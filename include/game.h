@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "common.h"
+#include "libgpu.h"
 
 /* Game globals referenced by decompiled functions. Types are inferred from the
  * access width in the decompiled functions (grep over asm/nonmatchings/game);
@@ -10,6 +11,7 @@
  * until understood. */
 extern u8 D_800B3D40;
 extern u8 D_800B3D44;
+extern u8 D_800B3D60;
 extern s32 D_800B3D70; /* only sw and &D_800B3D70 seen */
 extern u8 D_800B3D80;
 extern u8 D_800B3DC0[];
@@ -48,6 +50,8 @@ extern u8 D_800E62B5;
 extern u8 D_800E62B9;
 extern u8 D_800E62BA;
 extern u8 D_800E62BB; /* also read with lb elsewhere */
+extern u8 D_800E62BF;
+extern u8 D_800E62C0;
 extern u8 D_800E699D;
 extern u8 D_800E699E;
 extern u8 D_800E71DF;
@@ -100,5 +104,43 @@ typedef struct Entry8 {
     /* 0x06 */ u8 unk_06;
     /* 0x07 */ s8 unk_07;
 } Entry8; /* size 0x08 */
+
+/* Sync-wait object of func_80056AA8 (field meanings unknown). */
+typedef struct SyncObj {
+    /* 0x00 */ u8 unk_00[0x10];
+    /* 0x10 */ Entry8 tbl[2];
+    /* 0x20 */ s32 idx;
+    /* 0x24 */ s16 unk_24;
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ u8 unk_28[4];
+    /* 0x2C */ s32 flag;
+} SyncObj; /* size 0x30 */
+
+/* Prototypes for functions called from decompiled code. Argument types come
+ * from the call sites only; unprototyped (empty parentheses) where unknown. */
+void func_800415B4(s32 arg0, s32 arg1);
+void func_8004164C(s32 arg0, s32 arg1);
+void func_800418B0(void);
+void func_800419FC(void);
+void func_80041C2C(void);
+void func_80041F48(void);
+void func_8004284C(void);
+void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_80042908(s32 arg0);
+void func_8004500C(s32 arg0, s32 arg1);
+void func_80052DD4(s32 arg0, u8 arg1, u8 arg2);
+void func_800573F8(s32 arg0);
+void func_8006492C(s32 arg0);
+void func_8006D138(void);
+void func_80083440(s32 arg0);
+void func_80090D20(void);
+void func_8009C674(s32 arg0);
+void func_8009C7F8(RECT *rect, s32 arg1, s32 arg2, s32 arg3);
+void func_8009C884(RECT *rect, void *arg1);
+void func_8009C8E0(RECT *rect, void *arg1);
+void func_8009C93C(RECT *rect, s32 arg1, s32 arg2);
+void func_80044750(s32 arg0);
+void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
+void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
 
 #endif /* GAME_H */

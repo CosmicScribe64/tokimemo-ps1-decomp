@@ -1,17 +1,35 @@
 #include "common.h"
 #include "game.h"
+#include "libapi.h"
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80041000);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800410AC);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016, store order: the original stores h, w before x, y. */
+void func_8004111C(void) {
+    RECT rect;
+
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 640;
+    rect.h = 480;
+    func_8009C7F8(&rect, 0, 0, 0);
+    func_8009C674(0);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/game", func_8004111C);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80041168);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800412E0);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80041584);
+void func_80041584(void) {
+    func_800415B4(0, 0x40);
+    func_8004164C(0, 2);
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800415B4);
 
@@ -19,7 +37,12 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8004164C);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80041840);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80041878);
+void func_80041878(void) {
+    func_800418B0();
+    func_800419FC();
+    func_80041C2C();
+    func_80041F48();
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800418B0);
 
@@ -50,7 +73,11 @@ s32 func_80042400(void) {
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80042418);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80042458);
+void func_80042458(void) {
+    EnterCriticalSection();
+    FlushCache();
+    ExitCriticalSection();
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80042488);
 
@@ -125,18 +152,70 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80043A84);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80043B74);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016, ugen temporaries: original lhu into t8/t9, IDO t0/t1 (register allocation, not the frame). */
+void func_8004435C(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4) {
+    RECT rect;
+
+    rect.x = arg0;
+    rect.y = arg1;
+    rect.w = arg2;
+    rect.h = arg3;
+    func_8009C884(&rect, arg4);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/game", func_8004435C);
+#endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016, ugen temporaries: original lhu into t7/t8/t9, IDO t8/t9/t0 (register allocation, not the frame). */
+void func_800443A0(u16 arg0, u16 arg1, u16 arg2, s16 arg3, u16 arg4, u16 arg5) {
+    RECT rect;
+
+    rect.x = arg0;
+    rect.y = arg1;
+    rect.w = arg2;
+    rect.h = arg3;
+    func_8009C93C(&rect, arg4, arg5);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/game", func_800443A0);
+#endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016, ugen temporaries: original lhu into t8/t9, IDO t0/t1 (register allocation, not the frame). */
+void func_800443F0(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4) {
+    RECT rect;
+
+    rect.x = arg0;
+    rect.y = arg1;
+    rect.w = arg2;
+    rect.h = arg3;
+    func_8009C8E0(&rect, arg4);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/game", func_800443F0);
+#endif
 
 void func_80044434(void) {
 }
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004443C);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016, original frame has 8 more bytes of locals (0x38 vs 0x30); unknown extra local. */
+void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
+    RECT rect;
+
+    rect.x = arg1 << 4;
+    rect.y = arg0 + 0x1E0;
+    rect.w = 0x10;
+    rect.h = 1;
+    func_8009C93C(&rect, 0x100, arg2 + 0x1E0);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/game", func_80044700);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80044750);
 
@@ -226,9 +305,23 @@ void func_800462BC(u8 arg0, s32 arg1, s32 *arg2) {
     ((u8 *)arg2)[3] = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/game", func_800462C8);
+void func_800462C8(u8 arg0, s32 arg1, s32 arg2) {
+    u8 buf[0x20];
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80046318);
+    func_80044750(6);
+    func_800462BC(arg0, arg1, (s32 *)buf);
+    func_80045414(6, arg2, buf);
+    D_800B3D60 = 0;
+}
+
+void func_80046318(u8 arg0, s32 arg1, s32 arg2) {
+    u8 buf[0x20];
+
+    func_80044750(6);
+    func_800462BC(arg0, arg1, (s32 *)buf);
+    func_80045414(6, arg2, buf);
+    D_800B3D60 = 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004636C);
 
@@ -357,7 +450,9 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8004AE54);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004B19C);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8004B338);
+void func_8004B338(s32 arg0, s32 arg1, s32 arg2) {
+    func_8004B358(arg0, arg1, arg2, 0xF);
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004B358);
 
@@ -544,7 +639,9 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80052D04);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80052D54);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80052DA4);
+void func_80052DA4(s32 arg0) {
+    func_80052DD4(arg0, D_800E62BF, D_800E62C0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80052DD4);
 
@@ -667,7 +764,30 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8005680C);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800568B8);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016. The original keeps the constant 1 in v1 across the
+ * loop (uopt hoists integer constants out of loops); the project flag
+ * -Wo,-no_const_in_reg stops that. Frame and everything else match. */
+void func_80056AA8(SyncObj *arg0, s32 arg1) {
+    volatile s32 timeout = 0x800000;
+
+    while (arg0->flag == 0) {
+        if (--timeout == 0) {
+            arg0->flag = 1;
+            if (arg0->idx != 0) {
+                arg0->idx = 0;
+            } else {
+                arg0->idx = 1;
+            }
+            arg0->unk_24 = arg0->tbl[arg0->idx].unk_00;
+            arg0->unk_26 = arg0->tbl[arg0->idx].unk_02;
+        }
+    }
+    arg0->flag = 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/game", func_80056AA8);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80056B3C);
 
@@ -1231,7 +1351,11 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8006CB6C);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8006CC28);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8006CCE4);
+void func_8006CCE4(void) {
+    if (func_8004480C() == 0) {
+        func_8004500C(0, 0);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8006CD14);
 
@@ -1434,7 +1558,11 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80077CA8);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80077E30);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80077F2C);
+void func_80077F2C(void) {
+    func_8006D138();
+    func_8006492C(1);
+    func_80042908(0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80077F5C);
 
@@ -1573,7 +1701,9 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8007B4E4);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8007B568);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8007B5CC);
+void func_8007B5CC(void) {
+    func_80090D20();
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8007B5EC);
 
@@ -1705,7 +1835,10 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8007EC68);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8007EC9C);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8007ECD0);
+void func_8007ECD0(void) {
+    func_800573F8(1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8007ECF8);
 
@@ -1741,7 +1874,10 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80083268);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80083338);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80083378);
+void func_80083378(void) {
+    func_80083440(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800833A0);
 
