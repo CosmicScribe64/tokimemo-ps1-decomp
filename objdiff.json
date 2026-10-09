@@ -3,13 +3,26 @@
   "custom_make": "ninja",
   "build_target": false,
   "build_base": true,
+  "progress_categories": [
+    {
+      "id": "main",
+      "name": "Main executable"
+    },
+    {
+      "id": "overlays",
+      "name": "Overlays"
+    }
+  ],
   "units": [
     {
       "name": "src/main/80041000",
       "target_path": "expected/build/src/main/80041000.o",
       "base_path": "build/src/main/80041000.o",
       "metadata": {
-        "source_path": "src/main/80041000.c"
+        "source_path": "src/main/80041000.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -17,7 +30,10 @@
       "target_path": "expected/build/src/main/80042540.o",
       "base_path": "build/src/main/80042540.o",
       "metadata": {
-        "source_path": "src/main/80042540.c"
+        "source_path": "src/main/80042540.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -25,7 +41,10 @@
       "target_path": "expected/build/src/main/80042A00.o",
       "base_path": "build/src/main/80042A00.o",
       "metadata": {
-        "source_path": "src/main/80042A00.c"
+        "source_path": "src/main/80042A00.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -33,7 +52,10 @@
       "target_path": "expected/build/src/main/80043510.o",
       "base_path": "build/src/main/80043510.o",
       "metadata": {
-        "source_path": "src/main/80043510.c"
+        "source_path": "src/main/80043510.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -41,7 +63,10 @@
       "target_path": "expected/build/src/main/800451D0.o",
       "base_path": "build/src/main/800451D0.o",
       "metadata": {
-        "source_path": "src/main/800451D0.c"
+        "source_path": "src/main/800451D0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -49,7 +74,10 @@
       "target_path": "expected/build/src/main/80046500.o",
       "base_path": "build/src/main/80046500.o",
       "metadata": {
-        "source_path": "src/main/80046500.c"
+        "source_path": "src/main/80046500.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -57,7 +85,10 @@
       "target_path": "expected/build/src/main/80047550.o",
       "base_path": "build/src/main/80047550.o",
       "metadata": {
-        "source_path": "src/main/80047550.c"
+        "source_path": "src/main/80047550.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -65,7 +96,10 @@
       "target_path": "expected/build/src/main/80049FF0.o",
       "base_path": "build/src/main/80049FF0.o",
       "metadata": {
-        "source_path": "src/main/80049FF0.c"
+        "source_path": "src/main/80049FF0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -73,7 +107,10 @@
       "target_path": "expected/build/src/main/8004AD60.o",
       "base_path": "build/src/main/8004AD60.o",
       "metadata": {
-        "source_path": "src/main/8004AD60.c"
+        "source_path": "src/main/8004AD60.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -81,7 +118,10 @@
       "target_path": "expected/build/src/main/8004C3F0.o",
       "base_path": "build/src/main/8004C3F0.o",
       "metadata": {
-        "source_path": "src/main/8004C3F0.c"
+        "source_path": "src/main/8004C3F0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -89,7 +129,10 @@
       "target_path": "expected/build/src/main/8004E500.o",
       "base_path": "build/src/main/8004E500.o",
       "metadata": {
-        "source_path": "src/main/8004E500.c"
+        "source_path": "src/main/8004E500.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -97,7 +140,10 @@
       "target_path": "expected/build/src/main/8004F6B0.o",
       "base_path": "build/src/main/8004F6B0.o",
       "metadata": {
-        "source_path": "src/main/8004F6B0.c"
+        "source_path": "src/main/8004F6B0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -105,7 +151,10 @@
       "target_path": "expected/build/src/main/8004F870.o",
       "base_path": "build/src/main/8004F870.o",
       "metadata": {
-        "source_path": "src/main/8004F870.c"
+        "source_path": "src/main/8004F870.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -113,7 +162,10 @@
       "target_path": "expected/build/src/main/80053650.o",
       "base_path": "build/src/main/80053650.o",
       "metadata": {
-        "source_path": "src/main/80053650.c"
+        "source_path": "src/main/80053650.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -121,7 +173,10 @@
       "target_path": "expected/build/src/main/80056300.o",
       "base_path": "build/src/main/80056300.o",
       "metadata": {
-        "source_path": "src/main/80056300.c"
+        "source_path": "src/main/80056300.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -129,7 +184,10 @@
       "target_path": "expected/build/src/main/800563F0.o",
       "base_path": "build/src/main/800563F0.o",
       "metadata": {
-        "source_path": "src/main/800563F0.c"
+        "source_path": "src/main/800563F0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -137,7 +195,10 @@
       "target_path": "expected/build/src/main/80057390.o",
       "base_path": "build/src/main/80057390.o",
       "metadata": {
-        "source_path": "src/main/80057390.c"
+        "source_path": "src/main/80057390.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -145,7 +206,10 @@
       "target_path": "expected/build/src/main/80058D20.o",
       "base_path": "build/src/main/80058D20.o",
       "metadata": {
-        "source_path": "src/main/80058D20.c"
+        "source_path": "src/main/80058D20.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -153,7 +217,10 @@
       "target_path": "expected/build/src/main/80059710.o",
       "base_path": "build/src/main/80059710.o",
       "metadata": {
-        "source_path": "src/main/80059710.c"
+        "source_path": "src/main/80059710.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -161,7 +228,10 @@
       "target_path": "expected/build/src/main/80059A20.o",
       "base_path": "build/src/main/80059A20.o",
       "metadata": {
-        "source_path": "src/main/80059A20.c"
+        "source_path": "src/main/80059A20.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -169,7 +239,10 @@
       "target_path": "expected/build/src/main/8005A0B0.o",
       "base_path": "build/src/main/8005A0B0.o",
       "metadata": {
-        "source_path": "src/main/8005A0B0.c"
+        "source_path": "src/main/8005A0B0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -177,7 +250,10 @@
       "target_path": "expected/build/src/main/80061710.o",
       "base_path": "build/src/main/80061710.o",
       "metadata": {
-        "source_path": "src/main/80061710.c"
+        "source_path": "src/main/80061710.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -185,7 +261,10 @@
       "target_path": "expected/build/src/main/80062CD0.o",
       "base_path": "build/src/main/80062CD0.o",
       "metadata": {
-        "source_path": "src/main/80062CD0.c"
+        "source_path": "src/main/80062CD0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -193,7 +272,10 @@
       "target_path": "expected/build/src/main/8006CB30.o",
       "base_path": "build/src/main/8006CB30.o",
       "metadata": {
-        "source_path": "src/main/8006CB30.c"
+        "source_path": "src/main/8006CB30.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -201,7 +283,10 @@
       "target_path": "expected/build/src/main/80075320.o",
       "base_path": "build/src/main/80075320.o",
       "metadata": {
-        "source_path": "src/main/80075320.c"
+        "source_path": "src/main/80075320.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -209,7 +294,10 @@
       "target_path": "expected/build/src/main/800789E0.o",
       "base_path": "build/src/main/800789E0.o",
       "metadata": {
-        "source_path": "src/main/800789E0.c"
+        "source_path": "src/main/800789E0.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -217,7 +305,10 @@
       "target_path": "expected/build/src/main/80079B10.o",
       "base_path": "build/src/main/80079B10.o",
       "metadata": {
-        "source_path": "src/main/80079B10.c"
+        "source_path": "src/main/80079B10.c",
+        "progress_categories": [
+          "main"
+        ]
       }
     },
     {
@@ -225,7 +316,296 @@
       "target_path": "expected/build/src/main/80085E30.o",
       "base_path": "build/src/main/80085E30.o",
       "metadata": {
-        "source_path": "src/main/80085E30.c"
+        "source_path": "src/main/80085E30.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKAKEN",
+      "target_path": "expected/ovl/BUNKAKEN.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKAKEN.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI",
+      "target_path": "expected/ovl/BUNKASAI.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD",
+      "target_path": "expected/ovl/BUNKA_SD.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE",
+      "target_path": "expected/ovl/DATE.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE2",
+      "target_path": "expected/ovl/DATE2.o",
+      "base_path": "build/ovl/DATE2/src/ovl/DATE2.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE2.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING",
+      "target_path": "expected/ovl/ENDING.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EN_NICHI",
+      "target_path": "expected/ovl/EN_NICHI.o",
+      "base_path": "build/ovl/EN_NICHI/src/ovl/EN_NICHI.o",
+      "metadata": {
+        "source_path": "src/ovl/EN_NICHI.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC",
+      "target_path": "expected/ovl/ETC.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT",
+      "target_path": "expected/ovl/EVENT.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO",
+      "target_path": "expected/ovl/GEKO.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI",
+      "target_path": "expected/ovl/GYOZI.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI",
+      "target_path": "expected/ovl/KANGEI.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER",
+      "target_path": "expected/ovl/MASTER.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/NAME_ENT",
+      "target_path": "expected/ovl/NAME_ENT.o",
+      "base_path": "build/ovl/NAME_ENT/src/ovl/NAME_ENT.o",
+      "metadata": {
+        "source_path": "src/ovl/NAME_ENT.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/OLH",
+      "target_path": "expected/ovl/OLH.o",
+      "base_path": "build/ovl/OLH/src/ovl/OLH.o",
+      "metadata": {
+        "source_path": "src/ovl/OLH.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/OMIMAI",
+      "target_path": "expected/ovl/OMIMAI.o",
+      "base_path": "build/ovl/OMIMAI/src/ovl/OMIMAI.o",
+      "metadata": {
+        "source_path": "src/ovl/OMIMAI.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/OPTION",
+      "target_path": "expected/ovl/OPTION.o",
+      "base_path": "build/ovl/OPTION/src/ovl/OPTION.o",
+      "metadata": {
+        "source_path": "src/ovl/OPTION.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RENSYU",
+      "target_path": "expected/ovl/RENSYU.o",
+      "base_path": "build/ovl/RENSYU/src/ovl/RENSYU.o",
+      "metadata": {
+        "source_path": "src/ovl/RENSYU.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT",
+      "target_path": "expected/ovl/RPG_BAT.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU",
+      "target_path": "expected/ovl/SHOUGATU.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU",
+      "target_path": "expected/ovl/SHUGAKU.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO",
+      "target_path": "expected/ovl/TACO.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU",
+      "target_path": "expected/ovl/TAIIKU.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TEL",
+      "target_path": "expected/ovl/TEL.o",
+      "base_path": "build/ovl/TEL/src/ovl/TEL.o",
+      "metadata": {
+        "source_path": "src/ovl/TEL.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT",
+      "target_path": "expected/ovl/TT.o",
+      "base_path": "build/ovl/TT/src/ovl/TT.o",
+      "metadata": {
+        "source_path": "src/ovl/TT.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/VALEN",
+      "target_path": "expected/ovl/VALEN.o",
+      "base_path": "build/ovl/VALEN/src/ovl/VALEN.o",
+      "metadata": {
+        "source_path": "src/ovl/VALEN.c",
+        "progress_categories": [
+          "overlays"
+        ]
       }
     }
   ]

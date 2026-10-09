@@ -185,13 +185,25 @@ def main():
         "name": c[:-2],
         "target_path": "expected/build/" + c[:-2] + ".o",
         "base_path": "build/" + c[:-2] + ".o",
-        "metadata": {"source_path": c},
+        "metadata": {"source_path": c, "progress_categories": ["main"]},
     } for c in sorted(C_FILES)]
+    # Overlays (T-0902): the object `cc` writes for src/ovl/<NAME>.c; the target is the
+    # all-INCLUDE_ASM copy in expected/ovl/ (see wiki/decompile-workflow.md).
+    units += [{
+        "name": "src/ovl/" + name,
+        "target_path": "expected/ovl/%s.o" % name,
+        "base_path": "build/ovl/%s/src/ovl/%s.o" % (name, name),
+        "metadata": {"source_path": "src/ovl/%s.c" % name,
+                     "progress_categories": ["overlays"]},
+    } for name, _base, _text in read_overlays()]
     with open("objdiff.json", "w") as f:
         json.dump({"$schema": "https://raw.githubusercontent.com/encounter/"
                    "objdiff/main/config.schema.json",
                    "custom_make": "ninja", "build_target": False,
-                   "build_base": True, "units": units}, f, indent=2)
+                   "build_base": True,
+                   "progress_categories": [{"id": "main", "name": "Main executable"},
+                                           {"id": "overlays", "name": "Overlays"}],
+                   "units": units}, f, indent=2)
         f.write("\n")
 
 

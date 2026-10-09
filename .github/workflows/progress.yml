@@ -1,0 +1,104 @@
+# Build check and progress report, on every push to main and every pull request.
+#
+# The repository holds no game data. The 27 original binaries (SLPM_86.053 and the 26
+# overlays) come from an encrypted bundle kept in a private companion repository; this
+# workflow clones that repository with a read-only deploy key and decrypts the bundle
+# with a key kept in a repository secret. See wiki/ci.md for the setup.
+#
+# Forks and anyone without the two secrets get a notice and a green run: the build and
+# report steps are skipped, not failed.
+#
+# decomp.dev reads the "SLPM_86.053_report" artifact from runs on the default branch.
+name: Progress
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DATA_REPO: CosmicScribe64/tokimemo-ci-data
+  VERSION: SLPM_86.053
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for the encrypted game bundle
+        id: bundle
+        env:
+          DEPLOY_KEY: ${{ secrets.CI_DATA_DEPLOY_KEY }}
+          BUNDLE_KEY: ${{ secrets.GAME_BUNDLE_KEY }}
+        run: |
+          if [ -n "$DEPLOY_KEY" ] && [ -n "$BUNDLE_KEY" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Build skipped::The game bundle secrets are not available (fork or pull request from a fork). Build locally with tools/docker.sh ninja; see CONTRIBUTING.md."
+          fi
+
+      - name: Restore the original binaries
+        if: steps.bundle.outputs.available == 'true'
+        env:
+          DEPLOY_KEY: ${{ secrets.CI_DATA_DEPLOY_KEY }}
+          BUNDLE_KEY: ${{ secrets.GAME_BUNDLE_KEY }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/ci_data_key
+          chmod 600 ~/.ssh/ci_data_key
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+          GIT_SSH_COMMAND="ssh -i $HOME/.ssh/ci_data_key -o IdentitiesOnly=yes" \
+            git clone --depth 1 "git@github.com:${DATA_REPO}.git" "$RUNNER_TEMP/data"
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -pass env:BUNDLE_KEY \
+            -in "$RUNNER_TEMP/data/game-bundle.tar.gz.enc" | tar -xzf - -C .
+          rm -rf "$RUNNER_TEMP/data" ~/.ssh/ci_data_key
+          test -f disc/files/SLPM_86.053
+          echo "restored $(ls disc/files/CDROM/EXEDIR | wc -l) overlays"
+
+      - name: Build the toolchain image
+        if: steps.bundle.outputs.available == 'true'
+        run: docker build --platform linux/amd64 -t tokimemo-decomp tools
+
+      - name: Configure and build
+        if: steps.bundle.outputs.available == 'true'
+        run: |
+          tools/docker.sh python3 configure.py
+          tools/docker.sh ninja
+
+      - name: Check that all 27 binaries match
+        if: steps.bundle.outputs.available == 'true'
+        run: |
+          n=$(ls build/SLPM_86.053.ok build/ovl/*.ok | wc -l)
+          echo "$n of 27 sha1 checks passed"
+          test "$n" -eq 27
+
+      - name: Print progress
+        if: steps.bundle.outputs.available == 'true'
+        run: tools/docker.sh ninja progress
+
+      - name: Generate the objdiff report
+        if: steps.bundle.outputs.available == 'true'
+        run: |
+          tools/docker.sh python3 tools/report_objs.py build/report
+          tools/docker.sh objdiff-cli report generate -p build/report -o build/report.json -f json
+          python3 - <<'PY'
+          import json
+          m = json.load(open("build/report.json"))["measures"]
+          print("units", m["total_units"], "functions", m["matched_functions"], "/", m["total_functions"],
+                "code", m["matched_code"], "/", m["total_code"])
+          assert m["total_units"] == 54 and m["matched_functions"] > 0
+          PY
+
+      # The artifact holds only report.json: function names, sizes and match percentages.
+      - name: Upload the report
+        if: steps.bundle.outputs.available == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: SLPM_86.053_report
+          path: build/report.json
