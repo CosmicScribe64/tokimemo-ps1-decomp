@@ -43,6 +43,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0016-frame-layout-emulation-pass|T-0016]] Frame-layout emulation pass (Done)
 - [[tickets/T-0017-const-in-reg-loop-hoisting|T-0017]] Reconcile -Wo,-no_const_in_reg with loop hoisting (Backlog)
 - [[tickets/T-0018-ugen-temp-register-order|T-0018]] ugen temporary register order differs (Backlog)
+- [[tickets/T-0700-overlay-batch-a|T-0700]] Overlay batch A: RENSYU, OMIMAI, VALEN, MASTER (Done)
 - [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101]] Stop splat from overwriting include_asm.h (Done via T-0008)
 
 ## Entities / concepts / sources
