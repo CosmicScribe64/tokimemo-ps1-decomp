@@ -1,7 +1,7 @@
 ---
 id: T-0901
 title: "Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure"
-status: In Review
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -14,7 +14,7 @@ Write the CC0 LICENSE, a humanized README, ROADMAP.md, CONTRIBUTING.md and an ho
 
 ## Acceptance criteria
 
-- [ ] Done when the goal holds and the inline code-review gate has no open findings.
+- [x] Done when the goal holds and the inline code-review gate has no open findings.
 
 ## Notes
 

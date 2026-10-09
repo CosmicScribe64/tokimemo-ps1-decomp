@@ -15,3 +15,23 @@ __pycache__/
 .ninja_deps
 wiki/.obsidian/
 /tools/psyq_sigs/
+
+# Game data and anything derived from it, by extension (belt and braces; the directories above are the real guard)
+*.EXN
+*.exn
+*.STR
+*.xa
+*.img
+*.chd
+*.7z
+*.rar
+*.exe
+SLPM_*
+!config/SLPM_*
+!tools/SLPM_*
+
+# CI bundle material (tools/make_ci_bundle.sh writes under build/, which is already ignored)
+*.enc
+deploy_key
+deploy_key.pub
+game-bundle.key

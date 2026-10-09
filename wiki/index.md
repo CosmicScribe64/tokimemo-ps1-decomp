@@ -12,6 +12,7 @@ Read this first. Update on every ingest or new page.
 - [[SCHEMA]] - wiki layout summary (full rules in AGENTS.md)
 - [[log]] - append-only chronological record
 - [[kanban]] - ticket board (columns must match ticket frontmatter status)
+- Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
@@ -47,6 +48,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0018-ugen-temp-register-order|T-0018]] ugen temporary register order differs (Backlog)
 - [[tickets/T-0700-overlay-batch-a|T-0700]] Overlay batch A: RENSYU, OMIMAI, VALEN, MASTER (Done)
 - [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101]] Stop splat from overwriting include_asm.h (Done via T-0008)
+- [[tickets/T-0901-public-docs|T-0901]] Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure (Done)
+- [[tickets/T-0902-ci-progress-report|T-0902]] CI: encrypted game bundle and decomp.dev progress report (Done)
+- [[tickets/T-0903-public-release-audit|T-0903]] Public-release audit (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -60,6 +64,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit
 - [[build-system]] - configure.py / ninja pipeline and gotchas
-- Raw sources (plain paths): `raw/disc-findings.md`, `raw/compiler-mismatch-research-sources.md`
+- [[ci]] - GitHub Actions workflow, encrypted game bundle, objdiff report for decomp.dev
+- Raw sources (plain paths): `raw/disc-findings.md`, `raw/compiler-mismatch-research-sources.md`, `raw/ai-disclosure-research.md`
 
 ## Tooling

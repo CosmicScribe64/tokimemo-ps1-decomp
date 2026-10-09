@@ -118,4 +118,4 @@ same rules, in [CODING_STANDARDS.md](CODING_STANDARDS.md) and [AGENTS.md](AGENTS
 
 The project's own code, tools and documentation are released under [CC0 1.0 Universal](LICENSE), a public-domain
 dedication. That covers our work only. It does not cover the game, its executables, its data or its assets, which
-belong to their rights holders, and none of them are included here.
+other projects and keep their own licenses.

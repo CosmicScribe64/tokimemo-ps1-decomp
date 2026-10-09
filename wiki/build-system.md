@@ -25,7 +25,7 @@ Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha
 Every IDO compile (main exe and overlays) goes through `tools/frame_pass.py` via an `as1` shim under `USR_LIB` (details in [[toolchain]]). `configure.py` lists `tools/frame_pass.py` as an implicit input of the C compile rules, so changing it rebuilds all C. `tools/docker.sh python3 tools/test_frame_pass.py` runs its unit tests.
 
 ## Overlays
-Each overlay in `config/overlays.txt` is its own target (see [[overlays]]): `splat split config/overlays/<NAME>.yaml` -> `asm/ovl/<NAME>/` (gitignored) and `build/ovl/<NAME>.ld` -> `src/ovl/<NAME>.c` (IDO 5.3 via asm-processor) plus the rodata asm object -> `ld` with the splat script and `build/ovl/<NAME>_undefined_{funcs,syms}_auto.txt` -> `objcopy -O binary` -> sha1 against `config/overlays/<NAME>.sha1`, giving `build/ovl/<NAME>.ok`. The 26 `src/ovl/*.c` files are created by splat once (every function `INCLUDE_ASM`) and committed; like the `src/main` files they are never regenerated. `config/overlays/*.yaml`, the sha1 files and `config/overlays.txt` come from `tools/docker.sh python3 tools/gen_overlay_configs.py` (needs `disc/`). Status: all 26 rebuild byte-identical; O.BIN is not built ([[tickets/T-0201-obin-format-and-symbols]]). Not in `objdiff.json` yet.
+Each overlay in `config/overlays.txt` is its own target (see [[overlays]]): `splat split config/overlays/<NAME>.yaml` -> `asm/ovl/<NAME>/` (gitignored) and `build/ovl/<NAME>.ld` -> `src/ovl/<NAME>.c` (IDO 5.3 via asm-processor) plus the rodata asm object -> `ld` with the splat script and `build/ovl/<NAME>_undefined_{funcs,syms}_auto.txt` -> `objcopy -O binary` -> sha1 against `config/overlays/<NAME>.sha1`, giving `build/ovl/<NAME>.ok`. The 26 `src/ovl/*.c` files are created by splat once (every function `INCLUDE_ASM`) and committed; like the `src/main` files they are never regenerated. `config/overlays/*.yaml`, the sha1 files and `config/overlays.txt` come from `tools/docker.sh python3 tools/gen_overlay_configs.py` (needs `disc/`). Status: all 26 rebuild byte-identical; O.BIN is not built ([[tickets/T-0201-obin-format-and-symbols]]).
 
 ## Gotchas found
 - gas pads the standard `.text` section of every object to 16 bytes, which shifted everything after a lib object whose size is not a multiple of 16. `tools/asm.py` assembles splat's `.section .text` into the custom section `.text.sdk` (no padding) and renames it to `.text`; the linker script's `SUBALIGN(2)` keeps placement exact (T-0010).
@@ -43,9 +43,9 @@ Each overlay in `config/overlays.txt` is its own target (see [[overlays]]): `spl
 - Generated `asm/` contains game code and must never be committed (gitignored with `build/`, `disc/`).
 
 ## objdiff
-`objdiff.json` (written by `configure.py`) has one unit per `src/main` file: target `expected/build/src/main/<addr>.o` (copy the matching build's objects to `expected/` once for per-function diffs, `expected/` is gitignored) and base `build/src/main/<addr>.o`.
+`objdiff.json` (written by `configure.py`) has one unit per `src/main` file (target `expected/build/src/main/<addr>.o`, base `build/src/main/<addr>.o`) and one per overlay (target `expected/ovl/<NAME>.o`, base `build/ovl/<NAME>/src/ovl/<NAME>.o`). Copy the all-`INCLUDE_ASM` objects to `expected/` once for per-function diffs; `expected/` is gitignored. Units carry the progress categories `main` and `overlays`. CI builds its own target and base objects from the full build with `tools/report_objs.py`; see [[ci]].
 
-Layout facts: [[executable]]. Toolchain: [[toolchain]].
+CI, the encrypted game bundle and the decomp.dev report: [[ci]] (T-0902). Layout facts: [[executable]]. Toolchain: [[toolchain]].
 
 SDK names (T-0010) are in `config/symbol_addrs_sdk.txt` and the provisional O.BIN game names (T-0600, [[obin]]) in `config/symbol_addrs_obin.txt`, both read by the main config only (both are `split` inputs in `configure.py`): the shared `config/symbol_addrs.txt` is also loaded by the overlay configs, where splat rejects symbols outside the overlay segment.
 
