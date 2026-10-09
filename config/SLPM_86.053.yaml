@@ -1,4 +1,4 @@
-# splat config for the boot executable SLPM_86.053 (PS-X EXE, SDK ~PsyQ 3.x/4.x mix, see wiki/psyq-sdk.md).
+# splat config for the boot executable SLPM_86.053 (PS-X EXE, SDK: PsyQ 3.x, mixed library vintages, see wiki/psyq-sdk.md).
 # Layout facts: wiki/executable.md. File offset = vram - 0x80041000 + 0x800.
 name: SLPM_86.053
 sha1: e823bd844a8f8fa4d05483b59c66bc54b8393b26
@@ -20,12 +20,14 @@ options:
   ld_bss_is_noload: True
 
   find_file_boundaries: False
-  # include/*.inc and include_asm.h are maintained by hand (T-0013); splat would overwrite them
-  generate_asm_macros_files: False
   gp_value: 0x800EB670
 
   o_as_suffix: True
   use_legacy_include_asm: False
+  # splat would overwrite the hand-maintained include/*.h and macro.inc (T-0013)
+  generate_asm_macros_files: False
+  # keep asm for decompiled functions too, so tools/progress.py has a full denominator
+  disassemble_all: True
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
@@ -36,6 +38,8 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    # SDK names live at 0x80086810-0x800AF340, inside the main exe only; overlay configs would reject them
+    - config/symbol_addrs_sdk.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/undefined_funcs_auto.txt

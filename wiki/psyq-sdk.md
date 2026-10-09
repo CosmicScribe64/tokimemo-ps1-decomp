@@ -1,13 +1,13 @@
 ---
 type: concept
 updated: 2026-10-09
-sources: ["raw/disc-findings.md", "config/SLPM_86.053.yaml", "config/symbol_addrs.txt", "tools/psyq_sigmatch.py"]
+sources: ["raw/disc-findings.md", "config/SLPM_86.053.yaml", "config/symbol_addrs_sdk.txt", "tools/psyq_sigmatch.py"]
 ---
 
 # PsyQ SDK findings (T-0006, T-0010)
 
 ## Verdict
-- Not one release. Library by library the executable matches different PsyQ vintages, all of the 3.x family (late 1995; the game shipped Nov 1995 and the newest RCS id is 1995/10/18). Per-library pins are in the table below; the leftover conflict is [[tickets/T-0302-sdk-version-conflict]].
+- No single release could be pinned. Library by library the executable matches different PsyQ vintages (libgte 3.4 and libc 3.3 with high confidence, others weak); the game shipped Nov 1995 and the newest RCS id is 1995/10/18, which favours 3.x over 4.x (circumstantial). Evidence per library is in the table below; the open conflict is [[tickets/T-0302-sdk-version-conflict]].
 - No "PsyQ" or "Library Programs" version string exists in the exe.
 - Dated RCS ids: libgpu `sys.c,v 1.107 1995/10/18` (0x800B2E50), libetc `intr.c,v 1.71 1995/08/29` (0x800B3170), libsnd `ut_f.c,v 1.2 1995/03/13` (0x800DCB50), and `Copyright (C) by 1993, 1994 Sony Computer Entertainment Inc.` (0x800DCB85, libsnd/libspu side data).
 
@@ -21,19 +21,19 @@ Real .LIB/.OBJ files (needed for decompals/psyq-obj-parser) only come from a use
 
 Caveats: a short chunk can collide, so names were accepted only for unique hits of at least 48 bytes whose length equals the exe function (+-8 bytes), and for the 16-byte libapi stubs by byte identity. Where a stub has an old and a new spelling (`InitPAD`/`InitPAD2`, `delete`/`erase`) the old one is used because the exe's `_96_remove` is the pre-3.6 form.
 
-## Per-library pins (exact size or byte evidence)
-| library | evidence | version |
-|---|---|---|
-| libgte | `COR_00.OBJ` is 432 bytes at 0x8009F8AC (384 in 3.3, 460 in 3.5+); `MTX.OBJ` (1216 bytes) and `MSC01.OBJ` (288 bytes) exist only in 3.3/3.4 (3.5+ split them) | 3.4 |
-| libc | `SPRINTF.OBJ` 3456 bytes (0x800AE130), `MEMMOVE.OBJ` 144 bytes (0x800AEF20); 3.4 has 2880/128, 3.5 2140/108 | 3.3 (sprintf also 3.0) |
-| libcard | `CARD.OBJ` 48 bytes at 0x800AE030 | 3.3 |
-| libapi | `COUNTER.OBJ` 368 bytes (0x800AF030; 3.0, 3.3, 4.1+); `_96_remove` is the 16-byte form (<= 3.5) | <= 3.5, 3.3 fits |
-| libgpu | `SYS.OBJ` starts exactly at 0x8009C210 (`ResetGraph` is its offset 0); `get_mode`/`get_ofs` chunks match 3.3-3.61 only | <= 3.61 |
-| libcd | `CdComstr`, `CdIntstr` (3.5+), `CdDataCallback` (3.7+); `EVENT.OBJ` 256 bytes (4.1/4.2) vs 264 (<= 3.7) | >= 3.5, conflicts |
-| libsnd | `UT_VVOL` chunk matches 3.61-4.0; `UT_GVA`/`UT_GPA` score 0.91/0.87 against 4.1+ | 3.6x or newer |
-| libpress | `DecDCTReset` instruction order equals 4.1+; no `LIBPRESS`/`VLC`/`ENCSPU` object of any set matches | unresolved |
+## Per-library evidence and confidence
+| library | evidence | candidate | confidence |
+|---|---|---|---|
+| libgte | `COR_00.OBJ` is 432 bytes at 0x8009F8AC (384 in 3.3, 460 in 3.5+); `MTX.OBJ` (1216) and `MSC01.OBJ` (288) exist only in 3.3/3.4 | 3.4 | high (sizes unique to 3.4) |
+| libc | `SPRINTF.OBJ` 3456 bytes, `MEMMOVE.OBJ` 144 bytes; 3.4 has 2880/128, 3.5 2140/108 | 3.3 | high for these two objects |
+| libcard | `CARD.OBJ` 48 bytes at 0x800AE030 | 3.3 | low (one tiny object) |
+| libapi | `COUNTER.OBJ` 368 bytes (3.0, 3.3, 4.1+); `_96_remove` is the 16-byte form (<= 3.5) | <= 3.5 | medium |
+| libgpu | `get_mode`/`get_ofs` chunk matches only in 3.3-3.61; `SYS.OBJ` begins with ResetGraph | <= 3.61 | low (two chunks) |
+| libcd | `CdComstr`, `CdIntstr` match 3.5+, `CdDataCallback` 3.7+; `EVENT.OBJ` 256 bytes (4.1/4.2) vs 264 (<= 3.7) | >= 3.5 | low, contradicts libgte/libc |
+| libsnd | `UT_VVOL` chunk matches 3.61-4.0; whole-object fuzzy scores for `UT_GVA`/`UT_GPA` only 0.91/0.87 against 4.1+ (a mismatch, not a match) | unknown | none |
+| libpress | `DecDCTReset` instruction order equals 4.1+ sets; no whole `LIBPRESS`/`VLC`/`ENCSPU` object of any set matches | unknown | none |
 
-Conflict: libgte 3.4 and libc/libcard 3.3 are older than libcd/libsnd/libpress. Either the game linked libs from several installs or patches, or some signatures coincide. The release date (Nov 1995) and RCS ids (<= 1995/10/18) make 4.x unlikely, so the SDK is narrowed from "3.6-4.0" to "3.3-3.6 plus a few newer-looking components". Follow-up: [[tickets/T-0302-sdk-version-conflict]].
+Open conflict (not explained away): libgte (3.4) and libc/libcard (3.3) are older than libcd (>= 3.5, possibly 3.7+). A single release cannot be pinned from the signature sets. The dating context (Nov 1995 release, newest RCS id 1995/10/18) points to 3.x rather than 4.x; this is circumstantial, and the signature sets lack 3.1/3.2/3.6.0/3.8, so a missing set may also explain unmatched libs. Narrowed from the old "3.6-4.0" guess to "3.x, late 1995, mixed vintages". Follow-up: [[tickets/T-0302-sdk-version-conflict]].
 
 ## Game/SDK boundary
 The first SDK function is `DecDCTReset` at 0x80086810 (first function of `LIBPRESS.OBJ` in every signature set). This is the former heuristic start and it is correct: libpress does not start lower. The switch table at 0x800B2398 belongs to the game function `func_80085CD4` (IDO style, writes game globals), and the first libpress string is at 0x800B23B0. `src/game.c` keeps all its functions (the ~22 decompiled ones are all below 0x8006B640). A 48-byte signature hit at 0x80042C94 (libgpu `KanjiFntClose`) is a mid-function false positive inside game code.
@@ -56,7 +56,7 @@ Segments are asm-only in `config/SLPM_86.053.yaml`.
 | 0x800AD280 | `libetc` | high | `INTR.OBJ` (ResetCallback, DMACallback, VSync...) directly after DIVGT4A, which ends exactly at 0x800AD280; runs to 0x800ADFC0 |
 | 0x800ADFC0 | `libapi_0`-`libapi_4`, `libcard_card`, `libc_sprintf`, `libc_memmove`, `libapi_counter` | high | 16-byte BIOS stubs (one object each, A##/C##.OBJ), CARD.OBJ, SPRINTF.OBJ, MEMMOVE.OBJ, COUNTER.OBJ |
 
-`config/symbol_addrs.txt` carries 166 real names: 61 libapi stubs (`open`, `close`, `read`, `write`, `EnterCriticalSection`, `InitHeap`, `memcpy`, `strlen`, ...), libgte (including the `GsTMDfast*` routines), libetc, libc, libcard, libgs/libgpu leaves, and libpress/libcd/libsnd entry points. `GsDrawOt` and `GsDrawOtIO` are byte-identical at 0x8009AD00 and left as `func_8009AD00`.
+`config/symbol_addrs_sdk.txt` carries 166 real names: 61 libapi stubs (`open`, `close`, `read`, `write`, `EnterCriticalSection`, `InitHeap`, `memcpy`, `strlen`, ...), libgte (including the `GsTMDfast*` routines), libetc, libc, libcard, libgs/libgpu leaves, and libpress/libcd/libsnd entry points. `GsDrawOt` and `GsDrawOtIO` are byte-identical at 0x8009AD00 and left as `func_8009AD00`.
 
 Not yet split: objects inside `libcd_rest`, `libsnd`, `libspu`, `libgs`, `libgpu` ([[tickets/T-0300-sdk-object-split-remaining-libs]]) and the lib rodata/data ([[tickets/T-0301-sdk-rodata-data-split]]).
 

@@ -7,11 +7,10 @@ score is the fraction of literal signature bytes that agree. Writes "version lib
 Tool for T-0010; signature data is third-party and gitignored (tools/psyq_sigs/).
 """
 import argparse
-import json
 import os
+import sys
 
-TEXT_FILE_OFF = 0x800
-TEXT_VRAM = 0x80041000
+from psyqsig import TEXT_VRAM, load_text, objects, versions
 
 
 def runs(parts):
@@ -38,19 +37,12 @@ def main():
     ap.add_argument("--versions", default="")
     ap.add_argument("--min-score", type=float, default=0.8)
     a = ap.parse_args()
-    text = open(a.exe, "rb").read()[TEXT_FILE_OFF:TEXT_FILE_OFF + 0xA2800]
-    vers = a.versions.split(",") if a.versions else sorted(os.listdir(a.sigdir))
-    out = open(a.out, "w")
-    for v in vers:
-        d = os.path.join(a.sigdir, v)
-        if not os.path.isdir(d):
-            continue
-        for fn in sorted(os.listdir(d)):
-            if not fn.endswith(".json"):
-                continue
-            for o in json.load(open(os.path.join(d, fn))):
-                if "sig" not in o:
-                    continue
+    text = load_text(a.exe)
+    vers = versions(a.sigdir, a.versions)
+    nlines = 0
+    with open(a.out, "w") as out:
+        for v in vers:
+            for lib, o in objects(os.path.join(a.sigdir, v)):
                 parts = o["sig"].split()
                 n = len(parts)
                 if n < 16:
@@ -76,8 +68,10 @@ def main():
                     if sc > best[0]:
                         best = (sc, c)
                 if best[0] >= a.min_score:
-                    out.write("%s %s %s 0x%08X %d %.3f\n" % (v, fn[:-5], o["name"], TEXT_VRAM + best[1], n, best[0]))
-    out.close()
+                    out.write("%s %s %s 0x%08X %d %.3f\n" % (v, lib + ".LIB", o["name"], TEXT_VRAM + best[1], n, best[0]))
+                    nlines += 1
+    if nlines == 0:
+        sys.exit("psyq_sigfuzzy: no matches")
 
 
 if __name__ == "__main__":

@@ -14,10 +14,10 @@ Follow-up of [[tickets/T-0006-identify-psyq-libs-sdk-version]]: find the exact s
 
 ## Acceptance criteria
 
-- [x] Each lib object in `sdk_libs` becomes its own asm subsegment: done for libpress (3 blocks), libcd (event, rest), libgte (36 objects), libetc, libapi/libcard/libc objects; the other libs are one segment each. The rest is [[tickets/T-0300-sdk-object-split-remaining-libs]]; rodata/data is [[tickets/T-0301-sdk-rodata-data-split]] (re-scoped, not delivered here).
-- [x] SDK release narrowed by matching against the public PsyQ signature sets: libgte 3.4, libc/libcard 3.3, libgpu <= 3.61, game era late 1995. A single release could not be pinned, see [[tickets/T-0302-sdk-version-conflict]].
-- [x] Real SDK names for 166 functions in `config/symbol_addrs.txt`; game/SDK boundary confirmed at 0x80086810 (no `src/game.c` change needed).
+- [ ] Each lib object in `sdk_libs` becomes its own asm subsegment with its rodata/data. Partly delivered: libpress (3 blocks, low confidence), libcd (2), libgte (36 objects), libetc, libapi/libcard/libc objects; one segment each for libsnd/libspu/libgs/libgpu. -> moved to [[tickets/T-0300-sdk-object-split-remaining-libs]] (remaining objects) and [[tickets/T-0301-sdk-rodata-data-split]] (rodata/data).
+- [ ] SDK release pinned by matching an SDK function against a known library object. Not met: narrowed only (libgte matches 3.4 exactly, libc/libcard 3.3, libgpu probably <= 3.61; the rest conflicts). -> moved to [[tickets/T-0302-sdk-version-conflict]].
 - [x] Findings recorded in [[psyq-sdk]].
+- [x] Extra, delivered: 166 real SDK names in `config/symbol_addrs_sdk.txt`; game/SDK boundary confirmed at 0x80086810 (no `src/game.c` change).
 
 ## Notes
 

@@ -19,6 +19,8 @@ def main():
     src, out = sys.argv[1], sys.argv[2]
     text = open(src, encoding="utf-8").read()
     custom = TEXT in text
+    if not custom and "/data/" not in src and not src.endswith("header.s"):
+        sys.exit("asm.py: %s has code but no `%s` line (splat format changed?)" % (src, TEXT))
     if custom:
         text = text.replace(TEXT, '.section .text.sdk, "ax"')
     subprocess.run(AS + ["-o", out, "-"], input=text.encode("utf-8"), check=True)

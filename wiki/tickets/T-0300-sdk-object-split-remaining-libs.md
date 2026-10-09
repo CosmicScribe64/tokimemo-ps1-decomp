@@ -15,7 +15,7 @@ links: ["[[psyq-sdk]]", "[[tickets/T-0010-sdk-lib-object-boundaries]]"]
 ## Acceptance criteria
 
 - [ ] Each of `libcd_rest`, `libsnd`, `libspu`, `libgs`, `libgpu` in `config/SLPM_86.053.yaml` is replaced by per-object asm segments with boundaries verified against a library object or a call/xref argument.
-- [ ] Objects in `libpress_*` confirmed (names, sizes).
+- [ ] libpress: `libpress_main` (0x80086810), `libpress_vlc` (0x80086E50) and `libpress_obj2` (0x800871C0) are named after signature sets that did not match; identify each object (LIBPRESS/VLC/VLC2/BUILD/ENCSPU or other) and confirm the 0x80087730 end, or replace the three blocks with verified objects.
 - [ ] `ninja` still ends with `build/SLPM_86.053.bin: OK`.
 
 ## Notes

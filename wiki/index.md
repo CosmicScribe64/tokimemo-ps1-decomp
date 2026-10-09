@@ -23,7 +23,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0005-build-system-and-checksum-matching|T-0005]] Build system & checksum matching (Done)
 - [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006]] Identify PsyQ libs/SDK version (Done)
 - [[tickets/T-0007-write-coding-standards|T-0007]] Write CODING_STANDARDS.md (Done)
-- [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Backlog)
+- [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Done)
 - [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Done)
 - [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (In Review)
 - [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300]] Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress (Backlog)
@@ -31,13 +31,17 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0302-sdk-version-conflict|T-0302]] Resolve mixed SDK vintages (Backlog)
 - [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Compiler confirmation on first game functions (Done)
 - [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Done)
-- [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Backlog)
+- [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Done; frame follow-up T-0100)
 - [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Backlog)
+- [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
+- [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Backlog)
+- [[tickets/T-0100-older-mips-compiler-emulation|T-0100]] Run an older MIPS ucode compiler for the +16 frame (Backlog)
+- [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101]] Stop splat from overwriting include_asm.h (Done via T-0008)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
-- [[overlays]] - the 26 .EXN overlays
+- [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code)
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, matched/unmatched functions, idioms

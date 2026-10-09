@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""List remaining INCLUDE_ASM leaf functions (no jal/jalr) of a segment, smallest first.
+
+Usage: python3 tools/list_leaves.py [--seg game] [--skip LO-HI] [--limit N]
+Reads src/<seg>.c and asm/nonmatchings/<seg>/*.s; prints "size name" lines.
+--skip takes a hex address range (default 80080000-80086810).
+"""
+import argparse
+import re
+import sys
+from pathlib import Path
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seg", default="game")
+    ap.add_argument("--skip", default="80080000-80086810")
+    ap.add_argument("--limit", type=int, default=0)
+    a = ap.parse_args()
+    lo, hi = (int(x, 16) for x in a.skip.split("-"))
+    src = Path("src/%s.c" % a.seg).read_text()
+    names = re.findall(r'^\s*INCLUDE_ASM\(\s*"[^"]+"\s*,\s*(\w+)\s*\)', src, re.M)
+    rows = []
+    for n in names:
+        p = Path("asm/nonmatchings/%s/%s.s" % (a.seg, n))
+        if not p.exists():
+            continue
+        t = p.read_text()
+        m = re.search(r'^nonmatching\s+\w+,\s*(0x[0-9A-Fa-f]+|\d+)', t, re.M)
+        size = int(m.group(1), 0) if m else 0
+        am = re.match(r'func_([0-9A-Fa-f]{8})$', n)
+        if am and lo <= int(am.group(1), 16) < hi:
+            continue
+        if re.search(r'\bjalr?\b', t):
+            continue
+        rows.append((size, n))
+    rows.sort()
+    for s, n in rows[:a.limit or None]:
+        print("%d %s" % (s, n))
+    print("total leaves: %d" % len(rows), file=sys.stderr)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

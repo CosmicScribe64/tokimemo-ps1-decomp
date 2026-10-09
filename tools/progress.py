@@ -27,7 +27,8 @@ def main():
 
     # name -> size for every function split by splat
     sizes = {}
-    for s in (root / "asm" / "nonmatchings").rglob("*.s"):
+    # asm/matchings holds decompiled functions (splat disassemble_all), asm/nonmatchings the rest
+    for s in [f for d in ("nonmatchings", "matchings") for f in (root / "asm" / d).rglob("*.s")]:
         m = NONMATCH.search(s.read_text(errors="replace")[:400])
         if not m or m.group(1) != s.stem:
             print("error: no `nonmatching %s, size` header in %s" % (s.stem, s), file=sys.stderr)
