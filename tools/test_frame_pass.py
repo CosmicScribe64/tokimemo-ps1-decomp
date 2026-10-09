@@ -142,6 +142,12 @@ class IndexedLocals(unittest.TestCase):
             mem(Z["zlw"], V0, 92, base=T8))
         self.assertEqual(imms(run(recs))[3], 92)
 
+    def test_storing_derived_register_fails(self):
+        recs = self.leaf(code(Z["zaddu"], fp.F_FRRR, T8, SP, r3=T9),
+                         mem(Z["zsw"], T8, 0))
+        with self.assertRaises(fp.PassError):
+            run(recs)
+
     def test_unfollowable_use_fails(self):
         recs = self.leaf(code(Z["zaddu"], fp.F_FRRR, T8, SP, r3=T9),
                          code(Z["zsll"], fp.F_FRRI, V0, T8, 2))

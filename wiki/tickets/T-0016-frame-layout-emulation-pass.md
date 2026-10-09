@@ -28,3 +28,4 @@ Design (decided while working): the layer is IDO's binasm stream between ugen an
 
 ## Comments
 - 2026-10-09 review (standards agent): FAKE items tracked here: `v[6]` in the three TAIIKU leaf functions (`src/ovl/TAIIKU.c`), `u8 buf[0x20]` in `func_800462C8`/`func_80046318` (size from the original frame). Standards findings otherwise: none hard besides these markers. The spec-axis review had not returned when this was handed back; ticket stays In Review, not Done (framed-leaf criterion unmet in the default build, see T-0017).
+- 2026-10-09 review (spec agent): framed-leaf shortfall honestly recorded. Fixed: a tainted `$sp`-derived register stored as a value now fails (test added). Open, accepted: unknown binasm itypes other than ifile/ioption pass through; leaf evidence is 24 original functions; IdoIntegration tests skip without IDO. Ticket stays In Review pending the T-0017 decision.

@@ -67,7 +67,7 @@ I_ILAB = 36
 I_IASCII = 5
 I_IASCIIZ = 6
 I_IFILE = 12
-NO_PAYLOAD_UNKNOWN = (I_IFILE,)
+REJECTED_RECORDS = (I_IFILE,)
 
 # format values (binasm.h)
 F_FROB, F_FRA, F_FRI, F_FRRR, F_FRRI, F_FRR, F_FA, F_FR = range(8)
@@ -166,7 +166,7 @@ def parse(data):
             n = -(-rec.w[2] // 16) * 16
             payload = data[i:i + n]
             i += n
-        elif rec.instr in NO_PAYLOAD_UNKNOWN:
+        elif rec.instr in REJECTED_RECORDS:
             raise PassError("unsupported record type %d" % rec.instr)
         elif rec.instr == I_IOPTION and (rec.w[1] >> 14) & 3 not in (1, 2):
             raise PassError("unsupported .option record")
@@ -262,6 +262,8 @@ def transform_proc(recs, start, end):
         # memory operations
         if form == F_FROB and op in MEM_OPS:
             base = r2
+            if op in STORES and r1 in tainted:
+                raise PassError("$sp-derived register $%d stored as a value" % r1)
             if base == SP:
                 shift(rec)
             elif base in tainted:
