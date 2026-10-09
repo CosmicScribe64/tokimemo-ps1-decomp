@@ -469,7 +469,7 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80138FAC);
 
 void func_80139018(void) {
     bg_read_sub2(0x4225);
-    func_800AE0F0(&D_800CA19C, &D_8013AEF0);
+    func_800AE0F0(D_800CA19C, &D_8013AEF0);
     func_8004284C();
 }
 

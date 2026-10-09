@@ -19,6 +19,8 @@ import ninja_syntax
 import yaml
 
 EXE = "SLPM_86.053"
+HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
+HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
 
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
 # Every `c` subsegment of the `main` segment is a C file src/<name>.c (T-0012: one per original
@@ -112,7 +114,7 @@ def overlay_targets(n, overlays):
         c_o = "build/ovl/%s/%s.o" % (name, c[:-2])
         n.build(c_o, "cc", c,
                 variables={"toolchain": " ".join(OVL_C_TOOLCHAIN)},
-                implicit=[stamp, "include/common.h", "include/include_asm.h",
+                implicit=[stamp, HEADERS_OK, "include/common.h", "include/include_asm.h",
                           "include/asmproc_prelude.inc",
                           "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
         data_o = "build/ovl/%s/%s.o" % (name, data_s[:-2])
@@ -136,6 +138,10 @@ def main():
     n.rule("split",
            command="python3 -m splat split config/%s.yaml && touch %s" % (EXE, "build/split.stamp"),
            description="splat split")
+    n.rule("headers", command="python3 tools/check_headers.py include && touch $out",
+           description="CHECK HEADERS")
+    n.build(HEADERS_OK, "headers", implicit=["tools/check_headers.py"] + HEADER_FILES)
+    n.build("headers", "phony", HEADERS_OK)
     n.rule("as", command="python3 tools/asm.py $in $out", description="AS $in")
     n.rule("cc",
            command="python3 tools/cc.py $in $out $toolchain",
@@ -164,7 +170,7 @@ def main():
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, "tools/cc.py", "tools/frame_pass.py"] + headers)
+                implicit=[stamp, HEADERS_OK, "tools/cc.py", "tools/frame_pass.py"] + headers)
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"

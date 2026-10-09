@@ -66,7 +66,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006 Identify PsyQ libs/SDK version]]
 - [ ] [[tickets/T-0001-project-scaffolding|T-0001 Project scaffolding]]
 - [ ] [[tickets/T-0007-write-coding-standards|T-0007 Write CODING_STANDARDS.md]]
-
+- [ ] [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200 Fix conflicting extern declarations after batch merges]]
 
 %% kanban:settings
 ```

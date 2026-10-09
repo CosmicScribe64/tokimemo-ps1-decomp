@@ -103,6 +103,14 @@ typedef struct Foo {
 - Mark unknown fields `unk_XX` (offset in hex) and padding `pad`. Do not invent semantics.
 - Bit-fields only if the matching output requires them.
 
+### 8a. Shared externs (T-1200)
+
+- A global or function used by more than one file is declared once, in `include/game.h` (main exe symbols and the game types) or in the one overlay header that owns it (`include/ovl/<NAME>.h`, overlay addresses). Overlay headers include `game.h`; they must not redeclare a symbol it declares, not even with the same type.
+- One type per symbol inside every header closure (a root header plus what it includes). A second declaration with another type is an IDO "redeclaration" error, and a narrower prototype (`u8` parameter) changes call code in every file that sees it.
+- If two users really need different views, do not give them two declarations in one closure. Take the address (`(u8 *)&D_801217D0 + n`, `&D_800CA148`) when one user wants the bytes of a scalar, model a struct or union when the accesses show one, or keep the symbol out of `game.h` and declare each view where it is used: main-exe-only views in `include/main_only.h` (never included by overlays), overlay views in the overlay header.
+- Choose the type from the access widths of all users (`lbu` is `u8`, `lh` is `s16`, `lw` is `s32`/pointer) and keep it only if every matched user still matches.
+- No exact duplicates. `tools/check_headers.py` enforces all of this and runs in `ninja` and CI; tests: `tools/test_check_headers.py`.
+
 ## 9. Comments
 
 - Explain non-obvious matching tricks: why a cast, ordering, extra temp, or `register` is there.
@@ -143,6 +151,7 @@ Reviewer checklist:
 - [ ] Files in the right place; generated asm not hand-edited; `INCLUDE_ASM` used per section 6.
 - [ ] Every fakematch carries a `FAKE` comment with reason and ticket. Toolchain emulation passes meet all points of section 7a.
 - [ ] Fixed-width types; struct offsets documented.
+- [ ] Shared externs declared once with one type (section 8a); `tools/check_headers.py` passes.
 - [ ] Non-obvious tricks explained; no dead code or stray debug.
 - [ ] No copyrighted game data or assets staged.
 - [ ] Scripts are Python 3, Docker-run, no host installs.

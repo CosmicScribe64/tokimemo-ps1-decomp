@@ -30,6 +30,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Needs no game data, so it also runs on forks.
+      - name: Check header declarations
+        run: |
+          python3 tools/check_headers.py include
+          python3 tools/test_check_headers.py
+
       - name: Check for the encrypted game bundle
         id: bundle
         env:

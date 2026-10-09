@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "main_only.h"
 
 void func_80079B10(u16 arg0) {
     func_8007B5EC(arg0);
@@ -446,7 +447,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", select_girl_init);
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", select_girl_main);
 
 void sprite_brightness(s16 idx, u8 val) {
-    u8 *p = D_801217D0 + idx * 36;
+    u8 *p = (u8 *)&D_801217D0 + idx * 36;
     p[0x16] = val;
     p[0x15] = val;
     p[0x14] = val;
@@ -547,8 +548,8 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", don_wait);
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_speak_1line);
 
 void normal_date_speak_012(void) {
-    D_800CA134 = D_800CA148;
-    D_800CA138 = D_800CA14C;
+    D_800CA134 = &D_800CA148;
+    D_800CA138 = &D_800CA14C;
     D_800CA13C = D_800CA160;
     D_800CA140 = D_800CA164;
     D_800CA144 = D_800CA168;
@@ -556,8 +557,8 @@ void normal_date_speak_012(void) {
 }
 
 void normal_date_speak(void) {
-    D_800CA134 = D_800CA148;
-    D_800CA138 = D_800CA14C;
+    D_800CA134 = &D_800CA148;
+    D_800CA138 = &D_800CA14C;
     D_800CA13C = D_800CA160;
     D_800CA140 = D_800CA164;
     D_800CA144 = D_800CA168;

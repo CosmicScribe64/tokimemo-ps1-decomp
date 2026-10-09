@@ -7,29 +7,18 @@
 /* SHUGAKU overlay (load address 0x80132000): externs and types. */
 
 extern s16 D_800CA2DC;
-void func_80042940(s32 arg0);
 void bg_read_sub2(s32 arg0);
 
-extern u8 D_800E69A1;
-extern u8 D_800E69A2;
-extern u8 D_800E69DD;
 extern s8 D_800B5BD4;
 extern s8 D_8013C2E4;
 extern u8 D_8013C2EC;
-void func_80042908(s32 arg0);
 void func_800847B8(u8 arg0);
 void func_80085B3C(s32 arg0, s32 arg1);
-void dec_bg_show_switch(s32 arg0);
-void get_g_zyotai_s(u8 arg0);
 
 extern s16 D_800E6382;
 extern u8 D_800CA2CC;
 extern u8 D_8013C1C0;
-extern s32 D_800E7384;
-extern s32 D_800CA19C;
 extern s32 D_8013AEF0;
-extern s32 D_80122CDC;
-void func_80046318(s32 arg0, s32 arg1, s32 arg2);
 void func_800AE0F0(void *arg0, void *arg1);
 void func_80132000(void);
 void func_80133430(void);
@@ -60,8 +49,6 @@ extern s32 D_8013CAF4;
 extern s32 D_8013CAF8;
 extern s32 D_8013CB00;
 extern u8 D_8012069B;
-extern s16 D_80120666;
-extern s16 D_801206AA;
 extern s8 D_801206DA;
 extern s16 D_801206F0;
 extern s32 D_800CA2D0;
@@ -92,7 +79,6 @@ void func_8013ABAC(u8 arg0);
 extern s16 D_800CA2E0;
 extern s32 D_80122CFC;
 extern s16 D_800CA2E8;
-extern s32 D_80122D0C;
 extern s32 D_8013B06C;
 extern s32 D_8013B070;
 extern s32 D_8013B074;
@@ -107,5 +93,6 @@ void func_80067DD4(void);
 void normal_date_bggirl_fadeout(void);
 void func_80132E84(void);
 void func_80139D00(void);
+void func_80046318(s32 arg0, s32 arg1, s32 arg2); /* overlay view: main defines it with u8 arg0 */
 
 #endif /* OVL_SHUGAKU_H */

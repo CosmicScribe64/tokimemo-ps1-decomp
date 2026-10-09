@@ -293,3 +293,14 @@ Idioms: when a global is read as `lbu` in one function and stored as a word in a
 - Pads after the last function of an object: 2 or more `nop` use `INCLUDE_ASM("src/ovl/pad", pad_<NAME>_<end addr>)`; the 1-nop case still cannot be ported (asm-processor minimum), so `func_8013EAC8`, `func_80143D68`, `func_80148E68`, `func_80150CC8`, `func_80152618` (BUNKAKEN) and `func_80135448`, `func_80146F38`, `func_8014DD28` (BUNKASAI) stay `INCLUDE_ASM`.
 - `funcdiff.py` reports DIFF for these pad cases (the nops live in the original function) and for calls to renamed main-exe functions (`k_reset`/`k_disp_start` vs the auto name in `expected/`); only the linked sha1 (`ninja build/ovl/<NAME>.ok`) is authoritative there.
 - Left: `func_80150930`-style local function-pointer table copied from rodata and indexed by `D_800E7389` (known gap (a) of batch A), and every function above 0x7C bytes (not attempted, time-box).
+
+## Conflicting extern declarations (T-1200)
+
+After union merges, one global or function was declared with different types in `include/game.h` and the overlay headers, which IDO rejects ("redeclaration"). Decisions, by access widths over all users:
+- `D_801217D0`: s32 (sw/lw users everywhere); the table of 36-byte entries is reached with `(u8 *)&D_801217D0 + idx * 36` in `src/main/80079B10.c`.
+- `D_800CA148`, `D_800CA14C`: s16 (sh/lh in every overlay); main code that passed the array stores `&D_800CA148`.
+- `D_800CA160/164/168`: s32 (word stores and loads only; the overlay u32 declarations were removed).
+- `D_80120652`: u8 (sb stores, lbu loads; overlay s8 removed). `D_800CA19C`, `D_800CA1DC`: u8 arrays, only ever address-taken; overlay callers pass the array.
+- `func_80046318`, `func_80083440`: main defines them with a `u8` first parameter, overlay callers were matched with `s32` (no `andi`). A `u8` prototype visible to the overlay adds an `andi 0xff` (KANGEI grew 16 bytes), so game.h no longer declares them: overlays declare the `s32` view, `include/main_only.h` the `u8` view for `src/main/80079B10.c`.
+- Prototype repeats (`get_g_zyotai_s`, `func_80046500`, `draw2d3d`, `set_dec_bri`, `func_8006612C`, K&R `()` duplicates) were dropped in favour of the `game.h` one; 60-odd exact duplicates removed.
+A symbol that a header does not declare at all (implicit `int`) can also change call code when a header later declares it with narrow parameters; only the sha1 check sees that case.
