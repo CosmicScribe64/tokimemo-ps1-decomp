@@ -80,3 +80,6 @@ Measured where the extra 16 bytes sit (non-leaf: above the saves; leaf with a fr
 
 ## [2026-10-09] ticket | T-0014 to In Review; T-0100, T-0101 created
 [[tickets/T-0014-find-exact-ucode-compiler]] In Progress -> In Review on [[kanban]]. New Backlog tickets [[tickets/T-0100-older-mips-compiler-emulation]] and [[tickets/T-0101-splat-overwrites-include-asm-h]]; [[index]] updated.
+
+## [2026-10-09] ticket | T-0014 review resolved -> Done
+code-review of [[tickets/T-0014-find-exact-ucode-compiler]]: added a comment on the named temp in `src/game.c` (`func_80042400`), an Idioms entry in [[matching-notes]], fixed wording in [[toolchain]] and the ticket (AC1 partial). Moved In Review -> Done on [[kanban]]; the frame question continues in [[tickets/T-0100-older-mips-compiler-emulation]].

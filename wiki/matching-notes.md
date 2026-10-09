@@ -56,6 +56,7 @@ Next experiments (need a decision on obtaining OS images, see [[tickets/T-0100-o
 Fallbacks (documented, NOT adopted; would be fakematches by CODING_STANDARDS section 7): (a) a cc.py stage that adds 16 to the ucode `DEF Mmt` length between uopt and ugen (non-leaf only; leaves need a second rule); (b) post-processing the object to grow the frame and shift sp offsets.
 
 ## Idioms
+- Read-modify-write of a global that returns the new value (`func_80042400`): write it with a named temp (`s32 t = D + k; D = t; return t;`) to get `$v1`/`$v0`; `D += k; return D;` gives `$t6`. Needs `-Wo,-no_const_in_reg` (default build flag) for the per-access `%hi/%lo`.
 - A getter `T f(void) { return D; }` with `u8`/`s32` global matches; the global must be declared `extern` with its access width in `include/game.h` (types inferred from the load/store only).
 - Several `D_` symbols are accessed with different widths in different functions (e.g. `D_800B3F60` as `lbu` in `func_8004ECE0`, as halfword elsewhere). Do not declare a single type blindly; decide per symbol when more users are decompiled.
 - The ninja depfile only lists `INCLUDE_ASM` files; project headers are listed in `configure.py` as implicit inputs (add new headers there).

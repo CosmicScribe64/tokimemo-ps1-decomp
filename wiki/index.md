@@ -28,7 +28,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Backlog)
 - [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Compiler confirmation on first game functions (Done)
 - [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Done)
-- [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (In Review)
+- [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Done; frame follow-up T-0100)
 - [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Backlog)
 - [[tickets/T-0100-older-mips-compiler-emulation|T-0100]] Run an older MIPS ucode compiler for the +16 frame (Backlog)
 - [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101]] Stop splat from overwriting include_asm.h (Backlog)
