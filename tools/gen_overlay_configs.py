@@ -56,6 +56,8 @@ options:
   use_legacy_include_asm: False
   # splat would overwrite the hand-maintained include/*.h and macro.inc (T-0013)
   generate_asm_macros_files: False
+  # keep asm for decompiled functions too, so tools/progress.py has a full denominator (T-0602)
+  disassemble_all: True
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
