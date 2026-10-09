@@ -47,7 +47,22 @@ void hizuke_show(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", message_disp_switch);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", message_window_init);
+void message_window_init(void) {
+    func_80048F64(1);
+    D_8011ED15 = 7;
+    D_8011ED16 = 0x40;
+    D_8011ED4C = 0x40000000;
+    D_8011ED17 = 0x84;
+    D_8011ED20 = D_800C975C;
+    D_8011ED24 = D_800C9A14;
+    D_8011ED48 = D_800C9730;
+    D_8011ED28 = D_800C9A54;
+    D_8011ED18 = 8;
+    D_8011ED19 = 1;
+    D_8011ED2C = 0x3E;
+    D_8011ED3A = 0;
+    D_8011ED3E = 0x4B;
+}
 
 void message_window_show(void) {
     if (D_8011ED17 & 0x80) {
@@ -118,7 +133,14 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066C08);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800673B8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80067438);
+void func_80067438(void) {
+    s32 v;
+
+    func_80044750(5);
+    func_80044750(0x71);
+    v = func_80066A2C() & 3;
+    func_80044890(0, 0xBF98, 0xBF79, D_800B5BE8[v], D_800B5BF8[v], D_800B5BD8[v]);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800674B0);
 
@@ -141,7 +163,23 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80067DD4);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80067DFC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80067E34);
+void func_80067E34(void) {
+    func_80048F64(0x60);
+    D_80120651 = 4;
+    D_80120652 = 0x40;
+    D_80120688 = 0x40000000;
+    D_80120653 = 0x84;
+    D_8012065C = D_800C975C;
+    D_80120660 = D_800C9A14;
+    D_80120684 = D_800C9730;
+    D_80120664 = D_800C9A54;
+    D_80120654 = 8;
+    D_80120655 = 1;
+    D_80120668 = 0x43;
+    D_80120676 = -0x10;
+    D_8012067A = -0x13;
+    func_80067F04();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80067F04);
 
@@ -174,7 +212,22 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", cal_sprite_disp_switch);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", cal_sprite_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", data_save_load_class_init);
+void data_save_load_class_init(void) {
+    func_80048F64(0x60);
+    D_80120651 = 3;
+    D_80120652 = 0x40;
+    D_80120688 = 0x40000000;
+    D_80120653 = 0x84;
+    D_8012065C = D_800C975C;
+    D_80120660 = D_800C9A14;
+    D_80120684 = D_800C9730;
+    D_80120664 = D_800C9A54;
+    D_80120654 = 8;
+    D_80120655 = 1;
+    D_80120668 = 0x43;
+    D_80120676 = -0x10;
+    D_8012067A = -0x13;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800696DC);
 
@@ -213,9 +266,48 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006C334);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006C700);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006C760);
+void func_8006C760(s32 arg0) {
+    func_80048F64(0xF);
+    D_8011F0CD = 0;
+    D_8011F0CE = 0x40;
+    D_8011F104 = 0;
+    if (arg0) {
+        D_8011F0CF = 0x8C;
+    } else {
+        D_8011F0CF = 0;
+    }
+    D_8011F0D8 = D_800C975C;
+    D_8011F0DC = D_800C9A14;
+    D_8011F100 = D_800C9730;
+    D_8011F0E0 = D_800C9A54;
+    D_8011F0D0 = 8;
+    D_8011F0D1 = 1;
+    D_8011F10F = 0;
+    D_8011F0E2 = 0;
+    D_8011F0E4 = 0xAD;
+    D_8011F0F2 = -0x86;
+    D_8011F0F6 = -0x5C;
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006C848);
+void func_8006C848(s32 arg0) {
+    func_80048F64(2);
+    D_8011ED59 = 2;
+    D_8011ED5A = 0x40;
+    D_8011ED90 = 0x40000000;
+    D_8011ED64 = D_800C975C;
+    D_8011ED68 = D_800C9A14;
+    D_8011ED8C = D_800C9730;
+    D_8011ED70 = 1;
+    D_8011ED5C = 8;
+    D_8011ED5D = 1;
+    D_8011ED7E = 0x74;
+    D_8011ED82 = 0x48;
+    if (arg0 == 1) {
+        D_8011ED5B |= 0x80;
+    } else {
+        D_8011ED5B &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006C934);
 
@@ -231,4 +323,12 @@ u8 *func_8006CA9C(void) {
     return D_800B6724;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006CAE0);
+u8 *func_8006CAE0(void) {
+    if (D_800E71F4 == 0) {
+        if (D_800E71F5 != 0) {
+            return D_800B6730;
+        }
+        return D_800B672C;
+    }
+    return D_800B6728;
+}
