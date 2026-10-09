@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/NAME_ENT.h"
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80132000);
 
@@ -40,7 +41,13 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801341A8);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80134248);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80134B18);
+void func_80134B18(void) {
+    k_sub_reset();
+    set_kanji_string(-0x68, -0x58, 0xE, D_8014CC74, 0);
+    set_kanji_string(-0x30, -0x58, 0xE, D_8014CC7C, 0);
+    set_kanji_string(0x48, -0x58, 0xE, D_8014CC84, 0);
+    k_sub_disp_start(3);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80134B94);
 
@@ -70,7 +77,14 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801362D0);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013635C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013664C);
+void func_8013664C(s32 arg0) {
+    u8 *p = D_8011ECD0 + arg0 * 0x44;
+
+    if (!(p[2] & 1)) {
+        *(s16 *)(p + 0x18) = 0;
+        p[2] = 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80136688);
 
@@ -113,11 +127,26 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801387F4);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80138A7C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80138BCC);
+void func_80138BCC(void) {
+    func_80044750(5);
+    func_80044750(0xC1);
+    func_80044750(3);
+    func_80048E78();
+    func_80138F60();
+    func_8004E58C();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80138C1C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80138F00);
+void func_80138F00(void) {
+    D_800E7CBC = 0x801AAF58;
+    D_800E7CCC = 0x801AAF5C;
+    D_800E7CDC = 0x801AAFD0;
+    D_800E7CEC = 0x80190000;
+    D_800E7D04 = 0x801AA200;
+    D_800E7CFC = 0x80192200;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80138F60);
 
@@ -151,7 +180,14 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013B1D8);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013B51C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013B59C);
+void func_8013B59C(void) {
+    func_8004E58C();
+    func_80139CB4();
+    k_sub_reset_point_set();
+    k_sub_disp_start(0);
+    D_8014D0D4 = 1;
+    func_8013B51C(D_800E7398 - 1);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013B5F0);
 
@@ -159,7 +195,9 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013B77C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013B994);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013BB10);
+void func_8013BB10(void) {
+    D_8014D0A8 = 0;
+}
 
 void func_8013BB1C(void) {
 }
@@ -172,21 +210,53 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013BF74);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C4A8);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C510);
+void func_8013C510(void) {
+    func_80056284();
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014B7B4, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014B7C8, 0);
+    k_disp_start(2);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C580);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C664);
+void func_8013C664(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014B824, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014B838, 0);
+    k_disp_start(2);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C6CC);
+void func_8013C6CC(void) {
+    if (D_800E7208 & 0x860) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C6FC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C7C0);
+void func_8013C7C0(void) {
+    if (D_800E7208 & 0x800) {
+        func_8013B77C();
+        func_80042878(0x14);
+    } else if (D_800E7208 & 0x20) {
+        func_8013B77C();
+        func_80042878(0x14);
+    } else if (D_800E7208 & 0x40) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C834);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C8FC);
+void func_8013C8FC(void) {
+    if (D_800E7208 & 0x20) {
+        func_80056284();
+        func_80042940(0);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C934);
 
@@ -206,27 +276,74 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013D62C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013D6C0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013D7F4);
+void func_8013D7F4(void) {
+    if (func_80055AFC(0) == 1) {
+        func_8013BB10();
+        func_800AE0B0(D_8014B998);
+        func_80053D10();
+        func_80044750(0x501);
+        func_80042908(3);
+    } else {
+        func_800AE0B0(D_8014B9A4);
+        func_80056284();
+        func_80042908(1);
+    }
+    func_8013B1D8();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013D874);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013D954);
+void func_8013D954(void) {
+    if (D_800E7208 & 0x20) {
+        func_80042940(0x44);
+    } else if (D_800E7208 & 0x40) {
+        func_8004284C();
+    }
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013D9A0);
+void func_8013D9A0(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BA28, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014BA44, 0);
+    k_disp_start(2);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DA08);
+void func_8013DA08(void) {
+    if (D_800E7208 & 0x820) {
+        func_8013B77C();
+        func_80042878(0x14);
+    }
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DA40);
+void func_8013DA40(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BA60, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014BA78, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_8014BA88, 0);
+    k_disp_start(3);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DAC4);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DBD0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DC54);
+void func_8013DC54(void) {
+    if (D_800E7208 & 0x860) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DC84);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DD48);
+void func_8013DD48(void) {
+    if (D_800E7208 & 0x820) {
+        func_80042940(0x4C);
+    } else if (D_800E7208 & 0x40) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DD94);
 
@@ -234,7 +351,12 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DF88);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E30C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E390);
+void func_8013E390(void) {
+    if (D_800E7208 & 0x860) {
+        func_8004284C();
+    }
+    func_80142880();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E3C8);
 
@@ -242,7 +364,18 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E430);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E59C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E6A8);
+void func_8013E6A8(void) {
+    if (D_800E7208 & 0x40) {
+        func_80044750(0x501);
+        func_80042940(0);
+    } else if (D_800E7208 & 0x20) {
+        if (D_800E8BEE) {
+            func_80042940(0xA6);
+        } else {
+            func_80042940(0xA7);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E71C);
 
@@ -264,9 +397,23 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F454);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F5B0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F6BC);
+void func_8013F6BC(void) {
+    if (D_800E7208 & 0x20) {
+        func_80044750(0x501);
+        func_8004284C();
+    } else if (D_800E7208 & 0x40) {
+        func_80042940(0);
+        D_800E738D = 2;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F71C);
+void func_8013F71C(void) {
+    if (D_800E8BEE) {
+        func_80042940(0xC7);
+    } else {
+        func_80042940(0xC8);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F758);
 
@@ -278,13 +425,26 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013FB8C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013FCBC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013FDC8);
+void func_8013FDC8(void) {
+    if (D_800E7208 & 0x20) {
+        func_80044750(0x501);
+        if (D_800E8BEE) {
+            func_80042940(0xE4);
+        } else {
+            func_80042940(0xE5);
+        }
+    } else if (D_800E7208 & 0x40) {
+        func_80042940(0);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013FE40);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013FF98);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140024);
+void func_80140024(void) {
+    func_80042940(0);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140044);
 
@@ -300,17 +460,33 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140BA4);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140CCC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140D20);
+void func_80140D20(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BEB0, 0);
+    k_disp_start(2);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140D6C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140E18);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140E9C);
+void func_80140E9C(void) {
+    if (D_800E7208 & 0x860) {
+        func_80042908(1);
+        func_80042940(6);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140ED4);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140F54);
+void func_80140F54(void) {
+    if (D_800E8BEE) {
+        func_80042940(1);
+    } else {
+        func_80042940(2);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80140F90);
 
@@ -320,7 +496,11 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80141FA4);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80142028);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801422F0);
+void func_801422F0(void) {
+    if (D_800E738A == 0) {
+        func_80142028();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014231C);
 
@@ -330,7 +510,18 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801425C0);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80142880);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801429BC);
+s32 func_801429BC(void) {
+    if (D_800E7208 & 0x20) {
+        if (D_8011ECF6 < -0x50 && D_8011ECF6 >= -0x8F) {
+            if (D_8011ECFA < -0x18 && D_8011ECFA >= -0x27) {
+                func_80044750(0x50F);
+                func_80042908(0xD0);
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80142A3C);
 
@@ -348,7 +539,16 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014472C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80144908);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801449DC);
+void func_801449DC(void) {
+    func_8004AC18(0xFF);
+    func_800452C4();
+    func_80041168(0);
+    func_80041584();
+    func_80048DD0(0);
+    func_80044750(0x71);
+    func_80044750(0x7F);
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80144A34);
 
@@ -358,7 +558,10 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80144B44);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80144C8C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80144F98);
+void func_80144F98(void) {
+    func_80044890(0, 0xC592, 0xC580, 0xD15F, 0xD110, 0xD102);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80144FDC);
 
@@ -380,21 +583,38 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80145AC4);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80145EA4);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80145F74);
+void func_80145F74(void) {
+    func_801455E4(1);
+    if (D_800E738A == 0) {
+        func_80145AC4();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80145FB0);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801460D8);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146288);
+void func_80146288(void) {
+    if (D_800E738A == 0) {
+        func_801460D8();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801462B4);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801465F8);
+void func_801465F8(void) {
+    if (D_800E738A == 0) {
+        func_801462B4();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146624);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146914);
+void func_80146914(void) {
+    if (D_800E738A == 0) {
+        func_80146624();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146940);
 
@@ -416,25 +636,40 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146F4C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146FE0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147380);
+void func_80147380(void) {
+    if (D_800E738A == 0) {
+        func_80146FE0();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801473AC);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147590);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801478B4);
+void func_801478B4(void) {
+    if (D_800E738A == 0) {
+        func_80147590();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801478E0);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147950);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147A08);
+void func_80147A08(void) {
+    func_80049A40(-0xA0, -0x78, 0xA0, 0xA0, 0xD, 0xFFFFFF, 1);
+    func_80049A40(0, -0x78, 0xA0, 0xA0, 0xD, 0xFFFFFF, 1);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147A80);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147BEC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147F4C);
+void func_80147F4C(void) {
+    if (D_800E738A == 0) {
+        func_80147BEC();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147F78);
 
@@ -444,21 +679,37 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80148170);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014826C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801486CC);
+void func_801486CC(void) {
+    if (D_800E738A == 0) {
+        func_8014826C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801486F8);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801488DC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80148BF4);
+void func_80148BF4(void) {
+    if (D_800E738A == 0) {
+        func_801488DC();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80148C20);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80148EDC);
+void func_80148EDC(void) {
+    if (D_800E738A == 0) {
+        func_80148C20();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80148F08);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149118);
+void func_80149118(void) {
+    if (D_800E738A == 0) {
+        func_80148F08();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149144);
 
@@ -466,7 +717,11 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801492B0);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149340);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014952C);
+void func_8014952C(void) {
+    if (D_800E738A == 0) {
+        func_80149340();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149558);
 
@@ -476,7 +731,11 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014977C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149840);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149ADC);
+void func_80149ADC(void) {
+    if (D_800E738A == 0) {
+        func_80149840();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149B08);
 
@@ -484,34 +743,67 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149CEC);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149D74);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149E10);
+void func_80149E10(void) {
+    if (!(D_80120762 & 1)) {
+        D_80120762 = 1;
+    }
+    D_800B5BD4 = 0xF;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149E3C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014A5D4);
+void func_8014A5D4(void) {
+    if (D_800E738A == 0) {
+        func_80149E3C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014A600);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014A81C);
+void func_8014A81C(void) {
+    if (D_800E738A == 0) {
+        func_8014A600();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014A848);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014A960);
+void func_8014A960(void) {
+    if (D_800E738A == 0) {
+        func_8014A848();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014A98C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AAEC);
+void func_8014AAEC(void) {
+    if (D_800E738A == 0) {
+        func_8014A98C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AB18);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AD18);
+void func_8014AD18(void) {
+    if (D_800E738A == 0) {
+        func_8014AB18();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AD44);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AE00);
+void func_8014AE00(void) {
+    if (D_800E738A == 0) {
+        func_8014AD44();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AE2C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AEFC);
+void func_8014AEFC(void) {
+    if (D_800E738A == 0) {
+        func_8014AE2C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8014AF28);
