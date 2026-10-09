@@ -6,6 +6,7 @@
 /* Main-exe data and functions used by GYOZI. */
 extern u8 D_80129F40[];
 void func_8004DE1C(void);
+void func_8008A0D4(s32 arg0);
 
 /* GYOZI data. */
 extern u8 D_801474B8;

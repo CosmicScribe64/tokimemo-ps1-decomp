@@ -22,6 +22,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2020-wave-2-gyozi|T-2020 Wave 2: GYOZI]]
+
 
 
 ## In Review

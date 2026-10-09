@@ -28,7 +28,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013461C);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80134658);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801347AC);
+void func_801347AC(void) {
+    func_8008A0D4(0x4107);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801347D4);
 
@@ -40,7 +43,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80134C98);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80134CC0);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80134CF4);
+void func_80134CF4(void) {
+    func_8008A0D4(0x40E5);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80134D1C);
 
@@ -64,9 +70,15 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80135420);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80135478);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801354C8);
+void func_801354C8(void) {
+    func_8008A0D4(0x4107);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801354F0);
+void func_801354F0(void) {
+    func_8008A0D4(0x40E5);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80135518);
 
@@ -202,7 +214,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801378D0);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80137A0C);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80137A80);
+void func_80137A80(void) {
+    func_8008A0D4(0x418C);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80137AA8);
 
@@ -264,7 +279,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80138A10);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80138B50);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80138B84);
+void func_80138B84(void) {
+    func_8008A0D4(0x40C1);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80138BAC);
 
@@ -310,7 +328,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80139994);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801399C0);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80139A98);
+void func_80139A98(void) {
+    func_8008A0D4(0x40ED);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80139AC0);
 
@@ -380,7 +401,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013ADBC);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013AE04);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013AE4C);
+void func_8013AE4C(void) {
+    func_8008A0D4(0x3FED);
+    func_8004DE1C();
+}
 
 void func_8013AE80(void) {
     switch (D_801474B8) {
@@ -441,15 +465,27 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B6CC);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B740);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B7B4);
+void func_8013B7B4(void) {
+    func_8008A0D4(0x3FFF);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B7DC);
+void func_8013B7DC(void) {
+    func_8008A0D4(0x3FE3);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B804);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B848);
+void func_8013B848(void) {
+    func_8008A0D4(0x4065);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B870);
+void func_8013B870(void) {
+    func_8008A0D4(0x406F);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013B898);
 
@@ -471,11 +507,20 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013BC40);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013BCB4);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013BD28);
+void func_8013BD28(void) {
+    func_8008A0D4(0x4011);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013BD50);
+void func_8013BD50(void) {
+    func_8008A0D4(0x4080);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013BD78);
+void func_8013BD78(void) {
+    func_8008A0D4(0x4078);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013BDA0);
 
@@ -497,9 +542,15 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013C118);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013C310);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013C354);
+void func_8013C354(void) {
+    func_8008A0D4(0x3FED);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013C37C);
+void func_8013C37C(void) {
+    func_8008A0D4(0x466F);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013C3B0);
 
@@ -529,15 +580,30 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CAA4);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CB18);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CCDC);
+void func_8013CCDC(void) {
+    func_8008A0D4(0x405B);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CD04);
+void func_8013CD04(void) {
+    func_8008A0D4(0x3FE3);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CD2C);
+void func_8013CD2C(void) {
+    func_8008A0D4(0x405B);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CD54);
+void func_8013CD54(void) {
+    func_8008A0D4(0x4052);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CD7C);
+void func_8013CD7C(void) {
+    func_8008A0D4(0x4643);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013CDA4);
 
@@ -555,7 +621,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D01C);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D060);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D0A8);
+void func_8013D0A8(void) {
+    func_8008A0D4(0x4037);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D0D0);
 
@@ -573,9 +642,15 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D3BC);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D400);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D448);
+void func_8013D448(void) {
+    func_8008A0D4(0x4276);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D470);
+void func_8013D470(void) {
+    func_8008A0D4(0x4040);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D498);
 
@@ -606,9 +681,15 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D8C8);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D910);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D958);
+void func_8013D958(void) {
+    func_8008A0D4(0x3FF5);
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D980);
+void func_8013D980(void) {
+    func_8008A0D4(0x4037);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013D9A8);
 
@@ -630,7 +711,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013DC2C);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013DD38);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013DD7C);
+void func_8013DD7C(void) {
+    func_8008A0D4(0x3FC0);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013DDA4);
 
@@ -726,7 +810,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8014041C);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80140464);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801406A4);
+void func_801406A4(void) {
+    func_8008A0D4(0x4169);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801406CC);
 
@@ -746,7 +833,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80140894);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801408C4);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80140A30);
+void func_80140A30(void) {
+    func_8008A0D4(0x4173);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80140A58);
 
@@ -788,7 +878,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8014210C);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801421B4);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801425F4);
+void func_801425F4(void) {
+    func_8008A0D4(0x4183);
+    func_8004DE1C();
+}
 
 void func_8014261C(void) {
     s16 i;
@@ -834,7 +927,10 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80142E50);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80142F6C);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801430B4);
+void func_801430B4(void) {
+    func_8008A0D4(0x417B);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801430DC);
 
@@ -987,6 +1083,9 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801455BC);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8014569C);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801457D8);
+void func_801457D8(void) {
+    func_8008A0D4(0x4280);
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80145800);
