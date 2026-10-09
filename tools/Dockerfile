@@ -18,8 +18,8 @@ ARG MASPSX_REV=e85ecb373828aabea96d7e6400974d4f91ce8c74
 
 # Python tooling 
 RUN pip3 install --no-cache-dir "splat64[mips]==0.50.0" spimdisasm==1.42.4 rabbitizer==1.16.2 pycparser==3.11 colorama==0.4.6 \
-      pyyaml tqdm crcmod ninja_syntax \
-    && pip3 install --no-cache-dir git+https://github.com/matt-kempster/m2c.git  # unpinned HEAD (m2c 0.1.0 at build time)
+      pyyaml==6.0.3 tqdm==4.67.1 crcmod==1.7 ninja_syntax==1.7.2 \
+    && pip3 install --no-cache-dir git+https://github.com/matt-kempster/m2c.git@708d2d2cb2698f091a92492b328f73b24209f72d
 
 # maspsx (assembler wrapper for PsyQ-style GAS output)
 RUN git clone https://github.com/mkst/maspsx /opt/maspsx \
