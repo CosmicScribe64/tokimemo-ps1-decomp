@@ -8,8 +8,7 @@
 matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
 
 The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) already rebuild identically. Most functions are still
-assembly that the build pulls in from generated files, so the C is at an early stage. See [Status](#status) for numbers
-and [ROADMAP.md](ROADMAP.md) for where this is going.
+assembly that the build pulls in from generated files, so the C is at an early stage. See [ROADMAP.md](ROADMAP.md) for where this project is going.
 
 **This repository contains no game data.** You need your own copy of the disc. The build reads the executables from
 it and nothing else is shipped here. The disassembly is not in the repository either. You generate it locally.
