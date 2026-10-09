@@ -55,6 +55,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030]] Overlay batch G: BUNKA_SD, DATE2 (Done)
 - [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050]] Overlay batch I: KANGEI, SHUGAKU (Done)
 - [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200]] Fix conflicting extern declarations after batch merges (Done)
+- [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
+- [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap, deferred (Backlog)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -64,9 +66,10 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[obin]] - O.BIN: ECOFF format, symbol table, mapping onto the main exe, stats, generated rename list
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
-- [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), matched/unmatched functions, idioms
+- [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
-- [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit
+- [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit
+- [[data/t0018-cases]] - data table: functions skipped for the T-0018 register-promotion gap (calibrates `tools/queue.py`)
 - [[build-system]] - configure.py / ninja pipeline and gotchas
 - [[ci]] - GitHub Actions workflow, encrypted game bundle, objdiff report for decomp.dev
 - Raw sources (plain paths): `raw/disc-findings.md`, `raw/compiler-mismatch-research-sources.md`, `raw/ai-disclosure-research.md`

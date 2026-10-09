@@ -365,5 +365,26 @@ Not modelled as a pass: a binasm rewrite would have to redo uopt's register choi
 
 `LoadSquare`, `StoreSquare`, `MoveSquare` (original `lhu` into `t8,t9`, IDO `t0,t1`) are unchanged by every option, flag and pass mix above, and by K&R parameter declarations; still `NON_MATCHING`.
 
+## Work queue and the T-0018 detector (T-1320)
+Ticket [[tickets/T-1320-tooling-work-queue-and-blocker-detector]]. `tools/docker.sh python3 tools/queue.py` (tests `tools/test_queue.py`) reads the generated `asm/` and the `INCLUDE_ASM` lines of `src/main/*.c` and `src/ovl/*.c` and ranks the 6248 remaining functions (main exe and 26 overlays): unblocked first, leaf before non-leaf, then size. Columns: size, leaf or call, call count, flags. `--files` takes address stems or overlay names, `--next N` the N best unblocked, `--blocked`, `--summary`, `--calibrate`.
+
+Flags (J, S, P are exact; R and V are heuristics):
+- `L` a backward branch (information only).
+- `J` jump table (`jtbl_*`): 902 functions; a C `switch` table does not land where the original's does (batches A, E).
+- `S` reference to a string in `.rodata` (symbol followed by `.asciz`): 1149 functions; same reason.
+- `P` one extra `nop` after the last `jr` and its delay slot (asm-processor cannot port a 1-nop pad): 131 functions.
+- `R` one global scalar is loaded in two or more basic blocks outside loops into the same register (not `$a0-$a3`, base from the `lui` of the same symbol): the original promotes the global, IDO does that only in loops. 953 functions.
+- `V` a global loaded into `$v1` while `$v0` is dead and the value is read two or more times (compare chain, old value of `D++`): the original's promoted register choice; IDO takes `$v0` first. 739 functions (387 also R). R or V: 1305 functions, 853844 of 2231464 bytes.
+Detected from the original asm only. Not detected: `addiu sp` placement, RECT store order, local function-pointer table copies, hoisted `lui` sharing, the T-0018 register-order cases that are not a global load (see the `regorder` rows of [[data/t0018-cases]]).
+
+Calibration (`queue.py --calibrate`), positives = the 42 `promo` rows of [[data/t0018-cases]] (functions named in the batch sections above as T-0018 failures that reload or dispatch on a global), negatives = the 714 matched functions (`asm/matchings`):
+| | result |
+|---|---|
+| recall on the promo rows | 41 of 42 (97.6%); only `func_80086640` (swap of two globals, first load `$v1`, second `$v0`) is missed |
+| matched functions flagged | 0 of 714 |
+| precision against matched functions | 41 of 41 (100%) |
+| other T-0018 rows (`regorder`, `reverse`) flagged | 6 of 32 (not expected to fire) |
+Caveats: the rules were tuned on these same rows (recall is in-sample), and the matched set is biased (agents picked what compiles, so a function that has the pattern is rarely in it, which is also why zero matched hits is the expected result). The tuning removed three false-positive shapes seen in matched code: array-index loads (`lui; addu; lbu` through the same register), argument registers `$a0-$a3` reloaded for calls, and a single-use `$v1` temp whose result goes to `$v0` (`func_80042400`). Two recorded T-0018 shapes go the other way (the original loads the global again into fresh temporaries where IDO keeps one register: `func_80132DC4`, `func_8007B5EC`, category `reverse`); they are not detectable by the same-register rule. R and V together flag 21% of the remaining functions, so treat them as "probably blocked": a flagged function that matches is a finding to write down.
+
 ## Merge of -Wo,-nokpicopt over 703 matched functions (T-1200 follow-up)
 Clean build under the new flag, every function compared with the old-flag build: three functions with unchanged source stopped matching. `func_80042878` (main): local `t` changed from `u8` to `u32`, which puts the load in `$v0` again. `normal_date_bg_fadeout` (main) and `func_80135440` (BUNKA_SD) get `$v1` where the original has `$v0` (the T-0018 register family); about 15 source shapes (types, casts, temporaries, ternary, order) did not help, so both are back to `INCLUDE_ASM`. `check_end_k` and `func_80042400` already carry the branch's fixes. `get_h_tokimeki`/`get_h_yuukou` keep the `u32` prototypes from the branch. Result: 703 + 13 (branch) - 2 reverted = 714 functions of 6962, 27 of 27 sha1 OK.
