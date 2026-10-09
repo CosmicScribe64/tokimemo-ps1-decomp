@@ -21,6 +21,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050 Batch I: overlays KANGEI, SHUGAKU]]
+
 
 ## In Review
 
