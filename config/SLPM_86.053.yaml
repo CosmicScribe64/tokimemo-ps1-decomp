@@ -1,0 +1,67 @@
+# splat config for the boot executable SLPM_86.053 (PS-X EXE, SDK ~PsyQ 4.x).
+# Layout facts: wiki/executable.md. File offset = vram - 0x80041000 + 0x800.
+name: SLPM_86.053
+sha1: e823bd844a8f8fa4d05483b59c66bc54b8393b26
+options:
+  basename: SLPM_86.053
+  target_path: disc/files/SLPM_86.053
+  elf_path: build/SLPM_86.053.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: asm
+  src_path: src
+  build_path: build
+  create_asm_dependencies: True
+
+  ld_script_path: build/SLPM_86.053.ld
+  ld_dependencies: True
+  ld_bss_is_noload: True
+
+  find_file_boundaries: False
+  gp_value: 0x800EB670
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  asm_end_label: endlabel
+
+  section_order: [".text", ".rodata", ".data", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path:
+    - config/symbol_addrs.txt
+  reloc_addrs_path:
+    - config/reloc_addrs.txt
+  undefined_funcs_auto_path: build/undefined_funcs_auto.txt
+  undefined_syms_auto_path: build/undefined_syms_auto.txt
+
+  subalign: 2
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  # PS-X EXE header, 0x800 bytes
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x800
+    vram: 0x80041000
+    bss_size: 0x47D38
+    subsegments:
+      # game code, C-capable (every function INCLUDE_ASM for now)
+      - [0x800, c, game]
+      # PsyQ libs + libapi syscall stubs, kept as asm (T-0010 follow-up)
+      - [0x46010, asm, sdk_libs]
+      - [0x6D7C0, asm, libapi_stubs]
+      - [0x6EB40, rodata, rodata]
+      - [0x72A20, data, data]
+      - { start: 0xA3000, type: bss, name: bss, vram: 0x800E3800 }
+  - [0xA3000]
