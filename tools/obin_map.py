@@ -11,11 +11,10 @@ is "high" confidence only if its size is identical and it sits in a run of at
 least RUN_HIGH consecutive identical-size pairs with at least 3 distinct sizes.
 See wiki/obin.md for the method, the calibration on the PsyQ names and the stats.
 
-Usage: python3 tools/obin_map.py [--obin PATH] [--elf build/SLPM_86.053.elf]
-           [--sdk config/symbol_addrs_sdk.txt] [--write]
+Usage: python3 tools/obin_map.py [--write]
 Without --write it prints the statistics only. With --write it (re)writes
 config/symbol_addrs_obin.txt (splat format, high confidence, main exe only) and
-config/obin_renames.txt (old new, same set). The ELF comes from a normal build
+config/obin_renames.txt (old new, same set). Paths are the defaults below. The ELF comes from a normal build
 (`ninja`); it is only used for function addresses and sizes.
 """
 import argparse
@@ -32,12 +31,20 @@ RUN_HIGH = 4
 RUN_MED = 2
 CODE_LIMIT = 0x800C6000   # O.BIN: below this are code symbols, above data/bss
 MAIN_TEXT_END = 0x800B3220
+MAIN_BSS_LIMIT = 0x8012C000   # splat data symbols end here (main bss ends at 0x8012B538)
 OVL_BASE = 0x80132000
+
+ELF = "build/SLPM_86.053.elf"
+SDK = "config/symbol_addrs_sdk.txt"
+OUT_SYMS = "config/symbol_addrs_obin.txt"
+OUT_RENAMES = "config/obin_renames.txt"
+Entry = collections.namedtuple("Entry", "addr size name")
 
 
 def read_elf_syms(path):
-    """Return list of (addr, size, name, is_code) for named symbols of an ELF32 LE file."""
-    d = open(path, "rb").read()
+    """Return [(addr, size, name, is_code)] for the named symbols of an ELF32 LE file."""
+    with open(path, "rb") as f:
+        d = f.read()
     shoff, = struct.unpack_from("<I", d, 0x20)
     shentsize, shnum = struct.unpack_from("<HH", d, 0x2E)
     secs = [struct.unpack_from("<10I", d, shoff + shentsize * i) for i in range(shnum)]
@@ -47,26 +54,30 @@ def read_elf_syms(path):
             continue
         strtab = secs[s[6]]
         for k in range(s[5] // 16):
-            nm, val, size, info, other, shndx = struct.unpack_from("<IIIBBH", d, s[4] + 16 * k)
+            nm, val, size, _, _, shndx = struct.unpack_from("<IIIBBH", d, s[4] + 16 * k)
             if shndx == 0 or shndx >= 0xFF00:
                 continue
             e = d.index(b"\0", strtab[4] + nm)
             name = d[strtab[4] + nm:e].decode("ascii")
-            if not name or "." in name or name.startswith("_MACRO"):
-                continue
-            code = bool(secs[shndx][2] & 4)   # SHF_EXECINSTR
-            out.append((val, size, name, code))
+            if name and "." not in name and not name.startswith("_MACRO"):
+                out.append((val, size, name, bool(secs[shndx][2] & 4)))   # SHF_EXECINSTR
     return out
 
 
 def read_sdk(path):
     r = {}
-    for line in open(path):
-        if line.startswith("//") or "=" not in line:
-            continue
-        n, a = line.split("=", 1)
-        r[n.strip()] = int(a.split(";")[0].strip(), 16)
+    with open(path) as f:
+        for line in f:
+            if not line.startswith("//") and "=" in line:
+                n, a = line.split("=", 1)
+                r[n.strip()] = int(a.split(";")[0].strip(), 16)
     return r
+
+
+def gap_sizes(pairs):
+    """[(addr, name)] sorted by address -> [Entry] with size = gap to the next address (0 if last)."""
+    return [Entry(a, (pairs[k + 1][0] - a) if k + 1 < len(pairs) else 0, n)
+            for k, (a, n) in enumerate(pairs)]
 
 
 def lis_chain(pairs):
@@ -127,14 +138,14 @@ def align(osz, fsz):
 
 
 def map_region(O, F, anchors):
-    """O: [(addr,name,size)], F: [(addr,size,name)] sorted. anchors: [(oi,fj)]. Returns {oi: fj}."""
+    """O: [Entry], F: [Entry] sorted. anchors: [(oi,fj)]. Returns {oi: fj}."""
     res = {}
     bounds = [(-1, -1)] + anchors + [(len(O), len(F))]
     for (i0, j0), (i1, j1) in zip(bounds, bounds[1:]):
         oi = list(range(i0 + 1, i1))
         fj = list(range(j0 + 1, j1))
         if oi and fj:
-            for x, y in align([O[i][2] for i in oi], [F[j][1] for j in fj]):
+            for x, y in align([O[i].size for i in oi], [F[j].size for j in fj]):
                 res[oi[x]] = fj[y]
     for i, j in anchors:
         res[i] = j
@@ -147,20 +158,20 @@ def classify(res, O, F):
     def same(p, q):
         i, j = ids[p], res[ids[p]]
         k, l = ids[q], res[ids[q]]
-        return O[k][2] == F[l][1] and l - j == k - i and k - i == q - p
+        return O[k].size == F[l].size and l - j == k - i and k - i == q - p
     out = {}
     for p, i in enumerate(ids):
         j = res[i]
-        if O[i][2] != F[j][1]:
+        if O[i].size != F[j].size:
             out[i] = "low"
             continue
         lo = hi = p
-        while lo > 0 and O[ids[lo - 1]][2] == F[res[ids[lo - 1]]][1] and same(lo - 1, lo):
+        while lo > 0 and O[ids[lo - 1]].size == F[res[ids[lo - 1]]].size and same(lo - 1, lo):
             lo -= 1
-        while hi + 1 < len(ids) and O[ids[hi + 1]][2] == F[res[ids[hi + 1]]][1] and same(hi, hi + 1):
+        while hi + 1 < len(ids) and O[ids[hi + 1]].size == F[res[ids[hi + 1]]].size and same(hi, hi + 1):
             hi += 1
         run = hi - lo + 1
-        sizes = {O[ids[x]][2] for x in range(lo, hi + 1)}
+        sizes = {O[ids[x]].size for x in range(lo, hi + 1)}
         if run >= RUN_HIGH and len(sizes) >= 3:
             out[i] = "high"
         elif run >= RUN_MED:
@@ -170,92 +181,85 @@ def classify(res, O, F):
     return out
 
 
+def write_outputs(syms_path, rens_path, parts, taken):
+    """parts: [(tag, res, cls, O, F, type_hint)]; writes only high pairs whose target is a placeholder."""
+    seen, lines, rens = set(), [], []
+    for tag, R, C, OO, FF, hint in parts:
+        lines.append("// ---- %s ----" % tag)
+        for i in sorted(R):
+            name, target = OO[i].name, FF[R[i]]
+            if C[i] != "high" or not target.name.startswith(("func_", "D_", "jtbl_")):
+                continue
+            if name in seen or name in taken:
+                continue
+            seen.add(name)
+            extra = " ".join(x for x in (hint, "size:0x%X" % target.size if target.size else "") if x)
+            lines.append("%s = 0x%08X; // %s" % (name, target.addr, extra))
+            rens.append("%s %s" % (target.name, name))
+    with open(syms_path, "w") as f:
+        f.write("// Generated by tools/obin_map.py (T-0201); do not edit by hand.\n"
+                "// HYPOTHESES, not facts: names from the O.BIN developer-build symbol table, aligned to\n"
+                "// SLPM_86.053 by function size (identical size in a run of >= %d identical-size\n"
+                "// neighbours). Calibration and spot checks: wiki/obin.md. Not applied to the build.\n" % RUN_HIGH)
+        f.write("\n".join(lines) + "\n")
+    with open(rens_path, "w") as f:
+        f.write("# old new  (generated by tools/obin_map.py; hypotheses, apply through the splat symbol files)\n")
+        f.write("\n".join(rens) + "\n")
+    return len(rens)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--obin", default=obin_syms.DEFAULT)
-    ap.add_argument("--elf", default="build/SLPM_86.053.elf")
-    ap.add_argument("--sdk", default="config/symbol_addrs_sdk.txt")
     ap.add_argument("--write", action="store_true")
-    ap.add_argument("--out-syms", default="config/symbol_addrs_obin.txt")
-    ap.add_argument("--out-renames", default="config/obin_renames.txt")
     a = ap.parse_args()
     try:
-        fh, ah, secs, syms = obin_syms.parse(open(a.obin, "rb").read())
-        elf = read_elf_syms(a.elf)
+        with open(obin_syms.DEFAULT, "rb") as f:
+            _, syms = obin_syms.parse(f.read())
+        elf = read_elf_syms(ELF)
+        sdk = read_sdk(SDK)
     except (OSError, ValueError, struct.error) as e:
         print("obin_map: %s" % e, file=sys.stderr)
         return 1
-    sdk = read_sdk(a.sdk)
 
-    # O.BIN side: code symbols (sized by gap) vs main-exe functions.
-    O = [(s["addr"], s["name"], s["size"] or 0) for s in syms
-         if s["sc"] != 2 and s["addr"] < CODE_LIMIT]
+    # O.BIN code symbols (sized by gap) vs main-exe functions.
+    O = gap_sizes([(s.addr, s.name) for s in syms if s.sc != 2 and s.addr < CODE_LIMIT])
     funcs = {}
     for val, size, name, code in elf:
         if code and size and val < MAIN_TEXT_END:
-            funcs.setdefault(val, (size, name))
-    F = [(v, s, n) for v, (s, n) in sorted(funcs.items())]
-    oidx = {n: i for i, (_, n, _) in enumerate(O)}
-    fidx = {v: j for j, (v, _, _) in enumerate(F)}
+            funcs.setdefault(val, Entry(val, size, name))
+    F = [funcs[v] for v in sorted(funcs)]
+    oidx = {e.name: i for i, e in enumerate(O)}
+    fidx = {e.addr: j for j, e in enumerate(F)}
     anch_all = [(oidx[n], fidx[ad]) for n, ad in sdk.items() if n in oidx and ad in fidx]
     chain = lis_chain(anch_all)
     res = map_region(O, F, chain)
     cls = classify(res, O, F)
     for i, j in anch_all:       # PsyQ-named pairs are exact by construction
-        res[i] = j
-        cls[i] = "sdk"
-    inv = [(O[i][1], hex(O[i][0]), hex(F[j][0])) for i, j in anch_all if (i, j) not in set(chain)]
+        res[i], cls[i] = j, "sdk"
 
-    # Data/bss side: same alignment against the splat data symbols (no PsyQ anchors).
-    OD = [(s["addr"], s["name"], s["size"] or 0) for s in syms
-          if CODE_LIMIT <= s["addr"] < OVL_BASE]
+    # Data/bss: same alignment against the splat data symbols (no PsyQ anchors).
+    OD = gap_sizes([(s.addr, s.name) for s in syms if CODE_LIMIT <= s.addr < OVL_BASE])
     dsyms = {}
-    for val, size, name, code in elf:
-        if not code and MAIN_TEXT_END <= val < 0x8012C000 and name.startswith(("D_", "jtbl_")):
+    for val, _, name, code in elf:
+        if not code and MAIN_TEXT_END <= val < MAIN_BSS_LIMIT and name.startswith(("D_", "jtbl_")):
             dsyms.setdefault(val, name)
-    da = sorted(dsyms)
-    FD = [(v, (da[k + 1] - v if k + 1 < len(da) else 0), dsyms[v]) for k, v in enumerate(da)]
+    FD = gap_sizes([(v, dsyms[v]) for v in sorted(dsyms)])
     dres = map_region(OD, FD, [])
     dcls = classify(dres, OD, FD)
 
-    stats = collections.Counter(cls.values())
-    dstats = collections.Counter(dcls.values())
-    nsyms = len(syms)
-    novl = sum(1 for s in syms if s["addr"] >= OVL_BASE)
+    novl = sum(1 for s in syms if s.addr >= OVL_BASE)
     print("O.BIN symbols %d: main code-side %d (aligned %d), main data/bss-side %d (aligned %d), overlay-side %d" %
-          (nsyms, len(O), len(res), len(OD), len(dres), novl))
-    print("main-exe functions %d; PsyQ anchors %d (chain %d, order inversions %d)" %
-          (len(F), len(anch_all), len(chain), len(inv)))
-    print("code confidence:", dict(stats), "| data confidence:", dict(dstats))
-    print("same address and size:", sum(1 for i in res if O[i][0] == F[res[i]][0] and O[i][2] == F[res[i]][1]))
+          (len(syms), len(O), len(res), len(OD), len(dres), novl))
+    print("main-exe functions %d; PsyQ anchors %d (ordered chain %d)" % (len(F), len(anch_all), len(chain)))
+    print("code confidence:", dict(collections.Counter(cls.values())),
+          "| data confidence:", dict(collections.Counter(dcls.values())))
 
     if a.write:
-        taken = {n for _, _, n in F} | {n for _, _, n, _ in elf}
-        seen, lines, rens = set(), [], []
-        for tag, R, C, OO, FF, kind in (("code", res, cls, O, F, "type:func"),
-                                        ("data", dres, dcls, OD, FD, "")):
-            lines.append("// ---- %s (high confidence) ----" % tag)
-            for i in sorted(R):
-                if C[i] != "high":
-                    continue
-                name = OO[i][1]
-                faddr, fsize, fname = FF[R[i]]
-                if not fname.startswith(("func_", "D_", "jtbl_")) or name in seen or name in taken:
-                    continue
-                seen.add(name)
-                extra = (kind + " " if kind else "") + ("size:0x%X" % fsize if fsize else "")
-                lines.append("%s = 0x%08X; // %s" % (name, faddr, extra.strip()))
-                rens.append("%s %s" % (fname, name))
-        with open(a.out_syms, "w") as f:
-            f.write("// Generated by tools/obin_map.py (T-0201); do not edit by hand.\n"
-                    "// Names from the O.BIN developer-build symbol table mapped onto SLPM_86.053 by\n"
-                    "// size-sequence alignment, high confidence only (identical size in a run of >= %d\n"
-                    "// identical-size neighbours). Method and calibration: wiki/obin.md. Not yet applied.\n" % RUN_HIGH)
-            f.write("\n".join(lines) + "\n")
-        with open(a.out_renames, "w") as f:
-            f.write("# old new  (generated by tools/obin_map.py; apply through the splat symbol files)\n")
-            f.write("\n".join(rens) + "\n")
-        print("wrote %d symbols, %d renames" % (len(rens), len(rens)))
+        taken = {e.name for e in F} | {n for _, _, n, _ in elf}
+        n = write_outputs(OUT_SYMS, OUT_RENAMES,
+                          [("code (high confidence)", res, cls, O, F, "type:func"),
+                           ("data (high confidence, uncalibrated)", dres, dcls, OD, FD, "")], taken)
+        print("wrote %d symbols/renames" % n)
     return 0
 
 

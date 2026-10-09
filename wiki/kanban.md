@@ -25,10 +25,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-0201-obin-format-and-symbols|T-0201 Analyse O.BIN and harvest names]]
 
 ## Done
 
+- [ ] [[tickets/T-0201-obin-format-and-symbols|T-0201 Analyse O.BIN and harvest names]]
 - [ ] [[tickets/T-0016-frame-layout-emulation-pass|T-0016 Frame-layout emulation pass]]
 - [ ] [[tickets/T-0015-research-compiler-mismatch-handling|T-0015 Research: compiler mismatch handling]]
 - [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]

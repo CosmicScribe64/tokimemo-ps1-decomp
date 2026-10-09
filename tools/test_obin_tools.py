@@ -35,14 +35,17 @@ def make_ecoff(syms):
 
 class ParseTest(unittest.TestCase):
     def test_parse_and_sizes(self):
-        fh, ah, secs, syms = obin_syms.parse(make_ecoff([("b", 0x80000020), ("a", 0x80000000)]))
-        self.assertEqual([s["name"] for s in syms], ["a", "b"])
-        self.assertEqual(syms[0]["size"], 0x20)
-        self.assertIsNone(syms[1]["size"])
+        secs, syms = obin_syms.parse(make_ecoff([("b", 0x80000020), ("a", 0x80000000)]))
+        self.assertEqual([s.name for s in syms], ["a", "b"])
+        self.assertEqual(syms[0].size, 0x20)
+        self.assertIsNone(syms[1].size)
 
     def test_rejects_other_files(self):
         with self.assertRaises(ValueError):
             obin_syms.parse(b"\0" * 0x100)
+
+
+E = obin_map.Entry
 
 
 class MapTest(unittest.TestCase):
@@ -52,16 +55,42 @@ class MapTest(unittest.TestCase):
         self.assertEqual(obin_map.align(o, f), [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)])
 
     def test_high_needs_diverse_run(self):
-        O = [(i * 16, "n%d" % i, 16) for i in range(6)]
-        F = [(i * 16, 16, "func_%d" % i) for i in range(6)]
+        O = [E(i * 16, 16, "n%d" % i) for i in range(6)]
+        F = [E(i * 16, 16, "func_%d" % i) for i in range(6)]
         res = {i: i for i in range(6)}
         self.assertNotIn("high", obin_map.classify(res, O, F).values())   # one repeated size
-        O = [(0, "a", 4), (4, "b", 8), (12, "c", 12), (24, "d", 16)]
-        F = [(0, 4, "f0"), (4, 8, "f1"), (12, 12, "f2"), (24, 16, "f3")]
+        sizes = [4, 8, 12, 16]
+        O = [E(0, z, "a%d" % z) for z in sizes]
+        F = [E(0, z, "f%d" % z) for z in sizes]
         self.assertEqual(set(obin_map.classify({i: i for i in range(4)}, O, F).values()), {"high"})
 
     def test_lis_chain(self):
         self.assertEqual(obin_map.lis_chain([(0, 5), (1, 1), (2, 2), (3, 3)]), [(1, 1), (2, 2), (3, 3)])
+
+    def test_map_region_uses_anchors(self):
+        sizes = [4, 8, 12, 16, 20, 24]
+        O = [E(0, z, "o%d" % i) for i, z in enumerate(sizes)]
+        F = [E(0, 99, "f_extra")] + [E(0, z, "f%d" % i) for i, z in enumerate(sizes)]
+        res = obin_map.map_region(O, F, [(0, 1)])
+        self.assertEqual(res, {i: i + 1 for i in range(6)})
+
+    def test_map_region_anchor_splits_segments(self):
+        # Equal sizes on both sides of the anchor must not be paired across it.
+        O = [E(0, 8, "a"), E(0, 50, "anchor"), E(0, 8, "b")]
+        F = [E(0, 8, "x"), E(0, 50, "anchor"), E(0, 8, "y")]
+        self.assertEqual(obin_map.map_region(O, F, [(1, 1)]), {0: 0, 1: 1, 2: 2})
+
+    def test_write_outputs_only_high_placeholders(self):
+        import tempfile
+        O = [E(0, 4, "keep"), E(0, 8, "skip")]
+        F = [E(0x80041000, 4, "func_80041000"), E(0x80041004, 8, "func_80041004")]
+        res = {0: 0, 1: 1}
+        with tempfile.TemporaryDirectory() as d:
+            sp, rp = os.path.join(d, "s"), os.path.join(d, "r")
+            n = obin_map.write_outputs(sp, rp, [("t", res, {0: "high", 1: "med"}, O, F, "type:func")], set())
+            self.assertEqual(n, 1)
+            self.assertIn("keep = 0x80041000; // type:func size:0x4", open(sp).read())
+            self.assertNotIn("skip", open(sp).read())
 
 
 if __name__ == "__main__":
