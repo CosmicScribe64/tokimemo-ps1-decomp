@@ -289,3 +289,11 @@ Created [[tickets/T-1070-overlay-batch-k-name-ent-tt]] (Batch K: `src/ovl/NAME_E
 
 ## [2026-10-09] ticket | T-1070 done
 Batch K: 76 functions matched in `src/ovl/NAME_ENT.c` (53) and `src/ovl/TT.c` (23), headers `include/ovl/NAME_ENT.h` and `include/ovl/TT.h`, pad stubs in `src/ovl/pad/`. 27 of 27 sha1 OK. New patterns (source-order register numbers, `case 8: default:` chain, pointer-global reload) in [[matching-notes]]. Inline review passed; [[tickets/T-1070-overlay-batch-k-name-ent-tt]] moved to Done in [[kanban]].
+## [2026-10-09] ticket | T-1000 started
+Created [[tickets/T-1000-main-exe-batch-d]] (In Progress): decompile `src/main/8005A0B0.c` and `src/main/80061710.c`, target 40+ matches.
+
+## [2026-10-09] build | T-1000 batch D matches
+Matched 39 functions in src/main/8005A0B0.c and src/main/80061710.c (call sequences, guards, store sequences, hit-box tests); the other 90 hit the known T-0017/T-0018 patterns, recorded in [[matching-notes]] (section Main exe batch D). Main exe sha1 OK; progress grand total 243/6962. [[tickets/T-1000-main-exe-batch-d]] moved to In Review.
+
+## [2026-10-09] ticket | T-1000 closed
+Inline code-review gate passed (no open findings); [[tickets/T-1000-main-exe-batch-d]] moved to Done on branch batch-b-d, not merged. 39 matches.
