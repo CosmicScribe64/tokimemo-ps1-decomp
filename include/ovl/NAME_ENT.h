@@ -68,5 +68,19 @@ extern s32 D_800E7CFC;
 extern u8 D_80120762;
 extern u8 D_800B5BD4;
 extern u8 D_8011ECD0[];
+extern u8 D_800E738D;
+extern u8 D_800E7389;
+extern s32 D_801230D0;
+extern s32 D_800E7384;
+extern s32 D_800E7380;
+void func_80132198(void);
+void func_80132320(void);
+void func_80144A34(void);
+void func_80142A80(void);
+extern u8 D_8014B824[];
+extern u8 D_8014B838[];
+void func_8013BB24(void);
+void func_8013BE18(void);
+void func_8013BF74(void);
 
 #endif /* OVL_NAME_ENT_H */

@@ -208,7 +208,13 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C510);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C580);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013C664);
+void func_8013C664(void) {
+    func_8004E58C();
+    func_8004E788(-0x40, 0x20, 0xF, D_8014B824, 0);
+    func_8004E788(-0x40, 0x30, 0xF, D_8014B838, 0);
+    func_8004E884(2);
+    func_8004284C();
+}
 
 void func_8013C6CC(void) {
     if (D_800E7208 & 0x860) {
@@ -331,7 +337,15 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F454);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F5B0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F6BC);
+void func_8013F6BC(void) {
+    if (D_800E7208 & 0x20) {
+        func_80044750(0x501);
+        func_8004284C();
+    } else if (D_800E7208 & 0x40) {
+        func_80042940(0);
+        D_800E738D = 2;
+    }
+}
 
 void func_8013F71C(void) {
     if (D_800E8BEE) {

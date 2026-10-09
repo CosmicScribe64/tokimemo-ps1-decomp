@@ -146,7 +146,15 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80137C20);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80138178);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801381E8);
+void func_801381E8(void) {
+    u8 *p = D_80158A8C;
+
+    func_80142AF0(D_80152C54, 0);
+    if (p[0x40] & 1) {
+        *(u8 **)(p + 0x218) = D_80155C58;
+        *(s16 *)(p + 4) = 0x40;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80138240);
 
@@ -220,7 +228,16 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013B6C8);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013B928);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013BAD0);
+void func_8013BAD0(void) {
+    switch (*(u16 *)(D_80158A8C + 0x30E)) {
+    case 0:
+        func_8013B6C8();
+        break;
+    case 1:
+        func_8013B928();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013BB28);
 
@@ -352,7 +369,15 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013F3B4);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013F588);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013F5F8);
+void func_8013F5F8(void) {
+    u8 *p = D_80158A8C;
+
+    func_80142AF0(D_80155E2C, 0);
+    if (p[0x40] & 1) {
+        *(u8 **)(p + 0x218) = D_80155D2C;
+        *(s16 *)(p + 4) = 0x40;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013F650);
 
@@ -457,7 +482,10 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80144D70);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80145370);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801454D8);
+void func_801454D8(u8 *arg0) {
+    D_80158A74[0x55] = 0xA;
+    func_8013BE9C(arg0 + 0x14);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80145508);
 
@@ -621,7 +649,24 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014A7E0);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014A814);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014A8F8);
+void func_8014A8F8(u8 *arg0, u16 arg1) {
+    *(u16 *)(arg0 + 2) = arg1;
+    switch (arg1) {
+    case 8:
+    default:
+        arg0[0x42] = 0x80;
+        arg0[0x43] = 0xC0;
+        break;
+    case 9:
+        arg0[0x42] = 0x90;
+        arg0[0x43] = 0xC0;
+        break;
+    case 10:
+        arg0[0x42] = 0x80;
+        arg0[0x43] = 0xD0;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014A958);
 

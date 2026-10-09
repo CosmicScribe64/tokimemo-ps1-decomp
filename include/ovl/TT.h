@@ -24,10 +24,23 @@ extern u8 *D_80158A60;
 extern u8 *D_80158AB4;
 void func_8013E320(void);
 extern s32 D_8014E34C;
-void func_800AE0A0(s32 arg0, s32 arg1, s32 arg2);
-extern s32 D_8015694C[];
+void func_800AE0A0(void *arg0, s32 arg1, s32 arg2);
+
 void func_8009C884(RECT *rect, void *arg1);
 extern u8 *D_80158A64;
 extern s32 *D_80158A70;
+void func_8013BE9C(u8 *arg0);
+extern u8 *D_8015694C[];
+void func_80142AF0(void *arg0, s32 arg1);
+extern u8 D_80152C54[];
+extern u8 D_80155C58[];
+extern u8 D_80155E2C[];
+extern u8 D_80155D2C[];
+void func_8013B6C8(void);
+void func_8013B928(void);
+extern u8 D_80155A8C[];
+extern s16 D_80155A84[];
+extern u8 D_80155A80[];
+extern s16 D_80155A78[];
 
 #endif /* OVL_TT_H */
