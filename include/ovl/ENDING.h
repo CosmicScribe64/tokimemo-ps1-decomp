@@ -7,7 +7,7 @@
 /* Main-exe data and functions used by ENDING. */
 void func_80042878(s32 arg0);
 void func_80042908(s32 arg0);
-void func_8004284C(void);
+s32 func_8004284C(void);
 void func_80044750(s32 arg0);
 void func_8007ED84(s32 arg0);
 
@@ -67,4 +67,9 @@ extern s32 D_8013C33C;
 void func_800462C8();
 extern u8 D_800E7D34;
 void func_800AE0A0(s32 dst, s32 src, s32 n);
+extern s8 D_80120652;
+extern s16 D_80120666;
+extern u8 D_80120696;
+extern u8 D_80121874;
+void func_80084C98();
 #endif /* OVL_ENDING_H */

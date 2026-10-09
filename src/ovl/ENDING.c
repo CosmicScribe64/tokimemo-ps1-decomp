@@ -165,7 +165,15 @@ void func_801349A8(void) {
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801349E0);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80134AA8);
+void func_80134AA8(void) {
+    if ((D_80120696 == 0) && (D_80120668 == 1) && (D_80120658 == 0x14)) {
+        D_80120666 = 2;
+        D_80120668 = 0;
+        D_80120658 = 0;
+        D_80120652 = 5;
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80134B18);
 
