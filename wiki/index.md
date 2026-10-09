@@ -8,7 +8,7 @@ updated: 2026-10-09
 Read this first. Update on every ingest or new page.
 
 ## Core
-- [[overview]] - project goal, stack, TODO sections for disc/exe facts
+- [[overview]] - project goal, stack, pointers to fact pages
 - [[SCHEMA]] - wiki layout summary (full rules in AGENTS.md)
 - [[log]] - append-only chronological record
 - [[kanban]] - ticket board (columns must match ticket frontmatter status)
@@ -18,13 +18,23 @@ Read this first. Update on every ingest or new page.
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0001-project-scaffolding|T-0001]] Project scaffolding (Done)
 - [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002]] Disc extraction & exe identification (In Progress)
-- [[tickets/T-0003-docker-toolchain-image|T-0003]] Docker toolchain image (Backlog)
-- [[tickets/T-0004-splat-config-and-split|T-0004]] splat config & split (Backlog)
-- [[tickets/T-0005-build-system-and-checksum-matching|T-0005]] Build system & checksum matching (Backlog)
-- [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006]] Identify PsyQ libs/SDK version (Backlog)
+- [[tickets/T-0003-docker-toolchain-image|T-0003]] Docker toolchain image (In Review)
+- [[tickets/T-0004-splat-config-and-split|T-0004]] splat config & split (In Review)
+- [[tickets/T-0005-build-system-and-checksum-matching|T-0005]] Build system & checksum matching (In Review)
+- [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006]] Identify PsyQ libs/SDK version (In Review)
 - [[tickets/T-0007-write-coding-standards|T-0007]] Write CODING_STANDARDS.md (Done)
+- [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Backlog)
+- [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Backlog)
+- [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Backlog)
+- [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Game code file boundaries, compiler, Shift-JIS (Backlog)
 
 ## Entities / concepts / sources
-(none yet; add pages for executables, overlays, SDK libs, functions, tools, findings)
+- [[disc-layout]] - disc images, extraction, file list
+- [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
+- [[overlays]] - the 26 .EXN overlays
+- [[toolchain]] - Docker image, pinned versions, compiler choice
+- [[psyq-sdk]] - SDK era, libraries, code anchors
+- [[build-system]] - configure.py / ninja pipeline and gotchas
+- Raw source (plain path): `raw/disc-findings.md`
 
 ## Tooling

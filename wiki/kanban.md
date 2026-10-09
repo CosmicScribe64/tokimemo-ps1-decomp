@@ -6,19 +6,24 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-0003-docker-toolchain-image|T-0003 Docker toolchain image]]
-- [ ] [[tickets/T-0004-splat-config-and-split|T-0004 splat config & split]]
-- [ ] [[tickets/T-0005-build-system-and-checksum-matching|T-0005 Build system & checksum matching]]
-- [ ] [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006 Identify PsyQ libs/SDK version]]
+- [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
+- [ ] [[tickets/T-0009-progress-report-script|T-0009 Progress reporting script]]
+- [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]
+- [ ] [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011 Game code file boundaries, compiler confirmation, Shift-JIS strings]]
 
 ## Ready
 
 
 ## In Progress
 
-- [ ] [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002 Disc extraction & executable identification]]
 
 ## In Review
+
+- [ ] [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002 Disc extraction & executable identification]]
+- [ ] [[tickets/T-0003-docker-toolchain-image|T-0003 Docker toolchain image]]
+- [ ] [[tickets/T-0004-splat-config-and-split|T-0004 splat config & split]]
+- [ ] [[tickets/T-0005-build-system-and-checksum-matching|T-0005 Build system & checksum matching]]
+- [ ] [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006 Identify PsyQ libs/SDK version]]
 
 ## Done
 
