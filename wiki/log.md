@@ -340,3 +340,9 @@ Inline code-review gate for [[tickets/T-0017-const-in-reg-loop-hoisting]]: two f
 
 ## [2026-10-09] build | t0018-regs merged (-Wo,-nokpicopt)
 Merged branch t0018-regs into main. Regressions under the new flag: `func_80042878` (fixed: `u32` local), `normal_date_bg_fadeout` and `func_80135440` (reverted to INCLUDE_ASM, `$v0`/`$v1` family, see [[matching-notes]]). Clean build 27 of 27 sha1 OK, progress 703 -> 714 of 6962. Header conflicts from the merge (`get_h_*` u32 vs s32, a duplicate) resolved ([[tickets/T-1200-fix-conflicting-extern-declarations]]).
+
+## [2026-10-09] build | T-1330 m2c wrapper and decomp-permuter
+[[tickets/T-1330-tooling-m2c-context-and-permuter]]: `tools/m2c.py` (context from `include/`, jump tables and strings from rodata, `mipsel-ido-c`) and `tools/permute.py` (decomp-permuter 8556c81 in the Docker image, compile.sh = `tools/cc.py ido 5.3`, target from the splat .s). m2c vs plain: equal on simple functions (0.927 vs 0.926), wrapper needed for the 902 jump-table functions. Permuter found verified matches for `strSync` and `func_80044700`, only a fakematch for `func_8004111C`, nothing for `LoadSquare`. Documented in [[decompile-workflow]], [[toolchain]], [[matching-notes]]. Clean build 27/27 with the new image. Moved to In Review.
+
+## [2026-10-09] ticket | T-1330 In Review -> Done
+Inline review of [[tickets/T-1330-tooling-m2c-context-and-permuter]] against CODING_STANDARDS: two findings (permuter scores ignored stack offsets; stray `--debug` files), both fixed. Card moved to Done on [[kanban]].

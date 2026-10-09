@@ -19,6 +19,7 @@ ARG MKPSXISO_TAG=v2.30
 ARG IDO_TAG=v1.2
 ARG ASM_PROCESSOR_REV=f3b2f85a5bc7e8ae2030ea5a83ea8aa0bcbede03
 ARG MASPSX_REV=e85ecb373828aabea96d7e6400974d4f91ce8c74
+ARG PERMUTER_REV=8556c81d80d1c1af98a858c8f4dc951357f29139
 
 # Python tooling 
 RUN pip3 install --no-cache-dir "splat64[mips]==0.50.0" spimdisasm==1.42.4 rabbitizer==1.16.2 pycparser==3.11 colorama==0.4.6 \
@@ -48,6 +49,12 @@ RUN mkdir -p /opt/ido && cd /opt/ido && \
 RUN git clone https://github.com/simonlindholm/asm-processor /opt/asm-processor \
     && git -C /opt/asm-processor checkout ${ASM_PROCESSOR_REV}
 
+# decomp-permuter (T-1330): random/manual C permutation against target bytes. Runtime deps only
+# (pynacl and docker are for its remote/import features, which we do not use).
+RUN pip3 install --no-cache-dir toml==0.10.2 Levenshtein==0.27.1 \
+    && git clone https://github.com/simonlindholm/decomp-permuter /opt/decomp-permuter \
+    && git -C /opt/decomp-permuter checkout ${PERMUTER_REV}
+
 # objdiff-cli
 RUN curl -fsSL -o /usr/local/bin/objdiff-cli \
       https://github.com/encounter/objdiff/releases/download/${OBJDIFF_TAG}/objdiff-cli-linux-x86_64 \
@@ -59,5 +66,5 @@ RUN curl -fsSL -o /tmp/mk.zip https://github.com/Lameguy64/mkpsxiso/releases/dow
     && find /tmp/mk -type f \( -name dumpsxiso -o -name mkpsxiso \) -exec install -m755 {} /usr/local/bin/ \; \
     && rm -rf /tmp/mk /tmp/mk.zip
 
-ENV MASPSX_DIR=/opt/maspsx GCC_DIR=/opt/gcc IDO_DIR=/opt/ido ASM_PROCESSOR_DIR=/opt/asm-processor
+ENV MASPSX_DIR=/opt/maspsx GCC_DIR=/opt/gcc IDO_DIR=/opt/ido ASM_PROCESSOR_DIR=/opt/asm-processor PERMUTER_DIR=/opt/decomp-permuter
 WORKDIR /work

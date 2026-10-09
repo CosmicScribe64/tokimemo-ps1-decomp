@@ -367,3 +367,19 @@ Not modelled as a pass: a binasm rewrite would have to redo uopt's register choi
 
 ## Merge of -Wo,-nokpicopt over 703 matched functions (T-1200 follow-up)
 Clean build under the new flag, every function compared with the old-flag build: three functions with unchanged source stopped matching. `func_80042878` (main): local `t` changed from `u8` to `u32`, which puts the load in `$v0` again. `normal_date_bg_fadeout` (main) and `func_80135440` (BUNKA_SD) get `$v1` where the original has `$v0` (the T-0018 register family); about 15 source shapes (types, casts, temporaries, ternary, order) did not help, so both are back to `INCLUDE_ASM`. `check_end_k` and `func_80042400` already carry the branch's fixes. `get_h_tokimeki`/`get_h_yuukou` keep the `u32` prototypes from the branch. Result: 703 + 13 (branch) - 2 reverted = 714 functions of 6962, 27 of 27 sha1 OK.
+
+## m2c wrapper vs plain m2c, and decomp-permuter results (T-1330)
+
+m2c comparison. 16 matched functions of 96 to 360 bytes (5 main exe, 11 overlay; no matched function has a `switch`), draft token similarity to the final C in `src/` (identifiers other than globals/functions folded to one token, comments dropped, `difflib` ratio): plain `mipsel-gcc-c` 0.926, plain `mipsel-ido-c` 0.926, `tools/m2c.py` 0.927 (also with the function's own prototype hidden). On these branch-free or simple-loop functions the target flag changes nothing and context only changes casts and which `extern` lines m2c prints; the wrapper is worse where the context makes m2c add a cast between `u32` and `s32` globals (`func_8013C3C4`: `D = (s32) D2;`) and better where the headers hold the pointer types of globals (`func_8013B354`, `func_800674B0`, `func_8013731C`: 0.87-0.93 -> 0.94-1.0). The real gain is `switch`: 902 of the 6248 remaining functions use a jump table, and plain m2c gives up on them ("the corresponding jump table is not provided"); with the table from the segment rodata the wrapper prints `switch`/`case` (`func_80045414`, `func_80132C24`). Not solved: m2c prints `?` prototypes for callees missing from the headers, struct-copy temporaries as `M2C_MEMCPY_ALIGNED`, and `loop_N`/`goto` for IDO loops that the C wants as `while`. Rodata data variables must not be given to m2c (they come out as folded constants); the wrapper passes only `jtbl_` blocks and strings.
+
+decomp-permuter results (commit 8556c81, `--stack-diffs`, each run under 3 minutes on the emulated amd64 image; permuter output verified by a real `ninja` build, the permuter score alone is not accepted):
+
+| function | base score | permuter found | real build | verdict |
+|---|---|---|---|---|
+| `strSync` (800563F0, delay-slot nop vs volatile load, T-0016/T-0017 note) | 200 | score 0 in under 90 s: return type `unsigned int` with no `return` (an implicit-int old-style function, plausible original source) | `ninja`: main exe sha1 OK | match, not applied |
+| `func_80044700` (80043510, "8 more bytes of local") | 63 | score 0: `s32 t = arg1; rect.x = t << 4;` (a named copy of the parameter) | `ninja`: sha1 OK | match, not applied |
+| `func_8004111C` (80041000, store order h,w before x,y) | 20 | score 0 only as `do { x,y,w,h } while (0)` and `func_8009C7F8(&rect, 0, 0 * 0, 0)`; an earlier run without stack diffs found `int pad;` and failed the real build | not built | rejected: the trick would be a fakematch (7); stays NON_MATCHING |
+| `LoadSquare` (ugen temporaries t0/t1 vs t8/t9) | 20 | nothing below 20 in 90 s | n/a | register-allocation gap (T-0018 family), as expected |
+
+Lessons: (1) always run with `--stack-diffs` (default in `tools/permute.py`); without it the score ignores the frame and `func_80044700` already scored 0. (2) The permuter's output reformats the whole file; take only the changed expression. (3) The two verified matches are not applied in `src/` by T-1330 (tooling ticket); they are listed here for the next batch ticket (T-0950): `strSync`, `func_80044700`.
+

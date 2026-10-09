@@ -28,6 +28,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330 Tooling: m2c context and decomp-permuter]]
 - [ ] [[tickets/T-1040-overlay-batch-h-option-ending|T-1040 Batch H: overlays OPTION, ENDING]]
 
 - [ ] [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030 Batch G: overlays BUNKA_SD, DATE2]]
