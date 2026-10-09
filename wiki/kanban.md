@@ -23,10 +23,10 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]
-- [ ] [[tickets/T-0901-public-docs|T-0901 Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure]]
 
 ## In Review
 
+- [ ] [[tickets/T-0901-public-docs|T-0901 Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure]]
 
 ## Done
 

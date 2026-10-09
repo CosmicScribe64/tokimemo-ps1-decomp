@@ -234,3 +234,6 @@ Merged [[tickets/T-0700-overlay-batch-a]]. Applied config/obin_renames.txt to sr
 ## [2026-10-09] ticket | T-0750 In Progress -> In Review -> Done
 [[tickets/T-0750-overlay-batch-b-tel-olh-en-nichi]] moved In Progress -> In Review -> Done on [[kanban]] after the inline code-review gate (no open findings). Result 12 matches of ~50 aimed; new toolchain gaps (u8-global compare-chain switch uses `$v1`, `* 0x44` as `multu`, one-nop alignment pad) recorded in [[matching-notes]]. Rename list for the merge is in the ticket. [[index]] lists the ticket.
 
+## [2026-10-09] ingest | AI-disclosure wording research
+Read the AI sections of eds-decomp, CBFD-Recompiled, sonicheroes, sa2, pokediamond and rebang; notes and URLs in [[raw/ai-disclosure-research]]. Used for the README section of [[tickets/T-0901-public-docs]].
+
