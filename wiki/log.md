@@ -261,3 +261,5 @@ tools/make_ci_bundle.sh now writes to ci-bundle/ (gitignored) instead of build/c
 ## [2026-10-09] fix | CI base image mirror
 First CI run failed at the Docker build: Docker Hub answered 429 Too Many Requests for ubuntu:22.04. tools/Dockerfile now takes `ARG BASE` (default ubuntu:22.04) and .github/workflows/progress.yml passes public.ecr.aws/docker/library/ubuntu:22.04. Local builds are unchanged. See [[ci]].
 
+## [2026-10-09] ticket | T-1060 overlay batch J (BUNKAKEN, BUNKASAI)
+[[tickets/T-1060-overlay-batch-j-bunkaken-bunkasai]]: 77 functions matched in `src/ovl/BUNKAKEN.c` and `src/ovl/BUNKASAI.c` (two clone templates: pointer setters and scene-start stubs), headers `include/ovl/BUNKAKEN.h`, `include/ovl/BUNKASAI.h`, pad stubs `src/ovl/pad/pad_BUNKAKEN_*.s`, `src/ovl/pad/pad_BUNKASAI_*.s`. All 27 sha1 OK. Notes in [[matching-notes]] (section Overlay batch J). Ticket moved to Done after the inline code-review gate.

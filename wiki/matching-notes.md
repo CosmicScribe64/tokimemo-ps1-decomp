@@ -211,3 +211,11 @@ Failure patterns (left as `INCLUDE_ASM`; T-0017 and T-0018 are the owners):
 4. Register choice for a long-lived variable or return value (T-0018): `GetWorkBase`, `MouseState`, `func_8004AD60` (`li v0,8` vs `li t8,8`), `func_800450F4`/`func_8004500C` (result kept in `v1`, original keeps `v0`), `func_80044C98`/`func_80044E8C`, `func_800422C8`.
 5. RECT locals: the original emits the four halfword stores in the order `h, w, x, y` for the source order `x, y, w, h` (`func_80059308`); IDO keeps source order.
 6. Already known: pairs of globals sharing one `lui $at` (`func_8004482C`, `menu_bar_color`, `dec_bg_reset`), `move v0,zero` before the last `sb` (`func_8004284C`, `func_80042808`), `u16 * s32` operand order of `multu` (`RangeMouse`), `u16 >> 12` temp in `v1` (`func_8005352C`), first-parameter spill (`load_palette`: `sw a0,0(sp)` that the original does not have), `D++` after a store scheduled above it (`func_80053CC0`).
+
+## Overlay batch J (T-1060): BUNKAKEN, BUNKASAI
+77 functions matched (39 + 38 incl. one earlier empty stub); everything is one of two templates, so it went fast with a generator script over the asm (not committed).
+- 0x34-byte setters (`D_x0 = const; D_x4 = const; D_x8 = const;`, three `lui/ori` + `lui at/sw`): 27 + 22 clones, plain C with `u32` globals. Also the copy variant `D_800CA160 = D_80155E90; ...` (`func_8013BFA0`).
+- 0x64-byte scene-start stubs: `func_800847B8(n); handler(); D_800CA14C = 0; <3-word copy>; func_8004284C();` (26 clones). `n` is 0 when the original has `or a0,zero,zero`.
+- Pads after the last function of an object: 2 or more `nop` use `INCLUDE_ASM("src/ovl/pad", pad_<NAME>_<end addr>)`; the 1-nop case still cannot be ported (asm-processor minimum), so `func_8013EAC8`, `func_80143D68`, `func_80148E68`, `func_80150CC8`, `func_80152618` (BUNKAKEN) and `func_80135448`, `func_80146F38`, `func_8014DD28` (BUNKASAI) stay `INCLUDE_ASM`.
+- `funcdiff.py` reports DIFF for these pad cases (the nops live in the original function) and for calls to renamed main-exe functions (`k_reset`/`k_disp_start` vs the auto name in `expected/`); only the linked sha1 (`ninja build/ovl/<NAME>.ok`) is authoritative there.
+- Left: `func_80150930`-style local function-pointer table copied from rodata and indexed by `D_800E7389` (known gap (a) of batch A), and every function above 0x7C bytes (not attempted, time-box).

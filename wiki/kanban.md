@@ -21,13 +21,14 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-1060-overlay-batch-j-bunkaken-bunkasai|T-1060 Batch J: overlays BUNKAKEN, BUNKASAI]]
 
 
 ## In Review
 
 
 ## Done
+
+- [ ] [[tickets/T-1060-overlay-batch-j-bunkaken-bunkasai|T-1060 Batch J: overlays BUNKAKEN, BUNKASAI]]
 
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]
