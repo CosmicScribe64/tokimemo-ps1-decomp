@@ -17,7 +17,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0001-project-scaffolding|T-0001]] Project scaffolding (Done)
-- [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002]] Disc extraction & exe identification (In Progress)
+- [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002]] Disc extraction & exe identification (Done)
 - [[tickets/T-0003-docker-toolchain-image|T-0003]] Docker toolchain image (Done)
 - [[tickets/T-0004-splat-config-and-split|T-0004]] splat config & split (Done)
 - [[tickets/T-0005-build-system-and-checksum-matching|T-0005]] Build system & checksum matching (Done)
