@@ -21,4 +21,10 @@ INCLUDE_ASM("asm/nonmatchings/main/80059A20", func_80059E00);
 
 INCLUDE_ASM("asm/nonmatchings/main/80059A20", func_80059EF0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80059A20", func_8005A06C);
+void func_8005A06C(void) {
+    if (D_800E7389 == 0) {
+        func_80059B40();
+        return;
+    }
+    func_80042878(0x12);
+}
