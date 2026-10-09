@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/TT.h"
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80132000);
 
@@ -88,7 +89,9 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80135360);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801356C8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80135848);
+void func_80135848(s32 arg0) {
+    D_80158A8C[0x3E] = ((arg0 + 0x40) & 0xFFF) / 128;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80135870);
 
@@ -150,7 +153,9 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013923C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801392A0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801396C4);
+void func_801396C4(void) {
+    func_80138300();
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801396E4);
 
@@ -218,7 +223,16 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013BE08);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013BE9C);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013BF68);
+void func_8013BF68(u8 *arg0) {
+    *(s32 *)(arg0 + 0x20) = 0;
+    *(s32 *)(arg0 + 0x24) = 0x200000;
+    *(s32 *)(arg0 + 0x28) = 0;
+    *(s32 *)(arg0 + 0x2C) = 0;
+    *(s32 *)(arg0 + 0x30) = 0;
+    *(s32 *)(arg0 + 0x34) = 0xC00;
+    *(s16 *)(arg0 + 0x14) = *(s16 *)(arg0 + 0x22);
+    *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013BF9C);
 
@@ -232,7 +246,9 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013C41C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013C6D0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013C740);
+void func_8013C740(void) {
+    *(s16 *)(D_80158AA4 + 0x16) = D_80158A6C[0xA] * 16 + 0x60;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013C764);
 
@@ -276,7 +292,12 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013E498);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013E6A0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013E824);
+void func_8013E824(void) {
+    func_8004111C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_TT_8013E844);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013E850);
 
@@ -362,11 +383,15 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80142DEC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014304C);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801430C4);
+u8 func_801430C4(void) {
+    return D_80156784;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801430D4);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80143570);
+void func_80143570(void) {
+    *D_80158A74 = 0;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80143580);
 
@@ -497,7 +522,11 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80148DE4);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80148E7C);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80149098);
+void func_80149098(u8 *arg0) {
+    if ((u32)(u16)++*(u16 *)(arg0 + 0x46) >= 0x79) {
+        arg0[0] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801490C0);
 

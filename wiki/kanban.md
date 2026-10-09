@@ -21,6 +21,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-1070-overlay-batch-k-name-ent-tt|T-1070 Batch K: overlays NAME_ENT, TT]]
 
 ## In Review
 
