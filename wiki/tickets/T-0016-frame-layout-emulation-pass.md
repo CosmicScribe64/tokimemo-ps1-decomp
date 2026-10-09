@@ -27,3 +27,4 @@ Constraint: one rule for every function; anything per-function is a fakematch.
 Design (decided while working): the layer is IDO's binasm stream between ugen and as1, via an `as1` shim under `USR_LIB`. Rejected: `cc -S` text (reassembly changes the code), ucode `DEF Mmt` +16 (cannot do leaves; hole misplaced with spill temporaries). Findings that are not the frame: [[tickets/T-0017-const-in-reg-loop-hoisting]], [[tickets/T-0018-ugen-temp-register-order]].
 
 ## Comments
+- 2026-10-09 review (standards agent): FAKE items tracked here: `v[6]` in the three TAIIKU leaf functions (`src/ovl/TAIIKU.c`), `u8 buf[0x20]` in `func_800462C8`/`func_80046318` (size from the original frame). Standards findings otherwise: none hard besides these markers. The spec-axis review had not returned when this was handed back; ticket stays In Review, not Done (framed-leaf criterion unmet in the default build, see T-0017).

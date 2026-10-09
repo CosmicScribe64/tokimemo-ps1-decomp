@@ -306,6 +306,8 @@ void func_800462BC(u8 arg0, s32 arg1, s32 *arg2) {
 }
 
 void func_800462C8(u8 arg0, s32 arg1, s32 arg2) {
+    /* FAKE: size 0x20 is taken from the original frame (local at 0x28 in 0x48);
+     * the real type of this buffer is unknown. T-0016 */
     u8 buf[0x20];
 
     func_80044750(6);
@@ -315,6 +317,8 @@ void func_800462C8(u8 arg0, s32 arg1, s32 arg2) {
 }
 
 void func_80046318(u8 arg0, s32 arg1, s32 arg2) {
+    /* FAKE: size 0x20 is taken from the original frame (local at 0x28 in 0x48);
+     * the real type of this buffer is unknown. T-0016 */
     u8 buf[0x20];
 
     func_80044750(6);
