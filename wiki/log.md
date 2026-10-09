@@ -68,3 +68,6 @@ Moved [[tickets/T-0013-identify-original-compiler-pipeline]] In Review -> Done o
 
 ## [2026-10-09] docs | toolchain line updated after T-0013
 Updated the stack description in AGENTS.md and CODING_STANDARDS.md to IDO 5.3 for game code, gcc + maspsx for SDK libs, per [[tickets/T-0013-identify-original-compiler-pipeline]] and [[toolchain]].
+
+## [2026-10-09] ticket | T-0400 -> In Progress
+Created [[tickets/T-0400-leaf-function-batch-1]] and moved it to In Progress on [[kanban]]. Added `tools/list_leaves.py` (leaf listing, smallest first; 177 leaves outside the SDK skip range at start).

@@ -16,6 +16,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-0400-leaf-function-batch-1|T-0400 Leaf function batch 1]]
 
 ## In Review
 
