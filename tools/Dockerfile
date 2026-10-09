@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ARG OLD_GCC_TAG=0.17
 ARG OBJDIFF_TAG=v3.8.2
 ARG MKPSXISO_TAG=v2.30
+ARG IDO_TAG=v1.2
+ARG ASM_PROCESSOR_REV=f3b2f85a5bc7e8ae2030ea5a83ea8aa0bcbede03
 ARG MASPSX_REV=e85ecb373828aabea96d7e6400974d4f91ce8c74
 
 # Python tooling 
@@ -32,6 +34,18 @@ RUN mkdir -p /opt/gcc && cd /opt/gcc && \
         | tar xz -C $v; \
     done
 
+# SGI IDO 5.3 / 7.1 (decompals/ido-static-recomp), candidate compiler for the
+# game code (T-0013). Each lives in /opt/ido/<ver>/ (cc, cfe, uopt, ugen, as1...).
+RUN mkdir -p /opt/ido && cd /opt/ido && \
+    for v in 5.3 7.1; do \
+      mkdir -p $v && curl -fsSL https://github.com/decompals/ido-static-recomp/releases/download/${IDO_TAG}/ido-$v-recomp-linux.tar.gz \
+        | tar xz -C $v; \
+    done
+
+# asm-processor: lets IDO-compiled C keep INCLUDE_ASM functions (T-0013)
+RUN git clone https://github.com/simonlindholm/asm-processor /opt/asm-processor \
+    && git -C /opt/asm-processor checkout ${ASM_PROCESSOR_REV}
+
 # objdiff-cli
 RUN curl -fsSL -o /usr/local/bin/objdiff-cli \
       https://github.com/encounter/objdiff/releases/download/${OBJDIFF_TAG}/objdiff-cli-linux-x86_64 \
@@ -43,5 +57,5 @@ RUN curl -fsSL -o /tmp/mk.zip https://github.com/Lameguy64/mkpsxiso/releases/dow
     && find /tmp/mk -type f \( -name dumpsxiso -o -name mkpsxiso \) -exec install -m755 {} /usr/local/bin/ \; \
     && rm -rf /tmp/mk /tmp/mk.zip
 
-ENV MASPSX_DIR=/opt/maspsx GCC_DIR=/opt/gcc
+ENV MASPSX_DIR=/opt/maspsx GCC_DIR=/opt/gcc IDO_DIR=/opt/ido ASM_PROCESSOR_DIR=/opt/asm-processor
 WORKDIR /work
