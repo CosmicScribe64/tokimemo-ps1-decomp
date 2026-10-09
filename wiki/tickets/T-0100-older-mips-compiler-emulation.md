@@ -23,3 +23,4 @@ Every stack frame in the original is 16 bytes larger than IDO 5.3 produces (rule
 Ranked candidates and the diagnostic ucode experiment: [[matching-notes]]. decompals/ido-static-recomp ships only IDO 5.3 and 7.1; no other static recompilation was found (2026-10-09). The leaf-function pattern (16 bytes below the register saves) looks like an ugen without IDO's leaf-frame optimization, which points at an older ugen.
 
 ## Comments
+- 2026-10-09 (T-0016): the frame difference is now reproduced by `tools/frame_pass.py` ([[tickets/T-0016-frame-layout-emulation-pass]], [[toolchain]]), so framed functions are matchable. This ticket stays open: a copy of the real compiler would replace the pass without changing any C, and would also settle the other differences listed in [[matching-notes]] (constant hoisting in loops, ugen temporary order). The four named functions are no longer the test: use the evidence table in [[matching-notes]].

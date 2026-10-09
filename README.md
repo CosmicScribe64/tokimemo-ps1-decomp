@@ -14,3 +14,5 @@ tools/docker.sh ninja
 ```
 
 A successful build prints `OK` for `build/SLPM_86.053.bin` and for each `build/ovl/<NAME>.bin`; `ninja overlays` builds only the overlays. Project knowledge, tickets and layout notes live in `wiki/` (start at `wiki/index.md`); agent rules in `AGENTS.md`, code conventions in `CODING_STANDARDS.md`.
+
+The IDO compiles run through a documented frame-layout emulation pass (`tools/frame_pass.py`, wiki `toolchain`): the original's stack frames are 16 bytes larger than IDO 5.3's, and the pass models that for every function, so the C stays ordinary. It needs no extra build step; its unit tests run with `tools/docker.sh python3 tools/test_frame_pass.py`.

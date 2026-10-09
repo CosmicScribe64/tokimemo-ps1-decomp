@@ -29,7 +29,7 @@ Matched with IDO 5.3 in the build (23): the 10 getters and 3 empty functions fro
 ### Global-address CSE: solved with `-Wo,-no_const_in_reg` (T-0014)
 `func_80042400` (`D += 0x377`, value returned) is `lui v1; lw v1,%lo(D)(v1); lui at; addiu v0,v1,0x377; jr ra; sw v0,%lo(D)(at)` in the original; stock IDO 5.3/7.1 keep `&D` in a register (`addiu a0,a0,%lo(D)`, `lw v1,0(a0)`). uopt's undocumented option `-no_const_in_reg` (found in the uopt option table, passed as `-Wo,-no_const_in_reg`) stops uopt from keeping constants, including global addresses, in registers; with it the function byte-matches, and all 22 earlier matches still match. The flag is now in `IDO_CFLAGS` (`tools/cc.py`). Reading: the original uopt did not do this optimization (an older uopt, or one built/configured without it). `-Wo,-nokpicopt` has a similar but not identical effect (wrong register).
 
-### Frame size: not reproduced (T-0014)
+### Frame size: measured (T-0014); reproduced by the T-0016 pass (next section)
 Every function with a stack frame is 16 bytes larger in the original than in IDO 5.3 (147 non-leaf functions start `addiu sp,-0x28; sw ra,0x14(sp)` where IDO gives `-0x18`). Where the 16 bytes go, measured against IDO 5.3 output for the same or equivalent C:
 
 | kind | IDO 5.3 layout (from sp up) | original | example |
@@ -51,9 +51,90 @@ Ranked hypotheses for the exact compiler:
 3. A hidden option or a vendor patch of IDO 5.3: unlikely; every option in all three pass tables was tried.
 4. gcc of any version: ruled out (T-0013).
 
-Next experiments (need a decision on obtaining OS images, see [[tickets/T-0100-older-mips-compiler-emulation]]): get an Ultrix 4.x or IRIX 5.2 compiler running (gxemul / qemu-irix in Docker) and compile `func_80041584`, `func_8007C310`, `func_80056AA8`, `func_80042400` with `-EL -O2 -G 0`. Until then, decompile leaf functions without stack frames only; they match.
+Next experiments (need a decision on obtaining OS images, see [[tickets/T-0100-older-mips-compiler-emulation]]): get an Ultrix 4.x or IRIX 5.2 compiler running (gxemul / qemu-irix in Docker) and compile `func_80041584`, `func_8007C310`, `func_80056AA8`, `func_80042400` with `-EL -O2 -G 0`.
 
-Fallbacks (documented, NOT adopted; would be fakematches by CODING_STANDARDS section 7): (a) a cc.py stage that adds 16 to the ucode `DEF Mmt` length between uopt and ugen (non-leaf only; leaves need a second rule); (b) post-processing the object to grow the frame and shift sp offsets.
+Update (T-0016): framed functions are no longer parked. The uniform frame pass below is part of every IDO compile, so non-leaf functions and leaf functions with frames are decompiled like any other. The `DEF Mmt +16` diagnostic above was replaced by a pass on ugen's output, because the ucode route cannot express the leaf layout and puts the hole in the wrong place when spill temporaries exist.
+
+## Frame layout emulation (T-0016)
+
+Pass: `tools/frame_pass.py`, run by `tools/cc.py` on every IDO compile ([[toolchain]]). Ticket: [[tickets/T-0016-frame-layout-emulation-pass]]. This is a toolchain emulation pass, not a fakematch (CODING_STANDARDS section 7a): one rule, no function lists, ordinary C.
+
+### The rule
+Every function that has a stack frame gets F' = F + 16, and a 16-byte hole is inserted at offset H; every `$sp`-relative offset >= H moves up by 16 (locals, spill temporaries, address-of-local computations, and the incoming-argument homes above the frame).
+- Function saves `$ra` (every non-leaf function, plus leaf functions that use `$ra` as a register): H = end of the register-save block. Outgoing-argument area and saves keep IDO's offsets; the hole sits between the saves and the locals/temporaries.
+- Function does not save `$ra` (leaf): H = 0. The whole frame, saves included, moves up 16; the hole is at the bottom.
+- Frameless functions are untouched.
+
+Interpretation (not checked against the original compiler's source): IDO's ugen anchors locals and temporaries at the top of the frame and the saves above the argument-build area; the original compiler adds one 16-byte pad that, in functions with an argument-build area, sits above the saves, and in pseudo-leaf functions below everything. Which of the two positions applies is decided by `$ra` being saved, which is a property of the function body, not a choice.
+
+### Evidence from the original code
+Corpus: every function of the main game segment and the 26 overlays with a frame (first instruction `addiu $sp,$sp,-F`): 3312 of 6891 functions, split by whether `$ra` is saved and whether a call exists.
+
+| class | functions | invariant checked | result |
+|---|---|---|---|
+| N: non-leaf | 3286 (198 with `$fp`, 634 with s-registers, 914 with locals, 35 with all four argument homes written, 253 with incoming-argument homes) | no stack access inside [T, T+16), T = highest save slot + 4 | 0 violations |
+| N, no locals | 2372 | F = T + 16 exactly | 2371; 1 exception (below) |
+| N with locals | 914 | lowest local/temp offset >= T + 16 | 914 of 914 (301 start exactly at T+16) |
+| L: leaf, no `$ra` save | 24 (12 with s-registers) | no access in [0, 16) | 24 of 24; lowest access 0x10 to 0x2c |
+| R: leaf, `$ra` saved | 2 (`func_8004BBA8`, `func_80135600`: IDO's high-register-pressure pattern, saves from offset 8 like IDO leaf code) | saves at IDO offsets, hole after them | `func_8004BBA8` first local at T+16; `func_80135600` has no access near the hole (weak) |
+
+The single exception, `func_801488F0` (TAIIKU, F = T, no hole): the prologue stores `s0` before the `move s0,$a0` and the epilogue fills the `jr` slot with the stack release, which is gcc scheduling, not IDO. It is a gcc-compiled function inside an overlay and cannot be produced by IDO anyway, so it is outside the pass's domain. A search for others (functions with locals but no gap, hidden in the 914) found none.
+
+Sample of 33 functions (the rest are in the same pattern; `s-reg` counts include `$fp`; "IDO F" is the frame IDO produces for the same body, original minus 16):
+
+| function | class | original F | save slots | save block end T | hole | first use above hole | IDO F |
+|---|---|---|---|---|---|---|---|
+| func_8013E464 (SHOUGATU) | N | 0x28 | ra | 0x18 | 0x18-0x27 | none (F = T+16) | 0x18 |
+| func_8013A564 (GEKO) | N | 0x28 | ra | 0x18 | 0x18-0x27 | none | 0x18 |
+| func_801351B8 (KANGEI) | N | 0x28 | ra | 0x18 | 0x18-0x27 | none | 0x18 |
+| func_800853FC | N | 0x30 | ra+1 s-reg | 0x20 | 0x20-0x2f | none | 0x20 |
+| func_80051A68 | N | 0x30 | ra+1 s-reg | 0x20 | 0x20-0x2f | none | 0x20 |
+| func_8013DEA0 (ETC) | N | 0x38 | ra+2 s-reg | 0x28 | 0x28-0x37 | none | 0x28 |
+| func_8013E1DC (ETC) | N | 0x38 | ra+2 s-reg | 0x28 | 0x28-0x37 | none | 0x28 |
+| func_801493D4 (TACO) | N | 0x48 | ra+6 s-reg | 0x38 | 0x38-0x47 | none | 0x38 |
+| func_80148B58 (TACO) | N | 0x48 | ra+6 s-reg | 0x38 | 0x38-0x47 | none | 0x38 |
+| func_80136F3C (BUNKA_SD) | N | 0x58 | ra+9 s-reg incl. fp | 0x48 | 0x48-0x57 | none | 0x48 |
+| func_80135E50 (DATE2) | N | 0x60 | ra+9 s-reg incl. fp | 0x50 | 0x50-0x5f | none | 0x50 |
+| func_8006B900 | N | 0x50 | ra+4 s-reg | 0x40 | 0x40-0x4f | none | 0x40 |
+| func_80082764 | N | 0x38 | ra | 0x28 | 0x28-0x37 | none | 0x28 |
+| func_8013E934 (RPG_BAT) | N | 0x30 | ra | 0x20 | 0x20-0x2f | none | 0x20 |
+| func_8013F0DC (NAME_ENT) | N | 0x38 | ra | 0x18 | 0x18-0x27 | 0x2c | 0x28 |
+| func_800F86C4 (EVENT) | N | 0xb8 | ra | 0x18 | 0x18-0x27 | 0x28 | 0xa8 |
+| func_80134824 (SHUGAKU) | N | 0x30 | ra | 0x18 | 0x18-0x27 | 0x2b | 0x20 |
+| func_801400B0 (TT) | N | 0x88 | ra+3 s-reg | 0x30 | 0x30-0x3f | 0x5c | 0x78 |
+| func_801345CC (OLH) | N | 0xc0 | ra+9 s-reg incl. fp | 0x48 | 0x48-0x57 | 0x74 | 0xb0 |
+| func_80054AF4 | N | 0x60 | ra+4 s-reg | 0x28 | 0x28-0x37 | 0x44 | 0x50 |
+| func_80050C24 | N | 0x70 | ra+1 s-reg | 0x28 | 0x28-0x37 | 0x50 | 0x60 |
+| func_80140624 (TT) | N | 0x80 | ra+3 s-reg | 0x30 | 0x30-0x3f | 0x4c | 0x70 |
+| func_80136810 (KANGEI) | N, argument homes | 0x30 | ra | 0x18 | 0x18-0x27 | 0x28 | 0x20 |
+| func_8004A414 | N, argument homes, `$fp` | 0x98 | ra+9 s-reg incl. fp | 0x40 | 0x40-0x4f | 0x50 | 0x88 |
+| func_80056AA8 | L | 0x18 | none | - | 0x00-0x0f | 0x14 | 0x08 |
+| func_8013815C (TAIIKU) | L | 0x28 | none | - | 0x00-0x0f | 0x1c | 0x18 |
+| func_80146FA0 (TAIIKU) | L | 0x28 | none | - | 0x00-0x0f | 0x1c | 0x18 |
+| func_801464D4 (ETC) | L | 0x18 | 1 s-reg | - | 0x00-0x0f | 0x14 | 0x08 |
+| func_80138B90 (TT) | L | 0x28 | 4 s-reg | - | 0x00-0x0f | 0x18 | 0x18 |
+| func_80137C44 (TAIIKU) | L | 0x20 | 3 s-reg | - | 0x00-0x0f | 0x14 | 0x10 |
+| func_80144B40 (TAIIKU) | L | 0x40 | 2 s-reg | - | 0x00-0x0f | 0x18 | 0x30 |
+| func_8004BBA8 | R | 0xb8 | ra+9 s-reg incl. fp | 0x30 | 0x30-0x3f | 0x40 | 0xa8 |
+| func_80135600 (EN_NICHI) | R | 0x190 | ra+9 s-reg incl. fp | 0x30 | 0x30-0x3f | 0x84 | 0x180 |
+
+### Proof by building (IDO 5.3 + pass, byte-compared to the original)
+- 12 non-leaf functions now match in `src/game.c`: `func_80041584`, `func_80041878`, `func_80042458`, `func_8004B338`, `func_80052DA4`, `func_8006CCE4`, `func_80077F2C`, `func_8007B5CC`, `func_8007ECD0`, `func_80083378` (no locals) and `func_800462C8`, `func_80046318` (a 0x20-byte local buffer plus argument homes). All 63 earlier matches still match; `ninja progress` 75/834.
+- 3 leaf functions with frames, `func_8013815C`, `func_801446A0`, `func_80146FA0` (TAIIKU), match byte for byte (prologue, local at 0x1c, restore) but only with uopt allowed to keep constants in registers, which the project flag forbids: see "Findings that are not the frame". They are in `src/ovl/TAIIKU.c` under `NON_MATCHING` (T-0016). Reproduce: compile `src/ovl/TAIIKU.c` with `-DNON_MATCHING` and without `-Wo,-no_const_in_reg` and compare with `tools/funcdiff.py --expected <original TAIIKU.o>`.
+- `func_80056AA8` and `func_8007C310` (main) show the leaf layout in their first instructions (`sw s1,0x1c(sp); sw s0,0x18(sp)` in a 0x20 frame; local at 0x14 in 0x18) but differ for the reasons below.
+- Pass unit tests: `tools/docker.sh python3 tools/test_frame_pass.py` (19 tests: synthetic binasm records plus snippets compiled by the real IDO).
+
+### Limits
+- The pass changes layout only. Register allocation, scheduling and uopt heuristics are separate.
+- An `addu rd,$sp,rs` index register is followed within its basic block; use of such a register after a label, any other consumer of an `$sp`-derived register, a frame-pointer frame (`alloca`), saved float registers, and unknown binasm records make the build fail with `frame_pass.py: ...` (in the original, 3 of the 167 uses of such registers are after a label, so functions written like that would not build until the pass learns them).
+- Local array sizes: the original's local offsets sometimes imply a larger Mmt block than the obvious C (`func_8013815C`: `s16 v[6]` for three used elements, extra 8 bytes in `func_8015B828` and `func_80044700`); these are source-level unknowns, not pass errors. The oversized array in the TAIIKU leaves is marked `FAKE` in `src/ovl/TAIIKU.c`.
+- The rule is inferred from one compiler's output; a different class of function (alloca, float code) is absent from the corpus.
+
+### Findings that are not the frame (separate tickets: [[tickets/T-0017-const-in-reg-loop-hoisting]], [[tickets/T-0018-ugen-temp-register-order]])
+1. `-Wo,-no_const_in_reg` is too blunt. The original hoists loop-invariant integer constants and global addresses out of loops into registers (`func_8013815C`, `func_8007C310`, `func_80056AA8`, `func_801464D4`: `li v1,1`, `lui/addiu` before the loop, `multu` by a register holding 0x44), but does not keep a global address in a register across straight-line code (`func_80042400`). Without the flag all C functions in the project still match except `func_80042400`; with it, loops do not. No single uopt option gives both (all 19 tried, one at a time). Needs a decision: drop the flag and give up `func_80042400`, or keep it.
+2. `func_8004435C`, `func_800443F0`, `func_800443A0`: the original loads the u16 parameter homes into `t8,t9` / `t7,t8,t9`, IDO into `t0,t1` / `t8,t9,t0` (stock IDO without the pass gives the same). Register allocation, kept as `NON_MATCHING`.
+3. `func_8004111C`: the original stores the RECT's h and w before x and y (`NON_MATCHING`). `func_80044700`: the original frame has 8 more bytes of locals than the body needs.
+4. `func_80056AA8`: besides the constant hoisting, the original does not reload the decremented counter after storing it, which IDO's `volatile` handling does.
 
 ## Idioms
 - Read-modify-write of a global that returns the new value (`func_80042400`): write it with a named temp (`s32 t = D + k; D = t; return t;`) to get `$v1`/`$v0`; `D += k; return D;` gives `$t6`. Needs `-Wo,-no_const_in_reg` (default build flag) for the per-access `%hi/%lo`.

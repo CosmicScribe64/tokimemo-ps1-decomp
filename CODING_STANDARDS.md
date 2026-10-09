@@ -71,6 +71,19 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 - State what it does and why it is needed. Track it in the ticket so it can be revisited.
 - Unmarked fakematches fail review.
 
+### 7a. Toolchain emulation pass vs fakematch
+
+- A toolchain emulation pass is a build step that models a measured, deterministic difference between the compiler we have and the one the original authors used (example: `tools/frame_pass.py`, the 16-byte frame difference of IDO 5.3, T-0016). It is allowed when all of these hold:
+  - uniform: it runs on every function of a toolchain and has no per-function switches, lists, annotations, or source markers;
+  - documented: a module docstring and the wiki (`wiki/toolchain.md` and `wiki/matching-notes.md`) state the rule exactly;
+  - evidence-backed: the rule is derived from the original code over a broad sample and the exceptions are written down;
+  - fails loudly: anything it cannot transform exactly aborts the build; it never guesses;
+  - tested: unit tests with synthetic input (no game data);
+  - replaceable: the C stays ordinary, so the real compiler can take its place without source changes (T-0100).
+- A fakematch is anything done to one function (or a few) to hit bytes: dummy variables or statements, forced registers, odd casts, oversized buffers, flag or option changes for one file. It stays governed by the rules above: mark it with `FAKE`, state what it does, track it in the ticket.
+- If a pass needs a special case for a particular function, it is not a pass; the case is a fakematch and must be marked.
+- An oversized local that reproduces an observed frame offset without a known real source is a fakematch (mark it `FAKE`).
+
 ## 8. Types and structs
 
 - Use fixed-width typedefs: `s8 u8 s16 u16 s32 u32` (and `s64`/`u64` only where the SDK does). Do not use bare `int`/`short`/`char` for sized data unless the original ABI needs it (e.g. SDK prototypes).
@@ -127,7 +140,7 @@ Reviewer checklist:
 - [ ] SDK headers and types used; no SDK structs or prototypes redefined.
 - [ ] Placeholders kept until understood; renames done via splat symbol files.
 - [ ] Files in the right place; generated asm not hand-edited; `INCLUDE_ASM` used per section 6.
-- [ ] Every fakematch carries a `FAKE` comment with reason and ticket.
+- [ ] Every fakematch carries a `FAKE` comment with reason and ticket. Toolchain emulation passes meet all points of section 7a.
 - [ ] Fixed-width types; struct offsets documented.
 - [ ] Non-obvious tricks explained; no dead code or stray debug.
 - [ ] No copyrighted game data or assets staged.

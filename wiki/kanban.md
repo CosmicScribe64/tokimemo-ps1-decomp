@@ -6,6 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-0017-const-in-reg-loop-hoisting|T-0017 Reconcile -Wo,-no_const_in_reg with loop hoisting]]
+- [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
 - [ ] [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300 Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress]]
 - [ ] [[tickets/T-0301-sdk-rodata-data-split|T-0301 Split SDK rodata and data per library and object]]
@@ -22,6 +24,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-0016-frame-layout-emulation-pass|T-0016 Frame-layout emulation pass]]
 
 ## Done
 
