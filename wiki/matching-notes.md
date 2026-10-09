@@ -253,3 +253,13 @@ Failure patterns (left as `INCLUDE_ASM`):
 3. `func_8008667C`/`func_80083338`: `s32 t = f(); return t & 0x7F;` gives `andi t6,v0; move v0,t6`, the original has `move t6,v0; andi v0,t6`.
 4. `normal_date_girl_in_init`: `move v0,zero` before the last `sb` (known pattern 6 of batch C).
 5. `func_8007B5EC`: the original reloads the counter after the early return, IDO keeps it in a register.
+## Overlay batch I (T-1050): KANGEI, SHUGAKU
+105 functions matched (KANGEI 49, SHUGAKU 56) out of 334; `ninja progress` grand total 309/6962 functions. All are small (4 to 0x70 bytes): call sequences, constant stores, one-global conditionals, RECT locals. Function-name differences in `funcdiff.py` output (`func_8007ED84` expected vs `bg_read_sub2` built) are not code diffs: the overlay asm refers to the old names, the C to the applied names; the sha1 check is the real proof.
+
+Left `INCLUDE_ASM` from this batch (new instances of known gaps):
+- Load hoisted above an earlier store: IDO moves `lui/lbu` of the second global above the store to the first (`D |= 0x80; E = 3; F |= 0x80`, KANGEI `func_80135C18`, SHUGAKU `func_80135BB8`, `func_80135430`, KANGEI `func_801355F0`/`func_80135634`), the original keeps source order (and `li v0` before the delay-slot store in `func_80135BB8`). Same family as the `$at` sharing notes in batch C.
+- `D++` compared or tested in the same expression (`if (D++ == 1 && E == 2)`, SHUGAKU `func_80134024`, `func_80134D8C`, KANGEI `func_80133A14`): the original keeps the old value in `$v1` and the `sp` adjust comes after the first load (T-0018, pattern (b) above).
+- ugen temp skips `$t6` after a call (`get_g_zyotai_s(0) & 0x7F` lands in `$t7` in the original: KANGEI `func_80138320`, `func_801386C4`): T-0018. Same for `get_g_zyotai_h` result clamp to 3 (KANGEI `func_80132354`: the original fills the `bnez` slot with `andi a0,v0,0xFF`).
+- A parameter-register load before the `sp` adjust (`lui a0; lbu a0` first, KANGEI `func_801325D0`, SHUGAKU `func_80132BCC`) is not reproduced; IDO uses `v0`/a copy through `a1`.
+- `set_kanji_string` is unprototyped `void` in `include/game.h`, so its return value cannot be passed on (SHUGAKU `func_80138ADC`); needs a `game.h` change (not allowed in this batch).
+- Idioms that matched: `*(s16 *)((u8 *)&D + idx * 0x38) = v` for a struct-array field with an unknown struct; `func_80046318(n, 0x801B0000, 0xAF0D)` style calls with constants as is; `RECT` locals in x, y, w, h order (KANGEI `func_801350E0`); a pointer-to-struct global (`D_80139AD0->unk_34->unk_08`) as two nested `KSub`/`KObj` pointers; `(a >= k1) + (a >= k2)` for a bool sum.
