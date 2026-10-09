@@ -138,7 +138,7 @@ def main():
     n.rule("split",
            command="python3 -m splat split config/%s.yaml && touch %s" % (EXE, "build/split.stamp"),
            description="splat split")
-    n.rule("headers", command="python3 tools/check_headers.py include && touch $out",
+    n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
     n.build(HEADERS_OK, "headers", implicit=["tools/check_headers.py"] + HEADER_FILES)
     n.build("headers", "phony", HEADERS_OK)

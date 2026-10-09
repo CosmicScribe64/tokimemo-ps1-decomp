@@ -109,7 +109,7 @@ typedef struct Foo {
 - One type per symbol inside every header closure (a root header plus what it includes). A second declaration with another type is an IDO "redeclaration" error, and a narrower prototype (`u8` parameter) changes call code in every file that sees it.
 - If two users really need different views, do not give them two declarations in one closure. Take the address (`(u8 *)&D_801217D0 + n`, `&D_800CA148`) when one user wants the bytes of a scalar, model a struct or union when the accesses show one, or keep the symbol out of `game.h` and declare each view where it is used: main-exe-only views in `include/main_only.h` (never included by overlays), overlay views in the overlay header.
 - Choose the type from the access widths of all users (`lbu` is `u8`, `lh` is `s16`, `lw` is `s32`/pointer) and keep it only if every matched user still matches.
-- No exact duplicates. `tools/check_headers.py` enforces all of this and runs in `ninja` and CI; tests: `tools/test_check_headers.py`.
+- No exact duplicates. `tools/check_headers.py` enforces all of this (also for definitions and prototypes at the top of each `src` .c file against the headers it includes) and runs in `ninja` and CI; tests: `tools/test_check_headers.py`.
 
 ## 9. Comments
 

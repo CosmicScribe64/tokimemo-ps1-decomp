@@ -15,7 +15,6 @@ void func_80042940();
 extern s16 D_80134520;
 void func_80133C70();
 void func_80132000();
-extern u8 D_800E62BE;
 extern s16 D_80134498;
 void normal_date_girl_in();
 extern u8 D_80134544;

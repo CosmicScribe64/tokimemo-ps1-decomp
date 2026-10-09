@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "main_only.h"
 
 void func_80062CD0(s32 arg0) {
     func_80046318(0x2D, 0x80180000, arg0);

@@ -10,5 +10,6 @@
 #include "common.h"
 
 void func_80083440(u8 arg0);
+void func_80065900(u8 arg0);
 
 #endif /* MAIN_ONLY_H */

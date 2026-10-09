@@ -85,10 +85,17 @@ class CheckHeadersTest(unittest.TestCase):
         self.write("game.h", "extern void *D_1;\nextern u8 *D_1;\n")
         self.assertIn("conflict D_1", self.problems()[0])
 
+    def test_source_definition_conflicts_with_header(self):
+        self.write("game.h", "void f();\nvoid g(s32 a);\n")
+        (self.inc / "a.c").write_text('#include "game.h"\nvoid f(u8 a) {\n}\nvoid g(s32 a) {\n}\n')
+        out = check_headers.check(str(self.inc), str(self.inc))
+        self.assertEqual(len(out), 1)
+        self.assertIn("conflict f", out[0])
+
     def test_repo_headers_are_clean(self):
         repo = Path(__file__).resolve().parent.parent / "include"
         if repo.is_dir():
-            self.assertEqual(check_headers.check(str(repo)), [])
+            self.assertEqual(check_headers.check(str(repo), str(repo.parent / "src")), [])
 
 
 if __name__ == "__main__":

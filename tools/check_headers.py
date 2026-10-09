@@ -9,11 +9,14 @@ overlay headers may type the same overlay-local address differently, because the
 in one translation unit. Inside one closure there must be exactly one type per symbol
 (CODING_STANDARDS.md, "Shared externs").
 
+With a source directory, the declarations and function definitions at the top level of each
+.c file are also compared with the headers it includes (conflicts only).
+
 Checked: `extern` objects and function prototypes (return type and parameter types; an
 unprototyped `()` list is compatible with any list). Exact repeats are reported too:
 they are harmless to the compiler but are clutter, so they fail the check as well.
 
-Usage: python3 tools/check_headers.py [include_dir]
+Usage: python3 tools/check_headers.py [include_dir [src_dir]]
 Exit status 0 when clean, 1 when conflicts or duplicates are found.
 """
 import os
@@ -74,7 +77,7 @@ def parse_declarator(d, base):
     return name, norm(base) + stars + rest
 
 
-def declarations(path):
+def declarations(path, defs=False):
     with open(path) as fh:
         text = strip(fh.read())
     # drop brace bodies (typedef struct/enum/union bodies, inline code)
@@ -87,11 +90,15 @@ def declarations(path):
             continue
         if ch == "}":
             depth -= 1
+            if depth == 0:
+                out += ";"
             continue
         if depth == 0:
             out += ch
     for stmt in out.split(";"):
         stmt = stmt.strip()
+        if defs and re.search(r"\)\s*\{\}$", stmt):
+            stmt = stmt[:-2].strip()
         if not stmt or stmt.startswith("typedef") or "{}" in stmt:
             continue
         stmt = re.sub(r"^extern\s+", "", stmt)
@@ -135,7 +142,7 @@ def compatible(a, b):
     return False
 
 
-def check(inc):
+def check(inc, src=None):
     headers = {}
     for root, _d, files in os.walk(inc):
         for f in files:
@@ -179,12 +186,30 @@ def check(inc):
                     problems.add("duplicate %s: '%s' declared twice in %s" % (name, ts[0], h))
                 elif not compatible(ts[0], ts[k]):
                     problems.add("conflict %s: '%s' vs '%s' in %s" % (name, ts[0], ts[k], h))
+    if src:
+        for root, _d, files in os.walk(src):
+            for f in sorted(files):
+                if not f.endswith(".c"):
+                    continue
+                path = os.path.join(root, f)
+                seen = {}
+                files_in = []
+                for i in includes(path):
+                    closure(i, files_in)
+                for hf in files_in:
+                    for name, typ in own[hf]:
+                        seen.setdefault(name, []).append((typ, hf))
+                for name, typ in declarations(path, defs=True):
+                    for t2, hf in seen.get(name, []):
+                        if not compatible(typ, t2):
+                            problems.add("conflict %s: '%s' in %s vs '%s' in %s" % (name, typ, path, t2, hf))
     return sorted(problems)
 
 
 def main():
     inc = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), "..", "include")
-    problems = check(inc)
+    src = sys.argv[2] if len(sys.argv) > 2 else None
+    problems = check(inc, src)
     for p in problems:
         print(p)
     if problems:

@@ -319,3 +319,6 @@ Card moved In Progress -> In Review on [[kanban]], see [[tickets/T-1010-main-exe
 
 ## [2026-10-09] ticket | T-1010 -> Done
 Inline code review against CODING_STANDARDS.md found three minor issues (a transient `func_80066104` mismatch, unused declarations in include/game.h, a missing comment on `func_80072B5C`), all fixed. Card moved In Review -> Done on [[kanban]]; see [[tickets/T-1010-main-exe-batch-e]]. Not merged.
+
+## [2026-10-09] build | T-1200 follow-up: batch E merge
+After merge c9d2dbf the header check failed again (MASTER.h vs game.h, `func_80046318`, `func_8006612C`, duplicates). Fixed by access widths as in [[tickets/T-1200-fix-conflicting-extern-declarations]]; `tools/check_headers.py` now also checks `src` definitions against headers (caught `func_800634FC`, `func_80065900`).

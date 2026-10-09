@@ -69,7 +69,6 @@ extern s32 D_8013C2D8;
 extern s16 D_8013C2DC;
 extern s32 D_8013C2E0;
 extern s16 D_801C26A0;
-extern u8 D_80120653;
 extern u8 D_80120697;
 extern s32 D_8013AEE0;
 void func_800853FC(void);
