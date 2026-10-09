@@ -13,3 +13,4 @@ __pycache__/
 /build.ninja
 .ninja_log
 .ninja_deps
+wiki/.obsidian/
