@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/OPTION.h"
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_80132000);
 
@@ -22,7 +23,11 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_801326BC);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_801328C0);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_80132A8C);
+void func_80132A8C(void) {
+    if (D_800E738A == 0) {
+        func_80132AB8();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_80132AB8);
 
@@ -178,9 +183,13 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_80139F04);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_80139F8C);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A010);
+void func_8013A010(void) {
+    func_8004500C(0, D_8013D3A8);
+}
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A038);
+void func_8013A038(void) {
+    func_8004500C(1, D_8013D3A8);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A060);
 
@@ -188,9 +197,13 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A09C);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A1BC);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A304);
+void func_8013A304(void) {
+    D_8013D3B4 += 1;
+}
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A31C);
+void func_8013A31C(void) {
+    D_8013D3B0 += 1;
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A334);
 

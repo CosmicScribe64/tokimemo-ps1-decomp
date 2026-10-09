@@ -1,10 +1,13 @@
 #include "common.h"
+#include "ovl/ENDING.h"
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132000);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132334);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132400);
+void func_80132400(void) {
+    func_80042878(0xC2);
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132420);
 
@@ -16,7 +19,10 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132E10);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132E70);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132EF0);
+void func_80132EF0(void) {
+    func_80044750(0x200);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80132F18);
 
@@ -24,9 +30,16 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133030);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801330E4);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133400);
+void func_80133400(void) {
+    func_8007ED84(0x4045);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133428);
+void func_80133428(void) {
+    func_80046318(0x11, 0x801F0000, 0xAE07);
+    func_80132000();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133460);
 
@@ -56,7 +69,10 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801339C0);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133A00);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133A40);
+void func_80133A40(void) {
+    D_800E71DF = D_8013C3E0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133A6C);
 
@@ -64,7 +80,13 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133AD0);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133B80);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133BE0);
+void func_80133BE0(void) {
+    func_8007ED84(0x4055);
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_ENDING_80133C08);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133C10);
 
@@ -80,7 +102,11 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801341D8);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80134270);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801349A8);
+void func_801349A8(void) {
+    func_80046318(0x78, 0x80180000, 0x7B58);
+    func_80133C10();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801349E0);
 
@@ -140,13 +166,23 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80136D60);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80136EE4);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80137128);
+void func_80137128(void) {
+    func_80046318(0x3D, 0x80180000, 0x7B1B);
+    func_80134D20();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80137160);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80137340);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801374BC);
+void func_801374BC(void) {
+    if (D_800E73A4 != 0) {
+        func_80042878(0xC2);
+        return;
+    }
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801374F8);
 
@@ -154,7 +190,12 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80137574);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013759C);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801376FC);
+void func_801376FC(void) {
+    D_80122CE4 = 0;
+    D_8013C364 = 0;
+    D_8013C360 = 0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80137730);
 
@@ -186,7 +227,17 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801391E4);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80139498);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801396A4);
+void func_801396A4(s16 arg0, u8 arg1) {
+    D_8011F4DE = arg0;
+    D_8011F4E0 = 0;
+    D_8011F4D0 = 0;
+    if (arg1 != 0xFF) {
+        D_8011F4CA = arg1;
+    }
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_ENDING_801396D8);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801396E0);
 
@@ -198,7 +249,10 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80139AA0);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80139B48);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80139D24);
+void func_80139D24(void) {
+    func_80046318(9, 0x80180000, 0xAE18);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80139D54);
 
@@ -224,13 +278,27 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013B6A0);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013B760);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013B868);
+void func_8013B868(void) {
+    func_80042908(6);
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013B888);
+void func_8013B888(void) {
+    func_80042908(8);
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013B8A8);
+void func_8013B8A8(void) {
+    if (D_800E683E != 0) {
+        func_8004284C();
+        return;
+    }
+    func_8007E5A0();
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013B8E4);
+void func_8013B8E4(void) {
+    func_80046318(0x45, 0x801A0000, 0x727A);
+    func_8013B6A0();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013B91C);
 

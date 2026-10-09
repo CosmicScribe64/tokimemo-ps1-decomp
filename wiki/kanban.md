@@ -21,6 +21,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-1040-overlay-batch-h-option-ending|T-1040 Batch H: overlays OPTION, ENDING]]
 
 ## In Review
 
