@@ -319,7 +319,16 @@ void wait_sub_sub(s16 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007EF48);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80081128);
+void func_80081128(void) {
+    if (D_800CA2AC > 0x200) {
+        if (D_800E7208 & 0x600060) {
+            func_80044750(0xB4);
+            D_800CA2A8 = 0;
+            D_800CA2AC = 0;
+            D_800CA2C4 = 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80081190);
 
@@ -546,7 +555,14 @@ void normal_date_speak_012(void) {
     func_80082764(0xFF, 1, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_speak);
+void normal_date_speak(void) {
+    D_800CA134 = D_800CA148;
+    D_800CA138 = D_800CA14C;
+    D_800CA13C = D_800CA160;
+    D_800CA140 = D_800CA164;
+    D_800CA144 = D_800CA168;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", vram_bustup_clear);
 

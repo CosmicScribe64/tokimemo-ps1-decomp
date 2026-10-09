@@ -329,11 +329,7 @@ void Vblnk_Timer_Init(void);
 s32 get_g_zyotai_s();
 s32 func_80044E8C();
 extern s32 D_80122EA0;
-extern s16 D_801206EE;
 extern s16 D_80120666;
-extern s16 D_80120668;
-extern s16 D_801206F0;
-extern s16 D_80120658;
 
 s32 Vblnk_Timer(void);
 void func_8006BA40();
@@ -400,20 +396,6 @@ void func_80048F64(s32 a);
 
 void normal_date_move_place_init(void);
 
-extern u32 D_80125CA4;
-extern u32 D_80125CA8;
-extern u32 D_80125CAC;
-extern u32 D_80125CB0;
-extern u16 D_800C9FF8[];
-extern u16 D_800C9F60[];
-extern u8 D_8011F513;
-extern u8 D_801217E4;
-extern u8 D_801217E5;
-extern u8 D_801217E6;
-extern u8 D_80121808;
-extern u8 D_80121809;
-extern u8 D_8012180A;
-extern s32 D_80122CF4;
 extern u8 *D_800CA134;
 extern u8 *D_800CA138;
 extern s32 D_800CA13C;
@@ -425,5 +407,23 @@ extern s32 D_800CA160;
 extern s32 D_800CA164;
 extern s32 D_800CA168;
 void func_80082764();
+
+void func_80048E78();
+void icon_disp_switch(s32 a);
+void func_80075C24(void);
+void func_80066334();
+void func_80065B0C(s32 a);
+u8 func_800460CC(void);
+s32 func_8004636C();
+void func_80042458(void);
+
+void func_8007B5CC();
+void func_8007B568();
+extern s32 D_80122CDC;
+
+void k_speed_set(u8 a);
+u8 get_k_speed(void);
+extern u8 D_800CA2A8;
+extern u8 D_800CA2C4;
 
 #endif /* GAME_H */
