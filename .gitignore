@@ -1,0 +1,11 @@
+*.zip
+*.bin
+*.cue
+*.iso
+/disc/
+/build/
+/expected/
+/tools/bin/
+.DS_Store
+__pycache__/
+*.pyc
