@@ -127,7 +127,7 @@ void func_80041F48(void);
 void func_8004284C(void);
 void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80042908(s32 arg0);
-s32 func_8004500C(s32 arg0, s32 arg1);
+s32 func_8004500C();
 void birth_day_check_days(s32 arg0, u8 arg1, u8 arg2);
 void dec_bg_show_switch(s32 arg0);
 void hizuke_disp_switch(s32 arg0);
@@ -139,7 +139,7 @@ void func_8009C7F8(RECT *rect, s32 arg1, s32 arg2, s32 arg3);
 void func_8009C884(RECT *rect, void *arg1);
 void func_8009C8E0(RECT *rect, void *arg1);
 void func_8009C93C(RECT *rect, s32 arg1, s32 arg2);
-s32 func_80044750(s32 arg0);
+s32 func_80044750();
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
 
@@ -283,7 +283,7 @@ s32 GetWorkBase(s32 arg0, s32 arg1);
 
 void func_80059BC0(void);
 
-void set_kanji_string(s32 x, s32 y, s32 z, u8 *str, s32 w);
+void set_kanji_string();
 s32 strlen(u8 *s);
 extern s8 *D_800E36C0[];
 void DecDCTReset(s32 mode);
@@ -302,7 +302,7 @@ extern u8 D_800E7D34;
 
 extern u8 D_801217A0[];
 
-extern s8 D_800B3D48;
+extern u8 D_800B3D48;
 void func_800AD950(s32 arg0);
 void func_8008BE54(void);
 void func_80087C64(s32 a, u8 *b, s32 c);
@@ -311,5 +311,29 @@ void func_800879A8(s32 a);
 void func_8009C210(s32 a);
 void func_800ADBB0(void);
 extern u8 D_800AFDE0[];
+
+extern u8 D_800E7398;
+s32 func_8005478C(s32 a);
+s32 func_80054884(s32 a);
+s32 func_80053DDC(void);
+void func_80053CC0(void);
+
+void func_8009F0B8(u8 *p);
+u8 Sw_Test(void);
+
+extern u8 D_800E7312;
+extern s8 D_800E7313[];
+s8 menu_check_1(s16 a, s16 b);
+s8 menu_check_2(s16 a, s16 b);
+extern s32 D_800B5920;
+extern s32 D_800B5924;
+extern s32 D_800B5928;
+extern s32 D_800B592C;
+extern u8 D_800B5939;
+
+u8 func_800460DC(void);
+extern u8 D_800B3D20;
+extern u8 D_800B3D4C;
+void func_80044D54(void);
 
 #endif /* GAME_H */

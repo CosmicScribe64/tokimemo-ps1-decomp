@@ -87,7 +87,29 @@ void func_80053D10(void) {
     D_800E73A0 = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053D24);
+void func_80053D24(u8 arg0) {
+    switch (Sw_Test()) {
+    case 1:
+        func_80053CC0();
+        return;
+    case 8:
+        func_80053CAC(arg0);
+        return;
+    case 4:
+        D_800E739D += 1;
+        func_80053CAC(0);
+        if ((u32)D_800E739D >= 3) {
+            D_800E62B5 = 0;
+            D_800E7395 = 0xFF;
+            return;
+        }
+    case 0:
+        return;
+    default:
+        func_80053CAC(0);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053DDC);
 
