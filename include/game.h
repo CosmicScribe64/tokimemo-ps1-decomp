@@ -27,9 +27,7 @@ extern u8 D_800B5938[];
 extern u8 D_800B593C;
 extern u8 D_800B5940;
 extern s32 D_800B5948;
-extern u8 D_800B5A64;
 extern u8 D_800B6724[];
-extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
 extern u8 D_800B6D30;
@@ -50,11 +48,9 @@ extern u8 D_800E62B5;
 extern u8 D_800E62B9;
 extern u8 D_800E62BA;
 extern u8 D_800E62BB; /* also read with lb elsewhere */
-extern u16 D_800E6374;
 extern u8 D_800E699D;
 extern u8 D_800E699E;
 extern u8 D_800E71DF;
-extern u8 D_800E71EF;
 extern u8 D_800E71F4;
 extern u8 D_800E71F5;
 extern s16 D_800E71FA;
@@ -62,11 +58,7 @@ extern s16 D_800E71FC;
 extern s32 D_800E7200;
 extern s32 D_800E7204;
 extern s32 D_800E7208;
-extern u8 D_800E7312;
-extern s32 D_800E7384;
 extern u8 D_800E7388;
-extern u8 D_800E738A;
-extern u8 D_800E738D;
 extern u8 D_800E7392;
 extern u8 D_800E7393;
 extern u8 D_800E7394; /* also read with lhu elsewhere */
@@ -75,17 +67,9 @@ extern u8 D_800E739C;
 extern u8 D_800E739D;
 extern s32 D_800E73A0;
 extern u8 D_8011ECD0[];
-extern u8 D_8011ECD3;
 extern s16 D_8011ECF6;
 extern s16 D_8011ECFA;
-extern u8 D_8011ED17;
-extern u8 D_8011F4CA;
-extern u8 D_80120652;
-extern u8 D_80120696;
-extern s32 D_80122640[];
-extern s32 D_80122740[];
 extern s32 D_801230D0;
-extern s32 D_80123110;
 extern u8 D_80125128;
 extern u8 D_80125129;
 extern u8 D_8012512A;
@@ -105,5 +89,15 @@ extern u16 D_80125E62;
 extern s16 D_80125E64;
 extern s16 D_80125E66;
 extern s16 D_80125E68;
+
+/* 8-byte record of the array at D_800B3DC0 (stride 8; see func_8004E93C). */
+typedef struct Entry8 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ s8 unk_07;
+} Entry8; /* size 0x08 */
 
 #endif /* GAME_H */

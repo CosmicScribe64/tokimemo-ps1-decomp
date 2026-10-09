@@ -425,7 +425,16 @@ s16 *func_8004E99C(void) {
     return &D_800B3F60;
 }
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8004E9A8);
+void func_8004E9A8(s32 arg0, Entry8 arg1) {
+    Entry8 *p = (Entry8 *)D_800B3DC0 + arg0;
+
+    p->unk_00 = arg1.unk_00;
+    p->unk_02 = arg1.unk_02;
+    p->unk_04 = arg1.unk_04;
+    p->unk_05 = arg1.unk_05;
+    p->unk_06 = arg1.unk_06;
+    p->unk_07 = arg1.unk_07;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004E9F4);
 

@@ -71,3 +71,9 @@ Updated the stack description in AGENTS.md and CODING_STANDARDS.md to IDO 5.3 fo
 
 ## [2026-10-09] ticket | T-0400 -> In Progress
 Created [[tickets/T-0400-leaf-function-batch-1]] and moved it to In Progress on [[kanban]]. Added `tools/list_leaves.py` (leaf listing, smallest first; 177 leaves outside the SDK skip range at start).
+
+## [2026-10-09] build | T-0400 leaf batch 1: 40 functions matched
+Matched 40 leaf functions in `src/game.c` (smallest first, outside 0x80080000-0x80086810), sha1 OK after each group. Idioms, failures and the T-0014 address-CSE pattern recorded in [[matching-notes]]; new externs in `include/game.h`, new `Entry8` struct. Tooling: `tools/list_leaves.py`.
+
+## [2026-10-09] ticket | T-0400 -> In Review
+Moved [[tickets/T-0400-leaf-function-batch-1]] In Progress -> In Review on [[kanban]]; code-review gate next.
