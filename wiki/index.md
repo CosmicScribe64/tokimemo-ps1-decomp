@@ -55,6 +55,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030]] Overlay batch G: BUNKA_SD, DATE2 (Done)
 - [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050]] Overlay batch I: KANGEI, SHUGAKU (Done)
 - [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200]] Fix conflicting extern declarations after batch merges (Done)
+- [[tickets/T-1340-tooling-jump-table-functions|T-1340]] Tooling: jump-table functions, rodata islands (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -66,8 +67,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), matched/unmatched functions, idioms
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
-- [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit
-- [[build-system]] - configure.py / ninja pipeline and gotchas
+- [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit; how to decompile a switch (T-1340)
+- [[build-system]] - configure.py / ninja pipeline and gotchas, jump tables and rodata islands (T-1340)
 - [[ci]] - GitHub Actions workflow, encrypted game bundle, objdiff report for decomp.dev
 - Raw sources (plain paths): `raw/disc-findings.md`, `raw/compiler-mismatch-research-sources.md`, `raw/ai-disclosure-research.md`
 

@@ -1,4 +1,4 @@
-#include "common.h"
+#include "ovl/ETC.h"
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80132000);
 
@@ -712,7 +712,27 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014A180);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014A258);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014A2C4);
+s32 func_8014A2C4(void) {
+    switch (D_80150E9C) {
+    case 10:
+        return 0;
+    case 8:
+    case 9:
+        return 1;
+    case 7:
+        return 2;
+    case 5:
+    case 6:
+        return 3;
+    case 3:
+    case 4:
+        return 4;
+    case 1:
+    case 2:
+    default:
+        return 5;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014A32C);
 

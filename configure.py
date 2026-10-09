@@ -78,10 +78,27 @@ def read_overlays():
     return rows
 
 
+def overlay_data_files(name):
+    """Asm objects splat writes for the data subsegments (`rodata`/`data`/`bss`, not the
+    dot-prefixed siblings that the C object provides) of overlay `name` (T-1340)."""
+    with open("config/overlays/%s.yaml" % name) as f:
+        cfg = yaml.safe_load(f)
+    out = []
+    for seg in cfg["segments"]:
+        if not isinstance(seg, dict):
+            continue
+        for sub in seg.get("subsegments", []):
+            typ, sname = (sub["type"], sub["name"]) if isinstance(sub, dict) else (sub[1], sub[2])
+            if typ in ("rodata", "data", "bss"):
+                out.append("asm/ovl/%s/data/%s.%s.s" % (name, sname, typ))
+    return out
+
+
 def overlay_targets(n, overlays):
     """Write the split/compile/link/check rules for every overlay."""
     n.rule("osplit",
-           command="python3 -m splat split config/overlays/$name.yaml && touch $out",
+           command=("python3 -m splat split config/overlays/$name.yaml && "
+                    "python3 tools/rodata_pieces.py config/overlays/$name.yaml && touch $out"),
            description="splat split $name")
     n.rule("old",
            command=("mips-linux-gnu-ld -EL -T build/ovl/$name.ld "
@@ -104,8 +121,8 @@ def overlay_targets(n, overlays):
         v = {"name": name}
         stamp = "build/ovl/%s.stamp" % name
         ld = "build/ovl/%s.ld" % name
-        data_s = "asm/ovl/%s/data/%s_rodata.rodata.s" % (name, name)
-        n.build([stamp, ld, data_s], "osplit",
+        data_ss = overlay_data_files(name)
+        n.build([stamp, ld] + data_ss, "osplit",
                 ["config/overlays/%s.yaml" % name, "config/symbol_addrs.txt",
                  "config/reloc_addrs.txt"],
                 implicit=["disc/files/CDROM/EXEDIR/%s.EXN" % name],
@@ -117,10 +134,13 @@ def overlay_targets(n, overlays):
                 implicit=[stamp, HEADERS_OK, "include/common.h", "include/include_asm.h",
                           "include/asmproc_prelude.inc",
                           "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
-        data_o = "build/ovl/%s/%s.o" % (name, data_s[:-2])
-        n.build(data_o, "as", data_s, implicit=[stamp, "include/macro.inc"])
+        data_os = []
+        for data_s in data_ss:
+            data_o = "build/ovl/%s/%s.o" % (name, data_s[:-2])
+            n.build(data_o, "as", data_s, implicit=[stamp, "include/macro.inc"])
+            data_os.append(data_o)
         elf = "build/ovl/%s.elf" % name
-        n.build(elf, "old", [c_o, data_o], implicit=[stamp, ld, "build/main_names.ld"], variables=v)
+        n.build(elf, "old", [c_o] + data_os, implicit=[stamp, ld, "build/main_names.ld"], variables=v)
         n.build("build/ovl/%s.bin" % name, "objcopy", elf)
         ok = "build/ovl/%s.ok" % name
         n.build(ok, "osha1", "build/ovl/%s.bin" % name, variables=v)
@@ -134,9 +154,13 @@ def main():
     n.variable("ninja_required_version", "1.10")
     n.rule("configure", command="python3 configure.py", generator=True,
            description="configure")
-    n.build("build.ninja", "configure", "configure.py")
+    # the asm objects to build depend on the subsegments of the yaml files (T-1340)
+    n.build("build.ninja", "configure", "configure.py",
+            implicit=["config/%s.yaml" % EXE, "config/overlays.txt"]
+            + ["config/overlays/%s.yaml" % o[0] for o in read_overlays()])
     n.rule("split",
-           command="python3 -m splat split config/%s.yaml && touch %s" % (EXE, "build/split.stamp"),
+           command=("python3 -m splat split config/%s.yaml && python3 tools/rodata_pieces.py "
+                    "config/%s.yaml && touch %s") % (EXE, EXE, "build/split.stamp"),
            description="splat split")
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")

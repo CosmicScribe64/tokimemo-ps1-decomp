@@ -58,6 +58,7 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 - When a function is decompiled, replace its `INCLUDE_ASM` line with the C body in the same position. Keep the symbol name.
 - Do not wrap `INCLUDE_ASM` in other macros or conditionals except the `NON_MATCHING` guard in section 1.
 - One macro definition, in a single shared header under `include/`. Do not redefine it per file.
+- `INCLUDE_RODATA` is used only for the island symbols that `tools/rodata_pieces.py` reports as unowned (`wiki/build-system.md`, jump tables); never to avoid writing a string literal.
 
 ## 7. Fakematches
 

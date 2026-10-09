@@ -28,7 +28,8 @@ kanban-plugin: board
 
 
 ## Done
-- [ ] [[tickets/T-1040-overlay-batch-h-option-ending|T-1040 Batch H: overlays OPTION, ENDING]]
+
+- [x] [[tickets/T-1340-tooling-jump-table-functions|T-1340 Tooling: jump-table functions]]- [ ] [[tickets/T-1040-overlay-batch-h-option-ending|T-1040 Batch H: overlays OPTION, ENDING]]
 
 - [ ] [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030 Batch G: overlays BUNKA_SD, DATE2]]
 - [ ] [[tickets/T-1020-main-batch-f|T-1020 Batch F: main 80075320-80085E30]]

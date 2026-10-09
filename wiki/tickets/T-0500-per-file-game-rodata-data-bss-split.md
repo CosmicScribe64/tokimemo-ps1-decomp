@@ -26,3 +26,5 @@ Why T-0012 did not do it: only about 80 game functions reference `.rodata` direc
 Starting evidence (`tools/game_boundaries.py`): rodata objects start 16-aligned after a zero run of at least 5 bytes: `800AF370`, `800AF390`, `800AFB00`, `800AFB70`, `800AFE00`, `800AFE10`, `800B1590`, `800B2000` map onto the file boundaries; `.data`/`.bss` symbols used by a single file are 94% in file order. The libpress/libcd/libsnd/libgpu strings from about `0x800B23B0` (see [[tickets/T-0301-sdk-rodata-data-split]]) must be separated first. Pointer tables in `.data` that point into rodata give string ownership. Lines in splat's own output (`.asciz` comment hex) make string extents exact.
 
 ## Comments
+
+- 2026-10-09 T-1340: rodata chunk islands for jump-table functions exist (`.rodata` subsegment named like a C file; [[build-system]]). New boundary evidence: a jump table that ends in zero words up to a 16-byte boundary ends an original object (70 cases in the overlays); IDO's per-object order is [strings][tables][padding]. A per-object split of the C files would allow several islands per file.

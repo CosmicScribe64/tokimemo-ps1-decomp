@@ -88,5 +88,11 @@ class IdoFlags(unittest.TestCase):
         self.assertEqual(out.count("multu"), 2)
 
 
+class IncludeDeps(unittest.TestCase):
+    def test_include_asm_and_include_rodata_are_dependencies(self):
+        text = 'INCLUDE_ASM("a/b", f1);\nINCLUDE_RODATA("a/c", D_1);\nint x;\n'
+        self.assertEqual(cc.INCLUDE_ASM_RE.findall(text), [("a/b", "f1"), ("a/c", "D_1")])
+
+
 if __name__ == "__main__":
     unittest.main()

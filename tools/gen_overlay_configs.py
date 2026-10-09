@@ -58,6 +58,8 @@ options:
   generate_asm_macros_files: False
   # keep asm for decompiled functions too, so tools/progress.py has a full denominator (T-0602)
   disassemble_all: True
+  # rodata islands (T-1340): tools/rodata_pieces.py hands the rodata to the functions itself
+  migrate_rodata_to_functions: False
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel

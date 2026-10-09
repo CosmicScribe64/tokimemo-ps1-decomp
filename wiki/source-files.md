@@ -59,3 +59,5 @@ The linker script keeps `SUBALIGN(2)` (the SDK asm objects must be packed exactl
 
 ## Not split: rodata, data, bss
 They stay whole (`rodata`, `data`, `bss` subsegments). Only about 80 game functions reference `.rodata` directly (most strings are reached through `.data` pointer tables), and per-file `.data`/`.bss` blocks interleave with shared globals; cutting them needs symbol-level ownership. Tracked in [[tickets/T-0500-per-file-game-rodata-data-bss-split]].
+
+Exception (T-1340): a C file that contains a jump-table function gets a rodata *island*, the chunk of rodata of one original object, provided by the C object itself (`.rodata` subsegment named like the file; `src/main/80053650.c` and `src/main/80079B10.c` have one). It is cut from the splat output, not from a claim about file ownership: the chunk is the strings and tables of one object up to its zero padding, and the sha1 check confirms it. See [[build-system]] (section "Jump tables: rodata islands"). The zero padding after a jump table is also a new rodata boundary witness for T-0500: tables ending in zero words up to a 16-byte boundary mark the end of an object (70 cases in the overlays).

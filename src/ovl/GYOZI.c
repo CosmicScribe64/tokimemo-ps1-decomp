@@ -315,7 +315,28 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013AE04);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013AE4C);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013AE80);
+void func_8013AE80(void) {
+    switch (D_801474B8) {
+    case 0:
+        func_8013AF1C();
+        return;
+    case 1:
+        func_8013B03C();
+        return;
+    case 2:
+        func_8013B0C4();
+        return;
+    case 3:
+        func_8013B2B8();
+        return;
+    case 4:
+        func_8013B340();
+        return;
+    default:
+        func_8013B3B4();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8013AF1C);
 

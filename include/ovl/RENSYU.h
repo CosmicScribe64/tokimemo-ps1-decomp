@@ -14,5 +14,8 @@ extern s32 D_801343D4;
 extern s32 D_801343D8;
 extern s16 D_801343DC;
 extern s32 D_801343E0;
+extern u8 D_801342D0;
+extern u8 D_800E644A;
+extern void func_80062CD0(s32 arg0);
 
 #endif /* OVL_RENSYU_H */

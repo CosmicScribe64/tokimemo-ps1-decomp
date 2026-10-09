@@ -31,7 +31,7 @@ import tempfile
 
 AS = ["mips-linux-gnu-as", "-EL", "-march=r3000", "-mabi=32", "-G0",
       "-Iinclude", "-I."]
-INCLUDE_ASM_RE = re.compile(r'^INCLUDE_ASM\("([^"]*)",\s*(\w+)\)', re.M)
+INCLUDE_ASM_RE = re.compile(r'^INCLUDE_(?:ASM|RODATA)\("([^"]*)",\s*(\w+)\)', re.M)
 
 GCC_CFLAGS = ["-O2", "-G0", "-mcpu=3000", "-quiet"]
 MASPSX = "/opt/maspsx/maspsx.py"

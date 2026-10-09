@@ -11,5 +11,9 @@
 
 void func_80083440(u8 arg0);
 void func_80065900(u8 arg0);
+/* T-1340 */
+void func_8007B99C(u16 arg0);
+void func_8007BE94(s32 arg0);
+void func_8007BF04(s32 arg0);
 
 #endif /* MAIN_ONLY_H */
