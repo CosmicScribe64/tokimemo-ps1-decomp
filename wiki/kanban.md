@@ -21,13 +21,13 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030 Batch G: overlays BUNKA_SD, DATE2]]
 
 ## In Review
 
 
 ## Done
 
+- [ ] [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030 Batch G: overlays BUNKA_SD, DATE2]]
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]
 - [ ] [[tickets/T-0901-public-docs|T-0901 Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure]]

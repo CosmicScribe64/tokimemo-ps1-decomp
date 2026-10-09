@@ -211,3 +211,19 @@ Failure patterns (left as `INCLUDE_ASM`; T-0017 and T-0018 are the owners):
 4. Register choice for a long-lived variable or return value (T-0018): `GetWorkBase`, `MouseState`, `func_8004AD60` (`li v0,8` vs `li t8,8`), `func_800450F4`/`func_8004500C` (result kept in `v1`, original keeps `v0`), `func_80044C98`/`func_80044E8C`, `func_800422C8`.
 5. RECT locals: the original emits the four halfword stores in the order `h, w, x, y` for the source order `x, y, w, h` (`func_80059308`); IDO keeps source order.
 6. Already known: pairs of globals sharing one `lui $at` (`func_8004482C`, `menu_bar_color`, `dec_bg_reset`), `move v0,zero` before the last `sb` (`func_8004284C`, `func_80042808`), `u16 * s32` operand order of `multu` (`RangeMouse`), `u16 >> 12` temp in `v1` (`func_8005352C`), first-parameter spill (`load_palette`: `sw a0,0(sp)` that the original does not have), `D++` after a store scheduled above it (`func_80053CC0`).
+## Overlay batch G (T-1030): BUNKA_SD, DATE2
+63 functions matched (BUNKA_SD 28 of 98, DATE2 35 of 102), almost all call sequences, global setters, table fills and short conditionals. Details in [[tickets/T-1030-overlay-batch-g-bunka-sd-date2]].
+
+Idioms that worked:
+- Calls to main-exe functions that `build/main_names.ld` renames (`bg_read_sub2`, `dec_bg_show_switch`, `dec_bg_cd_read`, `get_g_zyotai_s`, `memcpy`, `k_reset`, ...): the overlay asm still says `func_XXXXXXXX`, so `funcdiff.py` prints a relocation-name DIFF on those lines only; the linked bytes match (ninja sha1 OK decides). Use the applied name in the C.
+- `D += 1; if (D >= k)` on a global (BUNKA_SD `func_801364F0`) matches when the compare reads `D` again; a temp `t = D + 1` puts the value in a different register. Opposite case: `func_80135440` needs the explicit `t = D; if (t == 0) ...; t = t + 1;` (one load kept in `v0`).
+- `u8` compares as `(u32)D >= 3 && (u32)D < 6` give `sltiu` (as in batch C); a `u8` constant store of 0x80 needs the global declared `u8`, not `s8`.
+- A trailing single `nop` (end address 12 mod 16) cannot be ported (asm-processor 2-instruction minimum): BUNKA_SD `func_801369AC`, `func_8013785C`, `func_801344A8`, DATE2 `func_80136D14`, `func_80132670`.
+- Pads of 2 or more nops are `src/ovl/pad/pad_<NAME>_<addr>.s` stubs; `funcdiff.py` shows a trailing `...` DIFF for such a function (the pad is a separate symbol in the built object); the sha1 check is the real test.
+
+Failures left as `INCLUDE_ASM` (all T-0017/T-0018 families):
+- `x * 0x44` struct-array index (BUNKA_SD `func_801341A0`, `func_801377D4`, `func_80138810`): `multu` vs shifts.
+- Post-increment compare of a global (`if (D++ == 0)`, `if (D++ > 0)`, `D += 1; if (D >= 0x400)`): original keeps the old value in `v1` and the compare result in `v0`, IDO swaps them (BUNKA_SD `func_80138C34`, DATE2 `func_801329F0`, `func_80132A48`, `func_80132B08`).
+- `u8` global compare-chain with a returned value (BUNKA_SD `func_80134540`, `func_80135160`, `func_801359B0`, `func_80136270`): `$v1` vs `$v0`, same as batch B.
+- `memcpy(t + A, t + B, 0x1400)` with `t = D * 0x1400`: the original keeps `t` in `v0`, IDO in `t6` (DATE2 `func_80132E5C`, `func_80132FB0`, `func_8013301C`, `func_80132EC8`).
+- Argument `D_dst = D_src` passed on: original loads the source straight into `a0` (DATE2 `func_801335E4`, `func_80132F48`); local function-pointer table copy (`func_80132DE0`, `func_80136660`, `func_801375D4`, `func_80138048`); jump-table switches and `printf` string literals (`func_80133A6C`, `func_801365DC`).
