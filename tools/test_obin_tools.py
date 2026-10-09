@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""Unit tests for tools/obin_syms.py and tools/obin_map.py with synthetic input (no game data).
+
+Run (in Docker): python3 tools/test_obin_tools.py
+"""
+import os
+import struct
+import sys
+import unittest
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import obin_map  # noqa: E402
+import obin_syms  # noqa: E402
+
+
+def make_ecoff(syms):
+    """Build a minimal ECOFF: file header, optional header, no sections, mdebug with externals."""
+    strs = b""
+    ext = b""
+    for name, addr in syms:
+        ext += struct.pack("<hhiII", 0, 0, len(strs), addr, 1 | (5 << 6))
+        strs += name.encode() + b"\0"
+    symptr = 20 + 0x38
+    hdr = struct.pack("<HHIIIHH", 0x162, 0, 0, symptr, 0x60, 0x38, 0)
+    hdr += b"\0" * 0x38
+    ss_off = symptr + 0x60
+    ext_off = ss_off + len(strs)
+    h = [0] * 23
+    h[obin_syms.HDRR_NAMES.index("issExtMax")] = len(strs)
+    h[obin_syms.HDRR_NAMES.index("cbSsExtOffset")] = ss_off
+    h[obin_syms.HDRR_NAMES.index("iextMax")] = len(syms)
+    h[obin_syms.HDRR_NAMES.index("cbExtOffset")] = ext_off
+    return hdr + struct.pack("<hh23i", 0x7009, 0x312, *h) + strs + ext
+
+
+class ParseTest(unittest.TestCase):
+    def test_parse_and_sizes(self):
+        fh, ah, secs, syms = obin_syms.parse(make_ecoff([("b", 0x80000020), ("a", 0x80000000)]))
+        self.assertEqual([s["name"] for s in syms], ["a", "b"])
+        self.assertEqual(syms[0]["size"], 0x20)
+        self.assertIsNone(syms[1]["size"])
+
+    def test_rejects_other_files(self):
+        with self.assertRaises(ValueError):
+            obin_syms.parse(b"\0" * 0x100)
+
+
+class MapTest(unittest.TestCase):
+    def test_align_shifted_sequence(self):
+        o = [8, 16, 24, 32, 40]
+        f = [4, 8, 16, 24, 32, 40]
+        self.assertEqual(obin_map.align(o, f), [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)])
+
+    def test_high_needs_diverse_run(self):
+        O = [(i * 16, "n%d" % i, 16) for i in range(6)]
+        F = [(i * 16, 16, "func_%d" % i) for i in range(6)]
+        res = {i: i for i in range(6)}
+        self.assertNotIn("high", obin_map.classify(res, O, F).values())   # one repeated size
+        O = [(0, "a", 4), (4, "b", 8), (12, "c", 12), (24, "d", 16)]
+        F = [(0, 4, "f0"), (4, 8, "f1"), (12, 12, "f2"), (24, 16, "f3")]
+        self.assertEqual(set(obin_map.classify({i: i for i in range(4)}, O, F).values()), {"high"})
+
+    def test_lis_chain(self):
+        self.assertEqual(obin_map.lis_chain([(0, 5), (1, 1), (2, 2), (3, 3)]), [(1, 1), (2, 2), (3, 3)])
+
+
+if __name__ == "__main__":
+    unittest.main()
