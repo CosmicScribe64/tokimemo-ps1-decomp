@@ -28,6 +28,8 @@ options:
   generate_asm_macros_files: False
   # keep asm for decompiled functions too, so tools/progress.py has a full denominator (T-0602)
   disassemble_all: True
+  # rodata islands (T-1340): tools/rodata_pieces.py hands the rodata to the functions itself
+  migrate_rodata_to_functions: False
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
@@ -55,5 +57,6 @@ segments:
     vram: 0x80132000
     subsegments:
       - [0x0, c, RENSYU]
-      - [0x2110, rodata, RENSYU_rodata]
+      - [0x2110, .rodata, RENSYU]
+      - [0x22B0, rodata, RENSYU_rodata_after_RENSYU]
   - [0x30000]

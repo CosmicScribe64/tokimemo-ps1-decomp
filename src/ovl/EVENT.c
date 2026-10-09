@@ -1622,7 +1622,21 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011A7FC);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011A838);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011A874);
+s32 func_8011A874(void) {
+    if (D_8012531C == 1) {
+        switch (D_800B1746) {
+        case 0:
+        case 3:
+        case 4:
+        case 5:
+        case 8:
+        case 9:
+            func_80011DFC();
+            return 0;
+        }
+    }
+    return func_80045FF4();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011A8E4);
 

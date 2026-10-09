@@ -2,7 +2,9 @@
 #define OVL_DATE_H
 
 #include "common.h"
+#include "game.h"
 
+<<<<<<< HEAD
 /* Main-exe data used by DATE. */
 extern u8 D_8011ECD0[];
 void func_8004284C();
@@ -67,5 +69,7 @@ extern u8 D_800CA19C[];
 void func_8013272C(void);
 void func_8006612C();
 void k_reset(s32 arg0);
+=======
+>>>>>>> t-jtbl
 
 #endif /* OVL_DATE_H */

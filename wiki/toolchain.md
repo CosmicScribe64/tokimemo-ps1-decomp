@@ -28,6 +28,9 @@ Mechanism. IDO's pipeline is cfe -> uopt -> ugen -> as1; ugen hands as1 a binary
 A real copy of the original compiler would replace the pass without any change to the C code ([[tickets/T-0100-older-mips-compiler-emulation]] stays open for that).
 
 
+## Jump tables and asm-processor (T-1340)
+asm-processor's `.rodata`/`.late_rodata` support is what lets `INCLUDE_ASM` functions and compiler-emitted jump tables share one object (it makes the compiler emit dummy data in the right order and replaces it by the asm bytes). `tools/rodata_pieces.py` writes those sections into the function files; see [[build-system]].
+
 ## Object padding pass (T-0012)
 `tools/cc.py` zero-pads the `.text` of every compiled C object to a multiple of 16 bytes (function `pad_text`, unit tests `tools/test_cc.py`). This is a toolchain emulation pass in the sense of CODING_STANDARDS 7a, not a fakematch: one uniform rule for all C objects (main exe and overlays), no per-function switches. It models the original link, which aligned every object's `.text` to 16; our linker script uses `SUBALIGN(2)` because the SDK asm objects must be packed exactly. Evidence: 804 of the 833 gaps between adjacent game functions are zero, and the 27 non-zero gaps all end on a 16-byte boundary and are 4 to 12 zero bytes ([[source-files]]); after the pass a file whose last function is C reproduces that padding (`func_80043504` as an empty C function matched). Functions kept as `INCLUDE_ASM` already contain their trailing nops, so nothing is doubled. It fails loudly (a missing `.text` makes `objcopy` abort the compile). Verified on a clean rebuild: the main exe and all 26 overlays still match their sha1 with the pass active (27 of 27 OK); each overlay is one C object whose end the linker script already aligned to 16.
 

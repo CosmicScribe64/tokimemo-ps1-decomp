@@ -4,6 +4,7 @@
 #include "common.h"
 #include "game.h"
 
+<<<<<<< HEAD
 /* Overlay-local externs (T-1300). */
 extern u8 D_80150108[];
 extern u8 D_80150128[];
@@ -14,3 +15,10 @@ void func_80145C00(void);
 void func_8014AA74(void);
 
 #endif
+=======
+/* ETC overlay (load address 0x80132000): externs and types. */
+
+extern s32 D_80150E9C;
+
+#endif /* OVL_ETC_H */
+>>>>>>> t-jtbl

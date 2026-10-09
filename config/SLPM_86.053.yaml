@@ -28,6 +28,8 @@ options:
   generate_asm_macros_files: False
   # keep asm for decompiled functions too, so tools/progress.py has a full denominator
   disassemble_all: True
+  # rodata islands (T-1340): tools/rodata_pieces.py hands the rodata to the functions itself
+  migrate_rodata_to_functions: False
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
@@ -162,6 +164,10 @@ segments:
       - [0x6E830, asm, libapi_counter]   # vram 0x800AF030
       - [0x6E9A0, asm, libapi_4]   # vram 0x800AF1A0
       - [0x6EB40, rodata, rodata]
+      - [0x6F3F0, .rodata, main/80053650]
+      - [0x6F5E0, rodata, rodata_after_80053650]
+      - [0x71630, .rodata, main/80079B10]
+      - [0x71800, rodata, rodata_after_80053650_after_80079B10]
       - [0x72A20, data, data]
       - { start: 0xA3000, type: bss, name: bss, vram: 0x800E3800 }
   - [0xA3000]

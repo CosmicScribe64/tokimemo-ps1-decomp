@@ -118,12 +118,44 @@ void func_80053D24(u8 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053DDC);
+s32 func_80053DDC(void) {
+    s32 status;
+
+    status = _card_status(0);
+    while (status == 0) {
+        status = _card_status(0);
+    }
+    switch (status) {
+    case 1:
+        close(D_800B58E4);
+        break;
+    case 2:
+        close(D_800B58E4);
+        break;
+    case 4:
+        close(D_800B58E4);
+        break;
+    case 8:
+        close(D_800B58E4);
+        break;
+    case 0x11:
+        D_800E739D += 1;
+        func_80053CAC(0);
+        close(D_800B58E4);
+        break;
+    case 0x21:
+        D_800E739D += 1;
+        func_80053CAC(0);
+        close(D_800B58E4);
+        break;
+    }
+    return status;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053F04);
 
 s32 func_80054108(void) {
-    if (format(D_800AFBF0) == 1) {
+    if (format((u8 *)"bu00:") == 1) {
         return 1;
     }
     return 0;

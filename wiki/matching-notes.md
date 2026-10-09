@@ -329,7 +329,7 @@ Failure patterns left as `INCLUDE_ASM` (the owner ticket in brackets):
 4. Register choice in leaf code: `func_8006C700` (bit-field extract, original keeps values in `$v0,$a0,$a1,$v1`), `get_weekly_bg_sector` (`$a0` for the loaded byte), `func_80066ACC`, `func_80074F24` (`li $v0,1` where IDO uses `$t2`), `func_80074D28` (IDO hoists `move a0,v0`). [T-0018]
 5. `func_800676AC`: IDO keeps the parameter in `$a1` across the call (`move a1,a0`) and does not reload the stored `s16`; the original reloads. `func_8006C934`: store in the delay slot of an early `jr ra` and different branch layout.
 6. `parameter_change`: the `sh 999` sits in the delay slot of the compare branch and runs on both paths; no C shape found.
-7. Jump-table functions (`func_80063520`, `func_80066A2C`, `func_80066A84`, `func_80072338`, `func_80072CA0`, `_schedule_init`, `func_800722C4`) cannot be built: the main exe's `.rodata` is one asm blob, so a C `switch` jump table does not land where the original's is.
+7. Jump-table functions (`func_80063520`, `func_80066A2C`, `func_80066A84`, `func_80072338`, `func_80072CA0`, `_schedule_init`, `func_800722C4`) could not be built before T-1340; they can now through a rodata island (see "Jump tables (T-1340)" below). The listed ones were not attempted again (`func_80066A2C`/`func_80066A84` have case labels in the neighbouring tiny functions; `func_800722C4` has bit-field code).
 
 - Loops with a constant bound (`EN_NICHI func_80135F54`, TEL `func_8013BDDC`) are the known T-0017 case (`li a0,0xB` hoisted by the original). Solved: `func_80135F54` matches; `func_8013BDDC` now differs only in the offset of its one local (0x10 vs 0x14).
 
@@ -407,3 +407,9 @@ decomp-permuter results (commit 8556c81, `--stack-diffs`, each run under 3 minut
 
 Lessons: (1) always run with `--stack-diffs` (default in `tools/permute.py`); without it the score ignores the frame and `func_80044700` already scored 0. (2) The permuter's output reformats the whole file; take only the changed expression. (3) The two verified matches are not applied in `src/` by T-1330 (tooling ticket); they are listed here for the next batch ticket (T-0950): `strSync`, `func_80044700`.
 
+## Jump tables (T-1340)
+Mechanism and limits: [[build-system]] (section "Jump tables: rodata islands"), how-to: [[decompile-workflow]]. Older notes above that say jump-table functions "cannot be built" are superseded.
+- Compiler facts measured: IDO 5.3 emits a `switch` with 5 or more dense cases as a jump table (`sltiu`, `sll 2`, `lw`, `jr`) and writes all tables of an object after all of its strings and constants, in function order (checked with a scratch file: `INCLUDE_RODATA` block, switch, block, string, switch gives block, block, string, table, table). The original compiler does the same (strings first, tables last, per object; objects end with zero padding to 16).
+- Matched (8): main `func_80053DDC` (card status loop; one separate block per `case`, return value kept in `$s0`), `func_8007A254` (`u16` argument masked with 0xFF and written back); overlays RENSYU `func_80133E5C` (nested switch, `(u32)D >> 4` gives `srl` where `u8 >> 4` gives `sra`), ETC `func_8014A2C4` (`case 1: case 2: default:` share the default block; without them IDO narrows the table to 3..10), DATE `func_8013EB1C` and EVENT `func_8011A874` (`if (g == 1) { switch ... }` then `return f()` at the end), DATE2 `func_80133620`, GYOZI `func_8013AE80`. None is a T-0018 compare-chain case.
+- Tables of dense switches are `jtbl_*` blocks of 5 or more words; dispatch with fewer cases is a compare chain and needs no island.
+- A string passed through an extern symbol (`format(D_800AFBF0)`) must become the literal (`format((u8 *)"bu00:")`) when the file gets an island, otherwise the symbol has no owner.

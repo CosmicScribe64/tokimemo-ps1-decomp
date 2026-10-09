@@ -60,6 +60,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap, deferred (Backlog)
 - [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330]] Tooling: m2c context and decomp-permuter (Done)
 - [[tickets/T-1310-tooling-object-trailing-padding|T-1310]] Tooling: object-trailing padding (Done)
+- [[tickets/T-1340-tooling-jump-table-functions|T-1340]] Tooling: jump-table functions, rodata islands (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -74,6 +75,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit
 - [[data/t0018-cases]] - data table: functions skipped for the T-0018 register-promotion gap (calibrates `tools/queue.py`)
 - [[build-system]] - configure.py / ninja pipeline and gotchas
+- [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit; how to decompile a switch (T-1340)
+- [[build-system]] - configure.py / ninja pipeline and gotchas, jump tables and rodata islands (T-1340)
 - [[ci]] - GitHub Actions workflow, encrypted game bundle, objdiff report for decomp.dev
 - Raw sources (plain paths): `raw/disc-findings.md`, `raw/compiler-mismatch-research-sources.md`, `raw/ai-disclosure-research.md`
 

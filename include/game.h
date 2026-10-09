@@ -151,7 +151,6 @@ extern u8 D_800E738D;
 extern s32 D_8011ECA8;
 extern u8 D_800B3220;
 extern u8 D_80123120[];
-extern u8 D_800AFBF0[];
 extern s8 D_800E8BEE;
 extern u8 D_800AFDF0[];
 extern u8 D_800B3D24;
@@ -690,4 +689,9 @@ extern u8 D_8011F4CA;
 extern u8 D_8011F50E;
 extern u8 D_8011F3FF[];
 extern s16 D_8012059A[];
+/* T-1340: first switch functions */
+s32 _card_status(s32 chan);
+extern u8 D_800CA2FC;
+s32 func_8007E390(void);
+
 #endif /* GAME_H */
