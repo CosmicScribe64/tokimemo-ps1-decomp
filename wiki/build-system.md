@@ -26,6 +26,7 @@ Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha
 - Shift-JIS decoding in splat (`string_encoding: SHIFT-JIS`) writes UTF-8 into the `.s` and changes the bytes (+0xC70 total). Use ASCII.
 - The link needs `build/undefined_syms_auto.txt` (131 addresses in overlay/heap space, see [[overlays]]).
 - Four tiny functions (`func_80066A68`, `func_80066A70`, `func_80066A78`, `func_80066AC0`) were emitted by splat with `jlabel`, which gives harmless `.end without .ent` assembler warnings.
+- In a fresh checkout the first `splat split` rewrites the committed `include/include_asm.h` with splat's own version (no `__sgi` guard), and the IDO compile then fails with `cfe: Error: include/include_asm.h, line 27: Syntax Error`. Restore it with `git checkout include/include_asm.h` and rerun `ninja` (T-0014; fix tracked in [[tickets/T-0101-splat-overwrites-include-asm-h]]).
 - Generated `asm/` contains game code and must never be committed (gitignored with `build/`, `disc/`).
 
 ## objdiff

@@ -6,7 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-0014-find-exact-ucode-compiler|T-0014 Find the exact MIPS ucode compiler]]
+- [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
+- [ ] [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101 Stop splat from overwriting include_asm.h]]
 - [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
 - [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]
 - [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
@@ -19,6 +20,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-0014-find-exact-ucode-compiler|T-0014 Find the exact MIPS ucode compiler]]
 
 ## Done
 
