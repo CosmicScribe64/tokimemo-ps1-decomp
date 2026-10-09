@@ -127,7 +127,7 @@ void func_80041F48(void);
 void func_8004284C(void);
 void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80042908(s32 arg0);
-void func_8004500C(s32 arg0, s32 arg1);
+s32 func_8004500C();
 void birth_day_check_days(s32 arg0, u8 arg1, u8 arg2);
 void dec_bg_show_switch(s32 arg0);
 void hizuke_disp_switch(s32 arg0);
@@ -142,5 +142,183 @@ void func_8009C93C(RECT *rect, s32 arg1, s32 arg2);
 void func_80044750(s32 arg0);
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
+
+extern s32 D_800E7374;
+extern s32 D_800E7384;
+extern u8 D_800E738A;
+extern u8 D_800E738D;
+extern s32 D_8011ECA8;
+extern u8 D_800B3220;
+extern u8 D_80123120[];
+extern u8 D_800AFBF0[];
+extern s8 D_800E8BEE;
+extern u8 D_800AFDF0[];
+extern u8 D_800B3D24;
+extern u8 D_800B3D54[];
+void bzero(void *p, s32 n);
+void func_80042488(void);
+void card_ev_set(void);
+void func_80042C30(void);
+void CloseEvent(s32 ev);
+void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3);
+s32 format(u8 *path);
+s32 func_80054AF4(s32 arg0);
+s32 printf(u8 *fmt, ...);
+
+void k_disp_start(s32 arg0);
+void k_reset(s32 arg0);
+void func_80059BE8(void);
+extern s32 D_800B3D68;
+extern u8 D_801255C0[];
+s32 func_80087E4C(s32 arg0, u8 *arg1);
+extern s32 D_800E7380;
+extern u8 D_800E7389;
+extern s8 D_800E738C;
+
+void func_80059B40(void);
+void func_80042878(s32 arg0);
+void Sw_Start(void);
+void Hw_Start(void);
+s32 InitCARD(s32 arg0);
+s32 StartCARD(void);
+void _bu_init(void);
+s32 _card_auto(s32 arg0);
+u32 get_h_tokimeki(s32 arg0);
+u32 get_h_yuukou(s32 arg0);
+extern s32 D_800B3D6C;
+void func_80049A40(s16 a, s16 b, s16 c, s16 d, s32 e, s32 f, s32 g);
+s32 TestEvent(s32 ev);
+extern s32 D_8011ECBC;
+extern s32 D_8011ECC0;
+extern s32 D_8011ECC4;
+extern s32 D_8011ECC8;
+extern s32 D_8011ECAC;
+extern s32 D_8011ECB0;
+extern s32 D_8011ECB4;
+extern s32 D_8011ECB8;
+
+void func_80042960(void);
+extern s32 D_800E737C;
+extern s8 D_800E738B;
+extern s8 D_800E62BC;
+extern s8 D_800E71E0;
+extern s8 D_800E71E1;
+extern s8 D_800E71E2;
+extern s8 D_800E71E3;
+extern s8 D_800E71EC;
+extern s8 D_800E71ED;
+extern s8 D_800E71EE;
+extern s8 D_800E71F0;
+extern s8 D_800E71F1;
+extern s8 D_800E71F3;
+s32 func_80087954(s32 arg0, u8 *arg1);
+extern u8 D_801255C8[];
+
+s32 close(s32 fd);
+s32 open(u8 *name, s32 mode);
+void func_80056070(u8 *buf, s32 arg1);
+extern s32 D_800B58E4;
+s32 OpenEvent(u32 desc, s32 spec, s32 mode, void (*func)(void));
+s32 EnableEvent(s32 ev);
+s32 SetRCnt(u32 spec, u32 target, u32 mode);
+s32 StartRCnt(u32 spec);
+s32 func_80079E00(s32 arg0);
+
+/* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
+ * counter; layout read from the frame (counter at +0x20 in func_80054704). */
+typedef struct FileReq {
+    /* 0x00 */ u8 name[32];
+    /* 0x20 */ s32 retry;
+} FileReq; /* size 0x24 */
+
+void func_80065F34(s32 arg0);
+extern s16 D_800CA2AC;
+extern u8 D_800E738E;
+
+void dtd_on_tpage(s32 a, s32 b, s32 c, s32 d, s32 e);
+
+extern u8 D_800E8BF0[];
+extern u8 D_800E8C30[];
+void InitPAD(u8 *buf1, s32 len1, u8 *buf2, s32 len2);
+void StartPAD(void);
+void ChangeClearPAD(s32 arg0);
+void func_8009AD30(s32 arg0);
+void func_8009AD50(s32 arg0);
+void func_8009AD60(s32 arg0);
+void func_80099540(s32 *p);
+extern s32 D_80122740;
+extern s32 D_80122744;
+extern s32 D_80122748;
+extern s32 D_8012274C;
+extern s32 D_80122750;
+extern s32 D_80122754;
+extern s32 D_80122758;
+extern s32 D_8012275C;
+extern s32 D_8011ECA0;
+extern u8 D_800E8CA0[];
+void AddPrim(void *ot, s32 prim);
+void func_8009D294(s32 a, s32 b, s32 c, s32 d, s32 e);
+void safe_env(s32 arg0);
+s32 GetWorkBase(s32 arg0, s32 arg1);
+
+void set_kanji_string();
+s32 strlen(u8 *s);
+void DecDCTReset(s32 mode);
+void func_800869C8(s32 arg0);
+void func_80088150(u8 *p, s32 n);
+void func_80088180(s32 a, s32 b, s32 c, s32 d, s32 e);
+void strKickCD(s32 arg0);
+extern u8 *D_80125C58;
+extern s32 D_800B5900;
+
+s32 func_8009ECB0(s32 a, s32 b, s32 c, s32 d);
+
+void func_8004B19C(s32 a, s32 b, s32 c);
+s32 GetSp(void);
+extern u8 D_800E7D34;
+
+extern u8 D_800B3D48;
+
+void func_80053CC0(void);
+
+void func_8009F0B8(u8 *p);
+u8 Sw_Test(void);
+
+extern s32 D_800B5920;
+extern s32 D_800B5924;
+extern s32 D_800B5928;
+extern s32 D_800B592C;
+extern u8 D_800B5939;
+
+void func_800869A4(s32 a);
+extern s32 D_80125C04;
+extern s32 D_80125C08;
+extern s32 D_80125C0C;
+void k_disp_goto_line_end(void);
+s32 k_disp_inc(void);
+s32 check_end_k(void);
+void func_80097D90(s32 a, s32 b, s32 c, s32 d, s32 e);
+void func_80098380(void);
+void func_80098490(s32 a, s32 b, s32 c, s32 d);
+void func_80098530(void);
+void InitGeom(void);
+void func_800985A0(void);
+s32 func_80098370(void);
+void func_800410AC(void);
+extern s32 D_800E8C70;
+extern u8 *D_800E8C74;
+extern s32 D_800E8C84;
+extern u8 *D_800E8C88;
+extern u8 D_800E90A0[];
+
+void func_800789E0(void);
+void func_8007BDE8(void);
+void func_8007B844(void);
+void func_800452C4(void);
+void func_80041878(void);
+void func_80042058(void);
+void func_8004482C(void);
+void dec_bg_reset(void);
+void tpage_buf_clear(void);
 
 #endif /* GAME_H */

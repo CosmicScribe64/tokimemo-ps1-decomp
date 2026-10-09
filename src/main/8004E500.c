@@ -56,13 +56,22 @@ void k_sub_reset_point_set(void) {
     D_800B3F64 = D_800B3F60;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_sub_reset);
+void k_sub_reset(void) {
+    k_reset(D_800B3F64);
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_sub_disp_start);
+void k_sub_disp_start(s32 arg0) {
+    k_disp_start(D_800B3F64 + arg0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_disp_goto_line_end);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_speed_set);
+void k_speed_set(u8 arg0) {
+    D_800B3F66 = arg0;
+    if ((u32)arg0 >= 0x81) {
+        D_800B3F66 = 0x7F;
+    }
+}
 
 u8 get_k_speed(void) {
     return D_800B3F66;

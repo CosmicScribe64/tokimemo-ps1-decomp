@@ -30,6 +30,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]
 - [ ] [[tickets/T-0901-public-docs|T-0901 Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure]]
+- [ ] [[tickets/T-0800-main-exe-batch-c|T-0800 Main exe batch C: 80041000-80059A20]]
+
 - [ ] [[tickets/T-0602-progress-overlays|T-0602 Extend progress reporting to the 26 overlays]]
 - [ ] [[tickets/T-0700-overlay-batch-a|T-0700 Overlay batch A: RENSYU, OMIMAI, VALEN, MASTER]]
 - [ ] [[tickets/T-0750-overlay-batch-b-tel-olh-en-nichi|T-0750 Overlay batch B: TEL, OLH, EN_NICHI]]
@@ -53,7 +55,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006 Identify PsyQ libs/SDK version]]
 - [ ] [[tickets/T-0001-project-scaffolding|T-0001 Project scaffolding]]
 - [ ] [[tickets/T-0007-write-coding-standards|T-0007 Write CODING_STANDARDS.md]]
-
 
 
 %% kanban:settings

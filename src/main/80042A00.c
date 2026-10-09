@@ -5,9 +5,18 @@ INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042A00);
 
 INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042AC8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042BD4);
+void func_80042BD4(void) {
+    InitMouse(D_800E8BF0, D_800E8C30);
+    SenseMouse(3, 4);
+    SetMouse(0, 0xA0, 0x78);
+    RangeMouse(0, 0x140, 0, 0xF0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042C30);
+void func_80042C30(void) {
+    InitPAD(D_800E8BF0, 8, D_800E8C30, 8);
+    StartPAD();
+    ChangeClearPAD(0);
+}
 
 void func_80042C74(void) {
     D_8011ECF6 = 0;
@@ -27,4 +36,4 @@ INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_800430C0);
 
 INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80043448);
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80043504);
+void func_80043504(void) {}

@@ -9,9 +9,21 @@ void func_800451E0(s32 arg0) {
     D_801255D8 = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_800451EC);
+void func_800451EC(void) {
+    D_8012512A = 0x80;
+    D_800B3D68 = func_80087E4C(1, D_801255C0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_80045224);
+void func_80045224(void) {
+    switch (func_80087954(1, D_801255C8)) {
+    case 2:
+        D_8012512A |= 2;
+        break;
+    case 5:
+        D_8012512B = -1;
+        break;
+    }
+}
 
 s32 func_80045288(void) {
     if (D_80125129 == D_80125128 && D_8012512B == -1) {
@@ -20,7 +32,17 @@ s32 func_80045288(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_800452C4);
+void func_800452C4(void) {
+    D_80125128 = 0;
+    D_80125129 = 0;
+    D_8012512A = 2;
+    D_8012512B = -1;
+    D_801255B0 = 0;
+    D_801255B4 = 0;
+    D_801255B5 = 0;
+    D_800B3D60 = 0;
+    D_800B3D6C = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_80045318);
 

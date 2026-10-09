@@ -1,6 +1,20 @@
 #include "common.h"
+#include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", initView);
+void initView(void) {
+    func_8009AD30(0x3E8);
+    D_80122740 = 0;
+    D_80122744 = 0;
+    D_80122748 = 0x3E8;
+    D_8012274C = 0;
+    D_80122750 = 0;
+    D_80122754 = 0;
+    D_80122758 = 0;
+    D_8012275C = 0;
+    func_80099540(&D_80122740);
+    func_8009AD50(0x64);
+    func_8009AD60(0x10000);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", initLight);
 
