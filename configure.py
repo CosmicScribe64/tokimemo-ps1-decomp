@@ -92,7 +92,7 @@ def overlay_targets(n, overlays):
                 variables={"toolchain": " ".join(OVL_C_TOOLCHAIN)},
                 implicit=[stamp, "include/common.h", "include/include_asm.h",
                           "include/asmproc_prelude.inc",
-                          "include/gte_macros.inc", "tools/cc.py"])
+                          "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
         data_o = "build/ovl/%s/%s.o" % (name, data_s[:-2])
         n.build(data_o, "as", data_s, implicit=[stamp, "include/macro.inc"])
         elf = "build/ovl/%s.elf" % name
@@ -142,7 +142,7 @@ def main():
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
                 implicit=[stamp, "include/common.h", "include/include_asm.h",
                           "include/game.h", "include/asmproc_prelude.inc",
-                          "include/gte_macros.inc", "tools/cc.py"])
+                          "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"

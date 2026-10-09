@@ -8,7 +8,9 @@ addresses and absolute branch targets are stripped, so only instructions,
 relocations and symbol-relative targets are compared.
 
 Usage (in Docker): python3 tools/funcdiff.py [--built OBJ] func_80042400 [func_...]
---built compares another object (e.g. a scratch compile) instead of build/src/game.o.
+--built compares another object (e.g. a scratch compile or an overlay object)
+instead of build/src/game.o; --expected names the original-side object (default
+expected/build/src/game.o, e.g. a copy of build/ovl/<NAME>/<NAME>.o).
 Exit code 1 if any function differs.
 """
 import difflib
@@ -40,12 +42,16 @@ def functions(obj, wanted):
 
 
 def main(names):
-    built = BUILT
-    if names[:1] == ["--built"]:
-        built, names = names[1], names[2:]
+    built, expected = BUILT, EXPECTED
+    while names[:1] in (["--built"], ["--expected"]):
+        if names[0] == "--built":
+            built = names[1]
+        else:
+            expected = names[1]
+        names = names[2:]
     if not names:
         sys.exit(__doc__)
-    got, want = functions(built, names), functions(EXPECTED, names)
+    got, want = functions(built, names), functions(expected, names)
     bad = 0
     for n in names:
         if got[n] is None or want[n] is None:
