@@ -281,7 +281,13 @@ void func_800490B4(u8 arg0) {
     D_800E62BB = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/game", func_800490C0);
+void func_800490C0(s32 arg0, s32 arg1) {
+    u8 *p = D_800E6280 + arg1 * 12;
+
+    *(s32 *)(p + 0x24) = arg0;
+    *(s32 *)(p + 0x1C) = 0x10C00;
+    *(s32 *)(p + 0x20) = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800490F0);
 
@@ -393,7 +399,12 @@ void func_8004E93C(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8004E970);
+u8 *func_8004E970(s32 arg0) {
+    if (arg0 >= 0x35) {
+        return D_800B3F58;
+    }
+    return D_800B3DC0 + arg0 * 8;
+}
 
 s16 *func_8004E99C(void) {
     return &D_800B3F60;
@@ -421,7 +432,12 @@ u8 func_8004EC14(void) {
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004EC24);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8004ECB4);
+s32 func_8004ECB4(void) {
+    if (D_800B3F62 == D_800B3F68) {
+        return 1;
+    }
+    return 0;
+}
 
 u8 func_8004ECE0(void) {
     return *(u8 *)&D_800B3F60;
@@ -538,7 +554,13 @@ void func_80053CAC(u8 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80053CC0);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80053CE0);
+void func_80053CE0(void) {
+    D_800E62B5 = 1;
+    D_800E739C = 0;
+    D_800E7395 = 0;
+    D_800E739D = 0;
+    D_800E73A0 = 0;
+}
 
 void func_80053D10(void) {
     D_800E62B5 = 0;
@@ -1044,9 +1066,13 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80066334);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80066A2C);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80066A68);
+s32 func_80066A68(void) {
+    return 1;
+}
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80066A70);
+s32 func_80066A70(void) {
+    return 2;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80066A78);
 
@@ -1388,7 +1414,13 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8007891C);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8007894C);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_800789E0);
+void func_800789E0(void) {
+    D_800B6D30 = 0;
+    D_800B6D34 = 0;
+    D_800B6D38 = 0;
+    D_800B6D3C = 0;
+    D_800B6D40 = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80078A0C);
 

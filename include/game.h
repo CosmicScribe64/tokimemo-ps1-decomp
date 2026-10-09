@@ -12,10 +12,14 @@ extern u8 D_800B3D40;
 extern u8 D_800B3D44;
 extern s32 D_800B3D70; /* only sw and &D_800B3D70 seen */
 extern u8 D_800B3D80;
+extern u8 D_800B3DC0[];
 extern u8 D_800B3DC7[]; /* stride 8 from func_8004E93C: likely a field of an 8-byte struct array */
+extern u8 D_800B3F58[];
 extern s16 D_800B3F60; /* lh/sh; also lbu elsewhere */
+extern s16 D_800B3F62;
 extern s16 D_800B3F64;
 extern u8 D_800B3F66;
+extern s16 D_800B3F68;
 extern u8 D_800B3F6A;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
@@ -24,8 +28,14 @@ extern u8 D_800B593C;
 extern u8 D_800B5940;
 extern s32 D_800B5948;
 extern u8 D_800B5A64;
+extern u8 D_800B6D30;
+extern u8 D_800B6D34;
+extern u8 D_800B6D38;
+extern s32 D_800B6D3C;
+extern s32 D_800B6D40;
 extern u16 D_800E36E8;
 extern u16 D_800E36EA;
+extern u8 D_800E6280[];
 extern u8 D_800E62B5;
 extern u8 D_800E62B9;
 extern u8 D_800E62BA;
@@ -42,6 +52,7 @@ extern u8 D_800E7393;
 extern u8 D_800E7394; /* also read with lhu elsewhere */
 extern u8 D_800E7395;
 extern u8 D_800E739C;
+extern u8 D_800E739D;
 extern s32 D_800E73A0;
 extern u8 D_8011F4CA;
 extern u8 D_80120652;
