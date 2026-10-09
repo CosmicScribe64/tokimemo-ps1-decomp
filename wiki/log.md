@@ -59,3 +59,9 @@ IDO 5.3 with `-EL` (decompals/ido-static-recomp v1.2) reproduces the signatures 
 
 ## [2026-10-09] ticket | T-0013 -> In Review
 Moved [[tickets/T-0013-identify-original-compiler-pipeline]] In Progress -> In Review on [[kanban]]; code-review gate next.
+
+## [2026-10-09] lint | Code review of T-0013
+Ran a code review (Standards + Spec, since fa2f49e). Fixed the `configure.py` docstring length, reworded the partial acceptance criterion and created [[tickets/T-0014-find-exact-ucode-compiler]] (Backlog) for the frame-size and address-CSE gap. Remaining judgement calls accepted and recorded in [[tickets/T-0013-identify-original-compiler-pipeline]].
+
+## [2026-10-09] ticket | T-0013 -> Done, T-0014 created
+Moved [[tickets/T-0013-identify-original-compiler-pipeline]] In Review -> Done on [[kanban]]; added [[tickets/T-0014-find-exact-ucode-compiler]] to Backlog.
