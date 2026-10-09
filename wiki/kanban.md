@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2010-wave2-date|T-2010 Wave 2: DATE]]
 
 
 ## In Review
