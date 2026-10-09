@@ -14,3 +14,4 @@ __pycache__/
 .ninja_log
 .ninja_deps
 wiki/.obsidian/
+/tools/psyq_sigs/

@@ -15,21 +15,32 @@ import sys
 import ninja_syntax
 
 EXE = "SLPM_86.053"
-AS = "mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I."
 
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
 # Each C file maps to its toolchain arguments for tools/cc.py. The game code
 # is IDO-compiled (T-0013, wiki/toolchain.md); SDK C, once split, would use
 # e.g. ["gcc", "2.7.2-psx", "2.79"].
 C_FILES = {"src/game.c": ["ido", "5.3"]}
-ASM_FILES = [
-    "asm/header.s",
-    "asm/sdk_libs.s",
-    "asm/libapi_stubs.s",
-    "asm/data/rodata.rodata.s",
-    "asm/data/data.data.s",
-    "asm/data/bss.bss.s",
-]
+
+
+def asm_files():
+    """asm objects splat writes for the `main` segment, from the splat config."""
+    import yaml
+    cfg = yaml.safe_load(open("config/%s.yaml" % EXE))
+    out = ["asm/header.s"]
+    for sub in cfg["segments"][1]["subsegments"]:
+        if isinstance(sub, dict):
+            typ, name = sub["type"], sub["name"]
+        else:
+            typ, name = sub[1], sub[2]
+        if typ == "asm":
+            out.append("asm/%s.s" % name)
+        elif typ in ("rodata", "data", "bss"):
+            out.append("asm/data/%s.%s.s" % (name, typ))
+    return out
+
+
+ASM_FILES = asm_files()
 
 
 def main():
@@ -41,7 +52,7 @@ def main():
     n.rule("split",
            command="python3 -m splat split config/%s.yaml && touch %s" % (EXE, "build/split.stamp"),
            description="splat split")
-    n.rule("as", command=AS + " -o $out $in", description="AS $in")
+    n.rule("as", command="python3 tools/asm.py $in $out", description="AS $in")
     n.rule("cc",
            command="python3 tools/cc.py $in $out $toolchain",
            depfile="$out.d", deps="gcc", description="CC $in")
@@ -73,7 +84,7 @@ def main():
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"
-        n.build(o, "as", s, implicit=[stamp, "include/macro.inc"])
+        n.build(o, "as", s, implicit=[stamp, "include/macro.inc", "tools/asm.py"])
         objs.append(o)
 
     elf = "build/%s.elf" % EXE

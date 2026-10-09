@@ -25,7 +25,10 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0007-write-coding-standards|T-0007]] Write CODING_STANDARDS.md (Done)
 - [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Backlog)
 - [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Done)
-- [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Backlog)
+- [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (In Review)
+- [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300]] Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress (Backlog)
+- [[tickets/T-0301-sdk-rodata-data-split|T-0301]] Split SDK rodata and data per library and object (Backlog)
+- [[tickets/T-0302-sdk-version-conflict|T-0302]] Resolve mixed SDK vintages (Backlog)
 - [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Compiler confirmation on first game functions (Done)
 - [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Done)
 - [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Backlog)
@@ -36,7 +39,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code)
-- [[psyq-sdk]] - SDK era, libraries, code anchors
+- [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, matched/unmatched functions, idioms
 - [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit
 - [[build-system]] - configure.py / ninja pipeline and gotchas

@@ -1,4 +1,4 @@
-# splat config for the boot executable SLPM_86.053 (PS-X EXE, SDK ~PsyQ 4.x).
+# splat config for the boot executable SLPM_86.053 (PS-X EXE, SDK ~PsyQ 3.x/4.x mix, see wiki/psyq-sdk.md).
 # Layout facts: wiki/executable.md. File offset = vram - 0x80041000 + 0x800.
 name: SLPM_86.053
 sha1: e823bd844a8f8fa4d05483b59c66bc54b8393b26
@@ -20,6 +20,8 @@ options:
   ld_bss_is_noload: True
 
   find_file_boundaries: False
+  # include/*.inc and include_asm.h are maintained by hand (T-0013); splat would overwrite them
+  generate_asm_macros_files: False
   gp_value: 0x800EB670
 
   o_as_suffix: True
@@ -58,9 +60,73 @@ segments:
     subsegments:
       # game code, C-capable (every function INCLUDE_ASM for now)
       - [0x800, c, game]
-      # PsyQ libs + libapi syscall stubs, kept as asm (T-0010 follow-up)
-      - [0x46010, asm, sdk_libs]
-      - [0x6D7C0, asm, libapi_stubs]
+      # PsyQ SDK libs, asm only (T-0010). Order is link order. Object-level
+      # splits where signature evidence exists, see wiki/psyq-sdk.md.
+      - [0x46010, asm, libpress_main]   # vram 0x80086810
+      - [0x46650, asm, libpress_vlc]   # vram 0x80086E50
+      - [0x469C0, asm, libpress_obj2]   # vram 0x800871C0
+      - [0x46F30, asm, libcd_event]   # vram 0x80087730
+      - [0x47030, asm, libcd_rest]   # vram 0x80087830
+      - [0x4AFB0, asm, libsnd]   # vram 0x8008B7B0
+      - [0x541B0, asm, libspu]   # vram 0x800949B0
+      - [0x59630, asm, libgs]   # vram 0x80099E30
+      - [0x5BA10, asm, libgpu]   # vram 0x8009C210
+      - [0x5EE80, asm, libgte_msc00]   # vram 0x8009F680
+      - [0x5EF00, asm, libgte_8009F700]   # vram 0x8009F700
+      - [0x5F0AC, asm, libgte_cor_00]   # vram 0x8009F8AC
+      - [0x5F25C, asm, libgte_8009FA5C]   # vram 0x8009FA5C
+      - [0x601D0, asm, libgte_fgo_01]   # vram 0x800A09D0
+      - [0x60464, asm, libgte_mtx]   # vram 0x800A0C64
+      - [0x60930, asm, libgte_msc01]   # vram 0x800A1130
+      - [0x60A50, asm, libgte_reg03]   # vram 0x800A1250
+      - [0x60BD0, asm, libgte_reg01]   # vram 0x800A13D0
+      - [0x60C50, asm, libgte_cmb_00]   # vram 0x800A1450
+      - [0x60CD0, asm, libgte_mtx_00]   # vram 0x800A14D0
+      - [0x616F0, asm, libgte_fgo_00]   # vram 0x800A1EF0
+      - [0x61740, asm, libgte_tmdf_f3]   # vram 0x800A1F40
+      - [0x61C50, asm, libgte_800A2450]   # vram 0x800A2450
+      - [0x62490, asm, libgte_tmdf_g3]   # vram 0x800A2C90
+      - [0x62A40, asm, libgte_800A3240]   # vram 0x800A3240
+      - [0x632C0, asm, libgte_tmdf_ft3]   # vram 0x800A3AC0
+      - [0x63870, asm, libgte_800A4070]   # vram 0x800A4070
+      - [0x64410, asm, libgte_tmdf_gt3]   # vram 0x800A4C10
+      - [0x64C00, asm, libgte_800A5400]   # vram 0x800A5400
+      - [0x65570, asm, libgte_tmdf_f4]   # vram 0x800A5D70
+      - [0x65B40, asm, libgte_800A6340]   # vram 0x800A6340
+      - [0x664A0, asm, libgte_tmdf_g4]   # vram 0x800A6CA0
+      - [0x66B60, asm, libgte_800A7360]   # vram 0x800A7360
+      - [0x67590, asm, libgte_tmdf_ft4]   # vram 0x800A7D90
+      - [0x67C30, asm, libgte_800A8430]   # vram 0x800A8430
+      - [0x68670, asm, libgte_tmdf_gt4]   # vram 0x800A8E70
+      - [0x68DE0, asm, libgte_800A95E0]   # vram 0x800A95E0
+      - [0x69910, asm, libgte_patchgte]   # vram 0x800AA110
+      - [0x699B0, asm, libgte_smp_00]   # vram 0x800AA1B0
+      - [0x69BC0, asm, libgte_msc02]   # vram 0x800AA3C0
+      - [0x69E60, asm, libgte_cmb_09]   # vram 0x800AA660
+      - [0x69F30, asm, libgte_divf3a]   # vram 0x800AA730
+      - [0x6A2A0, asm, libgte_cmb_08]   # vram 0x800AAAA0
+      - [0x6A370, asm, libgte_cmb_06]   # vram 0x800AAB70
+      - [0x6A400, asm, libgte_divg3a]   # vram 0x800AAC00
+      - [0x6A810, asm, libgte_cmb_18]   # vram 0x800AB010
+      - [0x6A910, asm, libgte_cmb_01]   # vram 0x800AB110
+      - [0x6A970, asm, libgte_smp]   # vram 0x800AB170
+      - [0x6AC20, asm, libgte_divft3a]   # vram 0x800AB420
+      - [0x6B020, asm, libgte_divgt3a]   # vram 0x800AB820
+      - [0x6B4C0, asm, libgte_cmb_07]   # vram 0x800ABCC0
+      - [0x6B570, asm, libgte_divf4a]   # vram 0x800ABD70
+      - [0x6B9F0, asm, libgte_divg4a]   # vram 0x800AC1F0
+      - [0x6BF40, asm, libgte_divft4a]   # vram 0x800AC740
+      - [0x6C460, asm, libgte_divgt4a]   # vram 0x800ACC60
+      - [0x6CA80, asm, libetc]   # vram 0x800AD280
+      - [0x6D7C0, asm, libapi_0]   # vram 0x800ADFC0
+      - [0x6D830, asm, libcard_card]   # vram 0x800AE030
+      - [0x6D860, asm, libapi_1]   # vram 0x800AE060
+      - [0x6D930, asm, libc_sprintf]   # vram 0x800AE130
+      - [0x6E6B0, asm, libapi_2]   # vram 0x800AEEB0
+      - [0x6E720, asm, libc_memmove]   # vram 0x800AEF20
+      - [0x6E7B0, asm, libapi_3]   # vram 0x800AEFB0
+      - [0x6E830, asm, libapi_counter]   # vram 0x800AF030
+      - [0x6E9A0, asm, libapi_4]   # vram 0x800AF1A0
       - [0x6EB40, rodata, rodata]
       - [0x72A20, data, data]
       - { start: 0xA3000, type: bss, name: bss, vram: 0x800E3800 }
