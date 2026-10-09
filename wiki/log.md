@@ -337,3 +337,6 @@ On [[kanban]]: [[tickets/T-0017-const-in-reg-loop-hoisting]] to In Review (revie
 
 ## [2026-10-09] ticket | T-0017 In Review -> Done
 Inline code-review gate for [[tickets/T-0017-const-in-reg-loop-hoisting]]: two findings (frame-pass IDO snippet broken by the flag change, missing comment on `check_end_k` operand order), both fixed in tools/test_frame_pass.py and src/main/8004E500.c. Clean rebuild 27/27 sha1 OK, tests OK. Card moved to Done on [[kanban]]; [[matching-notes]] notes the frame-pass side effect.
+
+## [2026-10-09] build | t0018-regs merged (-Wo,-nokpicopt)
+Merged branch t0018-regs into main. Regressions under the new flag: `func_80042878` (fixed: `u32` local), `normal_date_bg_fadeout` and `func_80135440` (reverted to INCLUDE_ASM, `$v0`/`$v1` family, see [[matching-notes]]). Clean build 27 of 27 sha1 OK, progress 703 -> 714 of 6962. Header conflicts from the merge (`get_h_*` u32 vs s32, a duplicate) resolved ([[tickets/T-1200-fix-conflicting-extern-declarations]]).

@@ -21,7 +21,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80042540", func_80042808);
 INCLUDE_ASM("asm/nonmatchings/main/80042540", func_8004284C);
 
 void func_80042878(s32 arg0) {
-    u8 t;
+    u32 t;
 
     D_800E7388 = arg0;
     D_800E7389 = 0;

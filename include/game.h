@@ -143,8 +143,6 @@ void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
 void func_80048F64(s32 arg0);
 void _sys_default_tpage_set(void);
-s32 get_h_tokimeki(s32 arg0);
-s32 get_h_yuukou(s32 arg0);
 
 extern s32 D_800E7374;
 extern s32 D_800E7384;
@@ -392,7 +390,6 @@ void func_8008BEE0();
 void func_8008BFB0();
 void func_8007A868(void);
 void func_8007A924();
-void func_80048F64(s32 a);
 
 void normal_date_move_place_init(void);
 

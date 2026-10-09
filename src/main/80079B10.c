@@ -258,20 +258,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_bg_fadein);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_bggirl_fadein);
 
-void normal_date_bg_fadeout(void) {
-    u8 v;
-    D_80122CF8 = 1;
-    v = D_800B593C - 4;
-    if ((u32)v > 0x80) {
-        v = 0;
-    }
-    D_800B593C = v;
-    if ((u32)v < 4) {
-        D_80122CF8 = 0;
-        D_800B593C = 0;
-        func_8004284C();
-    }
-}
+INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_bg_fadeout);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_bggirl_fadeout);
 
