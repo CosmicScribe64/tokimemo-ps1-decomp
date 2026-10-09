@@ -6,7 +6,6 @@
 /* Main-exe data used by EVENT. */
 extern u8 D_800E9620[];
 extern u8 D_800EC190[];
-<<<<<<< HEAD
 void func_80011DFC();
 void func_8010B430();
 void func_8004CF30();
@@ -56,11 +55,7 @@ extern s16 D_80124388;
 extern s32 D_801241D4;
 extern s32 D_801241E4;
 extern s32 D_801241F4;
-=======
-extern u8 D_800B1746;
 extern u8 D_8012531C;
-void func_80011DFC(void);
 s32 func_80045FF4(void);
->>>>>>> t-jtbl
 
 #endif /* OVL_EVENT_H */

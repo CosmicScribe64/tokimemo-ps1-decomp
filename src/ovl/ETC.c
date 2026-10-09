@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 #include "common.h"
-=======
->>>>>>> t-jtbl
 #include "ovl/ETC.h"
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80132000);
