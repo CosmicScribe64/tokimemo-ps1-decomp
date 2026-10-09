@@ -37,3 +37,4 @@ deploy_key.pub
 game-bundle.key
 /ci-bundle/
 /AGENTS.local.md
+/.claude/
