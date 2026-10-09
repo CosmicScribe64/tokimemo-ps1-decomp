@@ -286,3 +286,10 @@ Failure patterns seen here (all variants of T-0017 / T-0018, none new):
 6. Callee result used though the callee is `void` in its own file (`func_8005BAE0` family): the match needs `u8 k_sub_disp_start()`, but the defining file declares it `void`; kept as asm.
 
 Idioms: when a global is read as `lbu` in one function and stored as a word in another, a cast at the access (`*(s32 *)&D_800E7944 = x;` in `func_8005C4CC`) is enough. `u8` colour bytes must be declared `u8` (`li 128`/`li 255`, not `-128`). Calls to functions defined later in the same file need a prototype in `include/game.h` (IDO treats an implicit declaration as `int` and rejects the later `void` definition).
+## Overlay batch J (T-1060): BUNKAKEN, BUNKASAI
+77 functions matched (39 + 38 incl. one earlier empty stub); everything is one of two templates, so it went fast with a generator script over the asm (not committed).
+- 0x34-byte setters (`D_x0 = const; D_x4 = const; D_x8 = const;`, three `lui/ori` + `lui at/sw`): 27 + 22 clones, plain C with `u32` globals. Also the copy variant `D_800CA160 = D_80155E90; ...` (`func_8013BFA0`).
+- 0x64-byte scene-start stubs: `func_800847B8(n); handler(); D_800CA14C = 0; <3-word copy>; func_8004284C();` (26 clones). `n` is 0 when the original has `or a0,zero,zero`.
+- Pads after the last function of an object: 2 or more `nop` use `INCLUDE_ASM("src/ovl/pad", pad_<NAME>_<end addr>)`; the 1-nop case still cannot be ported (asm-processor minimum), so `func_8013EAC8`, `func_80143D68`, `func_80148E68`, `func_80150CC8`, `func_80152618` (BUNKAKEN) and `func_80135448`, `func_80146F38`, `func_8014DD28` (BUNKASAI) stay `INCLUDE_ASM`.
+- `funcdiff.py` reports DIFF for these pad cases (the nops live in the original function) and for calls to renamed main-exe functions (`k_reset`/`k_disp_start` vs the auto name in `expected/`); only the linked sha1 (`ninja build/ovl/<NAME>.ok`) is authoritative there.
+- Left: `func_80150930`-style local function-pointer table copied from rodata and indexed by `D_800E7389` (known gap (a) of batch A), and every function above 0x7C bytes (not attempted, time-box).

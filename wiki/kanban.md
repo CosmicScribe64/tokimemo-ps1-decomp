@@ -36,6 +36,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-1070-overlay-batch-k-name-ent-tt|T-1070 Batch K: overlays NAME_ENT, TT]]
 - [ ] [[tickets/T-1000-main-exe-batch-d|T-1000 Batch D: main 8005A0B0-80061710]]
+- [ ] [[tickets/T-1060-overlay-batch-j-bunkaken-bunkasai|T-1060 Batch J: overlays BUNKAKEN, BUNKASAI]]
+
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]
 - [ ] [[tickets/T-0901-public-docs|T-0901 Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure]]

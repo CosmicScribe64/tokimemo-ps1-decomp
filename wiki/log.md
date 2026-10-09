@@ -297,3 +297,5 @@ Matched 39 functions in src/main/8005A0B0.c and src/main/80061710.c (call sequen
 
 ## [2026-10-09] ticket | T-1000 closed
 Inline code-review gate passed (no open findings); [[tickets/T-1000-main-exe-batch-d]] moved to Done on branch batch-b-d, not merged. 39 matches.
+## [2026-10-09] ticket | T-1060 overlay batch J (BUNKAKEN, BUNKASAI)
+[[tickets/T-1060-overlay-batch-j-bunkaken-bunkasai]]: 77 functions matched in `src/ovl/BUNKAKEN.c` and `src/ovl/BUNKASAI.c` (two clone templates: pointer setters and scene-start stubs), headers `include/ovl/BUNKAKEN.h`, `include/ovl/BUNKASAI.h`, pad stubs `src/ovl/pad/pad_BUNKAKEN_*.s`, `src/ovl/pad/pad_BUNKASAI_*.s`. All 27 sha1 OK. Notes in [[matching-notes]] (section Overlay batch J). Ticket moved to Done after the inline code-review gate.
