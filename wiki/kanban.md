@@ -22,6 +22,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2090-wave2-main-executable|T-2090 Wave 2: main executable]]
+
 
 
 ## In Review

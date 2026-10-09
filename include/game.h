@@ -694,4 +694,9 @@ s32 _card_status(s32 chan);
 extern u8 D_800CA2FC;
 s32 func_8007E390(void);
 
+/* T-2090: wave 2 main */
+extern u8 D_800E71EF;
+extern u8 D_800E7312;
+extern u32 D_80123110;
+
 #endif /* GAME_H */

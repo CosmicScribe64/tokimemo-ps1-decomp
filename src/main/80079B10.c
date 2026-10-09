@@ -195,7 +195,13 @@ void func_8007BFA8(void) {
     D_80125D3C = -1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BFB8);
+void func_8007BFB8(void) {
+    if (D_80125D10 & 0x10000000) {
+        D_80125D10 &= 0xEFFFFFFF;
+        return;
+    }
+    D_80125D10 |= 0x10000000;
+}
 
 void SD_InitCDLevelInfo(void) {
     D_80125E60 = 0;
