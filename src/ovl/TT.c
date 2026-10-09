@@ -3,7 +3,12 @@
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80132000);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801320F0);
+void func_801320F0(u8 *arg0, u8 *arg1) {
+    s32 dx = *(s32 *)(arg1 + 0xC) - *(s32 *)(arg0 + 0xC);
+    s32 dy = *(s32 *)(arg1 + 0x10) - *(s32 *)(arg0 + 0x10);
+
+    func_8014D260(dy >> 16, dx >> 16);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80132130);
 
@@ -345,9 +350,6 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013E6A0);
 void func_8013E824(void) {
     func_8004111C();
 }
-
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_TT_8013E844);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013E850);
 

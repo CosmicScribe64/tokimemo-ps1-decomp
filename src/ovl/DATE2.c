@@ -133,9 +133,6 @@ void func_80132DAC(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_DATE2_80132DD4);
-
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_80132DE0);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_80132E5C);

@@ -236,7 +236,10 @@ void func_8013A484(void) {
     dtd_on(0xA);
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A4FC);
+void func_8013A4FC(void) {
+    func_80049A40(-0xA, -0x6E, 0x50, 0xB4, 6, 0xA08080, 2);
+    dtd_on(6);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013A550);
 

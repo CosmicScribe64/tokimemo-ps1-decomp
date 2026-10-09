@@ -2,8 +2,8 @@
 #define OVL_OLH_H
 
 #include "common.h"
+#include "game.h"
 
-/* Main-exe functions used by OLH (old names, see T-0750). */
-void func_80042878(s32 arg0);
+/* Main-exe functions used by OLH come from game.h (T-1200). */
 
 #endif /* OVL_OLH_H */

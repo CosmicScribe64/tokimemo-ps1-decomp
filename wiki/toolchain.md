@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-10-09
-sources: ["tools/Dockerfile", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
+sources: ["tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
 ---
 
 # Toolchain
@@ -29,3 +29,14 @@ A real copy of the original compiler would replace the pass without any change t
 
 ## Object padding pass (T-0012)
 `tools/cc.py` zero-pads the `.text` of every compiled C object to a multiple of 16 bytes (function `pad_text`, unit tests `tools/test_cc.py`). This is a toolchain emulation pass in the sense of CODING_STANDARDS 7a, not a fakematch: one uniform rule for all C objects (main exe and overlays), no per-function switches. It models the original link, which aligned every object's `.text` to 16; our linker script uses `SUBALIGN(2)` because the SDK asm objects must be packed exactly. Evidence: 804 of the 833 gaps between adjacent game functions are zero, and the 27 non-zero gaps all end on a 16-byte boundary and are 4 to 12 zero bytes ([[source-files]]); after the pass a file whose last function is C reproduces that padding (`func_80043504` as an empty C function matched). Functions kept as `INCLUDE_ASM` already contain their trailing nops, so nothing is doubled. It fails loudly (a missing `.text` makes `objcopy` abort the compile). Verified on a clean rebuild: the main exe and all 26 overlays still match their sha1 with the pass active (27 of 27 OK); each overlay is one C object whose end the linker script already aligned to 16.
+
+## Trailing padding pass (T-1310)
+`tools/trailing_pad.py` (called by `tools/cc.py` after every compile, before `pad_text`) puts the original's trailing zero words back after each C function. Problem: the original link aligned each object's `.text` to 16, so the zero words after an object's last function sit in the middle of an overlay `.c` (one C object holds many original objects). An `INCLUDE_ASM` function carries them (splat prints them after `endlabel`); a C function loses them. asm-processor needs at least 2 instructions per block, so the 1-nop case (end address = 12 mod 16, 124 overlay functions) could not even be a stub; the old `INCLUDE_ASM("src/ovl/pad", ...)` stubs (T-0700) were also a per-site source line.
+
+Rule (CODING_STANDARDS 7a: uniform, no per-function control, no source markers). For every function symbol that the source defines in C (not named by an `INCLUDE_ASM` line), read `asm/{matchings,nonmatchings}/<segment>/<name>.s` (`asm/ovl/<NAME>/...` for `src/ovl/<NAME>.c`, `asm/.../main/<addr>` for `src/main/<addr>.c`); the `nop` lines after its `endlabel` are the original's padding; insert that many zero words at symbol value + size. Before inserting it drops the assembler's own end-of-`.text` alignment fill (it belongs to no function; `pad_text` restores the original 16-byte object alignment afterwards). Anything unknown aborts the build: a function symbol without size, a symbol inside the function, HI16/LO16 or other relocations against the `.text` section symbol, trailing lines that are not nops, an `.s` without `endlabel`. No `.s` for a symbol (static helper) means no padding.
+
+Mechanics: the pass edits the relocatable ELF itself (symbol values, `.text` section symbol size, REL offsets, in-place addends of `R_MIPS_32`/`R_MIPS_26` against the section symbol). Tests: `tools/docker.sh sh -c 'cd tools && python3 test_trailing_pad.py'` (synthetic objects assembled and linked, compared byte for byte against sources with the nops written out). The depfile lists every `.s` read, so ninja rebuilds when they change.
+
+Coverage scan (all `asm/**/{non,}matchings` function files): 392 functions have nops after `endlabel`: 30 in the main exe (27 at the end of a `src/main` file, previously handled by `pad_text`; 2 odd 4/5-nop tails that are not 16-aligned) and 362 in overlays (1 nop 124, 2 nops 98, 3 nops 132, 4+ nops 8; 11 of them end off a 16-byte boundary). Because the count comes from the data, not from an alignment formula, the odd tails need no special case. Replaceable: the C stays ordinary; a real compiler/linker pair would produce the padding itself.
+
+`pad_text` side fix: it now edits the ELF in Python; `objcopy --update-section .text=` with a longer section silently dropped every relocation of the object (never hit before because no object with relocations needed padding).

@@ -340,3 +340,9 @@ Inline code-review gate for [[tickets/T-0017-const-in-reg-loop-hoisting]]: two f
 
 ## [2026-10-09] build | t0018-regs merged (-Wo,-nokpicopt)
 Merged branch t0018-regs into main. Regressions under the new flag: `func_80042878` (fixed: `u32` local), `normal_date_bg_fadeout` and `func_80135440` (reverted to INCLUDE_ASM, `$v0`/`$v1` family, see [[matching-notes]]). Clean build 27 of 27 sha1 OK, progress 703 -> 714 of 6962. Header conflicts from the merge (`get_h_*` u32 vs s32, a duplicate) resolved ([[tickets/T-1200-fix-conflicting-extern-declarations]]).
+
+## [2026-10-09] ticket | T-1310 created, In Progress -> In Review
+[[tickets/T-1310-tooling-object-trailing-padding]]: new `tools/trailing_pad.py` (called by `tools/cc.py`) re-inserts the original's trailing nops after every C function, read from the splat `.s`; replaces the 36 `src/ovl/pad` stubs, handles the 1-nop case asm-processor cannot. Scan: 392 functions with trailing nops (30 main, 362 overlay), all covered. Fixed `pad_text` (objcopy dropped relocations on growth). Ported 8 BUNKAKEN/BUNKASAI functions plus OLH `func_801323CC`, OPTION `func_8013A4FC`, VALEN `func_80133C44`, TT `func_801320F0` (progress 714 -> 726 of 6962). Clean rebuild 27/27 OK. Rule in [[toolchain]], [[matching-notes]], [[build-system]]; CODING_STANDARDS 7a names it as an example.
+
+## [2026-10-09] ticket | T-1310 In Review -> Done
+Inline review against CODING_STANDARDS (7a points: uniform, documented, evidence, fails loudly, tested, replaceable; C89 and `INCLUDE_ASM` layout of the ported functions; no game data committed) found nothing open; card moved to Done on [[kanban]]. Not merged.

@@ -43,9 +43,6 @@ void func_80132714(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_VALEN_80132754);
-
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80132760);
 
 void func_801327E8(void) {
@@ -107,7 +104,10 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80133AA8);
 
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80133B6C);
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80133C44);
+void func_80133C44(void) {
+    bg_read_sub2(0x414C);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80133C70);
 

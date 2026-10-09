@@ -98,9 +98,6 @@ void func_80133120(void) {
     func_80083A10();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_OMIMAI_801331A4);
-
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_801331B0);
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_80133424);

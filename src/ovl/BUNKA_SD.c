@@ -84,9 +84,6 @@ void func_80134228(u32 arg0) {
     }
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKA_SD_80134258);
-
 void func_80134260(void) {
     func_8008585C();
     func_80048E78();
@@ -215,9 +212,6 @@ void func_801361B8(void) {
         D_80120763 = 0;
     }
 }
-
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKA_SD_80136264);
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80136270);
 
@@ -380,9 +374,6 @@ void func_80138898(u32 arg0) {
         func_8004284C();
     }
 }
-
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKA_SD_801388C8);
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801388D0);
 
