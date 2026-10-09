@@ -14,7 +14,7 @@ Decompile functions in `src/ovl/NAME_ENT.c` and `src/ovl/TT.c` (IDO 5.3 with the
 
 ## Acceptance criteria
 
-- [x] Functions matched (funcdiff MATCH), all 27 sha1 checks OK. Result: 76 (NAME_ENT 52, TT 24); goal was at least 40
+- [x] Functions matched (funcdiff MATCH), all 27 sha1 checks OK. Result: 76 (NAME_ENT 53, TT 23); goal was at least 40
 - [x] New failure patterns noted in [[matching-notes]]
 - [x] Code-review gate run inline, findings resolved
 

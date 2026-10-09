@@ -212,7 +212,7 @@ Failure patterns (left as `INCLUDE_ASM`; T-0017 and T-0018 are the owners):
 5. RECT locals: the original emits the four halfword stores in the order `h, w, x, y` for the source order `x, y, w, h` (`func_80059308`); IDO keeps source order.
 6. Already known: pairs of globals sharing one `lui $at` (`func_8004482C`, `menu_bar_color`, `dec_bg_reset`), `move v0,zero` before the last `sb` (`func_8004284C`, `func_80042808`), `u16 * s32` operand order of `multu` (`RangeMouse`), `u16 >> 12` temp in `v1` (`func_8005352C`), first-parameter spill (`load_palette`: `sw a0,0(sp)` that the original does not have), `D++` after a store scheduled above it (`func_80053CC0`).
 ## Overlay batch K (T-1070): NAME_ENT, TT
-76 functions matched (NAME_ENT 52, TT 24): state-gated call sequences (`if (D_800E738A == 0) f();` family, pad-button masks on `D_800E7208`), argument-heavy call sequences (`func_8004E788`, `func_80044750`), slot finders, small struct setters. Verification with `funcdiff.py --expected expected/ovl/<NAME>.o`.
+76 functions matched (NAME_ENT 53, TT 23): state-gated call sequences (`if (D_800E738A == 0) f();` family, pad-button masks on `D_800E7208`), argument-heavy call sequences (`func_8004E788`, `func_80044750`), slot finders, small struct setters. Verification with `funcdiff.py --expected expected/ovl/<NAME>.o`.
 
 New patterns:
 - **Register numbers follow source order of the temporaries.** `func_8013BF68` (TT) matched only after the stores of constants were written before the `lh`/`sh` copies (`0xC00` got `t7`, loaded halfwords `t8`/`t9`). To fix a `t7`/`t8` swap, reorder statements before trying anything else.
