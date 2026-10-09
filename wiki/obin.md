@@ -66,6 +66,9 @@ Mapped to an overlay with high confidence: 0. High-confidence additions to the p
 - Procedure descriptors give frame sizes for the 5 overlay procedures (0x28, 0xC0, 0x28, 0x28, 0x30).
 - The libsnd bss variables (`_snd_openflag`, `_svm_vab_used`, ...) and other SDK data map with high confidence, useful for [[tickets/T-0301-sdk-rodata-data-split]].
 
+## Status of the names: hypotheses (T-0600)
+The 370 high-confidence names are applied to the build through `config/symbol_addrs_obin.txt` (listed in `symbol_addrs_path` of `config/SLPM_86.053.yaml` after the SDK file; main exe only, overlay configs would reject them). They are hypotheses, not facts: of the 24 game-code spot checks, 12 were corroborated by the callees or the role, 0 were refuted, and the other 12 were inconclusive. Convention (CODING_STANDARDS section 4): provisional names stay in that file, whose header says HYPOTHESES; a confirmed name moves to `config/symbol_addrs.txt`. The file is hand-maintained now: the generator only emits placeholders, so `tools/obin_map.py --write` on the renamed tree would produce an empty list (do not run it). Code lines have no `size:` attribute, because the O.BIN gap includes trailing alignment nops that splat would count into the function (+12 bytes in `ninja progress`). Splat's `asm/nonmatchings/main/<addr>/<name>.s` file names and the `INCLUDE_ASM` names in `src/main/*.c` follow the new names; old-to-new pairs stay in `config/obin_renames.txt` (this page and [[log]] keep the old names on purpose). Collision check on all 370: no duplicates, no C keywords, no invalid identifiers, no clash with `config/symbol_addrs_sdk.txt`, `include/` or `src/` identifiers or libc names; none had to be skipped. Many names are PsyQ-style (`SsUt*`, `SpuVm*`, `Cd*`) because the developer build linked the same libs; they sit in game-code addresses, so they stay hypotheses.
+
 ## Open
-- [[tickets/T-0600-apply-obin-renames]] apply after the `src/game.c` split merges.
+- [[tickets/T-0600-apply-obin-renames]] applied (see Status above).
 - [[tickets/T-0601-obin-med-confidence-review]] confirm med/low mappings by call-graph or semantics.

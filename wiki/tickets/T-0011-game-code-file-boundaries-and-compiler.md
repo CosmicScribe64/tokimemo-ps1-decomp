@@ -27,5 +27,5 @@ See [[toolchain]] and [[executable]].
 
 ## Comments
 
-- 2026-10-09: matched 10 getters (`func_8004480C`, `func_8004481C`, `func_800451D0`, `func_800460CC`, `func_800460DC`, `func_800460EC`, `func_80046274`, `func_8004901C`, `func_8004ADD4`, `func_8004EC14`) with gcc 2.7.2-psx `-O2 -G0 -mcpu=3000` + maspsx 2.79; `tools/funcdiff.py` reports MATCH for each and the full build ends `build/SLPM_86.053.bin: OK` (sha1 e823bd84...). 8 other small functions (setters, `x=y`, `x+=c`, `&sym`) do not match with any gcc in /opt/gcc; reverted to INCLUDE_ASM, evidence in [[matching-notes]].
+- 2026-10-09: matched 10 getters (`func_8004480C`, `func_8004481C`, `func_800451D0`, `func_800460CC`, `func_800460DC`, `func_800460EC`, `func_80046274`, `func_8004901C`, `func_8004ADD4`, `get_k_speed`) with gcc 2.7.2-psx `-O2 -G0 -mcpu=3000` + maspsx 2.79; `tools/funcdiff.py` reports MATCH for each and the full build ends `build/SLPM_86.053.bin: OK` (sha1 e823bd84...). 8 other small functions (setters, `x=y`, `x+=c`, `&sym`) do not match with any gcc in /opt/gcc; reverted to INCLUDE_ASM, evidence in [[matching-notes]].
 - Review (code-review, medium) findings fixed: funcdiff branch-target and internal-label handling, progress checks, criteria and comments recorded, `include/game.h` width check, commits split by topic.

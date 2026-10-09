@@ -47,7 +47,7 @@ Each overlay in `config/overlays.txt` is its own target (see [[overlays]]): `spl
 
 Layout facts: [[executable]]. Toolchain: [[toolchain]].
 
-SDK names (T-0010) are in `config/symbol_addrs_sdk.txt`, read by the main config only: the shared `config/symbol_addrs.txt` is also loaded by the overlay configs, where splat rejects symbols outside the overlay segment.
+SDK names (T-0010) are in `config/symbol_addrs_sdk.txt` and the provisional O.BIN game names (T-0600, [[obin]]) in `config/symbol_addrs_obin.txt`, both read by the main config only (both are `split` inputs in `configure.py`): the shared `config/symbol_addrs.txt` is also loaded by the overlay configs, where splat rejects symbols outside the overlay segment.
 
 ## Per-file layout notes (T-0012)
 - Adding or moving a file boundary: edit the `c` subsegment list in `config/SLPM_86.053.yaml` (names `main/<vram>`, start = file offset) and move the functions between `src/main/*.c`; `configure.py`, `objdiff.json`, `progress.py` follow automatically. `INCLUDE_ASM` folder names are `asm/nonmatchings/main/<addr>`.

@@ -15,7 +15,7 @@ Every stack frame in the original is 16 bytes larger than IDO 5.3 produces (rule
 ## Acceptance criteria
 
 - [ ] Decision from the user on obtaining an OS image or compiler binaries (Ultrix 4.x for gxemul, IRIX 5.x IDO for qemu-irix, Sony NEWS-OS), since this needs a download of third-party software.
-- [ ] Chosen compiler runs in Docker (pinned emulator version) and compiles `func_80041584`, `func_8007C310`, `func_80056AA8`, `func_80042400` with `-EL -O2 -G 0`; results recorded in [[matching-notes]].
+- [ ] Chosen compiler runs in Docker (pinned emulator version) and compiles `func_80041584`, `SD_DetectCDPeak`, `strSync`, `func_80042400` with `-EL -O2 -G 0`; results recorded in [[matching-notes]].
 - [ ] If one matches all four: integrate in `tools/cc.py`/`configure.py`/`tools/Dockerfile`, re-check every matched function and the sha1.
 
 ## Notes

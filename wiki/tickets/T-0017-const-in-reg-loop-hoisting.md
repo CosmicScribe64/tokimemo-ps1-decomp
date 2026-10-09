@@ -14,7 +14,7 @@ The project flag `-Wo,-no_const_in_reg` (T-0014) is needed by `func_80042400` (a
 
 ## Acceptance criteria
 
-- [ ] A toolchain setting (flag combination or a documented emulation step) that keeps `func_80042400` matching and matches `func_8013815C`, `func_801446A0`, `func_80146FA0` (TAIIKU), and ideally `func_8007C310`, `func_80056AA8`.
+- [ ] A toolchain setting (flag combination or a documented emulation step) that keeps `func_80042400` matching and matches `func_8013815C`, `func_801446A0`, `func_80146FA0` (TAIIKU), and ideally `SD_DetectCDPeak`, `strSync`.
 - [ ] If none exists: decision recorded (drop the flag and make `func_80042400` `NON_MATCHING`, or keep it).
 
 ## Notes
