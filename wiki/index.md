@@ -34,7 +34,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Done; frame follow-up T-0100)
 - [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Backlog)
 - [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
-- [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Backlog)
+- [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (In Progress)
+- [[tickets/T-0600-apply-obin-renames|T-0600]] Apply the O.BIN rename list after the game.c split (Backlog)
+- [[tickets/T-0601-obin-med-confidence-review|T-0601]] Review medium and low confidence O.BIN mappings (Backlog)
 - [[tickets/T-0100-older-mips-compiler-emulation|T-0100]] Run an older MIPS ucode compiler for the +16 frame (Backlog)
 - [[tickets/T-0015-research-compiler-mismatch-handling|T-0015]] Research: compiler mismatch handling (Done)
 - [[tickets/T-0016-frame-layout-emulation-pass|T-0016]] Frame-layout emulation pass (Done)
@@ -46,6 +48,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[disc-layout]] - disc images, extraction, file list
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
+- [[obin]] - O.BIN: ECOFF format, symbol table, mapping onto the main exe, stats, generated rename list
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, matched/unmatched functions, idioms

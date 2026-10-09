@@ -57,7 +57,7 @@ The entry is the address `D_80123110` receives; several overlays have more than 
 (Mode-to-entry pairing is in `func_80079070`; EVENT, GYOZI: unknown.) The table comes from decoding the two jump tables with a small script (loader sector -> overlay, entry per mode).
 
 ## O.BIN
-Not loaded by the game (its sector 0x964A is not referenced anywhere) but it has the same 96-sector size and checksum trailer. It is a PS1 developer build with a small header (starts `62 01 04 00`), a section table (.text .rdata .data .comment, address 0x80132000, content ends at 0xFD20) and an embedded plain-text symbol table of about 2100 strings (`warm_reset_init`, `system_init`, `main`, `olh_main`, `olh_init`, `menu0`...). Probably a leftover from the toolchain next to OLH. Not split; format and symbol harvesting in [[tickets/T-0201-obin-format-and-symbols]].
+Not loaded by the game (its sector 0x964A is not referenced anywhere) but it has the same 96-sector size and checksum trailer. It is a little-endian MIPS ECOFF link (1995-07-25) of an OLH overlay skeleton at 0x80132000 against the symbol map of a developer build of the main exe (2146 names: 14 overlay-side, 2132 main-program). It has no main-program code, no source file names and no types. Format, mapping onto SLPM_86.053 (524 high-confidence names, 0 overlay) and tools: [[obin]]. Not split.
 
 ## Splitting and build
 `tools/gen_overlay_configs.py` writes `config/overlays/<NAME>.yaml` (splat, `ovl_<NAME>`), `<NAME>.sha1` (sha1 of the original file) and `config/overlays.txt` (name, load address, text size). Each overlay is two parts: a C-capable code segment `src/ovl/<NAME>.c` (every function `INCLUDE_ASM`, built with IDO 5.3 like the main game code, [[toolchain]]) from offset 0 to the end of the last `jr $ra` rounded up to 16, and one `rodata` segment for the rest (strings, jump tables, data, trailer). Rodata and data are not separated yet; bss is not in the file.
@@ -66,4 +66,4 @@ Not loaded by the game (its sector 0x964A is not referenced anywhere) but it has
 - The 131 addresses the main exe leaves undefined (`build/undefined_syms_auto.txt`) lie in the shared slot; each overlay maps different code there, so they cannot be resolved from one overlay. They stay auto-defined for the main link.
 - DATE starts with a lone `nop` before its entry code; `config/overlays/DATE_symbols.txt` gives `func_80132000` its full size so asm-processor does not see a 4-byte function.
 
-Open: [[tickets/T-0200-event-gyozi-loader-and-address]], [[tickets/T-0201-obin-format-and-symbols]].
+Open: [[tickets/T-0200-event-gyozi-loader-and-address]].

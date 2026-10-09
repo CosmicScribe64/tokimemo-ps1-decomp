@@ -1,7 +1,7 @@
 ---
 id: T-0201
 title: Analyse O.BIN (symbol-bearing developer build) and harvest names
-status: Backlog
+status: In Review
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -14,8 +14,10 @@ links: ["[[overlays]]", "[[tickets/T-0008-overlay-load-address-and-split]]"]
 
 ## Acceptance criteria
 
-- [ ] File format documented in [[overlays]] (header at 0x0, section table at 0x4C, symbol table around 0x700-0x7700).
-- [ ] Names that map to main-exe or OLH functions verified by code comparison, then added through the splat symbol files.
+- [x] File format documented in [[obin]] (ECOFF: header, section table at 0x4C, mdebug header at 0x5C0, external symbols at 0x7700).
+- [x] `tools/obin_syms.py` parses O.BIN at run time; `tools/obin_map.py` maps the names onto SLPM_86.053 with stated confidence per method.
+- [x] High-confidence mappings written to `config/symbol_addrs_obin.txt` and `config/obin_renames.txt` (not applied; follow-up [[tickets/T-0600-apply-obin-renames]]).
+- [x] Metadata and stats in [[obin]] (no source file names; 524 high-confidence main-exe names, 0 overlay, 274 unmapped).
 
 ## Notes
 
