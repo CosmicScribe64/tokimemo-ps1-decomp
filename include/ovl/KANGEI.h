@@ -96,5 +96,14 @@ void func_80062CD0(s32 arg0);
 void func_80139540(void);
 void func_80046318(s32 arg0, s32 arg1, s32 arg2); /* overlay view; main_only.h has the u8 view */
 void func_80083440(s32 arg0); /* overlay view; main_only.h has the u8 view */
+extern s32 D_80139DCC;
+extern s32 D_80139DD0;
+extern s32 D_80139DD4;
+extern s32 D_80139DD8;
+extern s32 D_80139DDC;
+extern s32 D_80139DE0;
+extern s16 D_80139DE4;
+extern s16 D_80139DE8;
+extern s32 D_80139DEC;
 
 #endif /* OVL_KANGEI_H */

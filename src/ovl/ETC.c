@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/ETC.h"
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80132000);
 
@@ -458,7 +459,11 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013FC08);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013FC64);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013FF80);
+void func_8013FF80(void) {
+    if (D_800E738A == 0) {
+        func_8013FFAC();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013FFAC);
 
@@ -474,9 +479,25 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80140DC8);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80140E80);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80140F50);
+u8 *func_80140F50(void) {
+    if (D_800E71F4 == 0) {
+        if (D_800E71F5 != 0) {
+            return D_80150128;
+        }
+        return D_8015012C;
+    }
+    return D_80150108;
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80140F94);
+u8 *func_80140F94(void) {
+    if (D_800E71F4 == 0) {
+        if (D_800E71F5 != 0) {
+            return D_8015012C;
+        }
+        return D_80150128;
+    }
+    return D_80150124;
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80140FD8);
 
@@ -582,7 +603,11 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80145AF8);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80145C00);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80145F74);
+void func_80145F74(void) {
+    if (D_800E738A == 0) {
+        func_80145C00();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80145FA0);
 
@@ -640,7 +665,9 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80147414);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_801474FC);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80147630);
+void func_80147630(void) {
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80147650);
 
@@ -730,7 +757,11 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014A9A4);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014AA74);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014AB5C);
+void func_8014AB5C(void) {
+    if (D_800E738A == 0) {
+        func_8014AA74();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014AB88);
 

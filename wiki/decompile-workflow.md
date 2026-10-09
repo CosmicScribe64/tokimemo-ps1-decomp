@@ -1,13 +1,14 @@
 ---
 type: concept
 updated: 2026-10-09
-sources: ["tools/funcdiff.py", "tools/progress.py", "tools/cc.py", "configure.py"]
+sources: ["tools/dupes.py", "tools/funcdiff.py", "tools/progress.py", "tools/cc.py", "configure.py"]
 ---
 
 # How to decompile a function
 
 All commands run through `tools/docker.sh`. Standards: `CODING_STANDARDS.md`. Known matching limits: [[matching-notes]]. Create a ticket first ([[kanban]]).
 
+0. Before decompiling, run `tools/docker.sh python3 tools/dupes.py` (T-1300): overlays and the main exe hold many byte-identical helpers at different addresses, and `--apply --check` copies already matched C into the unmatched twins (details in [[build-system]]). Re-run it after every batch of new matches; a function listed in its output needs no new work.
 1. Pick a function (small leaf first). Size and sources: `head -1 asm/nonmatchings/main/<file>/func_XXXXXXXX.s` (`<file>` = the `src/main/<file>.c` that holds it; `grep -l func_XXXXXXXX src/main/*.c`) (`nonmatching name, size`). Progress: `tools/docker.sh ninja progress`.
 2. First time only: make the reference object from a matching build: `tools/docker.sh ninja && mkdir -p expected/build && cp -r build/src expected/build/` (gitignored; must come from an all-`INCLUDE_ASM` or otherwise sha1-OK build).
 3. Draft C with m2c: `tools/docker.sh m2c --target mipsel-gcc-c asm/nonmatchings/main/<file>/func_XXXXXXXX.s` (add `--context` for types). Clean it to C89 and `u8/s16/s32` types; put `extern` globals in `include/game.h`.

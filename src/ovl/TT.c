@@ -19,7 +19,15 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80132C24);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80132CCC);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80132F10);
+u8 *func_80132F10(u8 *arg0, u8 *arg1) {
+    while (arg0 < arg1) {
+        if (*arg0 == 0) {
+            return arg0;
+        }
+        arg0 += 0x78;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80132F4C);
 

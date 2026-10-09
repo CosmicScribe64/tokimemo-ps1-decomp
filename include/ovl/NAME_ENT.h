@@ -108,5 +108,19 @@ void func_8013BB10(void);
 void func_800AE0B0(void *arg0);
 void func_80053D10(void);
 void func_8013B1D8(void);
+extern u8 D_8014BBD4[];
+extern u8 D_8014BBEC[];
+extern u8 D_8014BAA4[];
+extern u8 D_8014BAC4[];
+extern u8 D_8014BAE0[];
+extern u8 D_8014BB8C[];
+extern u8 D_8014BBA8[];
+extern u8 D_8014BBC0[];
+extern u8 D_8014BCB4[];
+extern u8 D_8014BCCC[];
+extern u8 D_8014BCE0[];
+extern u8 D_8014BDE8[];
+extern u8 D_8014BE00[];
+extern u8 D_8014BE10[];
 
 #endif /* OVL_NAME_ENT_H */

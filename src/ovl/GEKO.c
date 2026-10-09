@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/GEKO.h"
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80132000);
 
@@ -16,7 +17,10 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80132490);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80132518);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80132598);
+void func_80132598(void) {
+    func_80044750(0x200);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801325C0);
 
@@ -32,7 +36,13 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80133024);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013313C);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80133164);
+void func_80133164(void) {
+    if (D_80144C58 != 0) {
+        func_801322E8();
+        return;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801331A0);
 
@@ -76,13 +86,24 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013445C);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013448C);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80134500);
+void func_80134500(void) {
+    func_80046318(3, 0x801B0000, 0xAF43);
+    func_80134F84();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80134538);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801346A0);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013478C);
+void func_8013478C(void) {
+    D_800CA134 = &D_80144E8C;
+    D_800CA138 = &D_80144E90;
+    D_800CA13C = D_80144E80;
+    D_800CA140 = D_80144E84;
+    D_800CA144 = D_80144E88;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80134808);
 
@@ -102,7 +123,10 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135340);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801354E4);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135570);
+void func_80135570(void) {
+    dec_bg_show_switch(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135598);
 
@@ -110,7 +134,11 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801355B8);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801355E8);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135894);
+void func_80135894(void) {
+    func_80046318(3, 0x801B0000, 0xAF43);
+    func_80134F84();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801358CC);
 
@@ -122,7 +150,11 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135BC4);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135C48);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135CC8);
+void func_80135CC8(void) {
+    func_80046318(0x16, 0x801B0000, 0xAF0D);
+    func_80134D10();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80135D00);
 
@@ -138,9 +170,23 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801367C4);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801367EC);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80136B2C);
+void func_80136B2C(void) {
+    D_800CA134 = &D_80145060;
+    D_800CA138 = &D_80145064;
+    D_800CA13C = D_80145048;
+    D_800CA140 = D_8014504C;
+    D_800CA144 = D_80145050;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80136BA8);
+void func_80136BA8(void) {
+    D_800CA134 = &D_80145060;
+    D_800CA138 = &D_80145064;
+    D_800CA13C = D_80145048;
+    D_800CA140 = D_8014504C;
+    D_800CA144 = D_80145050;
+    func_80082764(0xFF, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80136C20);
 
@@ -150,7 +196,13 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80136EE4);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80136F20);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80136FB8);
+void func_80136FB8(void) {
+    if (D_80145088 == 1) {
+        func_8004284C();
+        return;
+    }
+    func_8007E390();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80136FF8);
 
@@ -164,11 +216,20 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801372D4);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801374A8);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80137560);
+void func_80137560(void) {
+    func_80042940(0x31);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80137580);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80137630);
+void func_80137630(void) {
+    D_80145060 = D_80145068;
+    D_80145048 = D_80145054;
+    D_8014504C = D_80145058;
+    D_80145050 = D_8014505C;
+    func_80137894();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80137694);
 
@@ -182,9 +243,23 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80137990);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013882C);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80138A80);
+void func_80138A80(void) {
+    D_800CA134 = &D_800CA150;
+    D_800CA138 = &D_800CA154;
+    D_800CA13C = D_80146274;
+    D_800CA140 = D_80146278;
+    D_800CA144 = D_8014627C;
+    func_80082764(0xFF, 1, 0);
+}
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80138AF8);
+void func_80138AF8(void) {
+    D_800CA134 = &D_800CA150;
+    D_800CA138 = &D_800CA154;
+    D_800CA13C = D_80146274;
+    D_800CA140 = D_80146278;
+    D_800CA144 = D_8014627C;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80138B74);
 
@@ -336,7 +411,10 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013BAA8);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013BAE4);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013BB20);
+void func_8013BB20(void) {
+    func_8004500C(0, 0x200);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013BB4C);
 
@@ -366,7 +444,9 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013BFD4);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013C014);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013C070);
+void func_8013C070(void) {
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013C090);
 
@@ -592,11 +672,17 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013F92C);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013F9AC);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013FA38);
+void func_8013FA38(void) {
+    dec_bg_show_switch(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013FA60);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013FAB4);
+void func_8013FAB4(void) {
+    func_80044750(0x200);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8013FADC);
 
@@ -670,7 +756,10 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80140F44);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80140FD0);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8014107C);
+void func_8014107C(void) {
+    func_80065F34(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801410A4);
 
@@ -714,7 +803,9 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80141AC0);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80141AF0);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80141BA0);
+void func_80141BA0(void) {
+    func_80141BC0();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80141BC0);
 
@@ -756,7 +847,10 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80142B20);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80142BB8);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80142C38);
+void func_80142C38(void) {
+    func_80044750(0x200);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80142C60);
 
@@ -764,9 +858,23 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80142C9C);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80143AE4);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80143B0C);
+void func_80143B0C(void) {
+    D_800CA134 = &D_801476D8;
+    D_800CA138 = &D_801476DC;
+    D_800CA13C = D_801476CC;
+    D_800CA140 = D_801476D0;
+    D_800CA144 = D_801476D4;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80143B88);
+void func_80143B88(void) {
+    D_800CA134 = &D_801476D8;
+    D_800CA138 = &D_801476DC;
+    D_800CA13C = D_801476CC;
+    D_800CA140 = D_801476D0;
+    D_800CA144 = D_801476D4;
+    func_80082764(0xFF, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80143C00);
 
