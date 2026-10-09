@@ -1017,7 +1017,12 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80064FA4);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80065048);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80065074);
+s32 func_80065074(s32 arg0) {
+    if (D_80125C90[arg0] == 1) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8006509C);
 
@@ -1399,9 +1404,19 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80079070);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80079524);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80079554);
+s32 func_80079554(void) {
+    if (D_800E7388 == 0x90) {
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80079578);
+s32 func_80079578(void) {
+    if (D_800E7388 == 0x21) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8007959C);
 
