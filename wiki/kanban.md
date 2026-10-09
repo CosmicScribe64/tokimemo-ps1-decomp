@@ -21,6 +21,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-1020-main-batch-f|T-1020 Batch F: main 80075320-80085E30]]
 
 ## In Review
 

@@ -321,4 +321,39 @@ void func_8004482C(void);
 void dec_bg_reset(void);
 void tpage_buf_clear(void);
 
+/* T-1020 batch F */
+extern s32 D_800E36F0;
+extern s32 D_800E36F4;
+void Vblnk_Timer_Init(void);
+
+s32 get_g_zyotai_s();
+s32 func_80044E8C();
+extern s32 D_80122EA0;
+extern s16 D_801206EE;
+extern s16 D_80120666;
+extern s16 D_80120668;
+extern s16 D_801206F0;
+extern s16 D_80120658;
+
+s32 Vblnk_Timer(void);
+void func_8006BA40();
+
+void read_bustup();
+void func_8006C848();
+void func_8007B5EC(u16 a);
+void func_80047550(void);
+extern s32 D_80122D20;
+
+extern u8 D_800E69DD;
+extern s32 D_80122CF8;
+
+extern s32 D_80122D0C;
+extern u8 D_80120696;
+extern s16 D_801206AA;
+extern s32 D_80122D10;
+extern u8 D_80120652;
+extern s32 D_80125D14;
+void func_8007A50C(void);
+extern u8 D_801217D0[];
+
 #endif /* GAME_H */

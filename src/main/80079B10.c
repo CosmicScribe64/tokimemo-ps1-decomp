@@ -1,7 +1,9 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079B10);
+void func_80079B10(u16 arg0) {
+    func_8007B5EC(arg0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079B34);
 
@@ -27,7 +29,11 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A354);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A43C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A4DC);
+void func_8007A4DC(void) {
+    if (D_80125D14 & 0x100) {
+        func_8007A50C();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A50C);
 
@@ -153,7 +159,11 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007C784);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007C844);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007C878);
+void func_8007C878(void) {
+    D_80122CF8 = 0;
+    D_800B593C = 0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007C8A4);
 
@@ -179,7 +189,11 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_girl_suddenin);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_girl_out);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_girl_out_init);
+void normal_date_girl_out_init(void) {
+    D_800B5940 = 0x80;
+    D_80122CF8 = 0;
+    D_800E7384 = D_800E7384 + 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", normal_date_girl_out_main);
 
@@ -247,13 +261,25 @@ void func_80083378(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_800833A0);
+void func_800833A0(void) {
+    func_80083440(1);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_800833C8);
+void func_800833C8(void) {
+    func_80083440(2);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_800833F0);
+void func_800833F0(void) {
+    func_80083440(3);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80083418);
+void func_80083418(void) {
+    func_80083440(4);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80083440);
 
@@ -267,9 +293,15 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80083808);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80083A10);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", hizuke_hide);
+void hizuke_hide(void) {
+    hizuke_disp_switch(0);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", hizuke_appear);
+void hizuke_appear(void) {
+    hizuke_disp_switch(1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", read_bustup);
 
@@ -277,17 +309,28 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", read_bustup_uniform);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", read_bustup_swimsuit);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", bustup_return);
+void bustup_return(void) {
+    read_bustup();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", return_step);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", k_disp_inc2);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", yosi_trans);
+void yosi_trans(void) {
+    func_8004500C(0, 0x200);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", change_yoshio);
+void change_yoshio(void) {
+    D_800E71DF = 0xD;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", change_girl);
+void change_girl(void) {
+    D_800E71DF = D_800E69DD;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_800847B8);
 
@@ -299,15 +342,25 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", select_girl_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", select_girl_main);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", sprite_brightness);
+void sprite_brightness(s16 idx, u8 val) {
+    u8 *p = D_801217D0 + idx * 36;
+    p[0x16] = val;
+    p[0x15] = val;
+    p[0x14] = val;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", day_plus);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", check_para_limit);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80084E4C);
+void func_80084E4C(void) {
+    func_8006C848(0);
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80084E6C);
+void func_80084E6C(void) {
+    D_80122D20 = 0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80084E90);
 
@@ -319,31 +372,72 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80085368);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_800853FC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_face0);
+void event_face0(void) {
+    D_80120666 = 2;
+    D_801206AA = 0;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_face1);
+void event_face1(void) {
+    D_80120666 = 3;
+    D_801206AA = 1;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_face2);
+void event_face2(void) {
+    D_80120666 = 6;
+    D_801206AA = 4;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_face3);
+void event_face3(void) {
+    D_80120666 = 7;
+    D_801206AA = 5;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_face_kuchi0);
+void event_face_kuchi0(void) {
+    D_80120666 = 2;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_face_kuchi1);
+void event_face_kuchi1(void) {
+    D_80120666 = 3;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_kuchi_ani_no);
+void event_kuchi_ani_no(void) {
+    D_80122D10 = 0;
+    D_80120652 = 4;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", event_kuchi_ani_yes);
+void event_kuchi_ani_yes(void) {
+    D_80122D10 = 1;
+    D_80120652 = 0;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", ev_me_on);
+void ev_me_on(void) {
+    D_80122D0C = 0;
+    D_80120696 = 5;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", ev_me_on_continue);
+void ev_me_on_continue(void) {
+    D_80122D0C = 1;
+    D_80120696 = 5;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", _sprite_set_box_shade_tarao);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8008585C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", don_init2);
+void don_init2(void) {
+    func_80047550();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", don_wait);
 
