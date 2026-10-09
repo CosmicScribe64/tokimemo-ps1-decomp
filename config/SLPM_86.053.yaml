@@ -40,6 +40,8 @@ options:
     - config/symbol_addrs.txt
     # SDK names live at 0x80086810-0x800AF340, inside the main exe only; overlay configs would reject them
     - config/symbol_addrs_sdk.txt
+    # provisional game names from O.BIN (T-0600), hypotheses; see wiki/obin.md
+    - config/symbol_addrs_obin.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/undefined_funcs_auto.txt

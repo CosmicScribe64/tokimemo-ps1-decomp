@@ -40,6 +40,7 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 - Unknown symbols keep splat placeholders: `func_XXXXXXXX`, `D_XXXXXXXX`, `jtbl_XXXXXXXX`, `LXXXXXXXX` (8 hex digits, address in the original).
 - Once understood, rename to `snake_case` (functions, variables) and `PascalCase` (types) unless an established convention already exists in that file or module; match the neighbors.
 - Rename only through the splat symbol file (`symbol_addrs*.txt`), so asm, linker script, and C stay in sync. Never rename ad hoc in C alone or by search-and-replace over generated asm.
+- Provisional names (hypotheses) live only in a symbol file whose header says `HYPOTHESES` (today `config/symbol_addrs_obin.txt`, names from the O.BIN developer-build table, see `wiki/obin.md`); a name confirmed by evidence moves to `config/symbol_addrs.txt` with the evidence in the ticket. A hypothesis that is not from such a file gets a `/* HYPOTHESIS: ... */` comment at its definition.
 - Do not guess names. If a name is a hypothesis, say so in a comment and keep it easy to change.
 - Globals keep the `g_` prefix only if the module already uses it.
 

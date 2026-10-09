@@ -149,6 +149,7 @@ def main():
 
     stamp = "build/split.stamp"
     split_in = ["config/%s.yaml" % EXE, "config/symbol_addrs.txt", "config/symbol_addrs_sdk.txt",
+                "config/symbol_addrs_obin.txt",
                 "config/reloc_addrs.txt"]
     n.build([stamp, "build/%s.ld" % EXE] + ASM_FILES, "split", split_in, implicit=["disc/files/" + EXE])
 
