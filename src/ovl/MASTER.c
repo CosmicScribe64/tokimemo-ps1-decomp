@@ -36,9 +36,6 @@ void func_80132104(void) {
     D_8013C2D8 = 0x801E9370;
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_MASTER_80132138);
-
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER", func_80132140);
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER", func_801321B0);
@@ -68,9 +65,6 @@ void func_801336E8(void) {
     D_8013C4A4 = 0x801E8B7C;
     D_8013C4A8 = 0x801E93D4;
 }
-
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_MASTER_80133718);
 
 void func_80133724(void) {
     D_8013C4B0 = 0x801EAFC4;
@@ -176,9 +170,6 @@ void func_80138EC0(void) {
     D_8013C71C = *(s16 *)0x8019DDF8;
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_MASTER_80138F04);
-
 void func_80138F10(void) {
     D_8013C720 = 0x801A403C;
     D_8013C724 = 0x801A4048;
@@ -187,9 +178,6 @@ void func_80138F10(void) {
     D_8013C730 = 0x80197000;
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_MASTER_80138F64);
-
 void func_80138F70(void) {
     D_8013C740 = 0x8019DCFC;
     D_8013C744 = 0x8019DD00;
@@ -197,17 +185,11 @@ void func_80138F70(void) {
     D_8013C74C = *(s16 *)0x8019DDF8;
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_MASTER_80138FB4);
-
 void func_80138FC0(void) {
     D_8013C750 = 0x801EAA54;
     D_8013C754 = 0x801EAE50;
     D_8013C758 = 0x801ED1C4;
 }
-
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_MASTER_80138FF4);
 
 void func_80139000(void) {
     D_8013C760 = 0x801A42D4;

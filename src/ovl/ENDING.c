@@ -140,9 +140,6 @@ void func_80133BE0(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_ENDING_80133C08);
-
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133C10);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133F1C);
@@ -304,9 +301,6 @@ void func_801396A4(s16 arg0, u8 arg1) {
         D_8011F4CA = arg1;
     }
 }
-
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_ENDING_801396D8);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801396E0);
 

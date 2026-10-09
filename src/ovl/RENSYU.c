@@ -6,9 +6,6 @@ void func_80132000(void) {
     D_801342B8 = 0x801EB2D8;
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_RENSYU_80132034);
-
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80132040);
 
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_801320E0);
@@ -69,5 +66,3 @@ void func_801340B0(void) {
     D_801343E0 = 0x80197000;
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_RENSYU_80134104);

@@ -11,7 +11,10 @@ void func_801323AC(void) {
     func_80042878(0x34);
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH", func_801323CC);
+void func_801323CC(void) {
+    func_80049A40(-0x90, -0x58, 0x120, 0xC4, 4, 0xA0A0A0, 2);
+    dtd_on(4);
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH", func_80132420);
 

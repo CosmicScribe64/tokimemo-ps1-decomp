@@ -74,7 +74,7 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 
 ### 7a. Toolchain emulation pass vs fakematch
 
-- A toolchain emulation pass is a build step that models a measured, deterministic difference between the compiler we have and the one the original authors used (example: `tools/frame_pass.py`, the 16-byte frame difference of IDO 5.3, T-0016). It is allowed when all of these hold:
+- A toolchain emulation pass is a build step that models a measured, deterministic difference between the compiler we have and the one the original authors used (examples: `tools/frame_pass.py`, the 16-byte frame difference of IDO 5.3, T-0016; `tools/trailing_pad.py`, the nops the original left after a function, T-1310). It is allowed when all of these hold:
   - uniform: it runs on every function of a toolchain and has no per-function switches, lists, annotations, or source markers;
   - documented: a module docstring and the wiki (`wiki/toolchain.md` and `wiki/matching-notes.md`) state the rule exactly;
   - evidence-backed: the rule is derived from the original code over a broad sample and the exceptions are written down;

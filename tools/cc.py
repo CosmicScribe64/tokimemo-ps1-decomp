@@ -18,6 +18,11 @@ padding that the original linker added after the last function of a source file 
 the object. Without it, a file whose last function is C (not INCLUDE_ASM, which carries the
 padding nops itself) would shift every later file. See wiki/source-files.md.
 
+After the compile, tools/trailing_pad.py (T-1310) puts the original's trailing zero words back
+after every function the C source defines, read from the function's splat disassembly under
+asm/. That replaces the old per-site INCLUDE_ASM("src/ovl/pad", ...) stubs, which asm-processor
+could not do for a single nop. Rule and limits: wiki/toolchain.md, tools/trailing_pad.py.
+
 Also writes <out.o>.d (a make-style depfile) listing the asm/nonmatchings
 files named by INCLUDE_ASM, because the compiler cannot see them.
 Exits non-zero if any stage fails.
@@ -28,6 +33,8 @@ import shutil
 import subprocess
 import sys
 import tempfile
+
+import trailing_pad
 
 AS = ["mips-linux-gnu-as", "-EL", "-march=r3000", "-mabi=32", "-G0",
       "-Iinclude", "-I."]
@@ -98,19 +105,12 @@ def compile_ido(src, out, ido_ver):
 
 
 def pad_text(obj):
-    """Zero-pad the .text section of `obj` to a multiple of 16 bytes (original per-object alignment)."""
-    tmp = tempfile.mkdtemp(prefix="padtext")
-    try:
-        raw = os.path.join(tmp, "text.bin")
-        subprocess.run(["mips-linux-gnu-objcopy", "--dump-section", ".text=" + raw, obj, os.devnull],
-                       check=True)
-        data = open(raw, "rb").read()
-        if len(data) % 16:
-            with open(raw, "wb") as f:
-                f.write(data + b"\0" * (-len(data) % 16))
-            subprocess.run(["mips-linux-gnu-objcopy", "--update-section", ".text=" + raw, obj], check=True)
-    finally:
-        shutil.rmtree(tmp)
+    """Zero-pad the .text section of `obj` to a multiple of 16 bytes (original per-object alignment).
+
+    Edited in Python (trailing_pad.pad_text_to): objcopy --update-section drops the relocations
+    when the section grows (T-1310).
+    """
+    trailing_pad.pad_text_to(obj, 16)
 
 
 def main(argv):
@@ -119,16 +119,18 @@ def main(argv):
     src, out, kind = argv[1:4]
     with open(src) as f:
         text = f.read()
-    deps = ["%s/%s.s" % m for m in INCLUDE_ASM_RE.findall(text)]
-    with open(out + ".d", "w") as f:
-        f.write("%s: %s\n" % (out, " ".join(deps)))
+    includes = INCLUDE_ASM_RE.findall(text)
+    deps = ["%s/%s.s" % m for m in includes]
     if kind == "ido" and len(argv) == 5:
         compile_ido(src, out, argv[4])
     elif kind == "gcc" and len(argv) == 6:
         compile_gcc(src, out, argv[4], argv[5])
     else:
         sys.exit(__doc__)
+    deps += trailing_pad.pad_functions(out, src, {name for _, name in includes})
     pad_text(out)
+    with open(out + ".d", "w") as f:
+        f.write("%s: %s\n" % (out, " ".join(deps)))
 
 
 if __name__ == "__main__":

@@ -243,9 +243,6 @@ void func_801375D0(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKAKEN_80137634);
-
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80137640);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80137804);
@@ -318,9 +315,6 @@ void func_8013B4A0(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKAKEN_8013B504);
-
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013B510);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013BD84);
@@ -330,9 +324,6 @@ void func_8013BFA0(void) {
     D_800CA164 = D_80155E94;
     D_800CA168 = D_80155E98;
 }
-
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKAKEN_8013BFD4);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013BFE0);
 
@@ -352,9 +343,6 @@ void func_8013CEC0(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKAKEN_8013CF24);
-
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013CF30);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013D048);
@@ -373,7 +361,15 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013E578);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013E7C4);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013EAC8);
+void func_8013EAC8(void) {
+    func_800847B8(10);
+    func_801324AC();
+    D_800CA14C = 0;
+    D_800CA160 = D_80155E90;
+    D_800CA164 = D_80155E94;
+    D_800CA168 = D_80155E98;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_8013EB30);
 
@@ -407,9 +403,6 @@ void func_80140EF4(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKAKEN_80140F58);
-
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80140F60);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80141088);
@@ -430,9 +423,6 @@ void func_80142864(void) {
     func_8004284C();
 }
 
-/* object boundary: alignment padding of the original link */
-INCLUDE_ASM("src/ovl/pad", pad_BUNKAKEN_801428C8);
-
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_801428D0);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80142A40);
@@ -443,7 +433,15 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80143494);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_801438F8);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80143D68);
+void func_80143D68(void) {
+    func_800847B8(3);
+    func_801321D4();
+    D_800CA14C = 0;
+    D_800CA160 = D_80155E90;
+    D_800CA164 = D_80155E94;
+    D_800CA168 = D_80155E98;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80143DD0);
 
@@ -513,7 +511,15 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_801487DC);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80148A28);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80148E68);
+void func_80148E68(void) {
+    func_800847B8(6);
+    func_8013230C();
+    D_800CA14C = 0;
+    D_800CA160 = D_80155E90;
+    D_800CA164 = D_80155E94;
+    D_800CA168 = D_80155E98;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80148ED0);
 
@@ -583,7 +589,15 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80150680);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80150958);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80150CC8);
+void func_80150CC8(void) {
+    func_800847B8(7);
+    func_80132374();
+    D_800CA14C = 0;
+    D_800CA160 = D_80155E90;
+    D_800CA164 = D_80155E94;
+    D_800CA168 = D_80155E98;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80150D30);
 
@@ -603,7 +617,15 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_801520B4);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80152300);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80152618);
+void func_80152618(void) {
+    func_800847B8(9);
+    func_80132444();
+    D_800CA14C = 0;
+    D_800CA160 = D_80155E90;
+    D_800CA164 = D_80155E94;
+    D_800CA168 = D_80155E98;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN", func_80152680);
 
