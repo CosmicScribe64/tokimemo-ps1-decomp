@@ -57,5 +57,6 @@ extern s32 D_801241E4;
 extern s32 D_801241F4;
 extern u8 D_8012531C;
 s32 func_80045FF4(void);
+void func_8011C6C4(void);
 
 #endif /* OVL_EVENT_H */

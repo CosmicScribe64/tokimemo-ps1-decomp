@@ -105,5 +105,10 @@ extern s32 D_80139DE0;
 extern s16 D_80139DE4;
 extern s16 D_80139DE8;
 extern s32 D_80139DEC;
+void check_k_scroll();
+void func_80083808();
+void func_80083A10();
+void func_80132214();
+void k_disp_inc2();
 
 #endif /* OVL_KANGEI_H */

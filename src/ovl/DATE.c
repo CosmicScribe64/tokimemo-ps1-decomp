@@ -1148,7 +1148,9 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_801551D0);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8015522C);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80155284);
+void func_80155284(void) {
+    func_80146224();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_801552B0);
 

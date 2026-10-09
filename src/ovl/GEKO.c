@@ -835,7 +835,21 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_8014267C);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801426A4);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_801426D0);
+void func_801426D0(void) {
+    func_80083808();
+    if (D_800E7389 == 0) {
+        func_801429D4();
+    } else {
+        func_80046500();
+    }
+    check_k_scroll();
+    k_disp_inc2();
+    func_80066C08(2);
+    message_window_show();
+    func_80066334();
+    hizuke_show();
+    func_80083A10();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO", func_80142760);
 

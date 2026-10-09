@@ -674,7 +674,9 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_801023F4);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8010242C);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_80102484);
+void func_80102484(void) {
+    func_8011C6C4();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_801024B0);
 

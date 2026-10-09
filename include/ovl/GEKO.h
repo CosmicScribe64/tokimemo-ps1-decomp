@@ -38,5 +38,10 @@ extern s16 D_801476DC;
 extern s32 D_801476CC;
 extern s32 D_801476D0;
 extern s32 D_801476D4;
+void check_k_scroll();
+void func_80083808();
+void func_80083A10();
+void func_801429D4();
+void k_disp_inc2();
 
 #endif
