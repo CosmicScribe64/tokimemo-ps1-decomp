@@ -32,7 +32,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Compiler confirmation on first game functions (Done)
 - [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Done)
 - [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Done; frame follow-up T-0100)
-- [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Backlog)
+- [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (In Review)
+- [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500]] Split game rodata, data and bss per source file (Backlog)
 - [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
 - [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Backlog)
 - [[tickets/T-0100-older-mips-compiler-emulation|T-0100]] Run an older MIPS ucode compiler for the +16 frame (Backlog)
@@ -44,6 +45,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
+- [[source-files]] - the 29 `src/main/<address>.c` files: boundary evidence, alignment handling, what is not split
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass

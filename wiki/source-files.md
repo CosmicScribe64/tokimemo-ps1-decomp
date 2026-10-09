@@ -1,0 +1,61 @@
+---
+type: concept
+updated: 2026-10-09
+sources: ["tools/game_boundaries.py", "config/SLPM_86.053.yaml", "src/main/", "tools/cc.py"]
+---
+
+# Source files of the game code
+
+The game code (834 functions, 0x80041000-0x80086810) was one C file, `src/game.c`. Since [[tickets/T-0012-game-file-boundaries-and-shift-jis]] it is split into 29 files `src/main/<start address>.c`, one `c` subsegment each in `config/SLPM_86.053.yaml`; `configure.py` reads that list, so adding a boundary needs only a yaml line and moving the functions. Each file is a union of one or more original translation units: boundaries are only placed where the evidence is clear, so a file may still hold several originals ("fewer, larger files"). Names are neutral (address) because no file names are known; rename a file only through the yaml and `git mv`.
+
+Re-run the evidence: `tools/docker.sh python3 tools/game_boundaries.py` (needs `asm/`; `--yaml` prints the segment list).
+
+## Files
+| file | size | functions |
+|---|---|---|
+| `src/main/80041000.c` | 0x10D0 | 15 |
+| `src/main/800420D0.c` | 0x470 | 9 |
+| `src/main/80042540.c` | 0x4C0 | 8 |
+| `src/main/80042A00.c` | 0xB10 | 10 |
+| `src/main/80043510.c` | 0x1CC0 | 26 |
+| `src/main/800451D0.c` | 0x1330 | 23 |
+| `src/main/80046500.c` | 0x1050 | 5 |
+| `src/main/80047550.c` | 0x2AA0 | 30 |
+| `src/main/80049FF0.c` | 0xD70 | 7 |
+| `src/main/8004AD60.c` | 0x1690 | 13 |
+| `src/main/8004C3F0.c` | 0x2110 | 11 |
+| `src/main/8004E500.c` | 0x11B0 | 25 |
+| `src/main/8004F6B0.c` | 0x1C0 | 1 |
+| `src/main/8004F870.c` | 0x3DE0 | 35 |
+| `src/main/80053650.c` | 0x2CB0 | 40 |
+| `src/main/80056300.c` | 0xF0 | 1 |
+| `src/main/800563F0.c` | 0xFA0 | 11 |
+| `src/main/80057390.c` | 0x1990 | 13 |
+| `src/main/80058D20.c` | 0x9F0 | 12 |
+| `src/main/80059710.c` | 0x310 | 7 |
+| `src/main/80059A20.c` | 0x690 | 8 |
+| `src/main/8005A0B0.c` | 0x7660 | 109 |
+| `src/main/80061710.c` | 0x15C0 | 21 |
+| `src/main/80062CD0.c` | 0x9E60 | 85 |
+| `src/main/8006CB30.c` | 0x87F0 | 75 |
+| `src/main/80075320.c` | 0x36C0 | 41 |
+| `src/main/800789E0.c` | 0x1130 | 12 |
+| `src/main/80079B10.c` | 0xC320 | 165 |
+| `src/main/80085E30.c` | 0x9E0 | 16 |
+Sizes include the alignment padding that follows the last function. Largest: `80079B10` (165 functions), `8005A0B0` (109), `80062CD0` (85).
+
+## Evidence
+
+1. **Alignment padding (decisive, 27 boundaries).** The original linker aligned each object's `.text` to 16 bytes; functions inside an object follow each other without padding (804 of the 833 function ends touch the next function's start). A run of zero words after a function that ends at a non-16-aligned address and ends exactly at the next 16-byte boundary is therefore the padding in front of a new object. 27 gaps fit (3 to 12 bytes of nops, next function 16-aligned). Two gaps do not fit and are not used: `0x80067E24-0x80067E34` (16 bytes, next function at +4 mod 16) and `0x8006B8EC-0x8006B900` (20 bytes); they are runs of nops that may belong to either neighbouring object, so `80062CD0` stays large. An object whose size is a multiple of 16 leaves no padding at all: with 27 visible boundaries about a quarter of the true boundaries (roughly 9 of about 36) are invisible, so the large files are expected to hide further boundaries.
+2. **Entry point (inferred split, 1 boundary).** `0x800420D0` is the PS-X EXE entry (header PC), 16-aligned, and the string at `0x800AF370` used by the code after it starts a new rodata object (the zero run before it ends 16-aligned) while the previous string, `0x800AF35C`, is used by `func_800412E0`. A boundary must therefore lie in (`func_800412E0`, `func_80042134`]; the 16-aligned candidates are `80041840`, `800418B0`, `800420D0`, and the entry point is the only natural one. This is the weakest boundary; revert it by merging the two files if the entry stub turns out to share a file with `func_80041000`..`func_800412E0`.
+3. **Rodata object starts agree.** `.rodata` objects start 16-aligned (a zero run of 5 or more bytes ends 16-aligned in front of them). Of the 8 such starts that are referenced exactly and fall between two functions, 7 have a padding boundary inside the interval of code between the last function using lower rodata and the first using the new object (`800AF390` -> `80042540`; `800AFB00` -> `8004AD60`/`8004C3F0`; `800AFB70` -> `8004F6B0`/`8004F870`; `800AFE10` -> `8005A0B0`; `800B1590` -> `80075320`; `800B2000` -> `800789E0`/`80079B10`; the entry point from point 2). The eighth, `800AFE00` (used by `func_80059E00`), needs a hidden boundary in (`func_80059B04`, `func_80059E00`] inside `80059A20` (candidates `80059B40`, `80059BC0`, `80059E00`, not decidable) and is left unsplit.
+4. **Data and bss follow file order.** Of 1714 distinct `.data`/`.bss` addresses referenced from game code, 1338 are used by one file only; 94% of address-adjacent pairs of those (1261 of 1337) are in file order, i.e. each file's private data sits in one contiguous block in link order. This is the property a later per-file data split relies on ([[tickets/T-0500-per-file-game-rodata-data-bss-split]]). It does not locate boundaries inside the big files.
+5. **Call graph.** 881 of the 3680 calls between game functions stay inside a file (24%; a random split into files of these sizes would give about 7%), and 386 of 680 called functions are called from their own file only (static-looking). Both numbers rise when the boundaries are right; they are used as a sanity check, not to place boundaries (leaf-heavy files have zero crossing calls at many places).
+
+Candidates rejected: data-only separation (single-file symbols below vs above a point) gave only 4 points (`8004ECE0`..`8004EE10`, `8006BA40`), all dominated by shared structs, so no split.
+
+## Alignment in the build
+The linker script keeps `SUBALIGN(2)` (the SDK asm objects must be packed exactly), which would drop the original linker's 16-byte alignment of each C object. `tools/cc.py` therefore zero-pads every object's `.text` to a multiple of 16 after compiling (a uniform toolchain emulation of the original link, see CODING_STANDARDS 7a). Functions kept as `INCLUDE_ASM` already carry their trailing padding nops in their `.s`, so the padding is never doubled. Consequence: the last function of a file can now be decompiled; `func_80043504` (end of `80042A00`) and `func_8006CAE0` (end of `80062CD0`) were listed as unmatchable in [[matching-notes]] for this reason; `func_80043504` as `void func_80043504(void) {}` was checked to match with the padding, but was left as `INCLUDE_ASM` so that the split commit leaves the progress count unchanged (75/834).
+
+## Not split: rodata, data, bss
+They stay whole (`rodata`, `data`, `bss` subsegments). Only about 80 game functions reference `.rodata` directly (most strings are reached through `.data` pointer tables), and per-file `.data`/`.bss` blocks interleave with shared globals; cutting them needs symbol-level ownership. Tracked in [[tickets/T-0500-per-file-game-rodata-data-bss-split]].

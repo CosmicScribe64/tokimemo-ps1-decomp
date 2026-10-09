@@ -24,6 +24,8 @@ Evidence (IDO reproduces each original signature that no gcc 2.6 to 2.95 + masps
 | loads never in the `jr` slot, `jr ra; nop` after a getter | identical (as1 respects the MIPS I load delay across the return) | same |
 | prologue save order `sw s2; sw ra; sw s1; sw s0` (`func_80042134`) | IDO's order | not compared |
 
+Note: since T-0012 the functions live in `src/main/<address>.c` ([[source-files]]); older text below says `src/game.c`.
+
 Matched with IDO 5.3 in the build (23): the 10 getters and 3 empty functions from T-0011, plus `func_800438DC`, `func_800451E0`, `func_80046284`, `func_80047550`, `func_8004902C`, `func_8004E99C`, `func_8004EA98` (7 of the 8 functions gcc could not match), `func_8004E750`, `func_8004E93C` and `func_80042400` (T-0014). IDO 7.1 matches the same set except `func_8004E750` (it re-uses `$a0` for the `andi` instead of `$t6`), so the original is 5.3-like or older.
 
 ### Global-address CSE: solved with `-Wo,-no_const_in_reg` (T-0014)
@@ -143,7 +145,7 @@ Sample of 33 functions (the rest are in the same pattern; `s-reg` counts include
 - The ninja depfile only lists `INCLUDE_ASM` files; project headers are listed in `configure.py` as implicit inputs (add new headers there).
 
 ## Leaf batch 1 (T-0400): 40 more leaf functions matched
-Tool: `tools/list_leaves.py` lists the remaining `INCLUDE_ASM` functions without `jal`/`jalr`, smallest first (177 outside 0x80080000-0x80086810 at the start; `[[tickets/T-0400-leaf-function-batch-1]]`). `ninja progress` after the batch: 40/812 functions, 1404/284028 bytes (these 40 are the whole count; the 22 from T-0011/T-0013 are not in that total).
+Tool: `tools/list_leaves.py` (now over all `src/main` files; prints the file as a third column) lists the remaining `INCLUDE_ASM` functions without `jal`/`jalr`, smallest first (177 outside 0x80080000-0x80086810 at the start; `[[tickets/T-0400-leaf-function-batch-1]]`). `ninja progress` after the batch: 40/812 functions, 1404/284028 bytes (these 40 are the whole count; the 22 from T-0011/T-0013 are not in that total).
 
 Idioms that matched with IDO 5.3:
 - Straight-line stores to several different globals: one `lui $at` per store, nothing else, matches plain C. The same global accessed again in a later basic block (branches) does NOT: IDO keeps `&D` in a register (see failures).
@@ -154,7 +156,7 @@ Idioms that matched with IDO 5.3:
 - Arg spill `jr ra; sw a0,0(sp)` (func_8004DAC4) is matched with `s32 *p = &arg0;`, marked FAKE.
 
 Failures left as `INCLUDE_ASM` (all but the first two are the T-0014 compiler gap):
-- func_80043504, func_8006CAE0: asm ends with alignment nops after the last `jr` (source-file boundary padding); plain C cannot emit them
+- func_80043504, func_8006CAE0: asm ends with alignment nops after the last `jr` (source-file boundary padding); plain C could not emit them. Solved by the file split (T-0012): `tools/cc.py` pads each object to 16 ([[source-files]]); `func_80043504` as an empty function was verified to match
 - func_800597A0: original shares one lui at between D_800E36C0 and +4 stores; IDO gives addiu base (struct/array) or two lui (separate symbols)
 - func_80042940: original puts move v0,zero before the last sb (sb in jr slot); IDO puts move in slot; tried ret var, return a=0
 - func_80053CC0: D++ on u8 global: original keeps lui/lbu without address CSE then second lui at (same family as func_80042400, T-0014)

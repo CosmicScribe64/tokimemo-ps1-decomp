@@ -18,6 +18,7 @@ Evidence, all derived from the original bytes:
  3. Data/bss ordering: data and bss symbols referenced from one file only are laid out in file
     order; the script reports the fraction of address-adjacent pairs that respect the file order.
  4. Call graph: calls inside a file versus across files.
+INFERRED lists boundaries added on top of the padding evidence (see the comment there).
 --yaml prints the splat `c` subsegments for config/SLPM_86.053.yaml.
 """
 import argparse
