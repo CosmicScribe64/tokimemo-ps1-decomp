@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/OLH.h"
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH", func_80132000);
 
@@ -6,7 +7,9 @@ INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH", func_80132114);
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH", func_80132294);
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH", func_801323AC);
+void func_801323AC(void) {
+    func_80042878(0x34);
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH", func_801323CC);
 

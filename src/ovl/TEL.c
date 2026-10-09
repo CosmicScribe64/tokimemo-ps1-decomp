@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/TEL.h"
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_80132000);
 
@@ -82,7 +83,10 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013A478);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013A4FC);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013A76C);
+void func_8013A76C(void) {
+    D_800E66B3 = D_800E66B3 + 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013A79C);
 
@@ -102,7 +106,9 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013BDDC);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013BE38);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013BF50);
+void func_8013BF50(void) {
+    func_80042878(0x31);
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL", func_8013BF70);
 
