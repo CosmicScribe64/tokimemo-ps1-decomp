@@ -24,7 +24,7 @@ file offset = vram - 0x80041000 + 0x800.
 ## Memory map (verified by a matching rebuild)
 | vram | file offset | section | notes |
 |---|---|---|---|
-| 0x80041000-0x800AF340 | 0x800-0x6EB40 | .text | 831 game functions at 0x80041000-0x80086810, then SDK libs, then libapi syscall stubs from 0x800ADFC0 |
+| 0x80041000-0x800AF340 | 0x800-0x6EB40 | .text | 831 game functions at 0x80041000-0x80086810, then the PsyQ libs (libpress ... libgte, libetc) and the libapi/libc objects from 0x800ADFC0 (see [[psyq-sdk]]) |
 | 0x800AF340-0x800B3220 | 0x6EB40-0x72A20 | .rodata | game strings (Shift-JIS) and switch tables first, then lib strings/tables (MDEC, Cd, RCS ids) |
 | 0x800B3220-0x800E3800 | 0x72A20-0xA3000 | .data | includes lib data (`ut_f.c` id at 0x800DCB50, "SPU:T/O" at 0x800DCC24); no code uses `$gp`, so no `.sdata` split is needed for matching |
 | 0x800E3800-0x8012B538 | not in file | .bss | size 0x47D38 |
@@ -34,6 +34,6 @@ Entry code (0x800420D0): `SetSp(0x801FEFF0)`, `InitHeap`-style call with (0x801F
 gp 0x800EB670 minus 0x8000 is 0x800E3670, which would be the start of a small-data area at the end of `.data` (words `0x40, 1`, then zeros). Unverified; not needed for the sha1.
 
 ## Segment layout in the splat config
-`header` (0x0), `main` code at 0x800/vram 0x80041000 with subsegments: `game` (c, 0x800), `sdk_libs` (asm, 0x46010 = vram 0x80086810), `libapi_stubs` (asm, 0x6D7C0 = vram 0x800ADFC0), `rodata` (0x6EB40), `data` (0x72A20), `bss` (vram 0x800E3800). The lib start 0x80086810 is the first function demonstrably called as an SDK API; the real lib boundary may be lower, see [[psyq-sdk]] and [[tickets/T-0010-sdk-lib-object-boundaries]].
+`header` (0x0), `main` code at 0x800/vram 0x80041000 with subsegments: `game` (c, 0x800), 65 asm subsegments from file offset 0x46010 (vram 0x80086810) to 0x800AF340, one per SDK library or object (`libpress_*`, `libcd_*`, `libsnd`, `libspu`, `libgs`, `libgpu`, `libgte_*`, `libetc`, `libapi_*`, `libcard_card`, `libc_*`), `rodata` (0x6EB40), `data` (0x72A20), `bss` (vram 0x800E3800). The game/SDK boundary 0x80086810 (`DecDCTReset`) was confirmed by signature matching; per-lib boundaries and evidence are in [[psyq-sdk]] ([[tickets/T-0010-sdk-lib-object-boundaries]]).
 
 Strings are Shift-JIS; splat's ASCII mode leaves them as `.word` data so the assembler emits the original bytes. A UTF-8 conversion would change the bytes (found while bringing up the build).

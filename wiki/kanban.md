@@ -7,7 +7,9 @@ kanban-plugin: board
 ## Backlog
 
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
-- [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]
+- [ ] [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300 Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress]]
+- [ ] [[tickets/T-0301-sdk-rodata-data-split|T-0301 Split SDK rodata and data per library and object]]
+- [ ] [[tickets/T-0302-sdk-version-conflict|T-0302 Resolve mixed SDK vintages (libcd, libsnd, libpress newer than libgte, libc)]]
 - [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
 - [ ] [[tickets/T-0200-event-gyozi-loader-and-address|T-0200 Find how EVENT and GYOZI overlays are loaded]]
 - [ ] [[tickets/T-0201-obin-format-and-symbols|T-0201 Analyse O.BIN and harvest names]]
@@ -24,6 +26,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]
 - [ ] [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101 Stop splat from overwriting include_asm.h]]
 - [ ] [[tickets/T-0014-find-exact-ucode-compiler|T-0014 Find the exact MIPS ucode compiler]]
 - [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]

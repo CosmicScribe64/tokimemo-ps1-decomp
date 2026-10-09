@@ -6,7 +6,7 @@ sources: ["configure.py", "config/SLPM_86.053.yaml", "config/overlays.txt", "too
 
 # Build system
 
-Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha1 `e823bd844a8f8fa4d05483b59c66bc54b8393b26`), with every game function as `INCLUDE_ASM` in `src/game.c` (831 functions) and the SDK/lib region and data as plain asm.
+Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha1 `e823bd844a8f8fa4d05483b59c66bc54b8393b26`), with every game function as `INCLUDE_ASM` in `src/game.c` (831 functions) and the SDK/lib region (65 asm segments, see [[psyq-sdk]]) and data as plain asm.
 
 ## Commands (all through Docker)
 1. `tools/docker.sh python3 tools/extract_disc.py "<game>.zip" disc` once, to create `disc/`.
@@ -24,6 +24,9 @@ Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha
 Each overlay in `config/overlays.txt` is its own target (see [[overlays]]): `splat split config/overlays/<NAME>.yaml` -> `asm/ovl/<NAME>/` (gitignored) and `build/ovl/<NAME>.ld` -> `src/ovl/<NAME>.c` (IDO 5.3 via asm-processor) plus the rodata asm object -> `ld` with the splat script and `build/ovl/<NAME>_undefined_{funcs,syms}_auto.txt` -> `objcopy -O binary` -> sha1 against `config/overlays/<NAME>.sha1`, giving `build/ovl/<NAME>.ok`. The 26 `src/ovl/*.c` files are created by splat once (every function `INCLUDE_ASM`) and committed; like `src/game.c` they are never regenerated. `config/overlays/*.yaml`, the sha1 files and `config/overlays.txt` come from `tools/docker.sh python3 tools/gen_overlay_configs.py` (needs `disc/`). Status: all 26 rebuild byte-identical; O.BIN is not built ([[tickets/T-0201-obin-format-and-symbols]]). Not in `objdiff.json` yet.
 
 ## Gotchas found
+- gas pads the standard `.text` section of every object to 16 bytes, which shifted everything after a lib object whose size is not a multiple of 16. `tools/asm.py` assembles splat's `.section .text` into the custom section `.text.sdk` (no padding) and renames it to `.text`; the linker script's `SUBALIGN(2)` keeps placement exact (T-0010).
+- `configure.py` derives `ASM_FILES` from the `asm` / `rodata` / `data` / `bss` subsegments of `config/SLPM_86.053.yaml`; splitting a segment needs no `configure.py` edit.
+- splat rewrites `include/include_asm.h` and the `.inc` macro files on every split, which dropped the IDO guard from T-0013; `generate_asm_macros_files: False` in the yaml stops that.
 - splat rewrites `include/include_asm.h`, `macro.inc` and friends on every run, which clobbers the hand-edited IDO guard and breaks the IDO build after the first split. Both the main config and all overlay configs set `generate_asm_macros_files: False`.
 - asm-processor rejects a function that is a single 4-byte `nop` ("too short .text block"); see DATE in [[overlays]].
 - The linker aligns each section end to 16; the overlay code segment must therefore end on a 16-byte boundary (the generator rounds up) or later symbols shift.
@@ -39,3 +42,5 @@ Each overlay in `config/overlays.txt` is its own target (see [[overlays]]): `spl
 `objdiff.json` lists `src/game.c` with target `expected/build/src/game.o` (copy the matching build's objects to `expected/` once for per-function diffs, `expected/` is gitignored) and base `build/src/game.o`.
 
 Layout facts: [[executable]]. Toolchain: [[toolchain]].
+
+SDK names (T-0010) are in `config/symbol_addrs_sdk.txt`, read by the main config only: the shared `config/symbol_addrs.txt` is also loaded by the overlay configs, where splat rejects symbols outside the overlay segment.

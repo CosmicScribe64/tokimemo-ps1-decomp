@@ -20,7 +20,7 @@ Goal: a byte-matching decompilation of the PS1 executable(s) of Tokimeki Memoria
 - Main executable (SLPM_86.053, entry, memory map, bss): [[executable]]
 - Overlays (26 headerless .EXN, load address unverified): [[overlays]]
 - Compiler and tools: [[toolchain]] (IDO 5.3 + asm-processor for game code, splat 0.50.0)
-- Libraries linked and SDK era (libpress, libcd, libsnd, libspu, libgpu, libapi; PsyQ 3.6-4.0 era): [[psyq-sdk]]
+- Libraries linked and SDK era (libpress, libcd, libsnd, libspu, libgs, libgpu, libgte, libetc, libapi, libc; mixed PsyQ 3.3-3.6 vintages): [[psyq-sdk]]
 - Build and sha1 check (OK build, all `INCLUDE_ASM`): [[build-system]]
 
 ## Raw sources (immutable)
