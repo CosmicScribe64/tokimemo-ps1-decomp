@@ -3,7 +3,7 @@
 #
 # Usage: tools/make_ci_bundle.sh        (run on your own machine, after extracting disc/)
 #
-# Writes to build/ci-bundle/ (gitignored; override with BUNDLE_OUT):
+# Writes to ci-bundle/ (gitignored, outside build/ so clean rebuilds never delete the key; override with BUNDLE_OUT):
 #   data/game-bundle.tar.gz.enc   AES-256 encrypted tarball of SLPM_86.053 and the 26 overlays
 #   game-bundle.key               random passphrase, becomes the GAME_BUNDLE_KEY secret
 #   deploy_key, deploy_key.pub    read-only SSH key pair for the private data repository
@@ -14,7 +14,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 DATA_REPO="${DATA_REPO:-CosmicScribe64/tokimemo-ci-data}"
 MAIN_REPO="${MAIN_REPO:-CosmicScribe64/tokimemo-ps1-decomp}"
-OUT="${BUNDLE_OUT:-build/ci-bundle}"
+OUT="${BUNDLE_OUT:-ci-bundle}"
 BUNDLE=$OUT/data/game-bundle.tar.gz.enc
 
 files=(disc/files/SLPM_86.053)

@@ -27,7 +27,7 @@ Encryption is `openssl enc -aes-256-cbc -pbkdf2 -iter 600000` over a gzip tarbal
 
 ## Setup (done by the maintainer, once)
 `tools/make_ci_bundle.sh` builds the bundle from `disc/` and prints the exact `gh` commands. Secrets:
-- `GAME_BUNDLE_KEY`: the passphrase (`build/ci-bundle/game-bundle.key`).
+- `GAME_BUNDLE_KEY`: the passphrase (`ci-bundle/game-bundle.key`).
 - `CI_DATA_DEPLOY_KEY`: the private half of a read-only deploy key on `CosmicScribe64/tokimemo-ci-data`.
 
 Keep the passphrase file safe. To refresh the bundle, rerun the script and push the new `game-bundle.tar.gz.enc` to the data repository; the secrets stay valid.

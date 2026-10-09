@@ -35,3 +35,4 @@ SLPM_*
 deploy_key
 deploy_key.pub
 game-bundle.key
+/ci-bundle/
