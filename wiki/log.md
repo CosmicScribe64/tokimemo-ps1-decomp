@@ -355,3 +355,6 @@ Inline review of [[tickets/T-1330-tooling-m2c-context-and-permuter]] against COD
 Inline review against CODING_STANDARDS (7a points: uniform, documented, evidence, fails loudly, tested, replaceable; C89 and `INCLUDE_ASM` layout of the ported functions; no game data committed) found nothing open; card moved to Done on [[kanban]]. Not merged.
 ## [2026-10-09] ticket | T-1300 reuse C across identical functions (Backlog -> Done)
 [[tickets/T-1300-reuse-c-across-identical-functions]]: new `tools/dupes.py` (tests `tools/test_dupes.py`, usage in [[decompile-workflow]] and [[build-system]]) fingerprints all functions with relocations masked, groups identical ones and copies matched C into unmatched twins with symbol translation and header declarations, building each object to reject breakage. Result: 50 groups, 163 functions gained (7 reverted, 15 skipped), progress 714 -> 877 of 6962, clean build 27 of 27 sha1 OK. Inline review done, card in Done on [[kanban]]; [[index]] updated.
+
+## [2026-10-09] tooling | docker.sh rebuilds on Dockerfile change
+tools/docker.sh labels the image with the SHA-256 of tools/Dockerfile and rebuilds whenever the label does not match, so a merged Dockerfile change reaches every agent without a manual rebuild. See [[build-system]].
