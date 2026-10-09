@@ -26,6 +26,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-1040-overlay-batch-h-option-ending|T-1040 Batch H: overlays OPTION, ENDING]]
 
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]
