@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
+  "custom_make": "ninja",
+  "build_target": false,
+  "build_base": true,
+  "units": [
+    {
+      "name": "src/game",
+      "target_path": "expected/build/src/game.o",
+      "base_path": "build/src/game.o",
+      "metadata": {
+        "source_path": "src/game.c"
+      }
+    }
+  ]
+}

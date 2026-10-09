@@ -9,3 +9,7 @@
 .DS_Store
 __pycache__/
 *.pyc
+/asm/
+/build.ninja
+.ninja_log
+.ninja_deps
