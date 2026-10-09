@@ -222,4 +222,31 @@ extern s8 D_800E71F3;
 s32 func_80087954(s32 arg0, u8 *arg1);
 extern u8 D_801255C8[];
 
+s32 close(s32 fd);
+s32 open(u8 *name, s32 mode);
+void func_80056070(u8 *buf, s32 arg1);
+extern s32 D_800B58E4;
+s32 OpenEvent(u32 desc, s32 spec, s32 mode, void (*func)(void));
+s32 EnableEvent(s32 ev);
+s32 SetRCnt(u32 spec, u32 target, u32 mode);
+s32 StartRCnt(u32 spec);
+s32 func_80079E00(s32 arg0);
+
+void Sw_Clear(void);
+
+/* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
+ * counter; layout read from the frame (counter at +0x20 in func_80054704). */
+typedef struct FileReq {
+    /* 0x00 */ u8 name[32];
+    /* 0x20 */ s32 retry;
+} FileReq; /* size 0x24 */
+
+s32 delete(u8 *name);
+void func_80065F34(s32 arg0);
+extern s16 D_800CA2AC;
+extern u8 D_800E738E;
+extern u8 D_8011ED17;
+extern u32 D_800E7378;
+void func_80049FF0(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f, s32 g);
+
 #endif /* GAME_H */

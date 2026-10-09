@@ -88,7 +88,20 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005448C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054590);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054694);
+s32 func_80054694(s32 arg0) {
+    FileReq req;
+    s32 fd;
+
+    func_80056070(req.name, arg0);
+    close(D_800B58E4);
+    fd = open(req.name, 0x10200);
+    D_800B58E4 = fd;
+    if (fd == -1) {
+        return -1;
+    }
+    close(D_800B58E4);
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054704);
 

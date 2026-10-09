@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", initView);
 

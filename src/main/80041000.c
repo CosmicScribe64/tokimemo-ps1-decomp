@@ -101,7 +101,17 @@ void func_80042458(void) {
     ExitCriticalSection();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80042488);
+void func_80042488(void) {
+    s32 ev;
+
+    EnterCriticalSection();
+    ev = OpenEvent(0xF2000003, 2, 0x1000, func_800423D4);
+    D_8011ECA8 = ev;
+    EnableEvent(ev);
+    SetRCnt(0xF2000003, 1, 0x1000);
+    StartRCnt(0xF2000003);
+    ExitCriticalSection();
+}
 
 void func_800424FC(void) {
     EnterCriticalSection();
