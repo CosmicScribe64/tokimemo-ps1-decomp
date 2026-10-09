@@ -131,9 +131,22 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80134F00);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135004);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801350E0);
+void func_801350E0(void) {
+    RECT rect;
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_8013512C);
+    func_80083474();
+    rect.x = 0x140;
+    rect.y = 0x80;
+    rect.w = 0x180;
+    rect.h = 0x80;
+    func_8009C884(&rect, (void *)0x80180000);
+}
+
+void func_8013512C(void) {
+    *(s16 *)((u8 *)&D_800E6442 + D_800E71DF * 0x38) = 0x32;
+    func_80044750(0x24);
+    func_80135438();
+}
 
 void func_80135178(void) {
     if (D_800E71DF == 6) {
@@ -160,7 +173,12 @@ void func_80135250(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801352A4);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135314);
+void func_80135314(void) {
+    bg_read_sub2(0x42C6);
+    func_80085B3C(0xE, 0xB);
+    func_800AE0F0(&D_800CA1DC, &D_8013980C);
+    func_8004284C();
+}
 
 void func_8013535C(void) {
     bg_read_sub2(0x429F);
@@ -237,7 +255,14 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136018);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136094);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136108);
+void func_80136108(void) {
+    if (D_80139AE0 == 0) {
+        D_80139AE4 = 2;
+    } else {
+        D_80139AE4 = 0;
+    }
+    func_80133EF8();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_8013614C);
 
@@ -288,7 +313,11 @@ void func_80136930(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136970);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136A24);
+void func_80136A24(void) {
+    D_80139ADC = 0xC;
+    D_80139AE0 = (D_80139DFC >= 0x97U) + (D_80139DFC >= 0x12DU);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136A70);
 
@@ -325,7 +354,11 @@ void func_80136F6C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136F90);
+void func_80136F90(void) {
+    func_80044750(0xBF);
+    func_80044890(1, 0xBF98, 0xBF79, 0xC982, 0xC935, 0xC91B);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136FDC);
 
@@ -337,7 +370,13 @@ void func_80137064(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801370A0);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80137440);
+void func_80137440(void) {
+    D_80120666 = 2;
+    D_80120668 = 0;
+    D_80120658 = 0;
+    D_80120652 = 5;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80137484);
 
@@ -390,7 +429,11 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801386C4);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80138728);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801387B8);
+void func_801387B8(void) {
+    func_80083440(D_80122CDC + 1);
+    D_80139ADC = (D_80122CDC * 2) + 0xD;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801387FC);
 

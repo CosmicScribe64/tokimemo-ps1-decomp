@@ -45,6 +45,7 @@ void func_801386C4(void);
 void normal_date_girl_out(void);
 void normal_date_bg_fadein(void);
 void func_80134970(void);
+void func_801343B0(void);
 void func_80134B94(void);
 
 extern s8 D_800CA2F0;
@@ -69,4 +70,23 @@ extern s32 D_800CA2D8;
 extern s32 D_8013C450;
 extern s32 D_8013C484;
 extern s32 D_8013C4B8;
+extern s16 D_800CA2E4;
+extern u8 D_80120657;
+extern u8 D_801206DF;
+extern u8 D_80120723;
+extern s16 D_801206EE;
+extern u8 D_800CA2EC;
+extern s32 D_8013C2D0;
+extern s32 D_8013C2D4;
+extern s32 D_8013C2D8;
+extern s16 D_8013C2DC;
+extern s32 D_8013C2E0;
+extern s16 D_801C26A0;
+extern u8 D_80120653;
+extern u8 D_80120697;
+extern s32 D_8013AEE0;
+void func_800853FC(void);
+void func_80062CD0(s32 arg0);
+void func_8013ABAC(u8 arg0);
+
 #endif /* OVL_SHUGAKU_H */

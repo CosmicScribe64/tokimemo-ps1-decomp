@@ -16,6 +16,7 @@ void bg_read_sub2(s32 arg0);
 extern u8 D_800E69DD;
 extern s8 D_80139AC4;
 extern s32 D_80139DFC;
+extern s16 D_801D4094;
 extern s16 D_800E6442;
 extern s32 D_80139A50;
 extern s32 D_80139A54;
@@ -67,5 +68,24 @@ void func_80133A54(void);
 void func_80133EF8(void);
 void func_801349D4(void);
 void func_801392D4(void);
+
+extern s32 D_80139D10;
+extern s32 D_80139D14;
+extern s32 D_80139D18;
+extern s16 D_80139D1C;
+extern s32 D_80139D20;
+extern s32 D_80139D24;
+extern s32 D_80139D28;
+extern s16 D_80139D2C;
+extern s8 D_80120652;
+extern s16 D_80120658;
+extern s16 D_80120666;
+extern s16 D_80120668;
+extern s32 D_800CA1DC;
+extern s32 D_8013980C;
+void func_80083474(void);
+void func_80044890(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_80135438(void);
+s32 get_g_zyotai_s(u8 arg0);
 
 #endif /* OVL_KANGEI_H */

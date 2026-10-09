@@ -120,11 +120,22 @@ void func_80134100(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80134138);
+void func_80134138(void) {
+    D_800E71DF = 3;
+    D_80120666 = 2;
+    D_801206EE = 4;
+    func_800847B8(3);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80134184);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_801341DC);
+void func_801341DC(void) {
+    if (D_800E6382 >= 0x78) {
+        D_800CA2E4 += 3;
+    }
+    func_8004284C();
+}
 
 void func_80134220(void) {
     func_80044750(0x204);
@@ -221,7 +232,12 @@ void func_80134E9C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80134ED4);
+void func_80134ED4(void) {
+    D_800E69DD = D_800E71DF;
+    D_800E71DF = 0xD;
+    func_800847B8(0xD);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80134F18);
 
@@ -277,13 +293,26 @@ void func_80135A04(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135A3C);
+void func_80135A3C(void) {
+    func_800853FC();
+    D_80120657 = D_800B593C;
+    D_8012069B = D_800B593C;
+    D_801206DF = D_800B593C;
+    D_80120723 = D_800B593C;
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135A80);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135AF4);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135B68);
+s32 func_80135B68(void) {
+    D_80120653 &= 0xFF7F;
+    D_80120697 &= 0xFF7F;
+    D_801206DA = 5;
+    D_801206EE = 4;
+    D_801206F0 = 0;
+    return -0x81;
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135BB8);
 
@@ -465,7 +494,15 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80139604);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80139698);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_801396F4);
+void func_801396F4(void) {
+    if (D_800CA2EC != 0) {
+        func_80062CD0(0x6C32);
+    } else {
+        func_8004284C();
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80139740);
 
