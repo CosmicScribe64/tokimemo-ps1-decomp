@@ -80,3 +80,9 @@ Read the loader in the main exe (`func_80078C48`, `func_8007959C`, `func_8007907
 
 ## [2026-10-09] ticket | T-0008 -> In Review; T-0200, T-0201 created
 Moved [[tickets/T-0008-overlay-load-address-and-split]] In Progress -> In Review on [[kanban]]; added [[tickets/T-0200-event-gyozi-loader-and-address]] and [[tickets/T-0201-obin-format-and-symbols]] to Backlog.
+
+## [2026-10-09] lint | Code review of T-0008
+Ran a code review (Standards + Spec, since 159adc9). Fixed the generator import placement and the index status; added the shared-symbol address caution to [[overlays]]. Remaining judgement calls recorded in [[tickets/T-0008-overlay-load-address-and-split]].
+
+## [2026-10-09] ticket | T-0008 -> Done
+Moved [[tickets/T-0008-overlay-load-address-and-split]] In Review -> Done on [[kanban]] after the review; main exe and all 26 overlays pass sha1.

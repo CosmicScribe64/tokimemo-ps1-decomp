@@ -20,10 +20,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
 
 ## Done
 
+- [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
 - [ ] [[tickets/T-0013-identify-original-compiler-pipeline|T-0013 Identify the original compiler pipeline]]
 - [ ] [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011 Compiler confirmation on first decompiled game functions]]
 - [ ] [[tickets/T-0009-progress-report-script|T-0009 Progress reporting script]]

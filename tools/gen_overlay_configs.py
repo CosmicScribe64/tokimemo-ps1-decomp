@@ -11,6 +11,7 @@ config/overlays.txt lists `<NAME> <load address> <text size>` for configure.py.
 Load addresses: wiki/overlays.md. O.BIN is not code and is skipped.
 """
 import glob
+import hashlib
 import os
 import struct
 import sys
@@ -88,7 +89,6 @@ segments:
 
 
 def main():
-    import hashlib
     rows = []
     for path in sorted(glob.glob(DIR + "/*.EXN")):
         name = os.path.basename(path)[:-4]

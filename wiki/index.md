@@ -23,7 +23,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0005-build-system-and-checksum-matching|T-0005]] Build system & checksum matching (Done)
 - [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006]] Identify PsyQ libs/SDK version (Done)
 - [[tickets/T-0007-write-coding-standards|T-0007]] Write CODING_STANDARDS.md (Done)
-- [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Backlog)
+- [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Done)
 - [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Done)
 - [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Backlog)
 - [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Compiler confirmation on first game functions (Done)
