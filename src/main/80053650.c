@@ -5,21 +5,21 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053650);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800536AC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800537F0);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", card_ev_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053838);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", Sw_Start);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005391C);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", Hw_Start);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053A00);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", Sw_Test);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053AC8);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", Sw_Clear);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053B20);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", Hw_Test);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053BEC);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", Hw_Clear);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053C44);
+INCLUDE_ASM("asm/nonmatchings/main/80053650", Hw_Stop);
 
 void func_80053CAC(u8 arg0) {
     D_800E7395 = 0;

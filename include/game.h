@@ -15,7 +15,7 @@ extern u8 D_800B3D60;
 extern s32 D_800B3D70; /* only sw and &D_800B3D70 seen */
 extern u8 D_800B3D80;
 extern u8 D_800B3DC0[];
-extern u8 D_800B3DC7[]; /* stride 8 from func_8004E93C: likely a field of an 8-byte struct array */
+extern u8 D_800B3DC7[]; /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
 extern u8 D_800B3F58[];
 extern s16 D_800B3F60; /* lh/sh; also lbu elsewhere */
 extern s16 D_800B3F62;
@@ -95,7 +95,7 @@ extern s16 D_80125E64;
 extern s16 D_80125E66;
 extern s16 D_80125E68;
 
-/* 8-byte record of the array at D_800B3DC0 (stride 8; see func_8004E93C). */
+/* 8-byte record of the array at D_800B3DC0 (stride 8; see k_disp_switch). */
 typedef struct Entry8 {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
@@ -105,7 +105,7 @@ typedef struct Entry8 {
     /* 0x07 */ s8 unk_07;
 } Entry8; /* size 0x08 */
 
-/* Sync-wait object of func_80056AA8 (field meanings unknown). */
+/* Sync-wait object of strSync (field meanings unknown). */
 typedef struct SyncObj {
     /* 0x00 */ u8 unk_00[0x10];
     /* 0x10 */ Entry8 tbl[2];
@@ -128,9 +128,9 @@ void func_8004284C(void);
 void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80042908(s32 arg0);
 void func_8004500C(s32 arg0, s32 arg1);
-void func_80052DD4(s32 arg0, u8 arg1, u8 arg2);
-void func_800573F8(s32 arg0);
-void func_8006492C(s32 arg0);
+void birth_day_check_days(s32 arg0, u8 arg1, u8 arg2);
+void dec_bg_show_switch(s32 arg0);
+void hizuke_disp_switch(s32 arg0);
 void func_8006D138(void);
 void func_80083440(s32 arg0);
 void func_80090D20(void);

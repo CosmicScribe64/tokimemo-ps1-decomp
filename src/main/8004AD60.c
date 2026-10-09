@@ -25,8 +25,8 @@ INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004B358);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004B590);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004B778);
+INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004BBA8);
+INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar16);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004C1AC);
+INCLUDE_ASM("asm/nonmatchings/main/8004AD60", col2sepia);

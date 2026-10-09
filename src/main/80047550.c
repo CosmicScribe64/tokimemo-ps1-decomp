@@ -9,21 +9,21 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80047560);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800476C0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800482FC);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", tpage_buf_clear_all);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048390);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", tpage_buf_clear);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800483E8);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", _sys_default_tpage_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048514);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", load_tpage_buf_lock);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800485BC);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", search_load_tpage_buf_lock);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800486A4);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage_multi);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048828);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048A90);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage8);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048CF8);
 
@@ -58,7 +58,7 @@ void func_800490B4(u8 arg0) {
     D_800E62BB = arg0;
 }
 
-void func_800490C0(s32 arg0, s32 arg1) {
+void SetWorkBase(s32 arg0, s32 arg1) {
     u8 *p = D_800E6280 + arg1 * 12;
 
     *(s32 *)(p + 0x24) = arg0;
@@ -66,18 +66,18 @@ void func_800490C0(s32 arg0, s32 arg1) {
     *(s32 *)(p + 0x20) = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800490F0);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", GetWorkBase);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80049140);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", sprite_set_gpu_poly_ft4);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800493A8);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", goto_tpage);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80049450);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", safe_env);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800494BC);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", dtd_on_tpage);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_8004955C);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", dtd_on);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800495DC);
+INCLUDE_ASM("asm/nonmatchings/main/80047550", _sprite_set_light_effect1);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80049A40);

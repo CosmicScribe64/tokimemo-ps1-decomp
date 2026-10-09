@@ -168,15 +168,15 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_800603C0);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060504);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8006052C);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_800605D4);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060614);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_select);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060710);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_message);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060930);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_exit);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060958);
 
@@ -186,15 +186,15 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060B24);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060B78);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060BC8);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", uwasa_exit0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060BE8);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", uwasa0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060C3C);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", uwasa_main);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060CC4);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_xmas_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060DA4);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_xmas);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060DF8);
 
@@ -202,17 +202,17 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060EA0);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80061044);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80061118);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu_init1);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_800611A0);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu_init2);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_800611F0);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu_init3);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80061250);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_800612E8);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80061498);
+INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu1);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80061634);
 

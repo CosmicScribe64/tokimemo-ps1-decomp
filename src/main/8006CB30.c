@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CB30);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CB6C);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", _schedule_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CC28);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", last_date_spot_timer_dec);
 
-void func_8006CCE4(void) {
+void restore_bgm(void) {
     if (func_8004480C() == 0) {
         func_8004500C(0, 0);
     }
@@ -49,17 +49,17 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006F524);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006FB4C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070694);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", geko_judge);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070850);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", date_sasoi_judge);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070AD4);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070C44);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", yuukou_down);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070E10);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", syoushin_up);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070E90);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schdeule_girls_param);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070ECC);
 
@@ -122,15 +122,15 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800736AC);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800737A0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80073800);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800738E0);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_exit);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80073920);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800739A0);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_main);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800739E0);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", get_weekly_bg_sector);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80073A40);
 
@@ -142,13 +142,13 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800741B8);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8007437C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80074658);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_main0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80074798);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_exit0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800747DC);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", parameter_up_down);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80074CA8);
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", vacation_day_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80074D28);
 

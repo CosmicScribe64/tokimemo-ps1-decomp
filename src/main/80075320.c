@@ -57,32 +57,32 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077CA8);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077E30);
 
-void func_80077F2C(void) {
+void magazine_exit(void) {
     func_8006D138();
-    func_8006492C(1);
+    hizuke_disp_switch(1);
     func_80042908(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077F5C);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077FE0);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80078058);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_call);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80078148);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_exit);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800782F0);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", telephone_class_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80078604);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800787B4);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club_exit);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80078858);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_taibu_club_exit);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80078898);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007891C);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club_join_exit);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007894C);

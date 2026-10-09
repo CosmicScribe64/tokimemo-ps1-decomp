@@ -1,25 +1,25 @@
 #include "common.h"
 #include "game.h"
 
-void func_80057390(u8 arg0) {
+void set_dec_bri(u8 arg0) {
     D_800B593C = arg0;
 }
 
-s32 func_8005739C(void) {
+s32 get_last_gamen_mode(void) {
     return D_800B5948;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80057390", func_800573AC);
+INCLUDE_ASM("asm/nonmatchings/main/80057390", dec_bg_reset);
 
-void func_800573F8(s32 arg0) {
+void dec_bg_show_switch(s32 arg0) {
     D_800B5938[arg0] = 1 - D_800B5938[arg0];
 }
 
-void func_80057418(s32 arg0, s32 arg1) {
+void dec_bg_show_set(s32 arg0, s32 arg1) {
     D_800B5938[arg0] = arg1 & 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80057390", func_8005742C);
+INCLUDE_ASM("asm/nonmatchings/main/80057390", dec_bg_cd_read);
 
 INCLUDE_ASM("asm/nonmatchings/main/80057390", func_8005751C);
 

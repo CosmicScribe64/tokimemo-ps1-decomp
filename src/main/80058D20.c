@@ -1,12 +1,12 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058D20);
+INCLUDE_ASM("asm/nonmatchings/main/80058D20", initView);
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058DA0);
+INCLUDE_ASM("asm/nonmatchings/main/80058D20", initLight);
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058EB0);
+INCLUDE_ASM("asm/nonmatchings/main/80058D20", initCoordinate);
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058F0C);
+INCLUDE_ASM("asm/nonmatchings/main/80058D20", initModelingData_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058F9C);
 

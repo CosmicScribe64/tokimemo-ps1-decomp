@@ -1,49 +1,49 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004F870);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004F984);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FA88);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_1);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FB6C);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_2);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FC10);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050324);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050408);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050B00);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_color);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050B54);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_show);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050C24);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", x_taku_menu_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050D78);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", x_taku_string_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050DFC);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", gnsx);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050E8C);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndisp);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80051010);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndi);
 
-void func_8005142C(u8 arg0) {
+void set_c_girl(u8 arg0) {
     D_800E71DF = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80051438);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_name);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80051508);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_p_name);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80051A68);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_zyotai_s);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80051B48);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_zyotai_h);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80051BDC);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_girl_taku_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80051DBC);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", xa_wait);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052000);
 
@@ -51,19 +51,19 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052060);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8005215C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052648);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052C88);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_yuukou);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052D04);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki_table);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052D54);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_yuukou_table);
 
-void func_80052DA4(s32 arg0) {
-    func_80052DD4(arg0, D_800E62BF, D_800E62C0);
+void birth_day_check(s32 arg0) {
+    birth_day_check_days(arg0, D_800E62BF, D_800E62C0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052DD4);
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", birth_day_check_days);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052E60);
 
