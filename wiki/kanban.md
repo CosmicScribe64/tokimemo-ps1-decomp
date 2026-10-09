@@ -13,16 +13,17 @@ kanban-plugin: board
 
 ## Ready
 
-- [ ] [[tickets/T-0007-write-coding-standards|T-0007 Write CODING_STANDARDS.md]]
 
 ## In Progress
 
-- [ ] [[tickets/T-0001-project-scaffolding|T-0001 Project scaffolding]]
 - [ ] [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002 Disc extraction & executable identification]]
 
 ## In Review
 
 ## Done
+
+- [ ] [[tickets/T-0001-project-scaffolding|T-0001 Project scaffolding]]
+- [ ] [[tickets/T-0007-write-coding-standards|T-0007 Write CODING_STANDARDS.md]]
 
 
 

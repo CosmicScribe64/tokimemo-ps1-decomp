@@ -1,7 +1,7 @@
 ---
 id: T-0001
 title: Project scaffolding
-status: In Progress
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -14,8 +14,10 @@ Set up repo scaffolding: skills, wiki, AGENTS.md.
 
 ## Acceptance criteria
 
-- [ ] Skills installed, wiki seeded, AGENTS.md/CLAUDE.md written, committed.
+- [x] Skills installed, wiki seeded, AGENTS.md/CLAUDE.md written, committed.
 
 ## Notes
 
 ## Comments
+
+- 2026-10-09: In Progress -> In Review -> Done.

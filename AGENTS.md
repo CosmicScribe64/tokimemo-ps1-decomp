@@ -22,7 +22,7 @@ The project knowledge base is `wiki/`, maintained in the Karpathy LLM-wiki style
 
 ## Standards
 
-Coding conventions: [CODING_STANDARDS.md](CODING_STANDARDS.md) (to be written in ticket T-0007; until then follow existing code and ask).
+Coding conventions: [CODING_STANDARDS.md](CODING_STANDARDS.md) (required reading for any code change; a code review applies its checklist).
 
 ## Tooling rules
 
