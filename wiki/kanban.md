@@ -12,7 +12,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300 Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress]]
 - [ ] [[tickets/T-0301-sdk-rodata-data-split|T-0301 Split SDK rodata and data per library and object]]
 - [ ] [[tickets/T-0302-sdk-version-conflict|T-0302 Resolve mixed SDK vintages (libcd, libsnd, libpress newer than libgte, libc)]]
-- [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
+- [ ] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-0200-event-gyozi-loader-and-address|T-0200 Find how EVENT and GYOZI overlays are loaded]]
 - [ ] [[tickets/T-0600-apply-obin-renames|T-0600 Apply the O.BIN rename list after the game.c split]]
 - [ ] [[tickets/T-0601-obin-med-confidence-review|T-0601 Review medium and low confidence O.BIN mappings]]
@@ -29,6 +29,7 @@ kanban-plugin: board
 ## Done
 
 - [ ] [[tickets/T-0201-obin-format-and-symbols|T-0201 Analyse O.BIN and harvest names]]
+- [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
 - [ ] [[tickets/T-0016-frame-layout-emulation-pass|T-0016 Frame-layout emulation pass]]
 - [ ] [[tickets/T-0015-research-compiler-mismatch-handling|T-0015 Research: compiler mismatch handling]]
 - [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]

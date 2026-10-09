@@ -5,11 +5,227 @@
   "build_base": true,
   "units": [
     {
-      "name": "src/game",
-      "target_path": "expected/build/src/game.o",
-      "base_path": "build/src/game.o",
+      "name": "src/main/80041000",
+      "target_path": "expected/build/src/main/80041000.o",
+      "base_path": "build/src/main/80041000.o",
       "metadata": {
-        "source_path": "src/game.c"
+        "source_path": "src/main/80041000.c"
+      }
+    },
+    {
+      "name": "src/main/80042540",
+      "target_path": "expected/build/src/main/80042540.o",
+      "base_path": "build/src/main/80042540.o",
+      "metadata": {
+        "source_path": "src/main/80042540.c"
+      }
+    },
+    {
+      "name": "src/main/80042A00",
+      "target_path": "expected/build/src/main/80042A00.o",
+      "base_path": "build/src/main/80042A00.o",
+      "metadata": {
+        "source_path": "src/main/80042A00.c"
+      }
+    },
+    {
+      "name": "src/main/80043510",
+      "target_path": "expected/build/src/main/80043510.o",
+      "base_path": "build/src/main/80043510.o",
+      "metadata": {
+        "source_path": "src/main/80043510.c"
+      }
+    },
+    {
+      "name": "src/main/800451D0",
+      "target_path": "expected/build/src/main/800451D0.o",
+      "base_path": "build/src/main/800451D0.o",
+      "metadata": {
+        "source_path": "src/main/800451D0.c"
+      }
+    },
+    {
+      "name": "src/main/80046500",
+      "target_path": "expected/build/src/main/80046500.o",
+      "base_path": "build/src/main/80046500.o",
+      "metadata": {
+        "source_path": "src/main/80046500.c"
+      }
+    },
+    {
+      "name": "src/main/80047550",
+      "target_path": "expected/build/src/main/80047550.o",
+      "base_path": "build/src/main/80047550.o",
+      "metadata": {
+        "source_path": "src/main/80047550.c"
+      }
+    },
+    {
+      "name": "src/main/80049FF0",
+      "target_path": "expected/build/src/main/80049FF0.o",
+      "base_path": "build/src/main/80049FF0.o",
+      "metadata": {
+        "source_path": "src/main/80049FF0.c"
+      }
+    },
+    {
+      "name": "src/main/8004AD60",
+      "target_path": "expected/build/src/main/8004AD60.o",
+      "base_path": "build/src/main/8004AD60.o",
+      "metadata": {
+        "source_path": "src/main/8004AD60.c"
+      }
+    },
+    {
+      "name": "src/main/8004C3F0",
+      "target_path": "expected/build/src/main/8004C3F0.o",
+      "base_path": "build/src/main/8004C3F0.o",
+      "metadata": {
+        "source_path": "src/main/8004C3F0.c"
+      }
+    },
+    {
+      "name": "src/main/8004E500",
+      "target_path": "expected/build/src/main/8004E500.o",
+      "base_path": "build/src/main/8004E500.o",
+      "metadata": {
+        "source_path": "src/main/8004E500.c"
+      }
+    },
+    {
+      "name": "src/main/8004F6B0",
+      "target_path": "expected/build/src/main/8004F6B0.o",
+      "base_path": "build/src/main/8004F6B0.o",
+      "metadata": {
+        "source_path": "src/main/8004F6B0.c"
+      }
+    },
+    {
+      "name": "src/main/8004F870",
+      "target_path": "expected/build/src/main/8004F870.o",
+      "base_path": "build/src/main/8004F870.o",
+      "metadata": {
+        "source_path": "src/main/8004F870.c"
+      }
+    },
+    {
+      "name": "src/main/80053650",
+      "target_path": "expected/build/src/main/80053650.o",
+      "base_path": "build/src/main/80053650.o",
+      "metadata": {
+        "source_path": "src/main/80053650.c"
+      }
+    },
+    {
+      "name": "src/main/80056300",
+      "target_path": "expected/build/src/main/80056300.o",
+      "base_path": "build/src/main/80056300.o",
+      "metadata": {
+        "source_path": "src/main/80056300.c"
+      }
+    },
+    {
+      "name": "src/main/800563F0",
+      "target_path": "expected/build/src/main/800563F0.o",
+      "base_path": "build/src/main/800563F0.o",
+      "metadata": {
+        "source_path": "src/main/800563F0.c"
+      }
+    },
+    {
+      "name": "src/main/80057390",
+      "target_path": "expected/build/src/main/80057390.o",
+      "base_path": "build/src/main/80057390.o",
+      "metadata": {
+        "source_path": "src/main/80057390.c"
+      }
+    },
+    {
+      "name": "src/main/80058D20",
+      "target_path": "expected/build/src/main/80058D20.o",
+      "base_path": "build/src/main/80058D20.o",
+      "metadata": {
+        "source_path": "src/main/80058D20.c"
+      }
+    },
+    {
+      "name": "src/main/80059710",
+      "target_path": "expected/build/src/main/80059710.o",
+      "base_path": "build/src/main/80059710.o",
+      "metadata": {
+        "source_path": "src/main/80059710.c"
+      }
+    },
+    {
+      "name": "src/main/80059A20",
+      "target_path": "expected/build/src/main/80059A20.o",
+      "base_path": "build/src/main/80059A20.o",
+      "metadata": {
+        "source_path": "src/main/80059A20.c"
+      }
+    },
+    {
+      "name": "src/main/8005A0B0",
+      "target_path": "expected/build/src/main/8005A0B0.o",
+      "base_path": "build/src/main/8005A0B0.o",
+      "metadata": {
+        "source_path": "src/main/8005A0B0.c"
+      }
+    },
+    {
+      "name": "src/main/80061710",
+      "target_path": "expected/build/src/main/80061710.o",
+      "base_path": "build/src/main/80061710.o",
+      "metadata": {
+        "source_path": "src/main/80061710.c"
+      }
+    },
+    {
+      "name": "src/main/80062CD0",
+      "target_path": "expected/build/src/main/80062CD0.o",
+      "base_path": "build/src/main/80062CD0.o",
+      "metadata": {
+        "source_path": "src/main/80062CD0.c"
+      }
+    },
+    {
+      "name": "src/main/8006CB30",
+      "target_path": "expected/build/src/main/8006CB30.o",
+      "base_path": "build/src/main/8006CB30.o",
+      "metadata": {
+        "source_path": "src/main/8006CB30.c"
+      }
+    },
+    {
+      "name": "src/main/80075320",
+      "target_path": "expected/build/src/main/80075320.o",
+      "base_path": "build/src/main/80075320.o",
+      "metadata": {
+        "source_path": "src/main/80075320.c"
+      }
+    },
+    {
+      "name": "src/main/800789E0",
+      "target_path": "expected/build/src/main/800789E0.o",
+      "base_path": "build/src/main/800789E0.o",
+      "metadata": {
+        "source_path": "src/main/800789E0.c"
+      }
+    },
+    {
+      "name": "src/main/80079B10",
+      "target_path": "expected/build/src/main/80079B10.o",
+      "base_path": "build/src/main/80079B10.o",
+      "metadata": {
+        "source_path": "src/main/80079B10.c"
+      }
+    },
+    {
+      "name": "src/main/80085E30",
+      "target_path": "expected/build/src/main/80085E30.o",
+      "base_path": "build/src/main/80085E30.o",
+      "metadata": {
+        "source_path": "src/main/80085E30.c"
       }
     }
   ]

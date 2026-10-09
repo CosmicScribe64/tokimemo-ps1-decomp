@@ -12,6 +12,12 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      T-0016): the original's frames are 16 bytes larger than IDO's.
 gcc: the PsyQ way, cpp | cc1 | maspsx | as.
 
+Every object's .text is zero-padded to a multiple of 16 bytes (T-0012): the original link
+aligned the .text of each object to 16, and the build's linker script uses SUBALIGN(2), so the
+padding that the original linker added after the last function of a source file is made part of
+the object. Without it, a file whose last function is C (not INCLUDE_ASM, which carries the
+padding nops itself) would shift every later file. See wiki/source-files.md.
+
 Also writes <out.o>.d (a make-style depfile) listing the asm/nonmatchings
 files named by INCLUDE_ASM, because the compiler cannot see them.
 Exits non-zero if any stage fails.
@@ -88,6 +94,22 @@ def compile_ido(src, out, ido_ver):
         shutil.rmtree(tmp)
 
 
+def pad_text(obj):
+    """Zero-pad the .text section of `obj` to a multiple of 16 bytes (original per-object alignment)."""
+    tmp = tempfile.mkdtemp(prefix="padtext")
+    try:
+        raw = os.path.join(tmp, "text.bin")
+        subprocess.run(["mips-linux-gnu-objcopy", "--dump-section", ".text=" + raw, obj, os.devnull],
+                       check=True)
+        data = open(raw, "rb").read()
+        if len(data) % 16:
+            with open(raw, "wb") as f:
+                f.write(data + b"\0" * (-len(data) % 16))
+            subprocess.run(["mips-linux-gnu-objcopy", "--update-section", ".text=" + raw, obj], check=True)
+    finally:
+        shutil.rmtree(tmp)
+
+
 def main(argv):
     if len(argv) < 5:
         sys.exit(__doc__)
@@ -103,6 +125,7 @@ def main(argv):
         compile_gcc(src, out, argv[4], argv[5])
     else:
         sys.exit(__doc__)
+    pad_text(out)
 
 
 if __name__ == "__main__":

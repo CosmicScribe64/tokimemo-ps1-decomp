@@ -42,8 +42,8 @@ options:
   undefined_syms_auto_path: build/ovl/BUNKAKEN_undefined_syms_auto.txt
 
   subalign: 2
-  string_encoding: ASCII
-  data_string_encoding: ASCII
+  string_encoding: SHIFT-JIS
+  data_string_encoding: SHIFT-JIS
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
