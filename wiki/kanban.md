@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
 
 
 ## In Review
