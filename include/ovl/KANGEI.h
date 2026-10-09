@@ -23,7 +23,18 @@ extern s32 D_80139A54;
 extern s32 D_80139A58;
 extern s32 D_80122CDC;
 extern s8 D_80139DF0;
-extern s32 D_80139AD0;
+typedef struct KSub {
+    /* 0x00 */ u8 unk_00[8];
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+} KSub;
+
+typedef struct KObj {
+    /* 0x00 */ u8 unk_00[0x34];
+    /* 0x34 */ KSub *unk_34;
+} KObj;
+
+extern KObj *D_80139AD0;
 extern s32 D_80139AD4;
 extern s32 D_80139AD8;
 extern s32 D_8013A210;
@@ -86,6 +97,18 @@ extern s32 D_8013980C;
 void func_80083474(void);
 void func_80044890(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 void func_80135438(void);
-s32 get_g_zyotai_s(u8 arg0);
+u8 get_g_zyotai_s(u8 arg0);
+
+extern u8 D_8011F513;
+extern u8 D_80120653;
+extern u8 D_80120657;
+extern s32 D_801398E8;
+extern s32 D_801398EC;
+extern s32 D_801398F0;
+extern s32 D_801398F4;
+void normal_date_girl_in(void);
+void func_80081190(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
+void func_80062CD0(s32 arg0);
+void func_80139540(void);
 
 #endif /* OVL_KANGEI_H */

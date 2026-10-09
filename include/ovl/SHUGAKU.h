@@ -89,4 +89,23 @@ void func_800853FC(void);
 void func_80062CD0(s32 arg0);
 void func_8013ABAC(u8 arg0);
 
+extern s16 D_800CA2E0;
+extern s32 D_80122CFC;
+extern s16 D_800CA2E8;
+extern s32 D_80122D0C;
+extern s32 D_8013B06C;
+extern s32 D_8013B070;
+extern s32 D_8013B074;
+extern s32 D_8013B078;
+extern s32 D_8013B07C;
+extern s32 D_8013B080;
+extern s16 D_8013B08C;
+extern u8 D_800CA2F4;
+extern s32 D_800CA188;
+extern s32 D_8013AD70;
+void func_80067DD4(void);
+void normal_date_bggirl_fadeout(void);
+void func_80132E84(void);
+void func_80139D00(void);
+
 #endif /* OVL_SHUGAKU_H */
