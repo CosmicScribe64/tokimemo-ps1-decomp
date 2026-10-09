@@ -57,7 +57,16 @@ void func_80133924(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80133984);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80133CC4);
+void func_80133CC4(void) {
+    func_801341A0(0x1F, 0xBF, 0);
+    func_801341A0(0x1E, 0xC0, 1);
+    func_801341A0(0x1D, 0xC1, 1);
+    func_801341A0(8, 7, 1);
+    func_801341A0(2, 0x4D, 1);
+    func_801341A0(1, 0x2E, 1);
+    func_801341A0(0, 0x50, 1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80133D54);
 
@@ -78,7 +87,26 @@ void func_80134228(u32 arg0) {
 /* object boundary: alignment padding of the original link */
 INCLUDE_ASM("src/ovl/pad", pad_BUNKA_SD_80134258);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80134260);
+void func_80134260(void) {
+    func_8008585C();
+    func_80048E78();
+    k_reset(1);
+    tpage_buf_clear();
+    D_800E62B6 = 0;
+    D_800E62B8 = 0;
+    D_800E62B7 = 0;
+    if (D_80122EB8 == 1) {
+        back_clear_switch(0);
+    } else {
+        back_clear_switch(1);
+    }
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    hizuke_disp_switch(0);
+    func_80041584();
+    D_8013C700 = get_k_speed();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80134314);
 
@@ -130,7 +158,26 @@ void func_8013540C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80135440);
+void func_80135440(void) {
+    u32 t;
+
+    t = D_800E7384;
+    if (t == 0) {
+        D_80120652 = 5;
+    }
+    t = t + 1;
+    if (D_80122EAC == 3) {
+        D_800E7384 = t;
+        if (t >= 0x1C2) {
+            func_8004284C();
+        }
+    } else {
+        D_800E7384 = t;
+        if (!(D_80120652 & 1)) {
+            func_8004284C();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801354C8);
 
@@ -168,7 +215,28 @@ INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80135CD4);
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80135F38);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801361B8);
+void func_801361B8(void) {
+    if (D_800E7384 == 0) {
+        D_80120652 = 5;
+        D_80120696 = 5;
+        D_801206DA = 5;
+    }
+    if (D_800E7384 == 0x3A6) {
+        D_8012071F = 0x80;
+        D_8012071E = 5;
+        D_80120723 = 0x80;
+        D_80120763 = 0x80;
+        D_80120762 = 5;
+        D_80120767 = 0x80;
+    }
+    if (!(D_8012071E & 1)) {
+        D_8012071F = 0;
+        D_80120763 = 0;
+    }
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKA_SD_80136264);
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80136270);
 
@@ -183,7 +251,18 @@ void func_801364B4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801364F0);
+void func_801364F0(void) {
+    func_80136904();
+    func_801369AC();
+    D_800E7384 += 1;
+    if (D_80122EAC == 3) {
+        if (D_800E7384 >= 0x25B) {
+            func_8004284C();
+        }
+    } else if (!(D_80120652 & 1)) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80136578);
 
@@ -220,7 +299,16 @@ void func_801371BC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_8013722C);
+void func_8013722C(void) {
+    func_801377D4(1, 0xFF, 0);
+    func_801377D4(2, 0xFF, 0);
+    func_801377D4(3, 0xFF, 0);
+    func_801377D4(4, 0xFF, 0);
+    func_801377D4(5, 0xFF, 0);
+    func_801377D4(0, 0x44, 1);
+    func_801377D4(0x1F, 0x42, 1);
+    func_8004284C();
+}
 
 void func_801372BC(void) {
     func_801377D4(0, 0x44, 1);
@@ -230,7 +318,23 @@ void func_801372BC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_8013731C);
+void func_8013731C(void) {
+    if (D_800E7384 == 1) {
+        func_80137824(D_8013C814[D_8013CECC]);
+        D_800E7380 = 1;
+        func_80137620();
+        return;
+    }
+    func_80137620();
+    if (D_800E7380 == 0) {
+        D_8013CECC += 1;
+        D_8013CEC8 = 1;
+        D_8013CED0 = 0;
+        D_8013CED4 = 0;
+        k_reset(1);
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801373D0);
 
