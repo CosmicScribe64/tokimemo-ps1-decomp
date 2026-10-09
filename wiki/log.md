@@ -308,3 +308,14 @@ Per-symbol decisions (access widths over all users) in [[matching-notes]]: `D_80
 
 ## [2026-10-09] ticket | T-1200 done
 Inline code-review gate passed; [[tickets/T-1200-fix-conflicting-extern-declarations]] moved to Done in [[kanban]].
+## [2026-10-09] ticket | T-1010 created, In Progress
+New ticket [[tickets/T-1010-main-exe-batch-e]] (Backlog -> In Progress on [[kanban]]): decompile src/main/80062CD0.c and src/main/8006CB30.c, worktree branch batch-b-e.
+
+## [2026-10-09] build | T-1010 40 functions matched
+Matched 40 of 153 functions in src/main/80062CD0.c and src/main/8006CB30.c (`ninja progress` grand total 244/6962, 27 of 27 sha1 OK). Two `FAKE` marks (`bustup_wink`, `bustup_speech`), two array-form accesses for load/store ordering. New idioms and blocker list in [[matching-notes]] (section Main exe batch E); shared declarations appended to include/game.h.
+
+## [2026-10-09] ticket | T-1010 -> In Review
+Card moved In Progress -> In Review on [[kanban]], see [[tickets/T-1010-main-exe-batch-e]]. Inline code review next.
+
+## [2026-10-09] ticket | T-1010 -> Done
+Inline code review against CODING_STANDARDS.md found three minor issues (a transient `func_80066104` mismatch, unused declarations in include/game.h, a missing comment on `func_80072B5C`), all fixed. Card moved In Review -> Done on [[kanban]]; see [[tickets/T-1010-main-exe-batch-e]]. Not merged.
