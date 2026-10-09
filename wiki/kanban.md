@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2070-wave-2-tt|T-2070 Wave 2: TT]]
 
 
 ## In Review

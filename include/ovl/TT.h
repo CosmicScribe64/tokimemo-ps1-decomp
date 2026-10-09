@@ -43,5 +43,16 @@ extern s16 D_80155A84[];
 extern u8 D_80155A80[];
 extern s16 D_80155A78[];
 extern u8 *D_801569E8;
+extern u8 D_80155A34[];
+extern u8 D_80155A4C[];
+extern s16 D_80155A64[];
+extern s16 D_80155A6C[];
+extern u8 D_80155A74[];
+extern u8 D_801559F0[];
+extern u8 D_80155A08[];
+extern s16 D_80155A20[];
+extern s16 D_80155A28[];
+extern u8 D_80155A30[];
+extern u8 *D_80158AA8;
 
 #endif /* OVL_TT_H */
