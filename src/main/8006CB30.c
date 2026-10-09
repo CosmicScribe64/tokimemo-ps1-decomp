@@ -1,7 +1,12 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_init);
+void schedule_init(void) {
+    if (D_800E7389 == 0) {
+        _schedule_init();
+    }
+    func_800578F4(get_last_gamen_mode());
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", _schedule_init);
 
@@ -23,7 +28,11 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CF38);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CF80);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D00C);
+void func_8006D00C(void) {
+    if (D_800E62BF == 9) {
+        D_800E6376 &= 0xFFFB;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D038);
 
@@ -59,15 +68,46 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", yuukou_down);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", syoushin_up);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schdeule_girls_param);
+void schdeule_girls_param(void) {
+    if (D_800E62BD == 0) {
+        yuukou_down();
+        syoushin_up();
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070ECC);
+void func_80070ECC(void) {
+    func_80072338();
+    if (func_800460EC() & 4) {
+        func_80045414(9, 0, 0);
+    }
+    func_80042878(0x31);
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070F14);
+void func_80070F14(void) {
+    if (D_800E7389 == 0) {
+        func_80070F80();
+    }
+    parameter_show();
+    message_window_show();
+    hizuke_show();
+    func_80065B0C(0);
+    func_80067870();
+    func_800578F4(get_last_gamen_mode());
+    func_80066C08(1);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070F80);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070FD0);
+void func_80070FD0(void) {
+    if (D_800E738D == 0) {
+        func_80067438();
+        D_800E738D++;
+    } else if (func_80044E8C() == 1) {
+        func_80044750(0x200);
+        func_80042878(0x63);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80071038);
 
@@ -96,13 +136,23 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072944);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072998);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072B20);
+void func_80072B20(void) {
+    if (func_80044E8C() == 1) {
+        func_8004500C(0, 0);
+        func_80042808();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072B5C);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072BC0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072C68);
+void func_80072C68(void) {
+    parameter_show_init();
+    hizuke_init();
+    message_window_init();
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072CA0);
 
@@ -120,7 +170,16 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800735B8);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800736AC);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800737A0);
+void func_800737A0(void) {
+    func_80072B5C(0);
+    parameter_show();
+    message_window_show();
+    hizuke_show();
+    func_80065B0C(0);
+    func_80067870();
+    func_80066C08(1);
+    func_800578F4(get_last_gamen_mode());
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day);
 
@@ -144,7 +203,12 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8007437C);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_main0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_exit0);
+void week_day_exit0(void) {
+    D_800E699C++;
+    func_80048F64(0x60);
+    func_80048F64(0x61);
+    func_80042878(0x31);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", parameter_up_down);
 
