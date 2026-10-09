@@ -15,9 +15,11 @@ directory sector). Sector rules, all at byte offset LBA*2352:
   - sync(12)+header(4) = 16 bytes, then an 8-byte XA subheader (bytes 16..23);
   - Form1 sector: 2048 data bytes at +24;
   - Form2 sector (subheader submode bit 0x20): 2324 data bytes at +24;
+  - XA/STR streams (Form2 sectors) are skipped, see extract();
   - a directory sector may lack a valid subheader (two identical 4-byte
     halves is the valid pattern); then data starts at +16.
 Exit status is non-zero if the image is short or no SLPM_86.053 is found.
+The tracks are always re-extracted from the zip (no stale-file reuse).
 """
 import os
 import struct
@@ -47,8 +49,6 @@ def unzip_tracks(zip_path, out_dir):
             for suffix, dst in names.items():
                 if info.filename.endswith(suffix):
                     dst_path = os.path.join(out_dir, dst)
-                    if os.path.exists(dst_path) and os.path.getsize(dst_path) == info.file_size:
-                        continue
                     with z.open(info) as src, open(dst_path, "wb") as out:
                         while True:
                             buf = src.read(1 << 20)
@@ -98,10 +98,14 @@ class Image:
         return out
 
     def read_file(self, lba, size):
+        """Return the file bytes, or None if any sector is Form2 (a stream)."""
         out = bytearray()
         i = 0
         while len(out) < size:
-            out += self.read_sector(lba + i)[0]
+            payload, form2 = self.read_sector(lba + i)
+            if form2:
+                return None
+            out += payload
             i += 1
         return bytes(out[:size])
 
@@ -120,10 +124,16 @@ def extract(img, lba, size, dest, depth, counts):
         if flags & 2:
             extract(img, r_lba, r_size, path, depth + 1, counts)
         elif r_lba >= img.sectors:
-            counts["skipped"] += 1  # CD-DA track reference, no data in the bin
+            counts["skipped"] += 1  # CD-DA reference, no data in the bin
         else:
+            data = img.read_file(r_lba, r_size)
+            if data is None:
+                # XA/STR stream: the ISO size counts 2048-byte units, so a
+                # Form2 payload cannot be cut to size. Not needed for the decomp.
+                counts["skipped"] += 1
+                continue
             with open(path, "wb") as f:
-                f.write(img.read_file(r_lba, r_size))
+                f.write(data)
             counts["files"] += 1
 
 
@@ -139,10 +149,13 @@ def main(argv):
     root_lba = struct.unpack("<I", root[2:6])[0]
     root_size = struct.unpack("<I", root[10:14])[0]
     counts = {"files": 0, "skipped": 0}
-    extract(img, root_lba, root_size, os.path.join(out_dir, "files"), 0, counts)
+    try:
+        extract(img, root_lba, root_size, os.path.join(out_dir, "files"), 0, counts)
+    except EOFError as e:
+        sys.exit("truncated image: %s" % e)
     if not os.path.exists(os.path.join(out_dir, "files", "SLPM_86.053")):
         sys.exit("SLPM_86.053 not found")
-    print("extracted %d files, skipped %d" % (counts["files"], counts["skipped"]))
+    print("extracted %d files, skipped %d (CD-DA/XA streams)" % (counts["files"], counts["skipped"]))
 
 
 if __name__ == "__main__":
