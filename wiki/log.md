@@ -100,3 +100,6 @@ Ran a code review (Standards + Spec, since 159adc9). Fixed the generator import 
 
 ## [2026-10-09] ticket | T-0008 -> Done
 Moved [[tickets/T-0008-overlay-load-address-and-split]] In Review -> Done on [[kanban]] after the review; main exe and all 26 overlays pass sha1.
+
+## [2026-10-09] fix | progress denominator
+On a clean build splat skipped asm for decompiled functions, so tools/progress.py undercounted (0/772). Set `disassemble_all: True` in config/SLPM_86.053.yaml and made tools/progress.py read asm/matchings too; now 62/834. See [[build-system]].
