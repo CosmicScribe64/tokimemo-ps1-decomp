@@ -1,7 +1,7 @@
 ---
 id: T-0016
 title: Frame-layout emulation pass
-status: In Review
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -16,7 +16,7 @@ The original's stack frames are 16 bytes larger than IDO 5.3's (non-leaf: unused
 
 - [x] Rule derived from the original code: 3312 framed functions (main segment and 26 overlays), 33-row sample table, exceptions investigated; the one exception (`func_801488F0`) is a gcc-compiled function, explained by its prologue/epilogue shape (see [[matching-notes]]).
 - [x] Pass in its own module (`tools/frame_pass.py`) wired into `tools/cc.py`; deterministic, fails loudly; 19 unit tests in Docker (synthetic binasm plus snippets compiled by the real IDO).
-- [~] Proof: all 63 earlier matches still match, 12 non-leaf functions newly matched (need 5), 27/27 sha1 OK after a clean rebuild, `ninja progress` 75/834. Framed leaf functions (need 2): 3 match byte for byte in a diagnostic compile without `-Wo,-no_const_in_reg` (`func_8013815C`, `func_801446A0`, `func_80146FA0`) but not under the project flag, so they are `NON_MATCHING` in `src/ovl/TAIIKU.c`; the flag decision is [[tickets/T-0017-const-in-reg-loop-hoisting]]. Not met in the default build.
+- [x] Proof (framed-leaf part moved to T-0017 by user decision): all 63 earlier matches still match, 12 non-leaf functions newly matched (need 5), 27/27 sha1 OK after a clean rebuild, `ninja progress` 75/834. Framed leaf functions (need 2): 3 match byte for byte in a diagnostic compile without `-Wo,-no_const_in_reg` (`func_8013815C`, `func_801446A0`, `func_80146FA0`) but not under the project flag, so they are `NON_MATCHING` in `src/ovl/TAIIKU.c`; the flag decision is [[tickets/T-0017-const-in-reg-loop-hoisting]]. Not met in the default build.
 - [x] [[toolchain]], [[matching-notes]], `CODING_STANDARDS.md` (section 7a), README updated.
 - [x] code-review gate (recorded in Comments); [[tickets/T-0100-older-mips-compiler-emulation]] stays open with a note.
 
@@ -29,3 +29,4 @@ Design (decided while working): the layer is IDO's binasm stream between ugen an
 ## Comments
 - 2026-10-09 review (standards agent): FAKE items tracked here: `v[6]` in the three TAIIKU leaf functions (`src/ovl/TAIIKU.c`), `u8 buf[0x20]` in `func_800462C8`/`func_80046318` (size from the original frame). Standards findings otherwise: none hard besides these markers. The spec-axis review had not returned when this was handed back; ticket stays In Review, not Done (framed-leaf criterion unmet in the default build, see T-0017).
 - 2026-10-09 review (spec agent): framed-leaf shortfall honestly recorded. Fixed: a tainted `$sp`-derived register stored as a value now fails (test added). Open, accepted: unknown binasm itypes other than ifile/ioption pass through; leaf evidence is 24 original functions; IdoIntegration tests skip without IDO. Ticket stays In Review pending the T-0017 decision.
+- 2026-10-09 decision (user, via orchestrator): keep `-Wo,-no_const_in_reg` (func_80042400 keeps matching) and defer the framed-leaf target to [[tickets/T-0017-const-in-reg-loop-hoisting]]. Both review axes have reported and their findings are fixed or accepted (see above). Ticket Done.

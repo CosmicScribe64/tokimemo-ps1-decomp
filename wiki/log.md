@@ -167,3 +167,6 @@ Added to `CODING_STANDARDS.md`; [[tickets/T-0100-older-mips-compiler-emulation]]
 
 ## [2026-10-09] ticket | T-0016 -> In Review; T-0017, T-0018 created
 Moved [[tickets/T-0016-frame-layout-emulation-pass]] In Progress -> In Review on [[kanban]]. New Backlog tickets [[tickets/T-0017-const-in-reg-loop-hoisting]] and [[tickets/T-0018-ugen-temp-register-order]]; [[index]] updated.
+
+## [2026-10-09] ticket | T-0016 -> Done
+User chose to keep `-Wo,-no_const_in_reg`. The framed-leaf criterion of [[tickets/T-0016-frame-layout-emulation-pass]] moves to [[tickets/T-0017-const-in-reg-loop-hoisting]]. Card moved In Review -> Done on [[kanban]]. Pass lives in tools/frame_pass.py; rule in [[matching-notes]] and [[toolchain]].
