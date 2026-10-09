@@ -305,14 +305,7 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135A80);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135AF4);
 
-s32 func_80135B68(void) {
-    D_80120653 &= 0xFF7F;
-    D_80120697 &= 0xFF7F;
-    D_801206DA = 5;
-    D_801206EE = 4;
-    D_801206F0 = 0;
-    return -0x81;
-}
+INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135B68);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135BB8);
 
