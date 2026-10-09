@@ -65,7 +65,8 @@ def main():
     for c in C_FILES:
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, implicit=[stamp, "include/common.h",
-                                      "include/include_asm.h", "tools/cc.py"])
+                                      "include/include_asm.h", "include/game.h",
+                                      "tools/cc.py"])
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"
@@ -76,6 +77,8 @@ def main():
     n.build(elf, "ld", objs, implicit=[stamp])
     n.build("build/%s.bin" % EXE, "objcopy", elf)
     n.build("build/%s.ok" % EXE, "sha1", "build/%s.bin" % EXE)
+    n.rule("progress", command="python3 tools/progress.py", description="PROGRESS", pool="console")
+    n.build("progress", "progress")
     n.default("build/%s.ok" % EXE)
     n.close()
 
