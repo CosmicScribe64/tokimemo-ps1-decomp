@@ -287,7 +287,13 @@ void func_80135278(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_801352B0);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135430);
+void func_80135430(void) {
+    D_8013C2D0 = 0x801C25B8;
+    D_8013C2D4 = 0x801C25C8;
+    D_8013C2D8 = 0x801C2674;
+    D_8013C2DC = *(s16 *)0x801C26A0;
+    D_8013C2E0 = 0x801B0000;
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80135480);
 

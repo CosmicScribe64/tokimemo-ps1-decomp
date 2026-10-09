@@ -10,6 +10,7 @@ void k_speed_set(s32 arg0);
 s32 set_kanji_string();
 void k_disp_start(s32 arg0);
 extern u32 D_800E7384;
+extern u8 D_8011ECD0[];
 
 /* BUNKA_SD functions called across the overlay. */
 void func_80132940(void);
@@ -17,7 +18,7 @@ void func_80134938(void);
 void func_80135630(void);
 void func_80135CD4(void);
 void func_80136578(void);
-void func_80138810();
+void func_80138810(s32 arg0, s32 arg1, s32 arg2);
 void func_80132708(void);
 
 void func_80134B88(void);
@@ -25,7 +26,7 @@ void func_80134D94(void);
 void func_80133984(void);
 void func_80136F3C(void);
 void func_80137FEC(void);
-void func_801377D4();
+void func_801377D4(s32 arg0, s32 arg1, s32 arg2);
 
 
 void func_80135F38(void);
@@ -36,7 +37,7 @@ s32 func_800460EC(void);
 void func_80045414(s32 arg0, s32 arg1, s32 arg2);
 void func_80042940(s32 arg0);
 void func_80044750(s32 arg0);
-void func_801341A0();
+void func_801341A0(s32 arg0, s32 arg1, s32 arg2);
 void func_80136904(void);
 void func_801369AC(void);
 extern s32 D_80122EAC;

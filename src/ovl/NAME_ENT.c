@@ -160,7 +160,15 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801398EC);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80139AD8);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80139BA0);
+void func_80139BA0(void) {
+    if (D_800E7208 & 0x10) {
+        D_8014D0D4 += 1;
+        return;
+    }
+    if ((D_800E7208 & 0x20) && (D_8011ECF6 < 0x20) && (D_8011ECF6 >= -0x3F) && (D_8011ECFA < 0x1C) && (D_8011ECFA >= 0xD)) {
+        D_8014D0D4 += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80139C24);
 
@@ -650,17 +658,63 @@ void func_80146914(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146940);
+void func_80146940(void) {
+    D_80120651 = 0xA;
+    D_80120652 = 0x40;
+    D_80120688 = 0x41000000;
+    D_80120653 = 0xA4;
+    D_8012065C = (u8 *)0x801842C4;
+    D_80120660 = (u8 *)0x801842F0;
+    D_80120684 = (u8 *)0x801842BC;
+    D_80120668 = 0;
+    D_80120655 = 0x80;
+    D_80120676 = -0xA0;
+    D_8012067A = -0x78;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801469D0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146B3C);
+void func_80146B3C(void) {
+    D_801207E9 = 9;
+    D_801207EA = 3;
+    D_80120820 = 0x41000000;
+    D_801207EB = 0xA4;
+    D_801207F4 = 0x801842C4;
+    D_801207F8 = 0x801842F0;
+    D_8012081C = 0x801842BC;
+    D_801207FE = 0;
+    D_801207ED = 0x80;
+    D_8012080E = -0xA0;
+    D_80120812 = -0x78;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146BCC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146CB8);
+void func_80146CB8(void) {
+    D_8012071D = 9;
+    D_8012071E = 0;
+    D_80120754 = 0x41000000;
+    D_8012071F = 0xA4;
+    D_80120728 = 0x801800F8;
+    D_8012072C = 0x80180114;
+    D_80120750 = 0x801800F4;
+    D_80120721 = 0x80;
+    D_80120742 = -0xA0;
+    D_80120746 = -0x78;
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146D3C);
+void func_80146D3C(void) {
+    D_8012071D = 9;
+    D_8012071E = 5;
+    D_80120754 = 0x41000000;
+    D_8012071F = 0xA4;
+    D_80120728 = 0x801800F8;
+    D_8012072C = 0x80180114;
+    D_80120750 = 0x801800F4;
+    D_80120721 = 0x80;
+    D_80120742 = -0xA0;
+    D_80120746 = -0x78;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80146DC4);
 
@@ -707,7 +761,19 @@ void func_80147F4C(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80147F78);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801480E0);
+void func_801480E0(void) {
+    D_801206D9 = 9;
+    D_801206DA = 3;
+    D_80120710 = 0x41000000;
+    D_801206DB = 0xAC;
+    D_801206E4 = 0x80184288;
+    D_801206E8 = 0x801842AC;
+    D_8012070C = 0x80184280;
+    D_801206EE = 0;
+    D_801206DD = 0x80;
+    D_801206FE = -0xA0;
+    D_80120702 = -0x78;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80148170);
 
@@ -747,7 +813,19 @@ void func_80149118(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149144);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_801492B0);
+void func_801492B0(void) {
+    D_801206D9 = 9;
+    D_801206DA = 0x11;
+    D_80120710 = 0x41000000;
+    D_801206DB = 0xAC;
+    D_801206E4 = 0x801800F4;
+    D_801206E8 = 0x80180114;
+    D_8012070C = 0x801800F0;
+    D_801206EE = 0;
+    D_801206DD = 0x80;
+    D_801206FE = -0xA0;
+    D_80120702 = -0x78;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149340);
 
@@ -773,7 +851,18 @@ void func_80149ADC(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149B08);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149CEC);
+void func_80149CEC(void) {
+    D_8012071D = 9;
+    D_8012071E = 5;
+    D_80120754 = 0x41000000;
+    D_8012071F = 0xA4;
+    D_80120728 = 0x80180258;
+    D_8012072C = 0x80180298;
+    D_80120750 = 0x8018024C;
+    D_80120721 = 0x80;
+    D_80120742 = -0xA0;
+    D_80120746 = -0x78;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_80149D74);
 

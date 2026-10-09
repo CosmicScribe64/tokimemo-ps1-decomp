@@ -72,7 +72,18 @@ INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80133D54);
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80133FA4);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801341A0);
+void func_801341A0(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *p;
+
+    if (arg2 == 1) {
+        p = D_8011ECD0 + arg0 * 0x44;
+        p[0x1983] = 0x80;
+    } else {
+        p = D_8011ECD0 + arg0 * 0x44;
+        p[0x1983] = 0;
+    }
+    *(s16 *)(p + 0x1998) = arg1;
+}
 
 void func_801341F0(s32 arg0) {
     k_disp_start(set_kanji_string(-0x80, 0x30, 0, arg0, 0));
@@ -315,7 +326,18 @@ INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801373D0);
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80137620);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_801377D4);
+void func_801377D4(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *p;
+
+    if (arg2 == 1) {
+        p = D_8011ECD0 + arg0 * 0x44;
+        p[0x1983] = 0x80;
+    } else {
+        p = D_8011ECD0 + arg0 * 0x44;
+        p[0x1983] = 0;
+    }
+    *(s16 *)(p + 0x1998) = arg1;
+}
 
 void func_80137824(s32 arg0) {
     k_disp_start(set_kanji_string(-0x80, 0x30, 0, arg0, 0));
@@ -363,7 +385,18 @@ INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_8013842C);
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_8013867C);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD", func_80138810);
+void func_80138810(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *p;
+
+    if (arg2 == 1) {
+        p = D_8011ECD0 + arg0 * 0x44;
+        p[0x1983] = 0x80;
+    } else {
+        p = D_8011ECD0 + arg0 * 0x44;
+        p[0x1983] = 0;
+    }
+    *(s16 *)(p + 0x1998) = arg1;
+}
 
 void func_80138860(s32 arg0) {
     k_disp_start(set_kanji_string(-0x80, 0x30, 0, arg0, 0));

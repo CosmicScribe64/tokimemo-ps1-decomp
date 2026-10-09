@@ -210,7 +210,12 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135570);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801355F0);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135634);
+void func_80135634(void) {
+    D_80139D20 = 0x801D4074;
+    D_80139D24 = 0x801D4078;
+    D_80139D28 = 0x801D4088;
+    D_80139D2C = *(s16 *)0x801D4094;
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135678);
 

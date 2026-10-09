@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2100-wave2-small-overlays|T-2100 Wave 2: small overlays]]
 
 
 ## In Review
