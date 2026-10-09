@@ -21,9 +21,30 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_show);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", x_taku_menu_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", x_taku_string_set);
+void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    set_kanji_string(-0x78, 0x32, 0, arg0, 0);
+    set_kanji_string(-0x78, 0x42, 0, arg1, 0);
+    if (arg3 == 3) {
+        if (arg2 != 0) {
+            set_kanji_string(-0x78, 0x52, 0, arg2, 0);
+        }
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", gnsx);
+void gnsx(u8 *arg0) {
+    switch (strlen(arg0)) {
+    case 2:
+        set_kanji_string(-0x72, 0x32, 0, arg0, 0);
+        return;
+    case 4:
+        set_kanji_string(-0x79, 0x32, 0, arg0, 0);
+        return;
+    default:
+    case 6:
+        set_kanji_string(-0x80, 0x32, 0, arg0, 0);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndisp);
 

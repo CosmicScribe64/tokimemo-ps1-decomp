@@ -74,7 +74,14 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", goto_tpage);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", safe_env);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", dtd_on_tpage);
+void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 work;
+
+    work = GetWorkBase(0xC, D_8011ECA0);
+    func_8009D294(work, 0, 1, func_8009ECB0(arg4, arg3, arg0, arg1), 0);
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg2 * 4, work);
+    safe_env(arg2);
+}
 
 void dtd_on(s32 arg0) {
     s32 work;

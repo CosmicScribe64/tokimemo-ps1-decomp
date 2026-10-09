@@ -14,9 +14,31 @@ void card_ev_set(void) {
     _card_auto(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", Sw_Start);
+void Sw_Start(void) {
+    EnterCriticalSection();
+    D_8011ECAC = OpenEvent(0xF4000001, 4, 0x2000, 0);
+    D_8011ECB0 = OpenEvent(0xF4000001, 0x8000, 0x2000, 0);
+    D_8011ECB4 = OpenEvent(0xF4000001, 0x100, 0x2000, 0);
+    D_8011ECB8 = OpenEvent(0xF4000001, 0x2000, 0x2000, 0);
+    EnableEvent(D_8011ECAC);
+    EnableEvent(D_8011ECB0);
+    EnableEvent(D_8011ECB4);
+    EnableEvent(D_8011ECB8);
+    ExitCriticalSection();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", Hw_Start);
+void Hw_Start(void) {
+    EnterCriticalSection();
+    D_8011ECBC = OpenEvent(0xF0000011, 4, 0x2000, 0);
+    D_8011ECC0 = OpenEvent(0xF0000011, 0x8000, 0x2000, 0);
+    D_8011ECC4 = OpenEvent(0xF0000011, 0x100, 0x2000, 0);
+    D_8011ECC8 = OpenEvent(0xF0000011, 0x2000, 0x2000, 0);
+    EnableEvent(D_8011ECBC);
+    EnableEvent(D_8011ECC0);
+    EnableEvent(D_8011ECC4);
+    EnableEvent(D_8011ECC8);
+    ExitCriticalSection();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", Sw_Test);
 

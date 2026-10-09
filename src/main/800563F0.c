@@ -6,7 +6,14 @@ void set_movie_offset(s16 arg0, s16 arg1) {
     D_800B58FC = arg1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800563F0", strInit);
+void strInit(s32 arg0, s32 arg1) {
+    DecDCTReset(0);
+    *(s32 *)(D_80125C58 + 0x34) = 0;
+    func_800869C8(arg1);
+    func_80088150(D_80125C58 + 0x44, 0x20);
+    func_80088180(D_800B5900 & 1, 1, -1, 0, 0);
+    strKickCD(arg0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strSetDefDecEnv);
 
