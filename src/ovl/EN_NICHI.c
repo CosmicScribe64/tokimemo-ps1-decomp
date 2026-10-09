@@ -193,7 +193,16 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80135A48);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80135ACC);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80135F54);
+void func_80135F54(void) {
+    s32 i;
+    s32 j;
+
+    for (j = 0; j < 11; j++) {
+        for (i = 0; i < 14; i++) {
+            func_80135FBC(i, j);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80135FBC);
 

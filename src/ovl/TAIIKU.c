@@ -118,12 +118,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80137C44);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80137EA8);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016. Byte-identical when uopt keeps integer constants and
- * global addresses in registers (cc.py without -Wo,-no_const_in_reg); that flag
- * exists only for func_80042400 (T-0014) and breaks loop hoisting here. The
- * frame layout comes out right with the frame pass.
- * FAKE: v[6] instead of three elements reproduces the original local offset
+/* FAKE: v[6] instead of three elements reproduces the original local offset
  * (0x1c); the real source is unknown. T-0016 */
 s32 func_8013815C(void) {
     s16 v[6];
@@ -147,9 +142,6 @@ s32 func_8013815C(void) {
     D_8014927A = 1;
     return 4;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8013815C);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80138224);
 
@@ -363,9 +355,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8014430C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80144464);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, same as func_8013815C (constant hoisting flag;
- * FAKE: v[6] as there). */
+/* FAKE: v[6] as in func_8013815C. T-0016 */
 s32 func_801446A0(void) {
     s16 v[6];
     s32 i;
@@ -388,9 +378,6 @@ s32 func_801446A0(void) {
     D_8014A1A9 = 1;
     return 4;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_801446A0);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80144768);
 
@@ -452,9 +439,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80146C20);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80146D18);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, same as func_8013815C (constant hoisting flag;
- * FAKE: v[6] as there). */
+/* FAKE: v[6] as in func_8013815C. T-0016 */
 s32 func_80146FA0(void) {
     s16 v[6];
     s32 i;
@@ -477,9 +462,6 @@ s32 func_80146FA0(void) {
     D_8014A439 = 1;
     return 4;
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80146FA0);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80147068);
 

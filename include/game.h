@@ -142,5 +142,9 @@ void func_8009C93C(RECT *rect, s32 arg1, s32 arg2);
 void func_80044750(s32 arg0);
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
+void func_80048F64(s32 arg0);
+void _sys_default_tpage_set(void);
+s32 get_h_tokimeki(s32 arg0);
+s32 get_h_yuukou(s32 arg0);
 
 #endif /* GAME_H */

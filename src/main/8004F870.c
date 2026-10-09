@@ -55,9 +55,21 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_yuukou);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki_table);
+void get_h_tokimeki_table(u8 *arg0) {
+    s32 i;
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_yuukou_table);
+    for (i = 0; i < 11; i++) {
+        arg0[i] = get_h_tokimeki(i);
+    }
+}
+
+void get_h_yuukou_table(u8 *arg0) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        arg0[i] = get_h_yuukou(i);
+    }
+}
 
 void birth_day_check(s32 arg0) {
     birth_day_check_days(arg0, D_800E62BF, D_800E62C0);
