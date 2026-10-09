@@ -1,7 +1,7 @@
 ---
 id: T-0012
 title: Game code file boundaries and Shift-JIS strings
-status: Backlog
+status: In Progress
 assignee:
 created: 2026-10-09
 updated: 2026-10-09

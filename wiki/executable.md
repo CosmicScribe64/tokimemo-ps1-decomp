@@ -36,4 +36,4 @@ gp 0x800EB670 minus 0x8000 is 0x800E3670, which would be the start of a small-da
 ## Segment layout in the splat config
 `header` (0x0), `main` code at 0x800/vram 0x80041000 with subsegments: `game` (c, 0x800), 65 asm subsegments from file offset 0x46010 (vram 0x80086810) to 0x800AF340, one per SDK library or object (`libpress_*`, `libcd_*`, `libsnd`, `libspu`, `libgs`, `libgpu`, `libgte_*`, `libetc`, `libapi_*`, `libcard_card`, `libc_*`), `rodata` (0x6EB40), `data` (0x72A20), `bss` (vram 0x800E3800). The game/SDK boundary 0x80086810 (`DecDCTReset`) was confirmed by signature matching; per-lib boundaries and evidence are in [[psyq-sdk]] ([[tickets/T-0010-sdk-lib-object-boundaries]]).
 
-Strings are Shift-JIS; splat's ASCII mode leaves them as `.word` data so the assembler emits the original bytes. A UTF-8 conversion would change the bytes (found while bringing up the build).
+Strings are Shift-JIS. splat's SHIFT-JIS mode writes them as readable `.asciz` lines; `tools/asm.py` converts the literals back to Shift-JIS bytes when assembling, so the build still matches (T-0012, see [[build-system]]).
