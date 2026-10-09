@@ -19,10 +19,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-0400-leaf-function-batch-1|T-0400 Leaf function batch 1]]
 
 ## Done
 
+- [ ] [[tickets/T-0400-leaf-function-batch-1|T-0400 Leaf function batch 1]]
 - [ ] [[tickets/T-0013-identify-original-compiler-pipeline|T-0013 Identify the original compiler pipeline]]
 - [ ] [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011 Compiler confirmation on first decompiled game functions]]
 - [ ] [[tickets/T-0009-progress-report-script|T-0009 Progress reporting script]]

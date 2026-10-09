@@ -23,7 +23,7 @@ extern s16 D_800B3F68;
 extern u8 D_800B3F6A;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
-extern u8 D_800B5938[];
+extern u8 D_800B5938[]; /* flags; D_800B593C and D_800B5940 are also declared as scalars */
 extern u8 D_800B593C;
 extern u8 D_800B5940;
 extern s32 D_800B5948;

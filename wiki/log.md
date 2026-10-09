@@ -77,3 +77,9 @@ Matched 40 leaf functions in `src/game.c` (smallest first, outside 0x80080000-0x
 
 ## [2026-10-09] ticket | T-0400 -> In Review
 Moved [[tickets/T-0400-leaf-function-batch-1]] In Progress -> In Review on [[kanban]]; code-review gate next.
+
+## [2026-10-09] lint | Code review of T-0400
+Ran a code review against CODING_STANDARDS.md and [[tickets/T-0400-leaf-function-batch-1]]; two minor findings fixed (extern comment in `include/game.h`, trailing newline).
+
+## [2026-10-09] ticket | T-0400 -> Done
+Moved [[tickets/T-0400-leaf-function-batch-1]] In Review -> Done on [[kanban]].
