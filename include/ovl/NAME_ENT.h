@@ -99,5 +99,14 @@ extern u8 D_8014BA88[];
 void func_8004EAAC(void);
 extern s16 D_8011ECF6;
 extern s16 D_8011ECFA;
+extern u8 D_8014BA28[];
+extern u8 D_8014BA44[];
+extern u8 D_8014B998[];
+extern u8 D_8014B9A4[];
+s32 func_80055AFC(s32 arg0);
+void func_8013BB10(void);
+void func_800AE0B0(void *arg0);
+void func_80053D10(void);
+void func_8013B1D8(void);
 
 #endif /* OVL_NAME_ENT_H */
