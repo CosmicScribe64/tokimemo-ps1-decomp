@@ -189,11 +189,6 @@ u32 get_h_tokimeki(s32 arg0);
 u32 get_h_yuukou(s32 arg0);
 extern s32 D_800B3D6C;
 void func_80049A40(s16 a, s16 b, s16 c, s16 d, s32 e, s32 f, s32 g);
-extern s32 D_800E3680[];
-extern s32 D_800E36D8;
-extern s32 D_800E36DC;
-extern s32 D_800E36E0;
-extern s32 D_800E36E4;
 s32 TestEvent(s32 ev);
 extern s32 D_8011ECBC;
 extern s32 D_8011ECC0;
@@ -204,7 +199,6 @@ extern s32 D_8011ECB0;
 extern s32 D_8011ECB4;
 extern s32 D_8011ECB8;
 
-extern u8 D_800E76A8;
 void func_80042960(void);
 extern s32 D_800E737C;
 extern s8 D_800E738B;
@@ -241,18 +235,12 @@ typedef struct FileReq {
     /* 0x20 */ s32 retry;
 } FileReq; /* size 0x24 */
 
-s32 delete(u8 *name);
 void func_80065F34(s32 arg0);
 extern s16 D_800CA2AC;
 extern u8 D_800E738E;
-extern u8 D_8011ED17;
-extern u32 D_800E7378;
 void func_80049FF0(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f, s32 g);
 
 void dtd_on_tpage(s32 a, s32 b, s32 c, s32 d, s32 e);
-void func_80099E30(s32 a, u8 *p);
-extern u8 D_801227A0[];
-extern u8 D_80122CA0[];
 
 extern u8 D_800E8BF0[];
 extern u8 D_800E8C30[];
@@ -285,7 +273,6 @@ void func_80059BC0(void);
 
 void set_kanji_string();
 s32 strlen(u8 *s);
-extern s8 *D_800E36C0[];
 void DecDCTReset(s32 mode);
 void func_800869C8(s32 arg0);
 void func_80088150(u8 *p, s32 n);
@@ -300,19 +287,9 @@ void func_8004B19C(s32 a, s32 b, s32 c);
 s32 GetSp(void);
 extern u8 D_800E7D34;
 
-extern u8 D_801217A0[];
 
 extern u8 D_800B3D48;
-void func_800AD950(s32 arg0);
-void func_8008BE54(void);
-void func_80087C64(s32 a, u8 *b, s32 c);
-void func_80087E08(s32 a);
-void func_800879A8(s32 a);
-void func_8009C210(s32 a);
-void func_800ADBB0(void);
-extern u8 D_800AFDE0[];
 
-extern u8 D_800E7398;
 s32 func_8005478C(s32 a);
 s32 func_80054884(s32 a);
 s32 func_80053DDC(void);
@@ -321,8 +298,6 @@ void func_80053CC0(void);
 void func_8009F0B8(u8 *p);
 u8 Sw_Test(void);
 
-extern u8 D_800E7312;
-extern s8 D_800E7313[];
 s8 menu_check_1(s16 a, s16 b);
 s8 menu_check_2(s16 a, s16 b);
 extern s32 D_800B5920;
@@ -332,8 +307,6 @@ extern s32 D_800B592C;
 extern u8 D_800B5939;
 
 u8 func_800460DC(void);
-extern u8 D_800B3D20;
-extern u8 D_800B3D4C;
 void func_80044D54(void);
 
 void func_800869A4(s32 a);
@@ -357,20 +330,9 @@ extern s32 D_800E8C84;
 extern u8 *D_800E8C88;
 extern u8 D_800E90A0[];
 
-void func_8009C5E0(s32 a);
-void func_80097F58(s32 a, s32 b, s32 c, s32 d, s32 e);
 void func_8005907C(void);
 void func_80059308(void);
-extern s16 D_800E6282;
-extern s16 D_800E6284;
-extern s16 D_800E6294;
-extern s16 D_800E6296;
 
-void func_800985E0(s32 a);
-void func_800985F0(s32 a, s32 b, s32 c, s32 d);
-extern u8 D_800FD4A0[];
-extern u8 D_800E94A0[];
-extern s32 D_8011ECA4;
 
 void func_800789E0(void);
 void func_8007BDE8(void);
@@ -382,13 +344,10 @@ void func_8004482C(void);
 void dec_bg_reset(void);
 void tpage_buf_clear(void);
 
-extern s32 D_800E74A8[];
 s32 load_csr_tp(s32 a, s32 b, s32 c, s32 d, u16 e, u16 f, u16 g);
 
 void func_8009C93C(RECT *rect, s32 a, s32 b);
 void dec_bg_show_set(s32 a, s32 b);
-extern s32 D_800B5944;
 
-extern u16 D_800E6374;
 
 #endif /* GAME_H */
