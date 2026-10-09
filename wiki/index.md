@@ -33,6 +33,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
 - [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Backlog)
 - [[tickets/T-0100-older-mips-compiler-emulation|T-0100]] Run an older MIPS ucode compiler for the +16 frame (Backlog)
+- [[tickets/T-0015-research-compiler-mismatch-handling|T-0015]] Research: compiler mismatch handling (In Review)
 - [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101]] Stop splat from overwriting include_asm.h (Done via T-0008)
 
 ## Entities / concepts / sources
@@ -42,8 +43,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code)
 - [[psyq-sdk]] - SDK era, libraries, code anchors
 - [[matching-notes]] - compiler verdict, evidence, matched/unmatched functions, idioms
+- [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit
 - [[build-system]] - configure.py / ninja pipeline and gotchas
-- Raw source (plain path): `raw/disc-findings.md`
+- Raw sources (plain paths): `raw/disc-findings.md`, `raw/compiler-mismatch-research-sources.md`
 
 ## Tooling

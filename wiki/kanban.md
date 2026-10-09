@@ -20,6 +20,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-0015-research-compiler-mismatch-handling|T-0015 Research: compiler mismatch handling]]
 
 ## Done
 
