@@ -22,9 +22,20 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063520);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063668);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", bustup_speech);
+void bustup_speech(void) {
+    /* D_800E62BC is declared s8 in game.h; this function reads it as u8 (lbu) */
+    if (*(u8 *)&D_800E62BC == 0 && !(D_8011F50E & 1)) {
+        /* FAKE: the no-op "& 0xFF" shifts IDO's temp numbering (ori in $t9, as in the original); T-1010 */
+        D_8011F50E = (D_8011F50E & 0xFF) | 0x11;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", bustup_wink);
+void bustup_wink(void) {
+    if (!(D_8011F4CA & 1)) {
+        /* FAKE: the no-op "& 0xFF" shifts IDO's temp numbering (ori in $t8, as in the original); T-1010 */
+        D_8011F4CA = (D_8011F4CA & 0xFF) | 0x11;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", parameter_change);
 
@@ -45,7 +56,13 @@ void hizuke_show(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", message_disp_switch);
+void message_disp_switch(s32 arg0) {
+    if (arg0 == 1) {
+        D_8011ED17 |= 0x80;
+    } else {
+        D_8011ED17 &= 0x7F;
+    }
+}
 
 void message_window_init(void) {
     func_80048F64(1);
@@ -127,7 +144,30 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066AC0);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066ACC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066B40);
+s32 func_80066B40(s32 arg0, s32 arg1) {
+    if (arg0 == 8) {
+        return 1;
+    }
+    if (arg0 == 7 && arg1 >= 0x18) {
+        return 1;
+    }
+    if (arg0 == 0xC && arg1 >= 0x19) {
+        return 2;
+    }
+    if (arg0 == 0xD && arg1 < 8) {
+        return 2;
+    }
+    if (arg0 == 1 && arg1 < 8) {
+        return 2;
+    }
+    if (arg0 == 3 && arg1 >= 0x18) {
+        return 3;
+    }
+    if (arg0 == 4 && arg1 < 4) {
+        return 3;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066C08);
 
@@ -142,7 +182,32 @@ void func_80067438(void) {
     func_80044890(0, 0xBF98, 0xBF79, D_800B5BE8[v], D_800B5BF8[v], D_800B5BD8[v]);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800674B0);
+void func_800674B0(void) {
+    u8 v;
+    s32 i;
+
+    func_80044750(5);
+    func_80044750(0x71);
+    v = D_800E62BD;
+    if (D_800E62BE == 0x60 && D_800E62BF == 9 && D_800E62C0 == 1) {
+        v = 1;
+    }
+    switch (v) {
+    case 0:
+        i = func_80066A2C() & 3;
+        func_80044890(0, 0xBF98, 0xBF79, D_800B5BE8[i], D_800B5BF8[i], D_800B5BD8[i]);
+        break;
+    case 1:
+        func_80044890(0, 0xBF98, 0xBF79, 0xD7D1, 0xD7AF, 0xD7A4);
+        break;
+    case 2:
+        func_80044890(0, 0xBF98, 0xBF79, 0xD73F, 0xD71E, 0xD717);
+        break;
+    case 3:
+        func_80044890(0, 0xBF98, 0xBF79, 0xD780, 0xD752, 0xD743);
+        break;
+    }
+}
 
 void func_80067610(void) {
     if (func_80044E8C() == 1) {
@@ -151,7 +216,16 @@ void func_80067610(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006764C);
+void func_8006764C(s32 arg0) {
+    /* D_8011F443 is element 1 (stride 0x44) of the table at D_8011F3FF; the array form keeps IDO from hoisting the second load */
+    if (arg0) {
+        D_8011F3FF[0] |= 0x80;
+        D_8011F3FF[0x44] |= 0x80;
+    } else {
+        D_8011F3FF[0] &= 0x7F;
+        D_8011F3FF[0x44] &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800676AC);
 
@@ -183,9 +257,23 @@ void func_80067E34(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80067F04);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80068898);
+s16 func_80068898(s32 arg0, s32 arg1) {
+    s32 v = D_800E62E4[arg0 * 0x40];
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800688F0);
+    if (v == 6) {
+        v -= 7;
+    }
+    return arg0 * 0x88 + ((v + arg1 + 1) % 7) * 16 - 0x78;
+}
+
+s16 func_800688F0(s32 arg0, s32 arg1) {
+    s32 v = D_800E62E4[arg0 * 0x40];
+
+    if (v == 6) {
+        v -= 7;
+    }
+    return ((v + arg1 + 1) / 7) * 16 - 0x30;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80068938);
 
@@ -254,7 +342,13 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006BA40);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006BC28);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006BD6C);
+void func_8006BD6C(s32 arg0) {
+    if (arg0 == 1) {
+        D_8011ECD3 |= 0x80;
+    } else {
+        D_8011ECD3 &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006BDA8);
 
