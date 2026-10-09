@@ -36,7 +36,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
 - [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Backlog)
 - [[tickets/T-0100-older-mips-compiler-emulation|T-0100]] Run an older MIPS ucode compiler for the +16 frame (Backlog)
-- [[tickets/T-0015-research-compiler-mismatch-handling|T-0015]] Research: compiler mismatch handling (In Review)
+- [[tickets/T-0015-research-compiler-mismatch-handling|T-0015]] Research: compiler mismatch handling (Done)
 - [[tickets/T-0101-splat-overwrites-include-asm-h|T-0101]] Stop splat from overwriting include_asm.h (Done via T-0008)
 
 ## Entities / concepts / sources
