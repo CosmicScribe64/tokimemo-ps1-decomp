@@ -170,7 +170,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80135914);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80135C4C);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80136230);
+void func_80136230(void) {
+    func_800847B8(1);
+    func_801320D0();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_80136294);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_801362A0);
 
@@ -194,7 +205,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80138388);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013866C);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80138A00);
+void func_80138A00(void) {
+    func_800847B8(4);
+    func_8013223C();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_80138A64);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80138A70);
 
@@ -218,7 +240,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013ABA0);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013AE08);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013B120);
+void func_8013B120(void) {
+    func_800847B8(8);
+    func_8013230C();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_8013B184);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013B190);
 
@@ -230,7 +263,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013BB94);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013C0AC);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013C3C4);
+void func_8013C3C4(void) {
+    func_800847B8(2);
+    func_80132138();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_8013C428);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013C430);
 
@@ -261,11 +305,38 @@ void func_8013FA20(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013FA28);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013FC58);
+void func_8013FC58(void) {
+    func_800847B8(3);
+    func_8013216C();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013FCBC);
+void func_8013FCBC(void) {
+    func_800847B8(3);
+    func_801321A0();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013FD20);
+void func_8013FD20(void) {
+    func_800847B8(3);
+    func_801321D4();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_8013FD84);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8013FD90);
 
@@ -285,7 +356,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80141F70);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80142298);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80142694);
+void func_80142694(void) {
+    func_800847B8(10);
+    func_80132374();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_801426F8);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80142700);
 
@@ -327,7 +409,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80145930);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80145C28);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80145FC0);
+void func_80145FC0(void) {
+    func_800847B8(7);
+    func_801322D8();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_80146024);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80146030);
 
@@ -371,7 +464,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8014A49C);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8014A778);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8014AB54);
+void func_8014AB54(void) {
+    func_800847B8(0);
+    func_80132000();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_8014ABB8);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8014ABC0);
 
@@ -419,7 +523,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80150234);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8015052C);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_801508C4);
+void func_801508C4(void) {
+    func_800847B8(6);
+    func_801322A4();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_80150928);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80150930);
 
@@ -455,7 +570,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_801537BC);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80153A98);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80153FA4);
+void func_80153FA4(void) {
+    func_800847B8(0);
+    func_80132034();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_80154008);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80154018);
 
@@ -483,9 +609,28 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_801580EC);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80158764);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80158DD8);
+void func_80158DD8(void) {
+    func_800847B8(1);
+    func_80132068();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80158E3C);
+void func_80158E3C(void) {
+    func_800847B8(1);
+    func_8013209C();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_80158EA0);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_80158EB0);
 
@@ -505,7 +650,18 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8015A870);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8015AB58);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8015AF20);
+void func_8015AF20(void) {
+    func_800847B8(9);
+    func_80132340();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_BUNKASAI_8015AF84);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI", func_8015AF90);
 
