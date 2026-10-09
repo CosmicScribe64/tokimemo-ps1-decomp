@@ -249,4 +249,38 @@ extern u8 D_8011ED17;
 extern u32 D_800E7378;
 void func_80049FF0(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f, s32 g);
 
+void dtd_on_tpage(s32 a, s32 b, s32 c, s32 d, s32 e);
+void func_80099E30(s32 a, u8 *p);
+extern u8 D_801227A0[];
+extern u8 D_80122CA0[];
+
+extern u8 D_800E8BF0[];
+extern u8 D_800E8C30[];
+void InitPAD(u8 *buf1, s32 len1, u8 *buf2, s32 len2);
+void StartPAD(void);
+void ChangeClearPAD(s32 arg0);
+void func_80059E00(void);
+void func_80042808(void);
+void func_8004ADE4(void);
+void func_8009AD30(s32 arg0);
+void func_8009AD50(s32 arg0);
+void func_8009AD60(s32 arg0);
+void func_80099540(s32 *p);
+extern s32 D_80122740;
+extern s32 D_80122744;
+extern s32 D_80122748;
+extern s32 D_8012274C;
+extern s32 D_80122750;
+extern s32 D_80122754;
+extern s32 D_80122758;
+extern s32 D_8012275C;
+extern s32 D_8011ECA0;
+extern u8 D_800E8CA0[];
+void AddPrim(void *ot, s32 prim);
+void func_8009D294(s32 a, s32 b, s32 c, s32 d, s32 e);
+void safe_env(s32 arg0);
+s32 GetWorkBase(s32 arg0, s32 arg1);
+
+void func_80059BC0(void);
+
 #endif /* GAME_H */

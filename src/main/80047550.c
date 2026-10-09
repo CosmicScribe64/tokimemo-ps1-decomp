@@ -76,7 +76,14 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", safe_env);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", dtd_on_tpage);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", dtd_on);
+void dtd_on(s32 arg0) {
+    s32 work;
+
+    work = GetWorkBase(0xC, D_8011ECA0);
+    func_8009D294(work, 0, 1, 0, 0);
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg0 * 4, work);
+    safe_env(arg0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", _sprite_set_light_effect1);
 
