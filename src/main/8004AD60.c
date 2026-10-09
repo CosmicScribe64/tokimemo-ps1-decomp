@@ -3,7 +3,12 @@
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004AD60);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004ADAC);
+void func_8004ADAC(u8 arg0) {
+    D_800B3D80 = arg0;
+    if ((u32)arg0 >= 9) {
+        D_800B3D80 = 8;
+    }
+}
 
 u8 func_8004ADD4(void) {
     return D_800B3D80;

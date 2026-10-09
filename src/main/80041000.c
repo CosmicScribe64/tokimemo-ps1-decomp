@@ -2,7 +2,20 @@
 #include "game.h"
 #include "libapi.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041000);
+void func_80041000(void) {
+    func_80097D90(0x140, 0xF0, 0, 0, 0);
+    func_80098380();
+    func_80098490(0, 0, 0, 0xF0);
+    D_800E8C70 = 8;
+    D_800E8C74 = D_800E8CA0;
+    D_800E8C84 = 8;
+    D_800E8C88 = D_800E90A0;
+    func_80098530();
+    InitGeom();
+    func_800985A0();
+    D_8011ECA0 = func_80098370();
+    func_800410AC();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800410AC);
 

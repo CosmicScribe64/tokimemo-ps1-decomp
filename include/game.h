@@ -185,8 +185,8 @@ s32 InitCARD(s32 arg0);
 s32 StartCARD(void);
 void _bu_init(void);
 s32 _card_auto(s32 arg0);
-s8 get_h_tokimeki(s32 arg0);
-s8 get_h_yuukou(s32 arg0);
+u32 get_h_tokimeki(s32 arg0);
+u32 get_h_yuukou(s32 arg0);
 extern s32 D_800B3D6C;
 void func_80049A40(s16 a, s16 b, s16 c, s16 d, s32 e, s32 f, s32 g);
 extern s32 D_800E3680[];
@@ -335,5 +335,60 @@ u8 func_800460DC(void);
 extern u8 D_800B3D20;
 extern u8 D_800B3D4C;
 void func_80044D54(void);
+
+void func_800869A4(s32 a);
+extern s32 D_80125C04;
+extern s32 D_80125C08;
+extern s32 D_80125C0C;
+void k_disp_goto_line_end(void);
+s32 k_disp_inc(void);
+s32 check_end_k(void);
+void func_80097D90(s32 a, s32 b, s32 c, s32 d, s32 e);
+void func_80098380(void);
+void func_80098490(s32 a, s32 b, s32 c, s32 d);
+void func_80098530(void);
+void InitGeom(void);
+void func_800985A0(void);
+s32 func_80098370(void);
+void func_800410AC(void);
+extern s32 D_800E8C70;
+extern u8 *D_800E8C74;
+extern s32 D_800E8C84;
+extern u8 *D_800E8C88;
+extern u8 D_800E90A0[];
+
+void func_8009C5E0(s32 a);
+void func_80097F58(s32 a, s32 b, s32 c, s32 d, s32 e);
+void func_8005907C(void);
+void func_80059308(void);
+extern s16 D_800E6282;
+extern s16 D_800E6284;
+extern s16 D_800E6294;
+extern s16 D_800E6296;
+
+void func_800985E0(s32 a);
+void func_800985F0(s32 a, s32 b, s32 c, s32 d);
+extern u8 D_800FD4A0[];
+extern u8 D_800E94A0[];
+extern s32 D_8011ECA4;
+
+void func_800789E0(void);
+void func_8007BDE8(void);
+void func_8007B844(void);
+void func_800452C4(void);
+void func_80041878(void);
+void func_80042058(void);
+void func_8004482C(void);
+void dec_bg_reset(void);
+void tpage_buf_clear(void);
+
+extern s32 D_800E74A8[];
+s32 load_csr_tp(s32 a, s32 b, s32 c, s32 d, u16 e, u16 f, u16 g);
+
+void func_8009C93C(RECT *rect, s32 a, s32 b);
+void dec_bg_show_set(s32 a, s32 b);
+extern s32 D_800B5944;
+
+extern u16 D_800E6374;
 
 #endif /* GAME_H */

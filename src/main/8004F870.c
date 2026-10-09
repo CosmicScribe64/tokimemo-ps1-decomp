@@ -58,15 +58,60 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_name);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_p_name);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_zyotai_s);
+s32 get_g_zyotai_s(s32 arg0) {
+    if (get_h_yuukou(arg0) < 0xA) {
+        return 4;
+    }
+    if (get_h_yuukou(arg0) < 0x1E) {
+        return 3;
+    }
+    if (get_h_yuukou(arg0) < 0x32) {
+        if (get_h_tokimeki(arg0) < 0x32) {
+            return 3;
+        }
+        return 1;
+    }
+    if (get_h_yuukou(arg0) < 0x50) {
+        if (get_h_tokimeki(arg0) < 0x32) {
+            return 2;
+        }
+        return 1;
+    }
+    if (get_h_tokimeki(arg0) < 0x32) {
+        return 0x82;
+    }
+    return 0x80;
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_zyotai_h);
+s32 get_g_zyotai_h(s32 arg0) {
+    if (get_h_yuukou(arg0) < 0xA) {
+        return 4;
+    }
+    if (get_h_yuukou(arg0) < 0x32) {
+        return 3;
+    }
+    if (get_h_tokimeki(arg0) < 0x32) {
+        return 2;
+    }
+    if (get_h_tokimeki(arg0) < 0x50) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_girl_taku_set);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", xa_wait);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052000);
+void func_80052000(void) {
+    k_disp_inc();
+    if (D_800E7208 & 0x860) {
+        k_disp_goto_line_end();
+        if (check_end_k() != 0) {
+            D_800E738D += 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052060);
 

@@ -1,7 +1,14 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053650);
+void func_80053650(s32 arg0, s32 arg1, s32 arg2) {
+    DecDCTReset(0);
+    func_800869C8(0);
+    func_800869A4(0);
+    D_80125C08 = arg0;
+    D_80125C0C = arg1;
+    D_80125C04 = arg2;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800536AC);
 
