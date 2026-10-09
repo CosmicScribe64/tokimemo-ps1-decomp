@@ -6,7 +6,8 @@ Then:                  tools/docker.sh ninja            (build + sha1 check)
 
 Pipeline: splat split -> assemble asm (GNU as) -> compile C (per-file
 toolchain, see C_FILES and tools/cc.py) -> link with the splat linker
-script -> objcopy to the PS-X EXE -> sha1sum -c config/SLPM_86.053.sha1. Also writes objdiff.json.
+script -> objcopy to the PS-X EXE -> sha1sum -c config/SLPM_86.053.sha1.
+Also writes objdiff.json.
 """
 import json
 import sys
