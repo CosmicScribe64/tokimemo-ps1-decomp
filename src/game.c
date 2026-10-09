@@ -92,7 +92,13 @@ void func_800438DC(u8 arg0, u8 arg1) {
     D_800E7393 = arg1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/game", func_800438F0);
+void func_800438F0(s32 arg0) {
+    if (arg0 != 0) {
+        D_800E62B9 = 1;
+    } else {
+        D_800E62B9 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80043914);
 
@@ -244,7 +250,13 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80048A90);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80048CF8);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_80048DAC);
+void func_80048DAC(s32 arg0) {
+    if (arg0 != 0) {
+        D_800E7392 = 1;
+    } else {
+        D_800E7392 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80048DD0);
 
@@ -339,7 +351,10 @@ INCLUDE_ASM("asm/nonmatchings/game", func_8004D3C8);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004D6B8);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_8004DAC4);
+/* FAKE: taking the address of the argument forces the home-slot spill (sw a0,0(sp)); real source unknown. T-0400 */
+void func_8004DAC4(s32 arg0) {
+    s32 *p = &arg0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_8004DACC);
 
@@ -584,7 +599,10 @@ INCLUDE_ASM("asm/nonmatchings/game", func_80056284);
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80056300);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_800563F0);
+void func_800563F0(s16 arg0, s16 arg1) {
+    D_800B58F8 = arg0;
+    D_800B58FC = arg1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/game", func_80056414);
 
@@ -616,7 +634,9 @@ s32 func_8005739C(void) {
 
 INCLUDE_ASM("asm/nonmatchings/game", func_800573AC);
 
-INCLUDE_ASM("asm/nonmatchings/game", func_800573F8);
+void func_800573F8(s32 arg0) {
+    D_800B5938[arg0] = 1 - D_800B5938[arg0];
+}
 
 void func_80057418(s32 arg0, s32 arg1) {
     D_800B5938[arg0] = arg1 & 1;
