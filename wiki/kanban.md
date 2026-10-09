@@ -7,9 +7,10 @@ kanban-plugin: board
 ## Backlog
 
 - [ ] [[tickets/T-0014-find-exact-ucode-compiler|T-0014 Find the exact MIPS ucode compiler]]
-- [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
 - [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]
 - [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
+- [ ] [[tickets/T-0200-event-gyozi-loader-and-address|T-0200 Find how EVENT and GYOZI overlays are loaded]]
+- [ ] [[tickets/T-0201-obin-format-and-symbols|T-0201 Analyse O.BIN and harvest names]]
 
 ## Ready
 
@@ -19,6 +20,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
 
 ## Done
 

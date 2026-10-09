@@ -30,11 +30,13 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Done)
 - [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Backlog)
 - [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Backlog)
+- [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
+- [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Backlog)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
-- [[overlays]] - the 26 .EXN overlays
+- [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code)
 - [[psyq-sdk]] - SDK era, libraries, code anchors
 - [[matching-notes]] - compiler verdict, evidence, matched/unmatched functions, idioms
