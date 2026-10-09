@@ -37,6 +37,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
 - [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Done)
 - [[tickets/T-0600-apply-obin-renames|T-0600]] Apply the O.BIN rename list after the game.c split (Done)
+- [[tickets/T-0750-overlay-batch-b-tel-olh-en-nichi|T-0750]] Overlay batch B: TEL, OLH, EN_NICHI (Done)
 - [[tickets/T-0601-obin-med-confidence-review|T-0601]] Review medium and low confidence O.BIN mappings (Backlog)
 - [[tickets/T-0602-progress-overlays|T-0602]] Extend progress reporting to the 26 overlays (Done)
 - [[tickets/T-0100-older-mips-compiler-emulation|T-0100]] Run an older MIPS ucode compiler for the +16 frame (Backlog)
