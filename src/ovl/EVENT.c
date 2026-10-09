@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/EVENT.h"
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_800F6000);
 
@@ -718,7 +719,14 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_80103A84);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_80103ABC);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_80103B60);
+void func_80103B60(s16 dx, s16 dy) {
+    s16 i;
+
+    for (i = 0; i < 6; i++) {
+        *(s16 *)(D_800EC190 + i * 0x24 + 0x94) += dx;
+        *(s16 *)(D_800EC190 + i * 0x24 + 0x96) += dy;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_80103BC0);
 
@@ -1582,7 +1590,13 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011BDC8);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011BE00);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011C11C);
+void func_8011C11C(void) {
+    s16 i;
+
+    for (i = 0; i < 20; i++) {
+        D_800E9620[i * 0x44 + 0x1A0B] &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT", func_8011C164);
 

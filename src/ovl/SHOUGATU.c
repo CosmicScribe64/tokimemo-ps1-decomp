@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/SHOUGATU.h"
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80132000);
 
@@ -626,7 +627,16 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013FB28);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013FFA8);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013FFD0);
+void func_8013FFD0(void) {
+    s16 i;
+
+    for (i = 0; i < 6; i++) {
+        D_8011ECD0[i * 0x44 + 0x1983] = 0;
+    }
+    D_80146160 = 0;
+    D_80146164 = 0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80140030);
 

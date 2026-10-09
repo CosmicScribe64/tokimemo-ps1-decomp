@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/DATE.h"
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80132000);
 
@@ -390,7 +391,13 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014033C);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80140374);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80140788);
+void func_80140788(void) {
+    s16 i;
+
+    for (i = 0; i < 20; i++) {
+        D_8011ECD0[i * 0x44 + 0x1A0B] &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_801407D0);
 
