@@ -9,9 +9,18 @@ u8 func_8004ADD4(void) {
     return D_800B3D80;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004ADE4);
+void func_8004ADE4(void) {
+    if (D_800B3220 != 0) {
+        LoadSquare(0x2C0, 0x1E0, 0x40, 0x20, (void *)0x801F0020);
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004AE28);
+/* func_8004AE54 takes four arguments; the first three are whatever the caller left in a0-a2. */
+void func_8004AE28(s32 a0, s32 a1, s32 a2) {
+    if (D_800B3220 != 0) {
+        func_8004AE54(a0, a1, a2, 0xF);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004AE54);
 

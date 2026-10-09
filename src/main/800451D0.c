@@ -9,7 +9,10 @@ void func_800451E0(s32 arg0) {
     D_801255D8 = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_800451EC);
+void func_800451EC(void) {
+    D_8012512A = 0x80;
+    D_800B3D68 = func_80087E4C(1, D_801255C0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_80045224);
 

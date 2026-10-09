@@ -47,7 +47,12 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053DDC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053F04);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054108);
+s32 func_80054108(void) {
+    if (format(D_800AFBF0) == 1) {
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054140);
 
@@ -69,11 +74,19 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054884);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054AF4);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054BA8);
+void func_80054BA8(void) {
+    if (func_80054AF4(0) != 0) {
+        D_800E8BEE = 1;
+        return;
+    }
+    D_800E8BEE = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054BE4);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054C4C);
+void func_80054C4C(void) {
+    bzero(D_80123120, 0x2000);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054C74);
 

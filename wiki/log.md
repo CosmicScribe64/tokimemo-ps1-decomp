@@ -217,3 +217,6 @@ New ticket [[tickets/T-0602-progress-overlays]] (Backlog -> In Progress on [[kan
 
 ## [2026-10-09] ticket | T-0602 -> Done
 Inline code review against CODING_STANDARDS.md found one issue (overlay denominator needed `disassemble_all`), fixed. Card moved In Progress -> Done on [[kanban]], see [[tickets/T-0602-progress-overlays]].
+
+## [2026-10-09] ticket | T-0800 created, In Progress
+New ticket [[tickets/T-0800-main-exe-batch-c]] (Backlog -> In Progress on [[kanban]]): decompile functions in src/main/80041000.c through src/main/80059A20.c, worktree branch main-batch-c.

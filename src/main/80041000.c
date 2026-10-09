@@ -60,7 +60,10 @@ INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80042134);
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800422C8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800423D4);
+void func_800423D4(void) {
+    D_800E7374 += 1;
+    D_800E7D10 += 0x377;
+}
 
 /* The named temp gives the original's v1/v0 registers; `D += 0x377; return D;`
  * and `return D += 0x377;` load into t6 instead (T-0014). */
@@ -71,7 +74,12 @@ s32 func_80042400(void) {
     return t;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80042418);
+void func_80042418(void) {
+    bzero(&D_800E7D10, 0xEE0);
+    func_80042488();
+    card_ev_set();
+    func_80042C30();
+}
 
 void func_80042458(void) {
     EnterCriticalSection();
@@ -81,4 +89,8 @@ void func_80042458(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80042488);
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800424FC);
+void func_800424FC(void) {
+    EnterCriticalSection();
+    CloseEvent(D_8011ECA8);
+    ExitCriticalSection();
+}

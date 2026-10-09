@@ -21,6 +21,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-0800-main-exe-batch-c|T-0800 Main exe batch C: 80041000-80059A20]]
+
 
 ## In Review
 

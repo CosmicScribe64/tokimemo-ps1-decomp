@@ -139,8 +139,42 @@ void func_8009C7F8(RECT *rect, s32 arg1, s32 arg2, s32 arg3);
 void func_8009C884(RECT *rect, void *arg1);
 void func_8009C8E0(RECT *rect, void *arg1);
 void func_8009C93C(RECT *rect, s32 arg1, s32 arg2);
-void func_80044750(s32 arg0);
+s32 func_80044750(s32 arg0);
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
+
+extern s32 D_800E7374;
+extern s32 D_800E7384;
+extern u8 D_800E738A;
+extern s8 D_800E738D;
+extern s32 D_8011ECA8;
+extern u8 D_800B3220;
+extern u8 D_80123120[];
+extern u8 D_800AFBF0[];
+extern s8 D_800E8BEE;
+extern u8 D_800AFDF0[];
+extern u8 D_800B3D24;
+extern u8 D_800B3D54[];
+void bzero(void *p, s32 n);
+void func_80042488(void);
+void card_ev_set(void);
+void func_80042C30(void);
+void CloseEvent(s32 ev);
+void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3);
+s32 format(u8 *path);
+s32 func_80054AF4(s32 arg0);
+s32 printf(u8 *fmt, ...);
+
+s32 func_80079B10(s32 arg0);
+void k_disp_start(s32 arg0);
+void k_reset(s32 arg0);
+void func_80059BE8(void);
+extern s32 D_800B3D68;
+extern u8 D_801255C0[];
+s32 func_80087E4C(s32 arg0, u8 *arg1);
+void func_80048F64(s32 arg0);
+extern s32 D_800E7380;
+extern u8 D_800E7389;
+extern s8 D_800E738C;
 
 #endif /* GAME_H */
