@@ -21,6 +21,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-0700-overlay-batch-a|T-0700 Overlay batch A: RENSYU, OMIMAI, VALEN, MASTER]]
 
 ## In Review
 

@@ -1,0 +1,43 @@
+#ifndef OVL_MASTER_H
+#define OVL_MASTER_H
+
+#include "common.h"
+
+/* MASTER overlay (load address 0x80132000): externs and types. */
+
+extern u32 D_8013C2D0; /* three pointers set by func_80132000 and siblings */
+extern u32 D_8013C2D4;
+extern u32 D_8013C2D8;
+extern u32 D_8013C4A0; /* same, second group */
+extern u32 D_8013C4A4;
+extern u32 D_8013C4A8;
+
+extern u32 D_8013C750; /* third group */
+extern u32 D_8013C754;
+extern u32 D_8013C758;
+extern s32 D_8013C710;
+extern s32 D_8013C714;
+extern s32 D_8013C718;
+extern s16 D_8013C71C;
+extern s32 D_8013C720;
+extern s32 D_8013C724;
+extern s32 D_8013C728;
+extern s16 D_8013C72C;
+extern s32 D_8013C730;
+extern s32 D_8013C740;
+extern s32 D_8013C744;
+extern s32 D_8013C748;
+extern s16 D_8013C74C;
+extern s32 D_8013C760;
+extern s32 D_8013C764;
+extern s32 D_8013C768;
+extern s16 D_8013C76C;
+extern s32 D_8013C770;
+void func_80042808();
+void func_80086424();
+void func_80138490();
+extern u8 D_800E62BF;
+extern u8 D_800E62C0;
+extern s32 D_800E644C;
+
+#endif /* OVL_MASTER_H */
