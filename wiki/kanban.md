@@ -21,13 +21,15 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-1010-main-exe-batch-e|T-1010 Batch E: main 80062CD0-8006CB30]]
 
 
 ## In Review
 
 
+
 ## Done
+
+- [ ] [[tickets/T-1010-main-exe-batch-e|T-1010 Batch E: main 80062CD0-8006CB30]]
 
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]

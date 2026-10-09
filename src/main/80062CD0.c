@@ -109,7 +109,20 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006509C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800654D0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065900);
+void func_80065900(u8 arg0) {
+    /* D_8012059A[1] is D_8012059C; the array form keeps IDO from hoisting the load above the first store */
+    if (arg0) {
+        D_8012059A[0] = 0xE;
+        if (D_8012059A[1] >= 4) {
+            D_8012059A[1] = 0;
+        }
+    } else {
+        D_8012059A[0] = 0xD;
+        if (D_8012059A[1] >= 6) {
+            D_8012059A[1] = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80065964);
 

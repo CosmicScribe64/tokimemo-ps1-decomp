@@ -431,9 +431,6 @@ extern u8 *D_8011F100;
 extern u8 *D_8011ED64;
 extern u8 *D_8011ED68;
 extern u8 *D_8011ED8C;
-void func_8004E58C(void);
-void gnsx(u8 *arg0);
-void sndi(u8 *arg0, s32 arg1, s32 arg2);
 void func_80067F04(void);
 extern u8 D_800E71F4;
 extern u8 D_800E71F5;
@@ -444,41 +441,21 @@ void func_8006764C(s32 on);
 extern u8 D_800E62E4[];
 s16 func_800688F0(s32 arg0, s32 arg1);
 s16 func_80068898(s32 arg0, s32 arg1);
-/* D_800E6378: little-endian bit-field word, bits 0-3 and 4-8 used by func_8006C700 */
-typedef struct BitWord6378 {
-    u32 lo : 4;
-    u32 mid : 5;
-    u32 rest : 23;
-} BitWord6378;
-extern BitWord6378 D_800E6378;
-extern u16 D_800B670A[];
-extern u16 D_800B6710;
 s32 func_8006C700(void);
 extern u8 D_800E6375;
 s32 dec_bg_cd_read(s32 arg0, s32 arg1);
 s32 get_weekly_bg_sector(void);
 extern s32 D_800B5950[];
 extern s32 D_800E71E8;
-extern u8 D_800E691C;
-extern s32 D_800B5960[];
-s32 func_80075FA0(s32 a);
 
 extern u8 D_800E62BE;
-extern u8 D_8011F553;
 extern u8 D_8011ECD3;
 void func_8006BA40(void);
 void func_800726F0(void);extern u8 D_800E69AC[];
-extern u8 D_800E69CC[];
 void func_8006D038(void);
 
-extern u8 D_800E739B;
-s32 func_80054388(void);
-void func_80053D10(void);
-extern u8 D_800E691D[];
-extern s32 D_800B69E0[];
-extern s32 D_800B6810[];
-void func_80076FDC(void);
 extern u8 D_8011F4CA;
 extern u8 D_8011F50E;
 extern u8 D_8011F3FF[];
+extern s16 D_8012059A[];
 #endif /* GAME_H */

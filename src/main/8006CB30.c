@@ -153,6 +153,7 @@ s32 func_80072B5C(s32 arg0) {
     }
     D_800E699C++;
     func_80042878(0x31);
+    /* no return on this path: the original leaves $v0 as the call result */
 }
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072BC0);
