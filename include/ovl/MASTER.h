@@ -2,6 +2,7 @@
 #define OVL_MASTER_H
 
 #include "common.h"
+#include "game.h"
 
 /* MASTER overlay (load address 0x80132000): externs and types. */
 
@@ -36,8 +37,6 @@ extern s32 D_8013C770;
 void func_80042808();
 void func_80086424();
 void func_80138490();
-extern u8 D_800E62BF;
-extern u8 D_800E62C0;
 extern s32 D_800E644C;
 
 #endif /* OVL_MASTER_H */
