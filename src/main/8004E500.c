@@ -71,7 +71,7 @@ u8 get_k_speed(void) {
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_disp_inc);
 
 s32 check_end_k(void) {
-    if (D_800B3F62 == D_800B3F68) {
+    if (D_800B3F68 == D_800B3F62) {
         return 1;
     }
     return 0;

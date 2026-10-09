@@ -17,9 +17,9 @@ INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNextVlc);
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNext);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-0016. The original keeps the constant 1 in v1 across the
- * loop (uopt hoists integer constants out of loops); the project flag
- * -Wo,-no_const_in_reg stops that. Frame and everything else match. */
+/* NON_MATCHING: T-0016, T-0017. One delay slot: IDO's as1 fills the loop's
+ * back branch with the volatile load at the loop head, the original leaves a
+ * nop there. Frame and constant hoisting match (with -Wo,-nokpicopt). */
 void strSync(SyncObj *arg0, s32 arg1) {
     volatile s32 timeout = 0x800000;
 

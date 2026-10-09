@@ -36,10 +36,13 @@ INCLUDE_ASM_RE = re.compile(r'^INCLUDE_ASM\("([^"]*)",\s*(\w+)\)', re.M)
 GCC_CFLAGS = ["-O2", "-G0", "-mcpu=3000", "-quiet"]
 MASPSX = "/opt/maspsx/maspsx.py"
 
-# -Wo,-no_const_in_reg: uopt must not keep global addresses in registers;
-# the original reloads %hi/%lo per access (func_80042400, T-0014).
+# -Wo,-nokpicopt: uopt must not keep the address of a directly accessed global
+# in a register; the original reloads %hi/%lo per access (func_80042400). It
+# still keeps integer constants and array base addresses in registers, as the
+# original does (loop bounds hoisted, `li t1,0x44; multu`). Replaces
+# -Wo,-no_const_in_reg, which also stopped those (T-0014, T-0017).
 IDO_CFLAGS = ["-c", "-EL", "-O2", "-mips1", "-G", "0", "-non_shared",
-              "-Wo,-no_const_in_reg", "-Xcpluscomm", "-Iinclude"]
+              "-Wo,-nokpicopt", "-Xcpluscomm", "-Iinclude"]
 ASM_PROCESSOR = "/opt/asm-processor/build.py"
 ASM_PRELUDE = "include/asmproc_prelude.inc"
 FRAME_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frame_pass.py")
