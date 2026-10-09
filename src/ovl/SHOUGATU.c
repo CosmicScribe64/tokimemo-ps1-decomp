@@ -7,7 +7,14 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801322D4);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801323D4);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80132450);
+void func_80132450(void) {
+    D_800CA134 = &D_80143B00;
+    D_800CA138 = &D_80143B04;
+    D_800CA13C = D_80143AF4;
+    D_800CA140 = D_80143AF8;
+    D_800CA144 = D_80143AFC;
+    func_80082764(0xFF, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801324C8);
 
@@ -85,7 +92,13 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80133D10);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80133D98);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80133E30);
+void func_80133E30(void) {
+    if (D_80143B20 != 0) {
+        func_801323D4();
+        return;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80133E6C);
 
@@ -99,7 +112,13 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80133FC8);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134004);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134058);
+void func_80134058(void) {
+    if (D_80143B18 != 0) {
+        func_801323D4();
+        return;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134094);
 
@@ -109,7 +128,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801341E4);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013428C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134340);
+void func_80134340(void) {
+    D_800E69DD = D_800E71DF;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013436C);
 
@@ -141,7 +163,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134CB4);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134F10);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134F38);
+void func_80134F38(void) {
+    func_80044750(0x200);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80134F60);
 
@@ -165,7 +190,11 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80135E04);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136078);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136148);
+void func_80136148(void) {
+    D_800CA148 = 2;
+    D_800CA14C = 0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136178);
 
@@ -177,9 +206,16 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136424);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013644C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136590);
+void func_80136590(void) {
+    func_80046318(0x16, 0x801B0000, 0xAF0D);
+    func_80135B90();
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801365C8);
+void func_801365C8(void) {
+    D_80122CDC = D_80143FF4;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801365F4);
 
@@ -189,7 +225,14 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013673C);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136770);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136824);
+void func_80136824(void) {
+    D_800CA148 = 0x1D;
+    D_800CA160 = D_80143FE8;
+    D_800CA164 = D_80143FEC;
+    D_800CA168 = D_80143FF0;
+    func_80136884();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136884);
 
@@ -197,7 +240,11 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136948);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801369EC);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136B9C);
+void func_80136B9C(void) {
+    func_80046318(3, 0x801B0000, 0xAF43);
+    func_80135E04();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80136BD4);
 
@@ -229,7 +276,14 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80137A04);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80137A5C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80137AB4);
+void func_80137AB4(void) {
+    D_800CA134 = &D_80144E08;
+    D_800CA138 = &D_80144E0C;
+    D_800CA13C = D_80144DFC;
+    D_800CA140 = D_80144E00;
+    D_800CA144 = D_80144E04;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80137B30);
 
@@ -331,15 +385,24 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80138FC0);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801390C0);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801391D4);
+void func_801391D4(void) {
+    func_801391F4();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801391F4);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801392A4);
+void func_801392A4(void) {
+    k_reset(1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801392CC);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80139304);
+void func_80139304(void) {
+    func_80044750(0x24);
+    func_80044750(0x501);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80139334);
 
@@ -369,7 +432,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80139B94);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80139C10);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80139C68);
+void func_80139C68(void) {
+    D_800E71DF = 1;
+    func_80137AB4();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80139C90);
 
@@ -473,7 +539,9 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013AE6C);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013AEB4);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013AF10);
+void func_8013AF10(void) {
+    func_8013AF30();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013AF30);
 
@@ -511,7 +579,13 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013B900);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013B944);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013B984);
+void func_8013B984(void) {
+    if (D_80145A10 != 0) {
+        func_8004284C();
+        return;
+    }
+    func_8013B528();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013B9C0);
 
@@ -533,13 +607,27 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013C2E4);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013D180);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013D2A8);
+void func_8013D2A8(void) {
+    D_800CA134 = &D_80145F2C;
+    D_800CA138 = &D_80145F30;
+    D_800CA13C = D_80145F20;
+    D_800CA140 = D_80145F24;
+    D_800CA144 = D_80145F28;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013D324);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013D3B4);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013D560);
+void func_8013D560(void) {
+    D_800CA134 = &D_800CA150;
+    D_800CA138 = &D_800CA154;
+    D_800CA13C = D_80145F34;
+    D_800CA140 = D_80145F38;
+    D_800CA144 = D_80145F3C;
+    func_80082764(0xFF, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013D5D8);
 
@@ -565,7 +653,9 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013DCFC);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013DD24);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013DD4C);
+void func_8013DD4C(void) {
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8013DD6C);
 
@@ -670,7 +760,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801409F8);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80140A78);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80140AB0);
+void func_80140AB0(void) {
+    func_80044750(0x203);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80140AD8);
 
@@ -686,7 +779,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80140DC0);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80140F54);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80140FDC);
+void func_80140FDC(void) {
+    D_80145F2C = 3;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141004);
 
@@ -700,7 +796,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141138);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141180);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801411FC);
+void func_801411FC(void) {
+    D_80145F2C = 3;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141224);
 
@@ -712,7 +811,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8014131C);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141358);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801413CC);
+void func_801413CC(void) {
+    D_80145F2C = 3;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801413F4);
 
@@ -724,15 +826,24 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801414E0);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141568);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801415A0);
+void func_801415A0(void) {
+    D_80145F2C = 3;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801415C8);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141650);
+void func_80141650(void) {
+    D_80145F2C = 3;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141678);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801416EC);
+void func_801416EC(void) {
+    D_80145F2C = 3;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141714);
 
@@ -746,7 +857,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141920);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801419D0);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141AC0);
+void func_80141AC0(void) {
+    D_800B5A60 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80141AE8);
 
@@ -794,7 +908,10 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_8014306C);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_801430A0);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80143200);
+void func_80143200(void) {
+    func_80044750(0x205);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU", func_80143228);
 

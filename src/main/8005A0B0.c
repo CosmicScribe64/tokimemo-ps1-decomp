@@ -426,7 +426,19 @@ void join_club_exit(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060958);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060A84);
+void func_80060A84(void) {
+    if (func_800460CC() & 1) {
+        dec_bg_show_set(0, func_8005751C(0));
+        if (D_800B594C == -1) {
+            dec_bg_reset();
+            dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
+        } else {
+            set_dec_bri(0x80);
+            D_800E62BA = 0x80;
+            func_80042908(1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060B24);
 

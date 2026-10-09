@@ -249,7 +249,17 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135E90);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135F10);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80135F84);
+void func_80135F84(void) {
+    D_80139DCC = 0x801EAFC4;
+    D_80139DD0 = 0x801EB144;
+    D_80139DD4 = 0x801EAFF0;
+    D_80139DD8 = 0x801EB14C;
+    D_80139DDC = 0x801EB030;
+    D_80139DE0 = 0x801EB174;
+    D_80139DE4 = *(s16 *)0x801EB17C;
+    D_80139DE8 = *(s16 *)0x801EB180;
+    D_80139DEC = 0x801B4400;
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136018);
 

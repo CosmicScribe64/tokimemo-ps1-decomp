@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/TACO.h"
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80132000);
 
@@ -74,7 +75,9 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80135278);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_801352CC);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80135330);
+void func_80135330(void) {
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80135350);
 
@@ -291,7 +294,12 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_8013EAA4);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_8013F250);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_8013F430);
+void func_8013F430(void) {
+    func_8013F468();
+    func_8013F7D8();
+    func_8013F9C0();
+    func_8013FBF0();
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_8013F468);
 
@@ -353,11 +361,19 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80142AF0);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80142DE0);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80142EC4);
+void func_80142EC4(void) {
+    func_80059E00();
+}
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80142EE4);
+void func_80142EE4(void) {
+    func_80059BE8();
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80142F0C);
+void func_80142F0C(void) {
+    func_8004ADE4();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_80142F34);
 

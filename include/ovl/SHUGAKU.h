@@ -93,5 +93,9 @@ void normal_date_bggirl_fadeout(void);
 void func_80132E84(void);
 void func_80139D00(void);
 void func_80046318(s32 arg0, s32 arg1, s32 arg2); /* overlay view: main defines it with u8 arg0 */
+extern s16 D_8013B088;
+extern s32 D_8013BFFC;
+extern s32 D_8013C000;
+extern s32 D_8013C004;
 
 #endif /* OVL_SHUGAKU_H */

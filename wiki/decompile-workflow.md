@@ -2,6 +2,7 @@
 type: concept
 updated: 2026-10-09
 sources: ["tools/funcdiff.py", "tools/progress.py", "tools/cc.py", "tools/queue.py", "configure.py", "tools/m2c.py", "tools/permute.py"]
+sources: ["tools/dupes.py", "tools/funcdiff.py", "tools/progress.py", "tools/cc.py", "configure.py"]
 ---
 
 # How to decompile a function
@@ -10,6 +11,8 @@ All commands run through `tools/docker.sh`. Standards: `CODING_STANDARDS.md`. Kn
 
 0. Get your work list: `tools/docker.sh python3 tools/queue.py --next 20 --files <your files>` (main address stems such as `80061710`, overlay names such as `TEL`, comma separated). It ranks the remaining `INCLUDE_ASM` functions: unblocked first, leaf before non-leaf, smaller first, with size, call count and flags (`L` loop; `J` jump table, `S` string, `P` one-nop pad: cannot be built; `R`, `V`: T-0018 register-promotion gap, see [[matching-notes]]). `--blocked` lists what the flags rule out, `--summary` counts per file; a `=func_X` in the last column marks a duplicate of an already listed function when a dupes list exists, so one match covers both. Do not start with blocked functions; if you try one and it does fail on the T-0018 pattern, it goes into the data file (step 7).
 1. Pick a function from that list. Size and sources: `head -1 asm/nonmatchings/main/<file>/func_XXXXXXXX.s` (`<file>` = the `src/main/<file>.c` that holds it; `grep -l func_XXXXXXXX src/main/*.c`) (`nonmatching name, size`). Progress: `tools/docker.sh ninja progress`.
+0. Before decompiling, run `tools/docker.sh python3 tools/dupes.py` (T-1300): overlays and the main exe hold many byte-identical helpers at different addresses, and `--apply --check` copies already matched C into the unmatched twins (details in [[build-system]]). Re-run it after every batch of new matches; a function listed in its output needs no new work.
+1. Pick a function (small leaf first). Size and sources: `head -1 asm/nonmatchings/main/<file>/func_XXXXXXXX.s` (`<file>` = the `src/main/<file>.c` that holds it; `grep -l func_XXXXXXXX src/main/*.c`) (`nonmatching name, size`). Progress: `tools/docker.sh ninja progress`.
 2. First time only: make the reference object from a matching build: `tools/docker.sh ninja && mkdir -p expected/build && cp -r build/src expected/build/` (gitignored; must come from an all-`INCLUDE_ASM` or otherwise sha1-OK build).
 3. Draft C with m2c: `tools/docker.sh python3 tools/m2c.py func_XXXXXXXX` (T-1330). It finds the function's `.s`, builds the context from `include/game.h` (+ `include/ovl/<NAME>.h` for an overlay), adds the function's jump tables and strings from the segment rodata, targets `mipsel-ido-c`, prints the function body to stdout and the symbols missing from the headers to stderr. Options: `--no-context`, `--no-rodata`, `--raw`, extra m2c flags after `--`. Plain `m2c` fails on any function with a `switch` (no jump table), so use the wrapper; for branch-free code the two give the same text ([[matching-notes]], "m2c wrapper vs plain m2c"). Clean the draft to C89 and `u8/s16/s32` types; put `extern` globals in `include/game.h`.
 4. Replace the function's `INCLUDE_ASM(...)` line in its `src/main/<file>.c` with the C body, same position.

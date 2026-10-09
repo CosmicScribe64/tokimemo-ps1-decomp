@@ -327,7 +327,14 @@ void func_8013DA40(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DAC4);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DBD0);
+void func_8013DBD0(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BAA4, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014BAC4, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_8014BAE0, 0);
+    k_disp_start(3);
+    func_8004284C();
+}
 
 void func_8013DC54(void) {
     if (D_800E7208 & 0x860) {
@@ -349,7 +356,14 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DD94);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013DF88);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E30C);
+void func_8013E30C(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BB8C, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014BBA8, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_8014BBC0, 0);
+    k_disp_start(3);
+    func_8004284C();
+}
 
 void func_8013E390(void) {
     if (D_800E7208 & 0x860) {
@@ -358,7 +372,13 @@ void func_8013E390(void) {
     func_80142880();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E3C8);
+void func_8013E3C8(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BBD4, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014BBEC, 0);
+    k_disp_start(2);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013E430);
 
@@ -387,7 +407,14 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013EBEC);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013EE7C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F058);
+void func_8013F058(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BCB4, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014BCCC, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_8014BCE0, 0);
+    k_disp_start(3);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F0DC);
 
@@ -419,7 +446,14 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F758);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013F984);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013FB08);
+void func_8013FB08(void) {
+    func_8004E58C();
+    set_kanji_string(-0x40, 0x20, 0xF, D_8014BDE8, 0);
+    set_kanji_string(-0x40, 0x30, 0xF, D_8014BE00, 0);
+    set_kanji_string(-0x40, 0x40, 0xF, D_8014BE10, 0);
+    k_disp_start(3);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT", func_8013FB8C);
 

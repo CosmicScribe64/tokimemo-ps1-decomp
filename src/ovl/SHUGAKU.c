@@ -68,9 +68,23 @@ void func_80132E20(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80132E84);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80132F44);
+void func_80132F44(void) {
+    D_800CA134 = &D_8013B084;
+    D_800CA138 = &D_8013B088;
+    D_800CA13C = D_8013B06C;
+    D_800CA140 = D_8013B070;
+    D_800CA144 = D_8013B074;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80132FC0);
+void func_80132FC0(void) {
+    D_800CA134 = &D_8013B084;
+    D_800CA138 = &D_8013B088;
+    D_800CA13C = D_8013B06C;
+    D_800CA140 = D_8013B070;
+    D_800CA144 = D_8013B074;
+    func_80082764(0xFF, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80133038);
 
@@ -159,7 +173,14 @@ void func_80134220(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_8013425C);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_801343B0);
+void func_801343B0(void) {
+    D_800CA134 = &D_800CA2E4;
+    D_800CA138 = &D_800CA2E8;
+    D_800CA13C = D_8013BFFC;
+    D_800CA140 = D_8013C000;
+    D_800CA144 = D_8013C004;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_8013442C);
 
@@ -431,9 +452,23 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80138400);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_801385A8);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_8013864C);
+void func_8013864C(void) {
+    D_800CA134 = &D_800CA2DC;
+    D_800CA138 = &D_800CA2E0;
+    D_800CA13C = D_800CA2D0;
+    D_800CA140 = D_800CA2D4;
+    D_800CA144 = D_800CA2D8;
+    func_80082764(0xFF, 1, 0);
+}
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_801386C4);
+void func_801386C4(void) {
+    D_800CA134 = &D_800CA2DC;
+    D_800CA138 = &D_800CA2E0;
+    D_800CA13C = D_800CA2D0;
+    D_800CA140 = D_800CA2D4;
+    D_800CA144 = D_800CA2D8;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80138740);
 
