@@ -23,9 +23,9 @@ Numbers from `tools/docker.sh ninja progress` on 2026-10-09:
 
 | Part | Functions | Bytes |
 |---|---|---|
-| Main executable | 75 of 834 | 2,432 of 284,428 |
+| Main executable | 128 of 834 | 8,136 of 284,428 |
 | Overlays (26) | 76 of 6,128 | 5,700 of 1,994,940 |
-| Total | 151 of 6,962 | 8,132 of 2,279,368 (0.4%) |
+| Total | 204 of 6,962 | 13,836 of 2,279,368 (0.6%) |
 
 The PsyQ SDK library code (722 functions, 165,212 bytes) sits in the executable as assembly and is counted
 separately. It is not part of the totals above. [decomp.dev](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
@@ -60,12 +60,15 @@ tools/docker.sh python3 tools/list_leaves.py         # remaining leaf functions
 ## Toolchain
 
 The original compiler is unknown. The closest match found is SGI IDO 5.3, a MIPS compiler that the PsyQ SDK did not
-use. Two extra steps make its output line up with the original:
+use, run with `-O2 -G 0` and the optimizer option `-Wo,-no_const_in_reg`. Two build steps adjust its output to the
+original's layout. Each applies one rule to every function and has unit tests:
 
-- **Frame pass.** The original stack frames are 16 bytes larger than IDO's. `tools/frame_pass.py` runs inside every
-  IDO compile and adds the extra bytes, so the C stays ordinary. It has unit tests.
-- **Shift-JIS strings.** `tools/asm.py` re-encodes Japanese string literals to Shift-JIS escapes before assembling,
-  because splat writes them as UTF-8 for readability.
+- `tools/frame_pass.py` runs inside every IDO compile. The original stack frames are 16 bytes larger than IDO's,
+  and the pass adds those bytes, so the C stays ordinary.
+- `tools/cc.py` pads each object's code to 16 bytes, the alignment the original objects have.
+
+Separately, `tools/asm.py` re-encodes Japanese string literals to Shift-JIS before assembling, because splat writes
+them as UTF-8 for readability.
 
 SDK library code is assembly for now. If it moves to C, the repository already has a GCC 2.7 plus maspsx path for it.
 Details and the evidence behind each choice are in [wiki/toolchain.md](wiki/toolchain.md),
@@ -91,18 +94,15 @@ in [wiki/source-files.md](wiki/source-files.md), overlays in [wiki/overlays.md](
 
 AI coding agents (Claude Code) wrote most of the code and documentation here, directed by the maintainer.
 
-What protects the result is the match rule. A function counts as decompiled only when its compiled code is
-byte-identical to the original, and CI checks that on every push, along with the SHA-1 of the whole build.
+A function counts as decompiled only when its compiled code is byte-identical to the original. CI checks that on
+every push, along with the SHA-1 of every binary.
 
-The match rule says nothing about names, types or comments, because they do not change the bytes. Treat them as
-hypotheses. In particular, many function names come from the symbol map in the game's own `O.BIN` developer build and
-are listed as hypotheses in `config/symbol_addrs_obin.txt`.
+Names, types and comments do not change the bytes, so the match rule cannot check them. Treat them as hypotheses.
+Many function names come from the symbol map in the game's own `O.BIN` developer build; they are listed in
+`config/symbol_addrs_obin.txt`. In a spot check of 24 of them, 12 fit the functions they call, none contradicted the code, and the rest could not be checked.
 
 The English translation planned in the roadmap will also be made with AI, and will say so. Human translators are
 welcome to take part.
-
-Some decompilation projects ban AI-generated contributions. This one is independent of them and has no connection
-to their work.
 
 ## Roadmap
 

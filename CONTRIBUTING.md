@@ -32,7 +32,7 @@ than by search and replace. Names taken from the O.BIN symbol map are hypotheses
   start.
 - Check `wiki/matching-notes.md` first. It lists the compiler patterns that already cost time, so you do not repeat
   them.
-- Check `wiki/kanban.md` so you do not take a function someone is already working on.
+- Check `wiki/kanban.md` so you do not start on files someone is already working on.
 
 ## Wiki and tickets
 

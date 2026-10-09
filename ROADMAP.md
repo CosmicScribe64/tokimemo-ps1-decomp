@@ -3,14 +3,13 @@
 The goal is a playable, readable, English-translated version of *Tokimeki Memorial: Forever with You* that does not
 depend on the original code. It comes in five phases, in order. Later phases depend on earlier ones, and none has a date.
 
-The scale matters. The main executable and the 26 overlays hold about 7,000 functions (6,962 counted so far), and
-151 of them are done.
+The main executable and the 26 overlays hold about 7,000 functions (6,962 counted so far). 204 of them are done.
 
 ## 1. Byte-matching decompilation (in progress)
 
 Write C for every function so that the rebuilt executable and overlays are identical to the originals. The build
-and checks already work, and all 27 binaries rebuild from assembly. The decompiled C is 0.4% of the code by size, and
-2.2% of the functions. The remaining functions need hand work, and some hit limits of the compiler we use. Progress is
+and checks already work, and all 27 binaries rebuild byte for byte, mostly from assembly. The decompiled C is 0.6% of
+the code by size and 2.9% of the functions. The remaining functions need hand work, and some hit limits of the compiler we use. Progress is
 tracked on [decomp.dev](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp).
 
 ## 2. Readable decompilation (not started)
