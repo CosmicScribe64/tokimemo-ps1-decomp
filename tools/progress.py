@@ -54,7 +54,9 @@ def unit_totals(sizes, sources):
     Raises ValueError if a function has no size, or is neither INCLUDE_ASM nor defined in C."""
     remaining, defined = set(), set()
     for c in sources:
-        remaining.update((Path(e.folder).name, e.name) for e in srcscan.include_asm_entries(c))
+        # src/ovl/pad/*.s are hand-written nop padding between objects, not functions
+        remaining.update((Path(e.folder).name, e.name) for e in srcscan.include_asm_entries(c)
+                         if Path(e.folder).name != "pad")
         defined |= srcscan.defined_functions(c)
     missing = [k for k in remaining if k not in sizes]
     if missing:

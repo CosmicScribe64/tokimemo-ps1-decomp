@@ -100,7 +100,7 @@ void func_80135040(void) {
         return;
     }
     func_80042808();
-    func_80086424();
+    Default_Disp();
 }
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER", func_801350A8);
@@ -130,11 +130,11 @@ void func_80137B5C(void) {
         func_80048F64(0x60);
         D_800E699E |= 0x10;
         func_8008585C();
-        func_80057390(0);
+        set_dec_bri(0);
         func_8006D6E0();
         func_80072B5C(1);
     }
-    func_80086424();
+    Default_Disp();
 }
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER", func_80137BF4);

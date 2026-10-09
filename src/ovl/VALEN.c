@@ -28,13 +28,13 @@ void func_8013253C(void) {
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80132578);
 
 void func_801326B8(void) {
-    func_8007ED84(0x4045);
+    bg_read_sub2(0x4045);
     func_80085B3C(6, 0);
     func_8004284C();
 }
 
 void func_801326EC(void) {
-    func_8007ED84(0x4122);
+    bg_read_sub2(0x4122);
     func_8004284C();
 }
 
@@ -118,7 +118,7 @@ void func_80133F58(void) {
         func_8004284C();
         return;
     }
-    func_8007E390();
+    normal_date_girl_in();
 }
 
 void func_80133F98(void) {

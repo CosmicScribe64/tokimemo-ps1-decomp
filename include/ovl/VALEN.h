@@ -6,7 +6,7 @@
 
 /* VALEN overlay (load address 0x80132000): externs and types. */
 
-void func_8007ED84();
+void bg_read_sub2();
 void func_800847B8();
 void func_80132348();
 void func_80062CD0();
@@ -20,7 +20,7 @@ extern u8 D_800E69A2;
 void func_80132000();
 extern u8 D_800E62BE;
 extern s16 D_80134498;
-void func_8007E390();
+void normal_date_girl_in();
 extern u8 D_800E738A;
 extern u8 D_80134544;
 extern s32 D_80134400;

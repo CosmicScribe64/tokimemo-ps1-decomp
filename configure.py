@@ -85,12 +85,18 @@ def overlay_targets(n, overlays):
            command=("mips-linux-gnu-ld -EL -T build/ovl/$name.ld "
                     "-T build/ovl/${name}_undefined_funcs_auto.txt "
                     "-T build/ovl/${name}_undefined_syms_auto.txt "
+                    "-T build/main_names.ld "
                     "-Map build/ovl/$name.map -o $out"),
            description="LD $out")
     n.rule("osha1",
            command=("h=$$(cut -d' ' -f1 config/overlays/$name.sha1) && "
                     "echo \"$$h  $in\" | sha1sum -c && touch $out"),
            description="SHA1 CHECK $in")
+    # main-exe names (O.BIN, SDK) that overlays call by name; see tools/syms_to_ld.py
+    n.rule("symsld", command="python3 tools/syms_to_ld.py $out $in", description="SYMS $out")
+    n.build("build/main_names.ld", "symsld",
+            ["config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt"],
+            implicit=["tools/syms_to_ld.py"])
     oks = []
     for name, _base, _text in overlays:
         v = {"name": name}
@@ -112,7 +118,7 @@ def overlay_targets(n, overlays):
         data_o = "build/ovl/%s/%s.o" % (name, data_s[:-2])
         n.build(data_o, "as", data_s, implicit=[stamp, "include/macro.inc"])
         elf = "build/ovl/%s.elf" % name
-        n.build(elf, "old", [c_o, data_o], implicit=[stamp, ld], variables=v)
+        n.build(elf, "old", [c_o, data_o], implicit=[stamp, ld, "build/main_names.ld"], variables=v)
         n.build("build/ovl/%s.bin" % name, "objcopy", elf)
         ok = "build/ovl/%s.ok" % name
         n.build(ok, "osha1", "build/ovl/%s.bin" % name, variables=v)
@@ -154,7 +160,7 @@ def main():
     n.build([stamp, "build/%s.ld" % EXE] + ASM_FILES, "split", split_in, implicit=["disc/files/" + EXE])
 
     objs = []
-    headers = sorted(glob.glob("include/*.h") + glob.glob("include/*.inc"))
+    headers = sorted(glob.glob("include/**/*.h", recursive=True) + glob.glob("include/**/*.inc", recursive=True))
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
