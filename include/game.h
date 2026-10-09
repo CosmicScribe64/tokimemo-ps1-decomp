@@ -21,6 +21,7 @@ extern u8 D_800E62BA;
 extern u8 D_800E62BB; /* also read with lb elsewhere */
 extern u8 D_800E7393;
 extern u8 D_800E7394; /* also read with lhu elsewhere */
+extern s32 D_800E7D10;
 extern u8 D_8012512A;
 extern s32 D_801255B0;
 extern u8 D_801255B4;

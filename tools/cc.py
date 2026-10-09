@@ -25,8 +25,10 @@ INCLUDE_ASM_RE = re.compile(r'^INCLUDE_ASM\("([^"]*)",\s*(\w+)\)', re.M)
 GCC_CFLAGS = ["-O2", "-G0", "-mcpu=3000", "-quiet"]
 MASPSX = "/opt/maspsx/maspsx.py"
 
+# -Wo,-no_const_in_reg: uopt must not keep global addresses in registers;
+# the original reloads %hi/%lo per access (func_80042400, T-0014).
 IDO_CFLAGS = ["-c", "-EL", "-O2", "-mips1", "-G", "0", "-non_shared",
-              "-Xcpluscomm", "-Iinclude"]
+              "-Wo,-no_const_in_reg", "-Xcpluscomm", "-Iinclude"]
 ASM_PROCESSOR = "/opt/asm-processor/build.py"
 ASM_PRELUDE = "include/asmproc_prelude.inc"
 
