@@ -24,9 +24,11 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006]] Identify PsyQ libs/SDK version (Done)
 - [[tickets/T-0007-write-coding-standards|T-0007]] Write CODING_STANDARDS.md (Done)
 - [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Backlog)
-- [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Backlog)
+- [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Done)
 - [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Backlog)
-- [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Game code file boundaries, compiler, Shift-JIS (Backlog)
+- [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Compiler confirmation on first game functions (Done)
+- [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Backlog)
+- [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Backlog)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -34,6 +36,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[overlays]] - the 26 .EXN overlays
 - [[toolchain]] - Docker image, pinned versions, compiler choice
 - [[psyq-sdk]] - SDK era, libraries, code anchors
+- [[matching-notes]] - compiler verdict, evidence, matched/unmatched functions, idioms
+- [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit
 - [[build-system]] - configure.py / ninja pipeline and gotchas
 - Raw source (plain path): `raw/disc-findings.md`
 

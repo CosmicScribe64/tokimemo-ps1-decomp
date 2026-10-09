@@ -6,10 +6,10 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-0013-identify-original-compiler-pipeline|T-0013 Identify the original compiler pipeline]]
 - [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
-- [ ] [[tickets/T-0009-progress-report-script|T-0009 Progress reporting script]]
 - [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]
-- [ ] [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011 Game code file boundaries, compiler confirmation, Shift-JIS strings]]
+- [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
 
 ## Ready
 
@@ -22,6 +22,8 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011 Compiler confirmation on first decompiled game functions]]
+- [ ] [[tickets/T-0009-progress-report-script|T-0009 Progress reporting script]]
 - [ ] [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002 Disc extraction & executable identification]]
 - [ ] [[tickets/T-0003-docker-toolchain-image|T-0003 Docker toolchain image]]
 - [ ] [[tickets/T-0004-splat-config-and-split|T-0004 splat config & split]]
