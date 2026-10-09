@@ -70,6 +70,7 @@ u8 get_k_speed(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_disp_inc);
 
+/* The operand order sets the load order of the two globals (T-0017). */
 s32 check_end_k(void) {
     if (D_800B3F68 == D_800B3F62) {
         return 1;
