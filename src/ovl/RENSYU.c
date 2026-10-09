@@ -1,6 +1,13 @@
-#include "common.h"
+#include "ovl/RENSYU.h"
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80132000);
+void func_80132000(void) {
+    D_801342B0 = 0x801E990C;
+    D_801342B4 = 0x801E9C40;
+    D_801342B8 = 0x801EB2D8;
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_RENSYU_80132034);
 
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80132040);
 
@@ -22,12 +29,45 @@ INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80133CB8);
 
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80133E5C);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80133F60);
+void func_80133F60(void) {
+    D_801343D0 = 0x801A42D4;
+    D_801343D4 = 0x801A42E0;
+    D_801343D8 = 0x801A4330;
+    D_801343DC = *(s16 *)0x801A4338;
+    D_801343E0 = 0x80197000;
+}
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80133FB4);
+void func_80133FB4(void) {
+    D_801343D0 = 0x801A3E3C;
+    D_801343D4 = 0x801A3E48;
+    D_801343D8 = 0x801A3E90;
+    D_801343DC = *(s16 *)0x801A3E98;
+    D_801343E0 = 0x80197000;
+}
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80134008);
+void func_80134008(void) {
+    D_801343D0 = 0x801A42E4;
+    D_801343D4 = 0x801A42F0;
+    D_801343D8 = 0x801A4368;
+    D_801343DC = *(s16 *)0x801A4370;
+    D_801343E0 = 0x80197000;
+}
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_8013405C);
+void func_8013405C(void) {
+    D_801343D0 = 0x801A432C;
+    D_801343D4 = 0x801A4338;
+    D_801343D8 = 0x801A4394;
+    D_801343DC = *(s16 *)0x801A43A4;
+    D_801343E0 = 0x80197000;
+}
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_801340B0);
+void func_801340B0(void) {
+    D_801343D0 = 0x801A403C;
+    D_801343D4 = 0x801A4048;
+    D_801343D8 = 0x801A4098;
+    D_801343DC = *(s16 *)0x801A40B0;
+    D_801343E0 = 0x80197000;
+}
+
+/* object boundary: alignment padding of the original link */
+INCLUDE_ASM("src/ovl/pad", pad_RENSYU_80134104);
