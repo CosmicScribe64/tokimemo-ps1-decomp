@@ -1,7 +1,7 @@
 ---
 id: T-0004
 title: splat config & split
-status: In Review
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -24,3 +24,4 @@ Segment decisions and bss derivation: [[executable]]. Lib/game code boundary is 
 ## Comments
 
 - 2026-10-09: moved to In Review. Awaiting code-review against CODING_STANDARDS.md.
+- 2026-10-09: code review (vs CODING_STANDARDS.md, range 060900b..HEAD) run. Findings: No findings specific to the config; commit granularity noted (see log). Build re-verified from a clean tree after fixes: `build/SLPM_86.053.bin: OK`. Moved to Done.

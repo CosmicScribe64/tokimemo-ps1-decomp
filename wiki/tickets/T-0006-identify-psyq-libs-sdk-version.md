@@ -1,7 +1,7 @@
 ---
 id: T-0006
 title: Identify PsyQ libs/SDK version
-status: In Review
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -24,3 +24,4 @@ Library code is currently asm-only (`sdk_libs`, `libapi_stubs` segments). Re-sco
 ## Comments
 
 - 2026-10-09: moved to In Review. Awaiting code-review against CODING_STANDARDS.md.
+- 2026-10-09: code review (vs CODING_STANDARDS.md, range 060900b..HEAD) run. Findings: Acceptance criteria re-scoped to match delivered work; remainder in T-0010. Fixed. Build re-verified from a clean tree after fixes: `build/SLPM_86.053.bin: OK`. Moved to Done.

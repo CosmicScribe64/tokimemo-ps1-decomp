@@ -1,7 +1,7 @@
 ---
 id: T-0002
 title: Disc extraction & executable identification
-status: In Review
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -25,3 +25,4 @@ Verified: re-extraction of `SLPM_86.053` gives the sha1 in `config/SLPM_86.053.s
 ## Comments
 
 - 2026-10-09: moved to In Review. Awaiting code-review against CODING_STANDARDS.md.
+- 2026-10-09: code review (vs CODING_STANDARDS.md, range 060900b..HEAD) run. Findings: extract_disc.py: Form2/size handling (now skips XA/STR streams), stale-file reuse (always re-extracts), uncaught EOFError (clean exit). Fixed. Build re-verified from a clean tree after fixes: `build/SLPM_86.053.bin: OK`. Moved to Done.

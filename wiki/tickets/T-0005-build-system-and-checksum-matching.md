@@ -1,7 +1,7 @@
 ---
 id: T-0005
 title: Build system & checksum matching
-status: In Review
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -25,3 +25,4 @@ Verified from a clean tree (`rm -rf asm build`): split, build, sha1 OK, second `
 ## Comments
 
 - 2026-10-09: moved to In Review. Awaiting code-review against CODING_STANDARDS.md.
+- 2026-10-09: code review (vs CODING_STANDARDS.md, range 060900b..HEAD) run. Findings: cc pipeline pipefail (tools/cc.py checks each stage), INCLUDE_ASM depfile, self-regenerating build.ninja, --no-check-sections removed, single macro path via include/common.h. Fixed. Typedef-clash concern: PsyQ headers use u_char/u_long, comment added. Build re-verified from a clean tree after fixes: `build/SLPM_86.053.bin: OK`. Moved to Done.
