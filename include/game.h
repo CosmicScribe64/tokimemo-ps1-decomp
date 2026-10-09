@@ -132,7 +132,7 @@ void birth_day_check_days(s32 arg0, u8 arg1, u8 arg2);
 void dec_bg_show_switch(s32 arg0);
 void hizuke_disp_switch(s32 arg0);
 void func_8006D138(void);
-void func_80083440(s32 arg0);
+void func_80083440(u8 arg0);
 void func_80090D20(void);
 void func_8009C674(s32 arg0);
 void func_8009C7F8(RECT *rect, s32 arg1, s32 arg2, s32 arg3);
@@ -340,7 +340,8 @@ void func_8006BA40();
 
 void read_bustup();
 void func_8006C848();
-void func_8007B5EC(u16 a);
+s32 func_8007B5EC(u16 a);
+s32 func_80079E00(s32 a);
 void func_80047550(void);
 extern s32 D_80122D20;
 
@@ -355,5 +356,74 @@ extern u8 D_80120652;
 extern s32 D_80125D14;
 void func_8007A50C(void);
 extern u8 D_801217D0[];
+
+s32 func_8007C8D8();
+s32 func_8007D8AC();
+void func_8006612C(void *p);
+extern u8 D_800CA19C[];
+extern u8 D_800CA1DC[];
+void func_80085CD4(u8 a);
+void func_800634FC(u8 a);
+
+void func_80042940(s32 arg0);
+extern u8 D_800E69A0;
+extern u8 D_800E69A1;
+extern u8 D_800E69A2;
+extern s16 D_80125D4C;
+void func_8007AF0C(void);
+void func_80079E9C(void);
+void func_80079F00(void);
+void func_80058398();
+void func_8007A98C();
+extern s32 D_80125D18;
+extern s32 D_80125D1C;
+extern s32 D_80125D20;
+extern s32 D_80125D24;
+extern s32 D_80125D28;
+extern u8 D_80125D5C;
+extern u8 D_80125D5D;
+
+s32 func_80046500(void);
+void normal_date_move_place_main(void);
+void normal_date_three_select_init(void);
+void normal_date_three_select_main(void);
+void normal_date_two_select_init(void);
+void normal_date_two_select_main(void);
+void select_girl_init(void);
+void select_girl_main(void);
+extern u8 D_80125D54;
+void func_8008BEE0();
+void func_8008BFB0();
+void func_8007A868(void);
+void func_8007A924();
+void func_80048F64(s32 a);
+
+void normal_date_move_place_init(void);
+
+extern u32 D_80125CA4;
+extern u32 D_80125CA8;
+extern u32 D_80125CAC;
+extern u32 D_80125CB0;
+extern u16 D_800C9FF8[];
+extern u16 D_800C9F60[];
+extern u8 D_8011F513;
+extern u8 D_801217E4;
+extern u8 D_801217E5;
+extern u8 D_801217E6;
+extern u8 D_80121808;
+extern u8 D_80121809;
+extern u8 D_8012180A;
+extern s32 D_80122CF4;
+extern u8 *D_800CA134;
+extern u8 *D_800CA138;
+extern s32 D_800CA13C;
+extern s32 D_800CA140;
+extern s32 D_800CA144;
+extern u8 D_800CA148[];
+extern u8 D_800CA14C[];
+extern s32 D_800CA160;
+extern s32 D_800CA164;
+extern s32 D_800CA168;
+void func_80082764();
 
 #endif /* GAME_H */
