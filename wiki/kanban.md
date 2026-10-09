@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2040-wave-2-etc|T-2040 Wave 2: ETC]]
 
 
 ## In Review
