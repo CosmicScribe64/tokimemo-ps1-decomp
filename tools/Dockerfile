@@ -1,7 +1,9 @@
 # PS1 decomp toolchain. Built for linux/amd64 on purpose: the old-gcc PsyQ
 # compilers are x86_64-only ELF binaries, so every tool runs under one arch
 # (emulated via Rosetta/QEMU on Apple Silicon). See tools/docker.sh.
-FROM ubuntu:22.04
+# CI overrides BASE with a registry mirror: GitHub runners hit Docker Hub pull limits (HTTP 429).
+ARG BASE=ubuntu:22.04
+FROM ${BASE}
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \

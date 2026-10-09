@@ -63,7 +63,7 @@ jobs:
 
       - name: Build the toolchain image
         if: steps.bundle.outputs.available == 'true'
-        run: docker build --platform linux/amd64 -t tokimemo-decomp tools
+        run: docker build --platform linux/amd64 --build-arg BASE=public.ecr.aws/docker/library/ubuntu:22.04 -t tokimemo-decomp tools
 
       - name: Configure and build
         if: steps.bundle.outputs.available == 'true'
