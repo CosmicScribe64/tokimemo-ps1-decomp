@@ -1,5 +1,19 @@
 #include "common.h"
 
+extern u8 D_80149208[]; /* 3 slots of 0x24 bytes; byte at +0x2A is read */
+extern u8 D_8011ECD0[]; /* 3 records of 0x44 bytes; s16 at +0x19EA is read */
+extern u8 D_80149232;
+extern u8 D_80149256;
+extern u8 D_8014927A;
+extern u8 D_8014A13C[]; /* func_801446A0: same shape as D_80149208 */
+extern u8 D_8014A161;
+extern u8 D_8014A185;
+extern u8 D_8014A1A9;
+extern u8 D_8014A400[]; /* func_80146FA0: stride 0x1C */
+extern u8 D_8014A401;
+extern u8 D_8014A41D;
+extern u8 D_8014A439;
+
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80132000);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80132970);
@@ -104,7 +118,38 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80137C44);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80137EA8);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016. Byte-identical when uopt keeps integer constants and
+ * global addresses in registers (cc.py without -Wo,-no_const_in_reg); that flag
+ * exists only for func_80042400 (T-0014) and breaks loop hoisting here. The
+ * frame layout comes out right with the frame pass.
+ * FAKE: v[6] instead of three elements reproduces the original local offset
+ * (0x1c); the real source is unknown. T-0016 */
+s32 func_8013815C(void) {
+    s16 v[6];
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        if (D_80149208[i * 0x24 + 0x2A] == 0) {
+            v[i] = *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA);
+        } else {
+            v[i] = -0xF00;
+        }
+    }
+    if (v[0] >= v[1] && v[0] >= v[2]) {
+        D_80149232 = 1;
+        return 2;
+    }
+    if (v[1] >= v[2]) {
+        D_80149256 = 1;
+        return 3;
+    }
+    D_8014927A = 1;
+    return 4;
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8013815C);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80138224);
 
@@ -318,7 +363,34 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8014430C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80144464);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016, same as func_8013815C (constant hoisting flag;
+ * FAKE: v[6] as there). */
+s32 func_801446A0(void) {
+    s16 v[6];
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        if (D_8014A13C[i * 0x24 + 0x25] == 0) {
+            v[i] = *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA);
+        } else {
+            v[i] = -0xF00;
+        }
+    }
+    if (v[0] >= v[1] && v[0] >= v[2]) {
+        D_8014A161 = 1;
+        return 2;
+    }
+    if (v[1] >= v[2]) {
+        D_8014A185 = 1;
+        return 3;
+    }
+    D_8014A1A9 = 1;
+    return 4;
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_801446A0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80144768);
 
@@ -380,7 +452,34 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80146C20);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80146D18);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-0016, same as func_8013815C (constant hoisting flag;
+ * FAKE: v[6] as there). */
+s32 func_80146FA0(void) {
+    s16 v[6];
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        if (D_8014A400[i * 0x1C + 1] == 0) {
+            v[i] = *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA);
+        } else {
+            v[i] = -0xF00;
+        }
+    }
+    if (v[0] >= v[1] && v[0] >= v[2]) {
+        D_8014A401 = 1;
+        return 2;
+    }
+    if (v[1] >= v[2]) {
+        D_8014A41D = 1;
+        return 3;
+    }
+    D_8014A439 = 1;
+    return 4;
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80146FA0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_80147068);
 
