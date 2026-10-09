@@ -11,7 +11,7 @@ Goal: a byte-matching decompilation of the PS1 executable(s) of Tokimeki Memoria
 
 - Target: Sony PlayStation, MIPS R3000 (little-endian, GTE coprocessor)
 - SDK: PsyQ, 1995-era libs (see [[psyq-sdk]] and [[tickets/T-0006-identify-psyq-libs-sdk-version]])
-- Tooling: splat (splitting), maspsx (assembler macro post-processing), gcc 2.7.2-psx (provisional), all run in Docker only (see [[tickets/T-0003-docker-toolchain-image]])
+- Tooling: splat (splitting), IDO 5.3 via asm-processor for the game code (partial match, see [[matching-notes]]), maspsx + gcc kept for SDK C, all run in Docker only (see [[tickets/T-0003-docker-toolchain-image]])
 - Build: see [[tickets/T-0005-build-system-and-checksum-matching]]
 
 ## Facts
@@ -19,7 +19,7 @@ Goal: a byte-matching decompilation of the PS1 executable(s) of Tokimeki Memoria
 - Disc layout, extraction: [[disc-layout]]
 - Main executable (SLPM_86.053, entry, memory map, bss): [[executable]]
 - Overlays (26 headerless .EXN, load address unverified): [[overlays]]
-- Compiler and tools: [[toolchain]] (gcc 2.7.2-psx provisional, maspsx, splat 0.50.0)
+- Compiler and tools: [[toolchain]] (IDO 5.3 + asm-processor for game code, splat 0.50.0)
 - Libraries linked and SDK era (libpress, libcd, libsnd, libspu, libgpu, libapi; PsyQ 3.6-4.0 era): [[psyq-sdk]]
 - Build and sha1 check (OK build, all `INCLUDE_ASM`): [[build-system]]
 

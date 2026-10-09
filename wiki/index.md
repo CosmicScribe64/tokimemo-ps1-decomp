@@ -27,14 +27,14 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Done)
 - [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Backlog)
 - [[tickets/T-0011-game-code-file-boundaries-and-compiler|T-0011]] Compiler confirmation on first game functions (Done)
-- [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Backlog)
+- [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (In Review)
 - [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Backlog)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays
-- [[toolchain]] - Docker image, pinned versions, compiler choice
+- [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code)
 - [[psyq-sdk]] - SDK era, libraries, code anchors
 - [[matching-notes]] - compiler verdict, evidence, matched/unmatched functions, idioms
 - [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit

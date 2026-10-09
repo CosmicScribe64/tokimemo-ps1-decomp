@@ -6,7 +6,6 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-0013-identify-original-compiler-pipeline|T-0013 Identify the original compiler pipeline]]
 - [ ] [[tickets/T-0008-overlay-load-address-and-split|T-0008 Determine overlay load address and split overlays]]
 - [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]
 - [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
@@ -19,6 +18,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-0013-identify-original-compiler-pipeline|T-0013 Identify the original compiler pipeline]]
 
 ## Done
 
