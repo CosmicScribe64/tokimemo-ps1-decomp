@@ -13,7 +13,13 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075A64);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075AF8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075BE8);
+void func_80075BE8(void) {
+    if (D_800E738A == 0) {
+        func_80075C24();
+    }
+    func_80066334();
+    func_80065B0C(0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075C24);
 
@@ -79,10 +85,19 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club_exit);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_taibu_club_exit);
+void holiday_taibu_club_exit(void) {
+    func_80048E78();
+    if (D_800E7208 & 0x60) {
+        func_80042908(0);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club_join_exit);
+void holiday_club_join_exit(void) {
+    func_80048E78();
+    icon_disp_switch(1);
+    func_80042908(5);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007894C);

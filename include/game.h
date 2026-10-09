@@ -132,7 +132,7 @@ void birth_day_check_days(s32 arg0, u8 arg1, u8 arg2);
 void dec_bg_show_switch(s32 arg0);
 void hizuke_disp_switch(s32 arg0);
 void func_8006D138(void);
-void func_80083440(s32 arg0);
+void func_80083440(u8 arg0);
 void func_80090D20(void);
 void func_8009C674(s32 arg0);
 void func_8009C7F8(RECT *rect, s32 arg1, s32 arg2, s32 arg3);
@@ -320,5 +320,110 @@ void func_80042058(void);
 void func_8004482C(void);
 void dec_bg_reset(void);
 void tpage_buf_clear(void);
+
+/* T-1020 batch F */
+extern s32 D_800E36F0;
+extern s32 D_800E36F4;
+void Vblnk_Timer_Init(void);
+
+s32 get_g_zyotai_s();
+s32 func_80044E8C();
+extern s32 D_80122EA0;
+extern s16 D_80120666;
+
+s32 Vblnk_Timer(void);
+void func_8006BA40();
+
+void read_bustup();
+void func_8006C848();
+s32 func_8007B5EC(u16 a);
+s32 func_80079E00(s32 a);
+void func_80047550(void);
+extern s32 D_80122D20;
+
+extern u8 D_800E69DD;
+extern s32 D_80122CF8;
+
+extern s32 D_80122D0C;
+extern u8 D_80120696;
+extern s16 D_801206AA;
+extern s32 D_80122D10;
+extern u8 D_80120652;
+extern s32 D_80125D14;
+void func_8007A50C(void);
+extern u8 D_801217D0[];
+
+s32 func_8007C8D8();
+s32 func_8007D8AC();
+void func_8006612C(void *p);
+extern u8 D_800CA19C[];
+extern u8 D_800CA1DC[];
+void func_80085CD4(u8 a);
+void func_800634FC(u8 a);
+
+void func_80042940(s32 arg0);
+extern u8 D_800E69A0;
+extern u8 D_800E69A1;
+extern u8 D_800E69A2;
+extern s16 D_80125D4C;
+void func_8007AF0C(void);
+void func_80079E9C(void);
+void func_80079F00(void);
+void func_80058398();
+void func_8007A98C();
+extern s32 D_80125D18;
+extern s32 D_80125D1C;
+extern s32 D_80125D20;
+extern s32 D_80125D24;
+extern s32 D_80125D28;
+extern u8 D_80125D5C;
+extern u8 D_80125D5D;
+
+s32 func_80046500(void);
+void normal_date_move_place_main(void);
+void normal_date_three_select_init(void);
+void normal_date_three_select_main(void);
+void normal_date_two_select_init(void);
+void normal_date_two_select_main(void);
+void select_girl_init(void);
+void select_girl_main(void);
+extern u8 D_80125D54;
+void func_8008BEE0();
+void func_8008BFB0();
+void func_8007A868(void);
+void func_8007A924();
+void func_80048F64(s32 a);
+
+void normal_date_move_place_init(void);
+
+extern u8 *D_800CA134;
+extern u8 *D_800CA138;
+extern s32 D_800CA13C;
+extern s32 D_800CA140;
+extern s32 D_800CA144;
+extern u8 D_800CA148[];
+extern u8 D_800CA14C[];
+extern s32 D_800CA160;
+extern s32 D_800CA164;
+extern s32 D_800CA168;
+void func_80082764();
+
+void func_80048E78();
+void icon_disp_switch(s32 a);
+void func_80075C24(void);
+void func_80066334();
+void func_80065B0C(s32 a);
+u8 func_800460CC(void);
+s32 func_8004636C();
+void func_80042458(void);
+
+void func_8007B5CC();
+void func_8007B568();
+extern s32 D_80122CDC;
+
+void k_speed_set(u8 a);
+u8 get_k_speed(void);
+extern u8 D_800CA2A8;
+extern u8 D_800CA2C4;
 
 #endif /* GAME_H */

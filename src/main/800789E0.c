@@ -15,9 +15,21 @@ INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078A94);
 
 INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078C48);
 
-INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078FE0);
+void func_80078FE0(void) {
+    if (func_800460CC() & 1) {
+        D_800B6D34 = 2;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80079014);
+void func_80079014(void) {
+    if (func_8004636C(D_800B6D38, D_800B6D3C) != 0) {
+        D_800B6D34 = 3;
+        func_80042458();
+    } else {
+        D_800B6D34 = 0;
+        D_800B6D40 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80079070);
 

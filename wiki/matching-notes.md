@@ -236,3 +236,20 @@ Failures left as `INCLUDE_ASM` (all T-0017/T-0018 families):
 - `u8` global compare-chain with a returned value (BUNKA_SD `func_80134540`, `func_80135160`, `func_801359B0`, `func_80136270`): `$v1` vs `$v0`, same as batch B.
 - `memcpy(t + A, t + B, 0x1400)` with `t = D * 0x1400`: the original keeps `t` in `v0`, IDO in `t6` (DATE2 `func_80132E5C`, `func_80132FB0`, `func_8013301C`, `func_80132EC8`).
 - Argument `D_dst = D_src` passed on: original loads the source straight into `a0` (DATE2 `func_801335E4`, `func_80132F48`); local function-pointer table copy (`func_80132DE0`, `func_80136660`, `func_801375D4`, `func_80138048`); jump-table switches and `printf` string literals (`func_80133A6C`, `func_801365DC`).
+## Main exe batch F (T-1020): 58 functions in 80075320, 800789E0, 80079B10, 80085E30
+Ticket [[tickets/T-1020-main-batch-f]]. `ninja progress` grand total 204 -> 262 functions (17108 bytes). Mostly call-chain and global-store functions; they match as plain C.
+
+Idioms that matched:
+- A callee that takes a `u16` or `u8` argument needs a prototype with that type, and the caller's own `u16` parameter, to get `andi t6,a0,0xFFFF; move a0,t6` (`func_80079B10`, `func_80083440`). With an unprototyped callee IDO picks `a1` for the copy.
+- A shift by a `u16` global needs the `(u16)` cast to get `lhu` when the global is declared `s16` elsewhere (`func_80079E00`); `return (a & x) == 0 && (b & y) == 0` is written as nested `if (...== 0) { if (...== 0) return 1; } return 0;` for the original branch layout.
+- `D = D + 1; if (... >= ...)` on a counter: write the sum into a named temp (`s32 t = D + 1; D = t; if ((u32)t >= (u32)n)`) to reuse `v0` (`wait_sub_sub`).
+- A function that returns the global it just stored (`Vblnk_Timer`) is `s32 f(void) { D = expr; return D; }`; the reload is folded.
+- Array of structs with stride 0x44 or 36 as `u8 *p = D + idx * N;` with `*(s16 *)(p + off)` (`Yubi`, `sprite_brightness`).
+- A `switch`-less 0/1/default state dispatch compiles with `v0` for the selector in IDO, `v1` in the original (T-0018; `normal_date_move_place` and the four sibling `*_select` functions).
+
+Failure patterns (left as `INCLUDE_ASM`):
+1. Loop-invariant constants hoisted (T-0017): `Fade_Out_Main`/`Fade_In_Main` (`li v0,1` before the compare), `func_8007BFB8` (`lui v1,0x1000` before the `bgez`), `vram_bustup_clear`, `addr_init_*_sd` (`lui v1,0x801E` shared by three adds), `normal_date_girl_suddenin` (`li v1,0x80` reused).
+2. Register order of two live temporaries (T-0018): `func_80086640` (swap of two globals, `v1` first), `func_80075FA0`, `func_8007B358`/`func_8007B3DC` (`t6/t7` vs `t7/t6`), `don_wait` and `k_disp_inc2` (post-increment or decrement counter with the compare kept in `v0`, the loaded value in `v1`), `normal_date_move_place`.
+3. `func_8008667C`/`func_80083338`: `s32 t = f(); return t & 0x7F;` gives `andi t6,v0; move v0,t6`, the original has `move t6,v0; andi v0,t6`.
+4. `normal_date_girl_in_init`: `move v0,zero` before the last `sb` (known pattern 6 of batch C).
+5. `func_8007B5EC`: the original reloads the counter after the early return, IDO keeps it in a register.
