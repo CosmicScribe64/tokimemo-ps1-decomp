@@ -261,3 +261,5 @@ tools/make_ci_bundle.sh now writes to ci-bundle/ (gitignored) instead of build/c
 ## [2026-10-09] fix | CI base image mirror
 First CI run failed at the Docker build: Docker Hub answered 429 Too Many Requests for ubuntu:22.04. tools/Dockerfile now takes `ARG BASE` (default ubuntu:22.04) and .github/workflows/progress.yml passes public.ecr.aws/docker/library/ubuntu:22.04. Local builds are unchanged. See [[ci]].
 
+## [2026-10-09] ticket | T-1030 started
+Created [[tickets/T-1030-overlay-batch-g-bunka-sd-date2]] (Batch G: BUNKA_SD, DATE2 overlays), moved to In Progress in [[kanban]]. Sources: `src/ovl/BUNKA_SD.c`, `src/ovl/DATE2.c`.

@@ -21,6 +21,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030 Batch G: overlays BUNKA_SD, DATE2]]
 
 ## In Review
 
