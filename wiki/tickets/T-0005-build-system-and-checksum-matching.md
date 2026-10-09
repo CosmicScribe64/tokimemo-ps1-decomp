@@ -14,7 +14,7 @@ Build system (OK build) that assembles/compiles and verifies output checksum aga
 
 ## Acceptance criteria
 
-- [x] `configure.py` generates `build.ninja`; `tools/docker.sh ninja` reproduces `SLPM_86.053` with sha1 `e823bd84...3b26` (`build/SLPM_86.053.bin: OK`).
+- [x] `configure.py` generates `build.ninja` (self-regenerating) and `tools/cc.py` runs the C pipeline; `tools/docker.sh ninja` reproduces `SLPM_86.053` with sha1 `e823bd84...3b26` (`build/SLPM_86.053.bin: OK`).
 - [x] `include/include_asm.h`, `include/common.h`, and `src/game.c` (831 `INCLUDE_ASM`) exercise the C path (cpp, cc1 2.7.2-psx, maspsx, as).
 - [x] `objdiff.json` present; README.md and [[build-system]] document the steps.
 

@@ -20,7 +20,7 @@ Extract the disc image into disc/ and identify the main executable(s) and overla
 
 ## Notes
 
-Verified: re-extraction of `SLPM_86.053` gives the sha1 in `config/SLPM_86.053.sha1`; the other files (except XA/STR streams, which the earlier one-off extraction wrote differently) are identical to the earlier `disc/files`.
+Verified: re-extraction of `SLPM_86.053` gives the sha1 in `config/SLPM_86.053.sha1`; the other files (XA/STR streams are now skipped) are identical to the earlier `disc/files`.
 
 ## Comments
 

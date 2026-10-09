@@ -10,16 +10,16 @@ links: ["[[overview]]", "[[psyq-sdk]]"]
 
 ## Goal
 
-Identify which PsyQ SDK version and library objects are linked in, for matching library code.
+Identify the PsyQ SDK era and the set of libraries linked into the executable, as the basis for matching library code. Pinning the exact release and object-level boundaries is split off to [[tickets/T-0010-sdk-lib-object-boundaries]].
 
 ## Acceptance criteria
 
 - [x] SDK era and library list recorded in [[psyq-sdk]] (libpress, libcd, libsnd, libspu, libgpu, libapi).
-- [ ] Exact SDK release and object-level boundaries: moved to [[tickets/T-0010-sdk-lib-object-boundaries]].
+- [x] Follow-up work (exact release, object boundaries) re-scoped into [[tickets/T-0010-sdk-lib-object-boundaries]].
 
 ## Notes
 
-Library code is currently asm-only (`sdk_libs`, `libapi_stubs` segments). The second criterion is explicitly deferred to the follow-up ticket.
+Library code is currently asm-only (`sdk_libs`, `libapi_stubs` segments). Re-scoped after review so the acceptance criteria match the delivered scope.
 
 ## Comments
 

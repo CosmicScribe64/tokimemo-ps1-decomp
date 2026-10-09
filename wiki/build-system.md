@@ -10,11 +10,11 @@ Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha
 
 ## Commands (all through Docker)
 1. `tools/docker.sh python3 tools/extract_disc.py "<game>.zip" disc` once, to create `disc/`.
-2. `tools/docker.sh python3 configure.py` writes `build.ninja` and `objdiff.json`.
+2. `tools/docker.sh python3 configure.py` writes `build.ninja` (ninja regenerates it when `configure.py` changes) and `objdiff.json`.
 3. `tools/docker.sh ninja` splits, assembles, compiles, links and checks the sha1.
 
 ## Pipeline
-`splat split config/SLPM_86.053.yaml` -> `asm/` (generated, gitignored) and `build/SLPM_86.053.ld`; `src/game.c` is created by splat only if missing (it lists `INCLUDE_ASM` for each function; edit it afterwards, never regenerate) -> asm objects via `mips-linux-gnu-as`; C via `cpp | cc1 | maspsx | as` -> `ld -T build/SLPM_86.053.ld -T build/undefined_syms_auto.txt` -> `objcopy -O binary` (the header section is the first 0x800 bytes, so the output is the complete PS-X EXE) -> `sha1sum -c` against `config/SLPM_86.053.sha1`.
+`splat split config/SLPM_86.053.yaml` -> `asm/` (generated, gitignored) and `build/SLPM_86.053.ld`; `src/game.c` is created by splat only if missing (it lists `INCLUDE_ASM` for each function; edit it afterwards, never regenerate) -> asm objects via `mips-linux-gnu-as`; C via `tools/cc.py` (`cpp | cc1 | maspsx | as`, stage failures abort, depfile lists the `INCLUDE_ASM` .s files) -> `ld -T build/SLPM_86.053.ld -T build/undefined_syms_auto.txt` -> `objcopy -O binary` (the header section is the first 0x800 bytes, so the output is the complete PS-X EXE) -> `sha1sum -c` against `config/SLPM_86.053.sha1`.
 
 ## Gotchas found
 - `ld_gp_expression` must be a string; `include_macro_inc` is not a 0.50 option.

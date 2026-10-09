@@ -19,7 +19,7 @@ Docker image with splat, maspsx, gcc (PsyQ-era), binutils-mips, and build tools.
 
 ## Notes
 
-Image `tokimemo-decomp` is linux/amd64 only; the m2c dependency is unpinned (git HEAD), noted in [[toolchain]].
+Image `tokimemo-decomp` is linux/amd64 only. Review finding fixed: all Python deps and m2c (commit 708d2d2) are now pinned in `tools/Dockerfile`; a fresh `docker build` of the pinned file was run to verify.
 
 ## Comments
 

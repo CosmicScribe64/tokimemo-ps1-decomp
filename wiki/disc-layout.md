@@ -10,7 +10,7 @@ Tokimeki Memorial - Forever with You (Japan, PlayStation the Best). Volume ID `V
 
 ## Images
 - The game zip holds `(Track 1).bin` (MODE2/2352, 298500 sectors, data) and `(Track 2).bin` (CD-DA).
-- Reproducible extraction: `tools/docker.sh python3 tools/extract_disc.py "<game>.zip" disc` writes `disc/track1.bin`, `disc/track2.bin`, `disc/game.cue` and every ISO9660 file to `disc/files/` (1371 files, 1 skipped). Everything under `disc/` is gitignored.
+- Reproducible extraction: `tools/docker.sh python3 tools/extract_disc.py "<game>.zip" disc` writes `disc/track1.bin`, `disc/track2.bin`, `disc/game.cue` and every ISO9660 file to `disc/files/` (1355 files extracted; 17 skipped: the CD-DA reference and the XA/STR streams, whose Form2 sectors cannot be cut to the ISO size and are not needed for the decomp). Everything under `disc/` is gitignored.
 - `dumpsxiso` (mkpsxiso 2.30) cannot extract the tree: the `CDROM` directory sector (LBA 14515) has no valid XA subheader. `tools/extract_disc.py` reads such a sector at +16 and otherwise follows the sector rules below.
 - Sector rules (offset LBA*2352): 16-byte sync+header, 8-byte subheader; Form1 gives 2048 bytes at +24, Form2 (submode bit 0x20) gives 2324 bytes at +24.
 - `CDROM/DADIR/TR02.DA` points past the end of Track 1 (a CD-DA reference, no data in the bin), so it is skipped.
