@@ -12,9 +12,11 @@ extern u8 D_800B3D40;
 extern u8 D_800B3D44;
 extern s32 D_800B3D70; /* only sw and &D_800B3D70 seen */
 extern u8 D_800B3D80;
+extern u8 D_800B3DC7[]; /* stride 8 from func_8004E93C: likely a field of an 8-byte struct array */
 extern s16 D_800B3F60; /* lh/sh; also lbu elsewhere */
 extern s16 D_800B3F64;
 extern u8 D_800B3F66;
+extern u8 D_800B3F6A;
 extern u8 D_800E62BA;
 extern u8 D_800E62BB; /* also read with lb elsewhere */
 extern u8 D_800E7393;
