@@ -11,7 +11,7 @@ Workflow: [[decompile-workflow]].
 ## Compiler verdict (T-0013): MIPS ucode compiler, IDO-family; IDO 5.3 is the closest available
 Findings from [[tickets/T-0011-game-code-file-boundaries-and-compiler]] and [[tickets/T-0013-identify-original-compiler-pipeline]]. Toolchain details: [[toolchain]].
 
-The game code was compiled by a MIPS/SGI ucode compiler (cfe/uopt/ugen/as1, the IDO family), not by gcc. SGI IDO 5.3 (`-EL -O2 -mips1 -G 0 -non_shared -Wo,-no_const_in_reg`, via asm-processor) is now the build compiler for `src/game.c`; the SDK libs region stays gcc/ASPSX territory ([[psyq-sdk]]).
+The game code was compiled by a MIPS/SGI ucode compiler (cfe/uopt/ugen/as1, the IDO family), not by gcc. SGI IDO 5.3 (`-EL -O2 -mips1 -G 0 -non_shared -Wo,-no_const_in_reg`, via asm-processor) is now the build compiler for the game code (`src/main/*.c`); the SDK libs region stays gcc/ASPSX territory ([[psyq-sdk]]).
 
 Evidence (IDO reproduces each original signature that no gcc 2.6 to 2.95 + maspsx could):
 
@@ -23,8 +23,6 @@ Evidence (IDO reproduces each original signature that no gcc 2.6 to 2.95 + masps
 | `or rd,rs,zero` for move, `addiu rt,zero,imm` for li | identical (as1 encodings) | `addu` |
 | loads never in the `jr` slot, `jr ra; nop` after a getter | identical (as1 respects the MIPS I load delay across the return) | same |
 | prologue save order `sw s2; sw ra; sw s1; sw s0` (`func_80042134`) | IDO's order | not compared |
-
-Note: since T-0012 the functions live in `src/main/<address>.c` ([[source-files]]); older text below says `src/game.c`.
 
 Matched with IDO 5.3 in the build (23): the 10 getters and 3 empty functions from T-0011, plus `func_800438DC`, `func_800451E0`, `func_80046284`, `func_80047550`, `func_8004902C`, `func_8004E99C`, `func_8004EA98` (7 of the 8 functions gcc could not match), `func_8004E750`, `func_8004E93C` and `func_80042400` (T-0014). IDO 7.1 matches the same set except `func_8004E750` (it re-uses `$a0` for the `andi` instead of `$t6`), so the original is 5.3-like or older.
 
@@ -121,7 +119,7 @@ Sample of 33 functions (the rest are in the same pattern; `s-reg` counts include
 | func_80135600 (EN_NICHI) | R | 0x190 | ra+9 s-reg incl. fp | 0x30 | 0x30-0x3f | 0x84 | 0x180 |
 
 ### Proof by building (IDO 5.3 + pass, byte-compared to the original)
-- 12 non-leaf functions now match in `src/game.c`: `func_80041584`, `func_80041878`, `func_80042458`, `func_8004B338`, `func_80052DA4`, `func_8006CCE4`, `func_80077F2C`, `func_8007B5CC`, `func_8007ECD0`, `func_80083378` (no locals) and `func_800462C8`, `func_80046318` (a 0x20-byte local buffer plus argument homes). All 63 earlier matches still match; `ninja progress` 75/834.
+- 12 non-leaf functions now match in the game code (`src/main/*.c`): `func_80041584`, `func_80041878`, `func_80042458`, `func_8004B338`, `func_80052DA4`, `func_8006CCE4`, `func_80077F2C`, `func_8007B5CC`, `func_8007ECD0`, `func_80083378` (no locals) and `func_800462C8`, `func_80046318` (a 0x20-byte local buffer plus argument homes). All 63 earlier matches still match; `ninja progress` 75/834.
 - 3 leaf functions with frames, `func_8013815C`, `func_801446A0`, `func_80146FA0` (TAIIKU), match byte for byte (prologue, local at 0x1c, restore) but only with uopt allowed to keep constants in registers, which the project flag forbids: see "Findings that are not the frame". They are in `src/ovl/TAIIKU.c` under `NON_MATCHING` (T-0016). Reproduce: compile `src/ovl/TAIIKU.c` with `-DNON_MATCHING` and without `-Wo,-no_const_in_reg` and compare with `tools/funcdiff.py --expected <original TAIIKU.o>`.
 - `func_80056AA8` and `func_8007C310` (main) show the leaf layout in their first instructions (`sw s1,0x1c(sp); sw s0,0x18(sp)` in a 0x20 frame; local at 0x14 in 0x18) but differ for the reasons below.
 - Pass unit tests: `tools/docker.sh python3 tools/test_frame_pass.py` (19 tests: synthetic binasm records plus snippets compiled by the real IDO).
@@ -138,11 +136,14 @@ Sample of 33 functions (the rest are in the same pattern; `s-reg` counts include
 3. `func_8004111C`: the original stores the RECT's h and w before x and y (`NON_MATCHING`). `func_80044700`: the original frame has 8 more bytes of locals than the body needs.
 4. `func_80056AA8`: besides the constant hoisting, the original does not reload the decremented counter after storing it, which IDO's `volatile` handling does.
 
+## Object padding (T-0012)
+The alignment nops after the last function of a source file (the reason `func_80043504` and `func_8006CAE0` once failed) are now produced by the uniform padding pass in `tools/cc.py`; rule, evidence and verification are in [[toolchain]] (section Object padding pass) and [[source-files]].
+
 ## Idioms
 - Read-modify-write of a global that returns the new value (`func_80042400`): write it with a named temp (`s32 t = D + k; D = t; return t;`) to get `$v1`/`$v0`; `D += k; return D;` gives `$t6`. Needs `-Wo,-no_const_in_reg` (default build flag) for the per-access `%hi/%lo`.
 - A getter `T f(void) { return D; }` with `u8`/`s32` global matches; the global must be declared `extern` with its access width in `include/game.h` (types inferred from the load/store only).
 - Several `D_` symbols are accessed with different widths in different functions (e.g. `D_800B3F60` as `lbu` in `func_8004ECE0`, as halfword elsewhere). Do not declare a single type blindly; decide per symbol when more users are decompiled.
-- The ninja depfile only lists `INCLUDE_ASM` files; project headers are listed in `configure.py` as implicit inputs (add new headers there).
+- The ninja depfile only lists `INCLUDE_ASM` files; `configure.py` lists every `include/*.h` and `include/*.inc` (by glob) as an implicit input of the C compiles, so new headers need no `configure.py` edit.
 
 ## Leaf batch 1 (T-0400): 40 more leaf functions matched
 Tool: `tools/list_leaves.py` (now over all `src/main` files; prints the file as a third column) lists the remaining `INCLUDE_ASM` functions without `jal`/`jalr`, smallest first (177 outside 0x80080000-0x80086810 at the start; `[[tickets/T-0400-leaf-function-batch-1]]`). `ninja progress` after the batch: 40/812 functions, 1404/284028 bytes (these 40 are the whole count; the 22 from T-0011/T-0013 are not in that total).

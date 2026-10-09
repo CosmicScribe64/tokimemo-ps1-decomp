@@ -12,6 +12,8 @@ import re
 import sys
 from pathlib import Path
 
+import srcscan
+
 
 def main():
     ap = argparse.ArgumentParser()
@@ -21,25 +23,23 @@ def main():
     a = ap.parse_args()
     lo, hi = (int(x, 16) for x in a.skip.split("-"))
     rows = []
-    for c in sorted(Path("src/main").glob("*.c")):
+    for c in srcscan.source_files():
         if a.file not in c.stem:
             continue
-        for folder, n in re.findall(r'^\s*INCLUDE_ASM\(\s*"([^"]+)"\s*,\s*(\w+)\s*\)', c.read_text(), re.M):
-            p = Path(folder) / (n + ".s")
+        for e in srcscan.include_asm_entries(c):
+            p = Path(e.folder) / (e.name + ".s")
             if not p.exists():
                 continue
-            t = p.read_text()
-            m = re.search(r'^nonmatching\s+\w+,\s*(0x[0-9A-Fa-f]+|\d+)', t, re.M)
-            size = int(m.group(1), 0) if m else 0
-            am = re.match(r'func_([0-9A-Fa-f]{8})$', n)
+            head = srcscan.nonmatching_size(p)
+            am = re.match(r'func_([0-9A-Fa-f]{8})$', e.name)
             if am and lo <= int(am.group(1), 16) < hi:
                 continue
-            if re.search(r'\bjalr?\b', t):
+            if re.search(r'\bjalr?\b', p.read_text()):
                 continue
-            rows.append((size, n, c.stem))
+            rows.append((head[1] if head else 0, e.name, e.file))
     rows.sort()
-    for s, n, f in rows[:a.limit or None]:
-        print("%d %s %s" % (s, n, f))
+    for size, name, file in rows[:a.limit or None]:
+        print("%d %s %s" % (size, name, file))
     print("total leaves: %d" % len(rows), file=sys.stderr)
 
 

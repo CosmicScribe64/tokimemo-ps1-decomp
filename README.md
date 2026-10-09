@@ -1,6 +1,6 @@
 # Tokimeki Memorial - Forever with You (PS1) decompilation
 
-Work in progress matching decompilation of the Japanese "PlayStation the Best" release. The boot executable `SLPM_86.053` and the 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild byte-for-byte (nearly every function is still `INCLUDE_ASM`; the game code is split into 29 files, `src/main/<address>.c`). This repo contains no game data: you need your own copy of the disc zip.
+Work in progress matching decompilation of the Japanese "PlayStation the Best" release. The boot executable `SLPM_86.053` and the 26 overlays (`CDROM/EXEDIR/*.EXN`) rebuild byte-for-byte (nearly every function is still `INCLUDE_ASM`; the game code is split into 28 files, `src/main/<address>.c`). This repo contains no game data: you need your own copy of the disc zip.
 
 All tools run in Docker (`tools/docker.sh`; the image builds on first use, linux/amd64).
 

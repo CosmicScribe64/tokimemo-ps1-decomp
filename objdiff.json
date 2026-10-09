@@ -13,14 +13,6 @@
       }
     },
     {
-      "name": "src/main/800420D0",
-      "target_path": "expected/build/src/main/800420D0.o",
-      "base_path": "build/src/main/800420D0.o",
-      "metadata": {
-        "source_path": "src/main/800420D0.c"
-      }
-    },
-    {
       "name": "src/main/80042540",
       "target_path": "expected/build/src/main/80042540.o",
       "base_path": "build/src/main/80042540.o",

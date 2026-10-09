@@ -35,11 +35,11 @@ RO = (0x800AF340, 0x800B3220)
 DATA_BSS = (0x800B3220, 0x8012B538)
 
 
-# Boundaries not proven by padding but supported by two independent lines of evidence:
-# 0x800420D0 is the PS-X EXE entry point (16-aligned, start of the startup code) and the string
-# at 0x800AF370 used by the code after it starts a new rodata object (zero run before it ends
-# 16-aligned), which needs a boundary between 0x800412E0 and 0x80042134.
-INFERRED = [0x800420D0]
+# Boundaries not proven by padding but accepted on other evidence. Empty: the one candidate,
+# 0x800420D0 (PS-X EXE entry point, rodata object start at 0x800AF370 needs a boundary in
+# (0x800412E0, 0x80042134]), was rejected as too weak ("fewer, larger files"); see
+# wiki/source-files.md. The rodata check below still reports it as a candidate.
+INFERRED = []
 
 
 def load_functions(root):

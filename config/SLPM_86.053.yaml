@@ -65,7 +65,6 @@ segments:
       # game code, one C file per original object (T-0012, wiki/source-files.md), named by
       # start address. tools/game_boundaries.py --yaml prints this list.
       - { start: 0x800, type: c, name: main/80041000 }
-      - { start: 0x18D0, type: c, name: main/800420D0 }
       - { start: 0x1D40, type: c, name: main/80042540 }
       - { start: 0x2200, type: c, name: main/80042A00 }
       - { start: 0x2D10, type: c, name: main/80043510 }

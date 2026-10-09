@@ -6,7 +6,7 @@ sources: ["configure.py", "config/SLPM_86.053.yaml", "config/overlays.txt", "too
 
 # Build system
 
-Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha1 `e823bd844a8f8fa4d05483b59c66bc54b8393b26`), with the game functions in the 29 files `src/main/<address>.c` (834 functions, 75 in C, the rest `INCLUDE_ASM`; [[source-files]]) and the SDK/lib region (65 asm segments, see [[psyq-sdk]]) and data as plain asm.
+Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha1 `e823bd844a8f8fa4d05483b59c66bc54b8393b26`), with the game functions in the 28 files `src/main/<address>.c` (834 functions, 75 in C, the rest `INCLUDE_ASM`; [[source-files]]) and the SDK/lib region (65 asm segments, see [[psyq-sdk]]) and data as plain asm.
 
 ## Commands (all through Docker)
 1. `tools/docker.sh python3 tools/extract_disc.py "<game>.zip" disc` once, to create `disc/`.

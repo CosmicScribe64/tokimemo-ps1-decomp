@@ -23,10 +23,9 @@ EXE = "SLPM_86.053"
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
 # Every `c` subsegment of the `main` segment is a C file src/<name>.c (T-0012: one per original
 # object, named by start address) and is picked up automatically. All are IDO-compiled (T-0013,
-# wiki/toolchain.md); SDK C, once split, would use e.g. ["gcc", "2.7.2-psx", "2.79"] via
-# C_TOOLCHAIN_OVERRIDES below.
-DEFAULT_C_TOOLCHAIN = ["ido", "5.3"]
-C_TOOLCHAIN_OVERRIDES = {}
+# wiki/toolchain.md); SDK C, once split, would need a per-file toolchain here (e.g.
+# ["gcc", "2.7.2-psx", "2.79"]).
+C_TOOLCHAIN = ["ido", "5.3"]
 
 
 def main_subsegments():
@@ -47,7 +46,7 @@ def main_subsegments():
 
 def c_files():
     """{src/<name>.c: toolchain} for the `c` subsegments of the main segment."""
-    return {"src/%s.c" % name: C_TOOLCHAIN_OVERRIDES.get(name, DEFAULT_C_TOOLCHAIN)
+    return {"src/%s.c" % name: C_TOOLCHAIN
             for typ, name in main_subsegments() if typ == "c"}
 
 

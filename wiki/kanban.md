@@ -24,10 +24,10 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
 
 ## Done
 
+- [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]
 - [ ] [[tickets/T-0016-frame-layout-emulation-pass|T-0016 Frame-layout emulation pass]]
 - [ ] [[tickets/T-0015-research-compiler-mismatch-handling|T-0015 Research: compiler mismatch handling]]
 - [ ] [[tickets/T-0010-sdk-lib-object-boundaries|T-0010 Pin SDK version and lib object boundaries]]

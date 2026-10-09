@@ -15,20 +15,20 @@ expected/<same path as built>, e.g. a copy of build/ovl/<NAME>/<NAME>.o).
 Exit code 1 if any function differs.
 """
 import difflib
-import glob
 import re
 import subprocess
 import sys
 
-SRC_GLOB = "src/main/*.c"
+import srcscan
+
 
 
 def object_of(name):
     """Built object path of the src/main file that mentions `name`, or None."""
     pat = re.compile(r"\b%s\b" % re.escape(name))
-    for c in sorted(glob.glob(SRC_GLOB)):
-        if pat.search(open(c).read()):
-            return "build/" + c[:-2] + ".o"
+    for c in srcscan.source_files():
+        if pat.search(c.read_text()):
+            return "build/src/main/%s.o" % c.stem
     return None
 
 
