@@ -21,13 +21,13 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-0800-main-exe-batch-c|T-0800 Main exe batch C: 80041000-80059A20]]
-
 
 ## In Review
 
 
 ## Done
+
+- [ ] [[tickets/T-0800-main-exe-batch-c|T-0800 Main exe batch C: 80041000-80059A20]]
 
 - [ ] [[tickets/T-0602-progress-overlays|T-0602 Extend progress reporting to the 26 overlays]]
 - [ ] [[tickets/T-0600-apply-obin-renames|T-0600 Apply the O.BIN rename list after the game.c split]]
@@ -50,7 +50,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-0006-identify-psyq-libs-sdk-version|T-0006 Identify PsyQ libs/SDK version]]
 - [ ] [[tickets/T-0001-project-scaffolding|T-0001 Project scaffolding]]
 - [ ] [[tickets/T-0007-write-coding-standards|T-0007 Write CODING_STANDARDS.md]]
-
 
 
 %% kanban:settings

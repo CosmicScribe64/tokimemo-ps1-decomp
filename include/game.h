@@ -139,7 +139,7 @@ void func_8009C7F8(RECT *rect, s32 arg1, s32 arg2, s32 arg3);
 void func_8009C884(RECT *rect, void *arg1);
 void func_8009C8E0(RECT *rect, void *arg1);
 void func_8009C93C(RECT *rect, s32 arg1, s32 arg2);
-s32 func_80044750();
+void func_80044750(s32 arg0);
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
 
@@ -165,14 +165,12 @@ s32 format(u8 *path);
 s32 func_80054AF4(s32 arg0);
 s32 printf(u8 *fmt, ...);
 
-s32 func_80079B10(s32 arg0);
 void k_disp_start(s32 arg0);
 void k_reset(s32 arg0);
 void func_80059BE8(void);
 extern s32 D_800B3D68;
 extern u8 D_801255C0[];
 s32 func_80087E4C(s32 arg0, u8 *arg1);
-void func_80048F64(s32 arg0);
 extern s32 D_800E7380;
 extern u8 D_800E7389;
 extern s8 D_800E738C;
@@ -226,8 +224,6 @@ s32 SetRCnt(u32 spec, u32 target, u32 mode);
 s32 StartRCnt(u32 spec);
 s32 func_80079E00(s32 arg0);
 
-void Sw_Clear(void);
-
 /* Stack request of the memory-card file functions (func_80054694, func_80054704): name buffer plus a retry
  * counter; layout read from the frame (counter at +0x20 in func_80054704). */
 typedef struct FileReq {
@@ -238,7 +234,6 @@ typedef struct FileReq {
 void func_80065F34(s32 arg0);
 extern s16 D_800CA2AC;
 extern u8 D_800E738E;
-void func_80049FF0(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f, s32 g);
 
 void dtd_on_tpage(s32 a, s32 b, s32 c, s32 d, s32 e);
 
@@ -247,9 +242,6 @@ extern u8 D_800E8C30[];
 void InitPAD(u8 *buf1, s32 len1, u8 *buf2, s32 len2);
 void StartPAD(void);
 void ChangeClearPAD(s32 arg0);
-void func_80059E00(void);
-void func_80042808(void);
-void func_8004ADE4(void);
 void func_8009AD30(s32 arg0);
 void func_8009AD50(s32 arg0);
 void func_8009AD60(s32 arg0);
@@ -269,8 +261,6 @@ void func_8009D294(s32 a, s32 b, s32 c, s32 d, s32 e);
 void safe_env(s32 arg0);
 s32 GetWorkBase(s32 arg0, s32 arg1);
 
-void func_80059BC0(void);
-
 void set_kanji_string();
 s32 strlen(u8 *s);
 void DecDCTReset(s32 mode);
@@ -287,27 +277,18 @@ void func_8004B19C(s32 a, s32 b, s32 c);
 s32 GetSp(void);
 extern u8 D_800E7D34;
 
-
 extern u8 D_800B3D48;
 
-s32 func_8005478C(s32 a);
-s32 func_80054884(s32 a);
-s32 func_80053DDC(void);
 void func_80053CC0(void);
 
 void func_8009F0B8(u8 *p);
 u8 Sw_Test(void);
 
-s8 menu_check_1(s16 a, s16 b);
-s8 menu_check_2(s16 a, s16 b);
 extern s32 D_800B5920;
 extern s32 D_800B5924;
 extern s32 D_800B5928;
 extern s32 D_800B592C;
 extern u8 D_800B5939;
-
-u8 func_800460DC(void);
-void func_80044D54(void);
 
 void func_800869A4(s32 a);
 extern s32 D_80125C04;
@@ -330,10 +311,6 @@ extern s32 D_800E8C84;
 extern u8 *D_800E8C88;
 extern u8 D_800E90A0[];
 
-void func_8005907C(void);
-void func_80059308(void);
-
-
 void func_800789E0(void);
 void func_8007BDE8(void);
 void func_8007B844(void);
@@ -343,11 +320,5 @@ void func_80042058(void);
 void func_8004482C(void);
 void dec_bg_reset(void);
 void tpage_buf_clear(void);
-
-s32 load_csr_tp(s32 a, s32 b, s32 c, s32 d, u16 e, u16 f, u16 g);
-
-void func_8009C93C(RECT *rect, s32 a, s32 b);
-void dec_bg_show_set(s32 a, s32 b);
-
 
 #endif /* GAME_H */

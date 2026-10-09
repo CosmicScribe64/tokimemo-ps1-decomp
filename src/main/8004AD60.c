@@ -20,7 +20,8 @@ void func_8004ADE4(void) {
     }
 }
 
-/* func_8004AE54 takes four arguments; the first three are whatever the caller left in a0-a2. */
+/* FAKE: func_8004AE54 takes four arguments and the original leaves a0-a2 untouched; passing the
+ * (unused) incoming a0-a2 through reproduces that, real source unknown. T-0800 */
 void func_8004AE28(s32 a0, s32 a1, s32 a2) {
     if (D_800B3220 != 0) {
         func_8004AE54(a0, a1, a2, 0xF);

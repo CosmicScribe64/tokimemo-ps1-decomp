@@ -169,3 +169,24 @@ Failures left as `INCLUDE_ASM` (all but the first two are the T-0014 compiler ga
 - func_8005352C: u16>>12 compare in v0/v1 with srl; IDO emits sra into t6
 - message_disp_switch func_8006BD6C: global read-modify-write in two branches: original lui at per access, IDO keeps &D in a register
 - Not tried: `func_80066A78`, `func_80066AC0` (`return 3`/`return 1` with a `nop` after `jr`, jump-target labels), `func_80066A2C`/`func_80066A84` (jump-table switches), `set_k_work`-style larger leaves, and the other 100+ leaves; most of those contain the same-global-twice pattern above.
+
+## Main exe batch C (T-0800): 53 functions in src/main/80041000.c to 80059A20.c
+Ticket [[tickets/T-0800-main-exe-batch-c]]. `ninja progress` main game 75/834 -> 128/834 (8136 bytes). About 200 functions of the range stay `INCLUDE_ASM` (loops, jump tables, large bodies, and the failure patterns below).
+
+Idioms that matched with IDO 5.3 plus the frame pass:
+- A `u8` parameter makes IDO emit `andi t6,a0,0xFF` at entry, and an unsigned compare of it needs a `(u32)` cast to give `sltiu` (not `slti`): `void k_speed_set(u8 a) { D = a; if ((u32)a >= 0x81) D = 0x7F; }`. This solved two T-0400 failures (`k_speed_set`, `func_8004ADAC`; the "sltiu where IDO emits slti" note above). Same cast for `u8` globals compared in `func_80053D24`, `load_palette` attempts.
+- An 8-byte struct by value (`RECT rect` as parameter 2) arrives in `a1/a2` and its fields are read back with `lh` from the arg homes (`func_8004A14C`).
+- A stack struct whose size is only known from the frame: `FileReq` (`u8 name[32]; s32 retry;`, size 0x24, in `include/game.h`) reproduces both the local address (0x2C) and the frame of `func_80054694`. A plain `u8 buf[32]` is 8-aligned by IDO and lands at 0x30 instead (arrays of 33..36 bytes land at 0x2C).
+- `if (x) return a; return b;` chains instead of a `ret` variable: a `ret` local costs a `move` and a different frame (`get_g_zyotai_h`, `get_g_zyotai_s`).
+- `*(s32 *)((u8 *)&D + -(idx * 4)) = v` gives `sll; negu; addu` (`dec_bg_cd_read`); `(&D)[-idx]` gives `negu; sll`.
+- Calls with more arguments than the callee's visible prototype: declare the callee unprototyped in `include/game.h` (`func_8004500C`, `func_80044750`, `set_kanji_string`); passing the caller's own `a0..a2` through (`func_8004AE28`) reproduces a call that leaves `a0..a2` untouched.
+- Reading a global into a local before a later store fixes the order of the `lui` instructions (`func_80042878`).
+- `tools/funcdiff.py` finds the object by the first `src/main/*.c` that mentions the name; for a function that is also called from an earlier file use `--built build/src/main/<file>.o`.
+
+Failure patterns (left as `INCLUDE_ASM`; T-0017 and T-0018 are the owners):
+1. Stack-pointer adjust sunk into leading straight-line code: functions that start with global stores or a `D += 1` before the first call get `addiu sp` after the first few stores (`initLight`, `func_80054284`, `func_80054388`, `func_8005448C`, `func_80054590`). IDO puts it first.
+2. Constants and addresses kept in registers across a branch or loop (T-0017): `get_h_tokimeki_table`/`get_h_yuukou_table` (`li s2,11`), `initCoordinate`, `func_80054AF4`, `func_80048E78`, `func_80059688`, `func_80048F64`, `func_800590CC`/`func_800591D8` (`li a0/a1` before the `beqz`), `func_8004E44C` (`lui v1,0xFF00` reused by two `and`), `func_800463E8`, `tpage_buf_clear`.
+3. Spill slot of a temporary at F-8 instead of F-4: `func_8004AC18` and `func_800570B8` store the spilled value at 0x38 in a 0x40 frame, IDO + pass put it at 0x3C. Looks like a uniform layout rule (candidate for the frame pass), not a source difference.
+4. Register choice for a long-lived variable or return value (T-0018): `GetWorkBase`, `MouseState`, `func_8004AD60` (`li v0,8` vs `li t8,8`), `func_800450F4`/`func_8004500C` (result kept in `v1`, original keeps `v0`), `func_80044C98`/`func_80044E8C`, `func_800422C8`.
+5. RECT locals: the original emits the four halfword stores in the order `h, w, x, y` for the source order `x, y, w, h` (`func_80059308`); IDO keeps source order.
+6. Already known: pairs of globals sharing one `lui $at` (`func_8004482C`, `menu_bar_color`, `dec_bg_reset`), `move v0,zero` before the last `sb` (`func_8004284C`, `func_80042808`), `u16 * s32` operand order of `multu` (`RangeMouse`), `u16 >> 12` temp in `v1` (`func_8005352C`), first-parameter spill (`load_palette`: `sw a0,0(sp)` that the original does not have), `D++` after a store scheduled above it (`func_80053CC0`).
