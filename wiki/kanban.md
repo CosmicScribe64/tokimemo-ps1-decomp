@@ -6,8 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-0017-const-in-reg-loop-hoisting|T-0017 Reconcile -Wo,-no_const_in_reg with loop hoisting]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
+- [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
 - [ ] [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300 Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress]]
 - [ ] [[tickets/T-0301-sdk-rodata-data-split|T-0301 Split SDK rodata and data per library and object]]
@@ -27,6 +27,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-0017-const-in-reg-loop-hoisting|T-0017 Reconcile -Wo,-no_const_in_reg with loop hoisting]]
 - [ ] [[tickets/T-0602-progress-overlays|T-0602 Extend progress reporting to the 26 overlays]]
 - [ ] [[tickets/T-0700-overlay-batch-a|T-0700 Overlay batch A: RENSYU, OMIMAI, VALEN, MASTER]]
 - [ ] [[tickets/T-0750-overlay-batch-b-tel-olh-en-nichi|T-0750 Overlay batch B: TEL, OLH, EN_NICHI]]
