@@ -62,8 +62,37 @@ segments:
     vram: 0x80041000
     bss_size: 0x47D38
     subsegments:
-      # game code, C-capable (every function INCLUDE_ASM for now)
-      - [0x800, c, game]
+      # game code, one C file per original object (T-0012, wiki/source-files.md), named by
+      # start address. tools/game_boundaries.py --yaml prints this list.
+      - { start: 0x800, type: c, name: main/80041000 }
+      - { start: 0x18D0, type: c, name: main/800420D0 }
+      - { start: 0x1D40, type: c, name: main/80042540 }
+      - { start: 0x2200, type: c, name: main/80042A00 }
+      - { start: 0x2D10, type: c, name: main/80043510 }
+      - { start: 0x49D0, type: c, name: main/800451D0 }
+      - { start: 0x5D00, type: c, name: main/80046500 }
+      - { start: 0x6D50, type: c, name: main/80047550 }
+      - { start: 0x97F0, type: c, name: main/80049FF0 }
+      - { start: 0xA560, type: c, name: main/8004AD60 }
+      - { start: 0xBBF0, type: c, name: main/8004C3F0 }
+      - { start: 0xDD00, type: c, name: main/8004E500 }
+      - { start: 0xEEB0, type: c, name: main/8004F6B0 }
+      - { start: 0xF070, type: c, name: main/8004F870 }
+      - { start: 0x12E50, type: c, name: main/80053650 }
+      - { start: 0x15B00, type: c, name: main/80056300 }
+      - { start: 0x15BF0, type: c, name: main/800563F0 }
+      - { start: 0x16B90, type: c, name: main/80057390 }
+      - { start: 0x18520, type: c, name: main/80058D20 }
+      - { start: 0x18F10, type: c, name: main/80059710 }
+      - { start: 0x19220, type: c, name: main/80059A20 }
+      - { start: 0x198B0, type: c, name: main/8005A0B0 }
+      - { start: 0x20F10, type: c, name: main/80061710 }
+      - { start: 0x224D0, type: c, name: main/80062CD0 }
+      - { start: 0x2C330, type: c, name: main/8006CB30 }
+      - { start: 0x34B20, type: c, name: main/80075320 }
+      - { start: 0x381E0, type: c, name: main/800789E0 }
+      - { start: 0x39310, type: c, name: main/80079B10 }
+      - { start: 0x45630, type: c, name: main/80085E30 }
       # PsyQ SDK libs, asm only (T-0010). Order is link order. Object-level
       # splits where signature evidence exists, see wiki/psyq-sdk.md.
       - [0x46010, asm, libpress_main]   # vram 0x80086810

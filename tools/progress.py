@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Report decompilation progress for the main executable.
 
-Counts functions still included via INCLUDE_ASM in src/*.c against functions
+Counts functions still included via INCLUDE_ASM in src/main/*.c against functions
 written in C, using sizes from the splat `nonmatching <name>, <size>` headers
 in asm/nonmatchings/<seg>/<name>.s. A function counts as decompiled only if a C definition
-exists in src/*.c (the ninja build sha1 check guarantees it matches).
+exists in src/main/*.c (the ninja build sha1 check guarantees it matches).
 
 Usage: python3 tools/progress.py [--root DIR]
 Run inside Docker: tools/docker.sh python3 tools/progress.py
@@ -40,7 +40,8 @@ def main():
 
     remaining = {}
     defined = set()
-    for c in sorted((root / "src").glob("*.c")):
+    # one row per C file (src/main/<addr>.c, T-0012); overlays under src/ovl are not counted
+    for c in sorted((root / "src" / "main").glob("*.c")):
         text = c.read_text()
         for folder, name in INC.findall(text):
             remaining[(Path(folder).name, name)] = c.name
@@ -63,7 +64,7 @@ def main():
         if (seg, name) not in remaining:
             t[2] += 1
             t[3] += size
-    print("%-12s %12s %18s" % ("segment", "functions", "bytes"))
+    print("%-12s %12s %18s" % ("file", "functions", "bytes"))
     tot = [0, 0, 0, 0]
     for seg, t in sorted(segs.items()):
         print("%-12s %5d/%-5d %7d/%-7d %5.1f%%" % (seg, t[2], t[0], t[3], t[1], 100.0 * t[3] / t[1]))

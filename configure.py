@@ -11,6 +11,7 @@ Each overlay in config/overlays.txt (T-0008) is its own target: splat split
 config/overlays/<NAME>.yaml -> IDO C + asm -> ld -> objcopy -> sha1 check
 (build/ovl/<NAME>.ok, or `ninja overlays` for all). Also writes objdiff.json.
 """
+import glob
 import json
 import sys
 
@@ -20,25 +21,40 @@ import yaml
 EXE = "SLPM_86.053"
 
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
-# Each C file maps to its toolchain arguments for tools/cc.py. The game code
-# is IDO-compiled (T-0013, wiki/toolchain.md); SDK C, once split, would use
-# e.g. ["gcc", "2.7.2-psx", "2.79"].
-C_FILES = {"src/game.c": ["ido", "5.3"]}
+# Every `c` subsegment of the `main` segment is a C file src/<name>.c (T-0012: one per original
+# object, named by start address) and is picked up automatically. All are IDO-compiled (T-0013,
+# wiki/toolchain.md); SDK C, once split, would use e.g. ["gcc", "2.7.2-psx", "2.79"] via
+# C_TOOLCHAIN_OVERRIDES below.
+DEFAULT_C_TOOLCHAIN = ["ido", "5.3"]
+C_TOOLCHAIN_OVERRIDES = {}
+
+
+def main_subsegments():
+    """(type, name) of every subsegment of the `main` segment of the splat config."""
+    with open("config/%s.yaml" % EXE) as f:
+        cfg = yaml.safe_load(f)
+    main_seg = [s for s in cfg["segments"] if isinstance(s, dict) and s.get("name") == "main"]
+    if not main_seg:
+        sys.exit("configure.py: no `main` segment in config/%s.yaml" % EXE)
+    out = []
+    for sub in main_seg[0]["subsegments"]:
+        if isinstance(sub, dict):
+            out.append((sub["type"], sub["name"]))
+        else:
+            out.append((sub[1], sub[2]))
+    return out
+
+
+def c_files():
+    """{src/<name>.c: toolchain} for the `c` subsegments of the main segment."""
+    return {"src/%s.c" % name: C_TOOLCHAIN_OVERRIDES.get(name, DEFAULT_C_TOOLCHAIN)
+            for typ, name in main_subsegments() if typ == "c"}
 
 
 def asm_files():
     """asm objects splat writes for the `main` segment, from the splat config."""
-    with open("config/%s.yaml" % EXE) as f:
-        cfg = yaml.safe_load(f)
     out = ["asm/header.s"]
-    main_seg = [s for s in cfg["segments"] if isinstance(s, dict) and s.get("name") == "main"]
-    if not main_seg:
-        sys.exit("configure.py: no `main` segment in config/%s.yaml" % EXE)
-    for sub in main_seg[0]["subsegments"]:
-        if isinstance(sub, dict):
-            typ, name = sub["type"], sub["name"]
-        else:
-            typ, name = sub[1], sub[2]
+    for typ, name in main_subsegments():
         if typ == "asm":
             out.append("asm/%s.s" % name)
         elif typ in ("rodata", "data", "bss"):
@@ -46,6 +62,7 @@ def asm_files():
     return out
 
 
+C_FILES = c_files()
 ASM_FILES = asm_files()
 OVL_C_TOOLCHAIN = ["ido", "5.3"]
 
@@ -137,12 +154,11 @@ def main():
     n.build([stamp, "build/%s.ld" % EXE] + ASM_FILES, "split", split_in, implicit=["disc/files/" + EXE])
 
     objs = []
+    headers = sorted(glob.glob("include/*.h") + glob.glob("include/*.inc"))
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, "include/common.h", "include/include_asm.h",
-                          "include/game.h", "include/asmproc_prelude.inc",
-                          "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
+                implicit=[stamp, "tools/cc.py", "tools/frame_pass.py"] + headers)
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"
