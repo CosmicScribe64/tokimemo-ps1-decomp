@@ -31,7 +31,12 @@ void func_800625C0(void) {
     p[0x19C7] |= 0x40;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_800625F4);
+void func_800625F4(void) {
+    func_800625C0();
+    if ((u32)D_800E7384 >= 0x21U) {
+        func_80042808();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062634);
 

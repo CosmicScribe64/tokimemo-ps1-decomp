@@ -21,6 +21,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-1000-main-exe-batch-d|T-1000 Batch D: main 8005A0B0-80061710]]
 
 ## In Review
 

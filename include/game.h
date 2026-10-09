@@ -321,4 +321,18 @@ void func_8004482C(void);
 void dec_bg_reset(void);
 void tpage_buf_clear(void);
 
+/* T-1000 (batch D, 8005A0B0 / 80061710) */
+void func_80042940(s32 arg0);
+void func_80048E78(void);
+void k_sub_disp_start();
+extern u8 D_800B00FC[];
+extern u8 D_800B0194[];
+extern s8 D_800E7313;
+void icon_disp_switch();
+void func_8004E58C(void);
+void func_8006B648(void);
+void func_800625C0(void);
+void func_80042808(void);
+void xa_wait(void);
+
 #endif /* GAME_H */
