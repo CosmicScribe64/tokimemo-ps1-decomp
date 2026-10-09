@@ -7,7 +7,9 @@ Then:                  tools/docker.sh ninja            (build + sha1 check)
 Pipeline: splat split -> assemble asm (GNU as) -> compile C (per-file
 toolchain, see C_FILES and tools/cc.py) -> link with the splat linker
 script -> objcopy to the PS-X EXE -> sha1sum -c config/SLPM_86.053.sha1.
-Also writes objdiff.json.
+Each overlay in config/overlays.txt (T-0008) is its own target: splat split
+config/overlays/<NAME>.yaml -> IDO C + asm -> ld -> objcopy -> sha1 check
+(build/ovl/<NAME>.ok, or `ninja overlays` for all). Also writes objdiff.json.
 """
 import json
 import sys
@@ -22,6 +24,7 @@ AS = "mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I."
 # is IDO-compiled (T-0013, wiki/toolchain.md); SDK C, once split, would use
 # e.g. ["gcc", "2.7.2-psx", "2.79"].
 C_FILES = {"src/game.c": ["ido", "5.3"]}
+OVL_C_TOOLCHAIN = ["ido", "5.3"]
 ASM_FILES = [
     "asm/header.s",
     "asm/sdk_libs.s",
@@ -30,6 +33,61 @@ ASM_FILES = [
     "asm/data/data.data.s",
     "asm/data/bss.bss.s",
 ]
+
+
+def read_overlays():
+    """Return [(name, load address, text size)] from config/overlays.txt."""
+    rows = []
+    for line in open("config/overlays.txt"):
+        if line.strip() and not line.startswith("#"):
+            name, base, text = line.split()
+            rows.append((name, base, text))
+    return rows
+
+
+def overlay_targets(n, overlays):
+    """Write the split/compile/link/check rules for every overlay."""
+    n.rule("osplit",
+           command="python3 -m splat split config/overlays/$name.yaml && touch $out",
+           description="splat split $name")
+    n.rule("old",
+           command=("mips-linux-gnu-ld -EL -T build/ovl/$name.ld "
+                    "-T build/ovl/${name}_undefined_funcs_auto.txt "
+                    "-T build/ovl/${name}_undefined_syms_auto.txt "
+                    "-Map build/ovl/$name.map -o $out"),
+           description="LD $out")
+    n.rule("osha1",
+           command=("h=$$(cut -d' ' -f1 config/overlays/$name.sha1) && "
+                    "echo \"$$h  $in\" | sha1sum -c && touch $out"),
+           description="SHA1 CHECK $in")
+    oks = []
+    for name, _base, _text in overlays:
+        v = {"name": name}
+        stamp = "build/ovl/%s.stamp" % name
+        ld = "build/ovl/%s.ld" % name
+        data_s = "asm/ovl/%s/data/%s_rodata.rodata.s" % (name, name)
+        n.build([stamp, ld, data_s], "osplit",
+                ["config/overlays/%s.yaml" % name, "config/symbol_addrs.txt",
+                 "config/reloc_addrs.txt"],
+                implicit=["disc/files/CDROM/EXEDIR/%s.EXN" % name],
+                variables=v)
+        c = "src/ovl/%s.c" % name
+        c_o = "build/ovl/%s/%s.o" % (name, c[:-2])
+        n.build(c_o, "cc", c,
+                variables={"toolchain": " ".join(OVL_C_TOOLCHAIN)},
+                implicit=[stamp, "include/common.h", "include/include_asm.h",
+                          "include/asmproc_prelude.inc",
+                          "include/gte_macros.inc", "tools/cc.py"])
+        data_o = "build/ovl/%s/%s.o" % (name, data_s[:-2])
+        n.build(data_o, "as", data_s, implicit=[stamp, "include/macro.inc"])
+        elf = "build/ovl/%s.elf" % name
+        n.build(elf, "old", [c_o, data_o], implicit=[stamp, ld], variables=v)
+        n.build("build/ovl/%s.bin" % name, "objcopy", elf)
+        ok = "build/ovl/%s.ok" % name
+        n.build(ok, "osha1", "build/ovl/%s.bin" % name, variables=v)
+        oks.append(ok)
+    n.build("overlays", "phony", oks)
+    return oks
 
 
 def main():
@@ -82,7 +140,8 @@ def main():
     n.build("build/%s.ok" % EXE, "sha1", "build/%s.bin" % EXE)
     n.rule("progress", command="python3 tools/progress.py", description="PROGRESS", pool="console")
     n.build("progress", "progress")
-    n.default("build/%s.ok" % EXE)
+    oks = overlay_targets(n, read_overlays())
+    n.default(["build/%s.ok" % EXE] + oks)
     n.close()
 
     units = [{
