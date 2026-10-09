@@ -65,3 +65,6 @@ Ran a code review (Standards + Spec, since fa2f49e). Fixed the `configure.py` do
 
 ## [2026-10-09] ticket | T-0013 -> Done, T-0014 created
 Moved [[tickets/T-0013-identify-original-compiler-pipeline]] In Review -> Done on [[kanban]]; added [[tickets/T-0014-find-exact-ucode-compiler]] to Backlog.
+
+## [2026-10-09] docs | toolchain line updated after T-0013
+Updated the stack description in AGENTS.md and CODING_STANDARDS.md to IDO 5.3 for game code, gcc + maspsx for SDK libs, per [[tickets/T-0013-identify-original-compiler-pipeline]] and [[toolchain]].

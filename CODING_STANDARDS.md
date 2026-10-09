@@ -1,6 +1,6 @@
 # Coding Standards
 
-Rules for the Tokimeki Memorial (PS1) matching decompilation: MIPS R3000, PsyQ SDK, splat + maspsx + GCC 2.7.x/2.8.x, objdiff. Reviewers (see a code review) apply this file; the checklist is at the end.
+Rules for the Tokimeki Memorial (PS1) matching decompilation: MIPS R3000, PsyQ SDK, splat, IDO 5.3 for game code (`src/game.c`; closest known match, see T-0014), GCC 2.7.x + maspsx for SDK library C, objdiff. Reviewers (see a code review) apply this file; the checklist is at the end.
 
 ## 1. The match rule
 
@@ -19,7 +19,7 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 - Every `NON_MATCHING` block has a ticket id in a nearby comment (`/* NON_MATCHING: T-0123, diff in delay slot */`). The default build (without the define) must stay matching.
 - Never change a matching function to make it "cleaner" if the output changes.
 
-## 2. C dialect (old GCC, C89)
+## 2. C dialect (IDO 5.3 / old GCC, C89)
 
 - Plain C89 only. Declare all variables at the top of a block, before statements.
 - Comments are `/* ... */` only. No `//` (the compiler may reject it, and one style keeps greps simple).

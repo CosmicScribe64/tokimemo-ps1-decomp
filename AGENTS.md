@@ -1,6 +1,6 @@
 # Tokimeki Memorial (PS1) matching decompilation
 
-Goal: byte-matching decompilation of the PS1 executable(s) of Tokimeki Memorial - Forever with You (Japan, PlayStation the Best). Target: MIPS R3000, PsyQ SDK, splat + maspsx + gcc. Details: `wiki/overview.md`.
+Goal: byte-matching decompilation of the PS1 executable(s) of Tokimeki Memorial - Forever with You (Japan, PlayStation the Best). Target: MIPS R3000, PsyQ SDK, splat; game code built with IDO 5.3 (closest match, see `wiki/toolchain.md`), SDK libs gcc + maspsx. Details: `wiki/overview.md`.
 
 ## Wiki (read first)
 
@@ -26,7 +26,7 @@ Coding conventions: [CODING_STANDARDS.md](CODING_STANDARDS.md) (required reading
 
 ## Tooling rules
 
-- All tools (splat, maspsx, gcc, binutils, python deps, build) run in Docker only. Never install toolchains or dependencies on the host. Docker files live in `tools/`.
+- All tools (splat, IDO, maspsx, gcc, binutils, python deps, build) run in Docker only. Never install toolchains or dependencies on the host. Docker files live in `tools/`.
 - Never commit copyrighted game data: disc images, the game zip, extracted assets, executables, or anything under `disc/`. Keep them gitignored. Commit only source, configs, and tooling.
 
 ## Agent model policy
