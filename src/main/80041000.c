@@ -92,13 +92,9 @@ void func_800423D4(void) {
     D_800E7D10 += 0x377;
 }
 
-/* The named temp gives the original's v1/v0 registers; `D += 0x377; return D;`
- * and `return D += 0x377;` load into t6 instead (T-0014). */
 s32 func_80042400(void) {
-    s32 t = D_800E7D10 + 0x377;
-
-    D_800E7D10 = t;
-    return t;
+    D_800E7D10 += 0x377;
+    return D_800E7D10;
 }
 
 void func_80042418(void) {

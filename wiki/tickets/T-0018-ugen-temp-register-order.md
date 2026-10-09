@@ -18,6 +18,10 @@ In `LoadSquare`, `StoreSquare` and `MoveSquare` the original loads the u16 param
 
 ## Notes
 
-Not a frame issue: stock IDO without the pass gives the same registers. Also open: `func_8004111C` (original stores h and w before x and y), `func_80044700` (original frame has 8 more bytes of locals), `strSync` (no reload of the decremented volatile).
+Not a frame issue: stock IDO without the pass gives the same registers. Also open: `func_8004111C` (original stores h and w before x and y), `func_80044700` (original frame has 8 more bytes of locals). `strSync` moved to T-0017 (one delay slot left).
+
+Scope extended 2026-10-09: the T-0750 compare-chain `switch` on a `u8` global (`$v1` in the original, `$v0` from IDO; about 60 overlay functions, plus `func_8004435C`, `func_800443F0`, `func_800443A0`).
 
 ## Comments
+
+2026-10-09 (branch t0018-regs), verdict: compiler difference, not a C form and not an option. The original uopt register-promotes a scalar global that is read in several basic blocks of straight-line code: every load of it, including reloads after calls, goes into one register (189 of 195 functions that re-load such a global). IDO 5.3/7.1 only do that inside loops; in straight-line code they use a CSE temporary (`$v0`) and fresh ugen temporaries for later loads. No uopt/ugen/as1 option, `-O` level, per-pass 5.3/7.1 mix or C variant changes it (list in [[matching-notes]], section "Register promotion of globals"). A binasm pass would have to redo uopt's register choice, so it is not a uniform pass under CODING_STANDARDS 7a. `LoadSquare`/`StoreSquare`/`MoveSquare` are unchanged by all of the above. Next experiments: read uopt's promotion priority (ido-decomp) for a single weight that explains the 189 cases; older uopt via [[tickets/T-0100-older-mips-compiler-emulation]]. Moved back to Backlog.

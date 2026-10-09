@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl/GYOZI.h"
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80134000);
 
@@ -672,7 +673,16 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801421B4);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801425F4);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8014261C);
+void func_8014261C(void) {
+    s16 i;
+
+    for (i = 0; i < 6; i++) {
+        D_80129F40[i * 0x44 + 0x1983] = 0;
+    }
+    D_80148820 = 0;
+    D_80148824 = 0;
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_8014267C);
 

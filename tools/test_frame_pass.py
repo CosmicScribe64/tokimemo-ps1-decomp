@@ -207,10 +207,14 @@ SNIPPETS = {
     # leaf with a local array: IDO gives -16 / 0,4,8 ; the pass moves the frame up
     "leaf": ("int f(int a) { int l[4]; l[0] = a; l[1] = a + 1; l[2] = a * 3; return l[a & 3]; }",
              ["addiu\tsp,sp,-32", "sw\ta0,16(sp)", "addiu\tsp,sp,32"]),
-    # variable index into a local array of a non-leaf: IDO uses 40(t8); the
-    # displacement must move with the array (IDO frame 72, local at 40)
-    "indexed": ("extern int g(int); int f(int n) { int l[8]; int i; for (i = 0; i < n; i++) l[i & 7] = g(i); return l[n & 7]; }",
-                ["addiu\tsp,sp,-88", "sw\tv0,56(t8)", "lw\tv0,56(v0)", "addiu\tsp,sp,88"]),
+    # variable index into a local array of a non-leaf: IDO uses addu v0,sp,t8;
+    # lw v0,24(v0); the displacement must move with the array (IDO frame 56, local at 24)
+    "indexed": ("extern void g(int *); int f(int n) { int l[8]; g(l); return l[n & 7]; }",
+                ["addiu\tsp,sp,-72", "addiu\ta0,sp,40", "lw\tv0,40(v0)", "addiu\tsp,sp,72"]),
+    # loop over a local array: uopt keeps the array address in s1 (addiu s1,sp,48
+    # in IDO's frame of 80, T-0017 flags); the immediate moves with the array
+    "hoisted": ("extern int g(int); int f(int n) { int l[8]; int i; for (i = 0; i < n; i++) l[i & 7] = g(i); return l[n & 7]; }",
+                ["addiu\tsp,sp,-96", "addiu\ts1,sp,64", "addiu\tsp,sp,96"]),
 }
 
 

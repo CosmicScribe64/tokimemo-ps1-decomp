@@ -322,3 +322,18 @@ Inline code review against CODING_STANDARDS.md found three minor issues (a trans
 
 ## [2026-10-09] build | T-1200 follow-up: batch E merge
 After merge c9d2dbf the header check failed again (MASTER.h vs game.h, `func_80046318`, `func_8006612C`, duplicates). Fixed by access widths as in [[tickets/T-1200-fix-conflicting-extern-declarations]]; `tools/check_headers.py` now also checks `src` definitions against headers (caught `func_800634FC`, `func_80065900`).
+
+## [2026-10-09] ticket | T-0017, T-0018 Backlog -> In Progress
+[[tickets/T-0017-const-in-reg-loop-hoisting]] and [[tickets/T-0018-ugen-temp-register-order]] moved to In Progress on [[kanban]]: systematic study of the three remaining IDO 5.3 mismatches (u8 compare-chain `$v1`, `* 0x44` as `multu`, `-Wo,-no_const_in_reg` vs loop hoisting), worktree branch t0018-regs.
+
+## [2026-10-09] decision | T-0017 build flag -Wo,-nokpicopt
+[[tickets/T-0017-const-in-reg-loop-hoisting]]: `tools/cc.py` builds IDO code with `-Wo,-nokpicopt` instead of `-Wo,-no_const_in_reg`. The original keeps integer constants and array bases in registers but re-addresses scalar globals per access; `-nokpicopt` gives exactly that. The T-0750 `* 0x44` -> `multu` gap is the same cause, not an older ugen. Per-pass IDO 5.3/7.1 mixes and all pass options checked. Tests `tools/test_cc.py` (IdoFlags). `check_end_k` and `func_80042400` C adjusted; 13 functions newly matched (main, EN_NICHI, TAIIKU, DATE, EVENT, GYOZI, SHOUGATU; new headers `include/ovl/DATE.h`, `include/ovl/EVENT.h`, `include/ovl/GYOZI.h`, `include/ovl/SHOUGATU.h`). `ninja progress` 151 -> 164 functions. Evidence in [[matching-notes]] ("Constants in registers"), flag in [[toolchain]].
+
+## [2026-10-09] query | T-0018 compare-chain `$v1` is global register promotion
+[[tickets/T-0018-ugen-temp-register-order]]: the original register-promotes scalar globals read in several blocks of straight-line code (189 of 195 re-loading functions keep every load in one register); IDO 5.3/7.1 only in loops. No option, pass mix or C variant reproduces it; not a uniform pass. Evidence and next experiments in [[matching-notes]] ("Register promotion of globals").
+
+## [2026-10-09] ticket | T-0017 In Progress -> In Review; T-0018 In Progress -> Backlog; T-0950 created
+On [[kanban]]: [[tickets/T-0017-const-in-reg-loop-hoisting]] to In Review (review gate next), [[tickets/T-0018-ugen-temp-register-order]] back to Backlog with the evidence, new [[tickets/T-0950-match-nokpicopt-unblocked-functions]] in Backlog for the ~1200 functions the flag unblocks. [[index]] updated.
+
+## [2026-10-09] ticket | T-0017 In Review -> Done
+Inline code-review gate for [[tickets/T-0017-const-in-reg-loop-hoisting]]: two findings (frame-pass IDO snippet broken by the flag change, missing comment on `check_end_k` operand order), both fixed in tools/test_frame_pass.py and src/main/8004E500.c. Clean rebuild 27/27 sha1 OK, tests OK. Card moved to Done on [[kanban]]; [[matching-notes]] notes the frame-pass side effect.

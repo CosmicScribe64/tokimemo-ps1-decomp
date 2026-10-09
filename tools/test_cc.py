@@ -1,4 +1,5 @@
-"""Unit tests for tools/cc.py pad_text (T-0012), on synthetic objects (no game data).
+"""Unit tests for tools/cc.py: pad_text (T-0012) on synthetic objects, and the IDO flag set
+(T-0017) on synthetic C snippets compiled by the real IDO 5.3 (no game data).
 
 Run from tools/: python3 test_cc.py   (inside Docker: tools/docker.sh sh -c 'cd tools && python3 test_cc.py')
 """
@@ -53,6 +54,38 @@ class PadText(unittest.TestCase):
             out = subprocess.run(["mips-linux-gnu-objdump", "-r", obj], check=True,
                                  stdout=subprocess.PIPE, text=True).stdout
             self.assertIn("ext", out)
+
+
+def ido_disasm(code, tmp):
+    """Compile C `code` with cc.compile_ido (IDO 5.3, project flags); return `objdump -dr` text."""
+    src = os.path.join(tmp, "t.c")
+    obj = os.path.join(tmp, "t.o")
+    with open(src, "w") as f:
+        f.write(code)
+    cc.compile_ido(src, obj, "5.3")
+    return subprocess.run(["mips-linux-gnu-objdump", "-dr", obj], check=True,
+                          stdout=subprocess.PIPE, text=True).stdout
+
+
+class IdoFlags(unittest.TestCase):
+    """-Wo,-nokpicopt (T-0017): no address register for a directly accessed global, but
+    integer constants stay in registers (hoisted loop bound, multu by a register)."""
+
+    def test_global_read_modify_write_reloads_hi_lo(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = ido_disasm("extern int G;\nint f(void) { G += 0x377; return G; }\n", tmp)
+        self.assertEqual(out.count("R_MIPS_HI16\tG"), 2)   # lui for the load, lui at for the store
+        self.assertNotIn("addiu", out.split("R_MIPS_HI16")[1].split("R_MIPS_LO16")[0])
+
+    def test_loop_bound_constant_hoisted(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = ido_disasm("void g(int);\nvoid f(void) { int i; for (i = 0; i < 11; i++) g(i); }\n", tmp)
+        self.assertRegex(out, r"li\ts[0-7],11")
+
+    def test_repeated_constant_multiplier_stays_in_register(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = ido_disasm("int f(int a, int b) { return a * 0x44 + b * 0x44; }\n", tmp)
+        self.assertEqual(out.count("multu"), 2)
 
 
 if __name__ == "__main__":

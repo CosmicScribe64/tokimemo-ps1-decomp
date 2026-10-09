@@ -11,7 +11,18 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800476C0);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", tpage_buf_clear_all);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", tpage_buf_clear);
+void tpage_buf_clear(void) {
+    s32 i;
+
+    for (i = 0; i < 0x40; i++) {
+        if ((i & 0xF) < 5) {
+            ((s32 *)(D_800E6280 + 0x1228))[i] = 0;
+        } else {
+            ((s32 *)(D_800E6280 + 0x1228))[i] = -1;
+        }
+    }
+    _sys_default_tpage_set();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", _sys_default_tpage_set);
 
@@ -37,7 +48,13 @@ void func_80048DAC(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048DD0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048E78);
+void func_80048E78(void) {
+    s32 i;
+
+    for (i = 0x60; i < 0xA0; i++) {
+        func_80048F64(i);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048EB8);
 
