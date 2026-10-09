@@ -72,6 +72,7 @@ extern s16 D_8011ECFA;
 extern s32 D_801230D0;
 extern u8 D_80125128;
 extern u8 D_80125129;
+extern s32 D_800E7D10;
 extern u8 D_8012512A;
 extern s8 D_8012512B;
 extern u8 D_80125130[];
