@@ -27,5 +27,7 @@ extern s32 D_8014E34C;
 void func_800AE0A0(s32 arg0, s32 arg1, s32 arg2);
 extern s32 D_8015694C[];
 void func_8009C884(RECT *rect, void *arg1);
+extern u8 *D_80158A64;
+extern s32 *D_80158A70;
 
 #endif /* OVL_TT_H */
