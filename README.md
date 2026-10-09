@@ -5,8 +5,7 @@
 [![Functions](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=functions&label=Functions)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 
 *Tokimeki Memorial: Forever with You* is Konami's high-school dating sim for the PlayStation. This project is a
-matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`). It is C that compiles back to
-the original machine code, byte for byte.
+matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
 
 The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) already rebuild identically. Most functions are still
 assembly that the build pulls in from generated files, so the C is at an early stage. See [Status](#status) for numbers
@@ -16,20 +15,6 @@ and [ROADMAP.md](ROADMAP.md) for where this is going.
 it and nothing else is shipped here. The disassembly is not in the repository either. You generate it locally.
 
 This project is independent. It is not affiliated with or endorsed by Konami.
-
-## Status
-
-Numbers from `tools/docker.sh ninja progress` on 2026-10-09:
-
-| Part | Functions | Bytes |
-|---|---|---|
-| Main executable | 128 of 834 | 8,136 of 284,428 |
-| Overlays (26) | 76 of 6,128 | 5,700 of 1,994,940 |
-| Total | 204 of 6,962 | 13,836 of 2,279,368 (0.6%) |
-
-The PsyQ SDK library code (722 functions, 165,212 bytes) sits in the executable as assembly and is counted
-separately. It is not part of the totals above. [decomp.dev](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
-tracks the same progress from CI.
 
 ## Building
 
@@ -102,7 +87,7 @@ Many function names come from the symbol map in the game's own `O.BIN` developer
 `config/symbol_addrs_obin.txt`. In a spot check of 24 of them, 12 fit the functions they call, none contradicted the code, and the rest could not be checked.
 
 The English translation planned in the roadmap will also be made with AI, and will say so. Human translators are
-welcome to take part.
+welcome and encouraged to take part.
 
 ## Roadmap
 
