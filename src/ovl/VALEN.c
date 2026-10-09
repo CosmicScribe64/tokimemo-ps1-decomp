@@ -8,7 +8,14 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80132348);
 
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_801323D0);
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_8013244C);
+void func_8013244C(void) {
+    func_80044890(1, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
+    if (func_80044E8C() == 1) {
+        func_80044750(0x201);
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_801324B4);
 
