@@ -27,6 +27,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-0602-progress-overlays|T-0602 Extend progress reporting to the 26 overlays]]
 - [ ] [[tickets/T-0600-apply-obin-renames|T-0600 Apply the O.BIN rename list after the game.c split]]
 - [ ] [[tickets/T-0201-obin-format-and-symbols|T-0201 Analyse O.BIN and harvest names]]
 - [ ] [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012 Game code file boundaries and Shift-JIS strings]]

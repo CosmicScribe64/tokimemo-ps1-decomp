@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-10-09
-sources: ["configure.py", "config/SLPM_86.053.yaml", "config/overlays.txt", "tools/gen_overlay_configs.py", "README.md"]
+sources: ["tools/progress.py", "configure.py", "config/SLPM_86.053.yaml", "config/overlays.txt", "tools/gen_overlay_configs.py", "README.md"]
 ---
 
 # Build system
@@ -14,7 +14,7 @@ Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha
 3. `tools/docker.sh ninja` splits, assembles, compiles, links and checks the sha1 of the main exe and of all 26 overlays (default target). `ninja overlays` builds only the overlays, `ninja build/ovl/TT.ok` one overlay.
 
 ## Progress and per-function diff
-- `tools/docker.sh ninja progress` (or `tools/docker.sh python3 tools/progress.py`) prints decompiled versus total functions and bytes per splat segment, counting functions still `INCLUDE_ASM` in `src/main/*.c` against sizes from the `nonmatching` headers in `asm/nonmatchings/main/<addr>/`; one row per source file. Only the `src/main` files are C-capable now; the SDK lib region is plain asm and not counted (the totals, 834 functions and 284428 bytes, cover the game code only; the SDK lib region is a separate, later effort).
+- `tools/docker.sh ninja progress` (or `tools/docker.sh python3 tools/progress.py`, tests `tools/test_progress.py`, T-0602) prints decompiled versus total functions and bytes, counting functions still `INCLUDE_ASM` against sizes from the splat `nonmatching` headers. Sections: one row per `src/main` file against `asm/{nonmatchings,matchings}/main/<addr>/` and a `main game` subtotal (834 functions, 284428 bytes); one row per overlay (`src/ovl/<NAME>.c` against `asm/ovl/<NAME>/{nonmatchings,matchings}/<NAME>/`; the overlay configs set `disassemble_all` so decompiled functions keep their size) and an `overlays` subtotal (6128 functions, 1994940 bytes); a `grand total` (main + overlays, 6962 functions, 2279368 bytes); and a separate `SDK libs` line (722 functions, 165212 bytes from the top-level `asm/*.s`) that is asm-only and counted in no denominator. Snapshot: main 75/834, overlays 8/6128, grand 83/6962.
 - `tools/docker.sh python3 tools/funcdiff.py <func...>` finds the `src/main` file that holds each function and diffs it against the same object under `expected/` (`expected/build/src/main/<addr>.o`). See [[decompile-workflow]].
 - `tools/docker.sh python3 tools/list_leaves.py [--file ADDR]` lists remaining leaf functions over all files; `tools/docker.sh python3 tools/game_boundaries.py` reprints the file-boundary evidence ([[source-files]]).
 
