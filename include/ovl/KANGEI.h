@@ -27,12 +27,12 @@ typedef struct KSub {
     /* 0x00 */ u8 unk_00[8];
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
-} KSub;
+} KSub; /* size unknown, only 0x00-0x0F used */
 
 typedef struct KObj {
     /* 0x00 */ u8 unk_00[0x34];
     /* 0x34 */ KSub *unk_34;
-} KObj;
+} KObj; /* size unknown, only 0x00-0x37 used */
 
 extern KObj *D_80139AD0;
 extern s32 D_80139AD4;

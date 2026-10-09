@@ -51,6 +51,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0901-public-docs|T-0901]] Public docs: LICENSE, README, ROADMAP, CONTRIBUTING, AI disclosure (Done)
 - [[tickets/T-0902-ci-progress-report|T-0902]] CI: encrypted game bundle and decomp.dev progress report (Done)
 - [[tickets/T-0903-public-release-audit|T-0903]] Public-release audit (Done)
+- [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050]] Overlay batch I: KANGEI, SHUGAKU (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list

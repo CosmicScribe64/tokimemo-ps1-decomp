@@ -21,13 +21,15 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050 Batch I: overlays KANGEI, SHUGAKU]]
 
 
 ## In Review
 
 
+
 ## Done
+
+- [ ] [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050 Batch I: overlays KANGEI, SHUGAKU]]
 
 - [ ] [[tickets/T-0903-public-release-audit|T-0903 Public-release audit]]
 - [ ] [[tickets/T-0902-ci-progress-report|T-0902 CI: encrypted game bundle and decomp.dev progress report]]
