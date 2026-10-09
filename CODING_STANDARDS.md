@@ -1,6 +1,6 @@
 # Coding Standards
 
-Rules for the Tokimeki Memorial (PS1) matching decompilation: MIPS R3000, PsyQ SDK, splat, IDO 5.3 for game code (`src/main/*.c`; closest known match, see T-0014), GCC 2.7.x + maspsx for SDK library C, objdiff. Reviewers (see a code review) apply this file; the checklist is at the end.
+Rules for the Tokimeki Memorial (PS1) matching decompilation: MIPS R3000, PsyQ SDK, splat, IDO 5.3 for game code (`src/main/*.c`; closest known match, see T-0014), GCC 2.7.x + maspsx for SDK library C, objdiff. Reviewers apply this file; the checklist is at the end.
 
 ## 1. The match rule
 
@@ -131,7 +131,7 @@ typedef struct Foo {
 
 ## 13. Review gate
 
-The code review reviews each change against this file before a ticket moves to Done. Unresolved findings block Done. Record the result in the ticket's Comments.
+A code review checks each change against this file before a ticket moves to Done. Unresolved findings block Done. Record the result in the ticket's Comments.
 
 Reviewer checklist:
 

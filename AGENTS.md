@@ -18,11 +18,11 @@ The project knowledge base is `wiki/`, maintained in the Karpathy LLM-wiki style
 - Every piece of work has a ticket in `wiki/tickets/` (`T-NNNN-slug.md`, from `wiki/tickets/_template.md`). Create the ticket before starting work.
 - Statuses: Backlog, Ready, In Progress, In Review, Done. The `status` in ticket frontmatter MUST match the column holding its card in `wiki/kanban.md` (Obsidian Kanban format, cards `- [ ] [[tickets/T-NNNN-slug|T-NNNN Title]]`).
 - On every status change: update ticket `status` and `updated`, move the card, append to the log.
-- A ticket cannot move to Done until a code review has reviewed the work against `CODING_STANDARDS.md` and all findings are resolved. Work awaiting review sits in In Review.
+- A ticket cannot move to Done until a code review has checked the work against `CODING_STANDARDS.md` and all findings are resolved. Work awaiting review sits in In Review.
 
 ## Standards
 
-Coding conventions: [CODING_STANDARDS.md](CODING_STANDARDS.md) (required reading for any code change; a code review applies its checklist).
+Coding conventions: [CODING_STANDARDS.md](CODING_STANDARDS.md) (required reading for any code change; reviews apply its checklist).
 
 ## Tooling rules
 
@@ -33,42 +33,4 @@ Coding conventions: [CODING_STANDARDS.md](CODING_STANDARDS.md) (required reading
 
 Default to Sonnet or Haiku for subagent tasks. Use Opus only when required (e.g. hard function-matching problems). Be token-efficient: use head/grep, do not dump large files.
 
-## Agent skills
-
-
-### Issue tracker
-
-
-### Triage labels
-
-
-### Domain docs
-
-
-### Skill index
-
-Engineering:
-- `grill-with-docs`: interview to sharpen a plan, writing glossary/ADRs as it goes.
-- `domain-modeling`: build GLOSSARY.md and ADRs.
-- `to-spec`: turn the conversation into a spec in the tracker.
-- `to-tickets`: split a spec/plan into tracer-bullet tickets.
-- `triage`: move tickets through triage states and write agent-ready briefs.
-- `wayfinder`: plan large multi-session work as a map of decision tickets.
-- `implement` / `implement-spec`: implement from tickets or a spec.
-- `tdd`: test-first red-green-refactor.
-- `diagnosing-bugs`: structured diagnosis for hard bugs and regressions.
-- `code-review`: review changes against CODING_STANDARDS.md and the spec (required before Done).
-- `codebase-design`: vocabulary for deep-module design.
-- `improve-codebase-architecture`: find deepening opportunities, with an HTML report.
-- `prototype`: throwaway prototype to answer a design question.
-- `research`: investigate against primary sources and save findings as markdown.
-- `pr`: write a PR body.
-- `retro`: retrospective on a session.
-- `wizard`: generate an interactive bash wizard for human-only steps.
-
-Productivity:
-- `grill-me` / `grilling`: relentless interview to stress-test a plan.
-- `handoff`: compact the conversation for another agent.
-- `teach`: teach the user a concept.
-- `to-questionnaire`: turn an unanswerable decision into a questionnaire.
-- `wait-what`: re-pitch a message that did not land.
+Local-only agent setup (tool add-ons, not committed) may live in `AGENTS.local.md`; read it if present.
