@@ -21,6 +21,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-1060-overlay-batch-j-bunkaken-bunkasai|T-1060 Batch J: overlays BUNKAKEN, BUNKASAI]]
+
 
 ## In Review
 
