@@ -1,7 +1,7 @@
 ---
 id: T-0010
 title: Pin SDK version and lib object boundaries
-status: In Review
+status: Done
 assignee:
 created: 2026-10-09
 updated: 2026-10-09
@@ -26,3 +26,4 @@ Method and tools: `tools/psyq_sigmatch.py`, `tools/psyq_sigfuzzy.py` (signature 
 ## Comments
 
 - 2026-10-09: moved to In Review for the code-review gate.
+- 2026-10-09: code-review (Standards + Spec) run. Findings fixed: original acceptance criteria restored with unmet items moved to T-0300/T-0301/T-0302, SDK pins softened with confidence levels, signature tools share `tools/psyqsig.py` and exit non-zero on missing/empty input, asm.py/configure.py fail loudly, T-0300 libpress criterion made explicit. Merged main (overlays); clean rebuild: 27/27 sha1 OK (main exe + 26 overlays), `ninja progress` 63/834. Moved to Done.
