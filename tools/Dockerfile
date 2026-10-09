@@ -1,0 +1,47 @@
+# PS1 decomp toolchain. Built for linux/amd64 on purpose: the old-gcc PsyQ
+# compilers are x86_64-only ELF binaries, so every tool runs under one arch
+# (emulated via Rosetta/QEMU on Apple Silicon). See tools/docker.sh.
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl git unzip xz-utils make ninja-build build-essential \
+      python3 python3-pip python3-venv binutils-mips-linux-gnu \
+      gcc-mips-linux-gnu libicu70 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pinned tool versions
+ARG OLD_GCC_TAG=0.17
+ARG OBJDIFF_TAG=v3.8.2
+ARG MKPSXISO_TAG=v2.30
+ARG MASPSX_REV=e85ecb373828aabea96d7e6400974d4f91ce8c74
+
+# Python tooling 
+RUN pip3 install --no-cache-dir "splat64[mips]==0.50.0" spimdisasm==1.42.4 rabbitizer==1.16.2 pycparser==3.11 colorama==0.4.6 \
+      pyyaml tqdm crcmod ninja_syntax \
+    && pip3 install --no-cache-dir git+https://github.com/matt-kempster/m2c.git  # unpinned HEAD (m2c 0.1.0 at build time)
+
+# maspsx (assembler wrapper for PsyQ-style GAS output)
+RUN git clone https://github.com/mkst/maspsx /opt/maspsx \
+    && git -C /opt/maspsx checkout ${MASPSX_REV}
+
+# PsyQ-era GCC builds (decompals/old-gcc). Each lives in /opt/gcc/<ver>/ (cc1, etc.)
+RUN mkdir -p /opt/gcc && cd /opt/gcc && \
+    for v in 2.6.3-psx 2.7.2-psx 2.7.2-cdk 2.8.0-psx 2.8.1-psx 2.91.66-psx 2.95.2-psx; do \
+      mkdir -p $v && curl -fsSL https://github.com/decompals/old-gcc/releases/download/${OLD_GCC_TAG}/gcc-$v.tar.gz \
+        | tar xz -C $v; \
+    done
+
+# objdiff-cli
+RUN curl -fsSL -o /usr/local/bin/objdiff-cli \
+      https://github.com/encounter/objdiff/releases/download/${OBJDIFF_TAG}/objdiff-cli-linux-x86_64 \
+    && chmod +x /usr/local/bin/objdiff-cli
+
+# mkpsxiso / dumpsxiso
+RUN curl -fsSL -o /tmp/mk.zip https://github.com/Lameguy64/mkpsxiso/releases/download/${MKPSXISO_TAG}/mkpsxiso-${MKPSXISO_TAG#v}-Linux.zip \
+    && unzip -q /tmp/mk.zip -d /tmp/mk \
+    && find /tmp/mk -type f \( -name dumpsxiso -o -name mkpsxiso \) -exec install -m755 {} /usr/local/bin/ \; \
+    && rm -rf /tmp/mk /tmp/mk.zip
+
+ENV MASPSX_DIR=/opt/maspsx GCC_DIR=/opt/gcc
+WORKDIR /work
