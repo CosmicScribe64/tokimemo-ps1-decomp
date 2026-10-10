@@ -142,7 +142,14 @@ void func_80140E40(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80140EBC);
+s32 func_80140EBC(void) {
+    func_80138AF8();
+    if ((u16) D_800CA154 == 3) {
+        if (D_800E6280.unk_1104.w++ == 1) {
+            func_80044750(0x501);
+        }
+    }
+}
 
 void func_80140F14(void) {
     func_80046318(0x35, 0x801B0000, 0x8F43);

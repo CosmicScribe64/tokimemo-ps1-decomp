@@ -151,7 +151,13 @@ void func_80139E0C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139E54);
+void func_80139E54(void) {
+    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_80144E08 = 0xA;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "図書室");
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139EC8);
 

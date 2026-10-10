@@ -45,7 +45,22 @@ INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80135AC0", func_80136000);
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80135AC0", func_80136124);
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80135AC0", func_80136210);
+s32 func_80136210(void) {
+    switch (D_800E6280.unk_110D) {                           /* irregular */
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013CEB0, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　歌詞が出ないときは高解像モードです。", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80135AC0", func_801362C4);
 

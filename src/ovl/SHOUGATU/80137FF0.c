@@ -34,7 +34,15 @@ void func_8013808C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138158);
+s32 func_80138158(void) {
+    func_80137AB4();
+    if (D_80144E0C == 2) {
+        if (D_800E6280.unk_1104.w++ == 1) {
+            func_80044750(0x24);
+            func_80044750(0x501);
+        }
+    }
+}
 
 extern FnTbl20 D_80144F64;
 
@@ -121,12 +129,6 @@ void func_80138710(void) {
 }
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138758);
-
-typedef struct {
-    u8 pad:2;
-    u8 f:1;
-    u8 rest:5;
-} Bits64B8; /* bit 2 of the first byte of a Rec38 flag word */
 
 void func_80138868(void) {
     ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;

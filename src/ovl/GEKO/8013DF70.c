@@ -114,7 +114,14 @@ void func_8013E4F0(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E56C);
+s32 func_8013E56C(void) {
+    func_80138AF8();
+    if (D_800E6280.unk_1104.w++ == 1) {
+        if ((u16) D_800CA154 == 9) {
+            func_80083440(0);
+        }
+    }
+}
 
 void func_8013E5C8(void) {
     if (get_h_yuukou(9) < 0x50U) {
