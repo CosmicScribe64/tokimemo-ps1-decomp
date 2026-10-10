@@ -324,7 +324,16 @@ void func_80083440(u8 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083474);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083628);
+void func_80083628(void) {
+    u8 var_v1;
+
+    var_v1 = get_g_zyotai_h((s32) D_800E6280.unk_F5F) & 0x7F;
+    if ((u8) D_800E6280.unk_F5F >= 0xCU) {
+        var_v1 = 0;
+    }
+    func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_800836A0);
 
