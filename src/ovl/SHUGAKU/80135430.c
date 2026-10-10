@@ -64,7 +64,16 @@ void func_80135A3C(void) {
     D_80120723 = D_800B593C;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135A80);
+s32 func_80135A80(void) {
+    if (D_8013C2E8 < 0xA0 || (u8)D_800B5BD4 != 9) {
+        return 0;
+    }
+    func_800853FC();
+    D_80120657 = D_800B593C;
+    D_8012069B = D_800B593C;
+    D_801206DF = D_800B593C;
+    D_80120723 = D_800B593C;
+}
 
 /* One symbol for the whole 0x44-byte-entry table: as1 then keeps the later lbu below the earlier stores (T-2040, T-4020). */
 void func_80135AF4(void) {

@@ -43,13 +43,56 @@ void func_8013AACC(void) {
     *(s16 *)(p + 0x27E) = 9;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013AB50);
+void func_8013AB50(void) {
+    u8 *p = D_80158A8C;
+    u16 i = *(u16 *)(p + 0x3A8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013ABB0);
+    p[0xA0] = 2;
+    p[0xA2] = D_80155A80[i];
+    *(s16 *)(p + 0x252) = 0x1A;
+    *(s16 *)(p + 0x282) = 0x24;
+    p[0xB4] = 2;
+    p[0xB6] = 0xE;
+    *(s16 *)(p + 0x254) = 0x26;
+    *(s16 *)(p + 0x284) = D_80155A78[i];
+}
+
+void func_8013ABB0(void) {
+    u8 *p = D_80158A8C;
+    u16 i = *(u16 *)(p + 0x3AA);
+
+    p[0xC8] = 0;
+    p[0xCA] = D_80155A8C[i];
+    *(s16 *)(p + 0x256) = -0x1A;
+    *(s16 *)(p + 0x286) = 0x24;
+    p[0xDC] = 0;
+    p[0xDE] = 0xE;
+    *(s16 *)(p + 0x258) = -0x26;
+    *(s16 *)(p + 0x288) = D_80155A84[i];
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013AC0C);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013ADC0);
+void func_8013ADC0(void) {
+    u8 *p = D_80158A8C;
+
+    *(s32 *)(p + 0x20) = 0;
+    *(s32 *)(p + 0x24) += 0x10000;
+    *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+    *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+    if (*(s16 *)(p + 0x16) >= 0x40) {
+        *(s32 *)(p + 0x24) = 0x400000;
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        *(u8 **)(p + 0x218) = D_80155C78;
+        *(s16 *)(p + 4) = 0x40;
+        *(s16 *)(p + 0xA) = 0;
+        *(s16 *)(p + 8) = 0;
+        *(s16 *)(p + 6) = 0;
+        p[0xF] = 0;
+        p[0xE] = 0;
+        p[0xD] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013AE3C);
 

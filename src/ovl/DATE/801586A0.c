@@ -182,7 +182,21 @@ void func_8015905C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801586A0", func_8015908C);
+typedef struct {
+    void (*f[38])();
+} FnTbl38; /* size 0x98 */
+extern FnTbl38 D_801604F0;
+
+void func_8015908C(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl38 tbl;
+
+    tbl = D_801604F0;
+    if (D_800E6280.unk_110A < 8U && D_800B593C == 0x80) {
+        func_8006B900();
+    }
+    tbl.f[D_800E6280.unk_110A](0x80);
+}
 
 void func_8015913C(void) {
     func_80046318(0x3D, 0x801B0000, 0x8C4B);
@@ -198,7 +212,21 @@ void func_80159174(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801586A0", func_801591BC);
+typedef struct {
+    void (*f[56])();
+} FnTbl56; /* size 0xE0 */
+extern FnTbl56 D_80160588;
+
+void func_801591BC(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl56 tbl;
+
+    tbl = D_80160588;
+    if (D_80122D04 == 0 && D_800B593C == 0x80) {
+        func_8006B900();
+    }
+    tbl.f[D_800E6280.unk_110A](0x80);
+}
 
 void func_80159268(void) {
     func_80046318(0x45, 0x801B0000, 0x8C88);

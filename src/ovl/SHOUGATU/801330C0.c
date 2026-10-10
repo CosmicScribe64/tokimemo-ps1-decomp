@@ -38,7 +38,17 @@ void func_80133610(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133698);
+void func_80133698(void) {
+    if (D_80143B14 == 0) {
+        func_8007ED84(0x4167);
+        func_800AE0F0(D_800CA19C, "正月");
+        func_8004E9F4(0);
+        func_8006612C(D_800CA19C);
+    } else {
+        D_800E6280.unk_110A += 3;
+    }
+    func_8004284C();
+}
 
 void func_80133710(void) {
     bg_read_sub2(0x4167);

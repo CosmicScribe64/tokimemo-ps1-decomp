@@ -582,3 +582,5 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-stat
 
 ## [2026-10-10] ticket | T-6020 Wave 4 list 2 (created -> In Progress -> In Review -> Done)
 [[tickets/T-6020-wave-4-list-2]]: 13 of 151 listed functions matched (2580 bytes) in the 34 owned files; `ninja progress` 3539 -> 3552 of 6958; clean build 27 of 27 OK. Patterns in [[matching-notes]] ("Wave 4 list 2"), six rows in [[data/t0018-cases]]. Inline review recorded in the ticket; branch w4-2, not merged.
+## [2026-10-10] ticket | T-6060 wave 4 list 6 (In Progress -> Done)
+40 functions, 6724 bytes matched in the main exe and DATE, ENDING, EVENT, GEKO, GYOZI, OMIMAI, RPG_BAT, SHOUGATU, SHUGAKU, TT; 17 T-0018 rows in [[data/t0018-cases]]; progress 3539 -> 3579 of 6958 functions. New patterns (jump-table switches, function-table dispatchers, unsigned compares that unshare constants, in-place loop pointer) and blockers in [[matching-notes]], "Wave 4, list 6 (T-6060)". Inline review in [[tickets/T-6060-wave-4-list-6]]; branch w4-6, not merged.

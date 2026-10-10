@@ -26,19 +26,115 @@ void func_8013C740(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C764);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C818);
+u16 func_8013C818(u8 arg0, s8 *arg1) {
+    u16 ret;
+
+    switch (arg0) {
+    case 5:
+        ret = 0x1E;
+        *arg1 = 0;
+        break;
+    case 6:
+        ret = 0x1F;
+        *arg1 = 0;
+        break;
+    case 4:
+        ret = 0x20;
+        *arg1 = 0;
+        break;
+    case 7:
+        ret = 0x21;
+        *arg1 = 0;
+        break;
+    case 2:
+        ret = 0x22;
+        *arg1 = 0xF;
+        break;
+    case 3:
+        ret = 0x23;
+        *arg1 = 0xF;
+        break;
+    case 0:
+        ret = 0x24;
+        *arg1 = 0xF;
+        break;
+    case 1:
+        ret = 0x25;
+        *arg1 = 0xF;
+        break;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C8DC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CA0C);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CB58);
+void func_8013CB58(void) {
+    u8 *p = D_80158A64;
+
+    switch (*(u16 *)(p + 4)) {
+    case 0x0:
+        func_8014CBD0();
+        func_80148210();
+        func_80143570();
+        func_8014A7E0();
+        func_80146BE0();
+        func_80148DB0();
+        func_80147CE0();
+        func_8014AF3C();
+        func_80132F4C();
+        func_80133B70();
+        func_8013BD4C();
+        func_801473BC();
+        func_801426F0();
+        func_8013C8DC();
+        *(u16 *)(p + 4) = 0x40;
+        break;
+    case 0x40:
+        func_8013CA0C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CC24);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CDC0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D060);
+void func_8013D060(void) {
+    u8 *p = D_80158A64;
+
+    switch (*(u16 *)(p + 2)) {
+    case 0x0:
+        func_8014CBD0();
+        func_80148210();
+        func_80143570();
+        func_8014A7E0();
+        func_80146BE0();
+        func_80148DB0();
+        func_80147CE0();
+        func_8014AF3C();
+        func_80132F4C();
+        func_80133B70();
+        func_8013BD4C();
+        func_801473BC();
+        func_801426F0();
+        p[0x11] = 0;
+        p[0x1C] = 0;
+        p[0x13] = 0;
+        p[0x14] = 0;
+        p[0x15] = 0;
+        func_8013CC24();
+        *(u16 *)(p + 2) = 0x40;
+        break;
+    case 0x40:
+        func_8013CDC0();
+        break;
+    case 0x50:
+        func_8013CB58();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D150);
 

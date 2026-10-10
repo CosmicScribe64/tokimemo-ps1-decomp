@@ -1260,5 +1260,10 @@ extern s16 D_8012435C;
 extern u8 D_80124360;
 
 extern s16 D_801207AC;
+void func_801015B0(void);
+void func_80101F24(void);
+void func_80102118(void);
+void func_801021FC(void);
+void func_801022C0(void);
 
 #endif /* OVL_EVENT_H */

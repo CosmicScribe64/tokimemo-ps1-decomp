@@ -618,4 +618,6 @@ extern s32 D_80143AE8;
 extern s32 D_80143AEC;
 extern s32 D_80143AF0;
 
+extern u8 D_80143B14;
+
 #endif /* OVL_SHOUGATU_H */

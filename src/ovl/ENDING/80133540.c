@@ -1,7 +1,26 @@
 #include "common.h"
 #include "ovl/ENDING.h"
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_80133540);
+typedef struct {
+    void (*f[43])();
+} FnTbl43; /* size 0xAC */
+extern FnTbl43 D_8013C3E4;
+
+void func_80133540(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl43 tbl;
+
+    tbl = D_8013C3E4;
+    func_80083808();
+    tbl.f[D_800E6280.unk_110A](0x80);
+    func_8007EDF8();
+    func_800846C0();
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    func_80083A10();
+}
 
 void func_801335F4(void) {
     if (D_8013C3E0 == 0xC) {
@@ -82,7 +101,23 @@ void func_801338B8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_801338F8);
+s32 func_801338F8(void) {
+    if ((u32)D_800E6280.unk_1BC[14].unk_0C.w << 0x14 >> 0x1D < 3U) {
+        func_80042808();
+        return 0;
+    }
+    D_8013C3E0 = D_800E6280.unk_F5F;
+    D_800E6280.unk_F5F = 0xC;
+    D_800E6280.unk_75D = 0xC;
+    D_800CA148 = 0;
+    D_800CA14C = 0;
+    func_800AE0F0(D_800CA188, "外井");
+    func_80132000();
+    D_800CA160 = D_8013C2BC;
+    D_800CA164 = D_8013C300;
+    D_800CA168 = D_8013C344;
+    func_8004284C();
+}
 
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFB8);
 
@@ -115,7 +150,26 @@ void func_80133A6C(void) {
     D_800E7D34 |= 4;
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_80133AD0);
+typedef struct {
+    void (*f[9])();
+} FnTbl9; /* size 0x24 */
+extern FnTbl9 D_8013C490;
+
+void func_80133AD0(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl9 tbl;
+
+    tbl = D_8013C490;
+    func_80083808();
+    tbl.f[D_800E6280.unk_110A](0x80);
+    func_8007EDF8();
+    func_800846C0();
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    func_80083A10();
+}
 
 void func_80133B80(void) {
     D_800CA148 = 0;
