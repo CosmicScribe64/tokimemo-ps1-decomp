@@ -10,6 +10,7 @@ sources: ["tools/progress.py", "configure.py", "tools/rodata_pieces.py", "tools/
 Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha1 `e823bd844a8f8fa4d05483b59c66bc54b8393b26`), with the game functions in the 28 files `src/main/<address>.c` (834 functions, 75 in C, the rest `INCLUDE_ASM`; [[source-files]]) and the SDK/lib region (65 asm segments, see [[psyq-sdk]]) and data as plain asm.
 
 ## Commands (all through Docker)
+`tools/docker.sh` builds and runs the image natively for the Docker host (arm64 on Apple Silicon, amd64 elsewhere; `TOKIMEMO_PLATFORM=linux/amd64` forces the emulated amd64 image, the only one with the old-gcc compilers). Both give identical binaries; see [[toolchain]] ("Native image", T-3310). A clean build takes about a third of the time natively on Apple Silicon.
 1. `tools/docker.sh python3 tools/extract_disc.py "<game>.zip" disc` once, to create `disc/`.
 2. `tools/docker.sh python3 configure.py` writes `build.ninja` (ninja regenerates it when `configure.py` changes) and `objdiff.json`.
 3. `tools/docker.sh ninja` splits, assembles, compiles, links and checks the sha1 of the main exe and of all 26 overlays (default target). `ninja overlays` builds only the overlays, `ninja build/ovl/TT.ok` one overlay.
