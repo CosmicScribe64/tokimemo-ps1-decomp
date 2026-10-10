@@ -49,7 +49,7 @@ void func_8013FA7C(void) {
     m1.t[1] = D_801500CC;
     m1.t[2] = D_801500D0;
     *(EtcMat *)D_801227A4 = m1;
-    *(s32 *)(D_801227A4 - 4) = 0; /* D_801227A0: TAIIKU declares it as TaiikuBig[], so it has no common declaration */
+    *(s32 *)(D_801227A4 - 4) = 0; /* FAKE: D_801227A0 reached through D_801227A4; TAIIKU declares it as TaiikuBig[], so it has no common declaration (CODING_STANDARDS 8a). T-4010 */
 }
 
 void func_8013FC08(void) {

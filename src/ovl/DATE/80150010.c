@@ -106,7 +106,7 @@ void func_8015109C(void) {
 }
 
 void func_801510E8(void) {
-    /* one base symbol for the byte table: separate symbols let as1 hoist the lbu (wave 2 ETC note) */
+    /* FAKE: neighbouring globals reached as D_801206DA + offset (one base symbol); separate symbols let as1 hoist the lbu. Real source unknown. T-4010 */
     ((u8 *)&D_801206DA)[5] = 0x80;
     ((u8 *)&D_801206DA)[1] |= 0x80;
     *(s16 *)((u8 *)&D_801206DA + 6) = 0;
