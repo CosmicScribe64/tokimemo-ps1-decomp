@@ -76,7 +76,45 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139AA4);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139E3C);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139E90);
+s32 func_80139E90(void) {
+    /* FAKE: 4 spare bytes above the buffers reproduce the original frame (0x150); real locals unknown. T-9180 */
+    s32 pad;
+    u8 name[0x100];
+    u8 num[0x20];
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80139E3C();
+        func_8004EAAC();
+        func_80050DFC(D_800E6280.unk_0D4);
+        func_800AE0F0(name, "しまった！！今日は、 ");
+        func_80051438(num, (u32)(D_800E6280.unk_54C[0].w * 8) >> 0x1C);
+        func_800AE100(name, num);
+        func_800AE100(name, "と デートの約束があったんだ。）");
+        func_80050E8C(name, 0, 0x1F);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80051DBC();
+        return;
+    case 2:
+        func_8004EAAC();
+        func_80050DFC(D_800E6280.unk_0D4);
+        func_8004500C(0, 0x202);
+        func_80050E8C("これでは、おれは、 三国一の極悪人だ〜）", 0, 0x1F);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        func_80051DBC();
+        return;
+    default:
+        func_80139920();
+        func_8004284C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139FEC);
 

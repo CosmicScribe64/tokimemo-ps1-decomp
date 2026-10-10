@@ -297,4 +297,6 @@ extern s32 D_8016001C[];
 
 void func_8014EDCC(s32 arg0);
 void func_8014B5F0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
+extern s8 D_8015EDB8;
+
 #endif
