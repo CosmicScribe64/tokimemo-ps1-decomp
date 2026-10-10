@@ -663,3 +663,12 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7030-tooling-w
 
 ## [2026-10-10] build | T-7000 merged with main (96cae6e) under K&R mode
 Merged main (T-7010, T-7020, T-7030, 170 dupes/neardupes copies). Clean build in K&R mode: one main function broke, TAIIKU `func_80144B40` (the original's `slti` on a byte: `(s32)` cast); all dupes/neardupes copies hold; no reverts. 27/27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK, all tool tests pass; progress 3967/6958 (EVENT `func_80116360` and RPG_BAT `func_8014F1D4` were also matched on main). K&R rules added to CODING_STANDARDS.md section 2; queue.py hint note in [[decompile-workflow]].
+
+## [2026-10-10] ticket | T-8060 wave 5 list 6 started
+Opened [[tickets/T-8060-wave-5-list-6]] (In Progress) for the wave-5 batch agent 6 work list.
+
+## [2026-10-10] build | T-8060 wave 5 list 6: 29 functions, 5980 bytes
+Matched 29 functions (GEKO 7, TACO 5, TT 3, EVENT 3, SHOUGATU 2, BUNKA_SD 2, one each in SHUGAKU, KANGEI, TEL, DATE, EN_NICHI, RPG_BAT, TAIIKU) in `src/ovl/*`. Clean rebuild (`rm -rf asm build; configure.py; ninja`): 27/27 OK, headers OK, globals OK; `sync_protos.py --check-branch` OK (TACO `func_8015ACCC` declared `s32`); grand line 3996/6958 funcs, 520192/2279368 bytes (22.8%). 18 rows appended to [[data/t0018-cases]]; new patterns in [[matching-notes]] ("Wave 5, list 6"). Commits on branch w5-6, not merged.
+
+## [2026-10-10] ticket | T-8060 done
+[[tickets/T-8060-wave-5-list-6]] moved to Done after the inline review against CODING_STANDARDS.md (no open findings).
