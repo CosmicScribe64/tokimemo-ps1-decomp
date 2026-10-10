@@ -202,4 +202,5 @@ typedef struct TkS16x4 {
     /* 0x0 */ s16 v[4];
 } TkS16x4; /* size 0x8 */
 extern TkS16x4 D_80149F8C;
+extern TkS16x4 D_8014A360;
 #endif

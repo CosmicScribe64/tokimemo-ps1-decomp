@@ -280,7 +280,14 @@ s32 func_80148678(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_801487B4);
+void func_801487B4(void) {
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        *(s16 *)&D_8011ECD0[0x1AA8 + i * 0x44] -= 4 - i;
+    }
+    func_80085ED0();
+}
 
 void func_80148820(void) {
     s32 i;

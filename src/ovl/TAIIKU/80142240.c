@@ -227,7 +227,15 @@ void func_80145044(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801450C0);
+void func_801450C0(void) {
+    s32 i;
+    TkS16x4 t;
+
+    t = D_8014A360;
+    for (i = 0; i < 4; i++) {
+        *(s16 *)&D_8011ECD0[0x1998 + i * 0x44] += t.v[i];
+    }
+}
 
 void func_80145148(void) {
     if ((u32)D_8014A11C >= 0xF) {
