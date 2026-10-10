@@ -452,3 +452,14 @@ Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only g
 | RPG_BAT/801504E0 | `func_80150CD8` | promo | `s32` state `D_8015EC74` switched (cases 0, 1, 2) and reloaded for `+= 1` in each case: original keeps it in $v1, IDO uses $v0 and loads the constant 1 into $v1 (T-4100) |
 | BUNKASAI/801354B0 | `func_801354B0` | promo | `s32` selector `D_80122EB8` (cases 0, 1): original $v1, IDO $v0 (T-4100) |
 | 80075320 | `func_80077E30` | promo | five-entry jump table on `u8 D_800E738D` (cases 0 to 3 + `case 4:` with default), selector in $v1 and reused for `+= 1` in case 1, reloaded into $v1 in case 2; IDO $v0 and $t0 (T-4100) |
+| RPG_BAT/80148F70 | `func_801495DC` | regorder | stack slots match with `sp30, var_v1, sp2C, temp_v0, var_v1_2` declared in that order, but the three stores `D_8015EBB0 = v` (after each test) are merged by IDO; the original keeps all three (T-6070) |
+| GEKO/80140A00 | `func_80140EBC` | regorder | `if (GameState.unk_1104.u++ == 1)` as a value: original `xori v0; sltiu v0,v0,1` in the same $v0 and `beqz v0`, IDO `sltiu t7,v0,1`; `!(x++ ^ 1)` gets the shape but not the register (T-6070) |
+| DATE/8014CC40 | `func_8014E010` | regorder | `s16` sum `D_8015E310 + 1` kept in a register: original sign-extends in place ($v0, `sll t9,v0; sra v0,t9`), IDO puts the extended value in a new register (T-6070) |
+| DATE/8014CC40 | `func_8014DB98` | regorder | same `s16` wrap-around counter as `func_8014E010`: only $v0/$v1 and the place of the `lui` differ with `s32 v = (s16)(D + 1)` (T-6070) |
+| EVENT/80107FC0 | `func_80108A24` | regorder | two `s16` sums (`D_800EB044 += 0x80`, `D_800EB042 += 0x80`) with a compare on the second: the extension goes to a new register instead of $v0 (T-6070) |
+| OPTION/80132000 | `func_80132AB8` | regorder | `u8` GameState field (`D_800E62BA`) read as a scalar in the original (`lui v0; lbu v0,0(v0)`), as a member by IDO (`lui a1; lbu a1,58(a1)`): the extra base register changes every temp (T-6070) |
+| OPTION/80132000 | `func_801387E4` | regorder | same GameState `u8` field `D_800E62BA`: `lbu a0,58(a0)` instead of `lbu v0,0(v0)`, and the new value is the return value (`move v0,t6`) (T-6070) |
+| OPTION/8013A550 | `func_8013C780` | regorder | GameState `u8` selector `D_800E7389` switched and read again after the switch (`$v1` against `$a0`, one more spill) (T-6070) |
+| TACO/80136B40 | `func_80136C60` | regorder | GameState `u8` counter `D_800E738D` read twice and incremented: `li v1,3; multu v0,v1` in the original, `a1`/`t6` in IDO (T-6070) |
+| ENDING/80133C10 | `func_80134B18` | regorder | GameState `u8` triple `D_800E62B6..B8`: the first read is `lbu v1,0(v1)` in the original, `lbu v0,54(v0)` in IDO, then every temp shifts (T-6070) |
+| DATE/8014CC40 | `func_8014E38C` | regorder | GameState word `unk_1104` incremented and compared (`lw v1`), IDO `lw v0,4356(v0)` (T-6070) |

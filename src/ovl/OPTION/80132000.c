@@ -73,7 +73,7 @@ void func_80132A8C(void) {
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132AB8);
 
 void func_80132B30(void) {
-    switch (D_800E6280.unk_110A) {                           /* irregular */
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80132BA8();
         return;

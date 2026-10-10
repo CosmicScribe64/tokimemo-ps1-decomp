@@ -25,6 +25,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-6070-wave-4-list-7|T-6070 Wave 4: list 7]]
 
 
 

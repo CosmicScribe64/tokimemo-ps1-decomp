@@ -7,8 +7,9 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A604);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A7EC);
 
+/* No return value on purpose: the original is an implicit-int function (the `or v0,v1,zero` in the first delay slot). T-6070 */
 s32 func_8013AC30(void) {
-    switch (D_800E6280.unk_110D) {                           /* irregular */
+    switch (D_800E6280.unk_110D) {
     case 0:
         func_80046318(0x95U, 0x801A0000, 0x9B94);
         D_800E6280.unk_110D += 1;

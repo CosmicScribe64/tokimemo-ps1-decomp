@@ -20,8 +20,9 @@ void func_80137B14(s32 arg0) {
     D_8011ED3E = 0x78;
 }
 
+/* No return value on purpose: the original is an implicit-int function (the `or v0,v1,zero` in the first delay slot). T-6070 */
 s32 func_80137BD8(void) {
-    switch (D_800E6280.unk_110D) {                           /* irregular */
+    switch (D_800E6280.unk_110D) {
     case 0:
         func_800450F4(0, 0x201);
         func_80059048();

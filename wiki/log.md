@@ -579,3 +579,6 @@ The original's strength-reduced loops keep 0x800E6280 in the base register and r
 
 ## [2026-10-10] ticket | T-5100 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-state-struct]]; no open findings. Branch o-gamestate, not merged.
+
+## [2026-10-10] ticket | T-6070 started (wave 4, list 7)
+Ticket [[tickets/T-6070-wave-4-list-7]] In Progress in branch w4-7: 127 functions, 38952 bytes, 34 files.
