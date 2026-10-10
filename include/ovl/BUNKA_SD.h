@@ -58,4 +58,8 @@ extern s32 D_8013B808;
 
 extern s32 D_8013B80C;
 
+extern u8 D_8013B810[];
+extern u8 D_8013B938[];
+extern u8 *D_8013C6CC;
+extern u8 *D_8013C6D0;
 #endif /* OVL_BUNKA_SD_H */

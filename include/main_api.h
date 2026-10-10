@@ -767,6 +767,7 @@ extern u8 D_800F647A;
 extern s32 D_800F65C0;
 extern s32 D_800F6600;
 extern s32 D_800F6680;
+extern u8 D_800F7710[];
 extern s32 D_8011ECA0;
 extern s8 D_8011ECA4;
 extern s32 D_8011ECA8;
@@ -1279,6 +1280,7 @@ extern u8 D_80125E70[];
 extern s16 D_80126080[]; /* two 0x200-entry s16 tables (+0, +0x400), SD_CalcCDAve */
 extern s32 D_8012749C;
 extern s32 D_801274A0;
+extern s32 D_80129F10;
 extern u8 D_80129F40[];
 
 /* ---- functions ---- */
@@ -1507,6 +1509,7 @@ void func_80054864();
 void func_8005493C();
 void func_800549E8();
 s32 func_80054AF4(s32 arg0);
+void *func_80054B60();
 s32 func_80055A38(s32);
 s32 func_80055AFC(s32 arg0);
 void func_80056070(u8 *buf, s32 arg1);
@@ -1571,6 +1574,7 @@ s32 func_8005B43C();
 void func_8005B830(void);
 void func_8005B8A0(void);
 void func_8005B8E0(void);
+void func_8005BD20();
 void func_8005C4CC(s32 arg0);
 void func_8005D174(void);
 void func_8005D1B0();
@@ -1627,7 +1631,9 @@ void func_8006509C(void);
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);
+#ifndef MAIN_API_OVERRIDE_func_80066104
 void func_80066104(void);
+#endif
 void func_8006612C();  /* callers pass one pointer, or nothing */
 void func_80066334();
 s32 func_80066A2C(void);
@@ -1683,6 +1689,7 @@ void func_80072B20(void);
 s32 func_80072B5C(s32 arg0);
 void func_80072C68(void);
 void func_80072CA0(void);
+void func_80072FE8();
 void func_800737A0(void);
 u8 week_day_init(void);
 s32 get_weekly_bg_sector(void);
@@ -1962,6 +1969,9 @@ s32 func_800A0140(s32 a);
 void func_800A09D0();
 void func_800A0C64();
 void func_800A0F4C();
+void func_800AB984();
+void func_800ABA38();
+void func_800ABAB8();
 #ifndef MAIN_API_OVERRIDE_func_800AD950
 void func_800AD950();
 #endif

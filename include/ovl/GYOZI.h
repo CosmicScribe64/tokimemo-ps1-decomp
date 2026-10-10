@@ -175,6 +175,29 @@ extern s32 D_80148230;
 extern s32 D_80148264;
 extern s16 D_801488FC;
 
+/* Gouraud triangle primitive of the GPU wrapper (func_80054B60(0x1C, ...)), 0x1C bytes. */
+typedef struct GyoziPoly {
+    /* 0x00 */ u8 unk_00[4];
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ u8 r1;
+    /* 0x0D */ u8 g1;
+    /* 0x0E */ u8 b1;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ s16 x1;
+    /* 0x12 */ s16 y1;
+    /* 0x14 */ u8 r2;
+    /* 0x15 */ u8 g2;
+    /* 0x16 */ u8 b2;
+    /* 0x17 */ u8 unk_17;
+    /* 0x18 */ s16 x2;
+    /* 0x1A */ s16 y2;
+} GyoziPoly; /* size 0x1C */
+
 /* Girl work records at D_800F53A0 + 0x1A8: 11 entries of 0x38 bytes (fields seen so far). */
 typedef struct GyoziGirl {
     /* 0x00 */ u8 unk_00[6];
@@ -187,7 +210,10 @@ typedef struct GyoziGirl {
 } GyoziGirl; /* size 0x38 */
 
 typedef struct GyoziWork {
-    /* 0x000 */ u8 unk_000[0x1A8];
+    /* 0x000 */ u8 unk_000[0x14];
+    /* 0x014 */ s16 unk_014[2];
+    /* 0x018 */ s16 unk_018[2];
+    /* 0x01C */ u8 unk_01C[0x18C];
     /* 0x1A8 */ GyoziGirl girl[11];
 } GyoziWork;
 extern GyoziWork D_800F53A0;void func_8013D5B0();
@@ -565,4 +591,5 @@ extern s16 D_801487FC;
 extern u8 *D_80148800;
 void func_801418B0(void);
 
+extern s32 D_8012E6C0;
 #endif /* OVL_GYOZI_H */

@@ -293,4 +293,8 @@ extern TcPos D_801604DC;
 void func_80138348(void);
 void func_8013838C(void);
 void func_8013840C(void);
+extern s32 D_8016001C[];
+
+void func_8014EDCC(s32 arg0);
+void func_8014B5F0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
 #endif

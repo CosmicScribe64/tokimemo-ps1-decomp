@@ -1,7 +1,33 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143240);
+s32 func_80143240(void) {
+    s32 i;
+    u8 *p;
+
+    if (D_800E7D11[0x13] == 0 && D_800E6280.unk_53C[0] == 0) {
+        return 0;
+    }
+    i = 1;
+    /* FAKE: `do {` on the line of the pointer init; as1 schedules by source line and only this layout orders the lui/addiu pair like the original. T-8030 */
+    p = D_800E7D11; do {
+        if (p[0x14] == 0 && D_800E6280.unk_53C[i] == 0) {
+            return 0;
+        }
+        if (p[0x15] == 0 && D_800E6280.unk_53C[i + 1] == 0) {
+            return 0;
+        }
+        if (p[0x16] == 0 && D_800E6280.unk_53C[i + 2] == 0) {
+            return 0;
+        }
+        if (p[0x17] == 0 && D_800E6280.unk_53C[i + 3] == 0) {
+            return 0;
+        }
+        i += 4;
+        p += 4;
+    } while (i != 0xD);
+    return 1;
+}
 
 void func_80143334(void) {
     D_80150144 = 0;
@@ -129,7 +155,18 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144224);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144540);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801446E4);
+void func_801446E4(void) {
+    if (D_800E6280.unk_F88 & 0x20) {
+        func_8004E58C();
+        func_8004E788(-0x90, -0x40, 0xF, "メモリーカードをチェックしています", 0);
+        func_8004E884(1);
+        D_800E8BEE = 0;
+        func_80053CE0();
+        func_80042808();
+    } else if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(2);
+    }
+}
 
 void func_80144768(void) {
     if (D_800E6280.unk_03A-- < 8U) {

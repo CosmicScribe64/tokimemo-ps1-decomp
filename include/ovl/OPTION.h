@@ -8,6 +8,15 @@
 extern u8 D_8013D3A8;
 extern u8 D_8013D3B0;
 extern u8 D_8013D3B4;
+extern s32 **D_8013D360;
+extern s32 D_8013E730;
+extern u8 D_8013D3E0[];
+extern u8 D_8013D3CC[];
+extern u8 D_8013D3BC[];
+extern u16 D_8013D3B8;
+extern u8 D_8013D3A4;
+extern u8 D_8013D3A0;
+extern s8 D_8013D39C;
 
 void func_80132AB8(void);
 

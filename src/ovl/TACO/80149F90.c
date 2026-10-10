@@ -132,7 +132,24 @@ void func_8014A8E0(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014AB50);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014B2A4);
+void func_8014B2A4(s32 arg0) {
+    u8 t;
+
+    func_8014D2E0();
+    t = D_8015EDB4[16].unk84[2];
+    if (t == 0 || t == 2 || t == 3 || t == 4) {
+        func_80147B24(0xB, D_8015FA68);
+        if (D_8015EDB4[17].unk2 == 1 && arg0 >= 0x259) {
+            D_8015EDB4[17].unk84[2] = 1;
+        }
+    }
+    if (D_8015EDB4[17].unk84[2] == 1) {
+        func_8014B374(2);
+    }
+    if (D_8015EDB4[17].unk84[2] == 2) {
+        func_8014B4B4(2);
+    }
+}
 
 void func_8014B374(s32 arg0) {
     s32 i;
@@ -204,7 +221,20 @@ void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014B8B4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014BC80);
+void func_8014BC80(s32 arg0, s32 arg1) {
+    s32 i;
+    s32 n;
+    s32 *p;
+
+    /* FAKE: init statements on one source line; as1 schedules by source line and only this layout orders the prologue like the original. T-8030 */
+    i = 0; n = arg0; p = &D_8016001C[arg1];
+    for (; i < 3; ) {
+        func_801478F8(n, *p);
+        i++;
+        n++;
+        p++;
+    }
+}
 
 void func_8014BCEC(s32 arg0) {
     s32 i;
@@ -378,13 +408,82 @@ void func_8014D2E0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014D3B4);
+void func_8014D3B4(s32 arg0) {
+    if (D_8015EDB4[16].unk3 >= 3) {
+        func_8014D530(D_8015EDB4[16].unk2, arg0);
+        D_8015EDB4[16].unk2 += 1;
+        D_8015EDB4[16].unk3 = 0;
+        if (!(D_8015EDB4[16].unk2 & 1)) {
+            func_80147C98(0, 0x1B, 0x1F4, (func_800AE0D0() & 0xFF) - 0x80, 0x7D0, 0x12C, 0);
+            func_80147C98(0, 0x1B, -0x1F4, (func_800AE0D0() & 0xFF) - 0x80, 0x7D0, 0x12C, 0);
+        }
+    }
+    if (D_8015EDB4[16].unk2 >= 0x3C || func_800AE0D0() % 200 == 0) {
+        D_8015EDB4[16].unk2 = 0;
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
+        func_8014F044();
+    } else {
+        D_8015EDB4[16].unk3 += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014D530);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014D918);
+void func_8014D918(void) {
+    u8 v;
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014DA6C);
+    v = D_8015EDB4[16].unk2;
+    if (v < 0x19 || v >= 0x7D) {
+        if (D_8015EDB4[16].unk3 >= 2) {
+            func_8014DA6C(v);
+            D_8015EDB4[16].unk2 += 1;
+            D_8015EDB4[16].unk3 = 0;
+            v = D_8015EDB4[16].unk2;
+        }
+    } else if (v >= 0x19 && v < 0x7D) {
+        func_8014DA6C(v);
+        D_8015EDB4[16].unk2 += 1;
+        D_8015EDB4[16].unk3 = 0;
+        v = D_8015EDB4[16].unk2;
+    }
+    if (v >= 0x96 || D_8015EDB4[17].unk84[2] == 1) {
+        D_8015EDB4[16].unk2 = 0;
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
+        func_8014F044();
+    } else {
+        D_8015EDB4[16].unk3 += 1;
+    }
+}
+
+void func_8014DA6C(s32 arg0) {
+    if (arg0 < 0xF) {
+        func_80146F74(0, 0, -0x1E, -0x1E, -1, 0, 0, 0x32, 0x32);
+    } else if (arg0 >= 0x10 && arg0 < 0x19) {
+        func_80146F74(0, 0, -0x1E, -0x1E, 0, 0, 0, 0x32, 0x32);
+    } else if (arg0 == 0x19) {
+        if (D_8015EDB4[18].unk84[2] == 0) {
+            D_8015EDB4[18].unk84[2] = 1;
+            func_8014BC80(9, 3);
+        }
+        if (D_8015EDB4[19].unk84[2] == 0) {
+            D_8015EDB4[19].unk84[2] = 1;
+            func_8014BC80(0xD, 0);
+        }
+    } else if (arg0 >= 0x1A && arg0 < 0x7D) {
+        if (D_8015EDB4[18].unk84[2] != 0 && D_8015EDB4[17].unk2 == 1) {
+            func_8014B5F0(&D_8015EDB4[18].unk3, &D_8015EDB4[18].unk2, 9, 3, 1);
+        }
+        if (D_8015EDB4[19].unk84[2] != 0) {
+            if (D_8015EDB4[17].unk2 == 1) {
+                func_8014B5F0(&D_8015EDB4[19].unk3, &D_8015EDB4[19].unk2, 0xD, 0, 1);
+            }
+        }
+    } else if (arg0 >= 0x7D && arg0 < 0x87) {
+        func_80146F74(0, 0, 0x1E, 0x1E, 0, 0, 0, 0x32, 0x32);
+    } else if (arg0 >= 0x87 && arg0 < 0x96) {
+        func_80146F74(0, 0, 0x1E, 0x1E, 1, 0, 0, 0x32, 0x32);
+    }
+}
 
 void func_8014DC94(void) {
     if (D_8015EDB4[16].unk3 >= 3U) {
@@ -427,7 +526,33 @@ void func_8014DF50(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E048);
+void func_8014E048(void) {
+    u8 v;
+
+    v = D_8015EDB4[16].unk2;
+    if (v < 0x14 || v >= 0x32) {
+        if (D_8015EDB4[16].unk3 >= 3) {
+            func_8014E1A0(v);
+            D_8015EDB4[16].unk2 += 1;
+            D_8015EDB4[16].unk3 = 0;
+            v = D_8015EDB4[16].unk2;
+        }
+    } else if (v >= 0x14 && v < 0x32) {
+        if (D_8015EDB4[16].unk3 != 0) {
+            func_8014E1A0(v);
+            D_8015EDB4[16].unk2 += 1;
+            D_8015EDB4[16].unk3 = 0;
+            v = D_8015EDB4[16].unk2;
+        }
+    }
+    if (v >= 0x50) {
+        D_8015EDB4[16].unk2 = 0;
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
+        func_8014F044();
+    } else {
+        D_8015EDB4[16].unk3 += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E1A0);
 
@@ -467,7 +592,24 @@ void func_8014EB24(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014EC4C);
+void func_8014EC4C(void) {
+    s32 pad[3]; /* FAKE: unused local; reproduces the 12 bytes of frame the original has above the spilled rand() result. T-8030 */
+
+    if (D_8015EDB4[16].unk3 >= 3) {
+        func_8014EDCC(D_8015EDB4[16].unk2);
+        D_8015EDB4[16].unk2 += 1;
+        D_8015EDB4[16].unk3 = 0;
+        func_80147C98(0, 0x1B, (func_800AE0D0() & 0x3FF) - 0x138, (func_800AE0D0() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
+        func_80147C98(0, 0x1B, (func_800AE0D0() & 0x3FF) - 0x2C8, (func_800AE0D0() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
+    }
+    if (D_8015EDB4[16].unk2 >= 0x32 || D_8015EDB4[17].unk84[2] == 1) {
+        D_8015EDB4[16].unk2 = 0;
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
+        func_8014F044();
+    } else {
+        D_8015EDB4[16].unk3 += 1;
+    }
+}
 
 void func_8014EDCC(s32 arg0) {
     if (arg0 == 1) {
@@ -512,7 +654,46 @@ void func_8014EF14(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014F044);
+void func_8014F044(void) {
+    s32 r;
+    s32 h;
+    u8 t;
+
+    r = func_800AE0D0();
+    t = D_8015EDB4[17].unk2;
+    /* FAKE: `t ^ 0` only swaps the operands of the first bne (const reg first); found by the permuter, real source unknown. T-8030 */
+    if ((t ^ 0) == 1) {
+        h = r % 100;
+        if (h < 0x14) {
+            D_8015EDB4[16].unk84[2] = 0;
+        } else if (h >= 0x28 && h < 0x37) {
+            if (D_8015EDB4[21].unk84[1] != 0 || D_8015EDB4[25].unk84[1] != 0) {
+                D_8015EDB4[16].unk84[2] = 1;
+            } else {
+                D_8015EDB4[16].unk84[2] = 7;
+            }
+        } else if (h >= 0x37 && h < 0x46) {
+            D_8015EDB4[16].unk84[2] = 2;
+        } else if (h >= 0x46 && h < 0x5A) {
+            D_8015EDB4[16].unk84[2] = 3;
+        } else if (h >= 0x14 && h < 0x28) {
+            D_8015EDB4[16].unk84[2] = 4;
+        } else if (h >= 0x5A) {
+            D_8015EDB4[16].unk84[2] = 7;
+        }
+    } else if (t == 0x1D) {
+        h = r % 100;
+        if (h >= 0 && h < 0x28) {
+            D_8015EDB4[16].unk84[2] = 2;
+        } else if (h >= 0x28 && h < 0x46) {
+            D_8015EDB4[16].unk84[2] = 5;
+        } else if (h >= 0x46 && h < 0x5F) {
+            D_8015EDB4[16].unk84[2] = 6;
+        } else if (h >= 0x5F) {
+            D_8015EDB4[16].unk84[2] = 8;
+        }
+    }
+}
 
 void func_8014F210(void) {
     func_80151264(5);

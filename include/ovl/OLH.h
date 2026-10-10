@@ -27,12 +27,12 @@ void func_801338C8(void);
 void func_80133A24(void);
 void func_80133C4C(void);
 void func_80133D74(void);
-void func_80133EA4(void);
-void func_80133F90(void);
+s32 func_80133EA4(void);
+s32 func_80133F90(void);
 void func_80134060(void);
-void func_80134184(void);
-void func_80134254(void);
-void func_80134324(void);
+s32 func_80134184(void);
+s32 func_80134254(void);
+s32 func_80134324(void);
 void func_801343F4(void);
 void func_801345CC(void);
 void func_801346F4(void);
@@ -79,4 +79,9 @@ extern s32 D_8013D6CC;
 
 extern s32 D_8013C780;
 
+extern s32 D_8013B740;
+extern s32 D_8013B744;
+extern s32 D_8013B74C;
+extern s32 D_8013B750;
+extern s32 D_8013B754;
 #endif /* OVL_OLH_H */

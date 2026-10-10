@@ -698,3 +698,8 @@ Created [[tickets/T-8040-wave-5-list-4]] (In Progress), 151 functions in 37 file
 
 ## [2026-10-10] build | T-8040 wave 5 list 4 done
 24 functions matched (GYOZI, TAIIKU, EVENT x2, SHOUGATU, TACO x3, ENDING x3, MASTER, DATE, TT, SHUGAKU x2, ETC x6, main get_g_name) plus 17 dupes copies in owned files. 18 blocked cases added to [[data/t0018-cases]]; patterns in [[matching-notes]]. Review recorded in [[tickets/T-8040-wave-5-list-4]], moved to Done.
+## [2026-10-10] ticket | T-8030 wave 5 list 3 started
+Created [[tickets/T-8030-wave-5-list-3]] (In Progress) for work list 3, branch w5-3.
+
+## [2026-10-10] build | T-8030 wave 5 list 3 matched
+30 of 146 listed functions matched (7512 bytes), progress 3997 of 6958 functions. Clean rebuild 27 of 27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK. 20 rows added to [[data/t0018-cases]]; patterns and unsolved shapes in [[matching-notes]] (section "Wave 5, list 3 (T-8030)"). Inline review recorded in [[tickets/T-8030-wave-5-list-3]]; ticket moved to Done. Branch w5-3, not merged.
