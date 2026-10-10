@@ -1,7 +1,17 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148210);
+void func_80148210(void) {
+    s32 i;
+    u8 *p;
+
+    i = 0;
+    p = D_80158AA8;
+    for (; i < 0x80; i++) {
+        *p = 0;
+        p += 0x14;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148244);
 

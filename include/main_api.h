@@ -1660,6 +1660,7 @@ void func_80072B20(void);
 s32 func_80072B5C(s32 arg0);
 void func_80072C68(void);
 void func_80072CA0(void);
+void func_80072FE8();
 void func_800737A0(void);
 u8 week_day_init(void);
 s32 get_weekly_bg_sector(void);
