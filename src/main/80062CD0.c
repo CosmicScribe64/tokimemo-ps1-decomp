@@ -288,7 +288,16 @@ s32 func_80066B40(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066C08);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_800673B8);
+void func_800673B8(void) {
+    s32 i;
+    s32 j;
+
+    LoadSquare(0x3E0, 0x180, 0x20, 0x80, D_800B374C);
+    for (i = 0; i < 32; i++) {
+        for (j = 0; j < 4; j++) D_800E6280.unk_163C[i * 4 + j] = 0;
+    }
+    LoadSquare(0x3E0, 0x1C0, 4, 0x10, D_800E6280.unk_163C);
+}
 
 void func_80067438(void) {
     s32 v;

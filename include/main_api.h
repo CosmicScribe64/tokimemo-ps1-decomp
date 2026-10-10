@@ -464,6 +464,7 @@ extern s32 D_800B36EC;
 extern s32 D_800B3708[];
 #endif
 extern s32 D_800B372C;
+extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3C6C;
 extern s8 D_800B3CA0;
 extern u8 D_800B3D24;
