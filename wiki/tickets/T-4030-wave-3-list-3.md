@@ -14,7 +14,7 @@ Match the 118 functions (25936 bytes) of wave-3 work list 3 in main-exe files 80
 
 ## Acceptance criteria
 
-- [x] Work list processed in order, time-boxed per function (41 matched, 5156+ bytes of the list plus 4 more from the byte queue)
+- [x] Work list processed in order, time-boxed per function (41 matched: 38 list functions, 5464 bytes, plus 3 from the byte queue, 380 bytes)
 - [x] Clean build (`rm -rf asm build; configure.py; ninja`, no -k): 27 of 27 OK, build/headers.ok
 - [x] T-0018 cases appended to `wiki/data/t0018-cases.md` (15 rows, tagged w3-3)
 - [x] Inline review against CODING_STANDARDS.md recorded below
