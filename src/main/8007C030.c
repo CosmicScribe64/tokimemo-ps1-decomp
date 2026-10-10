@@ -568,7 +568,16 @@ void normal_date_speak(void) {
     func_80082764(D_80122CDC, 1, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", vram_bustup_clear);
+void vram_bustup_clear(void) {
+    s16 i;
+
+    func_80048F64(0x1F);
+    func_80048F64(0x1E);
+    for (i = 5; i < 0xA; i++) {
+        D_800E6280.unk_1228[i] = -1;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085B3C);
 

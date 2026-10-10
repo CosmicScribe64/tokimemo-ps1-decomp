@@ -51,18 +51,18 @@ void func_8005A3E8(void) {
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005A410);
 
 void func_8005A560(void) {
-    if (D_800E738D == 0) {
+    if (D_800E6280.unk_110D == 0) {
         if (func_80044E8C() == 1) {
             func_8004500C(0, 0);
-            D_800E738D += 1;
+            D_800E6280.unk_110D += 1;
         }
-    } else if (D_800E738D == 1) {
+    } else if (D_800E6280.unk_110D == 1) {
         func_80046318(0x95U, 0x801A0000, 0x9B94);
-        D_800E738D += 1;
-    } else if (D_800E738D == 2) {
+        D_800E6280.unk_110D += 1;
+    } else if (D_800E6280.unk_110D == 2) {
         if (func_800460CC() & 1) {
-            func_80068938(D_800E62BE, D_800E62BF, 0);
-            D_800E7312 &= 3;
+            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 0);
+            D_800E6280.unk_1092 &= 3;
             D_800B5BC8 = 0xFE;
             if (D_800B5C08 < 0xE) {
                 func_800676AC(D_800B5C08);
