@@ -292,10 +292,19 @@ class SplitTest(unittest.TestCase):
         self.run_split()
         c = self.read("src/ovl/AAA/80132080.c")
         self.assertIn('INCLUDE_RODATA("asm/ovl/AAA/data/AAA/80132080.rodata", D_80132110);', c)
+        self.assertEqual(c.count("INCLUDE_RODATA"), 1)
         self.assertIn("D_80132110 = 0x80132110;", self.read("config/labels/AAA.txt"))
         self.assertIn("    - config/labels/AAA.txt\n", self.read("config/overlays/AAA.yaml"))
         writes, _p = so.plan(self.root, ["AAA"], out=io.StringIO())
         self.assertEqual(writes, [])
+
+    def test_old_include_rodata_lines_are_regenerated(self):
+        # a stale INCLUDE_RODATA in front of the first function (the preamble) is dropped:
+        # D_80132100 is named by func_80132040, so nothing needs one
+        self.write("src/ovl/AAA.c", OVL_C.replace(
+            "extern s32 D_80132120;\n", 'extern s32 D_80132120;\nINCLUDE_RODATA("x", D_80132100);\n'))
+        self.run_split()
+        self.assertNotIn("INCLUDE_RODATA", self.read("src/ovl/AAA/80132000.c") + self.read("src/ovl/AAA/80132040.c"))
 
     def test_not_a_union_of_objects(self):
         self.write("config/overlays/AAA.yaml", OVL_YAML.replace(

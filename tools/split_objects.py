@@ -359,6 +359,9 @@ def plan_unit(root, unit, objs, old_files, funcs, items):
         first = next((k for k, p in enumerate(pieces) if p.kind in ("asm", "func", "cond")), None)
         if first is None:
             raise SplitError("%s: no functions" % cf.src)
+        # INCLUDE_RODATA lines are regenerated (plan_rodata), wherever they are now
+        pieces = [p for p in pieces if p.kind != "rodata"]
+        first = next(k for k, p in enumerate(pieces) if p.kind in ("asm", "func", "cond"))
         pre, rest = pieces[:first], pieces[first:]
         pending, groups = [], []      # groups: (function piece, [pieces in front])
         for p in rest:
