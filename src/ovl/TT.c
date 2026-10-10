@@ -607,7 +607,25 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013EC64);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013ED70);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013EE88);
+s32 func_8013EE88(void) {
+    u8 *q = D_80158A64;
+    u16 *pad = (u16 *)(D_80158A60 + 0x10);
+
+    if (q[0xE] != 0) {
+        if ((pad[0] & 0x90C) == 0x90C && (pad[1] & 0x90C) != 0x90C) {
+            q[0xF] = 1;
+        }
+        if (q[0xF] != 0 && (pad[0] & 0x90C) == 0x90C) {
+            *(u16 *)(q + 0xC) += 1;
+        } else {
+            *(u16 *)(q + 0xC) = 0;
+        }
+    }
+    if ((u32)*(u16 *)(q + 0xC) >= 0x1F) {
+        return 1;
+    }
+    return 0;
+}
 
 void func_8013EF38(void) {
     u8 *q = D_80158A68;
@@ -1216,27 +1234,222 @@ void func_8014B414(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014B4A4);
+void func_8014B4A4(u8 arg0) {
+    u8 *p = D_80158A98;
+    s32 i = 0;
+    s32 v;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014B5A4);
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            break;
+        }
+        if (arg0 != 0) {
+            v = 8;
+            *(s32 *)(p + 0x20) = 0x500000;
+        } else {
+            v = 7;
+            *(s32 *)(p + 0x20) = 0xFFB00000;
+        }
+        *(s32 *)(p + 0x24) = (-0x10 - i * 0x10) << 16;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0x10000;
+        p[0x63] = arg0;
+        func_8014AFB8(p, 0x43, v);
+        /* FAKE: the reset stores are written relative to the already advanced slot pointer (p - off); the original code does the increment first. T-2070 */
+        i += 1;
+        p += 0x78;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 4);
+}
+
+void func_8014B5A4(u8 *arg0) {
+    if (arg0[0x63] != 0) {
+        *(s32 *)(arg0 + 0x20) = -func_800A0070(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
+    } else {
+        *(s32 *)(arg0 + 0x20) = func_800A0070(*(s16 *)(arg0 + 0x16) << 5) * 0x600;
+    }
+    if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x11) {
+        if (arg0[0x60] == 0) {
+            *(u16 *)(arg0 + 0x5E) = 0;
+            arg0[0x60] += 1;
+            func_80133D14(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+        }
+    }
+    if (arg0[0x51] != 0) {
+        *(u16 *)(arg0 + 0x5E) += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014B67C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014B7A8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014BA54);
+void func_8014BA54(s32 arg0) {
+    u8 *p = D_80158A98;
+    s32 i = 0;
+
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            break;
+        }
+        *(s32 *)(p + 0x20) = 0;
+        *(s32 *)(p + 0x24) = 0xFFF00000;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0x20000;
+        p[0x50] = i;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        func_8014AFB8(p, 0x45, 0xA);
+        /* FAKE: the reset stores are written relative to the already advanced slot pointer (p - off); the original code does the increment first. T-2070 */
+        i += 1;
+        p += 0x78;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 5);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014BB30);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014BC74);
+void func_8014BC74(s32 arg0) {
+    u8 *p = D_80158A98;
+    s32 i = 0;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014BD68);
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            break;
+        }
+        *(s32 *)(p + 0x20) = (i << 21) + 0xFFC00000;
+        *(s32 *)(p + 0x24) = 0xFFF00000;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0x20000;
+        *(s16 *)(p + 0x6E) = 0;
+        p[0x50] = i;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        func_8014AFB8(p, 0x46, 0xB);
+        /* FAKE: the reset stores are written relative to the already advanced slot pointer (p - off); the original code does the increment first. T-2070 */
+        i += 1;
+        p += 0x78;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 5);
+}
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014BE60);
+void func_8014BD68(u8 *arg0) {
+    u32 t;
+
+    *(s32 *)(arg0 + 0x20) = (arg0[0x50] - 2) * (func_800A0140(*(u16 *)(arg0 + 0x6E) * 0x1E) << 9);
+    t = *(u16 *)(arg0 + 0x6E);
+    *(s32 *)(arg0 + 0x24) = (t - 0x10) << 16;
+    *(s32 *)(arg0 + 0x24) += (func_800A0070(t * 0x1E) << 9) * (arg0[0x50] - 2);
+    *(u16 *)(arg0 + 0x6E) += 1;
+    if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x19) {
+        if (arg0[0x60] == 0) {
+            *(u16 *)(arg0 + 0x5E) = 0;
+            arg0[0x60] += 1;
+            func_80133D14(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+        }
+    }
+    if (arg0[0x51] != 0) {
+        *(u16 *)(arg0 + 0x5E) += 1;
+    }
+}
+
+void func_8014BE60(s32 arg0) {
+    u8 *p = D_80158A98;
+    s32 i = 0;
+
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            break;
+        }
+        *(s32 *)(p + 0x20) = (i << 21) + 0xFFC00000;
+        *(s32 *)(p + 0x24) = 0x01000000;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0xFFFE0000;
+        *(s16 *)(p + 0x6E) = 0;
+        p[0x50] = i;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        func_8014AFB8(p, 0x47, 0xC);
+        /* FAKE: the reset stores are written relative to the already advanced slot pointer (p - off); the original code does the increment first. T-2070 */
+        i += 1;
+        p += 0x78;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 5);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014BF54);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014C0B0);
+void func_8014C0B0(u8 arg0) {
+    u8 *p = D_80158A98;
+    s32 i = 0;
+
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            break;
+        }
+        if (arg0 != 0) {
+            *(s32 *)(p + 0x20) = 0x500000;
+        } else {
+            *(s32 *)(p + 0x20) = 0xFFB00000;
+        }
+        *(s32 *)(p + 0x24) = (-0x10 - i * 0x10) << 16;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0x20000;
+        p[0x63] = arg0;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        func_8014AFB8(p, 0x48, 0xD);
+        /* FAKE: the reset stores are written relative to the already advanced slot pointer (p - off); the original code does the increment first. T-2070 */
+        i += 1;
+        p += 0x78;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 6);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014C1BC);
 
