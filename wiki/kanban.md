@@ -33,6 +33,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-3310-native-docker-image|T-3310 Tooling: native Docker image for Apple Silicon]]
 - [ ] [[tickets/T-3200-catalog-game-versions|T-3200 Catalog game versions]]
 - [ ] [[tickets/T-3100-identify-original-compiler|T-3100 Identify the original game-code compiler]]
 - [x] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]

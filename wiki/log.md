@@ -450,3 +450,6 @@ Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1):
 
 ## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
 [[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.
+
+## [2026-10-09] ticket | T-3310 native Docker image (Backlog -> In Progress -> In Review -> Done)
+[[tickets/T-3310-native-docker-image]] done after the inline review (no open findings). `tools/Dockerfile` builds for amd64 and arm64 (IDO recompiled from the pinned commit on arm64; old-gcc and mkpsxiso amd64 only), `tools/docker.sh` picks the host platform (`TOKIMEMO_PLATFORM` overrides), `.github/workflows/progress.yml` stays on linux/amd64 and now labels the image. Clean build 27 of 27 OK on both images, about 3x faster natively (64 s against 199 s, then 90 s against 252 s on a loaded machine); all `.bin`/`.elf` files identical, objects identical apart from asm-processor's random temp name; 14 tool test files pass on both. See [[toolchain]] ("Native image"), [[build-system]], [[ci]].

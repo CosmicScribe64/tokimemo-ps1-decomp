@@ -17,8 +17,8 @@ This project is independent. It is not affiliated with or endorsed by Konami.
 
 ## Building
 
-Everything runs in Docker, so Docker is the only thing you install. The image is linux/amd64 and builds on first
-use. On Apple Silicon it runs under emulation, which is slow but works.
+Everything runs in Docker, so Docker is the only thing you install. The image builds on first use, for the
+architecture of your Docker host (arm64 on Apple Silicon, amd64 elsewhere), so nothing runs under emulation.
 
 1. Put your Redump-style zip of the game in the repository root. The build expects the executable with SHA-1
    `e823bd844a8f8fa4d05483b59c66bc54b8393b26` and a matching set of overlays.
