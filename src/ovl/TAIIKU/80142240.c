@@ -216,7 +216,16 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144C70);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144E54);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80145044);
+void func_80145044(void) {
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        *(s16 *)&D_8011ECD0[0x1998 + i * 0x44] += 1;
+    }
+    for (i = 0; i < 4; i++) {
+        *(s16 *)&D_8011ECD0[0x1AA8 + i * 0x44] -= 4 - i;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801450C0);
 
