@@ -27,6 +27,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0008-overlay-load-address-and-split|T-0008]] Overlay load address and split (Done)
 - [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Done)
 - [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Done)
+- [[tickets/T-2040-wave-2-etc|T-2040]] Wave 2: ETC (Done)
 - [[tickets/T-1300-reuse-c-across-identical-functions|T-1300]] Tooling: reuse C across identical functions (Done)
 - [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300]] Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress (Backlog)
 - [[tickets/T-0301-sdk-rodata-data-split|T-0301]] Split SDK rodata and data per library and object (Backlog)

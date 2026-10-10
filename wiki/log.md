@@ -363,3 +363,6 @@ New [[tickets/T-1340-tooling-jump-table-functions]], In Review -> Done after the
 
 ## [2026-10-09] tooling | dupes.py re-run after T-1340
 Re-ran tools/dupes.py --apply --check after the jump-table merge: 4 copies kept (DATE, EVENT, GEKO, KANGEI), 3 rejected. Clean build 27/27 OK, progress 901/6962.
+
+## [2026-10-09] ticket | T-2040 Wave 2 ETC: 190 functions matched
+New [[tickets/T-2040-wave-2-etc]], In Progress -> Done after the inline code review (no open findings). `src/ovl/ETC.c`: 190 new matches (197 of 387 now C), clean build all sha1 OK, grand total 1098 of 6962. Four T-0018 rows added to [[data/t0018-cases]]; new patterns (constant-address loads, implicit-int returns, one-symbol table access for as1 scheduling, FAKE pad locals) and a `tools/m2c.py` overlay name collision bug in [[matching-notes]].
