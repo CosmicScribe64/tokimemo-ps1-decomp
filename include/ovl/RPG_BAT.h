@@ -154,5 +154,4 @@ extern s32 D_8015EBE4;
 
 extern s32 D_8015ED8C[2]; /* [1] is D_8015ED90; one base symbol keeps loads behind stores (T-4070) */
 
-
 #endif
