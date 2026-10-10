@@ -851,7 +851,13 @@ void func_8011A270(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A2C4);
+void func_8011A2C4(void) {
+    if ((D_800B1746 == 0xA) && (D_800EECBC == 1) && (D_8012531C == 1)) {
+        func_8004CF30();
+        return;
+    }
+    func_80011DFC();
+}
 
 void func_8011A328(void) {
     if (D_800B1746 == 0xA && D_800EECBC == 0 && D_8012531C == 0) {

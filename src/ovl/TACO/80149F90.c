@@ -469,7 +469,16 @@ void func_8014EB24(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014EC4C);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014EDCC);
+void func_8014EDCC(s32 arg0) {
+    if (arg0 == 1) {
+        D_8015EDB4[21].unk84[2] = 1;
+        func_8014BED8();
+    } else if ((arg0 >= 2) && (arg0 < 0x32)) {
+        if (D_8015EDB4[21].unk84[2] == 1) {
+            func_8014BCEC(0);
+        }
+    }
+}
 
 void func_8014EE3C(void) {
     if (D_8015EDB4[16].unk3 >= 3U) {

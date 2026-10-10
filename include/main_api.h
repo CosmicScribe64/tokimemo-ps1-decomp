@@ -1391,7 +1391,7 @@ void func_8004E500(s32 arg0);
 void func_8004E58C(void);
 s32 func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e); /* returns a value: SHUGAKU 80138A60 passes it on */
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
-void set_kanji_string(s32 arg0, s32 arg1, s32 arg2, void *arg3, s32 arg4);
+s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4);
 #endif
 void func_8004E884();
 void k_disp_start(s32 arg0);

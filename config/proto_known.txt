@@ -18,4 +18,3 @@ void-result TT:func_8014D260
 void-result main:SsVabTransCompleted
 void-result main:func_8006C334
 void-result main:func_800AD950
-void-result main:set_kanji_string
