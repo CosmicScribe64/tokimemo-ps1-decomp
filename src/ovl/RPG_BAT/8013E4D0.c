@@ -77,7 +77,9 @@ s32 func_8013E90C(s32 i) {
     return (*(&D_80120652 + i * 0x44) & 1) == 0;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013E934);
+void func_8013E934(s32 arg0, s32 arg1, s32 arg2) {
+    func_8004E788(arg0 - 0xA0, arg1 - 0x78, 0, arg2, 0);
+}
 
 void func_8013E97C(s32 i, s32 x, s32 y) {
     u8 *p = D_8011ECD0 + i * 0x44;
@@ -85,7 +87,12 @@ void func_8013E97C(s32 i, s32 x, s32 y) {
     *(s16 *)(p + 0x19AA) = y - 0x78;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013E9A8);
+s32 func_8013E9A8(s32 arg0) {
+    if (arg0 == 0) {
+        arg0 = 1;
+    }
+    return func_800AE0D0() % arg0;
+}
 
 s32 func_8013EA00(s32 arg0, s32 arg1) {
     s32 a = func_8013E9A8(arg0);

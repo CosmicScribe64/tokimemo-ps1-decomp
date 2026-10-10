@@ -415,6 +415,8 @@ extern s32 D_800F6458;
 extern s32 D_800F6474;
 extern u8 D_800F647A;
 extern s32 D_800F65C0;
+extern s32 D_800F6600;
+extern s32 D_800F6680;
 extern s32 D_8011ECA0;
 extern s32 D_8011ECA8;
 extern s32 D_8011ECAC;
@@ -1005,6 +1007,7 @@ void srn_init(s32, s32, s32);
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
 void func_8004E500(s32 arg0);
 void func_8004E58C(void);
+void func_8004E788(s16 x, s16 y, s32 c, s32 d, s32 e);
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
 void set_kanji_string(s32 arg0, s32 arg1, s32 arg2, void *arg3, s32 arg4);
 #endif
@@ -1095,6 +1098,7 @@ void func_8005B264();
 s8 func_8005B28C();
 s32 func_8005B2BC();
 s32 func_8005B32C();
+u32 func_8005B368();
 void func_8005B39C(void);
 s32 func_8005B43C();
 void func_8005B830(void);
@@ -1314,11 +1318,13 @@ void func_8008E408();
 void func_8008F618();
 void func_8008FB00();
 void func_8008FC10();
+void func_8008FD1C();
 void func_8008FD68();
 void func_8008FEB0();
 void func_8008FED0();
 void func_8008FEF0();
 void func_8008FF5C();
+void func_8008FF60();
 void func_8009068C();
 void func_80090960();
 void func_80090D20(void);
@@ -1402,7 +1408,5 @@ s32 open(u8 *name, s32 mode);
 s32 GetSp(void);
 void func_800BCE10();
 s32 func_800BDC20();
-
-u32 func_8005B368();
 
 #endif /* MAIN_API_H */
