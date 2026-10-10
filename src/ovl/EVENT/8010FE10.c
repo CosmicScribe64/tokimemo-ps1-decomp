@@ -884,7 +884,7 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A4A4);
 
 void func_8011A508(void) {
     if (D_800B1746 == 0xA) {
-        if ((u32)D_800EECBC == 1) {
+        if (D_800EECBC == 1) {
             if ((u8)D_80125320 == 2) {
                 if (D_8012531C == 1) {
                     if (D_800B1AF0++ == 0) {

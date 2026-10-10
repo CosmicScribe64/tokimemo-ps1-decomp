@@ -24,14 +24,16 @@ void func_80135CA0(void) {
 }
 
 void func_80135D64(void) {
+    u32 v;
     u32 sel;
 
     if (D_800F62CF == 4) {
-        sel = (u32) D_800F563A >> 4;
+        v = D_800F563A;
+        sel = v >> 4;
         if (sel == 6 && D_80145EB8 == 1) {
             D_80145EB8 = 2;
-        /* FAKE: `* 0` makes the compare reload D_800F563A (decomp-permuter, score 0); the plain test is `== 0`; real source unknown. T-4090 */
-        } else if (sel == 7 && D_80145EB8 == (D_800F563A * 0)) {
+        /* FAKE: `v * 0` keeps the loaded byte in its own register ($v1) as in the original (decomp-permuter); the plain test is `== 0`; real source unknown. T-4090, T-7000 */
+        } else if (sel == 7 && D_80145EB8 == v * 0) {
             D_80145EB8 = 1;
         }
     }

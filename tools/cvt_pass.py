@@ -51,6 +51,23 @@ and compare chains and on every matched function):
     CVT. A value that is assigned, passed or used in arithmetic keeps it, as
     in the original (`x = D; g(D);` keeps `lui v0; lbu a0,(v0)`).
 
+K&R front end (T-7000)
+----------------------
+The build runs IDO in K&R mode (-cckr, tools/cc.py): the original promotes an
+unsigned char/short to unsigned int (sltiu, srl, divu on values loaded by lbu/lhu).
+IDO's K&R front end then writes no CVT at all, while the original's ucode had the
+widening for global variables: in the original, a compare of a narrow global against
+a constant held in a register puts the constant first (lbu 310 against 76, lh 40
+against 8; uopt's operand swap for a non-variable left operand), a compare of a word
+global puts the variable first (lw 83 against 24), and a compare of a narrow local or
+parameter read from its stack slot puts the variable first (59 against 0). So the pass
+first puts back the record IDO's ANSI front end writes: `CVT J<-L` after every load of
+a narrow unsigned S variable, unless the value goes straight into a store, a
+conversion, an array index, ++/--, a truth test, an operand swap or a narrow
+parameter (where ANSI writes none either); a switch temporary does get it. Locals and
+parameters are not widened. The rules below then work on that ucode exactly as they
+did on ANSI ucode.
+
 Switch temporaries
 ------------------
 cfe evaluates a `switch` selector into a compiler temporary (a `VREG`) and
@@ -446,6 +463,35 @@ VALUED = {"-G", "-t", "-l", "-f", "-i", "-p", "-varref", "-Olimit", "-loopunroll
           "-unrolllimit", "-regr", "-rege"}
 
 
+# Consumers of a loaded value that IDO's ANSI front end does not precede by a widening:
+# stores and conversions, array indexing, ++/--, truth tests and operand swaps.
+NO_WIDEN = {OP[n] for n in "str istr cvt ixa inc dec fjp tjp swp".split()}
+
+
+def widen(insns):
+    """Insert IDO's ANSI widening `CVT J<-L` after loads of narrow unsigned globals (K&R mode).
+
+    IDO's K&R front end (-cckr) promotes an unsigned char/short to unsigned int without a
+    conversion record. The original keeps the widening for global variables: see the module
+    docstring. A load whose value goes straight into a store, a conversion, an array index,
+    ++/--, a truth test, or a narrow parameter gets none, as in ANSI mode.
+    """
+    temps = {(i.words[1], i.words[3]) for i in insns if i.opc == OP["vreg"]}
+    out = []
+    for k, i in enumerate(insns):
+        out.append(i)
+        if not (i.opc == OP["lod"] and i.dtype == DT_L and i.mtype == MT_S and i.words[2] < 4):
+            continue
+        c = _consumer(insns, k)
+        if c is None or (c.opc == OP["par"] and c.words[2] < 4):
+            continue
+        switch_temp = c.opc == OP["str"] and c.mtype == MT_M and (c.words[1], c.words[3]) in temps
+        if c.opc in NO_WIDEN and not switch_temp:
+            continue
+        out.append(Insn([(OP["cvt"] << 24) | (DT_J << 16), 0, DT_L << 24, 0]))
+    return out
+
+
 def run_uopt(real, argv):
     """Rewrite uopt's input, run the real uopt, rewrite its output. Returns uopt's exit code."""
     files, i = [], 0
@@ -461,7 +507,7 @@ def run_uopt(real, argv):
         raise PassError("uopt arguments name no input and output ucode")
     inp, outp = files[0], files[1]
     with open(argv[inp], "rb") as f:
-        insns, rewritten = pre(copy_propagation_options(parse(f.read())))
+        insns, rewritten = pre(copy_propagation_options(widen(parse(f.read()))))
     fd, tmp = tempfile.mkstemp(prefix="cvtpass", suffix=".B")
     with os.fdopen(fd, "wb") as f:
         f.write(serialize(insns))

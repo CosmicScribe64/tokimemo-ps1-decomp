@@ -709,8 +709,7 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013D23C);
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013D2C8);
 
 s32 func_8013D3B0(void) {
-    /* 1U: keeps the two constants 1 apart, as in the original (T-4020) */
-    if ((D_800E6280.unk_F5F == 1) && (D_800E6280.unk_03F >= 6U) && (D_800E6280.unk_03F < 9U) && (D_80122CDC == 1U)) {
+    if ((D_800E6280.unk_F5F == 1) && (D_800E6280.unk_03F >= 6) && (D_800E6280.unk_03F < 9) && (D_80122CDC == 1)) {
         func_8004284C();
         return 0;
     }
@@ -930,8 +929,7 @@ void func_8013E614(void) {
     s32 cur;
     s32 prev;
 
-    /* 1U: keeps the two constants 1 apart, as in the original (T-4020) */
-    if ((D_800E6280.unk_F5F == 0xA) && (D_80122CDC == 1U) && ((u8) D_8015B68C == 2) && (D_800CA2FC == 1)) {
+    if ((D_800E6280.unk_F5F == 0xA) && (D_80122CDC == 1) && ((u8) D_8015B68C == 2) && (D_800CA2FC == 1)) {
         prev = D_800E6280.unk_110A;
         func_80085A60();
         cur = D_800E6280.unk_110A;

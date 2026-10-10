@@ -249,6 +249,35 @@ class SwitchTemporaries(unittest.TestCase):
         self.assertEqual(zcopy(out), [0, 1])
 
 
+def par(dtype, length):
+    return rec("par", dtype, 2, 0, 0, length, 0)
+
+
+class Widen(unittest.TestCase):
+    """K&R front end (T-7000): the ANSI widening is put back after narrow unsigned global loads."""
+
+    def test_compare_operand_widened(self):
+        out = cp.widen([lod(L, 5), ldc(3), op("equ")])
+        self.assertEqual(names(out), ["lodL5", "cvt", "ldc", "equ"])
+        self.assertEqual(out[1].dtype, J)
+        self.assertEqual(out[1].words[2] >> 24, L)
+
+    def test_store_index_and_narrow_parameter_not_widened(self):
+        for consumer in (st(L, 6), op("ixa"), op("inc"), fjp(), par(L, 1)):
+            out = cp.widen([lod(L, 5), consumer])
+            self.assertEqual(len(out), 2, cp.OPS[consumer.opc])
+
+    def test_word_parameter_and_switch_temporary_widened(self):
+        self.assertEqual(len(cp.widen([lod(L, 5), par(L, 4)])), 3)
+        out = cp.widen([vreg(), lod(L, 5), st(L, 3, 4, -4 & 0xFFFFFFFF, M)])
+        self.assertEqual(names(out), ["vreg", "lodL5", "cvt", "str"])
+
+    def test_words_signed_locals_and_converted_loads_untouched(self):
+        for insns in ([lod(L, 5, 4), op("equ")], [lod(J, 5, 1), op("equ")],
+                      [lod(L, 5, 1, 0, M), op("equ")], [lod(L, 5), widen(), op("equ")]):
+            self.assertEqual(len(cp.widen(insns)), len(insns))
+
+
 class Post(unittest.TestCase):
     def test_loads_get_unsigned_type_back(self):
         insns = [lod(J, 6), rec("rlod", J, S, 0, 6, 1, 0), lod(J, 7), lod(J, 6, 2)]
@@ -316,9 +345,14 @@ void f(void) { E = D; F = D; g(D); }
 """)
         self.assertIn("lbu\ta0,0(v0)", dis)
 
-    def test_without_pass_ido_differs(self):
-        dis = self.compile(self.SOURCE, with_pass=False)
-        self.assertIn("lbu\tv0,0(v0)", dis)
+    def test_compare_after_a_call_keeps_widened_value(self):
+        # K&R mode (T-7000): with the widening the value of D is one CSE in $v0, reloaded after
+        # the call, as in the original; IDO's K&R front end alone gives fresh temporaries
+        src = """extern unsigned char D; extern void g0(void), g1(void), h(void);
+void f(void) { h(); if (D == 3) g0(); if (D == 3) g1(); }
+"""
+        self.assertEqual(self.compile(src).count("lbu\tv0,0(v0)"), 2)
+        self.assertIn("lbu\tt6,0(t6)", self.compile(src, with_pass=False))
 
 
 if __name__ == "__main__":

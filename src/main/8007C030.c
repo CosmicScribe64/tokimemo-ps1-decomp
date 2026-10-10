@@ -414,9 +414,9 @@ void func_800847B8(u8 arg0) {
 
     strcpy(D_800CA16C, D_800E6280.unk_0D4);
     strcpy(D_800CA174, D_800E6280.unk_0DC);
-    if ((u32)arg0 < 0xE) {
+    if (arg0 < 0xE) {
         t = arg0;
-        get_p_name(D_800CA17C, arg0);
+        get_p_name(D_800CA17C, t);
         strcpy(D_800CA188, D_800B35F4[arg0]);
         get_g_name(D_800CA190, t);
     }

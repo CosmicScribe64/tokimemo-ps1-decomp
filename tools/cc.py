@@ -54,8 +54,17 @@ MASPSX = "/opt/maspsx/maspsx.py"
 # still keeps integer constants and array base addresses in registers, as the
 # original does (loop bounds hoisted, `li t1,0x44; multu`). Replaces
 # -Wo,-no_const_in_reg, which also stopped those (T-0014, T-0017).
+#
+# -cckr: the original was compiled with K&R ("traditional") promotion rules, where an
+# unsigned char or unsigned short operand promotes to unsigned int. A value loaded by
+# lbu/lhu is compared, shifted and divided unsigned in the original (sltiu 1459 against
+# slti 3, srl 556 against sra 0, divu 101 against div 4, sltu 104 against slt 6), which is
+# what IDO's -cckr gives for plain C and what ANSI mode gives only with (u32) casts.
+# It also gives the original's copy of a narrow parameter (`andi t6,a0,0xff; move a0,t6`).
+# tools/cvt_pass.py puts back the widening of narrow globals that IDO's K&R front end
+# leaves out. T-7000, wiki/matching-notes.md "K&R promotion rules (T-7000)".
 IDO_CFLAGS = ["-c", "-EL", "-O2", "-mips1", "-G", "0", "-non_shared",
-              "-Wo,-nokpicopt", "-Xcpluscomm", "-Iinclude"]
+              "-Wo,-nokpicopt", "-cckr", "-Xcpluscomm", "-Iinclude"]
 ASM_PROCESSOR = "/opt/asm-processor/build.py"
 ASM_PRELUDE = "include/asmproc_prelude.inc"
 FRAME_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frame_pass.py")

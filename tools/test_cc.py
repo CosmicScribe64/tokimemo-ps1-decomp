@@ -88,6 +88,28 @@ class IdoFlags(unittest.TestCase):
         self.assertEqual(out.count("multu"), 2)
 
 
+class KandRPromotion(unittest.TestCase):
+    """-cckr (T-7000): unsigned char/short operands promote to unsigned int, as in the original."""
+
+    def test_unsigned_char_compare_divide_shift_are_unsigned(self):
+        code = ("extern unsigned char D; extern int R;\n"
+                "void f(void) { if (D < 10) R = D % 0x30 + (D >> 2); }\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            out = ido_disasm(code, tmp)
+        self.assertIn("sltiu", out)
+        self.assertIn("divu", out)
+        self.assertIn("srl", out)
+        self.assertNotIn("slti\t", out)
+        self.assertNotIn("sra", out)
+
+    def test_narrow_parameter_copied_back_to_its_register(self):
+        code = "void g();\nvoid f(int a, unsigned char d) { if (d > 8) d = 8; g(a, d); }\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            out = ido_disasm(code, tmp)
+        self.assertRegex(out, r"andi\tt6,a1,0xff")
+        self.assertRegex(out, r"move\ta1,t6")
+
+
 class IncludeDeps(unittest.TestCase):
     def test_include_asm_and_include_rodata_are_dependencies(self):
         text = 'INCLUDE_ASM("a/b", f1);\nINCLUDE_RODATA("a/c", D_1);\nint x;\n'

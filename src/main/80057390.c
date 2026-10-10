@@ -52,20 +52,20 @@ void func_80057640(s32 arg0) {
     rect.y = D_8011ECA0 * 0xF0;
     rect.w = 0x140;
     rect.h = arg0;
-    v = 1 - D_800B5939;
+    v = 1 - (s32)D_800B5939;
     (&D_800B5928)[v] = 0;
     switch (v) {
     case 0:
         func_8009C93C(&rect, 0x2C0, 0);
-        v = 1 - D_800B5939;
+        v = 1 - (s32)D_800B5939;
         break;
     case 1:
         func_8009C93C(&rect, 0x140, 0x100);
-        v = 1 - D_800B5939;
+        v = 1 - (s32)D_800B5939;
         break;
     }
-    /* FAKE: the cast makes IDO recompute 1 - D_800B5939 for the argument instead of passing v (decomp-permuter, score 0); real source unknown. T-4090 */
-    dec_bg_show_set(1, (u32) (1 - D_800B5939));
+    /* FAKE: the cast makes IDO recompute 1 - (s32)D_800B5939 for the argument instead of passing v (decomp-permuter, score 0); real source unknown. T-4090 */
+    dec_bg_show_set(1, (u32) (1 - (s32)D_800B5939));
     D_800B5944 = 0;
     func_8009C674(0);
 }

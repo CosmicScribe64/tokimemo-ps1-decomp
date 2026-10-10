@@ -124,7 +124,8 @@ u32 get_h_yuukou(s32 arg0) {
     s32 v;
 
     t = arg0 % 13;
-    v = D_800E6280.unk_1BC[t].unk_06 * D_800B41A0[t] / 100;
+    v = D_800E6280.unk_1BC[t].unk_06 * D_800B41A0[t];
+    v /= 100;
     if (v >= 0x65) {
         return 0x64;
     }

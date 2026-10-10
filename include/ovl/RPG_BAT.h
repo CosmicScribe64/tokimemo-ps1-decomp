@@ -62,7 +62,7 @@ extern s32 D_8015EC14;
 extern s32 D_8015EC74;
 extern s32 D_8015EDB4;
 void func_801373A8(void);
-extern u32 D_8015EB9C;
+extern s32 D_8015EB9C;
 s32 func_80144C84();
 s32 func_801452C0();
 s32 func_801453B4();
