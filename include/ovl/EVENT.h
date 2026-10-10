@@ -1120,5 +1120,6 @@ extern u8 D_800B1AF6;
 extern u8 D_800EAFA7;
 extern u8 D_800EB02A;
 extern u8 D_800EB02F;
+extern s8 D_8008093C;
 
 #endif /* OVL_EVENT_H */
