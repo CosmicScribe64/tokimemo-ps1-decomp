@@ -141,7 +141,15 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102AB0);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102C0C);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102CC4);
+void func_80102CC4(void) {
+    D_80120678 = D_80120448;
+    D_8012067C = D_80120464;
+    D_80120680 = D_80120480;
+    func_80078970(D_80094784, "廊下");
+    D_800B0B0A += 1;
+    func_8004C250();
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102D40);
 

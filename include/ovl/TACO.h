@@ -206,4 +206,13 @@ extern s16 *D_8016024C[];
 extern s16 *D_80160264;
 extern s16 *D_80160280;
 void func_801511C0(s32 arg0, s32 arg1);
+extern s16 *D_801600A8;
+extern s16 *D_801600AC[];
+extern s16 *D_801600B4;
+extern s16 *D_801600B8[];
+extern s16 *D_80160040[];
+extern s16 *D_80160054[];
+extern s16 *D_80160078[];
+extern s16 *D_801600A0[];
+void func_8014C2E4(void);
 #endif

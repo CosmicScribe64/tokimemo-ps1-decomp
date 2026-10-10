@@ -1198,4 +1198,7 @@ void func_80102A24();
 void func_801085C0();
 void func_80108680();
 void func_801087F8();
+extern s8 D_80123988;
+extern s32 D_8012398C;
+void func_80108D00(void);
 #endif /* OVL_EVENT_H */
