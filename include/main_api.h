@@ -1509,6 +1509,7 @@ void parameter_show_init(void);
 void parameter_show(void);
 void hizuke_disp_switch(s32 arg0);
 void hizuke_init(void);
+void func_80064DEC();
 void hizuke_show(void);
 void message_disp_switch(s32 arg0);
 void message_window_init(void);

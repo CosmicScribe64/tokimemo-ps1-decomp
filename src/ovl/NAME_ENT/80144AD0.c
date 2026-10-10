@@ -25,7 +25,21 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80144FDC);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145378);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145454);
+void func_80145454(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80144F98();
+        break;
+    case 1:
+        func_80144FDC();
+        break;
+    case 2:
+        func_80145378();
+        break;
+    }
+    func_80064DEC();
+    func_800578F4(1);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801454CC);
 

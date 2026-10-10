@@ -477,7 +477,22 @@ void func_80140E9C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140ED4);
+void func_80140ED4(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80140D20();
+        return;
+    case 1:
+        func_80140D6C();
+        return;
+    case 2:
+        func_80140E18();
+        return;
+    case 3:
+        func_80140E9C();
+        return;
+    }
+}
 
 void func_80140F54(void) {
     if (D_800E8BEE) {

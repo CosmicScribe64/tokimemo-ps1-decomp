@@ -1259,4 +1259,6 @@ void func_80108560();
 extern s16 D_8012435C;
 extern u8 D_80124360;
 
+extern s16 D_801207AC;
+
 #endif /* OVL_EVENT_H */
