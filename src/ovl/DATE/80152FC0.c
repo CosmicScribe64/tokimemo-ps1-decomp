@@ -213,7 +213,19 @@ void func_80153E1C(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80153E90);
+void func_80153E90(void) {
+    if (D_80122CDC != 0) {
+        D_800CA150 = 6;
+        func_80042940(0x24);
+        return;
+    }
+    /* FAKE: D_800E681D (= D_800E65CA + 0x253) is stored through D_800E65CA, and D_800E65CE is read through it, so that as1 keeps the loads after the stores; real source unknown. T-4050 */
+    *((s8 *)&D_800E65CA + 0x253) = 1;
+    D_800E65CA -= 1;
+    (&D_800E65CA)[2] += 0xA;
+    func_80084D3C();
+    func_8004284C();
+}
 
 void func_80153F10(void) {
     func_8014C5C8();

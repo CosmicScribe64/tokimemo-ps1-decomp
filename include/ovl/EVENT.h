@@ -1202,4 +1202,5 @@ void func_800FD4FC();
 void func_800FD604();
 void func_800FD6E0();
 extern s8 D_801252E8;
+extern s16 D_80124344;
 #endif /* OVL_EVENT_H */
