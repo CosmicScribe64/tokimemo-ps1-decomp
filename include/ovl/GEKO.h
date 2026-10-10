@@ -238,12 +238,5 @@ void func_80137560(void);
 
 /* defined in C in one object, called from another (T-0500) */
 void func_80138AF8(void);
-<<<<<<< HEAD
-void bg_read_sub2();
-extern s32 D_800B3688[];
-extern s32 D_800B36C8[];
-extern s32 D_800B3708[];
-=======
->>>>>>> t2-protos
 
 #endif
