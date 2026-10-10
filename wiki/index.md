@@ -61,6 +61,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330]] Tooling: m2c context and decomp-permuter (Done)
 - [[tickets/T-1310-tooling-object-trailing-padding|T-1310]] Tooling: object-trailing padding (Done)
 - [[tickets/T-1340-tooling-jump-table-functions|T-1340]] Tooling: jump-table functions, rodata islands (Done)
+- [[tickets/T-2100-wave2-small-overlays|T-2100]] Wave 2: small overlays, 94 functions (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
