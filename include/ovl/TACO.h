@@ -259,5 +259,9 @@ void func_8014EE3C();
 void func_80135418(void);
 void func_80138160(void);
 extern s32 D_8015F440[];
+s32 func_80137BD8(void);
+void func_80137D00(void);
+void func_80137E48(void);
+void func_80137F54(void);
 
 #endif

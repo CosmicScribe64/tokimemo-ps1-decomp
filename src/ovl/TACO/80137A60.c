@@ -1,7 +1,28 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137A60);
+/* No return value on purpose: implicit-int function, see func_80137BD8. T-6070 */
+s32 func_80137A60(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80137BD8();
+        break;
+    case 1:
+        func_80137D00();
+        break;
+    case 2:
+        func_80137E48();
+        break;
+    case 3:
+        func_80137F54();
+        break;
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80044750(0x74);
+        func_80044750(0xB1);
+        func_80042908(2);
+    }
+}
 
 void func_80137B14(s32 arg0) {
     func_80048F64(1);
