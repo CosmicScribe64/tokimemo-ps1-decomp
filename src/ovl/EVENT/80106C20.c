@@ -95,7 +95,16 @@ void func_80107118(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80107150);
+void func_80107150(void) {
+    if ((D_800B0E43 == 0) && (D_800B0E42 == 0)) {
+        D_80094714 += 4;
+        D_80094718 = 0;
+    } else if (D_800B0E42 != 0) {
+        D_80094714 += 2;
+        D_80094718 = 0;
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_801071D8);
 

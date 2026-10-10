@@ -26,4 +26,10 @@ void func_80133460(void) {
     D_800E7D34 |= 4;
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133030", func_801334E4);
+void func_801334E4(void) {
+    if ((((u32)(D_800E6480 << 0x1E) >> 0x1F)) && (get_h_tokimeki(1) >= 0x46U)) {
+        normal_date_speak();
+        return;
+    }
+    func_8004284C();
+}

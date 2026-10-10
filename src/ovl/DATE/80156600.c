@@ -61,7 +61,22 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_801568C0);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80156954);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80156B20);
+/* FAKE: D_800E6592 and D_800E6596 written as indexed views of D_800E658E; stops IDO hoisting the later loads above the stores (same as func_80151C54). Real source unknown. T-4040 */
+void func_80156B20(void) {
+    D_8015E208 = D_8015DF1C;
+    D_8015E20C = D_8015E058;
+    D_8015E210 = D_8015E194;
+    func_801566B0();
+    load_palette(D_8015FD1C, 0x11, 1, 2, 0);
+    func_80084E90(D_8015FD20, D_8015FD24, D_8015FD28, D_8015FD2C, D_8015FD30, D_8015FD34);
+    func_800850D4(D_8015FD10, D_8015FD14, D_8015FD0C, (s32) D_8015FD18);
+    D_800CA360 = 1;
+    D_800E658E += 3;
+    (&D_800E658E)[2] += 2;
+    (&D_800E658E)[4] -= 0x14;
+    check_para_limit();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80156C40);
 

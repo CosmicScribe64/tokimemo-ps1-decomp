@@ -73,7 +73,17 @@ void func_80151C54(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80151D68);
+void func_80151D68(void) {
+    D_8015E208 = D_8015DEC0;
+    D_8015E20C = D_8015DFFC;
+    D_8015E210 = D_8015E138;
+    func_80151670();
+    load_palette(D_8015EE04, 0x11, 1, 2, 0);
+    func_80084E90(D_8015EE08, D_8015EE0C, D_8015EE10, D_8015EE14, D_8015EE18, D_8015EE1C);
+    func_800850D4(D_8015EDF8, D_8015EDFC, D_8015EDF4, (s32) D_8015EE00);
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
 void func_80151E44(void) {
     bg_read_sub2(0x491B);
