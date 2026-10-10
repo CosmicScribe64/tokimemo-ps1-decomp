@@ -209,7 +209,52 @@ void func_80151380(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801513C8);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801513C8(void) {
+    func_80043914(D_8015EEE4, 0x1B, 1, 3, 7);
+    switch (D_8015EDC4 & 0xFFFF0000) {
+    case 0x100000:
+        func_8013E97C(0x35, 0x78, 0x68);
+        func_8013E97C(0x36, 0x40, 0x58);
+        func_8013E97C(0x37, 0x38, 0x88);
+        func_8013E810(0x35, 9, 1, 1);
+        func_8013E810(0x36, 9, 1, 1);
+        func_8013E810(0x37, 9, 1, 1);
+        D_8012149C = 0x51000000;
+        D_801214E0 = 0x51000000;
+        D_80121524 = 0x51000000;
+        D_8012146B = 0;
+        D_801214AF = 0;
+        D_801214F3 = 0;
+        D_801214A7 = 0x1B;
+        D_801214EB = 0x1B;
+        D_8012152F = 0x1B;
+        if (D_8015EBCC[0] == 1) {
+            D_80121467 |= 1;
+        }
+        if (D_8015EBCC[1] == 1) {
+            D_801214AB |= 1;
+        }
+        if (D_8015EBCC[2] == 1) {
+            D_801214EF |= 1;
+        }
+        break;
+    case 0x200000:
+        func_8013E97C(0x35, 0, 0);
+        func_8013E7C0(0x35, 0xA, 1, 1);
+        D_8012149C = 0x51000000;
+        D_8012146B = 0;
+        D_801214A7 = 0x1B;
+        break;
+    case 0x400000:
+        func_8013E97C(0x35, 0, 0);
+        func_8013E7C0(0x35, 0xB, 1, 1);
+        D_8012149C = 0x51000000;
+        D_8012146B = 0;
+        D_801214A7 = 0x1B;
+        break;
+    }
+}
 
 s32 func_801515F0(void) {
     switch (D_8015EDC4 & 0xFFFF0000) {
@@ -263,7 +308,28 @@ void func_801516E4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80151984);
+void func_80151984(void) {
+    if (D_8015EDB8 == 0) {
+        func_8013E7C0(0x34, 2, 1, 1);
+        func_8013E7C0(0x33, 8, 1, 0);
+    }
+    func_8013E97C(0x1D, (D_8015EC58.unk_00 - D_8015EC58.unk_08) * D_8015EDB8 / 100 + D_8015EC58.unk_08,
+                  (D_8015EC58.unk_04 - D_8015EC58.unk_0C) * D_8015EDB8 / 100 + D_8015EC58.unk_0C);
+    func_8013E97C(0x32, (D_8015EC58.unk_00 - D_8015EC58.unk_08) * D_8015EDB8 / 100 + D_8015EC58.unk_08 + D_8015EC58.unk_10,
+                  (D_8015EC58.unk_04 - D_8015EC58.unk_0C) * D_8015EDB8 / 100 + D_8015EC58.unk_0C + D_8015EC58.unk_14);
+    D_8015EDB8 += 4;
+    if (D_8015EDB8 >= 0x65) {
+        func_8013E97C(0x1D, 0, 0);
+        if (D_8015EB9C == 1 && D_8015EDF0 == 0x1000) {
+            func_8013E7C0(0x1D, 7, 1, 1);
+        } else {
+            func_8013E7C0(0x1D, 0, 1, 1);
+        }
+        func_8013E810(0x32, 0xFF, 1, 0);
+        D_80121399 = 5;
+        func_8014EBA8();
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D1B8);
 
