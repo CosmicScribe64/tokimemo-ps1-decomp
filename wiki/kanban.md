@@ -24,7 +24,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-9020-wave-5-codegen-shapes|T-9020 Wave-5 codegen shapes]]
 
 
 
@@ -38,6 +37,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-9020-wave-5-codegen-shapes|T-9020 Wave-5 codegen shapes]]
 - [x] [[tickets/T-8050-wave-5-list-5|T-8050 Wave 5: list 5]]
 - [x] [[tickets/T-8010-wave-5-list-1|T-8010 Wave 5: list 1]]
 - [x] [[tickets/T-8060-wave-5-list-6|T-8060 Wave 5: list 6]]

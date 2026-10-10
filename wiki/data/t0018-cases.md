@@ -705,3 +705,13 @@ Update (T-7000): the build runs IDO in K&R mode with the widening of narrow glob
 | 800451D0 | `func_80045318` | regorder | ring-buffer push: the original keeps `48` in $v0 and copies `arg2` to $a3; IDO uses $a3 for the constant (T-8080) |
 | BUNKAKEN/80152680 | `func_80152F4C` | regorder | local 16-word table (frame fixed with `s32 pad[2]` before it): original loads the column word into $t1 and the row pointer into $t8, IDO $t2 and $v1 (T-8080) |
 | TACO/80138890 | `func_80138890` | reverse | `D_800E6280.unk_1100` read twice after the switch: the original CSEs the load into $t8, IDO reloads it into a second register (T-8080) |
+| 8007C030 | `normal_date_three_select_init` | regorder | chain-assignment menu arrays match (T-9020 idiom) except the `0x10` chain: original `$v0`, IDO `$t3` (TAIIKU `func_80141964`, same body without the trailing stores, matches) (T-9020) |
+| 8007C030 | `normal_date_girl_suddenin` | regorder | `D_801217D0[0].unk_14 = .unk_15 = .unk_16 = 0x80` chain: original `li v1; move v0,v1`, IDO one register (T-9020) |
+| DATE/80132000 | `func_8013FA6C` | regorder | seven-target chain (`... = D_8011ECD0[0x843] = 0x80`) right except `li v0` scheduled after the first `lui at` (original before); permuter best 70 (T-9020) |
+| DATE/80132000 | `func_8013BEB8` | regorder | three chains of the `D_800CA21C` rows: the second `3` chain is in `$v0` in the original, `$t4` in IDO (T-9020) |
+| GEKO/8013C980 | `func_8013CC20` | regorder | `func_800847B8(*(u8 *)&D_800E6280.unk_F5F = 7)` shares `$a0` as the original does, but IDO puts `lui at` before `li a0` (original: `li a0; lui at; jal; sb a0`, all 37 such sites) (T-9020) |
+| SHOUGATU/8013F190 | `func_80140AD8` | regorder | C right with `unk_0C.f.b1`; IDO hoists `lui v0; addiu v0` of the GameState base into the branch slots, the original hoists `li t2,1` instead (T-9020) |
+| ENDING/80137340 | `func_80137E40` | regorder | `unk_1BC[1].unk_0C.f.b14 >= 1` gives the original's `sltiu; xori`; selector in `$a0` and flag word in `$v1` where the original has `$v1` and `$a0` (T-9020) |
+| VALEN/80132760 | `func_80133670` | regorder | everything but the first argument load: original `lui v0; lbu a0,%lo(D_800E71DF)(v0)`, IDO `lui a0; lbu a0` (member, `*(u8 *)&` view and byte index all the same) (T-9020) |
+| BUNKASAI/80146030 | `func_80146030` | promo | selector `D_80122EB8` in `$v1` and loaded before the stores: plain read gives the order but `$v0`, `*(u32 *)&` view gives `$v1` but loads after the stores (T-9020) |
+| TACO/80134930 | `func_8013546C` | regorder | s8 counter `D_8015EDE8`: IDO sign-extends the reloaded value into a second register (`sll; sra; move`), the original uses it in `$v0` directly (T-9020) |

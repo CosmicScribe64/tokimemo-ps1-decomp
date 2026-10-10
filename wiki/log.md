@@ -722,3 +722,9 @@ Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` 
 
 ## [2026-10-10] ticket | T-9020 created (In Progress)
 Tooling round 5, worktree r5-shapes: [[tickets/T-9020-wave-5-codegen-shapes]] collects the eight codegen shapes wave 5 left open ([[matching-notes]], T-8010..T-8080).
+
+## [2026-10-10] build | T-9020 wave-5 codegen shapes
+Idioms in [[decompile-workflow]] and [[matching-notes]] ("Wave-5 codegen shapes (T-9020)"): `x * 0x44` shifts are uopt's loop test replacement (separate value counter), a constant stored several times is a chain assignment to array elements, the ENDING reload is an empty `if`, one `CharFlags`/`Rec38Flags` bit-field type for the Rec38 flag word, the TACO frames are the family's `TcPos` locals. 13 functions matched (4227 -> 4240): OPTION 4, DATE 2, TAIIKU 1, ENDING 4, main 2. Shapes 4, 7 and three of shape 8 stay open (rows in [[data/t0018-cases]]; gcc needs an arm64 old-gcc first). Declarations changed: `include/main_api.h` (`D_800CA21C` rows, `Rec38Flags`, `func_80042960` returns `s32`), `include/ovl/ENDING.h`; [[data-types]], [[game-state]] updated.
+
+## [2026-10-10] ticket | T-9020 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9020-wave-5-codegen-shapes]]; no open findings. Branch r5-shapes, not merged.
