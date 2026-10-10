@@ -183,7 +183,25 @@ void func_801045E0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_801046F4);
+void func_801046F4(void) {
+    D_80120678 = D_801204A8;
+    D_8012067C = D_801204BC;
+    D_80120680 = D_801204D0;
+    if (((u8)func_8002328C(6) & 0x7F) < 2U) {
+        D_800B0A04[6].unk_02 += 3;
+        D_800B0A04[6].unk_06 += 2;
+    } else {
+        D_800B0A04[6].unk_02 += 1;
+        D_800B0A04[6].unk_06 += 3;
+    }
+    D_800B0A04[6].unk_0A -= 0x14;
+    func_8004C250();
+    func_80103F40();
+    func_80012D64(D_80122BF0, 0x11, 1, 2, 0);
+    func_8004C46C(D_80122BF4, D_80122BF8, D_80122BFC, D_80122C00, D_80122C04, D_80122C08);
+    func_8004C6B0(D_80122BE4, D_80122BE8, D_80122BE0, D_80122BEC);
+    func_80011DFC();
+}
 
 void func_8010484C(void) {
     func_800469F4(0x3FDE);

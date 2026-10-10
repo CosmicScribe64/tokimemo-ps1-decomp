@@ -1,7 +1,27 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801504E0);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801504E0(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E74C, "紐緒「馬鹿な事言ってるんじゃないわ");
+        func_8014B738(&D_8015E814, 1, 0x96);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x27, 0x0600002D, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(0);
+        return;
+    case 3:
+        func_8013F220();
+        func_8014EBA8();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801505B8);
 
