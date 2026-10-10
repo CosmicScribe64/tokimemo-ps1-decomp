@@ -57,8 +57,8 @@ void func_80141CCC(void) {
     /* records of 0x44 / 0x24 bytes: indexing from the first symbol keeps IDO from hoisting the loads above the stores (T-4070) */
     (&D_8011F4CB)[0x44] |= 0x80;
     D_8011F4CB |= 0x80;
-    D_801217D0 &= 0x7FFFFFFF;
-    (&D_801217D0)[9] &= 0x7FFFFFFF;
+    D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+    D_801217D0[1].unk_00 &= 0x7FFFFFFF;
     if ((u32)D_800E7378 % 240U == 0) {
         func_800638C4();
     }
@@ -82,8 +82,8 @@ void func_80141E48(void) {
         (&D_8011F4CB)[0x44] |= 0x80;
         D_8011F4CB |= 0x80;
         D_8011F524 = 0;
-        D_801217D0 &= 0x7FFFFFFF;
-        (&D_801217D0)[9] &= 0x7FFFFFFF;
+        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
         if ((u32)D_800E7378 % 240U == 0) {
             func_800638C4();
         }
@@ -92,8 +92,8 @@ void func_80141E48(void) {
         D_80122CF4 = 1;
         (&D_8011F4CB)[0x44] |= 0x80;
         D_8011F4CB |= 0x80;
-        D_801217D0 &= 0x7FFFFFFF;
-        (&D_801217D0)[9] &= 0x7FFFFFFF;
+        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
         D_80120652 = 0;
         D_80120668 = 0;
         if ((u32)D_800E7378 % 240U == 0x78) {

@@ -209,12 +209,11 @@ void func_80136C5C(s16 arg0) {
     u8 *p;
 
     for (i = 0; i < 0xC; i++) {
-        p = (u8 *)&D_801217D0 + i * 0x24;
+        p = (u8 *)D_801217D0 + i * 0x24;
         *(s16 *)(p + 0x96) = *(s16 *)(p + 0x96) + arg0;
     }
-    /* FAKE: D_8011F536 written as D_8011F4F2[0x22]; stops IDO hoisting the next load above this store (matching-notes, T-2100) */
-    (&D_8011F4F2)[0x22] += arg0;
-    D_8011F4F2 += arg0;
+    *(s16 *)&D_8011ECD0[0x866] += arg0;
+    *(s16 *)&D_8011ECD0[0x822] += arg0;
 }
 
 void func_80136CD0(s16 arg0) {
@@ -222,7 +221,7 @@ void func_80136CD0(s16 arg0) {
     u8 *p;
 
     for (i = 0; i < 3; i++) {
-        p = (u8 *)&D_801217D0 + i * 0x24;
+        p = (u8 *)D_801217D0 + i * 0x24;
         *(s16 *)(p + 0x246) = *(s16 *)(p + 0x246) + arg0;
     }
     for (i = 0; i < 0xE; i++) {

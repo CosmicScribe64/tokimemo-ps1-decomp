@@ -94,7 +94,7 @@ void func_801441DC(s32 arg0, s32 arg1) {
     } else {
         v = arg1;
     }
-    p = (u8 *)&D_801217D0 + arg0 * 36;
+    p = (u8 *)D_801217D0 + arg0 * 36;
     p[0x16] = v;
     p[0x15] = v;
     p[0x14] = v;

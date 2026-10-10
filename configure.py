@@ -123,10 +123,11 @@ def overlay_targets(n, overlays):
            command=("h=$$(cut -d' ' -f1 config/overlays/$name.sha1) && "
                     "echo \"$$h  $in\" | sha1sum -c && touch $out"),
            description="SHA1 CHECK $in")
-    # main-exe names (O.BIN, SDK) that overlays call by name; see tools/syms_to_ld.py
+    # main-exe names (O.BIN, SDK, aggregate bases of T-5000) that overlays use by name; see tools/syms_to_ld.py
     n.rule("symsld", command="python3 tools/syms_to_ld.py $out $in", description="SYMS $out")
     n.build("build/main_names.ld", "symsld",
-            ["config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt"],
+            ["config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt",
+             "config/symbol_addrs_types.txt"],
             implicit=["tools/syms_to_ld.py"])
     oks = []
     for name, _base, _text in overlays:

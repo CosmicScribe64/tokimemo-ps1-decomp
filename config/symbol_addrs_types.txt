@@ -1,0 +1,4 @@
+D_800B0A04 = 0x800B0A04; // T-5000: Rec34[12], base of the EVENT record table
+D_800E643C = 0x800E643C; // T-5000: Rec38[16], record table in main bss
+D_800EAFA0 = 0x800EAFA0; // T-5000: EVENT 0x44-byte record table (byte view)
+D_8011ECD0 = 0x8011ECD0; // T-5000: 0x44-byte record table (160 records, byte view)

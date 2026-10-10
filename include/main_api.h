@@ -22,6 +22,112 @@
 #include "common.h"
 #include "libgpu.h"
 
+/* ---- aggregate types (T-5000) ----
+ * Records whose fields splat names as separate D_ globals. tools/type_recovery.py proposes them from
+ * the original asm (indexed accesses with one stride, pointer walks, ordered store/load pairs);
+ * evidence and limits: wiki/data-types.md. Field names stay unk_XX until the meaning is known. */
+
+/* Flag word of Rec34; EVENT tests bits 12-14 one at a time (sll; bltz/bgez in the original). */
+typedef struct Rec34Flags {
+    u32 pad : 12;
+    u32 b12 : 1;
+    u32 b13 : 1;
+    u32 b14 : 1;
+    u32 rest : 17;
+} Rec34Flags; /* size 0x04 */
+
+/* 0x34-byte record of the table at D_800B0A04 (12 records; EVENT indexes it with stride 0x34). */
+typedef struct Rec34 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ Rec34Flags unk_0C;
+    /* 0x10 */ u8 pad10[7];
+    /* 0x17 */ u8 unk_17;
+    /* 0x18 */ u8 pad18[0xA];
+    /* 0x22 */ u8 unk_22;
+    /* 0x23 */ u8 pad23[0xA];
+    /* 0x2D */ u8 unk_2D;
+    /* 0x2E */ u8 pad2E[6];
+} Rec34; /* size 0x34 */
+
+/* 0x38-byte record of the table at D_800E643C (16 records: a loop walks it with stride 0x38 up to
+ * D_800E67BC; DATE, KANGEI and SHOUGATU index it). The first 0xC bytes are walked as four 0xC-byte
+ * steps elsewhere, and +0x0C..+0x37 are read as bit-fields through bytes and words; those fields
+ * keep their own D_ names until a layout reproduces every user (wiki/data-types.md). */
+typedef struct Rec38 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 unk_0C[0x2C];
+} Rec38; /* size 0x38 */
+
+/* 0x24-byte record of the table at D_801217D0 (at least 12 records: ENDING walks 12; indexed with
+ * stride 0x24, and code that reads entry i - 1 makes splat name D_801217AC). Record 0 is set field by
+ * field in func_8005AD70; records 0-5 have a flag in bit 31 of unk_00. */
+typedef struct Rec24 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u16 unk_0A;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ s16 unk_10;
+    /* 0x12 */ s16 unk_12;
+    /* 0x14 */ u8 unk_14;
+    /* 0x15 */ u8 unk_15;
+    /* 0x16 */ u8 unk_16;
+    /* 0x17 */ u8 pad17;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s32 unk_20;
+} Rec24; /* size 0x24 */
+
+/* Work area at D_80125D10 (0x50 bytes; main 80079B10 and 8007C030 only). The original keeps its
+ * stores and loads in source order, as for one object (wiki/data-types.md); unk_44 and unk_48 are
+ * message buffers passed to func_80045414. */
+typedef struct Work80125D10 {
+    /* 0x00 */ u32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s16 unk_20;
+    /* 0x22 */ s16 unk_22;
+    /* 0x24 */ u16 unk_24;
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ s16 unk_28;
+    /* 0x2A */ s16 unk_2A;
+    /* 0x2C */ s16 unk_2C;
+    /* 0x2E */ s16 unk_2E;
+    /* 0x30 */ s16 unk_30;
+    /* 0x32 */ s16 unk_32;
+    /* 0x34 */ u16 unk_34;
+    /* 0x36 */ u16 unk_36;
+    /* 0x38 */ u16 unk_38;
+    /* 0x3A */ s16 unk_3A;
+    /* 0x3C */ s16 unk_3C;
+    /* 0x3E */ s16 unk_3E;
+    /* 0x40 */ u16 unk_40;
+    /* 0x42 */ u16 unk_42;
+    /* 0x44 */ u8 unk_44[4];
+    /* 0x48 */ u8 unk_48[8];
+} Work80125D10; /* size 0x50 */
+
 /* ---- globals ---- */
 extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
@@ -53,23 +159,9 @@ extern u32 D_800B0940;
 extern s16 D_800B0956;
 extern s16 D_800B095E;
 extern s16 D_800B0966;
-extern s16 D_800B0A06;
-extern s16 D_800B0A0A;
-extern u8 D_800B0A10[];
-extern u8 D_800B0A31[];
-extern s16 D_800B0A3A;
-extern s16 D_800B0A3E;
-extern s16 D_800B0A42;
-extern u8 D_800B0A65;
-extern s16 D_800B0A6E;
-extern s16 D_800B0B0A;
-extern s32 D_800B0B14;
-extern u8 D_800B0B53;
+extern Rec34 D_800B0A04[]; /* 12 records */
 extern u8 D_800B0B64[];
 extern u8 D_800B0B6C[];
-extern u8 D_800B0BC6;
-extern s16 D_800B0C0E;
-extern s16 D_800B0C12;
 extern s8 D_800B0E31;
 extern u8 D_800B0E42;
 extern u8 D_800B0E43;
@@ -314,34 +406,21 @@ extern s16 D_800E638E;
 extern s16 D_800E6392;
 extern s16 D_800E6396;
 extern s16 D_800E639E;
-extern s16 D_800E643E[];
-extern s16 D_800E6442;
+extern Rec38 D_800E643C[]; /* 16 records */
 extern u8 D_800E6448[];
 extern u8 D_800E644A;
 extern s32 D_800E644C;
 extern u8 D_800E646A;
-extern s16 D_800E6476[];
 extern s32 D_800E6480;
 extern u8 D_800E64B8;
 extern u8 D_800E64BA;
-extern s16 D_800E64E6;
 extern u8 D_800E652A;
 extern s32 D_800E6560;
-extern s16 D_800E658E;
 extern s32 D_800E6598;
 extern u8 D_800E65A4;
-extern s16 D_800E65C6;
-extern s16 D_800E65CA;
-extern s16 D_800E65CE;
-extern s16 D_800E65FE;
 extern u8 D_800E661F;
-#ifndef MAIN_API_OVERRIDE_D_800E6636
-extern s16 D_800E6636;
-#endif
 extern s16 D_800E663A;
 extern u8 D_800E6641;
-extern s16 D_800E666E;
-extern s16 D_800E6672;
 extern u8 D_800E66B3;
 extern s32 D_800E66E8;
 extern u8 D_800E6723;
@@ -497,6 +576,8 @@ extern u8 D_800E96AB;
 extern s8 D_800E96EF;
 extern s8 D_800E9733;
 extern u8 D_800E9E63;
+/* 0x44-byte records like D_8011ECD0 (+3 flags, +7 value); EVENT reaches them through this base (T-5000). */
+extern u8 D_800EAFA0[];
 extern s8 D_800EAFA2;
 extern u8 D_800EAFA7;
 extern s16 D_800EAFB6;
@@ -908,34 +989,16 @@ extern s8 D_80121685;
 extern s8 D_8012168B;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
-extern s32 D_801217D0; /* first word of a table of 36-byte sprite entries; byte users take the address: (u8 *)&D_801217D0 + idx * 36 */
-extern s16 D_801217D4;
-extern s16 D_801217D6;
-extern s16 D_801217D8;
-extern s16 D_801217DA;
-extern s16 D_801217DC;
-extern u8 D_801217DE;
-extern u8 D_801217DF;
-extern s16 D_801217E0;
-extern s16 D_801217E2;
-extern u8 D_801217E4;
-extern u8 D_801217E5;
-extern u8 D_801217E6;
-extern s16 D_801217E8;
-extern s16 D_801217EA;
-extern s16 D_801217EC;
-extern s16 D_801217EE;
-extern s32 D_801217F0;
-extern s32 D_801217F4;
+extern Rec24 D_801217D0[]; /* at least 12 records */
 extern s16 D_801217F8;
-extern s32 D_80121818;
-extern s32 D_8012183C;
-extern s32 D_80121860;
-extern s16 D_80121864;
+extern s32 D_80121818; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_8012183C; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_80121860; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_80121864; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 #ifndef MAIN_API_OVERRIDE_D_80121874
 extern u8 D_80121874;
 #endif
-extern s32 D_80121884;
+extern s32 D_80121884; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 extern s32 D_80121FD4;
 extern u8 D_80121FE8;
 extern u8 D_80121FE9;
@@ -1042,39 +1105,7 @@ extern s32 D_80125CA8;
 extern s32 D_80125CAC;
 extern s32 D_80125CB0;
 extern u16 D_80125CC0;
-extern u32 D_80125D10;
-extern s32 D_80125D14;
-extern s32 D_80125D18;
-extern s32 D_80125D1C;
-extern s32 D_80125D20;
-extern s32 D_80125D24;
-extern s32 D_80125D28;
-extern s16 D_80125D2C;
-extern s16 D_80125D2E;
-extern s16 D_80125D30;
-extern s16 D_80125D32;
-extern u16 D_80125D34;
-extern s16 D_80125D36;
-extern s16 D_80125D38;
-extern s16 D_80125D3A;
-extern s16 D_80125D3C;
-extern s16 D_80125D3E;
-extern s16 D_80125D40;
-extern s16 D_80125D42;
-extern u16 D_80125D44;
-extern u16 D_80125D46;
-extern u16 D_80125D48;
-extern s16 D_80125D4A;
-extern s16 D_80125D4C;
-extern s16 D_80125D4E;
-extern u16 D_80125D50;
-extern u16 D_80125D52;
-extern u8 D_80125D54;
-extern u8 D_80125D58[];
-extern u8 D_80125D5C;
-extern u8 D_80125D5D;
-extern u8 D_80125D5E;
-extern u8 D_80125D5F;
+extern Work80125D10 D_80125D10;
 extern s32 D_80125D60[];
 extern s32 D_80125D70[];
 extern s32 D_80125D80[];
@@ -1698,9 +1729,7 @@ void func_800BCDF0();
 void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
-extern s16 D_800B0BDA;
 extern u8 D_800B1AF9;
-extern s16 D_800B0B3E;
 extern u8 D_800E6528;
 
 #endif /* MAIN_API_H */

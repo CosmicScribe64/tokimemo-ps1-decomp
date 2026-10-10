@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-09
+updated: 2026-10-10
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -954,3 +954,12 @@ IDO 5.3's uopt unrolls a loop by 4 (`-loopunroll`, default 4), by 2 when 4 copie
 - **A pointer loop whose end is the start symbol plus a constant is not unrolled** (`for (p = D_800E6280; p != D_800E6280 + 0x200; p += 0x10)`, also `p < D + N`). It gives the original's loop shape for main `func_800673B8`, NAME_ENT `func_801478E0` and the first loop of BUNKA_SD `func_8013987C`/`func_80134418`; the end pointer is then recomputed in the loop (`addiu t7,v1,0x200`) where the original holds `&D_800E6480` in a register, so these stay `INCLUDE_ASM`. An index loop over the same range is unrolled by 4 (constant trip count).
 - **Toolchain part: the original never unrolls a pointer loop with an unknown trip count.** IDO unrolls `p != &OTHER_SYMBOL` loops with a run-time remainder (`subu; andi 0x3F; beqz` before a remainder loop); the original has no such prologue in any of its 6958 functions (scan for `subu` followed by `andi` with a power-of-two mask: 12 hits, all byte arithmetic), while it does use the integer-counter remainder (`andi x,n,3; beqz`, 72 sites, e.g. `k_reset`). No IDO option switches only that off. ETC `func_80142AE8` and main `func_80071038` belong here (plus the unfilled `lbu; nop` delay slots of `func_80142AE8`, an as1 difference).
 - Not solved: OPTION `func_80132624` (8 iterations, two if/else in the body): IDO unrolls it by 2 at any budget between 144 and 287 and by 4 above, the original not at all; with the 200 that the matched loops need it would be unrolled by 2. Either the original never unrolls by 2 or the body was written differently; open. The OPTION rotation cases (`func_80134210`, `func_801385F0`, `func_80137FA0`) were not retried.
+
+## Recovered data types replace the "first symbol" trick (T-5000)
+
+- The "load hoisted above an earlier store" family is a type problem: the original reached those globals through one struct or array symbol, so it kept the load after the store; IDO does the same once the C declares the aggregate. 33 `FAKE` index tricks were replaced by real types with the same bytes (`Rec34`, `Rec38`, `Rec24`, `Work80125D10`, `RpgRec18`, and the base `D_8011ECD0` / `D_800EAFA0` of the 0x44-byte record tables); 7 load-hoist functions left as asm now match (GYOZI `func_80135C3C`, KANGEI `func_80135C18`, SHUGAKU `func_80135B68`, NAME_ENT `func_8013B51C`, EVENT `func_800F87BC`, DATE `func_8013C700`, `func_8013D9E8`). Method, counts, and the 20 functions retried: [[data-types]]. Tool: `tools/type_recovery.py --sym D_X`.
+- Struct, not array, when the fields are summed: RPG_BAT `func_801516E4` matches with `RpgRec18` and not with `s32[6]` (IDO orders the operands of array elements differently).
+- The base symbol is the one the original relocations use: `Rec24 D_801217D0[]` matches, `Rec24 D_801217AC[]` with `&T[1]` does not (IDO folds the element offset into the load offsets). splat's `D_801217AC` is entry `i - 1`.
+- A flag word read as a value and tested twice (`lw` once, two `sll; bltz`) is `D[i].flags.b12 || D[i].flags.b13` with a bit-field member; a pointer to the member reloads the word (EVENT `func_8011C514`).
+- The original sign-extends an `s16` argument in the callee (`sll/sra` of `$a0`); IDO 5.3 does not, with an ANSI or a K&R `s16` parameter (DATE `func_80148924`, main `func_80079F00`).
+- Still open: the main bss block `0x800E6248..0x800E7400` behaves as one object (SHUGAKU `func_80135994`, GEKO `func_8013B350` match only when `D_800E69A0` and `D_800E7388`, 0x9E8 apart, go through one symbol), and the full field layout of the 0x44-byte record table.

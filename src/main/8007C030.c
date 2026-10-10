@@ -8,7 +8,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_DetectCDPeak);
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_CalcCDAve);
 
 s16 getCDlevel(void) {
-    if (D_80125D10 & 0x400) {
+    if (D_80125D10.unk_00 & 0x400) {
         return (u32)(D_80125E60 + D_80125E62) >> 1;
     }
     return 0;
@@ -372,7 +372,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_init);
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_main);
 
 void sprite_brightness(s16 idx, u8 val) {
-    u8 *p = (u8 *)&D_801217D0 + idx * 36;
+    u8 *p = (u8 *)D_801217D0 + idx * 36;
     p[0x16] = val;
     p[0x15] = val;
     p[0x14] = val;

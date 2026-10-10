@@ -9,14 +9,13 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801439E0", func_80143CE8);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801439E0", func_80143DA8);
 
-/* FAKE: D_80121313 reached as D_80120E07 + 0x50C (one base symbol); separate symbols let as1 hoist the second lbu. Real source unknown. T-4010 */
 void func_80143ECC(void) {
     if (!(D_8015EE0C & 1)) {
-        ((u8 *)&D_80120E07)[0x50C] |= 0x80;
-        D_80120E07 |= 0x80;
+        D_8011ECD0[0x2643] |= 0x80;
+        D_8011ECD0[0x2137] |= 0x80;
     } else {
-        ((u8 *)&D_80120E07)[0x50C] &= 0xFF7F;
-        D_80120E07 &= 0xFF7F;
+        D_8011ECD0[0x2643] &= 0xFF7F;
+        D_8011ECD0[0x2137] &= 0xFF7F;
     }
     D_8015EE0C += 1;
     if (D_8015EE0C >= 0x3C) {
@@ -24,14 +23,13 @@ void func_80143ECC(void) {
     }
 }
 
-/* FAKE: D_80121313 reached as D_80120E07 + 0x50C (one base symbol); separate symbols let as1 hoist the second lbu. Real source unknown. T-4010 */
 void func_80143F68(void) {
     if (!(D_8015EE0C & 1)) {
-        ((u8 *)&D_80120E07)[0x50C] |= 0x80;
-        D_80120E07 |= 0x80;
+        D_8011ECD0[0x2643] |= 0x80;
+        D_8011ECD0[0x2137] |= 0x80;
     } else {
-        ((u8 *)&D_80120E07)[0x50C] &= 0xFF7F;
-        D_80120E07 &= 0xFF7F;
+        D_8011ECD0[0x2643] &= 0xFF7F;
+        D_8011ECD0[0x2137] &= 0xFF7F;
     }
     D_8015EE0C += 1;
     if (D_8015EE0C >= 0x3D) {

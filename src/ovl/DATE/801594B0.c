@@ -68,10 +68,9 @@ void func_80159804(void) {
     D_8015E208 = D_8015DF64;
     D_8015E20C = D_8015E0A0;
     D_8015E210 = D_8015E1DC;
-    /* FAKE: the later fields reached through D_800E666E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800E666E += 1;
-    (&D_800E666E)[2] += 1;
-    (&D_800E666E)[4] -= 0xA;
+    D_800E643C[10].unk_02 += 1;
+    D_800E643C[10].unk_06 += 1;
+    D_800E643C[10].unk_0A -= 0xA;
     check_para_limit();
     func_801594B0();
     func_80043914(D_801607F0, 0x11, 1, 2, 0);
@@ -92,10 +91,9 @@ void func_8015996C(void) {
     D_8015E20C = D_8015E0A4;
     D_8015E210 = D_8015E1E0;
     func_800AE0F0(D_800CA1DC, "池");
-    /* FAKE: the later fields reached through D_800E666E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800E666E += 3;
-    (&D_800E666E)[2] += 2;
-    (&D_800E666E)[4] -= 0x14;
+    D_800E643C[10].unk_02 += 3;
+    D_800E643C[10].unk_06 += 2;
+    D_800E643C[10].unk_0A -= 0x14;
     check_para_limit();
     func_80159560();
     func_80043914(D_8016081C, 0x11, 1, 2, 0);
@@ -108,9 +106,8 @@ void func_80159A98(void) {
     D_8015E208 = D_8015DF6C;
     D_8015E20C = D_8015E0A8;
     D_8015E210 = D_8015E1E4;
-    /* FAKE: the later fields reached through D_800E6672; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800E6672 += 2;
-    (&D_800E6672)[2] -= 0xA;
+    D_800E643C[10].unk_06 += 2;
+    D_800E643C[10].unk_0A -= 0xA;
     check_para_limit();
     func_80159610();
     func_80043914(D_80160848, 0x11, 1, 2, 0);
@@ -124,10 +121,9 @@ void func_80159BA4(void) {
     D_8015E208 = D_8015DF70;
     D_8015E20C = D_8015E0AC;
     D_8015E210 = D_8015E1E8;
-    /* FAKE: the later fields reached through D_800E666E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800E666E += 2;
-    (&D_800E666E)[2] += 1;
-    (&D_800E666E)[4] -= 0x14;
+    D_800E643C[10].unk_02 += 2;
+    D_800E643C[10].unk_06 += 1;
+    D_800E643C[10].unk_0A -= 0x14;
     check_para_limit();
     func_801596C0();
     func_80043914(D_80160874, 0x11, 1, 2, 0);

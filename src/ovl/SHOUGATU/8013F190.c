@@ -204,7 +204,7 @@ void func_80140D58(void) {
 }
 
 void func_80140D80(void) {
-    *(s16 *)((u8 *)&D_800E6442 + D_800E71DF * 0x38) = 0x28;
+    D_800E643C[D_800E71DF].unk_06 = 0x28;
     func_8004284C();
 }
 

@@ -68,7 +68,14 @@ void func_80135AF4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135B68);
+s32 func_80135B68(void) {
+    D_80120650[3] &= ~0x80;
+    D_80120650[0x47] &= ~0x80;
+    D_80120650[0x8A] = 5;
+    *(s16 *)&D_80120650[0x9E] = 4;
+    *(s16 *)&D_80120650[0xA0] = 0;
+    return ~0x80;
+}
 
 void func_80135BB8(void) {
     D_80120650[3] |= 0x80;

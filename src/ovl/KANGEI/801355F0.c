@@ -58,7 +58,13 @@ void func_80135B18(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/801355F0", func_80135B54);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/801355F0", func_80135C18);
+void func_80135C18(void) {
+    func_8007E390();
+    if ((D_800E71DF == 0xA) || (D_800E71DF == 3)) {
+        D_8011ECD0[0x1983] |= 0x80;
+        D_8011ECD0[0x1987] = D_8011ECD0[0x843];
+    }
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/801355F0", func_80135C78);
 

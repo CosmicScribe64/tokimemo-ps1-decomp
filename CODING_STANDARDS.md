@@ -102,6 +102,7 @@ typedef struct Foo {
 ```
 
 - Mark unknown fields `unk_XX` (offset in hex) and padding `pad`. Do not invent semantics.
+- Prefer the real aggregate over "first symbol" tricks (T-5000). When neighbouring globals are fields of one struct or array (stride-indexed in the asm, walked by a pointer, or a load the original keeps after a store to its neighbour), declare that struct or array once and write plain field or element accesses; do not reach a later field through the first symbol (`(&D_X)[n]`, `*((u8 *)&D_X + k)`). `tools/type_recovery.py --sym D_X` lists the proposals for a symbol; `wiki/data-types.md` has the method and the types already recovered. A struct and an array of the same bytes can compile differently, and the base symbol must be the one the original relocations use; let the build decide. A trick is acceptable only as a marked `FAKE` when the aggregate is not known yet.
 - Bit-fields only if the matching output requires them.
 
 ### 8a. Shared externs (T-1200, T-3340)
@@ -160,7 +161,7 @@ Reviewer checklist:
 - [ ] Placeholders kept until understood; renames done via splat symbol files.
 - [ ] Files in the right place; generated asm not hand-edited; `INCLUDE_ASM` used per section 6.
 - [ ] Every fakematch carries a `FAKE` comment with reason and ticket. Toolchain emulation passes meet all points of section 7a.
-- [ ] Fixed-width types; struct offsets documented.
+- [ ] Fixed-width types; struct offsets documented; neighbouring fields declared as their real struct or array, not reached through the first symbol (section 8).
 - [ ] Main-exe symbols declared once in `include/main_api.h` with one type, every override explained (section 8a); `tools/check_headers.py` passes.
 - [ ] Non-obvious tricks explained; no dead code or stray debug.
 - [ ] No copyrighted game data or assets staged.
