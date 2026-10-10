@@ -463,5 +463,8 @@ extern s32 D_8013C860;
 extern s32 D_8013C864;
 extern s32 D_8013C868;
 extern s32 D_8013C86C;
+void func_801383C8(void);
+void func_80138400(void);
+s16 func_801385A8(void);
 
 #endif /* OVL_SHUGAKU_H */
