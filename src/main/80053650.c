@@ -109,7 +109,11 @@ void func_80053CAC(u8 arg0) {
     D_800E739C = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053CC0);
+/* Indexing the first symbol keeps IDO from hoisting the load above the first store (see cal_sprite_disp_switch). */
+void func_80053CC0(void) {
+    D_800E7395 = 0;
+    (&D_800E7395)[7] += 1;
+}
 
 void func_80053CE0(void) {
     D_800E62B5 = 1;
