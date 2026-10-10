@@ -186,5 +186,8 @@ extern s32 D_8015EC54;
 extern s32 D_8015EDEC;
 void func_8014EF6C(void);
 void func_8014F1D4(s32 arg0);
+extern s32 D_8015EE04;
+void func_8014F278();
+void func_8014F350();
 
 #endif
