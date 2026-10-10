@@ -26,7 +26,45 @@ void func_8013C740(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C764);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C818);
+u16 func_8013C818(u8 arg0, s8 *arg1) {
+    u16 ret;
+
+    switch (arg0) {
+    case 5:
+        ret = 0x1E;
+        *arg1 = 0;
+        break;
+    case 6:
+        ret = 0x1F;
+        *arg1 = 0;
+        break;
+    case 4:
+        ret = 0x20;
+        *arg1 = 0;
+        break;
+    case 7:
+        ret = 0x21;
+        *arg1 = 0;
+        break;
+    case 2:
+        ret = 0x22;
+        *arg1 = 0xF;
+        break;
+    case 3:
+        ret = 0x23;
+        *arg1 = 0xF;
+        break;
+    case 0:
+        ret = 0x24;
+        *arg1 = 0xF;
+        break;
+    case 1:
+        ret = 0x25;
+        *arg1 = 0xF;
+        break;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C8DC);
 
