@@ -719,3 +719,6 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8020-wave5-lis
 
 ## [2026-10-10] ticket | T-8080 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8080-wave-5-list-8]]; no open findings. Branch w5-8, not merged.
+
+## [2026-10-10] ticket | T-9020 created (In Progress)
+Tooling round 5, worktree r5-shapes: [[tickets/T-9020-wave-5-codegen-shapes]] collects the eight codegen shapes wave 5 left open ([[matching-notes]], T-8010..T-8080).
