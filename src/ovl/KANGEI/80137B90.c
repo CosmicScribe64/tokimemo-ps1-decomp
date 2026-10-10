@@ -337,7 +337,37 @@ void func_80138D08(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-8050, scheduling: IDO hoists the load of the second D_80120653/D_80120697 pair */
+#ifdef NON_MATCHING
+void func_80138D40(void) {
+    s16 i;
+
+    D_8013A2A8 = 0;
+    func_8006BC28(0);
+    func_8006BD6C(0);
+    func_8006509C();
+    for (i = 0; i < 0xF; i++) {
+        func_80065048(i, 0);
+    }
+    func_80065B0C(1);
+    func_800639D8();
+    func_800639D8();
+    D_800B593C = 0x80;
+    D_80120653 &= 0x7F;
+    D_80120697 &= 0x7F;
+    func_8004E9F4(1);
+    D_800E6280.unk_F5F = 0;
+    D_80139ADC = 0;
+    D_80139AE0 = 0;
+    func_80137E04();
+    func_80138F54();
+    func_800847B8(D_800E6280.unk_F5F);
+    D_80139AC0 = 1;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138D40);
+#endif
 
 void func_80138E3C(void) {
     bg_read_sub2(0x42A9);

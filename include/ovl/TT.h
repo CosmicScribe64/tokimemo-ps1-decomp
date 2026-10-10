@@ -85,4 +85,6 @@ extern u8 D_80155C84[];
 extern s16 D_8014ED50;
 void func_80148DB0(void);
 
+extern u8 *D_80158AA0;
+
 #endif /* OVL_TT_H */

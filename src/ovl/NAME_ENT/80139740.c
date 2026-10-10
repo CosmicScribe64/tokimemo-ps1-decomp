@@ -91,7 +91,26 @@ void func_8013B59C(void) {
     func_8013B51C(D_800E6280.unk_1118 - 1);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B5F0);
+void func_8013B5F0(void) {
+    if ((D_800E6280.unk_1109 != 0 || D_800E6280.unk_110A != 0) && D_8014D0E0 < 0x4001) {
+        D_8014D0E0 = (D_8014D0E0 * 16 + 0x70) / 15;
+        D_8014D0E4 += D_8014D0EC;
+        D_8014D0E8 += D_8014D0F0;
+        if (D_8014D0E4 >= 0xA1) {
+            D_8014D0EC = -(func_800AE0D0() & 0xF);
+        }
+        if (D_8014D0E8 >= 0x79) {
+            D_8014D0F0 = -(func_800AE0D0() & 0xF);
+        }
+        if (D_8014D0E4 < -0xA0) {
+            D_8014D0EC = func_800AE0D0() & 0xF;
+        }
+        if (D_8014D0E8 < -0x78) {
+            D_8014D0F0 = func_800AE0D0() & 0xF;
+        }
+    }
+    func_80046AC8(0x1A, 0, 0x1F7, D_8014D0E0, D_8014D0E4, D_8014D0E8, 0x01DF7FCF, 2);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B77C);
 
@@ -156,7 +175,16 @@ void func_8013C6CC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C6FC);
+void func_8013C6FC(void) {
+    func_8004E58C();
+    func_8004E788(-0x40, 0x20, 0xF, "新たにゲームを始めますか？", 0);
+    func_8004E788(-0x40, 0x30, 0xF, D_800B3C70, 0);
+    func_8004E788(0x14, 0x30, 1, func_8006CA9C(), 0);
+    func_8004E788(-0x40, 0x40, 0xF, D_800B3C88, 0);
+    func_8004E788(0x14, 0x40, 2, func_8006CAE0(), 0);
+    func_8004E884(5);
+    func_8004284C();
+}
 
 void func_8013C7C0(void) {
     if (D_800E6280.unk_F88 & 0x800) {
@@ -170,7 +198,17 @@ void func_8013C7C0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C834);
+void func_8013C834(void) {
+    func_8004E58C();
+    func_8004E788(-0x40, 0x20, 0xF, "メモリーカードを", 0);
+    func_8004E788(-0x40, 0x30, 1, "差し込み口１", 0);
+    func_8004E788(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
+    func_8004E788(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
+    func_8004E788(-0x40, 0x40, 1, func_8006CA9C(), 0);
+    func_80053D10();
+    func_8004E884(5);
+    func_8004284C();
+}
 
 void func_8013C8FC(void) {
     if (D_800E6280.unk_F88 & 0x20) {
@@ -216,7 +254,17 @@ void func_8013D7F4(void) {
     func_8013B1D8();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D874);
+void func_8013D874(void) {
+    func_8004E58C();
+    func_8004E788(-0x40, 0x20, 0xF, "このゲームのデータがありません", 0);
+    func_8004E788(-0x40, 0x30, 0xF, "新たにアルバムを作成し、", 0);
+    func_8004E788(-0x40, 0x40, 0xF, "ゲームをプレイしますか？", 0);
+    func_8004E788(-0x40, 0x50, 0xF, "　　はい…　　いいえ…　", 0);
+    func_8004E788(6, 0x50, 1, func_8006CA9C(), 0);
+    func_8004E788(0x5A, 0x50, 2, func_8006CAE0(), 0);
+    func_8004E884(6);
+    func_8004284C();
+}
 
 void func_8013D954(void) {
     if (D_800E6280.unk_F88 & 0x20) {
@@ -283,7 +331,16 @@ void func_8013DC54(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013DC84);
+void func_8013DC84(void) {
+    func_8004E58C();
+    func_8004E788(-0x40, 0x20, 0xF, "システムファイルを作成しますか", 0);
+    func_8004E788(-0x40, 0x30, 0xF, D_800B3C70, 0);
+    func_8004E788(0x14, 0x30, 1, func_8006CA9C(), 0);
+    func_8004E788(-0x40, 0x40, 0xF, D_800B3C88, 0);
+    func_8004E788(0x14, 0x40, 2, func_8006CAE0(), 0);
+    func_8004E884(5);
+    func_8004284C();
+}
 
 void func_8013DD48(void) {
     if (D_800E6280.unk_F88 & 0x820) {
@@ -348,7 +405,26 @@ void func_8013E6A8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E71C);
+/* Packed date word: day in bits 0-3, month in bits 4-8, week in bits 9-10. */
+typedef struct NameDate {
+    u32 day : 4;
+    u32 month : 5;
+    u32 week : 2;
+    u32 rest : 21;
+} NameDate;
+
+void func_8013E71C(void) {
+    func_800AE0A0(D_8014D070, &D_800E6280.unk_0D4, 8);
+    func_800AE0A0(D_8014D078, &D_800E6280.unk_0DC, 8);
+    func_800AE0A0(D_8014D080, &D_800E6280.unk_0E4, 0xC);
+    D_8014D08C = ((NameDate *)&D_800E6280.unk_0F8)->day - 1;
+    D_8014D090 = ((NameDate *)&D_800E6280.unk_0F8)->month - 1;
+    D_8014D094 = (((NameDate *)&D_800E6280.unk_0F8)->week + 3) & 3;
+    D_8014D098 = ((NameDate *)&D_800E6280.unk_1BC[0].unk_10.w)->day - 1;
+    D_8014D09C = ((NameDate *)&D_800E6280.unk_1BC[0].unk_10.w)->month - 1;
+    D_8014D0A0 = (((NameDate *)&D_800E6280.unk_1BC[0].unk_10.w)->week + 3) & 3;
+    D_8014D0A4 = 1;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E80C);
 
@@ -437,7 +513,20 @@ void func_8013FDC8(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013FE40);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013FF98);
+void func_8013FF98(void) {
+    if (D_800E6280.unk_110D == 0) {
+        if (func_80054704(D_800E6280.unk_1118) == 1) {
+            func_800AE0B0("DELETE OK");
+            D_800E7D14[D_800E6280.unk_1118] = 0;
+            func_80042940(0);
+            D_800E6280.unk_110D = 2;
+            return;
+        }
+        func_80053D10();
+        func_80056284();
+        func_80042908(1);
+    }
+}
 
 void func_80140024(void) {
     func_80042940(0);
@@ -498,9 +587,41 @@ void func_80140D20(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140D6C);
+/* NON_MATCHING: T-8050, the original loads the end symbol address twice (hoisted copy in the loop, fresh one after it) */
+#ifdef NON_MATCHING
+void func_80140D6C(void) {
+    u8 *p;
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140E18);
+    if (D_800E6280.unk_F88 & 0x860) {
+        for (p = (u8 *)&D_800E7D10; p != &D_800E7D1F; p++) {
+            if (p[4] == 1) {
+                break;
+            }
+        }
+        if (p == &D_800E7D1F) {
+            func_8004284C();
+            return;
+        }
+        func_80042908(2);
+        if (D_800E8BEE != 0) {
+            func_80042940(1);
+            return;
+        }
+        func_80042940(0x20);
+    }
+}
+#else
+INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140D6C);
+#endif
+
+void func_80140E18(void) {
+    func_8004E58C();
+    func_8004E788(-0x40, 0x20, 0xF, "別のメモリーカードを差し込み口", 0);
+    func_8004E788(-0x40, 0x30, 0xF, "１にセットするか、他のゲームの", 0);
+    func_8004E788(-0x40, 0x40, 0xF, "データを消去してください。", 0);
+    func_8004E884(2);
+    func_8004284C();
+}
 
 void func_80140E9C(void) {
     if (D_800E6280.unk_F88 & 0x860) {

@@ -248,4 +248,6 @@ s32 func_80132290(void);
 extern u8 D_8013A2AC;
 void func_801341E8(void);
 
+void func_80138F54(void);
+
 #endif /* OVL_KANGEI_H */

@@ -475,4 +475,6 @@ extern u8 D_8013B090;
 void func_801378F0(void);
 void func_80134560(void);
 
+void func_80133A68(void);
+
 #endif /* OVL_SHUGAKU_H */

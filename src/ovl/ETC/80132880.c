@@ -1256,7 +1256,32 @@ void func_80137920(void) {
     *(s16 *)&D_80120650[0x6E] = -0x65;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_80137A14);
+/* One 0x44-byte sprite record of the D_80120650 table, copied as a whole. */
+typedef struct EtcRec44 {
+    s32 w[0x11];
+} EtcRec44;
+
+void func_80137A14(void) {
+    func_80133F2C();
+    load_palette(D_8014ED90, 0x11, 1, 2, 0);
+    func_800850D4(D_8014ED84, D_8014ED88, D_8014ED80, D_8014ED8C);
+    D_80120650[0x48] = 8;
+    D_80120650[4] = 8;
+    D_80120650[0x45] = 0xB;
+    D_80120650[1] = 0xB;
+    *(EtcRec44 *)&D_80120650[0x88] = *(EtcRec44 *)D_80120650;
+    D_80120650[0x8A] = 0x40;
+    *(s16 *)&D_80120650[0xA0] = 0x14;
+    D_80120650[0x8B] |= 0x80;
+    D_80120650[0x8F] = 0x80;
+    *(s16 *)&D_80120650[0xB2] = -0x65;
+    D_80120650[3] |= 0x80;
+    D_80120650[7] = 0x80;
+    *(s16 *)&D_80120650[0x2A] = -0x65;
+    D_80120650[0x47] |= 0x80;
+    D_80120650[0x4B] = 0x80;
+    *(s16 *)&D_80120650[0x6E] = -0x65;
+}
 
 void func_80137B88(void) {
     func_80133FEC();
@@ -1271,7 +1296,20 @@ void func_80137B88(void) {
     *(s16 *)&D_80120650[0x6E] = -0x65;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_80137C7C);
+void func_80137C7C(void) {
+    func_8013409C();
+    load_palette(D_8014EDEC, 0x11, 1, 2, 0);
+    func_80136948(D_8014EDF0, D_8014EDF4, D_8014EDF8, D_8014EDFC, D_8014EE00, D_8014EE04);
+    func_800850D4(D_8014EDE0, D_8014EDE4, D_8014EDDC, D_8014EDE8);
+    *(EtcRec44 *)&D_80120650[0x44] = *(EtcRec44 *)D_80120650;
+    *(s16 *)&D_80120650[0x5A] = 3;
+    D_80120650[3] |= 0x80;
+    D_80120650[7] = 0x80;
+    *(s16 *)&D_80120650[0x2A] = -0x65;
+    D_80120650[0x47] |= 0x80;
+    D_80120650[0x4B] = 0x80;
+    *(s16 *)&D_80120650[0x6E] = -0x65;
+}
 
 void func_80137DC4(void) {
     func_8013414C();
@@ -1551,7 +1589,24 @@ void func_801394F4(void) {
     *(s16 *)&D_80120650[0x6E] = -0x65;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_801395E8);
+void func_801395E8(void) {
+    func_801344BC();
+    if (D_80150048 == 0) {
+        load_palette(D_8014EEF4, 0x11, 1, 2, 0);
+    } else if (D_80150048 == 1) {
+        load_palette(D_8014EEF4, 0x11, 1, 2, 1);
+    } else if (D_80150048 == 2) {
+        load_palette(D_8014EEF4, 0x11, 1, 2, 2);
+    }
+    func_80136948(D_8014EEF8, D_8014EEFC, D_8014EF00, D_8014EF04, D_8014EF08, D_8014EF0C);
+    func_800850D4(D_8014EEE8, D_8014EEEC, D_8014EEE4, D_8014EEF0);
+    D_80120650[3] |= 0x80;
+    D_80120650[7] = 0x80;
+    *(s16 *)&D_80120650[0x2A] = -0x65;
+    D_80120650[0x47] |= 0x80;
+    D_80120650[0x4B] = 0x80;
+    *(s16 *)&D_80120650[0x6E] = -0x65;
+}
 
 void func_80139748(void) {
     func_8013456C();
@@ -1873,6 +1928,39 @@ void func_8013AE58(void) {
     func_800850D4(0, 0, 0, 0);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_8013AEE4);
+void func_8013AEE4(void) {
+    func_80134CD0();
+    if (D_80150058 >= 6 && D_80150058 < 0xA) {
+        load_palette(D_8014F0F4, 0x11, 1, 2, 0);
+        func_80136948(D_8014F0FC, D_8014F100, D_8014F104, D_8014F108, D_8014F10C, D_8014F110);
+        func_800850D4(D_8014F0E8, D_8014F0EC, D_8014F0E4, D_8014F0F0);
+    } else {
+        load_palette(D_8014F0F8, 0x11, 1, 2, 0);
+        func_80136948(D_8014F114, D_8014F118, D_8014F11C, D_8014F120, D_8014F124, D_8014F128);
+        func_800850D4(D_8014F0E8, D_8014F0EC, D_8014F0E4, D_8014F0F0);
+    }
+    D_80120650[3] |= 0x80;
+    D_80120650[7] = 0x80;
+    *(s16 *)&D_80120650[0x2A] = -0x65;
+    D_80120650[0x47] |= 0x80;
+    D_80120650[0x4B] = 0x80;
+    *(s16 *)&D_80120650[0x6E] = -0x65;
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132880", func_8013B078);
+void func_8013B078(void) {
+    func_8013484C();
+    if (D_80150058 >= 6 && D_80150058 < 0xA) {
+        load_palette(D_8014EFD0, 0x11, 1, 2, 0);
+        func_80136948(D_8014EFD8, D_8014EFDC, D_8014EFE0, D_8014EFE4, D_8014EFE8, D_8014EFEC);
+    } else {
+        load_palette(D_8014EFD4, 0x11, 1, 2, 0);
+        func_80136948(D_8014EFF0, D_8014EFF4, D_8014EFF8, D_8014EFFC, D_8014F000, D_8014F004);
+    }
+    func_800850D4(D_8014EFC4, D_8014EFC8, D_8014EFC0, D_8014EFCC);
+    D_80120650[3] |= 0x80;
+    D_80120650[7] = 0x80;
+    *(s16 *)&D_80120650[0x2A] = -0x65;
+    D_80120650[0x47] |= 0x80;
+    D_80120650[0x4B] = 0x80;
+    *(s16 *)&D_80120650[0x6E] = -0x65;
+}

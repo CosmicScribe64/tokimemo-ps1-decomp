@@ -80,6 +80,38 @@ void func_80146DC8(u8 *arg0) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80146E10);
 
+/* NON_MATCHING: T-8050, constant registers s3/s4 (8 and 0x20) allocated in the other order */
+#ifdef NON_MATCHING
+void func_80147074(void) {
+    s32 i;
+    u8 *p;
+
+    i = 0;
+    p = D_80158A84;
+    for (; i < 8; i++) {
+        if (p[0] != 0 && p[1] == 0) {
+            switch (*(u16 *)(p + 4)) {
+            case 0x20:
+                func_80146C74(p, i);
+                *(u16 *)(p + 4) = 0x40;
+                *(s16 *)(p + 0xA) = 0;
+                *(s16 *)(p + 8) = 0;
+                *(s16 *)(p + 6) = 0;
+                p[0xF] = 0;
+                p[0xE] = 0;
+                p[0xD] = 0;
+                break;
+            case 0x40:
+                func_80146DC8(p);
+                break;
+            }
+            func_80146E10(p, i);
+        }
+        p += 0x58;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80147074);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80147150);

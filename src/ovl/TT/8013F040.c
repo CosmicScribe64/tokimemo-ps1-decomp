@@ -35,7 +35,34 @@ void func_8013F5F8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F650);
+void func_8013F650(void) {
+    u8 *p;
+    u8 *q;
+    s32 d;
+    s32 a;
+
+    p = D_80158A8C;
+    q = D_80158A74;
+    d = *(s32 *)(q + 0x20) - *(s32 *)(p + 0x3E4);
+    a = d < 0 ? -d : d;
+    if (a < 0x4000) {
+        *(s32 *)(p + 0x3E4) = *(s32 *)(q + 0x20);
+    } else if (d < 0) {
+        *(s32 *)(p + 0x3E4) -= 0x4000;
+    } else {
+        *(s32 *)(p + 0x3E4) += 0x4000;
+    }
+    if (*(s32 *)(p + 0x3E4) < -0x400000) {
+        *(s32 *)(p + 0x3E4) = -0x400000;
+    } else if (*(s32 *)(p + 0x3E4) > 0x400000) {
+        *(s32 *)(p + 0x3E4) = 0x400000;
+    }
+    *(s32 *)(p + 0x20) = *(s32 *)(p + 0x3E4) + (func_800A0070(*(s32 *)(p + 0x3E8)) << 9);
+    *(s32 *)(p + 0x3E8) += 8;
+    if (*(s32 *)(p + 0x3E8) > 0x1000) {
+        *(s32 *)(p + 0x3E8) = 0;
+    }
+}
 
 void func_8013F748(void) {
     u8 *p = D_80158A8C;

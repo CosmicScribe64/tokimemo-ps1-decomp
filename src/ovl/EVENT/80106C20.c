@@ -71,7 +71,28 @@ void func_80106EE0(void) {
     D_80123508 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80106F90);
+void func_80106F90(void) {
+    switch (D_800EECB0) {
+    case 1:
+        func_80107030();
+        return;
+    case 2:
+        func_80107A28();
+        return;
+    case 3:
+        func_80107BB0();
+        return;
+    case 4:
+        func_80107CEC();
+        return;
+    case 5:
+        func_80107E20();
+        return;
+    default:
+        func_80015FE0();
+        return;
+    }
+}
 
 void func_80107030(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
@@ -123,7 +144,25 @@ void func_80107354(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_801073FC);
+void func_801073FC(void) {
+    D_80120678 = D_80120400;
+    D_8012067C = D_80120418;
+    D_80120680 = D_80120430;
+    func_80106CD0();
+    func_80012D64(D_8012346C, 0x11, 1, 2, 0);
+    func_8004C46C(D_80123470, D_80123474, D_80123478, D_8012347C, D_80123480, D_80123484);
+    func_8004C6B0(D_80123460, D_80123464, D_8012345C, (s32)D_80123468);
+    D_800B0A04[4].unk_02 += 2;
+    D_800B0A04[4].unk_06 += 1;
+    D_800B0A04[4].unk_0A -= 0x14;
+    func_8004C250();
+    D_800B0A04[4].unk_02 += 3;
+    D_800B0A04[4].unk_06 += 2;
+    D_800B0A04[4].unk_0A -= 0x14;
+    *(s16 *)((u8 *)D_800B0A04 - 0xB6) += 0xA; /* D_800B094E, addressed from the table so the load keeps its place */
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_80107564(void) {
     D_80120678 = D_80120404;

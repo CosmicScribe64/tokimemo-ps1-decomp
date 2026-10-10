@@ -27,7 +27,17 @@ void func_80133B3C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133B70);
+void func_80133B70(void) {
+    s32 i;
+    u8 *p;
+
+    i = 0;
+    p = D_80158AA0;
+    for (; i < 0x80; i++) {
+        *p = 0;
+        p += 0x68;
+    }
+}
 
 u8 *func_80133BA4(u8 *arg0, u8 *arg1) {
     while (arg0 < arg1) {

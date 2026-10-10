@@ -41,7 +41,35 @@ void func_80145454(void) {
     func_800578F4(1);
 }
 
+/* NON_MATCHING: T-8050, the original moves the last record-byte store into the bne delay slot (offset adjusted), IDO keeps it before the branch */
+#ifdef NON_MATCHING
+void func_801454CC(void) {
+    s32 i;
+    u8 *p;
+
+    p = D_8011ECD0;
+    i = 0;
+    for (; i < 8; i++) {
+        func_80048F64(i + 0x60);
+        p[0x1981] = 0xA;
+        p[0x1982] = 1;
+        *(s32 *)(p + 0x19B8) = 0x41000000;
+        p[0x1983] = 0xA4;
+        *(s32 *)(p + 0x198C) = 0x80184228;
+        *(s32 *)(p + 0x1990) = 0x80184258;
+        *(s32 *)(p + 0x19B4) = 0x80184224;
+        *(s16 *)(p + 0x1996) = 0;
+        *(s16 *)(p + 0x1998) = func_800AE0D0() & 7;
+        p[0x1985] = 0x80;
+        *(s16 *)(p + 0x19A6) = func_800AE0D0() % 440 - 0xA0;
+        *(s16 *)(p + 0x19AA) = -0x78 - func_800AE0D0() % 120;
+        p[0x1987] = func_800AE0D0();
+        p += 0x44;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801454CC);
+#endif
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801455E4);
 

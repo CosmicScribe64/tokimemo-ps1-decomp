@@ -266,7 +266,29 @@ void func_800FCDA0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FCDD8);
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+extern FnTbl39 D_80121404;
+
+void func_800FCDD8(void) {
+    s32 idx; /* FAKE: unused, declared before tbl for its stack slot (T-3330) */
+    FnTbl39 tbl;
+    u32 r;
+
+    tbl = D_80121404;
+    tbl.f[D_800B1AF6](0x80);
+    if (D_800B1AF6 >= 0xD && D_800B1AF6 < 0x10) {
+        r = D_800B1AE4 % 180;
+        if (r == (D_800B1AE4 * 0)) { /* FAKE: permuter find, the no-op multiply moves the load into $v1 */
+            func_800FCFA4();
+            r = D_800B1AE4 % 180;
+        }
+        if (r == 0x5A) {
+            func_800FCFC4();
+        }
+    }
+}
 
 void func_800FCEBC(void) {
     func_80015D28(0x3D, 0x801B0000, 0x7E09);

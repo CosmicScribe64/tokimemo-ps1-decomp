@@ -108,4 +108,22 @@ void func_80142E24();
 void func_80143580();
 s32 func_80140CCC(void);
 
+extern s32 D_8014D0E0;
+extern s32 D_8014D0E4;
+extern s32 D_8014D0E8;
+extern s32 D_8014D0EC;
+extern s32 D_8014D0F0;
+void func_8013B59C(void);
+
+extern u8 D_8014D070[];
+extern u8 D_8014D078[];
+extern u8 D_8014D080[];
+extern s8 D_8014D08C;
+extern s8 D_8014D090;
+extern s8 D_8014D094;
+extern s8 D_8014D098;
+extern s8 D_8014D09C;
+extern s8 D_8014D0A0;
+extern s8 D_8014D0A4;
+
 #endif /* OVL_NAME_ENT_H */
