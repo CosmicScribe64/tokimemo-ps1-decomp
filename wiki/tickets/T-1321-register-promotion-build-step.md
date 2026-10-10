@@ -4,7 +4,7 @@ title: Build step for the register-promotion gap
 status: Done
 assignee: opus-agent (o-t0018)
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-10
 links: ["[[tickets/T-0018-ugen-temp-register-order]]", "[[tickets/T-1320-tooling-work-queue-and-blocker-detector]]", "[[matching-notes]]", "[[toolchain]]", "[[data/t0018-cases]]", "[[tickets/T-3000-rematch-rv-functions-with-cvt-pass]]", "[[tickets/T-3001-shared-constant-registers]]", "[[tickets/T-3002-remaining-promotion-shapes]]"]
 ---
 
@@ -46,3 +46,4 @@ When a function is skipped because of this gap, append one row to [[data/t0018-c
 
 2026-10-09 merge with main (per-object layout, 2734 matched). The pass changes 26 of main's matched functions (20 `$v0` switches on unsigned globals, 4 promotions the original does not make, 2 FAKE masks it would make unnecessary); no rule on the C or the ucode separates the original's `$v0` and `$v1` switches (same C). Per the adoption gate it is taken out of the build (`tools/cc.py` keeps an `extra_shims` hook; tool and tests stay). Added a constant-first rule for `==`/`!=` (DATE `func_8013E184`, GEKO `func_8013F02C`). Ported the 13 plain-C matches into the per-object files; the 40 pass-only matches stay scratch. Clean build 27/27, `check_headers` OK, `ninja progress` 2747/6958 (main 2734 + 13). Detector retune left to [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]], which now also holds the open decision (encode the original's non-promotable selectors in C, e.g. as struct or array members, then enable the pass).
 
+2026-10-10 (T-5010): the pass is in the build. Two rules added (entry: only variables touched before the procedure's first call, branch or label; compare: the `CVT` goes only where the value is compared or switched on). With them it changes 17 of 3649 matched functions, 16 on unit-private data plus ETC `func_80145960`, all rewritten as `FAKE` local copies; the 40 pass-only bodies of this ticket are matched in the build. [[tickets/T-5010-t0018-register-order-second-attempt]].

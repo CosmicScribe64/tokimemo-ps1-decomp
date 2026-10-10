@@ -170,8 +170,16 @@ void func_80070F14(void) {
     func_80066C08(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80070F80);
-
+void func_80070F80(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_8007132C();
+        break;
+    case 1:
+        func_80070FD0();
+        break;
+    }
+}
 void func_80070FD0(void) {
     if (D_800E738D == 0) {
         func_80067438();
@@ -207,12 +215,59 @@ void func_8007259C(u8 arg0) {
     D_800E699D = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800725B0);
-
+void func_800725B0(void) {
+    switch (D_800E7389) {
+    case 0:
+        func_800726F0();
+        break;
+    case 1:
+        D_800E699C += 1;
+        func_80042878(0x31);
+        break;
+    }
+    if (D_8011F113 & 0x80) {
+        hizuke_show();
+    }
+    if (D_8011ED17 & 0x80) {
+        message_window_show();
+    }
+    if (D_8011F553 & 0x80) {
+        parameter_show();
+    }
+    if (*D_8011F3FF & 0x80) {
+        func_80067870();
+    }
+    if (D_8011ECD3 & 0x80) {
+        func_8006BA40();
+    }
+    func_800578F4(get_last_gamen_mode());
+    parameter_show();
+    message_window_show();
+    hizuke_show();
+    func_80065B0C(0);
+    func_80067870();
+    func_80066C08(0);
+}
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800726F0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800728A4);
-
+void func_800728A4(void) {
+    switch (D_800E7389) {
+    case 0:
+        func_80072944();
+        break;
+    case 1:
+        D_800E699C += 1;
+        func_80042878(0x31);
+        break;
+    }
+    func_800578F4(get_last_gamen_mode());
+    parameter_show();
+    message_window_show();
+    hizuke_show();
+    func_80065B0C(0);
+    func_80067870();
+    func_80066C08(1);
+}
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072944);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072998);
@@ -237,8 +292,27 @@ s32 func_80072B5C(s32 arg0) {
     /* no return on this path: the original leaves $v0 as the call result */
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072BC0);
-
+void func_80072BC0(void) {
+    switch (D_800E7389) {
+    case 0x0:
+        func_80072C68();
+        break;
+    case 0x1:
+        func_80072CA0();
+        break;
+    default:
+    case 0xFF:
+        func_800737A0();
+        break;
+    }
+    parameter_show();
+    message_window_show();
+    hizuke_show();
+    func_80065B0C(0);
+    func_80067870();
+    func_80066C08(1);
+    func_800578F4(get_last_gamen_mode());
+}
 void func_80072C68(void) {
     parameter_show_init();
     hizuke_init();

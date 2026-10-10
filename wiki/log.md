@@ -543,3 +543,15 @@ Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 m
 
 ## [2026-10-10] tooling run | dupes + neardupes after wave 3
 tools/dupes.py kept 77 of 79 exact copies and tools/neardupes.py kept 17 of 31 near copies (3668 bytes). Clean build 27/27 OK, 3438/6958, 18.6% of code bytes.
+
+## [2026-10-10] ticket | T-5010 T-0018 register order, second attempt (created -> In Progress)
+[[tickets/T-5010-t0018-register-order-second-attempt]]. Worktree r3-regs. Compare the original's `$v0` and `$v1` switches on every observable source property first (lesson of [[tickets/T-3330-local-fptab-frame-layout]]), then compiler rules; retune the queue detector.
+
+## [2026-10-10] decision | cvt_pass.py in the build with entry and compare rules (T-5010)
+Scripts over all 839 compare chains of the original and a per-function rebuild of the 3649 matched C functions: the `$v0`/`$v1` split has two causes. Compiler: a global first touched after a call or branch is not promoted (main-exe unsigned chains: entry `$v1` 260/283, after a call `$v0` 135/155). Source: unit-private data (used by one overlay or main file) keeps `$v0` (28/30) where shared state is `$v1` (258/270), most likely variables defined in the unit; written as a `FAKE` local copy (16 functions). Plus a compare rule (the `CVT` goes only where the value is compared or switched on). `tools/cvt_pass.py` gets the two rules and goes into `tools/cc.py` `SHIMS`; it then changes no matched function. Details: [[matching-notes]] "Selector register rule (T-5010)", [[toolchain]], [[original-compiler]].
+
+## [2026-10-10] build | T-5010 clean build
+`rm -rf asm build; configure.py; ninja`: 27 of 27 sha1 OK, headers OK, `ninja progress` 3438 -> 3482 of 6958 (44 functions, 6008 bytes: the 40 pass-only bodies of [[tickets/T-1321-register-promotion-build-step]] and 4 more). Detector (`tools/entry_rule.py`, hook in `tools/queue.py`): R/V/U1 558 -> 264 functions, any blocker 1205 -> 896.
+
+## [2026-10-10] ticket | T-5010 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS 7, 7a, 8a, 9, 11, 13 recorded in [[tickets/T-5010-t0018-register-order-second-attempt]]; no open findings. Notes added to [[tickets/T-0018-ugen-temp-register-order]], [[tickets/T-1321-register-promotion-build-step]], [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]], [[data/t0018-cases]], [[decompile-workflow]].

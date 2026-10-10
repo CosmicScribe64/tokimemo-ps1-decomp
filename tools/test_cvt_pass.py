@@ -102,8 +102,64 @@ class Strip(unittest.TestCase):
         self.assertEqual(names(out), names(insns))
 
     def test_store_of_same_type_allowed(self):
-        out, _ = run_pre([lod(L, 6), widen(), ldc(1), op("add"), rec("cvt", L, 0, 0, 0, J << 24, 0), st(L, 6)])
-        self.assertEqual(names(out)[:3], ["lodL6", "ldc", "add"])
+        # a store of the same unsigned type does not disqualify the variable (its compare is rewritten)
+        out, _ = run_pre([lod(L, 6), widen(), ldc(1), op("equ"), fjp(), lod(L, 6), rec("inc", L, 0, 0, 1), st(L, 6)])
+        self.assertEqual(names(out)[:3], ["lodL6", "ldc", "equ"])
+
+
+def cup():
+    return rec("cup", cp.DTYPES.index("P"), 0, 0, 7, 0, 0)
+
+
+class EntryRule(unittest.TestCase):
+    """T-5010: only a variable that the procedure touches before its first call, branch or label is
+    rewritten (the original's $v0 switches and compare chains follow a call or a branch)."""
+
+    def test_after_a_call_keeps_cvt(self):
+        insns = proc(cup(), lod(L, 6), widen(), ldc(1), op("equ"), fjp())
+        out, locs = run_pre(insns)
+        self.assertEqual(names(out), names(insns))
+        self.assertEqual(locs, set())
+
+    def test_after_a_branch_keeps_cvt(self):
+        insns = proc(lod(J, 8, 4), fjp(), lod(L, 6), widen(), ldc(1), op("equ"), fjp())
+        out, _ = run_pre(insns)
+        self.assertEqual(names(out), names(insns))
+
+    def test_entry_reference_covers_later_loads(self):
+        # first compare at entry; the compare after the call is rewritten too
+        out, _ = run_pre(proc(lod(L, 6), widen(), ldc(0), op("equ"), fjp(), cup(),
+                              lod(L, 6), widen(), ldc(1), op("equ"), fjp()))
+        self.assertEqual(names(out).count("cvt"), 0)
+
+    def test_per_procedure(self):
+        out, _ = run_pre(proc(lod(L, 6), widen(), ldc(0), op("equ"), fjp())
+                         + proc(cup(), lod(L, 6), widen(), ldc(0), op("equ"), fjp()))
+        self.assertEqual(names(out).count("cvt"), 1)
+
+
+class CompareRule(unittest.TestCase):
+    """T-5010: the widening is removed only where the value is compared or switched on."""
+
+    def test_assignment_keeps_cvt(self):
+        insns = [lod(L, 6), widen(), st(J, 3, 4, (-4) & 0xFFFFFFFF, mtype=M)]
+        out, locs = run_pre(insns)
+        self.assertEqual(names(out), names(insns))
+        self.assertEqual(locs, set())
+
+    def test_arithmetic_keeps_cvt(self):
+        insns = [lod(L, 6), widen(), ldc(25), op("mpy"), st(J, 9, 4)]
+        out, _ = run_pre(insns)
+        self.assertEqual(names(out), names(insns))
+
+    def test_compare_after_other_operand(self):
+        # the compare consumes the value although the other operand is pushed in between
+        out, _ = run_pre([lod(L, 6), widen(), lod(J, 8, 4), op("neq"), fjp()])
+        self.assertNotIn("cvt", names(out))
+
+    def test_switch_temporary(self):
+        out, _ = run_pre([lod(L, 6), widen(), vreg(), st(J, 3, 4, (-4) & 0xFFFFFFFF, mtype=M)])
+        self.assertNotIn("cvt", names(out))
 
 
 class EqualityOrder(unittest.TestCase):
@@ -180,6 +236,14 @@ class SwitchTemporaries(unittest.TestCase):
         out = cp.copy_propagation_options(proc(lod(L, 6), widen(), st(J, 3, 4, (-4) & 0xFFFFFFFF, mtype=M)))
         self.assertEqual(zcopy(out), [1])
 
+    def test_switch_after_a_call_keeps_it(self):
+        out = cp.copy_propagation_options(proc(cup(), *self.temp_store(lod(L, 6))))
+        self.assertEqual(zcopy(out), [1])
+
+    def test_switch_after_a_branch_keeps_it(self):
+        out = cp.copy_propagation_options(proc(lod(J, 8, 4), fjp(), *self.temp_store(lod(L, 6))))
+        self.assertEqual(zcopy(out), [1])
+
     def test_one_record_per_procedure(self):
         out = cp.copy_propagation_options(proc(*self.temp_store(lod(L, 6))) + proc(lod(J, 6), st(J, 7)))
         self.assertEqual(zcopy(out), [0, 1])
@@ -212,7 +276,7 @@ void f(void) { if (D == 0) { if (h() == 1) { g(); D++; } } else if (D == 1) { g(
             src = os.path.join(tmp, "t.c")
             with open(src, "w") as f:
                 f.write(text)
-            env = cc.ido_frame_env("5.3", lib, {"uopt": cc.CVT_PASS} if with_pass else None)
+            env = cc.ido_frame_env("5.3", lib, {"uopt": cc.CVT_PASS if with_pass else None})
             flags = [a for a in cc.IDO_CFLAGS if a != "-Iinclude"]
             subprocess.run(["/opt/ido/5.3/cc"] + flags + ["-o", os.path.join(tmp, "t.o"), src],
                            check=True, env=env)
@@ -238,6 +302,19 @@ void f(void) { switch (D) { case 0: g0(); break; case 1: g1(); break; } }
 void f(void) { unsigned char m = D; switch (m) { case 0: g0(); break; case 1: g1(); break; } }
 """)
         self.assertIn("lbu\tv0,0(v0)", dis)
+
+    def test_switch_after_a_call(self):
+        dis = self.compile("""extern unsigned char D; extern void g0(void), g1(void), h(void);
+void f(void) { h(); switch (D) { case 0: g0(); break; case 1: g1(); break; } }
+""")
+        self.assertIn("lbu\tv0,0(v0)", dis)
+
+    def test_copied_value_not_promoted(self):
+        # assignments and call arguments keep the CVT: base register $v0, value in $a0
+        dis = self.compile("""extern unsigned char D, E, F; extern void g(int);
+void f(void) { E = D; F = D; g(D); }
+""")
+        self.assertIn("lbu\ta0,0(v0)", dis)
 
     def test_without_pass_ido_differs(self):
         dis = self.compile(self.SOURCE, with_pass=False)

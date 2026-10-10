@@ -4,7 +4,7 @@ title: Re-match R/V-flagged functions with cvt_pass.py and retune the T-0018 det
 status: Backlog
 assignee:
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-10
 links: ["[[tickets/T-1321-register-promotion-build-step]]", "[[tickets/T-1320-tooling-work-queue-and-blocker-detector]]", "[[matching-notes]]", "[[data/t0018-cases]]"]
 ---
 
@@ -29,3 +29,4 @@ Open decision (T-1321 merge): `tools/cvt_pass.py` is not in the build because 20
 ## Comments
 
 - 2026-10-09: the detector part is done in [[tickets/T-3340-shared-main-prototypes-and-byte-queue]] (R/V only for unsigned narrow loads, `U0`/`U1` switch selectors blocked-unknown, `T` hint, recalibrated; numbers in [[matching-notes]]). Open here: re-matching the flagged functions and the decision on `tools/cvt_pass.py`. Status unchanged.
+- 2026-10-10 (T-5010): open decision resolved: `tools/cvt_pass.py` is in the build (entry and compare rules; unit-private selectors as `FAKE` local copies). The 40 pass-only matches of T-1321 and 4 more are in the build; the detector flags only what the pass cannot reproduce (R/V/U1 558 -> 264 functions). Left here: re-matching the remaining rows and R/V functions. Status unchanged.

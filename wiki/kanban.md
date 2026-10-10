@@ -36,6 +36,8 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-5010-t0018-register-order-second-attempt|T-5010 T-0018 register order, second attempt]]
+
 - [x] [[tickets/T-4010-wave-3-list-1|T-4010 Wave 3: list 1]]
 
 - [x] [[tickets/T-4040-wave-3-list-4|T-4040 Wave 3: list 4]]

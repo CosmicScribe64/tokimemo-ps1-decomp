@@ -95,8 +95,20 @@ void func_800625F4(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062634);
-
+void func_80062634(void) {
+    D_800E7384 += 1;
+    switch (D_800E738A) {
+    case 0:
+        func_80062210();
+        return;
+    case 1:
+        func_80062524();
+        return;
+    case 2:
+        func_800625F4();
+        return;
+    }
+}
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_800626B0);
 
 void func_80062764(void) {

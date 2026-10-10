@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-09
+updated: 2026-10-10
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -373,7 +373,7 @@ Update (T-3100, [[original-compiler]]): "IDO does this only inside loops" is too
 `LoadSquare`, `StoreSquare`, `MoveSquare` (original `lhu` into `t8,t9`, IDO `t0,t1`) are unchanged by every option, flag and pass mix above, and by K&R parameter declarations; still `NON_MATCHING`.
 
 ## Unsigned-load conversion pass (T-1321)
-**Status: not in the build.** After the merge with main (per-object layout, 2734 matched functions) the pass changes 26 functions that match without it: 20 switches on unsigned globals that the original keeps in `$v0` (all of GYOZI's and SHOUGATU's, DATE2 `func_80133A6C`, SHUGAKU `func_80132760`/`func_80137C3C`/`func_80138154`, ETC `func_80145960`/`func_80145FF0`, DATE `func_801448D4`, GEKO `func_80132244`, main `func_80078A0C`), 4 promotions the original does not make (ETC `func_80145FF0`, DATE `func_801448D4`, GEKO `func_80141D74`, `func_80143EA4`; even without the switch rule), and `bustup_speech`/`bustup_wink`, whose FAKE masks it makes unnecessary. The C of the `$v0` and `$v1` switches is the same (`switch (D)` on an extern `u8`), so no rule on the C or the ucode separates them; the original's discriminator is a property of the variable that the C does not encode (T-3100's model: a promotable scalar vs struct or array data, see [[original-compiler]]). A third rule found during the merge is kept in the tool: IDO puts the constant first in `cvt(D) == k`, so after uopt the pass swaps `D == k` back (DATE `func_8013E184`, GEKO `func_8013F02C`). Open in [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]].
+**Status: in the build since T-5010** (entry and compare rules, see "Selector register rule (T-5010)" below; the rest of this section is the T-1321 history). Until then: **not in the build.** After the merge with main (per-object layout, 2734 matched functions) the pass changes 26 functions that match without it: 20 switches on unsigned globals that the original keeps in `$v0` (all of GYOZI's and SHOUGATU's, DATE2 `func_80133A6C`, SHUGAKU `func_80132760`/`func_80137C3C`/`func_80138154`, ETC `func_80145960`/`func_80145FF0`, DATE `func_801448D4`, GEKO `func_80132244`, main `func_80078A0C`), 4 promotions the original does not make (ETC `func_80145FF0`, DATE `func_801448D4`, GEKO `func_80141D74`, `func_80143EA4`; even without the switch rule), and `bustup_speech`/`bustup_wink`, whose FAKE masks it makes unnecessary. The C of the `$v0` and `$v1` switches is the same (`switch (D)` on an extern `u8`), so no rule on the C or the ucode separates them; the original's discriminator is a property of the variable that the C does not encode (T-3100's model: a promotable scalar vs struct or array data, see [[original-compiler]]). A third rule found during the merge is kept in the tool: IDO puts the constant first in `cvt(D) == k`, so after uopt the pass swaps `D == k` back (DATE `func_8013E184`, GEKO `func_8013F02C`). Open in [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]].
 
 Ticket [[tickets/T-1321-register-promotion-build-step]]; tool `tools/cvt_pass.py` ([[toolchain]]). Supersedes the "Not solved" verdict of the T-0018 section above: IDO 5.3 does keep globals in registers across blocks and calls in straight-line code (a `s32` global compared and reloaded after a call, GEKO `func_8013A5E8`, comes out exactly like the original); what stops it for the recorded cases is two IDO details, not the allocator.
 
@@ -408,6 +408,51 @@ Batch-agent guidance for when the pass is adopted (T-3000); with the current bui
 - The same with `$v0`: switch on a local copy (`u8 mode = D; switch (mode)`).
 - `or v0,v1,zero` in the first delay slot of the chain: the function returns `int` and has no `return` (implicit int); declare it `s32 f(void)` without a return statement (DATE2-era K&R style). Example: `func_80072944` matches as `s32 func_80072944(void) { switch (D_800E738A) { case 0: f0(); break; case 1: f1(); break; } }`.
 - A `lw` global switched in `$v1`: declare it `u32`.
+
+## Selector register rule (T-5010)
+Ticket [[tickets/T-5010-t0018-register-order-second-attempt]]. Question: what separates the original's `$v0` switches from its `$v1` switches when the C is the same `switch (D)`? Lesson of T-3330: check source properties first.
+
+Method: scripts (scratch, not committed) over every compare chain in the original (839 chains with two or more compares of a register loaded from a global, in the 6958 functions) and a full rebuild of the 3649 matched C functions with and without the pass, compared per function. Properties compared: case count and density, chain shape (`beq` chain, `bne` chain, jump table), local count and declaration order, a local copy of the selector, signedness and width of the load, calls and branches before the load, the instructions before it, the position of the function in its object, the object and overlay, and which units use the variable.
+
+Result 1, compiler rule (entry). `beq` compare chains on unsigned (`lbu`/`lhu`) main-exe globals:
+| first load of the selector | `$v1` | `$v0` | other |
+|---|---|---|---|
+| before any call, branch or label | 260 | 23 | 0 |
+| after a call | 9 | 135 | 11 |
+| after a branch or label | 5 | 35 | 1 |
+The C of `f(); switch (D)` and `switch (D)` differ only in the call, and the 14 call-first `$v0` chains call 9 different functions first (not one copied template), so this is the compiler. `tools/cvt_pass.py` now rewrites a variable only in procedures that touch it before their first call, branch or label. On the matched set this fixes 10 of the 30 functions the T-1321 rules broke (SHOUGATU `func_8013B484`, DATE `func_801448D4`, GEKO `func_80132244`/`func_80143EA4`, SHUGAKU `func_80132760`/`func_80137C3C`, ETC `func_80145FF0`, BUNKA_SD `func_80136904`, EVENT `func_8011B09C`, `bustup_speech`).
+
+Result 2, compare rule. The original keeps the `CVT` where the widened value is assigned, passed or computed with: `E = D; F = D; g(D);` is `lui v0; lbu a0,(v0)` (GEKO `func_80141D74`), `prev = D; f(); cur = D;` is not promoted (GEKO `func_8013BC74`, `func_8013BCBC`). The pass now removes a `CVT` only when the next consumer of the value is `==`, `!=`, `<`, `<=`, `>`, `>=` or a switch temporary. Fixes those 3; no other change.
+
+Result 3, source property (unit-private data). At the entry, the selector variable decides:
+| unsigned selector at the entry | `$v1` | `$v0` |
+|---|---|---|
+| shared variable (used by two or more units: main exe, overlays) | 258 | 12 |
+| unit-private variable (used by one overlay, or by one main file) | 2 | 28 |
+Unit-private examples: GYOZI's and SHOUGATU's own data (`D_801474B8`, `D_80144E14`), DATE2 `D_8013A4C0`, RPG_BAT `D_8015EB9C`; and main-exe addresses that only one overlay uses: SHUGAKU's run around `D_800CA2CC` (`D_800CA2CC..D_800CA2EC`, SHUGAKU only), EVENT's `D_800B1746`, GYOZI's `D_800F53DE`, `D_800B6D34` (only `src/main/800789E0.c`). The likeliest reading: these variables were defined in the original source file itself (overlay data, or a tentative definition the linker put in the main bss), and the original did not promote variables defined in the same unit. The ucode shows the difference (`GSYM`/`LSYM` vs `ESYM`), but the build cannot define them in C (splat owns the data, and IDO puts a tentative definition in `.bss`, not COMMON), and the pass cannot see which data a unit owns. So the C switches on a local copy marked `FAKE` (16 functions in the matched set). Tested and rejected as encodings: `static`, defined and initialized globals, struct members and arrays (the pass promotes all of them like scalars), plain `char` (same ucode as `u8`).
+- One exception on shared data: ETC `func_80145960` (`D_800E738A`, eight cases at the entry, original `$v0`), also a `FAKE` local copy.
+- The TAIIKU bytes `D_801491E0..E3` (compared against `key` in turn) are one array, `u8 D_801491E0[4]`; constant-index elements compile through `ILOD`, which the pass does not touch, so the function matches with natural C.
+
+Cross-block promotion (R/V). For a global first touched at the entry the pass reproduces the original with natural C (the 44 matches below include compare chains with `D++` after calls). For a global first read after a call or branch, none of these C shapes changes IDO's allocation: a temporary, a `register` local, a local copy written back, `do { } while (0)`, an extra block; all give fresh `$t6`/`$t7` reloads (synthetic tests, scratch). These stay blocked; the queue flags only them (R 237, V 86 functions).
+
+Proof: 44 functions matched with the pass (6008 bytes): the 40 pass-only C bodies of T-1321 (ETC 23, main 9, NAME_ENT 4, EN_NICHI 1, TACO 3) and 4 more from its sample (DATE2 `func_801329F0`, `func_80132A48`, ETC `func_80144768`, RPG_BAT `func_80136BD8`). The other 118 sample bodies do not match today (compile errors against the current headers, or other differences). Clean build 27 of 27 sha1 OK, 3482 of 6958.
+
+Batch guidance (replaces the T-1321 guidance below):
+- A switch or compare chain on an unsigned global: write `switch (D)` or `if (D == k)` on the global. The pass gives `$v1` at the entry and `$v0` after a call or branch, as the original does.
+- The asm has `$v0` at the entry (queue flag `U0`) and the variable is unit-private: switch on a local copy, `u8 sel = D; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */`. On shared data: record a row in [[data/t0018-cases]].
+- `$v1` after a call or branch (flag `U1`), or a promotion of a global first read after a call (R, V): blocked, no known C.
+
+Detector retune (`tools/entry_rule.py`, three conditions in `tools/queue.py`, tests `tools/test_entry_rule.py` and `tools/test_queue.py`). U1 now means "`$v1` selector loaded after a call or branch", U0 "`$v0` selector loaded at the entry", and R/V fire only for a global whose first load is not at the entry. Current tree (3476 functions left, 1851640 bytes):
+| | before (T-3340 rule) | after (T-5010) |
+|---|---|---|
+| U1 | 264 | 2 |
+| U0 | 216 | 196 |
+| R / V | 263 / 96 | 237 / 86 |
+| R, V or U1 (blocked by the cvt gap) | 558 functions, 353936 bytes | 264 functions, 255140 bytes |
+| blocked by any flag | 1205 functions, 828888 bytes | 896 functions, 718216 bytes |
+| matched functions flagged R, V or U1 | 42 | 1 |
+| matched functions flagged U0 | 49 | 39 |
+The promo rows of [[data/t0018-cases]] are no longer a recall target: most of them are now workable (the pass covers them), which is the point.
 
 ## Work queue and the T-0018 detector (T-1320)
 Ticket [[tickets/T-1320-tooling-work-queue-and-blocker-detector]]. `tools/docker.sh python3 tools/queue.py` (tests `tools/test_queue.py`) reads the generated `asm/` and the `INCLUDE_ASM` lines of `src/main/*.c` and `src/ovl/*.c` and ranks the 6248 remaining functions (main exe and 26 overlays): unblocked first, leaf before non-leaf, then size. Columns: size, leaf or call, call count, flags. `--files` takes address stems or overlay names, `--next N` the N best unblocked, `--blocked`, `--summary`, `--calibrate`.

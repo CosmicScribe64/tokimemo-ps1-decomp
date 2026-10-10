@@ -98,7 +98,9 @@ void func_8013801C(void) {
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138044);
 
 void func_80138154(void) {
-    switch (D_800CA2CC) {
+    u8 sel = D_800CA2CC; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
     case 0:
         bg_read_sub2(0x4237);
         break;

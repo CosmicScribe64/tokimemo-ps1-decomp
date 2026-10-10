@@ -14,24 +14,24 @@ not, number of calls, and flags:
   P  one trailing nop after the last jr (end address 12 mod 16): asm-processor needs 2 (matching-notes)
   R  T-0018 register promotion of an UNSIGNED narrow global (lbu/lhu): loaded in two or more basic
      blocks outside loops into the same register (reloaded after calls or branches). Cause (T-1321):
-     cfe widens every unsigned 8/16-bit load with a CVT that uopt treats as another expression, so the
-     global is not promoted; tools/cvt_pass.py models it but is not in the build. Signed and word
-     globals (lb/lh/lw) are not flagged: IDO 5.3 already keeps them in a register (matching-notes).
+     cfe widens every unsigned 8/16-bit load with a CVT that uopt treats as another expression.
+     tools/cvt_pass.py (in the build since T-5010) removes it for globals first touched before the
+     function's first call or branch, so R only fires when the first load comes later
+     (tools/entry_rule.py). Signed and word globals (lb/lh/lw) are not flagged: IDO 5.3 already keeps
+     them in a register (matching-notes).
   V  T-0018 register choice, same family: the first load of an unsigned narrow global goes to $v1
      while $v0 is dead and the value is read twice or more (old value of `D++` and a compare), outside
-     a switch/compare chain.
+     a switch/compare chain; same entry condition as R.
   T  not a blocker, a hint: the V shape (global loaded into $v1, $v0 dead, read twice) on a signed or
      word global (lw/lh/lb). T-1321: a `lw` global switched or compared in $v1 matches when declared
      u32 (u16 for lh): try the unsigned type before anything else.
-  U  blocked, cause unknown: a switch or compare chain at the start of the function on an unsigned
-     narrow global. The original keeps the selector in $v1 (U1) or in $v0 (U0). The C of both is the
-     same (`switch (D)` on an extern u8, T-1321): the property that decides is the variable's, not
-     something the C encodes, so the queue does not guess a cause or a fix and marks both
-     blocked-unknown (they stay out of --next and --plan). What the asm adds, measured on this tree
-     (`--calibrate`): no matched function has a U1 selector, 48 matched functions have a U0 selector, so
-     U1 needs cvt_pass.py (not in the build) and U0 usually matches with the natural C. One natural
-     attempt on a U0 function is cheap (`--include-unknown u0`); record a failure in
-     wiki/data/t0018-cases.md. `--include-unknown` (all) lets U1 through too.
+  U  a switch or compare chain at the start of the function on an unsigned narrow global that the
+     build does not reproduce with the natural `switch (D)` (T-5010, wiki/matching-notes.md "Selector
+     register rule"): U1 = selector in $v1 loaded after a call or branch (blocked); U0 = selector in
+     $v0 loaded at the entry, where cvt_pass.py gives $v1. A U0 on unit-private data (a global only
+     this overlay or file uses) matches with a switch on a local copy marked FAKE; on shared game
+     state the cause is unknown. Both stay out of --next and --plan unless `--include-unknown`
+     (u0 or all) lets them in.
 
 R, V and U are heuristics calibrated against wiki/data/t0018-cases.md and the matched functions
 (`--calibrate`, results in wiki/matching-notes.md; `--calibrate --legacy` scores the T-1320 rule,
@@ -72,6 +72,7 @@ import sys
 from pathlib import Path
 from typing import NamedTuple
 
+import entry_rule
 import srcscan
 
 BLOCKERS = "JSPRVU"
@@ -219,11 +220,13 @@ def analyze(text, string_syms=frozenset(), legacy=False):
         b, reg, key, _loop, k = min(cand, key=lambda l: l[4])
         reads = compare_reads(insns, k, reg, key)
         if k < SELECTOR_WINDOW and reg not in ARGREGS and (reads >= 2 or (jtbl and reads >= 1)):
-            selector = reg
+            selector = entry_rule.selector_flag(reg, entry_rule.at_entry(insns, labels, k))  # T-5010
+    # T-5010: cvt_pass.py reproduces R and V for globals first loaded at the entry
+    late = entry_rule.late_globals(insns, labels, cand) if not legacy else {l[2] for l in loads}
     # R: one global, 2+ blocks outside loops, one destination register
     by = {}
     for b, reg, key, inloop, _ in cand:
-        if not inloop and reg not in ARGREGS:
+        if not inloop and reg not in ARGREGS and key in late:
             by.setdefault((key, reg), set()).add(b)
     reload = any(len(bs) >= 2 for bs in by.values()) and not selector
     # V: a global load goes to $v1 although $v0 is dead there (IDO takes $v0 first) and the value is
@@ -231,10 +234,10 @@ def analyze(text, string_syms=frozenset(), legacy=False):
     # CVT gap (V); with lw/lh/lb it is a type hint (T): the original compares the word unsigned
     # (`lw` global switched in $v1 matches declared u32, matching-notes T-1321)
     dispatch = hint = False
-    for _, reg, _, _, k in loads:
+    for _, reg, key, _, k in loads:
         if reg == "v1" and v0_dead_after(insns, k) and reads_before_redef(insns, k, "v1") >= 2:
             if legacy or insns[k].op in UNSIGNED:
-                dispatch = True
+                dispatch = dispatch or key in late
             else:
                 hint = True
     if selector:

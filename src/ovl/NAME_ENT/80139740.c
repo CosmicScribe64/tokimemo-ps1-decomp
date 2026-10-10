@@ -99,8 +99,19 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BE18);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BF74);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C4A8);
-
+void func_8013C4A8(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_8013BB24();
+        return;
+    case 1:
+        func_8013BE18();
+        return;
+    case 2:
+        func_8013BF74();
+        return;
+    }
+}
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014B7B4);
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014B7C8);

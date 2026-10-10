@@ -143,8 +143,25 @@ void func_8005B39C(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B43C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B798);
-
+void func_8005B798(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_8005B830();
+        break;
+    case 1:
+        func_8005B8A0();
+        break;
+    case 2:
+        func_8005B8E0();
+        break;
+    }
+    func_80068EC0();
+    parameter_show();
+    hizuke_show();
+    message_window_show();
+    func_80066334();
+    func_8006BA40();
+}
 INCLUDE_RODATA("asm/data/main/8005A0B0.rodata", D_800AFF6C);
 
 INCLUDE_RODATA("asm/data/main/8005A0B0.rodata", D_800AFF78);
@@ -450,16 +467,40 @@ void func_80060A84(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060B24);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060B78);
-
+void func_80060B78(void) {
+    switch (D_800E738D) {
+    case 0:
+        xa_wait();
+        return;
+    default:
+    case 1:
+        func_8004284C();
+        return;
+    }
+}
 void uwasa_exit0(void) {
     func_80042878(0x31);
 }
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", uwasa0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", uwasa_main);
-
+void uwasa_main(void) {
+    switch (D_800E7389) {
+    case 0:
+        func_80060B24();
+        break;
+    case 1:
+        uwasa0();
+        break;
+    }
+    func_80065B0C(1);
+    parameter_show();
+    hizuke_show();
+    message_window_show();
+    func_80066334();
+    func_800578F4(0);
+    func_80066C08(1);
+}
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_xmas_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_xmas);
@@ -540,4 +581,19 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu1);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80061634);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80061688);
+void func_80061688(void) {
+    switch (D_800E7389) {
+    case 0:
+        pre_syogatu_init();
+        break;
+    case 1:
+        func_80061634();
+        break;
+    }
+    hizuke_show();
+    message_window_show();
+    func_8006BA40();
+    func_80066334();
+    func_800578F4(1);
+    func_80066C08(1);
+}

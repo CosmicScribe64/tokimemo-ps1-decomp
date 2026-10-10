@@ -23,7 +23,9 @@ void func_8013C3B0(void) {
 }
 
 void func_8013C4D0(void) {
-    switch (D_801474B8) {
+    u8 sel = D_801474B8; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
     case 0:
         func_8013C560();
         return;

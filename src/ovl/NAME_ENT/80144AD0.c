@@ -1,8 +1,17 @@
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80144AD0);
-
+void func_80144AD0(void) {
+    D_800E7380 += 1;
+    switch (D_800E7389) {
+    case 0:
+        func_80144A34();
+        return;
+    case 1:
+        func_80142A80();
+        return;
+    }
+}
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80144B44);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80144C8C);
@@ -26,8 +35,16 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145760);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145848);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145A74);
-
+void func_80145A74(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_80145760();
+        return;
+    case 1:
+        func_80145848();
+        return;
+    }
+}
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145AC4);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145EA4);

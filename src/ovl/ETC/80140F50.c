@@ -59,8 +59,31 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142574);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_801428EC);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142974);
-
+void func_80142974(void) {
+    switch (D_800E7389) {
+    case 0:
+        func_80143644();
+        break;
+    case 1:
+        func_80143FE0();
+        break;
+    }
+    if (func_800460EC() & 4) {
+        if (D_800E7208 & 0x200000) {
+            if (D_800E73A4 != 0) {
+                func_80042878(0x11);
+            } else {
+                func_80042878(0xC4);
+            }
+        } else if (D_800E7208 & 0x400000) {
+            if (D_800E73A4 != 0) {
+                func_80042878(0x11);
+            } else {
+                func_80042878(0x91);
+            }
+        }
+    }
+}
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142A4C);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142AE8);

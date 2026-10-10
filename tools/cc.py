@@ -9,7 +9,9 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      splices the INCLUDE_ASM functions in and assembles them with GNU as.
      Used for the game code (T-0013, wiki/matching-notes.md). Every IDO
      compile also runs the frame-layout emulation pass (tools/frame_pass.py,
-     T-0016): the original's frames are 16 bytes larger than IDO's.
+     T-0016): the original's frames are 16 bytes larger than IDO's, and the
+     unsigned-load conversion pass around uopt (tools/cvt_pass.py, T-1321,
+     T-5010): the original keeps unsigned byte and halfword globals in a register.
 gcc: the PsyQ way, cpp | cc1 | maspsx | as.
 
 Every object's .text is zero-padded to a multiple of 16 bytes (T-0012): the original link
@@ -59,10 +61,10 @@ ASM_PRELUDE = "include/asmproc_prelude.inc"
 FRAME_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frame_pass.py")
 CVT_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cvt_pass.py")
 # IDO passes replaced by a shim that runs a toolchain emulation pass and then the real pass.
-# tools/cvt_pass.py (T-1321) is not in the build: on the full matched set it changes
-# functions that match without it (wiki/matching-notes.md); callers that want to try it
-# pass extra_shims={"uopt": CVT_PASS} to ido_frame_env.
-SHIMS = {"as1": FRAME_PASS}
+# tools/cvt_pass.py (T-1321, entry and compare rules T-5010) is in the build since T-5010:
+# with those rules it leaves every matched function unchanged except the ones on unit-private
+# data, which switch on a local copy (wiki/matching-notes.md, "Selector register rule").
+SHIMS = {"as1": FRAME_PASS, "uopt": CVT_PASS}
 
 
 def run_stage(cmd, data, env=None):
@@ -87,11 +89,12 @@ def ido_frame_env(ido_ver, tmp, extra_shims=None):
     symlinks to every IDO file except the shimmed passes (SHIMS plus
     extra_shims): `as1` applies the frame-layout emulation pass
     (tools/frame_pass.py, T-0016) to ugen's output before the real as1, for
-    every function. extra_shims={"uopt": CVT_PASS} adds the experimental
-    unsigned-load conversion pass (tools/cvt_pass.py, T-1321) around uopt.
+    every function; `uopt` runs the unsigned-load conversion pass
+    (tools/cvt_pass.py, T-1321, T-5010) around the real uopt. extra_shims
+    adds or replaces shims for experiments; a None value removes one.
     """
     ido = "/opt/ido/%s" % ido_ver
-    shims = dict(SHIMS, **(extra_shims or {}))
+    shims = {k: v for k, v in dict(SHIMS, **(extra_shims or {})).items() if v}
     for name in sorted(os.listdir(ido)):
         if name not in shims:
             os.symlink(os.path.join(ido, name), os.path.join(tmp, name))

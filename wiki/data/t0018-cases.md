@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-09
+updated: 2026-10-10
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -15,6 +15,8 @@ Rules for batch agents (decompile-workflow step 7): append one row per skipped c
 - `symptom`: one short line: what the original has and what IDO emits.
 
 Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or compare chain on an unsigned global, reloads after calls); see [[matching-notes]], "Unsigned-load conversion pass (T-1321)". The rows stay as the test set; T-3000 retries them.
+
+Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only globals touched before the first call or branch) and a compare rule; unit-private selectors that the original keeps in `$v0` are written as a switch on a `FAKE` local copy. Batch guidance and numbers: [[matching-notes]], "Selector register rule (T-5010)". Keep recording rows as before: they stay the test set.
 
 | file | function | category | symptom |
 |---|---|---|---|

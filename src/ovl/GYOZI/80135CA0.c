@@ -75,7 +75,9 @@ void func_80135E9C(void) {
 }
 
 void func_80135F74(void) {
-    switch (D_801460C0) {
+    u8 sel = D_801460C0; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
     case 0:
         D_80145EB4 += 3;
         break;

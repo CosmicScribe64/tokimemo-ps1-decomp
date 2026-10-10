@@ -186,16 +186,16 @@ s16 func_801388E4(s32 arg0) {
     s32 slot;
 
     key = arg0 + 1;
-    if (key == D_801491E0) {
+    if (key == D_801491E0[0]) {
         slot = 0;
     }
-    if (key == D_801491E1) {
+    if (key == D_801491E0[1]) {
         slot = 1;
     }
-    if (key == D_801491E2) {
+    if (key == D_801491E0[2]) {
         slot = 2;
     }
-    if (key == D_801491E3) {
+    if (key == D_801491E0[3]) {
         slot = 3;
     }
     return (slot << 6) + 0xA0;
