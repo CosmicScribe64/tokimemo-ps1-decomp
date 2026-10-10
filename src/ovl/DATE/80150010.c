@@ -72,7 +72,11 @@ void func_80150E9C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150ED4);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80151064);
+void func_80151064(void) {
+    func_80046318(0x3D, 0x801B0000, 0x8179);
+    func_80150080();
+    func_8004284C();
+}
 
 void func_8015109C(void) {
     func_800853FC();

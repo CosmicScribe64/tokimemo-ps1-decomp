@@ -13,7 +13,17 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143574);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143644);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801436D4);
+void func_801436D4(void) {
+    s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
+    RECT rect;
+
+    rect.x = 0;
+    rect.y = D_8011ECA0 * 0xF0;
+    rect.w = 0x200;
+    rect.h = 0xF0;
+    func_8009C93C(&rect, 0x200, 0);
+    func_8009C674(0);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143730);
 

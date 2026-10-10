@@ -56,4 +56,7 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137E54);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137F70);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137FC4);
+void func_80137FC4(void) {
+    bg_read_sub2(0x4045);
+    func_8004284C();
+}

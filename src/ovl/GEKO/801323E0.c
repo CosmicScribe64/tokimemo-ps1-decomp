@@ -21,7 +21,13 @@ void func_80132454(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132490);
+void func_80132490(void) {
+    func_80044890(1, 0xC043, 0xC01D, D_800B3688[D_800E71DF], D_800B36C8[D_800E71DF], D_800B3708[D_800E71DF]);
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132518);
 

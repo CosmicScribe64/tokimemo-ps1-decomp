@@ -82,4 +82,7 @@ void func_8013EDEC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013EE14);
+void func_8013EE14(void) {
+    func_8007ED84(0x403B);
+    func_8004284C();
+}

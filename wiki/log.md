@@ -495,3 +495,6 @@ Added .gitattributes forcing LF line endings so tools/docker.sh and the Python t
 
 ## [2026-10-09] apply | T-3330 proof patch
 Applied wiki/data/t3330-fptab-proof.patch (3-way, after T-1321 and T-3320 merged): 18 local function-pointer-table functions now C using the scalar-before-table declaration idiom from [[tickets/T-3330-local-fptab-frame-layout]]. Clean build 27/27 OK, 2772/6958.
+
+## [2026-10-09] tooling run | neardupes bulk apply
+Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 merged: 33 of 47 near-duplicate copies kept (20932 bytes), the rest reverted by the per-object check. Clean build 27/27 OK, 2805/6958, 13.4% of code bytes.
