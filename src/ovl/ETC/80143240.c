@@ -71,7 +71,11 @@ void func_8014369C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801436E4);
+void func_801436E4(s32 arg0) {
+    load_tpage_buf_lock(5, 0x801E8000 - (arg0 << 15), 2, arg0);
+    load_tpage_buf_lock(6, 0x801EA000 - (arg0 << 15), 2);
+    load_tpage_buf_lock(7, 0x801EC000 - (arg0 << 15), 2);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143758);
 
