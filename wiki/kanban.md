@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2000-wave2-event|T-2000 Wave 2: EVENT]]
 
 
 ## In Review

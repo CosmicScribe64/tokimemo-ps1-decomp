@@ -363,3 +363,6 @@ New [[tickets/T-1340-tooling-jump-table-functions]], In Review -> Done after the
 
 ## [2026-10-09] tooling | dupes.py re-run after T-1340
 Re-ran tools/dupes.py --apply --check after the jump-table merge: 4 copies kept (DATE, EVENT, GEKO, KANGEI), 3 rejected. Clean build 27/27 OK, progress 901/6962.
+
+## [2026-10-09] ticket | T-2000 Wave 2: EVENT started
+New [[tickets/T-2000-wave2-event]], In Progress. Matching functions in `src/ovl/EVENT.c`.
