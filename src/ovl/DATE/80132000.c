@@ -118,7 +118,30 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135620);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135804);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135A34);
+void func_80135A34(void) {
+    D_8015DE40 = 0;
+    D_8015DE44 = 0;
+    D_8015DE48 = 0;
+    D_8015DE4C = 0;
+    D_800CA160 = D_8015BE10;
+    D_800CA164 = D_8015BE7C;
+    D_800CA168 = D_8015BEE8;
+    if ((D_800E6280.unk_03E == 0x62) || ((D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_03F >= 3))) {
+        D_8015B674 = 1;
+    } else {
+        D_8015B674 = 0;
+    }
+    if ((D_800E6280.unk_03E == 0x62) || ((D_800E6280.unk_03E == 0x61) && (D_800E6280.unk_03F == 0xC))) {
+        D_8015B678 = 1;
+    } else {
+        D_8015B678 = 0;
+    }
+    D_8015B658 = 0;
+    func_800AE0F0(D_800CA19C, "遊園地");
+    func_8007ED84(0x432B);
+    func_80085B3C(1, 0x14);
+    func_8004284C();
+}
 
 void func_80135B4C(void) {
     D_800CA160 = D_8015BDF8;
@@ -192,7 +215,26 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137984);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801379E8);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137A4C);
+void func_80137A4C(void) {
+    u8 i;
+
+    i = D_800E6280.unk_F5E;
+    /* FAKE: 8-byte records at GameState+0x758 are not a declared aggregate yet; byte read through the base. T-8070 */
+    if (((u8 *)&D_800E6280)[0x758 + i * 8] == 1) {
+        D_800E6280.unk_F5E = i - 1;
+    }
+    func_80085B3C(0, D_80122D08);
+    if (D_8015B664 != 0) {
+        func_8007ED84(0x4503);
+    } else if (D_8015B668 != 0) {
+        func_8007ED84(0x450D);
+    } else if (D_8015B66C != 0) {
+        func_8007ED84(0x4516);
+    } else {
+        func_8007ED84(0x44FA);
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137B14);
 
@@ -323,7 +365,19 @@ void func_80138790(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801387B8);
+void func_801387B8(void) {
+    u8 i;
+
+    func_800AE0F0(D_800CA1DC, "無人島");
+    func_8007ED84(0x45B6);
+    i = D_800E6280.unk_F5E;
+    /* FAKE: 8-byte records at GameState+0x758 are not a declared aggregate yet; byte read through the base. T-8070 */
+    if (((u8 *)&D_800E6280)[0x758 + i * 8] == 1) {
+        D_800E6280.unk_F5E = i - 1;
+    }
+    func_80085B3C(0, 0x28);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013882C);
 
@@ -648,7 +702,37 @@ void func_8013B884(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013B910);
+s32 func_8013B910(void) {
+    if (D_800E6280.unk_110D++ < 0x80) {
+        return 0;
+    }
+    if (D_800E6280.unk_110D >= 0x97) {
+        D_800E6280.unk_110D = 0x96;
+    }
+    D_8015BF28 = D_8015B684;
+    D_800CA134 = &D_8015BF24;
+    D_800CA138 = &D_8015BF28;
+    D_800CA13C = D_8015BD9C;
+    D_800CA140 = D_8015BDAC;
+    D_800CA144 = D_8015BDBC;
+    if (func_80082764(D_80122CDC, 0, 0) != 0) {
+        func_80044750(0xC4);
+        func_80044750(0x201);
+        func_8004284C();
+        D_80122CFC = 0x80;
+        return 0;
+    }
+    D_80122CF0 = 0xA;
+    if ((func_80046094() == 9) && (func_8004ECB4() != 0)) {
+        func_80044750(0x201);
+        D_80122CE4 = 0;
+        func_8004E9F4(1);
+        D_80122CF0 = 0;
+        D_8011ED5B &= 0xFF7F;
+        D_800CA2AC = 0;
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013BA80);
 
@@ -1325,7 +1409,15 @@ void func_80140E44(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80140ECC);
+void func_80140ECC(void) {
+    func_8004E9F4(1);
+    func_8004E788(-0x80, 0x30, 1, "ドン", 0);
+    func_80044750(0x22);
+    func_80044750(0x21);
+    func_80044750(0x2F);
+    func_80044750(0x500);
+    func_8004284C();
+}
 
 void func_80140F40(void) {
     D_8015BD90 = 0x801972E8;

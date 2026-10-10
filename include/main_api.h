@@ -1426,6 +1426,7 @@ void k_sub_reset_point_set(void);
 void func_8004EAAC();
 void k_sub_reset(void);
 void func_8004EAD4();
+s32 func_8004ECB4();
 void k_sub_disp_start(s32 arg0);
 s16 k_disp_goto_line_end(void);
 void k_speed_set(u8 arg0);
