@@ -2,6 +2,11 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
+typedef struct {
+    void (*f[61])();
+} FnTbl61; /* size 0xF4 */
+extern FnTbl61 D_8015FE58;
+
 extern u32 D_80122CD0;
 
 typedef struct {
@@ -242,7 +247,18 @@ void func_80157184(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_801571D4);
+void func_801571D4(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl61 tbl;
+
+    tbl = D_8015FE58;
+    if (D_800E6280.unk_110A < 4 || D_800E6280.unk_110A >= 0x2C) {
+        if (D_800B593C == 0x80) {
+            func_8006B900();
+        }
+    }
+    tbl.f[D_800E6280.unk_110A](0x80);
+}
 
 void func_80157284(void) {
     func_80046318(0x45, 0x801B0000, 0x89C1);

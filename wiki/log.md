@@ -672,3 +672,11 @@ Matched by hand: BUNKA_SD `func_80135440`; ETC `func_801395E8`, `func_8013AEE4`,
 
 ## [2026-10-10] ticket | T-8050 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8050-wave-5-list-5]]; no open findings. `sync_protos.py --check-branch` OK, `migrate_globals.py --check` OK.
+## [2026-10-10] ticket | T-8010 created (In Progress)
+Wave 5 list 1 (141 functions, 35 files), worktree w5-1. See [[tickets/T-8010-wave-5-list-1]].
+
+## [2026-10-10] build | T-8010 wave 5 list 1: 20 functions matched
+Matched 20 functions (4048 bytes, 18 from the list): main `func_8007B358`, `func_80059308`, `func_8007A43C`; TT `func_80133058`, `func_80133288`; TAIIKU `func_80138950`, `func_80140738`, `func_8013AF74`; KANGEI `func_80134DB0`; DATE `func_801563A8`, `func_801571D4`, `func_80156494`; ENDING `func_80135DD0`; EVENT `func_801087F8`, `func_80109EE8`; OPTION `func_8013C780`; GYOZI `func_80135988`; OLH `func_801352A0`; TACO `func_801480B0`, `func_80138450`. Clean rebuild 27/27 OK, headers and globals OK, grand total 3987 of 6958 functions. Patterns in [[matching-notes]] ("Wave 5, list 1"), 19 rows in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-8010 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8010-wave-5-list-1]]; no open findings. Branch w5-1, not merged.

@@ -1,7 +1,15 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138950);
+void func_80138950(void) {
+    TaiikuTbl11 a;
+    TaiikuTbl11 b;
+
+    a = D_801498E8;
+    b = D_80149914;
+    func_80046290(a.v[D_801491DC], b.v[D_801491DC], D_801491DC);
+    func_80044750(0x300);
+}
 
 typedef struct {
     void (*f[9])();
@@ -76,7 +84,30 @@ void func_8013AEFC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013AF74);
+s32 func_8013AF74(void) {
+    s32 v;
+
+    if (D_80149990 != 0) {
+        return 7;
+    }
+    if (D_8012067A < 0x31 && D_8012067A >= ((s16)D_80149986 >> 3) + 0x10 && ((s16)D_80149984 >> 3) + 0x50 >= D_80120676 && D_80120676 >= ((s16)D_80149984 >> 3) - 0x50) {
+        return 1;
+    }
+    v = ((s16)D_80149986 >> 3) + 0x10;
+    if (D_8012067A < v && ((s16)D_80149984 >> 3) + 0x50 < D_80120676) {
+        return 2;
+    }
+    if (D_8012067A < v && D_80120676 < ((s16)D_80149984 >> 3) - 0x50) {
+        return 3;
+    }
+    if (D_8012067A >= v && D_80120676 < ((s16)D_80149984 >> 3) - 0x50) {
+        return 5;
+    }
+    if (D_8012067A >= v && ((s16)D_80149984 >> 3) + 0x50 < D_80120676) {
+        return 6;
+    }
+    return 0;
+}
 
 void func_8013B0AC(void) {
     if (D_80149990 == 0) {
@@ -333,7 +364,17 @@ void func_8014064C(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_801406A8);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80140738);
+void func_80140738(s32 arg0, s32 arg1) {
+    u8 *p;
+    s32 sp30;
+
+    sp30 = arg0 + 4;
+    func_8009B3C0(sp30);
+    p = (u8 *)D_80122640 + arg1 * 0x10;
+    func_8009B430(sp30 + 8, p, 0, sp30);
+    *(u8 **)((u8 *)D_80122640 + arg1 * 0x10 + 4) = (u8 *)&D_801227A0[arg1];
+    *(s32 *)((u8 *)D_80122640 + arg1 * 0x10) = 0;
+}
 
 void func_801407C0(void) {
     D_80149FA0 = 0x8019D000;

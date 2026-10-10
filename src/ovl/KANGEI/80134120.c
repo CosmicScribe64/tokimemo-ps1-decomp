@@ -6,6 +6,15 @@ typedef struct {
 } FnTbl30; /* size 0x78 */
 extern FnTbl30 D_80139B30;
 
+typedef struct {
+    void (*f[37])();
+} FnTbl37; /* size 0x94 */
+typedef struct {
+    void (*f[33])();
+} FnTbl33; /* size 0x84 */
+extern FnTbl37 D_80139BEC;
+extern FnTbl33 D_80139C80;
+
 /* Bit 1 of the flag word of a Rec38 record (tested with sll 30 / bgez). */
 typedef struct KangeiFlagBits {
     u32 pad0 : 1;
@@ -66,7 +75,20 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801349D4);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134BC4);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134DB0);
+void func_80134DB0(void) {
+    s32 pad; /* FAKE: unused slot above tblA, the original frame has 8 more bytes (T-3330 idiom, real source unknown). T-8010 */
+    FnTbl37 tblA;
+    FnTbl33 tblB;
+
+    tblA = D_80139BEC;
+    tblB = D_80139C80;
+    if ((u8)D_800E6280.unk_75D < 4) {
+        tblA.f[D_800E6280.unk_110A](0x80);
+        D_80139AC8 = 1;
+        return;
+    }
+    tblB.f[D_800E6280.unk_110A](0x80);
+}
 
 void func_80134EA8(void) {
     s32 pad; /* FAKE: unused local above the saved selector (the original frame has the copy at sp+0x28), T-6050 */

@@ -446,4 +446,7 @@ extern s32 D_8013C2BC;
 extern s32 D_8013C300;
 extern s32 D_8013C344;
 
+void func_80136D60(void);
+void func_80137574(void);
+
 #endif /* OVL_ENDING_H */

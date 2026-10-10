@@ -572,3 +572,23 @@ Update (T-7000): the build runs IDO in K&R mode with the widening of narrow glob
 | NAME_ENT/80144AD0 | `func_801454CC` | regorder | 8-record loop: the last `sb` (record byte +0x1987) sits in the `bne` delay slot with its offset adjusted to +0x1943, IDO keeps it before the branch (permuter best 125) (T-8050) |
 | KANGEI/80137B90 | `func_80138D40` | regorder | two `&= 0x7F` read-modify-writes in a row: the original loads the second byte after the first store, IDO hoists the load (permuter best 225) (T-8050) |
 | RPG_BAT/801321D0 | `func_80132B34` | regorder | five-case table switch that stores constants: the original builds `0x84 + 0x30` and `0x6C - 0xB0` from the registers that hold 0x84 and 0x6C, IDO folds them into separate `li` (T-8050) |
+| RPG_BAT | `func_8013F350` | regorder | flag/state variable loaded from D_8015ED90 and returned: original keeps it in $v0 throughout (return register), IDO $v1 plus a final `move v0,v1` (T-8010) |
+| TT | `func_8013923C` | regorder | pointer copy `or v0,t6` plus u32 and u16 temporaries: original v0/v1/a0 for pointer/clamp/counter, IDO v1/a1/v0 (T-8010) |
+| 80079B10 | `func_8007B2B4` | regorder | switch selector `arg0 & 0xFF` of a u16 argument: original $v0 (the flag word load reuses $v0 after the `ori`), IDO $v1 (T-8010) |
+| 80079B10 | `func_8007A354` | regorder | jump-table switch on `arg0 & 0xFF`: code identical but temporaries start at $t8 in the original, $t6 in IDO (T-8010) |
+| 80079B10 | `func_8007B144` | regorder | three-case switch with Work80125D10 flag RMWs: temporaries start at $t7 instead of $t6, D_80125D14 load not hoisted (T-8010) |
+| 80079B10 | `func_8007BCFC` | regorder | flag word kept in $v0 and the 0x18/0 variable in $v1 around a stack byte array, IDO uses $t regs and $a1 (T-8010) |
+| 80079B10 | `func_80079B34` | regorder | dispatcher loop calling f(r & 0xFFFF): original keeps the argument in $a0 across the compare chain, IDO $a1 plus `move a0,a1` (T-8010) |
+| 80079B10 | `func_8007B734` | regorder | RMW loads of D_80125D10/D_80125D14 hoisted above the zero stores in the original, in source order in IDO (T-8010) |
+| 80079B10 | `func_8007A868` | regorder | eight loads hoisted over twelve stores (D_80125D10 area): original v0/v1/a0 loaded first (T-8010) |
+| TAIIKU | `func_8013CF88` | regorder | two clamp variables in $v0 (in-place add of D_80149974) and $v1; IDO $a0/$v1 and shifted constants a1/a2/a3 (T-8010) |
+| TAIIKU | `func_8013C694` | regorder | position clamp: original $a0 = scaled D_80149984, $v1 = D_801206BA variable, IDO swaps them (T-8010) |
+| EVENT | `func_80108A24` | regorder | s16 pair += 0x80 with compare of the truncated value: original keeps the s16 variable in $v0 (in-place add, sll/sra into $v0), IDO t-regs (T-8010) |
+| ETC | `func_8014BF2C` | regorder | switch in an s32 function; call result compared in $v0 with a copy in $a1 for the argument, IDO compares the copy (T-8010) |
+| TT | `func_80141A1C` | regorder | packet link (P_TAG bit-field insert) builds exactly; pointer to the double-buffer record lands in $t0 in IDO, $t1 in the original (T-8010) |
+| TT | `func_8013D2E0` | regorder | packet link (P_TAG bit-field insert) builds exactly; locals v0/v1/a1 in the original (a0 unused), IDO v0/v1/a0 shifted (T-8010) |
+| GEKO | `func_80140040` | regorder | two 10-trip loops over D_8011ECD0 records: hoisted constants and base one register higher in IDO (base a1 vs a0) (T-8010) |
+| TACO | `func_8013546C` | promo | flags word D_800E7208 kept in $v1 and re-read after the call; s8 cursor loaded into $a0 in IDO, $v0 in the original, frame 8 bytes larger (T-8010) |
+| VALEN | `func_80133670` | regorder | GameState member D_800E71DF read as a scalar: original `lui v0; lbu a0,(v0)`, IDO `lui a0; lbu a0,(a0)` (T-8010) |
+| 80042540 | `func_80042960` | regorder | jump-table switch on GameState unk_1108 (u8): selector in $v1 with `or v0,v1,zero` in the original, $v0 in IDO (member of GameState, cvt pass does not apply) (T-8010) |
+| BUNKASAI | `func_80146030` | regorder | nested switches; selector D_80122EB8 loaded early into $v1, D_800E64F0 is a separate symbol in the original (T-8010) |

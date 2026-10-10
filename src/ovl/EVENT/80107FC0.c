@@ -2,6 +2,11 @@
 #include "ovl/EVENT.h"
 
 typedef struct {
+    void (*f[55])();
+} FnTbl55; /* size 0xDC */
+extern FnTbl55 D_80123AA0;
+
+typedef struct {
     void (*f[47])();
 } FnTbl47; /* size 0xBC */
 extern FnTbl47 D_80123990;
@@ -15,6 +20,7 @@ typedef struct {
     void (*f[44])();
 } FnTbl44; /* size 0xB0 */
 extern FnTbl44 D_80123D0C;
+extern FnTbl44 D_80123C5C;
 
 typedef struct {
     void (*f[52])();
@@ -219,7 +225,20 @@ void func_801087A8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_801087F8);
+void func_801087F8(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl55 tbl;
+
+    tbl = D_80123AA0;
+    tbl.f[D_800B1AF6](0x80);
+    if ((u8)D_80123988 != 0 && D_800B1AF6 >= 0x1B) {
+        func_80108AD8();
+    }
+    if (D_8012398C != 0 && D_800B1AF6 >= 0x1B) {
+        func_80108DD4();
+    }
+    func_80078950("flag%x\n", D_800EB02B);
+}
 
 void func_801088E8(void) {
     func_80015D28(0x45, 0x801B0000, 0x8B5E);
@@ -494,7 +513,17 @@ void func_80109EB0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_80109EE8);
+void func_80109EE8(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl44 tbl;
+
+    tbl = D_80123C5C;
+    func_80078950("%d\n", D_800B1AF6);
+    tbl.f[D_800B1AF6](0x80);
+    if (D_800EECE0 != 0 && D_800B1AE4 % 120 == 0) {
+        func_80109FB0();
+    }
+}
 
 void func_80109FB0(void) {
     func_800433D0(0x500);

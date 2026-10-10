@@ -316,7 +316,26 @@ void func_80135CC0(void) {
     D_8013CA18 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80134D20", func_80135DD0);
+typedef struct {
+    void (*f[9])();
+} FnTbl9; /* size 0x24 */
+extern FnTbl9 D_8013CA3C;
+
+void func_80135DD0(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl9 tbl;
+
+    tbl = D_8013CA3C;
+    tbl.f[D_800E6280.unk_110A](0x80);
+    if (D_8013CA38 != 0) {
+        _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
+        dtd_on(0xE);
+        func_80136D60();
+    }
+    if (D_800E6280.unk_10F8 % 240 == 0 && D_80122D0C == 0) {
+        func_80137574();
+    }
+}
 
 void func_80135ECC(void) {
     func_80041584();

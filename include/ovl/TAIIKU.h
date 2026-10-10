@@ -207,4 +207,11 @@ extern u8 D_801492AC[];
 extern u8 D_8014A1D4[];
 void func_801452D0(void);
 
+typedef struct {
+    s32 v[11];
+} TaiikuTbl11; /* size 0x2C */
+extern u8 D_801491DC;
+extern TaiikuTbl11 D_801498E8;
+extern TaiikuTbl11 D_80149914;
+
 #endif

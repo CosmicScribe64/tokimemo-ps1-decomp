@@ -44,7 +44,20 @@ INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800590CC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800591D8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80059308);
+/* FAKE: the RECT field stores sharing a source line are scheduled as a unit by as1, which gives the original's store order (h before w). T-8010 */
+void func_80059308(void) {
+    RECT rect;
+
+    rect.w = 0x100; rect.h = 0x1E0;
+    rect.x = 0;
+    rect.y = 0;
+    func_8009C7F8(&rect, 0, 0, 0);
+    func_8009C674(0);
+    rect.x = 0x100; rect.w = 0x100; rect.h = 0x1E0;
+    rect.y = 0;
+    func_8009C7F8(&rect, 0, 0, 0);
+    func_8009C674(0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_8005938C);
 

@@ -15,7 +15,29 @@ void func_80135900(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80135900", func_80135988);
+void func_80135988(void) {
+    s16 v;
+
+    func_800BCE10(&D_800D92A0, "初詣");
+    if (D_80145F60 != 0) {
+        v = 0;
+    } else {
+        v = 0xF;
+    }
+    if (D_80145EC8 == 0) {
+        v += 2;
+    }
+    /* FAKE: `^ 0` keeps IDO from dropping the second, identical store below; real source unknown. T-8010 */
+    D_80145EB4 = v ^ 0;
+    if (D_80145EC8 == 0) {
+        D_80145EB4 = v;
+        if (D_800F62CF == 5) {
+            v += 2;
+            D_80145EB4 = v;
+        }
+    }
+    func_8004DE1C();
+}
 
 void func_80135A20(void) {
     if (D_80145F60 != 0) {

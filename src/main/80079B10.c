@@ -116,7 +116,27 @@ void func_8007A254(u16 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A354);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A43C);
+void func_8007A43C(u8 arg0) {
+    arg0 &= 0xFF;
+    switch (arg0) {
+    case 1:
+    case 2:
+        func_8007BCFC(arg0);
+        break;
+    case 3:
+        func_8007B6E0(arg0);
+        break;
+    case 6:
+        func_8007B734(arg0);
+        break;
+    case 4:
+        func_8007B7E0(arg0);
+        break;
+    case 5:
+        D_80125D10.unk_00 |= 0x100000;
+        break;
+    }
+}
 
 void func_8007A4DC(void) {
     if (D_80125D10.unk_04 & 0x100) {
@@ -267,7 +287,17 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B144);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B2B4);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B358);
+void func_8007B358(u16 arg0) {
+    s32 a;
+
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D50 << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B3DC);
 
