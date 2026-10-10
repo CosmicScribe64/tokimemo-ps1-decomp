@@ -155,13 +155,56 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134E64);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134F9C);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135034);
+void func_80135034(void) {
+    s32 i;
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame; real source unknown. T-4070 */
+    s16 a[2];
+    s16 b[2];
+    s16 c[2];
+    s16 d[2];
+
+    for (i = 0; i < 2; i++) {
+        a[i] = 0;
+        b[i] = i * 0x10 + 0x28;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 2, a, b, c, d);
+    /* record 20 of the 0x44-byte table at D_80120650: one base symbol keeps the load behind the stores (T-4070) */
+    *(s16 *)&D_80120650[0x568] = 0x79;
+    *(s16 *)&D_80120650[0x576] = 0x40;
+    *(s16 *)&D_80120650[0x57A] = 0x30;
+    D_80120650[0x553] |= 0x80;
+    D_80120650[0x593] = 0x1F;
+    D_8013D180 = 0;
+    func_8004284C();
+    func_801320C0();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135110);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801352FC);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013539C);
+void func_8013539C(void) {
+    s32 i;
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame; real source unknown. T-4070 */
+    s16 a[4];
+    s16 b[4];
+    s16 c[4];
+    s16 d[4];
+
+    for (i = 0; i < 3; i++) {
+        a[i] = -0x78;
+        b[i] = i * 0x28 - 0x20;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 3, a, b, c, d);
+    func_801320C0();
+    D_80120BA3 &= 0xFF7F;
+    D_80120BE3 = 0;
+    func_80042940(1);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135450);
 
