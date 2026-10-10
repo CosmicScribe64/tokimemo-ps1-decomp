@@ -1257,7 +1257,12 @@ void func_8013752C(void) {
     *(s16 *)&D_80120650[0x6E] = -0x65;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80137620);
+void func_80137620(void) {
+    func_80133BDC();
+    func_80043914(D_8014ECBC, 0x11, 1, 2, 0);
+    func_80136948(D_8014ECC0, D_8014ECC4, D_8014ECC8, D_8014ECCC, D_8014ECD0, D_8014ECD4);
+    func_800850D4(0, 0, 0, 0);
+}
 
 void func_801376AC(void) {
     func_80133C8C();
@@ -2419,7 +2424,34 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80145318);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_801455B0);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80145960);
+void func_80145960(void) {
+    switch (D_800E738A) {
+    case 0x0:
+        func_801447B0();
+        break;
+    case 0x1:
+        func_80144AC0();
+        break;
+    case 0x2:
+        func_80144DF0();
+        break;
+    case 0x3:
+        func_80144F74();
+        break;
+    case 0xA0:
+        func_801455B0();
+        break;
+    case 0xC0:
+        func_80144CC4();
+        break;
+    case 0xF0:
+        func_80145318();
+        break;
+    case 0xFF:
+        func_801451D4();
+        break;
+    }
+}
 
 void func_80145A40(void) {
     if (D_800E7380 != 0) {
@@ -2548,7 +2580,23 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80146B40);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80146BC4);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80146C68);
+void func_80146C68(s32 arg0) {
+    func_80048F64(0x60);
+    func_80043914(D_80125CA4, 0x10, 1, 1, 0);
+    D_80120650[1] = 1;
+    D_80120650[2] = 4;
+    *(s32 *)&D_80120650[0x38] = 0x01000000;
+    D_80120650[3] = 0x84;
+    *(u8 **)&D_80120650[0xC] = D_80125CA8;
+    *(u8 **)&D_80120650[0x10] = D_80125CAC;
+    *(u8 **)&D_80120650[0x34] = D_80125CB0;
+    D_80120650[5] = 2;
+    D_80120650[6] = 1;
+    D_80120650[0x43] = 0x10;
+    *(s16 *)&D_80120650[0x16] = arg0;
+    *(s16 *)&D_80120650[0x26] = -0x50;
+    *(s16 *)&D_80120650[0x2A] = -0x40;
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80146D4C);
 
@@ -2714,7 +2762,23 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80149D3C);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80149DD8);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80149E68);
+void func_80149E68(void) {
+    func_80048F64(0x60);
+    D_80120650[1] = 1;
+    D_80120650[2] = 4;
+    *(s32 *)&D_80120650[0x38] = 0x01000000;
+    D_80120650[3] = 0x84;
+    *(u8 **)&D_80120650[0xC] = D_80125CA8;
+    *(u8 **)&D_80120650[0x10] = D_80125CAC;
+    *(u8 **)&D_80120650[0x34] = D_80125CB0;
+    D_80120650[5] = 2;
+    D_80120650[6] = 1;
+    D_80120650[0x43] = 0x10;
+    *(s16 *)&D_80120650[0x16] = 0;
+    *(s16 *)&D_80120650[0x26] = -0x50;
+    *(s16 *)&D_80120650[0x2A] = -0x40;
+    func_80043914(D_80125CA4, 0x10, 1, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80149F48);
 

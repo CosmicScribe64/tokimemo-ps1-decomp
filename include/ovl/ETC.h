@@ -972,5 +972,21 @@ extern s32 D_8014F994[];
 extern s32 D_8014F9D0[];
 extern s32 D_8014FA0C[];
 extern s32 D_8014FA48[];
+void func_80140BC4(void);
+void func_80140DC8(void);
+void func_80140E80(void);
+s32 func_80143240(void);
+void func_801447B0(void);
+void func_80144AC0(void);
+void func_80144DF0(void);
+void func_80144F74(void);
+void func_801455B0(void);
+void func_80144CC4(void);
+void func_80145318(void);
+void func_801451D4(void);
+extern s32 D_80125CA4;
+extern u8 *D_80125CA8;
+extern u8 *D_80125CAC;
+extern u8 *D_80125CB0;
 
 #endif /* OVL_ETC_H */
