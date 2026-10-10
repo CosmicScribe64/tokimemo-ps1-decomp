@@ -1115,5 +1115,10 @@ void func_80011EC4();
 void func_80046B88();
 void func_800469F4();
 void func_800335E0();
+extern u32 D_800B1AE4;
+extern u8 D_800B1AF6;
+extern u8 D_800EAFA7;
+extern u8 D_800EB02A;
+extern u8 D_800EB02F;
 
 #endif /* OVL_EVENT_H */
