@@ -45,4 +45,11 @@ extern s32 D_8013C6C8, D_8013C6D4, D_8013C6D8, D_8013C6DC, D_8013C6E0, D_8013C6E
 extern s32 D_8013CEBC, D_8013CED8;
 extern s32 D_8013D988, D_8013D994, D_8013D998, D_8013D99C, D_8013D9A0, D_8013D9A4;
 
+void func_80134260();
+void func_80134418();
+void func_801389DC();
+void func_80138CAC();
+void func_8013987C();
+void func_801388D0();
+void func_80138C34(void);
 #endif /* OVL_BUNKA_SD_H */

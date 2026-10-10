@@ -1178,6 +1178,7 @@ void hizuke_show(void);
 void message_disp_switch(s32 arg0);
 void message_window_init(void);
 void message_window_show(void);
+void func_80064F48();
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
