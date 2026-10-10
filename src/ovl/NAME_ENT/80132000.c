@@ -13,8 +13,8 @@ void func_80132000(s32 arg0) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_8013209C);
 
 void func_80132134(void) {
-    D_800E7384 += 1;
-    switch (D_800E738A) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80132198();
         return;
@@ -315,9 +315,9 @@ void func_80137EE4(void) {
         p[0x1982] = 0x40;
         *(s32 *)(p + 0x19B8) = 0;
         p[0x1983] = 0x84;
-        *(s32 *)(p + 0x198C) = D_800E7CCC;
-        *(s32 *)(p + 0x1990) = D_800E7CDC;
-        *(s32 *)(p + 0x19B4) = D_800E7CBC;
+        *(s32 *)(p + 0x198C) = D_800E6280.unk_1A4C;
+        *(s32 *)(p + 0x1990) = D_800E6280.unk_1A5C;
+        *(s32 *)(p + 0x19B4) = D_800E6280.unk_1A3C;
         p[0x1984] = 8;
         p[0x1985] = 0x81;
         p[0x19C3] = 0x10;
@@ -380,12 +380,12 @@ void func_80138BCC(void) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138C1C);
 
 void func_80138F00(void) {
-    D_800E7CBC = 0x801AAF58;
-    D_800E7CCC = 0x801AAF5C;
-    D_800E7CDC = 0x801AAFD0;
-    D_800E7CEC = 0x80190000;
-    D_800E7D04 = 0x801AA200;
-    D_800E7CFC = 0x80192200;
+    D_800E6280.unk_1A3C = 0x801AAF58;
+    D_800E6280.unk_1A4C = 0x801AAF5C;
+    D_800E6280.unk_1A5C = 0x801AAFD0;
+    D_800E6280.unk_1A6C = 0x80190000;
+    D_800E6280.unk_1A84 = 0x801AA200;
+    D_800E6280.unk_1A7C = 0x80192200;
 }
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138F60);

@@ -118,7 +118,7 @@ void func_80155D80(void) {
     FnTbl38 tbl;
 
     tbl = D_8015F9D0;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -132,10 +132,10 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80155E40);
 
 void func_80156024(void) {
     func_8014C5C8();
-    if (((u16) D_800CA154 == 2) && (D_800E7384 == 1)) {
+    if (((u16) D_800CA154 == 2) && (D_800E6280.unk_1104.w == 1)) {
         func_80083440(1);
     }
-    D_800E7384 += 1;
+    D_800E6280.unk_1104.w += 1;
 }
 
 void func_80156080(void) {
@@ -175,14 +175,14 @@ typedef struct {
 } Flags14; /* size 4 */
 
 void func_80156570(void) {
-    if (((Flags14 *)&D_800E6560)->b14) {
+    if (((Flags14 *)&D_800E6280.unk_1BC[5].unk_0C.w)->b14) {
         D_800CA150 = (u16)D_800CA150 + 1;
     }
     func_8004284C();
 }
 
 void func_801565B4(void) {
-    if (!((Flags14 *)&D_800E6560)->b14) {
+    if (!((Flags14 *)&D_800E6280.unk_1BC[5].unk_0C.w)->b14) {
         D_800CA150 = (u16)D_800CA150 + 1;
     }
     func_8004284C();

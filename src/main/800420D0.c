@@ -15,7 +15,7 @@ INCLUDE_ASM("asm/nonmatchings/main/800420D0", func_80042134);
 INCLUDE_ASM("asm/nonmatchings/main/800420D0", func_800422C8);
 
 void func_800423D4(void) {
-    D_800E7374 += 1;
+    D_800E6280.unk_10F4 += 1;
     D_800E7D10 += 0x377;
 }
 

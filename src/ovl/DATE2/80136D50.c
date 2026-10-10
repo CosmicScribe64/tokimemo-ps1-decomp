@@ -53,7 +53,7 @@ void func_80136FC4(void) {
     FnTbl8 tbl;
 
     tbl = D_8013A74C;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -66,7 +66,7 @@ void func_80137064(void) {
 void func_8013709C(void) {
     D_800CA148 = 1;
     D_800CA14C = 0;
-    func_800847B8(D_800E71DF);
+    func_800847B8(D_800E6280.unk_F5F);
     func_801370E4();
     func_8004284C();
 }

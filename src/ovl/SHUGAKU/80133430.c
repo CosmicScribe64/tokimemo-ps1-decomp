@@ -53,7 +53,7 @@ void func_801336A4(void) {
     FnTbl43 tbl;
 
     tbl = D_8013BF20;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 

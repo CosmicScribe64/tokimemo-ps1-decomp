@@ -117,7 +117,7 @@ void func_8015913C(void) {
 }
 
 void func_80159174(void) {
-    if (D_800E6807 != 0) {
+    if (D_800E6280.unk_56C[27] != 0) {
         D_800CA150 = (u16) D_800CA150 + 1;
         D_800CA154 = 0;
     }
@@ -150,17 +150,17 @@ void func_80159354(void) {
     FnTbl51 tbl;
 
     tbl = D_80160714;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
 void func_801593C8(void) {
-    D_800E71DF = 4;
+    D_800E6280.unk_F5F = 4;
     func_8014C5C8();
 }
 
 void func_801593F0(void) {
-    D_800E71DF = 0xE;
+    D_800E6280.unk_F5F = 0xE;
     func_8014C5C8();
 }
 
@@ -171,7 +171,7 @@ void func_80159418(void) {
 }
 
 void func_80159450(void) {
-    D_800E71DF = 0xE;
+    D_800E6280.unk_F5F = 0xE;
     D_80120666 = 4;
     func_8004284C();
 }

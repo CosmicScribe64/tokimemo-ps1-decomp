@@ -24,6 +24,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-5100-game-state-struct|T-5100 Recover the main game-state struct]]
 
 
 

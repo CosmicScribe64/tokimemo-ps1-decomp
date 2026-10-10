@@ -13,9 +13,9 @@ void func_801335F4(void) {
 }
 
 void func_8013363C(void) {
-    func_800AE0A0((void *)(0x801A0000 + D_800E7384 * 0x2800), 0x80180000 + D_800E7384 * 0x2800, 0x2800);
-    D_800E7384 += 1;
-    if (D_800E7384 == 9) {
+    func_800AE0A0((void *)(0x801A0000 + D_800E6280.unk_1104.w * 0x2800), 0x80180000 + D_800E6280.unk_1104.w * 0x2800, 0x2800);
+    D_800E6280.unk_1104.w += 1;
+    if (D_800E6280.unk_1104.w == 9) {
         func_8004284C();
     }
 }
@@ -28,19 +28,19 @@ void func_801336A8(void) {
     rect.w = 0x180;
     rect.h = 0x80;
     func_8009C884(&rect, (void *)0x80180000);
-    D_800E753C = 1;
-    D_800E7540 = 1;
-    D_800E7544 = 1;
-    D_800E7548 = 1;
-    D_800E754C = 1;
-    D_800E7550 = 1;
+    D_800E6280.unk_1228[37] = 1;
+    D_800E6280.unk_1228[38] = 1;
+    D_800E6280.unk_1228[39] = 1;
+    D_800E6280.unk_1228[40] = 1;
+    D_800E6280.unk_1228[41] = 1;
+    D_800E6280.unk_1228[42] = 1;
     func_8004284C();
 }
 
 void func_80133738(void) {
-    func_800AE0A0((void *)(0x80180000 + D_800E7384 * 0x2800), 0x801A0000 + D_800E7384 * 0x2800, 0x2800);
-    D_800E7384 += 1;
-    if (D_800E7384 == 9) {
+    func_800AE0A0((void *)(0x80180000 + D_800E6280.unk_1104.w * 0x2800), 0x801A0000 + D_800E6280.unk_1104.w * 0x2800, 0x2800);
+    D_800E6280.unk_1104.w += 1;
+    if (D_800E6280.unk_1104.w == 9) {
         func_8004284C();
     }
 }
@@ -69,7 +69,7 @@ void func_801337F0(void) {
 }
 
 void func_80133870(void) {
-    if (D_800E69DD == 0xE) {
+    if (D_800E6280.unk_75D == 0xE) {
         func_80062CD0(0x6B24);
     } else {
         func_80062CD0(0x5828);
@@ -87,7 +87,7 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_801338F8);
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFB8);
 
 void func_801339C0(void) {
-    D_800E69DD = 0xC;
+    D_800E6280.unk_75D = 0xC;
     func_800AE0F0(D_800CA188, D_8013BFB8);
     func_8004284C();
 }
@@ -95,18 +95,18 @@ void func_801339C0(void) {
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFC0);
 
 void func_80133A00(void) {
-    D_800E69DD = 0xE;
+    D_800E6280.unk_75D = 0xE;
     func_800AE0F0(D_800CA188, D_8013BFC0);
     func_8004284C();
 }
 
 void func_80133A40(void) {
-    D_800E71DF = D_8013C3E0;
+    D_800E6280.unk_F5F = D_8013C3E0;
     func_8004284C();
 }
 
 void func_80133A6C(void) {
-    if (D_800E71DF >= 0xDU) {
+    if (D_800E6280.unk_F5F >= 0xDU) {
         func_80042908(7);
         D_800E7D34 |= 8;
         return;

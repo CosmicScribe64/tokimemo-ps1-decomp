@@ -8,7 +8,7 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_80134930);
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_80134A54);
 
 void func_80134C34(void) {
-    if ((D_80143B20 == 0) && (*((u8 *)&D_800E69D8 + D_800E71DE * 8) != 5)) {
+    if ((D_80143B20 == 0) && (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 != 5)) {
         if (D_80143B24 != 0) {
             func_80085B3C(5, 5);
         } else {
@@ -32,7 +32,7 @@ void func_80134F38(void) {
 }
 
 void func_80134F60(void) {
-    if ((D_800E71DF == 2) && (D_80143B20 == 0)) {
+    if ((D_800E6280.unk_F5F == 2) && (D_80143B20 == 0)) {
         func_8004284C();
     }
     func_8004284C();

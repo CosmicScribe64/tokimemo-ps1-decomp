@@ -17,7 +17,7 @@ void func_80133428(void) {
 }
 
 void func_80133460(void) {
-    if (((u8) D_800E71DF >= 0xDU) && ((u32) ((u32) (D_800E6758 << 0x14) >> 0x1D) < 3U)) {
+    if (((u8) D_800E6280.unk_F5F >= 0xDU) && ((u32) ((u32) (D_800E6280.unk_1BC[14].unk_0C.w << 0x14) >> 0x1D) < 3U)) {
         func_80042908(7);
         D_800E7D34 |= 8;
         return;
@@ -27,7 +27,7 @@ void func_80133460(void) {
 }
 
 void func_801334E4(void) {
-    if ((((u32)(D_800E6480 << 0x1E) >> 0x1F)) && (get_h_tokimeki(1) >= 0x46U)) {
+    if ((((u32)(D_800E6280.unk_1BC[1].unk_0C.w << 0x1E) >> 0x1F)) && (get_h_tokimeki(1) >= 0x46U)) {
         normal_date_speak();
         return;
     }

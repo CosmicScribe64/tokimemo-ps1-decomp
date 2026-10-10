@@ -32,7 +32,7 @@ void func_8014A2AC(void) {
 void func_8014A314(void) {
     func_80044750(0x200);
     read_bustup();
-    D_800E738A -= 1;
+    D_800E6280.unk_110A -= 1;
     D_8015DE40 += 1;
 }
 

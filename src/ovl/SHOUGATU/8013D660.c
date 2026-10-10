@@ -16,10 +16,10 @@ void func_8013D734(void) {
         func_80044750(0x202);
         func_8004284C();
     }
-    if ((u32) D_800E7384++ >= 0x400U) {
+    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E738A - 1) & 0xFF);
+        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
     }
 }
 
@@ -39,7 +39,7 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013D660", func_8013D820);
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013D660", func_8013D92C);
 
 void func_8013DA5C(void) {
-    if (((u32) (D_800E6758 << 0x14) >> 0x1D) == 1) {
+    if (((u32) (D_800E6280.unk_1BC[14].unk_0C.w << 0x14) >> 0x1D) == 1) {
         func_8013D2A8();
         return;
     }

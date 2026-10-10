@@ -671,7 +671,7 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80141EE0", func_80144720);
 
 void func_801448D4(void) {
     func_80083808();
-    switch (D_800E7389) {
+    switch (D_800E6280.unk_1109) {
     case 0:
         func_801449D4();
         break;
@@ -690,7 +690,7 @@ void func_801448D4(void) {
     }
     check_k_scroll();
     k_disp_inc2();
-    if ((D_800E7389 != 0) || (D_800E738A != 0x45)) {
+    if ((D_800E6280.unk_1109 != 0) || (D_800E6280.unk_110A != 0x45)) {
         func_80066C08(2);
     }
     message_window_show();

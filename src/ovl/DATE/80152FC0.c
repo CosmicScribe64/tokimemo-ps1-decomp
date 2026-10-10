@@ -86,9 +86,9 @@ void func_8015347C(void) {
     D_8015E208 = D_8015DED0;
     D_8015E20C = D_8015E00C;
     D_8015E210 = D_8015E148;
-    D_800E643C[7].unk_02 += 1;
-    D_800E643C[7].unk_06 += 1;
-    D_800E643C[7].unk_0A -= 0x14;
+    D_800E6280.unk_1BC[7].unk_02 += 1;
+    D_800E6280.unk_1BC[7].unk_06 += 1;
+    D_800E6280.unk_1BC[7].unk_0A -= 0x14;
     func_80084D3C();
     func_80153070();
     func_80043914(D_8015F19C, 0x11, 1, 2, 0);
@@ -111,8 +111,8 @@ void func_80153928(void) {
     D_8015E208 = D_8015DEDC;
     D_8015E20C = D_8015E018;
     D_8015E210 = D_8015E154;
-    D_800E643C[7].unk_02 += 3;
-    D_800E643C[7].unk_06 += 2;
+    D_800E6280.unk_1BC[7].unk_02 += 3;
+    D_800E6280.unk_1BC[7].unk_06 += 2;
     func_80084D3C();
     func_8004284C();
 }
@@ -150,7 +150,7 @@ void func_80153A74(void) {
 
 void func_80153A9C(void) {
     bg_read_sub2(0x4347);
-    D_800E71DE -= 1;
+    D_800E6280.unk_F5E -= 1;
     func_80085B3C(0, D_80122D08);
     func_8004284C();
 }
@@ -219,7 +219,7 @@ void func_80153E1C(void) {
     FnTbl57 tbl;
 
     tbl = D_8015F350;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -229,18 +229,16 @@ void func_80153E90(void) {
         func_80042940(0x24);
         return;
     }
-    /* FAKE: D_800E681D, 0x253 bytes after D_800E643C[7].unk_06 and outside the record table, is stored
-     * through that field so that as1 keeps the next load after the store; real source unknown. T-4050 */
-    *((s8 *)&D_800E643C[7].unk_06 + 0x253) = 1;
-    D_800E643C[7].unk_06 -= 1;
-    D_800E643C[7].unk_0A += 0xA;
+    D_800E6280.unk_56C[0x31] = 1;
+    D_800E6280.unk_1BC[7].unk_06 -= 1;
+    D_800E6280.unk_1BC[7].unk_0A += 0xA;
     func_80084D3C();
     func_8004284C();
 }
 
 void func_80153F10(void) {
     func_8014C5C8();
-    if (D_800E7384 == 1) {
+    if (D_800E6280.unk_1104.w == 1) {
         if ((u16) D_800CA154 == 7) {
             func_80083440(1);
         }
@@ -253,9 +251,9 @@ void func_80153F5C(void) {
 }
 
 void func_80153F84(void) {
-    if (D_800E738D == 0) {
+    if (D_800E6280.unk_110D == 0) {
         func_80044750(0x205);
-        D_800E738D += 1;
+        D_800E6280.unk_110D += 1;
     }
     func_8014C5C8();
 }

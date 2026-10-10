@@ -10,7 +10,7 @@ void func_80132040(void) {
     FnTbl8 tbl;
 
     tbl = D_801342D4;
-    idx = D_800E7389;
+    idx = D_800E6280.unk_1109;
     tbl.f[idx]();
 }
 
@@ -33,7 +33,7 @@ INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133CB8);
 void func_80133E5C(void) {
     switch (D_801342D0) {
     case 0:
-        switch ((u32)D_800E644A >> 4) {
+        switch ((u32)D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) {
         case 6:
         case 7:
             func_80062CD0(0x54FE);

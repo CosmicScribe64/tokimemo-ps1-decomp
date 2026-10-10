@@ -3,13 +3,11 @@
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_set_kanji_string /* matched with s32() (main_api.h: void(s32,s32,s32,void*,s32)) */
-#define MAIN_API_OVERRIDE_D_800E7384 /* matched as u32 (main_api.h: s32) */
 
 #include "common.h"
 #include "main_api.h"
 
 s32 set_kanji_string();
-extern u32 D_800E7384;
 
 /* BUNKA_SD functions called across the overlay. */
 void func_80132940(void);

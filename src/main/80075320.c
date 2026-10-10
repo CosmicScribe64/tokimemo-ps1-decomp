@@ -25,7 +25,7 @@ void func_80075A64(void) {
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075AF8);
 
 void func_80075BE8(void) {
-    if (D_800E738A == 0) {
+    if (D_800E6280.unk_110A == 0) {
         func_80075C24();
     }
     func_80066334();
@@ -67,7 +67,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076FDC);
 s32 func_80077330(void) {
     s32 r;
 
-    if ((D_800E6375 & 0xF) == 3) {
+    if ((D_800E6280.unk_0F4.b[1] & 0xF) == 3) {
         r = dec_bg_cd_read(D_800B5960[func_80066A2C()], 0);
     } else {
         r = dec_bg_cd_read(func_80075FA0(), 0);
@@ -112,7 +112,7 @@ void holiday_tel_init(void) {
     icon_disp_switch(0);
     telephone_class_init();
     k_sub_reset_point_set();
-    gnsx(D_800E6354);
+    gnsx(D_800E6280.unk_0D4);
     sndi((u8 *)"誰に電話かけようかな？）", 0, 0x1F);
     k_sub_disp_start(2);
     func_8004284C();
@@ -129,7 +129,7 @@ void holiday_club_init(void) {
     func_8004E58C();
     x_taku_string_set("クラブ活動をする", "クラブをやめる", 0, 2);
     x_taku_menu_set(1, 2);
-    D_800E7314 = 0;
+    D_800E6280.unk_1094 = 0;
     k_disp_start(2);
     func_8004284C();
 }
@@ -138,7 +138,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
 
 void holiday_club_exit(void) {
     func_80048E78();
-    if (func_8005352C() == 1 && (u32)(D_800E62C0 + 6) / 7 == 3 && D_800E62BF % 3U == 0 && D_800E62C1 == 6) {
+    if (func_8005352C() == 1 && (u32)(D_800E6280.unk_040 + 6) / 7 == 3 && D_800E6280.unk_03F % 3U == 0 && D_800E6280.unk_041 == 6) {
         func_80042878(0x73);
         return;
     }
@@ -147,7 +147,7 @@ void holiday_club_exit(void) {
 
 void holiday_taibu_club_exit(void) {
     func_80048E78();
-    if (D_800E7208 & 0x60) {
+    if (D_800E6280.unk_F88 & 0x60) {
         func_80042908(0);
     }
 }

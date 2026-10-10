@@ -28,7 +28,7 @@ void func_8013D500(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013D4B0", func_8013D5B0);
 
 void func_8013D614(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013D68C();
         return;
     }
@@ -36,7 +36,7 @@ void func_8013D614(void) {
 }
 
 void func_8013D650(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013D74C();
         return;
     }
@@ -61,7 +61,7 @@ void func_8013D74C(void) {
     FnTbl23 tbl;
 
     tbl = D_80146D3C;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
 

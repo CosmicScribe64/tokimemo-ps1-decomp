@@ -10,7 +10,7 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80143498);
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80143580);
 
 void func_80144654(void) {
-    if (D_800E7200 & 0x10) {
+    if (D_800E6280.unk_F80 & 0x10) {
         k_disp_switch(0, 1);
         k_disp_switch(1, 1);
         k_disp_switch(2, 1);

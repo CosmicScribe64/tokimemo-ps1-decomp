@@ -178,9 +178,9 @@ void func_80135ECC(void) {
     func_80041584();
     func_80048EB8(0);
     tpage_buf_clear_all();
-    D_800E7518 = 1;
-    D_800E751C = 1;
-    D_800E7520 = 1;
+    D_800E6280.unk_1228[28] = 1;
+    D_800E6280.unk_1228[29] = 1;
+    D_800E6280.unk_1228[30] = 1;
     k_speed_set(0x10);
     func_8004E58C();
     k_reset(1);
@@ -192,14 +192,14 @@ void func_80135ECC(void) {
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80134D20", func_80135F4C);
 
 void func_80136BE0(void) {
-    if (!(D_800E7384 & 3)) {
+    if (!(D_800E6280.unk_1104.w & 3)) {
         func_80136C5C(1);
     }
-    if (!(D_800E7384 & 0xF)) {
+    if (!(D_800E6280.unk_1104.w & 0xF)) {
         func_80136CD0(1);
     }
-    D_800E7384 += 1;
-    if ((u32) D_800E7384 >= 0x440U) {
+    D_800E6280.unk_1104.w += 1;
+    if ((u32) D_800E6280.unk_1104.w >= 0x440U) {
         func_8004284C();
     }
 }

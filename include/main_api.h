@@ -54,10 +54,26 @@ typedef struct Rec34 {
     /* 0x2E */ u8 pad2E[6];
 } Rec34; /* size 0x34 */
 
-/* 0x38-byte record of the table at D_800E643C (16 records: a loop walks it with stride 0x38 up to
- * D_800E67BC; DATE, KANGEI and SHOUGATU index it). The first 0xC bytes are walked as four 0xC-byte
- * steps elsewhere, and +0x0C..+0x37 are read as bit-fields through bytes and words; those fields
- * keep their own D_ names until a layout reproduces every user (wiki/data-types.md). */
+/* One word read as a whole and through its halves and bytes: the original tests bit-fields of these
+ * words with lw and shifts, and IDO-style narrowed loads (lbu, then a shift) of single bytes. */
+typedef union GsWord {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ u32 u;
+    /* 0x00 */ u16 h[2];
+    /* 0x00 */ u8 b[4];
+} GsWord; /* size 0x04 */
+
+/* A halfword read as a whole (lhu) and through its bytes (lbu). */
+typedef union GsHalf {
+    /* 0x00 */ u16 h;
+    /* 0x00 */ u8 b[2];
+} GsHalf; /* size 0x02 */
+
+/* 0x38-byte record of the table at GameState +0x1BC (16 records: a loop walks it with stride 0x38 up
+ * to +0x53C; DATE, KANGEI and SHOUGATU index it; most code reads one record per girl, indexed by
+ * GameState.unk_F5F). The first 0xC bytes are walked as four 0xC-byte steps elsewhere. +0x0C and
+ * +0x10 are bit-field words read through the word and through single bytes (+0x10: bits 0-3 and
+ * 4-8 are compared with the month and day at GameState +0x3F/+0x40). */
 typedef struct Rec38 {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;
@@ -65,7 +81,9 @@ typedef struct Rec38 {
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ u8 unk_0C[0x2C];
+    /* 0x0C */ GsWord unk_0C;
+    /* 0x10 */ GsWord unk_10;
+    /* 0x14 */ u8 unk_14[0x24];
 } Rec38; /* size 0x38 */
 
 /* 0x24-byte record of the table at D_801217D0 (at least 12 records: ENDING walks 12; indexed with
@@ -127,6 +145,259 @@ typedef struct Work80125D10 {
     /* 0x44 */ u8 unk_44[4];
     /* 0x48 */ u8 unk_48[8];
 } Work80125D10; /* size 0x50 */
+
+/* ---- GameState (T-5100) ----
+ * The main bss block 0x800E6280..0x800E7D10 is one object of the original: loops over arrays deep
+ * inside it keep 0x800E6280 in the base register and reach the arrays through large offsets
+ * (search_tpage: +0x1128/+0x1228, OPTION: +0x163C..+0x17BC, ETC: +0x75E), which a compiler can only
+ * do when they are one symbol. Layout, evidence and confidence: wiki/game-state.md. O.BIN names the
+ * object of this size and position `sys` (hypothesis, not applied). Fields are named by offset;
+ * C code reaches them only through D_800E6280 (tools/migrate_globals.py rewrites the old D_ names
+ * and ninja rejects them). Records are named by their offset in GameState. */
+
+/* Two records at +0x1C, one per D_8011ECA0 (SetWorkBase stores a work address and two words). */
+typedef struct GsRec01C {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+} GsRec01C; /* size 0x0C */
+
+/* Two 0x40-byte records at +0x44 (bzero'd together, indexed by 0/1 with stride 0x40): two arrays
+ * of 0x20 bytes indexed by a day number (+0x00[0] = 30 and +0x20[0] = 5 at init). */
+typedef struct GsRec044 {
+    /* 0x00 */ u8 unk_00[0x20];
+    /* 0x20 */ u8 unk_20[0x20];
+} GsRec044; /* size 0x40 */
+
+/* Nine records at +0xFC (separate members); the s16 at +2 holds the nine values parameter_show_init reads, KANGEI
+ * copies whole records. */
+typedef struct GsRec0FC {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+} GsRec0FC; /* size 0x04 */
+
+/* Twelve records at +0x66C (bzero 0x30 at init). */
+typedef struct GsRec66C {
+    /* 0x00 */ u16 unk_00;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+} GsRec66C; /* size 0x04 */
+
+/* 32 records at +0x69C (cleared as words, then byte +0 set to 0xFF; indexed by GameState.unk_71C). */
+typedef struct GsRec69C {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+} GsRec69C; /* size 0x04 */
+
+/* 256 byte records at +0x75E (saved 8 bytes at a time; indexed from 1: code reads record i - 1). */
+typedef struct GsRec75E {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+} GsRec75E; /* size 0x08 */
+
+/* 32 records at +0xF90 (indexed with stride 8 and in pairs with stride 16). */
+typedef struct GsRecF90 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+} GsRecF90; /* size 0x08 */
+
+/* 32 records at +0x1328 (palette_load_vram). */
+typedef struct GsRec1328 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+} GsRec1328; /* size 0x08 */
+
+/* 33 records at +0x142C (csr_load_vram). */
+typedef struct GsRec142C {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u16 unk_08;
+    /* 0x0A */ u16 unk_0A;
+    /* 0x0C */ u16 unk_0C;
+    /* 0x0E */ u16 unk_0E;
+} GsRec142C; /* size 0x10 */
+
+typedef struct GameState {
+    /* 0x000 */ u16 unk_000;
+    /* 0x002 */ u16 unk_002;
+    /* 0x004 */ u16 unk_004;
+    /* 0x006 */ u8 unk_006[0xE];
+    /* 0x014 */ s16 unk_014[2];        /* indexed by D_8011ECA0 */
+    /* 0x018 */ s16 unk_018[2];        /* indexed by D_8011ECA0 */
+    /* 0x01C */ GsRec01C unk_01C[2];  /* indexed by D_8011ECA0 (SetWorkBase) */
+    /* 0x034 */ u8 unk_034;
+    /* 0x035 */ u8 unk_035;
+    /* 0x036 */ u8 unk_036;
+    /* 0x037 */ u8 unk_037;
+    /* 0x038 */ u8 unk_038;
+    /* 0x039 */ u8 unk_039;
+    /* 0x03A */ u8 unk_03A;
+    /* 0x03B */ u8 unk_03B;
+    /* 0x03C */ s8 unk_03C;
+    /* 0x03D */ u8 unk_03D;
+    /* 0x03E */ u8 unk_03E;            /* 0x5F at init; with +0x3F..+0x41 a date (year, month, day, weekday?) */
+    /* 0x03F */ u8 unk_03F;            /* 4 at init; compared with Rec38.unk_10 bits 0-3 */
+    /* 0x040 */ u8 unk_040;            /* 4 at init; compared with Rec38.unk_10 bits 4-8 */
+    /* 0x041 */ u8 unk_041;
+    /* 0x042 */ s16 unk_042;
+    /* 0x044 */ GsRec044 unk_044[2];
+    /* 0x0C4 */ u8 unk_0C4[0x10];      /* +0xC4..+0xF4: text buffers (NAME_ENT) */
+    /* 0x0D4 */ u8 unk_0D4[8];
+    /* 0x0DC */ u8 unk_0DC[8];
+    /* 0x0E4 */ u8 unk_0E4[0x10];
+    /* 0x0F4 */ GsHalf unk_0F4;
+    /* 0x0F6 */ GsHalf unk_0F6;
+    /* 0x0F8 */ s32 unk_0F8;
+    /* 0x0FC */ GsRec0FC unk_0FC;        /* +0xFC..+0x120: nine records, members (an array sums in another order, ETC func_8014A32C) */
+    /* 0x100 */ GsRec0FC unk_100;
+    /* 0x104 */ GsRec0FC unk_104;
+    /* 0x108 */ GsRec0FC unk_108;
+    /* 0x10C */ GsRec0FC unk_10C;
+    /* 0x110 */ GsRec0FC unk_110;
+    /* 0x114 */ GsRec0FC unk_114;
+    /* 0x118 */ GsRec0FC unk_118;
+    /* 0x11C */ GsRec0FC unk_11C;
+    /* 0x120 */ u8 unk_120[0x9C];
+    /* 0x1BC */ Rec38 unk_1BC[16];
+    /* 0x53C */ u8 unk_53C[0x10];
+    /* 0x54C */ GsWord unk_54C[8];
+    /* 0x56C */ u8 unk_56C[0xFC];
+    /* 0x668 */ u8 unk_668[4];
+    /* 0x66C */ GsRec66C unk_66C[12];
+    /* 0x69C */ GsRec69C unk_69C[32];
+    /* 0x71C */ u8 unk_71C;
+    /* 0x71D */ u8 unk_71D;
+    /* 0x71E */ u8 unk_71E;
+    /* 0x71F */ u8 unk_71F;
+    /* 0x720 */ u8 unk_720;
+    /* 0x721 */ u8 unk_721;
+    /* 0x722 */ u8 unk_722;
+    /* 0x723 */ u8 unk_723;
+    /* 0x724 */ u8 unk_724;
+    /* 0x725 */ u8 unk_725;
+    /* 0x726 */ u8 unk_726;
+    /* 0x727 */ u8 unk_727;
+    /* 0x728 */ u8 unk_728[4];
+    /* 0x72C */ u8 unk_72C[0x10];      /* +0x72C, +0x73C, +0x74C: one byte per girl (loops of 11) */
+    /* 0x73C */ u8 unk_73C[0x10];
+    /* 0x74C */ u8 unk_74C[0x10];
+    /* 0x75C */ u8 unk_75C;
+    /* 0x75D */ u8 unk_75D;
+    /* 0x75E */ GsRec75E unk_75E[256];
+    /* 0xF5E */ u8 unk_F5E;
+    /* 0xF5F */ u8 unk_F5F;            /* index of the current girl's Rec38 record */
+    /* 0xF60 */ s8 unk_F60;
+    /* 0xF61 */ s8 unk_F61;
+    /* 0xF62 */ s8 unk_F62;
+    /* 0xF63 */ s8 unk_F63;
+    /* 0xF64 */ u8 unk_F64[4];
+    /* 0xF68 */ GsWord unk_F68;
+    /* 0xF6C */ s8 unk_F6C;
+    /* 0xF6D */ s8 unk_F6D;
+    /* 0xF6E */ s8 unk_F6E;
+    /* 0xF6F */ u8 unk_F6F;
+    /* 0xF70 */ s8 unk_F70;
+    /* 0xF71 */ s8 unk_F71;
+    /* 0xF72 */ u8 unk_F72;
+    /* 0xF73 */ s8 unk_F73;
+    /* 0xF74 */ u8 unk_F74;
+    /* 0xF75 */ u8 unk_F75;
+    /* 0xF76 */ u8 unk_F76;
+    /* 0xF77 */ u8 unk_F77;
+    /* 0xF78 */ u8 unk_F78;
+    /* 0xF79 */ u8 unk_F79;
+    /* 0xF7A */ s16 unk_F7A;
+    /* 0xF7C */ s16 unk_F7C;
+    /* 0xF7E */ u8 unk_F7E[2];
+    /* 0xF80 */ s32 unk_F80;
+    /* 0xF84 */ s32 unk_F84;
+    /* 0xF88 */ s32 unk_F88;
+    /* 0xF8C */ s32 unk_F8C;
+    /* 0xF90 */ GsRecF90 unk_F90[32];
+    /* 0x1090 */ u8 unk_1090;
+    /* 0x1091 */ u8 unk_1091;
+    /* 0x1092 */ u8 unk_1092;
+    /* 0x1093 */ s8 unk_1093;           /* menu_check indexes +0x1093 by menu number (lb/sb) */
+    /* 0x1094 */ s8 unk_1094;
+    /* 0x1095 */ s8 unk_1095[0xD];
+    /* 0x10A2 */ s8 unk_10A2;
+    /* 0x10A3 */ u8 unk_10A3;
+    /* 0x10A4 */ u8 unk_10A4;
+    /* 0x10A5 */ u8 unk_10A5[0x43];    /* one byte per entry of the Rec24 table at D_801217D0 */
+    /* 0x10E8 */ s32 unk_10E8;
+    /* 0x10EC */ u8 unk_10EC[4];
+    /* 0x10F0 */ s32 unk_10F0;
+    /* 0x10F4 */ s32 unk_10F4;
+    /* 0x10F8 */ u32 unk_10F8;
+    /* 0x10FC */ s32 unk_10FC;
+    /* 0x1100 */ s32 unk_1100;
+    /* 0x1104 */ GsWord unk_1104;      /* the move/place selector (normal_date_move_place); BUNKA_SD reads it as u32 */
+    /* 0x1108 */ u8 unk_1108;
+    /* 0x1109 */ u8 unk_1109;
+    /* 0x110A */ u8 unk_110A;
+    /* 0x110B */ s8 unk_110B;
+    /* 0x110C */ s8 unk_110C;
+    /* 0x110D */ u8 unk_110D;
+    /* 0x110E */ u8 unk_110E;
+    /* 0x110F */ u8 unk_110F;
+    /* 0x1110 */ u8 unk_1110;
+    /* 0x1111 */ u8 unk_1111;
+    /* 0x1112 */ u8 unk_1112;
+    /* 0x1113 */ u8 unk_1113;
+    /* 0x1114 */ u8 unk_1114;
+    /* 0x1115 */ u8 unk_1115;
+    /* 0x1116 */ u8 unk_1116;
+    /* 0x1117 */ u8 unk_1117;
+    /* 0x1118 */ u8 unk_1118;
+    /* 0x1119 */ u8 unk_1119;
+    /* 0x111A */ s8 unk_111A;
+    /* 0x111B */ u8 unk_111B;
+    /* 0x111C */ u8 unk_111C;
+    /* 0x111D */ u8 unk_111D;
+    /* 0x111E */ u8 unk_111E[2];
+    /* 0x1120 */ s32 unk_1120;
+    /* 0x1124 */ u8 unk_1124;
+    /* 0x1125 */ u8 unk_1125[3];
+    /* 0x1128 */ s32 unk_1128[64];     /* search_tpage: set from +0x1228 */
+    /* 0x1228 */ s32 unk_1228[64];
+    /* 0x1328 */ GsRec1328 unk_1328[32];
+    /* 0x1428 */ u8 unk_1428;
+    /* 0x1429 */ u8 unk_1429;
+    /* 0x142A */ u8 unk_142A[2];
+    /* 0x142C */ GsRec142C unk_142C[33];
+    /* 0x163C */ s32 unk_163C[128];    /* OPTION fills it as words; +0x163C..+0x167C saved by memcpy */
+    /* 0x183C */ u8 unk_183C[0x200];
+    /* 0x1A3C */ s32 unk_1A3C;         /* +0x1A3C..+0x1A84: addresses set by NAME_ENT */
+    /* 0x1A40 */ u8 unk_1A40[0xC];
+    /* 0x1A4C */ s32 unk_1A4C;
+    /* 0x1A50 */ u8 unk_1A50[0xC];
+    /* 0x1A5C */ s32 unk_1A5C;
+    /* 0x1A60 */ u8 unk_1A60[0xC];
+    /* 0x1A6C */ s32 unk_1A6C;
+    /* 0x1A70 */ u8 unk_1A70[0xC];
+    /* 0x1A7C */ s32 unk_1A7C;
+    /* 0x1A80 */ u8 unk_1A80[4];
+    /* 0x1A84 */ s32 unk_1A84;
+    /* 0x1A88 */ u8 unk_1A88[8];
+} GameState; /* size 0x1A90 */
 
 /* ---- globals ---- */
 extern s32 D_8007E7D0[];
@@ -353,195 +624,10 @@ extern u16 D_800E36E8;
 extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
-#ifndef MAIN_API_OVERRIDE_D_800E6280
-extern u8 D_800E6280[];
-#endif
-extern s16 D_800E6294;
-extern s16 D_800E6296;
-extern s16 D_800E6298;
-extern s16 D_800E629A;
-extern u8 D_800E62B5;
-extern u8 D_800E62B6;
-extern u8 D_800E62B7;
-extern u8 D_800E62B8;
-extern u8 D_800E62B9;
-extern u8 D_800E62BA;
-extern u8 D_800E62BB;  /* also read with lb elsewhere */
-extern s8 D_800E62BC;
-extern u8 D_800E62BD;
-extern u8 D_800E62BE;
-extern u8 D_800E62BF;
-extern u8 D_800E62C0;
-extern u8 D_800E62C1;
-extern s16 D_800E62C2;
-extern u8 D_800E62C4[];
-extern u8 D_800E62C6;
-extern u8 D_800E62CD;
-extern u8 D_800E62D4;
-extern u8 D_800E62DB;
-extern u8 D_800E62E1;
-extern u8 D_800E62E2;
-extern u8 D_800E62E4[];
-extern u8 D_800E62E8;
-extern u8 D_800E6304;
-extern u8 D_800E6307;
-extern u8 D_800E6308;
-extern u8 D_800E6309;
-extern u8 D_800E630B;
-extern u8 D_800E6312;
-extern u8 D_800E6319;
-extern u8 D_800E6320;
-extern u8 D_800E6324;
-extern u8 D_800E6354[];
-extern u8 D_800E635C[];
-extern u16 D_800E6374;
-extern u8 D_800E6375;
-extern u8 D_800E6376;
-extern u8 D_800E6377;
-extern s32 D_800E6378;
-extern s16 D_800E6382;
-extern s16 D_800E6386;
-extern s16 D_800E638A;
-extern s16 D_800E638E;
-extern s16 D_800E6392;
-extern s16 D_800E6396;
-extern s16 D_800E639E;
-extern Rec38 D_800E643C[]; /* 16 records */
-extern u8 D_800E6448[];
-extern u8 D_800E644A;
-extern s32 D_800E644C;
-extern u8 D_800E646A;
-extern s32 D_800E6480;
-extern u8 D_800E64B8;
-extern u8 D_800E64BA;
-extern u8 D_800E652A;
-extern s32 D_800E6560;
-extern s32 D_800E6598;
-extern u8 D_800E65A4;
-extern u8 D_800E661F;
-extern s16 D_800E663A;
-extern u8 D_800E6641;
-extern u8 D_800E66B3;
-extern s32 D_800E66E8;
-extern u8 D_800E6723;
-extern s32 D_800E6758;
-extern s32 D_800E67CC;
-extern u8 D_800E67CF;
-extern u8 D_800E67EC;
-extern u8 D_800E67F2;
-extern s8 D_800E67F5;
-extern u8 D_800E67F9;
-extern u8 D_800E6807;
-extern u8 D_800E6808;
-extern u8 D_800E6819;
-extern u8 D_800E6820;
-extern u8 D_800E682E;
-extern u8 D_800E682F;
-extern s8 D_800E683B;
-extern u8 D_800E683E;
-extern u8 D_800E68EC[];
-extern u8 D_800E691C;
-extern u8 D_800E691D;
-extern u8 D_800E699C;
-extern u8 D_800E699D;
-extern u8 D_800E699E;
-extern u8 D_800E69A0;
-extern u8 D_800E69A1;
-extern u8 D_800E69A2;
-extern u8 D_800E69A5;
-extern u8 D_800E69A7;
-extern u8 D_800E69AC[];
-extern u8 D_800E69D8;
-extern u8 D_800E69DC;
-extern u8 D_800E69DD;
-extern u8 D_800E71DE;
-extern u8 D_800E71DF;
-extern s8 D_800E71E0;
-extern s8 D_800E71E1;
-extern s8 D_800E71E2;
-extern s8 D_800E71E3;
-extern u8 D_800E71E4[];
-extern s32 D_800E71E8;
-extern s8 D_800E71EC;
-extern s8 D_800E71ED;
-extern s8 D_800E71EE;
-extern u8 D_800E71EF;
-extern s8 D_800E71F0;
-extern s8 D_800E71F1;
-extern s8 D_800E71F3;
-extern u8 D_800E71F4;
-extern u8 D_800E71F5;
-extern s16 D_800E71FA;
-extern s16 D_800E71FC;
-extern s32 D_800E7200;
-extern s32 D_800E7204;
-extern s32 D_800E7208;
-extern u8 D_800E7310;
-extern u8 D_800E7312;
-extern s8 D_800E7313;
-extern s8 D_800E7314;
-extern s8 D_800E7322;
-extern s8 D_800E7325;
-extern s32 D_800E7368;
-extern s32 D_800E7374;
-extern u32 D_800E7378;
-extern s32 D_800E737C;
-extern s32 D_800E7380;
-#ifndef MAIN_API_OVERRIDE_D_800E7384
-extern s32 D_800E7384;
-#endif
-extern u8 D_800E7388;
-extern u8 D_800E7389;
-extern u8 D_800E738A;
-extern s8 D_800E738B;
-extern s8 D_800E738C;
-extern u8 D_800E738D;
-extern u8 D_800E738E;
-extern u8 D_800E7392;
-extern u8 D_800E7393;
-extern u8 D_800E7394;  /* also read with lhu elsewhere */
-extern u8 D_800E7395;
-extern u8 D_800E7398;
-extern s8 D_800E739A;
-extern u8 D_800E739C;
-extern u8 D_800E739D;
-extern s32 D_800E73A0;
-extern u8 D_800E73A4;
-extern s32 D_800E74BC;
-extern s32 D_800E74D0;
-extern s32 D_800E74D4;
-extern s32 D_800E74FC;
-extern s32 D_800E7510;
-extern s32 D_800E7514;
-extern s32 D_800E7518;
-extern s32 D_800E751C;
-extern s32 D_800E7520;
-extern s32 D_800E7524;
-extern s32 D_800E753C;
-extern s32 D_800E7540;
-extern s32 D_800E7544;
-extern s32 D_800E7548;
-extern s32 D_800E754C;
-extern s32 D_800E7550;
-extern s32 D_800E7554;
-extern s32 D_800E757C;
-extern s32 D_800E7594;
-extern s32 D_800E7598;
-extern s32 D_800E759C;
-extern s32 D_800E75A0;
-extern s32 D_800E75A4;
-extern u8 D_800E78BC[];
-extern s32 D_800E793C;
-extern s32 D_800E7940;
-extern u8 D_800E7944;
-extern s32 D_800E7948;
-extern s32 D_800E794C;
-extern s32 D_800E7CBC;
-extern s32 D_800E7CCC;
-extern s32 D_800E7CDC;
-extern s32 D_800E7CEC;
-extern s32 D_800E7CFC;
-extern s32 D_800E7D04;
+extern GameState D_800E6280;
+/* Old names of GameState fields kept only for the uses listed in config/migrate_globals.txt
+ * (they match only through a separate symbol; wiki/game-state.md, "Kept old views"). */
+extern s32 D_800E66E8;  /* D_800E6280.unk_1BC[12].unk_0C.w */
 extern s32 D_800E7D10;
 extern u8 D_800E7D11[];
 extern u8 D_800E7D14[];
@@ -1731,6 +1817,5 @@ void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
 extern u8 D_800B1AF9;
-extern u8 D_800E6528;
 
 #endif /* MAIN_API_H */

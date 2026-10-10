@@ -28,10 +28,10 @@ void func_80145EF4(void) {
     srn_init(0, D_80148EFC, 0);
     srn_vram_set(0, 5, 0x580, 0xF0);
     for (i = 0; i < 3; i++) {
-        *(s32 *)(D_800E6280 + 0x123C + i * 4) = 8;
+        D_800E6280.unk_1228[i + 5] = 8;
     }
     for (i = 0; i < 3; i++) {
-        *(s32 *)(D_800E6280 + 0x12BC + i * 4) = 8;
+        D_800E6280.unk_1228[i + 0x25] = 8;
     }
 }
 
@@ -74,7 +74,7 @@ void func_80146884(void) {
         D_8014A3F4 = -0x300;
         return;
     }
-    if (D_800E7208 & 0x20) {
+    if (D_800E6280.unk_F88 & 0x20) {
         D_8014A3C4 = 1;
         return;
     }

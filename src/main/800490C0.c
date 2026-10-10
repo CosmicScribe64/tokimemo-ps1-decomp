@@ -2,11 +2,9 @@
 #include "game.h"
 
 void SetWorkBase(s32 arg0, s32 arg1) {
-    u8 *p = D_800E6280 + arg1 * 12;
-
-    *(s32 *)(p + 0x24) = arg0;
-    *(s32 *)(p + 0x1C) = 0x10C00;
-    *(s32 *)(p + 0x20) = 0;
+    D_800E6280.unk_01C[arg1].unk_08 = arg0;
+    D_800E6280.unk_01C[arg1].unk_00 = 0x10C00;
+    D_800E6280.unk_01C[arg1].unk_04 = 0;
 }
 
 INCLUDE_ASM("asm/nonmatchings/main/800490C0", GetWorkBase);

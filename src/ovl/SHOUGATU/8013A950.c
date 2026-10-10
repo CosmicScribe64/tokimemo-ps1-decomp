@@ -52,7 +52,7 @@ void func_8013AD08(void) {
 }
 
 void func_8013AD50(void) {
-    if (((u8) D_800E62BF >= 6U) && ((u8) D_800E62BF < 0xAU)) {
+    if (((u8) D_800E6280.unk_03F >= 6U) && ((u8) D_800E6280.unk_03F < 0xAU)) {
         bg_read_sub2(0x404D);
     } else {
         bg_read_sub2(0x4055);
@@ -66,7 +66,7 @@ void func_8013ADA4(void) {
 }
 
 void func_8013ADCC(void) {
-    if (((u32) D_800E652A >> 4) == 7) {
+    if (((u32) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == 7) {
         D_80144E08 = 6;
     }
     func_8004284C();
@@ -75,15 +75,15 @@ void func_8013ADCC(void) {
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A950", func_8013AE0C);
 
 void func_8013AE6C(void) {
-    if (((u32) D_800E652A >> 4) != ((u32) D_800E6374 >> 0xC)) {
+    if (((u32) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) != ((u32) D_800E6280.unk_0F4.h >> 0xC)) {
         D_80144E08 = 4;
     }
     func_8004284C();
 }
 
 void func_8013AEB4(void) {
-    if (((u32) D_800E652A >> 4) == ((u32) D_800E6374 >> 0xC)) {
-        D_800E738A += 0xD;
+    if (((u32) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == ((u32) D_800E6280.unk_0F4.h >> 0xC)) {
+        D_800E6280.unk_110A += 0xD;
         return;
     }
     func_8004284C();

@@ -9,9 +9,9 @@ void func_80137B14(s32 arg0) {
     D_8011ED4C = 0;
     D_8011ED16 = 0x40;
     D_8011ED17 = 0x84;
-    D_8011ED20 = D_800E7CCC;
-    D_8011ED24 = D_800E7CDC;
-    D_8011ED48 = D_800E7CBC;
+    D_8011ED20 = D_800E6280.unk_1A4C;
+    D_8011ED24 = D_800E6280.unk_1A5C;
+    D_8011ED48 = D_800E6280.unk_1A3C;
     D_8011ED18 = 8;
     D_8011ED19 = 0x81;
     D_8011ED57 = 0xF;
@@ -27,29 +27,29 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137CBC);
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137D00);
 
 void func_80137E48(void) {
-    switch (D_800E738D) {
+    switch (D_800E6280.unk_110D) {
     case 0:
         if (D_8015EDEC < 8) {
             func_80137CBC(D_8015EDEC);
             D_8015EDEC += 1;
-            D_800E738D += 1;
+            D_800E6280.unk_110D += 1;
         } else {
             func_8004284C();
         }
         break;
     case 1:
         if (func_800460EC() & 4) {
-            D_800E738D += 1;
+            D_800E6280.unk_110D += 1;
         }
         break;
     case 2:
         if (func_800460EC() & 2) {
-            D_800E738D = 0;
+            D_800E6280.unk_110D = 0;
         }
         break;
     }
     func_800578F4(2);
-    if ((D_800E7378 & 3) == 3) {
+    if ((D_800E6280.unk_10F8 & 3) == 3) {
         D_8011ED3E -= 1;
     }
 }

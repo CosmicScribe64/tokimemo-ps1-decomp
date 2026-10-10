@@ -45,7 +45,7 @@ void func_80133C70(void) {
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80133C70", func_80133EE4);
 
 void func_80133F58(void) {
-    if (D_800E71DF == 9) {
+    if (D_800E6280.unk_F5F == 9) {
         func_8004284C();
         return;
     }
@@ -70,6 +70,6 @@ void func_80133FD0(void) {
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80133C70", func_80134030);
 
 void func_801342E8(void) {
-    func_80042908(D_800E69A1);
-    func_80042940(D_800E69A2);
+    func_80042908(D_800E6280.unk_721);
+    func_80042940(D_800E6280.unk_722);
 }

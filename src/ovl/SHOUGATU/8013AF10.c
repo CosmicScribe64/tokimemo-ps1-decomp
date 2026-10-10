@@ -31,14 +31,14 @@ void func_8013B158(void) {
 }
 
 void func_8013B180(void) {
-    if ((u8) D_800E6723 < 2U) {
+    if ((u8) D_800E6280.unk_1BC[13].unk_0C.b[3] < 2U) {
         D_80144E08 += 1;
     }
     func_8004284C();
 }
 
 void func_8013B1C4(void) {
-    if ((u8) D_800E6723 >= 2U) {
+    if ((u8) D_800E6280.unk_1BC[13].unk_0C.b[3] >= 2U) {
         D_80144E08 += 1;
     }
     func_8004284C();

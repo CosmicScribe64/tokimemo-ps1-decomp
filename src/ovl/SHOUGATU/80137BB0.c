@@ -30,7 +30,7 @@ void func_80137C28(void) {
     FnTbl24 tbl;
 
     tbl = D_80144E20;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
 
@@ -60,7 +60,7 @@ void func_80137D68(void) {
     FnTbl34 tbl;
 
     tbl = D_80144E80;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
 

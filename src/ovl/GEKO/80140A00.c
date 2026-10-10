@@ -66,7 +66,7 @@ void func_80140BA0(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80140C50);
 
 void func_80140CCC(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_80140D80();
         return;
     }
@@ -74,7 +74,7 @@ void func_80140CCC(void) {
 }
 
 void func_80140D08(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_80140E40();
         return;
     }
@@ -82,7 +82,7 @@ void func_80140D08(void) {
 }
 
 void func_80140D44(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_80141760();
         return;
     }
@@ -99,7 +99,7 @@ void func_80140D80(void) {
     FnTbl27 tbl;
 
     tbl = D_80147348;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
 
@@ -120,7 +120,7 @@ void func_80140E40(void) {
     FnTbl28 tbl;
 
     tbl = D_801473B4;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -205,10 +205,10 @@ void func_801416E0(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80141760);
 
 void func_8014181C(void) {
-    if (D_800E738D == 0) {
+    if (D_800E6280.unk_110D == 0) {
         k_reset(0);
         func_8006612C(D_800CA1DC);
-        D_800E738D += 1;
+        D_800E6280.unk_110D += 1;
     }
     normal_date_girl_in();
 }

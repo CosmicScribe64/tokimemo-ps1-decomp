@@ -30,7 +30,7 @@ void func_80133374(void) {
     if (D_8015EDEC == 0) {
         func_80042908(0x2D);
     }
-    if (D_800E7208 & 0x800) {
+    if (D_800E6280.unk_F88 & 0x800) {
         func_80042908(0x2D);
     }
     if (D_8015EDB4->unk84[1] == 0) {

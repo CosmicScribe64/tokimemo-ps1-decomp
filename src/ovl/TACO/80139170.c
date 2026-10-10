@@ -2,7 +2,7 @@
 #include "ovl/TACO.h"
 
 void func_80139170(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_8013920C();
         return;
@@ -27,9 +27,9 @@ void func_80139170(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_8013920C);
 
 void func_80139394(void) {
-    D_800E738D += 1;
+    D_800E6280.unk_110D += 1;
     func_8013A790(0, 0);
-    if ((u32)(D_800E738D * 3) >= 0x81U) {
+    if ((u32)(D_800E6280.unk_110D * 3) >= 0x81U) {
         func_8004284C();
     }
 }

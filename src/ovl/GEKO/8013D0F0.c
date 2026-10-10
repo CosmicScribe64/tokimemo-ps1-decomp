@@ -24,7 +24,7 @@ void func_8013D1A0(void) {
 }
 
 void func_8013D1E0(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013D21C();
         return;
     }

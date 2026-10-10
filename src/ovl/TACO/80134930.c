@@ -2,9 +2,9 @@
 #include "ovl/TACO.h"
 
 void func_80134930(void) {
-    D_800E62B7 = 0;
-    D_800E62B6 = 0;
-    D_800E62B8 = 0;
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_036 = 0;
+    D_800E6280.unk_038 = 0;
     draw2d3d(1, 1);
     initView();
     func_80146D60(-0xFA0);
@@ -35,9 +35,9 @@ void func_80134FB8(void) {
     D_8011ED4C = 0;
     D_8011ED16 = 0x40;
     D_8011ED17 = 0x84;
-    D_8011ED20 = D_800E7CCC;
-    D_8011ED24 = D_800E7CDC;
-    D_8011ED48 = D_800E7CBC;
+    D_8011ED20 = D_800E6280.unk_1A4C;
+    D_8011ED24 = D_800E6280.unk_1A5C;
+    D_8011ED48 = D_800E6280.unk_1A3C;
     D_8011ED18 = 8;
     D_8011ED19 = 0x81;
     D_8011ED57 = 0xF;
@@ -50,9 +50,9 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013506C);
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013515C);
 
 void func_80135220(void) {
-    if ((u32)D_800E7384 >= 0xD1U) {
+    if ((u32)D_800E6280.unk_1104.w >= 0xD1U) {
         func_8004284C();
-    } else if (D_800E7208 & 0x860) {
+    } else if (D_800E6280.unk_F88 & 0x860) {
         func_80042940(5);
     }
 }
@@ -60,18 +60,18 @@ void func_80135220(void) {
 void func_80135278(void) {
     if (func_8013515C() == 0) {
         func_8004284C();
-    } else if (D_800E7208 & 0x860) {
+    } else if (D_800E6280.unk_F88 & 0x860) {
         func_80042940(5);
     }
 }
 
 void func_801352CC(void) {
-    if ((u32)D_800E7384 < 0xFFU) {
-        if (D_800E7208 != 0) {
+    if ((u32)D_800E6280.unk_1104.w < 0xFFU) {
+        if (D_800E6280.unk_F88 != 0) {
             func_80042940(5);
             return;
         }
-        func_8004AC18(0xFF - D_800E7384);
+        func_8004AC18(0xFF - D_800E6280.unk_1104.w);
         return;
     }
     func_8004284C();
@@ -83,13 +83,13 @@ void func_80135330(void) {
 
 void func_80135350(void) {
     func_80059048();
-    load_palette(D_800E7CEC, 0x1F, 1, 1, 0);
+    load_palette(D_800E6280.unk_1A6C, 0x1F, 1, 1, 0);
     func_80042908(3);
 }
 
 void func_80135394(void) {
-    D_800E7384 += 1;
-    switch (D_800E738A) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80135418();
         break;

@@ -12,7 +12,7 @@ void func_80136B10(void) {
     FnTbl3 tbl;
 
     tbl = D_80139C5C;
-    tbl.f[D_800E7389]();
+    tbl.f[D_800E6280.unk_1109]();
 }
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80136B74);

@@ -28,7 +28,7 @@ void func_8013C980(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013CA30);
 
 void func_8013CA94(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013CAD0();
         return;
     }
@@ -40,7 +40,7 @@ void func_8013CAD0(void) {
     FnTbl38 tbl;
 
     tbl = D_80146ACC;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -52,7 +52,7 @@ void func_8013CB58(void) {
 
 void func_8013CB90(void) {
     D_800B5A60 = 1;
-    D_800E71DF = 0xE;
+    D_800E6280.unk_F5F = 0xE;
     func_800AE0F0(D_800CA188, "男子１");
     D_80120666 = 4;
     func_8004284C();
@@ -67,7 +67,7 @@ void func_8013CBE4(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013CC20);
 
 void func_8013CC60(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013CC9C();
         return;
     }
@@ -79,7 +79,7 @@ void func_8013CC9C(void) {
     FnTbl22 tbl;
 
     tbl = D_80146B64;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 

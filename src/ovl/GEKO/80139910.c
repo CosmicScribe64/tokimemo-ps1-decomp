@@ -39,7 +39,7 @@ void func_801399DC(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_80139A8C);
 
 void func_80139B08(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_80139B44();
         return;
     }
@@ -51,7 +51,7 @@ void func_80139B44(void) {
     FnTbl39 tbl;
 
     tbl = D_80146420;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
     func_80139E1C();
 }
@@ -64,7 +64,7 @@ void func_80139BC0(void) {
 
 void func_80139BF0(void) {
     LoadSquare(0x140, 0, 0x40, 0x80, D_801463B0);
-    D_800E74BC = 1;
+    D_800E6280.unk_1228[5] = 1;
     func_8004284C();
 }
 
@@ -81,7 +81,7 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_80139D54);
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_80139E1C);
 
 void func_8013A144(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013A180();
         return;
     }
@@ -91,7 +91,7 @@ void func_8013A144(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013A180);
 
 void func_8013A230(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013A2EC();
         return;
     }
@@ -138,10 +138,10 @@ void func_8013A640(void) {
 }
 
 void func_8013A668(void) {
-    if ((u8) D_800E738A >= 0x23U) {
+    if ((u8) D_800E6280.unk_110A >= 0x23U) {
         D_801206DF = D_80120657;
     }
-    if (((u8) D_800E738A >= 0x23U) && (((u32) D_800E7378 % 300U) == 0x14)) {
+    if (((u8) D_800E6280.unk_110A >= 0x23U) && (((u32) D_800E6280.unk_10F8 % 300U) == 0x14)) {
         D_801206DA |= 3;
     }
 }

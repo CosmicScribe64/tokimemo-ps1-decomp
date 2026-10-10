@@ -24,7 +24,7 @@ void func_8013B980(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013B9F0);
 
 void func_8013BA6C(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013BBE0();
         return;
     }
@@ -32,7 +32,7 @@ void func_8013BA6C(void) {
 }
 
 void func_8013BAA8(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013BD04();
         return;
     }
@@ -40,7 +40,7 @@ void func_8013BAA8(void) {
 }
 
 void func_8013BAE4(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013BE58();
         return;
     }
@@ -64,21 +64,21 @@ void func_8013BBE0(void) {
     FnTbl58 tbl;
 
     tbl = D_8014679C;
-    if (D_800E738A == 0x1B) {
+    if (D_800E6280.unk_110A == 0x1B) {
         func_80044750(0xCF);
     }
-    tbl.f[D_800E738A](0x80);
+    tbl.f[D_800E6280.unk_110A](0x80);
 }
 
 void func_8013BC74(void) {
     s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
     s32 prev;
 
-    prev = D_800E738A;
+    prev = D_800E6280.unk_110A;
     func_8007C8A4();
-    cur = D_800E738A;
+    cur = D_800E6280.unk_110A;
     if (prev != cur) {
-        D_800E738A = cur - 1;
+        D_800E6280.unk_110A = cur - 1;
         func_8007EC68();
     }
 }
@@ -87,11 +87,11 @@ void func_8013BCBC(void) {
     s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
     s32 prev;
 
-    prev = D_800E738A;
+    prev = D_800E6280.unk_110A;
     func_8007E81C();
-    cur = D_800E738A;
+    cur = D_800E6280.unk_110A;
     if (prev != cur) {
-        D_800E738A = cur - 1;
+        D_800E6280.unk_110A = cur - 1;
         func_8007EC9C();
     }
 }
@@ -122,7 +122,7 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BE58);
 s32 func_8013BEE0(void) {
     func_80138AF8();
     if ((u16) D_800CA154 == 9 && check_end_k() != 0) {
-        if (*(u8 *) &D_800E62BC == 0 || (*(u8 *) &D_800E62BC != 0 && func_80046094() == 9)) {
+        if (*(u8 *) &D_800E6280.unk_03C == 0 || (*(u8 *) &D_800E6280.unk_03C != 0 && func_80046094() == 9)) {
             D_80122CE4 = 0;
             k_reset(1);
             D_80122CF0 = 0;
@@ -151,11 +151,11 @@ void func_8013BFD4(void) {
 void func_8013C014(void) {
     func_8004284C();
     if (D_80122CDC != 0) {
-        D_800E738A += 0x14;
-        D_800E683B = 1;
+        D_800E6280.unk_110A += 0x14;
+        D_800E6280.unk_56C[0x4F] = 1;
         return;
     }
-    D_800E683B = 2;
+    D_800E6280.unk_56C[0x4F] = 2;
 }
 
 void func_8013C070(void) {

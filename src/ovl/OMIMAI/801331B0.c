@@ -5,7 +5,7 @@ INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_801331B0);
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_80133424);
 
 void func_801334AC(void) {
-    if ((D_800E71DF == 4) && (D_800CA148 == 5)) {
+    if ((D_800E6280.unk_F5F == 4) && (D_800CA148 == 5)) {
         normal_date_speak_1line();
         return;
     }
@@ -15,7 +15,7 @@ void func_801334AC(void) {
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_80133500);
 
 void func_801335C4(void) {
-    func_80044890(1, 0xBF98, 0xBF79, D_800B3688[D_800E71DF], D_800B36C8[D_800E71DF], D_800B3708[D_800E71DF]);
+    func_80044890(1, 0xBF98, 0xBF79, D_800B3688[D_800E6280.unk_F5F], D_800B36C8[D_800E6280.unk_F5F], D_800B3708[D_800E6280.unk_F5F]);
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
@@ -26,10 +26,10 @@ void func_8013364C(void) {
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
-    if ((u32) D_800E7384++ >= 0x400U) {
+    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E738A - 1) & 0xFF);
+        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
     }
 }
 
@@ -53,10 +53,10 @@ void func_80133730(void) {
     tpage_buf_clear();
     func_8004E58C();
     k_reset(1);
-    D_800E7322 = 0;
-    D_800E7368 = 1;
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
     func_8008585C();
-    D_800E62BA = 0x80;
+    D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     hizuke_init();
@@ -72,13 +72,13 @@ INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_801337EC);
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_8013388C);
 
 s32 func_80134030(void) {
-    if (D_800E71DF == 9) {
+    if (D_800E6280.unk_F5F == 9) {
         if (D_800CA148 == 2) {
             func_8004284C();
             return 0;
         }
     }
-    if (D_800E71DF == 8) {
+    if (D_800E6280.unk_F5F == 8) {
         func_8004284C();
         func_8004284C();
         return 0;
@@ -91,7 +91,7 @@ s32 func_80134030(void) {
 }
 
 void func_801340E4(void) {
-    switch (D_800E71DF) {
+    switch (D_800E6280.unk_F5F) {
     case 0:
         D_800CA160 = D_80134C30[1];
         D_800CA164 = D_80134C64[1];
@@ -156,14 +156,14 @@ void func_801340E4(void) {
 }
 
 void func_80134384(void) {
-    switch (D_800E71E8 & 0xF) {
+    switch (D_800E6280.unk_F68.w & 0xF) {
     case 0:
         func_800AE0F0(D_800CA19C, "図書室");
         bg_read_sub2(0x40BC);
         break;
     case 1:
         func_800AE0F0(D_800CA19C, "教室");
-        if (D_800E62BF >= 6U && D_800E62BF < 10U) {
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
             bg_read_sub2(0x404D);
         } else {
             bg_read_sub2(0x4055);
@@ -178,7 +178,7 @@ void func_80134384(void) {
         bg_read_sub2(0x414C);
         break;
     case 4:
-        switch (D_800E6374 >> 12) {
+        switch (D_800E6280.unk_0F4.h >> 12) {
         case 0:
             func_800AE0F0(D_800CA19C, "図書室");
             bg_read_sub2(0x40BC);

@@ -6,9 +6,9 @@ void func_80134260(void) {
     func_80048E78();
     k_reset(1);
     tpage_buf_clear();
-    D_800E62B6 = 0;
-    D_800E62B8 = 0;
-    D_800E62B7 = 0;
+    D_800E6280.unk_036 = 0;
+    D_800E6280.unk_038 = 0;
+    D_800E6280.unk_037 = 0;
     if (D_80122EB8 == 1) {
         back_clear_switch(0);
     } else {

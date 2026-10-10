@@ -82,7 +82,7 @@ void func_80133A2C(void) {
     FnTbl30 tbl;
 
     tbl = D_8013C5C8;
-    idx = D_800E7389;
+    idx = D_800E6280.unk_1109;
     tbl.f[idx]();
 }
 
@@ -93,7 +93,7 @@ INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80133F80);
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801344E0);
 
 void func_80135040(void) {
-    if (((D_800E644C & 0xF) == D_800E62BF) && (((u32)(D_800E644C << 0x17) >> 0x1B) == D_800E62C0)) {
+    if (((D_800E6280.unk_1BC[0].unk_10.w & 0xF) == D_800E6280.unk_03F) && (((u32)(D_800E6280.unk_1BC[0].unk_10.w << 0x17) >> 0x1B) == D_800E6280.unk_040)) {
         func_80138490();
         return;
     }
@@ -120,13 +120,13 @@ INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80137044);
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801375E8);
 
 void func_80137B5C(void) {
-    if (D_800E738A == 0) {
+    if (D_800E6280.unk_110A == 0) {
         func_80044750(0xBF);
         func_800674B0();
         func_8004284C();
     } else if (func_80044E8C() == 1) {
         func_80048F64(0x60);
-        D_800E699E |= 0x10;
+        D_800E6280.unk_71E |= 0x10;
         func_8008585C();
         set_dec_bri(0);
         func_8006D6E0();
@@ -161,19 +161,17 @@ void func_80137F94(void) {
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80138088);
 
-/* FAKE: the address goes through (u32) so that IDO does not keep D_800E71DE in a register across the
- * stores (the original reloads it each time); real source unknown. T-4050 */
 void func_80138374(void) {
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x75E) = D_800E71DF;
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x760) = 0x15;
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x75F) = 6;
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x761) = 5;
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x762) = D_800E62BE;
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x763) = D_800E62BF;
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x764) = D_800E62C0;
-    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x765) = D_800E62C1;
-    D_800E71DE += 1;
-    if (D_800E71DE >= 0xFFU) {
-        D_800E71DE = 0xFE;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_00 = D_800E6280.unk_F5F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_02 = 0x15;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_01 = 6;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 5;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_04 = D_800E6280.unk_03E;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_05 = D_800E6280.unk_03F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_06 = D_800E6280.unk_040;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_07 = D_800E6280.unk_041;
+    D_800E6280.unk_F5E += 1;
+    if (D_800E6280.unk_F5E >= 0xFFU) {
+        D_800E6280.unk_F5E = 0xFE;
     }
 }

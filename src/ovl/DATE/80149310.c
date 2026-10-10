@@ -58,7 +58,7 @@ void func_80149584(void) {
     FnTbl28 tbl;
 
     tbl = D_8015D098;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
     if ((D_80122D44 & 1) && (D_800B593C == 0x80)) {
         func_8006B900();
@@ -99,9 +99,9 @@ void func_80149B78(void) {
 }
 
 void func_80149C1C(void) {
-    if ((D_800E62BF == (D_800E6378 & 0xF)) && (D_800E62C0 == ((u32)(D_800E6378 << 0x17) >> 0x1B))) {
-        if ((u8)D_800E71DE < 0xFEU) {
-            D_800E71DE -= 1;
+    if ((D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (D_800E6280.unk_040 == ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B))) {
+        if ((u8)D_800E6280.unk_F5E < 0xFEU) {
+            D_800E6280.unk_F5E -= 1;
         }
         func_80042878(0x50);
         func_80042908(3);
@@ -126,7 +126,7 @@ void func_80149D04(void) {
     DateTxt tbl;
 
     tbl = D_8015D108;
-    func_800AE0F0(D_800CA25C, &tbl.s[D_800E71DF * 0x129 + D_8015D090 * 0x63 + D_80122CDC * 0x21]);
+    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8015D090 * 0x63 + D_80122CDC * 0x21]);
 }
 
 void func_80149DC4(void) {

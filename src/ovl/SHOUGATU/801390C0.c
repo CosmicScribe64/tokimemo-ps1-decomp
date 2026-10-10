@@ -36,7 +36,7 @@ void func_801391F4(void) {
     FnTbl62 tbl;
 
     tbl = D_801452B8;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
     if (D_80144E08 == 0) {
         if (D_80144E0C == 3) {

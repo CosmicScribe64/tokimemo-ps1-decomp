@@ -24,7 +24,7 @@ void func_8013EEF0(void) {
 }
 
 void func_8013EF30(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013EF6C();
         return;
     }
@@ -40,10 +40,10 @@ void func_8013EFF4(void) {
 }
 
 void func_8013F02C(void) {
-    if (D_800E6808 == 1 && D_800E6807 == 1) {
+    if (D_800E6280.unk_56C[28] == 1 && D_800E6280.unk_56C[27] == 1) {
         D_800CA150 = (u16) D_800CA150 + 4;
         D_800CA154 = 0;
-    } else if (D_800E6807 >= 2U) {
+    } else if (D_800E6280.unk_56C[27] >= 2U) {
         D_800CA150 = (u16) D_800CA150 + 2;
         D_800CA154 = 0;
     }

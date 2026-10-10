@@ -18,8 +18,8 @@ void func_80135C70(void) {
 
     func_80135F38();
     func_801361B8();
-    t = D_800E7384 + 1;
-    D_800E7384 = t;
+    t = D_800E6280.unk_1104.u + 1;
+    D_800E6280.unk_1104.u = t;
     if (t >= 0x21) {
         if (!(D_80120652 & 1)) {
             func_8004284C();
@@ -32,12 +32,12 @@ INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801359B0", func_80135CD4);
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801359B0", func_80135F38);
 
 void func_801361B8(void) {
-    if (D_800E7384 == 0) {
+    if (D_800E6280.unk_1104.u == 0) {
         D_80120652 = 5;
         D_80120696 = 5;
         D_801206DA = 5;
     }
-    if (D_800E7384 == 0x3A6) {
+    if (D_800E6280.unk_1104.u == 0x3A6) {
         D_8012071F = 0x80;
         D_8012071E = 5;
         D_80120723 = 0x80;

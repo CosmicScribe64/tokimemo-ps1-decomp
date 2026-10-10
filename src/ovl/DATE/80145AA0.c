@@ -53,7 +53,7 @@ void func_80145D14(void) {
     FnTbl15 tbl;
 
     tbl = D_8015CF3C;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
     if ((D_80122D44 & 1) && (D_800B593C == 0x80)) {
         func_8006B900();
@@ -71,7 +71,7 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80145AA0", func_80145DF0);
 void func_80145E74(void) {
     D_8015CF34 = 1;
     D_8015CF38 = 0;
-    func_800847B8(D_800E71DF);
+    func_800847B8(D_800E6280.unk_F5F);
     func_80145AA0();
     func_80145EC4();
     func_8004284C();

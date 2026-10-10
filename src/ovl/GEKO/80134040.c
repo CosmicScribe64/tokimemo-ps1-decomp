@@ -13,18 +13,18 @@ void func_801341A0(void) {
     FnTbl29 tbl;
 
     tbl = D_80144E94;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134228);
 
 s32 func_8013431C(void) {
-    if (D_800E62E4[D_800E62C0] == 5) {
-        if (D_800E7384++ == 0) {
+    if (D_800E6280.unk_044[0].unk_20[D_800E6280.unk_040] == 5) {
+        if (D_800E6280.unk_1104.w++ == 0) {
             func_80044750(0xBF);
         }
-        if ((u32)D_800E7384 < 0x80U) {
+        if ((u32)D_800E6280.unk_1104.w < 0x80U) {
             return 0;
         }
     }
@@ -39,10 +39,10 @@ void func_801343DC(void) {
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
-    if ((u32) D_800E7384++ >= 0x400U) {
+    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E738A - 1) & 0xFF);
+        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
     }
 }
 
@@ -55,7 +55,7 @@ void func_8013445C(void) {
 void func_8013448C(void) {
     func_80046318(3, 0x801B0000, 0xAF43);
     func_80134F84();
-    if (!(D_800E699E & 8)) {
+    if (!(D_800E6280.unk_71E & 8)) {
         func_80044750(0x603);
         func_8004E788(-0x28, 0x40, 2, "ピンポーン", 0);
     }

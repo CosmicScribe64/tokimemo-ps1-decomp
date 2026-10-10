@@ -2,7 +2,6 @@
 #define OVL_ENDING_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
-#define MAIN_API_OVERRIDE_D_800E6280 /* matched as s16 (main_api.h: u8[]) */
 #define MAIN_API_OVERRIDE_set_kanji_string /* matched with s32(s16,s32,s32,void*,s32): the result is passed on (main_api.h: void) */
 
 #include "common.h"
@@ -140,8 +139,6 @@ extern s32 D_8013C838;
 extern s32 D_8013C83C;
 
 void func_801396A4(s16 arg0, u8 arg1);
-
-extern s16 D_800E6280;
 
 void func_801341D8();
 

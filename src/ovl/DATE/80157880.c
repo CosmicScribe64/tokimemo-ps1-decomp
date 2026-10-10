@@ -69,9 +69,9 @@ void func_80157FE4(void) {
     D_8015E208 = D_8015DF3C;
     D_8015E20C = D_8015E078;
     D_8015E210 = D_8015E1B4;
-    D_800E643C[9].unk_02 += 3;
-    D_800E643C[9].unk_06 += 2;
-    D_800E643C[9].unk_0A -= 0x14;
+    D_800E6280.unk_1BC[9].unk_02 += 3;
+    D_800E6280.unk_1BC[9].unk_06 += 2;
+    D_800E6280.unk_1BC[9].unk_0A -= 0x14;
     func_80084D3C();
     func_80157A90();
     func_80043914(D_80160134, 0x11, 1, 2, 0);
@@ -81,7 +81,7 @@ void func_80157FE4(void) {
 }
 
 void func_801580FC(void) {
-    D_800E71DF = 9;
+    D_800E6280.unk_F5F = 9;
     bg_read_sub2(0x4818);
     func_8004284C();
 }
@@ -115,14 +115,14 @@ void func_801581D8(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80158200);
 
 void func_80158288(void) {
-    D_800E71DF = 9;
+    D_800E6280.unk_F5F = 9;
     D_80122D20 = 0;
     func_8014C5C8();
 }
 
 void func_801582B8(void) {
     if ((u16) D_800CA154 >= 4U) {
-        D_800E71DF = 0xE;
+        D_800E6280.unk_F5F = 0xE;
         D_80122D10 = 2;
     }
     func_8014C5C8();
@@ -185,7 +185,7 @@ void func_801585F0(void) {
     FnTbl36 tbl;
 
     tbl = D_801603B0;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 

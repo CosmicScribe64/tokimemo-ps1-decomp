@@ -2,8 +2,8 @@
 #include "ovl/TACO.h"
 
 void func_80137F90(void) {
-    D_800E7384 += 1;
-    switch (D_800E738A) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_8013801C();
         break;

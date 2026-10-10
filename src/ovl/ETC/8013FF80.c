@@ -2,7 +2,7 @@
 #include "ovl/ETC.h"
 
 void func_8013FF80(void) {
-    if (D_800E738A == 0) {
+    if (D_800E6280.unk_110A == 0) {
         func_8013FFAC();
     }
 }
@@ -10,8 +10,8 @@ void func_8013FF80(void) {
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013FF80", func_8013FFAC);
 
 void func_801407F0(void) {
-    D_800E7380 += 1;
-    switch (D_800E7389) {
+    D_800E6280.unk_1100 += 1;
+    switch (D_800E6280.unk_1109) {
     case 0:
         func_8013FF80();
         break;
@@ -26,8 +26,8 @@ void func_801407F0(void) {
         break;
     }
     func_80066334();
-    if (D_800E7389 != 0xFF) {
-        if (D_801500E0 == 0 && (D_800E7208 & 0x800)) {
+    if (D_800E6280.unk_1109 != 0xFF) {
+        if (D_801500E0 == 0 && (D_800E6280.unk_F88 & 0x800)) {
             func_8013FC08();
             D_801500D4 = 0x800;
             func_8013FA7C();

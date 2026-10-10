@@ -2,14 +2,14 @@
 #include "game.h"
 
 void func_80059A20(void) {
-    func_8004B19C(D_800E738A, 0x90, 0x58);
-    func_8004AE28(D_800E7384, 0x80, 0x58);
-    func_8004B19C(D_800E7389, 0x90, 0x50);
-    func_8004AE28(D_800E7380, 0x80, 0x50);
-    func_8004B19C(D_800E7388, 0x90, 0x48);
-    func_8004AE28(D_800E737C, 0x80, 0x48);
-    func_8004B19C(D_800E7374, 0x80, 0x60);
-    func_8004B19C(D_800E738D, 0x90, 0x60);
+    func_8004B19C(D_800E6280.unk_110A, 0x90, 0x58);
+    func_8004AE28(D_800E6280.unk_1104.w, 0x80, 0x58);
+    func_8004B19C(D_800E6280.unk_1109, 0x90, 0x50);
+    func_8004AE28(D_800E6280.unk_1100, 0x80, 0x50);
+    func_8004B19C(D_800E6280.unk_1108, 0x90, 0x48);
+    func_8004AE28(D_800E6280.unk_10FC, 0x80, 0x48);
+    func_8004B19C(D_800E6280.unk_10F4, 0x80, 0x60);
+    func_8004B19C(D_800E6280.unk_110D, 0x90, 0x60);
     func_8004B19C(D_800E7D34, 0x90, 0x40);
     func_8004B19C(GetSp(), 0x90, 0x68);
 }

@@ -25,6 +25,7 @@ import srcscan  # noqa: E402  (tools/srcscan.py: the C files of every unit, from
 EXE = "SLPM_86.053"
 DISC_STAMP = "build/disc.stamp"  # tools/prepare_disc.py: disc/files is unpacked from game/ (T-3300)
 HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
+GLOBALS_OK = "build/globals.ok"  # tools/migrate_globals.py --check passed (T-5100)
 HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
 
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
@@ -189,6 +190,13 @@ def main():
            description="CHECK HEADERS")
     n.build(HEADERS_OK, "headers", implicit=["tools/check_headers.py"] + HEADER_FILES)
     n.build("headers", "phony", HEADERS_OK)
+    # old D_ names of aggregate fields (T-5100): tools/migrate_globals.py --check over every C file
+    n.rule("globals", command="python3 tools/migrate_globals.py --check && touch $out",
+           description="CHECK GLOBALS")
+    n.build(GLOBALS_OK, "globals",
+            implicit=["tools/migrate_globals.py", "config/migrate_globals.txt"] + HEADER_FILES
+            + sorted(glob.glob("src/**/*.c", recursive=True)))
+    n.build("globals", "phony", GLOBALS_OK)
     n.rule("as", command="python3 tools/asm.py $in $out", description="AS $in")
     n.rule("cc",
            command="python3 tools/cc.py $in $out $toolchain",
@@ -229,7 +237,7 @@ def main():
     n.rule("progress", command="python3 tools/progress.py", description="PROGRESS", pool="console")
     n.build("progress", "progress")
     oks = overlay_targets(n, read_overlays())
-    n.default(["build/%s.ok" % EXE] + oks)
+    n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK])
     n.close()
 
     units = [{

@@ -47,13 +47,13 @@ void func_8015A4A8(void) {
     FnTbl20 tbl;
 
     tbl = D_80160B80;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
 void func_8015A530(void) {
-    D_800E71DF = D_800E69DD;
-    func_800847B8(D_800E69DD);
+    D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    func_800847B8(D_800E6280.unk_75D);
     func_8004284C();
 }
 
@@ -70,7 +70,7 @@ void func_8015A58C(void) {
 
     tbl = D_80160BD0;
     func_8006B900();
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 

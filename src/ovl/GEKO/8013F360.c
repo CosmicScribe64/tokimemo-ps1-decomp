@@ -36,7 +36,7 @@ void func_8013F410(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013F4C0);
 
 void func_8013F53C(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013F5F0();
         return;
     }
@@ -44,7 +44,7 @@ void func_8013F53C(void) {
 }
 
 void func_8013F578(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013F6A4();
         return;
     }
@@ -52,7 +52,7 @@ void func_8013F578(void) {
 }
 
 void func_8013F5B4(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013F850();
         return;
     }
@@ -69,7 +69,7 @@ void func_8013F5F0(void) {
     FnTbl49 tbl;
 
     tbl = D_801470B0;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -82,7 +82,7 @@ void func_8013F66C(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013F6A4);
 
 void func_8013F72C(void) {
-    if ((u8) D_800E682F >= 2U) {
+    if ((u8) D_800E6280.unk_56C[67] >= 2U) {
         D_800CA150 = (u16) D_800CA150 + 5;
     }
     func_8004284C();
@@ -90,7 +90,7 @@ void func_8013F72C(void) {
 
 void func_8013F770(void) {
     func_800634FC(get_g_zyotai_h(0xA));
-    if ((u8) D_800E682F >= 2U) {
+    if ((u8) D_800E6280.unk_56C[67] >= 2U) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
@@ -113,12 +113,12 @@ void func_8013F850(void) {
     FnTbl61 tbl;
 
     tbl = D_801471D0;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
-    if ((D_801470A8 != 0) && (D_800E738A >= 0x20U)) {
+    if ((D_801470A8 != 0) && (D_800E6280.unk_110A >= 0x20U)) {
         func_8013FD3C();
     }
-    if ((D_801470AC != 0) && (D_800E738A >= 0x20U)) {
+    if ((D_801470AC != 0) && (D_800E6280.unk_110A >= 0x20U)) {
         func_80140040();
     }
 }
@@ -149,7 +149,7 @@ void func_8013FA38(void) {
 void func_8013FA60(void) {
     func_80138AF8();
     if ((u16)D_800CA154 == 2) {
-        if (D_800E7384++ == 0) {
+        if (D_800E6280.unk_1104.w++ == 0) {
             func_80044750(0x603);
         }
     }
@@ -202,7 +202,7 @@ void func_8013FC00(void) {
 }
 
 s16 func_8013FC80(void) {
-    if (D_800E7384 == 0) {
+    if (D_800E6280.unk_1104.w == 0) {
         D_801206DB |= 0x80;
         D_801206F4 = 0;
         D_801206F2 = 0;
@@ -215,7 +215,7 @@ s16 func_8013FC80(void) {
         D_801470A8 = 1;
         func_8004284C();
     }
-    D_800E7384 += 1;
+    D_800E6280.unk_1104.w += 1;
 }
 
 void func_8013FD3C(void) {

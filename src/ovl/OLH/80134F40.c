@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80134F40(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0x0:
         func_8013500C();
         break;

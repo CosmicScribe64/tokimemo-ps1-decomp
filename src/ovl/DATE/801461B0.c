@@ -30,12 +30,12 @@ void func_801491E4(s32 arg0) {
     temp_v0 = func_8005742C(arg0, 1);
     if (temp_v0 == D_800B5939) {
         func_800AE0B0("same\n");
-        D_800E7384 += 3;
+        D_800E6280.unk_1104.w += 3;
         return;
     }
     if (temp_v0 == (1 - D_800B5939)) {
         func_800AE0B0("another\n");
-        D_800E7384 += 2;
+        D_800E6280.unk_1104.w += 2;
     }
 }
 

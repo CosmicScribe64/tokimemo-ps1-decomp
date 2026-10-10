@@ -57,7 +57,7 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139B94);
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139C10);
 
 void func_80139C68(void) {
-    D_800E71DF = 1;
+    D_800E6280.unk_F5F = 1;
     func_80137AB4();
 }
 

@@ -4,7 +4,7 @@
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137340);
 
 void func_801374BC(void) {
-    if (D_800E73A4 != 0) {
+    if (D_800E6280.unk_1124 != 0) {
         func_80042878(0xC2);
         return;
     }
@@ -14,7 +14,7 @@ void func_801374BC(void) {
 void func_801374F8(void) {
     _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
     dtd_on(0xE);
-    if (D_800E7384++ >= 0x81U) {
+    if (D_800E6280.unk_1104.w++ >= 0x81U) {
         func_8004284C();
     }
 }
@@ -33,7 +33,7 @@ void func_801376FC(void) {
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137730);
 
 void func_80137AA8(void) {
-    switch (D_800E71DF) {
+    switch (D_800E6280.unk_F5F) {
     case 0:
         func_80137BB4();
         return;

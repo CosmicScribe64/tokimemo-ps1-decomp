@@ -2,12 +2,12 @@
 #include "ovl/TAIIKU.h"
 
 void func_80141C00(void) {
-    if ((func_8008667C(6) < 2) && (((u32) (D_800E6598 << 0x1E) >> 0x1F) == 1) && (D_800E6819 == 0)) {
-        D_800E6819 = 1;
+    if ((func_8008667C(6) < 2) && (((u32) (D_800E6280.unk_1BC[6].unk_0C.w << 0x1E) >> 0x1F) == 1) && (D_800E6280.unk_56C[45] == 0)) {
+        D_800E6280.unk_56C[45] = 1;
         func_80042808();
     } else {
-        D_800E7389 = 0;
-        D_800E738A = 0;
+        D_800E6280.unk_1109 = 0;
+        D_800E6280.unk_110A = 0;
         D_80122ECC = 1;
     }
     Default_Disp();
@@ -19,8 +19,8 @@ void func_80141C88(void) {
     temp_v0 = func_80141CDC();
     if (temp_v0 != 0) {
         if (temp_v0 == 1) {
-            D_800E7389 = 0;
-            D_800E738A = 0;
+            D_800E6280.unk_1109 = 0;
+            D_800E6280.unk_110A = 0;
             D_80122ECC = 1;
             return;
         }

@@ -567,3 +567,6 @@ Scripts over all 839 compare chains of the original and a per-function rebuild o
 
 ## [2026-10-10] ticket | T-5010 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS 7, 7a, 8a, 9, 11, 13 recorded in [[tickets/T-5010-t0018-register-order-second-attempt]]; no open findings. Notes added to [[tickets/T-0018-ugen-temp-register-order]], [[tickets/T-1321-register-promotion-build-step]], [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]], [[data/t0018-cases]], [[decompile-workflow]].
+
+## [2026-10-10] ticket | T-5100 Recover the main game-state struct (created -> In Progress)
+[[tickets/T-5100-game-state-struct]] created and claimed (worktree o-gamestate): one struct for the main bss game state found by [[tickets/T-5000-type-recovery-arrays-structs]], a migration tool for the old `D_` names, the tree migrated byte-identically, then a retry of the blocked functions that touch it.

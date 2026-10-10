@@ -1,0 +1,7 @@
+# tools/migrate_globals.py (T-5100): aggregates whose fields splat names as separate D_ globals.
+#   aggregate <base symbol> <type> <header>   every D_ address inside the type is a field of the base
+#   keep <src file> <symbol> <reason>          a use that matches only on the old view (see wiki/game-state.md)
+aggregate D_800E6280 GameState include/main_api.h
+# Uses that match only through the old symbol (IDO orders the operands of a struct-array element
+# differently from a scalar extern); the symbol stays declared in include/main_api.h for them.
+keep src/ovl/SHOUGATU/8013DD90.c D_800E66E8 func_8013E0F0: the sum loads Rec38[12].unk_0C first only as a scalar extern

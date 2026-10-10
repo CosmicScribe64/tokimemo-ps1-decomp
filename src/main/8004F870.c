@@ -51,7 +51,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndisp);
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", sndi);
 
 void set_c_girl(u8 arg0) {
-    D_800E71DF = arg0;
+    D_800E6280.unk_F5F = arg0;
 }
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_name);
@@ -105,10 +105,10 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", xa_wait);
 
 void func_80052000(void) {
     k_disp_inc();
-    if (D_800E7208 & 0x860) {
+    if (D_800E6280.unk_F88 & 0x860) {
         k_disp_goto_line_end();
         if (check_end_k() != 0) {
-            D_800E738D += 1;
+            D_800E6280.unk_110D += 1;
         }
     }
 }
@@ -124,7 +124,7 @@ u32 get_h_yuukou(s32 arg0) {
     s32 v;
 
     t = arg0 % 13;
-    v = *(s16 *)(D_800E6280 + 0x1C2 + t * 0x38) * D_800B41A0[t] / 100;
+    v = D_800E6280.unk_1BC[t].unk_06 * D_800B41A0[t] / 100;
     if (v >= 0x65) {
         return 0x64;
     }
@@ -151,7 +151,7 @@ void get_h_yuukou_table(u8 *arg0) {
 }
 
 void birth_day_check(s32 arg0) {
-    birth_day_check_days(arg0, D_800E62BF, D_800E62C0);
+    birth_day_check_days(arg0, D_800E6280.unk_03F, D_800E6280.unk_040);
 }
 
 s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
@@ -163,14 +163,14 @@ s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
     }
     t = arg0 & 0xF;
     if (t == 0xF) {
-        v = D_800E6378;
+        v = D_800E6280.unk_0F8;
         if (arg1 == (v & 0xF)) {
             if (arg2 == (u32)(v << 23) >> 27) {
                 return 1;
             }
         }
     } else {
-        v = *(s32 *)(D_800E6280 + 0x1CC + t * 0x38);
+        v = D_800E6280.unk_1BC[t].unk_10.w;
         if (arg1 == (v & 0xF)) {
             if (arg2 == (u32)(v << 23) >> 27) {
                 return 1;

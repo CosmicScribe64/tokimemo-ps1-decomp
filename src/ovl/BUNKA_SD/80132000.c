@@ -26,7 +26,7 @@ INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80132000", func_80132940);
 
 void func_80132DB8(u32 arg0) {
     func_80132708();
-    if (arg0 < (u32)D_800E7384) {
+    if (arg0 < (u32)D_800E6280.unk_1104.u) {
         func_8004284C();
     }
 }

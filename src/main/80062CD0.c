@@ -67,8 +67,8 @@ void func_80063520(u32 arg0) {
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063668);
 
 void bustup_speech(void) {
-    /* D_800E62BC is declared s8 in game.h; this function reads it as u8 (lbu) */
-    if (*(u8 *)&D_800E62BC == 0 && !(D_8011F50E & 1)) {
+    /* GameState.unk_03C is s8; this function reads it as u8 (lbu) */
+    if (*(u8 *)&D_800E6280.unk_03C == 0 && !(D_8011F50E & 1)) {
         /* FAKE: the no-op "& 0xFF" shifts IDO's temp numbering (ori in $t9, as in the original); T-1010 */
         D_8011F50E = (D_8011F50E & 0xFF) | 0x11;
     }
@@ -184,7 +184,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006612C);
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066334);
 
 s32 func_80066A2C(void) {
-    switch (D_800E62BF) {
+    switch (D_800E6280.unk_03F) {
     case 3:
     case 4:
     case 5:
@@ -206,7 +206,7 @@ s32 func_80066A2C(void) {
 }
 
 s32 func_80066A84(void) {
-    switch (D_800E62BF) {
+    switch (D_800E6280.unk_03F) {
     case 1:
     case 2:
     case 3:
@@ -229,16 +229,16 @@ s32 func_80066ACC(void) {
     s32 ret;
 
     ret = func_80066A84();
-    if (D_800E62BF == 9) {
-        if (D_800E62C0 >= 0x18U) {
+    if (D_800E6280.unk_03F == 9) {
+        if (D_800E6280.unk_040 >= 0x18U) {
             ret = -1;
         }
         /* FAKE: empty test of ret makes ret the first register-allocated local ($v1), the global gets $a0. T-4100 */
         if (!ret) {
         }
     }
-    if (D_800E62BF == 5) {
-        if (D_800E62C0 >= 0x19U) {
+    if (D_800E6280.unk_03F == 5) {
+        if (D_800E6280.unk_040 >= 0x19U) {
             ret = -1;
         }
     }

@@ -19,7 +19,7 @@ void func_8013A53C(void) {
     FnTbl27 tbl;
 
     tbl = D_801456A0;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -72,7 +72,7 @@ void func_8013A8B4(void) {
 }
 
 void func_8013A8DC(void) {
-    if (((u32) D_800E6374 >> 0xC) == 9) {
+    if (((u32) D_800E6280.unk_0F4.h >> 0xC) == 9) {
         D_80144E08 = 5;
     }
     func_8004284C();

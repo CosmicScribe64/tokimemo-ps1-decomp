@@ -58,14 +58,14 @@ void func_8013A648(void) {
     if (D_80122CDC == 0) {
         func_80137C3C();
     } else {
-        *(s16 *) (D_800E6280 + D_800E71DF * 0x38 + 0x1BE) += 5;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 5;
     }
     func_80084D3C();
     if (D_800CA2EC != 0) {
         if (D_80122CDC == 2) {
-            D_800E71DF = 0xD;
+            D_800E6280.unk_F5F = 0xD;
         } else if (D_80122CDC == 1) {
-            D_800E71DF = 0xFF;
+            D_800E6280.unk_F5F = 0xFF;
         }
     }
     func_8004284C();

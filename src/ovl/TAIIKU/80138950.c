@@ -14,7 +14,7 @@ void func_80138A34(void) {
     FnTbl9 tbl;
 
     tbl = D_80149E08;
-    idx = D_800E7389;
+    idx = D_800E6280.unk_1109;
     tbl.f[idx]();
 }
 
@@ -29,13 +29,13 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139550);
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139610);
 
 void func_80139A20(void) {
-    if ((func_8008667C(6) < 2) && (((u32) (D_800E6598 << 0x1E) >> 0x1F) == 1) && (D_80149940 == 6) && (D_800E6819 == 0)) {
-        D_800E6819 = 1;
+    if ((func_8008667C(6) < 2) && (((u32) (D_800E6280.unk_1BC[6].unk_0C.w << 0x1E) >> 0x1F) == 1) && (D_80149940 == 6) && (D_800E6280.unk_56C[45] == 0)) {
+        D_800E6280.unk_56C[45] = 1;
         func_80042808();
         return;
     }
-    D_800E7389 = 0;
-    D_800E738A = 0;
+    D_800E6280.unk_1109 = 0;
+    D_800E6280.unk_110A = 0;
     D_80122ECC = 1;
 }
 

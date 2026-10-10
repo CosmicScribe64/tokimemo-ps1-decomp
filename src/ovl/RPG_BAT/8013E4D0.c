@@ -223,7 +223,7 @@ void func_8013F1C4(s32 a, s32 b, s32 c) {
 
     p = &D_8015ED64[0][c];
     if (*p == 0) {
-        D_800E71DF = 0xE;
+        D_800E6280.unk_F5F = 0xE;
         func_80046290(a, b, 0xE);
         func_80044750(0x300);
         *p = 1;

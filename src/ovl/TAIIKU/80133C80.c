@@ -16,7 +16,7 @@ void func_80133C80(void) {
     FnTbl10 tbl;
 
     tbl = D_8014933C;
-    idx = D_800E7389;
+    idx = D_800E6280.unk_1109;
     tbl.f[idx]();
 }
 
@@ -41,10 +41,10 @@ void func_801356E0(void) {
     srn_init(0, D_80149FA8, 0);
     srn_vram_set(0, 5, 0x580, 0xF0);
     for (i = 0; i < 3; i++) {
-        *(s32 *)(D_800E6280 + 0x123C + i * 4) = 8;
+        D_800E6280.unk_1228[i + 5] = 8;
     }
     for (i = 0; i < 3; i++) {
-        *(s32 *)(D_800E6280 + 0x12BC + i * 4) = 8;
+        D_800E6280.unk_1228[i + 0x25] = 8;
     }
 }
 
@@ -86,7 +86,7 @@ void func_801369F0(void) {
 }
 
 void func_80136A28(void) {
-    if (D_800E7208 & 0x20) {
+    if (D_800E6280.unk_F88 & 0x20) {
         D_80149204 = 1;
     }
     if (D_8014921C >= 0x10U) {

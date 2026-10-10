@@ -2,7 +2,7 @@
 #include "ovl/EN_NICHI.h"
 
 void func_80132000(void) {
-    if (D_800E62BE == 0x5F) {
+    if (D_800E6280.unk_03E == 0x5F) {
         func_801320C0();
     } else {
         func_80136B10();
@@ -23,7 +23,7 @@ void func_80132040(void) {
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801320C0);
 
 void func_8013216C(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_801321EC();
         return;
@@ -44,23 +44,23 @@ void func_801321EC(void) {
     func_80044750(0x7F);
     func_8006BC28(0);
     func_8006BD6C(0);
-    func_800AE120(D_800E7374);
+    func_800AE120(D_800E6280.unk_10F4);
     hizuke_disp_switch(0);
     func_80065F34(0);
     message_disp_switch(0);
     func_8006764C(0);
     func_8004284C();
-    D_80139B14 = D_800E71EF;
-    D_800E71EF = 1;
+    D_80139B14 = D_800E6280.unk_F6F;
+    D_800E6280.unk_F6F = 1;
 }
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132278);
 
 void func_80132308(void) {
-    if (D_800E738D == 0) {
+    if (D_800E6280.unk_110D == 0) {
         func_80044750(0x201);
         func_80046318(0x3F, 0x801B0000, 0x7C8C);
-        D_800E738D += 1;
+        D_800E6280.unk_110D += 1;
     } else if (func_800460CC() & 1) {
         func_8004284C();
     }
@@ -110,9 +110,9 @@ s32 func_80132B40(void) {
         for (i = 0; i < 64; i++) {
             D_8011ECD0[0x1987 + i * 0x44] = 0x80;
         }
-        D_800E62B6 = 0x40;
-        D_800E62B7 = 0x40;
-        D_800E62B8 = 0x80;
+        D_800E6280.unk_036 = 0x40;
+        D_800E6280.unk_037 = 0x40;
+        D_800E6280.unk_038 = 0x80;
         return;
     }
     if (D_8013921C < 0x80) {
@@ -120,9 +120,9 @@ s32 func_80132B40(void) {
         for (i = 0; i < 64; i++) {
             D_8011ECD0[0x1987 + i * 0x44] += 4;
         }
-        D_800E62B6 += 2;
-        (&D_800E62B6)[1] += 2; /* FAKE: indexing the first symbol keeps the loads after the stores; matches, real source unknown. T-4090 */
-        (&D_800E62B6)[2] += 4;
+        D_800E6280.unk_036 += 2;
+        D_800E6280.unk_037 += 2;
+        D_800E6280.unk_038 += 4;
     }
 }
 
@@ -134,9 +134,9 @@ void func_80132C4C(void) {
         for (i = 0; i < 64; i++) {
             D_8011ECD0[0x1987 + i * 0x44] = 0;
         }
-        D_800E62B6 = 0;
-        D_800E62B7 = 0;
-        D_800E62B8 = 0;
+        D_800E6280.unk_036 = 0;
+        D_800E6280.unk_037 = 0;
+        D_800E6280.unk_038 = 0;
         return;
     }
     if (D_8013921C > 0) {
@@ -144,9 +144,9 @@ void func_80132C4C(void) {
         for (i = 0; i < 64; i++) {
             D_8011ECD0[0x1987 + i * 0x44] -= 4;
         }
-        D_800E62B6 -= 2;
-        (&D_800E62B6)[1] -= 2; /* FAKE: indexing the first symbol keeps the loads after the stores; matches, real source unknown. T-4090 */
-        (&D_800E62B6)[2] -= 4;
+        D_800E6280.unk_036 -= 2;
+        D_800E6280.unk_037 -= 2;
+        D_800E6280.unk_038 -= 4;
     }
 }
 
@@ -183,7 +183,7 @@ void func_80132DC4(void) {
 
 void func_80132E3C(void) {
     func_801330D0();
-    if (D_800E7200 & 0x20) {
+    if (D_800E6280.unk_F80 & 0x20) {
         if (D_80121531 != 7) {
             func_80135A48(D_8011ECF6, D_8011ECFA);
             func_801369F4(0x501);

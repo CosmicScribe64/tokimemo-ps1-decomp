@@ -10,7 +10,7 @@ void func_80132760(void) {
     FnTbl56 tbl;
 
     tbl = D_8013454C;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -20,7 +20,7 @@ void func_801327E8(void) {
 }
 
 void func_80132810(void) {
-    D_800E71DF = 0;
+    D_800E6280.unk_F5F = 0;
     func_8004284C();
 }
 
@@ -44,8 +44,8 @@ void func_80133510(void) {
 }
 
 void func_80133568(void) {
-    if ((D_80134544 == 1) && (D_800E71DF == 9)) {
-        D_800E738A += 6;
+    if ((D_80134544 == 1) && (D_800E6280.unk_F5F == 9)) {
+        D_800E6280.unk_110A += 6;
         return;
     }
     func_8004284C();

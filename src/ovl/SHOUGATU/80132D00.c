@@ -20,7 +20,7 @@ void func_80132DE4(void) {
 
 void func_80132E0C(void) {
     if (D_80122CDC != 0) {
-        if ((D_800E71DF == 2) || (D_800E71DF == 7) || (D_800E71DF == 8) || (D_800E71DF == 9) || (D_800E71DF == 0xA)) {
+        if ((D_800E6280.unk_F5F == 2) || (D_800E6280.unk_F5F == 7) || (D_800E6280.unk_F5F == 8) || (D_800E6280.unk_F5F == 9) || (D_800E6280.unk_F5F == 0xA)) {
             func_80083418();
             return;
         }

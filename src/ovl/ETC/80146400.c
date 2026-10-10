@@ -9,7 +9,7 @@ void func_801465F8(void) {
     s32 *p;
     s32 y;
 
-    switch (D_800E7389) {
+    switch (D_800E6280.unk_1109) {
     case 0:
         func_80146B40();
         break;
@@ -26,7 +26,7 @@ void func_801465F8(void) {
     func_800646CC();
     func_8006BA40();
     func_80065B0C(1);
-    if (D_800E62C1 == 5) {
+    if (D_800E6280.unk_041 == 5) {
         func_8006764C(0);
     } else {
         func_80067870();
@@ -118,7 +118,7 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014790C);
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147D74);
 
 void func_80147F0C(void) {
-    if (((D_800E7208 & 0x20) && (u32)D_800E7384 >= 0x101) || (D_800E7208 & 0x40)) {
+    if (((D_800E6280.unk_F88 & 0x20) && (u32)D_800E6280.unk_1104.w >= 0x101) || (D_800E6280.unk_F88 & 0x40)) {
         func_8006BD6C(1);
         func_80042808();
     }
@@ -138,14 +138,14 @@ void func_80147FFC(void) {
 }
 
 void func_8014803C(void) {
-    if (D_800E62C1 == 5) {
+    if (D_800E6280.unk_041 == 5) {
         func_8004500C(0, 0);
     }
     func_80072B5C(0);
 }
 
 void func_80148078(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80147FFC();
         break;

@@ -2,7 +2,7 @@
 #include "game.h"
 
 void schedule_init(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         _schedule_init();
     }
     func_800578F4(get_last_gamen_mode());
@@ -14,8 +14,8 @@ void last_date_spot_timer_dec(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        if (D_800E6280[0x73C + i] != 0) {
-            D_800E6280[0x73C + i] -= 1;
+        if (D_800E6280.unk_73C[i] != 0) {
+            D_800E6280.unk_73C[i] -= 1;
         }
     }
 }
@@ -36,23 +36,23 @@ void func_8006CF38(void) {
     s32 i;
 
     for (i = 0; i < 32; i++) {
-        *(s32 *)(D_800E6280 + 0x69C + i * 4) = 0;
-        *(D_800E6280 + 0x69C + i * 4) = 0xFF;
+        *(s32 *)&D_800E6280.unk_69C[i] = 0;
+        D_800E6280.unk_69C[i].unk_00 = 0xFF;
     }
-    D_800E699C = 0;
+    D_800E6280.unk_71C = 0;
 }
 
 void func_8006CF80(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        D_800E6280[0x1C8 + i * 0x38] &= 0xFFFE;
+        D_800E6280.unk_1BC[i].unk_0C.b[0] &= 0xFFFE;
     }
 }
 
 void func_8006D00C(void) {
-    if (D_800E62BF == 9) {
-        D_800E6376 &= 0xFFFB;
+    if (D_800E6280.unk_03F == 9) {
+        D_800E6280.unk_0F6.b[0] &= 0xFFFB;
     }
 }
 
@@ -60,10 +60,10 @@ void func_8006D038(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        if (D_800E6280[0x72C + i] == 0x23 || D_800E6280[0x72C + i] == 0x24) {
-            D_800E6280[0x72C + i] = 0;
+        if (D_800E6280.unk_72C[i] == 0x23 || D_800E6280.unk_72C[i] == 0x24) {
+            D_800E6280.unk_72C[i] = 0;
         }
-        D_800E6280[0x74C + i] = 0;
+        D_800E6280.unk_74C[i] = 0;
     }
 }
 
@@ -73,32 +73,30 @@ void func_8006D4A0(void) {
     s32 i;
 
     for (i = 0; i < 11; i++) {
-        D_800E6280[0x66F + i * 4] &= 0xFFFE;
+        D_800E6280.unk_66C[i].unk_03 &= 0xFFFE;
     }
 }
 
 void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
     s32 i;
-    u8 *p;
 
-    if (birth_day_check_days(0, D_800E62BF + arg1, arg2) == 1) {
-        D_800E6280[*arg0 * 4 + 0x69C] = 0x32;
-        D_800E6280[*arg0 * 4 + 0x69D] = 0;
+    if (birth_day_check_days(0, D_800E6280.unk_03F + arg1, arg2) == 1) {
+        D_800E6280.unk_69C[*arg0].unk_00 = 0x32;
+        D_800E6280.unk_69C[*arg0].unk_01 = 0;
         *arg0 += 1;
     }
     for (i = 1; i != 0xB; i++) {
-        p = D_800E6280 + i * 0x38;
-        if (((CharFlags *)(p + 0x1C8))->b1 && ((CharFlags *)(p + 0x1C8))->b6) {
-            if (birth_day_check_days(i, D_800E62BF + arg1, arg2) == 1) {
-                D_800E6280[*arg0 * 4 + 0x69C] = 0x32;
-                D_800E6280[*arg0 * 4 + 0x69D] = i;
+        if (((CharFlags *)&D_800E6280.unk_1BC[i].unk_0C)->b1 && ((CharFlags *)&D_800E6280.unk_1BC[i].unk_0C)->b6) {
+            if (birth_day_check_days(i, D_800E6280.unk_03F + arg1, arg2) == 1) {
+                D_800E6280.unk_69C[*arg0].unk_00 = 0x32;
+                D_800E6280.unk_69C[*arg0].unk_01 = i;
                 *arg0 += 1;
             }
         }
     }
-    if ((D_800E6375 & 0xF) != 3) {
-        if (birth_day_check_days(0xF, D_800E62BF + arg1, arg2) == 1) {
-            D_800E6280[*arg0 * 4 + 0x69C] = 0x33;
+    if ((D_800E6280.unk_0F4.b[1] & 0xF) != 3) {
+        if (birth_day_check_days(0xF, D_800E6280.unk_03F + arg1, arg2) == 1) {
+            D_800E6280.unk_69C[*arg0].unk_00 = 0x33;
             *arg0 += 1;
         }
     }
@@ -130,19 +128,16 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", yuukou_down);
 
 void syoushin_up(void) {
     s32 i;
-    u8 *p;
 
-    p = D_800E6280;
     for (i = 0; i < 0xB; i++) {
-        if (((CharFlags *)(p + 0x1C8))->b1 && (s32)get_h_yuukou(i) < 0xA) {
-            *(s16 *)(p + 0x1C6) += 5;
+        if (((CharFlags *)&D_800E6280.unk_1BC[i].unk_0C)->b1 && (s32)get_h_yuukou(i) < 0xA) {
+            D_800E6280.unk_1BC[i].unk_0A += 5;
         }
-        p += 0x38;
     }
 }
 
 void schdeule_girls_param(void) {
-    if (D_800E62BD == 0) {
+    if (D_800E6280.unk_03D == 0) {
         yuukou_down();
         syoushin_up();
     }
@@ -158,7 +153,7 @@ void func_80070ECC(void) {
 }
 
 void func_80070F14(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_80070F80();
     }
     parameter_show();
@@ -171,7 +166,7 @@ void func_80070F14(void) {
 }
 
 void func_80070F80(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_8007132C();
         break;
@@ -181,9 +176,9 @@ void func_80070F80(void) {
     }
 }
 void func_80070FD0(void) {
-    if (D_800E738D == 0) {
+    if (D_800E6280.unk_110D == 0) {
         func_80067438();
-        D_800E738D++;
+        D_800E6280.unk_110D++;
     } else if (func_80044E8C() == 1) {
         func_80044750(0x200);
         func_80042878(0x63);
@@ -197,9 +192,9 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80071110);
 void func_80071280(void) {
     s32 i;
 
-    if (D_800E62BF == 5 && D_800E62C0 == 6) {
+    if (D_800E6280.unk_03F == 5 && D_800E6280.unk_040 == 6) {
         for (i = 0; i < 11; i++) {
-            D_800E6280[0x1C8 + i * 0x38] &= 0xFFEF;
+            D_800E6280.unk_1BC[i].unk_0C.b[0] &= 0xFFEF;
         }
     }
 }
@@ -211,17 +206,17 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800722C4);
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072338);
 
 void func_8007259C(u8 arg0) {
-    D_800E699E = arg0;
-    D_800E699D = arg0;
+    D_800E6280.unk_71E = arg0;
+    D_800E6280.unk_71D = arg0;
 }
 
 void func_800725B0(void) {
-    switch (D_800E7389) {
+    switch (D_800E6280.unk_1109) {
     case 0:
         func_800726F0();
         break;
     case 1:
-        D_800E699C += 1;
+        D_800E6280.unk_71C += 1;
         func_80042878(0x31);
         break;
     }
@@ -251,12 +246,12 @@ void func_800725B0(void) {
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800726F0);
 
 void func_800728A4(void) {
-    switch (D_800E7389) {
+    switch (D_800E6280.unk_1109) {
     case 0:
         func_80072944();
         break;
     case 1:
-        D_800E699C += 1;
+        D_800E6280.unk_71C += 1;
         func_80042878(0x31);
         break;
     }
@@ -287,13 +282,13 @@ s32 func_80072B5C(s32 arg0) {
     if (arg0 == 1) {
         func_8004500C(0, 0);
     }
-    D_800E699C++;
+    D_800E6280.unk_71C++;
     func_80042878(0x31);
     /* no return on this path: the original leaves $v0 as the call result */
 }
 
 void func_80072BC0(void) {
-    switch (D_800E7389) {
+    switch (D_800E6280.unk_1109) {
     case 0x0:
         func_80072C68();
         break;

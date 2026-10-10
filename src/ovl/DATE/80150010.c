@@ -117,7 +117,7 @@ void func_80150BCC(void) {
     FnTbl40 tbl;
 
     tbl = D_8015EAE8;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx]();
     if (D_80122D04 != 0) {
         func_80150C78();
@@ -196,7 +196,7 @@ void func_80151360(void) {
     FnTbl40 tbl;
 
     tbl = D_8015ECC4;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
     if (D_80122D04 != 0) {
         D_801206DB |= 0x80;

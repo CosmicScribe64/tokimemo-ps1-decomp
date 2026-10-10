@@ -24,7 +24,7 @@ void func_801324E8(void) {
     i = 0;
     do {
         n = i + 1;
-        if ((n ^ 0) != D_800E7389) { /* FAKE: '^ 0' swaps the beq operand order to the original's; real source unknown. T-4070 */
+        if ((n ^ 0) != D_800E6280.unk_1109) { /* FAKE: '^ 0' swaps the beq operand order to the original's; real source unknown. T-4070 */
             p = func_8004E970(i);
             if (p[0] >= -0xF7) {
                 p[0] -= 8;
@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801326BC);
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801328C0);
 
 void func_80132A8C(void) {
-    if (D_800E738A == 0) {
+    if (D_800E6280.unk_110A == 0) {
         func_80132AB8();
     }
 }
@@ -279,7 +279,7 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801385F0);
 
 void func_801386C8(void) {
     func_80048EB8(0);
-    D_800E71DF = D_800E7D68;
+    D_800E6280.unk_F5F = D_800E7D68;
     func_80042878(0x91);
     func_801320C0();
 }

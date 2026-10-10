@@ -24,7 +24,7 @@ void func_8013DC30(void) {
 }
 
 void func_8013DC70(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013DCAC();
         return;
     }
@@ -41,7 +41,7 @@ void func_8013DCAC(void) {
     FnTbl33 tbl;
 
     tbl = D_80146DCC;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
 

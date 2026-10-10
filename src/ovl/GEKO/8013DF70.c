@@ -30,7 +30,7 @@ void func_8013DF70(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E040);
 
 void func_8013E0A4(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013E11C();
         return;
     }
@@ -38,7 +38,7 @@ void func_8013E0A4(void) {
 }
 
 void func_8013E0E0(void) {
-    if (D_800E7389 == 0) {
+    if (D_800E6280.unk_1109 == 0) {
         func_8013E4F0();
         return;
     }
@@ -50,7 +50,7 @@ void func_8013E11C(void) {
     FnTbl46 tbl;
 
     tbl = D_80146E7C;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
     func_8013E950();
 }
@@ -78,7 +78,7 @@ void func_8013E4F0(void) {
     FnTbl22 tbl;
 
     tbl = D_80146F34;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -93,7 +93,7 @@ void func_8013E5C8(void) {
 
 void func_8013E60C(void) {
     if (get_h_yuukou(9) < 0x50U) {
-        D_800E738A += 0xE;
+        D_800E6280.unk_110A += 0xE;
     }
     func_8004284C();
 }

@@ -4,9 +4,9 @@
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80138680", func_80138680);
 
 void func_8013873C(void) {
-    D_800E62B6 = 8;
-    D_800E62B7 = 0x10;
-    D_800E62B8 = 0x60;
+    D_800E6280.unk_036 = 8;
+    D_800E6280.unk_037 = 0x10;
+    D_800E6280.unk_038 = 0x60;
     D_8015EDB0 = 4;
     func_8015ABF0();
     func_80132220();

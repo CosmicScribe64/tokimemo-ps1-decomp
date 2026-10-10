@@ -11,7 +11,7 @@ void func_80150930(void) {
     FnTbl165 tbl;
 
     tbl = D_80160810;
-    idx = D_800E7389;
+    idx = D_800E6280.unk_1109;
     tbl.f[idx]();
 }
 

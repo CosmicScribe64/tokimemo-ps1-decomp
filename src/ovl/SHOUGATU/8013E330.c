@@ -16,7 +16,7 @@ void func_8013E410(void) {
 
 void func_8013E464(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    if (((u8)func_80051A68(D_800E71DF) & 0x7F) != 4) {
+    if (((u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F) != 4) {
         func_8004284C();
         return;
     }

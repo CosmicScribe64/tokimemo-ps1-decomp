@@ -6,7 +6,7 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B170", func_8013B170);
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B170", func_8013B2A0);
 
 void func_8013B398(void) {
-    if (D_800E7208 != 0) {
+    if (D_800E6280.unk_F88 != 0) {
         func_8004284C();
     }
 }

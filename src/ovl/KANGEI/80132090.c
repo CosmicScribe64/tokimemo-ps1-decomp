@@ -40,10 +40,10 @@ void func_80132430(void) {
     if (func_80044E8C() == 1) {
         func_8004284C();
     }
-    if ((u32) D_800E7384++ >= 0x400U) {
+    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
         func_800452C4();
         func_8004482C();
-        func_80042940((D_800E738A - 1) & 0xFF);
+        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
     }
 }
 
@@ -67,10 +67,10 @@ void func_80132514(void) {
     tpage_buf_clear();
     func_8004E58C();
     k_reset(1);
-    D_800E7322 = 0;
-    D_800E7368 = 1;
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
     func_8008585C();
-    D_800E62BA = 0x80;
+    D_800E6280.unk_03A = 0x80;
     D_800B593C = 0;
     D_800B5940 = 0;
     hizuke_init();

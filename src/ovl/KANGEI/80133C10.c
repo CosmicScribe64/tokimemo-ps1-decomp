@@ -11,12 +11,12 @@ void func_80133C10(void) {
     FnTbl15 tbl;
 
     tbl = D_80139AE8;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
 void func_80133C84(void) {
-    D_800E71DF = D_800E69DD;
+    D_800E6280.unk_F5F = D_800E6280.unk_75D;
     func_80042808();
 }
 

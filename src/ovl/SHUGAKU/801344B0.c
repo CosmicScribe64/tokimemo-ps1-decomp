@@ -47,7 +47,7 @@ void func_80134824(void) {
     s32 pad; /* FAKE: unused local above `unused`, puts it at sp+0x2B as in the original; real source unknown. T-4010 */
     u8 unused; /* read uninitialised: the original passes the stack byte */
 
-    func_80051B48(D_800E71DF);
+    func_80051B48(D_800E6280.unk_F5F);
     func_800634FC(unused);
     func_80048F64(0x60);
     func_80048F64(0x61);

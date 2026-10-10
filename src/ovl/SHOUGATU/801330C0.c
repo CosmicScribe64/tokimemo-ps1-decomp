@@ -11,7 +11,7 @@ void func_801330C0(void) {
     FnTbl60 tbl;
 
     tbl = D_80143BC4;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
 }
 
@@ -58,12 +58,12 @@ void func_80133874(void) {
     D_80143AF8 = D_80143A84;
     D_80143AFC = D_80143AC0;
     func_8004284C();
-    D_800E738A -= 5;
+    D_800E6280.unk_110A -= 5;
 }
 
 void func_801338DC(void) {
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    if (((u8)func_80051A68(D_800E71DF) & 0x7F) != 4) {
+    if (((u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F) != 4) {
         D_80143B00 += 1;
         func_8004284C();
         func_8004284C();
@@ -86,7 +86,7 @@ void func_801339DC(void) {
     s32 temp_t6;
 
     /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
-    temp_t6 = (u8)func_80051A68(D_800E71DF) & 0x7F;
+    temp_t6 = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
     switch (temp_t6) {
     case 0:
         break;
@@ -109,15 +109,15 @@ void func_80133A60(void) {
 void func_80133A88(void) {
     if (D_80122CDC != 0) {
         D_80143B00 += 1;
-        D_800E643C[0].unk_02 -= 1;
-        D_800E643C[0].unk_06 -= 1;
-        D_800E643C[0].unk_0A += 0xA;
+        D_800E6280.unk_1BC[0].unk_02 -= 1;
+        D_800E6280.unk_1BC[0].unk_06 -= 1;
+        D_800E6280.unk_1BC[0].unk_0A += 0xA;
         D_80143B24 = 0;
         func_8004284C();
         func_8004284C();
         func_8004284C();
     } else {
-        D_800E643C[0].unk_02 += 1;
+        D_800E6280.unk_1BC[0].unk_02 += 1;
     }
     func_80084D3C();
     func_8004284C();

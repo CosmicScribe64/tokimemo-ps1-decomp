@@ -2,7 +2,7 @@
 #include "ovl/OLH.h"
 
 void func_80134500(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0x0:
         func_801345CC();
         break;
@@ -39,10 +39,10 @@ void func_801346F4(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
     menu_bar_show(0);
     func_8004FC10(0);
-    if (D_800E7208 & 0x20) {
-        if (D_800E7313 != -1) {
+    if (D_800E6280.unk_F88 & 0x20) {
+        if (D_800E6280.unk_1093 != -1) {
             func_80044750(0x501);
-            switch (*(u8 *)&D_800E7313) {
+            switch (*(u8 *)&D_800E6280.unk_1093) {
             case 0:
                 func_80042940(0x10);
                 break;
@@ -69,7 +69,7 @@ void func_801346F4(void) {
                 break;
             }
         }
-    } else if (D_800E7208 & 0x40) {
+    } else if (D_800E6280.unk_F88 & 0x40) {
         func_80042908(0);
     }
 }

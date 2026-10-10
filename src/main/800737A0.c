@@ -25,7 +25,7 @@ INCLUDE_ASM("asm/nonmatchings/main/800737A0", get_weekly_bg_sector);
 s32 func_80073A40(void) {
     s32 ret;
 
-    if ((D_800E6375 & 0xF) == 3 && !(*(u16 *)&D_800E6376 & 1) && (D_800E71E8 & 0xF) == 7) {
+    if ((D_800E6280.unk_0F4.b[1] & 0xF) == 3 && !(*(u16 *)&D_800E6280.unk_0F6.b[0] & 1) && (D_800E6280.unk_F68.w & 0xF) == 7) {
         ret = dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
     } else {
         ret = dec_bg_cd_read(get_weekly_bg_sector(), 0);
@@ -44,7 +44,7 @@ INCLUDE_ASM("asm/nonmatchings/main/800737A0", func_8007437C);
 INCLUDE_ASM("asm/nonmatchings/main/800737A0", week_day_main0);
 
 void week_day_exit0(void) {
-    D_800E699C++;
+    D_800E6280.unk_71C++;
     func_80048F64(0x60);
     func_80048F64(0x61);
     func_80042878(0x31);

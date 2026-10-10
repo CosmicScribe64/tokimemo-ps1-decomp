@@ -19,7 +19,7 @@ void func_8013A1CC(void) {
     FnTbl26 tbl;
 
     tbl = D_801455E0;
-    idx = D_800E738A;
+    idx = D_800E6280.unk_110A;
     tbl.f[idx]();
 }
 
@@ -52,7 +52,7 @@ void func_8013A488(void) {
 }
 
 void func_8013A4B0(void) {
-    if (D_800E71DF == 5) {
+    if (D_800E6280.unk_F5F == 5) {
         func_80062CD0(0x5FE4);
     } else {
         func_80062CD0(0x552B);

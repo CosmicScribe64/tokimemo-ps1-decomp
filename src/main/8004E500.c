@@ -78,7 +78,7 @@ u8 get_k_speed(void) {
 }
 
 s32 k_disp_inc(void) {
-    if (D_800E7378 % (D_800B3F66 + 1) == 0) {
+    if (D_800E6280.unk_10F8 % (D_800B3F66 + 1) == 0) {
         if (D_800B3F68 < D_800B3F62) {
             D_800B3F68 += 1;
             return 0;

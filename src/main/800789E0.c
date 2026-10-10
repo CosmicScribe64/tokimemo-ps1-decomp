@@ -52,21 +52,21 @@ void func_80079014(void) {
 INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80079070);
 
 s32 func_80079524(void) {
-    if (D_800E7388 == 0xD0 || D_800E7388 == 0xD1) {
+    if (D_800E6280.unk_1108 == 0xD0 || D_800E6280.unk_1108 == 0xD1) {
         return 1;
     }
     return 0;
 }
 
 s32 func_80079554(void) {
-    if (D_800E7388 == 0x90) {
+    if (D_800E6280.unk_1108 == 0x90) {
         return 1;
     }
     return 0;
 }
 
 s32 func_80079578(void) {
-    if (D_800E7388 == 0x21) {
+    if (D_800E6280.unk_1108 == 0x21) {
         return 1;
     }
     return 0;

@@ -4,15 +4,15 @@
 INCLUDE_ASM("asm/nonmatchings/main/80043510", func_80043510);
 
 void draw2d3d(u8 arg0, u8 arg1) {
-    D_800E7394 = arg0;
-    D_800E7393 = arg1;
+    D_800E6280.unk_1114 = arg0;
+    D_800E6280.unk_1113 = arg1;
 }
 
 void back_clear_switch(s32 arg0) {
     if (arg0 != 0) {
-        D_800E62B9 = 1;
+        D_800E6280.unk_039 = 1;
     } else {
-        D_800E62B9 = 0;
+        D_800E6280.unk_039 = 0;
     }
 }
 
