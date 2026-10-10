@@ -564,7 +564,24 @@ void func_8014EB24(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014EC4C);
+void func_8014EC4C(void) {
+    s32 pad[3]; /* FAKE: unused local; reproduces the 12 bytes of frame the original has above the spilled rand() result. T-8030 */
+
+    if (D_8015EDB4[16].unk3 >= 3) {
+        func_8014EDCC(D_8015EDB4[16].unk2);
+        D_8015EDB4[16].unk2 += 1;
+        D_8015EDB4[16].unk3 = 0;
+        func_80147C98(0, 0x1B, (func_800AE0D0() & 0x3FF) - 0x138, (func_800AE0D0() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
+        func_80147C98(0, 0x1B, (func_800AE0D0() & 0x3FF) - 0x2C8, (func_800AE0D0() & 0x1FF) - 0x200, 0x7D0, 0xFA, 0x40);
+    }
+    if (D_8015EDB4[16].unk2 >= 0x32 || D_8015EDB4[17].unk84[2] == 1) {
+        D_8015EDB4[16].unk2 = 0;
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
+        func_8014F044();
+    } else {
+        D_8015EDB4[16].unk3 += 1;
+    }
+}
 
 void func_8014EDCC(s32 arg0) {
     if (arg0 == 1) {

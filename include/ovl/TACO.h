@@ -283,4 +283,5 @@ s32 func_80135744(void);
 
 extern s32 D_8016001C[];
 
+void func_8014EDCC(s32 arg0);
 #endif
