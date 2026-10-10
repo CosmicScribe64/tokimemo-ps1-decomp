@@ -22,6 +22,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2080-wave2-taiiku-rpg-bat|T-2080 Wave 2: overlays TAIIKU, RPG_BAT]]
+
 
 
 ## In Review
