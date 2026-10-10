@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
+- [[tickets/T-6070-wave-4-list-7|T-6070]] Wave 4: list 7 (Done)
 - [[tickets/T-5100-game-state-struct|T-5100]] Recover the main game-state struct (Done)
 - [[tickets/T-5000-type-recovery-arrays-structs|T-5000]] Type recovery: arrays and structs from access patterns (Done)
 - [[tickets/T-2060-wave2-shougatu|T-2060]] Wave 2: SHOUGATU, 152 functions (Done)
