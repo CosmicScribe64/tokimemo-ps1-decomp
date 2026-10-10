@@ -2425,7 +2425,12 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80145318);
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_801455B0);
 
 void func_80145960(void) {
-    switch (D_800E738A) {
+    u8 mode;
+
+    /* switch on a local copy: a switch directly on the unsigned global keeps
+       the switch temporary apart from the global (cvt_pass.py, T-1321) */
+    mode = D_800E738A;
+    switch (mode) {
     case 0x0:
         func_801447B0();
         break;

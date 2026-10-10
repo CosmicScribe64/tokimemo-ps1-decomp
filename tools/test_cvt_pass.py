@@ -143,6 +143,48 @@ class EqualityOrder(unittest.TestCase):
             run_pre([lod(L, 6), widen(), rec("dup", J), op("equ"), fjp()])
 
 
+def vreg(blk=3, off=-4):
+    return rec("vreg", J, 0, 0, blk, 4, off & 0xFFFFFFFF)
+
+
+def proc(*body):
+    return [rec("ent", cp.DTYPES.index("P"), 0, 0, 3, 0, 1)] + list(body) + [rec("end", 0, 0, 0, 3)]
+
+
+def zcopy(insns):
+    return [i.words[2] for i in insns if cp.OPS[i.opc] == "optn" and i.words[1] == cp.UCO_ZCOPY]
+
+
+class SwitchTemporaries(unittest.TestCase):
+    def temp_store(self, load, widen_it=True):
+        return [load] + ([widen()] if widen_it else []) + [vreg(), st(J, 3, 4, (-4) & 0xFFFFFFFF, mtype=M)]
+
+    def test_unsigned_global_turns_copy_propagation_off(self):
+        out = cp.copy_propagation_options(proc(*self.temp_store(lod(L, 6))))
+        self.assertEqual(zcopy(out), [0])
+        self.assertEqual(cp.OPS[out[0].opc], "optn")
+
+    def test_unwidened_unsigned_word(self):
+        out = cp.copy_propagation_options(proc(*self.temp_store(lod(L, 6, 4), widen_it=False)))
+        self.assertEqual(zcopy(out), [0])
+
+    def test_signed_global_keeps_it(self):
+        out = cp.copy_propagation_options(proc(*self.temp_store(lod(J, 6), widen_it=False)))
+        self.assertEqual(zcopy(out), [1])
+
+    def test_local_copy_keeps_it(self):
+        out = cp.copy_propagation_options(proc(*self.temp_store(lod(L, 3, off=8, mtype=M))))
+        self.assertEqual(zcopy(out), [1])
+
+    def test_store_to_a_user_local_keeps_it(self):
+        out = cp.copy_propagation_options(proc(lod(L, 6), widen(), st(J, 3, 4, (-4) & 0xFFFFFFFF, mtype=M)))
+        self.assertEqual(zcopy(out), [1])
+
+    def test_one_record_per_procedure(self):
+        out = cp.copy_propagation_options(proc(*self.temp_store(lod(L, 6))) + proc(lod(J, 6), st(J, 7)))
+        self.assertEqual(zcopy(out), [0, 1])
+
+
 class Post(unittest.TestCase):
     def test_loads_get_unsigned_type_back(self):
         insns = [lod(J, 6), rec("rlod", J, S, 0, 6, 1, 0), lod(J, 7), lod(J, 6, 2)]
@@ -187,6 +229,18 @@ void f(void) { if (D == 0) { if (h() == 1) { g(); D++; } } else if (D == 1) { g(
         # every load of D goes to $v1 (entry and after the calls), always lbu
         self.assertEqual(dis.count("lbu\tv1,0(v1)"), 3, dis)
         self.assertNotIn("lb\t", dis)
+
+    def test_switch_on_unsigned_global(self):
+        dis = self.compile("""extern unsigned char D; extern void g0(void), g1(void);
+void f(void) { switch (D) { case 0: g0(); break; case 1: g1(); break; } }
+""")
+        self.assertIn("lbu\tv1,0(v1)", dis)
+
+    def test_switch_on_local_copy(self):
+        dis = self.compile("""extern unsigned char D; extern void g0(void), g1(void);
+void f(void) { unsigned char m = D; switch (m) { case 0: g0(); break; case 1: g1(); break; } }
+""")
+        self.assertIn("lbu\tv0,0(v0)", dis)
 
     def test_without_pass_ido_differs(self):
         dis = self.compile(self.SOURCE, with_pass=False)

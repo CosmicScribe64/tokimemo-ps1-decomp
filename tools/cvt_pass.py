@@ -37,6 +37,22 @@ changes:
 Constant operands (`LDC`, `LDA`) do not take part in the reordering: ugen
 emits the compare the same way for either order.
 
+Switch temporaries
+------------------
+cfe evaluates a `switch` selector into a compiler temporary (a `VREG`) and
+compares the temporary. When the selector is an unsigned global (`LOD L` of a
+memory type S variable, widened or not), the original keeps the temporary:
+the global goes to one register and the temporary to another (`lbu v1,D;
+or v0,v1,zero` with the compares on `$v1`; the copy is dropped when its value
+is never needed). IDO's global copy propagation replaces the temporary by
+the global and gives the global `$v0`. For every procedure that assigns such
+a temporary, the pass turns uopt's global copy propagation off with an
+`OPTN 405 0` record (the switch behind `-Wo,-zcopy:0`) in front of the
+procedure's `ENT`; every other procedure gets `OPTN 405 1`. A switch on a
+local copy (`u8 mode = D; switch (mode)`) or on a signed global is not
+affected and keeps IDO's propagation, which is what the original does for
+those forms (wiki/matching-notes.md).
+
 Layer
 -----
 IDO runs cfe -> uopt -> ugen -> as1. tools/cc.py points IDO's USR_LIB at a
@@ -83,6 +99,8 @@ DTYPES = "ACFGHIJKLMNPQRSWXZ"
 DT_J, DT_L = DTYPES.index("J"), DTYPES.index("L")
 STRING_DTYPES = {DTYPES.index(c) for c in "MQRSX"}
 MT_S = 4
+MT_M = 1
+UCO_ZCOPY = 405   # uopt option number of `zcopy` (global copy propagation on/off)
 
 # Expression operators: operands popped (uini.c stack_pop) for ops that push
 # a value. Only these may appear inside an operand that the pass reorders;
@@ -264,6 +282,46 @@ def pre(insns):
     return out, {insns[j - 1].location() for j in strip if j not in keep}
 
 
+def _procedures(insns):
+    """(index of ENT, index of END) of every procedure."""
+    procs, start = [], None
+    for k, i in enumerate(insns):
+        if i.opc == OP["ent"]:
+            start = k
+        elif i.opc == OP["end"] and start is not None:
+            procs.append((start, k))
+            start = None
+    return procs
+
+
+def _assigns_switch_temp_from_unsigned_global(insns, start, end):
+    """True if the procedure stores a direct load of an unsigned S variable into a VREG temporary."""
+    temps = {(i.words[1], i.words[3]) for i in insns[start:end] if i.opc == OP["vreg"]}
+    for k in range(start, end):
+        st = insns[k]
+        if st.opc != OP["str"] or st.mtype != MT_M or (st.words[1], st.words[3]) not in temps:
+            continue
+        j = k - 1
+        while j > start and insns[j].opc == OP["vreg"]:
+            j -= 1
+        if insns[j].opc == OP["cvt"] and (insns[j].words[2] >> 24) == DT_L:
+            j -= 1
+        if insns[j].opc == OP["lod"] and insns[j].mtype == MT_S and insns[j].dtype == DT_L:
+            return True
+    return False
+
+
+def copy_propagation_options(insns):
+    """Insert OPTN zcopy records: 0 before procedures with an unsigned-global switch temporary, else 1."""
+    flags = {s: _assigns_switch_temp_from_unsigned_global(insns, s, e) for s, e in _procedures(insns)}
+    out = []
+    for k, i in enumerate(insns):
+        if k in flags:
+            out.append(Insn([OP["optn"] << 24, UCO_ZCOPY, 0 if flags[k] else 1, 0]))
+        out.append(i)
+    return out
+
+
 def post(insns, rewritten):
     """Give loads of the rewritten locations their unsigned type back (in place)."""
     for i in insns:
@@ -291,7 +349,7 @@ def run_uopt(real, argv):
         raise PassError("uopt arguments name no input and output ucode")
     inp, outp = files[0], files[1]
     with open(argv[inp], "rb") as f:
-        insns, rewritten = pre(parse(f.read()))
+        insns, rewritten = pre(copy_propagation_options(parse(f.read())))
     fd, tmp = tempfile.mkstemp(prefix="cvtpass", suffix=".B")
     with os.fdopen(fd, "wb") as f:
         f.write(serialize(insns))
