@@ -781,5 +781,8 @@ extern u16 D_80125D52;
 extern u8 D_80125D5E;
 extern u8 D_80125D5F;
 extern u8 D_801217A0[];
+void func_8009F0A4();
+void SetSemiTrans();
+void SetShadeTex();
 
 #endif /* GAME_H */

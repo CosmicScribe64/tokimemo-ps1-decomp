@@ -357,7 +357,27 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007C8D8);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", set_tarao_bg);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", set_tarao_sprt);
+void set_tarao_sprt(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, s16 arg6, u8 arg7, u8 arg8, u8 arg9) {
+    u8 *p;
+
+    p = (u8 *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(p);
+    SetSemiTrans(p, 0);
+    SetShadeTex(p, 0);
+    p[4] = arg7;
+    p[5] = arg8;
+    p[6] = arg9;
+    *(s16 *)(p + 8) = arg0;
+    *(s16 *)(p + 0xA) = arg1;
+    *(s16 *)(p + 0x10) = arg2;
+    *(s16 *)(p + 0x12) = arg3;
+    p[0xC] = arg4;
+    p[0xD] = arg5;
+    if (D_8011ECA0 == 0) {
+        *(s16 *)(p + 0xA) += 0xF0;
+    }
+    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg6 * 4, p);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", set_tarao_rect);
 
