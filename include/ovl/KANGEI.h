@@ -191,6 +191,6 @@ extern u8 D_80139E0C;
 void func_80136238(void);
 void func_80136630();
 void func_801365C4(void);
-void func_80137544(void);
-void func_8013614C(void);
+void func_80136FDC(void);
+void func_80136520(void);
 #endif /* OVL_KANGEI_H */

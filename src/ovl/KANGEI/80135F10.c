@@ -100,7 +100,20 @@ void func_80136494(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136520);
+void func_80136520(void) {
+    if (D_800E7384++ == 0) {
+        if (D_80139DF4[(u8)D_80139DF0] == 0) {
+            func_80044750(0x204);
+        } else {
+            func_80044750(0x205);
+        }
+    }
+    if (D_80139DF4[(u8)D_80139DF0] == 1) {
+        func_8007E81C();
+        return;
+    }
+    func_80085368();
+}
 
 void func_801365C4(void) {
     if (D_80139DF4[(u8)D_80139DF0] != 0) {
@@ -216,7 +229,17 @@ void func_80136F90(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136FDC);
+void func_80136FDC(void) {
+    if (func_80044E8C() == 1) {
+        func_80044750(0x203);
+        func_8004284C();
+    }
+    if (D_800E7384++ >= 0x400U) {
+        func_800452C4();
+        func_8004482C();
+        func_80042940((D_800E738A - 1) & 0xFF);
+    }
+}
 
 void func_80137064(void) {
     func_80046318(0x6E, 0x801B4400, 0xBBA5);

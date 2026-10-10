@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+extern FnTbl39 D_80146420;
+
 void func_80139910(void) {
     D_80146380 = 0x801D6394;
     D_80146384 = 0x801D639C;
@@ -17,7 +22,19 @@ void func_80139910(void) {
     D_801463B0 = 0x801D2000;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_801399DC);
+void func_801399DC(void) {
+    D_801463B4 = 0x801D22D0;
+    D_801463B8 = 0x801D22D8;
+    D_801463BC = 0x801D233C;
+    D_801463C0 = *(s16 *)0x801D2358;
+    D_801463C4 = 0x801B0000;
+    D_801463C8 = 0x801B2000;
+    D_801463CC = 0x801B6000;
+    D_801463D0 = 0x801BA000;
+    D_801463D4 = 0x801BE000;
+    D_801463D8 = 0x801C2000;
+    D_801463DC = 0x801C6000;
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_80139A8C);
 
@@ -29,7 +46,15 @@ void func_80139B08(void) {
     func_80046500();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_80139B44);
+void func_80139B44(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl39 tbl;
+
+    tbl = D_80146420;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    func_80139E1C();
+}
 
 void func_80139BC0(void) {
     func_80044750(0x505);
