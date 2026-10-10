@@ -120,7 +120,48 @@ s32 func_80149A08(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149AC4);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149BC0);
+/* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
+s32 func_80149BC0(void) {
+    s32 r;
+
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_80050DFC(D_800E6280.unk_0D4);
+        func_80050E8C(D_80150D20, 0, 0x1F);
+        func_8004EAD4(2);
+        r = func_8005742C(0x463B, 1);
+        if (r != -1) {
+            if (r == 0 || r == 1) {
+                D_800E6280.unk_110D += 2;
+                func_80057418(1, r);
+                func_80057390(0x80);
+            }
+        } else {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_80057418(1, func_8005751C(1));
+            if (D_800B594C == -1) {
+                func_800573AC();
+                func_8005742C(0x463B, 1);
+            } else {
+                func_80057390(0x80);
+                D_800E6280.unk_110D += 1;
+            }
+        }
+        break;
+    case 2:
+        func_80063930(0);
+        func_800578F4(1);
+        func_80057390(0x80);
+        func_800649D4();
+        func_8004284C();
+        break;
+    }
+}
 
 s32 func_80149D3C(void) {
     switch (D_800E6280.unk_110D) {

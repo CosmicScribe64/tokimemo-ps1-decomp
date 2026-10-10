@@ -1015,3 +1015,4 @@ void func_80146AC0(void);
 s32 func_80146B40(void);
 
 #endif /* OVL_ETC_H */
+extern u8 D_80150D20[];
