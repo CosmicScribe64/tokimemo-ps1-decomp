@@ -157,6 +157,7 @@ void func_80135628(void) {
 }
 
 void func_80135690(void) {
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if (((u8)func_8005E0E0(D_800F62CF) & 0x7F) != 4) {
         D_80145EB4 += 1;
         func_8004DE1C();
@@ -186,6 +187,7 @@ void func_80135730(void) {
 void func_80135790(void) {
     s32 temp_t6;
 
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     temp_t6 = (u8)func_8005E0E0(D_800F62CF) & 0x7F;
     switch (temp_t6) {
     case 0:
@@ -339,6 +341,7 @@ void func_80135F74(void) {
 void func_80135FE8(void) {
     s32 temp_t6;
 
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     temp_t6 = (u8)func_8005E0E0(D_800F62CF) & 0x7F;
     switch (temp_t6) {
     case 0:
@@ -468,6 +471,7 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80137798);
 void func_80137854(void) {
     u32 temp_t8;
 
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     temp_t8 = (u8)func_8005E0E0(5) & 0x7F;
     if ((D_800F62CF == 5) && (temp_t8 < 2U)) {
         if (D_800F6474++ == 0) {
@@ -482,6 +486,7 @@ void func_80137854(void) {
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_801378D0);
 
 void func_80137A0C(void) {
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if ((u32) ((u8)func_8005E0E0(D_800F62CF) & 0x7F) >= 2U) {
         D_80145EB4 += 2;
     }
@@ -532,6 +537,7 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80137BEC);
 void func_80137CAC(void) {
     u32 temp_t6;
 
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     temp_t6 = (u8)func_8005E0E0(D_800F62CF) & 0x7F;
     if (temp_t6 < 2U) {
         D_800D9248 = 6;
@@ -1678,6 +1684,7 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80140AFC);
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI", func_80140C90);
 
 void func_80140D7C(void) {
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
     if (((u8)func_8005E0E0(D_800F62CF) & 0x7F) != 4) {
         func_8004DE1C();
         return;

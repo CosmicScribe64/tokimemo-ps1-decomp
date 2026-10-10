@@ -366,3 +366,6 @@ Re-ran tools/dupes.py --apply --check after the jump-table merge: 4 copies kept 
 
 ## [2026-10-09] ticket | T-2020 Wave 2: GYOZI (Backlog -> In Progress)
 [[tickets/T-2020-wave-2-gyozi]]: match the remaining functions of overlay GYOZI. Card on [[kanban]].
+
+## [2026-10-09] ticket | T-2020 Wave 2: GYOZI (In Progress -> Done)
+[[tickets/T-2020-wave-2-gyozi]]: 178 GYOZI functions matched (GYOZI 244 of 417), 6 rows added to [[data/t0018-cases]], new patterns in [[matching-notes]] ("Wave 2: GYOZI"). Clean build 27 of 27 sha1 OK. Inline review done, no open findings. Not merged.
