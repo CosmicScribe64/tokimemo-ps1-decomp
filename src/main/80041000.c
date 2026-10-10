@@ -44,7 +44,55 @@ void func_80041584(void) {
     func_8004164C(0, 2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800415B4);
+/* One 36-byte sprite entry of the table at D_801217D0 (main_api.h declares only its first word).
+ * Indexing the table as an array of this struct keeps IDO from unrolling the loop below, as in the
+ * original (T-5020, wiki/matching-notes.md "Loop unrolling"). */
+typedef struct SprEnt {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ s16 unk_10;
+    /* 0x12 */ s16 unk_12;
+    /* 0x14 */ u8 unk_14;
+    /* 0x15 */ u8 unk_15;
+    /* 0x16 */ u8 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s32 unk_20;
+} SprEnt; /* size 0x24 */
+
+void func_800415B4(s32 start, s32 end) {
+    s32 i;
+
+    for (i = start; i < end; i++) {
+        ((SprEnt *)&D_801217D0)[i].unk_00 = 0x80000000;
+        ((SprEnt *)&D_801217D0)[i].unk_04 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_06 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_08 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_0A = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_0C = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_0E = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_0F = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_10 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_12 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_14 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_15 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_16 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_18 = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_1A = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_1C = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_1E = 0;
+        ((SprEnt *)&D_801217D0)[i].unk_20 = 0;
+        D_800E6280[0x10A5 + i] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_8004164C);
 

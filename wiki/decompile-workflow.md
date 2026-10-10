@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-09
+updated: 2026-10-10
 sources: ["tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py"]
 ---
 
@@ -39,6 +39,13 @@ All commands run through `tools/docker.sh`. Standards: `CODING_STANDARDS.md`. Kn
 7. If it does not match after a reasonable number of tries, restore `INCLUDE_ASM`, add the function to [[matching-notes]], move on. Guard readable non-matching C with `#ifdef NON_MATCHING` and a ticket id (CODING_STANDARDS section 1).
 8. Commit one function (or one small batch) per commit: `T-NNNN: match func_XXXXXXXX`, ending with the Co-Authored-By line; never commit `asm/`, `build/`, `expected/`, `disc/`.
 9. Frames: IDO frames are 16 bytes smaller than the original's; `tools/frame_pass.py` adds them in every compile ([[toolchain]]), so write the C as if for a normal frame and compare. Overlay functions: copy the all-`INCLUDE_ASM` object (`build/ovl/<NAME>/src/ovl/<NAME>.o`) to `expected/ovl/<NAME>.o` once and use `funcdiff.py --expected expected/ovl/<NAME>.o --built <obj>`.
+
+## Loops: unrolled or not (T-5020)
+IDO unrolls a loop by 4 when it can count the trips and the body fits uopt's size budget; the original mostly did the same, so write the loop with its real trip count and let IDO unroll it (TT, TACO, TAIIKU notes in [[matching-notes]]). When the original loop is NOT unrolled and IDO unrolls yours, change how the loop is written, not the flags ([[matching-notes]], "Shared constants, shared `lui $at` and loop unrolling"):
+- Big body over an array of records: index the records as a struct array, `((Rec *)&D_xxx)[i].field = 0;`. Struct-array accesses count more in uopt's budget than a pointer (`e->field`) or byte casts (`*(s16 *)(p + 4)`), and a 20-store body then stays one loop (main `func_800415B4`).
+- Loop compared with `sltu` against a register bound: a signed counter and an unsigned bound, `s32 i; u32 n = ...; for (i = 1; i < n + 1; i++)`. uopt cannot count a mixed-signedness loop and leaves it alone (TACO `func_80147400`).
+- Pointer loop with `bne` against an end address: `p != D_xxx + N` (same symbol as the start) is not unrolled; `p != &D_yyy` (another symbol) gets a run-time remainder loop (`subu; andi 0x3F`), which the original never has. No C form gives the original's hoisted end pointer with a constant trip count yet (main `func_800673B8`, NAME_ENT `func_801478E0`): skip those.
+- A store sequence through one `lui $at` (`lui at; sw a,%lo(X)(at); sw b,%lo(X+4)(at)`) cannot be built with IDO 5.3 whatever the declaration; skip it ([[data/shared-at-groups]]). The same goes for a constant the original loads once and stores several times in straight-line code (`li t6,3` reused): no C form reproduces it with `-Wo,-nokpicopt`.
 
 ## How to decompile a switch or a function with strings (T-1340, T-0500)
 A function is a jump-table function when its asm has `%lo(jtbl_XXXXXXXX)` and a `jr`; it uses rodata when it names a `D_` symbol of the rodata (strings, constants). Both need the C object to provide its own rodata. Background and limits: [[build-system]] (sections "Per-object C files" and "Jump tables: rodata islands"); boundaries: [[source-files]].

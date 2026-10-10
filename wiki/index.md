@@ -66,7 +66,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
 - [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap: cause found, unsigned-load conversion pass kept out of the build (Done)
 - [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000]] Re-match R/V-flagged functions with cvt_pass.py, retune the detector (Backlog)
-- [[tickets/T-3001-shared-constant-registers|T-3001]] Constants reused across stores and compare/store types (Backlog)
+- [[tickets/T-3001-shared-constant-registers|T-3001]] Constants reused across stores and compare/store types (Done: toolchain, no fix)
+- [[tickets/T-5020-loop-unrolling-and-lui-sharing|T-5020]] Loop unrolling and lui sharing (Done: lui sharing is an as1 difference, loops mostly source idioms)
 - [[tickets/T-3002-remaining-promotion-shapes|T-3002]] Register shapes left after the unsigned-load conversion pass (Backlog)
 - [[tickets/T-3100-identify-original-compiler|T-3100]] Identify the original game-code compiler (Done)
 - [[tickets/T-3110-test-ido-52-and-41|T-3110]] Test IDO 5.2 and 4.1 against the game code (Done)
@@ -103,6 +104,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[original-compiler]] - T-3100: which compiler built the game code (O.BIN version stamps 3.18 = IDO 5.2-generation MIPS suite, big-endian ECOFF link host), header field table, ranked hypotheses, promotion experiments, rules for the T-1321 build step
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit
+- [[data/shared-at-groups]] - data table: address groups the original stores through one `lui $at`, per original object (T-5020; struct/array candidates)
 - [[data/t0018-cases]] - data table: functions skipped for the T-0018 register-promotion gap (calibrates `tools/queue.py`)
 - [[data/t3330-fptab-proof.patch]] - T-3330: C for 18 table-copy and spill functions with the index-declared-first idiom, to apply after T-1321
 - [[build-system]] - configure.py / ninja pipeline and gotchas
