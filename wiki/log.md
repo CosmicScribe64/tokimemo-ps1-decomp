@@ -389,3 +389,8 @@ Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri an
 
 ## [2026-10-09] ticket | T-2050 Wave 2: GEKO, 176 functions matched
 [[tickets/T-2050-wave2-geko]] In Progress -> Done after the inline code review. GEKO went from 367 to 191 `INCLUDE_ASM`; 8 rows added to [[data/t0018-cases]]; notes in [[matching-notes]] (m2c picks the wrong overlay for shared function names; absolute casts for other-overlay addresses). Clean build 27 of 27 OK, `ninja progress` grand total 1077 of 6962.
+## [2026-10-09] ticket | T-2020 Wave 2: GYOZI (Backlog -> In Progress)
+[[tickets/T-2020-wave-2-gyozi]]: match the remaining functions of overlay GYOZI. Card on [[kanban]].
+
+## [2026-10-09] ticket | T-2020 Wave 2: GYOZI (In Progress -> Done)
+[[tickets/T-2020-wave-2-gyozi]]: 178 GYOZI functions matched (GYOZI 244 of 417), 6 rows added to [[data/t0018-cases]], new patterns in [[matching-notes]] ("Wave 2: GYOZI"). Clean build 27 of 27 sha1 OK. Inline review done, no open findings. Not merged.
