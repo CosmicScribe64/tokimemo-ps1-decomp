@@ -15,6 +15,11 @@ it and nothing else is shipped here. The disassembly is not in the repository ei
 
 This project is independent. It is not affiliated with or endorsed by Konami.
 
+## Roadmap
+
+[ROADMAP.md](ROADMAP.md) lays out five phases, from a complete matching decompilation to an English-language Godot
+port.
+
 ## Building
 
 Everything runs in Docker, so Docker is the only thing you install. The image is linux/amd64 and builds on first
@@ -82,11 +87,6 @@ every push, along with the SHA-1 of every binary.
 Names, types and comments do not change the bytes, so the match rule cannot check them. Treat them as hypotheses.
 Many function names come from the symbol map in the game's own `O.BIN` developer build; they are listed in
 `config/symbol_addrs_obin.txt`. In a spot check of 24 of them, 12 fit the functions they call, none contradicted the code, and the rest could not be checked.
-
-## Roadmap
-
-[ROADMAP.md](ROADMAP.md) lays out five phases, from a complete matching decompilation to an English-language Godot
-port.
 
 ## AI assistance
 
