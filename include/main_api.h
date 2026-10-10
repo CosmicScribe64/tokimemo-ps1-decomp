@@ -1757,6 +1757,7 @@ void normal_date_girl_out_main(void);
 void func_8007E81C();
 void normal_date_bg_fadein(void);
 void func_8007E934();
+void normal_date_bg_fadeout(void);
 void normal_date_bggirl_fadeout(void);
 void normal_date_move_place(void);
 void normal_date_move_place_init(void);

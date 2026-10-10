@@ -187,7 +187,7 @@ void func_801407C0(void) {
     idx = D_800E6280.unk_110A;
     tbl.f[idx](0x80);
     j = D_800E6280.unk_110A;
-    if (func_8007E81C == tbl.f[j] || func_8007E934 == tbl.f[j]) {
+    if (normal_date_bg_fadein == tbl.f[j] || normal_date_bg_fadeout == tbl.f[j]) {
         D_80120653 |= 0x80;
         D_80120657 = D_800B593C;
     }
