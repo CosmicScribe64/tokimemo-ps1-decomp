@@ -22,9 +22,35 @@ void func_80156F50(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801570A4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801571E8);
+void func_801571E8(void) {
+    TcPos p0;
+    TcPos a;
+    TcPos b;
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801572D8);
+    func_800AE120(D_801604C0 + 0x1E240);
+    /* FAKE: the three stores on one source line make as1 order them z, y, x as the original does. T-9160 */
+    a.x = 0x3E8; a.y = 0x12C; a.z = -0x8000;
+    b.y = 0x800;
+    b.x = 0;
+    b.z = 0;
+    b.unk6 = 3;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0);
+}
+
+void func_801572D8(void) {
+    TcPos p0;
+    TcPos a;
+    TcPos b;
+
+    func_800AE120(D_801604C0 + 0x1E240);
+    /* FAKE: the three stores on one source line make as1 order them z, y, x as the original does. T-9160 */
+    a.x = -0x3E8; a.y = 0x12C; a.z = -0x8000;
+    b.y = 0x800;
+    b.x = 0;
+    b.z = 0;
+    b.unk6 = 1;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801573C8);
 
@@ -88,7 +114,15 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_8015800C);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801585D0);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801589B0);
+void func_801589B0(void) {
+    s32 i;
+
+    for (i = 16; i < 63; i++) {
+        if ((i + D_8015EDB4)->unk84[2] == 0xC) {
+            (i + D_8015EDB4)->unk2 = 0xFE;
+        }
+    }
+}
 
 void func_80158AB0(void) {
     /* p0..p2 and r are the locals of this family (func_801563E4 passes all three positions and spills r
