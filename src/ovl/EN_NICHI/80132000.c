@@ -227,7 +227,26 @@ void func_801338EC(void) {
     func_80133CA8();
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80133924);
+void func_80133924(void) {
+    s32 i;
+    s32 *p;
+    u8 n;
+
+    n = 10;
+    p = (s32 *) D_8013984C;
+    for (i = 0; i != n; i++) {
+        if (!(p[0] & 0x80)) {
+            if ((D_80121531 == 7) && (p[1] != 0)) {
+                func_80134C1C(i);
+                func_801339D4(i);
+            } else {
+                func_80134800(i);
+                func_801339D4(i);
+            }
+        }
+        p += 12;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801339D4);
 
