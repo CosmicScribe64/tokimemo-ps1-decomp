@@ -214,3 +214,5 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | DATE | `func_8015522C` | regorder | `u8 D |= 0x40` in an else branch: original lui t9, lbu t0, ori t1 (no reuse); IDO reuses t9 for the load (w3-3, T-4030) |
 | SHUGAKU | `func_80134024` | promo | `if (D++ == 0x3C)` on an s32 global: original loads it into $v1, `xori v0,v1,0x3c; sltiu v0,v0,1; addiu v1,v1,1; beqz`; IDO emits `xori; bnez` without the sltiu (w3-3, T-4030) |
 | NAME_ENT | `func_80134110` | promo | range checks on two s16 globals, early-out `or v0,v1,zero` return of the first global in $v1 (implicit int, no return): IDO keeps it in $v0 and takes other registers (w3-3, T-4030) |
+| 80059710 | `MouseState` | regorder | pointer array element loaded into $a2, return value 0 kept in $v1 (`move v0,v1` at the end), element address in $v0 reused for reloads; IDO uses $v1/$v0/$a2 in another order (w3-3, T-4030) |
+| TT | `func_8013C764` | regorder | two narrow (masked 0xFFFF) arguments copied back to $a0/$a1 (`or a1,t7` then `or a0,t6`); IDO moves the first one to $a2 or swaps the copy order (w3-3, T-4030) |

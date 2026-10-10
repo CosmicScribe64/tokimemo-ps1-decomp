@@ -77,7 +77,19 @@ u8 get_k_speed(void) {
     return D_800B3F66;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_disp_inc);
+s32 k_disp_inc(void) {
+    if (D_800E7378 % (D_800B3F66 + 1) == 0) {
+        if (D_800B3F68 < D_800B3F62) {
+            D_800B3F68 += 1;
+            return 0;
+        }
+        return 1;
+    }
+    if (D_800B3F68 == D_800B3F62) {
+        return 1;
+    }
+    return 0;
+}
 
 /* The operand order sets the load order of the two globals (T-0017). */
 s32 check_end_k(void) {
