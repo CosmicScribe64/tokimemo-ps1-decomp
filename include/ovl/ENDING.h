@@ -173,4 +173,5 @@ extern s32 D_8013CBD4;
 extern s32 D_8013CBD8;
 extern s32 D_8013CBDC;
 
+void func_80134140();
 #endif /* OVL_ENDING_H */

@@ -2,6 +2,11 @@
 #include "ovl/EVENT.h"
 
 typedef struct {
+    void (*f[38])();
+} FnTbl38; /* size 0x98 */
+extern FnTbl38 D_8012153C;
+
+typedef struct {
     void (*f[41])();
 } FnTbl41; /* size 0xA4 */
 extern FnTbl41 D_80121360;
@@ -295,7 +300,21 @@ void func_800FD188(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FD1C0);
+void func_800FD1C0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl38 tbl;
+
+    tbl = D_8012153C;
+    func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800EECE0 != 0) {
+        D_800EB02B |= 0x80;
+        D_800EB02F = D_800F19AB;
+        return;
+    }
+    D_800EB02B &= 0xFF7F;
+}
 
 void func_800FD2AC(void) {
     func_80015D28(0x45, 0x801B0000, 0x7E8B);
