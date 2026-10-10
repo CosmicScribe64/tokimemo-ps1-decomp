@@ -22,7 +22,17 @@ void func_80136CD8(void) {
     func_80042908(2);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80136B40", func_80136D00);
+void func_80136D00(void) {
+    if (D_8015F4F4 < 0x100) {
+        D_8015F4F0 = D_8015F4F4 / 2;
+    }
+    func_8013A790(1, 0);
+    D_8015F4F4 += 4;
+    if (D_8015F4F4 > 0x100) {
+        D_8015F4F0 = 0x80;
+        func_8004284C();
+    }
+}
 
 void func_80136D78(void) {
     if (D_800E7200 & 0x40) {

@@ -108,7 +108,7 @@ void func_80136FBC(s32 arg0, s32 arg1);
 void func_80154960(void);
 void func_80156A80(void);
 void func_80159090(void);
-void func_8015C208(void);
+void func_8015C208();
 void func_80139FB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8013A580(s32 arg0);
 void func_80132220(void);
@@ -192,5 +192,9 @@ void func_801416E8(Tc14 *arg0, s32 arg1);
 void func_80141B18(Tc14 *arg0, s32 arg1);
 extern u8 D_8015FA68[];
 void func_80147C98(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
+extern s32 D_8015F4F4;
+void func_80143B34();
+extern u8 D_80161D9C[];
+void func_8015C0A0();
 
 #endif
