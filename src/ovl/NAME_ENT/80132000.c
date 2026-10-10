@@ -261,7 +261,33 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134F6C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135168);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135434);
+void func_80135434(s32 arg0) {
+    s32 col;
+
+    if (arg0 != 0) {
+        col = 0x90002;
+    } else {
+        col = 0x8081F;
+    }
+    func_80049A40(-0x9D, -0x30, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, -0x10, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, 0x10, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, 0x30, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, 0x50, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9A, -0x6A, 0x130, 0x20, 4, col, 0x83);
+    func_80049A40(-0x7F, -0x40, 0x11D, 0x70, 4, col, 0x83);
+    if (D_8014CCC8 == 3) {
+        func_80049A40(-0x7A, 0x36, 0x50, 0x30, 4, col, 0x83);
+        func_80049A40(-0x1A, 0x36, 0x50, 0x30, 4, col, 0x83);
+        func_80049A40(0x46, 0x36, 0x50, 0x30, 4, col, 0x83);
+    }
+    func_800494BC(0, 0, 4, 0, 0);
+    if (!(D_800E6280.unk_F88 & 0x20) && !(D_800E6280.unk_F88 & 0x800)) {
+        if (!(D_800E6280.unk_F88 & 0x40)) {
+            func_80134F6C();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135650);
 
