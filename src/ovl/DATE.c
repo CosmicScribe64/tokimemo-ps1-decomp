@@ -1,6 +1,14 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
+/*
+ * Matching notes (T-2010):
+ * - Casts such as (u16) D_800CA150 or (u8) D_800E62BF pick the load width (lhu/lbu) the
+ *   original uses where the shared header declares another type.
+ * - *(s16 *)0x801CE12C reads data of another overlay by absolute address; a declared
+ *   extern would change the register allocation of the load.
+ */
+
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80132000);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80132288);
@@ -769,7 +777,7 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80144720);
 
 void func_801448D4(void) {
     func_80083808();
-    switch (D_800E7389) {                           /* irregular */
+    switch (D_800E7389) {
     case 0:
         func_801449D4();
         break;
@@ -939,7 +947,7 @@ void func_8014A280(void) {
 }
 
 void func_8014A2AC(void) {
-    switch (D_8015DE44) {                           /* irregular */
+    switch (D_8015DE44) {
     case 0:
         func_8014A810();
         return;

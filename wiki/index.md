@@ -56,6 +56,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1030-overlay-batch-g-bunka-sd-date2|T-1030]] Overlay batch G: BUNKA_SD, DATE2 (Done)
 - [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050]] Overlay batch I: KANGEI, SHUGAKU (Done)
 - [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200]] Fix conflicting extern declarations after batch merges (Done)
+- [[tickets/T-2010-wave2-date|T-2010]] Wave 2: DATE, 278 functions matched (Done)
 - [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
 - [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap, deferred (Backlog)
 - [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330]] Tooling: m2c context and decomp-permuter (Done)
