@@ -188,3 +188,7 @@ void func_8014EF6C(void);
 void func_8014F1D4(s32 arg0);
 
 #endif
+extern u8 D_8015E9E0[];
+extern u8 D_8015EB70[];
+extern u8 D_8015E828[];
+extern u8 D_8015E8F0[];
