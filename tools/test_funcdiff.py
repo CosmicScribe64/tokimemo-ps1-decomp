@@ -115,6 +115,36 @@ class Resolve(unittest.TestCase):
         self.assertEqual([k for k, _ in funcdiff.resolve(insns)], ["3c19801e", "87288010"])
 
 
+class HeaderProblem(unittest.TestCase):
+    def setUp(self):
+        funcdiff._headers.clear()
+        self.cwd = os.getcwd()
+        self.tmp = tempfile.mkdtemp()
+        os.chdir(self.tmp)
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        self.addCleanup(os.chdir, self.cwd)
+        self.addCleanup(funcdiff._headers.clear)
+
+    def test_no_include_dir_means_nothing_to_check(self):
+        self.assertIsNone(funcdiff.header_problem(False))
+
+    def test_failing_ninja_target_is_returned(self):
+        with open("build.ninja", "w") as f:
+            f.write("x")
+        r = mock.Mock(returncode=1, stdout="FAILED: build/headers.ok\nconflict D_1\n")
+        with mock.patch.object(funcdiff.shutil, "which", return_value="/bin/ninja"), \
+                mock.patch.object(funcdiff.subprocess, "run", return_value=r) as run:
+            problem = funcdiff.header_problem(True)
+        self.assertEqual(run.call_args[0][0], ["ninja", "build/headers.ok"])
+        self.assertIn("conflict D_1", problem)
+
+    def test_without_a_build_check_headers_runs_directly(self):
+        os.mkdir("include")
+        with open("include/a.h", "w") as f:
+            f.write("extern int x;\nextern char x;\n")
+        self.assertIn("conflict x", funcdiff.header_problem(False))
+
+
 class Fresh(unittest.TestCase):
     def setUp(self):
         funcdiff._checked.clear()

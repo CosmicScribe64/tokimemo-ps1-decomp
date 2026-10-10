@@ -444,6 +444,29 @@ class WaveFourTests(unittest.TestCase):
         self.assertIn('D_800E6280.unk_04 = 1;', plans[0]['text'])
 
 
+class FilesFilterTests(unittest.TestCase):
+    """T-9030: --files limits which C files --apply may edit (parallel batch agents)."""
+    PLANS = [dict(tgtfile='src/main/80041000.c', name='a'), dict(tgtfile='src/ovl/TEL.c', name='b'),
+             dict(tgtfile='src/ovl/DATE.c', name='c')]
+
+    def test_empty_spec_keeps_everything(self):
+        self.assertTrue(all(dupes.wanted_file(p['tgtfile'], None) for p in self.PLANS))
+
+    def test_stems_and_prefixes_case_insensitive(self):
+        self.assertTrue(dupes.wanted_file('src/main/80041000.c', '8004'))
+        self.assertTrue(dupes.wanted_file('src/ovl/TEL.c', 'tel'))
+        self.assertFalse(dupes.wanted_file('src/ovl/DATE.c', 'TEL,80041000'))
+
+    def test_restrict_files_filters_plans_and_skipped(self):
+        class T:
+            def __init__(self, path):
+                self.path = path
+        skipped = [(T('x/TEL.c'), ['r']), (T('x/DATE.c'), ['r'])]
+        plans, sk = dupes.restrict_files(self.PLANS, skipped, 'TEL,8004', lambda t: t.path)
+        self.assertEqual([p['name'] for p in plans], ['a', 'b'])
+        self.assertEqual(len(sk), 1)
+
+
 class ApplyAllTests(unittest.TestCase):
     def test_a_rejected_batch_restores_every_header(self):
         r = make_repo(SRC_C, TGT_C)

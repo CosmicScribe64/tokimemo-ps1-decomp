@@ -285,6 +285,13 @@ class Verification(unittest.TestCase):
         new = permute.replace_function(text, "func_1", "void func_1(void) {\n    new();\n}\n")
         self.assertEqual(new, "a;\nvoid func_1(void) {\n    new();\n}\nb;\n")
 
+    def test_replace_function_keeps_the_rodata_includes_of_the_guard_block(self):
+        """T-9030: a jump-table function: the table INCLUDE_RODATA'd inside the guard stays in the object."""
+        text = ('a;\n#ifdef NON_MATCHING\nINCLUDE_RODATA("asm/x.rodata", jtbl_80140000);\n\nvoid func_1(void) {\n    old();\n}\n'
+                '#else\nINCLUDE_ASM("asm/x", func_1);\n#endif\nb;\n')
+        new = permute.replace_function(text, "func_1", "void func_1(void) {\n    new();\n}\n")
+        self.assertEqual(new, 'a;\nINCLUDE_RODATA("asm/x.rodata", jtbl_80140000);\nvoid func_1(void) {\n    new();\n}\nb;\n')
+
     def test_replace_include_asm_line(self):
         text = 'a;\nINCLUDE_ASM("asm/x", func_1);\nb;\n'
         self.assertEqual(permute.replace_function(text, "func_1", "void func_1(void) {\n}"),
@@ -336,6 +343,29 @@ class Verification(unittest.TestCase):
         self.assertIn("DIFF", " ".join(report))
         with open(src) as f:
             self.assertEqual(f.read(), before)
+
+    JT = "TT:func_1: DIFF (- expected, + built)\n  -lw v0,0(v0) ; R_MIPS_LO16 jtbl_80140000\n  +lw v0,0(v0) ; R_MIPS_LO16 .rodata\n"
+
+    def test_jump_table_function_is_judged_by_the_unit_sha1(self):
+        """T-9030: funcdiff compares jtbl_X by name against .rodata and always differs; the sha1 decides."""
+        root, src, cand = self.make("extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")
+        meta = {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"}
+        seen = []
+        ok, report = permute.verify_candidate(root, meta, cand, self.Runner(self.JT, seen=seen))
+        self.assertTrue(ok, report)
+        self.assertEqual([c for c, _t in seen], ["TT:func_1", "build/ovl/TT.ok"])
+        ok, report = permute.verify_candidate(root, meta, cand, self.Runner(self.JT, ninja_rc=1))
+        self.assertFalse(ok)        # score 0 but the rodata differs: the real build fails
+        self.assertIn("FAILED", " ".join(report))
+        self.assertIn("jtbl_80140000", " ".join(report))
+
+    def test_other_funcdiff_differences_still_stop_before_the_sha1(self):
+        root, src, cand = self.make("extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")
+        seen = []
+        ok, _r = permute.verify_candidate(root, {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"}, cand,
+                                          self.Runner("TT:func_1: DIFF\n  -lw v0\n  +lw v1\n", seen=seen))
+        self.assertFalse(ok)
+        self.assertEqual(len(seen), 1)
 
     def test_unit_sha1_failure_is_not_a_match(self):
         root, src, cand = self.make("extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")

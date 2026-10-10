@@ -357,6 +357,71 @@ class WriteFixTest(Repo):
                                            '        func_80083440(1);\n    }\n}\n')
 
 
+class MinimalDiffTest(Repo):
+    """T-9030: --write/--fix never repeat a hand-written declaration and touch only what they must."""
+    def model(self):
+        return sp.Model(str(self.inc), str(self.root / "src"))
+
+    HAND = (sp.HEADER_TEXT + '\ntypedef struct Rec {\n    s32 a;\n} Rec;\nvoid func_80042808();\n'
+            "#ifndef MAIN_API_OVERRIDE_func_80083440\nvoid func_80083440(u8 arg0);\n#endif\n"
+            "\n/* ---- globals ---- */\nextern u8 D_800E7388;\n\n/* ---- functions ---- */\n\n#endif /* MAIN_API_H */\n")
+
+    def test_hand_written_prototype_among_the_typedefs_is_moved_not_repeated(self):
+        self.write("main_api.h", self.HAND)
+        self.ovl("AAA", "void func_80042808(void);\n")
+        m = self.model()
+        sp.write_api(m, sp.plan(m))
+        text = (self.inc / "main_api.h").read_text()
+        self.assertEqual(text.count("func_80042808"), 1, text)
+        self.assertEqual(text.count("func_80083440("), 1, text)
+        self.assertIn("} Rec;", text)
+        self.assertLess(text.index("/* ---- functions ---- */"), text.index("func_80042808"))
+        self.assertEqual([p for p in self.problems() if p.startswith("duplicate")], [])
+        m = self.model()
+        self.assertFalse(sp.write_api(m, sp.plan(m))[0])
+
+    def test_check_names_the_hand_written_duplicate(self):
+        self.write("main_api.h", self.HAND.replace("\n/* ---- functions ---- */\n",
+                                                   "\n/* ---- functions ---- */\nvoid func_80042808(void);\n"))
+        out = [p for p in self.problems() if "func_80042808" in p]
+        self.assertEqual(len(out), 1, out)
+        self.assertIn("duplicate func_80042808", out[0])
+        self.assertIn("sync_protos.py --write", out[0])
+
+    def test_check_reports_an_alias_conflict_unless_known(self):
+        (self.root / "config" / "obin_renames.txt").write_text("func_80043914 load_palette\n")
+        self.write("main_api.h", API.replace("void func_80042808(void);",
+                                             "void func_80043914(u16 a);\nvoid load_palette(u8 a);\nvoid func_80042808(void);"))
+        self.has("alias conflict at 0x80043914")
+        (self.root / "config").mkdir(exist_ok=True)
+        (self.root / sp.KNOWN).write_text("alias 0x80043914\n")
+        self.assertEqual([p for p in self.problems() if "alias" in p], [])
+
+    def test_write_keeps_the_order_of_existing_declarations(self):
+        self.write("main_api.h", sp.HEADER_TEXT + "\n/* ---- globals ---- */\nextern s32 D_800E7384;\nextern u8 D_800E7388;\n"
+                   "extern u8 D_800E7380;\n\n/* ---- functions ---- */\n\n#endif /* MAIN_API_H */\n")
+        self.ovl("AAA", "extern u8 D_800E7000;\nextern u8 D_800E7386;\n")
+        m = self.model()
+        sp.write_api(m, sp.plan(m))
+        text = (self.inc / "main_api.h").read_text()
+        order = [text.index(n) for n in ("D_800E7000", "D_800E7384", "D_800E7386", "D_800E7388", "D_800E7380")]
+        self.assertEqual(order, sorted(order), text)
+
+    def test_fix_leaves_a_header_with_nothing_to_change_alone(self):
+        body = "extern s32 D_80140000;\n\n\n\nvoid func_80132000(void);\n"
+        self.ovl("AAA", body)
+        before = (self.inc / "ovl/AAA.h").read_text()
+        sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda *a: None)
+        self.assertEqual((self.inc / "ovl/AAA.h").read_text(), before)
+
+    def test_fix_only_rewrites_the_named_headers(self):
+        self.ovl("AAA", "extern u8 D_800E7388;\n")
+        self.ovl("BBB", "extern u8 D_800E7388;\n")
+        sp.run_write(str(self.inc), str(self.root / "src"), fix=True, log=lambda *a: None, only={"ovl/AAA.h"})
+        self.assertNotIn("D_800E7388", (self.inc / "ovl/AAA.h").read_text())
+        self.assertIn("D_800E7388", (self.inc / "ovl/BBB.h").read_text())
+
+
 class ViewsTest(Repo):
     def views(self):
         return sp.snapshot(sp.Model(str(self.inc), str(self.root / "src")))

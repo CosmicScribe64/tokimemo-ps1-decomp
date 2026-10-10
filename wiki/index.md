@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
+- [[tickets/T-9030-wave-5-tool-fixes|T-9030]] Wave-5 tool fixes (Done)
 - [[tickets/T-8080-wave-5-list-8|T-8080]] Wave 5: list 8 (Done)
 - [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
 - [[tickets/T-8010-wave-5-list-1|T-8010]] Wave 5: list 1 (Done)

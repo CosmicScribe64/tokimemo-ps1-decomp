@@ -325,6 +325,7 @@ def outside_edits(base_text, cand_text, func):
     return out
 
 
+RODATA_RE = re.compile(r'^[ \t]*INCLUDE_RODATA\([^)]*\);[ \t]*\n?', re.M)
 GUARD_RE = re.compile(r"^[ \t]*#[ \t]*if(?:def[ \t]+NON_MATCHING|[ \t]+defined\(NON_MATCHING\))[^\n]*\n", re.M)
 
 
@@ -347,7 +348,11 @@ def replace_function(text, func, body):
                 end = g.end() + line.end()
                 break
         if end and g.start() <= where[0] and where[1] <= end:
-            return text[:g.start()] + body + text[end:]
+            # the jump tables and constants INCLUDE_RODATA'd inside the block belong to the object, not to
+            # the function body: the real build needs them (T-9030)
+            keep = "".join(m.group(0) if m.group(0).endswith("\n") else m.group(0) + "\n"
+                           for m in RODATA_RE.finditer(text[g.end():end]))
+            return text[:g.start()] + keep + body + text[end:]
     if r and text[r[1]:r[1] + 1] == "\n":
         return text[:r[0]] + body.rstrip("\n") + text[r[1]:]
     return text[:where[0]] + body + text[where[1]:]
@@ -408,17 +413,24 @@ def verify_candidate(root, meta, cand_dir, runner=subprocess.run):
         fd = runner([sys.executable, os.path.join(root, "tools", "funcdiff.py"), "--resolve", scope], cwd=root,
                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         fd_ok = fd.returncode == 0 and "MATCH" in fd.stdout
-        report.append("ninja object + funcdiff --resolve: %s" % ("MATCH" if fd_ok else "DIFF"))
+        # a switch with a jump table (T-9030): funcdiff compares the table by name (`jtbl_X` of the original
+        # against `.rodata` of the build) and reports a DIFF for code that matches; the unit's sha1, which
+        # covers .text and .rodata, is then the judge (it is the stricter test whatever funcdiff says)
+        jtbl = not fd_ok and bool(re.search(r"\bjtbl_\w+|\.rodata", fd.stdout)) and "ERROR" not in fd.stdout
+        report.append("ninja object + funcdiff --resolve: %s" % ("MATCH" if fd_ok else
+                                                                 "DIFF (jump table or rodata relocation: the unit sha1 decides)" if jtbl else "DIFF"))
         if fd_ok:
             report += ["note: " + n + " (IDO orders the stores of one source line together: keep the layout)"
                        for n in layout_notes(cand_text[r[0]:r[1]])]
-        if not fd_ok:
+        if not fd_ok and not jtbl:
             report += ["    " + l for l in fd.stdout.strip().splitlines()[:14]]
             return False, report
         nj = runner(["ninja", unit_target(unit)], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         report.append("ninja %s (unit sha1): %s" % (unit_target(unit), "OK" if nj.returncode == 0 else "FAILED"))
         if nj.returncode != 0:
             report += ["    " + l for l in nj.stdout.strip().splitlines()[-6:]]
+            if jtbl:
+                report += ["    funcdiff:"] + ["    " + l for l in fd.stdout.strip().splitlines()[:8]]
             return False, report
     finally:
         with open(src, "w") as f:

@@ -353,6 +353,7 @@ def apply_plans(args, root, plans):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--root', default='.')
+    ap.add_argument('--files', help='only edit these C files (queue.py --files syntax, comma separated)')
     ap.add_argument('--report', action='store_true')
     ap.add_argument('--apply', action='store_true')
     ap.add_argument('--check', action='store_true', help='with --apply: build each object, revert failures')
@@ -369,6 +370,8 @@ def main(argv=None):
     if a.unit:
         plans = [p for p in plans if p['unit'] in a.unit]
         skipped = [s for s in skipped if s[0].unit in a.unit]
+    if a.files:
+        plans, skipped = dupes.restrict_files(plans, skipped, a.files, lambda t: dupes.src_for(a.root, t))
     if a.func:
         plans = [p for p in plans if p['name'] in a.func]
     if a.apply:

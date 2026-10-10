@@ -990,9 +990,31 @@ def apply_all(root, plans, check, verbose, log=print, describe=None):
     return kept
 
 
+def file_stem(path):
+    return os.path.splitext(os.path.basename(path))[0]
+
+
+def wanted_file(path, spec):
+    """True when the C file `path` is named by `spec` (queue.py --files syntax: comma separated main
+    address stems / overlay names, matched case-insensitively as prefixes). Everything when spec is empty."""
+    if not spec:
+        return True
+    stem = file_stem(path).lower()
+    return any(w and stem.startswith(w.strip().lower()) for w in spec.split(','))
+
+
+def restrict_files(plans, skipped, spec, tgt_path):
+    """Plans and skipped entries limited to the target files named by `spec` (T-9030: parallel batch
+    agents each pass their own list, so --apply never edits another agent's file)."""
+    return ([p for p in plans if wanted_file(p['tgtfile'], spec)],
+            [s for s in skipped if wanted_file(tgt_path(s[0]), spec)])
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--root', default='.')
+    ap.add_argument('--files', help='only edit these C files (queue.py --files syntax: main address stems / overlay '
+                                    'names, comma separated); default is the whole tree')
     ap.add_argument('--apply', action='store_true')
     ap.add_argument('--check', action='store_true', help='with --apply: build each object, revert failures')
     ap.add_argument('--unit', action='append')
@@ -1007,6 +1029,8 @@ def main(argv=None):
     if a.unit:
         plans = [p for p in plans if p['unit'] in a.unit]
         skipped = [s for s in skipped if s[0].unit in a.unit]
+    if a.files:
+        plans, skipped = restrict_files(plans, skipped, a.files, lambda t: src_for(root, t))
     if a.func:
         plans = [p for p in plans if p['name'] in a.func]
     nm = sum(1 for f in funcs if f.matched)

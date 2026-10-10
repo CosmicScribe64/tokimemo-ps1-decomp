@@ -229,6 +229,16 @@ class Detector(unittest.TestCase):
         self.assertFalse(wq.analyze(asm("f", ["addiu $v0, $zero, 1", "jr $ra", " nop"])).pad)
 
 
+    def test_leading_nop_is_a_pad(self):
+        """T-9030: DATE and ENDING func_80132000 start with a single nop."""
+        f = wq.analyze(asm("f", ["nop", "jr $ra", " nop"]))
+        self.assertTrue(f.pad)
+        self.assertTrue(wq.Func("DATE", "func_80132000", "x.s", f).blocked)
+        self.assertIn("P", wq.Func("DATE", "func_80132000", "x.s", f).flags)
+        self.assertEqual(wq.p_match(wq.Func("DATE", "func_80132000", "x.s", f)), 0.0)
+        self.assertFalse(wq.analyze(asm("f", ["jr $ra", " nop"])).pad)
+
+
 def func(file, name, size, calls=0, flags=""):
     f = wq.Facts(size, calls, "L" in flags, "J" in flags, "S" in flags, "P" in flags, "R" in flags, "V" in flags)
     return wq.Func(file, name, "x.s", f)

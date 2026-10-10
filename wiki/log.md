@@ -719,3 +719,6 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8020-wave5-lis
 
 ## [2026-10-10] ticket | T-8080 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8080-wave-5-list-8]]; no open findings. Branch w5-8, not merged.
+
+## [2026-10-10] ticket | T-9030 wave-5 tool fixes (Backlog -> Done)
+[[tickets/T-9030-wave-5-tool-fixes]]: `tools/dupes.py` and `tools/neardupes.py` `--files`; `tools/sync_protos.py` no duplicate, stable order, `--only`; `tools/check_headers.py` duplicate and alias messages; `tools/funcdiff.py` header failure; `tools/queue.py` leading-nop P; `tools/permute.py` jump-table verification. All tools/test_*.py pass; clean build 27/27, headers OK, progress 4227/6958. Inline review against CODING_STANDARDS.md: no findings (tool code only, tests added, no game data). Branch r5-fixes, not merged.

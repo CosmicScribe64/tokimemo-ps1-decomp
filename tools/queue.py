@@ -11,7 +11,8 @@ not, number of calls, and flags:
      J and S block only when the function's C file has no rodata island: then its rodata is an
      asm blob the C object cannot provide. Per-object C files (tools/split_objects.py, T-0500)
      give every object with rodata an island, so J and S are workable there (decompile-workflow).
-  P  one trailing nop after the last jr (end address 12 mod 16): asm-processor needs 2 (matching-notes)
+  P  one trailing nop after the last jr (end address 12 mod 16): asm-processor needs 2 (matching-notes);
+     or a function whose first instruction is a nop (an alignment pad in front, T-9030): agents skip these
   R  T-0018 register promotion of an UNSIGNED narrow global (lbu/lhu): loaded in two or more basic
      blocks outside loops into the same register (reloaded after calls or branches). Cause (T-1321):
      cfe widens every unsigned 8/16-bit load with a CVT that uopt treats as another expression.
@@ -205,6 +206,9 @@ def analyze(text, string_syms=frozenset(), legacy=False):
     jtbl = any("%hi(jtbl_" in i.args or "%lo(jtbl_" in i.args for i in insns)
     strings = any(m in string_syms for i in insns for m in HI_RE.findall(i.args))
     pad = len(insns) >= 4 and insns[-1].op == "nop" and insns[-3].op == "jr" and insns[-3].args == "$ra"
+    # T-9030: an unbuildable alignment nop in front (DATE and ENDING func_80132000 start with one): C cannot
+    # begin a function with a nop and asm-processor rejects a one-word block
+    pad = pad or bool(insns) and insns[0].op == "nop"
     # basic blocks: a label starts one; so does the instruction after a branch/jump/call delay slot
     block, after_delay, pending = 0, False, False
     luireg = {}

@@ -518,6 +518,22 @@ def check_api(inc, src=None):
     api = model.api
     guarded = api_guards(model)
     defs = definitions(model) if model.sources else {}
+    # one declaration per symbol: a K&R `void f();` among the typedefs next to the generated `void f(void);`
+    # is compatible for the compiler but a duplicate (T-9030; it broke main after a merge)
+    seen = defaultdict(list)
+    for name, typ, _raw in model.own[API]:
+        seen[name].append(typ)
+    for name, ts in sorted(seen.items()):
+        if len(ts) > 1 and len(set(ts)) > 1:
+            problems.append("duplicate %s: include/%s declares it %d times ('%s'), e.g. a hand-written prototype next to the "
+                            "generated one; keep one declaration: python3 tools/sync_protos.py --write moves it into "
+                            "its section and deletes the copy" % (name, API, len(ts), "' and '".join(short(t) for t in dict.fromkeys(ts))))
+    # an address declared under two names with disagreeing types (strcat vs func_800AE100): the alias case
+    # --check-branch reports, found here before the merge (findings listed in KNOWN are the base tree's)
+    known = read_known(model.root)
+    for key, msg in alias_conflicts(model):
+        if key not in known:
+            problems.append(msg)
     for h, ds in sorted(model.own.items()):
         if h in (API,) or h in SDK_HEADERS:
             continue
@@ -795,13 +811,56 @@ def parse_foreign(old, names):
     return attach, tails
 
 
-def render_api(model, entries, guards, types="", keep=None):
+def drop_declared(lines, names):
+    """`lines` without the top-level declarations of `names` (T-9030): a hand-written `void f();` among the
+    typedefs or in a foreign block of main_api.h is moved into its section, never repeated there.
+    Comments, preprocessor lines and anything inside braces stay. A guard (`#ifndef MAIN_API_OVERRIDE_x`
+    ... `#endif`) left empty by that goes with it."""
+    out, depth = [], 0
+    for line in lines:
+        st = line.strip()
+        new = line
+        if depth == 0 and st and not st.startswith(("#", "/*", "*", "typedef")) and "{" not in st:
+            new = rewrite_line(line, names)
+        depth += line.count("{") - line.count("}")
+        if new is not None:
+            out.append(new)
+    i = 0
+    while i < len(out) - 1:
+        if re.match(r"\s*#\s*ifndef\s+" + OVERRIDE, out[i]) and re.match(r"\s*#\s*endif\b", out[i + 1]):
+            del out[i:i + 2]
+            i = max(i - 1, 0)
+        else:
+            i += 1
+    return out
+
+
+def stable_order(model, names, old_order):
+    """`names` in the order they had in the old file, a new one inserted at its address position
+    (T-9030: --write must not reorder the declarations it did not touch)."""
+    pos = {n: i for i, n in enumerate(old_order)}
+    kept = [n for n in old_order if n in names]
+    kept = list(dict.fromkeys(kept))
+    for n in sorted((n for n in names if n not in pos), key=lambda n: sort_key(model, n)):
+        k = sort_key(model, n)
+        at = next((i for i, m in enumerate(kept) if sort_key(model, m) > k), len(kept))
+        kept.insert(at, n)
+    return kept
+
+
+def render_api(model, entries, guards, types="", keep=None, order=()):
     """main_api.h text. entries: {name: (type, line text)}; guards: symbols wrapped in #ifndef;
     types: the type definitions to keep in front of the globals; keep: parse_foreign() result, the
-    comments and other lines of the old file that stay where they were."""
+    comments and other lines of the old file that stay where they were; order: the symbols of the old
+    file in its order (declarations keep their place, new ones go by address)."""
     attach, tails = keep if keep else ({}, {"globals": [], "functions": []})
-    data = sorted((n for n, (t, _l) in entries.items() if not is_func(t)), key=lambda n: sort_key(model, n))
-    funcs = sorted((n for n, (t, _l) in entries.items() if is_func(t)), key=lambda n: sort_key(model, n))
+    names = set(entries)
+    if types:
+        types = "\n".join(drop_declared(types.split("\n"), names))
+    attach = {n: drop_declared(ls, names) for n, ls in attach.items()}
+    tails = {k: drop_declared(ls, names) for k, ls in tails.items()}
+    data = stable_order(model, {n for n, (t, _l) in entries.items() if not is_func(t)}, order)
+    funcs = stable_order(model, {n for n, (t, _l) in entries.items() if is_func(t)}, order)
     out = [HEADER_TEXT.rstrip("\n"), ""] + ([types, ""] if types else []) + [GLOBALS_MARK]
 
     def emit(names):
@@ -876,7 +935,9 @@ def write_api(model, plan_, path=None):
     path = path or os.path.join(model.inc, API)
     old = _read(path) if os.path.exists(path) else ""
     keep = parse_foreign(old, set(entries)) if old else None
-    text = render_api(model, entries, guards, types_block(old), keep)
+    at = old.find(GLOBALS_MARK)      # a declaration found among the typedefs moves into its section
+    order = [n for n, _t, _r in ch.declarations_text(old[at:])] if at >= 0 else []
+    text = render_api(model, entries, guards, types_block(old), keep, order)
     if old != text:
         _write(path, text)
     return old != text, len(entries), len(guards)
@@ -978,7 +1039,9 @@ def fix_header(model, plan_, h, dry=False, log=print):
         at = max([i for i, l in enumerate(out) if re.match(r'\s*#\s*include\s+"(common|libgpu)\.h"', l)] or [-1]) + 1
         if h == "game.h" or "game.h" not in closure(model, h):
             out.insert(at, '#include "%s"' % API)
-    new = re.sub(r"\n{3,}", "\n\n", "\n".join(out))
+    new = "\n".join(out)
+    if new != text:     # T-9030: a header with nothing to change is not reflowed
+        new = re.sub(r"\n{3,}", "\n\n", new)
     if new != text and not dry:
         _write(path, new)
         model.forget()
@@ -1232,7 +1295,8 @@ def check_branch(inc, src, out=sys.stdout):
     model = Model(inc, src)
     known = read_known(model.root)
     findings = [("headers", p) for p in ch.check(inc, src)]
-    findings += alias_conflicts(model)
+    reported = {m for _k, m in findings}      # check_api reports the unknown alias conflicts too
+    findings += [(k, m) for k, m in alias_conflicts(model) if m not in reported]
     findings += void_result_conflicts(model)
     new = [(k, m) for k, m in findings if k not in known or k == "headers"]
     tolerated = [k for k, _m in findings if k in known and k != "headers"]
@@ -1339,12 +1403,13 @@ def add_implicit_overrides(model, changes, log=print):
 
 # ---------------------------------------------------------------------------------------------
 
-def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()):
+def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=(), only=None):
     """--write, or --fix when `fix`: update main_api.h (and clean the other headers). Returns the risky
     view changes of a --fix run (a count, 0 otherwise). `before` is a snapshot() taken before the caller
     edited the headers; without it the state on entry is the baseline. `ignore`: .c files whose view changes
     do not count (the files the caller just gave new code, which see their own new declarations); callers such as tools/dupes.py use it after they
-    added declarations (T-7030)."""
+    added declarations (T-7030). `only`: header names (relative to include/) --fix may rewrite; the
+    default is every header (T-9030: an agent passes the headers it owns)."""
     model = model or Model(inc, src)
     before = before if before is not None else (snapshot(model) if fix else None)
     plan_ = plan(model)
@@ -1354,7 +1419,7 @@ def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()
         model = Model(inc, src)
         plan_ = plan(model)
         for h in sorted(model.headers):
-            if h != API and h not in SDK_HEADERS:
+            if h != API and h not in SDK_HEADERS and (not only or h in only):
                 fix_header(model, plan_, h, log=log)
         model = Model(inc, src)
         write_api(model, plan(model))
@@ -1396,6 +1461,8 @@ def main(argv=None):
     g.add_argument("--write", action="store_true", help="create or update include/main_api.h")
     g.add_argument("--fix", action="store_true", help="--write, then clean the other headers")
     g.add_argument("--prune", action="store_true", help="drop the overrides the build does not need (runs ninja)")
+    ap.add_argument("--only", metavar="HEADERS", help="with --fix: rewrite only these headers (comma separated, "
+                    "relative to include/, e.g. game.h,ovl/TEL.h); default is every header")
     g.add_argument("--snapshot", metavar="FILE", help="save the view of every symbol per .c file")
     g.add_argument("--compare", metavar="FILE", help="compare the current views with a snapshot")
     g.add_argument("--check-branch", action="store_true",
@@ -1435,7 +1502,8 @@ def main(argv=None):
         _b, _c, risky = compare(old, snapshot(model))
         return 1 if risky else 0
     if a.write or a.fix:
-        risky = run_write(a.inc, a.src, fix=a.fix, model=model)
+        risky = run_write(a.inc, a.src, fix=a.fix, model=model,
+                          only=set(a.only.split(",")) if a.only else None)
         return 1 if risky else 0
     report(model)
     return 0

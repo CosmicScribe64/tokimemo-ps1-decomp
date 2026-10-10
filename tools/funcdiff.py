@@ -337,6 +337,36 @@ def check_fresh(obj, src, build=True, deps=()):
     return problem
 
 
+HEADERS_OK = os.path.join("build", "headers.ok")
+
+
+_headers = {}
+
+
+def header_problem(build=True):
+    """None when the header rules hold, else the check_headers output (T-9030): an object that was built
+    earlier can be up to date while build/headers.ok fails (an unguarded MAIN_API_OVERRIDE_, a
+    duplicate in main_api.h), and the merge then breaks the build. Runs `ninja build/headers.ok` when
+    the build exists, else tools/check_headers.py on include/ and src/. Cached per process."""
+    if build not in _headers:
+        _headers[build] = _header_problem(build)
+    return _headers[build]
+
+
+def _header_problem(build):
+    if build and os.path.exists("build.ninja") and shutil.which("ninja"):
+        r = subprocess.run(["ninja", HEADERS_OK], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        if r.returncode == 0:
+            return None
+        return "\n".join(r.stdout.strip().splitlines()[-15:])
+    if not os.path.isdir("include"):
+        return None
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import check_headers
+    problems = check_headers.check("include", "src" if os.path.isdir("src") else None)
+    return "\n".join(problems[:15]) if problems else None
+
+
 def asm_functions(c):
     """[(vram, folder, name)] of every function of the C file `c` in the original disassembly
     (matched or not), in address order: the .s files of its matchings and nonmatchings folders. The
@@ -480,6 +510,12 @@ def main(argv):
                 print("%s: ERROR %s" % (n, problem))
                 bad += 1
                 continue
+        problem = header_problem(not args.no_build)
+        if problem:     # never MATCH on a tree whose headers fail the build
+            print("%s: ERROR the header check (build/headers.ok) FAILED, a MATCH would not survive the build:\n%s"
+                  % (n, problem))
+            bad += 1
+            continue
         got, want = get(b, [name])[name], get(e, [name])[name]
         if got is None or want is None:
             print("%s: missing in %s" % (n, "built" if got is None else "expected"))
