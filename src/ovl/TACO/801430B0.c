@@ -9,7 +9,20 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801430D0);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801432F0);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143574);
+void func_80143574(s32 arg0, s32 arg1, s32 arg2) {
+    s32 pad; /* FAKE: unused local declared first puts p at sp+0x28 as in the original; real source unknown. T-6070 */
+    u8 *p;
+
+    p = func_800490F0(0xC, D_8011ECA0);
+    func_8009F0B8(p);
+    func_8009EF84(p, 0);
+    /* FAKE: p[4] and p[5] on one source line give the original's store order 5, 4, 6 (line-based scheduling). T-6070 */
+    p[4] = (arg2 >> 16) & 0xFF; p[5] = (arg2 >> 8) & 0xFF;
+    p[6] = arg2 & 0xFF;
+    *(s16 *)(p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg0;
+    *(s16 *)(p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    func_8009EED0((D_8011ECA0 << 10) + 0x3C + D_800E8CA0, p);
+}
 
 void func_80143644(void) {
     D_800E6280.unk_1092 = 1;
