@@ -193,7 +193,28 @@ void func_80137D3C(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801372B0", func_80137D70);
+extern u8 D_800F53DF;
+extern u8 D_800F53E0;
+extern s32 D_800F5490;
+
+void func_80137D70(void) {
+    s32 r;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    r = (u8)func_8005E0E0(D_800F62CF);
+    if (D_800F53DF == (D_800F5490 & 0xF) && D_800F53E0 == ((u32)(D_800F5490 << 0x17) >> 0x1B)) {
+        if ((u32)(r & 0x7F) < 2U) {
+            D_800F5AAE |= 4;
+            /* one base symbol keeps as1 from hoisting this load above the store */
+            (&D_800F5AAE)[0x9CC] += 5;
+        } else {
+            D_800F5AAE |= 8;
+            func_8004DE1C();
+        }
+    } else {
+        func_8004DE1C();
+    }
+}
 
 void func_80137E24(void) {
     D_800D9248 = 0x1D;

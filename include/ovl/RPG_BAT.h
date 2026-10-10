@@ -137,7 +137,7 @@ extern s32 D_8015EDC8;
 extern s32 D_8015EDE8;
 extern s32 D_8015EDF4;
 extern s32 D_8015EE40;
-void func_8013C1CC(void);
+s32 func_8013C1CC(void);
 void func_8013C2A0(void);
 void func_8013C32C(void);
 void func_8013C890(void);
@@ -207,3 +207,8 @@ extern u8 D_8015E9E0[];
 extern u8 D_8015EB70[];
 extern u8 D_8015E828[];
 extern u8 D_8015E8F0[];
+extern s32 D_8015EBC0;
+extern s32 D_8015EBC4;
+extern s32 D_8015EBC8;
+extern s32 D_8015EDC0;
+

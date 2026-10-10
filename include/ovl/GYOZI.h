@@ -602,3 +602,5 @@ typedef struct {
 } GirlFlag4;
 
 #endif /* OVL_GYOZI_H */
+extern s32 D_8012E688;
+

@@ -705,6 +705,7 @@ extern u8 D_800E9620[];
 extern u8 D_800E96AB;
 extern s8 D_800E96EF;
 extern s8 D_800E9733;
+extern u8 D_800E9E5F;
 extern u8 D_800E9E63;
 extern u8 D_800EAFA0[];
 extern s8 D_800EAFA2;

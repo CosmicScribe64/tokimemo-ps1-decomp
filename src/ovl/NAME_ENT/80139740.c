@@ -708,4 +708,9 @@ s32 func_801429BC(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80142A3C);
+void func_80142A3C(void) {
+    s32 i;
+
+    /* FAKE: loop body on the for line; as1 schedules by source line and then fills the delay slot like the original. T-9170 */
+    for (i = 0; i < 13; i++) D_801217D0[i].unk_00 = 0x80000000;
+}

@@ -52,11 +52,31 @@ void func_8010B538(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B570);
+void func_8010B570(void) {
+    func_800F7074();
+    D_800EECD0 = 0;
+    D_800E9E5F |= 0x80;
+    (&D_800E9E5F)[-0x44] |= 0x80;
+    *(s32 *)D_800EC190 &= 0x7FFFFFFF;
+    *(s32 *)(D_800EC190 + 0x24) &= 0x7FFFFFFF;
+    if (D_800B1AE4 % 240U == 0) {
+        func_8003424C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B614);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B678);
+extern s16 D_800E9E3E;
+extern s16 D_800EC194;
+
+/* neighbouring words reached through one base symbol each: as1 keeps the loads after the stores */
+void func_8010B678(void) {
+    (&D_800E9E3E)[0x22] += 0x40;
+    D_800E9E3E += 0x40;
+    D_800EC194 += 0x40;
+    (&D_800EC194)[0x12] += 0x40;
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B6E4);
 

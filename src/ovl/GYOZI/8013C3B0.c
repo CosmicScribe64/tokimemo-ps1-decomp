@@ -102,7 +102,26 @@ void func_8013C8E0(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013C91C);
+void func_8013C91C(void) {
+    D_800F6412 = 0;
+    D_800F6458 = 1;
+    func_8009068C();
+    D_800F53DA = 0x80;
+    D_801317EB = 0;
+    D_8012E688 = 0;
+    D_8012E684 = 0;
+    D_800C51C4 = 0;
+    func_80089200();
+    func_8008FC10();
+    /* FAKE: the store inside the call shares $a0 with the argument (T-9020, T-9170) */
+    func_8008F618(*(u8 *)&D_800F62CF = 1);
+    func_8013A140();
+    D_8014749C = D_80147440;
+    /* three words of a 0x24-byte record array reached through one base: as1 keeps the loads in order */
+    D_801474A0 = (&D_80147440)[9];
+    D_801474A4 = (&D_80147440)[18];
+    func_8004DE1C();
+}
 
 INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/8013C3B0.rodata", D_80145BB8);
 
