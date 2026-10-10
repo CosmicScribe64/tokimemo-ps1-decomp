@@ -215,6 +215,16 @@ class WriteFixTest(Repo):
         changed, _n, _g = sp.write_api(m, sp.plan(m))
         self.assertFalse(changed)
 
+    def test_write_keeps_the_type_definitions(self):
+        types = "/* ---- aggregate types ---- */\ntypedef struct Rec {\n    /* 0x00 */ s32 a;\n} Rec; /* size 0x04 */"
+        self.write("main_api.h", sp.HEADER_TEXT + "\n" + types + "\n\n/* ---- globals ---- */\nextern u8 D_800E7388;\n"
+                   "\n/* ---- functions ---- */\n\n#endif /* MAIN_API_H */\n")
+        m = self.model()
+        sp.write_api(m, sp.plan(m))
+        text = (self.inc / "main_api.h").read_text()
+        self.assertIn(types + "\n\n/* ---- globals ---- */", text)
+        self.assertIn("extern u8 D_800E7388;", text)
+
     def test_write_guards_overrides_and_sorts_by_address(self):
         self.ovl("AAA", "extern s8 D_800E7388;\n", head='#define MAIN_API_OVERRIDE_D_800E7388 /* lb */\n'
                  '#include "common.h"\n#include "game.h"\n')

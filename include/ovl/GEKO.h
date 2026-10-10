@@ -663,4 +663,6 @@ extern s32 D_80146DC0;
 extern s32 D_80146DC4;
 extern s32 D_80146DC8;
 
+extern s8 D_8014662C;
+
 #endif

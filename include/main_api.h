@@ -444,6 +444,7 @@ extern u32 D_800B1AE4;
 extern s32 D_800B1AF0;
 extern u8 D_800B1AF5;
 extern u8 D_800B1AF6;
+extern u8 D_800B1AF9;
 extern s32 D_800B1C1C;
 extern s32 D_800B1C70;
 extern u8 D_800B3220;
@@ -625,9 +626,7 @@ extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
 extern GameState D_800E6280;
-/* Old names of GameState fields kept only for the uses listed in config/migrate_globals.txt
- * (they match only through a separate symbol; wiki/game-state.md, "Kept old views"). */
-extern s32 D_800E66E8;  /* D_800E6280.unk_1BC[12].unk_0C.w */
+extern s32 D_800E66E8;  /* old name of D_800E6280.unk_1BC[12].unk_0C.w, kept for one use (config/migrate_globals.txt) */
 extern s32 D_800E7D10;
 extern u8 D_800E7D11[];
 extern u8 D_800E7D14[];
@@ -786,6 +785,8 @@ extern s16 D_8011ED7E;
 extern s16 D_8011ED82;
 extern u8 *D_8011ED8C;
 extern s32 D_8011ED90;
+extern s8 D_8011ED9F;
+extern s8 D_8011EDE3;
 extern u8 D_8011F0CD;
 extern u8 D_8011F0CE;
 extern u8 D_8011F0CF;
@@ -908,13 +909,20 @@ extern u8 D_801206D9;
 extern s8 D_801206DA;
 #endif
 extern u8 D_801206DB;
+#ifndef MAIN_API_OVERRIDE_D_801206DC
+extern s8 D_801206DC;
+#endif
 extern u8 D_801206DD;
+extern s8 D_801206DE;
 extern u8 D_801206DF;
 #ifndef MAIN_API_OVERRIDE_D_801206E0
 extern s16 D_801206E0;
 #endif
 extern s32 D_801206E4;
 extern s32 D_801206E8;
+#ifndef MAIN_API_OVERRIDE_D_801206EC
+extern s16 D_801206EC;
+#endif
 extern s16 D_801206EE;
 #ifndef MAIN_API_OVERRIDE_D_801206F0
 extern s16 D_801206F0;
@@ -925,6 +933,7 @@ extern s16 D_801206FE;
 extern s16 D_80120702;
 extern s32 D_8012070C;
 extern s32 D_80120710;
+extern s8 D_8012071B;
 extern s8 D_8012071D;
 extern u8 D_8012071E;
 extern u8 D_8012071F;
@@ -1087,9 +1096,23 @@ extern u8 D_80121874;
 #endif
 extern s32 D_80121884; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 extern s32 D_80121FD4;
+extern s16 D_80121FD8;
+extern s16 D_80121FDA;
+extern s16 D_80121FDC;
+extern s16 D_80121FDE;
+extern s16 D_80121FE0;
+extern s8 D_80121FE2;
+extern s8 D_80121FE3;
+extern s16 D_80121FE4;
+extern s16 D_80121FE6;
 extern u8 D_80121FE8;
 extern u8 D_80121FE9;
 extern u8 D_80121FEA;
+extern s16 D_80121FEC;
+extern s16 D_80121FEE;
+extern s16 D_80121FF0;
+extern s16 D_80121FF2;
+extern s32 D_80121FF4;
 extern u32 D_801220D0;
 extern s16 D_801220D4;
 extern s16 D_801220D6;
@@ -1816,6 +1839,5 @@ void func_800BCDF0();
 void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
-extern u8 D_800B1AF9;
 
 #endif /* MAIN_API_H */

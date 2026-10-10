@@ -59,7 +59,30 @@ void func_80157A90(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80157B40);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80157BD4);
+void func_80157BD4(void) {
+    D_8015E208 = D_8015DF30;
+    D_8015E20C = D_8015E06C;
+    D_8015E210 = D_8015E1A8;
+    func_800AE0F0(D_800CA19C, "遊園地");
+    D_800E6280.unk_1BC[9].unk_02 += 1;
+    D_800E6280.unk_1BC[9].unk_06 += 1;
+    D_800E6280.unk_1BC[9].unk_0A -= 0x14;
+    func_80084D3C();
+    func_80157880();
+    D_80122D20 = 1;
+    D_800E6280.unk_F5F = 0xE;
+    func_80043914(D_801600B0, 0x11, 1, 2, 0);
+    func_80084E90(D_801600B4, D_801600B8, D_801600BC, D_801600C0, D_801600C4, D_801600C8);
+    func_800850D4(D_801600A4, D_801600A8, D_801600A0, (s32) D_801600AC);
+    D_800CA360 = 1;
+    D_800CA224 = 3;
+    D_800CA226 = 3;
+    D_800CA228 = 3;
+    D_800CA234 = 2;
+    D_800CA236 = 2;
+    D_800CA238 = 2;
+    func_8004284C();
+}
 
 void func_80157D68(void) {
     D_8015E208 = D_8015DF34;
@@ -77,7 +100,26 @@ void func_80157D68(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80157E88);
+void func_80157E88(void) {
+    D_8015E208 = D_8015DF38;
+    D_8015E20C = D_8015E074;
+    D_8015E210 = D_8015E1B0;
+    D_800E6280.unk_1BC[9].unk_02 += 1;
+    D_800E6280.unk_1BC[9].unk_06 += 1;
+    D_800E6280.unk_1BC[9].unk_0A -= 0x14;
+    func_80084D3C();
+    func_801579E0();
+    func_80043914(D_80160108, 0x11, 1, 2, 0);
+    func_80084E90(D_8016010C, D_80160110, D_80160114, D_80160118, D_8016011C, D_80160120);
+    func_800850D4(D_801600FC, D_80160100, D_801600F8, (s32) D_80160104);
+    D_800CA224 = 2;
+    D_800CA226 = 2;
+    D_800CA228 = 2;
+    D_800CA234 = 1;
+    D_800CA236 = 1;
+    D_800CA238 = 1;
+    func_8004284C();
+}
 
 void func_80157FE4(void) {
     D_8015E208 = D_8015DF3C;

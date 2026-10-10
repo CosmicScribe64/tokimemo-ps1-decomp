@@ -694,11 +694,22 @@ def sort_key(model, name):
     return (a if a is not None else 1 << 40, name)
 
 
-def render_api(model, entries, guards):
-    """main_api.h text. entries: {name: (type, line text)}; guards: symbols wrapped in #ifndef."""
+def types_block(old):
+    """The hand-written type definitions of an existing main_api.h (T-5000, T-5100): everything between
+    the includes of HEADER_TEXT and the globals section, kept verbatim by --write."""
+    start = old.find('#include "libgpu.h"\n')
+    end = old.find("/* ---- globals ---- */")
+    if start < 0 or end < 0:
+        return ""
+    return old[start + len('#include "libgpu.h"\n'):end].strip("\n")
+
+
+def render_api(model, entries, guards, types=""):
+    """main_api.h text. entries: {name: (type, line text)}; guards: symbols wrapped in #ifndef;
+    types: the type definitions to keep in front of the globals."""
     data = sorted((n for n, (t, _l) in entries.items() if not is_func(t)), key=lambda n: sort_key(model, n))
     funcs = sorted((n for n, (t, _l) in entries.items() if is_func(t)), key=lambda n: sort_key(model, n))
-    out = [HEADER_TEXT.rstrip("\n"), "", "/* ---- globals ---- */"]
+    out = [HEADER_TEXT.rstrip("\n"), ""] + ([types, ""] if types else []) + ["/* ---- globals ---- */"]
 
     def emit(names):
         for n in names:
@@ -766,9 +777,9 @@ def all_overrides(model):
 def write_api(model, plan_, path=None):
     entries = build_entries(model, plan_)
     guards = all_overrides(model) & set(entries)
-    text = render_api(model, entries, guards)
     path = path or os.path.join(model.inc, API)
     old = _read(path) if os.path.exists(path) else ""
+    text = render_api(model, entries, guards, types_block(old))
     if old != text:
         _write(path, text)
     return old != text, len(entries), len(guards)

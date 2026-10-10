@@ -11,7 +11,52 @@ typedef struct {
     u32 rest : 18;
 } CharFlagsTel; /* size 4 */
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_801397D0);
+void func_801397D0(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_801399CC();
+        break;
+    case 1:
+        func_8013A228();
+        break;
+    case 2:
+        func_8013A40C();
+        break;
+    case 3:
+        func_8013A478();
+        break;
+    case 4:
+        func_8013A79C();
+        break;
+    case 5:
+        func_8013A820();
+        break;
+    case 6:
+        func_8013BF70();
+        break;
+    case 7:
+        func_8013C46C();
+        break;
+    case 8:
+        func_8013C968();
+        break;
+    case 9:
+        func_8013CB34();
+        break;
+    }
+    func_80064DEC();
+    func_80064F48();
+    func_800646CC();
+    func_80065B0C(0);
+    func_8006BA40();
+    func_80066334();
+    func_800578F4(0);
+    func_80066C08(0);
+    if (*D_8011F3FF & 0x80) {
+        func_80067870();
+    }
+}
 
 /* Flag word at +0x54C of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
 typedef struct {

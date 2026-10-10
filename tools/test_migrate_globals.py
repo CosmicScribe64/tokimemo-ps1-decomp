@@ -144,6 +144,23 @@ class MigrateTest(unittest.TestCase):
         msgs = mg.check(self.root, *mg.load_config(self.root))
         self.assertTrue(any("D_80100008" in m and "no field fits" in m for m in msgs))
 
+    def test_own_declarations_of_new_code(self):
+        # m2c output pasted with its extern lines: the declarations give the view and are deleted
+        self.put("src/main/a.c", '#include "main_api.h"\n'
+                 "extern s8 D_80100004;\nextern u8 D_8010001C;\n"
+                 "void f(void) {\n    D_80100004 = 1;\n    D_8010001C += 1;\n}\n")
+        self.assertEqual(self.apply(), 0)
+        out = self.get("src/main/a.c")
+        self.assertNotIn("extern", out)
+        self.assertIn("D_80100000.unk_04.b[0] = 1;", out)       # only stored: u8 byte fits the s8 view
+        self.assertIn("D_80100000.unk_18[4] += 1;", out)
+
+    def test_sign_mismatch_with_a_load_is_left(self):
+        self.put("src/main/a.c", '#include "main_api.h"\nextern s8 D_80100004;\n'
+                 "s32 f(void) {\n    return D_80100004;\n}\n")
+        self.assertEqual(self.apply(), 1)
+        self.assertIn("return D_80100004;", self.get("src/main/a.c"))
+
     def test_keep_and_base_views(self):
         self.put("config/migrate_globals.txt", CONFIG + "keep src/main/a.c D_80100002 matched only as a scalar\n")
         self.put("src/main/a.c", '#include "main_api.h"\nvoid f(void) { D_80100002 = 1; }\n')
