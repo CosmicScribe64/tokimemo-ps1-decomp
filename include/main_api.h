@@ -1411,7 +1411,7 @@ void func_8004EAAC();
 void k_sub_reset(void);
 void func_8004EAD4();
 void k_sub_disp_start(s32 arg0);
-void k_disp_goto_line_end(void);
+s16 k_disp_goto_line_end(void);
 void k_speed_set(u8 arg0);
 u8 get_k_speed(void);
 s32 k_disp_inc(void);

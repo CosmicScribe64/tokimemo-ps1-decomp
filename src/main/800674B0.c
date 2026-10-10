@@ -156,7 +156,25 @@ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A2CC);
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006AEC4);
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B014);
+typedef struct EntryFlags54C {
+    u32 pad : 25;
+    u32 nib : 4;
+    u32 b29 : 1;
+    u32 rest : 2;
+} EntryFlags54C;
+
+s32 func_8006B014(s32 arg0) {
+    s32 i;
+    s32 n;
+
+    n = 0;
+    for (i = 0; i < 8; i++) {
+        if (((EntryFlags54C *)&D_800E6280.unk_54C[i])->b29 && arg0 == ((EntryFlags54C *)&D_800E6280.unk_54C[i])->nib) {
+            n++;
+        }
+    }
+    return n;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B0C8);
 

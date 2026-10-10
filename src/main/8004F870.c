@@ -188,4 +188,13 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80053418);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8005352C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80053564);
+s32 func_80053564(s32 arg0) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        if (arg0 == (u32)D_800E6280.unk_1BC[i].unk_0C.b[2] >> 4) {
+            return i;
+        }
+    }
+    return -1;
+}
