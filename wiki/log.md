@@ -666,3 +666,9 @@ Merged main (T-7010, T-7020, T-7030, 170 dupes/neardupes copies). Clean build in
 
 ## [2026-10-10] ticket | T-8050 started (In Progress)
 Wave 5 list 5 batch, [[tickets/T-8050-wave-5-list-5]].
+
+## [2026-10-10] build | T-8050 wave 5 list 5: 24 matches and 7 dupes
+Matched by hand: BUNKA_SD `func_80135440`; ETC `func_801395E8`, `func_8013AEE4`, `func_8013B078`, `func_80137A14`, `func_80137C7C`, `func_801380AC`, `func_8013872C`; EVENT `func_800FCDD8`, `func_8010B490`, `func_801073FC`, `func_80106F90`; NAME_ENT nine (six dialog screens, `func_8013B5F0`, `func_8013D62C`, `func_8013E71C`); SHUGAKU `func_80133758`; TT `func_80133B70`, `func_8013F650`. Seven GYOZI twins from `tools/dupes.py`. Five near misses guarded with `NON_MATCHING`. Details in [[matching-notes]], rows in [[data/t0018-cases]], ticket [[tickets/T-8050-wave-5-list-5]]. Branch w5-5, not merged.
+
+## [2026-10-10] ticket | T-8050 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8050-wave-5-list-5]]; no open findings. `sync_protos.py --check-branch` OK, `migrate_globals.py --check` OK.
