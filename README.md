@@ -74,9 +74,7 @@ Details and the evidence behind each choice are in [wiki/toolchain.md](wiki/tool
 The wiki opens in Obsidian. Start at [wiki/index.md](wiki/index.md). File boundaries and the evidence for them are
 in [wiki/source-files.md](wiki/source-files.md), overlays in [wiki/overlays.md](wiki/overlays.md).
 
-## AI assistance
-
-AI coding agents (Claude Code) wrote most of the code and documentation here, directed by the maintainer.
+## Matching Decompilation
 
 A function counts as decompiled only when its compiled code is byte-identical to the original. CI checks that on
 every push, along with the SHA-1 of every binary.
@@ -85,13 +83,17 @@ Names, types and comments do not change the bytes, so the match rule cannot chec
 Many function names come from the symbol map in the game's own `O.BIN` developer build; they are listed in
 `config/symbol_addrs_obin.txt`. In a spot check of 24 of them, 12 fit the functions they call, none contradicted the code, and the rest could not be checked.
 
-The English translation planned in the roadmap will also be made with AI, and will say so. Human translators are
-welcome and encouraged to take part.
-
 ## Roadmap
 
 [ROADMAP.md](ROADMAP.md) lays out five phases, from a complete matching decompilation to an English-language Godot
 port.
+
+## AI assistance
+
+AI coding agents (Claude Code) wrote most of the code and documentation here, directed by the maintainer.
+
+The English translation planned in the roadmap will also be made with AI, and will say so. Human translators are
+welcome and encouraged to take part.
 
 ## Contributing
 
