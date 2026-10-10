@@ -577,7 +577,22 @@ s32 func_80117A10(void) {
     return func_80117A68();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117A68);
+s32 func_80117A68(void) {
+    u32 r;
+
+    D_8009471C = (u8 *)&D_80124344;
+    D_80094720 = (u8 *)&D_80124348;
+    D_80094724 = D_8012425C;
+    D_80094728 = D_801242C8;
+    D_8009472C = D_80124334;
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    r = (u8)func_8002328C(D_800B1746) & 0x7F;
+    if (D_801252E4 == 2 && D_80124348 == 2 && r >= 2U) {
+        func_8004A8EC(3);
+        func_80033E88();
+    }
+    return func_80049B20(D_800EECBC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117B30);
 

@@ -1290,3 +1290,4 @@ void func_800FDBF4(void);
 void func_8010BB64(void);
 
 #endif /* OVL_EVENT_H */
+extern s16 D_80124348;
