@@ -9,9 +9,7 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      splices the INCLUDE_ASM functions in and assembles them with GNU as.
      Used for the game code (T-0013, wiki/matching-notes.md). Every IDO
      compile also runs the frame-layout emulation pass (tools/frame_pass.py,
-     T-0016): the original's frames are 16 bytes larger than IDO's; and the
-     unsigned-load conversion pass (tools/cvt_pass.py, T-1321) around uopt,
-     so globals are kept in registers as the original does.
+     T-0016): the original's frames are 16 bytes larger than IDO's.
 gcc: the PsyQ way, cpp | cc1 | maspsx | as.
 
 Every object's .text is zero-padded to a multiple of 16 bytes (T-0012): the original link
@@ -61,7 +59,10 @@ ASM_PRELUDE = "include/asmproc_prelude.inc"
 FRAME_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frame_pass.py")
 CVT_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cvt_pass.py")
 # IDO passes replaced by a shim that runs a toolchain emulation pass and then the real pass.
-SHIMS = {"as1": FRAME_PASS, "uopt": CVT_PASS}
+# tools/cvt_pass.py (T-1321) is not in the build: on the full matched set it changes
+# functions that match without it (wiki/matching-notes.md); callers that want to try it
+# pass extra_shims={"uopt": CVT_PASS} to ido_frame_env.
+SHIMS = {"as1": FRAME_PASS}
 
 
 def run_stage(cmd, data, env=None):
@@ -79,21 +80,22 @@ def compile_gcc(src, out, gcc_ver, aspsx_ver):
     run_stage(AS + ["-o", out], data)
 
 
-def ido_frame_env(ido_ver, tmp):
+def ido_frame_env(ido_ver, tmp, extra_shims=None):
     """Environment that runs IDO with the toolchain emulation passes.
 
     IDO's cc finds its passes in USR_LIB. Point it at a directory holding
-    symlinks to every IDO file except the shimmed passes (SHIMS): `uopt` runs
-    the unsigned-load conversion pass (tools/cvt_pass.py, T-1321) around the
-    real uopt, and `as1` applies the frame-layout emulation pass
-    (tools/frame_pass.py, T-0016) to ugen's output before the real as1. Both
-    apply to every function; see the two modules.
+    symlinks to every IDO file except the shimmed passes (SHIMS plus
+    extra_shims): `as1` applies the frame-layout emulation pass
+    (tools/frame_pass.py, T-0016) to ugen's output before the real as1, for
+    every function. extra_shims={"uopt": CVT_PASS} adds the experimental
+    unsigned-load conversion pass (tools/cvt_pass.py, T-1321) around uopt.
     """
     ido = "/opt/ido/%s" % ido_ver
+    shims = dict(SHIMS, **(extra_shims or {}))
     for name in sorted(os.listdir(ido)):
-        if name not in SHIMS:
+        if name not in shims:
             os.symlink(os.path.join(ido, name), os.path.join(tmp, name))
-    for name, script in sorted(SHIMS.items()):
+    for name, script in sorted(shims.items()):
         shim = os.path.join(tmp, name)
         with open(shim, "w") as f:
             f.write('#!/bin/sh\nexec python3 "%s" --%s "%s/%s" "$@"\n'

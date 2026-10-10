@@ -212,10 +212,7 @@ void f(void) { if (D == 0) { if (h() == 1) { g(); D++; } } else if (D == 1) { g(
             src = os.path.join(tmp, "t.c")
             with open(src, "w") as f:
                 f.write(text)
-            env = cc.ido_frame_env("5.3", lib)
-            if not with_pass:
-                os.unlink(os.path.join(lib, "uopt"))
-                os.symlink("/opt/ido/5.3/uopt", os.path.join(lib, "uopt"))
+            env = cc.ido_frame_env("5.3", lib, {"uopt": cc.CVT_PASS} if with_pass else None)
             flags = [a for a in cc.IDO_CFLAGS if a != "-Iinclude"]
             subprocess.run(["/opt/ido/5.3/cc"] + flags + ["-o", os.path.join(tmp, "t.o"), src],
                            check=True, env=env)

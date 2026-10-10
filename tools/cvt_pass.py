@@ -100,6 +100,7 @@ DT_J, DT_L = DTYPES.index("J"), DTYPES.index("L")
 STRING_DTYPES = {DTYPES.index(c) for c in "MQRSX"}
 MT_S = 4
 MT_M = 1
+MT_R = 3
 UCO_ZCOPY = 405   # uopt option number of `zcopy` (global copy propagation on/off)
 
 # Expression operators: operands popped (uini.c stack_pop) for ops that push
@@ -320,12 +321,51 @@ def copy_propagation_options(insns):
     return out
 
 
+def _constant_first(insns, rewritten):
+    """Put the constant operand first in ==/!= against a rewritten variable, as IDO does with the CVT.
+
+    With the CVT the widened load is not a plain variable, so uopt swaps `cvt(D) == k` to
+    `k == cvt(D)`; without it uopt keeps `D == k`. The order is visible when uopt keeps the
+    constant in a register (`bne v1,v0` vs `bne v0,v1`). Operands are recognised in uopt's
+    output: a LOD of a rewritten location, or a register LOD of a register that the procedure
+    loads only by an RLOD of a rewritten location; constants are LDC records or registers
+    loaded only by RLDC.
+    """
+    out = list(insns)
+    for start, end in _procedures(out):
+        defs = {}
+        for i in out[start:end]:
+            if i.opc == OP["rlod"]:
+                defs.setdefault(i.lexlev, set()).add("var" if i.location() in rewritten else "other")
+            elif i.opc == OP["rldc"]:
+                defs.setdefault(i.words[1], set()).add("const")
+            elif i.opc == OP["str"] and i.mtype == MT_R:
+                defs.setdefault(i.words[3], set()).add("other")
+        var_regs = {r for r, kinds in defs.items() if kinds == {"var"}}
+        const_regs = {r for r, kinds in defs.items() if kinds == {"const"}}
+
+        def is_var(i):
+            if i.opc != OP["lod"]:
+                return False
+            if i.mtype == MT_R:
+                return i.words[3] in var_regs
+            return i.location() in rewritten
+
+        def is_const(i):
+            return i.opc == OP["ldc"] or (i.opc == OP["lod"] and i.mtype == MT_R and i.words[3] in const_regs)
+
+        for k in range(start + 2, end):
+            if out[k].opc in (OP["equ"], OP["neq"]) and is_var(out[k - 2]) and is_const(out[k - 1]):
+                out[k - 2], out[k - 1] = out[k - 1], out[k - 2]
+    return out
+
+
 def post(insns, rewritten):
-    """Give loads of the rewritten locations their unsigned type back (in place)."""
+    """Give loads of the rewritten locations their unsigned type back and restore IDO's constant order."""
     for i in insns:
         if i.opc in (OP["lod"], OP["rlod"]) and i.dtype == DT_J and i.location() in rewritten:
             i.set_dtype(DT_L)
-    return insns
+    return _constant_first(insns, rewritten)
 
 
 VALUED = {"-G", "-t", "-l", "-f", "-i", "-p", "-varref", "-Olimit", "-loopunroll",

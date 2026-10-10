@@ -145,7 +145,7 @@ def overlay_targets(n, overlays):
                     variables={"toolchain": " ".join(OVL_C_TOOLCHAIN)},
                     implicit=[stamp, HEADERS_OK, "include/common.h", "include/include_asm.h",
                               "include/asmproc_prelude.inc",
-                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"])
+                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
             c_os.append(cf.obj)
         data_os = []
         for data_s in data_ss:
@@ -205,7 +205,7 @@ def main():
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, HEADERS_OK, "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"] + headers)
+                implicit=[stamp, HEADERS_OK, "tools/cc.py", "tools/frame_pass.py"] + headers)
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"
