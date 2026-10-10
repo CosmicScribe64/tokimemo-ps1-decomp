@@ -1,6 +1,15 @@
 #include "common.h"
-#include "game.h"
 #include "ovl/TEL.h"
+
+/* Flag word at +0x1C8 of the 0x38-byte entries at D_800E6280, tested as bit-fields (sll; bgez in the original). */
+typedef struct {
+    u32 b0 : 1;
+    u32 b1 : 1;
+    u32 pad : 10;
+    u32 b12 : 1;
+    u32 b13 : 1;
+    u32 rest : 18;
+} CharFlagsTel; /* size 4 */
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_801397D0);
 
@@ -50,7 +59,7 @@ s32 func_8013BDDC(void) {
     s32 found;
 
     for (i = 0; i != 0xB; i++) {
-        if (((CharFlags *)(D_800E6280 + i * 0x38 + 0x1C8))->b1 &&
+        if (((CharFlagsTel *)(D_800E6280 + i * 0x38 + 0x1C8))->b1 &&
             *(s16 *)(D_800E6280 + i * 0x38 + 0x1C6) >= 0x5B) {
             found = i;
             break;
@@ -69,13 +78,39 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013BF70);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013BFDC);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013C3E0);
+s32 func_8013C3E0(void) {
+    u8 *p;
+    s32 i;
+
+    p = D_800E6280;
+    for (i = 0; i != 0xB; i++) {
+        if (((CharFlagsTel *)(p + 0x1C8))->b1 && ((CharFlagsTel *)(p + 0x1C8))->b12 &&
+            func_80051A68(i) != 4) {
+            return i;
+        }
+        p += 0x38;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013C46C);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013C4D8);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013C8DC);
+s32 func_8013C8DC(void) {
+    u8 *p;
+    s32 i;
+
+    p = D_800E6280;
+    for (i = 0; i != 0xB; i++) {
+        if (((CharFlagsTel *)(p + 0x1C8))->b1 && ((CharFlagsTel *)(p + 0x1C8))->b13 &&
+            func_80051A68(i) != 4) {
+            return i;
+        }
+        p += 0x38;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013C968);
 

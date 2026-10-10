@@ -25,7 +25,20 @@ void func_80132E5C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132EC8);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132F48);
+void func_80132F48(void) {
+    s32 pad; /* FAKE: unused local that moves rect to sp+0x2C like the original (T-3330 frame rule). T-4050 */
+    RECT rect;
+
+    rect.x = 0x140;
+    rect.y = 0x80;
+    rect.w = 0x180;
+    rect.h = 0x80;
+    func_8009C8E0(&rect, (void *)0x80180000);
+    D_800E71DF = D_800E69DD;
+    func_800847B8(D_800E69DD);
+    func_80133258();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132FB0);
 
@@ -172,7 +185,22 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801365DC);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136660);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801366E8);
+s32 func_801366E8(void) {
+    s32 v;
+
+    v = func_80051A68(0);
+    if ((D_800E6378 & 0xF) == D_800E62BF && ((u32)(D_800E6378 << 0x17) >> 0x1B) == D_800E62C0) {
+        if (((u8)v & 0x7F) < 2U) {
+            D_800E699E |= 4;
+            /* FAKE: reading D_800E738A (= D_800E699E + 0x9EC) through the other symbol keeps as1 from hoisting the load above the store; real source unknown. T-4050 */
+            D_800E69A2 = (&D_800E699E)[0x9EC] + 1;
+            func_80042908(4);
+            return 0;
+        }
+        D_800E699E |= 8;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136794);
 
