@@ -207,4 +207,10 @@ extern u8 D_801492AC[];
 extern u8 D_8014A1D4[];
 void func_801452D0(void);
 
+void func_8014684C(void);
+void func_80147068(void);
+void func_80147520(void);
+void func_80147F10(void);
+extern s16 D_8014A3DE;
+
 #endif
