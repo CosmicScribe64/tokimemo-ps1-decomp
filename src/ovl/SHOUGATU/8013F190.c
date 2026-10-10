@@ -173,7 +173,25 @@ void func_80140780(void) {
     D_80146240 = 0x801B0000;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_801407C0);
+typedef struct {
+    void (*f[31])();
+} FnTbl31; /* size 0x7C */
+extern FnTbl31 D_80146244;
+
+void func_801407C0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl31 tbl;
+    u32 j;
+
+    tbl = D_80146244;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    j = D_800E6280.unk_110A;
+    if (func_8007E81C == tbl.f[j] || func_8007E934 == tbl.f[j]) {
+        D_80120653 |= 0x80;
+        D_80120657 = D_800B593C;
+    }
+}
 
 void func_8014088C(void) {
     func_80044750(0xBF);
