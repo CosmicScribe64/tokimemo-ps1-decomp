@@ -5,7 +5,19 @@ void func_8013DB50(void) {
     func_8013DB70();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013DB50", func_8013DB70);
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+extern FnTbl42 D_80147FB0;
+
+void func_8013DB70(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl42 tbl;
+
+    tbl = D_80147FB0;
+    idx = D_800F647A;
+    tbl.f[idx]();
+}
 
 void func_8013DBE4(void) {
     func_8013A820();

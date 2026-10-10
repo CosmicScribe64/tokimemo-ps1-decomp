@@ -9,7 +9,23 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143C70);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143D20);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143E08);
+void func_80143E08(void) {
+    u32 r;
+    u8 flag;
+
+    flag = 1;
+    r = func_8005B368();
+    if (r >= 2U) {
+        D_800F6474 += 1;
+    }
+    if (((u32)D_800F6474 < 0x73U || (u32)D_800F6474 % 60U != 6) && !((u8)D_8012B8C2 & 1)) {
+        flag = 0;
+    }
+    func_80140050();
+    if (flag == 0 && D_8012E668 != 0) {
+        D_8012B8C2 = 0;
+    }
+}
 
 void func_80143EB8(void) {
     func_80086AB0(0x206);
@@ -58,7 +74,20 @@ void func_801447BC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_801447F0);
+typedef struct {
+    void (*f[51])();
+} FnTbl51; /* size 0xCC */
+extern FnTbl51 D_80148F50;
+
+void func_801447F0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl51 tbl;
+
+    tbl = D_80148F50;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+    func_80144B70();
+}
 
 void func_8014486C(void) {
     func_80072734(0x5BE4);

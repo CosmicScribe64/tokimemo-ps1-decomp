@@ -71,7 +71,24 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134B6C);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134C00);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134D38);
+void func_80134D38(void) {
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame (0x70) and array offsets; real source unknown. T-4070 */
+    s16 a[4];
+    s16 b[4];
+    s16 c[4];
+    s16 d[4];
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        a[i] = -0x78;
+        b[i] = i * 0x28 - 0x20;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 3, a, b, c, d);
+    func_801320C0();
+    func_80042940(1);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134DD0);
 
