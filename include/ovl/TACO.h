@@ -232,4 +232,6 @@ extern s16 *D_801600E8;
 extern s16 *D_801600EC[];
 void func_8014C0D4(s32 arg0);
 void func_8014C1DC(s32 arg0);
+void func_8014A8E0(void);
+void func_8014F2A0(void);
 #endif
