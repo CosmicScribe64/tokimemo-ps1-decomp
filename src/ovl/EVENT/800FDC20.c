@@ -193,7 +193,22 @@ void func_800FEA10(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEA38);
+typedef struct {
+    void (*f[49])();
+} FnTbl49; /* size 0xC4 */
+extern FnTbl49 D_80121968;
+
+void func_800FEA38(void) {
+    s32 idx; /* FAKE: unused local declared before the table, the original frame has the table 4 bytes lower (T-3330) */
+    FnTbl49 tbl;
+
+    tbl = D_80121968;
+    func_80078950("%d\n", D_800B1AF6);
+    tbl.f[D_800B1AF6]();
+    if (D_800B1AF6 == 0x17 || D_800B1AF6 == 0x18) {
+        func_800FEF74();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FEAE8);
 
