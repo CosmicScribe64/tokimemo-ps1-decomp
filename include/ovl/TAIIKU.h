@@ -220,3 +220,6 @@ void func_80147F10(void);
 extern s16 D_8014A3DE;
 
 #endif
+extern s32 D_80149954;
+extern s16 D_80149958;
+extern s16 D_8014995A;
