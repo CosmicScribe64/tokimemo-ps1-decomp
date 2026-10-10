@@ -737,6 +737,7 @@ extern u8 D_800F5ACD;
 extern u8 D_800F62CF;
 extern s8 D_800F6412;
 extern s32 D_800F6458;
+extern s32 D_800F6468;
 extern s32 D_800F6474;
 extern u8 D_800F6479;
 extern u8 D_800F647A;

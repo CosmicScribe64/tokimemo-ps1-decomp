@@ -50,7 +50,18 @@ void func_8015A3B0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8015A190", func_8015A414);
+void func_8015A414(void) {
+    func_80065F34(1);
+    D_800E6280.unk_F5F = 0xB;
+    func_800AE0F0(D_800CA188, "謎の女");
+    func_80085B3C(0xB, D_80122D08);
+    D_8015E208 = D_8015DF80;
+    D_8015E20C = D_8015E0BC;
+    D_8015E210 = D_8015E1F8;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8004284C();
+}
 
 typedef struct {
     void (*f[20])();

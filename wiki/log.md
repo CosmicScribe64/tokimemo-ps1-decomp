@@ -579,3 +579,12 @@ The original's strength-reduced loops keep 0x800E6280 in the base register and r
 
 ## [2026-10-10] ticket | T-5100 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-state-struct]]; no open findings. Branch o-gamestate, not merged.
+
+## [2026-10-10] ticket | T-6010 Wave 4 list 1 (Backlog -> In Progress)
+Created [[tickets/T-6010-wave-4-list-1]]; 127 listed functions, 39860 bytes, branch w4-1.
+
+## [2026-10-10] build | T-6010 wave 4 list 1: 17 functions
+17 functions turned into C in the 35 owned files (16 listed, 3412 bytes, plus TEL `func_801360E4`, 232 bytes); grand total 3539 -> 3556 of 6958, clean build 27 of 27 OK. New patterns (bit-field flag stores, word-aligned record copies, `*arg++` call argument, goto-shared block) and the unmatched families are in [[matching-notes]]; 9 rows in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-6010 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6010-wave-4-list-1]]; no open findings. Branch w4-1, not merged.

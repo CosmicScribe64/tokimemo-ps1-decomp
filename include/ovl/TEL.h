@@ -11,4 +11,6 @@ extern u8 D_80140B5C[];
 
 void func_80135FFC(void);
 
+void func_801360E4(void);
+
 #endif /* OVL_TEL_H */

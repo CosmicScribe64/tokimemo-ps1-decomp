@@ -21,7 +21,41 @@ void func_80142E28(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80142D00", func_80142E50);
+typedef struct {
+    u32 b0:1;
+    u32 b1:1;
+    u32 rest:30;
+} GyoziBits32;
+
+typedef struct {
+    u8 b0:1;
+    u8 b1:1;
+    u8 rest:6;
+} GyoziBits8;
+
+void func_80142E50(void) {
+    if (!((GyoziBits32 *)D_800F53A0.girl[9].unk_10)->b1 && D_800F53A0.girl[9].unk_06 >= 0x14 && (D_800F6468 & 1)) {
+        ((GyoziBits8 *)D_800F53A0.girl[9].unk_10)->b1 = 1;
+        D_80148620 = 5;
+        D_80148614 = D_801481F0;
+        D_80148618 = D_80148224;
+        D_8014861C = D_80148258;
+        D_800F62CF = 9;
+        func_80090960(4, 1);
+        func_8008F618(D_800F62CF);
+        func_8004DE1C();
+        return;
+    }
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+}
 
 void func_80142F6C(void) {
     func_80142D00();

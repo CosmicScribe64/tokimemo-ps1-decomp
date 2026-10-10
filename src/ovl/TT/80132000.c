@@ -18,7 +18,7 @@ void func_80132000(u8 *arg0, s8 *arg1, s8 *arg2) {
     if (!(arg0[8] & 0x40)) {
         if (--arg0[9] == 0) {
             arg0[6] += 1;
-step:
+step: /* the three flag paths join here, as in the original control flow */
             e = arg0[6] * 3 + *(u8 **)arg0;
             b = *e;
             arg0[9] = b;
