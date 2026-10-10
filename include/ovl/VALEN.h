@@ -11,6 +11,7 @@ extern s16 D_80134520;
 void func_80133C70();
 void func_80132000();
 extern s16 D_80134498;
+extern s16 D_8013453C;
 extern u8 D_80134544;
 extern s32 D_80134400;
 extern s32 D_80134434;
