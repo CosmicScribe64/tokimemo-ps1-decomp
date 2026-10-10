@@ -130,7 +130,6 @@ void func_8013703C(void);
 void func_80137090(void);
 void func_80137228(void);
 void func_8013732C(void);
-void k_reset(s32);
 extern s32 D_80122EC8;
 extern u16 D_801499A2;
 void func_8013F3A4(s32);
