@@ -14,7 +14,14 @@ void func_80144998(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_801449D8);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_80144CC0);
+void func_80144CC0(u8 *arg0) {
+    s32 i;
+
+    for (i = 0; i != 0x19; i++) {
+        *(s32 *)(arg0 + i * 8) = func_800AE0D0() % 320;
+        *(s32 *)(arg0 + i * 8 + 4) = func_800AE0D0() % 240 - 0x78;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_80144D90);
 
