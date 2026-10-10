@@ -3,7 +3,16 @@
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E330);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E410);
+void func_8013E410(void) {
+    u8 kind;
+
+    kind = func_80051A68(0) & 0x7F;
+    if ((D_80146050 != 0) || (kind == 4)) {
+        func_8013D2A8();
+        return;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E464);
 

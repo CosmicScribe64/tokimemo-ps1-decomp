@@ -1,7 +1,16 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004AD60);
+void func_8004AD60(s32 arg0) {
+    if ((arg0 & 0xFF) == 0) {
+        D_800B3D80 = 0;
+    } else {
+        D_800B3D80 = D_800B3D80 - 1;
+    }
+    if ((u32)D_800B3D80 >= 9U) {
+        D_800B3D80 = 8;
+    }
+}
 
 void func_8004ADAC(u8 arg0) {
     D_800B3D80 = arg0;

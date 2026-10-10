@@ -48,13 +48,30 @@ void func_80137CD4(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137D0C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137D68);
+typedef struct {
+    void (*f[34])();
+} FnTbl34; /* size 0x88 */
+extern FnTbl34 D_80144E80;
+
+void func_80137D68(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl34 tbl;
+
+    tbl = D_80144E80;
+    idx = D_800E738A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137DE4);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137E54);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137F70);
+void func_80137F70(void) {
+    D_80144E08 = D_80144E14 * 3;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "廊下");
+    func_8004284C();
+}
 
 void func_80137FC4(void) {
     bg_read_sub2(0x4045);

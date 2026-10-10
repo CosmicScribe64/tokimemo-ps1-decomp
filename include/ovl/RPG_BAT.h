@@ -136,6 +136,15 @@ extern s32 D_8015EBF0;
 extern s32 D_8015EBF4;
 extern s32 D_8015EBF8;
 void func_8013BBF8();
+/* Battle counters; one struct because as1 then keeps the access order of the original (T-4030, func_801452C0). */
+typedef struct RpgStat {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ u8 pad_0C[0x2C];
+    /* 0x38 */ s32 unk_38;
+} RpgStat; /* size 0x3C */
+extern RpgStat D_8015EBFC;
 
 extern s32 D_8015EE0C;
 

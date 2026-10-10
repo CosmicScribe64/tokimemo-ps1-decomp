@@ -294,5 +294,6 @@ extern s32 D_80146058;
 extern s32 D_80146194;
 void func_8013BBE0(void);
 s32 func_80046094();
+void func_801394EC(void);
 
 #endif

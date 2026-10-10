@@ -12,11 +12,38 @@ void func_801335F4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_8013363C);
+void func_8013363C(void) {
+    func_800AE0A0((void *)(0x801A0000 + D_800E7384 * 0x2800), 0x80180000 + D_800E7384 * 0x2800, 0x2800);
+    D_800E7384 += 1;
+    if (D_800E7384 == 9) {
+        func_8004284C();
+    }
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_801336A8);
+void func_801336A8(void) {
+    s32 pad; /* FAKE: unused local reproduces the extra 4-byte frame slot above rect; real source unknown. T-4030 */
+    RECT rect;
+    rect.x = 0x140;
+    rect.y = 0x80;
+    rect.w = 0x180;
+    rect.h = 0x80;
+    func_8009C884(&rect, (void *)0x80180000);
+    D_800E753C = 1;
+    D_800E7540 = 1;
+    D_800E7544 = 1;
+    D_800E7548 = 1;
+    D_800E754C = 1;
+    D_800E7550 = 1;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_80133738);
+void func_80133738(void) {
+    func_800AE0A0((void *)(0x80180000 + D_800E7384 * 0x2800), 0x801A0000 + D_800E7384 * 0x2800, 0x2800);
+    D_800E7384 += 1;
+    if (D_800E7384 == 9) {
+        func_8004284C();
+    }
+}
 
 void func_801337A4(void) {
     RECT rect;

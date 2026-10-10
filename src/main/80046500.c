@@ -38,7 +38,19 @@ s32 func_80046590(s16 arg0, u8 arg1) {
     return (arg0 / (p / 10)) % 10;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80046500", func_80046684);
+s32 func_80046684(s32 arg0) {
+    s32 result;
+    s32 mul;
+    s32 i;
+
+    result = 0;
+    mul = 1;
+    for (i = 0; i < 8; i++) {
+        result += (mul * (arg0 & (0xF << (i * 4)))) >> (i * 4);
+        mul *= 10;
+    }
+    return result;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80046500", func_80046754);
 

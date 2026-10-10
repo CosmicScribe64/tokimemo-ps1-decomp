@@ -3,7 +3,20 @@
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138950);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138A34);
+typedef struct {
+    void (*f[9])();
+} FnTbl9; /* size 0x24 */
+extern FnTbl9 D_80149E08;
+
+void func_80138A34(void) {
+    s32 idx;
+    s32 pad; /* FAKE: second word above tbl (T-3330 two-word case); real source unknown. T-4030 */
+    FnTbl9 tbl;
+
+    tbl = D_80149E08;
+    idx = D_800E7389;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138AA8);
 
@@ -65,7 +78,16 @@ void func_8013AEFC(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013AF74);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B0AC);
+void func_8013B0AC(void) {
+    if (D_80149990 == 0) {
+        func_8013B104();
+    } else {
+        func_8013C978();
+    }
+    if ((u16)D_801499B0[0].unk0 == 0) {
+        func_8013C780();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B104);
 
@@ -137,7 +159,16 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013CF88);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D114);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D254);
+void func_8013D254(void) {
+    func_80044750(0x504);
+    D_80149988 = 0;
+    D_8014999C = 0;
+    D_801499B0[0].unk0 = 0;
+    D_80149974 = 0;
+    D_8014994C = 0;
+    D_80149950 = 0;
+    D_801207A7 |= 0x80;
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D2B4);
 
@@ -220,7 +251,28 @@ s16 func_8013FBA8(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013FC5C);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013FE44);
+s8 func_8013FE44(void) {
+    s32 i;
+    s16 v[3];
+
+    for (i = 0; i < 3; i++) {
+        if (D_801499B4[i].val < 0xE00) {
+            v[i] = D_801499B4[i].val;
+        } else {
+            v[i] = -1;
+        }
+    }
+    if ((v[0] >= v[1]) && (v[0] >= v[2])) {
+        D_801499B4[0].val = -1;
+        return 1;
+    }
+    if (v[1] >= v[2]) {
+        D_801499B4[1].val = -1;
+        return 2;
+    }
+    D_801499B4[2].val = -1;
+    return 3;
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013FEF0);
 

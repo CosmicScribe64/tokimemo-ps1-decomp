@@ -180,5 +180,15 @@ extern u8 D_801491E0;
 extern u8 D_801491E1;
 extern u8 D_801491E2;
 extern u8 D_801491E3;
+extern s32 D_8014994C;
+extern s32 D_80149950;
+extern s32 D_80149974;
+extern s32 D_80149988;
+extern s32 D_8014999C;
+void func_8013B104(void);
+void func_8013C780(void);
+void func_8013C978(void);
+extern s32 D_80149990;
+extern TaiikuPair D_801499B4[];
 
 #endif
