@@ -48,4 +48,61 @@ void func_80132788(void) {
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801320A0", func_801327BC);
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801320A0", func_8013285C);
+void func_8013285C(void) {
+    switch (D_800E71DF) {
+    case 0:
+        D_800CA160 = D_80134A60[1];
+        D_800CA164 = D_80134A90[1];
+        D_800CA168 = D_80134AC0[1];
+        return;
+    case 1:
+        D_800CA160 = D_80134A60[5];
+        D_800CA164 = D_80134A90[5];
+        D_800CA168 = D_80134AC0[5];
+        return;
+    case 2:
+        D_800CA160 = D_80134A60[2];
+        D_800CA164 = D_80134A90[2];
+        D_800CA168 = D_80134AC0[2];
+        return;
+    case 3:
+        D_800CA160 = D_80134A60[3];
+        D_800CA164 = D_80134A90[3];
+        D_800CA168 = D_80134AC0[3];
+        return;
+    case 4:
+        D_800CA160 = D_80134A60[9];
+        D_800CA164 = D_80134A90[9];
+        D_800CA168 = D_80134AC0[9];
+        return;
+    case 5:
+        D_800CA160 = D_80134A60[6];
+        D_800CA164 = D_80134A90[6];
+        D_800CA168 = D_80134AC0[6];
+        return;
+    case 6:
+        D_800CA160 = D_80134A60[7];
+        D_800CA164 = D_80134A90[7];
+        D_800CA168 = D_80134AC0[7];
+        return;
+    case 7:
+        D_800CA160 = D_80134A60[4];
+        D_800CA164 = D_80134A90[4];
+        D_800CA168 = D_80134AC0[4];
+        return;
+    case 8:
+        D_800CA160 = D_80134A60[0];
+        D_800CA164 = D_80134A90[0];
+        D_800CA168 = D_80134AC0[0];
+        return;
+    case 9:
+        D_800CA160 = D_80134A60[8];
+        D_800CA164 = D_80134A90[8];
+        D_800CA168 = D_80134AC0[8];
+        return;
+    case 10:
+        D_800CA160 = D_80134A60[10];
+        D_800CA164 = D_80134A90[10];
+        D_800CA168 = D_80134AC0[10];
+    }
+}

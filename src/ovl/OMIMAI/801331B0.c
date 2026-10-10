@@ -58,7 +58,70 @@ INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_8013388C);
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_80134030);
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_801340E4);
+void func_801340E4(void) {
+    switch (D_800E71DF) {
+    case 0:
+        D_800CA160 = D_80134C30[1];
+        D_800CA164 = D_80134C64[1];
+        D_800CA168 = D_80134C98[1];
+        return;
+    case 1:
+        D_800CA160 = D_80134C30[6];
+        D_800CA164 = D_80134C64[6];
+        D_800CA168 = D_80134C98[6];
+        return;
+    case 2:
+        D_800CA160 = D_80134C30[2];
+        D_800CA164 = D_80134C64[2];
+        D_800CA168 = D_80134C98[2];
+        return;
+    case 3:
+        D_800CA160 = D_80134C30[4];
+        D_800CA164 = D_80134C64[4];
+        D_800CA168 = D_80134C98[4];
+        return;
+    case 4:
+        D_800CA160 = D_80134C30[10];
+        D_800CA164 = D_80134C64[10];
+        D_800CA168 = D_80134C98[10];
+        return;
+    case 5:
+        D_800CA160 = D_80134C30[7];
+        D_800CA164 = D_80134C64[7];
+        D_800CA168 = D_80134C98[7];
+        return;
+    case 6:
+        D_800CA160 = D_80134C30[8];
+        D_800CA164 = D_80134C64[8];
+        D_800CA168 = D_80134C98[8];
+        return;
+    case 7:
+        D_800CA160 = D_80134C30[5];
+        D_800CA164 = D_80134C64[5];
+        D_800CA168 = D_80134C98[5];
+        return;
+    case 8:
+        D_800CA160 = D_80134C30[0];
+        D_800CA164 = D_80134C64[0];
+        D_800CA168 = D_80134C98[0];
+        return;
+    case 9:
+        D_800CA160 = D_80134C30[9];
+        D_800CA164 = D_80134C64[9];
+        D_800CA168 = D_80134C98[9];
+        return;
+    case 10:
+        D_800CA160 = D_80134C30[12];
+        D_800CA164 = D_80134C64[12];
+        D_800CA168 = D_80134C98[12];
+        return;
+    default:
+        D_800CA160 = D_80134C30[3];
+        D_800CA164 = D_80134C64[3];
+        D_800CA168 = D_80134C98[3];
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_80134384);
 

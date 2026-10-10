@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Run m2c on one function with project context and print a C draft (T-1330).
 
-Usage (in Docker): python3 tools/m2c.py [--no-context] [--no-rodata] [--target T] func_80045414 [-- m2c options]
+Usage (in Docker): python3 tools/m2c.py [--no-context] [--no-rodata] [--target T] [UNIT:]func_80045414 [-- m2c options]
+(UNIT = main or an overlay name, for addresses that several overlays share)
 
 What it adds over a bare `m2c <file>.s`:
 - finds the function's .s under asm/{nonmatchings,matchings}/ (main exe) or asm/ovl/<NAME>/ (overlay);
@@ -30,7 +31,12 @@ WORD_RE = re.compile(r"[A-Za-z_]\w*")
 
 
 def locate(root, name):
-    """Return (asm_path, overlay_name or None) for function `name`, or raise LookupError."""
+    """Return (asm_path, overlay_name or None) for function `name`, or raise LookupError.
+    `OVERLAY:func_X` (or `main:func_X`) picks the unit when several overlays have a function at
+    the same address."""
+    unit = None
+    if ":" in name:
+        unit, name = name.split(":", 1)
     pats = [
         "asm/nonmatchings/main/*/%s.s",
         "asm/matchings/main/*/%s.s",
@@ -40,6 +46,9 @@ def locate(root, name):
     hits = []
     for pat in pats:
         hits += glob.glob(os.path.join(root, pat % name), recursive=True)
+    if unit:
+        hits = [h for h in hits if (unit == "main") == ("/ovl/" not in h)
+                and (unit == "main" or "/ovl/%s/" % unit in h)]
     if not hits:
         raise LookupError("no asm file for %s under %s/asm" % (name, root))
     path = sorted(hits)[0]

@@ -39,4 +39,16 @@ void func_80046318(s32 arg0, s32 arg1, s32 arg2); /* overlay view: main defines 
 /* matched against the main-exe u8 prototype */
 void draw2d3d(u8 arg0, u8 arg1);
 
+/* three parallel tables per object (13 words each), indexed by a fixed slot per value of
+ * D_800E71DF (func_8013285C, func_80132EB0, func_801340E4; T-0500) */
+extern s32 D_80134A60[];
+extern s32 D_80134A90[];
+extern s32 D_80134AC0[];
+extern s32 D_80134B60[];
+extern s32 D_80134B94[];
+extern s32 D_80134BC8[];
+extern s32 D_80134C30[];
+extern s32 D_80134C64[];
+extern s32 D_80134C98[];
+
 #endif /* OVL_OMIMAI_H */
