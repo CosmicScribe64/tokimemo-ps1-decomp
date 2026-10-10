@@ -62,7 +62,17 @@ void week_day_exit0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800737A0", parameter_up_down);
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", vacation_day_init);
+u8 vacation_day_init(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        return func_80074DE0();
+    case 1:
+        return func_80074F24();
+    case 2:
+        return func_8007505C();
+    }
+}
 
 s32 func_80074D28(void) {
     s32 ret;

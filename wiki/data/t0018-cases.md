@@ -475,3 +475,8 @@ Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only g
 | EVENT/8010FE10 | `func_801146B4` | regorder | same one-higher temp numbering after `func_8002328C`: `andi t1,v0,0x7f` where IDO gives `t0` (T-6060) |
 | TT/8013C6D0 | `func_8013C764` | regorder | `&= 0xFFFF` copies of both arguments: original `move a1,t7; move a0,t6`, IDO `move a0,t6; move a1,t7` (T-6060) |
 | 80041000 | `func_8004111C` | regorder | RECT on the stack set x,y,w,h and passed to `func_8009C7F8`: original `sh h` before `sh w` (li t6=w, li t7=h), all 24 statement orders give w first; same in `func_80059308` (T-6060) |
+| EVENT/800FD2F0 | `func_800FD588` | promo | `u32` `D_800B1AE4 % 60` tested twice after a call: original $v1, IDO $v0 (T-6030) |
+| DATE/80154260 | `func_80154E48` | regorder | `u8` GameState field `unk_110A` read after the table copy loop and compared (0xF..0x11): original `lbu $t1`, IDO `$v0`; table copy and local-table call otherwise match (T-6030) |
+| DATE/80154260 | `func_801551D0` | regorder | `u32` counter `D_800E7384` incremented in place then compared with 0x10 (returns 0 early): original loads it into $v1, IDO $v0 (T-6030) |
+| SHUGAKU/80133D60 | `func_80134024` | regorder | `u32` counter `D_800E7384` post-incremented and tested `== 0x3C` after a call: original keeps the compare as `xori $v0; sltiu $v0,$v0,1; beqz $v0` in place, IDO writes the `sltiu` to $t6 (or folds it to a plain `bnez`) (T-6030) |
+| RPG_BAT/801368B0 | `func_80136A9C` | promo | inner `switch (D_8015EBAC)` (cases 0, 1; `s32` and `u32` tried) after the outer `switch (D_8015EDB0)` case branch: original selector in $v1, IDO $v0 (T-6030) |

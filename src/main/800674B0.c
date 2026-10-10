@@ -234,7 +234,15 @@ void func_8006C848(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C934);
+s16 func_8006C934(void) {
+    if (D_8011ED82 < 0x4F) {
+        if (!(D_800E6280.unk_10F8 & 3)) {
+            D_8011ED82 += 1;
+        }
+    } else {
+        D_8011ED82 = 0x48;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C988);
 

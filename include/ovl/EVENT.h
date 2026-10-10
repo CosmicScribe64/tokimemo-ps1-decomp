@@ -1258,6 +1258,9 @@ void func_8010A0E4();
 void func_80108560();
 extern s16 D_8012435C;
 extern u8 D_80124360;
+void func_800FD3DC();
+void func_800FD43C();
+void func_800FD49C();
 
 extern s16 D_801207AC;
 void func_801015B0(void);

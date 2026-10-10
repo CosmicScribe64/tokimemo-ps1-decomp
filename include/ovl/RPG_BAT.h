@@ -177,6 +177,11 @@ void func_80150F84();
 extern u8 D_8015E814;
 extern s32 D_8015EE08;
 extern s32 D_8015EC18;
+void func_8013F1C4();
+extern u8 D_8015E904[];
+extern u8 D_8015E9CC[];
+extern s32 D_8015EC50;
+extern s32 D_8015EC54;
 
 extern s32 D_8015EDEC;
 
