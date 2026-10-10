@@ -25,6 +25,9 @@ void func_801331D0(void);
 void func_801330FC(void);
 void func_80147928(void);
 void func_80147594(void);
+void func_80143C84(void);
+void func_80143CC0(void);
+void func_8014756C(void);
 
 extern s32 D_8014A128;
 extern s32 D_8014A144;
@@ -182,5 +185,111 @@ typedef struct TaiikuPair {
     /* 0x2 */ s16 val;
 } TaiikuPair; /* size 0x4 */
 extern TaiikuPair D_801499B0[];
+
+extern s32 D_80149FB0;
+extern s32 D_80149FB4;
+extern s32 D_80149FB8;
+extern s32 D_80149FBC;
+extern s32 D_80149FC0;
+extern s32 D_80149FC4;
+extern s32 D_80149FC8;
+extern s32 D_80149FCC;
+extern s32 D_80149FD0;
+extern s32 D_80149FD4;
+extern s32 D_80149FD8;
+extern s32 D_80149FDC;
+extern s32 D_80149FE0;
+extern s32 D_80149FE4;
+extern s32 D_80149FE8;
+extern s32 D_80149FEC;
+extern s32 D_80149FF0;
+extern s32 D_80149FF4;
+extern s32 D_80149FF8;
+extern s32 D_80149FFC;
+extern s32 D_8014A000;
+extern s32 D_8014A004;
+extern s32 D_8014A008;
+extern s32 D_8014A00C;
+extern s32 D_8014A010;
+extern s32 D_8014A014;
+extern s32 D_8014A018;
+extern s32 D_8014A01C;
+extern s16 D_8014A020;
+extern s16 D_8014A024;
+extern s16 D_8014A028;
+extern s16 D_8014A02C;
+extern s16 D_8014A030;
+extern s16 D_8014A034;
+extern s16 D_8014A038;
+extern s16 D_8014A03C;
+extern s16 D_8014A040;
+extern s16 D_8014A044;
+extern s16 D_8014A048;
+extern s16 D_8014A04C;
+extern s16 D_8014A050;
+extern s16 D_8014A054;
+extern s16 D_8018EC40;
+extern s16 D_8018EC44;
+extern s16 D_8018EC48;
+extern s16 D_8018EC4C;
+extern s16 D_8018EC50;
+void func_80136EC0(void);
+void func_8013703C(void);
+void func_80137090(void);
+void func_80137228(void);
+void func_8013732C(void);
+void func_8004E9F4(s32);
+extern s32 D_80122EC8;
+extern u16 D_801499A2;
+void func_8013F3A4(s32);
+void func_8013F948(void);
+void func_80147F58(s32);
+void func_801482BC(s32);
+void func_80147A6C(s32);
+void func_80147B14(s32);
+s32 func_80141CDC();                                /* extern */
+extern s32 D_80122ECC;
+void func_8004D088(s32, s32, s32, s32);
+void func_8004E350(s32, s32, s32);
+void func_8004E44C(s32, s32, s32);
+void func_80085F0C(s32, s32, s32, s32, s32);
+void func_80132E20(s32, s32);
+typedef struct TaiikuBig {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ u8 unk4[0x1C];
+    /* 0x20 */ s32 unk20;
+    /* 0x24 */ u8 unk24[0x2C];
+} TaiikuBig; /* size 0x50 */
+extern TaiikuBig D_801227A0[];
+extern u8 D_80122CA0[];
+s32 func_80140A90();                                /* extern */
+extern s8 D_8014A110;
+void func_80085ED0(void);
+extern u8 D_80149E08[];
+extern u8 D_8014933C[];
+extern u8 D_8014A254[];
+void func_80143D24(void);
+void func_80143DD0(void);
+void func_80143F50(void);
+extern u16 D_8014A154;
+extern u8 D_800E628C[];
+void func_8009B3C0(s32);
+void func_8009B430(s32, void *, s32, s32);
+typedef struct TaiikuRec {
+    /* 0x0 */ s32 unk0;
+    /* 0x4 */ s32 unk4;
+    /* 0x8 */ s32 unk8;
+    /* 0xC */ s32 unkC;
+} TaiikuRec; /* size 0x10 */
+extern TaiikuRec D_80122640[];
+void func_80086424(void);
+extern s32 D_800E6598;
+extern u8 D_800E6819;
+s32 func_800AE0C0(s32);                             /* extern */
+extern s32 D_80149944;
+void func_8004F870(s32, s32, s16 *, s16 *, s16 *, s16 *);
+
+s32 func_8008667C(s32 a);
+void func_80099E30(s32 a, void *p);
 
 #endif
