@@ -58,7 +58,16 @@ void func_8013C560(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013C5E8);
+extern FnTbl20 D_80147B68;
+
+void func_8013C5E8(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80147B68;
+    idx = D_800F647A;
+    tbl.f[idx]();
+}
 
 typedef struct {
     void (*f[25])();
@@ -74,7 +83,16 @@ void func_8013C670(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013C6EC);
+extern FnTbl20 D_80147C1C;
+
+void func_8013C6EC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80147C1C;
+    idx = D_800F647A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013C774);
 
