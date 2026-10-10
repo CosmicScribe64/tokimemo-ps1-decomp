@@ -747,7 +747,9 @@ extern u8 D_800E62C1;
 typedef struct CharFlags {
     /* 0x00 */ u32 b0 : 1;
     /* 0x00 */ u32 b1 : 1;
-    /* 0x00 */ u32 rest : 30;
+    /* 0x00 */ u32 b2_5 : 4;
+    /* 0x00 */ u32 b6 : 1;
+    /* 0x00 */ u32 rest : 25;
 } CharFlags; /* size 0x04 */
 extern u8 D_800E7D11[];
 extern u8 D_801255B8;

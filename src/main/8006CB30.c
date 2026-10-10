@@ -77,7 +77,32 @@ void func_8006D4A0(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D52C);
+void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    u8 *p;
+
+    if (birth_day_check_days(0, D_800E62BF + arg1, arg2) == 1) {
+        D_800E6280[*arg0 * 4 + 0x69C] = 0x32;
+        D_800E6280[*arg0 * 4 + 0x69D] = 0;
+        *arg0 += 1;
+    }
+    for (i = 1; i != 0xB; i++) {
+        p = D_800E6280 + i * 0x38;
+        if (((CharFlags *)(p + 0x1C8))->b1 && ((CharFlags *)(p + 0x1C8))->b6) {
+            if (birth_day_check_days(i, D_800E62BF + arg1, arg2) == 1) {
+                D_800E6280[*arg0 * 4 + 0x69C] = 0x32;
+                D_800E6280[*arg0 * 4 + 0x69D] = i;
+                *arg0 += 1;
+            }
+        }
+    }
+    if ((D_800E6375 & 0xF) != 3) {
+        if (birth_day_check_days(0xF, D_800E62BF + arg1, arg2) == 1) {
+            D_800E6280[*arg0 * 4 + 0x69C] = 0x33;
+            *arg0 += 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
 
