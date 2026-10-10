@@ -95,7 +95,29 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147304);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014738C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147414);
+void func_80147414(void) {
+    s16 *mode;
+    if (D_800E6280.unk_1104.w == 0x20) {
+        D_80120652 |= 1;
+    }
+    if (!(D_80120652 & 1) && (D_80120668 != 0)) {
+        if (D_80120658 == 0) {
+            mode = &D_80120666;
+            switch ((*mode) & 1) {
+            case 0:
+                func_80044750(0x601);
+                break;
+            case 1:
+                func_80044750(0x602);
+                break;
+            }
+        }
+        if (D_80120658++ >= 0x11) {
+            func_8004284C();
+        }
+    }
+    func_8004EC24();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801474FC);
 
