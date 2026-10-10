@@ -73,7 +73,27 @@ void func_80134220(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80133D60", func_8013425C);
+typedef struct {
+    s32 w[0x11];
+} Tb44; /* size 0x44 */
+
+void func_8013425C(void) {
+    func_801365F4();
+    D_8013BFFC = D_8013C530;
+    D_8013C000 = D_8013C66C;
+    D_8013C004 = D_8013C7A8;
+    D_800CA2E4 = 0;
+    D_800CA2E8 = 0;
+    func_80133D60();
+    func_80043914(D_8013BFE0, 0x11, 1, 2, 0);
+    func_80084E90(D_8013BFE4, D_8013BFE8, D_8013BFEC, D_8013BFF0, D_8013BFF4, D_8013BFF8);
+    func_800850D4(D_8013BFD4, D_8013BFD8, D_8013BFD0, D_8013BFDC);
+    D_80120650[0x48] = 8;
+    D_80120650[4] = 8;
+    *(Tb44 *) &D_80120650[0x88] = *(Tb44 *) D_80120650;
+    *(s16 *) &D_80120650[0x9E] = 4;
+    func_8004284C();
+}
 
 void func_801343B0(void) {
     D_800CA134 = &D_800CA2E4;
