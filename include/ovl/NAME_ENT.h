@@ -91,5 +91,7 @@ extern s32 D_8014CCC4;
 extern u8 D_8014CE6C[];
 extern u8 D_8014CEE4[];
 extern u8 D_8014CF5C[];
+void func_80142E24();
+void func_80143580();
 
 #endif /* OVL_NAME_ENT_H */
