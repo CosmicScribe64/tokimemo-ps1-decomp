@@ -526,6 +526,7 @@ extern u8 D_8015B654;
 extern u8 D_8015BF4C;
 void func_8013934C(void);
 extern s8 D_8015B68C;
+extern u8 D_8015B694;
 extern s32 D_8015DEE8;
 extern s32 D_8015E024;
 extern s32 D_8015E160;

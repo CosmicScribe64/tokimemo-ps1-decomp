@@ -173,7 +173,17 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136FF0);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137154);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801378BC);
+void func_801378BC(void) {
+    u8 i;
+
+    i = D_800E6280.unk_F5E;
+    if (((u8 *)&D_800E6280)[0x758 + i * 8] == 1) {
+        D_800E6280.unk_F5E = i - 1;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x459A);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137920);
 
@@ -213,7 +223,18 @@ void func_8013808C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801380E4);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801381B4);
+void func_801381B4(void) {
+    u8 i;
+
+    i = D_800E6280.unk_F5E;
+    if (((u8 *)&D_800E6280)[0x758 + i * 8] == 1) {
+        D_800E6280.unk_F5E = i - 1;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_80044750(0x1500);
+    func_8007ED84(0x43F9);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80138220);
 
@@ -259,7 +280,17 @@ s32 func_8013867C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801386C8);
+void func_801386C8(void) {
+    u8 i;
+
+    func_8007ED84(0x45C9);
+    i = D_800E6280.unk_F5E;
+    if (((u8 *)&D_800E6280)[0x758 + i * 8] == 1) {
+        D_800E6280.unk_F5E = i - 1;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013872C);
 
@@ -380,7 +411,23 @@ void func_8013938C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801393DC);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801395B4);
+void func_801395B4(void) {
+    u8 g;
+
+    if (D_8015B694 == 0) {
+        g = D_800E6280.unk_F5F;
+        D_800CA148 = 9;
+        if (g == 7) {
+            D_800CA148 = 0xA;
+        } else if (g == 9) {
+            D_800CA148 = 8;
+        } else if ((g == 4) || (g == 8) || (g == 5) || (g == 0xA)) {
+            D_800CA148 = 7;
+        }
+        D_800E6280.unk_110A += 0x14;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139664);
 
