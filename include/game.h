@@ -128,7 +128,7 @@ void func_8004284C(void);
 void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80042908(s32 arg0);
 s32 func_8004500C();
-void birth_day_check_days(s32 arg0, u8 arg1, u8 arg2);
+s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2);
 void dec_bg_show_switch(s32 arg0);
 void hizuke_disp_switch(s32 arg0);
 void func_8006D138(void);

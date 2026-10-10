@@ -16,6 +16,7 @@ void func_8007B99C(u16 arg0);
 void func_8007BE94(s32 arg0);
 void func_8007BF04(s32 arg0);
 /* T-2090: overlay headers declare these symbols themselves */
+extern s32 D_800E6378;
 extern u8 D_800CA188[];
 extern u8 D_8011F513;
 void func_80062CD0();
