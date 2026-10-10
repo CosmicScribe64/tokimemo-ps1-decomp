@@ -285,7 +285,30 @@ void func_8013808C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801380E4);
+void func_801380E4(void) {
+    u8 i;
+
+    if (D_800CA2FC < 2) {
+        func_80044750(0x200);
+        func_8007ED84(0x4601);
+        i = D_800E6280.unk_F5E;
+        /* FAKE: 8-byte records at GameState+0x758 are not a declared aggregate yet; byte read through the base. T-8070 */
+        if (((u8 *)&D_800E6280)[0x758 + i * 8] == 1) {
+            D_800E6280.unk_F5E = i - 1;
+        }
+        func_80085B3C(0, D_80122D08);
+    } else {
+        func_80044750(0x201);
+        func_8007ED84(0x460A);
+        i = D_800E6280.unk_F5E;
+        /* FAKE: 8-byte records at GameState+0x758 are not a declared aggregate yet; byte read through the base. T-8070 */
+        if (((u8 *)&D_800E6280)[0x758 + i * 8] == 1) {
+            D_800E6280.unk_F5E = i - 1;
+        }
+        func_80085B3C(0, D_80122D08);
+    }
+    func_8004284C();
+}
 
 void func_801381B4(void) {
     u8 i;
