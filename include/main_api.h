@@ -433,6 +433,7 @@ extern s16 D_800B0966;
 extern Rec34 D_800B0A04[]; /* 12 records */
 extern u8 D_800B0B64[];
 extern u8 D_800B0B6C[];
+extern u8 D_800B0BCF;
 extern s8 D_800B0E31;
 extern u8 D_800B0E42;
 extern u8 D_800B0E43;
