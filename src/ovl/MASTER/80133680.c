@@ -32,7 +32,19 @@ void func_80133724(void) {
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801337B8);
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80133A2C);
+typedef struct {
+    void (*f[30])();
+} FnTbl30; /* size 0x78 */
+extern FnTbl30 D_8013C5C8;
+
+void func_80133A2C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl30 tbl;
+
+    tbl = D_8013C5C8;
+    idx = D_800E7389;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80133AA0);
 

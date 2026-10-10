@@ -43,7 +43,19 @@ void func_80133430(void) {
     D_8013BF08 = 0x801B155C;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80133430", func_801336A4);
+typedef struct {
+    void (*f[43])();
+} FnTbl43; /* size 0xAC */
+extern FnTbl43 D_8013BF20;
+
+void func_801336A4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl43 tbl;
+
+    tbl = D_8013BF20;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_80133720(void) {
     func_80046318(3, 0x801B0000, 0xAF43);
