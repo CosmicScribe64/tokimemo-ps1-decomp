@@ -11,6 +11,13 @@ u8 *func_80147380(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
+typedef struct {
+    /* 0x00 */ u8 flag;
+    /* 0x01 */ u8 pad1[0xF];
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ u8 pad12[0x56];
+} TtSlot68; /* size 0x68 */
+
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_801473BC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_801473E8);

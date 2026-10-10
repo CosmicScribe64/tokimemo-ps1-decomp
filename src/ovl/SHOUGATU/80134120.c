@@ -72,9 +72,43 @@ void func_80134554(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_801345C8);
+void func_801345C8(void) {
+    s32 v;
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_80134648);
+    if (D_80143B20 == 0) {
+        /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+        v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+        if ((v != 0) && (v != 1)) {
+            if (v != 2) {
+                D_80143B00 += 2;
+            } else {
+                D_80143B00 += 1;
+            }
+        }
+    }
+    func_8004284C();
+}
+
+void func_80134648(void) {
+    s32 v;
+
+    if (D_80143B20 == 0) {
+        /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+        v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+        switch (v) {
+        case 0:
+        case 1:
+            D_80143B00 += 2;
+            break;
+        case 2:
+            D_80143B00 += 1;
+            break;
+        }
+    } else {
+        D_80143B00 += 2;
+    }
+    func_8004284C();
+}
 
 void func_801346E8(void) {
     if (D_80122CDC != 2) {
