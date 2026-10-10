@@ -93,4 +93,29 @@ extern s32 D_80149228;
 extern s16 D_8014929A;
 extern s32 D_8014929C;
 
+extern s32 D_8014A0E0;
+extern s32 D_8014A0E4;
+extern s32 D_8014A0E8;
+extern s16 D_8014A0EC;
+extern s32 D_8014A0F0;
+extern s32 D_8014A0F4;
+extern s32 D_8014A0F8;
+extern s32 D_8014A0FC;
+extern s32 D_8014A100;
+extern s32 D_8014A104;
+extern s32 D_8014A108;
+extern s16 D_801B93F8;
+extern s32 D_8014A390;
+extern s32 D_8014A394;
+extern s32 D_8014A398;
+extern s16 D_8014A39C;
+extern s32 D_8014A3A0;
+extern s32 D_8014A3A4;
+extern s32 D_8014A3A8;
+extern s32 D_8014A3AC;
+extern s32 D_8014A3B0;
+extern s32 D_8014A3B4;
+extern s32 D_8014A3B8;
+extern s16 D_801B5240;
+
 #endif
