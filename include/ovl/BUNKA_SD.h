@@ -54,4 +54,8 @@ s32 func_80135160(void);
 s32 func_801359B0(void);
 s32 func_80136270(void);
 
+extern s32 D_8013B808;
+
+extern s32 D_8013B80C;
+
 #endif /* OVL_BUNKA_SD_H */
