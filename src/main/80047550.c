@@ -76,7 +76,19 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048CF8);
+void func_80048CF8(void) {
+    s32 i;
+
+    if (D_800E6280.unk_F80 & 2) {
+        printf("PRINT_TPAGE_BUF\n");
+        for (i = 0; i < 0x40; i++) {
+            printf("[%d]%08x", i, D_800E6280.unk_1228[i]);
+            if ((i & 3) == 3) {
+                printf("\r");
+            }
+        }
+    }
+}
 
 void func_80048DAC(s32 arg0) {
     if (arg0 != 0) {
@@ -96,7 +108,28 @@ void func_80048E78(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048EB8);
+void func_80048EB8(s32 arg0) {
+    s32 n;
+    s32 i;
+    s32 a;
+    s32 b;
+    s32 c;
+
+    a = D_8011ECF6;
+    b = D_8011ECFA;
+    c = D_8011ECE8;
+    if (arg0 == 0) {
+        n = 0xA0;
+    } else {
+        n = (arg0 >= 0xA1) ? 0xA0 : arg0;
+    }
+    for (i = 1; i < n; i++) {
+        func_80048F64(i);
+    }
+    D_8011ECF6 = a;
+    D_8011ECFA = b;
+    D_8011ECE8 = c;
+}
 
 void func_80048F64(s32 arg0) {
     u8 *p;
