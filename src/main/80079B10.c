@@ -122,7 +122,33 @@ void func_8007A924(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A98C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007AB24);
+/* Old-style definition: the u16 parameter is read through its home slot. */
+void func_8007AB24(arg0)
+u16 arg0;
+{
+    if (!(D_80125D14 & 0x100)) {
+        D_80125D44 = 0;
+        D_80125D14 |= 0x100;
+    }
+    switch (arg0 & 0xFF) {
+    default:
+        D_80125D48 = 0x100;
+        D_80125D46 = 0xA;
+        return;
+    case 0xB4:
+        D_80125D48 = 0x100;
+        D_80125D46 = 0xA;
+        return;
+    case 0xC4:
+        D_80125D48 = 0x100;
+        D_80125D46 = 1;
+        return;
+    case 0xD4:
+        D_80125D48 = 0x80;
+        D_80125D46 = 1;
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007ABE0);
 
