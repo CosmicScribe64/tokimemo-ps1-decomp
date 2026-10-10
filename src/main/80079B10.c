@@ -116,7 +116,27 @@ void func_8007A254(u16 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A354);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A43C);
+void func_8007A43C(u8 arg0) {
+    arg0 &= 0xFF;
+    switch (arg0) {
+    case 1:
+    case 2:
+        func_8007BCFC(arg0);
+        break;
+    case 3:
+        func_8007B6E0(arg0);
+        break;
+    case 6:
+        func_8007B734(arg0);
+        break;
+    case 4:
+        func_8007B7E0(arg0);
+        break;
+    case 5:
+        D_80125D10.unk_00 |= 0x100000;
+        break;
+    }
+}
 
 void func_8007A4DC(void) {
     if (D_80125D10.unk_04 & 0x100) {
