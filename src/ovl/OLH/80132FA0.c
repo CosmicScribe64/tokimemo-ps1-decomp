@@ -93,14 +93,135 @@ s32 func_801332F8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_801333E4);
+s32 func_801333E4(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013AF24, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　アルバムとは別に、システムファイルを", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "作成すると、オプションでおまけが使用で", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "きるようになります。", 0);
+        func_8004E788(-0x88, 0, 0xF, "　システムファイルも、１ブロックを必要", 0);
+        func_8004E788(-0x88, 0x10, 0xF, "とします。", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_80133508);
+s32 func_80133508(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013AF28, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　システムファイルがある場合、メモリー", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "カードアイコンが、", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "　　『セーブ中』", 0);
+        func_8004E788(-0x88, 0, 0xF, "と表示されている間は、絶対にメモリーカ", 0);
+        func_8004E788(-0x88, 0x10, 0xF, "ードの抜き差しをしないでください。", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_8013362C);
+s32 func_8013362C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013AF2C, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "『カードに空きがありません』", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "とのメッセージが表示された場合は、メモ", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "リーカードの他のデータを消去してから、", 0);
+        func_8004E788(-0x88, 0, 0xF, "セーブして下さい。", 0);
+        func_8004E788(-0x88, 0x10, 0xF, "　ゲーム中は、ときめきメモリアル以外の", 0);
+        func_8004E788(-0x88, 0x20, 0xF, "データの消去はできません。", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_8013376C);
+s32 func_8013376C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013AF30, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "あ", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "い", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "う", 0);
+        func_8004E788(-0x88, 0, 0xF, "え", 0);
+        func_8004E788(-0x88, 0x10, 0xF, "お", 0);
+        func_8004E788(-0x88, 0x20, 0xF, "か", 0);
+        func_8004E788(-0x88, 0x30, 0xF, "き", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_801338C8);
+s32 func_801338C8(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013AF34, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "あ", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "い", 0);
+        func_8004E788(-0x88, 0, 0xF, "う", 0);
+        func_8004E788(-0x88, 0x10, 0xF, "え", 0);
+        func_8004E788(-0x88, 0x20, 0xF, "お", 0);
+        func_8004E788(-0x88, 0x30, 0xF, "か", 0);
+        func_8004E788(-0x88, 0x40, 0xF, "き", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_80133A24);
+s32 func_80133A24(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013AF38, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "あ", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "い", 0);
+        func_8004E788(-0x88, 0, 0xF, "う", 0);
+        func_8004E788(-0x88, 0x10, 0xF, "え", 0);
+        func_8004E788(-0x88, 0x20, 0xF, "お", 0);
+        func_8004E788(-0x88, 0x30, 0xF, "か", 0);
+        func_8004E788(-0x88, 0x40, 0xF, "き", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
