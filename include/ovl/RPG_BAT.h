@@ -180,5 +180,7 @@ extern s32 D_8015EC18;
 void func_8013F1C4();
 extern u8 D_8015E904[];
 extern u8 D_8015E9CC[];
+extern s32 D_8015EC50;
+extern s32 D_8015EC54;
 
 #endif
