@@ -69,10 +69,12 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-2030-wave-2-taco|T-2030]] Wave 2: TACO, 70 functions matched (Done)
 - [[tickets/T-2000-wave2-event|T-2000]] Wave 2: EVENT, 421 functions matched (Done)
 - [[tickets/T-2100-wave2-small-overlays|T-2100]] Wave 2: small overlays, 94 functions (Done)
+- [[tickets/T-3200-catalog-game-versions|T-3200]] Catalog game versions (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
 - [[source-files]] - the 28 `src/main/<address>.c` files: boundary evidence, alignment handling, what is not split
+- [[versions]] - T-3200: the 5 distinct releases in versions/ (Rev 1/Shokai, Rev 2, Rev 4, Best), lineage, hashes, code differences against SLPM_86.053, recommendation; facts in `config/versions.txt`, `tools/identify_version.py`
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[obin]] - O.BIN: ECOFF format and header fields (`obin_syms.py --headers`), symbol table, mapping onto the main exe, stats, generated rename list
@@ -90,3 +92,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - Raw sources (plain paths): `raw/disc-findings.md`, `wiki/raw/compiler-mismatch-research-sources.md`, `wiki/raw/ai-disclosure-research.md`, `wiki/raw/original-compiler-sources.md` (T-3100)
 
 ## Tooling
+- `tools/identify_version.py` (T-3200): identify which release a disc image or folder is, from `config/versions.txt`; tests `tools/test_identify_version.py`

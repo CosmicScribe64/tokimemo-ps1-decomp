@@ -18,3 +18,7 @@ The build reads only the executables, so it doesn't matter which format a versio
 in. Supporting several versions is future work. The build currently targets one release:
 `SLPM_86.053`, the Japanese "PlayStation the Best" disc, checked by
 `config/SLPM_86.053.sha1`.
+
+The releases catalogued so far, their hashes and how they differ from the target are in
+`wiki/versions.md` and `config/versions.txt`; `tools/identify_version.py <image|folder>` tells
+you which one a disc is.
