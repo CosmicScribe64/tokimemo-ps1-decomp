@@ -84,10 +84,10 @@ void func_80134930(void) {
     D_800E62B7 = 0;
     D_800E62B6 = 0;
     D_800E62B8 = 0;
-    func_800438DC(1, 1);
-    func_80058D20();
+    draw2d3d(1, 1);
+    initView();
     func_80146D60(-0xFA0);
-    func_80058F0C(0x8019C800);
+    initModelingData_init(0x8019C800);
     func_801471D0(0x8019C800);
     func_80147488(1, D_8015F3E0, 0);
     D_80127090.unk0 = 0;
@@ -162,7 +162,7 @@ void func_80135330(void) {
 
 void func_80135350(void) {
     func_80059048();
-    func_80043914(D_800E7CEC, 0x1F, 1, 1, 0);
+    load_palette(D_800E7CEC, 0x1F, 1, 1, 0);
     func_80042908(3);
 }
 
@@ -266,7 +266,7 @@ void func_80136C00(void) {
     D_800E62B6 = 0;
     D_800E62B7 = 0;
     D_800E62B8 = 0;
-    func_800438F0(1);
+    back_clear_switch(1);
     D_8015EDB0 = 0;
     func_80059048();
     func_8004284C();
@@ -370,9 +370,9 @@ void func_80138160(void) {
     func_8013A790(1, 1);
     if (D_8015EDBC == 0) {
         func_800450F4(0, 0x203);
-        func_80043A00(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
-        func_80043A00(0x80172000, 0xC, 1, 0, 0, 0x100, 0x100);
-        func_80043A00(0x80182000, 0xA, 1, 0, 0, 0x80, 0x80);
+        load_csr_tp(0x80162000, 0xE, 1, 0, 0, 0x100, 0x100);
+        load_csr_tp(0x80172000, 0xC, 1, 0, 0, 0x100, 0x100);
+        load_csr_tp(0x80182000, 0xA, 1, 0, 0, 0x80, 0x80);
         func_8004284C();
     }
 }
@@ -851,7 +851,7 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO", func_8014488C);
 void func_80144998(void) {
     D_80127090.unk0 = 0x80000000;
     D_801270A0.unk0 = 0x80000000;
-    func_800438DC(1, 0);
+    draw2d3d(1, 0);
     func_80042908(2);
 }
 
