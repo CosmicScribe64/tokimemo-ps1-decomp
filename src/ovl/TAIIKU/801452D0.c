@@ -111,7 +111,18 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146A60);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146B8C);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146C20);
+void func_80146C20(void) {
+    D_8014A3E0 += D_8014A3F4;
+    if (D_8014A3D4 < D_8014A3E0) {
+        D_8014A3E0 = D_8014A3D4;
+    }
+    if (D_8014A3E0 < 0 || (D_8014A3F4 < 0 && D_8014A3FE < -0x9F)) {
+        D_8014A3E0 = 0;
+    }
+    D_8014A3DC += D_8014A3E0; /* the fixed-point high half (+2) is read as an s16 below */
+    func_80085F0C(((s16 *)&D_8014A3DC)[1] / 2 % 640, 0xF, 0, 0x70, 0x280);
+    func_80085F0C(((s16 *)&D_8014A3DC)[1] % 128, 0xF, 0x70, 0x80, 0x80);
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146D18);
 

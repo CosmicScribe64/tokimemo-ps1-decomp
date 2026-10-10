@@ -1336,6 +1336,7 @@ void func_80085E30(s32 arg0, s32 arg1);
 void Vblnk_Timer_Init(void);
 s32 Vblnk_Timer(void);
 void Scroll(s32, s32, s32, s32, s32);
+void func_80085F0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void Default_Disp(void);
 s32 func_8008667C(s32 a);
 void DecDCTReset(s32 mode);
