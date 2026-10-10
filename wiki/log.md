@@ -442,3 +442,11 @@ The overlays and the main game code are split into their original objects, each 
 
 ## [2026-10-09] migration | per-object C files for the whole game (T-0500)
 Ran tools/split_objects.py --all after wave 2: every overlay and main-exe C file is now one C file per original object with its own rodata island. Fixed the resulting header clashes (four ETC views moved to include/main_only.h, five duplicates dropped from TACO.h/ETC.h). Clean build 27/27 OK, 2734/6958.
+## [2026-10-09] ticket | T-3200 Catalog game versions (Backlog -> In Progress)
+[[tickets/T-3200-catalog-game-versions]] started: nine archives in versions/ (Rev 1/2/4 zip+7z, Shokai Genteiban, Best, v1.1). Extraction in Docker to scratch only.
+
+## [2026-10-09] ingest | T-3200 game versions catalogued
+Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1): Rev 1 = v1.1 (zip, 7z and the v1.1 7z are identical), Shokai Genteiban (differs from Rev 1 by one PVD byte), Rev 2, Rev 4, PlayStation the Best. New: [[versions]] (tables, lineage Rev 1 -> Rev 2 -> Rev 4 -> Best by PVD date, Ver 1.10/1.25/1.43 and SDK RCS ids, code diffs against SLPM_86.053, recommendation to keep it), `config/versions.txt` (hashes only), `tools/identify_version.py` with `tools/test_identify_version.py`. O.BIN, EVENT.EXN and GYOZI.EXN are identical in all versions; no debug leftovers beyond what [[obin]] covers. Extracted copies deleted.
+
+## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
+[[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.
