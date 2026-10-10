@@ -299,18 +299,11 @@ void func_80155174(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_801551D0);
 
-/* Bit 14 of a Rec38 flag word: IDO loads its byte into another register than the lui (T-7010). */
-typedef struct {
-    u32 pad0 : 14;
-    u32 f : 1;
-    u32 pad1 : 17;
-} Rec38Bit14;
-
 void func_8015522C(void) {
     if (D_80122CDC != 0) {
         D_800CA150 = (u16) D_800CA150 + 1;
     } else {
-        ((Rec38Bit14 *)&D_800E6280.unk_1BC[1].unk_0C)->f = 1;
+        D_800E6280.unk_1BC[1].unk_0C.f.b14 = 1;
     }
     func_8004284C();
 }

@@ -122,14 +122,8 @@ void func_80138710(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138758);
 
-typedef struct {
-    u8 pad:2;
-    u8 f:1;
-    u8 rest:5;
-} Bits64B8; /* bit 2 of the first byte of a Rec38 flag word */
-
 void func_80138868(void) {
-    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     D_80144E08 = 0xE;
     D_80144E0C = 0;
     func_800AE0F0(D_800CA19C, "教室");
@@ -138,7 +132,7 @@ void func_80138868(void) {
 }
 
 void func_801388F0(void) {
-    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     D_80144E08 = 0x12;
     D_80144E0C = 0;
     func_800AE0F0(D_800CA19C, "実験室");
@@ -146,7 +140,7 @@ void func_801388F0(void) {
 }
 
 void func_80138964(void) {
-    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     D_80144E08 = 0x17;
     D_80144E0C = 0;
     func_800AE0F0(D_800CA19C, "実験室");

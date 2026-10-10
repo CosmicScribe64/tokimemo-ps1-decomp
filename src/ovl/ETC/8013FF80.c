@@ -112,29 +112,17 @@ s32 func_80140DC8(void) {
     return 0;
 }
 
-typedef struct EtcFlagBits {
-    u32 pad0 : 1;
-    u32 flag : 1;
-    u32 rest : 30;
-} EtcFlagBits;
-
-typedef struct EtcBits9 {
-    u32 pad0 : 9;
-    u32 val : 3;
-    u32 rest : 20;
-} EtcBits9;
-
 s32 func_80140E80(void) {
     s32 i;
     s32 n;
 
     n = 0;
     for (i = 0; i < 13; i++) {
-        if (((EtcFlagBits *)&D_800E6280.unk_1BC[i].unk_0C)->flag) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1) {
             n++;
         }
     }
-    if (((EtcBits9 *)&D_800E6280.unk_1BC[11].unk_0C)->val != 0) {
+    if (D_800E6280.unk_1BC[11].unk_0C.f.f9 != 0) {
         n++;
     }
     if (n == 13) {

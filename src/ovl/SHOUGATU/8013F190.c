@@ -311,14 +311,8 @@ void func_8014102C(void) {
     tbl.f[idx](0x80);
 }
 
-typedef struct {
-    u8 pad:2;
-    u8 f:1;
-    u8 rest:5;
-} Bits64B8;
-
 void func_801410B4(void) {
-    ((Bits64B8 *)&D_800E6280.unk_1BC[2].unk_0C.b[0])->f = 1;
+    D_800E6280.unk_1BC[2].unk_0C.f.b2 = 1;
     D_80145F2C = 3;
     func_8004284C();
 }
@@ -375,7 +369,7 @@ void func_801412D4(void) {
 }
 
 void func_8014131C(void) {
-    ((Bits64B8 *)&D_800E6280.unk_1BC[4].unk_0C.b[0])->f = 1;
+    D_800E6280.unk_1BC[4].unk_0C.f.b2 = 1;
     D_80145F2C = 3;
     func_8004284C();
 }
@@ -406,7 +400,7 @@ void func_801413F4(void) {
 }
 
 void func_8014147C(void) {
-    ((Bits64B8 *)&D_800E6280.unk_1BC[6].unk_0C.b[0])->f = 1;
+    D_800E6280.unk_1BC[6].unk_0C.f.b2 = 1;
     D_80145F2C = 4;
     func_8004284C();
 }

@@ -36,13 +36,4 @@ typedef struct FileReq {
     /* 0x20 */ s32 retry;
 } FileReq; /* size 0x24 */
 
-/* Flag word at +0x1C8 of the 0x38-byte entries at D_800E6280; syoushin_up tests bit 1 as a bit-field. */
-typedef struct CharFlags {
-    /* 0x00 */ u32 b0 : 1;
-    /* 0x00 */ u32 b1 : 1;
-    /* 0x00 */ u32 b2_5 : 4;
-    /* 0x00 */ u32 b6 : 1;
-    /* 0x00 */ u32 rest : 25;
-} CharFlags; /* size 0x04 */
-
 #endif /* GAME_H */
