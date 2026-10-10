@@ -87,8 +87,10 @@ void parameter_disp_switch(s32 arg0) {
     s32 i;
 
     if (arg0 == 1) {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
         for (i = 0; i < 28; i++) D_8011ECD0[0x883 + i * 0x44] |= 0x80;
     } else {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
         for (i = 0; i < 28; i++) D_8011ECD0[0x883 + i * 0x44] &= 0x7F;
     }
 }
@@ -101,8 +103,10 @@ void hizuke_disp_switch(s32 arg0) {
     s32 i;
 
     if (arg0 == 1) {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
         for (i = 0; i < 8; i++) D_8011ECD0[0x443 + i * 0x44] |= 0x80;
     } else {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
         for (i = 0; i < 8; i++) D_8011ECD0[0x443 + i * 0x44] &= 0x7F;
     }
 }
@@ -294,6 +298,7 @@ void func_800673B8(void) {
 
     LoadSquare(0x3E0, 0x180, 0x20, 0x80, D_800B374C);
     for (i = 0; i < 32; i++) {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
         for (j = 0; j < 4; j++) D_800E6280.unk_163C[i * 4 + j] = 0;
     }
     LoadSquare(0x3E0, 0x1C0, 4, 0x10, D_800E6280.unk_163C);

@@ -347,7 +347,21 @@ void func_80109704(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_8010981C);
+void func_8010981C(void) {
+    D_80120678 = D_801205D0;
+    D_8012067C = D_801205EC;
+    D_80120680 = D_80120608;
+    func_80078970(D_800947C4, "池");
+    D_800B0A04[10].unk_02 += 3;
+    D_800B0A04[10].unk_06 += 2;
+    D_800B0A04[10].unk_0A -= 0x14;
+    func_8004C250();
+    func_80108120();
+    func_80012D64(D_801238E8, 0x11, 1, 2, 0);
+    func_8004C46C(D_801238EC, D_801238F0, D_801238F4, D_801238F8, D_801238FC, D_80123900);
+    func_8004C6B0(D_801238DC, D_801238E0, D_801238D8, D_801238E4);
+    func_80011DFC();
+}
 
 void func_80109948(void) {
     D_80120678 = D_801205D4;

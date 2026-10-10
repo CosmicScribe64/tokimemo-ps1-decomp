@@ -40,7 +40,37 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", load_tpage_buf_lock);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", search_load_tpage_buf_lock);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage_multi);
+s32 search_tpage_multi(s32 arg0, u8 arg1) {
+    s32 j;
+    s32 i;
+
+    for (i = 0xF; i >= 5; i--) {
+        for (j = 3; j >= 0; j--) {
+            if (D_800E6280.unk_1128[i + j * 16] == 0x7FFE && D_800E6280.unk_1228[i + j * 16] == arg0) {
+                return (j * 16 + i) & 0xFFFF;
+            }
+        }
+    }
+    for (i = 0; i < 0x40; i++) {
+        if (arg0 == D_800E6280.unk_1128[i]) {
+            return i & 0xFFFF;
+        }
+    }
+    for (i = 0; i < 0x40; i++) {
+        if (D_800E6280.unk_1128[i] == 0x7FFF) {
+            D_800E6280.unk_1128[i] = arg0;
+            if (i < 0x20) {
+                load_csr_tp(arg0, i & 0xFF, arg1, 0, 0, 0x80, 0x80);
+            } else {
+                load_csr_tp(arg0, i & 0xFF, arg1, 0, 0x80, 0x80, 0x80);
+            }
+            return i & 0xFFFF;
+        }
+        if (i == 0x3F) {
+            return 0x3F;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage);
 

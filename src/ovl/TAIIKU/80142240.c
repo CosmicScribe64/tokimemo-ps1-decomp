@@ -210,7 +210,31 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801448D4);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801449A0);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144B40);
+extern Tri3 D_8014A34C;
+
+void func_80144B40(void) {
+    s32 i;
+    Tri3 tbl;
+
+    tbl = D_8014A34C;
+    for (i = 0; i < 3; i++) {
+        if (i + 0x36 != *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC]) {
+            if ((u32)tbl.v[i] < *(u32 *)&D_8014A13C[i * 0x24 + 0x28] && *(s32 *)&D_8014A13C[i * 0x24 + 0x40] == 1) {
+                if (D_8014A13C[i * 0x24 + 0x24] >= 9) {
+                    D_8014A13C[i * 0x24 + 0x24] = 2;
+                    *(s32 *)&D_8014A13C[i * 0x24 + 0x28] = 0;
+                } else {
+                    D_8014A13C[i * 0x24 + 0x24] += 1;
+                    *(s32 *)&D_8014A13C[i * 0x24 + 0x28] = 0;
+                }
+                *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC] = *(s16 *)&D_8014A1D4[D_8014A13C[i * 0x24 + 0x24] * 2] + i * 9 + 0x12;
+            }
+            if (D_8014A13C[i * 0x24 + 0x24] == 6) {
+                D_8014A13C[i * 0x24 + 0x26] = 1;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144C70);
 

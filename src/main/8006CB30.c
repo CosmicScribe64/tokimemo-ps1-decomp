@@ -262,7 +262,36 @@ void func_80071038(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80071110);
+typedef struct { u32 pad0 : 1; u32 flag : 1; u32 rest : 30; } Bits64B8;
+s32 func_80071110(void) {
+    /* FAKE: buffer sizes chosen to reproduce the 0x70 frame and the 0x3C/0x5C slots; real sizes unknown. T-7020 */
+    u8 buf[20];
+    s16 v[16];
+    s32 idx;
+    s32 best;
+    s32 i;
+
+    func_80053418(buf, v);
+    idx = 0;
+    best = 0;
+    if (v[0] < 0x1F4) {
+        if (D_800E6280.unk_1BC[12].unk_0C.b[3] >= 0x46U && D_800E6280.unk_56C[79] == 2) {
+            return 0;
+        }
+    }
+    if (v[2] < 0x1F4) {
+        return 0;
+    }
+    if (!((Bits64B8 *) &D_800E6280.unk_1BC[2].unk_0C)->flag) {
+        return 0;
+    }
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 0; i < 11; i++) if (best < v[i]) { idx = i; best = v[i]; }
+    if (idx == 2) {
+        return 1;
+    }
+    return 0;
+}
 
 void func_80071280(void) {
     s32 i;

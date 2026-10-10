@@ -154,6 +154,7 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133F50);
 void func_80134210(void) {
     s32 i;
 
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
     for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] -= 200;
     D_800E6280.unk_F6D = 0xF;
     func_8006509C();
@@ -358,6 +359,7 @@ void func_80137FA0(void) {
     D_801206D8[0x1037] &= ~0x80;
     D_801206D8[0x377] &= ~0x80;
     D_801206D8[0x3BB] &= ~0x80;
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
     for (i = 0; i < 12; i++) D_801206D8[0x3FF + i * 0x44] &= ~0x80;
     func_80042940(0);
     D_801206D8[0x1037] = 0;
@@ -377,6 +379,7 @@ void func_801385F0(void) {
     D_801206D8[0x1037] &= ~0x80;
     D_801206D8[0x377] &= ~0x80;
     D_801206D8[0x3BB] &= ~0x80;
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
     for (i = 0; i < 12; i++) D_801206D8[0x3FF + i * 0x44] &= ~0x80;
     func_80042940(0);
     D_801206D8[0x1037] = 0;

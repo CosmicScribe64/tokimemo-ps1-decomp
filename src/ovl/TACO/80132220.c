@@ -67,8 +67,10 @@ void func_80133410(s32 arg0) {
     s32 i;
 
     if (arg0 == 0) {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
         for (i = 0; i < 16; i++) D_8015E270[i].unk13 &= ~0x20;
     } else {
+        /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
         for (i = 0; i < 16; i++) D_8015E3B0[i].unk13 &= ~0x20;
     }
 }

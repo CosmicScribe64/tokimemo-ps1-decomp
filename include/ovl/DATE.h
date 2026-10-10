@@ -1089,4 +1089,5 @@ void func_8014FE90(void);
 void func_8015A4A8(void);
 void func_8015A58C(void);
 
+extern s8 D_8015EE24[];
 #endif /* OVL_DATE_H */

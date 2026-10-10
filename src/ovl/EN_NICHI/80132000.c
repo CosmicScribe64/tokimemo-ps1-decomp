@@ -285,7 +285,14 @@ s32 func_80134008(s32 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801340CC);
+void func_801340CC(void) {
+    s32 i;
+    s32 x;
+    s32 y;
+
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 0; i < 10; i++) if (*(s16 *) &D_8013984C[i * 0x30 + 0x16] < -0xC0 || *(s16 *) &D_8013984C[i * 0x30 + 0x16] >= 0xC1 || *(s16 *) &D_8013984C[i * 0x30 + 0x1A] < -0x98 || *(s16 *) &D_8013984C[i * 0x30 + 0x1A] >= 0x99) *(s32 *) &D_8013984C[i * 0x30] = 0;
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134258);
 
