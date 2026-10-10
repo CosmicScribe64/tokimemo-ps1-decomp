@@ -49,7 +49,9 @@ typedef struct Rec34 {
     /* 0x17 */ u8 unk_17;
     /* 0x18 */ u8 pad18[0xA];
     /* 0x22 */ u8 unk_22;
-    /* 0x23 */ u8 pad23[0xA];
+    /* 0x23 */ u8 pad23[4];
+    /* 0x27 */ u8 unk_27;
+    /* 0x28 */ u8 pad28[5];
     /* 0x2D */ u8 unk_2D;
     /* 0x2E */ u8 pad2E[6];
 } Rec34; /* size 0x34 */

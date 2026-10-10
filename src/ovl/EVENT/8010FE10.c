@@ -220,7 +220,22 @@ void func_80115504(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011552C);
+void func_8011552C(void) {
+    u8 v;
+
+    func_800433D0(0x200);
+    func_80078970(D_80094784, "ヒーローショー");
+    func_800469F4(0x42E4);
+    if (!(D_800B0A04[D_800B1746].unk_27 & 1)) {
+        v = 0;
+    } else {
+        v = 1;
+    }
+    D_80094730 += v * 2;
+    D_800EECE4 = 0x13;
+    D_8012531C = v;
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801155D4);
 
