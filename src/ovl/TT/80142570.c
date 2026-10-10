@@ -3,7 +3,21 @@
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_80142570);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_801426F0);
+void func_801426F0(void) {
+    s32 i;
+    u8 *p = D_80158A8C;
+    u8 *r = D_80158AA4 + 0xC80;
+
+    p[0] = 0;
+    r[0xC8] = 0;
+    r[0x64] = 0;
+    r[0] = 0;
+    r += 0x12C;
+    for (i = 3; i < 0x1F; i++) {
+        *r = 0;
+        r += 0x64;
+    }
+}
 
 void func_80142740(void) {
     u8 *p = D_80158A8C;
