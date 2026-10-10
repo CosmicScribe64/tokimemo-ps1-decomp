@@ -907,5 +907,22 @@ void func_8004111C();
 void func_80057390();
 void func_800573AC();
 void func_8005742C();
+extern s32 D_80150144;
+extern s32 D_8015014C;
+extern s32 D_80150E98;
+extern u8 D_800E6354;
+extern s32 D_80151358[];
+void func_8004F984();
+void func_80050B54();
+void func_8004EAAC();
+void func_80050DFC();
+void func_80050E8C();
+void func_800438DC();
+void func_80061710();
+void func_80061790();
+void func_800618B0();
+void func_8014354C(void);
+void func_80143758(void);
+void func_8014407C(void);
 
 #endif /* OVL_ETC_H */
