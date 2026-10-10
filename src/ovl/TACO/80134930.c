@@ -87,8 +87,21 @@ void func_80135350(void) {
     func_80042908(3);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80135394);
-
+void func_80135394(void) {
+    D_800E7384 += 1;
+    switch (D_800E738A) {
+    case 0:
+        func_80135418();
+        break;
+    case 1:
+        func_8013546C();
+        break;
+    case 2:
+        func_80135638();
+        break;
+    }
+    func_8013506C();
+}
 void func_80135418(void) {
     func_8009C210(0);
     func_80059048();

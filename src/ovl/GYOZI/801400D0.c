@@ -39,7 +39,9 @@ void func_8014021C(void) {
 }
 
 void func_80140244(void) {
-    if (((u32) D_800F54A6 >= (u32) ((D_800F53DE * 0x19) - 0x8B1)) && (D_800F594F != 0)) {
+    s32 lv = D_800F53DE; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    if (((u32) D_800F54A6 >= (u32) ((lv * 0x19) - 0x8B1)) && (D_800F594F != 0)) {
         D_800F594F += 1;
         func_8004DE1C();
         func_8004DE1C();
@@ -47,7 +49,7 @@ void func_80140244(void) {
         func_8004DE1C();
         return;
     }
-    if ((u32) D_800F54AE >= (u32) (((D_800F53DE * 0x1E) - ((D_800F53DE == 0x61) * 0xA)) - 0xADC)) {
+    if ((u32) D_800F54AE >= (u32) (((lv * 0x1E) - ((lv == 0x61) * 0xA)) - 0xADC)) {
         func_8004DE1C();
         return;
     }

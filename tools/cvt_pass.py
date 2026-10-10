@@ -37,6 +37,20 @@ changes:
 Constant operands (`LDC`, `LDA`) do not take part in the reordering: ugen
 emits the compare the same way for either order.
 
+Two conditions limit the removal (T-5010, measured on the original's switch
+and compare chains and on every matched function):
+
+  * entry: a procedure's CVTs are removed only for variables that it loads or
+    stores before its first call, branch or label. Where the first reference
+    comes later (`f(); switch (D)`, a switch inside an `if`), the original
+    compiles the selector like IDO does (`$v0`): 135 of 155 chains after a
+    call and 35 of 41 after a branch, against 260 of 283 `$v1` chains at the
+    entry (wiki/matching-notes.md, "Selector register rule (T-5010)");
+  * compare: only a widened value that goes straight into a comparison
+    (`==`, `!=`, `<`, `<=`, `>`, `>=`) or into a switch temporary loses its
+    CVT. A value that is assigned, passed or used in arithmetic keeps it, as
+    in the original (`x = D; g(D);` keeps `lui v0; lbu a0,(v0)`).
+
 Switch temporaries
 ------------------
 cfe evaluates a `switch` selector into a compiler temporary (a `VREG`) and
@@ -46,7 +60,8 @@ the global goes to one register and the temporary to another (`lbu v1,D;
 or v0,v1,zero` with the compares on `$v1`; the copy is dropped when its value
 is never needed). IDO's global copy propagation replaces the temporary by
 the global and gives the global `$v0`. For every procedure that assigns such
-a temporary, the pass turns uopt's global copy propagation off with an
+a temporary before its first call, branch or label (the entry condition
+above), the pass turns uopt's global copy propagation off with an
 `OPTN 405 0` record (the switch behind `-Wo,-zcopy:0`) in front of the
 procedure's `ENT`; every other procedure gets `OPTN 405 1`. A switch on a
 local copy (`u8 mode = D; switch (mode)`) or on a signed global is not
@@ -198,6 +213,55 @@ def _unsigned_narrow_globals(insns):
     return {loc for loc, ts in types.items() if ts == {DT_L} and loc[3] < 4}
 
 
+CALL_OPS = {OP[n] for n in "cup icuf rcuf".split()}
+FLOW_OPS = {OP[n] for n in "fjp tjp ujp xjp ijp lab clab".split()}
+COMPARE_OPS = {OP[n] for n in "equ neq les leq grt geq".split()}
+
+
+def _spans(insns):
+    """[(start, end)] of every procedure; the whole stream when it has no ENT (unit tests)."""
+    return _procedures(insns) or [(0, len(insns))]
+
+
+def _entry_end(insns, start, end):
+    """Index of the procedure's first call, branch or label (`end` if it has none)."""
+    for k in range(start, end):
+        if insns[k].opc in CALL_OPS or insns[k].opc in FLOW_OPS:
+            return k
+    return end
+
+
+def _entry_locations(insns, start, end):
+    """S locations that the procedure loads or stores before its first call, branch or label."""
+    return {i.location() for i in insns[start:_entry_end(insns, start, end)]
+            if i.opc in (OP["lod"], OP["str"]) and i.mtype == MT_S}
+
+
+def _consumer(insns, k):
+    """The record that takes the value pushed by insns[k] off the stack (None at the end).
+    VREG records are declarations and are skipped."""
+    depth = 1
+    for j in range(k + 1, len(insns)):
+        r = insns[j]
+        if r.opc == OP["vreg"]:
+            continue
+        pops = EXPR_POP.get(r.opc)
+        if pops is None or pops >= depth:
+            return r
+        depth = depth - pops + 1
+    return None
+
+
+def _compared(insns, k, temps):
+    """True if the widened value of insns[k] goes straight into a comparison or a switch temporary."""
+    c = _consumer(insns, k)
+    if c is None:
+        return False
+    if c.opc in COMPARE_OPS:
+        return True
+    return c.opc == OP["str"] and c.mtype == MT_M and (c.words[1], c.words[3]) in temps
+
+
 def _widenings(insns, unsigned):
     """Indices of the CVT J<-L records that directly follow a LOD of a location in `unsigned`."""
     found = set()
@@ -230,7 +294,14 @@ def _operand(insns, end):
 def pre(insns):
     """Remove the widenings (in place on a copy). Returns (new insns, rewritten locations)."""
     unsigned = _unsigned_narrow_globals(insns)
-    strip = _widenings(insns, unsigned)
+    temps = {(i.words[1], i.words[3]) for i in insns if i.opc == OP["vreg"]}
+    strip = set()
+    for start, end in _spans(insns):
+        entry = _entry_locations(insns, start, end)
+        for k in _widenings(insns[start:end], unsigned):
+            k += start
+            if insns[k - 1].location() in entry and _compared(insns, k, temps):
+                strip.add(k)
     if not strip:
         return list(insns), set()
     keep = set()
@@ -294,7 +365,9 @@ def _procedures(insns):
 
 
 def _assigns_switch_temp_from_unsigned_global(insns, start, end):
-    """True if the procedure stores a direct load of an unsigned S variable into a VREG temporary."""
+    """True if the procedure stores a direct load of an unsigned S variable into a VREG temporary
+    before its first call, branch or label."""
+    stop = _entry_end(insns, start, end)
     temps = {(i.words[1], i.words[3]) for i in insns[start:end] if i.opc == OP["vreg"]}
     for k in range(start, end):
         st = insns[k]
@@ -305,7 +378,8 @@ def _assigns_switch_temp_from_unsigned_global(insns, start, end):
             j -= 1
         if insns[j].opc == OP["cvt"] and (insns[j].words[2] >> 24) == DT_L:
             j -= 1
-        if insns[j].opc == OP["lod"] and insns[j].mtype == MT_S and insns[j].dtype == DT_L:
+        if (k < stop and insns[j].opc == OP["lod"] and insns[j].mtype == MT_S
+                and insns[j].dtype == DT_L):
             return True
     return False
 

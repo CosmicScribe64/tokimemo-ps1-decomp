@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-09
+updated: 2026-10-10
 ticket: T-3100
 sources: ["disc/files/CDROM/EXEDIR/O.BIN", "disc/files/SLPM_86.053", "disc/files/CDROM/EXEDIR/*.EXN", "disc/track1.bin", "tools/obin_syms.py", "wiki/raw/original-compiler-sources.md"]
 ---
@@ -180,3 +180,6 @@ So the original combines a 3.18 (5.x-generation) code generator with the older f
 2. The same 3.18 compiler as stock IDO 5.2 on IRIX, with the ECOFF link done by another 3.18 linker. About 20%.
 3. An older RISCompiler/NEWS-OS 4.2.1R `ccom`-based compiler with a newer linker. About 15%: the stamps say 3.18.
 4. IDO 5.3 with a hidden option or patch. Under 5%: the stamp is lower than 5.3's, and the options are exhausted.
+
+## Update: selector register rule (T-5010)
+[[matching-notes]], "Selector register rule (T-5010)": of the two explanations in rule 7 above, (b) fits the data and (a) does not. Variables that only one overlay or main file uses (overlay data, and main-bss runs used by one overlay only, such as SHUGAKU's `D_800CA2CC..D_800CA2EC`) keep `$v0` in 28 of 30 entry switches, shared game state is `$v1` in 258 of 270, and struct or array declarations do not change IDO's result. The reading is that the original did not promote variables defined in the compilation unit. A second, compiler-side rule: a global first touched after a call or branch is not promoted (135 of 155 call-first chains are `$v0`). `tools/cvt_pass.py` models the second rule; the first is written in C as a `FAKE` local copy.

@@ -37,7 +37,9 @@ void func_8013436C(void) {
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_80134400);
 
 void func_80134554(void) {
-    switch (D_80143D20) {
+    u8 sel = D_80143D20; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
     case 2:
         break;
     case 0:

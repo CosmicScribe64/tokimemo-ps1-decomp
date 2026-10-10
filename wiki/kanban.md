@@ -38,6 +38,8 @@ kanban-plugin: board
 - [x] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
 - [x] [[tickets/T-5020-loop-unrolling-and-lui-sharing|T-5020 Loop unrolling and lui sharing]]
 - [x] [[tickets/T-5000-type-recovery-arrays-structs|T-5000 Type recovery: arrays and structs from access patterns]]
+- [x] [[tickets/T-5010-t0018-register-order-second-attempt|T-5010 T-0018 register order, second attempt]]
+
 - [x] [[tickets/T-4010-wave-3-list-1|T-4010 Wave 3: list 1]]
 
 - [x] [[tickets/T-4040-wave-3-list-4|T-4040 Wave 3: list 4]]

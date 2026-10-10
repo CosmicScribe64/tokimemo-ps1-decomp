@@ -4,8 +4,9 @@
 void func_801477E0(void) {
     s32 temp_t4;
     s32 var_a0;
+    u32 sel = D_8015EB9C; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
-    switch (D_8015EB9C) {
+    switch (sel) {
     case 2:
         D_8015EBB0 = func_8013EA00(0x4E2, 0x2EE) + 1;
         return;

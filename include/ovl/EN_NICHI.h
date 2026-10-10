@@ -62,4 +62,7 @@ void func_801339D4();
 void func_80134800();
 extern s32 D_8013921C;
 
+void func_801321EC(void);
+void func_80132308(void);
+void func_80132378(void);
 #endif /* OVL_EN_NICHI_H */

@@ -2,7 +2,9 @@
 #include "ovl/GYOZI.h"
 
 void func_8013B920(void) {
-    switch (D_801474B8) {
+    u8 sel = D_801474B8; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
     case 0:
         func_8013B980();
         return;

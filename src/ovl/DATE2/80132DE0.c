@@ -166,7 +166,9 @@ void func_801339F8(void) {
 }
 
 void func_80133A6C(void) {
-    switch (D_8013A4C0) {                           /* irregular */
+    u8 sel = D_8013A4C0; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
     case 0:
         func_801348F0();
         return;

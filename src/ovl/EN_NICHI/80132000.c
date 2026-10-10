@@ -22,8 +22,23 @@ void func_80132040(void) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801320C0);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_8013216C);
-
+void func_8013216C(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_801321EC();
+        return;
+    case 1:
+        func_80132308();
+        return;
+    case 2:
+        func_80132378();
+        return;
+    default:
+    case 3:
+        func_80042808();
+        return;
+    }
+}
 void func_801321EC(void) {
     func_80085E30(1, 0);
     func_80044750(0x7F);

@@ -2,7 +2,9 @@
 #include "ovl/SHOUGATU.h"
 
 void func_8013A950(void) {
-    switch (D_80144E14) {
+    u8 sel = D_80144E14; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+
+    switch (sel) {
     case 0:
         func_8013A9B0();
         return;

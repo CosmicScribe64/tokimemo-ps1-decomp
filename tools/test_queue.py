@@ -88,17 +88,27 @@ RELOAD = [
 ]
 
 
+# a call before the first load: cvt_pass.py does not promote the global there (T-5010)
+CALL_FIRST = ["jal        func_80010000", " nop"]
+
+
 class Detector(unittest.TestCase):
     def test_switch_chain_on_unsigned_global_is_U_not_R_or_V(self):
+        # T-5010: at the entry cvt_pass.py reproduces it; after a call it stays blocked (U1)
         f = wq.analyze(asm("f", PROMOTED))
+        self.assertEqual(f.selector, "")
+        self.assertFalse(f.reload)
+        self.assertFalse(f.dispatch)
+        f = wq.analyze(asm("f", CALL_FIRST + PROMOTED))
         self.assertEqual(f.selector, "v1")
         self.assertFalse(f.reload)
         self.assertFalse(f.dispatch)
 
     def test_reload_of_unsigned_global_in_two_blocks_is_R(self):
-        f = wq.analyze(asm("f", RELOAD))
+        f = wq.analyze(asm("f", CALL_FIRST + RELOAD))
         self.assertTrue(f.reload)
         self.assertEqual(f.selector, "")
+        self.assertFalse(wq.analyze(asm("f", RELOAD)).reload)   # first load at the entry (T-5010)
 
     def test_old_rule_flags_both(self):
         f = wq.analyze(asm("f", PROMOTED), legacy=True)
@@ -122,9 +132,10 @@ class Detector(unittest.TestCase):
         self.assertFalse(f.dispatch)
         self.assertEqual(wq.Func("F", "f", "x", f).flags, "T")
         self.assertFalse(wq.Func("F", "f", "x", f).blocked)
-        u = wq.analyze(asm("f", [l.replace("lw ", "lbu ") for l in body]))
+        u = wq.analyze(asm("f", CALL_FIRST + [l.replace("lw ", "lbu ") for l in body]))
         self.assertTrue(u.dispatch)
         self.assertFalse(u.hint)
+        self.assertFalse(wq.analyze(asm("f", [l.replace("lw ", "lbu ") for l in body])).dispatch)  # T-5010
 
     def test_jump_table_on_unsigned_global_is_U(self):
         body = ["lui $v0, %hi(D_1)", "lbu $v0, %lo(D_1)($v0)", "lui $at, %hi(jtbl_80010000)", "sltiu $at, $v0, 0x5",

@@ -12,8 +12,17 @@ void func_80132000(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_8013209C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132134);
-
+void func_80132134(void) {
+    D_800E7384 += 1;
+    switch (D_800E738A) {
+    case 0:
+        func_80132198();
+        return;
+    case 1:
+        func_80132320();
+        return;
+    }
+}
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132198);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132320);

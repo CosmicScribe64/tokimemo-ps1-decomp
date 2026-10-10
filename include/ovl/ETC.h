@@ -949,6 +949,27 @@ extern s32 D_801500C8;
 extern s32 D_801500CC;
 extern s32 D_801500D0;
 extern s32 D_801500D4;
+extern s32 D_801500E0;
 
 void func_801327AC(void);
+void func_80148078(void);
+void func_80132148(void);
+void func_80132198(void);
+void func_80132204(void);
+void func_80132254(void);
+void func_80132290(void);
+void func_801322E0(void);
+void func_80132344(void);
+void func_80132394(void);
+void func_80132460(void);
+void func_801324B0(void);
+void func_80132558(void);
+void func_801325A8(void);
+void func_801325E4(void);
+void func_80132634(void);
+void func_80132670(void);
+void func_801326C0(void);
+void func_8013275C(void);
+void func_801327F0(void);
+void func_80132840(void);
 #endif /* OVL_ETC_H */
