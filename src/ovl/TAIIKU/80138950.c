@@ -333,7 +333,17 @@ void func_8014064C(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_801406A8);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80140738);
+void func_80140738(s32 arg0, s32 arg1) {
+    u8 *p;
+    s32 sp30;
+
+    sp30 = arg0 + 4;
+    func_8009B3C0(sp30);
+    p = (u8 *)D_80122640 + arg1 * 0x10;
+    func_8009B430(sp30 + 8, p, 0, sp30);
+    *(u8 **)((u8 *)D_80122640 + arg1 * 0x10 + 4) = (u8 *)&D_801227A0[arg1];
+    *(s32 *)((u8 *)D_80122640 + arg1 * 0x10) = 0;
+}
 
 void func_801407C0(void) {
     D_80149FA0 = 0x8019D000;
