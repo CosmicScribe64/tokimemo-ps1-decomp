@@ -666,7 +666,6 @@ extern u8 D_800E96AB;
 extern s8 D_800E96EF;
 extern s8 D_800E9733;
 extern u8 D_800E9E63;
-/* 0x44-byte records like D_8011ECD0 (+3 flags, +7 value); EVENT reaches them through this base (T-5000). */
 extern u8 D_800EAFA0[];
 extern s8 D_800EAFA2;
 extern u8 D_800EAFA7;
@@ -1525,7 +1524,6 @@ void hizuke_disp_switch(s32 arg0);
 void hizuke_init(void);
 void func_80064DEC();
 void hizuke_show(void);
-void func_80064DEC();
 void message_disp_switch(s32 arg0);
 void message_window_init(void);
 void func_80064F48();
@@ -1703,9 +1701,9 @@ void func_80083808();
 void func_80083A10();
 void func_80083B24();
 void read_bustup();
+void func_800846C0();
 void k_disp_inc2();
 #ifndef MAIN_API_OVERRIDE_func_800847B8
-void func_800846C0();
 void func_800847B8(u8 arg0);
 #endif
 void select_girl_init(void);
