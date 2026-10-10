@@ -31,5 +31,7 @@ extern s32 D_80134C5C;
 extern s32 D_80134C90;
 extern s32 D_80134CC4;
 extern u8 D_80134CCC;
+s32 func_801323F8(void);
+s32 func_80133500(void);
 
 #endif /* OVL_OMIMAI_H */

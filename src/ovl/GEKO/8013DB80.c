@@ -82,7 +82,14 @@ void func_8013DD58(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DB80", func_8013DE90);
+void func_8013DE90(void) {
+    func_8013DB80();
+    func_80043914(D_80146DB0, 0x11, 1, 2, 0);
+    func_80084E90(D_80146DB4, D_80146DB8, D_80146DBC, D_80146DC0, D_80146DC4, D_80146DC8);
+    func_800850D4(D_80146DA4, D_80146DA8, D_80146DA0, D_80146DAC);
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
 void func_8013DF40(void) {
     bg_read_sub2(0x403B);

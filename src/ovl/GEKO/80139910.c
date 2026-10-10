@@ -1,5 +1,12 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/GEKO.h"
+
+extern u32 D_80122CD0;
+
+typedef struct {
+    s32 w[0x11];
+} Ev44; /* size 0x44: record of D_800EAFA0 */
 
 typedef struct {
     void (*f[39])();
@@ -36,7 +43,22 @@ void func_801399DC(void) {
     D_801463DC = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_80139A8C);
+void func_80139A8C(void) {
+    switch (D_80122CD0) {
+    case 1:
+        func_80139B08();
+        return;
+    case 2:
+        func_8013A144();
+        return;
+    case 8:
+        func_8013A230();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80139B08(void) {
     if (D_800E6280.unk_1109 == 0) {
@@ -171,7 +193,17 @@ void func_8013ACE0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013AD6C);
+void func_8013AD6C(void) {
+    func_801399DC();
+    func_80043914(D_801463C4, 0x11, 1, 2, 0);
+    func_80084E90(D_801463C8, D_801463CC, D_801463D0, D_801463D4, D_801463D8, D_801463DC);
+    func_800850D4(D_801463B8, D_801463BC, D_801463B4, D_801463C0);
+    D_80120650[0x48] = 8;
+    D_80120650[4] = 8;
+    *(Ev44 *)&D_80120650[0x88] = *(Ev44 *)D_80120650;
+    *(s16 *)&D_80120650[0x9E] = 4;
+    func_8004284C();
+}
 
 void func_8013AE7C(void) {
     bg_read_sub2(0x4068);

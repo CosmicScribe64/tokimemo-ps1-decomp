@@ -50,4 +50,8 @@ void func_80138CAC();
 void func_8013987C();
 void func_801388D0();
 void func_80138C34(void);
+s32 func_80135160(void);
+s32 func_801359B0(void);
+s32 func_80136270(void);
+
 #endif /* OVL_BUNKA_SD_H */

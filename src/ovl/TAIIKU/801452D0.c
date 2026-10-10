@@ -2,6 +2,11 @@
 #include "ovl/TAIIKU.h"
 
 typedef struct {
+    void (*f[8])();
+} FnTbl8; /* size 0x20 */
+extern FnTbl8 D_8014A54C;
+
+typedef struct {
     s32 v[3];
 } Lim3; /* size 0xC */
 extern Lim3 D_8014A5FC;
@@ -11,7 +16,14 @@ extern u8 D_8014A401;
 extern u8 D_8014A41D;
 extern u8 D_8014A439;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_801452D0);
+void func_801452D0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl8 tbl;
+
+    tbl = D_8014A54C;
+    idx = D_800E6280.unk_1109;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80145370);
 

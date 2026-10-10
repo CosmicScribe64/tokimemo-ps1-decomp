@@ -90,7 +90,14 @@ void func_80133948(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_8013397C);
+void func_8013397C(void) {
+    D_80143B20 = 1;
+    D_80143B00 = 0;
+    D_80143AF4 = D_80143A40;
+    D_80143AF8 = D_80143A7C;
+    D_80143AFC = D_80143AB8;
+    func_80042808();
+}
 
 void func_801339DC(void) {
     s32 temp_t6;

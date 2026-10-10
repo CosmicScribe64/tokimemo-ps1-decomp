@@ -367,7 +367,16 @@ void func_800728A4(void) {
     func_80067870();
     func_80066C08(1);
 }
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072944);
+s32 func_80072944(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80072998();
+        break;
+    case 1:
+        func_80072B20();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072998);
 

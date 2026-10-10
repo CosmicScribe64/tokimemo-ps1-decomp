@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
+typedef struct {
+    void (*f[41])();
+} FnTbl41; /* size 0xA4 */
+extern FnTbl41 D_8013C884;
+
 void func_801378B0(void) {
     D_8013C870 = 0x801D60E0;
     D_8013C874 = 0x801D60E4;
@@ -8,7 +13,14 @@ void func_801378B0(void) {
     D_8013C880 = 0x801D0000;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_801378F0);
+void func_801378F0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl41 tbl;
+
+    tbl = D_8013C884;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_80137978(void) {
     D_800CA2DC = 0;
@@ -88,7 +100,16 @@ void func_80137F04(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80137F90);
+s32 func_80137F90(void) {
+    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+        func_800573AC();
+        func_8004284C();
+        D_800E6280.unk_110A -= 3;
+        return 0;
+    }
+    func_8005751C(0);
+    func_8004284C();
+}
 
 void func_8013801C(void) {
     dec_bg_show_switch(0);

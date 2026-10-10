@@ -61,7 +61,22 @@ void func_80146A38(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146AC0);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146B40);
+s32 func_80146B40(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_801467C4();
+        break;
+    case 1:
+        func_801468FC();
+        break;
+    case 2:
+        func_80146A38();
+        break;
+    case 3:
+        func_80146AC0();
+        break;
+    }
+}
 
 s32 func_80146BC4(void) {
     switch (D_800E6280.unk_110D) {

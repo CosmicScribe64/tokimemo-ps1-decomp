@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138A60);
+typedef struct {
+    void (*f[16])();
+} FnTbl16; /* size 0x40 */
+extern FnTbl16 D_8013C930;
+
+void func_80138A60(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl16 tbl;
+
+    tbl = D_8013C930;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_80138ADC(void) {
     func_8004E884(func_8004E788(-0x80, 0x30, 2, "【団体行動中】", 0));

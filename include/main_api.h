@@ -465,7 +465,6 @@ extern s32 D_800B3708[];
 #endif
 extern s32 D_800B372C;
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
-extern u8 D_800B4341[]; /* table read by func_80052E60 */
 extern u8 D_800B3C6C;
 extern s8 D_800B3CA0;
 extern u8 D_800B3D24;
@@ -489,6 +488,7 @@ extern u8 D_800B3F66;
 extern s16 D_800B3F68;
 extern u8 D_800B3F6A;
 extern u8 D_800B41A0[];
+extern u8 D_800B4341[]; /* table read by func_80052E60 */
 extern s32 D_800B58E4;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
@@ -909,6 +909,9 @@ extern s16 D_801206AA;
 #ifndef MAIN_API_OVERRIDE_D_801206AC
 extern s16 D_801206AC;
 #endif
+#ifndef MAIN_API_OVERRIDE_D_801206B0
+extern volatile s16 D_801206B0;
+#endif
 extern s16 D_801206BA;
 extern s16 D_801206BE;
 #ifndef MAIN_API_OVERRIDE_D_801206C8
@@ -916,14 +919,14 @@ extern s32 D_801206C8;
 #endif
 extern s32 D_801206CC;
 extern u8 D_801206D7;
-extern u8 D_801206D9;
-#ifndef MAIN_API_OVERRIDE_D_801206DA
-extern s8 D_801206DA;
-#endif
 /* OPTION walks byte 3 of 0x44-byte records from here (the loop base register is this address,
  * not one of D_8011ECD0; T-7020). */
 #ifndef MAIN_API_OVERRIDE_D_801206D8
 extern u8 D_801206D8[];
+#endif
+extern u8 D_801206D9;
+#ifndef MAIN_API_OVERRIDE_D_801206DA
+extern s8 D_801206DA;
 #endif
 extern u8 D_801206DB;
 #ifndef MAIN_API_OVERRIDE_D_801206DC
@@ -1336,6 +1339,7 @@ void func_80046318(u8 arg0, s32 arg1, s32 arg2);
 s32 func_8004636C();
 s32 func_80046500(void);
 void func_800469F4();
+void func_80046A7C();
 void func_80046B88();
 void func_80047550(void);
 void func_80047560();
@@ -1365,15 +1369,20 @@ void func_8004A734(void);
 void func_8004A764();
 void func_8004A7C4();
 void func_8004A7F4();
+#ifndef MAIN_API_OVERRIDE_func_8004A8EC
 void func_8004A8EC();
+#endif
 void func_8004AC18(s32 arg0);
+void func_8004ACA8();
 void func_8004ACC8(s32 arg0);
 void func_8004ADE4(void);
 void func_8004AE28(s32 a0, s32 a1, s32 a2);
 void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3);
+void func_8004AEB0();
 void func_8004B19C(s32 a, s32 b, s32 c);
 void func_8004B338(s32 arg0, s32 arg1, s32 arg2);
 void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_8004BB54();
 s32 func_8004BC20(s32 arg0);
 void func_8004C060();
 void func_8004C250();
@@ -1546,7 +1555,9 @@ void join_club_select(void);
 void join_club_message(void);
 void join_club_exit(void);
 s32 func_80060B24();
-void uwasa0();
+void func_80060B78(void);
+void uwasa_exit0(void);
+s32 uwasa0();
 void pre_xmas_init(void);
 s32 func_80060EA0();
 s32 pre_syogatu_init();
@@ -1554,10 +1565,16 @@ s32 func_80061634();
 void func_80061710(void);
 void func_80061790(void);
 void func_800618B0();
+void func_80061EFC(void);
+void func_8006211C(void);
+void func_8006218C(void);
 void func_80062210(void);
 void func_800623E4(void);
 void func_80062524(void);
 void func_800625C0(void);
+void func_800626B0(void);
+void func_80062764(void);
+void func_800627DC(void);
 void func_80062CD0(); /* unprototyped: main callers pass no argument, overlays pass one */
 void func_80062DBC();
 void func_800634FC(); /* unprototyped: callers pass an argument, the definition ignores it */
@@ -1632,13 +1649,18 @@ void func_8007132C(void);
 void func_80072338(void);
 void func_800726F0(void);
 void func_80072734();
+s32 func_80072944(void);
 void func_80072998(void);
 void func_80072B20(void);
 s32 func_80072B5C(s32 arg0);
 void func_80072C68(void);
 void func_80072CA0(void);
 void func_800737A0(void);
+u8 week_day_init(void);
 s32 get_weekly_bg_sector(void);
+u8 func_80073AD8(void);
+u8 func_800741B8(void);
+u8 func_8007437C(void);
 void func_800744A0();
 void week_day_main0(void);
 void week_day_exit0(void);
@@ -1667,6 +1689,9 @@ void func_80077900(void);
 void func_80077C50(void);
 void func_80077E30(void);
 void magazine_exit(void);
+void holiday_tel(void);
+void holiday_tel_init(void);
+void holiday_tel_call(void);
 void telephone_class_init(void);
 void holiday_club_join_exit(void);
 void func_80078950();

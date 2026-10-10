@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
+typedef struct {
+    u8 s[0xCC3];
+} DateTxt; /* size 0xCC3 */
+extern DateTxt D_801451FC;
+
 void func_80134D10(void) {
     D_80144F10 = 0x801B0478;
     D_80144F14 = 0x801B13A4;
@@ -121,7 +126,16 @@ void func_80135340(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801354E4);
+s32 func_801354E4(void) {
+    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+        func_800573AC();
+        func_8004284C();
+        D_800E6280.unk_110A -= 3;
+        return 0;
+    }
+    func_8005751C(0);
+    func_8004284C();
+}
 
 void func_80135570(void) {
     dec_bg_show_switch(0);
@@ -320,7 +334,13 @@ void func_80137844(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80137894);
+void func_80137894(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    DateTxt tbl;
+
+    tbl = D_801451FC;
+    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8014506C * 0x63 + D_80122CDC * 0x21]);
+}
 
 void func_80137954(void) {
     if (D_8014508C == 0) {

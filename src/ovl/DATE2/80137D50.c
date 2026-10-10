@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/DATE2.h"
 
+typedef struct {
+    void (*f[13])();
+} FnTbl13; /* size 0x34 */
+extern FnTbl13 D_8013B600;
+
 void func_80137D50(void) {
     D_8013B540 = 0x801B00A4;
     D_8013B544 = 0x801B0238;
@@ -59,7 +64,14 @@ void func_80137FCC(void) {
     func_80082764(D_80122CDC, 1, 0);
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_80138048);
+void func_80138048(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl13 tbl;
+
+    tbl = D_8013B600;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x40);
+}
 
 void func_801380C4(void) {
     func_80046318(2, 0x801E8000, 0xBD02);
@@ -101,7 +113,19 @@ void func_801381D4(void) {
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013820C);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013850C);
+void func_8013850C(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        func_8013856C();
+        return;
+    case 1:
+        func_80138A3C();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_8013856C(void) {
     switch (D_800E6280.unk_110D) {
@@ -121,7 +145,16 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801385CC);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801388C0);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_80138A3C);
+s32 func_80138A3C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80138A90();
+        break;
+    case 1:
+        func_80138BEC();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_80138A90);
 

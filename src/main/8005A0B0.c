@@ -582,7 +582,16 @@ void uwasa_exit0(void) {
     func_80042878(0x31);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", uwasa0);
+s32 uwasa0(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80060B78();
+        break;
+    case 1:
+        uwasa_exit0();
+        break;
+    }
+}
 
 void uwasa_main(void) {
     switch (D_800E6280.unk_1109) {

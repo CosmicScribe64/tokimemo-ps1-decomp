@@ -1,7 +1,18 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_80134890);
+void func_80134890(void) {
+    D_80143DB0 = 0x801DABE0;
+    D_80143DB4 = 0x801DB684;
+    D_80143DB8 = 0x801DABE8;
+    D_80143DBC = 0x801DB6A0;
+    D_80143DC0 = 0x801DAC48;
+    D_80143DC4 = 0x801DB6CC;
+    D_80143DC8 = *(s16 *)0x801DB6E0;
+    D_80143DCC = *(s16 *)0x801DB6E4;
+    D_80143DD0 = 0x801C0000;
+    D_80143DD4 = 0x801C2000;
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_80134930);
 

@@ -160,7 +160,21 @@ void magazine_exit(void) {
     func_80042908(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel);
+void holiday_tel(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        holiday_tel_init();
+        break;
+    case 1:
+        holiday_tel_call();
+        break;
+    case 2:
+        holiday_tel_exit();
+        break;
+    }
+    cal_base_show();
+}
 
 void holiday_tel_init(void) {
     func_8004E58C();

@@ -21,7 +21,17 @@ void week_day_exit(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", week_day_init);
+u8 week_day_init(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        return func_80073AD8();
+    case 1:
+        return func_800741B8();
+    case 2:
+        return func_8007437C();
+    }
+}
 
 void week_day_main(void) {
     D_800E6280.unk_1104.w += 1;

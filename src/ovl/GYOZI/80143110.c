@@ -2,6 +2,16 @@
 #include "ovl/GYOZI.h"
 
 typedef struct {
+    void (*f[17])();
+} FnTbl17; /* size 0x44 */
+extern FnTbl17 D_80148A7C;
+
+typedef struct {
+    void (*f[12])();
+} FnTbl12; /* size 0x30 */
+extern FnTbl12 D_80148A4C;
+
+typedef struct {
     s32 w;
 } Word4; /* size 0x4 */
 extern Word4 D_80148970;
@@ -117,14 +127,28 @@ void func_801436BC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143110", func_801436E4);
+void func_801436E4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl12 tbl;
+
+    tbl = D_80148A4C;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
 
 void func_80143758(void) {
     D_80148620 = 3;
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143110", func_80143780);
+void func_80143780(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl17 tbl;
+
+    tbl = D_80148A7C;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
 
 void func_80143808(void) {
     D_80148620 = 4;

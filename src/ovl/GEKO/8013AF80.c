@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
 #include "common.h"
 #include "ovl/GEKO.h"
+
+extern u32 D_80122CD0;
 
 typedef struct {
     void (*f[41])();
@@ -20,7 +23,19 @@ void func_8013AF80(void) {
     D_80146628 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013AF80", func_8013B030);
+void func_8013B030(void) {
+    switch (D_80122CD0) {
+    case 1:
+        func_8013B094();
+        return;
+    case 7:
+        func_8013B0D0();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_8013B094(void) {
     if (D_800E6280.unk_1109 == 0) {

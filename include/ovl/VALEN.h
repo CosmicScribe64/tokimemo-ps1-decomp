@@ -96,5 +96,8 @@ extern s32 D_801346EC;
 extern s32 D_801346F0;
 extern s32 D_801346F4;
 extern s32 D_801346F8;
+void func_80133EE4(void);
+s32 func_80133AA8(void);
+void func_801339D0(void);
 
 #endif /* OVL_VALEN_H */

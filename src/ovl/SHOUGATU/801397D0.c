@@ -1,6 +1,21 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
+typedef struct {
+    void (*f[37])();
+} FnTbl37; /* size 0x94 */
+extern FnTbl37 D_8014554C;
+
+typedef struct {
+    void (*f[25])();
+} FnTbl25; /* size 0x64 */
+extern FnTbl25 D_80145498;
+
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+extern FnTbl20 D_801453F8;
+
 void func_801397D0(void) {
     D_801453B0 = (u8 *)0x801E60CC;
     D_801453B4 = (u8 *)0x801E60D0;
@@ -44,15 +59,36 @@ void func_801398F0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139980);
+void func_80139980(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_801453F8;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139A08);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139A90);
+void func_80139A90(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl25 tbl;
+
+    tbl = D_80145498;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139B0C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139B94);
+void func_80139B94(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl37 tbl;
+
+    tbl = D_8014554C;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
 
 s32 func_80139C10(void) {
     func_80137AB4();

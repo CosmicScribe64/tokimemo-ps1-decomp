@@ -1,5 +1,13 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32: selector in $v1 (main_api.h: s32) */
 #include "common.h"
 #include "ovl/DATE.h"
+
+extern u32 D_80122CD0;
+
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+extern FnTbl42 D_8015EFF4;
 
 void func_80151460(void) {
     D_8015ED70 = 0x801E2118;
@@ -61,7 +69,25 @@ void func_80151720(void) {
     D_8015EE20 = 0x801E4000;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80151734);
+void func_80151734(void) {
+    switch (D_80122CD0) {
+    case 2:
+        func_80151F84();
+        return;
+    case 3:
+        func_80152980();
+        return;
+    case 4:
+        func_80152B08();
+        return;
+    case 5:
+        func_80152BB4();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_801517C8(void) {
     s16 i;
@@ -221,7 +247,14 @@ void func_80152AE0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152B08);
+void func_80152B08(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl42 tbl;
+
+    tbl = D_8015EFF4;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_80152B7C(void) {
     func_80046318(0x3D, 0x801B0000, 0x8381);
