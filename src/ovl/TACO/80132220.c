@@ -15,7 +15,32 @@ void func_80132220(void) {
     D_8015EDB4[8].unk68 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_801322AC);
+void func_801322AC(void) {
+    func_801438F0(0x8019C800, 0, D_8015EDB4);
+    D_8015EDB4->pad0[1] = 0x80;
+    D_8015EDB4->unk6C = 0x400;
+    D_8015EDB4->unk6E = 0x400;
+    D_8015EDB4->unk70 = 0x400;
+    func_801438F0(0x8019C800, 1, &D_8015EDB4[8]);
+    D_8015EDB4[8].pad0[1] = 0x80;
+    D_8015EDB4[8].unk6C = 0x400;
+    D_8015EDB4[8].unk6E = 0x400;
+    D_8015EDB4[8].unk70 = 0x400;
+    D_8015EDB4->unk7A = 0;
+    D_8015EDB4[8].unk7A = 0;
+    D_8015EDB4->unk72 = -1;
+    D_8015EDB4[8].unk72 = -1;
+    D_8015EDB4->unk82 = -1;
+    D_8015EDB4[8].unk82 = -1;
+    D_8015EDB4->unk7C = 4;
+    D_8015EDB4->unk7E = 3;
+    D_8015EDB4->unk80 = 0;
+    D_8015EDB4->unk84[1] = 0xFF;
+    D_8015EDB4[8].unk84[1] = 0x80;
+    func_80132220();
+    D_8015EDD0 = 0;
+    D_8015EDD4 = 0;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_8013240C);
 
