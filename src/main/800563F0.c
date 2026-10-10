@@ -48,7 +48,12 @@ void strSync(SyncObj *arg0, s32 arg1) {
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strSync);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/main/800563F0", strKickCD);
+void strKickCD(s32 arg0) {
+    while (func_800879D0(0x15, arg0, 0) == 0) {
+    }
+    while (func_800880C0(0x1C0) == 0) {
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", func_80056BA8);
 

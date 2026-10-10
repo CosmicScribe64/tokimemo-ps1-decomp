@@ -202,7 +202,24 @@ void func_80054BA8(void) {
     D_800E8BEE = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054BE4);
+s32 func_80054BE4(void) {
+    s32 i;
+    s32 n;
+    u8 *p;
+    s32 t;
+
+    n = 0;
+    p = D_800E7D11;
+    i = 1;
+    do {
+        t = func_80054AF4(i);
+        i++;
+        p++;
+        p[3] = t;
+        n++;
+    } while (i != 0xF);
+    return n;
+}
 
 void func_80054C4C(void) {
     bzero(D_80123120, 0x2000);

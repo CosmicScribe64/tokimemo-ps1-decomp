@@ -74,7 +74,18 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", yuukou_down);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", syoushin_up);
+void syoushin_up(void) {
+    s32 i;
+    u8 *p;
+
+    p = D_800E6280;
+    for (i = 0; i < 0xB; i++) {
+        if (((CharFlags *)(p + 0x1C8))->b1 && (s32)get_h_yuukou(i) < 0xA) {
+            *(s16 *)(p + 0x1C6) += 5;
+        }
+        p += 0x38;
+    }
+}
 
 void schdeule_girls_param(void) {
     if (D_800E62BD == 0) {

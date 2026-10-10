@@ -743,5 +743,17 @@ void func_80078A94();
 void func_80057710();
 s32 func_8005352C();
 extern u8 D_800E62C1;
+/* Flag word at +0x1C8 of the 0x38-byte entries at D_800E6280; syoushin_up tests bit 1 as a bit-field. */
+typedef struct CharFlags {
+    /* 0x00 */ u32 b0 : 1;
+    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 rest : 30;
+} CharFlags; /* size 0x04 */
+extern u8 D_800E7D11[];
+extern u8 D_801255B8;
+s32 func_800879D0();
+s32 func_800880C0();
+s32 func_80087C64();
+void func_800AD950();
 
 #endif /* GAME_H */
