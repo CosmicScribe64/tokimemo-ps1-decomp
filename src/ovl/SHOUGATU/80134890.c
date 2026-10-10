@@ -14,7 +14,30 @@ void func_80134890(void) {
     D_80143DD4 = 0x801C2000;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_80134930);
+typedef struct {
+    void (*f[31])();
+} FnTbl31; /* size 0x7C */
+extern FnTbl31 D_80143DE0;
+
+void func_80134930(void) {
+    u16 idx; /* FAKE: u16 and the second call argument put idx in $a1 as the original does (permuter); real prototype unknown. T-8080 */
+    FnTbl31 tbl;
+
+    tbl = D_80143DE0;
+    if (D_80143B20 != 0) {
+        idx = D_800E6280.unk_110A;
+        if ((void (*)())normal_date_girl_in == tbl.f[idx]) {
+            tbl.f[idx] = func_8004284C;
+        }
+    }
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x40, idx);
+    if (D_80143DDC != 0) {
+        func_80085678(-0xA0, -0x78, 0x140, 0x64, 0xD, 0xE0FF, 0xFFFF);
+        func_80085678(-0xA0, -0x14, 0x140, 0x3C, 0xD, 0x6060, 0xE0FF);
+        func_8004955C(0xD);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_80134A54);
 
