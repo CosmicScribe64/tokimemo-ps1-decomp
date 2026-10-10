@@ -713,6 +713,7 @@ extern s32 D_800EECCC;
 extern s32 D_800EECD0;
 extern s32 D_800EECE0;
 extern s32 D_800EECE4;
+extern s32 D_800EECE8;
 extern s32 D_800EECEC;
 extern u8 D_800F19AB;
 extern u8 D_800F53DA;
