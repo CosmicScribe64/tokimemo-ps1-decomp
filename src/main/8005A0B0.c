@@ -376,7 +376,35 @@ void func_8005C7C0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005C7FC);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005C968);
+/* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
+void func_8005C968(void) {
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            func_80053D10();
+            D_800E6280.unk_110D += 1;
+        } else if (D_800E6280.unk_1120 >= 0x201U || D_800E6280.unk_1115 == 0xD0) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            func_80042940(4);
+            func_800696DC(0, 0);
+            func_8005C7C0();
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042940(0xFF);
+        }
+        break;
+    }
+    func_8005C7FC();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005CA94);
 
