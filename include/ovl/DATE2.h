@@ -46,4 +46,5 @@ void func_80133AF0();
 void func_801350A4();
 void func_80135E50();
 
+extern s32 D_8013A79C, D_8013A7D0, D_8013A804;
 #endif /* OVL_DATE2_H */

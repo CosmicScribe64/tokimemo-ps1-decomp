@@ -1,6 +1,16 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
+typedef struct {
+    void (*f[24])();
+} FnTbl24; /* size 0x60 */
+extern FnTbl24 D_80139F4C;
+
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+extern FnTbl40 D_80139E70;
+
 void func_80135F10(void) {
     D_80139DB0 = 0x801B4400;
     D_80139DB4 = 0x801B6400;
@@ -23,7 +33,14 @@ void func_80135F84(void) {
     D_80139DEC = 0x801B4400;
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136018);
+void func_80136018(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
+
+    tbl = D_80139E70;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_80136094(void) {
     s16 i;
@@ -123,7 +140,19 @@ void func_80136CD8(void) {
     LoadSquare(0x328, 0x100, 4, 0xC, &D_80139E10);
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136D58);
+void func_80136D58(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl24 tbl;
+
+    tbl = D_80139F4C;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_800E738A >= 9U) {
+        if (D_800E738A < 0x14U) {
+            func_801370A0();
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80135F10.rodata", D_801398E8);
 

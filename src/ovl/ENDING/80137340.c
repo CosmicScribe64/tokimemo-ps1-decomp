@@ -11,7 +11,13 @@ void func_801374BC(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_801374F8);
+void func_801374F8(void) {
+    _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
+    dtd_on(0xE);
+    if (D_800E7384++ >= 0x81U) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137574);
 

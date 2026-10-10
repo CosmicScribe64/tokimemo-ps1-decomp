@@ -45,11 +45,36 @@ void func_801376F0(void) {
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_8013775C);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_8013780C);
+void func_8013780C(void) {
+    u32 t;
+
+    t = (u8)get_g_zyotai_s(D_800E71DF) & 0x7F;
+    if (t < 2) {
+        D_800CA148 = 6;
+    } else if (t == 2) {
+        D_800CA148 = 8;
+    } else if (t == 3) {
+        D_800CA148 = 0xA;
+    } else {
+        D_800CA148 = 0xC;
+    }
+    D_800CA14C = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_801378A4);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_80137948);
+void func_80137948(void) {
+    u32 t;
+
+    t = (u8)get_g_zyotai_s(0) & 0x7F;
+    if (D_800E62BF == (D_800E6378 & 0xF) && D_800E62C0 == ((u32)(D_800E6378 << 0x17) >> 0x1B) && t < 2) {
+        D_800E699E |= 4;
+        func_80042908(4);
+        return;
+    }
+    func_8004284C();
+}
 
 void func_801379CC(void) {
     D_800CA148 = 0x1D;
@@ -62,6 +87,16 @@ void func_801379CC(void) {
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_80137A2C);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_80137AF0);
+void func_80137AF0(void) {
+    D_8013A80C = D_800CA160;
+    D_8013A810 = D_800CA164;
+    D_8013A814 = D_800CA168;
+    D_800CA148 = 0;
+    D_800CA14C = (D_800CA14C + D_800E62BE) - 0x5F;
+    D_800CA160 = D_8013A79C;
+    D_800CA164 = D_8013A7D0;
+    D_800CA168 = D_8013A804;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_80137B94);

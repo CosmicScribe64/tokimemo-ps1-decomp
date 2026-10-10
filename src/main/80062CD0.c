@@ -193,7 +193,25 @@ s32 func_80066A84(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066ACC);
+s32 func_80066ACC(void) {
+    s32 ret;
+
+    ret = func_80066A84();
+    if (D_800E62BF == 9) {
+        if (D_800E62C0 >= 0x18U) {
+            ret = -1;
+        }
+        /* FAKE: empty test of ret makes ret the first register-allocated local ($v1), the global gets $a0. T-4100 */
+        if (!ret) {
+        }
+    }
+    if (D_800E62BF == 5) {
+        if (D_800E62C0 >= 0x19U) {
+            ret = -1;
+        }
+    }
+    return ret;
+}
 
 s32 func_80066B40(s32 arg0, s32 arg1) {
     if (arg0 == 8) {

@@ -174,4 +174,11 @@ void func_80146B8C(void);
 void func_801488F0(s16 *);
 void func_8013D9B4(s32, u8);
 
+extern u8 D_8014A3C4;
+extern s32 D_8014A3D0;
+extern u32 D_8014A3EC;
+extern u8 D_8014A460;
+extern s32 D_8014A3E0;
+extern u8 D_8014A3E4;
+extern u32 D_8014A3E8;
 #endif

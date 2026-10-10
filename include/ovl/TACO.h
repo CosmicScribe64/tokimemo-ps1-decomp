@@ -193,4 +193,8 @@ void func_80141B18(Tc14 *arg0, s32 arg1);
 extern u8 D_8015FA68[];
 void func_80147C98(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
 
+extern s16 *D_80160034[];
+extern s16 *D_8016001C[];
+void func_8014BED8(void);
+void func_8014BCEC(s32 arg0);
 #endif

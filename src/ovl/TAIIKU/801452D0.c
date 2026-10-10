@@ -63,7 +63,28 @@ void func_8014684C(void) {
     func_80146A60();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146884);
+void func_80146884(void) {
+    if (D_8014A460 != 0) {
+        D_8014A3F4 = -0x300;
+        return;
+    }
+    if (D_800E7208 & 0x20) {
+        D_8014A3C4 = 1;
+        return;
+    }
+    if (D_8014A3EC >= 0x10) {
+        if (D_8014A3C4 != 0) {
+            if (D_8014A3F8 < 0) {
+                D_8014A3F8 = 0;
+            }
+            D_8014A3F4 = D_8014A3D0;
+        } else {
+            D_8014A3F4 = -0x300;
+        }
+        D_8014A3EC = 0;
+        D_8014A3C4 = 0;
+    }
+}
 
 void func_8014692C(void) {
     if ((u32)D_8014A3F0 >= 0xB) {

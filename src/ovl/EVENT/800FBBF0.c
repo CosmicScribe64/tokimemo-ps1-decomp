@@ -222,4 +222,8 @@ void func_800FD188(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FD1C0);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FD2AC);
+void func_800FD2AC(void) {
+    func_80015D28(0x45, 0x801B0000, 0x7E8B);
+    func_800FBE90();
+    func_80011DFC();
+}

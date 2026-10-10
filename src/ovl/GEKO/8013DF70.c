@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
+typedef struct {
+    void (*f[46])();
+} FnTbl46; /* size 0xB8 */
+extern FnTbl46 D_80146E7C;
+
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013DF70);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E040);
@@ -21,7 +26,15 @@ void func_8013E0E0(void) {
     func_80046500();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E11C);
+void func_8013E11C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl46 tbl;
+
+    tbl = D_80146E7C;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    func_8013E950();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E1A0);
 

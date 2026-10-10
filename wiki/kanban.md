@@ -26,6 +26,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-4100-wave-3-list-10|T-4100 Wave 3: list 10]]
 
 
 

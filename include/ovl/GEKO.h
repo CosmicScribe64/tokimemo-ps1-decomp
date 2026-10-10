@@ -239,4 +239,8 @@ void func_80137560(void);
 /* defined in C in one object, called from another (T-0500) */
 void func_80138AF8(void);
 
+void func_8013CC9C(void);
+void func_8013E950(void);
+void func_8013A180(void);
+void func_8013E11C(void);
 #endif
