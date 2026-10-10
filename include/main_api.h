@@ -76,7 +76,7 @@ typedef struct Rec24 {
     /* 0x04 */ s16 unk_04;
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s16 unk_08;
-    /* 0x0A */ s16 unk_0A;
+    /* 0x0A */ u16 unk_0A;
     /* 0x0C */ s16 unk_0C;
     /* 0x0E */ u8 unk_0E;
     /* 0x0F */ u8 unk_0F;
