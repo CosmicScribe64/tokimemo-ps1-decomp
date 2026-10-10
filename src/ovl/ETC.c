@@ -2031,7 +2031,40 @@ void func_8013BCFC(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013BD40);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013BDEC);
+void func_8013BDEC(s32 arg0, s32 arg1) {
+    s32 t;
+
+    switch (arg1) {
+    case 0:
+        t = D_8014F994[arg0];
+        if (t != -1) {
+            D_8014F990 = 1;
+            func_80062CD0(t);
+        }
+        break;
+    case 1:
+        t = D_8014F9D0[arg0];
+        if (t != -1) {
+            D_8014F990 = 1;
+            func_80062CD0(t);
+        }
+        break;
+    case 2:
+        t = D_8014FA0C[arg0];
+        if (t != -1) {
+            D_8014F990 = 1;
+            func_80062CD0(t);
+        }
+        break;
+    case 3:
+        t = D_8014FA48[arg0];
+        if (t != -1) {
+            D_8014F990 = 1;
+            func_80062CD0(t);
+        }
+        break;
+    }
+}
 
 void func_8013BEF0(void) {
     D_80150030 = (u8 *)0x8019DCFC;

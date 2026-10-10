@@ -968,5 +968,9 @@ void func_80135FB0(void);
 void func_80136060(void);
 void func_80136110(void);
 void func_80136230(void);
+extern s32 D_8014F994[];
+extern s32 D_8014F9D0[];
+extern s32 D_8014FA0C[];
+extern s32 D_8014FA48[];
 
 #endif /* OVL_ETC_H */
