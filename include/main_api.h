@@ -1443,6 +1443,7 @@ void menu_bar_show();
 void func_80050C24(s32 arg0, s32 arg1);
 void x_taku_menu_set(s32 arg0, s32 arg1);
 void func_80050D60();
+void func_80050D78();
 void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80050DFC(u8 *arg0);
 void gnsx(u8 *arg0);
