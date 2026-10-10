@@ -249,3 +249,4 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | TAIIKU/801452D0 | `func_80146A60` | promo | `s32` global `D_800E7200` tested with two masks (0xA, 0x5) in several blocks: original keeps it in $v0 and the 0xA mask in $v1, IDO swaps them (`u32` override too) (T-4100) |
 | RPG_BAT/801504E0 | `func_80150CD8` | promo | `s32` state `D_8015EC74` switched (cases 0, 1, 2) and reloaded for `+= 1` in each case: original keeps it in $v1, IDO uses $v0 and loads the constant 1 into $v1 (T-4100) |
 | BUNKASAI/801354B0 | `func_801354B0` | promo | `s32` selector `D_80122EB8` (cases 0, 1): original $v1, IDO $v0 (T-4100) |
+| 80075320 | `func_80077E30` | promo | five-entry jump table on `u8 D_800E738D` (cases 0 to 3 + `case 4:` with default), selector in $v1 and reused for `+= 1` in case 1, reloaded into $v1 in case 2; IDO $v0 and $t0 (T-4100) |

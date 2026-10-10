@@ -47,7 +47,59 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150B90);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150CD8);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150DE0);
+void func_80150DE0(void) {
+    switch (D_8015EB9C) {
+    case 0:
+        D_8015EC68 = 4;
+        D_8015EC6C = 0;
+        break;
+    case 1:
+        D_8015EC68 = 5;
+        D_8015EC6C = -2;
+        break;
+    case 2:
+        D_8015EC68 = 6;
+        D_8015EC6C = 2;
+        break;
+    case 3:
+        D_8015EC68 = 5;
+        D_8015EC6C = 2;
+        break;
+    case 4:
+        D_8015EC68 = 5;
+        D_8015EC6C = 2;
+        break;
+    case 5:
+        D_8015EC68 = 5;
+        D_8015EC6C = 2;
+        break;
+    case 6:
+        D_8015EC68 = 3;
+        D_8015EC6C = 2;
+        break;
+    case 7:
+        D_8015EC68 = 4;
+        D_8015EC6C = 1;
+        break;
+    case 8:
+        D_8015EC68 = 5;
+        D_8015EC6C = 1;
+        break;
+    case 9:
+        D_8015EC68 = 2;
+        D_8015EC6C = 0;
+        break;
+    case 10:
+        D_8015EC68 = 8;
+        D_8015EC6C = 2;
+        break;
+    }
+    /* FAKE: D_8015EC68 and D_8015EC6C are reread through D_8015EC58; separate names let as1 hoist the loads above the stores. T-4100 */
+    D_8015EC58 = 0x118;
+    (&D_8015EC58)[1] = 0x88;
+    (&D_8015EC58)[2] = 0x118 - (&D_8015EC58)[4];
+    (&D_8015EC58)[3] = 0x60 - (&D_8015EC58)[5];
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150F84);
 

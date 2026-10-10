@@ -235,4 +235,11 @@ void func_80139BCC();
 void func_80139B54();
 void func_80139394();
 void func_801393F4();
+void func_8014D3B4(s32 arg0);
+void func_8014D918();
+void func_8014DC94();
+void func_8014E4A4();
+void func_8014EA4C();
+void func_8014EC4C();
+void func_8014EE3C();
 #endif

@@ -346,7 +346,37 @@ void func_8014D200(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014D2E0);
+void func_8014D2E0(void) {
+    switch (D_8015EDB4[16].unk84[2]) {
+    case 0:
+        func_8014D3B4(1);
+        break;
+    case 1:
+        func_8014D918();
+        break;
+    case 2:
+        func_8014DC94();
+        break;
+    case 3:
+        func_8014E048();
+        break;
+    case 4:
+        func_8014D3B4(-1);
+        break;
+    case 5:
+        func_8014E4A4();
+        break;
+    case 6:
+        func_8014EA4C();
+        break;
+    case 7:
+        func_8014EC4C();
+        break;
+    case 8:
+        func_8014EE3C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014D3B4);
 
