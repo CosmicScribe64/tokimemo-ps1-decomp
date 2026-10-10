@@ -116,4 +116,9 @@ void func_8006509C(void);
 
 void func_80135634();
 
+void func_801355F0();
+
+extern s32 D_80139E10;
+void place_init();
+
 #endif /* OVL_KANGEI_H */
