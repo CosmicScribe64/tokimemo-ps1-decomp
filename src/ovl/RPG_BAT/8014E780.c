@@ -97,7 +97,8 @@ void func_8014EF3C(void) {
     D_8015EDE4 = 0;
 }
 
-void func_8014EF6C(void) {
+/* no prototype: func_8014F1D4 calls it with an argument */
+void func_8014EF6C() {
     D_8015EDDC++;
     D_8015EDE4 = 0;
 }
@@ -147,7 +148,16 @@ void func_8014F178(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014F1D4);
+void func_8014F1D4(s32 arg0) {
+    if (D_8015EE48 == 0) {
+        func_8014EF6C();
+    }
+    if (arg0 != 0) {
+        if ((D_8015EE44 - 3) >= arg0) {
+            func_8014EF6C(arg0);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014F230);
 
