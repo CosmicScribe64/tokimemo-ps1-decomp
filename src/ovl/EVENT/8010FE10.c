@@ -335,9 +335,18 @@ void func_80116CB4(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116D18);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116DC0);
+void func_80116DC0(void) {
+    if (D_800B0A31[D_800B1746 * 0x34] == 0) {
+        D_8012437C += 1;
+    }
+    func_80011DFC();
+}
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116E20);
+void func_80116E20(void) {
+    D_800B0860[D_800B1746 * 0x34 + 0x1D1] += 1;
+    func_80011DFC();
+    D_800B1AF6 += 7;
+}
 
 void func_80116E80(void) {
     D_80094730 += D_8012531C * 2;

@@ -181,4 +181,9 @@ void func_80156570(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801565B4);
+void func_801565B4(void) {
+    if (!((Flags14 *)&D_800E6560)->b14) {
+        D_800CA150 = (u16)D_800CA150 + 1;
+    }
+    func_8004284C();
+}

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "ovl/TEL.h"
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_801397D0);
@@ -44,7 +45,19 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013ADC0);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013B54C);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013BDDC);
+s32 func_8013BDDC(void) {
+    s32 i;
+    s32 found;
+
+    for (i = 0; i != 0xB; i++) {
+        if (((CharFlags *)(D_800E6280 + i * 0x38 + 0x1C8))->b1 &&
+            *(s16 *)(D_800E6280 + i * 0x38 + 0x1C6) >= 0x5B) {
+            found = i;
+            break;
+        }
+    }
+    return found;
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013BE38);
 

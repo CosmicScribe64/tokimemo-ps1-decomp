@@ -79,7 +79,21 @@ void func_8013F7B0(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F878);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F988);
+/* FAKE: the loop counter and pointer are declared as parameters so that they get $a0/$a1 like the original; nothing reads the incoming values. T-4050 */
+void func_8013F988(s32 i, u8 *p) {
+    i = 0x140;
+    p = D_80158A8C + 0x140;
+    if ((*(u16 *)(D_80158A8C + 0x366) & 7) == 7) {
+        do {
+            i += 0x14;
+            p[0x3E] += 1;
+            if (p[0x3E] >= 0x16U) {
+                p[0x3E] = 0x10;
+            }
+            p += 0x14;
+        } while (i != 0x17C);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F9E0);
 
