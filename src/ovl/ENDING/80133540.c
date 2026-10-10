@@ -1,7 +1,26 @@
 #include "common.h"
 #include "ovl/ENDING.h"
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_80133540);
+typedef struct {
+    void (*f[43])();
+} FnTbl43; /* size 0xAC */
+extern FnTbl43 D_8013C3E4;
+
+void func_80133540(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl43 tbl;
+
+    tbl = D_8013C3E4;
+    func_80083808();
+    tbl.f[D_800E6280.unk_110A](0x80);
+    func_8007EDF8();
+    func_800846C0();
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    func_80083A10();
+}
 
 void func_801335F4(void) {
     if (D_8013C3E0 == 0xC) {
@@ -115,7 +134,26 @@ void func_80133A6C(void) {
     D_800E7D34 |= 4;
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_80133AD0);
+typedef struct {
+    void (*f[9])();
+} FnTbl9; /* size 0x24 */
+extern FnTbl9 D_8013C490;
+
+void func_80133AD0(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl9 tbl;
+
+    tbl = D_8013C490;
+    func_80083808();
+    tbl.f[D_800E6280.unk_110A](0x80);
+    func_8007EDF8();
+    func_800846C0();
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    func_80083A10();
+}
 
 void func_80133B80(void) {
     D_800CA148 = 0;

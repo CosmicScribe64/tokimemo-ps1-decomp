@@ -1514,6 +1514,7 @@ void parameter_show(void);
 void hizuke_disp_switch(s32 arg0);
 void hizuke_init(void);
 void hizuke_show(void);
+void func_80064DEC();
 void message_disp_switch(s32 arg0);
 void message_window_init(void);
 void func_80064F48();
@@ -1668,6 +1669,7 @@ void place_init(void);
 void bg_read_sub2(s32 arg0);
 void func_8007ED84();
 void check_k_scroll();
+void func_8007EDF8();
 void wait_sub_sub(s16 arg0);
 void func_80081190(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
 void func_80081D30();
@@ -1692,6 +1694,7 @@ void func_80083B24();
 void read_bustup();
 void k_disp_inc2();
 #ifndef MAIN_API_OVERRIDE_func_800847B8
+void func_800846C0();
 void func_800847B8(u8 arg0);
 #endif
 void select_girl_init(void);
