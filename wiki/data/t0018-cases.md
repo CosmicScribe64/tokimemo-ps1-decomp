@@ -226,3 +226,5 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 8007C030 | `func_80083628` | regorder | same `get_g_zyotai_h(x) & 0x7F` copy shape as GEKO `func_80136F20` (T-4080) |
 | TAIIKU | `func_80136DA4` | regorder | `v = D_8014929C + D_80149218`: original loads the first global straight into the result register $v1, IDO loads into $t6 and adds into $v1 (T-4080) |
 | GYOZI | `func_8013CAA4` | regorder | a flag OR on `D_800F53A0.girl[D_800F62CF]` before a strcpy of a literal: code identical but the original numbers the temporaries $t0..$t2 where IDO uses $t9,$t0,$t1 (one unsigned-index temporary more consumed in the original) (T-4080) |
+| 8007C030 | `select_girl` | regorder | same shape as `normal_date_move_place`: switch on lw global D_800E7384, original selector in $v1, IDO $v0 (T-4080) |
+| 8007C030 | `select_girl2` | regorder | identical to `select_girl` (T-4080) |
