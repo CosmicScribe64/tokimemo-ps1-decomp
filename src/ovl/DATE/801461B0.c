@@ -23,6 +23,20 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_80148924);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_801489D0);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_801491E4);
+void func_801491E4(s32 arg0) {
+    s32 temp_v0;
+
+    D_800B3D60 = 0;
+    temp_v0 = func_8005742C(arg0, 1);
+    if (temp_v0 == D_800B5939) {
+        func_800AE0B0("same\n");
+        D_800E7384 += 3;
+        return;
+    }
+    if (temp_v0 == (1 - D_800B5939)) {
+        func_800AE0B0("another\n");
+        D_800E7384 += 2;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_80149268);
