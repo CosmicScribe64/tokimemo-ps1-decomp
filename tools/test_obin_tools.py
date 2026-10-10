@@ -13,8 +13,10 @@ import obin_map  # noqa: E402
 import obin_syms  # noqa: E402
 
 
-def make_ecoff(syms):
-    """Build a minimal ECOFF: file header, optional header, no sections, mdebug with externals."""
+def make_ecoff(syms, pdrs=()):
+    """Build a minimal ECOFF: file header, optional header, no sections, mdebug with externals.
+
+    pdrs: (adr, frame, regmask, regoffset) procedure descriptors appended after the externals."""
     strs = b""
     ext = b""
     for name, addr in syms:
@@ -30,7 +32,12 @@ def make_ecoff(syms):
     h[obin_syms.HDRR_NAMES.index("cbSsExtOffset")] = ss_off
     h[obin_syms.HDRR_NAMES.index("iextMax")] = len(syms)
     h[obin_syms.HDRR_NAMES.index("cbExtOffset")] = ext_off
-    return hdr + struct.pack("<hh23i", 0x7009, 0x312, *h) + strs + ext
+    pd = b"".join(struct.pack(obin_syms.PDR_FMT, adr, 0, -1, mask, regoff, -1, 0, 0, frame,
+                              29, 31, 0, 0, 0) for adr, frame, mask, regoff in pdrs)
+    h[obin_syms.HDRR_NAMES.index("ipdMax")] = len(pdrs)
+    h[obin_syms.HDRR_NAMES.index("cbPdOffset")] = ext_off + len(ext)
+    hdr = hdr[:20] + struct.pack("<HH", 0o407, 0x312) + hdr[24:]
+    return hdr + struct.pack("<hh23i", 0x7009, 0x312, *h) + strs + ext + pd
 
 
 class ParseTest(unittest.TestCase):
@@ -43,6 +50,24 @@ class ParseTest(unittest.TestCase):
     def test_rejects_other_files(self):
         with self.assertRaises(ValueError):
             obin_syms.parse(b"\0" * 0x100)
+        with self.assertRaises(ValueError):
+            obin_syms.headers(b"\0" * 0x100)
+
+    def test_headers_decode_stamps_and_frames(self):
+        # a 0x28 frame saving only $ra at 0x14 (regoffset -0x14): saves end at 0x18, 0x10 above
+        lines = obin_syms.headers(make_ecoff([("a", 0x80000000)],
+                                             [(0x80000000, 0x28, 0x80000000, -0x14)]))
+        self.assertIn("vstamp=0x0312 (3.18)", lines[1])
+        self.assertTrue(lines[1].startswith("aouthdr magic=0407"))
+        hdrr = [ln for ln in lines if ln.startswith("hdrr")][0]
+        self.assertIn("magic=0x7009 vstamp=0x0312 (3.18)", hdrr)
+        pdr = [ln for ln in lines if ln.startswith("pdr")][0]
+        self.assertIn("frame=0x28", pdr)
+        self.assertIn("save_end=0x18 above_saves=0x10", pdr)
+
+    def test_stamp(self):
+        self.assertEqual(obin_syms.stamp(0x0313), "3.19")
+        self.assertEqual(obin_syms.stamp(0x070A), "7.10")
 
 
 E = obin_map.Entry

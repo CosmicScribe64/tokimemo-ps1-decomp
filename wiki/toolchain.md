@@ -2,7 +2,7 @@
 type: concept
 updated: 2026-10-09
 sources: ["tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
-sources: ["tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
+sources: ["wiki/original-compiler.md", "tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
 ---
 
 # Toolchain
@@ -26,6 +26,9 @@ The toolchain is chosen per C file in `configure.py` (`DEFAULT_C_TOOLCHAIN`, `C_
 Mechanism. IDO's pipeline is cfe -> uopt -> ugen -> as1; ugen hands as1 a binary assembly file ("binasm", 16-byte records). `tools/cc.py` runs IDO with `USR_LIB` pointing at a temporary directory of symlinks to the real IDO files, except `as1`, which is a two-line shell shim calling `frame_pass.py --as1 /opt/ido/5.3/as1 ...`. The pass rewrites the `.frame`, `.mask` and every `$sp`-relative immediate in the binasm records and then execs the real as1. This layer was chosen over the alternatives because (1) `cc -S` text cannot be reassembled to the same code (the listing drops the vreg records as1 uses), (2) the ucode route (`DEF Mmt` +16 between uopt and ugen) fixes non-leaf functions without touching offsets but cannot express the leaf layout and misplaces the hole when spill temporaries exist, and (3) records give `.frame`/`.mask` and the instruction fields without decoding machine code. It is deterministic and fails loudly (`frame_pass.py: ...`, build error) on anything it does not understand. Tests: `tools/docker.sh python3 tools/test_frame_pass.py`.
 
 A real copy of the original compiler would replace the pass without any change to the C code ([[tickets/T-0100-older-mips-compiler-emulation]] stays open for that).
+
+## The original compiler (T-3100)
+Identification, evidence and citations: [[original-compiler]]. The best fit is a MIPS/SGI ucode suite at release 3.18, the release SGI shipped as IDO 5.2 (March 1994), one minor version before our IDO 5.3 (3.19). The evidence is the linker version stamps in O.BIN: a.out vstamp and symbolic-header vstamp are both 0x0312. The link was a little-endian ECOFF link on a big-endian host, which fits the Sony NEWS-based PlayStation toolchain (UNVERIFIED). The O.BIN procedure descriptors show that the 1995-07-25 developer build already had the +16 frames, which supports the frame pass as a property of the compiler. `-Wo,-regr,N` (an undocumented uopt option for the caller-saved register pool) was tested and rejected: it moves switch selectors to `$v1` without promoting the global, and 194 of 1647 matched functions regress. IDO 5.3 does promote globals in straight-line code, only at a higher reference count than the original; the rules for [[tickets/T-1321-register-promotion-build-step]] are in [[original-compiler]] section 5. No IDO older than 5.3 is in decompals/ido-static-recomp; running IDO 5.2 or 4.1 (decomp.me hosts both under qemu-irix) needs the user's decision under the licensing rule.
 
 
 ## Jump tables and asm-processor (T-1340)

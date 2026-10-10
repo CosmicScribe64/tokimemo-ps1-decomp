@@ -5,10 +5,14 @@ O.BIN is a stripped ECOFF whose only symbol data is the external symbol table of
 the mdebug symbolic header (see wiki/obin.md). The file is read at run time from
 disc/; nothing from it is stored in the repo.
 
-Usage: python3 tools/obin_syms.py [--file PATH] [--sections]
+Usage: python3 tools/obin_syms.py [--file PATH] [--sections | --headers]
 Output: ADDR NAME KIND SC SIZE, tab separated. SIZE is "~N", the gap to the next
 higher symbol address (an upper bound; O.BIN stores no sizes), or "-" for the last.
 --sections prints the ECOFF section table instead.
+--headers prints every header field (file header, a.out header, section headers,
+symbolic header, file and procedure descriptors) with the version stamps decoded
+as major.minor and, per procedure, the register-save block end and the space above
+it (T-3100, wiki/original-compiler.md).
 Exits non-zero if the file is not the expected ECOFF layout.
 """
 import argparse
@@ -55,14 +59,78 @@ def parse(data):
     return secs, syms
 
 
+STYP_COMMENT = 0x02100000
+FDR_FMT = "<10I2H7I"
+FDR_NAMES = ("adr rss issBase cbSs isymBase csym ilineBase cline ioptBase copt "
+             "ipdFirst cpd iauxBase caux rfdBase crfd bits cbLineOffset cbLine").split()
+PDR_FMT = "<IiiIiiIiiHHiiI"
+PDR_NAMES = ("adr isym iline regmask regoffset iopt fregmask fregoffset frameoffset "
+             "framereg pcreg lnLow lnHigh cbLineOffset").split()
+
+
+def stamp(v):
+    """ECOFF version stamp: high byte major, low byte minor (0x0312 -> '3.18')."""
+    return "%d.%d" % (v >> 8, v & 0xFF)
+
+
+def headers(data):
+    """Return the header fields of a little-endian MIPS ECOFF as printable lines."""
+    magic, nscns, timdat, symptr, nsyms, opthdr, flags = struct.unpack_from("<HHIIIHH", data, 0)
+    if magic != 0x0162 or opthdr != 0x38:
+        raise ValueError("not a little-endian MIPS ECOFF with a 0x38 optional header")
+    out = ["filehdr f_magic=%#06x f_nscns=%d f_timdat=%#010x f_symptr=%#x f_nsyms=%#x "
+           "f_opthdr=%#x f_flags=%#06x" % (magic, nscns, timdat, symptr, nsyms, opthdr, flags)]
+    a = struct.unpack_from("<HH13I", data, 20)
+    out.append("aouthdr magic=0%o vstamp=%#06x (%s) tsize=%#x dsize=%#x bsize=%#x entry=%#x "
+               "text_start=%#x data_start=%#x bss_start=%#x gprmask=%#010x cprmask=%s gp_value=%#x"
+               % (a[0], a[1], stamp(a[1]), a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9],
+                  ",".join("%#x" % c for c in a[10:14]), a[14]))
+    for i in range(nscns):
+        off = 20 + opthdr + 40 * i
+        name = data[off:off + 8].rstrip(b"\0").decode("ascii", "replace")
+        le = struct.unpack_from("<8IHHI", data, off)[2:]
+        be = struct.unpack_from(">8IHHI", data, off)[2:]
+        line = ("scnhdr %-8s paddr=%#x vaddr=%#x size=%#x scnptr=%#x relptr=%#x lnnoptr=%#x "
+                "nreloc=%d nlnno=%d flags=%#x" % ((name,) + le))
+        if be[-1] == STYP_COMMENT and le[-1] != STYP_COMMENT:
+            line += (" [big-endian fields: size=%#x scnptr=%#x flags=%#x STYP_COMMENT]"
+                     % (be[2], be[3], be[-1]))
+        out.append(line)
+    hmagic, hvstamp = struct.unpack_from("<HH", data, symptr)
+    h = dict(zip(HDRR_NAMES, struct.unpack_from("<23i", data, symptr + 4)))
+    out.append("hdrr magic=%#06x vstamp=%#06x (%s) " % (hmagic, hvstamp, stamp(hvstamp))
+               + " ".join("%s=%#x" % (k, h[k]) for k in HDRR_NAMES))
+    for i in range(h["ifdMax"]):
+        f = dict(zip(FDR_NAMES, struct.unpack_from(FDR_FMT, data, h["cbFdOffset"] + 72 * i)))
+        b = f["bits"]
+        out.append("fdr %d " % i + " ".join("%s=%#x" % (k, f[k]) for k in FDR_NAMES)
+                   + " lang=%d fMerge=%d fReadin=%d fBigendian=%d glevel=%d"
+                   % (b & 31, (b >> 5) & 1, (b >> 6) & 1, (b >> 7) & 1, (b >> 8) & 3))
+    for i in range(h["ipdMax"]):
+        p = dict(zip(PDR_NAMES, struct.unpack_from(PDR_FMT, data, h["cbPdOffset"] + 52 * i)))
+        nregs = bin(p["regmask"]).count("1")
+        # regoffset is the highest save slot relative to the virtual frame pointer ($sp + frame)
+        top = p["frameoffset"] + p["regoffset"] + 4 if nregs else 0
+        out.append("pdr %d adr=%#x frame=%#x framereg=%d pcreg=%d regmask=%#010x regoffset=%d "
+                   "fregmask=%#x saves=%d save_end=%#x above_saves=%#x"
+                   % (i, p["adr"], p["frameoffset"], p["framereg"], p["pcreg"], p["regmask"],
+                      p["regoffset"], p["fregmask"], nregs, top, p["frameoffset"] - top))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--file", default=DEFAULT)
     ap.add_argument("--sections", action="store_true")
+    ap.add_argument("--headers", action="store_true")
     a = ap.parse_args()
     try:
         with open(a.file, "rb") as f:
-            secs, syms = parse(f.read())
+            data = f.read()
+        if a.headers:
+            print("\n".join(headers(data)))
+            return 0
+        secs, syms = parse(data)
     except (OSError, ValueError, struct.error) as e:
         print("obin_syms: %s" % e, file=sys.stderr)
         return 1

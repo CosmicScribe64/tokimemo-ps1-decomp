@@ -401,3 +401,21 @@ New [[tickets/T-2000-wave2-event]], In Progress. Matching functions in `src/ovl/
 [[tickets/T-2000-wave2-event]] In Progress -> Done after the inline review (no open findings). 421 of 781 EVENT functions matched in `src/ovl/EVENT.c`, clean rebuild 27 of 27 OK, `ninja progress` grand total 1322/6962. 11 rows added to [[data/t0018-cases]]; new patterns in [[matching-notes]] (raw-address loads, `*(s32 *)&` for narrow game.h scalars).
 ## [2026-10-09] ticket | T-2080 wave 2: TAIIKU, RPG_BAT (108 functions matched)
 New [[tickets/T-2080-wave2-taiiku-rpg-bat]], In Progress -> Done after the inline code review (no open findings). Matched 108 functions (RPG_BAT 61, TAIIKU 47 new; the three `NON_MATCHING` TAIIKU functions of T-0017 were already plain C). Clean rebuild (`rm -rf asm build`, configure, ninja) 27 of 27 sha1 OK, `ninja progress` grand total 1009 of 6962 in this worktree. New patterns and blockers (shared `$at`, record-field scheduling, loop idioms, direct-global clamps) in [[matching-notes]]; 10 rows in [[data/t0018-cases]]. Tooling bug: `tools/m2c.py` picks the first overlay alphabetically for a function name present in several overlays.
+
+## [2026-10-09] ticket | T-3100 Identify the original game-code compiler started
+New [[tickets/T-3100-identify-original-compiler]], In Progress. Scope: O.BIN ECOFF header and symbolic-table forensics (`disc/files/CDROM/EXEDIR/O.BIN`), identification-string scan of the exe and overlays, public documentation of ucode-family compilers, in-image IDO experiments; output [[original-compiler]] and rules for [[tickets/T-1321-register-promotion-build-step]].
+
+## [2026-10-09] ingest | T-3100 O.BIN headers, version stamps and public compiler documentation
+New [[original-compiler]] and raw note `wiki/raw/original-compiler-sources.md`.
+- O.BIN (`disc/files/CDROM/EXEDIR/O.BIN`): a.out and symbolic-header vstamp are both 0x0312 (3.18), against 3.19 for in-image IDO 5.3 and 7.10 for 7.1. The SGI FAQ maps C 3.18 to IDO 5.2. The `.comment` header is big-endian in a little-endian file, so the link host was big-endian. All 5 procedure descriptors show the +16 frames in the 1995-07-25 developer build.
+- No toolchain strings anywhere on `disc/track1.bin`.
+- Tool: `tools/obin_syms.py --headers` (tests `tools/test_obin_tools.py`).
+- Pages updated: [[obin]] (corrected a.out fields and linker attribution), [[toolchain]], [[matching-notes]] (T-0018 premise corrected: IDO 5.3 promotes in straight-line code at higher reference counts), [[compiler-mismatch-research]], [[index]].
+
+## [2026-10-09] query | T-3100 promotion experiments and rules for T-1321
+- In-image IDO only. `-Wo,-regr,N` gives `$v1` selectors without promotion and regresses 194 of 1647 matched functions; rejected.
+- The original's switch, compare and `D++` shapes are IDO's own promoted shape at a lower reference count. Rules (promotion threshold, coloring order, not-promoted data, gate) appended to [[tickets/T-1321-register-promotion-build-step]]; follow-up for IDO 5.2/4.1 on [[tickets/T-0100-older-mips-compiler-emulation]].
+- Evo's Space Adventures and CelestialAmber/tokimemo checked: both are gcc setups.
+
+## [2026-10-09] ticket | T-3100 In Progress -> In Review -> Done
+[[tickets/T-3100-identify-original-compiler]] done after the inline review (no open findings). Clean rebuild 27 of 27 sha1 OK.

@@ -31,6 +31,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-3100-identify-original-compiler|T-3100 Identify the original game-code compiler]]
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
 - [x] [[tickets/T-2040-wave-2-etc|T-2040 Wave 2: ETC]]
 - [ ] [[tickets/T-2010-wave2-date|T-2010 Wave 2: DATE]]

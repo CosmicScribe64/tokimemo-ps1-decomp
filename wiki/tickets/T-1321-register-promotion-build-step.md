@@ -29,3 +29,10 @@ When a function is skipped because of this gap, append one row to [[data/t0018-c
 - [ ] Documented in [[toolchain]] and [[matching-notes]]; passes CODING_STANDARDS 7a if it is a build pass.
 
 ## Comments
+- 2026-10-09 (T-3100, [[original-compiler]] sections 4-5): key findings for this build step.
+  - The premise "IDO promotes only in loops" is wrong. IDO 5.3 promotes a global scalar in straight-line code once it has enough references. `if (D==1) { D++; g(); D += D; }` and the matching `switch` give the original's exact shape: `lbu v1`, reload into `$v1` after the call, `addiu tN,v1,k`, and for a switch `move v0,v1` in the first delay slot.
+  - The original promotes at lower counts: one switch selector (O.BIN `olh_main`, `func_8013A40C`) or one compare plus `D++` after a call (`func_8005A560`). So the change needed is the promotion decision (hypothesis: priority >= 0 instead of > 0, or no entry-load cost), not a register rename.
+  - Corpus: switch chains on main-exe globals are `$v1` in 262 functions and `$v0` in 25; on overlay-defined data `$v0` in 45 and `$v1` in 24; jump-table switches `$v0` in 138 and `$v1` in 28; if-chains `$v0` in 108 and `$v1` in 11.
+  - Overlay data is a counterexample to "every scalar". `func_8013AE80` (GYOZI) matches stock IDO on `switch (D_801474B8)`. Decide between "overlay data were struct members" and "only externally defined globals are promoted" first (rule 7).
+  - Rejected: `-Wo,-regr,N` (uopt caller-saved pool). At 7 or 8 it gives `$v1` selectors without promoting, and 194 of 1647 matched functions regress (per-function object compare, immediates masked). `-rege`, `-nomultibbunroll`, `-unrolllimit`, `-no_r23`, `-pic2`, `-fortran_lang`, `-f77alias`, `-dwopcode` and `-dowhyuncolor` have no effect. `-zdbug:6` aborts in the recomp.
+  - Suggested implementation: a one-comparison patch of uopt's allocation threshold in a copy of the recompiled uopt, located via the uopt reconstructions. Gate on all `promo` rows, the 1647 matched functions and 27 of 27 sha1. The `reverse` rows are not explained by this rule.
