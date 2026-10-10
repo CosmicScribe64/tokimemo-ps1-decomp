@@ -232,11 +232,32 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenout);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bg_fadein);
+s32 normal_date_bg_fadein(void) {
+    D_80122CF8 = 1;
+    D_800B593C += 4;
+    if (D_800B593C >= 0x80) {
+        D_800B593C = 0x80;
+    }
+    if (D_800B593C >= 0x7D) {
+        D_800B593C = 0x80;
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadein);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bg_fadeout);
+void normal_date_bg_fadeout(void) {
+    D_80122CF8 = 1;
+    D_800B593C -= 4;
+    if (D_800B593C >= 0x81) {
+        D_800B593C = 0;
+    }
+    if (D_800B593C < 4) {
+        D_80122CF8 = 0;
+        D_800B593C = 0;
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadeout);
 
