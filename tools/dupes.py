@@ -20,7 +20,17 @@ Usage (run inside Docker, from the repo root, after a build so asm/ exists):
   tools/docker.sh python3 tools/dupes.py --apply         # write the copies
   tools/docker.sh python3 tools/dupes.py --apply --check # + build each object, revert failures
   options: --unit NAME (main or overlay name, repeatable), --lenient (reuse the
-  target's existing declaration when it differs), -v (list skipped functions).
+  target's existing declaration when it differs), -v (list every skipped function with its reason).
+
+T-7030: besides the symbols of the relocation sequence the copy takes along what the body needs:
+fields of the game-state aggregate (D_800E6280.unk_110D, matched to the asm's D_800E738D through the
+address, migrate_globals), MAIN_API_OVERRIDE_ views of the source file, file-local struct typedefs
+and their declarations, `*(s16 *)0x801F0D14` address literals (the relocation's address of the
+target), and the target's prototype (a missing one is added, a `void` that the twin contradicts is
+corrected, a callee the target .c defines further down gets one). Declarations of main-exe symbols
+are written to include/main_api.h and sync_protos.py --fix then makes the other headers agree; the
+whole include/ tree is restored when a copy is rejected. The batch driver apply_all is shared with
+neardupes.py.
 Tests: tools/test_dupes.py.
 """
 import argparse
@@ -226,13 +236,16 @@ def norm(s):
     return re.sub(r'\s+', ' ', strip_comments(s)).strip()
 
 
-def find_decl(texts, sym):
-    """First one-line declaration or prototype of sym in the given header texts."""
+def find_decl(texts, sym, toplevel=False):
+    """First one-line declaration or prototype of sym in the given header texts. With `toplevel` (a
+    .c file) only lines that start in column 0 with a type count: an indented `f();` is a call."""
     var = re.compile(r'^\s*(?:extern\s+)?[^;(){}=#]*?\b%s\b\s*(?:\[[^\]]*\])*\s*[;,]' % re.escape(sym))
     proto = re.compile(r'^[^;{}=#]*\b%s\s*\([^;{}]*\)\s*;' % re.escape(sym))
     for t in texts:
         for line in t.splitlines():
             code = strip_comments(line)
+            if toplevel and (not code[:1].isalpha() or re.match(r'\s*%s\b' % re.escape(sym), code)):
+                continue
             if var.match(code) or proto.match(code):
                 return single_decl(re.sub(r'\s*/\*.*?\*/', '', line).strip(), sym)
     return None
@@ -303,10 +316,240 @@ def sym_key(name, aliases):
     return ('a', a) if a is not None else ('n', name)
 
 
+OVERRIDE_PREFIX = 'MAIN_API_OVERRIDE_'
+
+
+def norm_decl(s):
+    """norm() with `f(void)` and `f()` equal: they generate the same code for a call without arguments."""
+    return re.sub(r'\(\s*void\s*\)', '()', norm(s))
+
+
+def override_reason(texts, sym):
+    """The reason of `#define MAIN_API_OVERRIDE_<sym> /* reason */` in one of the texts, '' when it has
+    none, None when no text defines it."""
+    for t in texts:
+        m = re.search(r'^[ \t]*#[ \t]*define[ \t]+%s%s\b[ \t]*(?:/\*(.*?)\*/)?' % (OVERRIDE_PREFIX, re.escape(sym)), t, re.M)
+        if m:
+            return (m.group(1) or '').strip()
+    return None
+
+
+def cdecl_key(decl):
+    """A declaration without `extern`, comments and the spaces around `*`, `(void)` as `()`."""
+    d = re.sub(r'^\s*extern\s+', '', norm_decl(decl))
+    return re.sub(r'\s*\*\s*', '*', d).rstrip(';').strip()
+
+
+def find_definition(text, sym):
+    """`ret name(params);` of a function the C text defines (a definition declares it), or None."""
+    m = re.search(r'^([A-Za-z_][^;{}()\n]*?)\b%s\s*\(([^;{}]*)\)\s*\{' % re.escape(sym), text, re.M)
+    return '%s%s(%s);' % (m.group(1), sym, m.group(2)) if m else None
+
+
+def params_of(decl):
+    """The parameter list of a function declaration or definition line, normalised; None for data."""
+    m = re.search(r'\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*;?\s*$', norm_decl(decl))
+    return m.group(1).strip() if m else None
+
+
+def only_return_type_differs(a, b):
+    """True for two function declarations that take the same parameters: the return type does not change
+    how a call whose result is unused is compiled, the build decides."""
+    pa, pb = params_of(a), params_of(b)
+    return pa is not None and pa == pb
+
+
+def value_used(code, ident):
+    """True when the body uses the result of a call to `ident` (anything but a call statement)."""
+    for m in re.finditer(r'\b%s\s*\(' % re.escape(ident), code):
+        line_start = code.rfind('\n', 0, m.start()) + 1
+        if code[line_start:m.start()].strip():
+            return True
+    return False
+
+
+def soft_return_difference(have, want, used_value):
+    """True when two declarations of a function differ only in the return type and that cannot matter
+    for the copy: a call whose result is not used compiles alike for `void` and `int`. If the body
+    uses the result and the target's type is `void`, the copy would not compile."""
+    if not only_return_type_differs(have, want):
+        return False
+    return not (used_value and (return_type(have, re.search(r'(\w+)\s*\(', have).group(1)) or '') == 'void')
+
+
+def effective_decl(sym, ctext, cheads, overridden):
+    """(declaration line, where) of `sym` as the C file `ctext` with the header texts `cheads` sees it:
+    where is 'file' (declared in the .c) or 'header'. An overridden symbol (MAIN_API_OVERRIDE_ define)
+    hides the declaration in main_api.h: the file's own, or another header's, counts."""
+    if overridden:
+        d = find_decl([ctext], sym, True)
+        if d:
+            return d, 'file'
+        d = find_decl([h for h in cheads if 'MAIN_API_H' not in h], sym)
+        return (d, 'header') if d else (None, None)
+    d = find_decl(cheads, sym)
+    if d:
+        return d, 'header'
+    d = find_decl([ctext], sym, True) or find_definition(ctext, sym)
+    return (d, 'file') if d else (None, None)
+
+
+TYPEDEF_RE = re.compile(r'^typedef\s+(?:struct|union)\b[^{;]*\{.*?\n\}\s*(\w+)\s*;[^\n]*', re.M | re.S)
+
+
+def local_typedef(stext, name):
+    """Text of a struct/union typedef named `name` that the .c file defines itself, or None."""
+    for m in TYPEDEF_RE.finditer(stext):
+        if m.group(1) == name:
+            return m.group(0)
+    return None
+
+
+def load_aggregates(root, cache):
+    """The aggregates of config/migrate_globals.txt (GameState at D_800E6280) as migrate_globals sees them."""
+    if 'aggs' not in cache:
+        try:
+            import migrate_globals as mg
+            cache['aggs'] = mg.load_config(root)[0]
+        except (ImportError, SystemExit, OSError, ValueError):
+            cache['aggs'] = []
+    return cache['aggs']
+
+
+def resolve_path(agg, path):
+    """(byte offset, Type, dynamic) of a field path such as `.unk_1BC[2].unk_06` of the aggregate, or None.
+    A non-constant index counts as 0 (dynamic is then True): the relocation of an indexed access names
+    the address of element 0."""
+    import migrate_globals as mg
+    t, off, dyn = agg.type, 0, False
+    for m in re.finditer(r'\.\s*([A-Za-z_]\w*)|\[([^\]]*)\]', path):
+        if m.group(1):
+            if t.kind not in ('struct', 'union'):
+                return None
+            hit = next((f for f in t.fields if f[0] == m.group(1)), None)
+            if hit is None or (len(hit) > 3 and hit[3]):
+                return None
+            off += hit[1]
+            t = hit[2]
+        else:
+            if t.kind != 'array':
+                return None
+            idx = m.group(2).strip()
+            if re.match(r'^(0[xX][0-9A-Fa-f]+|\d+)$', idx):
+                k = int(idx, 0)
+            else:
+                k, dyn = 0, True
+            off += k * t.elem.size
+            t = t.elem
+    return off, t, dyn
+
+
+def game_state_edits(root, body, fwd, tname, cache):
+    """Rewrite the aggregate field accesses of a source body (`D_800E6280.unk_110D`) for the target.
+
+    The relocations of the asm name the old per-field symbols (`D_800E738D`), the C names the field of
+    the aggregate (T-5100). Every path is resolved to its address; that address must be in the
+    relocation sequence; when the target's symbol is another one the path of the target's field of the
+    same type is written (migrate_globals.find_mapping), when it is the same the text stays.
+    A field whose counterpart in the target is another global (outside the aggregate) is written with
+    that global's name; it is returned in `pseudo` {name: type spelling} for the declaration check.
+    Returns (new body, spans blanked for the symbol check, pseudo, reason or None)."""
+    aggs = load_aggregates(root, cache)
+    if not aggs:
+        return body, [], {}, None
+    import migrate_globals as mg
+    edits, spans, pseudo = [], [], {}
+    for agg in aggs:
+        for m in re.finditer(r'\b%s((?:\s*\.\s*[A-Za-z_]\w*|\s*\[[^\]]*\])+)' % re.escape(agg.base), body):
+            res = resolve_path(agg, m.group(1))
+            if res is None:
+                return body, [], {}, '%s%s is not a field path of %s' % (agg.base, m.group(1).strip(), agg.tname)
+            off, typ, dyn = res
+            addr = agg.addr + off
+            k = ('a', addr)
+            if k not in fwd:
+                return body, [], {}, 'body names %s%s (0x%08X) which is not in the relocation sequence' % (
+                    agg.base, m.group(1).strip(), addr)
+            spans.append((m.start(), m.end()))
+            tk = fwd[k]
+            if tk == k:
+                continue
+            if dyn:
+                return body, [], {}, '%s%s is indexed and the target field is another one' % (agg.base, m.group(1).strip())
+            if tk[0] != 'a' or not agg.holds(tk[1]):
+                if '[' in m.group(1):
+                    return body, [], {}, ('%s%s is an element of a struct array and the target reads a plain global: IDO '
+                                          'orders the loads of the two forms differently (T-5100)' % (agg.base, m.group(1).strip()))
+                tsym = tname[tk]
+                edits.append((m.start(), m.end(), tsym))
+                pseudo[tsym] = typ.spell()
+                continue
+            mp, why = mg.find_mapping(agg, 'D_%08X' % tk[1], typ.spell(), False)
+            if mp is None or mp.inner is not None:
+                return body, [], {}, 'target field 0x%08X: %s' % (tk[1], why or 'inside a longer array')
+            edits.append((m.start(), m.end(), mp.expr))
+    if len(pseudo) >= 2:
+        return body, [], {}, ('%d fields of the aggregate map to plain globals (%s): IDO orders the loads of separate '
+                              'symbols differently from fields of one struct (T-5100)' % (len(pseudo), ', '.join(sorted(pseudo))))
+    for a, b, new in sorted(edits, reverse=True):
+        body = body[:a] + new + body[b:]
+    return body, spans, pseudo, None
+
+
+def blank_spans(text, spans):
+    for a, b in sorted(spans, reverse=True):
+        text = text[:a] + ' ' * (b - a) + text[b:]
+    return text
+
+
+def addr_literal_edits(code, relocs_pairs):
+    """{old literal text: new} for hex literals in `code` that are the address a relocation of the source
+    names (`*(s16 *)0x801F0D14` for `%lo(D_801F0D14)`) and another address in the target."""
+    want = {}
+    for (s1, a1), (s2, a2) in relocs_pairs:
+        m1, m2 = ADDR_RE.match(s1), ADDR_RE.match(s2)
+        if not (m1 and m2):
+            continue
+        v1, v2 = int(m1.group(1), 16) + a1, int(m2.group(1), 16) + a2
+        if v1 != v2 and v1 >= 0x80000000:
+            if want.setdefault(v1, v2) != v2:
+                return None
+    return want
+
+
+def return_type(decl, name):
+    """Return type of the function `name` in a declaration or definition text, or None."""
+    m = re.match(r'^\s*(?:extern\s+)?([A-Za-z_][\w \t*]*?)[ \t*]*%s\s*\(' % re.escape(name), decl)
+    return re.sub(r'\s+', ' ', m.group(1)).strip() if m else None
+
+
+def prototype_of(definition, name):
+    """`ret name(params);` of a definition text."""
+    m = re.match(r'^\s*([A-Za-z_][^;{}()\n]*?)\b%s\s*\(([^;{}]*)\)\s*\{' % re.escape(name), definition)
+    return '%s%s(%s);' % (m.group(1), name, m.group(2)) if m else None
+
+
+def retype_definition(text, hdr_decl, name):
+    """The definition `text` with the return type of the target's prototype `hdr_decl` (a header says
+    `s32 f(void);` where the matched source twin is `void f(void) {...}`): same code, no header clash."""
+    m = re.match(r'^(\s*)([A-Za-z_][\w \t*]*?)([ \t*])%s\s*\(' % re.escape(name), text)
+    d = re.match(r'^\s*((?:extern\s+)?[A-Za-z_][\w \t*]*?)[ \t*]*%s\s*\(' % re.escape(name), hdr_decl or '')
+    if not m or not d:
+        return text
+    ret = re.sub(r'^extern\s+', '', d.group(1)).strip()
+    return text[:m.start(2)] + ret + text[m.end(2):] if norm(ret) != norm(m.group(2)) else text
+
+
 def plan_copy(root, src, tgt, cache):
     """Plan the copy of matched src to unmatched tgt.
 
-    Returns (plan, reason). plan = dict(text, tgtfile, name, decls=[(header, line)], src).
+    Returns (plan, reason). plan = dict(text, tgtfile, name, decls=[(header, line)], local=[(kind, text)],
+    retype=[(header, function, old return type, new)], src). local: 'define' lines go before the first
+    #include of the target file (MAIN_API_OVERRIDE_ of a view the source was matched with), 'block'
+    texts (file-local typedefs and declarations the source file carries) after its last #include,
+    'late' texts right above the function (a declaration that needs a typedef the target .c defines
+    further down). decls whose header is main_api.h are brought in line by sync_protos --fix when
+    the plans are applied (apply_all). retype: a `void` prototype whose twin returns a value.
     """
     al = cache['aliases']
     if len(src.relocs) != len(tgt.relocs):
@@ -332,13 +575,19 @@ def plan_copy(root, src, tgt, cache):
     if in_conditional(stext, rng[0]):
         return None, 'source inside #if'
     body = stext[rng[0]:rng[1]]
-    code = strip_comments(body)
-    if '"' in code or re.search(r'\bstatic\b|#', code):
+    if '"' in strip_comments(body) or re.search(r'\bstatic\b|#', strip_comments(body)):
         return None, 'source has string literal, static or preprocessor use'
     sheads = [read(root, h) for h in header_closure(root, sfile, cache)]
     thp = target_headers(root, tfile, tgt, cache)
     theads = [read(root, h) for h in thp]
     tall = '\n'.join(theads) + '\n' + ttext
+    # fields of the game-state aggregate (T-5100): resolved through their addresses
+    body, gs_spans, pseudo, why = game_state_edits(root, body, fwd, tname, cache)
+    if why:
+        return None, why
+    # symbols of the body: the text before the field rewrite, with the aggregate paths blanked
+    orig_body = stext[rng[0]:rng[1]]
+    code = strip_comments(blank_spans(orig_body, gs_spans))
     # every game symbol and every called name in the body must come from the relocations
     used = {}
     for ident in set(re.findall(r'\b[A-Za-z_]\w*\b', code)):
@@ -351,6 +600,17 @@ def plan_copy(root, src, tgt, cache):
         if k not in fwd:
             return None, 'body names %s which is not in the relocation sequence' % ident
         used[ident] = k
+    # file-local types the body needs (struct typedefs of the source .c) move with it
+    local, local_text, local_types = [], '', set()
+    for w in sorted(set(re.findall(r'\b[A-Z][A-Za-z0-9_]*\b', code))):
+        if w in used or ADDR_RE.match(w) or re.search(r'\b%s\b' % re.escape(w), tall):
+            continue
+        td = local_typedef(stext, w)
+        if td is not None:
+            local.append(('block', td))
+            local_types.add(w)
+            local_text += '\n' + td
+    tall += local_text
     # type and field names used by the body must exist in the target's closure
     for w in set(re.findall(r'\b[A-Z][A-Za-z0-9_]*\b', code)) | set(re.findall(r'(?:->|\.)\s*([A-Za-z_]\w*)', code)):
         if w in used or ADDR_RE.match(w):
@@ -360,43 +620,158 @@ def plan_copy(root, src, tgt, cache):
     mapping = {src.name: tgt.name}
     decls = []
     tmain = tgt.unit == 'main'
-    for ident, k in sorted(used.items()):
-        t = tname[fwd[k]]
-        names = [t] + [n for n in al[1].get(fwd[k][1], [])] if fwd[k][0] == 'a' else [t]
-        declared = [n for n in names if find_decl(theads, n)]
-        if declared:
-            t = declared[0]
-        elif fwd[k] == k:
-            t = ident
-        mapping[ident] = t
-        sd = find_decl(sheads, ident)
-        if sd is None:
-            if find_decl([stext], ident):
-                return None, 'declaration of %s only in %s' % (ident, sfile)
-            continue  # implicit declaration in the source: nothing to add
-        want = re.sub(r'\b%s\b' % re.escape(ident), t, sd)
-        for w in set(re.findall(r'\b[A-Za-z_]\w*\b', strip_comments(want))):
-            if w in BASIC_WORDS or w == t or re.match(r'((D|func)_[0-9A-F]{8}|arg\d+)$', w):
-                continue
-            if not re.search(r'\b%s\b' % re.escape(w), tall):
-                return None, 'declaration of %s uses %s which the target closure lacks' % (ident, w)
-        have = find_decl(theads, t)
+    aggs = load_aggregates(root, cache)
+
+    def declare(t, want, sover=None, swhere='header', ident=None, used_value=False):
+        """Make the target see `want` for its symbol `t`: nothing to do, a header line, or a file-local
+        addition. Returns a reason when the target already holds another view. want=None: the source
+        never declared it (implicit declaration); only a function the target .c defines below needs one."""
+        tover = override_reason(theads + [ttext], t)
+        have, _w = effective_decl(t, ttext, theads, tover is not None)
+        ismain = is_main_symbol(root, t, tgt.unit) and os.path.exists(os.path.join(root, 'include/main_api.h'))
+        tdef = find_definition(ttext, t)
+        if tdef and not find_decl(theads, t) and not find_decl([ttext], t, True):
+            # defined in the target .c and declared nowhere: the new function calls it above its
+            # definition (implicit `int f()`, then a clash), so it needs a prototype in a header
+            if want is not None and cdecl_key(tdef) != cdecl_key(want) and not (
+                    cache.get('lenient') or soft_return_difference(tdef, want, used_value)):
+                return 'target declares %s differently: "%s" vs "%s"' % (t, norm(tdef), norm(want))
+            decls.append(('include/main_api.h' if ismain else ('include/game.h' if tmain else 'include/ovl/%s.h' % tgt.unit), tdef))
+            return None
+        if want is None:
+            return None
+        if have is not None and cdecl_key(have) == cdecl_key(want):
+            return None
+        if sover is not None and ismain:
+            # matched against its own view of a main-exe symbol: the target needs the same override
+            if tover is not None and have is not None and not cache.get('lenient'):
+                return 'target declares %s differently: "%s" vs "%s"' % (t, norm(have), norm(want))
+            local.append(('define', '#define %s%s /* %s */' % (OVERRIDE_PREFIX, t, sover or 'matched like %s (T-7030)' % src.name)))
+            local.append(('block', want))
+            return None
         if have is not None:
-            if norm(have) != norm(want) and not cache.get('lenient'):
-                return None, 'target declares %s differently: "%s" vs "%s"' % (t, norm(have), norm(want))
-            continue
-        if find_decl([ttext], t):
-            return None, 'target declares %s inside its .c' % t
-        if os.path.exists(os.path.join(root, 'include/main_api.h')) and is_main_symbol(root, t, tgt.unit):
+            if cache.get('lenient') or soft_return_difference(have, want, used_value):
+                return None
+            return 'target declares %s differently: "%s" vs "%s"' % (t, norm(have), norm(want))
+        words = set(re.findall(r'\b[A-Za-z_]\w*\b', strip_comments(want))) - BASIC_WORDS
+        c_only = {w for w in words if re.match(r'[A-Z]', w) and not re.search(r'\b%s\b' % re.escape(w), '\n'.join(theads))}
+        if swhere == 'file' and (local_types | c_only) & words:
+            if ismain:
+                return 'declaration of %s only in %s' % (ident or t, sfile)
+            # a typedef only the .c files have: the copy declares it in its .c as well; right above the
+            # function when the typedef is the target file's own (it may stand anywhere above)
+            local.append(('block' if local_types & words else 'late', want))
+            return None
+        if ismain:
             dest = 'include/main_api.h'      # T-3340: one home for main-exe symbols
         elif tmain:
             dest = 'include/game.h'
         else:
             dest = 'include/ovl/%s.h' % tgt.unit
         decls.append((dest, want))
+        return None
+
+    for ident, k in sorted(used.items()):
+        t = tname[fwd[k]]
+        names = [t] + [n for n in al[1].get(fwd[k][1], [])] if fwd[k][0] == 'a' else [t]
+        declared = [n for n in names if find_decl(theads, n) or find_decl([ttext], n, True)]
+        if declared:
+            t = declared[0]
+        elif fwd[k] == k:
+            t = ident
+        sover = override_reason(sheads + [stext], ident)
+        sd, swhere = effective_decl(ident, stext, sheads, sover is not None)
+        agg = next((g for g in aggs if fwd[k][0] == 'a' and g.holds(fwd[k][1])), None)
+        if agg is not None and not any(g.holds(k[1]) for g in aggs if k[0] == 'a'):
+            # the target reads a field of the game-state aggregate, the source a plain global (T-5100)
+            import migrate_globals as mg
+            view = mg.declarations(sd + '\n').get(ident) if sd else None
+            indexed = bool(re.search(r'\b%s\s*\[' % re.escape(ident), code))
+            mp, why = mg.find_mapping(agg, 'D_%08X' % fwd[k][1], view, indexed)
+            if mp is None or mp.inner is not None:
+                return None, 'target field of %s: %s' % (ident, why or 'inside a longer array')
+            mapping[ident] = mp.expr
+            continue
+        mapping[ident] = t
+        if sd is None:       # implicit declaration in the source: a target function defined below still needs one
+            why = declare(t, None)
+            if why:
+                return None, why
+            continue
+        want = re.sub(r'\b%s\b' % re.escape(ident), t, sd)
+        for w in set(re.findall(r'\b[A-Za-z_]\w*\b', strip_comments(want))):
+            if w in BASIC_WORDS or w == t or re.match(r'((D|func)_[0-9A-F]{8}|arg\d+)$', w):
+                continue
+            if not re.search(r'\b%s\b' % re.escape(w), tall):
+                return None, 'declaration of %s uses %s which the target closure lacks' % (ident, w)
+        why = declare(t, want, sover, swhere, ident, value_used(code, ident))
+        if why:
+            return None, why
+    for t, spell in sorted(pseudo.items()):      # globals written for fields of the aggregate
+        arr = spell.endswith('[]')
+        want = 'extern %s %s%s;' % (spell[:-2] if arr else spell, t, '[]' if arr else '')
+        why = declare(t, want)
+        if why:
+            return None, why
+    # the address idiom: *(s16 *)0x801F0D14 stands for %lo(D_801F0D14); the target's address replaces it
+    lit = addr_literal_edits(code, [((s1, a1), (s2, a2)) for (_k1, s1, a1), (_k2, s2, a2) in zip(src.relocs, tgt.relocs)])
+    if lit is None:
+        return None, 'one address literal maps to two target addresses'
+    text = body
+    if lit:
+        text = re.sub(r'\b0[xX]([0-9A-Fa-f]{8})\b(?![\w.])',
+                      lambda m: ('0x%08X' % lit[int(m.group(1), 16)]) if int(m.group(1), 16) in lit else m.group(0), text)
     text = re.sub(r'\b(%s)\b' % '|'.join(map(re.escape, sorted(mapping, key=len, reverse=True))),
-                  lambda m: mapping[m.group(1)], body)
-    return dict(text=text, tgtfile=tfile, name=tgt.name, decls=decls, src=src.name), None
+                  lambda m: mapping[m.group(1)], text)
+    # the target's own prototype: the definition must agree with it, and a call earlier in the file
+    # would otherwise make the function `int f()` (implicit declaration) before the definition
+    retype = []
+    hdr = find_decl(theads, tgt.name) or find_decl([ttext], tgt.name, True)
+    if hdr:
+        sret = return_type(text, tgt.name)
+        hret = return_type(hdr, tgt.name)
+        if sret and hret and norm(sret) != norm(hret):
+            if hret == 'void' and sret != 'void':
+                # the callers' evidence said void, the matched twin returns a value: the header learns it
+                for hp in thp:
+                    if find_decl([read(root, hp)], tgt.name):
+                        retype.append((hp, tgt.name, hret, sret))
+                        break
+            else:
+                text = retype_definition(text, hdr, tgt.name)
+    else:
+        proto = prototype_of(text, tgt.name)
+        if proto:
+            if is_main_symbol(root, tgt.name, tgt.unit) and os.path.exists(os.path.join(root, 'include/main_api.h')):
+                dest = 'include/main_api.h'
+            elif tmain:
+                dest = 'include/game.h'
+            else:
+                dest = 'include/ovl/%s.h' % tgt.unit
+            decls.append((dest, proto))
+    return dict(text=text, tgtfile=tfile, name=tgt.name, decls=decls, local=local, retype=retype,
+                src=src.name), None
+
+
+def add_local(text, local):
+    """`text` of a C file with the plan's file-local additions: the override defines before its first
+    #include, the typedefs and declarations after its last one. Anything already there is kept as is."""
+    defs = [d for kind, d in local if kind == 'define' and d not in text]
+    blocks = []
+    for kind, b in local:
+        if kind == 'block' and b not in text and b not in blocks:
+            blocks.append(b)
+    if defs:
+        m = re.search(r'^[ \t]*#[ \t]*include\b', text, re.M)
+        at = m.start() if m else 0
+        text = text[:at] + '\n'.join(defs) + '\n' + text[at:]
+    if blocks:
+        last = None
+        for m in re.finditer(r'^[ \t]*#[ \t]*include\b[^\n]*\n', text, re.M):
+            last = m
+        at = last.end() if last else 0
+        text = text[:at] + '\n' + '\n'.join(blocks) + '\n' + text[at:]
+    return text
 
 
 def apply_plan(root, plan):
@@ -407,9 +782,21 @@ def apply_plan(root, plan):
         t = fh.read()
     saved[plan['tgtfile']] = t
     pat = re.compile(r'^INCLUDE_ASM\("[^"]*",\s*%s\);[ \t]*$' % re.escape(plan['name']), re.M)
-    t = pat.sub(lambda m: plan['text'].rstrip('\n'), t, count=1)
+    late = [b for kind, b in plan.get('local', ()) if kind == 'late' and b not in t]
+    body = '\n'.join(late) + '\n\n' + plan['text'].rstrip('\n') if late else plan['text'].rstrip('\n')
+    t = pat.sub(lambda m: body, t, count=1)
+    t = add_local(t, plan.get('local', ()))
     with open(tp, 'w') as fh:
         fh.write(t)
+    for hdr, name, old, new in plan.get('retype', ()):
+        hp = os.path.join(root, hdr)
+        with open(hp) as fh:
+            h = fh.read()
+        saved.setdefault(hdr, h)
+        h2 = re.sub(r'^([ \t]*)%s(\s+%s\s*\()' % (re.escape(old), re.escape(name)), lambda m: m.group(1) + new + m.group(2), h,
+                    count=1, flags=re.M)
+        with open(hp, 'w') as fh:
+            fh.write(h2)
     for dest, line in plan['decls']:
         hp = os.path.join(root, dest)
         if not os.path.exists(hp):
@@ -445,6 +832,71 @@ def restore(root, saved):
             continue
         with open(os.path.join(root, rel), 'w') as fh:
             fh.write(text)
+
+
+def snapshot_include(root):
+    """{relative path: text} of every file under include/ (restored when a batch is rejected)."""
+    out = {}
+    for d, _dirs, files in os.walk(os.path.join(root, 'include')):
+        for f in files:
+            p = os.path.join(d, f)
+            with open(p, errors='surrogateescape') as fh:
+                out[os.path.relpath(p, root)] = fh.read()
+    return out
+
+
+def restore_include(root, snap):
+    for rel, text in snap.items():
+        p = os.path.join(root, rel)
+        with open(p, errors='surrogateescape') as fh:
+            have = fh.read()
+        if have != text:
+            with open(p, 'w', errors='surrogateescape') as fh:
+                fh.write(text)
+    for d, _dirs, files in os.walk(os.path.join(root, 'include')):
+        for f in files:
+            rel = os.path.relpath(os.path.join(d, f), root)
+            if rel not in snap:
+                os.remove(os.path.join(root, rel))
+
+
+def needs_header_sync(plans):
+    """True when the plans declared a main-exe symbol in main_api.h or added an override: the other
+    headers and the guards of main_api.h must follow (tools/sync_protos.py --fix does that)."""
+    return any(d[0] == 'include/main_api.h' for p in plans for d in p['decls']) or \
+        any(r[0] == 'include/main_api.h' for p in plans for r in p.get('retype', ())) or \
+        any(k == 'define' for p in plans for k, _t in p.get('local', ()))
+
+
+def views_before(root, plans):
+    """sync_protos snapshot of the views every file sees, taken before the plans are written (None when no
+    header sync will run): the baseline for the risky-change check."""
+    if not needs_header_sync(plans):
+        return None
+    import sync_protos
+    cwd = os.getcwd()
+    try:
+        os.chdir(root)
+        return sync_protos.snapshot(sync_protos.Model('include', 'src'))
+    finally:
+        os.chdir(cwd)
+
+
+def sync_headers(root, plans, log=print, before=None):
+    """Run sync_protos --fix when needed. Returns a reason when it left a risky view change or failed."""
+    if not needs_header_sync(plans):
+        return None
+    import sync_protos
+    cwd = os.getcwd()
+    try:
+        os.chdir(root)
+        risky = sync_protos.run_write('include', 'src', fix=True, log=lambda *a: None, before=before,
+                                      ignore={p['tgtfile'] for p in plans})
+    except Exception as e:      # noqa: BLE001 - a broken header state is a rejection, not a crash
+        return 'sync_protos failed: %s' % e
+    finally:
+        os.chdir(cwd)
+    return 'sync_protos reports %d risky view change(s)' % risky if risky else None
 
 
 def build_ok(root, unit):
@@ -483,6 +935,61 @@ def plan_all(root, funcs, cache):
     return plans, skipped, stats
 
 
+def apply_all(root, plans, check, verbose, log=print, describe=None):
+    """Write the plans unit by unit; with `check` build each unit and take back what does not match
+    (all of a unit first, then one by one). Headers are brought in line by sync_protos --fix when a
+    plan declared a main-exe symbol or an override; the whole include/ tree is restored on rejection.
+    Returns the kept plans."""
+    describe = describe or (lambda p: '%s <- %s (%s)' % (p['name'], p['src'], p['unit']))
+    for p in plans:
+        log('PLAN ' + describe(p))
+    by_unit = {}
+    for p in plans:
+        by_unit.setdefault(p['unit'], []).append(p)
+    kept = []
+
+    def write(ps):
+        """(saved files, include snapshot, problem) after writing the plans and fixing the headers."""
+        snap = snapshot_include(root)
+        before = views_before(root, ps)
+        saved = {}
+        for p in ps:
+            for k, v in apply_plan(root, p).items():
+                saved.setdefault(k, v)
+        return saved, snap, sync_headers(root, ps, before=before)
+
+    def undo(saved, snap):
+        restore(root, saved)
+        restore_include(root, snap)
+
+    for unit, ps in sorted(by_unit.items()):
+        saved, snap, problem = write(ps)
+        if not check:
+            kept += ps
+            continue
+        ok, out = (False, problem) if problem else build_ok(root, unit)
+        if ok:
+            kept += ps
+            log('OK %s: %d copies' % (unit, len(ps)))
+            continue
+        if verbose and len(ps) == 1:
+            log('\n'.join(out.splitlines()[-12:]))
+        undo(saved, snap)
+        log('FAIL %s: reverting, retrying one by one' % unit)
+        for p in ps:
+            saved, snap, problem = write([p])
+            ok, out = (False, problem) if problem else build_ok(root, unit)
+            if ok:
+                kept.append(p)
+                log('  keep %s' % p['name'])
+            else:
+                if verbose:
+                    log('\n'.join(out.splitlines()[-12:]))
+                undo(saved, snap)
+                log('  reject %s' % p['name'])
+    return kept
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--root', default='.')
@@ -511,39 +1018,7 @@ def main(argv=None):
     kept = []
     if a.apply:
         # repeated rounds: a copy can make a new source for another group member
-        for p in plans:
-            print('PLAN %s <- %s (%s)' % (p['name'], p['src'], p['unit']))
-        by_unit = {}
-        for p in plans:
-            by_unit.setdefault(p['unit'], []).append(p)
-        for unit, ps in sorted(by_unit.items()):
-            saved_all = {}
-            for p in ps:
-                for k, v in apply_plan(root, p).items():
-                    saved_all.setdefault(k, v)
-            if not a.check:
-                kept += ps
-                continue
-            ok, out = build_ok(root, unit)
-            if ok:
-                kept += ps
-                print('OK %s: %d copies' % (unit, len(ps)))
-                continue
-            if a.v and len(ps) == 1:
-                print('\n'.join(out.splitlines()[-12:]))
-            restore(root, saved_all)
-            print('FAIL %s: reverting, retrying one by one' % unit)
-            for p in ps:
-                saved = apply_plan(root, p)
-                ok, out = build_ok(root, unit)
-                if ok:
-                    kept.append(p)
-                    print('  keep %s' % p['name'])
-                else:
-                    if a.v:
-                        print('\n'.join(out.splitlines()[-12:]))
-                    restore(root, saved)
-                    print('  reject %s' % p['name'])
+        kept = apply_all(root, plans, a.check, a.v)
         print('applied %d of %d' % (len(kept), len(plans)))
     return 0
 

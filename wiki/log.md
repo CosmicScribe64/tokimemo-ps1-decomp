@@ -638,3 +638,11 @@ Verdict: both wave-4 blockers are source forms; no flag or pass. 28 functions ma
 
 ## [2026-10-10] ticket | T-7020 (In Progress -> In Review -> Done)
 25 helper matches applied (total 53, 3721 -> 3774 of 6958); one-line loops marked FAKE. Clean rebuild 27/27 OK, headers OK, globals OK; sync_protos --check-branch OK. Inline review in [[tickets/T-7020-loop-unrolling-and-scheduling]], no findings open.
+## [2026-10-10] ticket | T-7030 Tooling wave-4 bug fixes (created -> In Progress)
+[[tickets/T-7030-tooling-wave-4-bug-fixes]] created and claimed (worktree r4-fixes).
+
+## [2026-10-10] build | T-7030 tooling fixes (wave 4)
+Fixed in worktree r4-fixes: `tools/sync_protos.py` keeps comments and other lines it does not own; `tools/dupes.py` and `tools/neardupes.py` copy game-state fields, override views, file-local typedefs, address literals and prototypes (163 and 25 copies applied, 188 functions, progress 3721 -> 3909 of 6958; before 0 of 5 and 0 of 15); `tools/funcdiff.py` builds `expected/` from the original asm; `tools/permute.py` enforces `--time`, verifies score-0 candidates with ninja and funcdiff, and reports the cause of the discrepancy (several statements on one source line); `tools/m2c.py` takes callee argument counts from the callee's asm (`tools/m2c_args.py`) and repairs the post-increment order. Findings in [[matching-notes]] ("Tooling fixes, wave 4 (T-7030)"), usage in [[decompile-workflow]] and [[build-system]].
+
+## [2026-10-10] ticket | T-7030 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7030-tooling-wave-4-bug-fixes]]; no open findings. Branch r4-fixes, not merged.

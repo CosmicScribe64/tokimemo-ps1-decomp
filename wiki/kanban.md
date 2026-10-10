@@ -39,6 +39,7 @@ kanban-plugin: board
 - [x] [[tickets/T-7020-loop-unrolling-and-scheduling|T-7020 Loop unrolling and instruction scheduling]]
 
 - [x] [[tickets/T-7010-game-state-view-audit|T-7010 Game-state struct audit: base vs separate symbols]]
+- [x] [[tickets/T-7030-tooling-wave-4-bug-fixes|T-7030 Tooling wave-4 bug fixes]]
 - [x] [[tickets/T-6020-wave-4-list-2|T-6020 Wave 4: list 2]]
 - [x] [[tickets/T-6060-wave-4-list-6|T-6060 Wave 4: list 6]]
 - [x] [[tickets/T-6030-wave-4-list-3|T-6030 Wave 4: list 3]]
