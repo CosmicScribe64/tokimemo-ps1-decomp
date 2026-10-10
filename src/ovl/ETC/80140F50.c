@@ -25,7 +25,18 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80140FD8);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141154);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_801413FC);
+void func_801413FC(void) {
+    func_800AE0B0("データセーブ");
+    if (D_800E6280.unk_1124 != 0) {
+        func_8004482C();
+        func_80042878(0x12);
+        return;
+    }
+    func_8004E58C();
+    func_80057390(0);
+    D_800E6280.unk_03A = 0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141468);
 
