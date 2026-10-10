@@ -2,7 +2,24 @@
 #include "game.h"
 #include "main_only.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_80085E30);
+void func_80085E30(s32 arg0, s32 arg1) {
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048E78();
+    back_clear_switch(arg0);
+    D_800E62B6 = 0;
+    D_800E62B7 = 0;
+    D_800E62B8 = 0;
+    D_800E62BA = 0x80;
+    func_8004E58C();
+    D_800E7322 = 0;
+    if (arg1 != 0) {
+        tpage_buf_clear_all();
+        return;
+    }
+    tpage_buf_clear();
+}
 
 void Vblnk_Timer_Init(void) {
     D_800E36F0 = D_800E7374;

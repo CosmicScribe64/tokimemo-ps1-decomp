@@ -784,5 +784,13 @@ extern u8 D_801217A0[];
 void func_8009F0A4();
 void SetSemiTrans();
 void SetShadeTex();
+extern u32 D_8011F544;
+extern u32 D_8011F500;
+extern u32 D_801217F4;
+extern u8 D_800E62B6;
+extern u8 D_800E62B7;
+extern u8 D_800E62B8;
+void tpage_buf_clear_all(void);
+void func_8009F0F4();
 
 #endif /* GAME_H */
