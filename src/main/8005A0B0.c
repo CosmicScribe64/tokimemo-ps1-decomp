@@ -712,7 +712,37 @@ void join_club_exit(void) {
     func_80042878(0x30);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060958);
+void func_80060958(void) {
+    s32 r;
+
+    func_8004E58C();
+    func_8006612C("自宅");
+    gnsx(D_800E6280.unk_0D4);
+    parameter_show_init();
+    hizuke_init();
+    message_window_init();
+    parameter_disp_switch(1);
+    func_8006BC28(0);
+    func_8006509C();
+    icon_disp_switch(1);
+    func_8006CE84();
+    icon_can_use_set(0, 0);
+    icon_can_use_set(D_800E6280.unk_F68.w & 0xF, 1);
+    tpage_buf_clear();
+    sndisp("最近女の子の間で 変な噂が流れているらしい…）", 0, 0x1F);
+    k_disp_start(1);
+    r = dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
+    if (r != -1) {
+        if (r == 0 || r == 1) {
+            dec_bg_show_set(0, r);
+            set_dec_bri(0x80);
+            func_80042808();
+        }
+    } else {
+        func_8004284C();
+    }
+    k_disp_start(2);
+}
 
 void func_80060A84(void) {
     if (func_800460CC() & 1) {
