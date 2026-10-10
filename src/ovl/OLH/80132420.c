@@ -76,11 +76,44 @@ void func_80132614(void) {
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132420", func_80132744);
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132420", func_80132884);
+s32 func_80132884(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013A704, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　マウスライク…カーソルが、方向キーの", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "上下左右に反応して動きます。", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132420", func_80132954);
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132420", func_80132AE8);
+s32 func_80132AE8(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013A70C, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　メニューＢ…メニュー選択時に方向キー", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "を押すと、その方向のメニューアイテムに", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "カーソルが移動します。", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132420", func_80132BD4);
 

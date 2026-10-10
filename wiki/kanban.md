@@ -45,6 +45,7 @@ kanban-plugin: board
 - [x] [[tickets/T-8030-wave-5-list-3|T-8030 Wave 5: list 3]]
 
 - [x] [[tickets/T-8020-wave5-list-2|T-8020 Wave 5: list 2]]
+- [ ] [[tickets/T-8080-wave-5-list-8|T-8080 Wave 5: list 8]]
 - [x] [[tickets/T-7020-loop-unrolling-and-scheduling|T-7020 Loop unrolling and instruction scheduling]]
 
 - [x] [[tickets/T-7000-shared-constants-lui-at-parameter-copies|T-7000 Shared constants, lui $at sharing and parameter copies]]

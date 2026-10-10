@@ -261,7 +261,33 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134F6C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135168);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135434);
+void func_80135434(s32 arg0) {
+    s32 col;
+
+    if (arg0 != 0) {
+        col = 0x90002;
+    } else {
+        col = 0x8081F;
+    }
+    func_80049A40(-0x9D, -0x30, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, -0x10, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, 0x10, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, 0x30, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9D, 0x50, 0x1B, 0xF, 4, col, 0x83);
+    func_80049A40(-0x9A, -0x6A, 0x130, 0x20, 4, col, 0x83);
+    func_80049A40(-0x7F, -0x40, 0x11D, 0x70, 4, col, 0x83);
+    if (D_8014CCC8 == 3) {
+        func_80049A40(-0x7A, 0x36, 0x50, 0x30, 4, col, 0x83);
+        func_80049A40(-0x1A, 0x36, 0x50, 0x30, 4, col, 0x83);
+        func_80049A40(0x46, 0x36, 0x50, 0x30, 4, col, 0x83);
+    }
+    func_800494BC(0, 0, 4, 0, 0);
+    if (!(D_800E6280.unk_F88 & 0x20) && !(D_800E6280.unk_F88 & 0x800)) {
+        if (!(D_800E6280.unk_F88 & 0x40)) {
+            func_80134F6C();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135650);
 
@@ -288,7 +314,18 @@ void func_8013621C(s32 arg0) {
     func_80049A40(-0x9D, 0x50, 0x1C, 0x10, 4, color, 0x83);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801362D0);
+void func_801362D0(void) {
+    func_8004E58C();
+    func_8013635C();
+    D_8014CC70 = 0;
+    func_8004E788(-0x98, -0x68, 0xA, "誕生日と血液型も教えてね？", 0);
+    func_80046290(D_8014CC50, D_8014CC54, 0);
+    func_80044750(0x300);
+    func_8004EA98();
+    func_801372A0(0);
+    func_8004EAD4(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_8013635C);
 
@@ -307,7 +344,31 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80136808);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801372A0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137608);
+void func_80137608(s32 arg0) {
+    s32 pad; /* FAKE: unused locals around the two cursor values, which the original reads without ever assigning them (T-3330 layout) */
+    s32 sp30;
+    s32 sp2C;
+    s32 pad2;
+
+    if (sp30 >= -0x9D && sp30 < -0x80 && sp2C >= 0x51 && sp2C < 0x60) {
+        D_8012093F |= 0x80;
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_801377E8();
+            func_8004284C();
+        }
+    } else {
+        D_8012093F &= 0x7F;
+    }
+    if (D_8014CC70 == 3) {
+        D_801208FB |= 0x80;
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_801377E8(arg0);
+            func_8004284C();
+        }
+    } else {
+        D_801208FB &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137708);
 
@@ -368,11 +429,50 @@ void func_80138268(s32 arg0) {
 void func_80138330(void) {
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138338);
+void func_80138338(void) {
+    s32 pad; /* FAKE: unused local, the original frame has the spill slots 4 bytes higher (T-3330) */
+    s32 x;
+    s32 y;
+
+    x = D_8011ECF6;
+    y = D_8011ECFA;
+    func_8006BA40();
+    if (x >= -0x2F && x < 0x10 && y >= 0x51 && y < 0x60) {
+        D_801206BA = -0xA;
+    }
+    if (x >= 0x11 && x < 0x50 && y >= 0x51 && y < 0x60) {
+        D_801206BA = 0x2E;
+    }
+    if (D_800E6280.unk_F88 & 0x800) {
+        func_80044750(0x501);
+        func_80042808();
+    } else if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        if (x >= -0x2F && x < 0x10 && y >= 0x51 && y < 0x60) {
+            func_80044750(0x501);
+            func_80042808();
+        }
+        if (x >= 0x11 && x < 0x50 && y >= 0x51 && y < 0x60) {
+            func_80042940(0);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138488);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801385A8);
+void func_801385A8(void) {
+    func_8004E58C();
+    D_8014CC70 = 0;
+    func_8004E788(-0x98, -0x68, 0xA, "藤崎詩織の誕生日と血液型は覚えてる？", 0);
+    func_8013635C();
+    func_80046290(D_8014CC58, D_8014CC5C, 0);
+    func_80044750(0x300);
+    func_8004EA98();
+    func_801372A0(1);
+    func_8004EAD4(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138634);
 
@@ -380,7 +480,35 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138714);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801387F4);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138A7C);
+void func_80138A7C(void) {
+    s32 pad; /* FAKE: unused local, the original frame has the spill slots 4 bytes higher (T-3330) */
+    s32 x;
+    s32 y;
+
+    x = D_8011ECF6;
+    y = D_8011ECFA;
+    func_8006BA40();
+    if (x >= -0x2F && x < 0x10 && y >= 0x51 && y < 0x60) {
+        D_801206BA = -0xA;
+    }
+    if (x >= 0x11 && x < 0x50 && y >= 0x51 && y < 0x60) {
+        D_801206BA = 0x2E;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        if (x >= -0x2F && x < 0x10 && y >= 0x51 && y < 0x60) {
+            func_80044750(0x501);
+            func_8004284C();
+        }
+        if (x >= 0x11 && x < 0x50 && y >= 0x51 && y < 0x60) {
+            func_80042940(0);
+        }
+    } else if (D_800E6280.unk_F88 & 0x800) {
+        func_80044750(0x501);
+        func_8004284C();
+    } else if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+    }
+}
 
 void func_80138BCC(void) {
     func_80044750(5);

@@ -1,7 +1,25 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80156CC0", func_80156CC0);
+void func_80156CC0(void) {
+    switch (D_8015EDD8) {
+    case 0:
+        func_800AE0F0(D_8015E828, "宇宙人「Ж○ξ♂×♀？〆£∞Й！");
+        func_8014B738(D_8015E8F0, 1, 0x5A);
+        func_8013F15C(0x512, 1, 0);
+        func_8014EF3C();
+        return;
+    case 1:
+        func_8014F178(0);
+        return;
+    case 2:
+        func_8014F080(0x14);
+        return;
+    case 3:
+        func_8014EF8C();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80156CC0", func_80156D78);
 

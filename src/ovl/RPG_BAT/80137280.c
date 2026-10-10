@@ -7,7 +7,27 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801373A8);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801374D0);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801375F8);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801375F8(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E9E0, "？？「ちょっと待てぇーい！");
+        func_8014B738(D_8015EB70, 1, 0xA0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1A00008E, 0x14000095, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(0);
+        return;
+    case 3:
+        func_8013F220();
+        func_8014F500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801376D4);
 
@@ -17,7 +37,27 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137AC8);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137C44);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137E74);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_80137E74(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E9E0, "番長「なにぃぃぃー！？");
+        func_8014B738(D_8015EB70, 1, 0xA0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1A000074, 0x1100007A, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(0);
+        return;
+    case 3:
+        func_8013F220();
+        func_8014F500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137F50);
 

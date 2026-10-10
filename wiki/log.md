@@ -711,3 +711,11 @@ Matched 21 of 133 listed functions (6,192 bytes) in worktree w5-2: main `func_80
 
 ## [2026-10-10] ticket | T-8020 (In Progress -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8020-wave5-list-2]]; no open findings. Branch w5-2, not merged.
+## [2026-10-10] ticket | T-8080 started
+[[tickets/T-8080-wave-5-list-8]] moved to In Progress (wave-5 agent 8).
+
+## [2026-10-10] build | T-8080 matches (wave 5, list 8)
+56 functions, 16320 bytes matched in [[tickets/T-8080-wave-5-list-8]]: main 8005A0B0 menu and state machines, EVENT, GYOZI, RPG_BAT scene scripts, ETC, OLH, NAME_ENT, SHOUGATU. Progress 3967 -> 4023 functions. New patterns (`s32` return without a value, `*(u8 *)&D_800E6280.field` views, function-pointer tables with the index passed on, pad rules for menu arrays) in [[matching-notes]]; 19 open cases in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-8080 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8080-wave-5-list-8]]; no open findings. Branch w5-8, not merged.

@@ -193,3 +193,7 @@ void func_8013F250();
 void func_8013F220();
 
 #endif
+extern u8 D_8015E9E0[];
+extern u8 D_8015EB70[];
+extern u8 D_8015E828[];
+extern u8 D_8015E8F0[];

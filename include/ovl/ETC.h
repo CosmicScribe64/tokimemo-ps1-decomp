@@ -1022,3 +1022,12 @@ extern s32 *D_801500C4;
 void func_8013FC64(s32 a, s32 b, s32 c, s32 d);
 void func_8013E524(s32 a, s32 b);
 #endif /* OVL_ETC_H */
+extern u8 D_80150D20[];
+extern s32 D_801508BC[];
+extern u8 D_80150904[];
+extern u8 D_8015091C[];
+extern u8 D_8015096C[];
+extern u8 D_80150984[];
+extern u8 D_80150954[];
+extern u8 D_801508EC[];
+s32 func_80149468();
