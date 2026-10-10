@@ -1,7 +1,15 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143110", func_80143110);
+typedef struct {
+    s32 w;
+} Word4; /* size 0x4 */
+extern Word4 D_80148970;
+
+void func_80143110(void) {
+    *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143110", func_80143160);
 

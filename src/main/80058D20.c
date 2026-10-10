@@ -24,7 +24,13 @@ INCLUDE_ASM("asm/nonmatchings/main/80058D20", initModelingData_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058F9C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80059048);
+void func_80059048(void) {
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        D_80122640[i * 4] = 0x80000000;
+    }
+}
 
 void func_8005907C(void) {
     func_80098380();

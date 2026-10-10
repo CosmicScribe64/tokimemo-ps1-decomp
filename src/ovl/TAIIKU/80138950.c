@@ -3,7 +3,20 @@
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138950);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138A34);
+typedef struct {
+    void (*f[9])();
+} FnTbl9; /* size 0x24 */
+extern FnTbl9 D_80149E08;
+
+void func_80138A34(void) {
+    s32 idx;
+    s32 pad; /* FAKE: second word above tbl (T-3330 two-word case); real source unknown. T-4030 */
+    FnTbl9 tbl;
+
+    tbl = D_80149E08;
+    idx = D_800E7389;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138AA8);
 

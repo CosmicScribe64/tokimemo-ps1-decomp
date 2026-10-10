@@ -23,6 +23,9 @@
 #include "libgpu.h"
 
 /* ---- globals ---- */
+extern s32 D_8007E7D0[];
+extern s32 D_8007E810[];
+extern s32 D_8007E850[];
 extern s8 D_8008093C;
 extern u16 D_80094714;
 extern u16 D_80094718;
@@ -339,6 +342,12 @@ extern s32 D_800E7510;
 extern s32 D_800E7518;
 extern s32 D_800E751C;
 extern s32 D_800E7520;
+extern s32 D_800E753C;
+extern s32 D_800E7540;
+extern s32 D_800E7544;
+extern s32 D_800E7548;
+extern s32 D_800E754C;
+extern s32 D_800E7550;
 extern u8 D_800E78BC[];
 extern s32 D_800E793C;
 extern s32 D_800E7940;
@@ -391,6 +400,7 @@ extern s32 D_800EB0A0;
 extern s32 D_800EB0A4;
 extern s8 D_800EB0AF;
 extern u8 D_800EC190[];
+extern s32 D_800EECB4;
 extern s32 D_800EECBC;
 extern s32 D_800EECC0;
 extern s32 D_800EECC8;
@@ -772,6 +782,7 @@ extern u32 D_801220D0;
 extern s16 D_801220EC;
 extern s16 D_801220EE;
 extern s32 D_801220F0;
+extern u32 D_80122640[];
 extern s32 D_80122740;
 extern s32 D_80122744;
 extern s32 D_80122748;

@@ -258,7 +258,10 @@ void func_800F7074(void) {
     func_80049B20(D_800EECBC, 1, 0);
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F6000", func_800F70F0);
+void func_800F70F0(void) {
+    func_800143DC(1, 0xB19B, 0xB178, D_8007E7D0[D_800EECB4], D_8007E810[D_800EECB4], D_8007E850[D_800EECB4]);
+    func_80011DFC();
+}
 
 void func_800F715C(void) {
     if (func_8001496C() == 1) {

@@ -216,3 +216,5 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | NAME_ENT | `func_80134110` | promo | range checks on two s16 globals, early-out `or v0,v1,zero` return of the first global in $v1 (implicit int, no return): IDO keeps it in $v0 and takes other registers (w3-3, T-4030) |
 | 80059710 | `MouseState` | regorder | pointer array element loaded into $a2, return value 0 kept in $v1 (`move v0,v1` at the end), element address in $v0 reused for reloads; IDO uses $v1/$v0/$a2 in another order (w3-3, T-4030) |
 | TT | `func_8013C764` | regorder | two narrow (masked 0xFFFF) arguments copied back to $a0/$a1 (`or a1,t7` then `or a0,t6`); IDO moves the first one to $a2 or swaps the copy order (w3-3, T-4030) |
+| SHOUGATU | `func_801345C8` | regorder | switch/compare chain (0,1 skip; 2 and default) on `f() & 0x7F`: original keeps the selector in $t7, IDO puts it in $v1 (w3-3, T-4030) |
+| TACO | `func_80133410` | regorder | 16-record loop `p[i].unk13 &= ~0x20` unrolled 4x: same code, but IDO schedules the first record's load/and after the other three (w3-3, T-4030) |
