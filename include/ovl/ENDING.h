@@ -10,7 +10,7 @@
 
 extern u8 D_8013C3E0;
 s32 set_kanji_string(s16 arg0, s32 arg1, s32 arg2, void *arg3, s32 arg4);
-extern s32 D_8013C360;
+extern u32 D_8013C360; /* compares take their own constant register: unsigned (T-9020) */
 extern s8 D_8013C364;
 void func_80132000(void);
 void func_80133C10(void);
@@ -26,7 +26,7 @@ extern s32 D_8013C34C;
 extern s32 D_8013C350;
 extern s32 D_8013C354;
 extern s32 D_8013C358;
-extern s32 D_8013C35C;
+extern s16 D_8013C35C; /* read with lh/sh only (T-8080, T-9020) */
 void func_80132B04(s32 arg0, s32 arg1, s32 arg2);
 extern u8 D_8013CA38;
 
