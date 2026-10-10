@@ -68,6 +68,31 @@ typedef struct Rec38 {
     /* 0x0C */ u8 unk_0C[0x2C];
 } Rec38; /* size 0x38 */
 
+/* 0x24-byte record of the table at D_801217D0 (at least 12 records: ENDING walks 12; indexed with
+ * stride 0x24, and code that reads entry i - 1 makes splat name D_801217AC). Record 0 is set field by
+ * field in func_8005AD70; records 0-5 have a flag in bit 31 of unk_00. */
+typedef struct Rec24 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ s16 unk_10;
+    /* 0x12 */ s16 unk_12;
+    /* 0x14 */ u8 unk_14;
+    /* 0x15 */ u8 unk_15;
+    /* 0x16 */ u8 unk_16;
+    /* 0x17 */ u8 pad17;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s32 unk_20;
+} Rec24; /* size 0x24 */
+
 /* ---- globals ---- */
 extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
@@ -927,34 +952,16 @@ extern s8 D_80121685;
 extern s8 D_8012168B;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
-extern s32 D_801217D0; /* first word of a table of 36-byte sprite entries; byte users take the address: (u8 *)&D_801217D0 + idx * 36 */
-extern s16 D_801217D4;
-extern s16 D_801217D6;
-extern s16 D_801217D8;
-extern s16 D_801217DA;
-extern s16 D_801217DC;
-extern u8 D_801217DE;
-extern u8 D_801217DF;
-extern s16 D_801217E0;
-extern s16 D_801217E2;
-extern u8 D_801217E4;
-extern u8 D_801217E5;
-extern u8 D_801217E6;
-extern s16 D_801217E8;
-extern s16 D_801217EA;
-extern s16 D_801217EC;
-extern s16 D_801217EE;
-extern s32 D_801217F0;
-extern s32 D_801217F4;
+extern Rec24 D_801217D0[]; /* at least 12 records */
 extern s16 D_801217F8;
-extern s32 D_80121818;
-extern s32 D_8012183C;
-extern s32 D_80121860;
-extern s16 D_80121864;
+extern s32 D_80121818; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_8012183C; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s32 D_80121860; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_80121864; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 #ifndef MAIN_API_OVERRIDE_D_80121874
 extern u8 D_80121874;
 #endif
-extern s32 D_80121884;
+extern s32 D_80121884; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 extern s32 D_80121FD4;
 extern u8 D_80121FE8;
 extern u8 D_80121FE9;

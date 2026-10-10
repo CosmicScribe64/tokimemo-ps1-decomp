@@ -372,7 +372,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_init);
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_main);
 
 void sprite_brightness(s16 idx, u8 val) {
-    u8 *p = (u8 *)&D_801217D0 + idx * 36;
+    u8 *p = (u8 *)D_801217D0 + idx * 36;
     p[0x16] = val;
     p[0x15] = val;
     p[0x14] = val;

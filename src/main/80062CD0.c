@@ -8,17 +8,17 @@ void func_80062CD0(s32 arg0) {
     D_800B5A60 = 0;
 }
 
-/* FAKE: indexed views of D_8011F50F and D_801217D0 stop IDO from hoisting the later loads above the stores (see cal_sprite_disp_switch). Real source unknown. T-2090 */
+/* FAKE: D_8011F4CB reached as an indexed view of D_8011F50F (the record 0x44 bytes before) stops IDO from hoisting the later loads above the stores (see cal_sprite_disp_switch). Real source unknown. T-2090 */
 void func_80062D0C(s32 arg0) {
     if (arg0 == 0) {
         D_8011F50F &= 0x7F;
         (&D_8011F50F)[-0x44] &= 0x7F;
-        D_801217D0 |= 0x80000000;
-        (&D_801217D0)[9] |= 0x80000000;
-        (&D_801217D0)[18] |= 0x80000000;
-        (&D_801217D0)[27] |= 0x80000000;
-        (&D_801217D0)[36] |= 0x80000000;
-        (&D_801217D0)[45] |= 0x80000000;
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+        D_801217D0[2].unk_00 |= 0x80000000;
+        D_801217D0[3].unk_00 |= 0x80000000;
+        D_801217D0[4].unk_00 |= 0x80000000;
+        D_801217D0[5].unk_00 |= 0x80000000;
     }
 }
 
@@ -31,37 +31,36 @@ void func_800634FC(void) {
 }
 
 void func_80063520(u32 arg0) {
-    /* FAKE: the fields of the second record entry (+0x24) and +2 are reached through D_801217DC; separate names let as1 hoist the lbu loads above the sh stores. T-4100 */
     switch (arg0) {
     case 0:
-        *(s16 *)((u8 *)&D_801217DC + 0x24) = 7;
-        D_801217DC = 7;
+        D_801217D0[1].unk_0C = 7;
+        D_801217D0[0].unk_0C = 7;
         return;
     case 1:
-        *(s16 *)((u8 *)&D_801217DC + 0x24) = 7;
-        *((u8 *)&D_801217DC + 0x26) += 0x40;
-        D_801217DC = 7;
-        *((u8 *)&D_801217DC + 2) += 0x40;
+        D_801217D0[1].unk_0C = 7;
+        D_801217D0[1].unk_0E += 0x40;
+        D_801217D0[0].unk_0C = 7;
+        D_801217D0[0].unk_0E += 0x40;
         return;
     case 2:
-        *(s16 *)((u8 *)&D_801217DC + 0x24) = 8;
-        D_801217DC = 8;
+        D_801217D0[1].unk_0C = 8;
+        D_801217D0[0].unk_0C = 8;
         return;
     case 3:
-        *(s16 *)((u8 *)&D_801217DC + 0x24) = 8;
-        *((u8 *)&D_801217DC + 0x26) += 0x40;
-        D_801217DC = 8;
-        *((u8 *)&D_801217DC + 2) += 0x40;
+        D_801217D0[1].unk_0C = 8;
+        D_801217D0[1].unk_0E += 0x40;
+        D_801217D0[0].unk_0C = 8;
+        D_801217D0[0].unk_0E += 0x40;
         return;
     case 4:
-        *(s16 *)((u8 *)&D_801217DC + 0x24) = 9;
-        D_801217DC = 9;
+        D_801217D0[1].unk_0C = 9;
+        D_801217D0[0].unk_0C = 9;
         return;
     case 5:
-        *(s16 *)((u8 *)&D_801217DC + 0x24) = 9;
-        *((u8 *)&D_801217DC + 0x26) += 0x40;
-        D_801217DC = 9;
-        *((u8 *)&D_801217DC + 2) += 0x40;
+        D_801217D0[1].unk_0C = 9;
+        D_801217D0[1].unk_0E += 0x40;
+        D_801217D0[0].unk_0C = 9;
+        D_801217D0[0].unk_0E += 0x40;
         return;
     }
 }

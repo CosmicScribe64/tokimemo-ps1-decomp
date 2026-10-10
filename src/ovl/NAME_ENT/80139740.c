@@ -8,7 +8,7 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_801398EC);
 void func_80139AD8(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
 
-    p = (u8 *)&D_801217D0 + arg0 * 36;
+    p = (u8 *)D_801217D0 + arg0 * 36;
     p[0x14] = 0x80;
     p[0x15] = 0x80;
     p[0x16] = 0x80;
