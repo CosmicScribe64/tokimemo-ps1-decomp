@@ -618,3 +618,14 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6070-wave-4-li
 
 ## [2026-10-10] ticket | T-6040 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6040-wave-4-list-4]]; no open findings. Branch w4-4, not merged.
+## [2026-10-10] ticket | T-7000 started (shared constants, lui $at, parameter copies)
+[[tickets/T-7000-shared-constants-lui-at-parameter-copies]] created and claimed by r4-consts (worktree r4-consts), In Progress.
+
+## [2026-10-10] decision | T-7000 build in K&R mode
+The original promotes unsigned char/short to unsigned int (on `lbu`/`lhu` values `sltiu` 1459 against `slti` 3, `srl` 556 against `sra` 0, `divu` 101 against `div` 4): IDO's `-cckr`. `tools/cc.py` adds `-cckr`; `tools/cvt_pass.py` first puts back the widening `CVT` of narrow global loads that IDO's K&R front end drops and the original kept (compare-operand order statistics). 14 matched functions written for ANSI promotion adjusted; clean build 27/27 OK, every other C function unchanged. [[toolchain]], [[matching-notes]] ("K&R promotion rules (T-7000)"), [[original-compiler]].
+
+## [2026-10-10] build | T-7000 verdicts and matches
+(c) parameter copies: K&R narrow parameter passed to a callee without prototype, solved. (a) shared constants: K&R constant types and chain assignment to aggregate elements; `$t6`-style temporaries open. (b) shared `lui $at`: data defined in the sharing file; needs per-object data (T-3052), no pass. 16 functions matched, progress 3721 -> 3737 of 6958. Idioms in [[decompile-workflow]] ("K&R promotion"), data note in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-7000 (In Progress -> In Review)
+[[tickets/T-7000-shared-constants-lui-at-parameter-copies]] In Review; inline review next.

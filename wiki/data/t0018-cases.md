@@ -18,6 +18,8 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 
 Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only globals touched before the first call or branch) and a compare rule; unit-private selectors that the original keeps in `$v0` are written as a switch on a `FAKE` local copy. Batch guidance and numbers: [[matching-notes]], "Selector register rule (T-5010)". Keep recording rows as before: they stay the test set.
 
+Update (T-7000): the build runs IDO in K&R mode with the widening of narrow globals ([[matching-notes]], "K&R promotion rules (T-7000)"). Rows now matched with plain C: TACO `func_8014EDCC`, EVENT `func_8011A2C4`, `func_8011A4A4`, `func_80119600`, `func_80102C0C`, DATE `func_8013BDB4`, TT `func_8013C764`, main `func_8007B5EC`, `SD_DetectCDPeak`. The `li at,k` per compare and the K&R parameter copies are no longer T-0018 shapes; U1 selectors after a call (main `func_800626B0`, `func_8005AE60`) still are.
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |

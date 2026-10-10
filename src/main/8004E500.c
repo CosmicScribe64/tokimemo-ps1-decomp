@@ -21,9 +21,9 @@ s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
         return -1;
     }
     if (str == 0) {
-        D_800B3DC7[D_800B3F60 * 8] = 0;
+        ((Entry8 *)D_800B3DC0)[D_800B3F60].unk_07 = 0;
     } else if (str[0] == 0 || str[1] == 0) {
-        D_800B3DC7[D_800B3F60 * 8] = 0;
+        ((Entry8 *)D_800B3DC0)[D_800B3F60].unk_07 = 0;
     } else {
         ((Entry8 *)D_800B3DC0)[D_800B3F60].unk_02 = y;
         ((Entry8 *)D_800B3DC0)[D_800B3F60].unk_04 = col;
