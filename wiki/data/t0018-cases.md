@@ -717,3 +717,4 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 | VALEN/80132760 | `func_80133670` | regorder | everything but the first argument load: original `lui v0; lbu a0,%lo(D_800E71DF)(v0)`, IDO `lui a0; lbu a0` (member, `*(u8 *)&` view and byte index all the same) (T-9020) |
 | BUNKASAI/80146030 | `func_80146030` | promo | selector `D_80122EB8` in `$v1` and loaded before the stores: plain read gives the order but `$v0`, `*(u32 *)&` view gives `$v1` but loads after the stores (T-9020) |
 | TACO/80134930 | `func_8013546C` | regorder | s8 counter `D_8015EDE8`: IDO sign-extends the reloaded value into a second register (`sll; sra; move`), the original uses it in `$v0` directly (T-9020) |
+| DATE/80156600 | `func_801572E4` | consts | three `D_800E6280` byte fields set to 0x7F: original shares `li v0` after `sw zero`, IDO gives t2/t3/t4 (chain, copies, plain all the same); struct copy and `move v1` schedule also differ (T-9120) |
