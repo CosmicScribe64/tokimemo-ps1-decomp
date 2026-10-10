@@ -379,3 +379,8 @@ New [[tickets/T-2040-wave-2-etc]], In Progress -> Done after the inline code rev
 Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri and dec_bg_cd_read prototypes moved from game.h to include/main_only.h (ETC calls them unprototyped, MASTER keeps its u8 view of set_dec_bri in include/ovl/MASTER.h), six duplicate declarations dropped from include/ovl/ETC.h. Clean build 27/27 OK, 1168/6962.
 ## [2026-10-09] ticket | T-2010 Wave 2: DATE, 278 functions matched
 [[tickets/T-2010-wave2-date]] In Progress -> Done after the inline review (no open findings). `src/ovl/DATE.c`: 278 functions matched (INCLUDE_ASM 637 -> 359), 9 `regorder` rows in [[data/t0018-cases]], new patterns in [[matching-notes]] (section "Wave 2: DATE"). Clean build 27 of 27 sha1 OK, `ninja progress` grand total 901 -> 1179 of 6962.
+## [2026-10-09] ticket | T-2060 Wave 2 SHOUGATU started
+[[tickets/T-2060-wave2-shougatu]] created, In Progress; scope: `src/ovl/SHOUGATU.c`.
+
+## [2026-10-09] ticket | T-2060 Wave 2 SHOUGATU In Progress -> Done
+[[tickets/T-2060-wave2-shougatu]]: 152 SHOUGATU functions matched (overlay 30 -> 182 of 400), 22 T-0018 rows in [[data/t0018-cases]], notes in [[matching-notes]]. Inline review against CODING_STANDARDS: no open findings. Tooling bug: `tools/m2c.py` locates the wrong overlay's asm for shared addresses. Not merged.

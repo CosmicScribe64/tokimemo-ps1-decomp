@@ -23,6 +23,8 @@ kanban-plugin: board
 ## In Progress
 
 
+
+
 ## In Review
 
 
@@ -32,6 +34,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
 - [x] [[tickets/T-2040-wave-2-etc|T-2040 Wave 2: ETC]]
 - [ ] [[tickets/T-2010-wave2-date|T-2010 Wave 2: DATE]]
+- [ ] [[tickets/T-2060-wave2-shougatu|T-2060 Wave 2: SHOUGATU]]
+
 - [ ] [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320 Tooling: work queue and blocker detector]]
 - [ ] [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330 Tooling: m2c context and decomp-permuter]]
 - [ ] [[tickets/T-1310-tooling-object-trailing-padding|T-1310 Tooling: object-trailing padding]]
