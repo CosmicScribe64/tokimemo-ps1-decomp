@@ -752,3 +752,6 @@ Idioms in [[decompile-workflow]] and [[matching-notes]] ("Wave-5 codegen shapes 
 
 ## [2026-10-10] ticket | T-9020 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9020-wave-5-codegen-shapes]]; no open findings. Branch r5-shapes, not merged.
+
+## [2026-10-10] ticket | T-9160 (Backlog -> In Progress)
+Wave 6 list 6 started: [[tickets/T-9160-wave-6-list-6]].

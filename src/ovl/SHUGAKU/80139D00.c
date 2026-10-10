@@ -170,4 +170,16 @@ s32 func_8013A980(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A9E0);
+void func_8013A9E0(void) {
+    u32 temp_t8;
+
+    temp_t8 = (u8)func_80051A68(4) & 0x7F;
+    if (D_800E6280.unk_F5F != 4 || temp_t8 >= 2U) {
+        func_8004284C();
+        return;
+    }
+    D_800E6280.unk_721 = D_800E6280.unk_1109;
+    D_800E6280.unk_722 = D_800E6280.unk_110A + 2;
+    D_800E6280.unk_75D = 4;
+    func_80042908(0xA);
+}

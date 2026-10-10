@@ -93,7 +93,19 @@ void func_80136148(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136178);
+void func_80136178(void) {
+    u32 temp_t8;
+
+    temp_t8 = (u8)func_80051A68(5) & 0x7F;
+    if (D_800E6280.unk_F5F == 5 && temp_t8 < 2U && D_80143B20 == 0) {
+        if (D_800E6280.unk_1104.w++ == 0) {
+            D_80143B00 = 0x2A;
+        }
+        func_801323D4();
+        return;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136204);
 
