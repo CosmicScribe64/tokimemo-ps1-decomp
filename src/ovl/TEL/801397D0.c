@@ -82,7 +82,36 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139FEC);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013A228);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_8013A2F0);
+s32 func_8013A2F0(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80139E3C();
+        func_8004EAAC();
+        func_80050DFC(D_800E6280.unk_0D4);
+        func_80050E8C("しまった！！ デートの場所を 間違えたのか〜。）", 0, 0x1F);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80051DBC();
+        return;
+    case 2:
+        func_8004EAAC();
+        func_80050DFC(D_800E6280.unk_0D4);
+        func_8004500C(0, 0x202);
+        func_80050E8C("おれは、なんという ボケをかまして しまったんだ〜）", 0, 0x1F);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        func_80051DBC();
+        return;
+    default:
+        func_80139920();
+        func_8004284C();
+        break;
+    }
+}
 
 s32 func_8013A40C(void) {
     switch (D_800E6280.unk_110A) {

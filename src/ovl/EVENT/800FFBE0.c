@@ -189,7 +189,35 @@ void func_80100448(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_801004F0);
+void func_801004F0(void) {
+    D_800B1746 = 7;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 8;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_8004BC20(D_800B1746);
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_801204EC;
+    D_8012067C = D_80120508;
+    D_80120680 = D_80120524;
+    func_80078970(D_80094784, "廊下");
+    func_80011DFC();
+}
 
 void func_80100614(void) {
     D_80120678 = D_801204D8;
@@ -229,7 +257,20 @@ void func_80100770(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100888);
+void func_80100888(void) {
+    D_80120678 = D_801204E0;
+    D_8012067C = D_801204FC;
+    D_80120680 = D_80120518;
+    func_80078970(D_800947C4, "遊園地");
+    D_800B0A04[7].unk_06 -= 1;
+    D_800B0A04[7].unk_0A += 0xA;
+    func_8004C250();
+    func_800FFDF0();
+    func_80012D64(D_80121DB4, 0x11, 1, 2, 0);
+    func_8004C46C(D_80121DB8, D_80121DBC, D_80121DC0, D_80121DC4, D_80121DC8, D_80121DCC);
+    func_8004C6B0(D_80121DA8, D_80121DAC, D_80121DA4, D_80121DB0);
+    func_80011DFC();
+}
 
 void func_801009A0(void) {
     D_80120678 = D_801204E4;
