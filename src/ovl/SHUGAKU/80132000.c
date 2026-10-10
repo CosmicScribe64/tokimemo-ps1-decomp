@@ -43,7 +43,19 @@ void func_80132000(void) {
     D_8013B068 = 0x801BAB90;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132274);
+typedef struct {
+    void (*f[70])();
+} FnTbl70; /* size 0x118 */
+extern FnTbl70 D_8013B094;
+
+void func_80132274(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl70 tbl;
+
+    tbl = D_8013B094;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_801322F0);
 
@@ -121,7 +133,23 @@ void func_80132C1C(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132C64);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132D14);
+void func_80132D14(void) {
+    u32 t;
+
+    t = func_80051A68(D_800E71DF);
+    t = t & 0x7F;
+    t = t & 0x7F; /* FAKE: the repeated mask reproduces the original's extra move; real source unknown. T-4070 */
+    if (t >= 2U) {
+        if (t == 2) {
+            D_8013B084 += 2;
+        } else if (t == 3) {
+            D_8013B084 += 4;
+        } else {
+            D_8013B084 += 6;
+        }
+    }
+    func_8004284C();
+}
 
 void func_80132DAC(void) {
     D_800E71DF = D_800E69DD;

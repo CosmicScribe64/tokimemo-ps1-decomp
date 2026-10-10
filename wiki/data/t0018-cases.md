@@ -403,3 +403,11 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | RPG_BAT | `func_80144B7C` | regorder | switch on `D & 0xFFFF0000` with default returning the selector: original keeps the loaded word in $v0 and the masked selector in $t6 (`move v0,t6` in the first delay slot), IDO loads into $v1 (w3-3, T-4030) |
 | GEKO | `func_80144198` | regorder | month/day style helper with a 24-byte local s16 table: the original frame has only the table (no scalar slots, argument kept in $a2); with the five scalar locals IDO spills the argument and moves the table (w3-3, T-4030) |
 | TAIIKU | `func_80140738` | regorder | GsMapModelingData/GsLinkObject4 pair with `arg0 += 4` kept across both calls: the original has the two spilled locals adjacent at sp+0x30/0x2C and spills the incoming argument home at 0x3C; IDO leaves a 4-byte hole between them whatever the declaration order (w3-3, T-4030) |
+| GYOZI | `func_8014494C` | regorder | u32 counter `D++ == 0` loaded into $a0 (`sltiu v1,a0,1; addiu a0,a0,1`) before two struct copies, IDO $v1/$v0; the first copy's address registers also differ (T-4070) |
+| GYOZI | `func_80137188` | promo | `u8` selector from `D & 7` (`v ? v-1 : v`) kept in $v0 across a call and two reloads, IDO $v1 (T-4070) |
+| SHOUGATU | `func_801407C0` | promo | after the table call the original reloads `D_800E738A` into $v1 while the first copy stays in $t1, IDO spills or reuses one register (T-4070) |
+| BUNKASAI | `func_8013B190` | promo | switch selector `D_80122EB8` in $v1, IDO $v0 (the `D \|= 4` entry is a bit-field, matched; T-4070) |
+| TT | `func_80134768` | regorder | temporaries after the two `func_800A0140/70` calls start at $t2 in the original, IDO $t4 (T-4070) |
+| TT | `func_80133C1C` | regorder | constant 1 stored as `sb` and `sh` shares $v0 in the original, IDO loads it twice (T-4070) |
+| OPTION | `func_8013357C` | regorder | dead `li v0,0x60` ahead of a 64-record loop in the original, IDO has none (T-4070) |
+| OPTION | `func_801387E4` | regorder | unsigned byte global read into $v0 before `addiu sp` and returned after `-= 2`, IDO loads it into $a0 (T-4070) |

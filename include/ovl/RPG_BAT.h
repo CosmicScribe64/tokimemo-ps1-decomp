@@ -148,4 +148,11 @@ extern RpgStat D_8015EBFC;
 
 extern s32 D_8015EE0C;
 
+extern s32 D_8015ED3C[];
+
+extern s32 D_8015EBE4;
+
+extern s32 D_8015ED8C[2]; /* [1] is D_8015ED90; one base symbol keeps loads behind stores (T-4070) */
+
+
 #endif

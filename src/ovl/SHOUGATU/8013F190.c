@@ -200,7 +200,17 @@ void func_80141004(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8014102C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_801410B4);
+typedef struct {
+    u8 pad:2;
+    u8 f:1;
+    u8 rest:5;
+} Bits64B8;
+
+void func_801410B4(void) {
+    ((Bits64B8 *)&D_800E64B8)->f = 1;
+    D_80145F2C = 3;
+    func_8004284C();
+}
 
 void func_801410F0(void) {
     if (((u32) D_800E64BA >> 4) == 3) {

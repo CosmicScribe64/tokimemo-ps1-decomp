@@ -199,4 +199,10 @@ void func_8015C0A0();
 
 void func_80143730();
 
+extern u8 D_8015E220;
+
+extern u8 D_8015E221;
+
+extern u8 D_8015E222[];
+
 #endif

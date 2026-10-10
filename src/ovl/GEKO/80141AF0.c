@@ -27,7 +27,22 @@ void func_80141BC0(void) {
     func_80046500();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80141AF0", func_80141BFC);
+typedef struct {
+    void (*f[43])();
+} FnTbl43; /* size 0xAC */
+extern FnTbl43 D_80147560;
+
+void func_80141BFC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl43 tbl;
+
+    tbl = D_80147560;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_8014755C != 0) {
+        func_80063668();
+    }
+}
 
 void func_80141C94(void) {
     func_80046318(0x3D, 0x801B0000, 0x8FB5);
@@ -35,7 +50,19 @@ void func_80141C94(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80141AF0", func_80141CCC);
+void func_80141CCC(void) {
+    D_800B5A60 = 0;
+    func_80138AF8();
+    D_80122CF4 = 0;
+    /* records of 0x44 / 0x24 bytes: indexing from the first symbol keeps IDO from hoisting the loads above the stores (T-4070) */
+    (&D_8011F4CB)[0x44] |= 0x80;
+    D_8011F4CB |= 0x80;
+    D_801217D0 &= 0x7FFFFFFF;
+    (&D_801217D0)[9] &= 0x7FFFFFFF;
+    if ((u32)D_800E7378 % 240U == 0) {
+        func_800638C4();
+    }
+}
 
 void func_80141D74(void) {
     D_800E683E = D_800E69DD;
@@ -47,7 +74,33 @@ void func_80141D74(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80141AF0", func_80141DDC);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80141AF0", func_80141E48);
+void func_80141E48(void) {
+    func_80138AF8();
+    if ((u16)D_800CA154 == 2) {
+        D_800B5A60 = 0;
+        D_80122CF4 = 0;
+        (&D_8011F4CB)[0x44] |= 0x80;
+        D_8011F4CB |= 0x80;
+        D_8011F524 = 0;
+        D_801217D0 &= 0x7FFFFFFF;
+        (&D_801217D0)[9] &= 0x7FFFFFFF;
+        if ((u32)D_800E7378 % 240U == 0) {
+            func_800638C4();
+        }
+    } else {
+        func_800634FC(0);
+        D_80122CF4 = 1;
+        (&D_8011F4CB)[0x44] |= 0x80;
+        D_8011F4CB |= 0x80;
+        D_801217D0 &= 0x7FFFFFFF;
+        (&D_801217D0)[9] &= 0x7FFFFFFF;
+        D_80120652 = 0;
+        D_80120668 = 0;
+        if ((u32)D_800E7378 % 240U == 0x78) {
+            func_80067DD4();
+        }
+    }
+}
 
 void func_80141FB8(void) {
     D_800CA150 = (u16) D_800CA150 + D_800E71DF;

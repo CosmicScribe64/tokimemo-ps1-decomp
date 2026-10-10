@@ -1,7 +1,22 @@
 #include "common.h"
 #include "ovl/DATE2.h"
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/801326F0", func_801326F0);
+typedef struct {
+    void (*f[31])();
+} FnTbl31; /* size 0x7C */
+extern FnTbl31 D_8013A440;
+
+void func_801326F0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl31 tbl;
+
+    tbl = D_8013A440;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_800E7389 == 0 && (u8)D_800E738A < 0x13U) {
+        func_80066C08(1);
+    }
+}
 
 void func_8013279C(void) {
     s32 t;
@@ -19,7 +34,16 @@ void func_8013279C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/801326F0", func_8013281C);
+s32 func_8013281C(void) {
+    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+        func_800573AC();
+        func_8004284C();
+        D_800E738A -= 3;
+        return 0;
+    }
+    func_8005751C(0);
+    func_8004284C();
+}
 
 void func_801328A8(void) {
     dec_bg_show_switch(0);

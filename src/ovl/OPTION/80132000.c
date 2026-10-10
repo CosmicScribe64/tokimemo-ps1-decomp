@@ -13,7 +13,32 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801320C0);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132384);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801324E8);
+void func_801324E8(void) {
+    s32 i;
+    s32 n;
+    s16 *p;
+
+    if (D_80120676 >= -0x11F) {
+        D_80120676 -= 8;
+    }
+    i = 0;
+    do {
+        n = i + 1;
+        if ((n ^ 0) != D_800E7389) { /* FAKE: '^ 0' swaps the beq operand order to the original's; real source unknown. T-4070 */
+            p = func_8004E970(i);
+            if (p[0] >= -0xF7) {
+                p[0] -= 8;
+            }
+        } else {
+            p = func_8004E970(i);
+            if (p[1] >= -0x57) {
+                p[1] -= 8;
+                D_801206BE -= 8;
+            }
+        }
+        i = n;
+    } while (n != 8);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801325A0);
 
@@ -67,25 +92,119 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134804);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013493C);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134B6C);
+void func_80134B6C(void) {
+    s32 i;
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame (0x60); real source unknown. T-4070 */
+    s16 a[2];
+    s16 b[2];
+    s16 c[2];
+    s16 d[2];
+
+    for (i = 0; i < 2; i++) {
+        a[i] = 0;
+        b[i] = i * 0x10 - 0x28;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 2, a, b, c, d);
+    func_8004284C();
+    func_801320C0();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134C00);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134D38);
+void func_80134D38(void) {
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame (0x70) and array offsets; real source unknown. T-4070 */
+    s16 a[4];
+    s16 b[4];
+    s16 c[4];
+    s16 d[4];
+    s32 i;
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134DD0);
+    for (i = 0; i < 3; i++) {
+        a[i] = -0x78;
+        b[i] = i * 0x28 - 0x20;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 3, a, b, c, d);
+    func_801320C0();
+    func_80042940(1);
+}
+
+void func_80134DD0(void) {
+    s32 i;
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame (0x60); real source unknown. T-4070 */
+    s16 a[2];
+    s16 b[2];
+    s16 c[2];
+    s16 d[2];
+
+    for (i = 0; i < 2; i++) {
+        a[i] = 0;
+        b[i] = i * 0x10;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 2, a, b, c, d);
+    func_8004284C();
+    func_801320C0();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134E64);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134F9C);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135034);
+void func_80135034(void) {
+    s32 i;
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame; real source unknown. T-4070 */
+    s16 a[2];
+    s16 b[2];
+    s16 c[2];
+    s16 d[2];
+
+    for (i = 0; i < 2; i++) {
+        a[i] = 0;
+        b[i] = i * 0x10 + 0x28;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 2, a, b, c, d);
+    /* record 20 of the 0x44-byte table at D_80120650: one base symbol keeps the load behind the stores (T-4070) */
+    *(s16 *)&D_80120650[0x568] = 0x79;
+    *(s16 *)&D_80120650[0x576] = 0x40;
+    *(s16 *)&D_80120650[0x57A] = 0x30;
+    D_80120650[0x553] |= 0x80;
+    D_80120650[0x593] = 0x1F;
+    D_8013D180 = 0;
+    func_8004284C();
+    func_801320C0();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135110);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801352FC);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013539C);
+void func_8013539C(void) {
+    s32 i;
+    s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame; real source unknown. T-4070 */
+    s16 a[4];
+    s16 b[4];
+    s16 c[4];
+    s16 d[4];
+
+    for (i = 0; i < 3; i++) {
+        a[i] = -0x78;
+        b[i] = i * 0x28 - 0x20;
+        c[i] = 0x6C;
+        d[i] = 0x10;
+    }
+    func_8004F870(1, 3, a, b, c, d);
+    func_801320C0();
+    D_80120BA3 &= 0xFF7F;
+    D_80120BE3 = 0;
+    func_80042940(1);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135450);
 

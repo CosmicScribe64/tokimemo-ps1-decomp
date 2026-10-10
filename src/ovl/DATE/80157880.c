@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_800E6636 /* matched as an s16 array: one base symbol keeps the loads behind the stores (T-4070) */
 #include "common.h"
 #include "ovl/DATE.h"
+
+extern s16 D_800E6636[];
 
 void func_80157880(void) {
     D_801600A0 = 0x801CE090;
@@ -65,7 +68,20 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80157D68);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80157E88);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80157FE4);
+void func_80157FE4(void) {
+    D_8015E208 = D_8015DF3C;
+    D_8015E20C = D_8015E078;
+    D_8015E210 = D_8015E1B4;
+    D_800E6636[0] += 3;
+    D_800E6636[2] += 2;
+    D_800E6636[4] -= 0x14;
+    func_80084D3C();
+    func_80157A90();
+    func_80043914(D_80160134, 0x11, 1, 2, 0);
+    func_80084E90(D_80160138, D_8016013C, D_80160140, D_80160144, D_80160148, D_8016014C);
+    func_800850D4(D_80160128, D_8016012C, D_80160124, D_80160130);
+    func_8004284C();
+}
 
 void func_801580FC(void) {
     D_800E71DF = 9;

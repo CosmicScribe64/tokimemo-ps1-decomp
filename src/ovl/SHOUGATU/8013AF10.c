@@ -18,7 +18,12 @@ void func_8013AFA4(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013AF10", func_8013AFEC);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013AF10", func_8013B114);
+void func_8013B114(void) {
+    D_80144E08 = 0;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "学校前");
+    func_8004284C();
+}
 
 void func_8013B158(void) {
     bg_read_sub2(0x4016);

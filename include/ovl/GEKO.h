@@ -296,4 +296,10 @@ void func_8013BBE0(void);
 s32 func_80046094();
 void func_801394EC(void);
 
+void func_8013DCAC(void);
+
+extern u8 D_8014755C;
+
+void func_80141BFC(void);
+
 #endif
