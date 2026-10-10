@@ -1,6 +1,18 @@
 #include "ovl/VALEN.h"
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80132760);
+typedef struct {
+    void (*f[56])();
+} FnTbl56; /* size 0xE0 */
+extern FnTbl56 D_8013454C;
+
+void func_80132760(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl56 tbl;
+
+    tbl = D_8013454C;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_801327E8(void) {
     func_800847B8(9);

@@ -401,7 +401,16 @@ void func_800FB8EC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB920);
+extern FnTbl45 D_8012112C;
+
+void func_800FB920(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl45 tbl;
+
+    tbl = D_8012112C;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+}
 
 void func_800FB994(void) {
     func_800433D0(0x502);
