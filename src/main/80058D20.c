@@ -42,4 +42,31 @@ INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80059308);
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_8005938C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80059688);
+void func_80059688(s32 arg0) {
+    u8 *p;
+
+    p = D_8011ECD0 + arg0 * 0x44;
+    p[0] = 1;
+    p[1] = 0;
+    p[2] = 0;
+    p[3] = 0;
+    *(s16 *)(p + 0x64) = 0;
+    *(s16 *)(p + 0x66) = 0;
+    *(s16 *)(p + 0x68) = 0;
+    *(s16 *)(p + 0x6A) = 0;
+    *(s16 *)(p + 0x6C) = 0x1000;
+    *(s16 *)(p + 0x6E) = 0x1000;
+    *(s16 *)(p + 0x70) = 0x1000;
+    *(s16 *)(p + 0x72) = 0;
+    *(s16 *)(p + 0x74) = 0;
+    *(s16 *)(p + 0x76) = 0;
+    *(s16 *)(p + 0x78) = 0;
+    *(s16 *)(p + 0x7A) = 0;
+    *(s16 *)(p + 0x7C) = 0;
+    *(s16 *)(p + 0x7E) = 0;
+    *(s16 *)(p + 0x80) = 0;
+    *(s16 *)(p + 0x82) = 0;
+    p[0x84] = 0;
+    p[0x85] = 1;
+    p[0x86] = 0;
+}

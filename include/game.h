@@ -780,5 +780,6 @@ extern u16 D_80125D50;
 extern u16 D_80125D52;
 extern u8 D_80125D5E;
 extern u8 D_80125D5F;
+extern u8 D_801217A0[];
 
 #endif /* GAME_H */
