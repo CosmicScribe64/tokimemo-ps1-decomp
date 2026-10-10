@@ -29,7 +29,56 @@ void func_80078A0C(void) {
     func_80078A94();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078A94);
+void func_80078A94(void) {
+    s32 pad; /* FAKE: unused local above the spill slot of n, the original has the spill at sp+0x28 (T-3330) */
+    s32 n;
+
+    n = 0;
+    if (D_8011F113 & 0x80) {
+        hizuke_show();
+        n = 1;
+    }
+    if (D_8011ED17 & 0x80) {
+        message_window_show();
+        n += 1;
+    }
+    if (D_8011F553 & 0x80) {
+        parameter_show();
+        n += 1;
+    }
+    if (*D_8011F3FF & 0x80) {
+        func_80067870();
+        n += 1;
+    }
+    if (D_8011ECD3 & 0x80) {
+        func_8006BA40();
+        n += 1;
+    }
+    if (D_800E6280.unk_110E == 0x45) {
+        cal_base_show();
+    }
+    if (n != 0) {
+        func_80066C08(0);
+        switch (D_800B6D30) {
+        case 0:
+            if (D_80122D44 & 1) {
+                func_8006B900();
+            }
+            if (D_80122D44 & 2) {
+                func_80066334();
+            }
+            func_800578F4(get_last_gamen_mode());
+            break;
+        case 1:
+            func_80057710();
+            func_800578F4(1);
+            break;
+        default:
+            back_clear_switch(1);
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078C48);
 
