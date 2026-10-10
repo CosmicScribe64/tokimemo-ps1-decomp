@@ -281,4 +281,8 @@ void func_801359B4(void);
 void func_80135994(void);
 s32 func_80135744(void);
 
+void func_80138520(void);
+void func_801385B4(void);
+void func_80138634(void);
+
 #endif
