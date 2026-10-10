@@ -32,7 +32,35 @@ void func_8005A0B0(void) {
     func_80066C08(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005A1A0);
+/* FAKE: u8 views of the selector and of the counter give the original's global (LOD) access: compares on $v1 and the `andi`/`or v0` copy of the increment (T-5010) */
+s32 func_8005A1A0(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (*(u8 *)&D_800E6280.unk_110A) {
+    case 0:
+        func_8005A37C();
+        break;
+    case 1:
+        func_8005A560();
+        break;
+    case 2:
+        func_8005A668();
+        break;
+    case 3:
+        func_8005ABD0();
+        break;
+    }
+    hizuke_show();
+    message_window_show();
+    parameter_show();
+    func_80065B0C(0);
+    func_8006BA40();
+    if (D_800E6280.unk_110A >= 2) {
+        func_80066334();
+        if (*(u8 *)&D_800E6280.unk_03A < 0x80) {
+            *(u8 *)&D_800E6280.unk_03A += 4;
+        }
+    }
+}
 
 void func_8005A2A8(void) {
     D_800E6280.unk_1104.w += 1;
