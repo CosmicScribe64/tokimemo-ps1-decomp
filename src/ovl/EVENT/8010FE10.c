@@ -759,7 +759,26 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119110);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119370);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119440);
+void func_80119440(void) {
+    s32 one; /* FAKE: keeps the constant 1 in a register shared by the compare and the store (permuter) */
+
+    if (1 == D_800B1746) {
+        if ((one = 1) == D_8012531C) {
+            if (D_800B0896 >= 6 && D_800B0896 < 9) {
+                D_80094730 += 9;
+                D_8012439C = one;
+                D_8012439E = 3;
+                D_801243A0 = 2;
+                D_8012438C = 2;
+                D_8012438E = 3;
+                D_80124390 = 3;
+            }
+        } else if (D_8012531C == 2) {
+            D_80094730 += 9;
+        }
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119518);
 
