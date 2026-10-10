@@ -53,7 +53,25 @@ void func_8014F300(void) {
     D_8015E72C = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014F0F0", func_8014F370);
+void func_8014F370(void) {
+    switch (D_80122CD0) {
+    case 3:
+        func_8014FAE0();
+        return;
+    case 4:
+        func_8014FBA0();
+        return;
+    case 5:
+        func_8014FC80();
+        return;
+    case 6:
+        func_8014FE90();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_8014F404(void) {
     D_8015E208 = D_8015DE70;

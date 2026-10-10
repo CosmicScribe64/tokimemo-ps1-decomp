@@ -1079,4 +1079,9 @@ extern s16 D_8015E310;
 extern s16 D_8015E314;
 extern s8 D_8015F5D0;
 
+void func_8014FAE0(void);
+void func_8014FBA0(void);
+void func_8014FC80(void);
+void func_8014FE90(void);
+
 #endif /* OVL_DATE_H */

@@ -152,7 +152,22 @@ void holiday_taibu_club_exit(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club);
+s32 holiday_club(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        holiday_club_init();
+        break;
+    case 1:
+        func_8007866C();
+        break;
+    case 2:
+        holiday_club_exit();
+        break;
+    case 3:
+        holiday_taibu_club_exit();
+        break;
+    }
+}
 
 void holiday_club_join_exit(void) {
     func_80048E78();
