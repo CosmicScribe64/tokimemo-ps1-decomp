@@ -1871,5 +1871,8 @@ void func_80063930(s32);
 void func_800649D4();
 void func_80064E84();
 void func_80064FA4(s32);
+extern u32 D_800E7384;
+void normal_date_girl_out_init(void);
+void normal_date_girl_out_main(void);
 
 #endif /* MAIN_API_H */
