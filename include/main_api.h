@@ -2023,7 +2023,6 @@ s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
 void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
 void strcpy(u8 *dst, u8 *src);
-void func_800AE100(void *dst, void *src);
 void strcat(u8 *dst, u8 *src);
 void func_800AE120(s32 arg0);
 s32 strcmp(u8 *a, u8 *b);

@@ -237,7 +237,7 @@ void func_8013D62C(void) {
 
     func_8004E58C();
     func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
-    func_800AE100(buf, "番アルバムを");
+    strcat(buf, "番アルバムを");
     func_8004E788(-0x40, 0x20, 0xF, buf, 0);
     func_8004E788(-0x40, 0x30, 0xF, "ロードしています。", 0);
     func_8004E884(2);
