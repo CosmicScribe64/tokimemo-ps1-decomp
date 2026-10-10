@@ -185,4 +185,52 @@ extern s32 D_8013A29C;
 extern s32 D_8013A2A0;
 extern s32 D_8013A2A4;
 
+extern s32 D_80139950;
+
+extern s32 D_80139954;
+
+extern s32 D_80139958;
+
+extern s32 D_8013995C;
+
+extern s32 D_80139960;
+
+extern s32 D_80139964;
+
+extern s32 D_80139968;
+
+extern s32 D_8013996C;
+
+extern s32 D_80139970;
+
+extern s32 D_80139974;
+
+extern s32 D_80139978;
+
+extern s32 D_8013997C;
+
+extern s32 D_80139980;
+
+extern s32 D_80139984;
+
+extern s32 D_80139988;
+
+extern s32 D_8013998C;
+
+extern s32 D_80139990;
+
+extern s32 D_80139994;
+
+extern s32 D_80139998;
+
+extern s32 D_8013999C;
+
+extern s32 D_801399A0;
+
+extern s32 D_801399A4;
+
+extern s32 D_801399A8;
+
+extern s32 D_801399AC;
+
 #endif /* OVL_KANGEI_H */
