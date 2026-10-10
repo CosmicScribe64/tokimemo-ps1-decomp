@@ -180,6 +180,11 @@ typedef struct {
 extern FnTbl38 D_8015F9D0;
 
 typedef struct {
+    void (*f[56])();
+} FnTbl56; /* size 0xE0 */
+extern FnTbl56 D_8015FBFC;
+
+typedef struct {
     void (*f[40])();
 } FnTbl40; /* size 0xA0 */
 extern FnTbl40 D_8015FB5C;
@@ -242,7 +247,16 @@ void func_8015645C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80156494);
+void func_80156494(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl56 tbl;
+
+    tbl = D_8015FBFC;
+    if (D_800E6280.unk_110A >= 0x1E && D_800E6280.unk_110A < 0x2C) {
+        func_8006B900();
+    }
+    tbl.f[D_800E6280.unk_110A](0x80);
+}
 
 void func_80156538(void) {
     func_80046318(0x35, 0x801B0000, 0x88CD);
