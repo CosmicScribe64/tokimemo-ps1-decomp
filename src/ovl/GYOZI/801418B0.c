@@ -28,7 +28,23 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_80141ACC);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_8014206C);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_8014210C);
+void func_8014210C(void) {
+    s16 a[4];
+    s16 b[4];
+    s16 c[4];
+    s16 d[4];
+
+    a[0] = -0x96;
+    a[1] = -0x48;
+    a[2] = 6;
+    a[3] = 0x54;
+    b[0] = b[1] = b[2] = b[3] = -0x40;
+    c[0] = c[1] = c[2] = c[3] = 0x40;
+    d[0] = d[1] = d[2] = d[3] = 0x40;
+    func_8005BD20(0, 4, a, b, c, d);
+    D_8012E6C0 = 1;
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801421B4);
 

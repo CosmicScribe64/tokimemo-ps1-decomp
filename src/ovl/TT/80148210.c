@@ -30,6 +30,12 @@ void func_801486D8(s32 arg0, s32 arg1) {
     func_800AE0A0(D_8015694C[arg1], arg0, 3);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148714);
+void func_80148714(u16 arg0, s32 arg1) {
+    u8 *p = D_8015694C[arg1];
+
+    arg0 = arg0 % 100;
+    p[6] = arg0 / 10;
+    p[7] = arg0 % 10;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148764);

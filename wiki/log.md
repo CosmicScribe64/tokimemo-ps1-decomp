@@ -663,3 +663,6 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7030-tooling-w
 
 ## [2026-10-10] build | T-7000 merged with main (96cae6e) under K&R mode
 Merged main (T-7010, T-7020, T-7030, 170 dupes/neardupes copies). Clean build in K&R mode: one main function broke, TAIIKU `func_80144B40` (the original's `slti` on a byte: `(s32)` cast); all dupes/neardupes copies hold; no reverts. 27/27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK, all tool tests pass; progress 3967/6958 (EVENT `func_80116360` and RPG_BAT `func_8014F1D4` were also matched on main). K&R rules added to CODING_STANDARDS.md section 2; queue.py hint note in [[decompile-workflow]].
+
+## [2026-10-10] ticket | T-8030 wave 5 list 3 started
+Created [[tickets/T-8030-wave-5-list-3]] (In Progress) for work list 3, branch w5-3.

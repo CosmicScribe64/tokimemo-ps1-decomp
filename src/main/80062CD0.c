@@ -81,7 +81,18 @@ void bustup_wink(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", parameter_change);
+/* nine +0xFC records, reached by byte offset: the word view (value) and the s16 at +2 (cap) */
+void parameter_change(s32 arg0, s32 arg1) {
+    u8 *p = (u8 *)&D_800E6280 + arg0 * 4;
+
+    *(s32 *)(p + 0xFC) += arg1;
+    if (*(s32 *)(p + 0xFC) < 0) {
+        *(s32 *)(p + 0xFC) = 0;
+    }
+    if (*(s16 *)(p + 0xFE) >= 0x3E8) {
+        *(s16 *)(p + 0xFE) = 0x3E7;
+    }
+}
 
 void parameter_disp_switch(s32 arg0) {
     s32 i;
