@@ -243,7 +243,18 @@ void func_801366DC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136714);
+s32 func_80136714(void) {
+    if (D_80145088 == 0) {
+        D_800E6280.unk_110A += 5;
+    } else {
+        D_80145060 = 0x13;
+        if ((func_8006AEC4(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) > 0) && (D_800E6280.unk_F5F == ((u32)(D_800E6280.unk_54C[0].w << 3) >> 0x1C)) && (D_80122D4C == 0)) {
+            func_80042940(0x3D);
+            return 0;
+        }
+    }
+    func_8004284C();
+}
 
 void func_801367C4(void) {
     bg_read_sub2(0x4045);
