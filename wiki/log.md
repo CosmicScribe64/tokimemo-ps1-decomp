@@ -663,3 +663,9 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7030-tooling-w
 
 ## [2026-10-10] build | T-7000 merged with main (96cae6e) under K&R mode
 Merged main (T-7010, T-7020, T-7030, 170 dupes/neardupes copies). Clean build in K&R mode: one main function broke, TAIIKU `func_80144B40` (the original's `slti` on a byte: `(s32)` cast); all dupes/neardupes copies hold; no reverts. 27/27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK, all tool tests pass; progress 3967/6958 (EVENT `func_80116360` and RPG_BAT `func_8014F1D4` were also matched on main). K&R rules added to CODING_STANDARDS.md section 2; queue.py hint note in [[decompile-workflow]].
+
+## [2026-10-10] ticket | T-8040 wave 5 list 4 started
+Created [[tickets/T-8040-wave-5-list-4]] (In Progress), 151 functions in 37 files.
+
+## [2026-10-10] build | T-8040 wave 5 list 4 done
+24 functions matched (GYOZI, TAIIKU, EVENT x2, SHOUGATU, TACO x3, ENDING x3, MASTER, DATE, TT, SHUGAKU x2, ETC x6, main get_g_name) plus 17 dupes copies in owned files. 18 blocked cases added to [[data/t0018-cases]]; patterns in [[matching-notes]]. Review recorded in [[tickets/T-8040-wave-5-list-4]], moved to Done.
