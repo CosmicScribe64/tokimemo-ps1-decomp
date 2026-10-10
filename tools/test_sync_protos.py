@@ -380,5 +380,138 @@ class WalkTest(Repo):
         self.assertTrue(any("conflict D_1" in p for p in check_headers.check(str(self.inc), api=False)))
 
 
+class SpeedTest(Repo):
+    """--fix took minutes on the real tree (T-5030): per-symbol rescans of headers and sources."""
+
+    def big_api(self, n):
+        lines = ["#ifndef MAIN_API_H", "#define MAIN_API_H", '#include "common.h"']
+        lines += ["extern u8 D_%08X; /* c%d */" % (0x800E0000 + 4 * i, i) for i in range(n)]
+        lines += ["void func_%08X(s32 a);" % (0x80050000 + 8 * i) for i in range(n)]
+        self.write("main_api.h", "\n".join(lines + ["#endif", ""]))
+
+    def test_line_index_finds_what_find_line_found(self):
+        lines = ["extern u8 D_1; /* one */", "int x", "extern u8 D_2;", "extern u8 D_1;", "void f(s32 a); /* f */"]
+        idx = sp.LineIndex(lines)
+        self.assertEqual(idx.find("u8 D_1"), (0, "/* one */"))
+        self.assertEqual(idx.find("void f(s32 a)"), (4, "/* f */"))
+        self.assertEqual(idx.find("u8   D_2"), (2, ""))
+        self.assertEqual(idx.find("u8 D_3"), (None, ""))
+        self.assertEqual(sp.find_line(lines, "u8 D_2"), (2, ""))
+
+    def test_write_api_reads_candidates_once(self):
+        self.big_api(60)
+        self.ovl("AAA", "extern u8 D_800E0004;\nvoid func_80050008(s32 a);\n")
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        calls = []
+        real = sp.candidates
+        sp.candidates = lambda m: calls.append(1) or real(m)
+        try:
+            sp.write_api(model, sp.plan(model))
+        finally:
+            sp.candidates = real
+        self.assertLessEqual(len(calls), 3)   # once per plan/build, not once per symbol
+
+    def test_header_closure_is_memoised_and_follows_a_rewrite(self):
+        self.ovl("AAA", "extern s32 D_80140000;\n", head='#include "common.h"\n')
+        model = sp.Model(str(self.inc), str(self.root / "src"))
+        self.assertNotIn("main_api.h", sp.closure(model, "ovl/AAA.h"))
+        self.assertIs(sp.closure(model, "ovl/AAA.h"), sp.closure(model, "ovl/AAA.h"))
+        sp.fix_header(model, sp.plan(model), "ovl/AAA.h")      # adds the main_api.h include
+        self.assertIn("main_api.h", sp.closure(model, "ovl/AAA.h"))
+
+    def test_fix_result_is_unchanged_by_the_caches(self):
+        self.ovl("AAA", "extern u8 D_800E7388;\nvoid func_80042808(void);\nextern s32 D_80140000;\n")
+        self.assertEqual(sp.main(["--inc", str(self.inc), "--src", str(self.root / "src"), "--fix"]), 0)
+        self.assertEqual(self.problems(), [])
+        text = (self.inc / "ovl" / "AAA.h").read_text()
+        self.assertNotIn("D_800E7388", text)
+        self.assertIn("D_80140000", text)
+
+
+ASM = """glabel {name}
+    /* 0 80132000 00000000 */  addiu      $sp, $sp, -0x18
+{body}
+    /* 20 80132020 00000000 */  jr         $ra
+    /* 24 80132024 00000000 */   nop
+endlabel {name}
+"""
+
+
+def call(addr, sym, after):
+    """asm text of `jal sym` followed by `after` instructions (each `op args`)."""
+    out = ["    /* 4 %08X 00000000 */  jal        %s" % (addr, sym), "    /* 8 %08X 00000000 */   nop" % (addr + 4)]
+    for i, ins in enumerate(after):
+        out.append("    /* %X %08X 00000000 */  %s" % (12 + 4 * i, addr + 8 + 4 * i, ins))
+    return "\n".join(out)
+
+
+class BranchTest(Repo):
+    def asm(self, unit, name, body):
+        d = self.root / "asm" / ("ovl/%s/nonmatchings/%s" % (unit, unit) if unit != "main" else "nonmatchings/main/80041000")
+        d.mkdir(parents=True, exist_ok=True)
+        (d / (name + ".s")).write_text(ASM.format(name=name, body=body))
+
+    def test_result_read_after_call(self):
+        def used(after):
+            text = call(0x80132004, "func_X", after).split("\n")
+            return sp.result_read_after_call(text[1:])
+        self.assertTrue(used(["or         $a0, $v0, $zero"]))
+        self.assertTrue(used(["beqz       $v0, .L80132040", "nop"]))
+        self.assertTrue(used(["sw         $v0, 0x10($sp)"]))
+        self.assertTrue(used(["addiu      $t0, $zero, 0x1", "lw         $t1, 0x0($v0)"]))
+        self.assertFalse(used(["addiu      $v0, $zero, 0x1", "or         $a0, $v0, $zero"]))   # overwritten first
+        self.assertFalse(used(["jal        func_Y", "nop", "or         $a0, $v0, $zero"]))   # another call first
+        self.assertFalse(used(["addiu      $a0, $zero, 0x1"]))
+        self.assertFalse(used([]))
+
+    def test_alias_conflict(self):
+        (self.root / "config" / "obin_renames.txt").write_text("# old new\nfunc_80043914 load_palette\n")
+        self.write("main_api.h", API.replace("void func_80042808(void);",
+                                             "void func_80043914();\nvoid load_palette(u8 a);\nvoid func_80042808(void);"))
+        found = sp.alias_conflicts(sp.Model(str(self.inc), str(self.root / "src")))
+        self.assertEqual([k for k, _m in found], ["alias 0x80043914"])
+        self.assertIn("load_palette", found[0][1])
+        self.assertIn("func_80043914", found[0][1])
+
+    def test_alias_with_same_type_or_benign_k_and_r_is_fine(self):
+        (self.root / "config" / "obin_renames.txt").write_text("func_80043914 load_palette\n")
+        self.write("main_api.h", API.replace("void func_80042808(void);",
+                                             "void func_80043914();\nvoid load_palette(s32 a);\nvoid func_80042808(void);"))
+        self.assertEqual(sp.alias_conflicts(sp.Model(str(self.inc), str(self.root / "src"))), [])   # () against s32: benign
+
+    def test_void_declared_function_with_a_caller_using_the_result(self):
+        self.ovl("AAA", "extern s32 D_80140000;\n")
+        self.asm("AAA", "func_80132100", call(0x80132104, "func_80042808", ["or         $a0, $v0, $zero"]))
+        found = sp.void_result_conflicts(sp.Model(str(self.inc), str(self.root / "src")))
+        self.assertEqual([k for k, _m in found], ["void-result AAA:func_80042808"])
+        self.assertIn("func_80132100.s", found[0][1])
+
+    def test_check_branch_exit_codes_and_known_list(self):
+        import io
+        self.asm("AAA", "func_80132100", call(0x80132104, "func_80042808", ["or         $a0, $v0, $zero"]))
+        self.ovl("AAA", "extern s32 D_80140000;\n")
+        out = io.StringIO()
+        self.assertEqual(sp.check_branch(str(self.inc), str(self.root / "src"), out), 1)
+        self.assertIn("1 new disagreement(s), 0 known", out.getvalue())
+        sp.update_known(str(self.inc), str(self.root / "src"), io.StringIO())
+        known = (self.root / sp.KNOWN).read_text()
+        self.assertIn("void-result AAA:func_80042808", known)
+        out = io.StringIO()
+        self.assertEqual(sp.check_branch(str(self.inc), str(self.root / "src"), out), 0)
+        self.assertIn("0 new disagreement(s), 1 known", out.getvalue())
+        # the caller no longer reads the result: the known line is reported as stale
+        self.asm("AAA", "func_80132100", call(0x80132104, "func_80042808", []))
+        out = io.StringIO()
+        sp.check_branch(str(self.inc), str(self.root / "src"), out)
+        self.assertIn("no longer found", out.getvalue())
+
+    def test_check_branch_reports_header_rule_violations(self):
+        import io
+        self.ovl("AAA", "extern u8 D_800E7399;\n")    # main symbol in an overlay header
+        out = io.StringIO()
+        self.assertEqual(sp.check_branch(str(self.inc), str(self.root / "src"), out), 1)
+        self.assertIn("declare it in include/main_api.h", out.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()

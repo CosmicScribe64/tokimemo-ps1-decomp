@@ -116,7 +116,8 @@ class Model:
     """Everything read from include/ and src/ (nothing from the game data)."""
 
     def __init__(self, inc, src=None):
-        ch._SEGMENTS.clear()   # headers may have been edited since the last model
+        for h in ch.header_files(inc).values():   # headers may have been edited since the last model
+            ch.drop_cache(h)
         self.inc = inc
         self.src = src
         self.root = os.path.dirname(os.path.abspath(inc))
@@ -125,8 +126,7 @@ class Model:
         self.bases = self._overlay_bases()
         self.own = {}       # header -> [(name, type, raw)]
         for h, p in self.headers.items():
-            with open(p) as fh:
-                self.own[h] = list(ch.declarations_text(fh.read()))
+            self.own[h] = list(_declarations(_read(p)))
         self.sources = {}   # src .c path -> info
         if src:
             for root, _d, files in os.walk(src):
@@ -138,6 +138,14 @@ class Model:
         self.overrides = self._overrides()
         self.users = {}      # header -> .c files that include it
         self._others = None
+        self._closure = {}   # header -> headers reached by #include; file -> same (forget() after a write)
+        self._lines = {}     # header -> LineIndex of its text
+
+    def forget(self):
+        """Drop what depends on header text after a header was rewritten (the declarations read at
+        construction stay, as before)."""
+        self._closure.clear()
+        self._lines.clear()
 
     # -- config
     def _symbol_map(self):
@@ -150,7 +158,7 @@ class Model:
     def _read_source(self, path):
         with open(path, errors="replace") as fh:
             text = fh.read()
-        return {"text": text, "tokens": tokens(text)}
+        return {"text": text, "tokens": _tokens(text)}
 
     # -- symbols
     def addr(self, name):
@@ -244,6 +252,29 @@ class Model:
 def _read(path):
     with open(path, errors="replace") as fh:
         return fh.read()
+
+
+def _write(path, text):
+    """Write a file and forget the parse caches of it (check_headers caches by mtime and size)."""
+    with open(path, "w") as fh:
+        fh.write(text)
+    ch.drop_cache(path)
+
+
+# parse results by exact text: the five Models of a --fix run read the same sources five times
+_TOKENS, _DECLS = {}, {}
+
+
+def _tokens(text):
+    if text not in _TOKENS:
+        _TOKENS[text] = tokens(text)
+    return _TOKENS[text]
+
+
+def _declarations(text):
+    if text not in _DECLS:
+        _DECLS[text] = tuple(ch.declarations_text(text))
+    return _DECLS[text]
 
 
 def tokens(text):
@@ -560,22 +591,28 @@ def check_api(inc, src=None):
 
 def closure(model, header):
     """Headers reached from `header` by #include (itself included)."""
-    seen, stack = set(), [header]
-    while stack:
-        h = stack.pop()
-        if h in seen or h not in model.headers:
-            continue
-        seen.add(h)
-        stack += list(ch.includes(model.headers[h]))
-    return seen
+    key = ("h", header)
+    if key not in model._closure:
+        seen, stack = set(), [header]
+        while stack:
+            h = stack.pop()
+            if h in seen or h not in model.headers:
+                continue
+            seen.add(h)
+            stack += list(ch.includes(model.headers[h]))
+        model._closure[key] = seen
+    return model._closure[key]
 
 
 def closure_of_file(model, path):
     """Headers reached from a .c file by #include."""
-    out = set()
-    for i in ch.includes(path):
-        out |= closure(model, i)
-    return out
+    key = ("f", path)
+    if key not in model._closure:
+        out = set()
+        for i in ch.includes(path):
+            out |= closure(model, i)
+        model._closure[key] = out
+    return model._closure[key]
 
 
 def api_guards(model):
@@ -622,14 +659,29 @@ def _norm_line(line):
     return line.rstrip(";").strip()
 
 
+class LineIndex:
+    """The single-line declarations of a header text by normalised form: find() is a dict lookup
+    (the scan of every line per symbol took minutes on the 1600-symbol main_api.h)."""
+
+    def __init__(self, lines):
+        self.lines = lines
+        self.first = {}
+        for i, line in enumerate(lines):
+            if line.rstrip().endswith(("*/", ";")):
+                self.first.setdefault(_norm_line(line), i)
+
+    def find(self, raw):
+        """(index, trailing comment) of the declaration `raw`, or (None, '')."""
+        i = self.first.get(re.sub(r"\s+", " ", raw).strip())
+        if i is None:
+            return None, ""
+        m = re.search(r"(/\*.*\*/)\s*$", self.lines[i])
+        return i, (m.group(1) if m else "")
+
+
 def find_line(lines, raw):
     """(index, trailing comment) of the single-line declaration `raw` in `lines`, or (None, '')."""
-    want = re.sub(r"\s+", " ", raw).strip()
-    for i, line in enumerate(lines):
-        if _norm_line(line) == want and line.rstrip().endswith(("*/", ";")):
-            m = re.search(r"(/\*.*\*/)\s*$", line)
-            return i, (m.group(1) if m else "")
-    return None, ""
+    return LineIndex(lines).find(raw)
 
 
 def decl_text(name, typ, raw, comment=""):
@@ -663,33 +715,39 @@ def render_api(model, entries, guards):
     return "\n".join(out)
 
 
+def line_index(model, header):
+    if header not in model._lines:
+        model._lines[header] = LineIndex(_read(model.headers[header]).split("\n"))
+    return model._lines[header]
+
+
 def existing_lines(model):
     """{symbol: line} of the declarations in main_api.h, comments kept."""
     out = {}
     if not model.api_present:
         return out
-    lines = _read(model.headers[API]).split("\n")
+    idx = line_index(model, API)
     for n, _t, raw in model.own[API]:
-        i, _c = find_line(lines, raw)
+        i, _c = idx.find(raw)
         if i is not None:
-            out[n] = lines[i].rstrip()
+            out[n] = idx.lines[i].rstrip()
     return out
 
 
 def source_comment(model, header, raw):
-    lines = _read(model.headers[header]).split("\n")
-    return find_line(lines, raw)[1]
+    return line_index(model, header).find(raw)[1]
 
 
 def build_entries(model, plan_):
     keep = existing_lines(model)
+    cands = candidates(model)
     entries = {}
     for name, (typ, raw, why) in plan_.items():
         if name in keep and model.api.get(name, (None,))[0] == typ:
             entries[name] = (typ, keep[name])
             continue
         comment = ""
-        for h, t, r in candidates(model).get(name, ()):
+        for h, t, r in cands.get(name, ()):
             if t == typ and r == raw:
                 comment = source_comment(model, h, r)
                 break
@@ -712,8 +770,7 @@ def write_api(model, plan_, path=None):
     path = path or os.path.join(model.inc, API)
     old = _read(path) if os.path.exists(path) else ""
     if old != text:
-        with open(path, "w") as fh:
-            fh.write(text)
+        _write(path, text)
     return old != text, len(entries), len(guards)
 
 
@@ -815,8 +872,8 @@ def fix_header(model, plan_, h, dry=False, log=print):
             out.insert(at, '#include "%s"' % API)
     new = re.sub(r"\n{3,}", "\n\n", "\n".join(out))
     if new != text and not dry:
-        with open(path, "w") as fh:
-            fh.write(new)
+        _write(path, new)
+        model.forget()
     return len(drop) + len(overrides)
 
 
@@ -851,8 +908,7 @@ def remove_override(path, name):
                 continue
         out.append(l)
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(tidy_override_block(out))).lstrip("\n")
-    with open(path, "w") as fh:
-        fh.write(text)
+    _write(path, text)
 
 
 def ninja_target(model, f):
@@ -883,10 +939,215 @@ def prune(model, run=None, log=print):
                                                                  name, target))
                 removed.append((f, name))
             else:
-                with open(path, "w") as fh:
-                    fh.write(before)
+                _write(path, before)
                 kept.append((f, name))
     return removed, kept
+
+
+# ---------------------------------------------------------------------------------------------
+# --check-branch: disagreements that a single header does not show (T-5030)
+
+KNOWN = os.path.join("config", "proto_known.txt")
+JAL_RE = re.compile(r"^[ \t]*/\*[^*\n]*\*/[ \t]+jal[ \t]+(\w+)", re.M)
+ASM_INSN_RE = re.compile(r"^\s*/\*\s*\w+\s+[0-9A-Fa-f]{8}\s+[0-9A-Fa-f]{8}\s*\*/\s+(\w+)\s*(.*?)\s*$")
+ASM_LABEL_RE = re.compile(r"^\s*\.L[0-9A-Fa-f]{8}:")
+READS_FIRST = {"sb", "sh", "sw", "swl", "swr", "swc1", "swc2", "mtc0", "mtc1", "mtc2", "ctc0", "ctc1", "ctc2",
+               "jr", "jalr", "mult", "multu", "div", "divu", "b", "beq", "bne", "beqz", "bnez", "bgez", "bgtz",
+               "blez", "bltz", "bgezal", "bltzal", "beql", "bnel", "beqzl", "bnezl", "bgezl", "bgtzl", "blezl",
+               "bltzl"}
+BRANCH_OPS = READS_FIRST - {"sb", "sh", "sw", "swl", "swr", "swc1", "swc2", "mtc0", "mtc1", "mtc2", "ctc0",
+                            "ctc1", "ctc2", "mult", "multu", "div", "divu"}
+WINDOW = 12   # instructions after a call in which the result is looked for
+
+
+def result_read_after_call(lines):
+    """True when the instructions after a `jal` (delay slot skipped: it runs before the callee) read
+    $v0 before anything writes it, in straight-line code. `lines`: the asm lines after the jal."""
+    insns = []
+    for line in lines:
+        if ASM_LABEL_RE.match(line):
+            insns.append(None)
+            continue
+        m = ASM_INSN_RE.match(line)
+        if m:
+            insns.append((m.group(1), re.findall(r"\$(\w+)", m.group(2))))
+    for item in insns[1:WINDOW]:
+        if item is None:
+            return False                  # another path joins here: not sure
+        op, regs = item
+        if op in ("jal", "jalr"):
+            return op == "jalr" and "v0" in regs
+        if op in READS_FIRST:
+            if "v0" in regs:
+                return True
+            if op in BRANCH_OPS:
+                return False
+            continue
+        if "v0" in regs[1:]:
+            return True
+        if regs[:1] == ["v0"]:
+            return False
+    return False
+
+
+def asm_result_users(root):
+    """{(unit, callee): (calls, calls whose result is read, example caller file)} over the splat asm
+    (asm/**/*.s without data). Sequential reads: tools/queue.py shadows the standard queue module
+    here, so no thread pool."""
+    out = {}
+    base = os.path.join(root, "asm")
+    for dirpath, dirs, files in os.walk(base):
+        dirs[:] = [d for d in dirs if d != "data"]
+        rel = os.path.relpath(dirpath, base).replace(os.sep, "/")
+        m = re.match(r"ovl/([^/]+)", rel)
+        unit = m.group(1) if m else "main"
+        for f in sorted(files):
+            if not f.endswith(".s"):
+                continue
+            text = _read(os.path.join(dirpath, f))
+            if "jal" not in text:
+                continue
+            body = text.split("\n")
+            starts = [m.start() for m in JAL_RE.finditer(text)]
+            if not starts:
+                continue
+            index, pos = {}, 0
+            for n, line in enumerate(body):
+                index[pos] = n
+                pos += len(line) + 1
+            for m in JAL_RE.finditer(text):
+                n = index.get(text.rfind("\n", 0, m.start()) + 1)
+                if n is None:
+                    continue
+                rec = out.get((unit, m.group(1)), (0, 0, ""))
+                used = result_read_after_call(body[n + 1:n + 1 + WINDOW + 2])
+                out[(unit, m.group(1))] = (rec[0] + 1, rec[1] + used, rec[2] or (f if used else ""))
+    return out
+
+
+def unit_types(model, unit):
+    """{symbol: effective type} a C file of `unit` sees from its root header."""
+    root = "game.h" if unit == "main" else "ovl/%s.h" % unit
+    if root not in model.headers:
+        return {}
+    seen = defaultdict(list)
+    for name, typ, _f, _raw in ch.walk(model.headers[root], model.inc, rel=root):
+        seen[name].append(typ)
+    return {n: effective(ts) for n, ts in seen.items()}
+
+
+def load_renames(root):
+    """{new name: address} of config/obin_renames.txt (`old new`, old = func_/D_<address>)."""
+    out = {}
+    path = os.path.join(root, "config", "obin_renames.txt")
+    if os.path.exists(path):
+        for line in _read(path).splitlines():
+            parts = line.split()
+            if len(parts) == 2 and not line.lstrip().startswith("#"):
+                m = ADDR_RE.match(parts[0])
+                if m:
+                    out[parts[1]] = int(m.group(1), 16)
+    return out
+
+
+def disagree(a, b):
+    """True when two views of one address differ in a way the call code or the data shows."""
+    return a != b and not benign(a, b)
+
+
+def alias_conflicts(model):
+    """[(key, message)]: an address declared under several names whose types disagree."""
+    renames = load_renames(model.root)
+    groups = defaultdict(set)   # (namespace, address) -> {(name, type, header)}
+    for h, ds in model.own.items():
+        if h in SDK_HEADERS:
+            continue
+        for name, typ, _raw in ds:
+            a = model.addr(name)
+            if a is None:
+                a = renames.get(name)
+            if a is None:
+                continue
+            ns = "main" if model.is_main(name, h) or model.owner(h) is None else model.owner(h)
+            groups[(ns, a)].add((name, typ, h))
+    out = []
+    for (ns, a), views in sorted(groups.items(), key=lambda kv: (kv[0][1], kv[0][0])):
+        names = {n for n, _t, _h in views}
+        if len(names) < 2:
+            continue
+        bad = sorted((x, y) for x in views for y in views if x[0] < y[0] and disagree(x[1], y[1]))
+        if not bad:
+            continue
+        listing = "; ".join("%s '%s' (include/%s)" % (n, short(t), h) for n, t, h in sorted(views))
+        out.append(("alias 0x%08X" % a,
+                    "alias conflict at 0x%08X (%s): %s. One symbol has one declaration, under its current "
+                    "name (config/obin_renames.txt, config/symbol_addrs*.txt): delete the other, or declare "
+                    "the current name with the right type" % (a, ns, listing)))
+    return out
+
+
+def void_result_conflicts(model):
+    """[(key, message)]: functions declared `void` whose result some asm caller reads."""
+    if not os.path.isdir(os.path.join(model.root, "asm")):
+        return []
+    users = asm_result_users(model.root)
+    types, out = {}, []
+    for (unit, sym), (calls, used, example) in sorted(users.items()):
+        if not used:
+            continue
+        if unit not in types:
+            types[unit] = unit_types(model, unit)
+        typ = types[unit].get(sym)
+        if typ and is_func(typ) and typ.split("F(", 1)[0] == "void":
+            out.append(("void-result %s:%s" % (unit, sym),
+                        "%s: %s is declared void but %d of %d asm calls read $v0 afterwards (e.g. in %s): the C "
+                        "of those callers will need its return value. Declare the return type they use in "
+                        "include/main_api.h (or the overlay header), or keep void if matched callers need it and "
+                        "ask the orchestrator to list the finding in %s"
+                        % (unit, sym, used, calls, example, KNOWN)))
+    return out
+
+
+def read_known(root):
+    path = os.path.join(root, KNOWN)
+    out = set()
+    if os.path.exists(path):
+        for line in _read(path).splitlines():
+            line = line.split("#", 1)[0].strip()
+            if line:
+                out.add(line)
+    return out
+
+
+def check_branch(inc, src, out=sys.stdout):
+    """Run the branch guard; returns the number of new findings (see the module docstring)."""
+    model = Model(inc, src)
+    known = read_known(model.root)
+    findings = [("headers", p) for p in ch.check(inc, src)]
+    findings += alias_conflicts(model)
+    findings += void_result_conflicts(model)
+    new = [(k, m) for k, m in findings if k not in known or k == "headers"]
+    tolerated = [k for k, _m in findings if k in known and k != "headers"]
+    for _k, m in new:
+        out.write(m + "\n")
+    stale = sorted(known - {k for k, _m in findings})
+    for k in stale:
+        out.write("note: %s is listed in %s but no longer found; delete the line\n" % (k, KNOWN))
+    out.write("%d new disagreement(s), %d known (%s)\n" % (len(new), len(tolerated), KNOWN))
+    return len(new)
+
+
+def update_known(inc, src, out=sys.stdout):
+    model = Model(inc, src)
+    findings = alias_conflicts(model) + void_result_conflicts(model)
+    path = os.path.join(model.root, KNOWN)
+    lines = ["# Findings of `tools/sync_protos.py --check-branch` that exist on the base tree (T-5030).",
+             "# Orchestrator only: a branch never edits this file (it would conflict at every merge).",
+             "# One finding key per line; delete a line when the disagreement is fixed."]
+    lines += sorted({k for k, _m in findings})
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    _write(path, "\n".join(lines) + "\n")
+    out.write("%s: %d finding(s)\n" % (KNOWN, len(findings)))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -964,8 +1225,7 @@ def add_implicit_overrides(model, changes, log=print):
             at = next((i for i, l in enumerate(lines) if re.match(r"\s*#\s*include", l)), 0)
             defs = ["/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */"] + defs + [""]
         lines[at:at] = defs
-        with open(path, "w") as fh:
-            fh.write("\n".join(lines))
+        _write(path, "\n".join(lines))
         log("  %s: implicit override for %s" % (f, ", ".join(sorted(names - existing))))
 
 
@@ -983,7 +1243,17 @@ def main(argv=None):
     g.add_argument("--prune", action="store_true", help="drop the overrides the build does not need (runs ninja)")
     g.add_argument("--snapshot", metavar="FILE", help="save the view of every symbol per .c file")
     g.add_argument("--compare", metavar="FILE", help="compare the current views with a snapshot")
+    g.add_argument("--check-branch", action="store_true",
+                   help="before finishing: header rules plus alias and void-result disagreements (T-5030)")
+    g.add_argument("--update-known", action="store_true", help="rewrite %s from the current findings" % KNOWN)
     a = ap.parse_args(argv)
+    if a.check_branch:
+        n = check_branch(a.inc, a.src)
+        print("branch check FAILED" if n else "branch check OK")
+        return 1 if n else 0
+    if a.update_known:
+        update_known(a.inc, a.src)
+        return 0
     model = Model(a.inc, a.src)
     if a.check:
         problems = check_api(a.inc, a.src)
@@ -1028,7 +1298,6 @@ def main(argv=None):
         _c, n, g = write_api(model, plan(model))
         print("%s: %d symbols, %d guarded" % (os.path.join(a.inc, API), n, g))
         if a.fix:
-            compare(before, snapshot(Model(a.inc, a.src)), out=open(os.devnull, "w"))
             _b, _c, risky = compare(before, snapshot(Model(a.inc, a.src)))
             return 1 if risky else 0
         return 0

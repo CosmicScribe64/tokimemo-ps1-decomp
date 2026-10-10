@@ -1,0 +1,21 @@
+# Findings of `tools/sync_protos.py --check-branch` that exist on the base tree (T-5030).
+# Orchestrator only: a branch never edits this file (it would conflict at every merge).
+# One finding key per line; delete a line when the disagreement is fixed.
+alias 0x800438DC
+alias 0x8004435C
+alias 0x800490F0
+alias 0x8004E788
+alias 0x80051B48
+alias 0x80057390
+alias 0x8007E390
+alias 0x80084C98
+alias 0x800AE080
+alias 0x800AE0B0
+alias 0x800AE0E0
+alias 0x800AE0F0
+void-result GYOZI:func_8008D610
+void-result TT:func_8014D260
+void-result main:SsVabTransCompleted
+void-result main:func_8006C334
+void-result main:func_800AD950
+void-result main:set_kanji_string

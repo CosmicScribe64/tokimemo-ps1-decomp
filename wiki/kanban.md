@@ -50,6 +50,7 @@ kanban-plugin: board
 - [x] [[tickets/T-4070-wave-3-list-7|T-4070 Wave 3: list 7]]
 - [x] [[tickets/T-4100-wave-3-list-10|T-4100 Wave 3: list 10]]
 - [x] [[tickets/T-3300-tooling-fix-wave-2-bugs|T-3300 Tooling: fix bugs reported by wave 2]]
+- [x] [[tickets/T-5030-tooling-fix-wave-3-bugs|T-5030 Tooling: wave-3 bug fixes]]
 - [x] [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340 Tooling: shared main-exe prototypes and byte-weighted queue]]
 - [x] [[tickets/T-4060-wave-3-list-6|T-4060 Wave 3: list 6]]
 - [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]

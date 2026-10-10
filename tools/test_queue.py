@@ -436,7 +436,7 @@ class Cli(unittest.TestCase):
     def run_cli(self, *args):
         import contextlib
         buf = io.StringIO()
-        with contextlib.redirect_stdout(buf):
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(io.StringIO()):
             rc = wq.main(list(args))
         return rc, buf.getvalue()
 
@@ -455,6 +455,94 @@ class Cli(unittest.TestCase):
             rc, out = self.run_cli("--root", str(r), "--plan", "3", "--agents", "2", "--no-groups", "--json")
             self.assertEqual(rc, 0)
             self.assertEqual(out.count('"name"'), 3)
+
+
+@unittest.skipUnless(importlib.util.find_spec("yaml"), "needs PyYAML (runs in Docker)")
+class CacheTest(unittest.TestCase):
+    """T-5030: queue.py over many files ran for minutes and Docker cut the connection."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.r = Cli().tree(self.tmp.name)
+        (self.r / "build").mkdir()
+
+    def run_cli(self, *args):
+        import contextlib
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            rc = wq.main(list(args) + ["--root", str(self.r)])
+        return rc, out.getvalue(), err.getvalue()
+
+    def test_second_run_reads_no_asm_and_gives_the_same_table(self):
+        rc, first, err = self.run_cli("--by", "bytes", "--no-groups", "--next", "5")
+        self.assertIn("reading the asm", err)
+        self.assertTrue((self.r / wq.CACHE).exists())
+        real = wq.analyze
+        wq.analyze = lambda *a, **k: self.fail("asm was analysed again")
+        try:
+            rc, second, err = self.run_cli("--by", "bytes", "--no-groups", "--next", "5")
+        finally:
+            wq.analyze = real
+        self.assertEqual((rc, second), (0, first))
+        self.assertEqual(err, "")
+
+    def test_edited_asm_invalidates_the_cache(self):
+        self.run_cli("--summary")
+        p = self.r / "asm/nonmatchings/main/80041000/func_80041000.s"
+        p.write_text(asm("func_80041000", ["addiu $v0, $zero, 7"] * 6 + ["jr $ra", " nop"]))
+        rc, out, err = self.run_cli("--by", "bytes", "--no-groups", "--next", "5")
+        self.assertIn("reading the asm", err)
+        self.assertIn("32", out)    # the new size, not the cached one
+
+    def test_no_cache_flag_and_missing_build_dir(self):
+        self.run_cli("--no-cache", "--summary")
+        self.assertFalse((self.r / wq.CACHE).exists())
+        import shutil
+        shutil.rmtree(self.r / "build")
+        rc, _out, _err = self.run_cli("--summary")
+        self.assertEqual(rc, 0)
+        self.assertFalse((self.r / wq.CACHE).exists())
+
+    def test_groups_are_cached_too(self):
+        calls = []
+        real = wq.compute_groups
+        wq.compute_groups = lambda root: calls.append(1) or [[("main", "func_80041000", False, 8, "x"),
+                                                                ("main", "func_80041010", False, 12, "x")]]
+        try:
+            rc, a, _e = self.run_cli("--by", "bytes", "--next", "3")
+            rc, b, _e = self.run_cli("--by", "bytes", "--next", "3")
+        finally:
+            wq.compute_groups = real
+        self.assertEqual(calls, [1])
+        self.assertEqual(a, b)
+        self.assertIn("rep+1", a)
+
+    def test_files_limit_what_is_read_without_groups(self):
+        seen = []
+        real = wq.load
+        wq.load = lambda root, string_syms=None, legacy=False, files=None: seen.append(files) or real(
+            root, string_syms, legacy, files)
+        try:
+            rc, out, _e = self.run_cli("--files", "80041000", "--next", "2", "--no-cache")
+            self.run_cli("--files", "80041000", "--by", "bytes", "--no-groups", "--next", "2", "--no-cache")
+        finally:
+            wq.load = real
+        self.assertEqual(seen, [["80041000"], []])
+        self.assertIn("func_80041000", out)
+
+    def test_many_files_filter_matches_prefixes(self):
+        names = ",".join(["80041000"] + ["NOPE%d" % i for i in range(30)])
+        rc, out, _e = self.run_cli("--files", names, "--next", "10")
+        self.assertEqual(rc, 0)
+        self.assertEqual(out.count("func_8004"), 3)
+        rc, out, _e = self.run_cli("--files", "ZZZ", "--next", "10")
+        self.assertEqual(rc, 0)
+
+    def test_json_roundtrip_of_a_func(self):
+        f = func_obj = wq.Func("TEL", "func_1", "p.s", wq.Facts(8, 1, True, False, True, False, False, False, "v0", True),
+                               True, "TEL")
+        self.assertEqual(wq.func_from_json(__import__("json").loads(__import__("json").dumps(wq.func_to_json(f)))), func_obj)
 
 
 if __name__ == "__main__":

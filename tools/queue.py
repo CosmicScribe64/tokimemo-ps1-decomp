@@ -52,7 +52,19 @@ Usage (inside Docker, from the repo root after `ninja` has generated asm/):
   python3 tools/queue.py --blocked              only functions with a blocker flag (R V U J S P)
   python3 tools/queue.py --summary              counts per file and per flag
   python3 tools/queue.py --calibrate            detector precision/recall
+  python3 tools/queue.py --no-cache ...         ignore build/queue-cache.json (see below)
 Ranking: unblocked first, then leaf before non-leaf, then size ascending, then file and name.
+
+Run time and the cache (T-5030): reading and analysing the 8000 asm files, then fingerprinting them
+for the duplicate groups (--by bytes, --plan), took 10 to 25 s on an idle machine and minutes when
+several agents were building (every file is read through the Docker bind mount); a `--by bytes` run
+over a whole file list was cut off by the Docker daemon after more than five minutes ("error waiting
+for container: unexpected EOF"). Nothing else was wrong: output is a few KB and the peak memory about
+80 MB. Now the loaded functions and the groups are cached in build/queue-cache.json, keyed on the
+size and mtime of every asm, source and config file and of queue.py, dupes.py and neardupes.py, so a
+repeat run takes about a second and any edit or regenerated asm invalidates it (--no-cache ignores it).
+Without --by bytes / --plan, --files also limits what is read to those files. Progress lines go to
+stderr, so a long first run is not silent.
 
 Byte-weighted ranking (--by bytes): score = expected bytes / effort.
   expected bytes = size * P(match) * (1 + credit), credit = 0.9 per byte-identical twin and 0.6 per near
@@ -67,6 +79,9 @@ it unlocks the rest. Groups come from dupes.py / neardupes.py in-process (a few 
 file (`--groups FILE`, written by `--save-groups FILE`), or, as before, from `--dupes FILE` name lists.
 """
 import argparse
+import hashlib
+import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -306,12 +321,28 @@ def units(root):
     return out
 
 
-def load(root=".", string_syms=None, legacy=False):
-    """(remaining Funcs, matched Funcs) for the whole project."""
+def note(msg):
+    """Progress line on stderr (a long first run is not silent)."""
+    print("queue.py: " + msg, file=sys.stderr, flush=True)
+
+
+def file_wanted(label, files):
+    """True when the file label matches one of the --files prefixes (all when `files` is empty)."""
+    if not files:
+        return True
+    low = label.lower()
+    return any(low == w.lower() or low.startswith(w.lower()) for w in files)
+
+
+def load(root=".", string_syms=None, legacy=False, files=None):
+    """(remaining Funcs, matched Funcs) for the whole project, or only for the C files whose label
+    matches `files` (prefixes, as in select())."""
     if string_syms is None:
         string_syms = string_symbols(root)
     remaining, matched = [], []
     for label, c, mdir, island, unit in units(root):
+        if not file_wanted(label, files):
+            continue
         for e in srcscan.include_asm_entries(c):
             if Path(e.folder).name == "pad":
                 continue
@@ -326,6 +357,105 @@ def load(root=".", string_syms=None, legacy=False):
                     matched.append(Func(label, p.stem, str(p), analyze(p.read_text(errors="replace"), string_syms, legacy),
                                         island, unit))
     return remaining, matched
+
+
+CACHE = Path("build") / "queue-cache.json"
+CACHE_VERSION = 1
+TOOL_FILES = ("queue.py", "dupes.py", "neardupes.py")
+
+
+def tree_signature(root):
+    """Hash of (path, size, mtime) of everything the loaded data depends on: the splat asm, the C
+    sources, the configs and the code of the tools that compute it. Stats only; no file is read."""
+    h = hashlib.sha1(("v%d" % CACHE_VERSION).encode())
+    here = Path(__file__).resolve().parent
+    for name in TOOL_FILES:
+        try:
+            st = (here / name).stat()
+            h.update(("%s %d %d\n" % (name, st.st_size, st.st_mtime_ns)).encode())
+        except OSError:
+            h.update(name.encode())
+    for base, exts in (("asm", (".s",)), ("src", (".c",)), ("config", (".yaml", ".txt"))):
+        for dirpath, dirs, fnames in os.walk(Path(root) / base):
+            dirs.sort()
+            for f in sorted(fnames):
+                if f.endswith(exts):
+                    st = os.stat(os.path.join(dirpath, f))
+                    h.update(("%s/%s %d %d\n" % (dirpath, f, st.st_size, st.st_mtime_ns)).encode())
+    return h.hexdigest()
+
+
+def func_to_json(f):
+    return [f.file, f.name, f.path, list(f.facts), f.island, f.unit]
+
+
+def func_from_json(row):
+    file, name, path, facts, island, unit = row
+    return Func(file, name, path, Facts(*facts), island, unit)
+
+
+class Cache:
+    """build/queue-cache.json: JSON payloads under a key, valid for one tree signature. Disabled
+    (every get misses, put does nothing) with use_cache=False or without a build/ directory."""
+
+    def __init__(self, root=".", use_cache=True):
+        self.path = Path(root) / CACHE
+        self.enabled = bool(use_cache) and self.path.parent.is_dir()
+        self.sig = tree_signature(root) if self.enabled else None
+        self.data = {}
+        if self.enabled:
+            try:
+                data = json.loads(self.path.read_text())
+                if isinstance(data, dict) and data.get("sig") == self.sig:
+                    self.data = data
+            except (OSError, ValueError):
+                pass
+
+    def get(self, key):
+        return self.data.get(key)
+
+    def put(self, key, value):
+        if not self.enabled:
+            return
+        self.data[key] = value
+        self.data["sig"] = self.sig
+        try:
+            tmp = self.path.with_suffix(".tmp%d" % os.getpid())
+            tmp.write_text(json.dumps(self.data, separators=(",", ":")))
+            os.replace(tmp, self.path)
+        except OSError:
+            pass
+
+
+def load_cached(root=".", legacy=False, cache=None, files=None):
+    """load() through the cache. A request limited to `files` is served from a full cache but does
+    not write one."""
+    cache = cache or Cache(root, False)
+    key = "legacy" if legacy else "rules"
+    hit = cache.get(key)
+    if hit:
+        rem = [func_from_json(r) for r in hit["remaining"]]
+        mat = [func_from_json(r) for r in hit["matched"]]
+        if files:
+            rem = [f for f in rem if file_wanted(f.file, files)]
+            mat = [f for f in mat if file_wanted(f.file, files)]
+        return rem, mat
+    note("reading the asm of the project%s" % (" (cached afterwards)" if cache.enabled and not files else ""))
+    rem, mat = load(root, legacy=legacy, files=files)
+    if not files:
+        cache.put(key, {"remaining": [func_to_json(f) for f in rem], "matched": [func_to_json(f) for f in mat]})
+    return rem, mat
+
+
+def groups_cached(root, cache):
+    """compute_groups() through the cache."""
+    hit = cache.get("groups")
+    if hit is not None:
+        return [[tuple(m) for m in g] for g in hit]
+    note("fingerprinting the functions for duplicate groups")
+    groups = compute_groups(root)
+    cache.put("groups", [[list(m) for m in g] for g in groups])
+    return groups
 
 
 def read_cases(path):
@@ -671,10 +801,16 @@ def main(argv=None):
     ap.add_argument("--with-applicable", action="store_true",
                     help="keep functions whose duplicate group already has a matched member in --next/--plan")
     ap.add_argument("--json", action="store_true", help="with --plan: JSON instead of text")
+    ap.add_argument("--no-cache", action="store_true", help="ignore and do not write build/queue-cache.json")
     a = ap.parse_args(argv)
     root = Path(a.root)
-    remaining, matched = load(root, legacy=a.calibrate and a.legacy)
-    if not remaining:
+    cache = Cache(root, not a.no_cache)
+    wanted = a.files.split(",") if a.files else []
+    # only --by bytes / --plan need the whole project (duplicate groups, balancing); otherwise a
+    # --files list limits what is read
+    narrow = wanted if not (a.calibrate or a.plan or a.by == "bytes") else []
+    remaining, matched = load_cached(root, legacy=a.calibrate and a.legacy, cache=cache, files=narrow)
+    if not remaining and not narrow:
         print("error: no INCLUDE_ASM functions found (run ninja first to generate asm/)", file=sys.stderr)
         return 1
     if a.calibrate:
@@ -682,10 +818,10 @@ def main(argv=None):
         calibrate(remaining, matched, cases, title="T-1320 rule" if a.legacy else "T-3340 rule")
         if not a.legacy:
             print()
-            lr, lm = load(root, legacy=True)
+            lr, lm = load_cached(root, legacy=True, cache=cache)
             calibrate(lr, lm, cases, title="T-1320 rule, for comparison")
         return 0
-    funcs = select(remaining, a.files.split(",") if a.files else [])
+    funcs = select(remaining, wanted)
     if a.summary:
         summary(funcs)
         return 0
@@ -706,7 +842,7 @@ def main(argv=None):
             if a.groups and Path(a.groups).exists():
                 glist = load_groups_file(a.groups)
             else:
-                glist = compute_groups(root)
+                glist = groups_cached(root, cache)
                 if a.save_groups:
                     save_groups(glist, a.save_groups)
             groups = group_index(glist, remaining)

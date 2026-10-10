@@ -543,3 +543,6 @@ Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 m
 
 ## [2026-10-10] tooling run | dupes + neardupes after wave 3
 tools/dupes.py kept 77 of 79 exact copies and tools/neardupes.py kept 17 of 31 near copies (3668 bytes). Clean build 27/27 OK, 3438/6958, 18.6% of code bytes.
+
+## [2026-10-10] ticket | T-5030 Tooling: wave-3 bug fixes (Backlog -> In Progress -> Done)
+[[tickets/T-5030-tooling-fix-wave-3-bugs]]. `funcdiff.py` and `permute.py` find the C file by definition (`tools/funcloc.py`) and refuse ambiguous names; stale objects and string relocations fixed; `sync_protos.py --fix` 5x faster, new `--check-branch` ([[decompile-workflow]] "Before finishing"); `queue.py` caches its asm scan in `build/queue-cache.json`. Details in [[matching-notes]] ("Tooling fixes T-5030").

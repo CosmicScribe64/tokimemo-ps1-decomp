@@ -16,6 +16,7 @@ from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import funcdiff  # noqa: E402
+import funcloc  # noqa: E402
 
 HAVE_BINUTILS = bool(shutil.which("mips-linux-gnu-as") and shutil.which("mips-linux-gnu-objdump"))
 
@@ -77,7 +78,9 @@ class Parse(unittest.TestCase):
 class Resolve(unittest.TestCase):
     def keys(self, name):
         funcs = funcdiff.split_functions(OBJDUMP)
-        return [k for k, _d in funcdiff.resolve(funcdiff.parse_insns(funcs[name]))]
+        return [k for k, _d in funcdiff.resolve(funcdiff.parse_insns(funcs[name]), names=self.names)]
+
+    names = {}
 
     def test_hi_lo_pair_equals_absolute_address(self):
         got = self.keys("func_80100000")
@@ -89,6 +92,22 @@ class Resolve(unittest.TestCase):
         got = self.keys("func_80100000")
         self.assertEqual(got[2], "0c040800")        # jal 0x80102000: (0x80102000 >> 2) & 0x3ffffff
         self.assertEqual(got[3], "3c010000 R_MIPS_HI16 bg_read_sub2")
+
+    def test_renamed_symbol_resolves_through_the_rename_table(self):
+        # bg_read_sub2 is func_8007ED84 in config/obin_renames.txt (T-5030)
+        self.names = {"bg_read_sub2": 0x8007ED84}
+        self.assertEqual(self.keys("func_80100000")[3], "3c018008")
+
+    def test_renames_are_read_from_the_config_files(self):
+        with in_repo_dir() as tmp:
+            with open(os.path.join(tmp, "config", "obin_renames.txt"), "w") as f:
+                f.write("# old new\nfunc_8007ED84 bg_read_sub2\n")
+            with open(os.path.join(tmp, "config", "symbol_addrs_main.txt"), "w") as f:
+                f.write("my_global = 0x800E6280; // type:u8\n")
+            funcdiff._names.clear()
+            names = funcdiff.renamed_addresses(".")
+            funcdiff._names.clear()
+        self.assertEqual(names, {"bg_read_sub2": 0x8007ED84, "my_global": 0x800E6280})
 
     def test_negative_low_half_carries_into_hi(self):
         insns = [[0x3c190000, "lui t9,0x0", [("R_MIPS_HI16", "D_801D8010", 0)]],
@@ -162,6 +181,34 @@ class Fresh(unittest.TestCase):
         self.assertNotIn("MATCH", out.getvalue())
 
 
+    def test_header_newer_than_object_is_stale(self):
+        self.touch("a.c", 100)
+        self.touch("a.h", 300)
+        self.touch("a.o", 200)
+        self.assertIn("older than a.h", funcdiff.check_fresh("a.o", "a.c", build=False, deps=["a.h"]))
+        funcdiff._checked.clear()
+        self.touch("a.o", 400)
+        self.assertIsNone(funcdiff.check_fresh("a.o", "a.c", build=False, deps=["a.h"]))
+
+    def test_no_build_and_built_never_match_a_stale_object(self):
+        # a failed build leaves the old object; the edited source is newer than it
+        self.touch("a.c", 200)
+        self.touch("a.o", 100)
+        os.mkdir("config")
+        cf = mock.Mock(obj="a.o", src="a.c")
+        for argv in (["--no-build", "func_1"], ["--built", "a.o", "func_1"]):
+            funcdiff._checked.clear()
+            out = io.StringIO()
+            with mock.patch.object(funcdiff, "locate", return_value=cf), \
+                    mock.patch.object(funcdiff, "cfile_of_object", return_value=cf), \
+                    mock.patch.object(funcdiff.shutil, "which", side_effect=lambda n: "/bin/" + n), \
+                    contextlib.redirect_stdout(out):
+                rc = funcdiff.main(argv)
+            self.assertEqual(rc, 1, argv)
+            self.assertIn("ERROR a.o is older than a.c", out.getvalue())
+            self.assertNotIn("MATCH", out.getvalue())
+
+
 class Host(unittest.TestCase):
     def test_no_objdump_says_docker_without_a_nameerror(self):
         with mock.patch.object(funcdiff.shutil, "which", return_value=None):
@@ -171,12 +218,33 @@ class Host(unittest.TestCase):
 
     def test_unknown_function_message(self):
         out = io.StringIO()
-        with in_repo_dir(), mock.patch.object(funcdiff, "locate", return_value=None), \
+        with in_repo_dir(), mock.patch.object(funcdiff, "locate", side_effect=funcloc.LocateError(
+                "func_1: no INCLUDE_ASM or C definition of it")), \
                 mock.patch.object(funcdiff.shutil, "which", return_value="/bin/x"), \
                 contextlib.redirect_stdout(out):
             rc = funcdiff.main(["func_1"])
         self.assertEqual(rc, 1)
-        self.assertIn("not found in any C source", out.getvalue())
+        self.assertIn("no INCLUDE_ASM or C definition", out.getvalue())
+
+    def test_ambiguous_name_is_an_error_listing_the_candidates(self):
+        err = funcloc.AmbiguousError("func_1: held by 2 C files: A (src/ovl/A.c), B (src/ovl/B.c); pick one")
+        out = io.StringIO()
+        with in_repo_dir(), mock.patch.object(funcdiff, "locate", side_effect=err), \
+                mock.patch.object(funcdiff.shutil, "which", return_value="/bin/x"), \
+                contextlib.redirect_stdout(out):
+            rc = funcdiff.main(["func_1"])
+        self.assertEqual(rc, 1)
+        self.assertIn("A (src/ovl/A.c), B (src/ovl/B.c)", out.getvalue())
+
+    def test_unit_option_and_prefix_reach_locate(self):
+        calls = []
+        err = funcloc.LocateError("nope")
+        with in_repo_dir(), mock.patch.object(funcdiff, "locate", side_effect=lambda n, u=None: calls.append((n, u)) or (_ for _ in ()).throw(err)), \
+                mock.patch.object(funcdiff.shutil, "which", return_value="/bin/x"), \
+                contextlib.redirect_stdout(io.StringIO()):
+            funcdiff.main(["--unit", "TT", "func_1"])
+            funcdiff.main(["B:func_2"])
+        self.assertEqual(calls, [("func_1", "TT"), ("func_2", "B")])
 
 
 @unittest.skipUnless(HAVE_BINUTILS, "needs mips-linux-gnu binutils (Docker)")
@@ -239,6 +307,65 @@ LoadImage:
     def test_resolve_mode_matches(self):
         rc, out = self.run_main("--resolve", "func_80100000")
         self.assertEqual((rc, out.strip()), (0, "func_80100000: MATCH (relocations resolved)"))
+
+    STR_ORIGINAL = """.set noat
+.set noreorder
+.section .rodata
+.word 0, 0, 0, 0
+.globl D_80100010
+D_80100010:
+.asciz "hello"
+.section .text
+.globl func_80100100
+func_80100100:
+    lui $a1, %hi(D_80100010)
+    addiu $a1, $a1, %lo(D_80100010)
+    jr $ra
+    nop
+"""
+    STR_BUILT = """.set noat
+.set noreorder
+.section .rodata
+L1:
+.asciz "{text}"
+.section .text
+.globl func_80100100
+func_80100100:
+    lui $a1, %hi(L1)
+    addiu $a1, $a1, %lo(L1)
+    jr $ra
+    nop
+"""
+
+    def string_case(self, text):
+        exp = self.assemble("sexp", self.STR_ORIGINAL)
+        got = self.assemble("sgot", self.STR_BUILT.replace("{text}", text))
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            rc = funcdiff.main(["--built", got, "--expected", exp, "--resolve", "func_80100100"])
+        return rc, out.getvalue()
+
+    def test_resolve_compares_string_relocations_by_content(self):
+        rc, out = self.string_case("hello")
+        self.assertEqual((rc, out.strip()), (0, "func_80100100: MATCH (relocations resolved)"))
+
+    def test_resolve_different_string_is_a_diff(self):
+        rc, out = self.string_case("jello")
+        self.assertEqual(rc, 1)
+        self.assertIn("DIFF", out)
+        self.assertIn("jello", out)
+
+    def test_parse_object_info(self):
+        info = funcdiff.parse_object_info(
+            "00000000 l    d  .rodata\t00000020 .rodata\n00000010 g     O .rodata\t00000006 D_80100010\n"
+            "00000000 g     F .text\t00000010 f\n",
+            "Contents of section .rodata:\n 0000 00000000 00000000 00000000 00000000  ................\n"
+            " 0010 68656c6c 6f00                          hello.          \n")
+        self.assertEqual(info.symbols, {".rodata": 0, "D_80100010": 0x10})
+        self.assertEqual(info.string_at("D_80100010", 0), b"hello")
+        self.assertEqual(info.string_at(".rodata", 0x11), b"ello")
+        self.assertIsNone(info.string_at(".rodata", 0))          # a NUL: no string
+        self.assertIsNone(info.string_at("elsewhere", 0))
 
     def test_function_starting_with_L(self):
         rc, out = self.run_main("LoadImage")

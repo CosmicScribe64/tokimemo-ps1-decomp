@@ -135,20 +135,42 @@ def declarations(path, defs=False):
         yield name, typ
 
 
+_INCLUDES = {}   # path -> ((mtime_ns, size), [included names]): include closures re-read every file
+
+
 def includes(path):
-    with open(path) as fh:
-        src = fh.read()
-    for m in re.finditer(r'^\s*#\s*include\s+"([^"]+)"', src, flags=re.M):
-        yield m.group(1)
+    """Names a file includes with #include "...". Cached per (mtime, size); drop_cache(path) after a write."""
+    st = os.stat(path)
+    key = (st.st_mtime_ns, st.st_size)
+    hit = _INCLUDES.get(path)
+    if hit is None or hit[0] != key:
+        with open(path) as fh:
+            src = fh.read()
+        hit = _INCLUDES[path] = (key, re.findall(r'^\s*#\s*include\s+"([^"]+)"', src, flags=re.M))
+    return iter(hit[1])
+
+
+def drop_cache(path=None):
+    """Forget the parse caches of one file after it was written (all files without a path)."""
+    if path is None:
+        _INCLUDES.clear()
+        _SEGMENTS.clear()
+    else:
+        _INCLUDES.pop(path, None)
+        _SEGMENTS.pop(path, None)
 
 
 _SEGMENTS = {}
 
 
 def segments(path):
-    """File as a list of ('decls', [(name, type, raw)]) and ('dir', keyword, argument), in order."""
-    if path in _SEGMENTS:
-        return _SEGMENTS[path]
+    """File as a list of ('decls', [(name, type, raw)]) and ('dir', keyword, argument), in order.
+    Cached per (mtime, size); drop_cache(path) after writing the file."""
+    st = os.stat(path)
+    key = (st.st_mtime_ns, st.st_size)
+    hit = _SEGMENTS.get(path)
+    if hit is not None and hit[0] == key:
+        return hit[1]
     with open(path) as fh:
         text = fh.read()
     # comments out (newlines kept), directive continuation lines joined
@@ -169,7 +191,7 @@ def segments(path):
         else:
             chunk.append(line)
     flush()
-    _SEGMENTS[path] = segs
+    _SEGMENTS[path] = (key, segs)
     return segs
 
 
@@ -251,7 +273,7 @@ def header_files(inc):
 
 
 def check(inc, src=None, api=True):
-    _SEGMENTS.clear()
+    drop_cache()
     headers = header_files(inc)
     problems = set()
     visible = {}   # header -> declarations visible after reading it as a root
