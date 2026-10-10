@@ -427,7 +427,22 @@ void sprite_brightness(s16 idx, u8 val) {
     p[0x14] = val;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", day_plus);
+void day_plus(void) {
+    s32 sp28; /* FAKE: unused local, the original frame has one more word below sp2B (T-3330 slot rule); source unknown. T-6040 */
+    u8 sp2B;
+
+    D_800CA2F0 = 0;
+    sp2B = D_8011F113;
+    func_80072338();
+    hizuke_init();
+    if (sp2B & 0x80) {
+        hizuke_disp_switch(1);
+    } else {
+        hizuke_disp_switch(0);
+    }
+    hizuke_show();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", check_para_limit);
 
