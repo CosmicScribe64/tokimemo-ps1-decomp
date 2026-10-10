@@ -71,6 +71,35 @@ typedef union GsHalf {
     /* 0x00 */ u8 b[2];
 } GsHalf; /* size 0x02 */
 
+/* Flag word at +0x0C of a Rec38 record (GameState +0x1C8 + 0x38 * i). The original tests single bits
+ * with sll; bltz/bgez (bits 1, 2, 3, 6, 12-14 seen) and reads bits 9-11 as one value (sll 20; srl 29);
+ * a bit-field store loads the byte into another register than its lui. T-9020 (was a view per file). */
+typedef struct CharFlags {
+    /* 0x00 */ u32 b0 : 1;
+    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 b2 : 1;
+    /* 0x00 */ u32 b3 : 1;
+    /* 0x00 */ u32 b4 : 1;
+    /* 0x00 */ u32 b5 : 1;
+    /* 0x00 */ u32 b6 : 1;
+    /* 0x00 */ u32 b7 : 1;
+    /* 0x00 */ u32 b8 : 1;
+    /* 0x00 */ u32 f9 : 3;
+    /* 0x00 */ u32 b12 : 1;
+    /* 0x00 */ u32 b13 : 1;
+    /* 0x00 */ u32 b14 : 1;
+    /* 0x00 */ u32 rest : 17;
+} CharFlags; /* size 0x04 */
+
+/* The Rec38 flag word: whole, by halves and bytes, or by bits. */
+typedef union Rec38Flags {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ u32 u;
+    /* 0x00 */ u16 h[2];
+    /* 0x00 */ u8 b[4];
+    /* 0x00 */ CharFlags f;
+} Rec38Flags; /* size 0x04 */
+
 /* 0x38-byte record of the table at GameState +0x1BC (16 records: a loop walks it with stride 0x38 up
  * to +0x53C; DATE, KANGEI and SHOUGATU index it; most code reads one record per girl, indexed by
  * GameState.unk_F5F). The first 0xC bytes are walked as four 0xC-byte steps elsewhere. +0x0C and
@@ -83,7 +112,7 @@ typedef struct Rec38 {
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s16 unk_08;
     /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ GsWord unk_0C;
+    /* 0x0C */ Rec38Flags unk_0C;
     /* 0x10 */ GsWord unk_10;
     /* 0x14 */ u8 unk_14[0x24];
 } Rec38; /* size 0x38 */
@@ -578,18 +607,12 @@ extern u8 D_800CA188[];
 extern u8 D_800CA190[];
 extern u8 D_800CA19C[];
 extern u8 D_800CA1DC[];
-extern s16 D_800CA21C;
-extern s16 D_800CA21E;
-extern s16 D_800CA220;
-extern s16 D_800CA224;
-extern s16 D_800CA226;
-extern s16 D_800CA228;
-extern s16 D_800CA22C;
-extern s16 D_800CA22E;
-extern s16 D_800CA230;
-extern s16 D_800CA234;
-extern s16 D_800CA236;
-extern s16 D_800CA238;
+/* Four s16[4] rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
+ * with one chain assignment, which gives the original's shared register only for array elements. */
+extern s16 D_800CA21C[4];
+extern s16 D_800CA224[4];
+extern s16 D_800CA22C[4];
+extern s16 D_800CA234[4];
 extern u8 D_800CA23C[];
 extern u8 D_800CA25C[];
 extern u8 D_800CA2A4;
@@ -1324,7 +1347,7 @@ void func_8004284C(void);
 void func_80042878();
 void func_80042908(s32 arg0);
 void func_80042940(s32 arg0);
-void func_80042960(void);
+s32 func_80042960(void);
 s32 func_80042AC8();
 void func_80042C30(void);
 void func_80042CB0();

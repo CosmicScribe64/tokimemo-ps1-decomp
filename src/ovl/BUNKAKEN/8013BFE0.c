@@ -4,13 +4,6 @@
 
 extern u32 D_80122EB8;
 
-/* Bit 2 of the flag word of a Rec38 record (tested with sll 29 / bltz). */
-typedef struct BunkakenFlagBits {
-    u32 pad0 : 2;
-    u32 flag : 1;
-    u32 rest : 29;
-} BunkakenFlagBits;
-
 void func_8013BFE0(void) {
     D_80122EBC = 1;
     switch (D_80122EB8) {
@@ -19,7 +12,7 @@ void func_8013BFE0(void) {
             func_80042908(0x2E);
             return;
         }
-        if ((func_8008667C(1) == 4) && !((BunkakenFlagBits *)&D_800E6280.unk_1BC[1].unk_0C)->flag) {
+        if ((func_8008667C(1) == 4) && !D_800E6280.unk_1BC[1].unk_0C.f.b2) {
             D_80122EBC = 0xFF;
             func_80042908(5);
             return;

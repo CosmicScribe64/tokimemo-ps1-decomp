@@ -120,12 +120,12 @@ void func_80155AD4(void) {
     D_800E6280.unk_1BC[5].unk_06 += 1;
     D_800E6280.unk_1BC[5].unk_0A -= 0x14;
     func_80084D3C();
-    D_800CA224 = 2;
-    D_800CA226 = 2;
-    D_800CA228 = 2;
-    D_800CA234 = 1;
-    D_800CA236 = 1;
-    D_800CA238 = 1;
+    D_800CA224[0] = 2;
+    D_800CA224[1] = 2;
+    D_800CA224[2] = 2;
+    D_800CA234[0] = 1;
+    D_800CA234[1] = 1;
+    D_800CA234[2] = 1;
     func_8004284C();
 }
 
@@ -264,22 +264,15 @@ void func_80156538(void) {
     func_8004284C();
 }
 
-/* Bit 14 of the word is tested as a bit-field: the original has sll 17; bgez, not andi (T-4050) */
-typedef struct {
-    u32 pad : 14;
-    u32 b14 : 1;
-    u32 rest : 17;
-} Flags14; /* size 4 */
-
 void func_80156570(void) {
-    if (((Flags14 *)&D_800E6280.unk_1BC[5].unk_0C.w)->b14) {
+    if (D_800E6280.unk_1BC[5].unk_0C.f.b14) {
         D_800CA150 = (u16)D_800CA150 + 1;
     }
     func_8004284C();
 }
 
 void func_801565B4(void) {
-    if (!((Flags14 *)&D_800E6280.unk_1BC[5].unk_0C.w)->b14) {
+    if (!D_800E6280.unk_1BC[5].unk_0C.f.b14) {
         D_800CA150 = (u16)D_800CA150 + 1;
     }
     func_8004284C();

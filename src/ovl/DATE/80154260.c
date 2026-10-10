@@ -114,18 +114,18 @@ void func_801546BC(void) {
     D_800E6280.unk_1BC[1].unk_06 += 2;
     D_800E6280.unk_1BC[1].unk_0A -= 0x14;
     func_80084D3C();
-    D_800CA21C = 2;
-    D_800CA220 = 2;
-    D_800CA21E = 2;
-    D_800CA224 = 2;
-    D_800CA228 = 2;
-    D_800CA226 = 2;
-    D_800CA22C = 2;
-    D_800CA230 = 2;
-    D_800CA22E = 2;
-    D_800CA234 = 1;
-    D_800CA238 = 1;
-    D_800CA236 = 1;
+    D_800CA21C[0] = 2;
+    D_800CA21C[2] = 2;
+    D_800CA21C[1] = 2;
+    D_800CA224[0] = 2;
+    D_800CA224[2] = 2;
+    D_800CA224[1] = 2;
+    D_800CA22C[0] = 2;
+    D_800CA22C[2] = 2;
+    D_800CA22C[1] = 2;
+    D_800CA234[0] = 1;
+    D_800CA234[2] = 1;
+    D_800CA234[1] = 1;
     func_8004284C();
 }
 
@@ -245,12 +245,12 @@ void func_80154D38(void) {
         return;
     }
     D_800E6280.unk_56C[9] = 1;
-    D_800CA224 = 3;
-    D_800CA226 = 3;
-    D_800CA228 = 3;
-    D_800CA234 = 2;
-    D_800CA236 = 2;
-    D_800CA238 = 2;
+    D_800CA224[0] = 3;
+    D_800CA224[1] = 3;
+    D_800CA224[2] = 3;
+    D_800CA234[0] = 2;
+    D_800CA234[1] = 2;
+    D_800CA234[2] = 2;
     D_800E6280.unk_1BC[1].unk_02 -= 2;
     D_800E6280.unk_1BC[1].unk_06 -= 1;
     D_800E6280.unk_1BC[1].unk_0A += 0x14;
@@ -299,18 +299,11 @@ void func_80155174(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_801551D0);
 
-/* Bit 14 of a Rec38 flag word: IDO loads its byte into another register than the lui (T-7010). */
-typedef struct {
-    u32 pad0 : 14;
-    u32 f : 1;
-    u32 pad1 : 17;
-} Rec38Bit14;
-
 void func_8015522C(void) {
     if (D_80122CDC != 0) {
         D_800CA150 = (u16) D_800CA150 + 1;
     } else {
-        ((Rec38Bit14 *)&D_800E6280.unk_1BC[1].unk_0C)->f = 1;
+        D_800E6280.unk_1BC[1].unk_0C.f.b14 = 1;
     }
     func_8004284C();
 }

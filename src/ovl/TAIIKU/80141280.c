@@ -3,7 +3,23 @@
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80141280", func_80141280);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80141280", func_80141964);
+void func_80141964(void) {
+    s32 pad; /* FAKE: unused word above the arrays, the original frame has it (T-9020) */
+    s16 x[3];
+    s16 y[3];
+    s16 w[3];
+    s16 h[3];
+
+    x[0] = x[1] = x[2] = -0x80;
+    y[0] = 0x30;
+    y[1] = 0x40;
+    y[2] = 0x50;
+    w[0] = w[1] = w[2] = 0xFC;
+    h[0] = h[1] = h[2] = 0x10;
+    func_8004F870(0, 3, x, y, w, h);
+    func_8006BC28(0);
+    func_8006BD6C(1);
+}
 
 s32 func_801419F8(void) {
     func_8004F984(0, D_8011ECF6, D_8011ECFA);

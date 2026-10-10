@@ -137,7 +137,7 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
         *arg0 += 1;
     }
     for (i = 1; i != 0xB; i++) {
-        if (((CharFlags *)&D_800E6280.unk_1BC[i].unk_0C)->b1 && ((CharFlags *)&D_800E6280.unk_1BC[i].unk_0C)->b6) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b6) {
             if (birth_day_check_days(i, D_800E6280.unk_03F + arg1, arg2) == 1) {
                 D_800E6280.unk_69C[*arg0].unk_00 = 0x32;
                 D_800E6280.unk_69C[*arg0].unk_01 = i;
@@ -181,7 +181,7 @@ void syoushin_up(void) {
     s32 i;
 
     for (i = 0; i < 0xB; i++) {
-        if (((CharFlags *)&D_800E6280.unk_1BC[i].unk_0C)->b1 && (s32)get_h_yuukou(i) < 0xA) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && (s32)get_h_yuukou(i) < 0xA) {
             D_800E6280.unk_1BC[i].unk_0A += 5;
         }
     }
@@ -265,7 +265,6 @@ void func_80071038(void) {
     }
 }
 
-typedef struct { u32 pad0 : 1; u32 flag : 1; u32 rest : 30; } Bits64B8;
 s32 func_80071110(void) {
     /* FAKE: buffer sizes chosen to reproduce the 0x70 frame and the 0x3C/0x5C slots; real sizes unknown. T-7020 */
     u8 buf[20];
@@ -285,7 +284,7 @@ s32 func_80071110(void) {
     if (v[2] < 0x1F4) {
         return 0;
     }
-    if (!((Bits64B8 *) &D_800E6280.unk_1BC[2].unk_0C)->flag) {
+    if (!D_800E6280.unk_1BC[2].unk_0C.f.b1) {
         return 0;
     }
     /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */

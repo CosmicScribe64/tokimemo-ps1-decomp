@@ -392,7 +392,23 @@ void normal_date_two_select(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_two_select_init);
+void normal_date_two_select_init(void) {
+    s32 pad; /* FAKE: unused word above the arrays, the original frame is 8 bytes bigger (T-9020) */
+    s16 x[2];
+    s16 y[2];
+    s16 w[2];
+    s16 h[2];
+
+    x[0] = x[1] = -0x80;
+    y[0] = 0x30;
+    y[1] = 0x40;
+    w[0] = w[1] = 0xFC;
+    h[0] = h[1] = 0x10;
+    menu_set(1, 2, x, y, w, h);
+    D_800E6280.unk_1094 = 0;
+    D_80122D30 = 1;
+    D_800E6280.unk_1104.w++;
+}
 
 s32 normal_date_two_select_main(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);

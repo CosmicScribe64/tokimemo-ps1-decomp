@@ -15,20 +15,12 @@ typedef struct {
 extern FnTbl37 D_80139BEC;
 extern FnTbl33 D_80139C80;
 
-/* Bit 1 of the flag word of a Rec38 record (tested with sll 30 / bgez). */
-typedef struct KangeiFlagBits {
-    u32 pad0 : 1;
-    u32 flag : 1;
-    u32 flag2 : 1;
-    u32 rest : 29;
-} KangeiFlagBits;
-
 void func_80134120(void) {
-    if ((D_800E6280.unk_F5F != 0xFF) && ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag) {
+    if ((D_800E6280.unk_F5F != 0xFF) && D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1) {
         func_801341E8();
         return;
     }
-    if ((D_800E6280.unk_F5F != 0xFF) && !((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag && ((u8)D_800E6280.unk_03E < 0x61U) && (D_800E6280.unk_F5F != 0xA)) {
+    if ((D_800E6280.unk_F5F != 0xFF) && !D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 && ((u8)D_800E6280.unk_03E < 0x61U) && (D_800E6280.unk_F5F != 0xA)) {
         func_80134DB0();
         return;
     }
@@ -199,8 +191,8 @@ void func_80135390(void) {
 
 /* Bits 1 and 2 of the current girl's flag word; the index is read again after the first store (T-7010). */
 void func_80135438(void) {
-    ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag = 1;
-    ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag2 = 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b1 = 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
     func_80042808();
 }
 

@@ -1,16 +1,6 @@
 #include "common.h"
 #include "ovl/TEL.h"
 
-/* Flag word at +0x1C8 of the 0x38-byte entries at GameState +0x1BC (Rec38.unk_0C), tested as bit-fields (sll; bgez in the original). */
-typedef struct {
-    u32 b0 : 1;
-    u32 b1 : 1;
-    u32 pad : 10;
-    u32 b12 : 1;
-    u32 b13 : 1;
-    u32 rest : 18;
-} CharFlagsTel; /* size 4 */
-
 void func_801397D0(void) {
     D_800E6280.unk_1104.w += 1;
     switch (D_800E6280.unk_1109) {
@@ -178,7 +168,7 @@ s32 func_8013BDDC(void) {
     s32 found;
 
     for (i = 0; i != 0xB; i++) {
-        if (((CharFlagsTel *)&D_800E6280.unk_1BC[i].unk_0C)->b1 &&
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 &&
             D_800E6280.unk_1BC[i].unk_0A >= 0x5B) {
             found = i;
             break;
@@ -213,7 +203,7 @@ s32 func_8013C3E0(void) {
     s32 i;
 
     for (i = 0; i != 0xB; i++) {
-        if (((CharFlagsTel *)&D_800E6280.unk_1BC[i].unk_0C)->b1 && ((CharFlagsTel *)&D_800E6280.unk_1BC[i].unk_0C)->b12 &&
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b12 &&
             func_80051A68(i) != 4) {
             return i;
         }
@@ -241,7 +231,7 @@ s32 func_8013C8DC(void) {
     s32 i;
 
     for (i = 0; i != 0xB; i++) {
-        if (((CharFlagsTel *)&D_800E6280.unk_1BC[i].unk_0C)->b1 && ((CharFlagsTel *)&D_800E6280.unk_1BC[i].unk_0C)->b13 &&
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && D_800E6280.unk_1BC[i].unk_0C.f.b13 &&
             func_80051A68(i) != 4) {
             return i;
         }

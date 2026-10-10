@@ -43,16 +43,9 @@ s32 func_80133AA8(void) {
     return func_80072B5C(1);
 }
 
-/* Bit 1 of a Rec38 flag word: IDO loads its byte into another register than the lui (T-7010). */
-typedef struct {
-    u32 pad0 : 1;
-    u32 f : 1;
-    u32 pad1 : 30;
-} Rec38Bit1;
-
 void func_80133B6C(void) {
     if (D_80134544 != 0) {
-        ((Rec38Bit1 *)&D_800E6280.unk_1BC[9].unk_0C)->f = 1;
+        D_800E6280.unk_1BC[9].unk_0C.f.b1 = 1;
     }
     if (D_8013453C >= 7) {
         D_80134498 = 0;

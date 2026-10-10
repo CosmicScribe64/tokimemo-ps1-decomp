@@ -283,14 +283,8 @@ void func_80136BA8(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136C20);
 
-typedef struct {
-    u32 pad : 3;
-    u32 f : 1;
-    u32 rest : 28;
-} GekoFlagBits; /* bit 3 of a Rec38 flag word */
-
 void func_80136E7C(void) {
-    if (((GekoFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.w)->f) {
+    if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b3) {
         D_80145060 += 1;
         func_8004284C();
     } else {

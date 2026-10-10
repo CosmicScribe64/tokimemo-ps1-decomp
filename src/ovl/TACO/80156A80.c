@@ -4,10 +4,11 @@
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80156A80);
 
 void func_80156F50(void) {
-    /* FAKE: unused TcPos locals reproduce the original's frame; real source unknown. T-8060 */
-    TcPos fake_hi;
+    /* the family's position locals and spill (see func_80158AB0); the unused ones keep their stack
+     * slots. T-9020 */
+    TcPos p0;
     TcPos pos;
-    TcPos fake_lo;
+    TcPos p2;
     s32 r;
 
     func_800AE120(D_801604C0);
@@ -90,11 +91,12 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801585D0);
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801589B0);
 
 void func_80158AB0(void) {
-    /* FAKE: unused TcPos locals reproduce the original's frame (0x60, pos at sp+0x48); real source unknown. T-8060 */
-    TcPos fake_hi2;
-    TcPos fake_hi;
+    /* p0..p2 and r are the locals of this family (func_801563E4 passes all three positions and spills r
+     * at the same offsets); the unused ones keep their stack slots. T-9020 */
+    TcPos p0;
+    TcPos p1;
     TcPos pos;
-    TcPos fake_lo;
+    s32 r;
 
     func_800AE120(D_801604C0);
     pos.y = 0x400;
@@ -107,10 +109,11 @@ void func_80158AB0(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80158B84);
 
 void func_80158CDC(s16 arg0, s16 arg1, s16 arg2) {
-    /* FAKE: the two unused TcPos locals reproduce the original's frame (0x58, pos at sp+0x48); real source unknown. T-8060 */
-    TcPos fake_hi;
+    /* the family's position locals and spill (see func_80158AB0); the unused ones keep their stack
+     * slots. T-9020 */
+    TcPos p1;
     TcPos pos;
-    TcPos fake_lo;
+    s32 r;
 
     func_800AE120(D_801604C0);
     pos.x = arg0;
@@ -120,10 +123,11 @@ void func_80158CDC(s16 arg0, s16 arg1, s16 arg2) {
 }
 
 void func_80158DBC(s16 arg0, s16 arg1, s16 arg2) {
-    /* FAKE: unused TcPos locals reproduce the original's frame; real source unknown. T-8060 */
-    TcPos fake_hi;
+    /* the family's position locals and spill (see func_80158AB0); the unused ones keep their stack
+     * slots. T-9020 */
+    TcPos p1;
     TcPos pos;
-    TcPos fake_lo;
+    s32 r;
 
     func_800AE120(D_801604C0);
     pos.x = arg0;
