@@ -452,3 +452,8 @@ Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only g
 | RPG_BAT/801504E0 | `func_80150CD8` | promo | `s32` state `D_8015EC74` switched (cases 0, 1, 2) and reloaded for `+= 1` in each case: original keeps it in $v1, IDO uses $v0 and loads the constant 1 into $v1 (T-4100) |
 | BUNKASAI/801354B0 | `func_801354B0` | promo | `s32` selector `D_80122EB8` (cases 0, 1): original $v1, IDO $v0 (T-4100) |
 | 80075320 | `func_80077E30` | promo | five-entry jump table on `u8 D_800E738D` (cases 0 to 3 + `case 4:` with default), selector in $v1 and reused for `+= 1` in case 1, reloaded into $v1 in case 2; IDO $v0 and $t0 (T-4100) |
+| EVENT/800FD2F0 | `func_800FD588` | promo | `u32` `D_800B1AE4 % 60` tested twice after a call: original $v1, IDO $v0 (T-6030) |
+| DATE/80154260 | `func_80154E48` | regorder | `u8` GameState field `unk_110A` read after the table copy loop and compared (0xF..0x11): original `lbu $t1`, IDO `$v0`; table copy and local-table call otherwise match (T-6030) |
+| DATE/80154260 | `func_801551D0` | regorder | `u32` counter `D_800E7384` incremented in place then compared with 0x10 (returns 0 early): original loads it into $v1, IDO $v0 (T-6030) |
+| SHUGAKU/80133D60 | `func_80134024` | regorder | `u32` counter `D_800E7384` post-incremented and tested `== 0x3C` after a call: original keeps the compare as `xori $v0; sltiu $v0,$v0,1; beqz $v0` in place, IDO writes the `sltiu` to $t6 (or folds it to a plain `bnez`) (T-6030) |
+| RPG_BAT/801368B0 | `func_80136A9C` | promo | inner `switch (D_8015EBAC)` (cases 0, 1; `s32` and `u32` tried) after the outer `switch (D_8015EDB0)` case branch: original selector in $v1, IDO $v0 (T-6030) |

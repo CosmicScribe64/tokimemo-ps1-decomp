@@ -579,3 +579,6 @@ The original's strength-reduced loops keep 0x800E6280 in the base register and r
 
 ## [2026-10-10] ticket | T-5100 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-state-struct]]; no open findings. Branch o-gamestate, not merged.
+
+## [2026-10-10] ticket | T-6030 wave 4 list 3 (In Progress -> Done)
+19 of 144 functions matched (3384 bytes, progress 3539 -> 3558 of 6958) on branch w4-3, not merged: [[tickets/T-6030-wave-4-list-3]]. New idioms (read a global back through the global, post-increment compare, `u8` switch without return, `u32` override for a switch, local bit-field views) and the unsolved shapes are in [[matching-notes]] ("Wave 4, list 3"); 5 rows appended to [[data/t0018-cases]]. Inline review recorded in the ticket.
