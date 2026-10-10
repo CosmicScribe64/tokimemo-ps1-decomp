@@ -579,3 +579,6 @@ The original's strength-reduced loops keep 0x800E6280 in the base register and r
 
 ## [2026-10-10] ticket | T-5100 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-state-struct]]; no open findings. Branch o-gamestate, not merged.
+
+## [2026-10-10] ticket | T-6060 wave 4 list 6 (In Progress -> Done)
+40 functions, 6724 bytes matched in the main exe and DATE, ENDING, EVENT, GEKO, GYOZI, OMIMAI, RPG_BAT, SHOUGATU, SHUGAKU, TT; 17 T-0018 rows in [[data/t0018-cases]]; progress 3539 -> 3579 of 6958 functions. New patterns (jump-table switches, function-table dispatchers, unsigned compares that unshare constants, in-place loop pointer) and blockers in [[matching-notes]], "Wave 4, list 6 (T-6060)". Inline review in [[tickets/T-6060-wave-4-list-6]]; branch w4-6, not merged.
