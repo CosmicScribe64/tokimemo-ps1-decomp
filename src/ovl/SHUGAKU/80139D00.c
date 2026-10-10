@@ -52,7 +52,24 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A4F8);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A59C);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A648);
+void func_8013A648(void) {
+    D_800CA2DC = (D_800CA2DC - D_800CA2CC) + (D_80122CDC == 1) + ((D_80122CDC == 2) * 3) + 2;
+    D_800CA2F4 = D_80122CDC > 0;
+    if (D_80122CDC == 0) {
+        func_80137C3C();
+    } else {
+        *(s16 *) (D_800E6280 + D_800E71DF * 0x38 + 0x1BE) += 5;
+    }
+    func_80084D3C();
+    if (D_800CA2EC != 0) {
+        if (D_80122CDC == 2) {
+            D_800E71DF = 0xD;
+        } else if (D_80122CDC == 1) {
+            D_800E71DF = 0xFF;
+        }
+    }
+    func_8004284C();
+}
 
 void func_8013A74C(void) {
     if (D_800CA2CC == 1) {

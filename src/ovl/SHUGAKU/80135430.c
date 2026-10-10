@@ -57,11 +57,27 @@ void func_80135A3C(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135A80);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135AF4);
+/* One symbol for the whole 0x44-byte-entry table: as1 then keeps the later lbu below the earlier stores (T-2040, T-4020). */
+void func_80135AF4(void) {
+    D_80120650[3] |= 0x80;
+    *(s16 *) &D_80120650[0x16] = 8;
+    D_80120650[0x47] |= 0x80;
+    *(s16 *) &D_80120650[0x5A] = 7;
+    D_80120650[0x8A] = 0x40;
+    *(s16 *) &D_80120650[0xA0] = 0x14;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135B68);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135BB8);
+void func_80135BB8(void) {
+    D_80120650[3] |= 0x80;
+    *(s16 *) &D_80120650[0x16] = 3;
+    D_80120650[0x47] |= 0x80;
+    *(s16 *) &D_80120650[0x5A] = 1;
+    D_80120650[0x8A] = 0x40;
+    *(s16 *) &D_80120650[0xA0] = 0x16;
+}
 
 void func_80135C14(void) {
     D_80120666 = 2;
@@ -90,7 +106,21 @@ void func_80135CC8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135CF8);
+typedef struct {
+    s32 w[17];
+} Blk44; /* size 0x44 */
+
+void func_80135CF8(void) {
+    D_8013C2E4 = 1;
+    *(Blk44 *) &D_80120650[0xCC] = *(Blk44 *) D_80120650;
+    D_80120650[0xCD] = 0xB;
+    D_80120650[0xCF] |= 0x80;
+    *(s16 *) &D_80120650[0xE2] = 5;
+    D_80120650[0xCE] = 9;
+    *(s16 *) &D_80120650[0xF2] = -0x60;
+    *(s16 *) &D_80120650[0xF6] = -0x48;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135DB8);
 
