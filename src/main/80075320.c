@@ -175,7 +175,31 @@ void holiday_tel_init(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_call);
+void holiday_tel_call(void) {
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(0);
+    func_8004FC10(0);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(0);
+        return;
+    }
+    if ((D_800E6280.unk_F88 & 0x20) && D_800E6280.unk_1093 != -1) {
+        if (D_800E6280.unk_1093 == 0xD) {
+            func_80042908(0);
+            return;
+        }
+        func_80044750(0x50A);
+        if (D_800E6280.unk_1093 == 0) {
+            D_800E6280.unk_F5F = 0xD;
+        } else if (D_800E6280.unk_1093 == 0xC) {
+            D_800E6280.unk_F5F = 0xB;
+        } else {
+            D_800E6280.unk_F5F = D_800E6280.unk_1093 - 1;
+        }
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_exit);
 
