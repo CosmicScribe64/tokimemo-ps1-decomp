@@ -5,6 +5,9 @@ kanban-plugin: board
 ---
 
 ## Backlog
+- [ ] [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000 Re-match R/V-flagged functions with cvt_pass.py and retune the T-0018 detector]]
+- [ ] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
+- [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]
 
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
