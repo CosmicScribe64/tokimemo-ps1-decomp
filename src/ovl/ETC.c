@@ -2779,6 +2779,8 @@ void func_801460C4(void) {
         func_80145FF0();
         break;
     }
+    /* unsigned compares (sltiu): the counters are probably u32 in the
+       original; game.h declares them s32 for their other users (T-1321) */
     if ((u32) D_800E7380 < 0xFFU) {
         func_8004AC18(0xFF - D_800E7380);
     }
