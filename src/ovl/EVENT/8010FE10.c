@@ -140,7 +140,23 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801142E8);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801144AC);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801146B4);
+void func_801146B4(void) {
+    D_8009473C = D_80124210;
+    D_80094740 = D_8012427C;
+    D_80094744 = D_801242E8;
+    func_80078970(D_80094784, "縁日");
+    func_80078970(D_800947C4, "花火大会");
+    D_801252E8 = 5;
+    D_8012438C = 0;
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    D_8012438E = (u8)func_8002328C(D_800B1746) & 0x7F;
+    D_801243A4 = 0;
+    D_801243A6 = 0;
+    D_8012531C = 0;
+    D_800EECE4 = -1;
+    func_800469F4(0x425B);
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114784);
 
