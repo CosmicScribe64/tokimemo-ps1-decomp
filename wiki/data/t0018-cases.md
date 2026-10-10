@@ -211,3 +211,6 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 80079B10 | `SD_DetectCDPeak` | regorder | same family as `SD_CalcCDAve` (T-2090) |
 | 80079B10 | `func_8007B2B4` | regorder | switch variable after a read-modify-write store: original reuses $v0, IDO allocates $v1 (T-2090) |
 | 80079B10 | `func_8007A6AC` | regorder | struct fields loaded into $t7/$a0/$v1 and spilled; IDO uses $t6/$a0/$a2 (T-2090) |
+| DATE | `func_8015522C` | regorder | `u8 D |= 0x40` in an else branch: original lui t9, lbu t0, ori t1 (no reuse); IDO reuses t9 for the load (w3-3, T-4030) |
+| SHUGAKU | `func_80134024` | promo | `if (D++ == 0x3C)` on an s32 global: original loads it into $v1, `xori v0,v1,0x3c; sltiu v0,v0,1; addiu v1,v1,1; beqz`; IDO emits `xori; bnez` without the sltiu (w3-3, T-4030) |
+| NAME_ENT | `func_80134110` | promo | range checks on two s16 globals, early-out `or v0,v1,zero` return of the first global in $v1 (implicit int, no return): IDO keeps it in $v0 and takes other registers (w3-3, T-4030) |

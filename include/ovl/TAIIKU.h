@@ -173,5 +173,10 @@ extern u8 D_8014A1FC;
 void func_80146B8C(void);
 void func_801488F0(s16 *);
 void func_8013D9B4(s32, u8);
+extern s32 D_8014994C;
+extern s32 D_80149950;
+extern s32 D_80149974;
+extern s32 D_80149988;
+extern s32 D_8014999C;
 
 #endif

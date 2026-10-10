@@ -12,7 +12,13 @@ void func_801335F4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_8013363C);
+void func_8013363C(void) {
+    func_800AE0A0((void *)(0x801A0000 + D_800E7384 * 0x2800), 0x80180000 + D_800E7384 * 0x2800, 0x2800);
+    D_800E7384 += 1;
+    if (D_800E7384 == 9) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_801336A8);
 
