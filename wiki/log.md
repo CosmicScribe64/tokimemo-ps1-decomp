@@ -500,3 +500,6 @@ Applied wiki/data/t3330-fptab-proof.patch (3-way, after T-1321 and T-3320 merged
 
 ## [2026-10-09] decision | T-3300 game/ drop-in folder
 `game/` (gitignored except `game/README.md`) takes the user's disc in any common form and depth; `tools/prepare_disc.py` (ninja step `build/disc.stamp`) finds it, identifies the release with `tools/identify_version.py`, and unpacks the supported one into `disc/files/`. Unsupported releases and a missing image fail with a message; an existing `disc/` and CI's restore keep working. The repo-root zip is not searched any more. README Building, [[build-system]], [[ci]], [[disc-layout]] updated. Tested with the Best 7z, zip, a CHD and a 2048-byte ISO made from the Best disc, and with the Rev 2 zip (refused).
+
+## [2026-10-09] ticket | T-3300 In Review -> Done
+[[tickets/T-3300-tooling-fix-wave-2-bugs]] done after the inline review (no open findings). Merged main; the p7zip/mame-tools apt line works on both architectures; [[decompile-workflow]] deduplicated into one ordered procedure (queue, dupes, neardupes, m2c `--unit`, funcdiff `--resolve`, permuter, T-0018 rows, fptab idiom of T-3330). Clean build on the native image from only an archive in `game/`: 27 of 27 OK.
