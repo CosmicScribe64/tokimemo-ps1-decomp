@@ -182,7 +182,7 @@ def main():
                                                   "config/%s.sha1" % EXE])
     n.rule("split",
            command=("python3 -m splat split config/%s.yaml && python3 tools/rodata_pieces.py "
-                    "config/%s.yaml && touch %s") % (EXE, EXE, "build/split.stamp"),
+                    "config/%s.yaml && touch $out") % (EXE, EXE),
            description="splat split")
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
