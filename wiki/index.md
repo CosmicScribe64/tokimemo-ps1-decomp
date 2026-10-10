@@ -65,6 +65,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
 - [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap, deferred (Backlog)
 - [[tickets/T-3100-identify-original-compiler|T-3100]] Identify the original game-code compiler (Done)
+- [[tickets/T-3110-test-ido-52-and-41|T-3110]] Test IDO 5.2 and 4.1 against the game code (Done)
 - [[tickets/T-2070-wave-2-tt|T-2070]] Wave 2: TT, 49 functions matched (Done)
 - [[tickets/T-2090-wave2-main-executable|T-2090]] Wave 2: main executable (Done; 61 functions)
 - [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330]] Tooling: m2c context and decomp-permuter (Done)
@@ -86,6 +87,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms
+- [[ido-52-evaluation]] - T-3110: IDO 5.2 and 4.1 (decomp.me archives, private) against the game code: 5.2 = 5.3 byte for byte, 4.1 ugen reproduces the frame pass, nothing reproduces the T-1321 behaviours; recommendation, CI options, licensing facts
 - [[original-compiler]] - T-3100: which compiler built the game code (O.BIN version stamps 3.18 = IDO 5.2-generation MIPS suite, big-endian ECOFF link host), header field table, ranked hypotheses, promotion experiments, rules for the T-1321 build step
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit

@@ -40,3 +40,4 @@ game-bundle.key
 /.claude/
 /versions/*
 !/versions/README.md
+/tools/local-compilers/

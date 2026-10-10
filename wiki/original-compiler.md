@@ -166,6 +166,14 @@ Each rule is grounded in the evidence above and can be tested against [[data/t00
 - Whether 3.18 itself produces the +16 frames and the lower promotion threshold. The decisive test is IDO 5.2, which decomp.me runs under qemu-irix. The licensing rule forbids running it here, so this needs the user's decision ([[tickets/T-0100-older-mips-compiler-emulation]]). The same applies to IDO 4.1 (3.10/3.12). On the four frame canaries of T-0100 and the promo rows, a match would settle hypothesis 1.
 - The exact uopt priority formula (loop weighting, entry-load cost). It is not in any public document read; it is in the uopt reconstructions.
 
+## Update: IDO 5.2 and 4.1 tested (T-3110)
+[[ido-52-evaluation]]:
+- IDO 5.2 (stamp 3.18) is byte-identical to 5.3 on all 2564 matched functions and on 46 blocked cases. It has 5.3's frames, and it does not reproduce the T-0018/T-1321 behaviours.
+- IDO 4.1's ugen (3.12) makes exactly the frame-pass layout (0 frame differences in 2564 functions), but its register allocation differs from the original in 80 of them.
+- 4.1 objects store the ECOFF header big-endian with f_flags 0x8000 and opthdr 0x38, like O.BIN.
+
+So the original combines a 3.18 (5.x-generation) code generator with the older frame layout; stock IRIX 5.2 is not it. Hypothesis 2 below ("stock IDO 5.2") is now unlikely; hypothesis 1 (a non-IRIX 3.18 build) stays.
+
 ## Ranked hypotheses
 
 1. **MIPS/SGI ucode suite release 3.18 (IDO 5.2-generation back end), linked to ECOFF on a big-endian host** (probably Sony's NEWS-based PlayStation toolchain). Confidence about 60%. For the release number alone (3.18), about 80%, on the strength of the linker stamps.

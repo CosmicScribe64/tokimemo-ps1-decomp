@@ -59,6 +59,8 @@ Update (T-0016): framed functions are no longer parked. The uniform frame pass b
 
 ## Frame layout emulation (T-0016)
 
+Update (T-3110): IDO 4.1's ugen produces this layout natively. With IDO 5.2's front end and uopt and 4.1's ugen, all 2564 matched C functions have exactly the frame pass's frame sizes and `$sp` offsets; 80 differ only in register choice ([[ido-52-evaluation]]).
+
 Pass: `tools/frame_pass.py`, run by `tools/cc.py` on every IDO compile ([[toolchain]]). Ticket: [[tickets/T-0016-frame-layout-emulation-pass]]. This is a toolchain emulation pass, not a fakematch (CODING_STANDARDS section 7a): one rule, no function lists, ordinary C.
 
 ### The rule

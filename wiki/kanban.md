@@ -34,6 +34,7 @@ kanban-plugin: board
 ## Done
 
 - [ ] [[tickets/T-3200-catalog-game-versions|T-3200 Catalog game versions]]
+- [ ] [[tickets/T-3110-test-ido-52-and-41|T-3110 Test IDO 5.2 and 4.1 against the game code]]
 - [ ] [[tickets/T-3100-identify-original-compiler|T-3100 Identify the original game-code compiler]]
 - [x] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
