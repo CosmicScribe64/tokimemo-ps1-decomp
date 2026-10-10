@@ -8,9 +8,12 @@ Usage (inside Docker):
   - a folder holding the boot exe (SLPM_86.053 or PSX.EXE) and optionally
     CDROM/EXEDIR/*.EXN and O.BIN (for example disc/files after extract_disc.py);
   - a raw .bin (MODE2/2352) or .iso (2048-byte sectors) data track, or a .cue
-    whose first FILE is such a track.
-CHD, 7z and zip are not read directly: unpack them first (tools/extract_disc.py
-takes the Redump zip).
+    whose first FILE is such a track;
+  - a .zip, .7z or .chd archive of such a disc (T-3300). A zip is read in place with Python's
+    zipfile (only the sectors needed are decompressed). A 7z or CHD is unpacked to a temporary
+    directory first (about 700 MB, removed afterwards) with 7-Zip (7zz, 7z, 7za or 7zr) or
+    chdman; both are in the Docker image. Without the tool the tool says so and asks for the
+    disc to be unpacked first.
 
 The boot exe is found through SYSTEM.CNF, hashed, and looked up in
 config/versions.txt (facts only: ids, sizes, SHA-1; see wiki/versions.md). The
@@ -18,17 +21,24 @@ overlays found next to it are compared as well, so a patched or mixed disc is
 reported as such. Nothing is written; no game data leaves the machine.
 Exit status: 0 known exe, 1 unknown exe, 2 usage or read error.
 """
+import contextlib
 import hashlib
 import os
 import re
+import shutil
 import struct
+import subprocess
 import sys
+import tempfile
+import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import extract_disc  # noqa: E402
 
 DEFAULT_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config", "versions.txt")
 BOOT_NAMES = ("SLPM_86.053", "PSX.EXE")
+ARCHIVE_EXTS = (".zip", ".7z", ".chd")
+SEVENZIP = ("7zz", "7z", "7za", "7zr")
 
 
 def load_db(path):
@@ -49,12 +59,11 @@ def load_db(path):
 
 
 class IsoImage(extract_disc.Image):
-    """Cooked 2048-byte-sector image."""
+    """Cooked 2048-byte-sector image (`f`: an open file-like object, `size`: its length)."""
 
-    def __init__(self, path):
-        self.f = open(path, "rb")
-        self.f.seek(0, 2)
-        self.sectors = self.f.tell() // 2048
+    def __init__(self, f, size):
+        self.f = f
+        self.sectors = size // 2048
 
     def read_sector(self, lba):
         self.f.seek(lba * 2048)
@@ -64,17 +73,131 @@ class IsoImage(extract_disc.Image):
         return data, False
 
 
+class RawImage(extract_disc.Image):
+    """Raw 2352-byte-sector image (`f`: an open file-like object, `size`: its length)."""
+
+    def __init__(self, f, size):
+        self.f = f
+        self.sectors = size // extract_disc.SECTOR
+
+
+class ArchiveError(ValueError):
+    """An archive cannot be read (missing tool, no disc track inside, tool failure)."""
+
+
+def image_of(f, size):
+    """Image over a seekable binary file, raw or cooked by its sync header."""
+    f.seek(0)
+    head = f.read(12)
+    f.seek(0)
+    return (RawImage if head == b"\x00" + b"\xff" * 10 + b"\x00" else IsoImage)(f, size)
+
+
+def cue_track(text):
+    """File name of the first FILE entry of a cue sheet, or None."""
+    m = re.search(r'FILE\s+"([^"]+)"', text)
+    return m.group(1) if m else None
+
+
 def open_image(path):
     if path.lower().endswith(".cue"):
         with open(path) as f:
-            m = re.search(r'FILE\s+"([^"]+)"', f.read())
-        if not m:
+            name = cue_track(f.read())
+        if not name:
             raise ValueError("no FILE entry in cue")
-        path = os.path.join(os.path.dirname(path), m.group(1))
-    with open(path, "rb") as f:
-        head = f.read(12)
-    raw = head == b"\x00" + b"\xff" * 10 + b"\x00"
-    return extract_disc.Image(path) if raw else IsoImage(path)
+        path = os.path.join(os.path.dirname(path), name)
+    f = open(path, "rb")
+    f.seek(0, 2)
+    return image_of(f, f.tell())
+
+
+def pick_track(names, cue_text=None):
+    """The data track among archive member names: the cue's first FILE, else the first .bin/.iso."""
+    base = {os.path.basename(n).lower(): n for n in names}
+    if cue_text:
+        want = cue_track(cue_text)
+        if want and os.path.basename(want).lower() in base:
+            return base[os.path.basename(want).lower()]
+    for n in sorted(names):
+        if n.lower().endswith((".bin", ".iso", ".img")):
+            return n
+    raise ArchiveError("no .bin or .iso disc track in the archive")
+
+
+def find_tool(candidates, what, path):
+    for c in candidates:
+        found = shutil.which(c)
+        if found:
+            return found
+    raise ArchiveError("%s needs %s on PATH, which is not installed here. Run this through "
+                       "tools/docker.sh (the image has it), or unpack %s first and pass the "
+                       ".cue, .bin or folder" % (os.path.splitext(path)[1], what, os.path.basename(path)))
+
+
+def run_tool(cmd):
+    proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    if proc.returncode != 0:
+        raise ArchiveError("%s failed (exit %d):\n%s" % (os.path.basename(cmd[0]), proc.returncode,
+                                                         proc.stdout.strip()[-600:]))
+    return proc.stdout
+
+
+def sevenzip_members(tool, path):
+    out = run_tool([tool, "l", "-slt", "-ba", path])
+    names, cur = [], {}
+    for line in out.splitlines() + [""]:
+        if line.strip() == "":
+            if cur.get("Path") and cur.get("Folder") != "+":
+                names.append(cur["Path"])
+            cur = {}
+        elif " = " in line:
+            k, v = line.split(" = ", 1)
+            cur[k.strip()] = v
+    return names
+
+
+@contextlib.contextmanager
+def open_archive(path):
+    """Context manager giving the Image of the data track of a .zip, .7z or .chd disc archive."""
+    ext = os.path.splitext(path)[1].lower()
+    if ext == ".zip":
+        try:
+            z = zipfile.ZipFile(path)
+        except zipfile.BadZipFile as e:
+            raise ArchiveError("%s is not a readable zip: %s" % (path, e))
+        with z:
+            names = [i.filename for i in z.infolist() if not i.is_dir()]
+            cue = next((n for n in sorted(names) if n.lower().endswith(".cue")), None)
+            track = pick_track(names, z.read(cue).decode("latin1") if cue else None)
+            with z.open(track) as f:
+                yield image_of(f, z.getinfo(track).file_size)
+        return
+    tmp = tempfile.mkdtemp(prefix="identify_version")
+    try:
+        if ext == ".7z":
+            tool = find_tool(SEVENZIP, "7-Zip (7zz, 7z, 7za or 7zr)", path)
+            names = sevenzip_members(tool, path)
+            cue = next((n for n in sorted(names) if n.lower().endswith(".cue")), None)
+            text = None
+            if cue:
+                run_tool([tool, "e", "-y", "-bd", "-o" + tmp, path, cue])
+                with open(os.path.join(tmp, os.path.basename(cue)), errors="replace") as f:
+                    text = f.read()
+            track = pick_track(names, text)
+            run_tool([tool, "e", "-y", "-bd", "-o" + tmp, path, track])
+            img_path = os.path.join(tmp, os.path.basename(track))
+        else:
+            tool = find_tool(("chdman",), "chdman (MAME tools)", path)
+            run_tool([tool, "extractcd", "-i", path, "-o", os.path.join(tmp, "disc.cue"),
+                      "-ob", os.path.join(tmp, "disc.bin")])
+            img_path = os.path.join(tmp, "disc.bin")
+        img = open_image(img_path)
+        try:
+            yield img
+        finally:
+            img.f.close()
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
 
 
 def read_tree(img, wanted):
@@ -181,11 +304,12 @@ def main(argv):
         if os.path.isdir(path):
             files = read_folder(path)
         else:
-            if path.lower().endswith((".chd", ".7z", ".zip")):
-                sys.exit("unpack %s first (tools/extract_disc.py takes the Redump zip)" % path)
-            img = open_image(path)
-            files = read_tree(img, {"SYSTEM.CNF", *BOOT_NAMES} |
-                              {"CDROM/EXEDIR/%s" % n for n in db_overlay_names(db)})
+            wanted = {"SYSTEM.CNF", *BOOT_NAMES} | {"CDROM/EXEDIR/%s" % n for n in db_overlay_names(db)}
+            if path.lower().endswith(ARCHIVE_EXTS):
+                with open_archive(path) as img:
+                    files = read_tree(img, wanted)
+            else:
+                files = read_tree(open_image(path), wanted)
         res = identify(files, db)
     except (OSError, ValueError, EOFError) as e:
         print("error: %s" % e, file=sys.stderr)

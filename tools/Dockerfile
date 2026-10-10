@@ -66,5 +66,10 @@ RUN curl -fsSL -o /tmp/mk.zip https://github.com/Lameguy64/mkpsxiso/releases/dow
     && find /tmp/mk -type f \( -name dumpsxiso -o -name mkpsxiso \) -exec install -m755 {} /usr/local/bin/ \; \
     && rm -rf /tmp/mk /tmp/mk.zip
 
+# Archive readers for tools/identify_version.py (T-3300): 7z (p7zip-full) and CHD (chdman)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      p7zip-full=16.02+dfsg-8 mame-tools=0.242+dfsg.1-1 \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV MASPSX_DIR=/opt/maspsx GCC_DIR=/opt/gcc IDO_DIR=/opt/ido ASM_PROCESSOR_DIR=/opt/asm-processor PERMUTER_DIR=/opt/decomp-permuter
 WORKDIR /work

@@ -20,5 +20,5 @@ in. Supporting several versions is future work. The build currently targets one 
 `config/SLPM_86.053.sha1`.
 
 The releases catalogued so far, their hashes and how they differ from the target are in
-`wiki/versions.md` and `config/versions.txt`; `tools/identify_version.py <image|folder>` tells
-you which one a disc is.
+`wiki/versions.md` and `config/versions.txt`; `tools/identify_version.py <image|folder|archive>` tells
+you which one a disc is. It reads `.zip`, `.7z` and `.chd` files directly.
