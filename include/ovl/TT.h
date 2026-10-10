@@ -75,6 +75,8 @@ extern u8 *D_80158A9C;
 
 extern u8 *D_80158A80;
 extern u8 *D_80158A88;
+extern u8 *D_80158A7C;
+extern u8 *D_80158AA0;
 
 extern u8 D_80155C78[];
 void func_801487D0(s16 arg0, s16 arg1, u8 arg2);
