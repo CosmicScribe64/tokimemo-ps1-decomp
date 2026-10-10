@@ -97,7 +97,19 @@ void func_80133730(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_801337EC);
+void func_801337EC(void) {
+    func_800847B8(D_800E6280.unk_F5F = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01);
+    func_801331B0();
+    if (D_800E6280.unk_F5F == 0xC) {
+        D_800CA148 = 8;
+    } else {
+        D_800CA148 = 0;
+    }
+    D_800CA14C = 0;
+    D_800CA160 = D_80134C5C;
+    D_800CA164 = D_80134C90;
+    D_800CA168 = D_80134CC4;
+}
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_8013388C);
 

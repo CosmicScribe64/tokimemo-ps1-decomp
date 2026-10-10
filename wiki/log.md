@@ -688,3 +688,8 @@ Matched 29 functions (GEKO 7, TACO 5, TT 3, EVENT 3, SHOUGATU 2, BUNKA_SD 2, one
 
 ## [2026-10-10] ticket | T-8060 done
 [[tickets/T-8060-wave-5-list-6]] moved to Done after the inline review against CODING_STANDARDS.md (no open findings).
+## [2026-10-10] ticket | T-8070 wave 5 list 7 started
+Created [[tickets/T-8070-wave-5-list-7]], In Progress.
+
+## [2026-10-10] build | T-8070 wave 5 list 7: 34 functions matched
+34 functions (about 6860 bytes) from the list matched in 10 commits; all 27 sha1 OK after a clean rebuild; grand total 4001/6958 functions, 521056/2279368 bytes. 20 T-0018 rows appended to [[data/t0018-cases]]; idioms and blockers in [[matching-notes]] (section "Wave 5, list 7"). Ticket [[tickets/T-8070-wave-5-list-7]] reviewed inline and moved to Done.

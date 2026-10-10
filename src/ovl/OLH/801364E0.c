@@ -76,11 +76,59 @@ void func_801366D4(void) {
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/801364E0", func_80136804);
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/801364E0", func_80136960);
+s32 func_80136960(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013D6C4, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　同じメモリーカード内で、データをコピ", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "ーすることができます。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/801364E0", func_80136A30);
+s32 func_80136A30(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013D6C8, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　クリア人数そのままで、ゲームをプロロ", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "ーグからやり直すことが出来ます。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/801364E0", func_80136B00);
+s32 func_80136B00(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013D6CC, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　ときめきメモリアルのデータを消去する", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "ことが出来ます。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/801364E0", func_80136BD0);
 

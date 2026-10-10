@@ -74,15 +74,65 @@ void func_801346F4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134500", func_80134824);
+s32 func_80134824(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013BF60, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　明るくアニメーションしているアイコン", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "が、現在選択できるアイコンです。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134500", func_801348F4);
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134500", func_801349FC);
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134500", func_80134B3C);
+s32 func_80134B3C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013BF6C, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　システムを選択し、カーソルの移動速度", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "を遅くしてから、アイコンを移動してくだ", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "さい。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134500", func_80134C28);
+s32 func_80134C28(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013BF70, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　マウスでは、アイコンを動かせません。", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "コントローラにつなぎ替えて、アイコンを", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "移動してから、御遊び下さい。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134500", func_80134D14);
 

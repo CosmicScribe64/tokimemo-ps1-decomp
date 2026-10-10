@@ -47,21 +47,15 @@ void func_800410AC(void) {
     func_8009CCF4(&disp);
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, store order: the original stores h, w before x, y. */
 void func_8004111C(void) {
     RECT rect;
 
+    rect.w = 640; rect.h = 480; /* FAKE: both on one source line, as1 then stores h before w */
     rect.x = 0;
     rect.y = 0;
-    rect.w = 640;
-    rect.h = 480;
     func_8009C7F8(&rect, 0, 0, 0);
     func_8009C674(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_8004111C);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041168);
 

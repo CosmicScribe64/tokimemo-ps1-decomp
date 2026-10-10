@@ -91,7 +91,28 @@ void addr_init_bustup(void) {
     D_800CA130 = 0x801800AC;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007C784);
+void func_8007C784(void) {
+    s32 pad; /* FAKE: unused slot above the byte locals, the original frame has it (real source unknown). T-8070 */
+    u8 sp2B;
+    u8 sp2A;
+    u8 sp29;
+
+    if (func_800460CC() & 1) {
+        func_8004284C();
+        return;
+    }
+    if ((u32)D_800E6280.unk_1104.w++ >= 0x401) {
+        func_800452C4();
+        sp29 = D_800B5939;
+        sp2A = *(u8 *)&D_800B5948;
+        sp2B = D_800B593C;
+        dec_bg_reset();
+        *(u8 *)&D_800B5948 = sp2A;
+        D_800B593C = sp2B;
+        D_800B5939 = sp29;
+        D_800E6280.unk_110A -= 1;
+    }
+}
 
 void func_8007C844(void) {
     D_80122CF8 = 1;
@@ -334,7 +355,28 @@ void normal_date_three_select(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_main);
+s32 normal_date_three_select_main(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    if (D_800E6280.unk_F88 & 0x200020) {
+        if (check_end_k() != 0) {
+            if (D_800E6280.unk_F90[1].unk_06 != 0) {
+                D_80122CDC = D_800CA2A4;
+            } else if (D_800E6280.unk_F90[3].unk_06 != 0) {
+                D_80122CDC = D_800CA2A5;
+            } else if (D_800E6280.unk_F90[5].unk_06 != 0) {
+                D_80122CDC = D_800CA2A6;
+            } else {
+                return 0;
+            }
+            D_8011ECD3 &= 0xFF7F;
+            D_80122D30 = 0;
+            k_reset(1);
+            func_8004284C();
+        }
+    }
+}
 
 void normal_date_two_select(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -352,7 +394,26 @@ void normal_date_two_select(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_two_select_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_two_select_main);
+s32 normal_date_two_select_main(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    if (D_800E6280.unk_F88 & 0x200020) {
+        if (check_end_k() != 0) {
+            if (D_800E6280.unk_F90[1].unk_06 != 0) {
+                D_80122CDC = 0;
+            } else if (D_800E6280.unk_F90[3].unk_06 != 0) {
+                D_80122CDC = 1;
+            } else {
+                return 0;
+            }
+            D_8011ECD3 &= 0xFF7F;
+            D_80122D30 = 0;
+            k_reset(1);
+            func_8004284C();
+        }
+    }
+}
 
 void func_80083338(void) {
     func_80083440(get_g_zyotai_h(D_800E6280.unk_F5F) & 0x7F);
@@ -434,7 +495,20 @@ void return_step(void) {
     func_80042940(D_800E6280.unk_722);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", k_disp_inc2);
+void k_disp_inc2(void) {
+    s32 pad; /* FAKE: unused slot above sp2B, the original frame has it (real source unknown). T-8070 */
+    u8 sp2B;
+
+    if (D_80122CFC-- < 1) {
+        D_80122CFC = 0;
+        sp2B = get_k_speed();
+        if (D_800E6280.unk_F80 & 0x600060) {
+            k_speed_set(0);
+        }
+        k_disp_inc();
+        k_speed_set(sp2B);
+    }
+}
 
 void yosi_trans(void) {
     func_8004500C(0, 0x200);

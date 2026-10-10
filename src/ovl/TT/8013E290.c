@@ -3,7 +3,26 @@
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E290", func_8013E290);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E290", func_8013E320);
+void func_8013E320(void) {
+    func_800AE080(D_80158A64, 0x38);
+    *(s32 *)(D_80158A68 + 8) = 0;
+    func_800AE080(D_80158AA8, 0xA00);
+    func_800AE080(D_80158A6C, 0x20);
+    func_800AE080((u8 *)D_80158A70, 0x20);
+    func_800AE080(D_80158A74, 0x74);
+    func_800AE080(D_80158A78, 0x1EC);
+    func_800AE080(D_80158A7C, 0x300);
+    func_800AE080(D_80158A80, 0x3F0);
+    func_800AE080(D_80158A84, 0x2C0);
+    func_800AE080(D_80158A88, 0x2C0);
+    func_800AE080(D_80158A8C, 0x424);
+    func_800AE080(D_80158A90, 0xD80);
+    func_800AE080(D_80158A94, 0x270);
+    func_800AE080(D_80158A98, 0x1E00);
+    func_800AE080(D_80158A9C, 0xF00);
+    func_800AE080(D_80158AA0, 0x3400);
+    func_800AE080(D_80158AA4, 0x3200);
+}
 
 void func_8013E454(void) {
     func_800AE080(D_80158A60, 0xA8);
