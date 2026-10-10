@@ -1309,6 +1309,7 @@ void func_80107CEC(void);
 void func_80107E20(void);
 void func_80107A28(void);
 void func_80107BB0(void);
+extern s8 D_801212B4;
 #endif /* OVL_EVENT_H */
 extern s16 D_80124348;
 void func_800FE030(void);
