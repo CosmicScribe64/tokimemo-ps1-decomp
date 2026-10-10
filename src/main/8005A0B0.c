@@ -729,7 +729,36 @@ void func_8005E9EC(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005EA38);
+void func_8005EA38(void) {
+    s32 pad[2]; /* FAKE: unused locals above the arrays, the original frame is 8 bytes bigger (T-3330) */
+    s16 x[4];
+    s16 y[4];
+    s16 w[4];
+    s16 h[4];
+    s32 i;
+
+    func_8004E58C();
+    func_8006612C("決定ボタン設定");
+    func_8005DEA0(2);
+    for (i = 0; i < 2; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    set_kanji_string(x[0], y[0], 3, "右ボタンで決定", 0);
+    set_kanji_string(x[1], y[1], 3, "左ボタンで決定", 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "決定ボタンを選択します", 0);
+    menu_set(1, 2, x, y, w, h);
+    if (D_800E6280.unk_F75 == 0 || D_800E6280.unk_F75 != 1) {
+        D_800E6280.unk_1094 = 1;
+    } else {
+        D_800E6280.unk_1094 = 0;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005EB74(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -801,7 +830,35 @@ void func_8005EF04(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005EF44);
+void func_8005EF44(void) {
+    s32 pad[2]; /* FAKE: unused locals above the arrays, the original frame is 8 bytes bigger (T-3330) */
+    s16 x[4];
+    s16 y[4];
+    s16 w[4];
+    s16 h[4];
+    s32 i;
+
+    func_8004E58C();
+    func_8006612C("クリックスピード設定");
+    func_8005DEA0(2);
+    for (i = 0; i < 2; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    set_kanji_string(x[0], y[0], 3, "初期状態", 0);
+    set_kanji_string(x[1], y[1], 3, "変更", 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "クリックスピードを設定します", 0);
+    set_kanji_string(-0x80, 0x42, 0, "変更する場合、変更にカーソルを", 0);
+    set_kanji_string(-0x80, 0x52, 0, "合わせて、ダブルクリックして下さい", 0);
+    menu_set(1, 2, x, y, w, h);
+    D_800E6280.unk_1094 = 0;
+    D_801230E4 = 0;
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F09C);
 
