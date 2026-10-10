@@ -419,3 +419,9 @@ New [[original-compiler]] and raw note `wiki/raw/original-compiler-sources.md`.
 
 ## [2026-10-09] ticket | T-3100 In Progress -> In Review -> Done
 [[tickets/T-3100-identify-original-compiler]] done after the inline review (no open findings). Clean rebuild 27 of 27 sha1 OK.
+
+## [2026-10-09] ticket | T-3110 created, Backlog -> In Progress
+[[tickets/T-3110-test-ido-52-and-41]]: test IDO 5.2 and 4.1 (from decomp.me's public compiler distribution, user decision) against the game code. Follow-up of [[tickets/T-3100-identify-original-compiler]] and [[tickets/T-0100-older-mips-compiler-emulation]].
+
+## [2026-10-09] query | T-3110 compiler sources located; download blocked by permissions
+decomp.me's distribution: IDO 5.2 from `https://github.com/LLONSIT/qemu-irix-helpers/raw/refs/heads/n/qemu/ido5.2.tar.xz`, IDO 4.1 from `https://github.com/decompme/compilers/releases/download/compilers/ido4.1.tar.gz` (decompme/compilers @ fdd6793). Both run under qemu-irix bundled in the tarball; no OS image needed. The download was refused by the session permission system; [[tickets/T-3110-test-ido-52-and-41]] waits for the user.

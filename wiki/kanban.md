@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-3110-test-ido-52-and-41|T-3110 Test IDO 5.2 and 4.1 against the game code]]
 
 
 
