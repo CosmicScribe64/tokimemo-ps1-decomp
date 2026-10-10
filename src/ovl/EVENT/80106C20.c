@@ -155,7 +155,20 @@ void func_80107684(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80107784);
+void func_80107784(void) {
+    D_80120678 = D_8012040C;
+    D_8012067C = D_80120424;
+    D_80120680 = D_8012043C;
+    func_80106EE0();
+    func_80012D64(D_801234F0, 0x11, 1, 2, 0);
+    func_8004C46C(D_801234F4, D_801234F8, D_801234FC, D_80123500, D_80123504, D_80123508);
+    func_8004C6B0(D_801234E4, D_801234E8, D_801234E0, D_801234EC);
+    D_800B0A04[4].unk_02 += 1;
+    D_800B0A04[4].unk_06 += 1;
+    D_800B0A04[4].unk_0A -= 0x14;
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_80107898(void) {
     func_800469F4(0x3FE8);

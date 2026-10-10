@@ -13,6 +13,7 @@
 #define MAIN_API_OVERRIDE_D_801206F0 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120720 /* EVENT overlay data at this address, s16 (main_api.h: s8) */
 #define MAIN_API_OVERRIDE_D_801206DC /* EVENT overlay data at this address, s32 (main_api.h: s8) */
+#define MAIN_API_OVERRIDE_D_801206D8 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
 #define MAIN_API_OVERRIDE_D_801206EC /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120724 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120730 /* EVENT overlay data at this address, s32 (main_api.h: s16) */

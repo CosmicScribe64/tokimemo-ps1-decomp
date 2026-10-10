@@ -635,7 +635,19 @@ void func_80060DF8(void) {
     func_80066C08(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060EA0);
+s32 func_80060EA0(void) {
+    typedef struct { u32 pad0 : 1; u32 flag : 1; u32 rest : 30; } Bits;
+    s32 pad[2]; /* FAKE: unused, gives the 0x48 frame and the n/tbl slots. T-7020 */
+    u8 tbl[12];
+    s32 i;
+    s32 n;
+
+    n = 0;
+    get_h_yuukou_table(tbl);
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 0; i < 11; i++) if (tbl[i] >= 0x4DU && ((Bits *) &D_800E6280.unk_1BC[i].unk_0C)->flag) n++;
+    return n;
+}
 
 void func_80061044(void) {
     if (func_80060EA0() != 0) {

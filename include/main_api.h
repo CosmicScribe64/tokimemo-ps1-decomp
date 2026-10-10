@@ -464,6 +464,8 @@ extern s32 D_800B36EC;
 extern s32 D_800B3708[];
 #endif
 extern s32 D_800B372C;
+extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
+extern u8 D_800B4341[]; /* table read by func_80052E60 */
 extern u8 D_800B3C6C;
 extern s8 D_800B3CA0;
 extern u8 D_800B3D24;
@@ -671,6 +673,7 @@ extern u8 D_800EAFA0[];
 extern s8 D_800EAFA2;
 extern u8 D_800EAFA7;
 extern s16 D_800EAFB6;
+extern s32 D_800EAFD8;
 extern u8 D_800EAFEB;
 extern s8 D_800EB029;
 extern u8 D_800EB02A;
@@ -917,6 +920,11 @@ extern u8 D_801206D9;
 #ifndef MAIN_API_OVERRIDE_D_801206DA
 extern s8 D_801206DA;
 #endif
+/* OPTION walks byte 3 of 0x44-byte records from here (the loop base register is this address,
+ * not one of D_8011ECD0; T-7020). */
+#ifndef MAIN_API_OVERRIDE_D_801206D8
+extern u8 D_801206D8[];
+#endif
 extern u8 D_801206DB;
 #ifndef MAIN_API_OVERRIDE_D_801206DC
 extern s8 D_801206DC;
@@ -1096,6 +1104,8 @@ extern s8 D_80121603;
 extern s8 D_80121647;
 extern s8 D_80121685;
 extern s8 D_8012168B;
+extern s16 D_80121726;
+extern s16 D_80121728;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
 extern Rec24 D_801217D0[]; /* at least 12 records */
@@ -1404,7 +1414,7 @@ void func_8004EAAC();
 void k_sub_reset(void);
 void func_8004EAD4();
 void k_sub_disp_start(s32 arg0);
-void k_disp_goto_line_end(void);
+s16 k_disp_goto_line_end(void);
 void k_speed_set(u8 arg0);
 u8 get_k_speed(void);
 s32 k_disp_inc(void);

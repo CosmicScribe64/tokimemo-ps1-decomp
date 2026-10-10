@@ -630,3 +630,11 @@ Bit-field stores (`lui rA; lbu rB`, rB != rA) and one line-scheduling case: DATE
 
 ## [2026-10-10] ticket | T-7010 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7010-game-state-view-audit]]; no open findings. Branch r4-gsaudit, not merged.
+## [2026-10-10] ticket | T-7020 created (In Progress)
+[[tickets/T-7020-loop-unrolling-and-scheduling]]: loop unrolling the original does not do, and load/delay-slot scheduling differences (wave-4 blockers). Worktree r4-loops.
+
+## [2026-10-10] build | T-7020 loop unrolling and scheduling
+Verdict: both wave-4 blockers are source forms; no flag or pass. 28 functions matched (3721 -> 3749). Rules in [[matching-notes]], idioms in [[decompile-workflow]], [[toolchain]] updated. Ticket [[tickets/T-7020-loop-unrolling-and-scheduling]] stays In Progress (helper results pending, review not done).
+
+## [2026-10-10] ticket | T-7020 (In Progress -> In Review -> Done)
+25 helper matches applied (total 53, 3721 -> 3774 of 6958); one-line loops marked FAKE. Clean rebuild 27/27 OK, headers OK, globals OK; sync_protos --check-branch OK. Inline review in [[tickets/T-7020-loop-unrolling-and-scheduling]], no findings open.
