@@ -141,9 +141,9 @@ void func_80144768(void) {
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801447B0);
 
 s32 func_80144A38(void) {
-    switch (D_800E738A) {                           /* irregular */
+    switch (D_800E6280.unk_110A) {                           /* irregular */
     case 0:
-        D_800E62BA = 0;
+        D_800E6280.unk_03A = 0;
         func_80059E00();
         break;
     case 1:

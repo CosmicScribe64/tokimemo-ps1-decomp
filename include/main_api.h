@@ -1865,7 +1865,5 @@ void func_80057D28(s32);
 void normal_date_girl_in_init();
 void normal_date_girl_in_main();
 void func_80051DBC();
-extern s8 D_800E62BA;
-extern u8 D_800E738A;
 
 #endif /* MAIN_API_H */
