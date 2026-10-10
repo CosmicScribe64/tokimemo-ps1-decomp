@@ -66,7 +66,21 @@ void func_80136108(void) {
     func_80133EF8();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_8013614C);
+typedef struct {
+    u32 pad0 : 1;
+    u32 flag : 1;
+    u32 rest : 30;
+} KgFlags;
+
+void func_8013614C(void) {
+    if ((D_80139DF4[(u8) D_80139DF0] == 0) && (D_800E6280.unk_75D != 0xFF) && ((KgFlags *) &D_800E6280.unk_1BC[D_800E6280.unk_75D].unk_0C)->flag) {
+        D_800E6280.unk_1BC[D_800E6280.unk_75D].unk_02 -= 0xA;
+    } else if (D_80139DF4[(u8) D_80139DF0] == 1) {
+        D_800E6280.unk_11C.unk_02 += 0xA;
+    }
+    func_80084D3C();
+    func_8004284C();
+}
 
 void func_801361F8(void) {
     func_80044750(0x23);

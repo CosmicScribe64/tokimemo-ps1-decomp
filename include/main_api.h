@@ -705,7 +705,9 @@ extern s32 D_800EB0A0;
 extern s32 D_800EB0A4;
 extern s8 D_800EB0AF;
 extern u8 D_800EC190[];
+#ifndef MAIN_API_OVERRIDE_D_800EECB0
 extern s32 D_800EECB0;
+#endif
 extern s32 D_800EECB4;
 extern s32 D_800EECBC;
 extern s32 D_800EECC0;

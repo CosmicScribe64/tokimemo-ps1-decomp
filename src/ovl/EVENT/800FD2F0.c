@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_800EECB0 /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/EVENT.h"
+
+extern u32 D_800EECB0;
 
 void func_800FD2F0(void) {
     D_801215E0 = 0x801B0000;
@@ -11,7 +14,22 @@ void func_800FD2F0(void) {
     D_801215F8 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD360);
+void func_800FD360(void) {
+    switch (D_800EECB0) {
+    case 1:
+        func_800FD3DC();
+        return;
+    case 2:
+        func_800FD43C();
+        return;
+    case 3:
+        func_800FD49C();
+        return;
+    default:
+        func_80015FE0();
+        return;
+    }
+}
 
 void func_800FD3DC(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
