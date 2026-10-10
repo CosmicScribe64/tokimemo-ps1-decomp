@@ -217,9 +217,32 @@ void func_80101FC8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80102000);
+void func_80102000(void) {
+    if (D_800EECBC == 1) {
+        func_8004A8EC(2);
+        func_80033E88();
+        func_80011EC4(0x2E);
+        return;
+    }
+    D_800B0E31 = 1;
+    D_80124394 = 3;
+    D_80124396 = 3;
+    D_80124398 = 3;
+    D_801243A4 = 2;
+    D_801243A6 = 2;
+    D_801243A8 = 2;
+    /* FAKE: D_800B0A3E/42 as D_800B0A3A + 4/8 (one base symbol); separate symbols let as1 hoist the loads. T-4010 */
+    D_800B0A3A -= 2;
+    (&D_800B0A3A)[2] -= 1;
+    (&D_800B0A3A)[4] += 0x14;
+    func_8004C250();
+    func_80011DFC();
+}
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_801020E4);
+void func_801020E4(void) {
+    func_80078970(D_800947C4, "絶叫マシーンビビール");
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80102118);
 

@@ -42,7 +42,14 @@ void func_8013990C(void) {
     func_801399C0();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801399C0);
+void func_801399C0(void) {
+    if (D_800E7208 & 0x800) {
+        D_8013D3F4 += 1;
+        func_8007BFB8();
+    }
+    func_8004B338("reverve", 0x78, 0);
+    func_8004B19C(D_8013D3F4 & 1, 0x78, 0xA);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139A30);
 

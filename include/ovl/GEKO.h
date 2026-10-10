@@ -241,4 +241,11 @@ void func_80138AF8(void);
 
 void func_8013F5F0();
 
+extern u8 D_801470A8;
+extern u32 D_801470AC;
+void func_8013FD3C();
+void func_80140040();
+
+void func_8013F850();
+
 #endif

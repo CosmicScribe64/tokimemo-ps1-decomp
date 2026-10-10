@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/EN_NICHI.h"
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80136B10);
+typedef struct {
+    void (*f[3])();
+} FnTbl3; /* size 0xC */
+
+extern FnTbl3 D_80139C5C;
+
+void func_80136B10(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl3 tbl;
+
+    tbl = D_80139C5C;
+    tbl.f[D_800E7389]();
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80136B74);
 

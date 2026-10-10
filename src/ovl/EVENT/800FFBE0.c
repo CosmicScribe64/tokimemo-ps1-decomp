@@ -85,7 +85,14 @@ void func_800FFEA0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_800FFF50);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100010);
+void func_80100010(void) {
+    func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
+    if (D_800B1AF5 == 0) {
+        func_80100070();
+        return;
+    }
+    func_80015FE0();
+}
 
 extern FnTbl38 D_80121DFC;
 
@@ -104,9 +111,17 @@ void func_8010010C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100144);
+void func_80100144(void) {
+    func_80078970(D_80094764, "男子１");
+    D_800EAFB6 = 4;
+    func_80011DFC();
+}
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100180);
+void func_80100180(void) {
+    func_80078970(D_80094764, "男子２");
+    D_800EAFB6 = 5;
+    func_80011DFC();
+}
 
 void func_801001BC(void) {
     func_8004BC20((s32) D_800B1746);

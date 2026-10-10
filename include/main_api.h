@@ -32,6 +32,8 @@ extern s32 D_80094724;
 extern s32 D_80094728;
 extern s32 D_8009472C;
 extern s16 D_80094730;
+extern u8 D_80094764[];
+extern u8 D_800947C4[];
 extern u8 D_800AFDF0[];
 extern u8 D_800AFF6C[];
 extern u8 D_800AFF78[];
