@@ -70,7 +70,27 @@ void func_80153320(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_8015347C);
+void func_8015347C(void) {
+    D_8015E208 = D_8015DED0;
+    D_8015E20C = D_8015E00C;
+    D_8015E210 = D_8015E148;
+    D_800E65C6 += 1;
+    /* FAKE: D_800E65CA and D_800E65CE are reached through D_800E65C6 so that as1 does not hoist their loads above the earlier stores; real source unknown. T-4050 */
+    (&D_800E65C6)[2] += 1;
+    (&D_800E65C6)[4] -= 0x14;
+    func_80084D3C();
+    func_80153070();
+    func_80043914(D_8015F19C, 0x11, 1, 2, 0);
+    func_80084E90(D_8015F1A0, D_8015F1A4, D_8015F1A8, D_8015F1AC, D_8015F1B0, D_8015F1B4);
+    func_800850D4(D_8015F190, D_8015F194, D_8015F18C, D_8015F198);
+    D_800CA224 = 3;
+    D_800CA226 = 3;
+    D_800CA228 = 3;
+    D_800CA234 = 2;
+    D_800CA236 = 2;
+    D_800CA238 = 2;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_801535D8);
 

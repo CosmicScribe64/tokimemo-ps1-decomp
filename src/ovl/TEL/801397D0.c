@@ -13,7 +13,28 @@ typedef struct {
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_801397D0);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139920);
+/* Flag word at +0x54C of the 4-byte entries at D_800E6280: nibble in bits 25..28, flag in bit 29. */
+typedef struct {
+    u32 pad : 25;
+    u32 nib : 4;
+    u32 b29 : 1;
+    u32 rest : 2;
+} TelEntryFlags; /* size 4 */
+
+void func_80139920(void) {
+    u8 *p;
+    s32 i;
+    u32 sel;
+
+    sel = ((TelEntryFlags *)&D_800E67CC)->nib;
+    for (i = 0, p = D_800E6280; i != 8; i++, p += 4) {
+        if (((TelEntryFlags *)(p + 0x54C))->b29 && sel == ((TelEntryFlags *)(p + 0x54C))->nib) {
+            p[0x54F] &= 0xFFDF;
+            func_800AE0B0("canceled %d \n", i);
+        }
+    }
+    func_8006B0C8();
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_801399CC);
 
