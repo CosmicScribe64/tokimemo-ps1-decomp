@@ -110,7 +110,6 @@ extern s32 D_801206DC;
 extern s32 D_801206E0;
 extern s32 D_801206EC;
 extern s32 D_801206F0;
-extern s16 D_801206F4;
 extern s32 D_801206F8;
 extern s32 D_801206FC;
 extern s32 D_80120700;
@@ -1198,5 +1197,10 @@ void func_80105910();
 void func_80105DF8();
 
 void func_80107090(void);
+
+void func_80100070();
+
+void func_80100254();
+void func_80101610();
 
 #endif /* OVL_EVENT_H */

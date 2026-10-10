@@ -12,7 +12,13 @@ void func_8014AD94(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014ADDC);
+void func_8014ADDC(void) {
+    func_8006612C("進路指導");
+    func_8004EA98();
+    func_8004EAD4(0);
+    func_80057390(0x80);
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AE20);
 
@@ -69,7 +75,35 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BB94);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BC00);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BDE0);
+s32 func_8014BDE0(void) {
+    s32 pad; /* FAKE: unused local, makes the frame 0x38 and puts the spill at sp+0x2C as in the original; real source unknown. T-4010 */
+    s32 sum;
+    s32 n;
+
+    sum = 0;
+    n = 0;
+    if (D_800E6382 >= 0x79) {
+        n = 1;
+        sum = D_800E6382 - 0x78;
+    }
+    if (D_800E6386 >= 0x79) {
+        n += 1;
+        sum += D_800E6386;
+        sum -= 0x78;
+    }
+    if (D_800E638A >= 0x79) {
+        n += 1;
+        sum += D_800E638A;
+        sum -= 0x78;
+    }
+    if ((n == 3) && (sum >= 0xC9)) {
+        n = 3;
+    } else if (n != 0) {
+        n -= 1;
+    }
+    func_800AE0B0("thl %d \n", n);
+    return 3 - n;
+}
 
 s32 func_8014BE98(void) {
     s32 n;

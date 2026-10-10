@@ -14,7 +14,21 @@ void func_80138A24(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80138A8C);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80138B4C);
+void func_80138B4C(s32 arg0) {
+    s32 i;
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    for (i = 0; i < 16; i++) {
+        a[i] = 0;
+        b[i] = i * 10 - 0x64;
+        c[i] = 0x40;
+        d[i] = 0xA;
+        func_8004F870(1, 0x10, a, b, c, d);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80138C20);
 
@@ -42,7 +56,14 @@ void func_8013990C(void) {
     func_801399C0();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801399C0);
+void func_801399C0(void) {
+    if (D_800E7208 & 0x800) {
+        D_8013D3F4 += 1;
+        func_8007BFB8();
+    }
+    func_8004B338("reverve", 0x78, 0);
+    func_8004B19C(D_8013D3F4 & 1, 0x78, 0xA);
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139A30);
 

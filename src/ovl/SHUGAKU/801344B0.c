@@ -31,4 +31,14 @@ void func_801347F0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801344B0", func_80134824);
+void func_80134824(void) {
+    s32 pad; /* FAKE: unused local above `unused`, puts it at sp+0x2B as in the original; real source unknown. T-4010 */
+    u8 unused; /* read uninitialised: the original passes the stack byte */
+
+    func_80051B48(D_800E71DF);
+    func_800634FC(unused);
+    func_80048F64(0x60);
+    func_80048F64(0x61);
+    func_80048F64(0x62);
+    func_8004284C();
+}

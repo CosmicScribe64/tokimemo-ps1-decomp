@@ -1,6 +1,10 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
+typedef struct {
+    void (*f[61])();
+} FnTbl61; /* size 0xF4 */
+
 void func_8013F360(void) {
     D_80147050 = 0x801D21BC;
     D_80147054 = 0x801D21C4;
@@ -55,7 +59,19 @@ void func_8013F5B4(void) {
     func_80046500();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013F5F0);
+typedef struct {
+    void (*f[49])();
+} FnTbl49; /* size 0xC4 */
+extern FnTbl49 D_801470B0;
+
+void func_8013F5F0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl49 tbl;
+
+    tbl = D_801470B0;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_8013F66C(void) {
     func_80046318(0x45, 0x801B0000, 0x8DBD);
@@ -90,7 +106,22 @@ void func_8013F770(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013F800);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013F850);
+extern FnTbl61 D_801471D0;
+
+void func_8013F850(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl61 tbl;
+
+    tbl = D_801471D0;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if ((D_801470A8 != 0) && (D_800E738A >= 0x20U)) {
+        func_8013FD3C();
+    }
+    if ((D_801470AC != 0) && (D_800E738A >= 0x20U)) {
+        func_80140040();
+    }
+}
 
 void func_8013F92C(void) {
     s32 temp_v0;
@@ -115,7 +146,14 @@ void func_8013FA38(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013FA60);
+void func_8013FA60(void) {
+    func_80138AF8();
+    if ((u16)D_800CA154 == 2) {
+        if (D_800E7384++ == 0) {
+            func_80044750(0x603);
+        }
+    }
+}
 
 void func_8013FAB4(void) {
     func_80044750(0x200);
@@ -163,7 +201,22 @@ void func_8013FC00(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013FC80);
+s16 func_8013FC80(void) {
+    if (D_800E7384 == 0) {
+        D_801206DB |= 0x80;
+        D_801206F4 = 0;
+        D_801206F2 = 0;
+        func_80044750(0x501);
+    }
+    D_801206F2 += 0x80;
+    D_801206F4 += 0x80;
+    if (D_801206F2 >= 0x1000) {
+        D_801206DB &= 0xFF7F;
+        D_801470A8 = 1;
+        func_8004284C();
+    }
+    D_800E7384 += 1;
+}
 
 void func_8013FD3C(void) {
     func_8013FD88(-0xA0, -0x78, 0x140, 0xA0, 0xFFFFFF, 0xA, 0);

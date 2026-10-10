@@ -9,7 +9,19 @@ void func_8013D120(void) {
     func_8013D20C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013D120", func_8013D15C);
+typedef struct {
+    void (*f[26])();
+} FnTbl26; /* size 0x68 */
+extern FnTbl26 D_80147DB0;
+
+void func_8013D15C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl26 tbl;
+
+    tbl = D_80147DB0;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
 
 void func_8013D1E4(void) {
     func_80086AB0(0x502);

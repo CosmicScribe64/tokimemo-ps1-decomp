@@ -137,4 +137,6 @@ extern s32 D_8015EBF4;
 extern s32 D_8015EBF8;
 void func_8013BBF8();
 
+extern s32 D_8015EE0C;
+
 #endif

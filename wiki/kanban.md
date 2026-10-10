@@ -36,6 +36,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-4010-wave-3-list-1|T-4010 Wave 3: list 1]]
 
 - [x] [[tickets/T-4040-wave-3-list-4|T-4040 Wave 3: list 4]]
 

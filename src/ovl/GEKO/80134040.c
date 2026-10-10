@@ -3,11 +3,37 @@
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134040);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_801341A0);
+typedef struct {
+    void (*f[29])();
+} FnTbl29; /* size 0x74 */
+extern FnTbl29 D_80144E94;
+
+void func_801341A0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl29 tbl;
+
+    tbl = D_80144E94;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134228);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_8013431C);
+s32 func_8013431C(void) {
+    if (D_800E62E4[D_800E62C0] == 5) {
+        if (D_800E7384++ == 0) {
+            func_80044750(0xBF);
+        }
+        if ((u32)D_800E7384 < 0x80U) {
+            return 0;
+        }
+    }
+    func_80044890(1, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_801343DC);
 
@@ -17,7 +43,15 @@ void func_8013445C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_8013448C);
+void func_8013448C(void) {
+    func_80046318(3, 0x801B0000, 0xAF43);
+    func_80134F84();
+    if (!(D_800E699E & 8)) {
+        func_80044750(0x603);
+        func_8004E788(-0x28, 0x40, 2, "ピンポーン", 0);
+    }
+    func_8004284C();
+}
 
 void func_80134500(void) {
     func_80046318(3, 0x801B0000, 0xAF43);

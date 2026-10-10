@@ -197,4 +197,6 @@ void func_80143B34();
 extern u8 D_80161D9C[];
 void func_8015C0A0();
 
+void func_80143730();
+
 #endif

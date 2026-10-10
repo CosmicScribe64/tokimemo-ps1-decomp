@@ -301,3 +301,16 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | TT | `func_80148714` | regorder | u16 parameter reduced modulo 100 in place: original keeps it in $a0 and the divisor 10 in $v1, IDO uses $v1/$a2 (T-4020) |
 | BUNKA_SD | `func_80134418` | regorder | constant 0x80 for a loop store and a global store: original reuses $v1 (the old counter), IDO uses $v0 and moves the pointer to $v1 (T-4020) |
 | EVENT | `func_8010564C` | regorder | loop with two calls: the constants 84, 130, 8, 0x24 are kept in saved registers and used as division operands in the original; IDO uses immediates (T-4020) |
+| DATE | `func_80149AC0` | regorder | `func_80051A68(..) & 0x7F` result and every later temporary one register later than IDO (known wave-2 shape) (T-4010) |
+| ENDING | `func_80139EC4` | promo | u8 global `D_80121874` loaded into `$a1` (also the call argument) and re-loaded into `$a1` in the loop; IDO uses `$v0` for the first load and a different chain (T-4010) |
+| OPTION | `func_80139F8C` | regorder | s32 global `D_800E7208` in `$v1` for two masked compares, u8 `D_8013D3A8` loaded to `$t1` then re-loaded into `$a0`; IDO uses `$v0` and one load (T-4010) |
+| OPTION | `func_80139F04` | regorder | clamp of s32 global `D_8013E730`: original loads it into `$v0` both times, IDO takes `$a1` for the first load and copies (T-4010) |
+| EVENT | `func_80100DD8` | regorder | `D_80094714 += D_800EECBC` then the same global as 5th argument: original loads it after the `lhu`, IDO hoists the `lw` above it (T-4010) |
+| GEKO | `func_80140040` | regorder | loop with constants `0x44`, `0x1E`, `-0x81`, `-1`, `1` held in `$a1,$a2,$t1,$a3,$t0` for the whole function; IDO keeps them as immediates or other registers and uses other temporaries (T-4010) |
+| DATE | `func_801511B4` | promo | u8 global `D_800B593C` loaded once into `$v0` through `lui $v1` and kept for four stores; IDO uses `lui $v0; lbu $v0` (T-4010) |
+| ENDING | `func_80139F3C` | promo | u8 global `D_80121874` kept in `$a1` across the tests, the loop and the final shifts (re-loaded into `$a1`); IDO uses `$s0/$v0/$v1` (T-4010) |
+| ENDING | `func_8013B510` | regorder | `u32` loop counter: original does `addiu s0,s0,1; andi t0,s0,0xff; ...; move s0,t0` with the next value in `$t0`, IDO takes `$a0` (the call-argument register) (T-4010) |
+| OPTION | `func_80139878` | promo | u8 global `D_800E62BA` loaded into `$v1` (+4) and the masked copy in `$v0`, then reused for the compare and the `0x80` store; IDO swaps `$v0/$v1` and the later temporaries (T-4010) |
+| TT | `func_801364EC` | regorder | switch on a `u16` field: the original reuses the selector register `$v0` for the later `lhu` of the counter, IDO takes `$a0` (everything else matches) (T-4010) |
+| 80047550 | `func_80047560` | promo | u8 global `D_801255DC` kept in `$a0` for the loop bound, the `rsin` result math and the `+4` store (re-loaded into `$a0` after the call); IDO uses `$a3/$a1/$t9` and a different temp chain (T-4010) |
+| RPG_BAT | `func_8013D1D0` | regorder | `D_80120E07 &= ~0x80` in the else branch: original materialises `-0x81` in `$v1` (`and t6,t5,v1`), IDO folds it to `andi 0xFF7F` for every spelling tried (T-4010) |

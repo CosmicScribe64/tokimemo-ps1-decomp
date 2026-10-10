@@ -3,7 +3,21 @@
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013CC90", func_8013CC90);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013CC90", func_8013D030);
+void func_8013D030(void) {
+    if (D_8015ED94 == 0) {
+        func_8013E7C0(0x30, 7, 1, 1);
+        return;
+    }
+    /* FAKE: absolute address instead of D_8015ED98; the original's lui and lw use different registers. Real source unknown. T-4010 */
+    if (*(s32 *)0x8015ED98 & 0x100) {
+        func_8013E7C0(0x30, 3, 1, 1);
+        return;
+    }
+    func_8013E7C0(0x30, 0, 1, 1);
+    if (D_8015ED94 < 0xA) {
+        func_8013E7C0(0x30, 4, 1, 1);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013CC90", func_8013D0D4);
 
