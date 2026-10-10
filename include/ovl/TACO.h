@@ -270,4 +270,10 @@ void func_8014394C();
 void func_801345D4();
 void func_8013474C();
 void func_801347F4(s32 arg0);
+extern s32 D_8015F440[];
+s32 func_80137BD8(void);
+void func_80137D00(void);
+void func_80137E48(void);
+void func_80137F54(void);
+
 #endif

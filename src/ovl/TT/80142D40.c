@@ -3,7 +3,15 @@
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142D40);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142DA8);
+void func_80142DA8(void *arg0, s16 arg1, s16 arg2) {
+    RECT r;
+
+    /* FAKE: w and h on one source line; IDO then stores h before w (line-based scheduling). T-6070 */
+    r.w = 0x20; r.h = 0x80;
+    r.x = arg1;
+    r.y = arg2;
+    func_8009C884(&r, arg0);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142DEC);
 
@@ -98,6 +106,16 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144854);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144A04);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144CA8);
+void func_80144CA8(void) {
+    u8 *q;
+    u8 *p;
+    u32 i;
+
+    q = D_80158A6C;
+    for (i = 0, p = D_80158AA4 + 0x64; i < (u32)(2 - q[0xC]); i++) {
+        *p = 0;
+        p -= 0x64;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144CF0);

@@ -40,7 +40,23 @@ void func_801324E8(void) {
     } while (n != 8);
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801325A0);
+typedef struct {
+    s16 a[8];
+    s16 b[8];
+    s16 c[8];
+    s16 d[8];
+} Arrs4x8; /* size 0x40 */
+
+void func_801325A0(Arrs4x8 *p) {
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        p->a[i] = -0x78;
+        p->b[i] = -0x58 + i * 0x14;
+        p->c[i] = 0x60;
+        p->d[i] = 0x14;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132624);
 
@@ -56,7 +72,22 @@ void func_80132A8C(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132AB8);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132B30);
+void func_80132B30(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80132BA8();
+        return;
+    case 1:
+        func_80133010();
+        return;
+    case 2:
+        func_80133330();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132BA8);
 

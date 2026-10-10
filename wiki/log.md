@@ -602,3 +602,11 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6010-wave-4-li
 
 ## [2026-10-10] ticket | T-6050 (In Progress -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6050-wave-4-list-5]]; no open findings. Branch w4-5, not merged.
+## [2026-10-10] ticket | T-6070 started (wave 4, list 7)
+Ticket [[tickets/T-6070-wave-4-list-7]] In Progress in branch w4-7: 127 functions, 38952 bytes, 34 files.
+
+## [2026-10-10] build | T-6070 matches (wave 4, list 7)
+24 of 127 functions matched (5,520 of 38,952 bytes) in OPTION, ENDING, TACO, TT, RPG_BAT and main 80043510. New findings in [[matching-notes]] ("Wave 4, list 7 (T-6070)"): statements on one source line are scheduled as a unit, `u16` prototype parameters replace casts (`func_8004435C`), `for (i = 0, p = ...)` register order, implicit-int dispatchers, unused-local frame fixes; GameState members read as scalars block about 15 functions. Eleven rows in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-6070 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6070-wave-4-list-7]]; no open findings. Branch w4-7, not merged.

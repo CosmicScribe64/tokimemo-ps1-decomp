@@ -42,6 +42,7 @@ kanban-plugin: board
 - [x] [[tickets/T-6030-wave-4-list-3|T-6030 Wave 4: list 3]]
 - [x] [[tickets/T-6010-wave-4-list-1|T-6010 Wave 4: list 1]]
 - [x] [[tickets/T-6050-wave-4-list-5|T-6050 Wave 4: list 5]]
+- [x] [[tickets/T-6070-wave-4-list-7|T-6070 Wave 4: list 7]]
 - [x] [[tickets/T-5100-game-state-struct|T-5100 Recover the main game-state struct]]
 - [x] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
 - [x] [[tickets/T-5020-loop-unrolling-and-lui-sharing|T-5020 Loop unrolling and lui sharing]]

@@ -24,7 +24,26 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B1B8);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B2AC);
+void func_8015B2AC(s32 arg0, s16 *arg1) {
+    s32 pad[7]; /* FAKE: unused local reproduces the original frame (0x60) and spill offsets; real source unknown. T-6070 */
+    TcObj50 *o;
+    TcPos *pos;
+    u8 *q;
+
+    o = &D_80127480[arg0];
+    o->unk18 += arg1[0];
+    o->unk1C += arg1[1];
+    o->unk20 += arg1[2];
+    pos = &D_80128880[arg0];
+    pos->x = arg1[3];
+    pos->z = arg1[4];
+    q = &o->pad0[4];
+    pos->y = arg1[5];
+    func_8015D0D0((pos->x << 12) / 360, q);
+    func_8015CF30((pos->z << 12) / 360, q);
+    func_8015D270((pos->y << 12) / 360, q);
+    *(s32 *)o = 0;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B3B0);
 

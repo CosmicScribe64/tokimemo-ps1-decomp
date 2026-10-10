@@ -1,7 +1,28 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137A60);
+/* No return value on purpose: implicit-int function, see func_80137BD8. T-6070 */
+s32 func_80137A60(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80137BD8();
+        break;
+    case 1:
+        func_80137D00();
+        break;
+    case 2:
+        func_80137E48();
+        break;
+    case 3:
+        func_80137F54();
+        break;
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80044750(0x74);
+        func_80044750(0xB1);
+        func_80042908(2);
+    }
+}
 
 void func_80137B14(s32 arg0) {
     func_80048F64(1);
@@ -20,9 +41,40 @@ void func_80137B14(s32 arg0) {
     D_8011ED3E = 0x78;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137BD8);
+/* No return value on purpose: the original is an implicit-int function (the `or v0,v1,zero` in the first delay slot). T-6070 */
+s32 func_80137BD8(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_800450F4(0, 0x201);
+        func_80059048();
+        func_800573AC();
+        func_80046318(9U, 0x80162000, 0xB380);
+        func_8004E9F4(0);
+        D_8015EDEC = 0;
+        func_80048DAC(1);
+        func_800438DC(1, 0);
+        func_80137B14(1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_800536AC(0x2C0, 0, 0x140, 0xF0);
+            func_80135944();
+            func_8004284C();
+        }
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137CBC);
+void func_80137CBC(s32 arg0) {
+    s32 *p;
+    s32 i;
+
+    i = arg0; /* FAKE: copy of the argument reproduces the original's `move t6,a0`; real source unknown. T-6070 */
+    p = &D_8015F440[i * 2];
+    func_80046290(p[0], p[1], 8);
+    func_80044750(0x300);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137D00);
 
