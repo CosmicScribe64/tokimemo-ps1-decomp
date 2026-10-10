@@ -1,7 +1,14 @@
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132000);
+void func_80132000(s32 arg0) {
+    s32 rem;
+
+    rem = arg0 % 15;
+    func_800AE090(D_8014CC74, D_8014CE6C + rem * 8, 8);
+    func_800AE090(D_8014CC7C, D_8014CEE4 + rem * 8, 8);
+    func_800AE090(D_8014CC84, D_8014CF5C + rem * 0xC, 0xC);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_8013209C);
 
