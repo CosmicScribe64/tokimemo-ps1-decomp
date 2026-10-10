@@ -5,7 +5,8 @@
 typedef struct KangeiFlagBits {
     u32 pad0 : 1;
     u32 flag : 1;
-    u32 rest : 30;
+    u32 flag2 : 1;
+    u32 rest : 29;
 } KangeiFlagBits;
 
 void func_80134120(void) {
@@ -162,7 +163,12 @@ void func_80135390(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80135438);
+/* Bits 1 and 2 of the current girl's flag word; the index is read again after the first store (T-7010). */
+void func_80135438(void) {
+    ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag = 1;
+    ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag2 = 1;
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801354AC);
 
