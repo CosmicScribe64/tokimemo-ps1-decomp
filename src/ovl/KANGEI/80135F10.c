@@ -129,7 +129,22 @@ void func_801365C4(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136630);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136810);
+void func_80136810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7, s32 arg8) {
+    s32 unused; /* FAKE: unused local, only its 4-byte frame slot above p is observed (T-6030) */
+    u8 *p;
+
+    p = func_800490F0(0x10, D_8011ECA0);
+    func_8009F0F4(p);
+    func_8009EF84(p, arg8);
+    p[4] = arg4;
+    p[5] = arg5;
+    p[6] = arg6;
+    *(s16 *) (p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg0;
+    *(s16 *) (p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    *(s16 *) (p + 0xC) = arg2;
+    *(s16 *) (p + 0xE) = arg3;
+    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 0xA) + (arg7 * 4)], p);
+}
 
 void func_80136900(void) {
     D_80139DFC += 1;
