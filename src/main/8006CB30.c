@@ -10,7 +10,15 @@ void schedule_init(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", _schedule_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", last_date_spot_timer_dec);
+void last_date_spot_timer_dec(void) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        if (D_800E6280[0x73C + i] != 0) {
+            D_800E6280[0x73C + i] -= 1;
+        }
+    }
+}
 
 void restore_bgm(void) {
     if (func_8004480C() == 0) {
