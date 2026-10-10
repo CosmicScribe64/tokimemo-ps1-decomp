@@ -3,7 +3,19 @@
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075320);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075468);
+void func_80075468(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+    default:
+        func_800755B4();
+        break;
+    case 1:
+        func_80075A64();
+        break;
+    }
+    func_80066334();
+    func_80065B0C(0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800754C0);
 
@@ -58,9 +70,41 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076C7C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076DA0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076EC0);
+void func_80076EC0(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80076630();
+        break;
+    case 1:
+        func_80076B48();
+        break;
+    case 2:
+        func_80076C7C();
+        break;
+    case 3:
+        func_80076DA0();
+        break;
+    }
+    func_80066334();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076F48);
+void func_80076F48(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8007739C();
+        break;
+    case 1:
+        func_80077694();
+        break;
+    case 2:
+        func_80077900();
+        break;
+    }
+    parameter_show();
+    func_80066334();
+    func_80065B0C(1);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076FDC);
 
@@ -81,7 +125,20 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077694);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077900);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077BE0);
+void func_80077BE0(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80077C50();
+        break;
+    case 1:
+        func_80077E30();
+        break;
+    case 2:
+        magazine_exit();
+        break;
+    }
+    func_80066334();
+}
 
 void func_80077C50(void) {
     func_8006A044(0, 0);
@@ -175,4 +232,20 @@ void holiday_club_join_exit(void) {
     func_80042908(5);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007894C);
+void func_8007894C(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        join_club_init();
+        break;
+    case 1:
+        join_club_select();
+        break;
+    case 2:
+        join_club_message();
+        break;
+    case 3:
+        holiday_club_join_exit();
+        break;
+    }
+    cal_base_show();
+}
