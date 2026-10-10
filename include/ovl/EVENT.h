@@ -1190,5 +1190,10 @@ extern s8 D_80125310;
 void func_801103A0();
 void func_800FBE90();
 void func_800F7640();
+void func_800F77A0();
+void func_800F8C2C();
+void func_801055D0();
+void func_80105910();
+void func_80105DF8();
 
 #endif /* OVL_EVENT_H */

@@ -3,7 +3,10 @@
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138A60);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138ADC);
+void func_80138ADC(void) {
+    func_8004E884(func_8004E788(-0x80, 0x30, 2, "【団体行動中】", 0));
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138B20);
 
@@ -129,7 +132,27 @@ void func_801395DC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139604);
+void func_80139604(void) {
+    s32 var_v0;
+    u8 x;
+    u32 t;
+
+    if (D_800CA2EC == 0) {
+        x = func_80051A68(D_800E71DF);
+        t = x & 0x7F;
+        if (t < 2U) {
+            var_v0 = 0;
+        } else if (t == 2) {
+            var_v0 = 3;
+        } else if (t == 3) {
+            var_v0 = 6;
+        } else {
+            var_v0 = 9;
+        }
+        D_800CA2DC += var_v0;
+    }
+    func_8004284C();
+}
 
 void func_80139698(void) {
     D_800CA2DC = D_800CA2CC + 0x1A;
@@ -169,4 +192,16 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801398E8);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_801399F4);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139C80);
+typedef struct {
+    void (*f[18])();
+} FnTbl18; /* size 0x48 */
+extern FnTbl18 D_8013CAA0;
+
+void func_80139C80(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl18 tbl;
+
+    tbl = D_8013CAA0;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
