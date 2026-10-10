@@ -181,7 +181,21 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80135DA4);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80135E50);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801365DC);
+void func_801365DC(s32 arg0) {
+    s32 v;
+
+    D_800B3D60 = 0;
+    v = func_8005742C(arg0, 1);
+    if (v == D_800B5939) {
+        func_800AE0B0("same\n");
+        D_800E7384 += 3;
+        return;
+    }
+    if (v == 1 - D_800B5939) {
+        func_800AE0B0("another\n");
+        D_800E7384 += 2;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136660);
 

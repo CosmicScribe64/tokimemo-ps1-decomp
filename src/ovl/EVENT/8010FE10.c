@@ -80,7 +80,20 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80110234);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801103A0);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80111E60);
+void func_80111E60(void) {
+    D_8009473C = D_8012421C;
+    D_80094740 = D_80124288;
+    D_80094744 = D_801242F4;
+    D_800EECD0 = 0;
+    D_8012531C = 0;
+    func_80078970(D_80094784, "近所の公園");
+    D_801252E8 = 2;
+    D_801243A4 = 0;
+    D_801243A6 = 0;
+    D_800EECE4 = -1;
+    func_800469F4(0x4264);
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80111F04);
 
@@ -914,6 +927,23 @@ void func_8011C3F4(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C470);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C514);
+typedef struct {
+    u32 pad : 12;
+    u32 b12 : 1;
+    u32 b13 : 1;
+    u32 rest : 18;
+} EvFlags; /* size 4; bits 12 and 13 are tested as bit-fields (sll; bltz/bgez in the original) */
+
+void func_8011C514(void) {
+    EvFlags *f;
+
+    f = (EvFlags *)(D_800B0A10 + D_800B1746 * 0x34);
+    if (f->b12 || f->b13) {
+        func_80011DFC();
+        return;
+    }
+    func_80011DFC();
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C588);

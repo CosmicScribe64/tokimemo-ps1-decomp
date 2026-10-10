@@ -39,7 +39,12 @@ void func_80133568(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_801335C0);
+void func_801335C0(void) {
+    func_800AE0F0(D_800CA1DC, "校舎裏");
+    func_800AE0F0(D_800CA19C, "　");
+    func_8007ED84(0x407A);
+    func_8004284C();
+}
 
 void func_80133610(void) {
     func_800847B8(0);
