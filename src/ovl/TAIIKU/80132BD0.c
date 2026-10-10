@@ -12,7 +12,25 @@ void func_801330D4(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_801330FC);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_801331D0);
+void func_801331D0(void) {
+    /* FAKE: unused 8-byte local reproduces the original frame (real source unknown). T-9150 */
+    s32 pad[2];
+    RECT r;
+    s32 i;
+
+    i = 0x140;
+    do {
+        r.x = i;
+        r.y = 0x70;
+        r.w = 0x40;
+        r.h = 0x80;
+        func_8009C884(&r, D_801491CC);
+        i += 0x40;
+    } while (i < 0x200);
+    for (i = 0; i < 3; i++) {
+        D_800E6280.unk_1228[i + 0x25] = 8;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80133258);
 
