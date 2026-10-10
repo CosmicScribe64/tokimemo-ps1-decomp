@@ -732,6 +732,7 @@ extern s16 D_800F5496;
 extern s16 D_800F549A;
 extern s16 D_800F54A6;
 extern s16 D_800F54AE;
+extern s16 D_800F54B2;
 extern u8 D_800F55CA;
 extern u32 D_800F5638;
 extern u8 D_800F563A;
