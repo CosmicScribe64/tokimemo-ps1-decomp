@@ -157,7 +157,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_main);
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenin);
 
 void normal_date_girl_out(void) {
-    switch (D_800E7384) {
+    switch (D_800E6280.unk_1104.u) {
     case 0:
         normal_date_girl_out_init();
         break;
@@ -289,7 +289,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
 
 void normal_date_three_select(void) {
-    switch (D_800E7384) {
+    switch (D_800E6280.unk_1104.u) {
     case 0:
         normal_date_three_select_init();
         return;

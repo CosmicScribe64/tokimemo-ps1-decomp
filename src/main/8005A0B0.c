@@ -724,7 +724,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu0);
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu1);
 
 s32 func_80061634(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         pre_syogatu0();
         break;
