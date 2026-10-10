@@ -140,7 +140,23 @@ void func_80144768(void) {
 }
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801447B0);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144A38);
+s32 func_80144A38(void) {
+    switch (D_800E738A) {                           /* irregular */
+    case 0:
+        D_800E62BA = 0;
+        func_80059E00();
+        break;
+    case 1:
+        func_80059BC0();
+        break;
+    case 2:
+        func_80144540();
+        break;
+    case 3:
+        func_801446E4();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144AC0);
 

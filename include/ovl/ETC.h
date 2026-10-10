@@ -972,4 +972,6 @@ void func_801326C0(void);
 void func_8013275C(void);
 void func_801327F0(void);
 void func_80132840(void);
+void func_80144540();
+void func_801446E4();
 #endif /* OVL_ETC_H */
