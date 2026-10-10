@@ -3,7 +3,15 @@
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142D40);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142DA8);
+void func_80142DA8(void *arg0, s16 arg1, s16 arg2) {
+    RECT r;
+
+    /* FAKE: w and h on one source line; IDO then stores h before w (line-based scheduling). T-6070 */
+    r.w = 0x20; r.h = 0x80;
+    r.x = arg1;
+    r.y = arg2;
+    func_8009C884(&r, arg0);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142DEC);
 
