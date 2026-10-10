@@ -27,6 +27,7 @@ INCLUDE_ASM("asm/nonmatchings/foo", func_80012345);
 - The same rules apply to headers; they are compiled by the same compiler.
 - Flags come from the build system. Do not add per-file flag overrides without a note in the file and the ticket.
 - Code that only builds with modern GCC is not acceptable in `src/`; host tooling lives in `tools/`.
+- The game code is compiled in K&R mode (`-cckr`, T-7000): `unsigned char`/`unsigned short` promote to `unsigned int`, so compares, shifts and divisions of `u8`/`u16` values are unsigned without casts; write `(s32)` (or an `s32` variable) where the original uses the signed form. Prototypes are still honoured: a callee that the original called without a prototype (its narrow parameter is converted at the callee's entry, `andi t6,a0,0xff; move a0,t6`) is declared `void f();`. Details: `wiki/decompile-workflow.md`, "K&R promotion".
 
 ## 3. PsyQ headers and SDK types
 
