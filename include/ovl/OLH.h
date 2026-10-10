@@ -18,7 +18,7 @@ void func_80132CDC(void);
 void func_80132E54(void);
 void func_8013306C(void);
 void func_801331C8(void);
-void func_801332F8(void);
+s32 func_801332F8(void);
 void func_801333E4(void);
 void func_80133508(void);
 void func_8013362C(void);
@@ -70,5 +70,6 @@ void func_80136B00(void);
 void func_80136BD0(void);
 void func_80136CF4(void);
 void func_80136E18(void);
+extern s32 D_8013AF20;
 
 #endif /* OVL_OLH_H */

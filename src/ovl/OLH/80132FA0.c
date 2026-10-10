@@ -74,7 +74,24 @@ void func_801331C8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_801332F8);
+s32 func_801332F8(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013AF20, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　ときめきメモリアルでは、１ブロックに", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "一つのアルバムを作成します。", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "　アルバムの最大数は、１４です。", 0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80052000();
+        return;
+    case 2:
+        func_80042940(0);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_801333E4);
 
