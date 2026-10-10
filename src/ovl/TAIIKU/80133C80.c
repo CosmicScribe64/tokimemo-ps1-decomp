@@ -132,7 +132,20 @@ void func_80136E80(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136EC0);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_8013703C);
+typedef struct {
+    s32 w[3];
+} Tw3; /* size 0xC */
+extern Tw3 D_801497FC;
+
+void func_8013703C(void) {
+    s32 i;
+    Tw3 t;
+
+    t = D_801497FC;
+    for (i = 0; i < 3; i++) {
+        *(s32 *)(D_80149208 + i * 0x24 + 0x34) = t.w[i];
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137090);
 
