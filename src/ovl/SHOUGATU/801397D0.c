@@ -68,7 +68,16 @@ void func_80139980(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139A08);
+extern FnTbl20 D_80145448;
+
+void func_80139A08(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80145448;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
 
 void func_80139A90(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
@@ -79,7 +88,16 @@ void func_80139A90(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139B0C);
+extern FnTbl20 D_801454FC;
+
+void func_80139B0C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_801454FC;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
 
 void func_80139B94(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
