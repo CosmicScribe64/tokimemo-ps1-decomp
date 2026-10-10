@@ -73,7 +73,18 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801336F8);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80133970);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80133A60);
+void func_80133A60(void) {
+    s32 i;
+
+    func_80079B34();
+    func_800451E0(0x8019A000);
+    func_80044750(0x12);
+    i = 0;
+    do {
+        func_80079B34();
+        func_800AD950(0);
+    } while (i++ < 0x10000 && func_80044F94(1) == 0);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80133AD0);
 
@@ -601,7 +612,16 @@ void func_8013E824(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013E850);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013EC1C);
+void func_8013EC1C(void) {
+    u8 *q = D_80158A64;
+    u8 *p = D_80158A6C;
+
+    if (q[0x12] != 0) {
+        if (*(u16 *)(p + 8) < 0x8CA0U) {
+            *(u16 *)(p + 8) += 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013EC64);
 
@@ -691,7 +711,30 @@ void func_8013F748(void) {
     *(s16 *)(p + 6) = 2;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013F7B0);
+void func_8013F7B0(void) {
+    switch (*(u16 *)(D_80158A8C + 0x30E)) {
+    case 0:
+        switch (*(u16 *)(D_80158A8C + 6)) {
+        case 0:
+            func_8013F650();
+            return;
+        case 1:
+            func_8013F748();
+            return;
+        }
+        break;
+    case 1:
+        switch (*(u16 *)(D_80158A8C + 6)) {
+        case 0:
+            func_8013F650();
+            return;
+        case 1:
+            func_8013F748();
+            return;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8013F878);
 
@@ -709,7 +752,30 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80140624);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80140920);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80140CBC);
+void func_80140CBC(void) {
+    switch (*(u16 *)(D_80158A8C + 0x30E)) {
+    case 0:
+        switch (*(u16 *)(D_80158A8C + 6)) {
+        case 0:
+            func_8013FF14();
+            return;
+        case 2:
+            func_801400B0();
+            return;
+        }
+        break;
+    case 1:
+        switch (*(u16 *)(D_80158A8C + 6)) {
+        case 0:
+            func_80140624();
+            return;
+        case 2:
+            func_80140920();
+            return;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_80140D84);
 
@@ -997,7 +1063,10 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801473BC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_801473E8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014742C);
+void func_8014742C(u8 *arg0, u16 arg1) {
+    arg0[0] = 1;
+    *(u16 *)(arg0 + 2) = arg1;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014743C);
 
@@ -1289,7 +1358,43 @@ void func_8014B5A4(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014B67C);
+void func_8014B67C(u8 arg0) {
+    u8 *p = D_80158A98;
+    s32 i = 0;
+
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            break;
+        }
+        if (arg0 != 0) {
+            *(s32 *)(p + 0x20) = (i * 0x10 + 0x90) << 16;
+            *(s32 *)(p + 0x28) = 0xFFFC0000;
+        } else {
+            *(s32 *)(p + 0x20) = (-0x90 - i * 0x10) << 16;
+            *(s32 *)(p + 0x28) = 0x40000;
+        }
+        *(s32 *)(p + 0x24) = 0x380000;
+        *(s32 *)(p + 0x2C) = 0;
+        p[0x63] = arg0;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        func_8014AFB8(p, 0x44, 9);
+        /* FAKE: the reset stores are written relative to the already advanced slot pointer (p - off); the original code does the increment first. T-2070 */
+        i += 1;
+        p += 0x78;
+        p[-0x38] = p[-0x38] | 0x40;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 6);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014B7A8);
 
@@ -1451,7 +1556,42 @@ void func_8014C0B0(u8 arg0) {
     } while (i != 6);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014C1BC);
+void func_8014C1BC(u8 *arg0) {
+    switch (*(u16 *)(arg0 + 6)) {
+    case 0:
+        if (*(s32 *)(arg0 + 0x24) >= *(s32 *)(D_80158A74 + 0x24)) {
+            *(s32 *)(arg0 + 0x2C) = 0;
+            if (arg0[0x63] != 0) {
+                *(s32 *)(arg0 + 0x28) = 0xFFFE0000;
+            } else {
+                *(s32 *)(arg0 + 0x28) = 0x20000;
+            }
+            *(u16 *)(arg0 + 6) = 1;
+        }
+        break;
+    case 1:
+        if (arg0[0x63] != 0) {
+            if (*(s32 *)(D_80158A74 + 0x20) >= *(s32 *)(arg0 + 0x20)) {
+                *(s32 *)(arg0 + 0x28) = 0;
+                *(s32 *)(arg0 + 0x2C) = 0xFFFE0000;
+            }
+        } else if (*(s32 *)(arg0 + 0x20) >= *(s32 *)(D_80158A74 + 0x20)) {
+            *(s32 *)(arg0 + 0x28) = 0;
+            *(s32 *)(arg0 + 0x2C) = 0xFFFE0000;
+        }
+        break;
+    }
+    if ((u32)*(u16 *)(arg0 + 0x5E) >= 0x19) {
+        if (arg0[0x60] == 0) {
+            *(u16 *)(arg0 + 0x5E) = 0;
+            arg0[0x60] += 1;
+            func_80133D14(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+        }
+    }
+    if (arg0[0x51] != 0) {
+        *(u16 *)(arg0 + 0x5E) += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT", func_8014C2F8);
 

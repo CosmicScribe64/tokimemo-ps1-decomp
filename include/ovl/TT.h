@@ -55,7 +55,6 @@ extern u8 D_80155A08[];
 extern s16 D_80155A20[];
 extern s16 D_80155A28[];
 extern u8 D_80155A30[];
-extern u8 *D_80158AA8;
 extern u8 *D_80158AAC;
 extern u8 *D_80158A68;
 extern u8 *D_80158AB0;
@@ -66,14 +65,5 @@ extern u8 D_80151A50[];
 extern u8 D_80150978[];
 extern u8 D_80155B54[];
 void func_8013AE3C(void);
-extern u8 D_80152CD0[];
-extern u8 D_80152CE4[];
-extern u8 D_80155C78[];
-extern u8 D_80155D02[];
-extern u16 D_80156C90[];
-extern u8 D_80155B4E[];
-extern u8 *D_80158AA0;
-extern u8 *D_80158A7C;
-extern u8 *D_80158A88;
 
 #endif /* OVL_TT_H */
