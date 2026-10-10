@@ -5,10 +5,12 @@ kanban-plugin: board
 ---
 
 ## Backlog
+- [ ] [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000 Re-match R/V-flagged functions with cvt_pass.py and retune the T-0018 detector]]
+- [ ] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
+- [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]
 
 - [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
 - [ ] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
-- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap (deferred)]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
@@ -32,6 +34,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
 
 - [x] [[tickets/T-3320-tooling-near-duplicate-function-reuse|T-3320 Tooling: near-duplicate function reuse]]
 - [ ] [[tickets/T-3200-catalog-game-versions|T-3200 Catalog game versions]]

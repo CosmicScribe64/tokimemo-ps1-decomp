@@ -377,6 +377,15 @@ New [[tickets/T-2040-wave-2-etc]], In Progress -> Done after the inline code rev
 
 ## [2026-10-09] merge | wave 2 ETC
 Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri and dec_bg_cd_read prototypes moved from game.h to include/main_only.h (ETC calls them unprototyped, MASTER keeps its u8 view of set_dec_bri in include/ovl/MASTER.h), six duplicate declarations dropped from include/ovl/ETC.h. Clean build 27/27 OK, 1168/6962.
+
+## [2026-10-09] ticket | T-1321 register-promotion build step started
+[[tickets/T-1321-register-promotion-build-step]] Backlog -> In Progress (branch o-t0018). Plan: diff IDO 5.3 output against the original over the [[data/t0018-cases]] functions with scripts, look for a uopt option or a ucode-level rule that makes IDO's own allocator promote globals outside loops, and implement it as a uniform pass if one exists.
+
+## [2026-10-09] ticket | T-1321 unsigned-load conversion pass
+[[tickets/T-1321-register-promotion-build-step]]: the register-promotion gap of [[tickets/T-0018-ugen-temp-register-order]] is not a loop-only allocator. IDO's cfe widens every unsigned 8/16-bit load (`CVT J<-L`) and uopt allocates the widened value instead of the global; IDO's copy propagation also merges switch temporaries of unsigned globals into the global. New `tools/cvt_pass.py` (uopt shim, tests `tools/test_cvt_pass.py`) removes the widening for unsigned globals, keeps IDO's `==`/`!=` operand order and unsigned loads, and turns uopt's copy propagation off (`OPTN zcopy 0`) for procedures with such a switch temporary. Matched corpus unchanged except two FAKE masks dropped (`bustup_speech`, `bustup_wink`) and two ETC switches on a local copy; clean build 27/27. 26 ETC/TACO functions matched. Evidence and guidance in [[matching-notes]], rule in [[toolchain]], CODING_STANDARDS 7a example. Follow-ups [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]], [[tickets/T-3001-shared-constant-registers]], [[tickets/T-3002-remaining-promotion-shapes]] (Backlog).
+
+## [2026-10-09] ticket | T-1321 Done
+[[tickets/T-1321-register-promotion-build-step]] In Progress -> Done after the inline code review (no open findings). Results: clean build 27/27, `ninja progress` 1168 -> 1207; 26 pass-only ETC/TACO matches plus 13 larger R-flagged RPG_BAT/TACO functions that need no pass; detector precision 40 of 59 resolved sampled functions. No uopt patch proposed (threshold prototype rejected). [[tickets/T-0018-ugen-temp-register-order]] commented. Notes in [[matching-notes]], [[data/t0018-cases]].
 ## [2026-10-09] ticket | T-2010 Wave 2: DATE, 278 functions matched
 [[tickets/T-2010-wave2-date]] In Progress -> Done after the inline review (no open findings). `src/ovl/DATE.c`: 278 functions matched (INCLUDE_ASM 637 -> 359), 9 `regorder` rows in [[data/t0018-cases]], new patterns in [[matching-notes]] (section "Wave 2: DATE"). Clean build 27 of 27 sha1 OK, `ninja progress` grand total 901 -> 1179 of 6962.
 ## [2026-10-09] ticket | T-2060 Wave 2 SHOUGATU started
@@ -474,3 +483,5 @@ Inline review against CODING_STANDARDS.md: no open findings ([[tickets/T-3110-te
 
 ## [2026-10-09] ticket | T-3320 In Progress -> In Review -> Done
 [[tickets/T-3320-tooling-near-duplicate-function-reuse]] done after the inline review (unused code removed, no open findings). Proof applied in this branch: `src/ovl/EN_NICHI/80136B10.c`, `src/ovl/KANGEI/*.c`, `src/ovl/SHUGAKU/*.c` (7 functions, 3408 bytes) plus the headers the copies needed. Clean build 27 of 27 OK, headers OK, progress 2734 -> 2741 of 6958.
+## [2026-10-09] merge | T-1321 merged with main
+[[tickets/T-1321-register-promotion-build-step]]: merged main (per-object C, wave 2). `tools/cvt_pass.py` changes 26 of main's 2734 matched functions, so it is out of the build (tool, tests and an `extra_shims` hook in `tools/cc.py` remain); new constant-first rule in the tool. 13 plain-C matches ported to the per-object files. Clean build 27/27, check_headers OK, progress 2747/6958. Open decision moved to [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]]. Notes in [[matching-notes]], [[toolchain]].
