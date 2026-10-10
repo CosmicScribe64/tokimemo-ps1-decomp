@@ -70,14 +70,80 @@ void func_80133164(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_801331A0);
+void func_801331A0(void) {
+    u8 temp_v0;
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133250);
+    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    if (((temp_v0 & 0x7F) == 4) || (D_80144C58 != 0)) {
+        D_80144C3C += 0x12;
+        func_80083440(4U);
+        D_80144C54 = 0;
+    } else {
+        if ((temp_v0 & 0x7F) == 2) {
+            D_80144C3C += 6;
+        }
+        if ((temp_v0 & 0x7F) == 3) {
+            D_80144C3C += 0xC;
+        }
+    }
+    func_8004284C();
+}
+
+void func_80133250(void) {
+    u8 temp_v0;
+
+    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    if (((temp_v0 & 0x7F) == 4) || (D_80144C58 != 0)) {
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+    } else if ((D_800E6280.unk_F5F == 6) && ((temp_v0 & 0x7F) < 2U)) {
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133308);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80133598);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_8013375C);
+void func_8013375C(void) {
+    u8 temp_v0;
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_801337EC);
+    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    if (((u32)(temp_v0 & 0x7F) < 2U) && (D_80122CDC != 0)) {
+        if ((D_800E6280.unk_F5F == 2) || (D_800E6280.unk_F5F == 7) || (D_800E6280.unk_F5F == 9)) {
+            func_80083418();
+            return;
+        }
+        func_800833F0();
+        return;
+    }
+    func_8004284C();
+}
+
+s32 func_801337EC(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_800674B0();
+        D_800E6280.unk_110D += 1;
+    }
+    if (D_800E6280.unk_110D == 1) {
+        if ((u32)D_800E6280.unk_1104.w++ >= 0x400U) {
+            func_800452C4();
+            func_8004482C();
+            D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
+    func_80084D3C();
+    return func_80072B5C(1);
+}

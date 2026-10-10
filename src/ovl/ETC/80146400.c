@@ -63,7 +63,20 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146AC0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146B40);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146BC4);
+s32 func_80146BC4(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80046318(9U, 0x801E0000, *(s32 *)&D_80150720[-(func_80066A84() * 4)]);
+        D_800E6280.unk_110D = 1;
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_8007C6A8(1 - func_80066A84());
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 void func_80146C68(s32 arg0) {
     func_80048F64(0x60);
@@ -95,7 +108,29 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147304);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014738C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147414);
+void func_80147414(void) {
+    s16 *mode; /* pointer local: the switch reads the flag through it, as the permuter-found form that matches (T-6050) */
+    if (D_800E6280.unk_1104.w == 0x20) {
+        D_80120652 |= 1;
+    }
+    if (!(D_80120652 & 1) && (D_80120668 != 0)) {
+        if (D_80120658 == 0) {
+            mode = &D_80120666;
+            switch ((*mode) & 1) {
+            case 0:
+                func_80044750(0x601);
+                break;
+            case 1:
+                func_80044750(0x602);
+                break;
+            }
+        }
+        if (D_80120658++ >= 0x11) {
+            func_8004284C();
+        }
+    }
+    k_disp_inc();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801474FC);
 

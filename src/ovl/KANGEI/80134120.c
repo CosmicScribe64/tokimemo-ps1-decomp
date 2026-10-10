@@ -1,7 +1,24 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134120);
+/* Bit 1 of the flag word of a Rec38 record (tested with sll 30 / bgez). */
+typedef struct KangeiFlagBits {
+    u32 pad0 : 1;
+    u32 flag : 1;
+    u32 rest : 30;
+} KangeiFlagBits;
+
+void func_80134120(void) {
+    if ((D_800E6280.unk_F5F != 0xFF) && ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag) {
+        func_801341E8();
+        return;
+    }
+    if ((D_800E6280.unk_F5F != 0xFF) && !((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag && ((u8)D_800E6280.unk_03E < 0x61U) && (D_800E6280.unk_F5F != 0xA)) {
+        func_80134DB0();
+        return;
+    }
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801341E8);
 
@@ -38,7 +55,17 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134BC4);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134DB0);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134EA8);
+void func_80134EA8(void) {
+    s32 pad; /* FAKE: unused local above the saved selector (the original frame has the copy at sp+0x28), T-6050 */
+    s32 sp;
+
+    D_800E6280.unk_F5F = 0xE;
+    sp = D_800E6280.unk_110A;
+    func_80133EF8();
+    if (sp != D_800E6280.unk_110A) {
+        D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134F00);
 
@@ -94,7 +121,16 @@ void func_80135250(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801352A4);
+void func_801352A4(void) {
+    if ((u8)D_800E6280.unk_F5F < 4U) {
+        func_8007ED84(0x42A9);
+        func_800AE0F0(D_800CA19C, "ロビー");
+    } else {
+        func_8007ED84(0x4296);
+        func_800AE0F0(D_800CA19C, "グランド");
+    }
+    func_8004284C();
+}
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.rodata", D_8013980C);
 
@@ -130,4 +166,18 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80135438);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801354AC);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80135570);
+void func_80135570(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 1:
+        func_80062CD0(0x5F30);
+        break;
+    case 3:
+        func_80062CD0(0x5A9E);
+        break;
+    default:
+        func_8004284C();
+        func_8004284C();
+        break;
+    }
+    func_8004284C();
+}

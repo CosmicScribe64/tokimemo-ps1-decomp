@@ -1078,6 +1078,9 @@ extern s32 D_80160494;
 extern s16 D_8015E310;
 extern s16 D_8015E314;
 extern s8 D_8015F5D0;
+extern u8 D_8015B67C;
+extern s8 D_8015B680;
+void func_801324A8();
 
 void func_8014FAE0(void);
 void func_8014FBA0(void);

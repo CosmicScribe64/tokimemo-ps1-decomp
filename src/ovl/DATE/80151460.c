@@ -229,7 +229,13 @@ void func_80152BB4(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152C3C);
+void func_80152C3C(void) {
+    func_8014C5C8();
+    if (((u16)D_800CA154 == 7) && (D_800E6280.unk_1104.u == 1) && (D_80122CDC == 1)) {
+        func_80083440(0);
+    }
+    D_800E6280.unk_1104.w += 1;
+}
 
 void func_80152CA8(void) {
     func_80046318(0x3D, 0x801B0000, 0x83BE);

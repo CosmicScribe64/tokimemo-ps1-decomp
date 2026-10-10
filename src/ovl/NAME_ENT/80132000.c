@@ -10,7 +10,22 @@ void func_80132000(s32 arg0) {
     func_800AE090(D_8014CC84, D_8014CF5C + rem * 0xC, 0xC);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_8013209C);
+void func_8013209C(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_80132134();
+        break;
+    case 1:
+        func_80132E80();
+        break;
+    case 2:
+        func_80138488();
+        break;
+    }
+    func_800578F4(2);
+    func_8004B19C(D_801220D0, 0, 0x50);
+    func_8004B19C(D_801220F4, 0, 0x5A);
+}
 
 void func_80132134(void) {
     D_800E6280.unk_1104.w += 1;

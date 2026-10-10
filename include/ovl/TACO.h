@@ -266,4 +266,8 @@ void func_801536BC();
 
 void func_801534E0(s32 arg0);
 
+void func_8014394C();
+void func_801345D4();
+void func_8013474C();
+void func_801347F4(s32 arg0);
 #endif

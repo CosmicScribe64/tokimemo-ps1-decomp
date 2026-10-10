@@ -11,7 +11,7 @@ extern u8 D_8015012C[];
 extern u8 D_80150124[];
 void func_8013FFAC(void);
 void func_80145C00(void);
-void func_8014AA74(void);
+s32 func_8014AA74(void);
 extern s32 D_80150E9C;
 
 /* A 15-bit color and its three masked channels (func_80132880, T-2040). */
@@ -972,4 +972,13 @@ void func_801326C0(void);
 void func_8013275C(void);
 void func_801327F0(void);
 void func_80132840(void);
+s32 func_80149394(void);
+s32 func_801495CC(void);
+void func_80149E68(void);
+extern u8 D_80150720[];
+extern u8 D_8015093C[];
+extern u8 D_8015099C[];
+extern u8 D_801509B0[];
+extern u8 D_801509C4[];
+extern u8 *D_80150CCC[];
 #endif /* OVL_ETC_H */

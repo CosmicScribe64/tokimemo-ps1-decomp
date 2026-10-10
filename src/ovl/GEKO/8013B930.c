@@ -52,7 +52,18 @@ void func_8013BB20(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BB4C);
+s32 func_8013BB4C(void) {
+    func_80044750(0xCF);
+    if ((u32)D_800E6280.unk_1104.w++ < 0x40U) {
+        return 0;
+    }
+    D_800B3D60 = 0;
+    func_80044890(0, 0, 0, 0xD989, 0xD949, 0xD941);
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 typedef struct {
     void (*f[58])();

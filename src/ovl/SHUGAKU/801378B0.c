@@ -118,7 +118,27 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_801381BC);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138290);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138320);
+void func_80138320(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        func_801383C8();
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            D_800E6280.unk_1104.w += 1;
+        }
+        break;
+    case 2:
+        func_80138400();
+        break;
+    case 3:
+        func_801385A8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_801383C8(void) {
     func_80046318(0xD, 0x801D0000, 0xBB98);

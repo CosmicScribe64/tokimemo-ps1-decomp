@@ -594,3 +594,11 @@ Created [[tickets/T-6010-wave-4-list-1]]; 127 listed functions, 39860 bytes, bra
 
 ## [2026-10-10] ticket | T-6010 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6010-wave-4-list-1]]; no open findings. Branch w4-1, not merged.
+## [2026-10-10] ticket | T-6050 Wave 4: list 5 (created -> In Progress)
+[[tickets/T-6050-wave-4-list-5]] created and claimed (worktree w4-5): 166 functions, 41008 bytes in 31 files (main 80047550, 800490C0, 80049FF0 and 15 overlays).
+
+## [2026-10-10] build | T-6050 wave 4 list 5
+40 of 166 functions matched (6492 of 41008 bytes) in 31 files, plus ETC `func_8014A258` from the byte queue; progress 3539 -> 3580 of 6958. New patterns (implicit int for delay-slot copies and the post-increment boolean, constants of different types, direct globals instead of m2c locals, frame-slot FAKEs, bit-field tests) are in [[matching-notes]] ("Wave 4, list 5 (T-6050)"); 49 blocked cases in [[data/t0018-cases]]. Clean build 27/27 sha1 OK, `sync_protos.py --check-branch` and `migrate_globals.py --check` clean. Tool bug: `sync_protos.py --write/--fix` drops one comment line in `include/main_api.h`.
+
+## [2026-10-10] ticket | T-6050 (In Progress -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6050-wave-4-list-5]]; no open findings. Branch w4-5, not merged.

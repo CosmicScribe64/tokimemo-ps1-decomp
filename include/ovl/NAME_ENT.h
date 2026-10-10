@@ -91,6 +91,9 @@ extern s32 D_8014CCC4;
 extern u8 D_8014CE6C[];
 extern u8 D_8014CEE4[];
 extern u8 D_8014CF5C[];
+void func_80132134(void);
+void func_80132E80(void);
+void func_80138488(void);
 
 void func_80140D6C(void);
 void func_80140E18(void);
