@@ -244,7 +244,18 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135E58);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135F74);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_8013621C);
+void func_8013621C(s32 arg0) {
+    s32 color;
+
+    if (arg0 != 0) {
+        color = 0x90002;
+    } else {
+        color = 0x8081F;
+    }
+    func_80049A40(-0x9A, -0x6A, 0x130, 0x20, 4, color, 0x83);
+    func_80049A40(-0x7C, -0x3D, 0x118, 0x9E, 4, color, 0x83);
+    func_80049A40(-0x9D, 0x50, 0x1C, 0x10, 4, color, 0x83);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801362D0);
 
@@ -307,7 +318,21 @@ void func_80137EE4(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137FC4);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138268);
+void func_80138268(s32 arg0) {
+    s32 color;
+
+    if (arg0 != 0) {
+        color = 0x90002;
+    } else {
+        color = 0x8081F;
+    }
+    if (arg0 != 0) {
+        func_80049A40(-0x7E, -0x3D, 0x11A, 0x58, 4, color, 0x83);
+    } else {
+        func_80049A40(-0x7E, -0x3D, 0x11A, 0x76, 4, color, 0x83);
+    }
+    func_80049A40(-0x28, 0x3B, 0x7C, 0x26, 4, color, 0x83);
+}
 
 void func_80138330(void) {
 }

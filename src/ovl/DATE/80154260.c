@@ -158,7 +158,25 @@ void func_80154D00(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_80154D38);
+void func_80154D38(void) {
+    if (D_80122CDC == 1) {
+        func_80083440(2);
+        func_80042940(0x2E);
+        return;
+    }
+    D_800E67F5 = 1;
+    D_800CA224 = 3;
+    D_800CA226 = 3;
+    D_800CA228 = 3;
+    D_800CA234 = 2;
+    D_800CA236 = 2;
+    D_800CA238 = 2;
+    D_800E6476[0] -= 2;
+    D_800E6476[2] -= 1;
+    D_800E6476[4] += 0x14;
+    func_80084D3C();
+    func_8004284C();
+}
 
 void func_80154E14(void) {
     func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");

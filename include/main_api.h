@@ -246,10 +246,12 @@ extern s16 D_800E6386;
 extern s16 D_800E6392;
 extern s16 D_800E6396;
 extern s16 D_800E639E;
+extern s16 D_800E643E[];
 extern s16 D_800E6442;
 extern u8 D_800E6448[];
 extern u8 D_800E644A;
 extern s32 D_800E644C;
+extern s16 D_800E6476[];
 extern s32 D_800E6480;
 extern u8 D_800E64BA;
 extern u8 D_800E652A;
@@ -265,6 +267,7 @@ extern u8 D_800E6723;
 extern s32 D_800E6758;
 extern u8 D_800E67CF;
 extern u8 D_800E67F2;
+extern s8 D_800E67F5;
 extern u8 D_800E67F9;
 extern u8 D_800E6807;
 extern u8 D_800E6808;
@@ -1276,6 +1279,7 @@ void read_bustup();
 void k_disp_inc2();
 #ifndef MAIN_API_OVERRIDE_func_800847B8
 void func_800847B8(u8 arg0);
+void func_80084D3C();
 #endif
 void select_girl_init(void);
 void select_girl_main(void);

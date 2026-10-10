@@ -220,3 +220,5 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | TACO | `func_80133410` | regorder | 16-record loop `p[i].unk13 &= ~0x20` unrolled 4x: same code, but IDO schedules the first record's load/and after the other three (w3-3, T-4030) |
 | DATE | `func_801551D0` | promo | `if (++D < 0x10) return 0;` (s32 return, global incremented): original keeps the global in $v1 (v0 is the return value), IDO uses $v0 (w3-3, T-4030) |
 | SHOUGATU | `func_8013315C` | regorder | two indexed loads through the same `D_80143B00 * 4` offset: the original also leaves a copy `or v0,t6,zero` of the CSE temp and schedules differently; everything else (post-increment compare, string) matches (w3-3, T-4030) |
+| SHOUGATU | `func_80137DE4` | promo | if-chain on an `s16` global (3/0xB, then 5/0xD) after a call: original loads it into $v1, IDO uses $v0 (w3-3, T-4030) |
+| KANGEI | `func_80134120` | regorder | two `D_800E71DF != 0xFF` tests: the original keeps the constant 0xFF in $v0 for both and loads the global into $t6; IDO uses `li at` and $v0 for the load (w3-3, T-4030) |

@@ -72,7 +72,22 @@ void func_80133A60(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133A88);
+void func_80133A88(void) {
+    if (D_80122CDC != 0) {
+        D_80143B00 += 1;
+        D_800E643E[0] -= 1;
+        D_800E643E[2] -= 1;
+        D_800E643E[4] += 0xA;
+        D_80143B24 = 0;
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+    } else {
+        D_800E643E[0] += 1;
+    }
+    func_80084D3C();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133B44);
 
