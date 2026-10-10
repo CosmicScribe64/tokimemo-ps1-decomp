@@ -574,7 +574,45 @@ void func_8005E018(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E150);
+void func_8005E150(void) {
+    u8 sel;
+    s32 i;
+    s16 x[4];
+    s16 y[4];
+    s16 w[4];
+    s16 h[4];
+
+    func_8004E58C();
+    func_8006612C("文字速度");
+    func_8005DEA0(0);
+    for (i = 0; i < 3; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    set_kanji_string(x[0], y[0], 3, "遅い", 0);
+    set_kanji_string(x[1], y[1], 3, "普通", 0);
+    set_kanji_string(x[2], y[2], 3, "速い", 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "文字出力のスピードを変更します", 0);
+    menu_set(1, 3, x, y, w, h);
+    sel = get_k_speed();
+    switch (sel) {
+    default:
+    case 0:
+        D_800E6280.unk_1094 = 2;
+        break;
+    case 1:
+        D_800E6280.unk_1094 = 1;
+        break;
+    case 3:
+        D_800E6280.unk_1094 = 0;
+        break;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005E2C0(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -617,7 +655,45 @@ void func_8005E40C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E454);
+void func_8005E454(void) {
+    u8 sel;
+    s32 i;
+    s16 x[4];
+    s16 y[4];
+    s16 w[4];
+    s16 h[4];
+
+    func_8004E58C();
+    func_8006612C("アイコンモード");
+    func_8005DEA0(1);
+    for (i = 0; i < 3; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    set_kanji_string(x[0], y[0], 3, "ＴＹＰＥ‐Ａ", 0);
+    set_kanji_string(x[1], y[1], 3, "ＴＹＰＥ‐Ｂ", 0);
+    set_kanji_string(x[2], y[2], 3, "フリー", 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "アイコンの位置の設定をします", 0);
+    menu_set(1, 3, x, y, w, h);
+    sel = D_800E6280.unk_F6C;
+    switch (sel) {
+    default:
+    case 0:
+        D_800E6280.unk_1094 = 0;
+        break;
+    case 1:
+        D_800E6280.unk_1094 = 1;
+        break;
+    case 2:
+        D_800E6280.unk_1094 = 2;
+        break;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005E5C8(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
