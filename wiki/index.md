@@ -33,6 +33,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051]] Review low-confidence object boundaries and orphan rodata chunks (Backlog)
 - [[tickets/T-3052-per-object-data-bss-split|T-3052]] Split .data and .bss per original object (Backlog)
 - [[tickets/T-1300-reuse-c-across-identical-functions|T-1300]] Tooling: reuse C across identical functions (Done)
+- [[tickets/T-3320-tooling-near-duplicate-function-reuse|T-3320]] Tooling: near-duplicate function reuse (Done)
 - [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300]] Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress (Backlog)
 - [[tickets/T-0301-sdk-rodata-data-split|T-0301]] Split SDK rodata and data per library and object (Backlog)
 - [[tickets/T-0302-sdk-version-conflict|T-0302]] Resolve mixed SDK vintages (Backlog)
@@ -63,8 +64,12 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200]] Fix conflicting extern declarations after batch merges (Done)
 - [[tickets/T-2010-wave2-date|T-2010]] Wave 2: DATE, 278 functions matched (Done)
 - [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
-- [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap, deferred (Backlog)
+- [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap: cause found, unsigned-load conversion pass kept out of the build (Done)
+- [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000]] Re-match R/V-flagged functions with cvt_pass.py, retune the detector (Backlog)
+- [[tickets/T-3001-shared-constant-registers|T-3001]] Constants reused across stores and compare/store types (Backlog)
+- [[tickets/T-3002-remaining-promotion-shapes|T-3002]] Register shapes left after the unsigned-load conversion pass (Backlog)
 - [[tickets/T-3100-identify-original-compiler|T-3100]] Identify the original game-code compiler (Done)
+- [[tickets/T-3110-test-ido-52-and-41|T-3110]] Test IDO 5.2 and 4.1 against the game code (Done)
 - [[tickets/T-2070-wave-2-tt|T-2070]] Wave 2: TT, 49 functions matched (Done)
 - [[tickets/T-2090-wave2-main-executable|T-2090]] Wave 2: main executable (Done; 61 functions)
 - [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330]] Tooling: m2c context and decomp-permuter (Done)
@@ -74,6 +79,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-2000-wave2-event|T-2000]] Wave 2: EVENT, 421 functions matched (Done)
 - [[tickets/T-2100-wave2-small-overlays|T-2100]] Wave 2: small overlays, 94 functions (Done)
 - [[tickets/T-3200-catalog-game-versions|T-3200]] Catalog game versions (Done)
+- [[tickets/T-3310-native-docker-image|T-3310]] Native Docker image for Apple Silicon (Done)
+- [[tickets/T-3330-local-fptab-frame-layout|T-3330]] Local function-pointer table frame layout (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -83,13 +90,16 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[obin]] - O.BIN: ECOFF format and header fields (`obin_syms.py --headers`), symbol table, mapping onto the main exe, stats, generated rename list
-- [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
+- [[toolchain]] - Docker image (native arm64/amd64, T-3310), pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms
+- [[ido-52-evaluation]] - T-3110: IDO 5.2 and 4.1 (decomp.me archives, private) against the game code: 5.2 = 5.3 byte for byte, 4.1 ugen reproduces the frame pass, nothing reproduces the T-1321 behaviours; recommendation, CI options, licensing facts
+- [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms, local function-pointer tables (T-3330)
 - [[original-compiler]] - T-3100: which compiler built the game code (O.BIN version stamps 3.18 = IDO 5.2-generation MIPS suite, big-endian ECOFF link host), header field table, ranked hypotheses, promotion experiments, rules for the T-1321 build step
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit
 - [[data/t0018-cases]] - data table: functions skipped for the T-0018 register-promotion gap (calibrates `tools/queue.py`)
+- [[data/t3330-fptab-proof.patch]] - T-3330: C for 18 table-copy and spill functions with the index-declared-first idiom, to apply after T-1321
 - [[build-system]] - configure.py / ninja pipeline and gotchas
 - [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit; how to decompile a switch (T-1340)
 - [[build-system]] - configure.py / ninja pipeline and gotchas, jump tables and rodata islands (T-1340)

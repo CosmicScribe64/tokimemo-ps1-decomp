@@ -6,6 +6,7 @@
 
 /* Main-exe data and functions used by ENDING. */
 void func_80042878(s32 arg0);
+extern u8 D_800E738A;
 void func_80042908(s32 arg0);
 s32 func_8004284C(void);
 void func_80044750(s32 arg0);

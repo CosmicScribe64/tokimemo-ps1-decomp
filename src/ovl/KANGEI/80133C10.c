@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80133C10", func_80133C10);
+typedef struct {
+    void (*f[15])();
+} FnTbl15; /* size 0x3C */
+extern FnTbl15 D_80139AE8;
+
+void func_80133C10(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl15 tbl;
+
+    tbl = D_80139AE8;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_80133C84(void) {
     D_800E71DF = D_800E69DD;

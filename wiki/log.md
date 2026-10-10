@@ -377,6 +377,15 @@ New [[tickets/T-2040-wave-2-etc]], In Progress -> Done after the inline code rev
 
 ## [2026-10-09] merge | wave 2 ETC
 Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri and dec_bg_cd_read prototypes moved from game.h to include/main_only.h (ETC calls them unprototyped, MASTER keeps its u8 view of set_dec_bri in include/ovl/MASTER.h), six duplicate declarations dropped from include/ovl/ETC.h. Clean build 27/27 OK, 1168/6962.
+
+## [2026-10-09] ticket | T-1321 register-promotion build step started
+[[tickets/T-1321-register-promotion-build-step]] Backlog -> In Progress (branch o-t0018). Plan: diff IDO 5.3 output against the original over the [[data/t0018-cases]] functions with scripts, look for a uopt option or a ucode-level rule that makes IDO's own allocator promote globals outside loops, and implement it as a uniform pass if one exists.
+
+## [2026-10-09] ticket | T-1321 unsigned-load conversion pass
+[[tickets/T-1321-register-promotion-build-step]]: the register-promotion gap of [[tickets/T-0018-ugen-temp-register-order]] is not a loop-only allocator. IDO's cfe widens every unsigned 8/16-bit load (`CVT J<-L`) and uopt allocates the widened value instead of the global; IDO's copy propagation also merges switch temporaries of unsigned globals into the global. New `tools/cvt_pass.py` (uopt shim, tests `tools/test_cvt_pass.py`) removes the widening for unsigned globals, keeps IDO's `==`/`!=` operand order and unsigned loads, and turns uopt's copy propagation off (`OPTN zcopy 0`) for procedures with such a switch temporary. Matched corpus unchanged except two FAKE masks dropped (`bustup_speech`, `bustup_wink`) and two ETC switches on a local copy; clean build 27/27. 26 ETC/TACO functions matched. Evidence and guidance in [[matching-notes]], rule in [[toolchain]], CODING_STANDARDS 7a example. Follow-ups [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]], [[tickets/T-3001-shared-constant-registers]], [[tickets/T-3002-remaining-promotion-shapes]] (Backlog).
+
+## [2026-10-09] ticket | T-1321 Done
+[[tickets/T-1321-register-promotion-build-step]] In Progress -> Done after the inline code review (no open findings). Results: clean build 27/27, `ninja progress` 1168 -> 1207; 26 pass-only ETC/TACO matches plus 13 larger R-flagged RPG_BAT/TACO functions that need no pass; detector precision 40 of 59 resolved sampled functions. No uopt patch proposed (threshold prototype rejected). [[tickets/T-0018-ugen-temp-register-order]] commented. Notes in [[matching-notes]], [[data/t0018-cases]].
 ## [2026-10-09] ticket | T-2010 Wave 2: DATE, 278 functions matched
 [[tickets/T-2010-wave2-date]] In Progress -> Done after the inline review (no open findings). `src/ovl/DATE.c`: 278 functions matched (INCLUDE_ASM 637 -> 359), 9 `regorder` rows in [[data/t0018-cases]], new patterns in [[matching-notes]] (section "Wave 2: DATE"). Clean build 27 of 27 sha1 OK, `ninja progress` grand total 901 -> 1179 of 6962.
 ## [2026-10-09] ticket | T-2060 Wave 2 SHOUGATU started
@@ -451,6 +460,41 @@ Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1):
 ## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
 [[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.
 
+## [2026-10-09] ticket | T-3110 created, Backlog -> In Progress
+[[tickets/T-3110-test-ido-52-and-41]]: test IDO 5.2 and 4.1 (from decomp.me's public compiler distribution, user decision) against the game code. Follow-up of [[tickets/T-3100-identify-original-compiler]] and [[tickets/T-0100-older-mips-compiler-emulation]].
+
+## [2026-10-09] query | T-3110 compiler sources located; download blocked by permissions
+decomp.me's distribution: IDO 5.2 from `https://github.com/LLONSIT/qemu-irix-helpers/raw/refs/heads/n/qemu/ido5.2.tar.xz`, IDO 4.1 from `https://github.com/decompme/compilers/releases/download/compilers/ido4.1.tar.gz` (decompme/compilers @ fdd6793). Both run under qemu-irix bundled in the tarball; no OS image needed. The download was refused by the session permission system; [[tickets/T-3110-test-ido-52-and-41]] waits for the user.
+
+## [2026-10-09] query | T-3110 IDO 5.2 and 4.1 measured against the game code
+New [[ido-52-evaluation]] and `tools/ido_eval.py`, with cases in `tools/ido_eval_cases/`. Archives are in the gitignored `tools/local-compilers/` (sha256 on the page).
+- IDO 5.2: stamp 3.18 (= O.BIN). Byte-identical to 5.3: 2564/2564 matched functions with the frame pass, 504 without; the 46 blocked cases are unchanged.
+- IDO 4.1's ugen gives the frame pass's layout in all 2564 functions (real-compiler evidence for the pass), but 80 of them differ in register allocation.
+- No version or pass mix reproduces the T-1321 unsigned-load and switch-temporary behaviours, the function-pointer-table frame, or the spill offsets.
+- Pages updated: [[toolchain]], [[original-compiler]], [[matching-notes]], [[tickets/T-0100-older-mips-compiler-emulation]], [[index]].
+
+## [2026-10-09] decision | T-3110 recommendation: keep IDO 5.3 + frame pass + T-1321 pass
+Option (b). The CI options for a 5.2 switch (fetch from decomp.me's URLs, or the private encrypted bundle) are listed for the user and not implemented.
+
+## [2026-10-09] ticket | T-3110 In Progress -> In Review -> Done
+Inline review against CODING_STANDARDS.md: no open findings ([[tickets/T-3110-test-ido-52-and-41]]).
+## [2026-10-09] tooling | T-3320 near-duplicate function reuse
+[[tickets/T-3320-tooling-near-duplicate-function-reuse]]: new `tools/neardupes.py` (tests `tools/test_neardupes.py`, usage in [[decompile-workflow]] and [[build-system]]). It fingerprints functions with ALU immediates masked as well, groups equal shapes with different constants, copies the matched C through `dupes.plan_copy` and substitutes each differing constant by value when unambiguous. `tools/dupes.py` gained an optional immediate-masking mode (`parse_asm(imm=...)`, `load_funcs(near=True)`); exact mode is unchanged. Report on the tree before the proof: 178 near groups, 19 with a matched source, 66 functions / 34592 bytes fillable (1974 constants), 10 skipped (target header declares a symbol differently 7, no C literal 1, value maps to two constants 1, missing type 1); 59 groups (193 functions, 41972 bytes) have no matched member; 1438 unmatched jump-table and string functions are not fingerprinted (same limit as dupes.py). Proof with `--apply --check` on EN_NICHI, KANGEI, SHUGAKU: 7 of 7 kept, first build, 3408 bytes. Bulk application waits for T-1321 (it changes ETC/TACO C).
+
+## [2026-10-09] ticket | T-3320 In Progress -> In Review -> Done
+[[tickets/T-3320-tooling-near-duplicate-function-reuse]] done after the inline review (unused code removed, no open findings). Proof applied in this branch: `src/ovl/EN_NICHI/80136B10.c`, `src/ovl/KANGEI/*.c`, `src/ovl/SHUGAKU/*.c` (7 functions, 3408 bytes) plus the headers the copies needed. Clean build 27 of 27 OK, headers OK, progress 2734 -> 2741 of 6958.
+## [2026-10-09] merge | T-1321 merged with main
+[[tickets/T-1321-register-promotion-build-step]]: merged main (per-object C, wave 2). `tools/cvt_pass.py` changes 26 of main's 2734 matched functions, so it is out of the build (tool, tests and an `extra_shims` hook in `tools/cc.py` remain); new constant-first rule in the tool. 13 plain-C matches ported to the per-object files. Clean build 27/27, check_headers OK, progress 2747/6958. Open decision moved to [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]]. Notes in [[matching-notes]], [[toolchain]].
+## [2026-10-09] ticket | T-3310 native Docker image (Backlog -> In Progress -> In Review -> Done)
+[[tickets/T-3310-native-docker-image]] done after the inline review (no open findings). `tools/Dockerfile` builds for amd64 and arm64 (IDO recompiled from the pinned commit on arm64; old-gcc and mkpsxiso amd64 only), `tools/docker.sh` picks the host platform (`TOKIMEMO_PLATFORM` overrides), `.github/workflows/progress.yml` stays on linux/amd64 and now labels the image. Clean build 27 of 27 OK on both images, about 3x faster natively (64 s against 199 s, then 90 s against 252 s on a loaded machine); all `.bin`/`.elf` files identical, objects identical apart from asm-processor's random temp name; 14 tool test files pass on both. See [[toolchain]] ("Native image"), [[build-system]], [[ci]].
+
+## [2026-10-09] tooling | .gitattributes for Windows
+Added .gitattributes forcing LF line endings so tools/docker.sh and the Python tools still run in Docker when the repo is cloned on Windows (WSL2 + Docker Desktop is the supported route there). See [[build-system]].
+## [2026-10-09] ticket | T-3330 Local function-pointer table frame layout (Backlog -> In Progress -> In Review -> Done)
+[[tickets/T-3330-local-fptab-frame-layout]]. A scan of all splat asm found 236 table-copy functions in 15 overlays, none matched. Every one has 4 or more bytes above the table, which IDO's bare-table layout never has. IDO 5.3 experiments show the rule: once a local is in memory, every declared local gets a stack slot, top-down in declaration order. Declaring the index local before the table reproduces `sp+0x2C`/0x90, and `s32 cur; s32 prev;` fixes the GEKO spill. This is a source difference, so no pass and no `tools/cc.py` change; [[ido-52-evaluation]] agrees. Found along the way: one-line test C changes as1's prologue schedule. 18 functions matched in an uncommitted tree (27 of 27 sha1 OK, 2734 -> 2752 of 6958). Their C is in [[data/t3330-fptab-proof.patch]], to apply after T-1321. Notes in [[matching-notes]] (new section "Local function-pointer tables") and [[toolchain]].
+
+## [2026-10-09] apply | T-3330 proof patch
+Applied wiki/data/t3330-fptab-proof.patch (3-way, after T-1321 and T-3320 merged): 18 local function-pointer-table functions now C using the scalar-before-table declaration idiom from [[tickets/T-3330-local-fptab-frame-layout]]. Clean build 27/27 OK, 2772/6958.
 ## [2026-10-09] ticket | T-3300 Tooling: fix bugs reported by wave 2 (In Review)
 [[tickets/T-3300-tooling-fix-wave-2-bugs]]: `tools/m2c.py` (explicit/inferred unit, ambiguous names refused, `%lo` workaround for an upstream m2c bug), `tools/funcdiff.py` (L names, ninja freshness check, host message, `--resolve`), `tools/srcscan.py` (K&R), `tools/identify_version.py` (zip/7z/chd; `tools/Dockerfile` gets p7zip-full and mame-tools). New tests `tools/test_srcscan.py`, `tools/test_funcdiff.py`, more in `tools/test_m2c.py` and `tools/test_identify_version.py`. Details in [[matching-notes]] ("Tooling fixes T-3300"), usage in [[decompile-workflow]], [[versions]], [[toolchain]].
 

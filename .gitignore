@@ -42,3 +42,4 @@ game-bundle.key
 !/game/README.md
 /versions/*
 !/versions/README.md
+/tools/local-compilers/

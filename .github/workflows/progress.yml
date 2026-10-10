@@ -23,6 +23,9 @@ permissions:
 env:
   DATA_REPO: CosmicScribe64/tokimemo-ci-data
   VERSION: SLPM_86.053
+  # GitHub runners are x86_64. tools/docker.sh would pick this itself; set here so a change of
+  # runner cannot change the image (T-3310).
+  TOKIMEMO_PLATFORM: linux/amd64
 
 jobs:
   report:
@@ -69,7 +72,11 @@ jobs:
 
       - name: Build the toolchain image
         if: steps.bundle.outputs.available == 'true'
-        run: docker build --platform linux/amd64 --build-arg BASE=public.ecr.aws/docker/library/ubuntu:22.04 -t tokimemo-decomp tools
+        # The label is what tools/docker.sh compares; without it the script would rebuild the
+        # image from Docker Hub (and hit the pull limit the BASE mirror avoids).
+        run: |
+          docker build --platform linux/amd64 --build-arg BASE=public.ecr.aws/docker/library/ubuntu:22.04 \
+            --label "dockerfile.sha256=$(sha256sum tools/Dockerfile | cut -d' ' -f1)" -t tokimemo-decomp tools
 
       - name: Configure and build
         if: steps.bundle.outputs.available == 'true'

@@ -251,7 +251,19 @@ void func_800F8BF4(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F8C2C);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F93FC);
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+extern FnTbl42 D_80120A94;
+
+void func_800F93FC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl42 tbl;
+
+    tbl = D_80120A94;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+}
 
 void func_800F9470(void) {
     func_800433D0(0x503);

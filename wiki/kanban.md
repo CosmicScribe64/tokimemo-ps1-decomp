@@ -5,10 +5,12 @@ kanban-plugin: board
 ---
 
 ## Backlog
+- [ ] [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000 Re-match R/V-flagged functions with cvt_pass.py and retune the T-0018 detector]]
+- [ ] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
+- [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]
 
 - [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
 - [ ] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
-- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap (deferred)]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
@@ -34,8 +36,13 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
 
+- [x] [[tickets/T-3320-tooling-near-duplicate-function-reuse|T-3320 Tooling: near-duplicate function reuse]]
+- [ ] [[tickets/T-3310-native-docker-image|T-3310 Tooling: native Docker image for Apple Silicon]]
+- [x] [[tickets/T-3330-local-fptab-frame-layout|T-3330 Local function-pointer table frame layout]]
 - [ ] [[tickets/T-3200-catalog-game-versions|T-3200 Catalog game versions]]
+- [ ] [[tickets/T-3110-test-ido-52-and-41|T-3110 Test IDO 5.2 and 4.1 against the game code]]
 - [ ] [[tickets/T-3100-identify-original-compiler|T-3100 Identify the original game-code compiler]]
 - [x] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]

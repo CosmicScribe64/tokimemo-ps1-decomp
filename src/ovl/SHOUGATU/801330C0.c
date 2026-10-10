@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_801330C0);
+typedef struct {
+    void (*f[60])();
+} FnTbl60; /* size 0xF0 */
+extern FnTbl60 D_80143BC4;
+
+void func_801330C0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl60 tbl;
+
+    tbl = D_80143BC4;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_80133134(void) {
     func_80044750(0x603);

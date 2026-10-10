@@ -4,21 +4,25 @@
 [![Code](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=code&label=Code)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 [![Functions](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=functions&label=Functions)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 
-*Tokimeki Memorial: Forever with You* is Konami's high-school dating sim for the PlayStation. This project is a
-matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
+This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`), and an eventual English-translated Godot port of the game.
 
-The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) already rebuild identically. Most functions are still
-assembly that the build pulls in from generated files, so the C is at an early stage. See [ROADMAP.md](ROADMAP.md) for where this project is going.
+The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) already rebuild identically. Functions not yet written
+in C are pulled in as assembly, so the build matches at every stage; the badges above show how much is C so far. See
+[ROADMAP.md](ROADMAP.md) for where this project is going.
 
 **This repository contains no game data.** You need your own copy of the disc. The build reads the executables from
 it and nothing else is shipped here. The disassembly is not in the repository either. You generate it locally.
 
 This project is independent. It is not affiliated with or endorsed by Konami.
 
+## Roadmap
+
+[ROADMAP.md](ROADMAP.md) lays out five phases, from a complete matching decompilation to an English-language Godot
+port.
+
 ## Building
 
-Everything runs in Docker, so Docker is the only thing you install. The image is linux/amd64 and builds on first
-use. On Apple Silicon it runs under emulation, which is slow but works.
+Everything runs in Docker, so Docker is the only thing you install. The image builds on first use.
 
 1. Put your copy of the game in the `game/` folder (gitignored). BIN+CUE, CHD, ISO, or a `.zip` or `.7z` of those all
    work, in any subfolder. The build expects the PlayStation the Best release: executable SHA-1
@@ -30,47 +34,20 @@ use. On Apple Silicon it runs under emulation, which is slow but works.
    tools/docker.sh ninja
    ```
 
-The build splits the executables into assembly, compiles the C, links, and checks the SHA-1 of the main executable and
-of every overlay. A good build prints `OK` 27 times. `ninja overlays` builds only the overlays.
-
-```
-tools/docker.sh ninja progress                       # progress table
-tools/docker.sh python3 tools/funcdiff.py func_XXXXXXXX   # diff one function against the original
-tools/docker.sh python3 tools/list_leaves.py         # remaining leaf functions
-```
+The build splits the executables into assembly, compiles the C, links, and checks every binary against the original.
+A good build prints `OK` once per binary. `tools/docker.sh ninja progress` shows how much is decompiled.
 
 ## Toolchain
 
-The original compiler is unknown. The closest match found is SGI IDO 5.3, a MIPS compiler that the PsyQ SDK did not
-use, run with `-O2 -G 0` and the optimizer option `-Wo,-no_const_in_reg`. Two build steps adjust its output to the
-original's layout. Each applies one rule to every function and has unit tests:
+The game code was built with an early MIPS compiler of the SGI IDO family, not with the GCC most PlayStation games
+used. The build uses SGI IDO 5.3 plus a few small build steps that reproduce the original compiler's differences, each
+one rule applied to every function. [wiki/toolchain.md](wiki/toolchain.md) has the details and the evidence.
 
-- `tools/frame_pass.py` runs inside every IDO compile. The original stack frames are 16 bytes larger than IDO's,
-  and the pass adds those bytes, so the C stays ordinary.
-- `tools/cc.py` pads each object's code to 16 bytes, the alignment the original objects have.
+## Documentation
 
-Separately, `tools/asm.py` re-encodes Japanese string literals to Shift-JIS before assembling, because splat writes
-them as UTF-8 for readability.
-
-SDK library code is assembly for now. If it moves to C, the repository already has a GCC 2.7 plus maspsx path for it.
-Details and the evidence behind each choice are in [wiki/toolchain.md](wiki/toolchain.md),
-[wiki/compiler-mismatch-research.md](wiki/compiler-mismatch-research.md) and
-[wiki/build-system.md](wiki/build-system.md).
-
-## Layout
-
-| Path | What is there |
-|---|---|
-| `src/main/` | C for the main executable, one file per original object (named by address) |
-| `src/ovl/` | C for the 26 overlays |
-| `include/` | headers, including per-overlay headers in `include/ovl/` |
-| `config/` | splat configs, symbol files, expected SHA-1 files |
-| `tools/` | Docker image, build helpers, progress and diff tools |
-| `wiki/` | project knowledge base, tickets and the kanban board |
-| `asm/`, `build/`, `disc/`, `expected/` | generated or game-derived, gitignored |
-
-The wiki opens in Obsidian. Start at [wiki/index.md](wiki/index.md). File boundaries and the evidence for them are
-in [wiki/source-files.md](wiki/source-files.md), overlays in [wiki/overlays.md](wiki/overlays.md).
+The project's notes, tickets and research live in [`wiki/`](wiki/index.md), which opens in Obsidian. Start at
+[wiki/index.md](wiki/index.md); [wiki/decompile-workflow.md](wiki/decompile-workflow.md) explains how to decompile a
+function.
 
 ## Matching Decompilation
 
@@ -78,13 +55,7 @@ A function counts as decompiled only when its compiled code is byte-identical to
 every push, along with the SHA-1 of every binary.
 
 Names, types and comments do not change the bytes, so the match rule cannot check them. Treat them as hypotheses.
-Many function names come from the symbol map in the game's own `O.BIN` developer build; they are listed in
-`config/symbol_addrs_obin.txt`. In a spot check of 24 of them, 12 fit the functions they call, none contradicted the code, and the rest could not be checked.
-
-## Roadmap
-
-[ROADMAP.md](ROADMAP.md) lays out five phases, from a complete matching decompilation to an English-language Godot
-port.
+Many function names come from the symbol map in the game's own `O.BIN` developer build and are not yet confirmed.
 
 ## AI assistance
 

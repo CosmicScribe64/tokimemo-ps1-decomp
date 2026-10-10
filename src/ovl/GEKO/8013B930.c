@@ -56,9 +56,31 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BB4C);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BBE0);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BC74);
+void func_8013BC74(void) {
+    s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
+    s32 prev;
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BCBC);
+    prev = D_800E738A;
+    func_8007C8A4();
+    cur = D_800E738A;
+    if (prev != cur) {
+        D_800E738A = cur - 1;
+        func_8007EC68();
+    }
+}
+
+void func_8013BCBC(void) {
+    s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
+    s32 prev;
+
+    prev = D_800E738A;
+    func_8007E81C();
+    cur = D_800E738A;
+    if (prev != cur) {
+        D_800E738A = cur - 1;
+        func_8007EC9C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BD04);
 

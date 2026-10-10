@@ -159,7 +159,7 @@ void func_8014A79C(void);
 s32 func_800AE0C0(s32 arg0);
 void load_csr_tp(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 void func_8014D2E0(void);
-void func_80147B24(s32 arg0, void *arg1);
+s32 func_80147B24(s32 arg0, void *arg1);
 void func_8014B374(s32 arg0);
 void func_8014B4B4(s32 arg0);
 void func_8014EB24(s32 arg0);
@@ -187,5 +187,37 @@ void func_8014C8DC(void);
 
 void func_8014C978(s32 arg0);
 void func_8014D200(void);
+
+/* T-1321 */
+void func_8014DF50(s32 arg0);
+typedef struct Tc14 {
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 pad6;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ s16 unkC;
+    /* 0x0E */ u8 padE[4];
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ u8 unk13;
+} Tc14; /* size 0x14 */
+void func_80151F94(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3);
+void func_80152C60(s32 arg0);
+void func_80153068(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
+extern s32 D_8015F4F0;
+extern s32 D_80160460;
+extern s32 D_80160464;
+void func_80153AA0(s32 arg0, s32 arg1, s32 arg2);
+void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3);
+extern Tc14 D_8015E270[];
+extern Tc14 D_8015E3B0[];
+void func_801413B8(Tc14 *arg0, s32 arg1);
+void func_801416E8(Tc14 *arg0, s32 arg1);
+void func_80141B18(Tc14 *arg0, s32 arg1);
+extern u8 D_8015FA68[];
+s32 func_800AE0D0(void);
+void func_80147C98(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
 
 #endif
