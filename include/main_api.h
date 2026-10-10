@@ -1461,6 +1461,7 @@ s32 get_g_zyotai_h(s32 arg0);
 void func_80051DBC();
 void xa_wait(void);
 void func_80051DD8();
+void func_80052000();
 void func_80052060();
 u32 get_h_tokimeki(s32 arg0);
 u32 get_h_yuukou(s32 arg0);
