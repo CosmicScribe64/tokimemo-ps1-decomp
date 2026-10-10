@@ -869,7 +869,50 @@ void func_8005F22C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F26C);
+void func_8005F26C(void) {
+    s32 pad; /* FAKE: unused local, the original frame has 4 more bytes above the arrays (T-3330) */
+    s32 i;
+    s16 x[4];
+    s16 y[4];
+    s16 w[4];
+    s16 h[4];
+
+    func_8004E58C();
+    func_8006612C("メニューモード設定");
+    func_8005DEA0(3);
+    for (i = 0; i < 4; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    set_kanji_string(x[0], y[0], 3, "１：マウスライク", 0);
+    set_kanji_string(x[1], y[1], 3, "２：メニューＡ", 0);
+    set_kanji_string(x[2], y[2], 3, "３：メニューＢ", 0);
+    set_kanji_string(x[3], y[3], 3, "４：１＋２", 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "コントローラでの、メニュー間の", 0);
+    set_kanji_string(-0x80, 0x42, 0, "（２択・３択・アイコンなど）", 0);
+    set_kanji_string(-0x80, 0x52, 0, "カーソルの動かし方を設定します", 0);
+    menu_set(1, 4, x, y, w, h);
+    switch (D_800E6280.unk_1092) {
+    default:
+    case 1:
+        D_800E6280.unk_1094 = 1;
+        break;
+    case 0:
+        D_800E6280.unk_1094 = 0;
+        break;
+    case 3:
+        D_800E6280.unk_1094 = 2;
+        break;
+    case 2:
+        D_800E6280.unk_1094 = 3;
+        break;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005F478(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
