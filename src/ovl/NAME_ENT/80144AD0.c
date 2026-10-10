@@ -247,7 +247,19 @@ void func_801478B4(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801478E0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80147950);
+void func_80147950(void) {
+    s32 unused; /* FAKE: unused 4-byte local, the original frame keeps the spill slot of var_v0 one word lower; real source unknown. T-6020 */
+    s32 var_v0;
+
+    if (D_8014D184 < 0x100) {
+        var_v0 = D_8014D184 * 0x10101;
+    } else {
+        var_v0 = 0xFFFFFF;
+    }
+    func_80049A40(-0xA0, -0x78, 0xA0, 0xA0, 0xB, var_v0, 0x81);
+    func_80049A40(0, -0x78, 0xA0, 0xA0, 0xB, var_v0, 0x81);
+    func_800494BC(0, 0, 0xB, 1, 1);
+}
 
 void func_80147A08(void) {
     func_80049A40(-0xA0, -0x78, 0xA0, 0xA0, 0xD, 0xFFFFFF, 1);
@@ -485,7 +497,27 @@ void func_8014AD18(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_8014AD44);
+void func_8014AD44(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        D_8014D180 = 0x2A;
+        D_8014D184 = 0;
+        func_80144B44();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80144C8C();
+        break;
+    case 2:
+        if (D_8014D184++ >= 0x3D) {
+            func_80044750(5);
+            func_80044750(0xD1);
+            func_80042808();
+        }
+        break;
+    }
+    func_800578F4(1);
+}
 
 void func_8014AE00(void) {
     if (D_800E6280.unk_110A == 0) {

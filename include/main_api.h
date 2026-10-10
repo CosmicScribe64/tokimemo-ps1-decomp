@@ -1326,6 +1326,7 @@ s32 GetWorkBase(s32 arg0, s32 arg1);
 void *func_800490F0();
 void safe_env(s32 arg0);
 void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_800494BC();
 void dtd_on(s32 arg0);
 void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 void func_80049A40(s16 a, s16 b, s16 c, s16 d, s32 e, s32 f, s32 g);
