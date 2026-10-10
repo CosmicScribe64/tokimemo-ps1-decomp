@@ -241,5 +241,56 @@ extern u8 D_800E652A;
 
 extern s32 D_80122CD4;
 extern s32 D_80122CE4;
+extern u8 D_8014508C;
+extern s32 D_80122CF0;
+extern s32 D_80122CD0;
+extern s32 D_80122D38;
+extern s32 D_800E74BC;
+extern s8 D_80145070;
+extern s32 D_80144FD8;
+extern s32 D_8014500C;
+extern s32 D_80145040;
+extern s8 D_800CA368;
+extern s16 D_800E6636;
+extern s16 D_800E663A;
+extern u8 D_800E6641;
+extern s32 D_801217F4;
+extern s32 D_80122CF4;
+extern s8 D_80144C54;
+extern s8 D_800CA360;
+extern s32 D_800E7368;
+extern s8 D_8014507C;
+extern s8 D_80120698;
+extern u8 D_8011F4CF;
+extern u8 D_8011F513;
+extern s16 D_8011F524;
+extern s32 D_800E7510;
+extern s8 D_8012071D;
+extern s8 D_8012071E;
+extern s8 D_8012071F;
+extern s8 D_80120720;
+extern s8 D_80120721;
+extern s8 D_80120722;
+extern s8 D_80120723;
+extern s16 D_80120724;
+extern s32 D_80120728;
+extern s32 D_8012072C;
+extern s16 D_80120730;
+extern s16 D_80120732;
+extern s16 D_80120734;
+extern s16 D_80120742;
+extern s16 D_80120746;
+extern s32 D_80120750;
+extern s32 D_80120754;
+extern s8 D_8012075F;
+extern u8 D_80145074;
+
+s32 func_80051A68(u8);
+
+void func_801394B0(void);
+void func_8013C5B0(void);
+void func_8013D1E0(void);
+void func_8013DC70(void);
+void func_8013EF30(void);
 
 #endif
