@@ -377,3 +377,6 @@ New [[tickets/T-2040-wave-2-etc]], In Progress -> Done after the inline code rev
 
 ## [2026-10-09] merge | wave 2 ETC
 Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri and dec_bg_cd_read prototypes moved from game.h to include/main_only.h (ETC calls them unprototyped, MASTER keeps its u8 view of set_dec_bri in include/ovl/MASTER.h), six duplicate declarations dropped from include/ovl/ETC.h. Clean build 27/27 OK, 1168/6962.
+
+## [2026-10-09] ticket | T-1321 register-promotion build step started
+[[tickets/T-1321-register-promotion-build-step]] Backlog -> In Progress (branch o-t0018). Plan: diff IDO 5.3 output against the original over the [[data/t0018-cases]] functions with scripts, look for a uopt option or a ucode-level rule that makes IDO's own allocator promote globals outside loops, and implement it as a uniform pass if one exists.

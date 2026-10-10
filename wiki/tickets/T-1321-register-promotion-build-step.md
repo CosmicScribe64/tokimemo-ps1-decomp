@@ -1,8 +1,8 @@
 ---
 id: T-1321
-title: Build step for the register-promotion gap (deferred)
-status: Backlog
-assignee:
+title: Build step for the register-promotion gap
+status: In Progress
+assignee: opus-agent (o-t0018)
 created: 2026-10-09
 updated: 2026-10-09
 links: ["[[tickets/T-0018-ugen-temp-register-order]]", "[[tickets/T-1320-tooling-work-queue-and-blocker-detector]]", "[[matching-notes]]", "[[data/t0018-cases]]"]

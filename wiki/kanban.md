@@ -6,7 +6,6 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap (deferred)]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
@@ -21,6 +20,7 @@ kanban-plugin: board
 
 
 ## In Progress
+- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
 
 
 ## In Review
