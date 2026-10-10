@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "main_only.h"
 
 void set_dec_bri(u8 arg0) {
     D_800B593C = arg0;

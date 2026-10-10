@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "main_only.h"
 
 void schedule_init(void) {
     if (D_800E7389 == 0) {

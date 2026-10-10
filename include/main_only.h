@@ -19,4 +19,8 @@ void func_8007BF04(s32 arg0);
 /* T-2030: overlays call it with s32 arguments, see include/ovl/*.h */
 void draw2d3d(u8 arg0, u8 arg1);
 
+/* T-2040: ETC calls these through unprototyped declarations, MASTER through its own u8 view */
+void set_dec_bri(u8 arg0);
+s32 dec_bg_cd_read(s32 arg0, s32 arg1);
+
 #endif /* MAIN_ONLY_H */

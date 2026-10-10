@@ -59,4 +59,7 @@ extern s16 D_8012066C;
 extern s8 D_80120693;
 void func_80138F70();
 
+/* matched against the main-exe u8 prototype */
+void set_dec_bri(u8 arg0);
+
 #endif /* OVL_MASTER_H */
