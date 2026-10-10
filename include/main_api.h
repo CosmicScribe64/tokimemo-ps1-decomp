@@ -1608,7 +1608,9 @@ void func_8006509C(void);
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);
+#ifndef MAIN_API_OVERRIDE_func_80066104
 void func_80066104(void);
+#endif
 void func_8006612C();  /* callers pass one pointer, or nothing */
 void func_80066334();
 s32 func_80066A2C(void);
