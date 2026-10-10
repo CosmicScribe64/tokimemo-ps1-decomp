@@ -75,7 +75,22 @@ void func_80133DB4(void) {
     func_8013272C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80133DE8);
+void func_80133DE8(void) {
+    D_800CA160 = D_8015BDDC;
+    D_800CA164 = D_8015BE48;
+    D_800CA168 = D_8015BEB4;
+    D_80122CF4 = 0;
+    D_800CA2FC = 0;
+    func_800AE0F0(D_800CA19C, "近所の公園");
+    D_8015B658 = 2;
+    D_800CA22C = 0;
+    D_800CA22E = 0;
+    D_800CA230 = 0;
+    D_80122D08 = 0x21;
+    func_8007ED84(0x42D8);
+    func_80085B3C(0, 0x21);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80133EA0);
 
@@ -453,7 +468,19 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A464);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A62C);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A804);
+void func_8013A804(void) {
+    D_80122CEC = D_80122CDC;
+    if (D_800E6280.unk_03F == 8) {
+        D_8015B680 = 1;
+        D_8015BF34 = 0;
+        D_8015BF38 = 0;
+        func_80083440(func_80051B48(D_800E6280.unk_F5F));
+        func_8004284C();
+        return;
+    }
+    func_8004284C();
+    D_800E6280.unk_110A += 0x10;
+}
 
 void func_8013A898(void) {
     u8 temp_v0;

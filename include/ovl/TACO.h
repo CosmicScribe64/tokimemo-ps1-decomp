@@ -258,4 +258,9 @@ void func_8014EC4C();
 void func_8014EE3C();
 void func_80135418(void);
 void func_80138160(void);
+void func_8014394C();
+void func_801345D4();
+void func_8013474C();
+void func_801347F4(s32 arg0);
+
 #endif

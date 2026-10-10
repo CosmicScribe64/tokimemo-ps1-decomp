@@ -80,7 +80,19 @@ s32 func_80134D8C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134DE8);
+s32 func_80134DE8(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_8004E9F4(0);
+        func_8006612C("ホテル・廊下");
+        D_800E6280.unk_110D += 1;
+    }
+    func_801343B0();
+    if (D_800CA2E8 == 1) {
+        if (D_800E6280.unk_1104.u++ == 1) {
+            func_80044750(0x503);
+        }
+    }
+}
 
 void func_80134E74(void) {
     func_80044750(0x205);
