@@ -489,7 +489,19 @@ void func_80118618(void) {
     func_80049B20(0xFF, 1, 0);
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118690);
+void func_80118690(void) {
+    D_8009471C = (u8 *)&D_80094730;
+    if (D_800B1746 == 0 && (D_800B0940 >> 0x1C) == 6 && D_8012531C == 0 && D_80094734 == 0) {
+        D_80094734 += 1;
+    }
+    D_80094720 = (u8 *)&D_80094734;
+    D_80094724 = D_8009473C;
+    D_80094728 = D_80094740;
+    D_8009472C = D_80094744;
+    if (func_80049B20(D_800EECBC, 0, 0) != 0) {
+        func_80011DFC();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118764);
 
@@ -568,7 +580,21 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119824);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801198E8);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119A60);
+void func_80119A60(void) {
+    if (D_800B1746 == 2) {
+        func_8004A8EC(4);
+        func_80033E88();
+        D_80094730 = 5;
+        D_800B0A06 += 1;
+        /* FAKE: D_800B0A0A and D_800B0A0E are reached through D_800B0A06 so that as1 does not hoist their loads above the earlier stores; real source unknown. T-4050 */
+        (&D_800B0A06)[2] += 1;
+        (&D_800B0A06)[4] -= 0x14;
+        func_8004C250();
+        func_80011EC4(0x5C);
+        return;
+    }
+    func_801103A0();
+}
 
 void func_80119AFC(void) {
     if ((D_800B1746 == 2) || (D_800B1746 == 8) || (D_800B1746 == 5) || (D_800B1746 == 0xA)) {
@@ -859,7 +885,17 @@ void func_8011C11C(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C164);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C3F4);
+void func_8011C3F4(void) {
+    u32 v;
+
+    v = func_8002328C(D_800B1746);
+    if (D_800B1746 == 7 && v >= 3U && D_801252E4 == 2) {
+        func_80011EC4(0x39);
+        D_801243B0 += 1;
+        return;
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C470);
 
