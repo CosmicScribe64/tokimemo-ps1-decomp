@@ -99,7 +99,29 @@ s32 func_8014B8CC(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B978);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B9CC);
+s32 func_8014B9CC(void) {
+    s32 sp34; /* FAKE: unused local, the original frame is 8 bytes larger (T-3330 slot rule); source unknown. T-6040 */
+    s32 sp30;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_80150F98, 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        xa_wait();
+        break;
+    case 2:
+        k_sub_reset();
+        menu_girl_taku_set(0, &sp30);
+        func_8004E884(sp30);
+        D_800E6280.unk_1093 = 0;
+        func_8004284C();
+        break;
+    }
+}
 
 void func_8014BA8C(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
