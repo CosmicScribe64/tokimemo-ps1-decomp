@@ -71,6 +71,20 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_80136438);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_80136688);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_801368D8);
+void func_801368D8(u8 *arg0, u8 arg1) {
+    u8 v;
+
+    if (D_8015F3F0 < 4) {
+        D_8015F3F4 = 1;
+    }
+    v = *arg0;
+    D_8015F3F8 = v;
+    if (D_800E6280.unk_F88 & 0x2020) {
+        *arg0 = ((u32)v + arg1 + 1) % (u32)arg1;
+    }
+    if (D_800E6280.unk_F88 & 0x8000) {
+        *arg0 = (*arg0 + arg1 - 1U) % (u32)arg1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_80136988);
