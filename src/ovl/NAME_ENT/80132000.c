@@ -288,7 +288,18 @@ void func_8013621C(s32 arg0) {
     func_80049A40(-0x9D, 0x50, 0x1C, 0x10, 4, color, 0x83);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801362D0);
+void func_801362D0(void) {
+    func_8004E58C();
+    func_8013635C();
+    D_8014CC70 = 0;
+    func_8004E788(-0x98, -0x68, 0xA, "誕生日と血液型も教えてね？", 0);
+    func_80046290(D_8014CC50, D_8014CC54, 0);
+    func_80044750(0x300);
+    func_8004EA98();
+    func_801372A0(0);
+    func_8004EAD4(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_8013635C);
 
@@ -424,7 +435,18 @@ void func_80138338(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138488);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801385A8);
+void func_801385A8(void) {
+    func_8004E58C();
+    D_8014CC70 = 0;
+    func_8004E788(-0x98, -0x68, 0xA, "藤崎詩織の誕生日と血液型は覚えてる？", 0);
+    func_8013635C();
+    func_80046290(D_8014CC58, D_8014CC5C, 0);
+    func_80044750(0x300);
+    func_8004EA98();
+    func_801372A0(1);
+    func_8004EAD4(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138634);
 
