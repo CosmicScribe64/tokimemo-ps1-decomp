@@ -127,7 +127,26 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80135C4C);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80135E28);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80135FFC);
+void func_80135FFC(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_80050DFC(D_800B35F4[D_801405E4]);
+        func_80050E8C(D_80140AD8[D_801405E4], 0, D_801405E4);
+        func_80052060(D_80140B04, D_80140B5C, D_801405E4, D_801405E4);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_8005215C();
+        break;
+    default:
+        func_80042940(0x20);
+        break;
+    }
+    func_80050B54(0);
+    func_80069128();
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_801360E4);
 

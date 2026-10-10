@@ -1152,7 +1152,9 @@ extern u8 D_8012278C;
 extern u8 D_8012278D;
 extern u8 D_8012278E;
 extern u8 D_801227A4[];
+#ifndef MAIN_API_OVERRIDE_D_80122CD0
 extern s32 D_80122CD0;
+#endif
 extern s32 D_80122CD4;
 extern s32 D_80122CDC;
 extern s32 D_80122CE0;
