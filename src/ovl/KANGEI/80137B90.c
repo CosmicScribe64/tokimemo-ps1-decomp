@@ -140,7 +140,21 @@ void func_801385E0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138640);
+void func_80138640(void) {
+    s32 unused; /* FAKE: the original frame has one more 4-byte local above sp2A (same extra scalar as the T-3330 table functions); its real use is unknown. T-4040 */
+    s16 sp2A;
+
+    sp2A = (s16) D_80122CDC;
+    func_80134374();
+    D_80122CDC = (s32) sp2A;
+    D_80139AC0 = 0;
+    D_800E71DF = 0;
+    func_800847B8(0U);
+    D_80139AD0 = (KObj *) D_8013A210;
+    D_80139AD4 = D_8013A244;
+    D_80139AD8 = D_8013A278;
+    D_80139ADC = 4;
+}
 
 void func_801386C4(void) {
     u8 s;

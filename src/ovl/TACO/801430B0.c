@@ -45,7 +45,16 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143730);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143814);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801438F0);
+void func_801438F0(s32 arg0, s32 arg1, u8 *arg2) {
+    s32 pad[3]; /* FAKE: 12 bytes of unused locals above sp28 reproduce the original frame (0x38, sp28 at 0x28); real source unknown. T-4040 */
+    s32 sp28;
+
+    sp28 = arg0 + 4;
+    func_8009B3C0(sp28);
+    func_8009B430(sp28 + 8, arg2 + 4, arg1, sp28);
+    *(u8 **)(arg2 + 8) = arg2 + 0x14;
+    *(s32 *)(arg2 + 4) = 0;
+}
 
 void func_8014394C(void) {
     D_80122760 = 0;
