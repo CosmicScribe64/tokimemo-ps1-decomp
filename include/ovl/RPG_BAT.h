@@ -148,4 +148,9 @@ void func_8013A480();
 void func_80132000();
 void func_801454F0();
 void func_801496F0();
+void func_8014B738();
+void func_8014ED80();
+void func_8014EE98();
+void func_80150F84();
+extern u8 D_8015E814;
 #endif

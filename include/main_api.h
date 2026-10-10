@@ -757,6 +757,7 @@ extern s16 D_801213B0;
 extern u8 D_801213DF;
 extern s16 D_801213F4;
 extern u8 D_80121422;
+extern s16 D_80121438;
 extern s8 D_8012146B;
 extern s8 D_801214AF;
 extern s8 D_801214F3;
