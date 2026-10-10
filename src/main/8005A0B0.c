@@ -304,7 +304,7 @@ void func_8005D31C(void) {
         if (func_8005448C() == 4) {
             func_80053D10();
             D_800E6280.unk_110D += 1;
-        } else if (((u32) D_800E73A0 >= 0x201U) || (D_800E6280.unk_1115 == 0xD0)) {
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xD0)) {
             func_80053D10();
             func_80042940(0xFF);
         }
