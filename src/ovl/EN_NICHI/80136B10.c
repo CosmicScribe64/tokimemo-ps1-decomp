@@ -393,6 +393,28 @@ s32 func_80138B9C(s32 arg0, s32 arg1) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80138C34);
+s32 func_80138C34(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x20 >= px && px >= x - 0x20) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 16 >= py && py >= y - 16) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80138CCC);

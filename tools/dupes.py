@@ -52,10 +52,41 @@ class Func:
         self.key = key
         self.relocs = relocs      # [(kind, symbol, addend)]
         self.bad = bad            # reason this function cannot take part, or None
+        self.exact = key          # exact fingerprint (key is replaced by the near one in near mode)
+        self.wide = None          # fingerprint with load/store offsets and shifts masked too (near mode)
+        self.imm_words = []       # [(item index, word)] of the masked ALU-immediate ops (near mode)
+        self.n = 0                # instruction count
 
 
-def parse_asm(text):
-    """Return (key, relocs, bad) for the text of one split function file."""
+ALU_IMM_OPS = {0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F}   # addi addiu slti sltiu andi ori xori lui
+MEM_OPS = set(range(0x20, 0x2F)) | {0x31, 0x32, 0x39, 0x3A}          # loads, stores, lwc/swc
+
+
+def imm_mask(word, mode):
+    """Extra mask of a non-relocated word for the near-duplicate fingerprint (T-3320).
+
+    mode 'alu': the 16-bit immediate of ALU-immediate ops (not on $sp: frame size and local
+    addresses stay in the shape). mode 'wide' additionally masks load/store offsets (not $sp
+    based) and shift amounts.
+    """
+    op, rs = word >> 26, (word >> 21) & 31
+    if op in ALU_IMM_OPS and rs != 29 and not (op == 0x0F and (word >> 16) & 31 == 29):
+        return 0xFFFF
+    if mode == 'wide':
+        if op in MEM_OPS and rs != 29:
+            return 0xFFFF
+        if op == 0 and word & 0x3F in (0, 2, 3):
+            return 0x7C0
+    return 0
+
+
+def parse_asm(text, imm=None, imm_out=None, info=None):
+    """Return (key, relocs, bad) for the text of one split function file.
+
+    imm=None is the exact fingerprint. imm='alu'/'wide' also masks immediates (see imm_mask);
+    imm_out, when a list, receives (item index, word) of every ALU-immediate op that was masked.
+    info, when a dict, receives 'n' (instruction count).
+    """
     items = []
     relocs = []
     bad = None
@@ -96,16 +127,21 @@ def parse_asm(text):
             relocs.append((rel[0], sm.group(1), add))
             items.append((word & ~mask & 0xFFFFFFFF, rel[0]))
         else:
-            items.append((word, ''))
+            m2 = imm_mask(word, imm) if imm else 0
+            if m2 and imm_out is not None and (word >> 26) in ALU_IMM_OPS:
+                imm_out.append((len(items), word))
+            items.append((word & ~m2 & 0xFFFFFFFF, 'i' if m2 else ''))
     if nglabel != 1:
         bad = bad or 'not exactly one glabel'
     if not items:
         bad = bad or 'no instructions'
     key = hashlib.sha1(repr(items).encode()).hexdigest()
+    if info is not None:
+        info['n'] = len(items)
     return key, relocs, bad
 
 
-def load_funcs(root, units=None):
+def load_funcs(root, units=None, near=False):
     funcs = []
     for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True)):
         rel = os.path.relpath(p, root).replace(os.sep, '/')
@@ -118,8 +154,15 @@ def load_funcs(root, units=None):
         if not os.path.exists(os.path.join(root, src_for_dir(unit, m.group(3)))):
             continue          # a folder of an old source layout (asm/ is not cleaned by splat)
         with open(p) as f:
-            key, relocs, bad = parse_asm(f.read())
-        funcs.append(Func(m.group(4), unit, m.group(2) is None, rel, key, relocs, bad))
+            text = f.read()
+        info = {}
+        key, relocs, bad = parse_asm(text, info=info)
+        fn = Func(m.group(4), unit, m.group(2) is None, rel, key, relocs, bad)
+        fn.n = info.get('n', 0)
+        if near:      # T-3320: key becomes the immediate-masked fingerprint, exact keeps the old one
+            fn.key = parse_asm(text, 'alu', fn.imm_words)[0]
+            fn.wide = parse_asm(text, 'wide')[0]
+        funcs.append(fn)
     return funcs
 
 

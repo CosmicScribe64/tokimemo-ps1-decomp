@@ -1,7 +1,15 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80135F10);
+void func_80135F10(void) {
+    D_80139DB0 = 0x801B4400;
+    D_80139DB4 = 0x801B6400;
+    D_80139DB8 = 0x801BA400;
+    D_80139DBC = 0x801BE400;
+    D_80139DC0 = 0x801C2400;
+    D_80139DC4 = 0x801C6400;
+    D_80139DC8 = 0x801CA400;
+}
 
 void func_80135F84(void) {
     D_80139DCC = 0x801EAFC4;
