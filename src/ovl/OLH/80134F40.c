@@ -37,7 +37,24 @@ INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134F40", func_8013500C);
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134F40", func_80135190);
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134F40", func_801352A0);
+s32 func_801352A0(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013C780, 0);
+        func_8004E788(-0x88, -0x30, 0xF, (s32)"　画面左下の対地速度表示をよく見てスク", 0);
+        func_8004E788(-0x88, -0x20, 0xF, (s32)"ロールを早くすることが、タイム短縮の秘", 0);
+        func_8004E788(-0x88, -0x10, 0xF, (s32)"訣です。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134F40", func_8013538C);
 
