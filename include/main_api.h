@@ -368,6 +368,7 @@ extern u8 D_800E8CA0[];
 extern u8 D_800E90A0[];
 extern u8 D_800E9620[];
 extern u8 D_800E96AB;
+extern u8 D_800E9E63;
 extern u8 D_800EAFA7;
 extern s16 D_800EAFB6;
 extern u8 D_800EB02A;
@@ -819,7 +820,9 @@ extern s32 D_80122D38;
 extern s32 D_80122EA0;
 extern s32 D_80122EAC;
 extern s32 D_80122EB8;
+#ifndef MAIN_API_OVERRIDE_D_80122EC8
 extern s32 D_80122EC8;
+#endif
 extern s32 D_80122ECC;
 extern s32 D_801230D0;
 extern u32 D_80123110;
@@ -1410,5 +1413,6 @@ s32 open(u8 *name, s32 mode);
 s32 GetSp(void);
 void func_800BCE10();
 s32 func_800BDC20();
+void func_801040F0(void);
 
 #endif /* MAIN_API_H */
