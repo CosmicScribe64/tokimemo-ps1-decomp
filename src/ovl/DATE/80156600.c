@@ -235,7 +235,21 @@ s32 func_801573F0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_8015745C);
+void func_8015745C(void) {
+    s16 i;
+
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_036 = 0;
+    /* FAKE: the last store and the loop on one source line; as1 then places the store after the
+     * loop setup as the original does (line-based scheduling, T-6070). Not a separate symbol. T-7010 */
+    D_800E6280.unk_038 = 0; for (i = 0; i < 6; i++) {
+        D_801217D0[i + 4].unk_00 &= 0x7FFFFFFF;
+    }
+    D_80120650[3] |= 0x80;
+    D_80120650[0x47] |= 0x80;
+    D_80122CF8 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_8015750C);
 
