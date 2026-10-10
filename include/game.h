@@ -729,5 +729,19 @@ void func_800949B0();
 extern u16 D_80125D34;
 extern s32 D_80125120;
 extern s32 D_80125124;
+s32 func_80075FA0();
+extern s32 D_800B5960[];
+void func_8007B144();
+void func_8007AEC0();
+extern s16 D_80125D3A;
+void func_8009B560();
+void func_80078C48();
+void func_80078FE0();
+void func_80079014();
+void func_80079070();
+void func_80078A94();
+void func_80057710();
+s32 func_8005352C();
+extern u8 D_800E62C1;
 
 #endif /* GAME_H */
