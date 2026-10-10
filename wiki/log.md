@@ -618,3 +618,9 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6070-wave-4-li
 
 ## [2026-10-10] ticket | T-6040 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6040-wave-4-list-4]]; no open findings. Branch w4-4, not merged.
+
+## [2026-10-10] ticket | T-7020 created (In Progress)
+[[tickets/T-7020-loop-unrolling-and-scheduling]]: loop unrolling the original does not do, and load/delay-slot scheduling differences (wave-4 blockers). Worktree r4-loops.
+
+## [2026-10-10] build | T-7020 loop unrolling and scheduling
+Verdict: both wave-4 blockers are source forms; no flag or pass. 28 functions matched (3721 -> 3749). Rules in [[matching-notes]], idioms in [[decompile-workflow]], [[toolchain]] updated. Ticket [[tickets/T-7020-loop-unrolling-and-scheduling]] stays In Progress (helper results pending, review not done).
