@@ -191,7 +191,12 @@ void func_801383BC(void) {
     func_80085A60();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80138418);
+void func_80138418(void) {
+    s32 sp28[2]; /* FAKE: the original keeps a 4-byte local at sp+0x28; only the first word is written (T-6050) */
+
+    sp28[0] = D_800E6280.unk_110A;
+    func_8007E934();
+}
 
 void func_80138440(void) {
     func_80044750(0x500);
@@ -434,7 +439,17 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A62C);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A804);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A898);
+void func_8013A898(void) {
+    u8 temp_v0;
+
+    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    D_800CA148 = (((temp_v0 & 0x7F) >= 2U) + ((temp_v0 & 0x7F) >= 3U)) * 2;
+    D_800CA14C = 0;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 1;
+    func_80084D3C();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A94C);
 
