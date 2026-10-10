@@ -84,7 +84,23 @@ void func_80149698(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80149310", func_801496C4);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80149310", func_80149AC0);
+void func_80149AC0(void) {
+    u32 v;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    if (v < 2U) {
+        D_8015D084 += 2;
+    } else if (v == 2) {
+        D_8015D084 += 4;
+    } else if (v == 3) {
+        D_8015D084 += 6;
+    } else {
+        D_8015D084 += 8;
+    }
+    D_8015D088 = 1;
+    func_8004284C();
+}
 
 void func_80149B78(void) {
     s32 pad; /* FAKE: unused local above buf, puts buf at sp+0x28 as in the original; real source unknown. T-4010 */

@@ -241,4 +241,26 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80139064);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_801393A8);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_801396EC);
+void func_801396EC(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_80044750(0x50C);
+        func_80050DFC(D_800E6280.unk_0D4);
+        func_80051010("あ〜あ、留守みたいだな。", 0, 0x1F);
+        func_80051010("今日はあきらめるか……。）", 1, 0x1F);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80051DBC();
+        break;
+    case 2:
+        func_8004E58C();
+        func_80048E78();
+        func_80042878(0x46);
+        break;
+    }
+    func_80050B54(0);
+    func_80069128();
+}

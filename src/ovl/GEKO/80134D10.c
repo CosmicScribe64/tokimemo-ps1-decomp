@@ -162,7 +162,14 @@ void func_80135894(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801358CC);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80135A6C);
+s32 func_80135A6C(void) {
+    func_80136B2C();
+    if (D_800E6280.unk_1104.w++ == 1) {
+        if (D_80145064 == 4) {
+            func_80044750(0x60C);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80135AC8);
 
@@ -236,7 +243,18 @@ void func_801366DC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136714);
+s32 func_80136714(void) {
+    if (D_80145088 == 0) {
+        D_800E6280.unk_110A += 5;
+    } else {
+        D_80145060 = 0x13;
+        if ((func_8006AEC4(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) > 0) && (D_800E6280.unk_F5F == ((u32)(D_800E6280.unk_54C[0].w << 3) >> 0x1C)) && (D_80122D4C == 0)) {
+            func_80042940(0x3D);
+            return 0;
+        }
+    }
+    func_8004284C();
+}
 
 void func_801367C4(void) {
     bg_read_sub2(0x4045);
@@ -265,7 +283,20 @@ void func_80136BA8(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136C20);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136E7C);
+typedef struct {
+    u32 pad : 3;
+    u32 f : 1;
+    u32 rest : 28;
+} GekoFlagBits; /* bit 3 of a Rec38 flag word */
+
+void func_80136E7C(void) {
+    if (((GekoFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.w)->f) {
+        D_80145060 += 1;
+        func_8004284C();
+    } else {
+        func_80137560();
+    }
+}
 
 void func_80136EE4(void) {
     if (D_80145088 == 0) {
@@ -275,7 +306,20 @@ void func_80136EE4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80136F20);
+void func_80136F20(void) {
+    s32 v;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    if (v == 2) {
+        D_80145060 += 2;
+    } else if (v == 3) {
+        D_80145060 += 4;
+    } else if (v == 4) {
+        D_80145060 += 6;
+    }
+    func_8004284C();
+}
 
 void func_80136FB8(void) {
     if (D_80145088 == 1) {
@@ -294,7 +338,23 @@ void func_80136FF8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80137040);
+void func_80137040(void) {
+    s32 v;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    if (D_80145088 == 1) {
+        D_80145060 = 6;
+    }
+    if (v == 2) {
+        D_80145060 += 2;
+    } else if (v == 3) {
+        D_80145060 += 4;
+    } else if (v == 4) {
+        D_80145060 += 6;
+    }
+    func_8004284C();
+}
 
 void func_801370EC(void) {
     D_80145060 = (D_80122CDC * 2) + 0xD;

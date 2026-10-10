@@ -213,5 +213,10 @@ typedef struct {
 extern u8 D_801491DC;
 extern TaiikuTbl11 D_801498E8;
 extern TaiikuTbl11 D_80149914;
+void func_8014684C(void);
+void func_80147068(void);
+void func_80147520(void);
+void func_80147F10(void);
+extern s16 D_8014A3DE;
 
 #endif

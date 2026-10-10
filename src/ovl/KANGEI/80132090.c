@@ -62,7 +62,19 @@ s32 func_80132290(void) {
     return func_80072B5C(1);
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_80132354);
+void func_80132354(void) {
+    u32 v;
+    s32 lo;
+
+    v = func_80051B48(D_800E6280.unk_F5F);
+    lo = v & 0xFF;
+    if (v >= 3U) {
+        func_80083440(3);
+    } else {
+        func_80083440(lo);
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_801323A8);
 

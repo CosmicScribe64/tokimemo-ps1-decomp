@@ -1298,5 +1298,6 @@ extern u8 D_8012411C;
 void func_80108AD8(void);
 void func_80108DD4(void);
 void func_80109FB0(void);
+void func_800F8970(void);
 
 #endif /* OVL_EVENT_H */

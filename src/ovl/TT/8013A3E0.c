@@ -7,9 +7,43 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A610);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A710);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A810);
+typedef struct {
+    s16 x;
+    s16 y;
+    u8 pad4[0x1C];
+} TtXY; /* FAKE: pad4 and fake_pad below reproduce the original's frame (locals 0x30..0x54); real locals unknown. T-8060 */
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A8B8);
+void func_8013A810(void) {
+    u8 *p;
+    u16 idx;
+    TtXY pos;
+    s32 fake_pad[2];
+
+    p = D_80158A8C;
+    idx = *(u16 *)(p + 0x3A8);
+    pos.x = *(s16 *)(p + 0x14) + *(s16 *)(p + 0x252);
+    pos.y = *(s16 *)(p + 0x16) + *(s16 *)(p + 0x282);
+    func_8013A3E0(&pos, idx * 6 + 0x78 + D_80155C78, -1);
+    pos.x = *(s16 *)(p + 0x14) + *(s16 *)(p + 0x254);
+    pos.y = *(s16 *)(p + 0x16) + *(s16 *)(p + 0x284);
+    func_8013A3E0(&pos, &D_80155D02, 2);
+}
+
+void func_8013A8B8(void) {
+    u8 *p;
+    u16 idx;
+    TtXY pos;
+    s32 fake_pad[2];
+
+    p = D_80158A8C;
+    idx = *(u16 *)(p + 0x3AA);
+    pos.x = *(s16 *)(p + 0x14) + *(s16 *)(p + 0x256);
+    pos.y = *(s16 *)(p + 0x16) + *(s16 *)(p + 0x286);
+    func_8013A3E0(&pos, idx * 6 + 0x66 + D_80155C78, -1);
+    pos.x = *(s16 *)(p + 0x14) + *(s16 *)(p + 0x258);
+    pos.y = *(s16 *)(p + 0x16) + *(s16 *)(p + 0x288);
+    func_8013A3E0(&pos, &D_80155D02, 3);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A960);
 

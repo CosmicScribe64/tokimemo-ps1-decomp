@@ -680,3 +680,11 @@ Matched 20 functions (4048 bytes, 18 from the list): main `func_8007B358`, `func
 
 ## [2026-10-10] ticket | T-8010 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8010-wave-5-list-1]]; no open findings. Branch w5-1, not merged.
+## [2026-10-10] ticket | T-8060 wave 5 list 6 started
+Opened [[tickets/T-8060-wave-5-list-6]] (In Progress) for the wave-5 batch agent 6 work list.
+
+## [2026-10-10] build | T-8060 wave 5 list 6: 29 functions, 5980 bytes
+Matched 29 functions (GEKO 7, TACO 5, TT 3, EVENT 3, SHOUGATU 2, BUNKA_SD 2, one each in SHUGAKU, KANGEI, TEL, DATE, EN_NICHI, RPG_BAT, TAIIKU) in `src/ovl/*`. Clean rebuild (`rm -rf asm build; configure.py; ninja`): 27/27 OK, headers OK, globals OK; `sync_protos.py --check-branch` OK (TACO `func_8015ACCC` declared `s32`); grand line 3996/6958 funcs, 520192/2279368 bytes (22.8%). 18 rows appended to [[data/t0018-cases]]; new patterns in [[matching-notes]] ("Wave 5, list 6"). Commits on branch w5-6, not merged.
+
+## [2026-10-10] ticket | T-8060 done
+[[tickets/T-8060-wave-5-list-6]] moved to Done after the inline review against CODING_STANDARDS.md (no open findings).

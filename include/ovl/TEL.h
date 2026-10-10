@@ -43,4 +43,6 @@ s32 func_8013A478(void);
 void func_8013BE38(void);
 s32 func_8013A79C(void);
 
+void func_801396EC(void);
+
 #endif /* OVL_TEL_H */

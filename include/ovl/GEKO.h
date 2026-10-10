@@ -707,4 +707,7 @@ void func_8013E0A4(void);
 void func_8013E0E0(void);
 void func_8013E040(void);
 
+void func_80136B2C(void);
+
+
 #endif

@@ -135,7 +135,24 @@ void func_80138154(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_801381BC);
+void func_801381BC(void) {
+    D_800CA2CC = D_80122CDC;
+    switch (D_80122CDC) {
+    case 0:
+        func_800AE0F0(D_800CA23C, "京都・奈良");
+        func_800AE0F0(D_800CA1DC, "京都・奈良");
+        break;
+    case 1:
+        func_800AE0F0(D_800CA23C, "沖縄");
+        func_800AE0F0(D_800CA1DC, "沖縄");
+        break;
+    case 2:
+        func_800AE0F0(D_800CA23C, "北海道");
+        func_800AE0F0(D_800CA1DC, "北海道");
+        break;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138290);
 
