@@ -83,7 +83,7 @@ void func_801327BC(void) {
     func_800847B8(D_800E6280.unk_75D);
     D_800E6280.unk_F5F = 0xE;
     func_800AE0F0(D_800CA188, "母親");
-    D_800CA148 = D_800E6280.unk_75D > 0;
+    D_800CA148 = (u32)D_800E6280.unk_75D > 0;
     D_800CA14C = 0;
     func_801320A0();
     D_800CA160 = D_80134A8C;
