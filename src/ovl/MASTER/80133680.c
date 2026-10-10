@@ -121,4 +121,19 @@ void func_80137F94(void) {
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80138088);
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80138374);
+/* FAKE: the address goes through (u32) so that IDO does not keep D_800E71DE in a register across the
+ * stores (the original reloads it each time); real source unknown. T-4050 */
+void func_80138374(void) {
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x75E) = D_800E71DF;
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x760) = 0x15;
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x75F) = 6;
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x761) = 5;
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x762) = D_800E62BE;
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x763) = D_800E62BF;
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x764) = D_800E62C0;
+    *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x765) = D_800E62C1;
+    D_800E71DE += 1;
+    if (D_800E71DE >= 0xFFU) {
+        D_800E71DE = 0xFE;
+    }
+}

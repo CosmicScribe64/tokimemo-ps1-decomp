@@ -40,7 +40,38 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801436E4);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143758);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_8014387C);
+void func_8014387C(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *p;
+    s32 j;
+
+    j = arg0 + 0x60;
+    p = D_8011ECD0 + arg0 * 0x44;
+    p[0x1982] = 0x40;
+    p[0x1983] = 0xA4;
+    p[0x1981] = 0;
+    *(s32 *)(p + 0x19B8) = 0;
+    *(s32 *)(p + 0x198C) = 0x801F86EC;
+    *(s32 *)(p + 0x1990) = 0x801F897C;
+    *(s32 *)(p + 0x19B4) = 0x801F86A4;
+    p[0x1984] = 8;
+    *(s16 *)(p + 0x1998) = arg1;
+    p[0x19C3] = 0xF;
+    p[0x1985] = 0x80;
+    *(s16 *)(p + 0x19A6) = arg2 - 0xA0;
+    *(s16 *)(p + 0x19AA) = 0x8C;
+    *(s16 *)(p + 0x19AE) = 0;
+    *(s16 *)(p + 0x19B2) = -1;
+    p[0x1987] = 0x80;
+    if (arg1 == 0xA3) {
+        D_8011ECD0[j * 0x44 + 0x43] = 0xE;
+    }
+    p = D_8011ECD0 + j * 0x44;
+    if (*(s16 *)(p + 0x18) >= 0xF1) {
+        p[3] = 0x34;
+    } else {
+        p[3] = 0xB4;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143968);
 

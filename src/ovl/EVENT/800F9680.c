@@ -114,7 +114,20 @@ void func_800F9DBC(void) {
     func_80015FE0();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800F9DF8);
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+extern FnTbl39 D_80120D30;
+
+void func_800F9DF8(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl39 tbl;
+
+    tbl = D_80120D30;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    func_800FA25C();
+}
 
 void func_800F9E74(void) {
     func_800433D0(0x505);
@@ -150,7 +163,22 @@ void func_800FA584(void) {
     func_80015FE0();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FA5C0);
+typedef struct {
+    void (*f[22])();
+} FnTbl22; /* size 0x58 */
+extern FnTbl22 D_80120DCC;
+
+void func_800FA5C0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl22 tbl;
+
+    tbl = D_80120DCC;
+    idx = D_800B1AF6;
+    tbl.f[idx]();
+    if (D_800B1AF6 >= 0xDU && D_800B1AF6 < 0x12U) {
+        func_8003C2C0();
+    }
+}
 
 void func_800FA664(void) {
     if (D_800B1AF5 == 0) {
@@ -300,7 +328,19 @@ void func_800FB5CC(void) {
     func_800F6000();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB67C);
+typedef struct {
+    void (*f[45])();
+} FnTbl45; /* size 0xB4 */
+extern FnTbl45 D_80120EE0;
+
+void func_800FB67C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl45 tbl;
+
+    tbl = D_80120EE0;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+}
 
 void func_800FB6F0(void) {
     func_80015D28(0x45, 0x801B0000, 0x7BF1);
@@ -308,7 +348,19 @@ void func_800FB6F0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB728);
+typedef struct {
+    void (*f[44])();
+} FnTbl44; /* size 0xB0 */
+extern FnTbl44 D_80120F94;
+
+void func_800FB728(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl44 tbl;
+
+    tbl = D_80120F94;
+    idx = D_800B1AF6;
+    tbl.f[idx]();
+}
 
 void func_800FB7B0(void) {
     func_80015D28(0x45, 0x801B0000, 0x7C36);
@@ -316,7 +368,19 @@ void func_800FB7B0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB7E8);
+typedef struct {
+    void (*f[58])();
+} FnTbl58; /* size 0xE8 */
+extern FnTbl58 D_80121044;
+
+void func_800FB7E8(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl58 tbl;
+
+    tbl = D_80121044;
+    idx = D_800B1AF6;
+    tbl.f[idx]();
+}
 
 void func_800FB864(void) {
     func_800F7074();
@@ -332,9 +396,21 @@ void func_800FB8B4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB8EC);
+void func_800FB8EC(void) {
+    func_80078970(D_800947C4, "観覧車");
+    func_80011DFC();
+}
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB920);
+extern FnTbl45 D_8012112C;
+
+void func_800FB920(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl45 tbl;
+
+    tbl = D_8012112C;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+}
 
 void func_800FB994(void) {
     func_800433D0(0x502);

@@ -31,7 +31,19 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A920", func_8013AAAC);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A920", func_8013AB34);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A920", func_8013ABBC);
+typedef struct {
+    void (*f[28])();
+} FnTbl28; /* size 0x70 */
+extern FnTbl28 D_801475D4;
+
+void func_8013ABBC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl28 tbl;
+
+    tbl = D_801475D4;
+    idx = D_800F647A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A920", func_8013AC38);
 

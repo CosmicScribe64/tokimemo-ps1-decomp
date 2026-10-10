@@ -17,7 +17,19 @@ void func_80138BAC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_80138BF0);
+typedef struct {
+    void (*f[56])();
+} FnTbl56; /* size 0xE0 */
+extern FnTbl56 D_80147248;
+
+void func_80138BF0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl56 tbl;
+
+    tbl = D_80147248;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
 
 void func_80138C78(void) {
     D_800F62CF = 0;

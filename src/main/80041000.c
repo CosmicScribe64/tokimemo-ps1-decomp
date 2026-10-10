@@ -62,7 +62,35 @@ void func_80041878(void) {
     func_80041F48();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800418B0);
+void func_800418B0(void) {
+    D_800E62BD = 0;
+    D_800E62BE = 0x5F;
+    D_800E62BF = 4;
+    D_800E62C0 = 4;
+    D_800E62C1 = 1;
+    D_800E62C2 = 0;
+    bzero(D_800E62C4, 0x80);
+    bzero(D_800E68EC, 0x30);
+    bzero(D_800E71E4, 4);
+    D_800E62C4[0] = 0x1E;
+    D_800E62E4[0] = 5;
+    D_800E62C6 = 1;
+    D_800E62CD = 1;
+    D_800E62D4 = 1;
+    D_800E62DB = 1;
+    D_800E62E1 = 2;
+    D_800E62E2 = 1;
+    D_800E62E8 = 1;
+    D_800E6304 = 0x1F;
+    D_800E6324 = 0;
+    D_800E630B = 1;
+    D_800E6312 = 1;
+    D_800E6319 = 1;
+    D_800E6320 = 1;
+    D_800E6307 = 2;
+    D_800E6308 = 2;
+    D_800E6309 = 2;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800419FC);
 

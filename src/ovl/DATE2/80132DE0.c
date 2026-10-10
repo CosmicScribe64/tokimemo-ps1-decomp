@@ -1,15 +1,52 @@
 #include "common.h"
 #include "ovl/DATE2.h"
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132DE0);
+typedef struct {
+    void (*f[58])();
+} FnTbl58; /* size 0xE8 */
+extern FnTbl58 D_8013A4C8;
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132E5C);
+void func_80132DE0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl58 tbl;
+
+    tbl = D_8013A4C8;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
+
+void func_80132E5C(void) {
+    func_800AE0A0((void *)(0x80180000 + D_800E7384 * 0x1400), 0x801C0000 + D_800E7384 * 0x1400, 0x1400);
+    D_800E7384 += 1;
+    if (D_800E7384 == 0x12) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132EC8);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132F48);
+void func_80132F48(void) {
+    s32 pad; /* FAKE: unused local that moves rect to sp+0x2C like the original (T-3330 frame rule). T-4050 */
+    RECT rect;
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132FB0);
+    rect.x = 0x140;
+    rect.y = 0x80;
+    rect.w = 0x180;
+    rect.h = 0x80;
+    func_8009C8E0(&rect, (void *)0x80180000);
+    D_800E71DF = D_800E69DD;
+    func_800847B8(D_800E69DD);
+    func_80133258();
+    func_8004284C();
+}
+
+void func_80132FB0(void) {
+    func_800AE0A0((void *)(0x801C0000 + D_800E7384 * 0x1400), 0x80180000 + D_800E7384 * 0x1400, 0x1400);
+    D_800E7384 += 1;
+    if (D_800E7384 == 0x12) {
+        func_80083474();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_8013301C);
 
@@ -42,7 +79,12 @@ void func_801335A4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801335E4);
+void func_801335E4(void) {
+    D_800E71DF = D_800E69DD;
+    func_800847B8(D_800E69DD);
+    func_80133258();
+    func_80083B24();
+}
 
 void func_80133620(void) {
     D_800E71DF = D_800E69DD;
@@ -145,11 +187,40 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80135DA4);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80135E50);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801365DC);
+void func_801365DC(s32 arg0) {
+    s32 v;
+
+    D_800B3D60 = 0;
+    v = func_8005742C(arg0, 1);
+    if (v == D_800B5939) {
+        func_800AE0B0("same\n");
+        D_800E7384 += 3;
+        return;
+    }
+    if (v == 1 - D_800B5939) {
+        func_800AE0B0("another\n");
+        D_800E7384 += 2;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136660);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801366E8);
+s32 func_801366E8(void) {
+    s32 v;
+
+    v = func_80051A68(0);
+    if ((D_800E6378 & 0xF) == D_800E62BF && ((u32)(D_800E6378 << 0x17) >> 0x1B) == D_800E62C0) {
+        if (((u8)v & 0x7F) < 2U) {
+            D_800E699E |= 4;
+            /* FAKE: reading D_800E738A (= D_800E699E + 0x9EC) through the other symbol keeps as1 from hoisting the load above the store; real source unknown. T-4050 */
+            D_800E69A2 = (&D_800E699E)[0x9EC] + 1;
+            func_80042908(4);
+            return 0;
+        }
+        D_800E699E |= 8;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136794);
 

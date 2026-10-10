@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013E5B0", func_8013E5B0);
+typedef struct {
+    void (*f[17])();
+} FnTbl17; /* size 0x44 */
+extern FnTbl17 D_80148180;
+
+void func_8013E5B0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl17 tbl;
+
+    tbl = D_80148180;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013E5B0", func_8013E638);
 

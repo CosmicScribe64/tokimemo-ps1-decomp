@@ -116,7 +116,19 @@ void func_8015931C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801586A0", func_80159354);
+typedef struct {
+    void (*f[51])();
+} FnTbl51; /* size 0xCC */
+extern FnTbl51 D_80160714;
+
+void func_80159354(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl51 tbl;
+
+    tbl = D_80160714;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_801593C8(void) {
     D_800E71DF = 4;
