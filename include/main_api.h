@@ -939,6 +939,7 @@ void func_80042CB0();
 s32 func_80043010(void);
 void func_800430C0();
 void func_800433D0(s32 arg0);
+void func_80043914(s32, s32, s32, s32, s32);
 void draw2d3d(u8 arg0, u8 arg1);
 void back_clear_switch(s32 arg0);
 void load_palette(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
