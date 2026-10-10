@@ -1856,5 +1856,11 @@ void func_8005D174(void);
 void func_8005D1B0();
 void func_800696DC(s32, s32);
 extern u32 D_800E73A0;
+void func_8008BE54();
+void func_8008BEBC();
+void func_80090580(s16);
+void func_800907E0(s16);
+void func_80090E60(s16);
+extern s16 D_80125D38;
 
 #endif /* MAIN_API_H */
