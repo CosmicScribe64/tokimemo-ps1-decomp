@@ -155,7 +155,18 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144224);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144540);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801446E4);
+void func_801446E4(void) {
+    if (D_800E6280.unk_F88 & 0x20) {
+        func_8004E58C();
+        func_8004E788(-0x90, -0x40, 0xF, "メモリーカードをチェックしています", 0);
+        func_8004E884(1);
+        D_800E8BEE = 0;
+        func_80053CE0();
+        func_80042808();
+    } else if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(2);
+    }
+}
 
 void func_80144768(void) {
     if (D_800E6280.unk_03A-- < 8U) {
