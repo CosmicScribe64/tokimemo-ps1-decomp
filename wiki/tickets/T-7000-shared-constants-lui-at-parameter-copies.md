@@ -1,7 +1,7 @@
 ---
 id: T-7000
 title: Shared constants, lui $at sharing and parameter copies
-status: In Review
+status: Done
 assignee: r4-consts
 created: 2026-10-10
 updated: 2026-10-10
@@ -32,3 +32,5 @@ Results in [[matching-notes]], "K&R promotion rules (T-7000)"; idioms in [[decom
 - Matched 16 functions: ETC `func_80132048`, TACO `func_80136E70`, `func_8014EDCC`, TT `func_8013C764`, main `func_8007B5EC`, `SD_DetectCDPeak`, `set_kanji_string`, RPG_BAT `func_8014F1D4`, EVENT `func_80102C0C`, `func_8011A2C4`, `func_8011A4A4`, `func_80119600`, `func_80118764`, `func_80116360`, DATE `func_8013E5B0`, `func_8013BDB4`. Progress 3721 -> 3737 of 6958.
 
 ## Comments
+
+- 2026-10-10 review (inline, CODING_STANDARDS checklist, diff 7c36126..HEAD): matches verified by the 27 sha1 checks of a clean build (`rm -rf asm build`, configure, ninja: 27/27 OK, headers OK) and a per-function object compare with the pre-change build (3524 C functions, the only differences are the 5 new C functions whose relocations name the struct base instead of splat's label); progress 3737/6958. No `NON_MATCHING`. C89, `/* */` comments, fixed-width types. Fakematches: the GYOZI `func_80135D64` `FAKE` keeps its comment (updated to the new local copy) and main `func_80057640` keeps its `FAKE` cast; no new tricks besides those. `set_kanji_string` writes the record array (`((Entry8 *)D_800B3DC0)[i].unk_07`), not the `D_800B3DC7` field label. Main-exe declarations: `set_kanji_string` prototype updated to the definition, `func_80042878()` K&R (ETC `func_80132048` forwards a `u8` to it, which the original compiled without prototype), `s32 func_8009AD70();`, `D_80126080` with a comment; `sync_protos.py --check-branch` OK, `--write` leaves the file unchanged; `migrate_globals.py --check` OK. Tooling (7a): the widening step is uniform (every narrow unsigned global load, no per-function control), documented (module docstring, [[toolchain]], [[matching-notes]]), evidence-backed (compare-order statistics and the 440-file ucode comparison), cannot produce invalid ucode (it inserts a fixed record; unknown ucode still aborts in `parse`), tested (`Widen` class, an IDO integration test), and replaceable (the C is plain). `-cckr` is a build-wide flag, documented with its evidence. All tool tests pass. Findings: `tools/cc.py` module docstring did not mention `-cckr` (fixed). No open findings.

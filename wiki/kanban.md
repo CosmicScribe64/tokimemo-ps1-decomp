@@ -31,13 +31,13 @@ kanban-plugin: board
 
 
 ## In Review
-- [ ] [[tickets/T-7000-shared-constants-lui-at-parameter-copies|T-7000 Shared constants, lui $at sharing and parameter copies]]
 
 
 
 
 ## Done
 
+- [x] [[tickets/T-7000-shared-constants-lui-at-parameter-copies|T-7000 Shared constants, lui $at sharing and parameter copies]]
 - [x] [[tickets/T-6020-wave-4-list-2|T-6020 Wave 4: list 2]]
 - [x] [[tickets/T-6060-wave-4-list-6|T-6060 Wave 4: list 6]]
 - [x] [[tickets/T-6030-wave-4-list-3|T-6030 Wave 4: list 3]]

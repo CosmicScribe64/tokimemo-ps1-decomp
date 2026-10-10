@@ -12,6 +12,8 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      T-0016): the original's frames are 16 bytes larger than IDO's, and the
      unsigned-load conversion pass around uopt (tools/cvt_pass.py, T-1321,
      T-5010): the original keeps unsigned byte and halfword globals in a register.
+     IDO runs in K&R mode (-cckr, T-7000): unsigned char/short promote to
+     unsigned int, as in the original.
 gcc: the PsyQ way, cpp | cc1 | maspsx | as.
 
 Every object's .text is zero-padded to a multiple of 16 bytes (T-0012): the original link

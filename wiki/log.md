@@ -629,3 +629,6 @@ The original promotes unsigned char/short to unsigned int (on `lbu`/`lhu` values
 
 ## [2026-10-10] ticket | T-7000 (In Progress -> In Review)
 [[tickets/T-7000-shared-constants-lui-at-parameter-copies]] In Review; inline review next.
+
+## [2026-10-10] ticket | T-7000 (In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7000-shared-constants-lui-at-parameter-copies]]; one finding (the `tools/cc.py` docstring did not name `-cckr`) fixed. Branch r4-consts, not merged; the `tools/cc.py` flag change is for the orchestrator's review.
