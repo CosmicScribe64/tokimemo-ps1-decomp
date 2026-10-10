@@ -974,4 +974,5 @@ void func_801327F0(void);
 void func_80132840(void);
 void func_80144540();
 void func_801446E4();
+extern u8 D_80150EE0[];
 #endif /* OVL_ETC_H */

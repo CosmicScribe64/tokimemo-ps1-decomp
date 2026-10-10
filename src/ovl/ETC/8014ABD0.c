@@ -51,7 +51,22 @@ void func_8014ADDC(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AE20);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AE8C);
+s32 func_8014AE8C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_80150EE0, 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        xa_wait();
+        break;
+    case 2:
+        func_8004284C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AF28);
 
