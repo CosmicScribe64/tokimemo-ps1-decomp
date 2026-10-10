@@ -40,7 +40,23 @@ void func_801324E8(void) {
     } while (n != 8);
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801325A0);
+typedef struct {
+    s16 a[8];
+    s16 b[8];
+    s16 c[8];
+    s16 d[8];
+} Arrs4x8; /* size 0x40 */
+
+void func_801325A0(Arrs4x8 *p) {
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        p->a[i] = -0x78;
+        p->b[i] = -0x58 + i * 0x14;
+        p->c[i] = 0x60;
+        p->d[i] = 0x14;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132624);
 
