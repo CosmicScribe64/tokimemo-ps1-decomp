@@ -19,7 +19,19 @@ void func_80103BC0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80103BF8);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80103C3C);
+/* D_800B0B14 read as a bit-field (bit 14): IDO tests it with sll 17 / bltz, as the original does (T-4070). */
+typedef struct {
+    unsigned pad:14;
+    unsigned f:1;
+    unsigned rest:17;
+} BitsB14;
+
+void func_80103C3C(void) {
+    if (!((BitsB14 *)&D_800B0B14)->f) {
+        D_80094714 += 1;
+    }
+    func_80011DFC();
+}
 
 void func_80103C80(void) {
     D_80122B30 = 0x801CE124;
