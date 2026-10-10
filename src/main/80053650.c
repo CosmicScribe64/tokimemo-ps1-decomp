@@ -71,7 +71,22 @@ void Sw_Clear(void) {
     TestEvent(D_8011ECB8);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", Hw_Test);
+u8 Hw_Test(void) {
+    D_800E7395 = 0;
+    do {
+        if (TestEvent(D_8011ECBC) != 0) {
+            D_800E7395 = 0x81;
+        } else if (TestEvent(D_8011ECC0) != 0) {
+            D_800E7395 = 0x82;
+        } else if (TestEvent(D_8011ECC4) != 0) {
+            D_800E7395 = 0x84;
+        } else if (TestEvent(D_8011ECC8) != 0) {
+            D_800E7395 = 0x88;
+        }
+    } while (D_800E7395 == 0);
+    Hw_Clear();
+    return D_800E7395;
+}
 
 void Hw_Clear(void) {
     TestEvent(D_8011ECBC);

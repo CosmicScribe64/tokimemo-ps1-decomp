@@ -818,5 +818,6 @@ void func_8007B640();
 void func_8008BE34();
 extern u8 D_80125E70[];
 extern u8 *D_800E36C0[];
+void Hw_Clear();
 
 #endif /* GAME_H */
