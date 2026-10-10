@@ -364,7 +364,18 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135274);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801354E0);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_8013556C);
+void func_8013556C(void) {
+    D_80139220 += 1;
+    func_80135600();
+    D_80139224 += 3;
+    if (D_80139224 >= 0x1000) {
+        D_80139224 = 0;
+    }
+    D_801392A4 = (func_800A0070(D_80139224) * 8) >> 12;
+    D_801392A8 = (func_800A0140(D_80139224) * 0x10) >> 12;
+    func_801359D0();
+    func_80135F54();
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135600);
 

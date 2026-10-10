@@ -3,7 +3,21 @@
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80156A80);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80156F50);
+void func_80156F50(void) {
+    /* FAKE: unused TcPos locals reproduce the original's frame; real source unknown. T-8060 */
+    TcPos fake_hi;
+    TcPos pos;
+    TcPos fake_lo;
+    s32 r;
+
+    func_800AE120(D_801604C0);
+    r = func_800AE0D0();
+    pos.x = (D_8015EDB4[0].unk74 + (func_800AE0D0() % 1500) + (r % 500)) - 0x3E8;
+    r = func_800AE0D0();
+    pos.y = (func_800AE0D0() % 1000 + (r % 500)) - 0x5DC;
+    pos.z = -0x8000;
+    func_8015ACCC(0xB, 0x10, D_801604D4, pos, D_801604E4, 6, 0);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801570A4);
 
@@ -105,6 +119,21 @@ void func_80158CDC(s16 arg0, s16 arg1, s16 arg2) {
     func_8015ACCC(0xF, 0x16, D_801604D4, pos, D_801604E4, 4, 0xD0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80158DBC);
+void func_80158DBC(s16 arg0, s16 arg1, s16 arg2) {
+    /* FAKE: unused TcPos locals reproduce the original's frame; real source unknown. T-8060 */
+    TcPos fake_hi;
+    TcPos pos;
+    TcPos fake_lo;
+
+    func_800AE120(D_801604C0);
+    pos.x = arg0;
+    pos.y = arg1;
+    pos.z = arg2;
+    if (!(func_800AE0D0() & 1)) {
+        func_8015ACCC(0x10, 0x16, D_801604D4, pos, D_801604E4, 8, 0x60);
+        return;
+    }
+    func_8015ACCC(0x10, 0x16, D_801604D4, pos, D_801604E4, 8, 0x70);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80158F48);
