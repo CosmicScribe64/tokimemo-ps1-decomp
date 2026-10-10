@@ -24,7 +24,15 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CDD4);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CE84);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CF38);
+void func_8006CF38(void) {
+    s32 i;
+
+    for (i = 0; i < 32; i++) {
+        *(s32 *)(D_800E6280 + 0x69C + i * 4) = 0;
+        *(D_800E6280 + 0x69C + i * 4) = 0xFF;
+    }
+    D_800E699C = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CF80);
 

@@ -15,5 +15,10 @@ void func_80065900(u8 arg0);
 void func_8007B99C(u16 arg0);
 void func_8007BE94(s32 arg0);
 void func_8007BF04(s32 arg0);
+/* T-2090: overlay headers declare these symbols themselves */
+void k_disp_inc2();
+void func_80083A10();
+void check_k_scroll();
+
 
 #endif /* MAIN_ONLY_H */

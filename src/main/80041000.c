@@ -86,7 +86,13 @@ void func_80042058(void) {
     D_800E71EE = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800420D0);
+void func_800420D0(void) {
+    D_80125124 = SetSp(0x801FEFF0);
+    InitHeap(0x801FF800, 0x7F0);
+    bzero((void *)0x800E60A0, 0x45498);
+    D_80125120 = GetGp();
+    func_80042134();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80042134);
 

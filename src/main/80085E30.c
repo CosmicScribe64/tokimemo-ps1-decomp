@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "main_only.h"
 
 INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_80085E30);
 
@@ -37,7 +38,16 @@ void Yubi(s32 idx) {
     *(s16 *)(p + 0x2A) = D_8011ECFA;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", Default_Disp);
+void Default_Disp(void) {
+    k_disp_inc2();
+    check_k_scroll();
+    func_80083A10();
+    message_window_show();
+    hizuke_show();
+    func_80066C08(2);
+    func_80066334();
+    func_80047560();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_8008647C);
 

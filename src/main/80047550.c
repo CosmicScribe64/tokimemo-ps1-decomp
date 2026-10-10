@@ -9,7 +9,17 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80047560);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800476C0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", tpage_buf_clear_all);
+void tpage_buf_clear_all(void) {
+    s32 i;
+
+    for (i = 0; i < 0x40; i++) {
+        if ((i & 0xF) < 5) {
+            ((s32 *)(D_800E6280 + 0x1228))[i] = 0;
+        } else {
+            ((s32 *)(D_800E6280 + 0x1228))[i] = -1;
+        }
+    }
+}
 
 void tpage_buf_clear(void) {
     s32 i;

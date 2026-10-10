@@ -21,7 +21,13 @@ void func_80075BE8(void) {
     func_80065B0C(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075C24);
+void func_80075C24(void) {
+    k_disp_inc();
+    func_8006BA40();
+    if (func_80076000() == 0 && func_80075C84() == 0 && func_8005B0F4() == 0) {
+        func_8005B1A8();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075C84);
 
