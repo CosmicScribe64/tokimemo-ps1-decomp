@@ -453,7 +453,30 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140B20);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140BA4);
+void func_80140BA4(void) {
+    if (D_800E6280.unk_110D++ >= 0x41U) {
+        func_8013B77C();
+        func_80057390(0);
+        if (D_800E6280.unk_03E == 0x62 && D_800E6280.unk_03F == 3 && D_800E6280.unk_040 == 1) {
+            func_8013E71C();
+            func_80041878();
+            func_80041F48();
+            D_800E6280.unk_F5E = 0;
+            func_80042878(0x14);
+        } else if (D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4 && D_800E6280.unk_040 == 4) {
+            func_8013E71C();
+            func_80041878();
+            func_80041F48();
+            D_800E6280.unk_F5E = 0;
+            func_80042878(0x14);
+        } else {
+            func_800674B0();
+            func_80042878(0x34);
+            func_80042908(0xFF);
+        }
+    }
+    D_8011ECA4 = 1;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140CCC);
 

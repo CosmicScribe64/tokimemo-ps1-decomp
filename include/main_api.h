@@ -744,6 +744,7 @@ extern s32 D_800F65C0;
 extern s32 D_800F6600;
 extern s32 D_800F6680;
 extern s32 D_8011ECA0;
+extern s8 D_8011ECA4;
 extern s32 D_8011ECA8;
 extern s32 D_8011ECAC;
 extern s32 D_8011ECB0;
