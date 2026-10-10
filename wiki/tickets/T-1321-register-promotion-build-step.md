@@ -24,7 +24,7 @@ When a function is skipped because of this gap, append one row to [[data/t0018-c
 
 ## Acceptance criteria
 
-- [x] A rule that reproduces the original's register choice: `tools/cvt_pass.py` (ucode, around uopt). Of the 40 `promo` rows with C written, 15 match with it; the rest fail on other shapes (T-3002) or switch placement (see Comments). Not all rows: recorded as open.
+- [x] A rule that reproduces the original's register choice: `tools/cvt_pass.py` (ucode, around uopt). Of the 40 recorded rows with C written (mostly `promo`), 19 match with it (14 of them only with it); the rest fail on other shapes (T-3002) or switch placement (see Comments). Not all rows: recorded as open.
 - [x] No regression in the matched functions; clean build 27 of 27 sha1 OK (four existing C bodies changed: two FAKE masks removed, two switches on a local copy).
 - [x] Documented in [[toolchain]], [[matching-notes]], CODING_STANDARDS 7a.
 
