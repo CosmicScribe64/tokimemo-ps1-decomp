@@ -425,3 +425,16 @@ New [[original-compiler]] and raw note `wiki/raw/original-compiler-sources.md`.
 
 ## [2026-10-09] query | T-3110 compiler sources located; download blocked by permissions
 decomp.me's distribution: IDO 5.2 from `https://github.com/LLONSIT/qemu-irix-helpers/raw/refs/heads/n/qemu/ido5.2.tar.xz`, IDO 4.1 from `https://github.com/decompme/compilers/releases/download/compilers/ido4.1.tar.gz` (decompme/compilers @ fdd6793). Both run under qemu-irix bundled in the tarball; no OS image needed. The download was refused by the session permission system; [[tickets/T-3110-test-ido-52-and-41]] waits for the user.
+
+## [2026-10-09] query | T-3110 IDO 5.2 and 4.1 measured against the game code
+New [[ido-52-evaluation]] and `tools/ido_eval.py`, with cases in `tools/ido_eval_cases/`. Archives are in the gitignored `tools/local-compilers/` (sha256 on the page).
+- IDO 5.2: stamp 3.18 (= O.BIN). Byte-identical to 5.3: 2564/2564 matched functions with the frame pass, 504 without; the 46 blocked cases are unchanged.
+- IDO 4.1's ugen gives the frame pass's layout in all 2564 functions (real-compiler evidence for the pass), but 80 of them differ in register allocation.
+- No version or pass mix reproduces the T-1321 unsigned-load and switch-temporary behaviours, the function-pointer-table frame, or the spill offsets.
+- Pages updated: [[toolchain]], [[original-compiler]], [[matching-notes]], [[tickets/T-0100-older-mips-compiler-emulation]], [[index]].
+
+## [2026-10-09] decision | T-3110 recommendation: keep IDO 5.3 + frame pass + T-1321 pass
+Option (b). The CI options for a 5.2 switch (fetch from decomp.me's URLs, or the private encrypted bundle) are listed for the user and not implemented.
+
+## [2026-10-09] ticket | T-3110 In Progress -> In Review -> Done
+Inline review against CODING_STANDARDS.md: no open findings ([[tickets/T-3110-test-ido-52-and-41]]).

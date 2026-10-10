@@ -38,3 +38,4 @@ game-bundle.key
 /ci-bundle/
 /AGENTS.local.md
 /.claude/
+/tools/local-compilers/
