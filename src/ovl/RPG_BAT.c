@@ -197,13 +197,73 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013E4D0);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013E54C);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013E7C0);
+void func_8013E7C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u8 *temp_v0;
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013E810);
+    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    *(s16 *)(temp_v0 + 0x1988) = 0;
+    *(u8 *)(temp_v0 + 0x1982) = arg2;
+    if (arg3 == 1) {
+        *(u8 *)(temp_v0 + 0x1983) = 0x80;
+    } else {
+        *(u8 *)(temp_v0 + 0x1983) = 0;
+    }
+    *(s16 *)(temp_v0 + 0x1998) = 0;
+    if (arg1 != 0xFF) {
+        *(s16 *)(temp_v0 + 0x1996) = arg1;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013E864);
+void func_8013E810(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u8 *temp_v0;
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013E8B8);
+    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    *(s16 *)(temp_v0 + 0x1988) = 0;
+    *(u8 *)(temp_v0 + 0x1982) = arg2;
+    if (arg3 == 1) {
+        *(u8 *)(temp_v0 + 0x1983) = 0x84;
+    } else {
+        *(u8 *)(temp_v0 + 0x1983) = 4;
+    }
+    *(s16 *)(temp_v0 + 0x1998) = 0;
+    if (arg1 != 0xFF) {
+        *(s16 *)(temp_v0 + 0x1996) = arg1;
+    }
+}
+
+void func_8013E864(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *temp_v0;
+
+    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    *(s16 *)(temp_v0 + 0x8) = 0;
+    *(u8 *)(temp_v0 + 0x2) = 1;
+    if (arg2 == 1) {
+        *(u8 *)(temp_v0 + 0x3) = 0x80;
+    } else {
+        *(u8 *)(temp_v0 + 0x3) = 0;
+    }
+    *(s16 *)(temp_v0 + 0x18) = 0;
+    if (arg1 != 0xFF) {
+        *(s16 *)(temp_v0 + 0x16) = arg1;
+    }
+}
+
+void func_8013E8B8(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *temp_v0;
+
+    temp_v0 = D_8011ECD0 + arg0 * 0x44;
+    *(s16 *)(temp_v0 + 0x1108) = 0;
+    *(u8 *)(temp_v0 + 0x1102) = 1;
+    if (arg2 == 1) {
+        *(u8 *)(temp_v0 + 0x1103) = 0x80;
+    } else {
+        *(u8 *)(temp_v0 + 0x1103) = 0;
+    }
+    *(s16 *)(temp_v0 + 0x1118) = 0;
+    if (arg1 != 0xFF) {
+        *(s16 *)(temp_v0 + 0x1116) = arg1;
+    }
+}
 
 s32 func_8013E90C(s32 i) {
     return (*(&D_80120652 + i * 0x44) & 1) == 0;
@@ -225,7 +285,13 @@ s32 func_8013EA00(s32 arg0, s32 arg1) {
     return a + b;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013EA30);
+void func_8013EA30(s32 arg0) {
+    s32 i;
+
+    for (i = 0; i < 96; i++) {
+        D_8011ECD0[0x1107 + i * 0x44] = arg0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013EA60);
 
@@ -239,7 +305,16 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013F15C);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013F1C4);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013F220);
+void func_8013F220(void) {
+    s32 i;
+
+    for (i = 0; i < 3; i++) {
+        D_8015ED64[i][0] = 0;
+        D_8015ED64[i][1] = 0;
+        D_8015ED64[i][2] = 0;
+        D_8015ED64[i][3] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT", func_8013F250);
 

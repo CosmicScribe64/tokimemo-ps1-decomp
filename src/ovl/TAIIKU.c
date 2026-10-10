@@ -313,9 +313,55 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8013F3A4);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8013F948);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8013FB14);
+s32 func_8013FB14(s32 arg0) {
+    s16 temp_v0;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8013FBA8);
+    temp_v0 = D_801499B0[arg0].val;
+    if (temp_v0 < 0x400) {
+        return 0;
+    }
+    if (temp_v0 < 0x500) {
+        return 1;
+    }
+    if (temp_v0 < 0x600) {
+        return 2;
+    }
+    if (temp_v0 < 0xA00) {
+        return 3;
+    }
+    if (temp_v0 < 0xB00) {
+        return 4;
+    }
+    if (temp_v0 < 0xC00) {
+        return 5;
+    }
+    return 6;
+}
+
+s16 func_8013FBA8(s32 arg0) {
+    s16 temp_v1;
+
+    temp_v1 = D_801499B0[arg0].val;
+    if (temp_v1 < 0x400) {
+        return temp_v1;
+    }
+    if (temp_v1 < 0x500) {
+        return (s16) (temp_v1 - 0x200);
+    }
+    if (temp_v1 < 0x600) {
+        return (s16) (temp_v1 - 0x200);
+    }
+    if (temp_v1 < 0xA00) {
+        return (s16) (temp_v1 - 0x600);
+    }
+    if (temp_v1 < 0xB00) {
+        return (s16) (temp_v1 - 0x800);
+    }
+    if (temp_v1 < 0xC00) {
+        return (s16) (temp_v1 - 0x800);
+    }
+    return (s16) (temp_v1 - 0xC00);
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU", func_8013FC5C);
 

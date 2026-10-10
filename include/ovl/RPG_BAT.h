@@ -65,4 +65,11 @@ void func_80141E38(void);
 void func_80137280(void);
 void func_8014EF8C(void);
 
+extern u8 D_80120650[];
+extern s32 D_8015ED64[][4];
+extern u8 D_8015ED94[];
+extern u8 D_8011EDE0[];
+extern u8 D_8011F110[];
+s32 func_800AE0D0(s32);                             /* extern */
+
 #endif
