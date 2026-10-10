@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-10-10
-sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md"]
+sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py"]
 ---
 
 # Data types recovered from access patterns (T-5000)
@@ -21,14 +21,15 @@ Reads the generated asm of all functions (`asm/**/matchings` and `nonmatchings`,
 
 Counts on the current tree: 1724 proposals, 654 high (544 arrays, 110 structs; 129 in the main exe, 525 in overlays; they absorb 11,593 symbols), 559 medium, 511 low (co-access only). Evidence in the high ones: index 525, walk 193, later-element field 188, loop end 186, ordered pairs 92, shared `$at` 76, pointer fields 39. Before conversion the `--fake-sites` check found a proposal for 70 of the 72 index-trick sites.
 
-Limits: the pass is linear (no control flow), so a register state survives a label; proposals overlap (an outer array and a record view, or a 2-D index); the main-exe bss block `0x800E6248..0x800E7400` gives many large, conflicting proposals because it is very likely one game-state struct (see below). Treat the output as hypotheses and let the build decide.
+Limits: the pass is linear (no control flow), so a register state survives a label; proposals overlap (an outer array and a record view, or a 2-D index); the main-exe bss block `0x800E6280..0x800E7D10` gave many large, conflicting proposals because it is one game-state struct, now `GameState` ([[game-state]]). Treat the output as hypotheses and let the build decide.
 
 ## Conversions made (all byte-identical, clean build 27/27)
 
 | type | base | where | absorbed | FAKEs removed |
 |---|---|---|---|---|
 | `Rec34[12]` (0x34 bytes, flag word as bit-field struct `Rec34Flags`) | `D_800B0A04` | `main_api.h` | 17 globals `D_800B0A06..D_800B0C16` | 13 (EVENT) |
-| `Rec38[16]` (0x38 bytes, s16 at +2/+6/+A) | `D_800E643C` | `main_api.h` | 11 globals, `MAIN_API_OVERRIDE_D_800E6636`, the `s16[]` views of `D_800E643E`/`D_800E6476` | 9 (DATE) |
+| `Rec38[16]` (0x38 bytes, s16 at +2/+6/+A) | `D_800E643C` (since T-5100: `GameState.unk_1BC`) | `main_api.h` | 11 globals, `MAIN_API_OVERRIDE_D_800E6636`, the `s16[]` views of `D_800E643E`/`D_800E6476` | 9 (DATE) |
+| `GameState` (0x1A90 bytes, records `GsRec*`, unions `GsWord`/`GsHalf`, T-5100) | `D_800E6280` | `main_api.h` | 166 globals, 1459 uses rewritten by `tools/migrate_globals.py` | 7 |
 | `Rec24[]` (0x24 bytes) | `D_801217D0` | `main_api.h` | 19 globals | 2 (main) |
 | `Work80125D10` (0x50 bytes, one work area) | `D_80125D10` | `main_api.h` | 33 globals of main `80079B10`/`8007C030` | 1 |
 | `RpgRec18` (six words) | `D_8015EC58` | `include/ovl/RPG_BAT.h` | 5 globals | 1 |
@@ -44,13 +45,20 @@ Linking: a base that no original instruction names has no label. Overlays get su
 | result | functions |
 |---|---|
 | matched with the recovered types (7) | GYOZI `func_80135C3C` (`GyoziWork.girl[5]`), KANGEI `func_80135C18`, SHUGAKU `func_80135B68`, NAME_ENT `func_8013B51C` (records 31/96/119 of `D_8011ECD0`), EVENT `func_800F87BC` (`D_800EAFA0`), DATE `func_8013C700`, `func_8013D9E8` (`Rec38[2]`) |
-| match only through a base-symbol view whose real type is not recovered; left as asm (3) | SHUGAKU `func_80135994`, GEKO `func_8013B350` (`D_800E69A0` and `D_800E7388` are 0x9E8 apart in one object: the bss game-state block), EVENT `func_8010B678` (a second 0x44 table and a 0x24 table below `D_800EAFA0`) |
+| match only through a base-symbol view whose real type is not recovered; left as asm (3) | SHUGAKU `func_80135994`, GEKO `func_8013B350` (`D_800E69A0` and `D_800E7388` are 0x9E8 apart in one object: the bss game-state block), EVENT `func_8010B678` (a second 0x44 table and a 0x24 table below `D_800EAFA0`). Update T-5100: SHUGAKU `func_80135994` and GEKO `func_8013B350` match through `GameState` |
 | load order fixed, another gap left (5) | GEKO `func_8013E1A0` (temp numbering, T-0018), DATE `func_80148924` and main `func_80079F00` (the original sign-extends `s16` arguments in the callee, IDO 5.3 does not), DATE `func_8015745C` (one `sb` scheduled earlier), main `func_8007A868` (load placement, 18 words) |
 | not a one-object case (5) | DATE `func_80149F48` (the original hoists across these words: separate objects), TAIIKU `func_8013A63C` (shared `lui $at`, T-5020), EVENT `func_80100DD8` (one global read twice), GEKO `func_80140FD0` (bit-fields at `Rec38` +0x0C not modelled), main `func_8007A6AC` (T-0018 row, needs the callee's return struct) |
 
 ## Open work
 
 - The 0x44-byte table at `D_8011ECD0` (160 records; `D_80120650` is record 96) is still a `u8[]` view: its users read the same offsets as `u8` and `s8` and some words as `s32` or pointers, so one struct does not fit all of them yet.
-- The main bss block `0x800E6248..0x800E7400` behaves as one object (ordered pairs and the matches above span 0x9E8 bytes). Its layout (it contains `Rec38` at `0x800E643C` and bit-field words at +0x0C of each record) is the next big type to recover; the remaining FAKEs at `D_800E62B6`, `D_800E7395`, `D_800E699E`, `D_800E71DF`, `D_800B1746` wait for it.
-- `Rec38` fields +0x0C..+0x37 keep their own names: their users read bit-fields through bytes and words.
+- The main bss block is `GameState D_800E6280` (0x800E6280..0x800E7D10, T-5100): [[game-state]] has the layout, the evidence and what is still unknown. Its old `D_` names are rejected by ninja; `tools/migrate_globals.py --apply` rewrites them, also in new code.
+- `Rec38` +0x0C and +0x10 are `GsWord` unions (word and byte views of bit-field words); a bit-field struct that fits every user is still open.
 - Main `D_80121818`, `D_8012183C`, `D_80121860`, `D_80121864`, `D_80121884` stay declared because EVENT has its own data at those addresses.
+
+## Aggregates and old names (T-5100)
+
+Once an aggregate is declared, its fields must not be used through their splat names: separate symbols let IDO hoist loads that the original kept behind stores. `config/migrate_globals.txt` lists the aggregates (`aggregate <base> <type> <header>`) and the few uses that match only through the old symbol (`keep <file> <symbol> <reason>`). `tools/migrate_globals.py --apply` rewrites every C use of a `D_` name inside an aggregate into the field access (the old declaration picks the field: a byte of a union, an array, a record element) and deletes the old declarations; `--check` runs in ninja. Findings from the `GameState` migration that hold for any type here:
+- A constant-index array element is not a struct member for IDO: a `switch` on it and a sum of two of them compile differently. Use separate members where the matched code needs them.
+- `((u8 *)&S)[k + i]` is not the same as the old `u8 S[]` view: it changes the induction variable. Write the field access.
+- Struct-array elements in a sum can swap the load order against a scalar extern; keep that use on the old name (`keep`) when no C form matches.

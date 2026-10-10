@@ -24,7 +24,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-5100-game-state-struct|T-5100 Recover the main game-state struct]]
 
 
 
@@ -36,6 +35,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-5100-game-state-struct|T-5100 Recover the main game-state struct]]
 - [x] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
 - [x] [[tickets/T-5020-loop-unrolling-and-lui-sharing|T-5020 Loop unrolling and lui sharing]]
 - [x] [[tickets/T-5000-type-recovery-arrays-structs|T-5000 Type recovery: arrays and structs from access patterns]]

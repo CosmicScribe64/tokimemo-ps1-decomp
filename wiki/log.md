@@ -570,3 +570,12 @@ Inline review against CODING_STANDARDS 7, 7a, 8a, 9, 11, 13 recorded in [[ticket
 
 ## [2026-10-10] ticket | T-5100 Recover the main game-state struct (created -> In Progress)
 [[tickets/T-5100-game-state-struct]] created and claimed (worktree o-gamestate): one struct for the main bss game state found by [[tickets/T-5000-type-recovery-arrays-structs]], a migration tool for the old `D_` names, the tree migrated byte-identically, then a retry of the blocked functions that touch it.
+
+## [2026-10-10] decision | GameState base 0x800E6280, size 0x1A90 (T-5100)
+The original's strength-reduced loops keep 0x800E6280 in the base register and reach arrays up to +0x183C (search_tpage, OPTION, ETC, the save routine), so the game state is one symbol at 0x800E6280; 0x800E6260/0x800E6270 are SDK bss and `D_800E6248` is a compare artifact. `D_800E7D10` is the next object (own base in ETC, `bzero(&D_800E7D10, 0xEE0)`). Layout and evidence: [[game-state]].
+
+## [2026-10-10] build | T-5100 migration and retries
+`tools/migrate_globals.py --apply`: 166 globals, 1459 uses rewritten, byte-identical after three layout fixes (members instead of arrays at +0x1093 and +0xFC, field accesses instead of byte views); one use kept on `D_800E66E8`. 191 load-order candidates tried with m2c C: 47 match (none with separate symbols); 26 U0 functions on block selectors: 1 match, not struct-related. `sync_protos.py --write` now keeps the type definitions of `main_api.h`. Clean build 27/27 sha1 OK, headers OK, globals OK, `--check-branch` OK; progress 3491 -> 3539 of 6958. Pages: [[game-state]] (new), [[data-types]], [[decompile-workflow]], [[matching-notes]], [[index]].
+
+## [2026-10-10] ticket | T-5100 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-state-struct]]; no open findings. Branch o-gamestate, not merged.
