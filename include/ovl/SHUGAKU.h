@@ -114,4 +114,19 @@ extern s32 D_8013BEA8;
 extern s32 D_8013BEDC;
 extern s32 D_80122CF4;
 
+extern u8 D_80120695;
+extern s32 D_801206CC;
+extern s32 D_801206A0;
+extern s32 D_801206A4;
+extern s32 D_801206C8;
+extern s16 D_8013CAFC;
+extern s16 D_801206A8;
+extern s16 D_801206AC;
+extern u8 D_8012069A;
+extern u8 D_801206D7;
+extern s16 D_801206BA;
+extern s16 D_801206BE;
+extern u8 D_80120699;
+extern u8 D_80120698;
+
 #endif /* OVL_SHUGAKU_H */

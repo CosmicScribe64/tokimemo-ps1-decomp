@@ -9,7 +9,16 @@ void func_80132000(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80132040);
+void func_80132040(void) {
+    D_801391E0 = 0x801E0400;
+    D_801391E4 = 0x801E20F8;
+    D_801391E8 = 0x801E2120;
+    D_801391EC = 0x801E21C4;
+    D_801391F0 = *(s16 *)0x801E5A10;
+    D_801391F4 = 0x801B0000;
+    D_801391F8 = 0x801E21CC;
+    D_801391FC = 0x801E0408;
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_801320C0);
 

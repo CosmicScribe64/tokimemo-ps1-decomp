@@ -54,7 +54,15 @@ void func_80133428(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133460);
+void func_80133460(void) {
+    if (((u8) D_800E71DF >= 0xDU) && ((u32) ((u32) (D_800E6758 << 0x14) >> 0x1D) < 3U)) {
+        func_80042908(7);
+        D_800E7D34 |= 8;
+        return;
+    }
+    func_8004284C();
+    D_800E7D34 |= 4;
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801334E4);
 

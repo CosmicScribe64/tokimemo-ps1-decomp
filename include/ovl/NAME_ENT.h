@@ -173,4 +173,44 @@ extern s16 D_80120C96;
 
 extern s32 D_801217D0;
 
+extern u8 D_80120761;
+extern s32 D_80120798;
+extern u8 D_80120763;
+extern s32 D_8012076C;
+extern s32 D_80120770;
+extern s32 D_80120794;
+extern s16 D_80120776;
+extern u8 D_80120765;
+extern s16 D_80120786;
+extern s16 D_8012078A;
+s32 func_800460EC();
+
+extern u8 D_801207A6;
+extern u8 D_801207A5;
+extern s32 D_801207DC;
+extern u8 D_801207A7;
+extern s32 D_801207B0;
+extern s32 D_801207B4;
+extern s32 D_801207D8;
+extern s16 D_801207BA;
+extern u8 D_801207A9;
+extern s16 D_801207CA;
+extern s16 D_801207CE;
+
+extern u8 D_8012082D;
+extern u8 D_8012082E;
+extern s32 D_80120864;
+extern u8 D_8012082F;
+extern s32 D_80120838;
+extern s32 D_8012083C;
+extern s32 D_80120860;
+extern s16 D_80120844;
+extern u8 D_80120831;
+extern s16 D_80120852;
+extern s16 D_80120856;
+
+extern s16 D_80120732;
+
+void func_80048F64();
+
 #endif /* OVL_NAME_ENT_H */

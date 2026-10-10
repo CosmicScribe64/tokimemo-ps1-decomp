@@ -44,4 +44,5 @@ extern u8 D_800E738D;
 void func_80046318(s32 arg0, s32 arg1, s32 arg2);
 void func_80048E78(void);
 void func_80041584(void);
+
 #endif /* OVL_OPTION_H */

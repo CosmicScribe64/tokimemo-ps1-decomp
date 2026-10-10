@@ -249,7 +249,23 @@ void func_801339F8(void) {
     D_8013A5C8 = 0x801C2000;
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_80133A6C);
+void func_80133A6C(void) {
+    switch (D_8013A4C0) {                           /* irregular */
+    case 0:
+        func_801348F0();
+        return;
+    case 1:
+        if ((u8) D_800E62BE >= 0x61U) {
+            func_80133AF0();
+            return;
+        }
+        func_801350A4();
+        return;
+    default:
+        func_80135E50();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_80133AF0);
 

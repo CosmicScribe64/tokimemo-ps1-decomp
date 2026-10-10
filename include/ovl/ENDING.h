@@ -207,4 +207,8 @@ extern s32 D_8013C834;
 extern s32 D_8013C838;
 extern s32 D_8013C83C;
 
+extern s32 D_800E6758;
+
+void func_801396A4(s16 arg0, u8 arg1);
+
 #endif /* OVL_ENDING_H */

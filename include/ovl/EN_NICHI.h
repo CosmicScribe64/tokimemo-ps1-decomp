@@ -71,4 +71,13 @@ extern u8 D_801213DF;
 extern s16 D_801213F4;
 extern u8 D_8013984C[];
 
+extern s32 D_801391E0;
+extern s32 D_801391E4;
+extern s32 D_801391E8;
+extern s32 D_801391EC;
+extern s16 D_801391F0;
+extern s32 D_801391F4;
+extern s32 D_801391F8;
+extern s32 D_801391FC;
+
 #endif /* OVL_EN_NICHI_H */

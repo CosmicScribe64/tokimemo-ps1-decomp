@@ -28,7 +28,6 @@ void func_80136F3C(void);
 void func_80137FEC(void);
 void func_801377D4(s32 arg0, s32 arg1, s32 arg2);
 
-
 void func_80135F38(void);
 void func_801361B8(void);
 void func_80138D48(void);

@@ -96,4 +96,10 @@ extern s32 D_8013A404, D_8013A408, D_8013A40C;
 void func_801370E4(void);
 void func_8009C884(RECT *rect, void *arg1);
 
+extern u8 D_800E62BE;
+void func_801348F0();
+void func_80133AF0();
+void func_801350A4();
+void func_80135E50();
+
 #endif /* OVL_DATE2_H */
