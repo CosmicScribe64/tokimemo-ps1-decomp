@@ -922,8 +922,5 @@ extern s32 D_8015E1F4;
 extern s32 D_8015E1F8;
 extern s32 D_8015E1FC;
 extern s32 D_8015E200;
-extern s32 D_8015DEF0;
-extern s32 D_8015E02C;
-extern s32 D_8015E168;
 
 #endif /* OVL_DATE_H */
