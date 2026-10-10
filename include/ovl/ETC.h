@@ -13,6 +13,8 @@ void func_8013FFAC(void);
 void func_80145C00(void);
 s32 func_8014AA74(void);
 extern s32 D_80150E9C;
+extern s32 D_801506F0;
+extern s32 D_801506F4;
 
 /* A 15-bit color and its three masked channels (func_80132880, T-2040). */
 typedef struct Rgb555Split {

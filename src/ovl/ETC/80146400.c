@@ -150,7 +150,43 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147880);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014790C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147D74);
+/* Bits 0 and 1 of the low byte of GameState +0xF6 (T-7010). */
+typedef struct {
+    u8 f0 : 1;
+    u8 f1 : 1;
+    u8 rest : 6;
+} GsBits0F6;
+
+void func_80147D74(void) {
+    func_80148BC8();
+    D_800E6280.unk_0F6.b[0] &= 0xFFFD;
+    if (D_800E6280.unk_1104.u >= 0x79U) {
+        func_80050DFC(D_800E6280.unk_0D4);
+        if (D_801230F4 >= 3) {
+            func_80050E8C("３科目以上赤点だった。 明日から、一週間補習だぁ。 勉強しかできないー！）", 0, 0x1F);
+            func_8004500C(1, 0x203);
+            ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f0 = 1;
+            D_800E6280.unk_044[0].unk_20[D_800E6280.unk_040 + 1] = 0x17;
+            ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f1 = 1;
+        } else if (D_801506F0 < 2) {
+            func_80050E8C("やったー、一番だ！ これで試験の帝王だな。）", 0, 0x1F);
+            func_8004500C(1, 0x204);
+        } else if (D_801506F4 != 0) {
+            func_80050E8C("今回の試験は終了した。）", 0, 0x1F);
+            ((GsBits0F6 *)&D_800E6280.unk_0F6.b[0])->f1 = 1;
+            func_8004500C(1, 0x200);
+        } else {
+            func_80050E8C("今回の試験は終了した。）", 0, 0x1F);
+            func_8004500C(1, 0x201);
+        }
+        func_8004EA98();
+        func_8004EAD4(0);
+        func_8006BD6C(0);
+        func_8004284C();
+    }
+    func_80148E98();
+    func_80148EE8();
+}
 
 void func_80147F0C(void) {
     if (((D_800E6280.unk_F88 & 0x20) && (u32)D_800E6280.unk_1104.w >= 0x101) || (D_800E6280.unk_F88 & 0x40)) {
