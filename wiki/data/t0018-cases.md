@@ -211,3 +211,11 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 80079B10 | `SD_DetectCDPeak` | regorder | same family as `SD_CalcCDAve` (T-2090) |
 | 80079B10 | `func_8007B2B4` | regorder | switch variable after a read-modify-write store: original reuses $v0, IDO allocates $v1 (T-2090) |
 | 80079B10 | `func_8007A6AC` | regorder | struct fields loaded into $t7/$a0/$v1 and spilled; IDO uses $t6/$a0/$a2 (T-2090) |
+| GYOZI | `func_8014494C` | regorder | u32 counter `D++ == 0` loaded into $a0 (`sltiu v1,a0,1; addiu a0,a0,1`) before two struct copies, IDO $v1/$v0; the first copy's address registers also differ (T-4070) |
+| GYOZI | `func_80137188` | promo | `u8` selector from `D & 7` (`v ? v-1 : v`) kept in $v0 across a call and two reloads, IDO $v1 (T-4070) |
+| SHOUGATU | `func_801407C0` | promo | after the table call the original reloads `D_800E738A` into $v1 while the first copy stays in $t1, IDO spills or reuses one register (T-4070) |
+| BUNKASAI | `func_8013B190` | promo | switch selector `D_80122EB8` in $v1, IDO $v0 (the `D \|= 4` entry is a bit-field, matched; T-4070) |
+| TT | `func_80134768` | regorder | temporaries after the two `func_800A0140/70` calls start at $t2 in the original, IDO $t4 (T-4070) |
+| TT | `func_80133C1C` | regorder | constant 1 stored as `sb` and `sh` shares $v0 in the original, IDO loads it twice (T-4070) |
+| OPTION | `func_8013357C` | regorder | dead `li v0,0x60` ahead of a 64-record loop in the original, IDO has none (T-4070) |
+| OPTION | `func_801387E4` | regorder | unsigned byte global read into $v0 before `addiu sp` and returned after `-= 2`, IDO loads it into $a0 (T-4070) |

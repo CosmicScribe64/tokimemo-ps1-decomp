@@ -413,13 +413,10 @@ extern s32 D_8014825C;
 extern s32 D_80148260;
 extern s32 D_80148268;
 
-extern s8 D_8012B906;
-extern u8 D_8012B907;
 
 extern s32 D_8012E668;
 void func_80140050();
 
-extern s16 D_8012B8C8;
 void func_80144018();
 
 /* Three consecutive records at D_8012B8C0 (T-4070): accessing the flag bytes through one base symbol

@@ -29,6 +29,7 @@ kanban-plugin: board
 
 
 
+
 ## In Review
 
 
@@ -36,6 +37,7 @@ kanban-plugin: board
 
 ## Done
 
+- [x] [[tickets/T-4070-wave-3-list-7|T-4070 Wave 3: list 7]]
 - [x] [[tickets/T-3300-tooling-fix-wave-2-bugs|T-3300 Tooling: fix bugs reported by wave 2]]
 - [x] [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340 Tooling: shared main-exe prototypes and byte-weighted queue]]
 - [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
