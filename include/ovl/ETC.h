@@ -945,5 +945,4 @@ extern s32 D_801500CC;
 extern s32 D_801500D0;
 extern s32 D_801500D4;
 
-
 #endif /* OVL_ETC_H */
