@@ -123,6 +123,76 @@ void func_801340E4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_80134384);
+void func_80134384(void) {
+    switch (D_800E71E8 & 0xF) {
+    case 0:
+        func_800AE0F0(D_800CA19C, "図書室");
+        bg_read_sub2(0x40BC);
+        break;
+    case 1:
+        func_800AE0F0(D_800CA19C, "教室");
+        if (D_800E62BF >= 6U && D_800E62BF < 10U) {
+            bg_read_sub2(0x404D);
+        } else {
+            bg_read_sub2(0x4055);
+        }
+        break;
+    case 2:
+        func_800AE0F0(D_800CA19C, "中庭");
+        bg_read_sub2(0x4071);
+        break;
+    case 3:
+        func_800AE0F0(D_800CA19C, "自宅前");
+        bg_read_sub2(0x414C);
+        break;
+    case 4:
+        switch (D_800E6374 >> 12) {
+        case 0:
+            func_800AE0F0(D_800CA19C, "図書室");
+            bg_read_sub2(0x40BC);
+            break;
+        case 1:
+            func_800AE0F0(D_800CA19C, "演劇部");
+            bg_read_sub2(0x40B2);
+            break;
+        case 2:
+            func_800AE0F0(D_800CA19C, "実験室");
+            bg_read_sub2(0x40C6);
+            break;
+        case 3:
+            func_800AE0F0(D_800CA19C, "電脳部室");
+            bg_read_sub2(0x40D0);
+            break;
+        case 4:
+            func_800AE0F0(D_800CA19C, "美術室");
+            bg_read_sub2(0x40D9);
+            break;
+        case 5:
+            func_800AE0F0(D_800CA19C, "音楽室");
+            bg_read_sub2(0x40E2);
+            break;
+        case 6:
+        case 7:
+        case 8:
+            func_800AE0F0(D_800CA19C, "グランド");
+            bg_read_sub2(0x4097);
+            break;
+        case 9:
+            func_800AE0F0(D_800CA19C, "プール");
+            bg_read_sub2(0x40A0);
+            break;
+        default:
+            func_800AE0F0(D_800CA19C, "体育館");
+            bg_read_sub2(0x40A9);
+            break;
+        }
+        break;
+    default:
+        func_800AE0F0(D_800CA19C, "廊下");
+        bg_read_sub2(0x4045);
+        break;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_80134628);

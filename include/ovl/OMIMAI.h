@@ -51,4 +51,7 @@ extern s32 D_80134C30[];
 extern s32 D_80134C64[];
 extern s32 D_80134C98[];
 
+extern u16 D_800E6374;
+void func_800AE0F0(void *dst, void *src); /* strcpy (SDK libc) */
+
 #endif /* OVL_OMIMAI_H */
