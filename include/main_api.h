@@ -1918,6 +1918,7 @@ void func_8009EED0();
 void SetSemiTrans();
 void func_8009EF84();
 void SetShadeTex();
+void func_8009F02C();
 void func_8009F054();
 void func_8009F0A4();
 void func_8009F0B8(u8 *p);
