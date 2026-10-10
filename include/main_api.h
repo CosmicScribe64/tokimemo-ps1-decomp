@@ -1488,7 +1488,7 @@ s32 func_80060B24();
 void uwasa0();
 s32 func_80060EA0();
 s32 pre_syogatu_init();
-void func_80061634();
+s32 func_80061634();
 void func_80061710(void);
 void func_80061790(void);
 void func_800618B0();
