@@ -26,6 +26,17 @@
       }
     },
     {
+      "name": "src/main/800420D0",
+      "target_path": "expected/build/src/main/800420D0.o",
+      "base_path": "build/src/main/800420D0.o",
+      "metadata": {
+        "source_path": "src/main/800420D0.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
       "name": "src/main/80042540",
       "target_path": "expected/build/src/main/80042540.o",
       "base_path": "build/src/main/80042540.o",
@@ -86,6 +97,17 @@
       "base_path": "build/src/main/80047550.o",
       "metadata": {
         "source_path": "src/main/80047550.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "src/main/800490C0",
+      "target_path": "expected/build/src/main/800490C0.o",
+      "base_path": "build/src/main/800490C0.o",
+      "metadata": {
+        "source_path": "src/main/800490C0.c",
         "progress_categories": [
           "main"
         ]
@@ -235,6 +257,17 @@
       }
     },
     {
+      "name": "src/main/80059B40",
+      "target_path": "expected/build/src/main/80059B40.o",
+      "base_path": "build/src/main/80059B40.o",
+      "metadata": {
+        "source_path": "src/main/80059B40.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
       "name": "src/main/8005A0B0",
       "target_path": "expected/build/src/main/8005A0B0.o",
       "base_path": "build/src/main/8005A0B0.o",
@@ -290,6 +323,17 @@
       }
     },
     {
+      "name": "src/main/800737A0",
+      "target_path": "expected/build/src/main/800737A0.o",
+      "base_path": "build/src/main/800737A0.o",
+      "metadata": {
+        "source_path": "src/main/800737A0.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
       "name": "src/main/80075320",
       "target_path": "expected/build/src/main/80075320.o",
       "base_path": "build/src/main/80075320.o",
@@ -323,6 +367,17 @@
       }
     },
     {
+      "name": "src/main/8007C030",
+      "target_path": "expected/build/src/main/8007C030.o",
+      "base_path": "build/src/main/8007C030.o",
+      "metadata": {
+        "source_path": "src/main/8007C030.c",
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
       "name": "src/main/80085E30",
       "target_path": "expected/build/src/main/80085E30.o",
       "base_path": "build/src/main/80085E30.o",
@@ -334,154 +389,2112 @@
       }
     },
     {
-      "name": "src/ovl/BUNKAKEN",
-      "target_path": "expected/ovl/BUNKAKEN.o",
-      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN.o",
+      "name": "src/ovl/BUNKAKEN/80132000",
+      "target_path": "expected/ovl/BUNKAKEN/80132000.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80132000.o",
       "metadata": {
-        "source_path": "src/ovl/BUNKAKEN.c",
+        "source_path": "src/ovl/BUNKAKEN/80132000.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/BUNKASAI",
-      "target_path": "expected/ovl/BUNKASAI.o",
-      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI.o",
+      "name": "src/ovl/BUNKAKEN/80137640",
+      "target_path": "expected/ovl/BUNKAKEN/80137640.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80137640.o",
       "metadata": {
-        "source_path": "src/ovl/BUNKASAI.c",
+        "source_path": "src/ovl/BUNKAKEN/80137640.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/BUNKA_SD",
-      "target_path": "expected/ovl/BUNKA_SD.o",
-      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD.o",
+      "name": "src/ovl/BUNKAKEN/80139E50",
+      "target_path": "expected/ovl/BUNKAKEN/80139E50.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80139E50.o",
       "metadata": {
-        "source_path": "src/ovl/BUNKA_SD.c",
+        "source_path": "src/ovl/BUNKAKEN/80139E50.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/DATE",
-      "target_path": "expected/ovl/DATE.o",
-      "base_path": "build/ovl/DATE/src/ovl/DATE.o",
+      "name": "src/ovl/BUNKAKEN/8013B510",
+      "target_path": "expected/ovl/BUNKAKEN/8013B510.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/8013B510.o",
       "metadata": {
-        "source_path": "src/ovl/DATE.c",
+        "source_path": "src/ovl/BUNKAKEN/8013B510.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/DATE2",
-      "target_path": "expected/ovl/DATE2.o",
-      "base_path": "build/ovl/DATE2/src/ovl/DATE2.o",
+      "name": "src/ovl/BUNKAKEN/8013BFE0",
+      "target_path": "expected/ovl/BUNKAKEN/8013BFE0.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/8013BFE0.o",
       "metadata": {
-        "source_path": "src/ovl/DATE2.c",
+        "source_path": "src/ovl/BUNKAKEN/8013BFE0.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/ENDING",
-      "target_path": "expected/ovl/ENDING.o",
-      "base_path": "build/ovl/ENDING/src/ovl/ENDING.o",
+      "name": "src/ovl/BUNKAKEN/8013CF30",
+      "target_path": "expected/ovl/BUNKAKEN/8013CF30.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/8013CF30.o",
       "metadata": {
-        "source_path": "src/ovl/ENDING.c",
+        "source_path": "src/ovl/BUNKAKEN/8013CF30.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/EN_NICHI",
-      "target_path": "expected/ovl/EN_NICHI.o",
-      "base_path": "build/ovl/EN_NICHI/src/ovl/EN_NICHI.o",
+      "name": "src/ovl/BUNKAKEN/8013EB30",
+      "target_path": "expected/ovl/BUNKAKEN/8013EB30.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/8013EB30.o",
       "metadata": {
-        "source_path": "src/ovl/EN_NICHI.c",
+        "source_path": "src/ovl/BUNKAKEN/8013EB30.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/ETC",
-      "target_path": "expected/ovl/ETC.o",
-      "base_path": "build/ovl/ETC/src/ovl/ETC.o",
+      "name": "src/ovl/BUNKAKEN/80140F60",
+      "target_path": "expected/ovl/BUNKAKEN/80140F60.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80140F60.o",
       "metadata": {
-        "source_path": "src/ovl/ETC.c",
+        "source_path": "src/ovl/BUNKAKEN/80140F60.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/EVENT",
-      "target_path": "expected/ovl/EVENT.o",
-      "base_path": "build/ovl/EVENT/src/ovl/EVENT.o",
+      "name": "src/ovl/BUNKAKEN/801428D0",
+      "target_path": "expected/ovl/BUNKAKEN/801428D0.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/801428D0.o",
       "metadata": {
-        "source_path": "src/ovl/EVENT.c",
+        "source_path": "src/ovl/BUNKAKEN/801428D0.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/GEKO",
-      "target_path": "expected/ovl/GEKO.o",
-      "base_path": "build/ovl/GEKO/src/ovl/GEKO.o",
+      "name": "src/ovl/BUNKAKEN/80143DD0",
+      "target_path": "expected/ovl/BUNKAKEN/80143DD0.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80143DD0.o",
       "metadata": {
-        "source_path": "src/ovl/GEKO.c",
+        "source_path": "src/ovl/BUNKAKEN/80143DD0.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/GYOZI",
-      "target_path": "expected/ovl/GYOZI.o",
-      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI.o",
+      "name": "src/ovl/BUNKAKEN/80144F70",
+      "target_path": "expected/ovl/BUNKAKEN/80144F70.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80144F70.o",
       "metadata": {
-        "source_path": "src/ovl/GYOZI.c",
+        "source_path": "src/ovl/BUNKAKEN/80144F70.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/KANGEI",
-      "target_path": "expected/ovl/KANGEI.o",
-      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI.o",
+      "name": "src/ovl/BUNKAKEN/80145E40",
+      "target_path": "expected/ovl/BUNKAKEN/80145E40.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80145E40.o",
       "metadata": {
-        "source_path": "src/ovl/KANGEI.c",
+        "source_path": "src/ovl/BUNKAKEN/80145E40.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/MASTER",
-      "target_path": "expected/ovl/MASTER.o",
-      "base_path": "build/ovl/MASTER/src/ovl/MASTER.o",
+      "name": "src/ovl/BUNKAKEN/80146560",
+      "target_path": "expected/ovl/BUNKAKEN/80146560.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80146560.o",
       "metadata": {
-        "source_path": "src/ovl/MASTER.c",
+        "source_path": "src/ovl/BUNKAKEN/80146560.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/NAME_ENT",
-      "target_path": "expected/ovl/NAME_ENT.o",
-      "base_path": "build/ovl/NAME_ENT/src/ovl/NAME_ENT.o",
+      "name": "src/ovl/BUNKAKEN/80148ED0",
+      "target_path": "expected/ovl/BUNKAKEN/80148ED0.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80148ED0.o",
       "metadata": {
-        "source_path": "src/ovl/NAME_ENT.c",
+        "source_path": "src/ovl/BUNKAKEN/80148ED0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKAKEN/8014A6A0",
+      "target_path": "expected/ovl/BUNKAKEN/8014A6A0.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/8014A6A0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKAKEN/8014A6A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKAKEN/8014E440",
+      "target_path": "expected/ovl/BUNKAKEN/8014E440.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/8014E440.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKAKEN/8014E440.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKAKEN/80150D30",
+      "target_path": "expected/ovl/BUNKAKEN/80150D30.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80150D30.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKAKEN/80150D30.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKAKEN/80152680",
+      "target_path": "expected/ovl/BUNKAKEN/80152680.o",
+      "base_path": "build/ovl/BUNKAKEN/src/ovl/BUNKAKEN/80152680.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKAKEN/80152680.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80132000",
+      "target_path": "expected/ovl/BUNKASAI/80132000.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80132480",
+      "target_path": "expected/ovl/BUNKASAI/80132480.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80132480.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80132480.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/801354B0",
+      "target_path": "expected/ovl/BUNKASAI/801354B0.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/801354B0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/801354B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/801362A0",
+      "target_path": "expected/ovl/BUNKASAI/801362A0.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/801362A0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/801362A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80138A70",
+      "target_path": "expected/ovl/BUNKASAI/80138A70.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80138A70.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80138A70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/8013B190",
+      "target_path": "expected/ovl/BUNKASAI/8013B190.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/8013B190.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/8013B190.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/8013C430",
+      "target_path": "expected/ovl/BUNKASAI/8013C430.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/8013C430.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/8013C430.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/8013FD90",
+      "target_path": "expected/ovl/BUNKASAI/8013FD90.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/8013FD90.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/8013FD90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80142700",
+      "target_path": "expected/ovl/BUNKASAI/80142700.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80142700.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80142700.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80143770",
+      "target_path": "expected/ovl/BUNKASAI/80143770.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80143770.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80143770.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80146030",
+      "target_path": "expected/ovl/BUNKASAI/80146030.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80146030.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80146030.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80146FA0",
+      "target_path": "expected/ovl/BUNKASAI/80146FA0.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80146FA0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80146FA0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80148040",
+      "target_path": "expected/ovl/BUNKASAI/80148040.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80148040.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80148040.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/8014ABC0",
+      "target_path": "expected/ovl/BUNKASAI/8014ABC0.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/8014ABC0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/8014ABC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/8014DD90",
+      "target_path": "expected/ovl/BUNKASAI/8014DD90.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/8014DD90.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/8014DD90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80150930",
+      "target_path": "expected/ovl/BUNKASAI/80150930.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80150930.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80150930.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/801511E0",
+      "target_path": "expected/ovl/BUNKASAI/801511E0.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/801511E0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/801511E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/8015AF90",
+      "target_path": "expected/ovl/BUNKASAI/8015AF90.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/8015AF90.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/8015AF90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80132000",
+      "target_path": "expected/ovl/BUNKA_SD/80132000.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80133540",
+      "target_path": "expected/ovl/BUNKA_SD/80133540.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80133540.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80133540.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80134260",
+      "target_path": "expected/ovl/BUNKA_SD/80134260.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80134260.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80134260.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80134540",
+      "target_path": "expected/ovl/BUNKA_SD/80134540.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80134540.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80134540.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80135160",
+      "target_path": "expected/ovl/BUNKA_SD/80135160.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80135160.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80135160.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/801359B0",
+      "target_path": "expected/ovl/BUNKA_SD/801359B0.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/801359B0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/801359B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80136270",
+      "target_path": "expected/ovl/BUNKA_SD/80136270.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80136270.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80136270.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/801369D0",
+      "target_path": "expected/ovl/BUNKA_SD/801369D0.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/801369D0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/801369D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80137890",
+      "target_path": "expected/ovl/BUNKA_SD/80137890.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80137890.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80137890.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/80137B40",
+      "target_path": "expected/ovl/BUNKA_SD/80137B40.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/80137B40.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/80137B40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKA_SD/801388D0",
+      "target_path": "expected/ovl/BUNKA_SD/801388D0.o",
+      "base_path": "build/ovl/BUNKA_SD/src/ovl/BUNKA_SD/801388D0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKA_SD/801388D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80132000",
+      "target_path": "expected/ovl/DATE/80132000.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80141EE0",
+      "target_path": "expected/ovl/DATE/80141EE0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80141EE0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80141EE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80145AA0",
+      "target_path": "expected/ovl/DATE/80145AA0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80145AA0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80145AA0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/801461B0",
+      "target_path": "expected/ovl/DATE/801461B0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/801461B0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/801461B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80149310",
+      "target_path": "expected/ovl/DATE/80149310.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80149310.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80149310.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8014A1B0",
+      "target_path": "expected/ovl/DATE/8014A1B0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8014A1B0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8014A1B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8014B1F0",
+      "target_path": "expected/ovl/DATE/8014B1F0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8014B1F0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8014B1F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8014CC40",
+      "target_path": "expected/ovl/DATE/8014CC40.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8014CC40.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8014CC40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8014F0F0",
+      "target_path": "expected/ovl/DATE/8014F0F0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8014F0F0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8014F0F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80150010",
+      "target_path": "expected/ovl/DATE/80150010.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80150010.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80150010.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80151460",
+      "target_path": "expected/ovl/DATE/80151460.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80151460.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80151460.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80152FC0",
+      "target_path": "expected/ovl/DATE/80152FC0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80152FC0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80152FC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80154260",
+      "target_path": "expected/ovl/DATE/80154260.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80154260.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80154260.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/801552B0",
+      "target_path": "expected/ovl/DATE/801552B0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/801552B0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/801552B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80156600",
+      "target_path": "expected/ovl/DATE/80156600.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80156600.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80156600.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/80157880",
+      "target_path": "expected/ovl/DATE/80157880.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/80157880.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/80157880.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/801586A0",
+      "target_path": "expected/ovl/DATE/801586A0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/801586A0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/801586A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/801594B0",
+      "target_path": "expected/ovl/DATE/801594B0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/801594B0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/801594B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8015A190",
+      "target_path": "expected/ovl/DATE/8015A190.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8015A190.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8015A190.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8015A640",
+      "target_path": "expected/ovl/DATE/8015A640.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8015A640.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8015A640.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8015A7E0",
+      "target_path": "expected/ovl/DATE/8015A7E0.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8015A7E0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8015A7E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE/8015A980",
+      "target_path": "expected/ovl/DATE/8015A980.o",
+      "base_path": "build/ovl/DATE/src/ovl/DATE/8015A980.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE/8015A980.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE2/80132000",
+      "target_path": "expected/ovl/DATE2/80132000.o",
+      "base_path": "build/ovl/DATE2/src/ovl/DATE2/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE2/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE2/801326F0",
+      "target_path": "expected/ovl/DATE2/801326F0.o",
+      "base_path": "build/ovl/DATE2/src/ovl/DATE2/801326F0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE2/801326F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE2/80132DE0",
+      "target_path": "expected/ovl/DATE2/80132DE0.o",
+      "base_path": "build/ovl/DATE2/src/ovl/DATE2/80132DE0.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE2/80132DE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE2/80136D50",
+      "target_path": "expected/ovl/DATE2/80136D50.o",
+      "base_path": "build/ovl/DATE2/src/ovl/DATE2/80136D50.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE2/80136D50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE2/80137360",
+      "target_path": "expected/ovl/DATE2/80137360.o",
+      "base_path": "build/ovl/DATE2/src/ovl/DATE2/80137360.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE2/80137360.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/DATE2/80137D50",
+      "target_path": "expected/ovl/DATE2/80137D50.o",
+      "base_path": "build/ovl/DATE2/src/ovl/DATE2/80137D50.o",
+      "metadata": {
+        "source_path": "src/ovl/DATE2/80137D50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/80132000",
+      "target_path": "expected/ovl/ENDING/80132000.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/80133030",
+      "target_path": "expected/ovl/ENDING/80133030.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/80133030.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/80133030.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/80133540",
+      "target_path": "expected/ovl/ENDING/80133540.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/80133540.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/80133540.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/80133C10",
+      "target_path": "expected/ovl/ENDING/80133C10.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/80133C10.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/80133C10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/80134D20",
+      "target_path": "expected/ovl/ENDING/80134D20.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/80134D20.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/80134D20.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/80137340",
+      "target_path": "expected/ovl/ENDING/80137340.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/80137340.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/80137340.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/801396E0",
+      "target_path": "expected/ovl/ENDING/801396E0.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/801396E0.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/801396E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ENDING/8013B6A0",
+      "target_path": "expected/ovl/ENDING/8013B6A0.o",
+      "base_path": "build/ovl/ENDING/src/ovl/ENDING/8013B6A0.o",
+      "metadata": {
+        "source_path": "src/ovl/ENDING/8013B6A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EN_NICHI/80132000",
+      "target_path": "expected/ovl/EN_NICHI/80132000.o",
+      "base_path": "build/ovl/EN_NICHI/src/ovl/EN_NICHI/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/EN_NICHI/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EN_NICHI/80136B10",
+      "target_path": "expected/ovl/EN_NICHI/80136B10.o",
+      "base_path": "build/ovl/EN_NICHI/src/ovl/EN_NICHI/80136B10.o",
+      "metadata": {
+        "source_path": "src/ovl/EN_NICHI/80136B10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/80132000",
+      "target_path": "expected/ovl/ETC/80132000.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/80132880",
+      "target_path": "expected/ovl/ETC/80132880.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/80132880.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/80132880.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/8013B1F0",
+      "target_path": "expected/ovl/ETC/8013B1F0.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/8013B1F0.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/8013B1F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/8013BEF0",
+      "target_path": "expected/ovl/ETC/8013BEF0.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/8013BEF0.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/8013BEF0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/8013F980",
+      "target_path": "expected/ovl/ETC/8013F980.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/8013F980.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/8013F980.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/8013FF80",
+      "target_path": "expected/ovl/ETC/8013FF80.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/8013FF80.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/8013FF80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/80140F50",
+      "target_path": "expected/ovl/ETC/80140F50.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/80140F50.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/80140F50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/80142B80",
+      "target_path": "expected/ovl/ETC/80142B80.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/80142B80.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/80142B80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/80143240",
+      "target_path": "expected/ovl/ETC/80143240.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/80143240.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/80143240.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/80146400",
+      "target_path": "expected/ovl/ETC/80146400.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/80146400.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/80146400.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/801492C0",
+      "target_path": "expected/ovl/ETC/801492C0.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/801492C0.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/801492C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/8014ABD0",
+      "target_path": "expected/ovl/ETC/8014ABD0.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/8014ABD0.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/8014ABD0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/ETC/8014C2D0",
+      "target_path": "expected/ovl/ETC/8014C2D0.o",
+      "base_path": "build/ovl/ETC/src/ovl/ETC/8014C2D0.o",
+      "metadata": {
+        "source_path": "src/ovl/ETC/8014C2D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/800F6000",
+      "target_path": "expected/ovl/EVENT/800F6000.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/800F6000.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/800F6000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/800F7220",
+      "target_path": "expected/ovl/EVENT/800F7220.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/800F7220.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/800F7220.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/800F9680",
+      "target_path": "expected/ovl/EVENT/800F9680.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/800F9680.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/800F9680.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/800FBBF0",
+      "target_path": "expected/ovl/EVENT/800FBBF0.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/800FBBF0.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/800FBBF0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/800FD2F0",
+      "target_path": "expected/ovl/EVENT/800FD2F0.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/800FD2F0.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/800FD2F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/800FDC20",
+      "target_path": "expected/ovl/EVENT/800FDC20.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/800FDC20.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/800FDC20.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/800FFBE0",
+      "target_path": "expected/ovl/EVENT/800FFBE0.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/800FFBE0.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/800FFBE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/801011A0",
+      "target_path": "expected/ovl/EVENT/801011A0.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/801011A0.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/801011A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/801024B0",
+      "target_path": "expected/ovl/EVENT/801024B0.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/801024B0.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/801024B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/80103B60",
+      "target_path": "expected/ovl/EVENT/80103B60.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/80103B60.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/80103B60.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/801050D0",
+      "target_path": "expected/ovl/EVENT/801050D0.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/801050D0.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/801050D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/80106C20",
+      "target_path": "expected/ovl/EVENT/80106C20.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/80106C20.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/80106C20.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/80107FC0",
+      "target_path": "expected/ovl/EVENT/80107FC0.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/80107FC0.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/80107FC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/8010A210",
+      "target_path": "expected/ovl/EVENT/8010A210.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/8010A210.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/8010A210.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/8010B360",
+      "target_path": "expected/ovl/EVENT/8010B360.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/8010B360.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/8010B360.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/8010BB90",
+      "target_path": "expected/ovl/EVENT/8010BB90.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/8010BB90.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/8010BB90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/8010FE10",
+      "target_path": "expected/ovl/EVENT/8010FE10.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/8010FE10.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/8010FE10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/EVENT/8011C650",
+      "target_path": "expected/ovl/EVENT/8011C650.o",
+      "base_path": "build/ovl/EVENT/src/ovl/EVENT/8011C650.o",
+      "metadata": {
+        "source_path": "src/ovl/EVENT/8011C650.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80132000",
+      "target_path": "expected/ovl/GEKO/80132000.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/801323E0",
+      "target_path": "expected/ovl/GEKO/801323E0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/801323E0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/801323E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/801338F0",
+      "target_path": "expected/ovl/GEKO/801338F0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/801338F0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/801338F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80134040",
+      "target_path": "expected/ovl/GEKO/80134040.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80134040.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80134040.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80134C90",
+      "target_path": "expected/ovl/GEKO/80134C90.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80134C90.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80134C90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80134D10",
+      "target_path": "expected/ovl/GEKO/80134D10.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80134D10.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80134D10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/801393C0",
+      "target_path": "expected/ovl/GEKO/801393C0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/801393C0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/801393C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80139910",
+      "target_path": "expected/ovl/GEKO/80139910.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80139910.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80139910.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013AF80",
+      "target_path": "expected/ovl/GEKO/8013AF80.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013AF80.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013AF80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013B930",
+      "target_path": "expected/ovl/GEKO/8013B930.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013B930.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013B930.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013C4C0",
+      "target_path": "expected/ovl/GEKO/8013C4C0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013C4C0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013C4C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013C980",
+      "target_path": "expected/ovl/GEKO/8013C980.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013C980.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013C980.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013D0F0",
+      "target_path": "expected/ovl/GEKO/8013D0F0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013D0F0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013D0F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013D4B0",
+      "target_path": "expected/ovl/GEKO/8013D4B0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013D4B0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013D4B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013DB80",
+      "target_path": "expected/ovl/GEKO/8013DB80.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013DB80.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013DB80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013DF70",
+      "target_path": "expected/ovl/GEKO/8013DF70.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013DF70.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013DF70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013EE40",
+      "target_path": "expected/ovl/GEKO/8013EE40.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013EE40.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013EE40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/8013F360",
+      "target_path": "expected/ovl/GEKO/8013F360.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/8013F360.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/8013F360.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80140A00",
+      "target_path": "expected/ovl/GEKO/80140A00.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80140A00.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80140A00.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80141AF0",
+      "target_path": "expected/ovl/GEKO/80141AF0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80141AF0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80141AF0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/801426D0",
+      "target_path": "expected/ovl/GEKO/801426D0.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/801426D0.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/801426D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GEKO/80142760",
+      "target_path": "expected/ovl/GEKO/80142760.o",
+      "base_path": "build/ovl/GEKO/src/ovl/GEKO/80142760.o",
+      "metadata": {
+        "source_path": "src/ovl/GEKO/80142760.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80134000",
+      "target_path": "expected/ovl/GYOZI/80134000.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80134000.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80134000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80134520",
+      "target_path": "expected/ovl/GYOZI/80134520.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80134520.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80134520.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80134C10",
+      "target_path": "expected/ovl/GYOZI/80134C10.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80134C10.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80134C10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80134FD0",
+      "target_path": "expected/ovl/GYOZI/80134FD0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80134FD0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80134FD0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80135900",
+      "target_path": "expected/ovl/GYOZI/80135900.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80135900.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80135900.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80135CA0",
+      "target_path": "expected/ovl/GYOZI/80135CA0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80135CA0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80135CA0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80136220",
+      "target_path": "expected/ovl/GYOZI/80136220.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80136220.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80136220.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/801372B0",
+      "target_path": "expected/ovl/GYOZI/801372B0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/801372B0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/801372B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80138510",
+      "target_path": "expected/ovl/GYOZI/80138510.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80138510.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80138510.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/801388E0",
+      "target_path": "expected/ovl/GYOZI/801388E0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/801388E0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/801388E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80138B50",
+      "target_path": "expected/ovl/GYOZI/80138B50.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80138B50.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80138B50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80139920",
+      "target_path": "expected/ovl/GYOZI/80139920.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80139920.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80139920.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013A140",
+      "target_path": "expected/ovl/GYOZI/8013A140.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013A140.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013A140.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013A920",
+      "target_path": "expected/ovl/GYOZI/8013A920.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013A920.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013A920.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013AE80",
+      "target_path": "expected/ovl/GYOZI/8013AE80.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013AE80.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013AE80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013B920",
+      "target_path": "expected/ovl/GYOZI/8013B920.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013B920.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013B920.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013BD50",
+      "target_path": "expected/ovl/GYOZI/8013BD50.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013BD50.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013BD50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013C3B0",
+      "target_path": "expected/ovl/GYOZI/8013C3B0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013C3B0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013C3B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013CDD0",
+      "target_path": "expected/ovl/GYOZI/8013CDD0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013CDD0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013CDD0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013D120",
+      "target_path": "expected/ovl/GYOZI/8013D120.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013D120.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013D120.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013D470",
+      "target_path": "expected/ovl/GYOZI/8013D470.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013D470.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013D470.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013DB50",
+      "target_path": "expected/ovl/GYOZI/8013DB50.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013DB50.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013DB50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013DE30",
+      "target_path": "expected/ovl/GYOZI/8013DE30.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013DE30.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013DE30.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013E1D0",
+      "target_path": "expected/ovl/GYOZI/8013E1D0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013E1D0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013E1D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013E5B0",
+      "target_path": "expected/ovl/GYOZI/8013E5B0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013E5B0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013E5B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/8013EB10",
+      "target_path": "expected/ovl/GYOZI/8013EB10.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/8013EB10.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/8013EB10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/801400D0",
+      "target_path": "expected/ovl/GYOZI/801400D0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/801400D0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/801400D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80140740",
+      "target_path": "expected/ovl/GYOZI/80140740.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80140740.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80140740.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80140C90",
+      "target_path": "expected/ovl/GYOZI/80140C90.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80140C90.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80140C90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/801418B0",
+      "target_path": "expected/ovl/GYOZI/801418B0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/801418B0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/801418B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80142D00",
+      "target_path": "expected/ovl/GYOZI/80142D00.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80142D00.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80142D00.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80143110",
+      "target_path": "expected/ovl/GYOZI/80143110.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80143110.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80143110.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/GYOZI/80143AD0",
+      "target_path": "expected/ovl/GYOZI/80143AD0.o",
+      "base_path": "build/ovl/GYOZI/src/ovl/GYOZI/80143AD0.o",
+      "metadata": {
+        "source_path": "src/ovl/GYOZI/80143AD0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/80132000",
+      "target_path": "expected/ovl/KANGEI/80132000.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/80132090",
+      "target_path": "expected/ovl/KANGEI/80132090.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/80132090.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/80132090.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/80132E40",
+      "target_path": "expected/ovl/KANGEI/80132E40.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/80132E40.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/80132E40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/80133C10",
+      "target_path": "expected/ovl/KANGEI/80133C10.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/80133C10.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/80133C10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/80134120",
+      "target_path": "expected/ovl/KANGEI/80134120.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/80134120.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/80134120.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/801355F0",
+      "target_path": "expected/ovl/KANGEI/801355F0.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/801355F0.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/801355F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/80135F10",
+      "target_path": "expected/ovl/KANGEI/80135F10.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/80135F10.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/80135F10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/KANGEI/80137B90",
+      "target_path": "expected/ovl/KANGEI/80137B90.o",
+      "base_path": "build/ovl/KANGEI/src/ovl/KANGEI/80137B90.o",
+      "metadata": {
+        "source_path": "src/ovl/KANGEI/80137B90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80132000",
+      "target_path": "expected/ovl/MASTER/80132000.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80132140",
+      "target_path": "expected/ovl/MASTER/80132140.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80132140.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80132140.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80133680",
+      "target_path": "expected/ovl/MASTER/80133680.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80133680.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80133680.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80138490",
+      "target_path": "expected/ovl/MASTER/80138490.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80138490.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80138490.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80138EC0",
+      "target_path": "expected/ovl/MASTER/80138EC0.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80138EC0.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80138EC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80138F10",
+      "target_path": "expected/ovl/MASTER/80138F10.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80138F10.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80138F10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80138F70",
+      "target_path": "expected/ovl/MASTER/80138F70.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80138F70.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80138F70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80138FC0",
+      "target_path": "expected/ovl/MASTER/80138FC0.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80138FC0.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80138FC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/MASTER/80139000",
+      "target_path": "expected/ovl/MASTER/80139000.o",
+      "base_path": "build/ovl/MASTER/src/ovl/MASTER/80139000.o",
+      "metadata": {
+        "source_path": "src/ovl/MASTER/80139000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/NAME_ENT/80132000",
+      "target_path": "expected/ovl/NAME_ENT/80132000.o",
+      "base_path": "build/ovl/NAME_ENT/src/ovl/NAME_ENT/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/NAME_ENT/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/NAME_ENT/80139740",
+      "target_path": "expected/ovl/NAME_ENT/80139740.o",
+      "base_path": "build/ovl/NAME_ENT/src/ovl/NAME_ENT/80139740.o",
+      "metadata": {
+        "source_path": "src/ovl/NAME_ENT/80139740.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/NAME_ENT/80142A80",
+      "target_path": "expected/ovl/NAME_ENT/80142A80.o",
+      "base_path": "build/ovl/NAME_ENT/src/ovl/NAME_ENT/80142A80.o",
+      "metadata": {
+        "source_path": "src/ovl/NAME_ENT/80142A80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/NAME_ENT/80144AD0",
+      "target_path": "expected/ovl/NAME_ENT/80144AD0.o",
+      "base_path": "build/ovl/NAME_ENT/src/ovl/NAME_ENT/80144AD0.o",
+      "metadata": {
+        "source_path": "src/ovl/NAME_ENT/80144AD0.c",
         "progress_categories": [
           "overlays"
         ]
@@ -620,11 +2633,33 @@
       }
     },
     {
-      "name": "src/ovl/OPTION",
-      "target_path": "expected/ovl/OPTION.o",
-      "base_path": "build/ovl/OPTION/src/ovl/OPTION.o",
+      "name": "src/ovl/OPTION/80132000",
+      "target_path": "expected/ovl/OPTION/80132000.o",
+      "base_path": "build/ovl/OPTION/src/ovl/OPTION/80132000.o",
       "metadata": {
-        "source_path": "src/ovl/OPTION.c",
+        "source_path": "src/ovl/OPTION/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/OPTION/801389A0",
+      "target_path": "expected/ovl/OPTION/801389A0.o",
+      "base_path": "build/ovl/OPTION/src/ovl/OPTION/801389A0.o",
+      "metadata": {
+        "source_path": "src/ovl/OPTION/801389A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/OPTION/8013A550",
+      "target_path": "expected/ovl/OPTION/8013A550.o",
+      "base_path": "build/ovl/OPTION/src/ovl/OPTION/8013A550.o",
+      "metadata": {
+        "source_path": "src/ovl/OPTION/8013A550.c",
         "progress_categories": [
           "overlays"
         ]
@@ -653,55 +2688,1738 @@
       }
     },
     {
-      "name": "src/ovl/RPG_BAT",
-      "target_path": "expected/ovl/RPG_BAT.o",
-      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT.o",
+      "name": "src/ovl/RPG_BAT/80132000",
+      "target_path": "expected/ovl/RPG_BAT/80132000.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80132000.o",
       "metadata": {
-        "source_path": "src/ovl/RPG_BAT.c",
+        "source_path": "src/ovl/RPG_BAT/80132000.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/SHOUGATU",
-      "target_path": "expected/ovl/SHOUGATU.o",
-      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU.o",
+      "name": "src/ovl/RPG_BAT/801321D0",
+      "target_path": "expected/ovl/RPG_BAT/801321D0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801321D0.o",
       "metadata": {
-        "source_path": "src/ovl/SHOUGATU.c",
+        "source_path": "src/ovl/RPG_BAT/801321D0.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/SHUGAKU",
-      "target_path": "expected/ovl/SHUGAKU.o",
-      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU.o",
+      "name": "src/ovl/RPG_BAT/80132FE0",
+      "target_path": "expected/ovl/RPG_BAT/80132FE0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80132FE0.o",
       "metadata": {
-        "source_path": "src/ovl/SHUGAKU.c",
+        "source_path": "src/ovl/RPG_BAT/80132FE0.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/TACO",
-      "target_path": "expected/ovl/TACO.o",
-      "base_path": "build/ovl/TACO/src/ovl/TACO.o",
+      "name": "src/ovl/RPG_BAT/801340F0",
+      "target_path": "expected/ovl/RPG_BAT/801340F0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801340F0.o",
       "metadata": {
-        "source_path": "src/ovl/TACO.c",
+        "source_path": "src/ovl/RPG_BAT/801340F0.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/TAIIKU",
-      "target_path": "expected/ovl/TAIIKU.o",
-      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU.o",
+      "name": "src/ovl/RPG_BAT/80134A70",
+      "target_path": "expected/ovl/RPG_BAT/80134A70.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80134A70.o",
       "metadata": {
-        "source_path": "src/ovl/TAIIKU.c",
+        "source_path": "src/ovl/RPG_BAT/80134A70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80134D30",
+      "target_path": "expected/ovl/RPG_BAT/80134D30.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80134D30.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80134D30.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80135AE0",
+      "target_path": "expected/ovl/RPG_BAT/80135AE0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80135AE0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80135AE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80136070",
+      "target_path": "expected/ovl/RPG_BAT/80136070.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80136070.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80136070.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80136530",
+      "target_path": "expected/ovl/RPG_BAT/80136530.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80136530.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80136530.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801368B0",
+      "target_path": "expected/ovl/RPG_BAT/801368B0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801368B0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801368B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80136D50",
+      "target_path": "expected/ovl/RPG_BAT/80136D50.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80136D50.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80136D50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80137280",
+      "target_path": "expected/ovl/RPG_BAT/80137280.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80137280.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80137280.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013A480",
+      "target_path": "expected/ovl/RPG_BAT/8013A480.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013A480.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013A480.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013A650",
+      "target_path": "expected/ovl/RPG_BAT/8013A650.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013A650.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013A650.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013AD50",
+      "target_path": "expected/ovl/RPG_BAT/8013AD50.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013AD50.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013AD50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013B5B0",
+      "target_path": "expected/ovl/RPG_BAT/8013B5B0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013B5B0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013B5B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013C5D0",
+      "target_path": "expected/ovl/RPG_BAT/8013C5D0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013C5D0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013C5D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013C890",
+      "target_path": "expected/ovl/RPG_BAT/8013C890.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013C890.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013C890.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013CC90",
+      "target_path": "expected/ovl/RPG_BAT/8013CC90.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013CC90.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013CC90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013D780",
+      "target_path": "expected/ovl/RPG_BAT/8013D780.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013D780.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013D780.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013E300",
+      "target_path": "expected/ovl/RPG_BAT/8013E300.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013E300.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013E300.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013E4D0",
+      "target_path": "expected/ovl/RPG_BAT/8013E4D0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013E4D0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013E4D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8013F4F0",
+      "target_path": "expected/ovl/RPG_BAT/8013F4F0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8013F4F0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8013F4F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80141060",
+      "target_path": "expected/ovl/RPG_BAT/80141060.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80141060.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80141060.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80141C30",
+      "target_path": "expected/ovl/RPG_BAT/80141C30.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80141C30.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80141C30.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80142000",
+      "target_path": "expected/ovl/RPG_BAT/80142000.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80142000.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80142000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801421E0",
+      "target_path": "expected/ovl/RPG_BAT/801421E0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801421E0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801421E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80142F70",
+      "target_path": "expected/ovl/RPG_BAT/80142F70.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80142F70.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80142F70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80143830",
+      "target_path": "expected/ovl/RPG_BAT/80143830.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80143830.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80143830.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801439E0",
+      "target_path": "expected/ovl/RPG_BAT/801439E0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801439E0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801439E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80144010",
+      "target_path": "expected/ovl/RPG_BAT/80144010.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80144010.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80144010.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801447E0",
+      "target_path": "expected/ovl/RPG_BAT/801447E0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801447E0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801447E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801454F0",
+      "target_path": "expected/ovl/RPG_BAT/801454F0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801454F0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801454F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80145CC0",
+      "target_path": "expected/ovl/RPG_BAT/80145CC0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80145CC0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80145CC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801468B0",
+      "target_path": "expected/ovl/RPG_BAT/801468B0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801468B0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801468B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801477E0",
+      "target_path": "expected/ovl/RPG_BAT/801477E0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801477E0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801477E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80147F10",
+      "target_path": "expected/ovl/RPG_BAT/80147F10.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80147F10.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80147F10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801480F0",
+      "target_path": "expected/ovl/RPG_BAT/801480F0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801480F0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801480F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801484E0",
+      "target_path": "expected/ovl/RPG_BAT/801484E0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801484E0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801484E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80148F70",
+      "target_path": "expected/ovl/RPG_BAT/80148F70.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80148F70.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80148F70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801496F0",
+      "target_path": "expected/ovl/RPG_BAT/801496F0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801496F0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801496F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801498C0",
+      "target_path": "expected/ovl/RPG_BAT/801498C0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801498C0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801498C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8014A660",
+      "target_path": "expected/ovl/RPG_BAT/8014A660.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8014A660.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8014A660.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8014ADD0",
+      "target_path": "expected/ovl/RPG_BAT/8014ADD0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8014ADD0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8014ADD0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8014D380",
+      "target_path": "expected/ovl/RPG_BAT/8014D380.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8014D380.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8014D380.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8014DF60",
+      "target_path": "expected/ovl/RPG_BAT/8014DF60.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8014DF60.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8014DF60.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8014E780",
+      "target_path": "expected/ovl/RPG_BAT/8014E780.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8014E780.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8014E780.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8014F790",
+      "target_path": "expected/ovl/RPG_BAT/8014F790.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8014F790.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8014F790.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801504E0",
+      "target_path": "expected/ovl/RPG_BAT/801504E0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801504E0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801504E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80151C10",
+      "target_path": "expected/ovl/RPG_BAT/80151C10.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80151C10.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80151C10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80151FC0",
+      "target_path": "expected/ovl/RPG_BAT/80151FC0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80151FC0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80151FC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801525B0",
+      "target_path": "expected/ovl/RPG_BAT/801525B0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801525B0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801525B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80154430",
+      "target_path": "expected/ovl/RPG_BAT/80154430.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80154430.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80154430.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80155A70",
+      "target_path": "expected/ovl/RPG_BAT/80155A70.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80155A70.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80155A70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80155CC0",
+      "target_path": "expected/ovl/RPG_BAT/80155CC0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80155CC0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80155CC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/801563A0",
+      "target_path": "expected/ovl/RPG_BAT/801563A0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/801563A0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/801563A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80156870",
+      "target_path": "expected/ovl/RPG_BAT/80156870.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80156870.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80156870.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80156CC0",
+      "target_path": "expected/ovl/RPG_BAT/80156CC0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80156CC0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80156CC0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80157AE0",
+      "target_path": "expected/ovl/RPG_BAT/80157AE0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80157AE0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80157AE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/80159D50",
+      "target_path": "expected/ovl/RPG_BAT/80159D50.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/80159D50.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/80159D50.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/RPG_BAT/8015A1F0",
+      "target_path": "expected/ovl/RPG_BAT/8015A1F0.o",
+      "base_path": "build/ovl/RPG_BAT/src/ovl/RPG_BAT/8015A1F0.o",
+      "metadata": {
+        "source_path": "src/ovl/RPG_BAT/8015A1F0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80132000",
+      "target_path": "expected/ovl/SHOUGATU/80132000.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80132550",
+      "target_path": "expected/ovl/SHOUGATU/80132550.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80132550.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80132550.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80132D00",
+      "target_path": "expected/ovl/SHOUGATU/80132D00.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80132D00.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80132D00.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/801330C0",
+      "target_path": "expected/ovl/SHOUGATU/801330C0.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/801330C0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/801330C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80133D10",
+      "target_path": "expected/ovl/SHOUGATU/80133D10.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80133D10.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80133D10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80134120",
+      "target_path": "expected/ovl/SHOUGATU/80134120.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80134120.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80134120.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80134890",
+      "target_path": "expected/ovl/SHOUGATU/80134890.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80134890.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80134890.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80135B90",
+      "target_path": "expected/ovl/SHOUGATU/80135B90.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80135B90.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80135B90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80136F90",
+      "target_path": "expected/ovl/SHOUGATU/80136F90.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80136F90.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80136F90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80137BB0",
+      "target_path": "expected/ovl/SHOUGATU/80137BB0.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80137BB0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80137BB0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80137FF0",
+      "target_path": "expected/ovl/SHOUGATU/80137FF0.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80137FF0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80137FF0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80138B40",
+      "target_path": "expected/ovl/SHOUGATU/80138B40.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80138B40.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80138B40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/801390C0",
+      "target_path": "expected/ovl/SHOUGATU/801390C0.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/801390C0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/801390C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/801397D0",
+      "target_path": "expected/ovl/SHOUGATU/801397D0.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/801397D0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/801397D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013A190",
+      "target_path": "expected/ovl/SHOUGATU/8013A190.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013A190.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013A190.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013A500",
+      "target_path": "expected/ovl/SHOUGATU/8013A500.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013A500.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013A500.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013A950",
+      "target_path": "expected/ovl/SHOUGATU/8013A950.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013A950.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013A950.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013AF10",
+      "target_path": "expected/ovl/SHOUGATU/8013AF10.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013AF10.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013AF10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013B210",
+      "target_path": "expected/ovl/SHOUGATU/8013B210.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013B210.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013B210.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013B5B0",
+      "target_path": "expected/ovl/SHOUGATU/8013B5B0.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013B5B0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013B5B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013BA00",
+      "target_path": "expected/ovl/SHOUGATU/8013BA00.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013BA00.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013BA00.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013C070",
+      "target_path": "expected/ovl/SHOUGATU/8013C070.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013C070.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013C070.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013D660",
+      "target_path": "expected/ovl/SHOUGATU/8013D660.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013D660.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013D660.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013DD90",
+      "target_path": "expected/ovl/SHOUGATU/8013DD90.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013DD90.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013DD90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013E330",
+      "target_path": "expected/ovl/SHOUGATU/8013E330.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013E330.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013E330.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/8013F190",
+      "target_path": "expected/ovl/SHOUGATU/8013F190.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/8013F190.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/8013F190.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHOUGATU/80141780",
+      "target_path": "expected/ovl/SHOUGATU/80141780.o",
+      "base_path": "build/ovl/SHOUGATU/src/ovl/SHOUGATU/80141780.o",
+      "metadata": {
+        "source_path": "src/ovl/SHOUGATU/80141780.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80132000",
+      "target_path": "expected/ovl/SHUGAKU/80132000.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80133430",
+      "target_path": "expected/ovl/SHUGAKU/80133430.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80133430.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80133430.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80133D60",
+      "target_path": "expected/ovl/SHUGAKU/80133D60.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80133D60.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80133D60.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/801344B0",
+      "target_path": "expected/ovl/SHUGAKU/801344B0.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/801344B0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/801344B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80134880",
+      "target_path": "expected/ovl/SHUGAKU/80134880.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80134880.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80134880.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80135430",
+      "target_path": "expected/ovl/SHUGAKU/80135430.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80135430.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80135430.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80136380",
+      "target_path": "expected/ovl/SHUGAKU/80136380.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80136380.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80136380.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/801378B0",
+      "target_path": "expected/ovl/SHUGAKU/801378B0.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/801378B0.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/801378B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80138A60",
+      "target_path": "expected/ovl/SHUGAKU/80138A60.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80138A60.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80138A60.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/80139D00",
+      "target_path": "expected/ovl/SHUGAKU/80139D00.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/80139D00.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/80139D00.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/SHUGAKU/8013AA70",
+      "target_path": "expected/ovl/SHUGAKU/8013AA70.o",
+      "base_path": "build/ovl/SHUGAKU/src/ovl/SHUGAKU/8013AA70.o",
+      "metadata": {
+        "source_path": "src/ovl/SHUGAKU/8013AA70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80132000",
+      "target_path": "expected/ovl/TACO/80132000.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80132220",
+      "target_path": "expected/ovl/TACO/80132220.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80132220.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80132220.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/801335A0",
+      "target_path": "expected/ovl/TACO/801335A0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/801335A0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/801335A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80133870",
+      "target_path": "expected/ovl/TACO/80133870.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80133870.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80133870.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80134930",
+      "target_path": "expected/ovl/TACO/80134930.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80134930.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80134930.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80135720",
+      "target_path": "expected/ovl/TACO/80135720.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80135720.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80135720.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80136B40",
+      "target_path": "expected/ovl/TACO/80136B40.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80136B40.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80136B40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80137590",
+      "target_path": "expected/ovl/TACO/80137590.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80137590.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80137590.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80137A60",
+      "target_path": "expected/ovl/TACO/80137A60.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80137A60.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80137A60.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80137F90",
+      "target_path": "expected/ovl/TACO/80137F90.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80137F90.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80137F90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80138280",
+      "target_path": "expected/ovl/TACO/80138280.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80138280.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80138280.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80138450",
+      "target_path": "expected/ovl/TACO/80138450.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80138450.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80138450.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80138680",
+      "target_path": "expected/ovl/TACO/80138680.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80138680.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80138680.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80138890",
+      "target_path": "expected/ovl/TACO/80138890.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80138890.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80138890.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80139170",
+      "target_path": "expected/ovl/TACO/80139170.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80139170.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80139170.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8013B170",
+      "target_path": "expected/ovl/TACO/8013B170.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8013B170.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8013B170.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8013B990",
+      "target_path": "expected/ovl/TACO/8013B990.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8013B990.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8013B990.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8013D1E0",
+      "target_path": "expected/ovl/TACO/8013D1E0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8013D1E0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8013D1E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8013DB80",
+      "target_path": "expected/ovl/TACO/8013DB80.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8013DB80.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8013DB80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80140DF0",
+      "target_path": "expected/ovl/TACO/80140DF0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80140DF0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80140DF0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80141DE0",
+      "target_path": "expected/ovl/TACO/80141DE0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80141DE0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80141DE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80142820",
+      "target_path": "expected/ovl/TACO/80142820.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80142820.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80142820.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/801430B0",
+      "target_path": "expected/ovl/TACO/801430B0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/801430B0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/801430B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80143E80",
+      "target_path": "expected/ovl/TACO/80143E80.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80143E80.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80143E80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/801447D0",
+      "target_path": "expected/ovl/TACO/801447D0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/801447D0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/801447D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80146D60",
+      "target_path": "expected/ovl/TACO/80146D60.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80146D60.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80146D60.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/801480B0",
+      "target_path": "expected/ovl/TACO/801480B0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/801480B0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/801480B0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80148FE0",
+      "target_path": "expected/ovl/TACO/80148FE0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80148FE0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80148FE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80149F90",
+      "target_path": "expected/ovl/TACO/80149F90.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80149F90.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80149F90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80151C30",
+      "target_path": "expected/ovl/TACO/80151C30.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80151C30.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80151C30.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80153AA0",
+      "target_path": "expected/ovl/TACO/80153AA0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80153AA0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80153AA0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80154230",
+      "target_path": "expected/ovl/TACO/80154230.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80154230.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80154230.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80154960",
+      "target_path": "expected/ovl/TACO/80154960.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80154960.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80154960.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80156A80",
+      "target_path": "expected/ovl/TACO/80156A80.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80156A80.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80156A80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/80159090",
+      "target_path": "expected/ovl/TACO/80159090.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/80159090.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/80159090.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8015A900",
+      "target_path": "expected/ovl/TACO/8015A900.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8015A900.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8015A900.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8015ABF0",
+      "target_path": "expected/ovl/TACO/8015ABF0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8015ABF0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8015ABF0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8015CF30",
+      "target_path": "expected/ovl/TACO/8015CF30.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8015CF30.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8015CF30.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8015D0D0",
+      "target_path": "expected/ovl/TACO/8015D0D0.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8015D0D0.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8015D0D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8015D270",
+      "target_path": "expected/ovl/TACO/8015D270.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8015D270.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8015D270.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80132000",
+      "target_path": "expected/ovl/TAIIKU/80132000.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80132B40",
+      "target_path": "expected/ovl/TAIIKU/80132B40.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80132B40.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80132B40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80132B90",
+      "target_path": "expected/ovl/TAIIKU/80132B90.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80132B90.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80132B90.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80132BD0",
+      "target_path": "expected/ovl/TAIIKU/80132BD0.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80132BD0.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80132BD0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80133BF0",
+      "target_path": "expected/ovl/TAIIKU/80133BF0.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80133BF0.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80133BF0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80133C30",
+      "target_path": "expected/ovl/TAIIKU/80133C30.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80133C30.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80133C30.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80133C80",
+      "target_path": "expected/ovl/TAIIKU/80133C80.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80133C80.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80133C80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80138950",
+      "target_path": "expected/ovl/TAIIKU/80138950.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80138950.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80138950.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80140810",
+      "target_path": "expected/ovl/TAIIKU/80140810.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80140810.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80140810.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80141280",
+      "target_path": "expected/ovl/TAIIKU/80141280.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80141280.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80141280.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80141B70",
+      "target_path": "expected/ovl/TAIIKU/80141B70.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80141B70.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80141B70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80141BB0",
+      "target_path": "expected/ovl/TAIIKU/80141BB0.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80141BB0.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80141BB0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80141C00",
+      "target_path": "expected/ovl/TAIIKU/80141C00.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80141C00.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80141C00.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80142140",
+      "target_path": "expected/ovl/TAIIKU/80142140.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80142140.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80142140.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80142180",
+      "target_path": "expected/ovl/TAIIKU/80142180.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80142180.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80142180.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80142240",
+      "target_path": "expected/ovl/TAIIKU/80142240.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80142240.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80142240.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/80145210",
+      "target_path": "expected/ovl/TAIIKU/80145210.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/80145210.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/80145210.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/801452D0",
+      "target_path": "expected/ovl/TAIIKU/801452D0.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/801452D0.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/801452D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TAIIKU/801488F0",
+      "target_path": "expected/ovl/TAIIKU/801488F0.o",
+      "base_path": "build/ovl/TAIIKU/src/ovl/TAIIKU/801488F0.o",
+      "metadata": {
+        "source_path": "src/ovl/TAIIKU/801488F0.c",
         "progress_categories": [
           "overlays"
         ]
@@ -741,22 +4459,396 @@
       }
     },
     {
-      "name": "src/ovl/TT",
-      "target_path": "expected/ovl/TT.o",
-      "base_path": "build/ovl/TT/src/ovl/TT.o",
+      "name": "src/ovl/TT/80132000",
+      "target_path": "expected/ovl/TT/80132000.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80132000.o",
       "metadata": {
-        "source_path": "src/ovl/TT.c",
+        "source_path": "src/ovl/TT/80132000.c",
         "progress_categories": [
           "overlays"
         ]
       }
     },
     {
-      "name": "src/ovl/VALEN",
-      "target_path": "expected/ovl/VALEN.o",
-      "base_path": "build/ovl/VALEN/src/ovl/VALEN.o",
+      "name": "src/ovl/TT/80132130",
+      "target_path": "expected/ovl/TT/80132130.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80132130.o",
       "metadata": {
-        "source_path": "src/ovl/VALEN.c",
+        "source_path": "src/ovl/TT/80132130.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80132F10",
+      "target_path": "expected/ovl/TT/80132F10.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80132F10.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80132F10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80133970",
+      "target_path": "expected/ovl/TT/80133970.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80133970.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80133970.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80135360",
+      "target_path": "expected/ovl/TT/80135360.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80135360.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80135360.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/801367C0",
+      "target_path": "expected/ovl/TT/801367C0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/801367C0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/801367C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80136830",
+      "target_path": "expected/ovl/TT/80136830.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80136830.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80136830.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/801374C0",
+      "target_path": "expected/ovl/TT/801374C0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/801374C0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/801374C0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8013A040",
+      "target_path": "expected/ovl/TT/8013A040.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8013A040.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8013A040.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8013A3E0",
+      "target_path": "expected/ovl/TT/8013A3E0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8013A3E0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8013A3E0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8013BD10",
+      "target_path": "expected/ovl/TT/8013BD10.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8013BD10.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8013BD10.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8013C6D0",
+      "target_path": "expected/ovl/TT/8013C6D0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8013C6D0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8013C6D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8013E290",
+      "target_path": "expected/ovl/TT/8013E290.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8013E290.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8013E290.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8013E850",
+      "target_path": "expected/ovl/TT/8013E850.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8013E850.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8013E850.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8013F040",
+      "target_path": "expected/ovl/TT/8013F040.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8013F040.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8013F040.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/801410A0",
+      "target_path": "expected/ovl/TT/801410A0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/801410A0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/801410A0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80141450",
+      "target_path": "expected/ovl/TT/80141450.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80141450.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80141450.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80142110",
+      "target_path": "expected/ovl/TT/80142110.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80142110.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80142110.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80142350",
+      "target_path": "expected/ovl/TT/80142350.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80142350.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80142350.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80142570",
+      "target_path": "expected/ovl/TT/80142570.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80142570.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80142570.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80142D40",
+      "target_path": "expected/ovl/TT/80142D40.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80142D40.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80142D40.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80144D70",
+      "target_path": "expected/ovl/TT/80144D70.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80144D70.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80144D70.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80145E60",
+      "target_path": "expected/ovl/TT/80145E60.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80145E60.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80145E60.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80146BE0",
+      "target_path": "expected/ovl/TT/80146BE0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80146BE0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80146BE0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80147380",
+      "target_path": "expected/ovl/TT/80147380.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80147380.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80147380.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/801478D0",
+      "target_path": "expected/ovl/TT/801478D0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/801478D0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/801478D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80148210",
+      "target_path": "expected/ovl/TT/80148210.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80148210.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80148210.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/801487D0",
+      "target_path": "expected/ovl/TT/801487D0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/801487D0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/801487D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/80148DB0",
+      "target_path": "expected/ovl/TT/80148DB0.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/80148DB0.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/80148DB0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8014AF00",
+      "target_path": "expected/ovl/TT/8014AF00.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8014AF00.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8014AF00.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TT/8014D260",
+      "target_path": "expected/ovl/TT/8014D260.o",
+      "base_path": "build/ovl/TT/src/ovl/TT/8014D260.o",
+      "metadata": {
+        "source_path": "src/ovl/TT/8014D260.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/VALEN/80132000",
+      "target_path": "expected/ovl/VALEN/80132000.o",
+      "base_path": "build/ovl/VALEN/src/ovl/VALEN/80132000.o",
+      "metadata": {
+        "source_path": "src/ovl/VALEN/80132000.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/VALEN/801323D0",
+      "target_path": "expected/ovl/VALEN/801323D0.o",
+      "base_path": "build/ovl/VALEN/src/ovl/VALEN/801323D0.o",
+      "metadata": {
+        "source_path": "src/ovl/VALEN/801323D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/VALEN/80132760",
+      "target_path": "expected/ovl/VALEN/80132760.o",
+      "base_path": "build/ovl/VALEN/src/ovl/VALEN/80132760.o",
+      "metadata": {
+        "source_path": "src/ovl/VALEN/80132760.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/VALEN/801339D0",
+      "target_path": "expected/ovl/VALEN/801339D0.o",
+      "base_path": "build/ovl/VALEN/src/ovl/VALEN/801339D0.o",
+      "metadata": {
+        "source_path": "src/ovl/VALEN/801339D0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/VALEN/80133C70",
+      "target_path": "expected/ovl/VALEN/80133C70.o",
+      "base_path": "build/ovl/VALEN/src/ovl/VALEN/80133C70.o",
+      "metadata": {
+        "source_path": "src/ovl/VALEN/80133C70.c",
         "progress_categories": [
           "overlays"
         ]
