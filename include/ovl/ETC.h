@@ -1014,4 +1014,5 @@ void func_801467C4(void);
 void func_80146AC0(void);
 s32 func_80146B40(void);
 
+s32 func_80146D4C();
 #endif /* OVL_ETC_H */

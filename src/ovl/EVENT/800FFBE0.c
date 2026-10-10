@@ -301,7 +301,14 @@ void func_80100DA0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100DD8);
+void func_80100DD8(void) {
+    u16 t;
+
+    /* FAKE: one-line do-while around both statements fixes the as1 load order (lhu before lw); T-8040 */
+    do { t = D_80094714; D_80094714 = t + D_800EECBC; } while (0);
+    func_80012D64(D_80121D5C, 0x11, 1, 2, D_800EECBC);
+    func_80011DFC();
+}
 
 extern FnTbl38 D_80121F88;
 

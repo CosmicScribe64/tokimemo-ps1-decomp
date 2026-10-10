@@ -1149,4 +1149,8 @@ void func_801591BC(void);
 void func_80159354(void);
 void func_80158960(void);
 
+void func_80153CEC(void);
+void func_80153E1C(void);
+void func_80154004(void);
+void func_80154118(void);
 #endif /* OVL_DATE_H */

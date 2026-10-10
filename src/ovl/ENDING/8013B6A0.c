@@ -16,7 +16,33 @@ void func_8013B6A0(void) {
     D_8013CBDC = 0x801BE000;
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013B760);
+typedef struct {
+    void (*f[25])();
+} FnTbl25; /* size 0x64 */
+extern FnTbl25 D_8013CBE4;
+
+void func_8013B760(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl25 tbl;
+
+    tbl = D_8013CBE4;
+    if (D_800E6280.unk_1109 == 7 && D_800E6280.unk_110A < 0x10) {
+        func_80083808();
+    }
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_800E6280.unk_1109 == 7) {
+        if (D_800E6280.unk_110A < 0x10) {
+            func_8007EDF8();
+            func_800846C0();
+            func_80066C08(2);
+            func_80064F48();
+            func_80066334();
+            func_80064DEC();
+            func_80083A10();
+        }
+    }
+}
 
 void func_8013B868(void) {
     func_80042908(6);
@@ -63,9 +89,65 @@ s32 func_8013B91C(void) {
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013B9F0);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BB9C);
+typedef struct {
+    s32 w[4];
+} Tw4; /* size 0x10 */
+extern Tw4 D_8013CD90;
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BC58);
+void func_8013BB9C(void) {
+    s32 r;
+    Tw4 v;
+
+    v = D_8013CD90;
+    func_80044750(0xBF);
+    if (D_800E6280.unk_56C[82] != 0) {
+        func_80046290(v.w[2], v.w[3], 0xF);
+    } else {
+        func_80046290(v.w[0], v.w[1], 0xF);
+    }
+    func_80044750(0x300);
+    r = func_8004E788(-0x50, 0x50, 0, "『女々しい野郎どもの詩』", 0);
+    func_8004E884(r);
+    D_8013CBE0 = 0;
+    func_8004284C();
+}
+
+typedef struct {
+    s16 h[13];
+} Th13; /* size 0x1A */
+extern Th13 D_8013CDA0;
+
+void func_8013BC58(void) {
+    Th13 tbl;
+    s16 i;
+    s16 sel;
+
+    tbl = D_8013CDA0;
+    sel = 0xFF;
+    for (i = 0; i < 13; i++) {
+        if (D_8013CBE0 >= tbl.h[i]) {
+            sel = i;
+        }
+    }
+    if (D_8013CBE0 == 0x3E8) {
+        func_8004E9F4(1, sel, &tbl);
+    }
+    if (sel != 0xFF) {
+        if (D_8013CBE0 == tbl.h[sel]) {
+            func_8004E9F4(1, sel, &tbl);
+            func_8013BDD8(sel);
+        }
+    }
+    if (D_8013CBE0 == 0x1536) {
+        func_8004E9F4(1);
+    }
+    if (func_800460EC() & 4) {
+        D_8013CBE0 += 1;
+    }
+    if (func_80046094() == 9) {
+        func_8004284C();
+    }
+}
 
 void func_8013BDD8(s16 arg0) {
     u8 *p;

@@ -71,7 +71,62 @@ void func_80149E44(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149EA0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014A000);
+void func_8014A000(void) {
+    s32 i;
+    u8 *a64;
+    u8 *a6C;
+    u8 *a74;
+    u8 *p;
+    u8 *aA8;
+
+    a64 = D_80158A64;
+    a6C = D_80158A6C;
+    a74 = D_80158A74;
+    p = D_80158AA4 + 0xFA0;
+    aA8 = D_80158AA8;
+    if (*(u16 *) (a6C + 0x10) >= 0x2C) {
+        *(u16 *) (a6C + 0x10) = 0;
+        *(u16 *) (a64 + 2) += 1;
+    }
+    switch (*(u16 *) (a6C + 0x10)) {
+    case 8:
+        a74[0x3E] = 8;
+        break;
+    case 16:
+        a74[0x3E] = 9;
+        break;
+    case 22:
+        a74[0x3E] = 0xA;
+        break;
+    case 28:
+        a74[0x3E] = 0xB;
+        break;
+    case 34:
+        a74[0x3E] = 0xC;
+        break;
+    case 40:
+        a74[0x3E] = 0xD;
+        break;
+    case 42:
+        a74[0x3E] = 0xE;
+        break;
+    case 44:
+        a74[0x3E] = 0xF;
+        break;
+    }
+    for (i = 0; i < 4; i++) {
+        *(s32 *) (p + 0x24) += 0xFFFC0000;
+        *(s16 *) (p + 0x16) = *(s16 *) (p + 0x26);
+        p += 0x64;
+    }
+    for (i = 0; i < 7; i++) {
+        *(s16 *) (aA8 + 0xC) += 4;
+        aA8 += 0x14;
+    }
+    D_80158AA8[0x78] = 0;
+    *(s16 *) (D_80158AA4 + 0x16) += 4;
+    *(u16 *) (a6C + 0x10) += 1;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014A198);
 

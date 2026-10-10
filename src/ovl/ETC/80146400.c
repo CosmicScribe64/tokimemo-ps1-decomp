@@ -43,7 +43,42 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146714);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801467C4);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801468FC);
+void func_801468FC(void) {
+    s32 r2;
+    s32 r;
+
+    if (D_800E6280.unk_041 == 0 || *(u8 *) &D_800E6280.unk_66C[10 + D_800E6280.unk_71C] != 0x40) {
+        if (func_80044E8C() == 1) {
+            func_8004500C(1, 0x205);
+            r = func_8005742C(0x3FA4, 0);
+            func_80057390(0);
+            if (r != -1) {
+                if (r == 0 || r == 1) {
+                    func_80057418(0, r);
+                    func_80057390(0x80);
+                    func_80042940(3);
+                }
+            } else {
+                func_8004284C();
+            }
+        }
+    } else {
+        if (func_8004481C() == 0) {
+            func_8004500C(1, 0x205);
+        }
+        r2 = func_8005742C(0x3FA4, 0);
+        if (r2 != -1) {
+            if (r2 == 0 || r2 == 1) {
+                func_80057418(0, r2);
+                func_800578F4(0);
+                func_80057390(0x80);
+                func_80042940(3);
+            }
+        } else {
+            func_8004284C();
+        }
+    }
+}
 
 void func_80146A38(void) {
     if (func_800460CC() & 1) {
@@ -113,15 +148,75 @@ void func_80146C68(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146D4C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014716C);
+void func_8014716C(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第一日目の試験科目は 語学だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801471F4);
+void func_801471F4(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第二日目の試験科目は 数学だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014727C);
+void func_8014727C(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第三日目の試験科目は 理科だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147304);
+void func_80147304(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第四日目の試験科目は 社会だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014738C);
+void func_8014738C(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第五日目の試験科目は 美術だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
 void func_80147414(void) {
     s16 *mode; /* pointer local: the switch reads the flag through it, as the permuter-found form that matches (T-6050) */

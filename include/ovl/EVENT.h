@@ -1300,4 +1300,9 @@ void func_80108DD4(void);
 void func_80109FB0(void);
 void func_800F8970(void);
 
+void func_8010A3D0(void);
+void func_8010A430(void);
+void func_8010A490(void);
+void func_8010AD70(void);
+void func_8010B29C(void);
 #endif /* OVL_EVENT_H */

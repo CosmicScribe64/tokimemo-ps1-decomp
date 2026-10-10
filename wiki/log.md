@@ -693,3 +693,8 @@ Created [[tickets/T-8070-wave-5-list-7]], In Progress.
 
 ## [2026-10-10] build | T-8070 wave 5 list 7: 34 functions matched
 34 functions (about 6860 bytes) from the list matched in 10 commits; all 27 sha1 OK after a clean rebuild; grand total 4001/6958 functions, 521056/2279368 bytes. 20 T-0018 rows appended to [[data/t0018-cases]]; idioms and blockers in [[matching-notes]] (section "Wave 5, list 7"). Ticket [[tickets/T-8070-wave-5-list-7]] reviewed inline and moved to Done.
+## [2026-10-10] ticket | T-8040 wave 5 list 4 started
+Created [[tickets/T-8040-wave-5-list-4]] (In Progress), 151 functions in 37 files.
+
+## [2026-10-10] build | T-8040 wave 5 list 4 done
+24 functions matched (GYOZI, TAIIKU, EVENT x2, SHOUGATU, TACO x3, ENDING x3, MASTER, DATE, TT, SHUGAKU x2, ETC x6, main get_g_name) plus 17 dupes copies in owned files. 18 blocked cases added to [[data/t0018-cases]]; patterns in [[matching-notes]]. Review recorded in [[tickets/T-8040-wave-5-list-4]], moved to Done.

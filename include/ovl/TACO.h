@@ -290,4 +290,7 @@ extern TcPos D_801604E4;
 
 extern TcPos D_801604DC;
 
+void func_80138348(void);
+void func_8013838C(void);
+void func_8013840C(void);
 #endif
