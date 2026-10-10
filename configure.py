@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate build.ninja for the SLPM_86.053 matching build.
 
-Usage (inside Docker): tools/docker.sh python3 configure.py
+Usage (inside Docker): tools/docker.sh python3 configure.py   (put the game in game/ first)
 Then:                  tools/docker.sh ninja            (build + sha1 check)
 
 Pipeline: splat split -> assemble asm (GNU as) -> compile C (per-file
@@ -19,9 +19,11 @@ import ninja_syntax
 import yaml
 
 sys.path.insert(0, "tools")
+import prepare_disc  # noqa: E402  (tools/prepare_disc.py: finds the user's game image)
 import srcscan  # noqa: E402  (tools/srcscan.py: the C files of every unit, from the yaml files)
 
 EXE = "SLPM_86.053"
+DISC_STAMP = "build/disc.stamp"  # tools/prepare_disc.py: disc/files is unpacked from game/ (T-3300)
 HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
 HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
 
@@ -135,7 +137,7 @@ def overlay_targets(n, overlays):
         n.build([stamp, ld] + data_ss, "osplit",
                 ["config/overlays/%s.yaml" % name, "config/reloc_addrs.txt"]
                 + symbol_files("config/overlays/%s.yaml" % name),
-                implicit=["disc/files/CDROM/EXEDIR/%s.EXN" % name],
+                implicit=[DISC_STAMP],
                 variables=v)
         # one C file per `c` subsegment: src/ovl/<NAME>.c, or src/ovl/<NAME>/<addr>.c per
         # original object once tools/split_objects.py has run (T-0500)
@@ -168,12 +170,19 @@ def main():
     n.rule("configure", command="python3 configure.py", generator=True,
            description="configure")
     # the asm objects to build depend on the subsegments of the yaml files (T-1340)
+    images, image_dirs = prepare_disc.find_candidates()
     n.build("build.ninja", "configure", "configure.py",
-            implicit=["config/%s.yaml" % EXE, "config/overlays.txt"]
+            implicit=["config/%s.yaml" % EXE, "config/overlays.txt"] + image_dirs
             + ["config/overlays/%s.yaml" % o[0] for o in read_overlays()])
+    # game image -> disc/files (T-3300); reruns only when an image or the tools change, and a new
+    # file in game/ changes a directory time, which regenerates build.ninja and so re-finds the images
+    n.rule("disc", command="python3 tools/prepare_disc.py --stamp $out", description="DISC game/ -> disc/files")
+    n.build(DISC_STAMP, "disc", implicit=images + ["tools/prepare_disc.py", "tools/identify_version.py",
+                                                  "tools/extract_disc.py", "config/versions.txt",
+                                                  "config/%s.sha1" % EXE])
     n.rule("split",
            command=("python3 -m splat split config/%s.yaml && python3 tools/rodata_pieces.py "
-                    "config/%s.yaml && touch %s") % (EXE, EXE, "build/split.stamp"),
+                    "config/%s.yaml && touch $out") % (EXE, EXE),
            description="splat split")
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
@@ -198,7 +207,7 @@ def main():
 
     stamp = "build/split.stamp"
     split_in = ["config/%s.yaml" % EXE, "config/reloc_addrs.txt"] + symbol_files("config/%s.yaml" % EXE)
-    n.build([stamp, "build/%s.ld" % EXE] + ASM_FILES, "split", split_in, implicit=["disc/files/" + EXE])
+    n.build([stamp, "build/%s.ld" % EXE] + ASM_FILES, "split", split_in, implicit=[DISC_STAMP])
 
     objs = []
     headers = sorted(glob.glob("include/**/*.h", recursive=True) + glob.glob("include/**/*.inc", recursive=True))

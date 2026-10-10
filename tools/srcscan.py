@@ -18,6 +18,10 @@ from typing import NamedTuple
 SRC_DIR = "src/main"
 INCLUDE_ASM_RE = re.compile(r'^\s*INCLUDE_ASM\(\s*"([^"]+)"\s*,\s*(\w+)\s*\)', re.M)
 DEF_RE = re.compile(r'^[A-Za-z_][\w \t*]*[ \t*](\w+)\(.*\)\s*\{', re.M)
+# K&R definition: `void f(a, b)` + parameter declarations + `{` on a later line (T-3300).
+KR_DEF_RE = re.compile(
+    r'^[A-Za-z_][\w \t*]*[ \t*](\w+)\([ \t]*(?:\w+[ \t]*(?:,[ \t]*\w+[ \t]*)*)?\)[ \t]*\n'
+    r'(?:[ \t]*[A-Za-z_][^;{}()\n]*;[ \t]*\n)*[ \t]*\{', re.M)
 NONMATCHING_RE = re.compile(r'^nonmatching\s+(\w+),\s*(0x[0-9A-Fa-f]+|\d+)', re.M)
 
 
@@ -39,7 +43,8 @@ def include_asm_entries(path):
 
 def defined_functions(path):
     """Names of the functions with a C body in one C file."""
-    return set(DEF_RE.findall(path.read_text()))
+    text = path.read_text()
+    return set(DEF_RE.findall(text)) | set(KR_DEF_RE.findall(text))
 
 
 def nonmatching_size(asm_path):

@@ -498,3 +498,11 @@ Applied wiki/data/t3330-fptab-proof.patch (3-way, after T-1321 and T-3320 merged
 
 ## [2026-10-09] tooling run | neardupes bulk apply
 Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 merged: 33 of 47 near-duplicate copies kept (20932 bytes), the rest reverted by the per-object check. Clean build 27/27 OK, 2805/6958, 13.4% of code bytes.
+## [2026-10-09] ticket | T-3300 Tooling: fix bugs reported by wave 2 (In Review)
+[[tickets/T-3300-tooling-fix-wave-2-bugs]]: `tools/m2c.py` (explicit/inferred unit, ambiguous names refused, `%lo` workaround for an upstream m2c bug), `tools/funcdiff.py` (L names, ninja freshness check, host message, `--resolve`), `tools/srcscan.py` (K&R), `tools/identify_version.py` (zip/7z/chd; `tools/Dockerfile` gets p7zip-full and mame-tools). New tests `tools/test_srcscan.py`, `tools/test_funcdiff.py`, more in `tools/test_m2c.py` and `tools/test_identify_version.py`. Details in [[matching-notes]] ("Tooling fixes T-3300"), usage in [[decompile-workflow]], [[versions]], [[toolchain]].
+
+## [2026-10-09] decision | T-3300 game/ drop-in folder
+`game/` (gitignored except `game/README.md`) takes the user's disc in any common form and depth; `tools/prepare_disc.py` (ninja step `build/disc.stamp`) finds it, identifies the release with `tools/identify_version.py`, and unpacks the supported one into `disc/files/`. Unsupported releases and a missing image fail with a message; an existing `disc/` and CI's restore keep working. The repo-root zip is not searched any more. README Building, [[build-system]], [[ci]], [[disc-layout]] updated. Tested with the Best 7z, zip, a CHD and a 2048-byte ISO made from the Best disc, and with the Rev 2 zip (refused).
+
+## [2026-10-09] ticket | T-3300 In Review -> Done
+[[tickets/T-3300-tooling-fix-wave-2-bugs]] done after the inline review (no open findings). Merged main; the p7zip/mame-tools apt line works on both architectures; [[decompile-workflow]] deduplicated into one ordered procedure (queue, dupes, neardupes, m2c `--unit`, funcdiff `--resolve`, permuter, T-0018 rows, fptab idiom of T-3330). Clean build on the native image from only an archive in `game/`: 27 of 27 OK.

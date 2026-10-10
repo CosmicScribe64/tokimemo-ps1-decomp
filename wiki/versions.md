@@ -86,4 +86,4 @@ Multi-version support later, by effort:
 - **Rev 2 and Rev 1/Shokai:** expensive. Older SDK libs (older `sys.c`/`intr.c`, extra `vsync.c`), 475-521 exe functions changed, larger exe, different gp; treat as separate targets that reuse the game logic by hand.
 - The overlays of all versions are not byte-compatible with ours (24 of 26 differ), so every version needs its own overlay hashes; `config/versions.txt` holds them.
 
-`tools/identify_version.py` is the basis for "bring your own disc": it takes a bin/iso/cue or a folder, identifies the exe and counts matching overlays. Rev 1 and Shokai identify together (same exe and overlays). Unknown exes exit with status 1.
+`tools/identify_version.py` is the basis for "bring your own disc": it takes a bin/iso/cue, a folder, or a `.zip`/`.7z`/`.chd` archive (T-3300: zip is read in place with `zipfile`; 7z and CHD are unpacked to a temporary directory with p7zip or chdman, which the Docker image has), identifies the exe and counts matching overlays. Rev 1 and Shokai identify together (same exe and overlays). Unknown exes exit with status 1.

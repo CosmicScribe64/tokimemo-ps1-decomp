@@ -15,10 +15,10 @@ Any common dump format is fine:
   sector data that XA audio and video streams use, so it is less complete.
 
 The build reads only the executables, so it doesn't matter which format a version comes
-in. Supporting several versions is future work. The build currently targets one release:
+in. To build, put the supported release (PlayStation the Best) in `game/` instead; see `game/README.md`. Supporting several versions is future work. The build currently targets one release:
 `SLPM_86.053`, the Japanese "PlayStation the Best" disc, checked by
 `config/SLPM_86.053.sha1`.
 
 The releases catalogued so far, their hashes and how they differ from the target are in
-`wiki/versions.md` and `config/versions.txt`; `tools/identify_version.py <image|folder>` tells
-you which one a disc is.
+`wiki/versions.md` and `config/versions.txt`; `tools/identify_version.py <image|folder|archive>` tells
+you which one a disc is. It reads `.zip`, `.7z` and `.chd` files directly.
