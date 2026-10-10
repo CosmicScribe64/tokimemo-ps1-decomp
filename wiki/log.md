@@ -377,3 +377,6 @@ New [[tickets/T-2040-wave-2-etc]], In Progress -> Done after the inline code rev
 
 ## [2026-10-09] merge | wave 2 ETC
 Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri and dec_bg_cd_read prototypes moved from game.h to include/main_only.h (ETC calls them unprototyped, MASTER keeps its u8 view of set_dec_bri in include/ovl/MASTER.h), six duplicate declarations dropped from include/ovl/ETC.h. Clean build 27/27 OK, 1168/6962.
+
+## [2026-10-09] ticket | T-0500 In Progress
+[[tickets/T-0500-per-file-game-rodata-data-bss-split]] Backlog -> In Progress. Scope widened by the orchestrator: find the original object boundaries of every overlay and of the main game code (text and rodata), split the C files per object so each object provides its own rodata (jump tables, strings), with a migration tool for the wave-2 tree; prove it on RENSYU, OMIMAI, OLH, TEL and `src/main/80062CD0.c`.

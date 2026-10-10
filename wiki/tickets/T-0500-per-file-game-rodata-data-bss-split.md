@@ -1,8 +1,8 @@
 ---
 id: T-0500
 title: Split game rodata, data and bss per source file
-status: Backlog
-assignee:
+status: In Progress
+assignee: claude
 created: 2026-10-09
 updated: 2026-10-09
 links: ["[[source-files]]", "[[tickets/T-0012-game-file-boundaries-and-shift-jis]]", "[[tickets/T-0301-sdk-rodata-data-split]]"]
