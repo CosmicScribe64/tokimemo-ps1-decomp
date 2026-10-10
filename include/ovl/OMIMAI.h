@@ -36,4 +36,8 @@ void func_801337EC();
 extern s32 D_800E7368;
 void func_80046318(s32 arg0, s32 arg1, s32 arg2); /* overlay view: main defines it with u8 arg0 */
 
+extern s32 D_800B3688[];
+extern s32 D_800B36C8[];
+extern s32 D_800B3708[];
+
 #endif /* OVL_OMIMAI_H */

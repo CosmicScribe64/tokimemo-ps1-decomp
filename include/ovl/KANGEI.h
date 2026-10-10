@@ -111,4 +111,7 @@ void func_80083A10();
 void func_80132214();
 void k_disp_inc2();
 
+extern s32 D_800E6378;
+void func_8006509C(void);
+
 #endif /* OVL_KANGEI_H */

@@ -77,4 +77,26 @@ extern s16 D_8011F4F2;
 extern s32 D_801217D0;
 extern u8 D_8011ECD0[];
 
+extern u8 *D_800CA134;
+extern u8 *D_800CA138;
+extern s32 D_800CA13C;
+extern s32 D_800CA140;
+extern s32 D_800CA144;
+extern s32 D_80122D20;
+void k_speed_set(s32 arg0);
+void k_reset(s32 arg0);
+
+extern s32 D_8013C34C;
+extern s32 D_8013C350;
+extern s32 D_8013C354;
+extern s32 D_8013C358;
+extern s32 D_8013C35C;
+void func_80132B04(s32 arg0, s32 arg1, s32 arg2);
+extern s32 D_800E7518;
+extern s32 D_800E751C;
+extern s32 D_800E7520;
+extern u8 D_8013CA38;
+
+void tpage_buf_clear_all(void);
+
 #endif /* OVL_ENDING_H */

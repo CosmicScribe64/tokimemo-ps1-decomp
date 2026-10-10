@@ -282,7 +282,20 @@ void func_80135F84(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136018);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80136094);
+void func_80136094(void) {
+    s16 i;
+
+    func_8006509C();
+    for (i = 0; i < 0xF; i++) {
+        icon_can_use_set(i, 0);
+    }
+    func_80065B0C(1);
+    parameter_show_init();
+    parameter_show_init();
+    D_800B593C = 0;
+    D_80139AC0 = 0;
+    func_8004284C();
+}
 
 void func_80136108(void) {
     if (D_80139AE0 == 0) {
@@ -443,7 +456,13 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_8013828C);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80138320);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_8013836C);
+void func_8013836C(void) {
+    if (((u32)(D_800E6378 << 0x17) >> 0x1B) == D_800E62C0 && (D_800E6378 & 0xF) == D_800E62BF) {
+        D_800E738A += 0xC;
+        return;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_801383D0);
 
@@ -508,7 +527,14 @@ void func_801389F4(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80138A34);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80138B28);
+void func_80138B28(void) {
+    D_800B3D60 = 0;
+    func_80044890(1, 0xBF98, 0xBF79, 0xCA95, 0xCA4F, 0xCA3E);
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI", func_80138B90);
 
