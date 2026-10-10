@@ -12,6 +12,7 @@ extern s32 D_8015EDE4;
 
 extern s32 D_8015EC28;
 extern s32 D_8015EC2C;
+extern s32 D_8015EC6C;
 extern s32 D_8015E744;
 extern s32 D_8015EE44;
 extern s32 D_8015EE48;
