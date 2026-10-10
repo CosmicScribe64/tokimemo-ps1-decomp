@@ -632,5 +632,9 @@ extern s32 D_8015BEF8;
 extern s32 D_8015BEFC;
 extern s32 D_8015BF00;
 void func_8014DB98(void);
+void func_8014E3E8(void);
+extern s32 D_8015DE60;
+extern s32 D_8015DF9C;
+extern s32 D_8015E0D8;
 
 #endif /* OVL_DATE_H */

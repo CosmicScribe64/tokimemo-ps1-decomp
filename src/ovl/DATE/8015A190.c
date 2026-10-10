@@ -62,7 +62,17 @@ void func_8015A564(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8015A190", func_8015A58C);
+extern FnTbl20 D_80160BD0;
+
+void func_8015A58C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80160BD0;
+    func_8006B900();
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_8015A610(void) {
     func_80062CD0(0x6BD8);

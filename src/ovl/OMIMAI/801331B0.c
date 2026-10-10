@@ -62,7 +62,29 @@ INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_801337EC);
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_8013388C);
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_80134030);
+extern s32 D_80134C5C;
+extern s32 D_80134C90;
+extern s32 D_80134CC4;
+extern u8 D_80134CCC;
+
+s32 func_80134030(void) {
+    if (D_800E71DF == 9) {
+        if (D_800CA148 == 2) {
+            func_8004284C();
+            return 0;
+        }
+    }
+    if (D_800E71DF == 8) {
+        func_8004284C();
+        func_8004284C();
+        return 0;
+    }
+    D_800CA160 = D_80134C5C;
+    D_800CA164 = D_80134C90;
+    D_800CA168 = D_80134CC4;
+    D_800CA148 = D_80134CCC + 1;
+    func_8004284C();
+}
 
 void func_801340E4(void) {
     switch (D_800E71DF) {

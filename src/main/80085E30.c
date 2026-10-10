@@ -77,7 +77,10 @@ INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_8008647C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_80086640);
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_8008667C);
+s32 func_8008667C(s32 a) {
+    /* FAKE: the (u8) cast reserves the extra temp the original has (same as GYOZI func_80140D7C); real return type unknown. T-4060 */
+    return (u8)get_g_zyotai_s(a) & 0x7F;
+}
 
 void func_800866A0(void) {
     if (D_800E738D == 0) {

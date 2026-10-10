@@ -87,7 +87,29 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D298);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D57C);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D6B0);
+/* The three s16 counters at D_800E65FE, +4, +8 are reached through one base so that as1 keeps the
+ * loads in program order, as in the original (T-4060). */
+void func_8014D6B0(void) {
+    D_8015E208 = D_8015DE60;
+    D_8015E20C = D_8015DF9C;
+    D_8015E210 = D_8015E0D8;
+    (&D_800E65FE)[0] += 1;
+    (&D_800E65FE)[2] += 1;
+    (&D_800E65FE)[4] -= 0x14;
+    func_80084D3C();
+    func_8014CE50();
+    func_80043914(D_8015E2B4, 0x11, 1, 2, 0);
+    func_80084E90(D_8015E2B8, D_8015E2BC, D_8015E2C0, D_8015E2C4, D_8015E2C8, D_8015E2CC);
+    func_800850D4(D_8015E2A8, D_8015E2AC, D_8015E2A4, D_8015E2B0);
+    D_800CA360 = 1;
+    D_800CA224 = 3;
+    D_800CA226 = 3;
+    D_800CA228 = 3;
+    D_800CA234 = 2;
+    D_800CA236 = 2;
+    D_800CA238 = 2;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D818);
 
@@ -219,7 +241,22 @@ void func_8014E108(void) {
     dtd_on_tpage(0, 0, 0xD, 3, 0);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E2E8);
+typedef struct {
+    void (*f[44])();
+} FnTbl44; /* size 0xB0 */
+extern FnTbl44 D_8015E460;
+
+void func_8014E2E8(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl44 tbl;
+
+    tbl = D_8015E460;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_800E738A == 0xD) {
+        func_8014E3E8();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E38C);
 

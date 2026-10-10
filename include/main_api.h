@@ -248,6 +248,7 @@ extern u8 D_800E64BA;
 extern u8 D_800E652A;
 extern s32 D_800E6598;
 extern u8 D_800E65A4;
+extern s16 D_800E65FE;
 extern u8 D_800E661F;
 extern s16 D_800E6636;
 extern s16 D_800E663A;
