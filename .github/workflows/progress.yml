@@ -38,6 +38,7 @@ jobs:
         run: |
           python3 tools/check_headers.py include src
           python3 tools/test_check_headers.py
+          python3 tools/test_sync_protos.py
 
       - name: Check for the encrypted game bundle
         id: bundle

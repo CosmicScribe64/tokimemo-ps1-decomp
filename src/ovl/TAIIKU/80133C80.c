@@ -1,7 +1,6 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 extern u8 D_80149208[]; /* 3 slots of 0x24 bytes; byte at +0x2A is read */
-extern u8 D_8011ECD0[]; /* 3 records of 0x44 bytes; s16 at +0x19EA is read */
 extern u8 D_80149232;
 extern u8 D_80149256;
 extern u8 D_8014927A;

@@ -1,6 +1,5 @@
 #include "common.h"
 #include "game.h"
-#include "main_only.h"
 
 void func_800674B0(void) {
     u8 v;

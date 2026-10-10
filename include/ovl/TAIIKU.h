@@ -63,7 +63,6 @@ extern s32 D_8014A0B0;
 extern s32 D_8014A0B4;
 extern s32 D_8014A0B8;
 extern s32 D_8014A0BC;
-extern s16 D_80120778;
 extern s32 D_8014A12C;
 extern s32 D_8014A148;
 extern u32 D_8014A14C;
@@ -130,7 +129,6 @@ void func_8013703C(void);
 void func_80137090(void);
 void func_80137228(void);
 void func_8013732C(void);
-extern s32 D_80122EC8;
 extern u16 D_801499A2;
 void func_8013F3A4(s32);
 void func_8013F948(void);
@@ -139,11 +137,6 @@ void func_801482BC(s32);
 void func_80147A6C(s32);
 void func_80147B14(s32);
 s32 func_80141CDC();
-extern s32 D_80122ECC;
-void srn_vram_set(s32, s32, s32, s32);
-void srn_init(s32, s32, s32);
-void func_8004E44C(s32, s32, s32);
-void Scroll(s32, s32, s32, s32, s32);
 void func_80132E20(s32, s32);
 typedef struct TaiikuBig {
     /* 0x00 */ s32 unk0;
@@ -164,20 +157,9 @@ typedef struct TaiikuRec {
     /* 0x8 */ s32 unk8;
     /* 0xC */ s32 unkC;
 } TaiikuRec; /* size 0x10 */
-void Default_Disp(void);
-extern s32 D_800E6598;
-extern u8 D_800E6819;
-s32 func_800AE0C0(s32);
 extern s32 D_80149944;
 
-s32 func_8008667C(s32 a);
-void func_80099E30(s32 a, void *p);
-
 void func_801339C4(void);
-extern s8 D_80120656;
-extern u8 D_80120657;
-extern s16 D_8012066A;
-extern s16 D_8012066C;
 extern u8 D_801492C4;
 void func_8013DDB8(void);
 s8 func_8013FE44();
@@ -186,8 +168,6 @@ void func_801448D4(void);
 void func_801449A0(void);
 void func_80144B40(void);
 void func_80144C70(void);
-extern s32 D_800E6480;
-extern u8 D_800E67F9;
 extern u8 D_8014A4F4;
 extern u8 D_8014A1FC;
 void func_80146B8C(void);

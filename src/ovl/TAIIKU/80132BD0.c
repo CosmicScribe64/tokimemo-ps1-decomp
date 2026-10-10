@@ -1,6 +1,5 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
-extern u8 D_8011ECD0[]; /* 3 records of 0x44 bytes; s16 at +0x19EA is read */
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80132BD0);
 

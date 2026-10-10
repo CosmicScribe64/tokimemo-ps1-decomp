@@ -31,6 +31,9 @@ import re
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from sync_protos import is_main_symbol  # noqa: E402
+
 # asm/[ovl/<NAME>/](non)matchings/[main/]<c subsegment name>/<func>.s; the name is <addr>, <NAME> or
 # <NAME>/<addr> (per-object overlay files, T-0500)
 ASM_RE = re.compile(r'^asm/(?:ovl/(\w+)/)?(non)?matchings/(?:main/)?([\w/]+)/(\w+)\.s$')
@@ -384,9 +387,10 @@ def plan_copy(root, src, tgt, cache):
             continue
         if find_decl([ttext], t):
             return None, 'target declares %s inside its .c' % t
-        if tmain:
-            dest = 'include/main_only.h' if 'include/main_only.h' in thp \
-                and not find_decl([read(root, 'include/game.h')], ident) else 'include/game.h'
+        if os.path.exists(os.path.join(root, 'include/main_api.h')) and is_main_symbol(root, t, tgt.unit):
+            dest = 'include/main_api.h'      # T-3340: one home for main-exe symbols
+        elif tmain:
+            dest = 'include/game.h'
         else:
             dest = 'include/ovl/%s.h' % tgt.unit
         decls.append((dest, want))

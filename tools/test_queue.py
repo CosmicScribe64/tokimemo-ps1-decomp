@@ -65,14 +65,89 @@ PROMOTED = [
 ]
 
 
-class Detector(unittest.TestCase):
-    def test_reload_in_two_blocks_same_register_is_R(self):
-        f = wq.analyze(asm("f", PROMOTED))
-        self.assertTrue(f.reload)
+# unsigned global kept in $v1 and reloaded after a call, one compare only: not a switch (R)
+RELOAD = [
+    "lui        $v1, %hi(D_800E738D)",
+    "lbu        $v1, %lo(D_800E738D)($v1)",
+    "addiu      $sp, $sp, -0x28",
+    "bnez       $v1, " + lbl(15),
+    " sw         $ra, 0x14($sp)",
+    "jal        func_80044E8C",
+    " nop",
+    "lui        $v1, %hi(D_800E738D)",
+    "lbu        $v1, %lo(D_800E738D)($v1)",
+    "lui        $at, %hi(D_800E738D)",
+    "addiu      $t6, $v1, 0x1",
+    "b          " + lbl(15),
+    " sb         $t6, %lo(D_800E738D)($at)",
+    "nop",
+    "nop",
+    at(15),
+    "jr         $ra",
+    " nop",
+]
 
-    def test_dispatch_on_v1_is_V(self):
+
+class Detector(unittest.TestCase):
+    def test_switch_chain_on_unsigned_global_is_U_not_R_or_V(self):
         f = wq.analyze(asm("f", PROMOTED))
+        self.assertEqual(f.selector, "v1")
+        self.assertFalse(f.reload)
+        self.assertFalse(f.dispatch)
+
+    def test_reload_of_unsigned_global_in_two_blocks_is_R(self):
+        f = wq.analyze(asm("f", RELOAD))
+        self.assertTrue(f.reload)
+        self.assertEqual(f.selector, "")
+
+    def test_old_rule_flags_both(self):
+        f = wq.analyze(asm("f", PROMOTED), legacy=True)
+        self.assertTrue(f.reload)
         self.assertTrue(f.dispatch)
+        self.assertEqual(f.selector, "")
+
+    def test_signed_and_word_globals_are_not_R(self):
+        # T-1321: IDO keeps lw/lh/lb globals in a register by itself; the old rule over-reported
+        for op in ("lw", "lh", "lb"):
+            body = [l.replace("lbu", op) for l in RELOAD]
+            self.assertFalse(wq.analyze(asm("f", body)).reload, op)
+            self.assertTrue(wq.analyze(asm("f", body), legacy=True).reload, op)
+
+    def test_v_shape_on_a_word_global_is_the_T_hint(self):
+        # D++ compared in the same expression: old value in $v1, result in $v0 (unsigned compare)
+        body = ["lui $v1, %hi(D_1)", "lw $v1, %lo(D_1)($v1)", "lui $at, %hi(D_1)", "sltiu $v0, $v1, 0x1",
+                "addiu $v1, $v1, 0x1", "beqz $v0, " + lbl(7), " sw $v1, %lo(D_1)($at)", "nop", "jr $ra", " nop"]
+        f = wq.analyze(asm("f", body))
+        self.assertTrue(f.hint)
+        self.assertFalse(f.dispatch)
+        self.assertEqual(wq.Func("F", "f", "x", f).flags, "T")
+        self.assertFalse(wq.Func("F", "f", "x", f).blocked)
+        u = wq.analyze(asm("f", [l.replace("lw ", "lbu ") for l in body]))
+        self.assertTrue(u.dispatch)
+        self.assertFalse(u.hint)
+
+    def test_jump_table_on_unsigned_global_is_U(self):
+        body = ["lui $v0, %hi(D_1)", "lbu $v0, %lo(D_1)($v0)", "lui $at, %hi(jtbl_80010000)", "sltiu $at, $v0, 0x5",
+                "beqz $at, " + lbl(9), " nop", "sll $t6, $v0, 2", "jr $t6", " nop", at(9), "jr $ra", " nop"]
+        f = wq.analyze(asm("f", body))
+        self.assertEqual(f.selector, "v0")
+        self.assertEqual(wq.Func("F", "f", "x", f, island=True).flags, "JU0")
+
+    def test_selector_must_start_the_function(self):
+        body = ["nop"] * 12 + RELOAD[:0] + PROMOTED
+        self.assertEqual(wq.analyze(asm("f", body)).selector, "")
+
+    def test_flags_and_unknown(self):
+        mk = lambda sel: wq.Func("F", "f", "x", wq.Facts(40, 0, False, False, False, False, False, False, sel))
+        u1, u0 = mk("v1"), mk("v0")
+        self.assertEqual((u1.flags, u0.flags), ("U1", "U0"))
+        self.assertTrue(u1.blocked and u1.unknown and not u1.u0)
+        self.assertTrue(u0.blocked and u0.unknown and u0.u0)
+        self.assertFalse(func("F", "r", 8, flags="R").unknown)
+        self.assertTrue(wq.allow_unknown(u0, "u0"))
+        self.assertFalse(wq.allow_unknown(u1, "u0"))
+        self.assertTrue(wq.allow_unknown(u1, "all"))
+        self.assertFalse(wq.allow_unknown(u0, ""))
 
     def test_single_v1_use_is_not_V(self):
         # func_80042400 shape: v1 loaded, used once, v0 is the result
@@ -87,6 +162,7 @@ class Detector(unittest.TestCase):
                 "addiu $at, $zero, 1", "beq $v0, $at, " + lbl(7), " nop", at(7), "jr $ra", " nop"]
         f = wq.analyze(asm("f", body))
         self.assertFalse(f.dispatch)
+        self.assertEqual(f.selector, "v0")   # but it is a U0 selector
 
     def test_v1_with_live_v0_is_not_V(self):
         # a call result in v0 is still read after the load: IDO has to use v1 (matched shape)
@@ -213,6 +289,172 @@ class Project(unittest.TestCase):
             remaining, matched = wq.load(r)
             self.assertEqual([(f.file, f.name, f.facts.size) for f in remaining], [("80041000", "func_80041000", 8)])
             self.assertEqual([f.name for f in matched], ["func_80041010"])
+
+
+def sel(file, name, size, selector, island=False):
+    return wq.Func(file, name, "x.s", wq.Facts(size, 0, False, False, False, False, False, False, selector), island)
+
+
+class Bytes(unittest.TestCase):
+    """T-3340: byte-weighted ranking."""
+
+    def test_match_chance_by_flags(self):
+        self.assertEqual(wq.p_match(func("F", "a", 8, flags="P")), 0.0)
+        self.assertEqual(wq.p_match(func("F", "a", 8, flags="J")), 0.0)          # no island: cannot be built
+        isl = wq.Func("F", "a", "x", wq.Facts(8, 0, False, True, False, False, False, False), True)
+        self.assertAlmostEqual(wq.p_match(isl), 0.85 * 0.8)
+        self.assertGreater(wq.p_match(func("F", "a", 8)), wq.p_match(func("F", "a", 8, calls=3)))
+        self.assertGreater(wq.p_match(func("F", "a", 8)), wq.p_match(func("F", "a", 8, flags="L")))
+        self.assertLess(wq.p_match(func("F", "a", 8, flags="R")), 0.3 * wq.p_match(func("F", "a", 8)))
+        self.assertGreater(wq.p_match(sel("F", "a", 8, "v0")), 5 * wq.p_match(sel("F", "a", 8, "v1")))
+
+    def test_size_weighs_against_effort(self):
+        # tiny leaves are cheap but small; the middle sizes give the most bytes per effort; huge ones cost more
+        scores = {n: wq.score_funcs([func("F", "f", n)])[0].score for n in (8, 120, 400, 4000)}
+        self.assertGreater(scores[120], scores[8])
+        self.assertGreater(scores[120], scores[400])
+        self.assertGreater(scores[400], scores[4000])
+
+    def test_flags_cost(self):
+        a = wq.score_funcs([func("F", "a", 120)])[0].score
+        for flags in ("R", "V"):
+            self.assertLess(wq.score_funcs([func("F", "b", 120, flags=flags)])[0].score, a / 3)
+
+    def groups(self, matched_member=False):
+        fs = [func("TT/1", "func_a", 100), func("TT/1", "func_b", 120), func("TEL", "func_c", 100),
+              func("TEL", "func_d", 100, flags="R")]
+        for f in fs:
+            self.assertEqual(f.unit_name, f.file.split("/")[0])
+        members = [("TT", "func_a", False, 100, 1), ("TT", "func_b", False, 120, 2), ("TEL", "func_c", False, 100, 1),
+                   ("TEL", "func_d", False, 100, 1)]
+        if matched_member:
+            members.append(("TT", "func_m", True, 100, 1))
+        return fs, wq.group_index([members], fs)
+
+    def test_group_without_matched_member_lists_one_representative(self):
+        fs, gi = self.groups()
+        reps = [n for (u, n), g in gi.items() if g.rep]
+        self.assertEqual(len(reps), 1)
+        self.assertIn(reps[0], ("func_a", "func_c"))           # unblocked, smallest
+        rep = next(g for g in gi.values() if g.rep)
+        self.assertEqual(rep.unmatched, 4)
+        # two byte-identical twins (exact 1) at 0.9 and one near duplicate at 0.6, the blocked twin included
+        self.assertAlmostEqual(rep.credit, 0.9 + 0.9 + 0.6)
+        items = {sc.func.name: sc for sc in wq.score_funcs(fs, gi)}
+        self.assertEqual(items["func_b"].score, 0.0)
+        self.assertEqual(items["func_b"].dup, "=rep")
+        top = max(items.values(), key=lambda sc: sc.score)
+        self.assertEqual(top.dup, "rep+3")
+        alone = wq.score_funcs([func("TT/1", "func_a", 100)])[0]
+        self.assertGreater(top.score, 2 * alone.score)
+
+    def test_group_with_a_matched_member_is_applied_by_the_copy_tools(self):
+        fs, gi = self.groups(matched_member=True)
+        for sc in wq.score_funcs(fs, gi):
+            self.assertEqual(sc.score, 0.0)
+            self.assertEqual(sc.dup, "apply:func_m")
+
+    def test_groups_file_roundtrip(self):
+        with tempfile.TemporaryDirectory() as d:
+            g = [[("TT", "func_a", False, 100, 7), ("TEL", "func_c", True, 100, 7)]]
+            wq.save_groups(g, Path(d) / "g.json")
+            self.assertEqual(wq.load_groups_file(Path(d) / "g.json"), g)
+
+    def test_plan_lists_are_balanced_and_never_share_a_file(self):
+        fs = [func("A", "a%d" % i, 40 + 4 * i) for i in range(6)] + [func("B", "b%d" % i, 100) for i in range(2)] + \
+             [func("C", "c%d" % i, 60) for i in range(3)] + [func("D", "d0", 80), func("E", "e0", 20)]
+        items = wq.score_funcs(fs)
+        lists = wq.plan_lists(items, 3, lambda sc: sc.eff)
+        self.assertEqual(len(lists), 3)
+        files = [{sc.func.file for sc in l} for l in lists]
+        self.assertEqual(sum(len(f) for f in files), len(set().union(*files)))      # disjoint
+        self.assertEqual(sum(len(l) for l in lists), len(fs))
+        loads = [sum(sc.eff for sc in l) for l in lists]
+        self.assertLess(max(loads) / min(loads), 1.5)
+        # deterministic
+        again = wq.plan_lists(wq.score_funcs(fs), 3, lambda sc: sc.eff)
+        self.assertEqual([[sc.func.name for sc in l] for l in again], [[sc.func.name for sc in l] for l in lists])
+
+    def test_plan_lists_by_unit(self):
+        fs = [func("TT/1", "a", 40), func("TT/2", "b", 40), func("TEL", "c", 40)]
+        lists = wq.plan_lists(wq.score_funcs(fs), 2, lambda sc: sc.eff, lambda sc: wq.unit_of(sc.func))
+        units = [{wq.unit_of(sc.func) for sc in l} for l in lists]
+        self.assertTrue(units[0].isdisjoint(units[1]))
+
+    def test_more_lists_than_files_leaves_some_empty(self):
+        lists = wq.plan_lists(wq.score_funcs([func("A", "a", 40), func("A", "b", 40)]), 3, lambda sc: sc.eff)
+        self.assertEqual(sorted(len(l) for l in lists), [0, 0, 2])
+        out = io.StringIO()
+        wq.print_plan(lists, out)
+        self.assertIn("no work left", out.getvalue())
+
+    def test_plan_json(self):
+        import json
+        lists = wq.plan_lists(wq.score_funcs([func("A", "a", 40), func("B", "b", 80)]), 2, lambda sc: sc.eff)
+        data = json.loads(wq.plan_json(lists))
+        self.assertEqual(sorted(x["files"][0] for x in data), ["A", "B"])
+        self.assertEqual(data[0]["functions"][0]["size"] in (40, 80), True)
+
+
+class Calibration(unittest.TestCase):
+    def test_rows_found_in_either_set_and_family_split(self):
+        rem = [sel("TT/1", "func_p", 40, "v1"), sel("TT/1", "func_q", 40, "")]
+        mat = [sel("TEL", "func_m", 40, "v0"), sel("TEL", "func_n", 40, ""), sel("TT/2", "func_x", 40, "")]
+        cases = [("TT", "func_p", "promo", "compare chain on a global"), ("TT", "func_q", "promo", "`D = N; f(N)` constants"),
+                 ("TEL", "func_m", "promo", "post-increment compare"), ("TT", "func_gone", "promo", "compare chain"),
+                 ("TT", "func_x", "regorder", "other")]
+        c = wq.calibration(rem, mat, cases)
+        self.assertEqual([f.name for f in c["pos"]], ["func_p", "func_q", "func_m"])
+        self.assertEqual([f.name for f in c["fam"]], ["func_p", "func_m"])
+        self.assertEqual([f.name for f in c["neg"]], ["func_n"])        # func_m and func_x are table rows
+        self.assertEqual(c["missing"], [("TT", "func_gone")])
+        out = io.StringIO()
+        res = wq.calibrate(rem, mat, cases, out)
+        self.assertEqual(res["U1 ($v1 selector)"], (1, 1, 0))
+        self.assertEqual(res["U0 ($v0 selector)"], (1, 1, 0))
+        self.assertIn("family", out.getvalue())
+
+
+class Cli(unittest.TestCase):
+    def tree(self, d):
+        r = Path(d)
+        (r / "src/main").mkdir(parents=True)
+        (r / "config").mkdir()
+        (r / "config/overlays.txt").write_text("# none\n")
+        (r / "config/SLPM_86.053.yaml").write_text(
+            "segments:\n  - name: main\n    type: code\n    start: 0x800\n    vram: 0x80041000\n"
+            "    subsegments:\n      - { start: 0x800, type: c, name: main/80041000 }\n")
+        names = ["func_80041000", "func_80041010", "func_80041020"]
+        (r / "src/main/80041000.c").write_text("".join(
+            'INCLUDE_ASM("asm/nonmatchings/main/80041000", %s);\n' % n for n in names))
+        nm = r / "asm/nonmatchings/main/80041000"
+        nm.mkdir(parents=True)
+        for n, extra in zip(names, ([], ["addiu $v0, $zero, 1"], ["addiu $v0, $zero, 1", "addiu $v0, $v0, 1"])):
+            (nm / (n + ".s")).write_text(asm(n, extra + ["jr $ra", " nop"]))
+        return r
+
+    def run_cli(self, *args):
+        import contextlib
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = wq.main(list(args))
+        return rc, buf.getvalue()
+
+    @unittest.skipUnless(importlib.util.find_spec("yaml"), "needs PyYAML (runs in Docker)")
+    def test_bytes_next_and_plan(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = self.tree(d)
+            rc, out = self.run_cli("--root", str(r), "--by", "bytes", "--no-groups", "--next", "2")
+            self.assertEqual(rc, 0)
+            self.assertIn("score", out)
+            self.assertEqual(len(out.strip().splitlines()), 3)
+            rc, out = self.run_cli("--root", str(r), "--by", "bytes", "--no-groups", "--plan", "3", "--agents", "2")
+            self.assertEqual(rc, 0)
+            self.assertIn("plan: 3 functions", out)
+            self.assertIn("agent 2", out)
+            rc, out = self.run_cli("--root", str(r), "--plan", "3", "--agents", "2", "--no-groups", "--json")
+            self.assertEqual(rc, 0)
+            self.assertEqual(out.count('"name"'), 3)
 
 
 if __name__ == "__main__":

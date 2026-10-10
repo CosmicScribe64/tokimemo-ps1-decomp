@@ -104,13 +104,22 @@ typedef struct Foo {
 - Mark unknown fields `unk_XX` (offset in hex) and padding `pad`. Do not invent semantics.
 - Bit-fields only if the matching output requires them.
 
-### 8a. Shared externs (T-1200)
+### 8a. Shared externs (T-1200, T-3340)
 
-- A global or function used by more than one file is declared once, in `include/game.h` (main exe symbols and the game types) or in the one overlay header that owns it (`include/ovl/<NAME>.h`, overlay addresses). Overlay headers include `game.h`; they must not redeclare a symbol it declares, not even with the same type.
+- Every main-exe symbol (address 0x80041000-0x8012B537: game functions, SDK functions, globals; renamed ones are listed in `config/symbol_addrs*.txt`) is declared once, in `include/main_api.h`, and nowhere else. `include/game.h` holds the game structs only; `include/ovl/<NAME>.h` holds the overlay's own symbols (addresses from its load address up) and includes `main_api.h` (directly or through `game.h`). A `.c` file does not declare a symbol of `main_api.h` either. (A main-bss global that only one overlay reads through a struct defined in that overlay's header, such as `TaiikuBig D_801227A0[]`, stays in that header; `tools/check_headers.py` accepts it while nothing else declares the symbol.)
+- The type in `main_api.h` is the one the main-exe definition has (matched C in `src/main`). While the function is still `INCLUDE_ASM`, the type comes from the call sites; change it when a definition shows better. A `()` is kept where callers pass other arguments than the definition takes. Choose data types from the access widths of all users (`lbu` is `u8`, `lh` is `s16`, `lw` is `s32`/pointer).
 - One type per symbol inside every header closure (a root header plus what it includes). A second declaration with another type is an IDO "redeclaration" error, and a narrower prototype (`u8` parameter) changes call code in every file that sees it.
-- If two users really need different views, do not give them two declarations in one closure. Take the address (`(u8 *)&D_801217D0 + n`, `&D_800CA148`) when one user wants the bytes of a scalar, model a struct or union when the accesses show one, or keep the symbol out of `game.h` and declare each view where it is used: main-exe-only views in `include/main_only.h` (never included by overlays), overlay views in the overlay header.
-- Choose the type from the access widths of all users (`lbu` is `u8`, `lh` is `s16`, `lw` is `s32`/pointer) and keep it only if every matched user still matches.
-- No exact duplicates. `tools/check_headers.py` enforces all of this (also for definitions and prototypes at the top of each `src` .c file against the headers it includes) and runs in `ninja` and CI; tests: `tools/test_check_headers.py`.
+- A file that was genuinely matched against another view (a signed byte of an unsigned global, a scalar of an array, a `u32` selector, another return type, an implicit `int f()`) keeps that view as an explicit override, and only then: before its first include it defines `MAIN_API_OVERRIDE_<symbol>` with the reason, and it declares its own type next to its other declarations. `main_api.h` wraps the symbol in `#ifndef MAIN_API_OVERRIDE_<symbol>`.
+  ```c
+  #define MAIN_API_OVERRIDE_D_800E7384 /* matched as u32 (main_api.h: s32) */
+  #include "common.h"
+  #include "game.h"
+  ...
+  extern u32 D_800E7384;
+  ```
+  An override changes what that file's functions see, so first try the `main_api.h` type; if the build still matches, no override is needed. `tools/sync_protos.py --prune` tries to delete every override and keeps the ones the build needs. Where several users really need different views of the bytes, prefer taking the address (`(u8 *)&D_801217D0 + n`) or a struct/union that models the accesses over an override.
+- Tools: `tools/sync_protos.py --report` lists the main-exe symbols the overlays use and every conflicting view; `--write` adds the declarations that are missing in `main_api.h`; `--fix` also removes the duplicates from the other headers and turns genuine differences into overrides; `--snapshot`/`--compare` prove that a header refactor changes no view. `tools/check_headers.py` (ninja, CI; tests `tools/test_check_headers.py`, `tools/test_sync_protos.py`) enforces all of this, also for definitions and prototypes at the top of each `src` .c file, and each message names the fix ("declare X in include/main_api.h", "add `#define MAIN_API_OVERRIDE_X /* reason */`").
+- No exact duplicates.
 
 ## 9. Comments
 
@@ -152,7 +161,7 @@ Reviewer checklist:
 - [ ] Files in the right place; generated asm not hand-edited; `INCLUDE_ASM` used per section 6.
 - [ ] Every fakematch carries a `FAKE` comment with reason and ticket. Toolchain emulation passes meet all points of section 7a.
 - [ ] Fixed-width types; struct offsets documented.
-- [ ] Shared externs declared once with one type (section 8a); `tools/check_headers.py` passes.
+- [ ] Main-exe symbols declared once in `include/main_api.h` with one type, every override explained (section 8a); `tools/check_headers.py` passes.
 - [ ] Non-obvious tricks explained; no dead code or stray debug.
 - [ ] No copyrighted game data or assets staged.
 - [ ] Scripts are Python 3, Docker-run, no host installs.

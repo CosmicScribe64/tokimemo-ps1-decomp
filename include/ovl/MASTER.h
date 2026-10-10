@@ -34,10 +34,7 @@ extern s32 D_8013C764;
 extern s32 D_8013C768;
 extern s16 D_8013C76C;
 extern s32 D_8013C770;
-void func_80042808();
-void Default_Disp();
 void func_80138490();
-extern s32 D_800E644C;
 extern s32 D_8013C4B0;
 extern s32 D_8013C4B4;
 extern s32 D_8013C4B8;
@@ -47,19 +44,7 @@ extern s32 D_8013C4C4;
 extern s16 D_8013C4C8;
 extern s16 D_8013C4CC;
 extern s32 D_8013C4D0;
-void func_80048F64();
-void func_800674B0();
-void func_8006D6E0();
-void func_8008585C();
 void func_80138EC0();
-extern s8 D_80120656;
-extern s8 D_80120657;
-extern s16 D_8012066A;
-extern s16 D_8012066C;
-extern s8 D_80120693;
 void func_80138F70();
-
-/* matched against the main-exe u8 prototype */
-void set_dec_bri(u8 arg0);
 
 #endif /* OVL_MASTER_H */

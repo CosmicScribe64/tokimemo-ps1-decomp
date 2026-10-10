@@ -2,37 +2,13 @@
 #define OVL_EN_NICHI_H
 
 #include "common.h"
-
-/* Main-exe data and functions used by EN_NICHI (old names, see T-0750). */
-extern u8 D_800E62BE;
-extern u8 D_8011ECD0[];
-extern u8 D_800E738D;
-extern u8 D_80121531;
-void func_8004284C(void);
-void func_80044750(s32 arg0);
-s32 func_800460CC(void);
-void func_80046318(s32 arg0, s32 arg1, s32 arg2);
+#include "main_api.h"
 
 typedef struct Rec30 {
     /* 0x00 */ s32 val;
     /* 0x04 */ u8 unk_04[0x2C];
 } Rec30; /* size 0x30 */
 extern Rec30 D_80139868[];
-
-extern u8 D_800E71EF;
-extern s32 D_800E7374;
-extern s32 D_800E7200;
-extern s16 D_8011ECF6;
-extern s16 D_8011ECFA;
-void func_8006BC28(s32 arg0);
-void load_palette(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void func_80085E30(s32 arg0, s32 arg1);
-void func_8006BD6C(s32 arg0);
-void func_800AE120(s32 arg0);
-void hizuke_disp_switch(s32 arg0);
-void func_80065F34(s32 arg0);
-void message_disp_switch(s32 arg0);
-void func_8006764C(s32 arg0);
 
 /* EN_NICHI data (overlay rodata/data) */
 extern s32 D_80139B1C;
@@ -61,14 +37,6 @@ void func_80136A2C(void);
 void func_801338EC(void);
 void func_80132ADC(void);
 
-extern u8 D_80121313;
-extern s16 D_80121328;
-extern u8 D_80121357;
-extern s16 D_8012136C;
-extern u8 D_8012139B;
-extern s16 D_801213B0;
-extern u8 D_801213DF;
-extern s16 D_801213F4;
 extern u8 D_8013984C[];
 
 extern s32 D_801391E0;
@@ -87,8 +55,5 @@ void func_80132EE8();
 void func_80132DC4();
 
 extern s32 D_80139AFC;
-extern s16 D_80121548;
-extern u8 D_80121533;
-void func_80042808();
 
 #endif /* OVL_EN_NICHI_H */

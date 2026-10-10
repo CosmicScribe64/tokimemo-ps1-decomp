@@ -81,6 +81,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-3200-catalog-game-versions|T-3200]] Catalog game versions (Done)
 - [[tickets/T-3310-native-docker-image|T-3310]] Native Docker image for Apple Silicon (Done)
 - [[tickets/T-3330-local-fptab-frame-layout|T-3330]] Local function-pointer table frame layout (Done)
+- [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340]] Tooling: shared main-exe prototypes (`include/main_api.h`) and byte-weighted queue (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -110,3 +111,6 @@ See [[kanban]]. Template: [[tickets/_template]].
 - `tools/identify_version.py` (T-3200): identify which release a disc image or folder is, from `config/versions.txt`; reads bin/iso/cue, folders and zip/7z/chd (T-3300); tests `tools/test_identify_version.py`
 - `tools/prepare_disc.py` (T-3300): finds the game in `game/`, identifies it, unpacks it into `disc/`; ninja step `build/disc.stamp`; tests `tools/test_prepare_disc.py`
 - T-3300 tooling fixes: `tools/m2c.py --unit`, `funcdiff.py --resolve/--no-build`, K&R in `srcscan.py`, archives in `identify_version.py`; tests `tools/test_srcscan.py`, `tools/test_funcdiff.py`; details in [[matching-notes]] ("Tooling fixes T-3300")
+- `tools/identify_version.py` (T-3200): identify which release a disc image or folder is, from `config/versions.txt`; tests `tools/test_identify_version.py`
+- `tools/sync_protos.py` (T-3340): lists, generates and checks `include/main_api.h`, the one declaration of every main-exe symbol; overrides, `--prune`, `--snapshot/--compare`; tests `tools/test_sync_protos.py`; rules in CODING_STANDARDS 8a and [[decompile-workflow]]
+- `tools/queue.py` (T-1320, T-3340): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags; calibration in [[matching-notes]]
