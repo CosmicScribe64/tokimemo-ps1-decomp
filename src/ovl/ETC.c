@@ -1472,7 +1472,14 @@ void func_8013BAC4(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013BB08);
+void func_8013BB08(s32 arg0, s32 arg1) {
+    s32 t = D_8014FD90[arg0][arg1];
+
+    if (t != -1) {
+        D_8014F990 = 1;
+        func_80062CD0(t);
+    }
+}
 
 void func_8013BB64(s32 arg0) {
     s32 t = D_8014FCDC[arg0];
@@ -1564,9 +1571,29 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013CCE4);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013CF2C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013D264);
+void func_8013D264(void) {
+    s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
+    RECT rect;
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013D2C0);
+    rect.x = 0;
+    rect.y = D_8011ECA0 * 0xF0;
+    rect.w = 0x140;
+    rect.h = 0xF0;
+    func_8009C93C(&rect, 0x140, 0x100);
+    func_8009C674(0);
+}
+
+void func_8013D2C0(void) {
+    s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
+    RECT rect;
+
+    rect.x = 0;
+    rect.y = (1 - D_8011ECA0) * 0xF0;
+    rect.w = 0x140;
+    rect.h = 0xF0;
+    func_8009C93C(&rect, 0, D_8011ECA0 * 0xF0);
+    func_8009C674(0);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013D32C);
 
@@ -1590,7 +1617,14 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013EAC0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013EB90);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013ECDC);
+void func_8013ECDC(void) {
+    func_801408F0();
+    if (D_8014F990 == 1) {
+        func_8013ED8C();
+    } else if (D_8015007C == 1) {
+        func_80136448();
+    }
+}
 
 void func_8013ED38(void) {
     D_80150084 = (u8 *)0x80180084;
@@ -1600,7 +1634,12 @@ void func_8013ED38(void) {
     D_80150094 = (u8 *)0x801800AC;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013ED8C);
+void func_8013ED8C(void) {
+    func_8013ED38();
+    func_800415B4(0, 0x40);
+    func_80062DBC(D_80150094, D_80150084, D_80150088, D_8015008C, D_80150048);
+    func_8013E094(D_80150088);
+}
 
 void func_8013EDF8(void) {
     if (D_8014F990 == 1) {
@@ -1608,7 +1647,13 @@ void func_8013EDF8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013EE28);
+void func_8013EE28(void) {
+    if (D_8014F990 == 1) {
+        func_8013EEAC();
+    } else if (D_8015007C == 1) {
+        func_8013EE7C();
+    }
+}
 
 void func_8013EE7C(void) {
     D_8015007C = 0;
@@ -1656,7 +1701,17 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013F980);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013FA7C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013FC08);
+void func_8013FC08(void) {
+    s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
+    RECT rect;
+
+    rect.x = 0;
+    rect.y = D_8011ECA0 * 0xF0;
+    rect.w = 0x140;
+    rect.h = 0xF0;
+    func_8009C93C(&rect, 0x280, 0);
+    func_8009C674(0);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8013FC64);
 
@@ -1710,7 +1765,15 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80141468);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_801415A4);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80141700);
+void func_80141700(void) {
+    if (D_800E7208 & 0x20) {
+        func_8004284C();
+    } else if (D_800E7208 & 0x40) {
+        func_8004482C();
+        func_80042878(0xC4);
+    }
+    func_800578F4(2);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014175C);
 
@@ -1863,7 +1926,14 @@ void func_80146254(void) {
     func_8009C5E0(1);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_80146294);
+void func_80146294(void) {
+    if (*(u16 *)D_800E6280 == 0x100) {
+        func_800590CC(0);
+    }
+    D_800E71DF += 0x10;
+    func_80042878(0x12);
+    func_8009C5E0(1);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_801462E8);
 
@@ -2128,4 +2198,12 @@ void func_8014C2D0(void) {
     func_80072B5C(1);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC", func_8014C320);
+void func_8014C320(void) {
+    func_80072338();
+    func_80072338();
+    func_80072338();
+    func_80072338();
+    func_80072338();
+    func_80072338();
+    func_80072B5C(1);
+}

@@ -884,5 +884,14 @@ void func_801339EC(void);
 void func_80133C8C(void);
 void func_801350B0(void);
 void func_80133F7C(void);
+extern s32 D_8014FD90[][11];
+void func_8013EE7C(void);
+void func_8013EEAC(void);
+void func_80136448(void);
+void func_801408F0(void);
+void func_8013ED8C(void);
+void func_8013ED38(void);
+void func_80062DBC();
+void func_8013E094(u8 *arg0);
 
 #endif /* OVL_ETC_H */
