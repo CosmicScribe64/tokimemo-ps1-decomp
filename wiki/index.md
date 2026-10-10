@@ -84,6 +84,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340]] Tooling: shared main-exe prototypes (`include/main_api.h`) and byte-weighted queue (Done)
 - [[tickets/T-4060-wave-3-list-6|T-4060]] Wave 3 list 6: 26 functions in DATE, DATE2, GYOZI, MASTER, OMIMAI, RPG_BAT, SHOUGATU, TT, VALEN and main (Done)
 - [[tickets/T-4020-wave-3-list-2|T-4020]] Wave 3, list 2: 60 functions in DATE, SHUGAKU, EVENT, TACO, TT, GYOZI, GEKO, ENDING (Done)
+- [[tickets/T-4080-wave-3-list-8|T-4080]] Wave 3, list 8: 32 functions matched in 800451D0, 8007C030 and 17 overlay files (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list

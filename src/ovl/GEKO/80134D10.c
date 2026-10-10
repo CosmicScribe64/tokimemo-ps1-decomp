@@ -265,7 +265,17 @@ void func_80138AF8(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80138B74);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80138BF0);
+void func_80138BF0(void) {
+    if (D_80122CD4 == 8 || (D_80122CD4 == 0xB && D_80122CD0 == 2)) {
+        func_80044890(1, 0xC063, 0xC045, D_800B3688[D_80122CD4], D_800B36C8[D_80122CD4], D_800B3708[D_80122CD4]);
+    } else {
+        func_80044890(1, 0xC043, 0xC01D, D_800B3688[D_80122CD4], D_800B36C8[D_80122CD4], D_800B3708[D_80122CD4]);
+    }
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80138CDC);
 

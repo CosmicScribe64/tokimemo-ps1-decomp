@@ -314,3 +314,22 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | TT | `func_801364EC` | regorder | switch on a `u16` field: the original reuses the selector register `$v0` for the later `lhu` of the counter, IDO takes `$a0` (everything else matches) (T-4010) |
 | 80047550 | `func_80047560` | promo | u8 global `D_801255DC` kept in `$a0` for the loop bound, the `rsin` result math and the `+4` store (re-loaded into `$a0` after the call); IDO uses `$a3/$a1/$t9` and a different temp chain (T-4010) |
 | RPG_BAT | `func_8013D1D0` | regorder | `D_80120E07 &= ~0x80` in the else branch: original materialises `-0x81` in `$v1` (`and t6,t5,v1`), IDO folds it to `andi 0xFF7F` for every spelling tried (T-4010) |
+| 8007C030 | `normal_date_move_place` | regorder | switch on lw global (also tried u32 and if-chain): original selector in $v1, IDO $v0 (T-4080) |
+| GYOZI | `func_801399C0` | regorder | `D_800F5750 \|= 2`: original loads into $t8 with base $t7, IDO reuses $t7 as destination (T-4080) |
+| 8007C030 | `normal_date_girl_in` | regorder | same shape as `normal_date_move_place`: switch on lw global D_800E7384, original selector in $v1, IDO $v0 (T-4080) |
+| GEKO | `func_80135A6C` | regorder | `if (D++ == 1 && ...)` on lw global: original keeps it in $v1 and materialises the compare (`xori; sltiu 1; beqz`), IDO branches with `xori; bnez` (T-4080) |
+| 8007C030 | `normal_date_bg_fadein` | regorder | u8 global `+4`, clamp, store, compare: original keeps the masked temporary in $t7 and copies it to $v0, IDO propagates one register (T-4080) |
+| 8007C030 | `normal_date_bg_fadeout` | regorder | same shape as `normal_date_bg_fadein` with `-4` (T-4080) |
+| NAME_ENT | `func_80140B20` | regorder | u8 global `-2` stored to six bytes and back: original loads the global into $a0 and reuses it, IDO uses $v1/$v0/$a1 (T-4080) |
+| 8007C030 | `normal_date_girl_suddenin` | regorder | seven byte stores of 0x80: original keeps the constant in $v1/$v0 with a `move`, IDO emits a fresh `li` per store; chained assignments do not help (T-4080) |
+| TACO | `func_801368D8` | regorder | `u8` parameter used as modulus (`(u32)(*p + n + 1) % n`): IDO adds `move v0,a1` before the zero check and takes $v1 for the loaded byte (T-4080) |
+| GEKO | `func_80136F20` | regorder | `g = func_80051A68(x) & 0x7F` then compare chain: original `move v1,v0; andi t6,v1,0x7F; ...; move v1,t6` (copy kept), IDO folds to `andi v1,v0,0x7F` (T-4080) |
+| GEKO | `func_80137040` | regorder | same `& 0x7F` copy shape as `func_80136F20` (T-4080) |
+| GEKO | `func_801331A0` | regorder | same `& 0x7F` copy shape as `func_80136F20` (T-4080) |
+| 8007C030 | `func_80083628` | regorder | same `get_g_zyotai_h(x) & 0x7F` copy shape as GEKO `func_80136F20` (T-4080) |
+| TAIIKU | `func_80136DA4` | regorder | `v = D_8014929C + D_80149218`: original loads the first global straight into the result register $v1, IDO loads into $t6 and adds into $v1 (T-4080) |
+| GYOZI | `func_8013CAA4` | regorder | a flag OR on `D_800F53A0.girl[D_800F62CF]` before a strcpy of a literal: code identical but the original numbers the temporaries $t0..$t2 where IDO uses $t9,$t0,$t1 (one unsigned-index temporary more consumed in the original) (T-4080) |
+| 8007C030 | `select_girl` | regorder | same shape as `normal_date_move_place`: switch on lw global D_800E7384, original selector in $v1, IDO $v0 (T-4080) |
+| 8007C030 | `select_girl2` | regorder | identical to `select_girl` (T-4080) |
+| NAME_ENT | `func_8013DAC4` | promo | signed byte global D_800E7313 compared with -1 twice and read again after a call: original keeps it in $v1 with -1 in $a1, IDO loads into $v0/$a0 (T-4080) |
+| BUNKA_SD | `func_801362EC` | promo | unsigned byte global D_800E738A tested in two range checks around a call: original keeps it in $a1 (loaded once, reloaded after the call), IDO uses $a0 or spills a local (T-4080) |
