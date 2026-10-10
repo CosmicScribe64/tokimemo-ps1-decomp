@@ -98,4 +98,20 @@ extern s32 D_8013BFFC;
 extern s32 D_8013C000;
 extern s32 D_8013C004;
 
+void check_para_limit(void);
+void func_80132BCC(void);
+
+extern s32 D_800E6378;
+extern s32 D_80122CE0;
+extern u16 D_800E6374;
+extern u8 D_800E652A;
+extern u8 D_8013C97C;
+void func_80083418(void);
+void func_800833F0(void);
+void func_80083440(s32 arg0);
+extern s32 D_8013BE74;
+extern s32 D_8013BEA8;
+extern s32 D_8013BEDC;
+extern s32 D_80122CF4;
+
 #endif /* OVL_SHUGAKU_H */

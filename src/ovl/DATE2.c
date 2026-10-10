@@ -145,7 +145,16 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_80132FB0);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_8013301C);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_80133088);
+void func_80133088(void) {
+    RECT rect;
+
+    func_80083474();
+    rect.x = 0x140;
+    rect.y = 0x80;
+    rect.w = 0x180;
+    rect.h = 0x80;
+    func_8009C884(&rect, (void *)0x80180000);
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_801330D4);
 
@@ -288,7 +297,13 @@ void func_80137064(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_8013709C);
+void func_8013709C(void) {
+    D_800CA148 = 1;
+    D_800CA14C = 0;
+    func_800847B8(D_800E71DF);
+    func_801370E4();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2", func_801370E4);
 

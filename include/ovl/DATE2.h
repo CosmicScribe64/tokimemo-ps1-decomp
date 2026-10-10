@@ -2,6 +2,7 @@
 #define OVL_DATE2_H
 
 #include "common.h"
+#include "libgpu.h"
 
 /* Main-exe data and functions used by DATE2 (old names, see T-1030). */
 void func_8004284C(void);
@@ -91,5 +92,8 @@ extern s32 D_8013A774, D_8013A7A8, D_8013A7DC;
 extern s16 D_800CA14C;
 extern s32 D_8013A5B0, D_8013A5B4, D_8013A5B8, D_8013A5BC, D_8013A5C0, D_8013A5C4, D_8013A5C8;
 extern s32 D_8013A404, D_8013A408, D_8013A40C;
+
+void func_801370E4(void);
+void func_8009C884(RECT *rect, void *arg1);
 
 #endif /* OVL_DATE2_H */
