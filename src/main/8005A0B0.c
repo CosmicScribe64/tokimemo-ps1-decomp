@@ -449,7 +449,45 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005DDB4);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005DEA0);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E018);
+void func_8005E018(void) {
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(0);
+    func_8004FC10(0);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(0);
+        func_80042940(2);
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1093) {
+        case 0:
+            func_80042940(0x10);
+            break;
+        case 1:
+            func_80042940(0x20);
+            break;
+        case 2:
+            if (D_800E6280.unk_F74 == 0) {
+                func_80042940(0x30);
+            }
+            break;
+        case 3:
+            func_80042940(0x40);
+            break;
+        case 4:
+            func_80042940(0x50);
+            break;
+        case 5:
+            func_80042940(0x60);
+            break;
+        case 6:
+            func_80042940(0x70);
+            break;
+        case 7:
+            func_80042940(0xFF);
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E150);
 
@@ -665,7 +703,52 @@ void func_8005F22C(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F26C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F478);
+void func_8005F478(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+        return;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1094) {
+        case 0:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "メニュー設定を", 0);
+            set_kanji_string(-0x56, 0x42, 1, "マウスライク", 0);
+            set_kanji_string(-0x80, 0x52, 0, "にしました", 0);
+            D_800E6280.unk_1092 = 0;
+            func_8004284C();
+            return;
+        case 1:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "メニュー設定を", 0);
+            set_kanji_string(-0x56, 0x42, 1, "メニューＡ", 0);
+            set_kanji_string(-0x80, 0x52, 0, "にしました", 0);
+            D_800E6280.unk_1092 = 1;
+            func_8004284C();
+            return;
+        case 2:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "メニュー設定を", 0);
+            set_kanji_string(-0x56, 0x42, 1, "メニューＢ", 0);
+            set_kanji_string(-0x80, 0x52, 0, "にしました", 0);
+            D_800E6280.unk_1092 = 3;
+            func_8004284C();
+            return;
+        case 3:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "メニュー設定を", 0);
+            set_kanji_string(-0x56, 0x42, 1, "マウスライク＋メニューＡ", 0);
+            set_kanji_string(-0x80, 0x52, 0, "にしました", 0);
+            D_800E6280.unk_1092 = 2;
+            func_8004284C();
+            break;
+        }
+    }
+}
 
 void func_8005F6E4(void) {
     k_disp_inc();
