@@ -56,7 +56,16 @@ void func_8006D00C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D038);
+void func_8006D038(void) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        if (D_800E6280[0x72C + i] == 0x23 || D_800E6280[0x72C + i] == 0x24) {
+            D_800E6280[0x72C + i] = 0;
+        }
+        D_800E6280[0x74C + i] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D138);
 
