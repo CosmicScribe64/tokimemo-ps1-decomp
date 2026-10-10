@@ -540,7 +540,7 @@ void func_8014AE2C(void) {
     default:
     case 1:
         D_800B3DB0 = 0;
-        func_8004EBEC(3);
+        k_speed_set(3);
         D_800E6280.unk_1092 = 1;
         func_80042878(0x34);
         func_80042908(0xFF);

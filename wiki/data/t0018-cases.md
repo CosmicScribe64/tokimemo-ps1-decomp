@@ -452,3 +452,9 @@ Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only g
 | RPG_BAT/801504E0 | `func_80150CD8` | promo | `s32` state `D_8015EC74` switched (cases 0, 1, 2) and reloaded for `+= 1` in each case: original keeps it in $v1, IDO uses $v0 and loads the constant 1 into $v1 (T-4100) |
 | BUNKASAI/801354B0 | `func_801354B0` | promo | `s32` selector `D_80122EB8` (cases 0, 1): original $v1, IDO $v0 (T-4100) |
 | 80075320 | `func_80077E30` | promo | five-entry jump table on `u8 D_800E738D` (cases 0 to 3 + `case 4:` with default), selector in $v1 and reused for `+= 1` in case 1, reloaded into $v1 in case 2; IDO $v0 and $t0 (T-4100) |
+| GEKO | `func_80135A6C` | regorder | post-increment compare `if (D_800E7384++ == 1)`: original materialises `(old ^ 1) < 1` (xori; sltiu) in $v0 before `beqz`, IDO uses `xori; bnez` (T-6020) |
+| GEKO | `func_80137040` | regorder | `temp = f() & 0x7F` compare chain: original keeps the call result in a copy (`move v1,v0; andi t7,v1,0x7f`), IDO folds it; same for `func_80136F20` (T-6020) |
+| TACO | `func_8013587C` | promo | switch on `u8` `D_800E738D` (cases 0, 1, 2) with `+= 1` in cases 0 and 1: original copies the selector (`move v0,v1`), IDO does not (T-6020) |
+| BUNKA_SD | `func_801389DC` | promo | `u8` `D_800E738D` tested `== 0` / `== 1` and incremented in the first branch: original keeps the old value in $v0 and does `addiu v0; andi t6; move v0,t6; sb t6`, IDO `addiu t6; sb` (T-6020) |
+| NAME_ENT | `func_80145378` | promo | switch on `u8` `D_800E738D` (cases 0 to 3, case 2 falls into 3): original compares the selector in $v1 and copies it to $v0 for the later cases (`move v0,v1`), IDO does not; rest of the body matches (T-6020) |
+| 80061710 | `func_800626B0` | promo | `switch` on `s32` `D_801230D0` (cases 0, 1, default) after a call: original loads the selector into $v1, IDO into $v0 (T-6020) |
