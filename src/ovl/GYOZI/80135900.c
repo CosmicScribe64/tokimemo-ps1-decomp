@@ -66,4 +66,10 @@ void func_80135C00(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80135900", func_80135C3C);
+void func_80135C3C(void) {
+    D_800F53A0.girl[5].unk_0A -= 1;
+    D_800F53A0.girl[5].unk_06 -= 1;
+    D_800F53A0.girl[5].unk_0E += 0xA;
+    func_8008FB00();
+    func_8004DE1C();
+}
