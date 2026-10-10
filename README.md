@@ -4,8 +4,7 @@
 [![Code](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=code&label=Code)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 [![Functions](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp.svg?mode=shield&measure=functions&label=Functions)](https://decomp.dev/CosmicScribe64/tokimemo-ps1-decomp)
 
-*Tokimeki Memorial: Forever with You* is Konami's high-school dating sim for the PlayStation. This project is a
-matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`).
+This project is a matching decompilation of the Japanese "PlayStation the Best" release (`SLPM_86.053`), and an eventual English-translated Godot port of the game.
 
 The boot executable and all 26 overlays (`CDROM/EXEDIR/*.EXN`) already rebuild identically. Most functions are still
 assembly that the build pulls in from generated files, so the C is at an early stage. See [ROADMAP.md](ROADMAP.md) for where this project is going.
