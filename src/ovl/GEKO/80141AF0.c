@@ -50,7 +50,19 @@ void func_80141C94(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80141AF0", func_80141CCC);
+void func_80141CCC(void) {
+    D_800B5A60 = 0;
+    func_80138AF8();
+    D_80122CF4 = 0;
+    /* records of 0x44 / 0x24 bytes: indexing from the first symbol keeps IDO from hoisting the loads above the stores (T-4070) */
+    (&D_8011F4CB)[0x44] |= 0x80;
+    D_8011F4CB |= 0x80;
+    D_801217D0 &= 0x7FFFFFFF;
+    (&D_801217D0)[9] &= 0x7FFFFFFF;
+    if ((u32)D_800E7378 % 240U == 0) {
+        func_800638C4();
+    }
+}
 
 void func_80141D74(void) {
     D_800E683E = D_800E69DD;
