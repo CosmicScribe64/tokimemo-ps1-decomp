@@ -285,7 +285,6 @@ extern s32 D_80120754;
 extern s8 D_8012075F;
 extern u8 D_80145074;
 
-s32 get_g_zyotai_s(u8);
 
 void func_801394B0(void);
 void func_8013C5B0(void);
