@@ -9,7 +9,9 @@ ido: SGI IDO (decompals/ido-static-recomp) run through asm-processor, which
      splices the INCLUDE_ASM functions in and assembles them with GNU as.
      Used for the game code (T-0013, wiki/matching-notes.md). Every IDO
      compile also runs the frame-layout emulation pass (tools/frame_pass.py,
-     T-0016): the original's frames are 16 bytes larger than IDO's.
+     T-0016): the original's frames are 16 bytes larger than IDO's; and the
+     unsigned-load conversion pass (tools/cvt_pass.py, T-1321) around uopt,
+     so globals are kept in registers as the original does.
 gcc: the PsyQ way, cpp | cc1 | maspsx | as.
 
 Every object's .text is zero-padded to a multiple of 16 bytes (T-0012): the original link
