@@ -22,6 +22,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2050-wave2-geko|T-2050 Wave 2: GEKO]]
 
 
 ## In Review
