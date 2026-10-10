@@ -237,7 +237,33 @@ s32 func_8013C72C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013C780);
+void func_8013C780(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_8013AD10();
+        break;
+    case 1:
+        func_8013B3BC();
+        break;
+    case 2:
+        func_8013BE78();
+        break;
+    case 3:
+        func_8013C3B0();
+        break;
+    case 0xFF:
+    default:
+        func_8013C72C();
+        break;
+    }
+    if (D_800E6280.unk_1109 != 0xFF && (D_800E6280.unk_F88 & 0x20)) {
+        func_80042808();
+    }
+    if (D_800E6280.unk_1109 != 0 && (D_800E6280.unk_F88 & 0x40)) {
+        func_80042908((D_800E6280.unk_1109 - 1) & 0xFF);
+    }
+    func_80066C08(1);
+}
 
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CFA8);
 
