@@ -194,7 +194,19 @@ s32 func_8014A180(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A258);
+s32 func_8014A258(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80149F48();
+        break;
+    case 1:
+        func_8014A180();
+        break;
+    case 2:
+        func_8004284C();
+        break;
+    }
+}
 
 s32 func_8014A2C4(void) {
     switch (D_80150E9C) {
