@@ -85,7 +85,25 @@ void func_80137524(void) {
     D_80146354 = 0x801B1488;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801372B0", func_80137798);
+typedef struct {
+    void (*f[48])();
+} FnTbl48; /* size 0xC0 */
+extern FnTbl48 D_80146368;
+
+void func_80137798(void) {
+    u16 idx; /* FAKE: u16 and the second call argument put idx in $a1 as the original does (permuter); real prototype unknown. T-8080 */
+    FnTbl48 tbl;
+
+    tbl = D_80146368;
+    if (D_80145F60 != 0) {
+        idx = D_800F647A;
+        if ((void (*)())D_800896E0 == tbl.f[idx] || (void (*)())D_800898F0 == tbl.f[idx]) {
+            tbl.f[idx] = func_8004DE1C;
+        }
+    }
+    idx = D_800F647A;
+    tbl.f[idx](0x80, idx);
+}
 
 void func_80137854(void) {
     u32 temp_t8;
