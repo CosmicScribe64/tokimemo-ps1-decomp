@@ -110,9 +110,91 @@ void func_8013EA30(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013EA60);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013EEAC);
+void func_8013EEAC(u32 arg0) {
+    switch (arg0) {
+    case 0:
+        D_8015EC28 = 0x78;
+        D_8015EC2C = 0x68;
+        return;
+    case 1:
+        D_8015EC28 = 0x40;
+        D_8015EC2C = 0x58;
+        return;
+    case 2:
+        D_8015EC28 = 0x38;
+        D_8015EC2C = 0x88;
+        return;
+    case 3:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 4:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 5:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 16:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 17:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 18:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013EFD0);
+void func_8013EFD0(u32 arg0) {
+    switch (arg0) {
+    case 0:
+        D_8015EC28 = 0x78;
+        D_8015EC2C = 0x68;
+        return;
+    case 1:
+        D_8015EC28 = 0x40;
+        D_8015EC2C = 0x58;
+        return;
+    case 2:
+        D_8015EC28 = 0x38;
+        D_8015EC2C = 0x88;
+        return;
+    case 3:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x40;
+        return;
+    case 4:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x50;
+        return;
+    case 5:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 16:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 17:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        return;
+    case 18:
+        D_8015EC28 = 0x48;
+        D_8015EC2C = 0x60;
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 void func_8013F0F4(s32 a, s32 b, s32 c) {
     if (b == 0) {
