@@ -109,7 +109,7 @@ void func_80053CAC(u8 arg0) {
     D_800E739C = arg0;
 }
 
-/* Indexing the first symbol keeps IDO from hoisting the load above the first store (see cal_sprite_disp_switch). */
+/* FAKE: indexing the first symbol stops IDO from hoisting the load above the first store (see cal_sprite_disp_switch). Real source unknown. T-2090 */
 void func_80053CC0(void) {
     D_800E7395 = 0;
     (&D_800E7395)[7] += 1;

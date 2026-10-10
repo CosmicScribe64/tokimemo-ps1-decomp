@@ -111,7 +111,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A6AC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A868);
 
-/* Indexed views of D_80125D58 keep IDO from hoisting the later loads (see cal_sprite_disp_switch). */
+/* FAKE: indexed views of D_80125D58 stop IDO from hoisting the later loads above the stores (see cal_sprite_disp_switch). Real source unknown. T-2090 */
 void func_8007A924(s32 arg0) {
     func_8007BA54();
     D_80125D58[0] = D_80125D5E;

@@ -9,7 +9,7 @@ void func_80062CD0(s32 arg0) {
     D_800B5A60 = 0;
 }
 
-/* Indexed views of D_8011F50F and D_801217D0 keep IDO from hoisting the later loads (see cal_sprite_disp_switch). */
+/* FAKE: indexed views of D_8011F50F and D_801217D0 stop IDO from hoisting the later loads above the stores (see cal_sprite_disp_switch). Real source unknown. T-2090 */
 void func_80062D0C(s32 arg0) {
     if (arg0 == 0) {
         D_8011F50F &= 0x7F;
@@ -322,7 +322,7 @@ void magazine_base_show(void) {
     dtd_on(5);
 }
 
-/* Bit 31 of the first four 36-byte entries of the table at D_801217D0; indexing the symbol keeps IDO from hoisting the loads. */
+/* FAKE: bit 31 of the first four 36-byte entries of the table at D_801217D0 is reached by indexing the first symbol; separate scalar names let IDO hoist the loads above the stores. Real source unknown. T-2090 */
 void cal_sprite_disp_switch(s32 arg0) {
     if (arg0 == 1) {
         D_801217D0 &= 0x7FFFFFFF;
