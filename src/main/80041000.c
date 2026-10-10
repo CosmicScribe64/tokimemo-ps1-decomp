@@ -48,7 +48,12 @@ INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800415B4);
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_8004164C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041840);
+void func_80041840(void) {
+    D_800E71F4 = 1;
+    D_800E71EF = 3;
+    D_800E7312 = 1;
+    D_80123110 = 0x80132000;
+}
 
 void func_80041878(void) {
     func_800418B0();
@@ -81,7 +86,13 @@ void func_80042058(void) {
     D_800E71EE = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800420D0);
+void func_800420D0(void) {
+    D_80125124 = SetSp(0x801FEFF0);
+    InitHeap(0x801FF800, 0x7F0);
+    bzero((void *)0x800E60A0, 0x45498);
+    D_80125120 = GetGp();
+    func_80042134();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80042134);
 

@@ -24,4 +24,19 @@ INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_set);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", func_8004E44C);
+void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2) {
+    u8 *p;
+
+    p = D_801217A0 + arg0 * 0x14;
+    *(s32 *)p = arg2;
+    *(u32 **)(p + 4) = arg1 + 4;
+    p[8] = (arg1[0] & 0xFF000000) >> 24;
+    *(s16 *)(p + 0xA) = (arg1[0] & 0xFFFF) >> 24;
+    p[0xC] = (arg1[1] & 0xFF000000) >> 24;
+    p[0xD] = (arg1[1] & 0xFF0000) >> 16;
+    p[0xE] = (arg1[1] & 0xFF00) >> 8;
+    /* FAKE: the no-op "& 0xFF" consumes one IDO temp number, as in the original. T-2090 */
+    p[0xF] = arg1[1] & 0xFF;
+    *(s16 *)(p + 0x10) = ((u8 *)arg1)[8];
+    *(s16 *)(p + 0x12) = ((u8 *)arg1)[0xC];
+}

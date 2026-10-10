@@ -66,6 +66,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap, deferred (Backlog)
 - [[tickets/T-3100-identify-original-compiler|T-3100]] Identify the original game-code compiler (Done)
 - [[tickets/T-2070-wave-2-tt|T-2070]] Wave 2: TT, 49 functions matched (Done)
+- [[tickets/T-2090-wave2-main-executable|T-2090]] Wave 2: main executable (Done; 61 functions)
 - [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330]] Tooling: m2c context and decomp-permuter (Done)
 - [[tickets/T-1310-tooling-object-trailing-padding|T-1310]] Tooling: object-trailing padding (Done)
 - [[tickets/T-1340-tooling-jump-table-functions|T-1340]] Tooling: jump-table functions, rodata islands (Done)

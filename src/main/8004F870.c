@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "main_only.h"
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_set);
 
@@ -119,7 +120,20 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8005215C);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_tokimeki);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_h_yuukou);
+u32 get_h_yuukou(s32 arg0) {
+    s32 t;
+    s32 v;
+
+    t = arg0 % 13;
+    v = *(s16 *)(D_800E6280 + 0x1C2 + t * 0x38) * D_800B41A0[t] / 100;
+    if (v >= 0x65) {
+        return 0x64;
+    }
+    if (v < 0) {
+        return 0;
+    }
+    return v & 0xFF;
+}
 
 void get_h_tokimeki_table(u8 *arg0) {
     s32 i;
@@ -141,7 +155,31 @@ void birth_day_check(s32 arg0) {
     birth_day_check_days(arg0, D_800E62BF, D_800E62C0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", birth_day_check_days);
+s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
+    s32 t;
+    s32 v;
+
+    if (arg1 == 0xD) {
+        arg1 = 1;
+    }
+    t = arg0 & 0xF;
+    if (t == 0xF) {
+        v = D_800E6378;
+        if (arg1 == (v & 0xF)) {
+            if (arg2 == (u32)(v << 23) >> 27) {
+                return 1;
+            }
+        }
+    } else {
+        v = *(s32 *)(D_800E6280 + 0x1CC + t * 0x38);
+        if (arg1 == (v & 0xF)) {
+            if (arg2 == (u32)(v << 23) >> 27) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052E60);
 

@@ -116,8 +116,20 @@ void magazine_base_show(void) {
     dtd_on(5);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", cal_sprite_disp_switch);
-
+/* FAKE: bit 31 of the first four 36-byte entries of the table at D_801217D0 is reached by indexing the first symbol; separate scalar names let IDO hoist the loads above the stores. Real source unknown. T-2090 */
+void cal_sprite_disp_switch(s32 arg0) {
+    if (arg0 == 1) {
+        D_801217D0 &= 0x7FFFFFFF;
+        (&D_801217D0)[9] &= 0x7FFFFFFF;
+        (&D_801217D0)[18] &= 0x7FFFFFFF;
+        (&D_801217D0)[27] &= 0x7FFFFFFF;
+        return;
+    }
+    D_801217D0 |= 0x80000000;
+    (&D_801217D0)[9] |= 0x80000000;
+    (&D_801217D0)[18] |= 0x80000000;
+    (&D_801217D0)[27] |= 0x80000000;
+}
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", cal_sprite_init);
 
 void data_save_load_class_init(void) {
