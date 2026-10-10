@@ -601,4 +601,5 @@ typedef struct {
     u8 rest:5;
 } GirlFlag4;
 
+extern u8 D_801486E4;
 #endif /* OVL_GYOZI_H */

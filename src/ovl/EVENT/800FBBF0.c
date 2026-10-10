@@ -163,7 +163,24 @@ void func_800FC46C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FC56C);
+typedef struct {
+    s32 w[0x11];
+} Ev44; /* size 0x44: record of D_800EAFA0 */
+
+void func_800FC56C(void) {
+    D_80120678 = D_80120374;
+    D_8012067C = D_8012038C;
+    D_80120680 = D_801203A4;
+    D_800B0A04[2].unk_02 += 2;
+    D_800B0A04[2].unk_0A -= 0xA;
+    func_8004C250();
+    func_800FBD10();
+    func_80012D64(D_80121238, 0x11, 1, 2, 0);
+    func_8004C46C(D_8012123C, D_80121240, D_80121244, D_80121248, D_8012124C, D_80121250);
+    func_8004C6B0(D_8012122C, D_80121230, D_80121228, D_80121234);
+    *(Ev44 *)&D_800EAFA0[0x88] = *(Ev44 *)D_800EAFA0;
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FC6B8);
 

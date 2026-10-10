@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-9130-wave-6-list-3|T-9130 Wave 6: list 3]]
 
 
 
