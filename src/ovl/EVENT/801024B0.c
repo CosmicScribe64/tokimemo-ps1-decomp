@@ -151,11 +151,39 @@ void func_80102CC4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102D40);
+void func_80102D40(void) {
+    D_80120678 = D_8012044C;
+    D_8012067C = D_80120468;
+    D_80120680 = D_80120484;
+    func_80102560();
+    func_80012D64(D_801226BC, 0x11, 1, 2, 0);
+    func_8004C46C(D_801226C0, D_801226C4, D_801226C8, D_801226CC, D_801226D0, D_801226D4);
+    func_8004C6B0(D_801226B0, D_801226B4, D_801226AC, D_801226B8);
+    /* FAKE: the two later fields reached through D_800B0B0A; separate names let as1 hoist their loads above the stores. T-4100 */
+    D_800B0B0A += 2;
+    (&D_800B0B0A)[2] += 1;
+    (&D_800B0B0A)[4] -= 0xA;
+    func_8004C250();
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102E54);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_801030F4);
+void func_801030F4(void) {
+    D_80120678 = D_80120454;
+    D_8012067C = D_80120470;
+    D_80120680 = D_8012048C;
+    func_801026C0();
+    func_80012D64(D_80122714, 0x11, 1, 2, 0);
+    func_8004C46C(D_80122718, D_8012271C, D_80122720, D_80122724, D_80122728, D_8012272C);
+    func_8004C6B0(D_80122708, D_8012270C, D_80122704, D_80122710);
+    /* FAKE: the two later fields reached through D_800B0B0A; separate names let as1 hoist their loads above the stores. T-4100 */
+    D_800B0B0A += 3;
+    (&D_800B0B0A)[2] += 2;
+    (&D_800B0B0A)[4] -= 0x14;
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_80103208(void) {
     D_80120678 = D_80120458;
