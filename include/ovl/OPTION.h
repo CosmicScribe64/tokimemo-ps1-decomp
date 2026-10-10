@@ -56,5 +56,6 @@ s32 func_8013AC30(void);
 void func_8013A604(void);
 void func_8013ACD4(void);
 s32 func_8013AD10(void);
+void func_80132384();
 
 #endif /* OVL_OPTION_H */

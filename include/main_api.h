@@ -1035,6 +1035,8 @@ extern s32 D_80120860;
 extern s32 D_80120864;
 extern s16 D_8012089A;
 extern s16 D_801208DE;
+extern u8 D_801208FB;
+extern s16 D_80120912[];
 extern s16 D_80120922;
 extern s16 D_80120966;
 extern s16 D_801209AA;
