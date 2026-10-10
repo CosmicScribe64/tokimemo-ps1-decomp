@@ -103,7 +103,19 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013820C);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013850C);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013856C);
+void func_8013856C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_801385CC();
+        return;
+    case 1:
+        func_801388C0();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801385CC);
 

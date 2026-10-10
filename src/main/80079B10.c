@@ -412,7 +412,24 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BBE8);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BCFC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BDE8);
+void func_8007BDE8(void) {
+    s16 var_s0;
+
+    if (D_80125D10.unk_00 & 0x1100) {
+        func_80090580(D_80125D38);
+        func_800907E0(D_80125D38);
+    }
+    func_8008FD68(0);
+    var_s0 = 3;
+    do {
+        if ((0x10000 << var_s0) & D_80125D10.unk_00) {
+            func_80090E60(var_s0);
+        }
+        var_s0 -= 1;
+    } while (var_s0 >= 0);
+    func_8008BE54();
+    func_8008BEBC();
+}
 
 void func_8007BE94(s16 arg0) {
     /* FAKE: `^ 0` turns the left operand into an expression, which makes uopt swap the operands of the compare (decomp-permuter, score 0); real source unknown. T-4090 */

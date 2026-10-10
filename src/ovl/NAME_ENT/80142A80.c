@@ -55,4 +55,20 @@ void func_801449DC(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80144A34);
+void func_80144A34(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80142E24();
+        break;
+    case 1:
+        func_80143580();
+        break;
+    case 2:
+        func_801449DC();
+        break;
+    }
+    if (D_800E6280.unk_F88 & 0x860) {
+        func_80042940(2);
+    }
+}

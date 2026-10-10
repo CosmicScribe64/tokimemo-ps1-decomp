@@ -135,7 +135,20 @@ void normal_date_bg_out(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007D8AC);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in);
+void normal_date_girl_in(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        normal_date_girl_in_init();
+        break;
+    case 1:
+        normal_date_girl_in_main();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80057D28(1);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_init);
 
@@ -143,7 +156,20 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_main);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenin);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out);
+void normal_date_girl_out(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        normal_date_girl_out_init();
+        break;
+    case 1:
+        normal_date_girl_out_main();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80057D28(1);
+}
 
 void normal_date_girl_out_init(void) {
     D_800B5940 = 0x80;
@@ -163,7 +189,19 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bg_fadeout);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadeout);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_move_place);
+void normal_date_move_place(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        normal_date_move_place_init();
+        return;
+    case 1:
+        normal_date_move_place_main();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void normal_date_move_place_init(void) {
     k_reset(1);
@@ -250,7 +288,19 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select);
+void normal_date_three_select(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        normal_date_three_select_init();
+        return;
+    case 1:
+        normal_date_three_select_main();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_init);
 
@@ -299,7 +349,16 @@ void func_80083440(u8 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083474);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083628);
+void func_80083628(void) {
+    u8 var_v1;
+
+    var_v1 = get_g_zyotai_h((s32) D_800E6280.unk_F5F) & 0x7F;
+    if ((u8) D_800E6280.unk_F5F >= 0xCU) {
+        var_v1 = 0;
+    }
+    func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_800836A0);
 
@@ -363,9 +422,33 @@ void func_800847B8(u8 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl);
+void select_girl(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        select_girl_init(0);
+        return;
+    case 1:
+        select_girl_main(0);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl2);
+void select_girl2(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        select_girl_init(1);
+        return;
+    case 1:
+        select_girl_main(1);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_init);
 
@@ -378,7 +461,22 @@ void sprite_brightness(s16 idx, u8 val) {
     p[0x14] = val;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", day_plus);
+void day_plus(void) {
+    s32 sp28; /* FAKE: unused local, the original frame has one more word below sp2B (T-3330 slot rule); source unknown. T-6040 */
+    u8 sp2B;
+
+    D_800CA2F0 = 0;
+    sp2B = D_8011F113;
+    func_80072338();
+    hizuke_init();
+    if (sp2B & 0x80) {
+        hizuke_disp_switch(1);
+    } else {
+        hizuke_disp_switch(0);
+    }
+    hizuke_show();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", check_para_limit);
 
@@ -504,7 +602,16 @@ void normal_date_speak(void) {
     func_80082764(D_80122CDC, 1, 0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", vram_bustup_clear);
+void vram_bustup_clear(void) {
+    s16 i;
+
+    func_80048F64(0x1F);
+    func_80048F64(0x1E);
+    for (i = 5; i < 0xA; i++) {
+        D_800E6280.unk_1228[i] = -1;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085B3C);
 
