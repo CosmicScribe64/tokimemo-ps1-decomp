@@ -20,6 +20,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
+- [[tickets/T-8010-wave-5-list-1|T-8010]] Wave 5: list 1 (In Progress)
 - [[tickets/T-6070-wave-4-list-7|T-6070]] Wave 4: list 7 (Done)
 - [[tickets/T-7030-tooling-wave-4-bug-fixes|T-7030]] Tooling: wave-4 bug fixes (Done)
 - [[tickets/T-5100-game-state-struct|T-5100]] Recover the main game-state struct (Done)

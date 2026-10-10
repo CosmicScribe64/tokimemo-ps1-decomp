@@ -53,7 +53,24 @@ void func_80132FC8(u8 *arg0, u16 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_80133058);
+/* FAKE: the two byte stores of each case share one source line; as1 schedules them as a unit, which gives the original's store order. Real source unknown. T-8010 */
+void func_80133058(u8 *arg0, u16 arg1) {
+    *(u16 *)(arg0 + 2) = arg1;
+    switch (arg1) {
+    case 0x6E:
+        arg0[0x5C] = 0xF0; arg0[0x5D] = 0xA0;
+        *(u16 *)(arg0 + 0x5A) = 0x3C84;
+        break;
+    case 0x6F:
+        arg0[0x5C] = 0xF0; arg0[0x5D] = 0xB0;
+        *(u16 *)(arg0 + 0x5A) = 0x3C84;
+        break;
+    case 0x6D:
+        arg0[0x5C] = 0xF0; arg0[0x5D] = 0xE0;
+        *(u16 *)(arg0 + 0x5A) = 0x3C8D;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_801330D8);
 
