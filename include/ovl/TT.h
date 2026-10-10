@@ -91,3 +91,4 @@ void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2);
 extern u8 D_80155D02;
 
 #endif /* OVL_TT_H */
+void func_8013EC1C(void);
