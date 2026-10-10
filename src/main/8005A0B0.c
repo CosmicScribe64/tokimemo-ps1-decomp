@@ -511,7 +511,32 @@ void func_8005E9EC(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005EA38);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005EB74);
+void func_8005EB74(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+        return;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1094) {
+        case 0:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "右ボタンで決定にしました", 0);
+            D_800E6280.unk_F75 = 1;
+            func_8004284C();
+            return;
+        case 1:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "左ボタンで決定にしました", 0);
+            D_800E6280.unk_F75 = 0;
+            func_8004284C();
+            break;
+        }
+    }
+}
 
 void func_8005EC78(void) {
     k_disp_inc();
@@ -522,7 +547,32 @@ void func_8005EC78(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005ECB8);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005EE00);
+void func_8005EE00(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+        return;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1094) {
+        case 0:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "シングルクリックにしました", 0);
+            D_800E6280.unk_F70 = 0;
+            func_8004284C();
+            return;
+        case 1:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "ダブルクリックにしました", 0);
+            D_800E6280.unk_F70 = 1;
+            func_8004284C();
+            break;
+        }
+    }
+}
 
 void func_8005EF04(void) {
     k_disp_inc();
