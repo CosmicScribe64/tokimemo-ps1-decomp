@@ -388,9 +388,33 @@ void func_800847B8(u8 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl);
+void select_girl(void) {
+    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    case 0:
+        select_girl_init(0);
+        return;
+    case 1:
+        select_girl_main(0);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl2);
+void select_girl2(void) {
+    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    case 0:
+        select_girl_init(1);
+        return;
+    case 1:
+        select_girl_main(1);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_init);
 

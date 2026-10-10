@@ -1669,8 +1669,8 @@ void k_disp_inc2();
 #ifndef MAIN_API_OVERRIDE_func_800847B8
 void func_800847B8(u8 arg0);
 #endif
-void select_girl_init(void);
-void select_girl_main(void);
+void select_girl_init(s32 arg0);
+void select_girl_main(s32 arg0);
 void func_80084C98();
 void sprite_brightness(s16 idx, u8 val);
 void check_para_limit(void);
