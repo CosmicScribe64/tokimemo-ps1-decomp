@@ -159,7 +159,65 @@ void func_80137F94(void) {
     D_80120668 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80138088);
+void func_80138088(void) {
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_00 = D_800E6280.unk_F5F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_02 = 0x15;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_01 = 6;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_04 = D_800E6280.unk_03E;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_05 = D_800E6280.unk_03F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_06 = D_800E6280.unk_040;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_07 = D_800E6280.unk_041;
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 1:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 2:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 3:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 4:
+        if ((D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == 6) {
+            D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 5;
+            D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_07 = 0xFF;
+        } else {
+            D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        }
+        break;
+    case 5:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 6:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 0;
+        break;
+    case 7:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 0;
+        break;
+    case 8:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 9:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 5;
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_07 = 0xFF;
+        break;
+    case 10:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 11:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    case 12:
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 1;
+        break;
+    }
+    if ((D_800E6280.unk_F5E = D_800E6280.unk_F5E + 1) >= 0xFF) {
+        D_800E6280.unk_F5E = 0xFE;
+    }
+}
 
 void func_80138374(void) {
     D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_00 = D_800E6280.unk_F5F;
