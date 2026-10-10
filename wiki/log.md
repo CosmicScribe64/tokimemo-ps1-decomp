@@ -366,3 +366,6 @@ Re-ran tools/dupes.py --apply --check after the jump-table merge: 4 copies kept 
 
 ## [2026-10-09] ticket | T-2030 Wave 2: TACO started
 New [[tickets/T-2030-wave-2-taco]] (In Progress): matching `src/ovl/TACO.c`.
+
+## [2026-10-09] ticket | T-2030 Wave 2: TACO done
+[[tickets/T-2030-wave-2-taco]] In Progress -> Done after the inline code review (no open findings). 70 functions matched in `src/ovl/TACO.c` (TACO 7 -> 77 of 406), clean build 27 of 27 sha1 OK, `ninja progress` grand total 971 of 6962. 7 rows added to [[data/t0018-cases]]; new patterns in [[matching-notes]] (section "Wave 2 batch TACO"). Tooling bug: `tools/m2c.py` resolves a function name to the first overlay with that name, so a draft for a TACO function can come from another overlay.

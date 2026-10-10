@@ -48,17 +48,9 @@ typedef struct TcObj50 {
     /* 0x24 */ u8 pad24[0x2C];
 } TcObj50; /* size 0x50 */
 
-typedef struct TcEnt1C {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ u8 padC[0x10];
-} TcEnt1C; /* size 0x1C */
-
 extern TcPos D_80128880[];
 extern Tc10 D_80127080[];
 extern TcObj50 D_80127480[];
-extern s32 D_8015F294[];
 
 typedef struct TcActor {
     /* 0x00 */ u8 pad0[2];
@@ -84,41 +76,7 @@ typedef struct TcActor {
     /* 0x84 */ u8 unk84[4];
 } TcActor; /* size 0x88 */
 
-typedef struct TcSlot {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ u8 pad6[0xB];
-    /* 0x11 */ u8 unk11;
-    /* 0x12 */ u8 unk12;
-    /* 0x13 */ u8 unk13;
-} TcSlot; /* size 0x14 */
-
 extern TcActor *D_8015EDB4;
-extern s16 D_8015F5F0;
-extern s16 D_8015F5F4;
-extern s16 D_8015F5F6;
-extern void func_8013D21C(void);
-
-typedef struct TcPack {
-    /* 0x00 */ u8 b[0x10];
-} TcPack; /* size 0x10 */
-
-typedef struct TcSlotB {
-    /* 0x00 */ TcPack pack;
-    /* 0x10 */ u8 unk10;
-    /* 0x11 */ u8 unk11;
-    /* 0x12 */ u8 unk12;
-    /* 0x13 */ u8 unk13;
-} TcSlotB; /* size 0x14 */
-
-extern TcSlotB D_8015E9F0[];
-extern s16 D_8015E9F6;
-
-typedef struct TcPair {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-} TcPair; /* size 0x08 */
 
 void func_8004ACC8(s32 arg0);
 void func_80059688(s32 arg0);
@@ -136,7 +94,6 @@ extern Tc10 D_801270A0;
 extern s32 D_8015EDB0;
 extern u8 D_8015EDBC;
 extern u8 D_8015EDC0;
-extern TcPair D_8015F440[];
 
 void func_80135F6C(void);
 void func_80136988(void);
@@ -174,7 +131,6 @@ void func_8013A580(s32 arg0);
 void func_80132220(void);
 void func_801334BC(void);
 extern s32 D_8015F400;
-extern s32 D_8015F4F0;
 extern u8 D_8015EDC4;
 
 void func_8014394C(void);
@@ -219,9 +175,21 @@ void func_80146D60(s32 arg0);
 void func_801471D0(s32 arg0);
 void func_80147488(s32 arg0, s32 arg1, s32 arg2);
 extern s32 D_8012749C;
-extern u8 D_8015FA68[];
 extern s32 D_8015F3E0;
 extern s32 D_8015F3E4;
 extern s16 D_8015F3E8;
+
+extern s32 D_801274A0;
+
+void func_8009B310(s32 arg0, s32 arg1, s32 arg2);
+
+void func_80144CC0(u8 *arg0);
+void func_80146E3C(void);
+void func_80144D90(s32 arg0);
+void func_8014C3B4(s32 arg0);
+void func_8014C8DC(void);
+
+void func_8014C978(s32 arg0);
+void func_8014D200(void);
 
 #endif
