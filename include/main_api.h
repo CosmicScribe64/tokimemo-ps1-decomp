@@ -1021,7 +1021,6 @@ void srn_init(s32, s32, s32);
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
 void func_8004E500(s32 arg0);
 void func_8004E58C(void);
-void func_8004E788();
 #ifndef MAIN_API_OVERRIDE_set_kanji_string
 void set_kanji_string(s32 arg0, s32 arg1, s32 arg2, void *arg3, s32 arg4);
 #endif
