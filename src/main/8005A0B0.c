@@ -397,7 +397,49 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D448);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D56C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D804);
+/* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original; the s32 return keeps the switch temporary copy in $v0. T-5010 */
+s32 func_8005D804(void) {
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    default:
+        D_800E6280.unk_110D += 1;
+        break;
+    case 0:
+        if (D_800E6280.unk_03E == 0x62 && D_800E6280.unk_03F == 3 && D_800E6280.unk_040 == 1) {
+            D_800E6280.unk_110D += 1;
+        } else if (D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4 && D_800E6280.unk_040 == 4) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_80044750(0xB1);
+            D_800E6280.unk_110D = 0xC0;
+        }
+        break;
+    case 1:
+        func_80044750(5);
+        func_80044750(0xB1);
+        func_80044890(0, 0xBF98, 0xBF79, 0xCD21, 0xCCD9, 0xCCD1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 2:
+        if (func_80044E8C() == 1) {
+            func_80041878();
+            func_80041F48();
+            D_800E6280.unk_F5E = 0;
+            parameter_disp_switch(0);
+            hizuke_disp_switch(0);
+            message_disp_switch(0);
+            func_8006764C(0);
+            func_8004500C(0, 0);
+            func_80042878(0x14);
+        }
+        break;
+    case 0xFF:
+        func_80065F34(0);
+        func_80042878(0x34);
+        func_80042908(0xFF);
+        func_800674B0();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D9B4);
 
