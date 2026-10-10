@@ -7,6 +7,7 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801373A8);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801374D0);
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801375F8(void) {
     switch (D_8015ED8C[0]) {
     case 0:
@@ -36,6 +37,7 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137AC8);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137C44);
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80137E74(void) {
     switch (D_8015ED8C[0]) {
     case 0:

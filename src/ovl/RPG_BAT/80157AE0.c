@@ -1,6 +1,7 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80157AE0(void) {
     switch (D_8015ED8C[0]) {
     case 0:
@@ -29,6 +30,7 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80157F48);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_801580C4);
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80158240(void) {
     switch (D_8015ED8C[0]) {
     case 0:
@@ -50,6 +52,7 @@ s32 func_80158240(void) {
     }
 }
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_8015831C(void) {
     switch (D_8015ED8C[0]) {
     case 0:
@@ -71,6 +74,7 @@ s32 func_8015831C(void) {
     }
 }
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801583F8(void) {
     switch (D_8015ED8C[0]) {
     case 0:
@@ -92,6 +96,7 @@ s32 func_801583F8(void) {
     }
 }
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801584D4(void) {
     switch (D_8015ED8C[0]) {
     case 0:
@@ -113,6 +118,7 @@ s32 func_801584D4(void) {
     }
 }
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801585B0(void) {
     switch (D_8015ED8C[0]) {
     case 0:
@@ -138,6 +144,7 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_8015868C);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_801587B4);
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80158930(void) {
     switch (D_8015ED8C[0]) {
     case 0:

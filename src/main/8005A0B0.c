@@ -657,6 +657,7 @@ void func_8005E454(void) {
     func_8004284C();
 }
 
+/* the u8 views: the original reads these two bytes unsigned, the struct declares them s8 (T-8080) */
 void func_8005E5C8(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
     menu_bar_show(1);

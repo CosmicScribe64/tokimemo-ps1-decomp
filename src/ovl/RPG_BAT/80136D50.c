@@ -1,6 +1,7 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80136D50(void) {
     switch (D_8015ED8C[0]) {
     case 0:

@@ -564,3 +564,22 @@ Update (T-7000): the build runs IDO in K&R mode with the widening of narrow glob
 | 8005A0B0 | `func_8005B040` | reverse | table lookup `D_800B5970[D_800E62C2 & 7]` (8-byte rows): original takes $t0/$t1/$t2 for the index chain ($t9 skipped), IDO $t9/$t0/$t1 (T-6040) |
 | 8005A0B0 | `func_8005B2BC` | reverse | table lookup `D_800B37D4[D_8011F414]` at the end of a long `&&` chain: original $t8 base and $t7 index, IDO $t7 and $t6 (T-6040) |
 | 8005A0B0 | `func_8005B1A8` | reverse | table lookup `D_800B3B9C[idx][flag]` (16-byte rows) after a long `&&` chain: original frame 0x38 with $t8/$t0/$t2, IDO frame 0x30 and one register less (T-6040) |
+| GYOZI/801372B0 | `func_80137D70` | regorder | `(u8)func_8005E0E0(..) & 0x7F` and two `D_800F5AAE`/`D_800F647A` read-modify-writes: C matches except IDO hoists the `lbu` of `D_800F647A` above the `sb` of `D_800F5AAE`, the original does not (T-8080) |
+| GYOZI/801372B0 | `func_801381DC` | regorder | same `(u8)` cast family: the original leaves a `nop` in the `jal` delay slot, IDO fills it with the `sb` to `D_800F5AAE` (T-8080) |
+| GYOZI/801372B0 | `func_80137F48` | regorder | six word copies between globals: original uses $t6/$t7/$t8/$t5/$t6/$t7 in an interleaved order, IDO $t9/$t0/... after the sequence of stores (T-8080) |
+| TEL/801397D0 | `func_80139E3C` | regorder | `(w << 3) >> 28` selector loaded from a game-state word: original keeps it in $v0 for the whole function (lw v0; sll t6,v0; srl v0), IDO moves the shifted value to $t7 (T-8080) |
+| EVENT/8010FE10 | `func_80115714` | regorder | six halfword stores of 1/0 then 3/2: the original shares one `li` register across stores of different scalars, IDO loads per store (T-8080) |
+| EVENT/8010FE10 | `func_8011C470` | regorder | `old = D_800B1AF6` kept at sp+0x28, return value in $v0 and `(u8)(v+5)` in $t0: IDO puts `old` in $t6 and the return value in $v1 (T-8080) |
+| BUNKASAI/801354B0 | `func_801354B0` | regorder | u32 selector in $v1 matches (override) but the original loads the selector before the byte read-modify-write, IDO after (T-8080) |
+| ENDING/80137340 | `func_80137F64` | reverse | counter `D_8013C360` tested for zero, then reloaded (`lw t9`) for `== 1` in the original; IDO keeps one register (same shape in `func_80137E40`, `func_80138C70`, `func_80138A9C`, `func_80138DC8`) (T-8080) |
+| 8005A0B0 | `func_8005B0F4` | reverse | same lookup as `func_8005B040` (table `D_800B59B0`) (T-8080) |
+| 8005A0B0 | `join_club_select` | regorder | C matches but the original leaves a `nop` after `lw t9,D_800E7208` where IDO moves the next `lui v0` into it, and uses $t5/$t6/$t7 where IDO uses $t2/$t3/$t5 (T-8080) |
+| NAME_ENT/80132000 | `func_80133E54` | regorder | five-trip unrolled loop (`for (i = 0; i < 5; i++)` over `D_8014CCD0[i]`): shape right, original keeps x in $v0 and y in $v1, IDO $v1 and $a1 (T-8080) |
+| NAME_ENT/80132000 | `func_80133D94` | regorder | `a` kept in $a0 (parameter-like), constant -1 hoisted into $t9: IDO uses $v0/$v1 in the other order for the two `lh` (T-8080) |
+| NAME_ENT/80132000 | `func_80132198` | regorder | state machine matches except one `lui $at` (the final `D_800E738D = 1` store) is hoisted above the `li v0,1` (T-8080) |
+| EVENT/8010FE10 | `func_801142E8` | regorder | `idx * 6` per access: the original recomputes it with `li v1,6; multu` six times, IDO computes it once with shifts (same for `func_80114784`, `func_80114948`) (T-8080) |
+| 8005A0B0 | `func_8005BCEC` | regorder | menu arrays: everything matches (layout, constants) except the order of two store pairs (`sh t9;sh t8` against `sh t8;sh t9`) (T-8080) |
+| 8005A0B0 | `func_8005E150` | regorder | same loop as `func_8005E7F0`, but with the `get_k_speed()` switch IDO allocates the loop pointers one register later (T-8080) |
+| 800451D0 | `func_80045318` | regorder | ring-buffer push: the original keeps `48` in $v0 and copies `arg2` to $a3; IDO uses $a3 for the constant (T-8080) |
+| BUNKAKEN/80152680 | `func_80152F4C` | regorder | local 16-word table (frame fixed with `s32 pad[2]` before it): original loads the column word into $t1 and the row pointer into $t8, IDO $t2 and $v1 (T-8080) |
+| TACO/80138890 | `func_80138890` | reverse | `D_800E6280.unk_1100` read twice after the switch: the original CSEs the load into $t8, IDO reloads it into a second register (T-8080) |
