@@ -1,9 +1,31 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80146BE0);
+void func_80146BE0(void) {
+    s32 i;
+    u8 *p;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80146C14);
+    i = 0;
+    p = D_80158A84;
+    for (; i < 8; i++) {
+        *p = 0;
+        p += 0x58;
+    }
+}
+
+void func_80146C14(void) {
+    s32 i;
+    u8 *p;
+
+    i = 0;
+    p = D_80158A84;
+    for (; i < 8; i++) {
+        *(s16 *)(p + 0x10) = 3;
+        *(s16 *)(p + 0x40) = 0xA;
+        *(s16 *)(p + 0x42) = 0x3C81;
+        p += 0x58;
+    }
+}
 
 void func_80146C74(u8 *arg0, s32 arg1) {
     u8 *p = D_80158A74;

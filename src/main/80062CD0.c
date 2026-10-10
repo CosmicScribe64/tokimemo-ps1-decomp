@@ -89,7 +89,15 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", parameter_show_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", parameter_show);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", hizuke_disp_switch);
+void hizuke_disp_switch(s32 arg0) {
+    s32 i;
+
+    if (arg0 == 1) {
+        for (i = 0; i < 8; i++) D_8011ECD0[0x443 + i * 0x44] |= 0x80;
+    } else {
+        for (i = 0; i < 8; i++) D_8011ECD0[0x443 + i * 0x44] &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", hizuke_init);
 

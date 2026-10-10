@@ -196,4 +196,5 @@ extern s32 D_8014A3E0;
 extern s32 D_8014A3DC;
 extern s16 D_8014A3FE;
 void func_80146C20(void);
+extern u8 D_8014A3D8[];
 #endif
