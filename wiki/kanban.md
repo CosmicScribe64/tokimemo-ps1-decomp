@@ -24,6 +24,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-9180-wave-6-list-8|T-9180 Wave 6: list 8]]
+
 
 
 

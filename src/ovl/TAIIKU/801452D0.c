@@ -9,6 +9,20 @@ extern FnTbl8 D_8014A54C;
 typedef struct {
     s32 v[3];
 } Lim3; /* size 0xC */
+
+typedef struct TkPl {
+    /* 0x00 */ u8 pad0[2];
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ u8 pad4[2];
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 pad0E[6];
+    /* 0x14 */ u16 unk_14;
+    /* 0x16 */ u16 unk_16;
+    /* 0x18 */ u8 pad18[4];
+} TkPl; /* size 0x1C */
 extern Lim3 D_8014A5FC;
 extern u8 D_8014A400[];
 extern u8 D_8014A400[]; /* func_80146FA0: stride 0x1C */

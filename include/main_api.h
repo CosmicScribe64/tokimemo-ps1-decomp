@@ -530,10 +530,7 @@ extern s32 D_800B58E4;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
 extern s32 D_800B5900;
-extern s32 D_800B5920;
-extern s32 D_800B5924;
-extern s32 D_800B5928;
-extern s32 D_800B592C;
+extern s32 D_800B5920[4];
 #ifndef MAIN_API_OVERRIDE_D_800B5938
 extern u8 D_800B5938[];  /* flags; D_800B593C and D_800B5940 are also declared as scalars */
 #endif
