@@ -1346,7 +1346,7 @@ void func_8004284C(void);
 void func_80042878();
 void func_80042908(s32 arg0);
 void func_80042940(s32 arg0);
-void func_80042960(void);
+s32 func_80042960(void);
 s32 func_80042AC8();
 void func_80042C30(void);
 void func_80042CB0();
