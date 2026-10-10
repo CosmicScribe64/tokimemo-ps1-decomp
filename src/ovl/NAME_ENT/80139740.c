@@ -37,7 +37,23 @@ void func_80139BA0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139C24);
+void func_80139C24(void) {
+    if (D_8014D0D4 < 0) {
+        D_8014D0D4 += 3;
+    }
+    switch (D_8014D0D4 % 3) {
+    case 0:
+        func_80139F30();
+        break;
+    case 1:
+        func_8013ACA4();
+        break;
+    case 2:
+        func_8013A9C8();
+        break;
+    }
+    func_80139BA0();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139CB4);
 

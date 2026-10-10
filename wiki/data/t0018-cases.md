@@ -228,3 +228,5 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | GYOZI | `func_8013CAA4` | regorder | a flag OR on `D_800F53A0.girl[D_800F62CF]` before a strcpy of a literal: code identical but the original numbers the temporaries $t0..$t2 where IDO uses $t9,$t0,$t1 (one unsigned-index temporary more consumed in the original) (T-4080) |
 | 8007C030 | `select_girl` | regorder | same shape as `normal_date_move_place`: switch on lw global D_800E7384, original selector in $v1, IDO $v0 (T-4080) |
 | 8007C030 | `select_girl2` | regorder | identical to `select_girl` (T-4080) |
+| NAME_ENT | `func_8013DAC4` | promo | signed byte global D_800E7313 compared with -1 twice and read again after a call: original keeps it in $v1 with -1 in $a1, IDO loads into $v0/$a0 (T-4080) |
+| BUNKA_SD | `func_801362EC` | promo | unsigned byte global D_800E738A tested in two range checks around a call: original keeps it in $a1 (loaded once, reloaded after the call), IDO uses $a0 or spills a local (T-4080) |
