@@ -1,0 +1,6 @@
+// Rodata labels for the INCLUDE_RODATA lines of overlay SHUGAKU (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_8013AD70 = 0x8013AD70;
+D_8013AEF0 = 0x8013AEF0;

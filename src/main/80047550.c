@@ -9,7 +9,17 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80047560);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_800476C0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", tpage_buf_clear_all);
+void tpage_buf_clear_all(void) {
+    s32 i;
+
+    for (i = 0; i < 0x40; i++) {
+        if ((i & 0xF) < 5) {
+            ((s32 *)(D_800E6280 + 0x1228))[i] = 0;
+        } else {
+            ((s32 *)(D_800E6280 + 0x1228))[i] = -1;
+        }
+    }
+}
 
 void tpage_buf_clear(void) {
     s32 i;
@@ -58,7 +68,40 @@ void func_80048E78(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048EB8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048F64);
+void func_80048F64(s32 arg0) {
+    u8 *p;
+
+    if (arg0 < 0xA0) {
+        p = D_8011ECD0 + arg0 * 0x44;
+        p[0] = 0;
+        *(s32 *)(p + 0x38) = 0;
+        p[1] = 0;
+        p[4] = 0;
+        p[5] = 0;
+        p[2] = 0;
+        p[3] = 0;
+        p[6] = 1;
+        *(s16 *)(p + 8) = 0;
+        *(s32 *)(p + 0xC) = (s32)D_800C975C;
+        *(s32 *)(p + 0x10) = (s32)D_800C9A14;
+        *(s32 *)(p + 0x34) = (s32)D_800C9730;
+        *(s16 *)(p + 0x14) = 0;
+        *(s16 *)(p + 0x16) = 0;
+        *(s16 *)(p + 0x18) = 0;
+        *(s16 *)(p + 0x1A) = 0x1000;
+        *(s16 *)(p + 0x1C) = 0x1000;
+        p[0x43] = 0;
+        p[7] = 0x80;
+        *(s32 *)(p + 0x20) = 0;
+        *(s32 *)(p + 0x24) = 0;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0;
+        *(s32 *)(p + 0x30) = 0;
+        p[0x40] = 0;
+        p[0x41] = 0;
+        p[0x42] = 0;
+    }
+}
 
 u8 func_8004901C(void) {
     return D_800E62BA;
@@ -74,58 +117,3 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80049044);
 void func_800490B4(u8 arg0) {
     D_800E62BB = arg0;
 }
-
-void SetWorkBase(s32 arg0, s32 arg1) {
-    u8 *p = D_800E6280 + arg1 * 12;
-
-    *(s32 *)(p + 0x24) = arg0;
-    *(s32 *)(p + 0x1C) = 0x10C00;
-    *(s32 *)(p + 0x20) = 0;
-}
-
-INCLUDE_ASM("asm/nonmatchings/main/80047550", GetWorkBase);
-
-INCLUDE_ASM("asm/nonmatchings/main/80047550", sprite_set_gpu_poly_ft4);
-
-void goto_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 work;
-    u16 tpage;
-
-    tpage = func_8009ECB0(arg4, arg3, arg0, arg1);
-    work = GetWorkBase(0xC, D_8011ECA0);
-    func_8009D294(work, 0, 0, tpage, 0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg2 * 4, work);
-    safe_env(arg2);
-}
-
-void safe_env(s32 arg0) {
-    u8 *p;
-
-    p = (u8 *)GetWorkBase(0xC, D_8011ECA0);
-    func_8009F0B8(p);
-    *(s16 *)(p + 8) = 0;
-    *(s16 *)(p + 0xA) = 0;
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg0 * 4, (s32)p);
-}
-
-void dtd_on_tpage(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 work;
-
-    work = GetWorkBase(0xC, D_8011ECA0);
-    func_8009D294(work, 0, 1, func_8009ECB0(arg4, arg3, arg0, arg1), 0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg2 * 4, work);
-    safe_env(arg2);
-}
-
-void dtd_on(s32 arg0) {
-    s32 work;
-
-    work = GetWorkBase(0xC, D_8011ECA0);
-    func_8009D294(work, 0, 1, 0, 0);
-    AddPrim(D_800E8CA0 + (D_8011ECA0 << 10) + arg0 * 4, work);
-    safe_env(arg0);
-}
-
-INCLUDE_ASM("asm/nonmatchings/main/80047550", _sprite_set_light_effect1);
-
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80049A40);

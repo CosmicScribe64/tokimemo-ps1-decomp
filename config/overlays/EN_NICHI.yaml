@@ -56,6 +56,9 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, EN_NICHI]
-      - [0x70D0, rodata, EN_NICHI_rodata]
+      - [0x0, c, EN_NICHI/80132000]
+      - [0x4B10, c, EN_NICHI/80136B10]
+      - [0x70D0, .rodata, EN_NICHI/80132000]
+      - [0x7170, .rodata, EN_NICHI/80136B10]
+      - [0x71E0, data, EN_NICHI_data]
   - [0x30000]

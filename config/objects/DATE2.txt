@@ -1,0 +1,12 @@
+# Original objects of overlay DATE2 (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8013A380 last-jtbl
+object 80132000 801326F0 8013A020 8013A040 yes start start
+object 801326F0 80132DE0 8013A040 8013A050 yes pad jtbl-pad
+object 80132DE0 80136D50 8013A050 8013A2D0 yes pad owner
+object 80136D50 80137360 8013A2D0 8013A300 yes pad jtbl-pad
+object 80137360 80137D50 8013A300 8013A310 yes pad jtbl-pad
+object 80137D50 8013A020 8013A310 8013A380 yes pad owner

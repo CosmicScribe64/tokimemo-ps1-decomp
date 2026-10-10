@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/BUNKASAI.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/BUNKASAI_undefined_funcs_auto.txt
@@ -56,6 +57,41 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, BUNKASAI]
-      - [0x29900, rodata, BUNKASAI_rodata]
+      - [0x0, c, BUNKASAI/80132000]
+      - [0x480, c, BUNKASAI/80132480]
+      - [0x34B0, c, BUNKASAI/801354B0]
+      - [0x42A0, c, BUNKASAI/801362A0]
+      - [0x6A70, c, BUNKASAI/80138A70]
+      - [0x9190, c, BUNKASAI/8013B190]
+      - [0xA430, c, BUNKASAI/8013C430]
+      - [0xDD90, c, BUNKASAI/8013FD90]
+      - [0x10700, c, BUNKASAI/80142700]
+      - [0x11770, c, BUNKASAI/80143770]
+      - [0x14030, c, BUNKASAI/80146030]
+      - [0x14FA0, c, BUNKASAI/80146FA0]
+      - [0x16040, c, BUNKASAI/80148040]
+      - [0x18BC0, c, BUNKASAI/8014ABC0]
+      - [0x1BD90, c, BUNKASAI/8014DD90]
+      - [0x1E930, c, BUNKASAI/80150930]
+      - [0x1F1E0, c, BUNKASAI/801511E0]
+      - [0x28F90, c, BUNKASAI/8015AF90]
+      - [0x29900, .rodata, BUNKASAI/80132480]
+      - [0x29EC0, .rodata, BUNKASAI/801354B0]
+      - [0x2A050, .rodata, BUNKASAI/801362A0]
+      - [0x2A570, .rodata, BUNKASAI/80138A70]
+      - [0x2AA30, .rodata, BUNKASAI/8013B190]
+      - [0x2AC60, .rodata, BUNKASAI/8013C430]
+      - [0x2B230, .rodata, BUNKASAI/8013FD90]
+      - [0x2B6E0, .rodata, BUNKASAI/80142700]
+      - [0x2B7E0, .rodata, BUNKASAI/80143770]
+      - [0x2BCB0, .rodata, BUNKASAI/80146030]
+      - [0x2BE80, .rodata, BUNKASAI/80146FA0]
+      - [0x2BFD0, .rodata, BUNKASAI/80148040]
+      - [0x2C5B0, .rodata, BUNKASAI/8014ABC0]
+      - [0x2CC20, .rodata, BUNKASAI/8014DD90]
+      - [0x2D140, .rodata, BUNKASAI/80150930]
+      - [0x2D1C0, .rodata, BUNKASAI/801511E0]
+      - [0x2D730, rodata, BUNKASAI_rodata_8015F730]
+      - [0x2E380, .rodata, BUNKASAI/8015AF90]
+      - [0x2E4F0, data, BUNKASAI_data]
   - [0x30000]

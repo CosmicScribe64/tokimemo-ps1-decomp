@@ -1,0 +1,37 @@
+# Original objects of overlay TT (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8014D860 last-jtbl
+object 80132000 80132130 - - no:no_rodata start -
+object 80132130 80132F10 - - no:no_rodata pad -
+object 80132F10 80133970 8014D3F0 8014D440 yes pad start
+object 80133970 80135360 8014D440 8014D490 yes pad jtbl-pad
+object 80135360 801367C0 8014D490 8014D4B0 yes pad jtbl-pad
+object 801367C0 80136830 - - no:no_rodata pad -
+object 80136830 801374C0 - - no:no_rodata pad -
+object 801374C0 8013A040 8014D4B0 8014D590 yes pad jtbl-pad
+object 8013A040 8013A3E0 - - no:no_rodata pad -
+object 8013A3E0 8013BD10 8014D590 8014D5B0 yes pad jtbl-pad
+object 8013BD10 8013C6D0 8014D5B0 8014D5D0 yes choice/6 jtbl-pad
+object 8013C6D0 8013E290 8014D5D0 8014D680 yes pad jtbl-pad
+object 8013E290 8013E850 8014D680 8014D690 yes pad jtbl-pad
+object 8013E850 8013F040 8014D690 8014D6C0 yes pad str-pad
+object 8013F040 801410A0 8014D6C0 8014D710 yes pad str-pad
+object 801410A0 80141450 - - no:no_rodata pad -
+object 80141450 80142110 - - no:no_rodata pad -
+object 80142110 80142350 - - no:no_rodata pad -
+object 80142350 80142570 - - no:no_rodata pad -
+object 80142570 80142D40 - - no:no_rodata pad -
+object 80142D40 80144D70 8014D710 8014D730 yes pad owner
+object 80144D70 80145E60 - - no:no_rodata pad -
+object 80145E60 80146BE0 - - no:no_rodata pad -
+object 80146BE0 80147380 - - no:no_rodata pad -
+object 80147380 801478D0 - - no:no_rodata pad -
+object 801478D0 80148210 - - no:no_rodata pad -
+object 80148210 801487D0 - - no:no_rodata pad -
+object 801487D0 80148DB0 - - no:no_rodata pad -
+object 80148DB0 8014AF00 8014D730 8014D7F0 yes pad jtbl-pad
+object 8014AF00 8014D260 8014D7F0 8014D860 yes pad jtbl-pad
+object 8014D260 8014D3F0 - - no:no_rodata pad -

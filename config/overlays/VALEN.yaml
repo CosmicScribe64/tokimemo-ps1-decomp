@@ -56,6 +56,14 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, VALEN]
-      - [0x2320, rodata, VALEN_rodata]
+      - [0x0, c, VALEN/80132000]
+      - [0x3D0, c, VALEN/801323D0]
+      - [0x760, c, VALEN/80132760]
+      - [0x19D0, c, VALEN/801339D0]
+      - [0x1C70, c, VALEN/80133C70]
+      - [0x2320, .rodata, VALEN/801323D0]
+      - [0x2330, .rodata, VALEN/80132760]
+      - [0x23B0, .rodata, VALEN/801339D0]
+      - [0x23C0, .rodata, VALEN/80133C70]
+      - [0x23F0, data, VALEN_data]
   - [0x30000]

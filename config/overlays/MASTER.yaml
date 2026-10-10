@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/MASTER.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/MASTER_undefined_funcs_auto.txt
@@ -56,6 +57,18 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, MASTER]
-      - [0x99B0, rodata, MASTER_rodata]
+      - [0x0, c, MASTER/80132000]
+      - [0x140, c, MASTER/80132140]
+      - [0x1680, c, MASTER/80133680]
+      - [0x6490, c, MASTER/80138490]
+      - [0x6EC0, c, MASTER/80138EC0]
+      - [0x6F10, c, MASTER/80138F10]
+      - [0x6F70, c, MASTER/80138F70]
+      - [0x6FC0, c, MASTER/80138FC0]
+      - [0x7000, c, MASTER/80139000]
+      - [0x99B0, .rodata, MASTER/80132140]
+      - [0x9B10, .rodata, MASTER/80133680]
+      - [0x9FB0, .rodata, MASTER/80138490]
+      - [0xA0C0, .rodata, MASTER/80139000]
+      - [0xA2D0, data, MASTER_data]
   - [0x30000]

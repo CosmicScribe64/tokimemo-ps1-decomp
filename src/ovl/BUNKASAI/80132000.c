@@ -1,0 +1,134 @@
+#include "common.h"
+#include "ovl/BUNKASAI.h"
+
+void func_80132000(void) {
+    D_801604F0 = 0x801EC7F8;
+    D_801604F4 = 0x801ECD50;
+    D_801604F8 = 0x801F02A8;
+}
+
+void func_80132034(void) {
+    D_801604F0 = 0x801EEAF0;
+    D_801604F4 = 0x801EF1F4;
+    D_801604F8 = 0x801F3C2C;
+}
+
+void func_80132068(void) {
+    D_801604F0 = 0x801ED9E0;
+    D_801604F4 = 0x801EDFE8;
+    D_801604F8 = 0x801F17E0;
+}
+
+void func_8013209C(void) {
+    D_801604F0 = 0x801ECDF4;
+    D_801604F4 = 0x801ED474;
+    D_801604F8 = 0x801F0A0C;
+}
+
+void func_801320D0(void) {
+    D_801604F0 = 0x801EAE58;
+    D_801604F4 = 0x801EB114;
+    D_801604F8 = 0x801ECF80;
+}
+
+void func_80132104(void) {
+    D_801604F0 = 0x801EF01C;
+    D_801604F4 = 0x801EF838;
+    D_801604F8 = 0x801F4768;
+}
+
+void func_80132138(void) {
+    D_801604F0 = 0x801EAAE8;
+    D_801604F4 = 0x801EAD98;
+    D_801604F8 = 0x801ECA94;
+}
+
+void func_8013216C(void) {
+    D_801604F0 = 0x801EEF50;
+    D_801604F4 = 0x801EF630;
+    D_801604F8 = 0x801F3EFC;
+}
+
+void func_801321A0(void) {
+    D_801604F0 = 0x801EE578;
+    D_801604F4 = 0x801EEC8C;
+    D_801604F8 = 0x801F338C;
+}
+
+void func_801321D4(void) {
+    D_801604F0 = 0x801EC030;
+    D_801604F4 = 0x801EC440;
+    D_801604F8 = 0x801EF008;
+}
+
+void func_80132208(void) {
+    D_801604F0 = 0x801EB46C;
+    D_801604F4 = 0x801EB784;
+    D_801604F8 = 0x801EDBF0;
+}
+
+void func_8013223C(void) {
+    D_801604F0 = 0x801EA968;
+    D_801604F4 = 0x801EACA8;
+    D_801604F8 = 0x801ECC70;
+}
+
+void func_80132270(void) {
+    D_801604F0 = 0x801EB83C;
+    D_801604F4 = 0x801EBC70;
+    D_801604F8 = 0x801EE0F8;
+}
+
+void func_801322A4(void) {
+    D_801604F0 = 0x801EBD80;
+    D_801604F4 = 0x801EC234;
+    D_801604F8 = 0x801EF02C;
+}
+
+void func_801322D8(void) {
+    D_801604F0 = 0x801EBF6C;
+    D_801604F4 = 0x801EC3C0;
+    D_801604F8 = 0x801EEFA8;
+}
+
+void func_8013230C(void) {
+    D_801604F0 = 0x801ED958;
+    D_801604F4 = 0x801EDE80;
+    D_801604F8 = 0x801F1C8C;
+}
+
+void func_80132340(void) {
+    D_801604F0 = 0x801EA974;
+    D_801604F4 = 0x801EAC48;
+    D_801604F8 = 0x801ECD44;
+}
+
+void func_80132374(void) {
+    D_801604F0 = 0x801ED184;
+    D_801604F4 = 0x801ED664;
+    D_801604F8 = 0x801F0F78;
+}
+
+void func_801323A8(void) {
+    D_801604F0 = 0x801E92FC;
+    D_801604F4 = 0x801E9598;
+    D_801604F8 = 0x801EA298;
+}
+
+void func_801323DC(void) {
+    D_801604F0 = 0x801E81BC;
+    D_801604F4 = 0x801E81CC;
+    D_801604F8 = 0x801E82CC;
+}
+
+void func_80132410(void) {
+    D_801604F0 = 0x801E81CC;
+    D_801604F4 = 0x801E8204;
+    D_801604F8 = 0x801E82E4;
+}
+
+void func_80132444(void) {
+    D_801604F0 = 0x801E8A10;
+    D_801604F4 = 0x801E8B7C;
+    D_801604F8 = 0x801E93D4;
+}

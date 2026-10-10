@@ -9,7 +9,7 @@ sources: ["disc/files/CDROM/EXEDIR/O.BIN", "tools/obin_syms.py", "tools/obin_map
 Ticket [[tickets/T-0201-obin-format-and-symbols]]. Context: [[overlays]], [[executable]], [[psyq-sdk]].
 
 ## What it is
-`CDROM/EXEDIR/O.BIN` (196608 bytes, sector 0x964A, never read by the game) is a **little-endian MIPS ECOFF** executable (magic 0x0162, as written by the PsyQ/SN linker), zero-padded to 0x30000 with the usual checksum trailer. It is the link of a tiny **OLH overlay skeleton** at 0x80132000 against the symbol map of the **main program**: 14 symbols belong to the overlay itself, the other 2132 are absolute (`scAbs`) addresses of a developer build of the main exe. It holds no code or data of the main program.
+`CDROM/EXEDIR/O.BIN` (196608 bytes, sector 0x964A, never read by the game) is a **little-endian MIPS ECOFF** executable (magic 0x0162). It was linked by a MIPS ld of release 3.18 on a big-endian host, not by PsyQ/SN or GNU ld (version stamps and the byte order of the `.comment` section header, [[original-compiler]]), zero-padded to 0x30000 with the usual checksum trailer. It is the link of a tiny **OLH overlay skeleton** at 0x80132000 against the symbol map of the **main program**: 14 symbols belong to the overlay itself, the other 2132 are absolute (`scAbs`) addresses of a developer build of the main exe. It holds no code or data of the main program.
 
 Not a copy of the retail layout: its link timestamp is 1995-07-25 (UTC, `f_timdat` 0x30152746) and its main-program addresses differ from SLPM_86.053 (game code starts at 0x8004C000 instead of 0x80041000; debug code present that retail lacks). Whether it is earlier or later than the retail build is not provable from the file; the OLH skeleton being much smaller than the retail OLH suggests earlier.
 
@@ -17,13 +17,13 @@ Not a copy of the retail layout: its link timestamp is 1995-07-25 (UTC, `f_timda
 | offset | content |
 |---|---|
 | 0x00 | ECOFF file header: magic 0x0162, 4 sections, timdat, `symptr` 0x5C0, `nsyms` 0x60 (size of the symbolic header), `opthdr` 0x38, flags 0x800F |
-| 0x14 | a.out optional header (0x38 bytes): magic 0x0107, tsize 0x3A0, dsize 0x130, bsize 0, entry 0, text_start 0x80132000, data_start 0x80132000 |
-| 0x4C | section table, 4 x 0x28 bytes: `.text` 0x80132000 size 0x3A0 at 0xF0; `.rdata` 0x801323A0 size 0x90 at 0x490; `.data` 0x80132430 size 0xA0 at 0x520; `.comment` (empty, flags 0x1002, header fields not meaningful) |
+| 0x14 | a.out optional header (0x38 bytes): magic 0407 (0x0107), vstamp 0x0312 (3.18), tsize 0x3A0, dsize 0x130, bsize 0, entry 0x80132000, text_start 0x80132000, data_start 0x801323A0, bss_start 0x801324D0, gprmask 0xE1FFC0FE, gp_value 0x8013A4C0 (corrected by T-3100; the earlier row had entry 0 and data_start 0x80132000) |
+| 0x4C | section table, 4 x 0x28 bytes: `.text` 0x80132000 size 0x3A0 at 0xF0; `.rdata` 0x801323A0 size 0x90 at 0x490; `.data` 0x80132430 size 0xA0 at 0x520; `.comment` (its header is stored big-endian: size 0x24, scnptr 0x620, flags 0x02100000 STYP_COMMENT) |
 | 0xF0..0x5C0 | section contents (0x3A0 + 0x90 + 0xA0 bytes) |
 | 0x5C0 | mdebug symbolic header (HDRR, 0x60 bytes, magic 0x7009, vstamp 0x312). Only these counts are non-zero: `ipdMax`=5 (procedure descriptors at 0x638), `issExtMax`=0x6F7C (external strings at 0x73C), `ifdMax`=1 (file descriptor at 0x76B8), `iextMax`=0x862=2146 (external symbols at 0x7700) |
-| 0x638 | 5 procedure descriptors (52 bytes each): address, frame size (0x28, 0xC0, 0x28, 0x28, 0x30), register masks |
+| 0x638 | 5 procedure descriptors (52 bytes each): address, frame size (0x28, 0xC0, 0x28, 0x28, 0x30), register masks; all show the +16 frame layout ([[original-compiler]]) |
 | 0x73C | external string table, NUL-separated names |
-| 0x76B8 | one file descriptor, empty (no source name, no local symbols) |
+| 0x76B8 | one file descriptor, empty (no source name, no local symbols; lang 4 = langMachine, glevel field 2 = GLEVEL_0) |
 | 0x7700 | 2146 external symbols x 16 bytes (`EXTR`: flags, ifd, then `SYMR` iss/value/bitfield; st = bits 0-5, sc = bits 6-10, index = bits 12-31), ends at 0xFD20 |
 | 0xFD20 | zeros up to the trailer `2E DC 12 10` at 0x2FFFC |
 
@@ -32,7 +32,7 @@ Local symbols, line numbers, types, auxiliary and optimization tables are all ab
 Symbol kinds: 2132 Global/Abs (main program, 0x8004C000-0x80131xxx), 5 Proc/Text (`olh_main` 0x80132000, `olh_init` 0x80132070, `olh` 0x8013222C, `olh_exit` 0x8013231C, `move_menu_title` 0x8013233C), 9 Global/Data (`menu0`..`menu7` at 0x80132430 + 0x10 each, `olh_menu` 0x801324B0).
 
 ## Tool: tools/obin_syms.py
-`tools/docker.sh python3 tools/obin_syms.py [--file PATH] [--sections]` reads `disc/files/CDROM/EXEDIR/O.BIN` at run time (nothing from the file is committed) and prints `addr name kind sc size`. Tests with synthetic ECOFF input (parser, alignment, `map_region`, output filter): `tools/docker.sh python3 tools/test_obin_tools.py`.
+`tools/docker.sh python3 tools/obin_syms.py [--file PATH] [--sections | --headers]` reads `disc/files/CDROM/EXEDIR/O.BIN` at run time (nothing from the file is committed) and prints `addr name kind sc size`. `--headers` prints every header field with the version stamps decoded and, per procedure descriptor, the end of the register-save block (T-3100). Tests with synthetic ECOFF input (parser, alignment, `map_region`, output filter): `tools/docker.sh python3 tools/test_obin_tools.py`.
 
 ## Mapping onto SLPM_86.053 and the overlays
 Code-byte matching is only possible for the 5 overlay procedures (the 0x3A0 `.text` bytes). The 2132 main-program names have addresses and names only, so the mapping is structural: `tools/obin_map.py` (needs a build for `build/SLPM_86.053.elf`) sorts both sides by address, takes the gap to the next symbol as O.BIN size and aligns the two size sequences (Needleman-Wunsch, +3 equal size, +0.3 size within 2x, -0.7 otherwise, -1 gap). The 154 PsyQ names already found by signature matching ([[psyq-sdk]], `config/symbol_addrs_sdk.txt`) that O.BIN also carries are hard anchors: 116 form an ordered chain that splits the address space into segments (the other 38 are lib blocks linked in a different order). Data and bss are aligned the same way against the `D_`/`jtbl_` symbols (no anchors).

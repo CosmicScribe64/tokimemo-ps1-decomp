@@ -1,0 +1,5 @@
+// Main-exe-only symbol facts that are not names (T-0500). Read by config/SLPM_86.053.yaml only.
+// Function sizes where splat cut one function into several: the case blocks of a switch that
+// follow its `jr $ra` were taken as functions of their own (jump-table targets, `jlabel`).
+func_80066A2C = 0x80066A2C; // type:func size:0x58
+func_80066A84 = 0x80066A84; // type:func size:0x48

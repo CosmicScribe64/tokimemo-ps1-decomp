@@ -47,7 +47,22 @@ void Hw_Start(void) {
     ExitCriticalSection();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", Sw_Test);
+u8 Sw_Test(void) {
+    D_800E7395 = 0;
+    if (TestEvent(D_8011ECAC) != 0) {
+        D_800E7395 = 1;
+    } else if (TestEvent(D_8011ECB0) != 0) {
+        D_800E7395 = 2;
+    } else if (TestEvent(D_8011ECB4) != 0) {
+        D_800E7395 = 4;
+    } else if (TestEvent(D_8011ECB8) != 0) {
+        D_800E7395 = 8;
+    }
+    if (D_800E7395 != 0) {
+        Sw_Clear();
+    }
+    return D_800E7395;
+}
 
 void Sw_Clear(void) {
     TestEvent(D_8011ECAC);
@@ -56,7 +71,22 @@ void Sw_Clear(void) {
     TestEvent(D_8011ECB8);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", Hw_Test);
+u8 Hw_Test(void) {
+    D_800E7395 = 0;
+    do {
+        if (TestEvent(D_8011ECBC) != 0) {
+            D_800E7395 = 0x81;
+        } else if (TestEvent(D_8011ECC0) != 0) {
+            D_800E7395 = 0x82;
+        } else if (TestEvent(D_8011ECC4) != 0) {
+            D_800E7395 = 0x84;
+        } else if (TestEvent(D_8011ECC8) != 0) {
+            D_800E7395 = 0x88;
+        }
+    } while (D_800E7395 == 0);
+    Hw_Clear();
+    return D_800E7395;
+}
 
 void Hw_Clear(void) {
     TestEvent(D_8011ECBC);
@@ -79,7 +109,11 @@ void func_80053CAC(u8 arg0) {
     D_800E739C = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80053CC0);
+/* FAKE: indexing the first symbol stops IDO from hoisting the load above the first store (see cal_sprite_disp_switch). Real source unknown. T-2090 */
+void func_80053CC0(void) {
+    D_800E7395 = 0;
+    (&D_800E7395)[7] += 1;
+}
 
 void func_80053CE0(void) {
     D_800E62B5 = 1;
@@ -202,7 +236,24 @@ void func_80054BA8(void) {
     D_800E8BEE = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054BE4);
+s32 func_80054BE4(void) {
+    s32 i;
+    s32 n;
+    u8 *p;
+    s32 t;
+
+    n = 0;
+    p = D_800E7D11;
+    i = 1;
+    do {
+        t = func_80054AF4(i);
+        i++;
+        p++;
+        p[3] = t;
+        n++;
+    } while (i != 0xF);
+    return n;
+}
 
 void func_80054C4C(void) {
     bzero(D_80123120, 0x2000);

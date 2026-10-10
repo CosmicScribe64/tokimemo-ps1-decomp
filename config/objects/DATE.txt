@@ -1,0 +1,28 @@
+# Original objects of overlay DATE (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8015B520 monotone-strings
+object 80132000 80141EE0 8015AB20 8015B060 yes start start
+object 80141EE0 80145AA0 8015B060 8015B110 yes choice/3 jtbl-pad
+object 80145AA0 801461B0 8015B110 8015B140 yes pad jtbl-pad
+object 801461B0 80149310 8015B140 8015B360 yes rodata jtbl-pad
+object 80149310 8014A1B0 8015B360 8015B390 yes pad jtbl-pad
+object 8014A1B0 8014B1F0 8015B390 8015B3D0 yes pad owner
+object 8014B1F0 8014CC40 8015B3D0 8015B440 yes pad jtbl-pad
+object 8014CC40 8014F0F0 8015B440 8015B470 yes choice/7 jtbl-pad
+object 8014F0F0 80150010 8015B470 8015B480 yes pad jtbl-pad
+object 80150010 80151460 8015B480 8015B490 yes pad str-pad
+object 80151460 80152FC0 - - no:no_rodata pad -
+object 80152FC0 80154260 8015B490 8015B4C0 yes pad str-pad
+object 80154260 801552B0 8015B4C0 8015B4E0 yes pad jtbl-pad
+object 801552B0 80156600 - - no:no_rodata pad -
+object 80156600 80157880 8015B4E0 8015B4F0 yes pad str-pad
+object 80157880 801586A0 8015B4F0 8015B500 yes pad str-pad
+object 801586A0 801594B0 - - no:no_rodata pad -
+object 801594B0 8015A190 8015B500 8015B510 yes pad str-pad
+object 8015A190 8015A640 8015B510 8015B520 yes choice/5 str-pad
+object 8015A640 8015A7E0 - - no:no_rodata pad -
+object 8015A7E0 8015A980 - - no:no_rodata pad -
+object 8015A980 8015AB20 - - no:no_rodata pad -

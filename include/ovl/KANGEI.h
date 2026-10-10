@@ -111,4 +111,27 @@ void func_80083A10();
 void func_80132214();
 void k_disp_inc2();
 
+extern s32 D_800E6378;
+void func_8006509C(void);
+
+void func_80135634();
+
+void func_801355F0();
+
+extern s32 D_80139E10;
+void place_init();
+
+extern s32 D_800B36C8;
+extern s32 D_800B3708;
+extern s32 D_800B3688;
+
+extern s32 D_800E7368;
+void func_8008585C();
+void addr_init_bustup();
+void func_80084E4C();
+void func_801325D0();
+
+/* defined in C in one object, called from another (T-0500) */
+void func_80132E40(void);
+
 #endif /* OVL_KANGEI_H */

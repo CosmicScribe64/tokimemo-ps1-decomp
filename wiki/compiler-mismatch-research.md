@@ -43,3 +43,5 @@ Nothing found. gcc 2.8.1's mips frame code allocates 4 words only for outgoing a
 Open: does any IDO before 5.3 (4.x, 5.0, 5.1) already do this? A comparison from someone with older IDO binaries would be the cheapest evidence.
 
 Outcome (T-0016): recommendation 1 was implemented as `tools/frame_pass.py` ([[toolchain]], [[matching-notes]]). The layer is IDO's binasm stream (ugen to as1), not the ucode stream: the leaf rule needs a post-ugen layer. The hole position follows from whether `$ra` is saved, which a single rule handles; no special casing was needed. [[tickets/T-0100-older-mips-compiler-emulation]] remains the way to replace it.
+
+Update (T-3100): the O.BIN version stamps (3.18) narrow the compiler to the release SGI shipped as IDO 5.2, linked to ECOFF on a big-endian host; see [[original-compiler]].

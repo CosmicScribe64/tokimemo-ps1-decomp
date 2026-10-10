@@ -11,7 +11,15 @@ void schedule_init(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", _schedule_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", last_date_spot_timer_dec);
+void last_date_spot_timer_dec(void) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        if (D_800E6280[0x73C + i] != 0) {
+            D_800E6280[0x73C + i] -= 1;
+        }
+    }
+}
 
 void restore_bgm(void) {
     if (func_8004480C() == 0) {
@@ -25,9 +33,23 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CDD4);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CE84);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CF38);
+void func_8006CF38(void) {
+    s32 i;
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006CF80);
+    for (i = 0; i < 32; i++) {
+        *(s32 *)(D_800E6280 + 0x69C + i * 4) = 0;
+        *(D_800E6280 + 0x69C + i * 4) = 0xFF;
+    }
+    D_800E699C = 0;
+}
+
+void func_8006CF80(void) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        D_800E6280[0x1C8 + i * 0x38] &= 0xFFFE;
+    }
+}
 
 void func_8006D00C(void) {
     if (D_800E62BF == 9) {
@@ -35,13 +57,53 @@ void func_8006D00C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D038);
+void func_8006D038(void) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        if (D_800E6280[0x72C + i] == 0x23 || D_800E6280[0x72C + i] == 0x24) {
+            D_800E6280[0x72C + i] = 0;
+        }
+        D_800E6280[0x74C + i] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D138);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D4A0);
+void func_8006D4A0(void) {
+    s32 i;
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D52C);
+    for (i = 0; i < 11; i++) {
+        D_800E6280[0x66F + i * 4] &= 0xFFFE;
+    }
+}
+
+void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    u8 *p;
+
+    if (birth_day_check_days(0, D_800E62BF + arg1, arg2) == 1) {
+        D_800E6280[*arg0 * 4 + 0x69C] = 0x32;
+        D_800E6280[*arg0 * 4 + 0x69D] = 0;
+        *arg0 += 1;
+    }
+    for (i = 1; i != 0xB; i++) {
+        p = D_800E6280 + i * 0x38;
+        if (((CharFlags *)(p + 0x1C8))->b1 && ((CharFlags *)(p + 0x1C8))->b6) {
+            if (birth_day_check_days(i, D_800E62BF + arg1, arg2) == 1) {
+                D_800E6280[*arg0 * 4 + 0x69C] = 0x32;
+                D_800E6280[*arg0 * 4 + 0x69D] = i;
+                *arg0 += 1;
+            }
+        }
+    }
+    if ((D_800E6375 & 0xF) != 3) {
+        if (birth_day_check_days(0xF, D_800E62BF + arg1, arg2) == 1) {
+            D_800E6280[*arg0 * 4 + 0x69C] = 0x33;
+            *arg0 += 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
 
@@ -67,7 +129,18 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", yuukou_down);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", syoushin_up);
+void syoushin_up(void) {
+    s32 i;
+    u8 *p;
+
+    p = D_800E6280;
+    for (i = 0; i < 0xB; i++) {
+        if (((CharFlags *)(p + 0x1C8))->b1 && (s32)get_h_yuukou(i) < 0xA) {
+            *(s16 *)(p + 0x1C6) += 5;
+        }
+        p += 0x38;
+    }
+}
 
 void schdeule_girls_param(void) {
     if (D_800E62BD == 0) {
@@ -114,7 +187,15 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80071038);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80071110);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80071280);
+void func_80071280(void) {
+    s32 i;
+
+    if (D_800E62BF == 5 && D_800E62C0 == 6) {
+        for (i = 0; i < 11; i++) {
+            D_800E6280[0x1C8 + i * 0x38] &= 0xFFEF;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8007132C);
 
@@ -181,64 +262,3 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800734C4);
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800735B8);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800736AC);
-
-void func_800737A0(void) {
-    func_80072B5C(0);
-    parameter_show();
-    message_window_show();
-    hizuke_show();
-    func_80065B0C(0);
-    func_80067870();
-    func_80066C08(1);
-    func_800578F4(get_last_gamen_mode());
-}
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_exit);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_init);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_main);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", get_weekly_bg_sector);
-
-s32 func_80073A40(void) {
-    s32 ret;
-
-    if ((D_800E6375 & 0xF) == 3 && !(*(u16 *)&D_800E6376 & 1) && (D_800E71E8 & 0xF) == 7) {
-        ret = dec_bg_cd_read(D_800B5950[func_80066A2C()], 0);
-    } else {
-        ret = dec_bg_cd_read(get_weekly_bg_sector(), 0);
-    }
-    return ret;
-}
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80073AD8);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80073CB0);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800741B8);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8007437C);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", week_day_main0);
-
-void week_day_exit0(void) {
-    D_800E699C++;
-    func_80048F64(0x60);
-    func_80048F64(0x61);
-    func_80042878(0x31);
-}
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", parameter_up_down);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", vacation_day_init);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80074D28);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80074DE0);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80074F24);
-
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8007505C);

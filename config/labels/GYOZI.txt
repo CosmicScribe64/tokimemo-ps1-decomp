@@ -1,0 +1,24 @@
+// Rodata labels for the INCLUDE_RODATA lines of overlay GYOZI (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_801458A0 = 0x801458A0;
+D_801458E8 = 0x801458E8;
+D_801459E0 = 0x801459E0;
+D_80145A40 = 0x80145A40;
+D_80145B80 = 0x80145B80;
+D_80145BA0 = 0x80145BA0;
+D_80145BB8 = 0x80145BB8;
+D_80145BC0 = 0x80145BC0;
+D_80145BC8 = 0x80145BC8;
+D_80145BE0 = 0x80145BE0;
+D_80145BEC = 0x80145BEC;
+D_80145C00 = 0x80145C00;
+D_80145C0C = 0x80145C0C;
+D_80145C20 = 0x80145C20;
+D_80145C28 = 0x80145C28;
+D_80145C34 = 0x80145C34;
+D_80145C40 = 0x80145C40;
+D_80145D20 = 0x80145D20;
+D_80145D28 = 0x80145D28;
+D_80145D30 = 0x80145D30;

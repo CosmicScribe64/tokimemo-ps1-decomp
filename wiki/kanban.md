@@ -9,20 +9,24 @@ kanban-plugin: board
 - [ ] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
 - [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]
 
+- [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
+- [ ] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
 - [ ] [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300 Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress]]
 - [ ] [[tickets/T-0301-sdk-rodata-data-split|T-0301 Split SDK rodata and data per library and object]]
 - [ ] [[tickets/T-0302-sdk-version-conflict|T-0302 Resolve mixed SDK vintages (libcd, libsnd, libpress newer than libgte, libc)]]
-- [ ] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-0200-event-gyozi-loader-and-address|T-0200 Find how EVENT and GYOZI overlays are loaded]]
 - [ ] [[tickets/T-0601-obin-med-confidence-review|T-0601 Review medium and low confidence O.BIN mappings]]
 
 ## Ready
 
+- [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+
 
 
 ## In Review
@@ -32,8 +36,23 @@ kanban-plugin: board
 ## Done
 - [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
 
+- [ ] [[tickets/T-3200-catalog-game-versions|T-3200 Catalog game versions]]
+- [ ] [[tickets/T-3100-identify-original-compiler|T-3100 Identify the original game-code compiler]]
+- [x] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
 - [x] [[tickets/T-2040-wave-2-etc|T-2040 Wave 2: ETC]]
+- [ ] [[tickets/T-2010-wave2-date|T-2010 Wave 2: DATE]]
+- [ ] [[tickets/T-2060-wave2-shougatu|T-2060 Wave 2: SHOUGATU]]
+
+- [ ] [[tickets/T-2070-wave-2-tt|T-2070 Wave 2: TT]]
+- [ ] [[tickets/T-2050-wave2-geko|T-2050 Wave 2: GEKO]]
+
+- [x] [[tickets/T-2020-wave-2-gyozi|T-2020 Wave 2: GYOZI]]
+- [x] [[tickets/T-2000-wave2-event|T-2000 Wave 2: EVENT]]
+
+- [x] [[tickets/T-2080-wave2-taiiku-rpg-bat|T-2080 Wave 2: overlays TAIIKU, RPG_BAT]]
+- [ ] [[tickets/T-2100-wave2-small-overlays|T-2100 Wave 2: small overlays]]
+- [ ] [[tickets/T-2090-wave2-main-executable|T-2090 Wave 2: main executable]]
 - [ ] [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320 Tooling: work queue and blocker detector]]
 - [ ] [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330 Tooling: m2c context and decomp-permuter]]
 - [ ] [[tickets/T-1310-tooling-object-trailing-padding|T-1310 Tooling: object-trailing padding]]

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Run m2c on one function with project context and print a C draft (T-1330).
 
-Usage (in Docker): python3 tools/m2c.py [--no-context] [--no-rodata] [--target T] func_80045414 [-- m2c options]
+Usage (in Docker): python3 tools/m2c.py [--no-context] [--no-rodata] [--target T] [UNIT:]func_80045414 [-- m2c options]
+(UNIT = main or an overlay name, for addresses that several overlays share)
 
 What it adds over a bare `m2c <file>.s`:
 - finds the function's .s under asm/{nonmatchings,matchings}/ (main exe) or asm/ovl/<NAME>/ (overlay);
@@ -30,16 +31,24 @@ WORD_RE = re.compile(r"[A-Za-z_]\w*")
 
 
 def locate(root, name):
-    """Return (asm_path, overlay_name or None) for function `name`, or raise LookupError."""
+    """Return (asm_path, overlay_name or None) for function `name`, or raise LookupError.
+    `OVERLAY:func_X` (or `main:func_X`) picks the unit when several overlays have a function at
+    the same address."""
+    unit = None
+    if ":" in name:
+        unit, name = name.split(":", 1)
     pats = [
         "asm/nonmatchings/main/*/%s.s",
         "asm/matchings/main/*/%s.s",
-        "asm/ovl/*/nonmatchings/*/%s.s",
-        "asm/ovl/*/matchings/*/%s.s",
+        "asm/ovl/*/nonmatchings/**/%s.s",
+        "asm/ovl/*/matchings/**/%s.s",
     ]
     hits = []
     for pat in pats:
-        hits += glob.glob(os.path.join(root, pat % name))
+        hits += glob.glob(os.path.join(root, pat % name), recursive=True)
+    if unit:
+        hits = [h for h in hits if (unit == "main") == ("/ovl/" not in h)
+                and (unit == "main" or "/ovl/%s/" % unit in h)]
     if not hits:
         raise LookupError("no asm file for %s under %s/asm" % (name, root))
     path = sorted(hits)[0]
@@ -92,9 +101,24 @@ def rodata_blocks(rodata_text, referenced_text):
 
 
 def rodata_files(root, overlay):
-    if overlay:
-        return sorted(glob.glob(os.path.join(root, "asm/ovl/%s/data/*.rodata.s" % overlay)))
-    return sorted(glob.glob(os.path.join(root, "asm/data/*.rodata.s")))
+    """The splat rodata files of the main exe or an overlay, islands of per-object files
+    (data/<NAME>/<addr>.rodata.s, T-0500) included."""
+    base = "asm/ovl/%s/data" % overlay if overlay else "asm/data"
+    return sorted(glob.glob(os.path.join(root, base, "**/*.rodata.s"), recursive=True))
+
+
+def unique_blocks(text, seen):
+    """`text` without the glabel blocks whose label is in `seen` (stale copies of a block in an
+    old layout's rodata file); adds the kept labels to `seen`."""
+    out, keep = [], True
+    for line in text.splitlines():
+        m = re.match(r"^glabel\s+(\w+)", line)
+        if m:
+            keep = m.group(1) not in seen
+            seen.add(m.group(1))
+        if keep:
+            out.append(line)
+    return "\n".join(out) + ("\n" if out else "")
 
 
 def drop_declaration(text, name):
@@ -141,9 +165,9 @@ def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=
         cmd += list(extra) + [asm]
         if rodata:
             func_text = open(asm).read()
-            blocks = ""
+            blocks, seen = "", set()
             for rf in rodata_files(root, overlay):
-                blocks += rodata_blocks(open(rf).read(), func_text).split("\n", 1)[1]
+                blocks += unique_blocks(rodata_blocks(open(rf).read(), func_text).split("\n", 1)[1], seen)
             if blocks.strip():
                 ro = os.path.join(tmp, "rodata.s")
                 with open(ro, "w") as f:

@@ -14,4 +14,17 @@ extern s32 D_80154B84;
 extern s32 D_80154B8C;
 void func_800847B8(s32 arg0);
 
+/* defined in C in one object, called from another (T-0500) */
+void func_80132034(void);
+void func_80132104(void);
+void func_8013216C(void);
+void func_801321D4(void);
+void func_8013223C(void);
+void func_8013230C(void);
+void func_80132374(void);
+void func_801323DC(void);
+void func_80132444(void);
+void func_801324AC(void);
+void func_801324E0(void);
+
 #endif

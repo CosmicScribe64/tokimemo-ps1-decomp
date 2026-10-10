@@ -1,0 +1,14 @@
+# Original objects of overlay KANGEI (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 80139950 last-jtbl
+object 80132000 80132090 - - no:no_rodata start -
+object 80132090 80132E40 80139600 801396F0 yes pad start
+object 80132E40 80133C10 801396F0 80139780 yes rodata jtbl-pad
+object 80133C10 80134120 80139780 80139790 yes pad jtbl-pad
+object 80134120 801355F0 80139790 801398B0 yes pad str-pad
+object 801355F0 80135F10 801398B0 801398E0 yes pad jtbl-pad
+object 80135F10 80137B90 801398E0 80139900 yes pad jtbl-pad
+object 80137B90 80139600 80139900 80139950 yes pad owner

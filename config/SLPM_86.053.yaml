@@ -44,6 +44,9 @@ options:
     - config/symbol_addrs_sdk.txt
     # provisional game names from O.BIN (T-0600), hypotheses; see wiki/obin.md
     - config/symbol_addrs_obin.txt
+    # main-exe-only function sizes (T-0500)
+    - config/symbol_addrs_main.txt
+    - config/labels/main.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/undefined_funcs_auto.txt
@@ -69,12 +72,14 @@ segments:
       # game code, one C file per original object (T-0012, wiki/source-files.md), named by
       # start address. tools/game_boundaries.py --yaml prints this list.
       - { start: 0x800, type: c, name: main/80041000 }
+      - { start: 0x18D0, type: c, name: main/800420D0 }
       - { start: 0x1D40, type: c, name: main/80042540 }
       - { start: 0x2200, type: c, name: main/80042A00 }
       - { start: 0x2D10, type: c, name: main/80043510 }
       - { start: 0x49D0, type: c, name: main/800451D0 }
       - { start: 0x5D00, type: c, name: main/80046500 }
       - { start: 0x6D50, type: c, name: main/80047550 }
+      - { start: 0x88C0, type: c, name: main/800490C0 }
       - { start: 0x97F0, type: c, name: main/80049FF0 }
       - { start: 0xA560, type: c, name: main/8004AD60 }
       - { start: 0xBBF0, type: c, name: main/8004C3F0 }
@@ -88,13 +93,17 @@ segments:
       - { start: 0x18520, type: c, name: main/80058D20 }
       - { start: 0x18F10, type: c, name: main/80059710 }
       - { start: 0x19220, type: c, name: main/80059A20 }
+      - { start: 0x19340, type: c, name: main/80059B40 }
       - { start: 0x198B0, type: c, name: main/8005A0B0 }
       - { start: 0x20F10, type: c, name: main/80061710 }
       - { start: 0x224D0, type: c, name: main/80062CD0 }
+      - { start: 0x26CB0, type: c, name: main/800674B0 }
       - { start: 0x2C330, type: c, name: main/8006CB30 }
+      - { start: 0x32FA0, type: c, name: main/800737A0 }
       - { start: 0x34B20, type: c, name: main/80075320 }
       - { start: 0x381E0, type: c, name: main/800789E0 }
       - { start: 0x39310, type: c, name: main/80079B10 }
+      - { start: 0x3B830, type: c, name: main/8007C030 }
       - { start: 0x45630, type: c, name: main/80085E30 }
       # PsyQ SDK libs, asm only (T-0010). Order is link order. Object-level
       # splits where signature evidence exists, see wiki/psyq-sdk.md.
@@ -163,11 +172,31 @@ segments:
       - [0x6E7B0, asm, libapi_3]   # vram 0x800AEFB0
       - [0x6E830, asm, libapi_counter]   # vram 0x800AF030
       - [0x6E9A0, asm, libapi_4]   # vram 0x800AF1A0
-      - [0x6EB40, rodata, rodata]
+      - [0x6EB40, .rodata, main/80041000]
+      - [0x6EB70, .rodata, main/800420D0]
+      - [0x6EB90, .rodata, main/80042540]
+      - [0x6EFF0, .rodata, main/80043510]
+      - [0x6F010, .rodata, main/800451D0]
+      - [0x6F160, .rodata, main/80047550]
+      - [0x6F2C0, .rodata, main/800490C0]
+      - [0x6F2E0, .rodata, main/80049FF0]
+      - [0x6F300, .rodata, main/8004C3F0]
+      - [0x6F350, .rodata, main/8004E500]
+      - [0x6F370, .rodata, main/8004F870]
       - [0x6F3F0, .rodata, main/80053650]
-      - [0x6F5E0, rodata, rodata_after_80053650]
+      - [0x6F5E0, .rodata, main/80056300]
+      - [0x6F5F0, .rodata, main/80059A20]
+      - [0x6F600, .rodata, main/80059B40]
+      - [0x6F610, .rodata, main/8005A0B0]
+      - [0x70700, .rodata, main/80062CD0]
+      - [0x70790, .rodata, main/800674B0]
+      - [0x70940, .rodata, main/8006CB30]
+      - [0x70CF0, .rodata, main/800737A0]
+      - [0x70D90, .rodata, main/80075320]
+      - [0x71120, .rodata, main/800789E0]
       - [0x71630, .rodata, main/80079B10]
-      - [0x71800, rodata, rodata_after_80053650_after_80079B10]
+      - [0x71800, .rodata, main/8007C030]
+      - [0x71BB0, rodata, rodata_800B23B0]
       - [0x72A20, data, data]
       - { start: 0xA3000, type: bss, name: bss, vram: 0x800E3800 }
   - [0xA3000]

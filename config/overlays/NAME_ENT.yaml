@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/NAME_ENT.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/NAME_ENT_undefined_funcs_auto.txt
@@ -56,6 +57,13 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, NAME_ENT]
-      - [0x19140, rodata, NAME_ENT_rodata]
+      - [0x0, c, NAME_ENT/80132000]
+      - [0x7740, c, NAME_ENT/80139740]
+      - [0x10A80, c, NAME_ENT/80142A80]
+      - [0x12AD0, c, NAME_ENT/80144AD0]
+      - [0x19140, .rodata, NAME_ENT/80132000]
+      - [0x19660, .rodata, NAME_ENT/80139740]
+      - [0x1A4F0, .rodata, NAME_ENT/80142A80]
+      - [0x1A910, .rodata, NAME_ENT/80144AD0]
+      - [0x1AC30, data, NAME_ENT_data]
   - [0x30000]

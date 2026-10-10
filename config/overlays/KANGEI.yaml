@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/KANGEI.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/KANGEI_undefined_funcs_auto.txt
@@ -56,6 +57,20 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, KANGEI]
-      - [0x7600, rodata, KANGEI_rodata]
+      - [0x0, c, KANGEI/80132000]
+      - [0x90, c, KANGEI/80132090]
+      - [0xE40, c, KANGEI/80132E40]
+      - [0x1C10, c, KANGEI/80133C10]
+      - [0x2120, c, KANGEI/80134120]
+      - [0x35F0, c, KANGEI/801355F0]
+      - [0x3F10, c, KANGEI/80135F10]
+      - [0x5B90, c, KANGEI/80137B90]
+      - [0x7600, .rodata, KANGEI/80132090]
+      - [0x76F0, .rodata, KANGEI/80132E40]
+      - [0x7780, .rodata, KANGEI/80133C10]
+      - [0x7790, .rodata, KANGEI/80134120]
+      - [0x78B0, .rodata, KANGEI/801355F0]
+      - [0x78E0, .rodata, KANGEI/80135F10]
+      - [0x7900, .rodata, KANGEI/80137B90]
+      - [0x7950, data, KANGEI_data]
   - [0x30000]

@@ -9,7 +9,23 @@ void func_800789E0(void) {
     D_800B6D40 = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078A0C);
+void func_80078A0C(void) {
+    switch (D_800B6D34) {
+    case 0:
+        func_80078C48();
+        break;
+    case 1:
+        func_80078FE0();
+        break;
+    case 2:
+        func_80079014();
+        break;
+    case 3:
+        func_80079070();
+        break;
+    }
+    func_80078A94();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078A94);
 

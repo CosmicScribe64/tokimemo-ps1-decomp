@@ -1,0 +1,40 @@
+# Original objects of the main game code (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 800B23B0 sdk-start
+object 80041000 800420D0 800AF340 800AF370 yes start start
+object 800420D0 80042540 800AF370 800AF390 yes choice/3 str-pad
+object 80042540 80042A00 800AF390 800AF7F0 yes pad str-pad
+object 80042A00 80043510 - - no:no_rodata pad -
+object 80043510 800451D0 800AF7F0 800AF810 yes pad jtbl-pad
+object 800451D0 80046500 800AF810 800AF960 yes pad jtbl-pad
+object 80046500 80047550 - - no:no_rodata pad -
+object 80047550 800490C0 800AF960 800AFAC0 yes pad jtbl-end
+object 800490C0 80049FF0 800AFAC0 800AFAE0 yes choice/5 jtbl-pad
+object 80049FF0 8004AD60 800AFAE0 800AFB00 yes pad jtbl-pad
+object 8004AD60 8004C3F0 - - no:no_rodata pad -
+object 8004C3F0 8004E500 800AFB00 800AFB50 yes pad str-pad
+object 8004E500 8004F6B0 800AFB50 800AFB70 yes pad jtbl-end
+object 8004F6B0 8004F870 - - no:no_rodata pad -
+object 8004F870 80053650 800AFB70 800AFBF0 yes pad str-pad
+object 80053650 80056300 800AFBF0 800AFDE0 yes pad jtbl-pad
+object 80056300 800563F0 800AFDE0 800AFDF0 yes pad jtbl-pad
+object 800563F0 80057390 - - no:no_rodata pad -
+object 80057390 80058D20 - - no:no_rodata pad -
+object 80058D20 80059710 - - no:no_rodata pad -
+object 80059710 80059A20 - - no:no_rodata pad -
+object 80059A20 80059B40 800AFDF0 800AFE00 yes pad owner
+object 80059B40 8005A0B0 800AFE00 800AFE10 yes choice/3 str-pad
+object 8005A0B0 80061710 800AFE10 800B0F00 yes pad str-pad
+object 80061710 80062CD0 - - no:no_rodata pad -
+object 80062CD0 800674B0 800B0F00 800B0F90 yes pad jtbl-pad
+object 800674B0 8006CB30 800B0F90 800B1140 yes choice/5 jtbl-end
+object 8006CB30 800737A0 800B1140 800B14F0 yes pad jtbl-pad
+object 800737A0 80075320 800B14F0 800B1590 yes choice/8 jtbl-pad
+object 80075320 800789E0 800B1590 800B1920 yes pad jtbl-pad
+object 800789E0 80079B10 800B1920 800B1E30 yes pad jtbl-pad
+object 80079B10 8007C030 800B1E30 800B2000 yes pad jtbl-pad
+object 8007C030 80085E30 800B2000 800B23B0 yes choice/4 jtbl-pad
+object 80085E30 80086810 - - no:no_rodata pad -

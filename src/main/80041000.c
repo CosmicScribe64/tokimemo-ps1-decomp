@@ -48,7 +48,12 @@ INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800415B4);
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_8004164C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041840);
+void func_80041840(void) {
+    D_800E71F4 = 1;
+    D_800E71EF = 3;
+    D_800E7312 = 1;
+    D_80123110 = 0x80132000;
+}
 
 void func_80041878(void) {
     func_800418B0();
@@ -79,51 +84,4 @@ void func_80042058(void) {
     D_800E71F5 = 0;
     D_800E71ED = 0xE;
     D_800E71EE = 0;
-}
-
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800420D0);
-
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80042134);
-
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800422C8);
-
-void func_800423D4(void) {
-    D_800E7374 += 1;
-    D_800E7D10 += 0x377;
-}
-
-s32 func_80042400(void) {
-    D_800E7D10 += 0x377;
-    return D_800E7D10;
-}
-
-void func_80042418(void) {
-    bzero(&D_800E7D10, 0xEE0);
-    func_80042488();
-    card_ev_set();
-    func_80042C30();
-}
-
-void func_80042458(void) {
-    EnterCriticalSection();
-    FlushCache();
-    ExitCriticalSection();
-}
-
-void func_80042488(void) {
-    s32 ev;
-
-    EnterCriticalSection();
-    ev = OpenEvent(0xF2000003, 2, 0x1000, func_800423D4);
-    D_8011ECA8 = ev;
-    EnableEvent(ev);
-    SetRCnt(0xF2000003, 1, 0x1000);
-    StartRCnt(0xF2000003);
-    ExitCriticalSection();
-}
-
-void func_800424FC(void) {
-    EnterCriticalSection();
-    CloseEvent(D_8011ECA8);
-    ExitCriticalSection();
 }

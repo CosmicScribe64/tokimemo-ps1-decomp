@@ -56,6 +56,21 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, OLH]
-      - [0x4F60, rodata, OLH_rodata]
+      - [0x0, c, OLH/80132000]
+      - [0x420, c, OLH/80132420]
+      - [0xFA0, c, OLH/80132FA0]
+      - [0x1B80, c, OLH/80133B80]
+      - [0x2500, c, OLH/80134500]
+      - [0x2F40, c, OLH/80134F40]
+      - [0x3AC0, c, OLH/80135AC0]
+      - [0x44E0, c, OLH/801364E0]
+      - [0x4F60, .rodata, OLH/80132000]
+      - [0x5190, .rodata, OLH/80132420]
+      - [0x5880, .rodata, OLH/80132FA0]
+      - [0x5D40, .rodata, OLH/80133B80]
+      - [0x6190, .rodata, OLH/80134500]
+      - [0x6740, .rodata, OLH/80134F40]
+      - [0x6BB0, .rodata, OLH/80135AC0]
+      - [0x7110, .rodata, OLH/801364E0]
+      - [0x76E0, data, OLH_data]
   - [0x30000]

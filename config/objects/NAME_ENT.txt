@@ -1,0 +1,10 @@
+# Original objects of overlay NAME_ENT (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8014CC30 last-jtbl
+object 80132000 80139740 8014B140 8014B660 yes start start
+object 80139740 80142A80 8014B660 8014C4F0 yes pad jtbl-end
+object 80142A80 80144AD0 8014C4F0 8014C910 yes pad jtbl-end
+object 80144AD0 8014B140 8014C910 8014CC30 yes rodata jtbl-pad

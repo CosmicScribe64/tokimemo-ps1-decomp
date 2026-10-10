@@ -56,6 +56,12 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, OMIMAI]
-      - [0x28B0, rodata, OMIMAI_rodata]
+      - [0x0, c, OMIMAI/80132000]
+      - [0xA0, c, OMIMAI/801320A0]
+      - [0xAD0, c, OMIMAI/80132AD0]
+      - [0x11B0, c, OMIMAI/801331B0]
+      - [0x28B0, .rodata, OMIMAI/801320A0]
+      - [0x28F0, .rodata, OMIMAI/80132AD0]
+      - [0x2920, .rodata, OMIMAI/801331B0]
+      - [0x2A60, data, OMIMAI_data]
   - [0x30000]

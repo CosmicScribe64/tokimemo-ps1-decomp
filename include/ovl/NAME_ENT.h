@@ -123,4 +123,114 @@ extern u8 D_8014BDE8[];
 extern u8 D_8014BE00[];
 extern u8 D_8014BE10[];
 
+extern u8 D_8012071D;
+extern u8 D_8012071E;
+extern u8 D_8012071F;
+extern u8 D_80120721;
+extern s32 D_80120728;
+extern s32 D_8012072C;
+extern s16 D_80120742;
+extern s16 D_80120746;
+extern s32 D_80120750;
+extern s32 D_80120754;
+extern u8 D_80120651;
+extern u8 D_80120652;
+extern u8 D_80120653;
+extern u8 D_80120655;
+extern s32 D_80120688;
+extern u8 *D_8012065C;
+extern u8 *D_80120660;
+extern u8 *D_80120684;
+extern s16 D_80120668;
+extern s16 D_80120676;
+extern s16 D_8012067A;
+extern u8 D_801207E9;
+extern u8 D_801207EA;
+extern u8 D_801207EB;
+extern u8 D_801207ED;
+extern s32 D_801207F4;
+extern s32 D_801207F8;
+extern s16 D_801207FE;
+extern s16 D_8012080E;
+extern s16 D_80120812;
+extern s32 D_8012081C;
+extern s32 D_80120820;
+extern u8 D_801206D9;
+extern u8 D_801206DA;
+extern u8 D_801206DB;
+extern u8 D_801206DD;
+extern s32 D_801206E4;
+extern s32 D_801206E8;
+extern s16 D_801206EE;
+extern s16 D_801206FE;
+extern s16 D_80120702;
+extern s32 D_8012070C;
+extern s32 D_80120710;
+
+extern u8 D_80120C6F;
+extern s16 D_80120C92;
+extern s16 D_80120C96;
+
+extern s32 D_801217D0;
+
+extern u8 D_80120761;
+extern s32 D_80120798;
+extern u8 D_80120763;
+extern s32 D_8012076C;
+extern s32 D_80120770;
+extern s32 D_80120794;
+extern s16 D_80120776;
+extern u8 D_80120765;
+extern s16 D_80120786;
+extern s16 D_8012078A;
+s32 func_800460EC();
+
+extern u8 D_801207A6;
+extern u8 D_801207A5;
+extern s32 D_801207DC;
+extern u8 D_801207A7;
+extern s32 D_801207B0;
+extern s32 D_801207B4;
+extern s32 D_801207D8;
+extern s16 D_801207BA;
+extern u8 D_801207A9;
+extern s16 D_801207CA;
+extern s16 D_801207CE;
+
+extern u8 D_8012082D;
+extern u8 D_8012082E;
+extern s32 D_80120864;
+extern u8 D_8012082F;
+extern s32 D_80120838;
+extern s32 D_8012083C;
+extern s32 D_80120860;
+extern s16 D_80120844;
+extern u8 D_80120831;
+extern s16 D_80120852;
+extern s16 D_80120856;
+
+extern s16 D_80120732;
+
+void func_80048F64();
+
+extern u8 D_80120697;
+
+s32 rand();
+
+extern s32 D_800E7200;
+void k_disp_switch();
+void dtd_on_tpage();
+
+extern u8 D_80120696;
+extern u8 D_80120695;
+extern s32 D_801206CC;
+extern s32 D_801206A0;
+extern s32 D_801206A4;
+extern s32 D_801206C8;
+extern s16 D_801206AA;
+extern u8 D_80120698;
+extern u8 D_80120699;
+extern s16 D_801206BA;
+extern s16 D_801206BE;
+
 #endif /* OVL_NAME_ENT_H */

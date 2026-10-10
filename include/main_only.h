@@ -15,6 +15,13 @@ void func_80065900(u8 arg0);
 void func_8007B99C(u16 arg0);
 void func_8007BE94(s32 arg0);
 void func_8007BF04(s32 arg0);
+/* T-2090: overlay headers declare these symbols themselves */
+extern s32 D_800E6378;
+extern u8 D_800CA188[];
+void func_80062CD0();
+void k_disp_inc2();
+void func_80083A10();
+void check_k_scroll();
 
 /* T-2030: overlays call it with s32 arguments, see include/ovl/*.h */
 void draw2d3d(u8 arg0, u8 arg1);
@@ -22,5 +29,19 @@ void draw2d3d(u8 arg0, u8 arg1);
 /* T-2040: ETC calls these through unprototyped declarations, MASTER through its own u8 view */
 void set_dec_bri(u8 arg0);
 s32 dec_bg_cd_read(s32 arg0, s32 arg1);
+
+/* defined in C in one object, called from another (T-0500) */
+void SenseMouse(u16 arg0, u16 arg1);
+void SetMouse(s32 arg0, u32 arg1, u32 arg2);
+u8 func_8004480C(void);
+void func_800462C8(u8 arg0, s32 arg1, s32 arg2);
+void func_80046318(u8 arg0, s32 arg1, s32 arg2);
+void func_8004AE28(s32 a0, s32 a1, s32 a2);
+
+/* T-2090: ETC reads these through its own views (u8 scalar, u8 pointers) */
+extern u8 D_800E6354[];
+extern s32 D_80125CA8;
+extern s32 D_80125CAC;
+extern s32 D_80125CB0;
 
 #endif /* MAIN_ONLY_H */

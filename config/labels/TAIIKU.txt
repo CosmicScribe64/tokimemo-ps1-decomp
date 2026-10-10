@@ -1,0 +1,26 @@
+// Rodata labels for the INCLUDE_RODATA lines of overlay TAIIKU (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_80148A90 = 0x80148A90;
+D_80148A98 = 0x80148A98;
+D_80148AA0 = 0x80148AA0;
+D_80148AA8 = 0x80148AA8;
+D_80148AB0 = 0x80148AB0;
+D_80148AB8 = 0x80148AB8;
+D_80148AC0 = 0x80148AC0;
+D_80148AC8 = 0x80148AC8;
+D_80148AD0 = 0x80148AD0;
+D_80148AD8 = 0x80148AD8;
+D_80148ADC = 0x80148ADC;
+D_80148AE4 = 0x80148AE4;
+D_80148AEC = 0x80148AEC;
+D_80148AF0 = 0x80148AF0;
+D_80148AF8 = 0x80148AF8;
+D_80148B00 = 0x80148B00;
+D_80148B08 = 0x80148B08;
+D_80148B10 = 0x80148B10;
+D_80148B18 = 0x80148B18;
+D_80148B1C = 0x80148B1C;
+D_80148B24 = 0x80148B24;
+D_80148B2C = 0x80148B2C;

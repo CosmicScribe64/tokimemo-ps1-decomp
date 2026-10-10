@@ -20,7 +20,23 @@ s32 func_80046500(void) {
     return -1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80046500", func_80046590);
+s32 func_80046590(s16 arg0, u8 arg1) {
+    s32 p;
+    u32 i;
+
+    p = 1;
+    if ((u32)arg1 >= 6) {
+        return 0;
+    }
+    i = 0;
+    if (arg1 != 0) {
+        do {
+            i += 1;
+            p *= 10;
+        } while (i < (u32)arg1);
+    }
+    return (arg0 / (p / 10)) % 10;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80046500", func_80046684);
 

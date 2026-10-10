@@ -386,3 +386,76 @@ Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri an
 
 ## [2026-10-09] ticket | T-1321 Done
 [[tickets/T-1321-register-promotion-build-step]] In Progress -> Done after the inline code review (no open findings). Results: clean build 27/27, `ninja progress` 1168 -> 1207; 26 pass-only ETC/TACO matches plus 13 larger R-flagged RPG_BAT/TACO functions that need no pass; detector precision 40 of 59 resolved sampled functions. No uopt patch proposed (threshold prototype rejected). [[tickets/T-0018-ugen-temp-register-order]] commented. Notes in [[matching-notes]], [[data/t0018-cases]].
+## [2026-10-09] ticket | T-2010 Wave 2: DATE, 278 functions matched
+[[tickets/T-2010-wave2-date]] In Progress -> Done after the inline review (no open findings). `src/ovl/DATE.c`: 278 functions matched (INCLUDE_ASM 637 -> 359), 9 `regorder` rows in [[data/t0018-cases]], new patterns in [[matching-notes]] (section "Wave 2: DATE"). Clean build 27 of 27 sha1 OK, `ninja progress` grand total 901 -> 1179 of 6962.
+## [2026-10-09] ticket | T-2060 Wave 2 SHOUGATU started
+[[tickets/T-2060-wave2-shougatu]] created, In Progress; scope: `src/ovl/SHOUGATU.c`.
+
+## [2026-10-09] ticket | T-2060 Wave 2 SHOUGATU In Progress -> Done
+[[tickets/T-2060-wave2-shougatu]]: 152 SHOUGATU functions matched (overlay 30 -> 182 of 400), 22 T-0018 rows in [[data/t0018-cases]], notes in [[matching-notes]]. Inline review against CODING_STANDARDS: no open findings. Tooling bug: `tools/m2c.py` locates the wrong overlay's asm for shared addresses. Not merged.
+## [2026-10-09] ticket | T-2070 wave 2 TT: 49 functions matched
+[[tickets/T-2070-wave-2-tt]] In Progress -> In Review -> Done after the inline review (no open findings). `src/ovl/TT.c`: 277 -> 228 `INCLUDE_ASM`; clean rebuild 27 of 27 sha1 OK, `ninja progress` TT 75/303, grand total 950/6962. New patterns, left-over blockers and a `tools/m2c.py` bug (first overlay wins when a function name exists in several overlays) are in [[matching-notes]]; six `regorder` rows added to [[data/t0018-cases]].
+
+## [2026-10-09] ticket | T-2050 Wave 2: GEKO, 176 functions matched
+[[tickets/T-2050-wave2-geko]] In Progress -> Done after the inline code review. GEKO went from 367 to 191 `INCLUDE_ASM`; 8 rows added to [[data/t0018-cases]]; notes in [[matching-notes]] (m2c picks the wrong overlay for shared function names; absolute casts for other-overlay addresses). Clean build 27 of 27 OK, `ninja progress` grand total 1077 of 6962.
+## [2026-10-09] ticket | T-2020 Wave 2: GYOZI (Backlog -> In Progress)
+[[tickets/T-2020-wave-2-gyozi]]: match the remaining functions of overlay GYOZI. Card on [[kanban]].
+
+## [2026-10-09] ticket | T-2020 Wave 2: GYOZI (In Progress -> Done)
+[[tickets/T-2020-wave-2-gyozi]]: 178 GYOZI functions matched (GYOZI 244 of 417), 6 rows added to [[data/t0018-cases]], new patterns in [[matching-notes]] ("Wave 2: GYOZI"). Clean build 27 of 27 sha1 OK. Inline review done, no open findings. Not merged.
+## [2026-10-09] ticket | T-2000 Wave 2: EVENT started
+New [[tickets/T-2000-wave2-event]], In Progress. Matching functions in `src/ovl/EVENT.c`.
+
+## [2026-10-09] ticket | T-2000 Wave 2: EVENT done
+[[tickets/T-2000-wave2-event]] In Progress -> Done after the inline review (no open findings). 421 of 781 EVENT functions matched in `src/ovl/EVENT.c`, clean rebuild 27 of 27 OK, `ninja progress` grand total 1322/6962. 11 rows added to [[data/t0018-cases]]; new patterns in [[matching-notes]] (raw-address loads, `*(s32 *)&` for narrow game.h scalars).
+## [2026-10-09] ticket | T-2080 wave 2: TAIIKU, RPG_BAT (108 functions matched)
+New [[tickets/T-2080-wave2-taiiku-rpg-bat]], In Progress -> Done after the inline code review (no open findings). Matched 108 functions (RPG_BAT 61, TAIIKU 47 new; the three `NON_MATCHING` TAIIKU functions of T-0017 were already plain C). Clean rebuild (`rm -rf asm build`, configure, ninja) 27 of 27 sha1 OK, `ninja progress` grand total 1009 of 6962 in this worktree. New patterns and blockers (shared `$at`, record-field scheduling, loop idioms, direct-global clamps) in [[matching-notes]]; 10 rows in [[data/t0018-cases]]. Tooling bug: `tools/m2c.py` picks the first overlay alphabetically for a function name present in several overlays.
+
+## [2026-10-09] ticket | T-3100 Identify the original game-code compiler started
+New [[tickets/T-3100-identify-original-compiler]], In Progress. Scope: O.BIN ECOFF header and symbolic-table forensics (`disc/files/CDROM/EXEDIR/O.BIN`), identification-string scan of the exe and overlays, public documentation of ucode-family compilers, in-image IDO experiments; output [[original-compiler]] and rules for [[tickets/T-1321-register-promotion-build-step]].
+
+## [2026-10-09] ingest | T-3100 O.BIN headers, version stamps and public compiler documentation
+New [[original-compiler]] and raw note `wiki/raw/original-compiler-sources.md`.
+- O.BIN (`disc/files/CDROM/EXEDIR/O.BIN`): a.out and symbolic-header vstamp are both 0x0312 (3.18), against 3.19 for in-image IDO 5.3 and 7.10 for 7.1. The SGI FAQ maps C 3.18 to IDO 5.2. The `.comment` header is big-endian in a little-endian file, so the link host was big-endian. All 5 procedure descriptors show the +16 frames in the 1995-07-25 developer build.
+- No toolchain strings anywhere on `disc/track1.bin`.
+- Tool: `tools/obin_syms.py --headers` (tests `tools/test_obin_tools.py`).
+- Pages updated: [[obin]] (corrected a.out fields and linker attribution), [[toolchain]], [[matching-notes]] (T-0018 premise corrected: IDO 5.3 promotes in straight-line code at higher reference counts), [[compiler-mismatch-research]], [[index]].
+
+## [2026-10-09] query | T-3100 promotion experiments and rules for T-1321
+- In-image IDO only. `-Wo,-regr,N` gives `$v1` selectors without promotion and regresses 194 of 1647 matched functions; rejected.
+- The original's switch, compare and `D++` shapes are IDO's own promoted shape at a lower reference count. Rules (promotion threshold, coloring order, not-promoted data, gate) appended to [[tickets/T-1321-register-promotion-build-step]]; follow-up for IDO 5.2/4.1 on [[tickets/T-0100-older-mips-compiler-emulation]].
+- Evo's Space Adventures and CelestialAmber/tokimemo checked: both are gcc setups.
+
+## [2026-10-09] ticket | T-3100 In Progress -> In Review -> Done
+[[tickets/T-3100-identify-original-compiler]] done after the inline review (no open findings). Clean rebuild 27 of 27 sha1 OK.
+## [2026-10-09] ticket | T-2100 Wave 2 small overlays (In Progress -> Done)
+[[tickets/T-2100-wave2-small-overlays]]: 94 functions matched in ENDING (17), SHUGAKU (21), NAME_ENT (18), EN_NICHI (16), KANGEI (11), BUNKA_SD, DATE2 (3 each), OMIMAI, VALEN (2 each), OPTION (1); `ninja progress` 901 -> 995 of 6962, clean rebuild 27 of 27 OK, `tools/check_headers.py` OK. Patterns (hit-box tests with shared-bound temporaries, far-address reads, load-hoist trick, parameter width) and tooling notes in [[matching-notes]]; 3 rows added to [[data/t0018-cases]]. Inline review against CODING_STANDARDS found nothing open. Not merged.
+
+## [2026-10-09] setup | versions/ folder
+Added versions/ for the user to collect dumps of other releases (BIN+CUE, CHD, ISO). Everything in it is gitignored except versions/README.md, which explains the formats. The build still targets only SLPM_86.053.
+
+## [2026-10-09] ticket | T-0500 In Progress
+[[tickets/T-0500-per-file-game-rodata-data-bss-split]] Backlog -> In Progress. Scope widened by the orchestrator: find the original object boundaries of every overlay and of the main game code (text and rodata), split the C files per object so each object provides its own rodata (jump tables, strings), with a migration tool for the wave-2 tree; prove it on RENSYU, OMIMAI, OLH, TEL and `src/main/80062CD0.c`.
+
+## [2026-10-09] decision | T-0500 one C file per original object
+The overlays and the main game code are split into their original objects, each C object providing its own rodata island (jump tables, strings, constants). Rejected: one C file per overlay with an object-file pass that splits and reorders `.rodata` (a new emulation pass with no source fidelity); asm-processor `late_rodata`/`INCLUDE_RODATA` alone (places rodata inside one object only). Rationale in [[tickets/T-0500-per-file-game-rodata-data-bss-split]].
+
+## [2026-10-09] build | T-0500 object boundaries, migration tool, proof units
+`tools/object_boundaries.py` (440 objects, 357 rodata chunks, evidence and confidence in [[source-files]] and `config/objects/`), `tools/split_objects.py` (migration, idempotent, `config/labels/`), `tools/srcscan.py` C file list from the yaml files; configure, progress, queue, dupes, funcdiff, m2c, permute, trailing_pad, rodata_pieces, gen_overlay_configs, objdiff.json and CI follow ([[build-system]]). `tools/cc.py` compiles UTF-8 string literals as Shift-JIS ([[toolchain]]). Migrated: RENSYU, OMIMAI, TEL, OLH, `src/main/80062CD0.c`; a full trial migration of all 27 units on a copy built 27 of 27 OK. splat mis-split `func_80066A2C`/`func_80066A84` fixed by sizes in `config/symbol_addrs_main.txt`. 18 jump-table/string functions matched (main 2, OLH 12, OMIMAI 4). Clean build 27 of 27 OK, grand total 1184/6958 functions (was 1168/6962).
+
+## [2026-10-09] ticket | T-0500 Done; T-3050, T-3051, T-3052 new
+[[tickets/T-0500-per-file-game-rodata-data-bss-split]] In Progress -> Done after the inline code review (no open findings). New: [[tickets/T-3050-run-per-object-migration-after-wave-2]] (Ready: `tools/split_objects.py --all` after wave 2 merges), [[tickets/T-3051-review-low-confidence-object-boundaries]] (Backlog), [[tickets/T-3052-per-object-data-bss-split]] (Backlog).
+## [2026-10-09] ticket | T-2090 wave 2 main executable: 61 functions matched
+[[tickets/T-2090-wave2-main-executable]] Backlog -> In Progress -> Done (inline review, no open findings). 61 functions matched in 15 `src/main/*.c` files (`ninja progress` grand total 901 -> 962 of 6962), clean rebuild 27 of 27 sha1 OK. New idioms in [[matching-notes]] (section "Main exe wave 2"): byte-flag loops over the 0x38-byte entries, bit-field flag words, `u16`/`s32` parameter types that decide spill and reload code (`LoadSquare` family), indexed symbol views against load hoisting (marked FAKE). 34 T-0018 rows appended to [[data/t0018-cases]]. Tooling bugs: `tools/funcdiff.py` cannot diff names starting with `L`; `tools/srcscan.py` does not see old-style definitions (`ninja progress` aborts). Open blockers: return types fixed by other owners' overlay headers, jump-table functions need a yaml island, T-0018 register choices.
+
+
+## [2026-10-09] migration | per-object C files for the whole game (T-0500)
+Ran tools/split_objects.py --all after wave 2: every overlay and main-exe C file is now one C file per original object with its own rodata island. Fixed the resulting header clashes (four ETC views moved to include/main_only.h, five duplicates dropped from TACO.h/ETC.h). Clean build 27/27 OK, 2734/6958.
+## [2026-10-09] ticket | T-3200 Catalog game versions (Backlog -> In Progress)
+[[tickets/T-3200-catalog-game-versions]] started: nine archives in versions/ (Rev 1/2/4 zip+7z, Shokai Genteiban, Best, v1.1). Extraction in Docker to scratch only.
+
+## [2026-10-09] ingest | T-3200 game versions catalogued
+Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1): Rev 1 = v1.1 (zip, 7z and the v1.1 7z are identical), Shokai Genteiban (differs from Rev 1 by one PVD byte), Rev 2, Rev 4, PlayStation the Best. New: [[versions]] (tables, lineage Rev 1 -> Rev 2 -> Rev 4 -> Best by PVD date, Ver 1.10/1.25/1.43 and SDK RCS ids, code diffs against SLPM_86.053, recommendation to keep it), `config/versions.txt` (hashes only), `tools/identify_version.py` with `tools/test_identify_version.py`. O.BIN, EVENT.EXN and GYOZI.EXN are identical in all versions; no debug leftovers beyond what [[obin]] covers. Extracted copies deleted.
+
+## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
+[[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.

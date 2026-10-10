@@ -1,0 +1,93 @@
+#include "common.h"
+#include "ovl/EVENT.h"
+
+void func_800FD2F0(void) {
+    D_801215E0 = 0x801B0000;
+    D_801215E4 = 0x801B2000;
+    D_801215E8 = 0x801B6000;
+    D_801215EC = 0x801BA000;
+    D_801215F0 = 0x801BE000;
+    D_801215F4 = 0x801C2000;
+    D_801215F8 = 0x801C6000;
+}
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD360);
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD3DC);
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD43C);
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD49C);
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD4FC);
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD588);
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD604);
+
+void func_800FD680(void) {
+    func_800433D0(0x500);
+    func_80011DFC();
+}
+
+void func_800FD6A8(void) {
+    func_80015D28(0x35, 0x801B0000, 0x7EF5);
+    func_800FD2F0();
+    func_80011DFC();
+}
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD6E0);
+
+void func_800FD77C(void) {
+    if (D_800EECBC != 0) {
+        D_80094714 = (u16) D_80094714 + 5;
+    }
+    func_80011DFC();
+}
+
+void func_800FD7BC(void) {
+    func_80011DFC();
+    if (D_800EECBC != 0) {
+        D_800B1AF6 += 0x13;
+    }
+}
+
+void func_800FD800(void) {
+    func_80011DFC();
+}
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD820);
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD974);
+
+void func_800FDA9C(void) {
+    func_800FD2F0();
+    func_80012D64(D_801215E0, 0x11, 1, 2, 0);
+    func_8004C46C(D_801215E4, D_801215E8, D_801215EC, D_801215F0, D_801215F4, D_801215F8);
+    func_8004C6B0(0, 0, 0, 0);
+    func_80011DFC();
+}
+
+void func_800FDB30(void) {
+    D_80120678 = D_80120620;
+    D_8012067C = D_80120640;
+    D_80120680 = (s32) D_80120660;
+    func_80011DFC();
+}
+
+void func_800FDB7C(void) {
+    func_800469F4(0x3FE8);
+    func_80011DFC();
+}
+
+void func_800FDBA4(void) {
+    func_800469F4(0x488A);
+    func_80011DFC();
+}
+
+void func_800FDBCC(void) {
+    func_800469F4(0x3FE8);
+    func_80011DFC();
+}
+
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FDBF4);

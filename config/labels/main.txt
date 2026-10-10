@@ -1,0 +1,11 @@
+// Rodata labels for the INCLUDE_RODATA lines of the main exe (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_800AFDF0 = 0x800AFDF0;
+D_800AFF6C = 0x800AFF6C;
+D_800AFF78 = 0x800AFF78;
+D_800B00FC = 0x800B00FC;
+D_800B0194 = 0x800B0194;
+D_800B0B64 = 0x800B0B64;
+D_800B0B6C = 0x800B0B6C;

@@ -1,0 +1,28 @@
+# Original objects of overlay GEKO (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 80144BA0 last-jtbl
+object 80132000 801323E0 - - no:no_rodata start -
+object 801323E0 801338F0 80144710 80144750 yes pad start
+object 801338F0 80134040 - - no:no_rodata pad -
+object 80134040 80134C90 80144750 801447A0 yes pad jtbl-end
+object 80134C90 80134D10 - - no:no_rodata pad -
+object 80134D10 801393C0 801447A0 80144980 yes pad jtbl-pad
+object 801393C0 80139910 80144980 801449A0 yes choice/5 jtbl-end
+object 80139910 8013AF80 801449A0 801449D0 yes pad str-pad
+object 8013AF80 8013B930 801449D0 801449F0 yes pad str-pad
+object 8013B930 8013C4C0 801449F0 80144A20 yes choice/10 str-pad
+object 8013C4C0 8013C980 80144A20 80144A30 yes pad str-pad
+object 8013C980 8013D0F0 80144A30 80144A60 yes pad str-pad
+object 8013D0F0 8013D4B0 80144A60 80144A70 yes pad str-pad
+object 8013D4B0 8013DB80 80144A70 80144A90 yes choice/4 str-pad
+object 8013DB80 8013DF70 80144A90 80144AA0 yes pad str-pad
+object 8013DF70 8013EE40 80144AA0 80144AC0 yes pad str-pad
+object 8013EE40 8013F360 80144AC0 80144AD0 yes pad str-pad
+object 8013F360 80140A00 80144AD0 80144B00 yes pad str-pad
+object 80140A00 80141AF0 80144B00 80144B50 yes choice/8 str-pad
+object 80141AF0 801426D0 80144B50 80144B60 yes pad str-pad
+object 801426D0 80142760 - - no:no_rodata pad -
+object 80142760 80144710 80144B60 80144BA0 yes pad str-pad

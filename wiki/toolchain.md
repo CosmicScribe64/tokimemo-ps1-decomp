@@ -2,7 +2,7 @@
 type: concept
 updated: 2026-10-09
 sources: ["tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
-sources: ["tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"]
+sources: ["wiki/original-compiler.md", "tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"]
 ---
 
 # Toolchain
@@ -27,6 +27,9 @@ Mechanism. IDO's pipeline is cfe -> uopt -> ugen -> as1; ugen hands as1 a binary
 
 A real copy of the original compiler would replace the pass without any change to the C code ([[tickets/T-0100-older-mips-compiler-emulation]] stays open for that).
 
+## The original compiler (T-3100)
+Identification, evidence and citations: [[original-compiler]]. The best fit is a MIPS/SGI ucode suite at release 3.18, the release SGI shipped as IDO 5.2 (March 1994), one minor version before our IDO 5.3 (3.19). The evidence is the linker version stamps in O.BIN: a.out vstamp and symbolic-header vstamp are both 0x0312. The link was a little-endian ECOFF link on a big-endian host, which fits the Sony NEWS-based PlayStation toolchain (UNVERIFIED). The O.BIN procedure descriptors show that the 1995-07-25 developer build already had the +16 frames, which supports the frame pass as a property of the compiler. `-Wo,-regr,N` (an undocumented uopt option for the caller-saved register pool) was tested and rejected: it moves switch selectors to `$v1` without promoting the global, and 194 of 1647 matched functions regress. IDO 5.3 does promote globals in straight-line code, only at a higher reference count than the original; the rules for [[tickets/T-1321-register-promotion-build-step]] are in [[original-compiler]] section 5. No IDO older than 5.3 is in decompals/ido-static-recomp; running IDO 5.2 or 4.1 (decomp.me hosts both under qemu-irix) needs the user's decision under the licensing rule.
+
 
 
 ## Unsigned-load conversion pass (T-1321)
@@ -37,6 +40,9 @@ Both rules are uniform (CODING_STANDARDS 7a): no per-function control; the C dec
 
 ## Jump tables and asm-processor (T-1340)
 asm-processor's `.rodata`/`.late_rodata` support is what lets `INCLUDE_ASM` functions and compiler-emitted jump tables share one object (it makes the compiler emit dummy data in the right order and replaces it by the asm bytes). `tools/rodata_pieces.py` writes those sections into the function files; see [[build-system]].
+
+## Shift-JIS string literals (T-0500)
+C sources are UTF-8, so Japanese strings stay readable in `src/`. `tools/cc.py` (`sjis_literals`, tests in `tools/test_cc.py`) re-encodes every non-ASCII character inside a string or character literal to its Shift-JIS bytes as octal escapes before IDO sees the file (the copy compiled is `<obj>.sjis.c`), the same rule `tools/asm.py` applies to splat's `.asciz` lines. Raw Shift-JIS bytes would not work: a second byte 0x5C (`表`) is a backslash to cfe. Non-ASCII text outside a literal stops the compile (comments are ASCII, CODING_STANDARDS 9). This is an encoding step, not an emulation pass: the bytes are those of the literal as written.
 
 ## Object padding pass (T-0012)
 `tools/cc.py` zero-pads the `.text` of every compiled C object to a multiple of 16 bytes (function `pad_text`, unit tests `tools/test_cc.py`). This is a toolchain emulation pass in the sense of CODING_STANDARDS 7a, not a fakematch: one uniform rule for all C objects (main exe and overlays), no per-function switches. It models the original link, which aligned every object's `.text` to 16; our linker script uses `SUBALIGN(2)` because the SDK asm objects must be packed exactly. Evidence: 804 of the 833 gaps between adjacent game functions are zero, and the 27 non-zero gaps all end on a 16-byte boundary and are 4 to 12 zero bytes ([[source-files]]); after the pass a file whose last function is C reproduces that padding (`func_80043504` as an empty C function matched). Functions kept as `INCLUDE_ASM` already contain their trailing nops, so nothing is doubled. It fails loudly (a missing `.text` makes `objcopy` abort the compile). Verified on a clean rebuild: the main exe and all 26 overlays still match their sha1 with the pass active (27 of 27 OK); each overlay is one C object whose end the linker script already aligned to 16.

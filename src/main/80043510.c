@@ -27,9 +27,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80043510", csr_load_vram);
 
 INCLUDE_ASM("asm/nonmatchings/main/80043510", palette_load_vram);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, ugen temporaries: original lhu into t8/t9, IDO t0/t1 (register allocation, not the frame). */
-void LoadSquare(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4) {
+void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
     RECT rect;
 
     rect.x = arg0;
@@ -38,13 +36,8 @@ void LoadSquare(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4) {
     rect.h = arg3;
     func_8009C884(&rect, arg4);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80043510", LoadSquare);
-#endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, ugen temporaries: original lhu into t7/t8/t9, IDO t8/t9/t0 (register allocation, not the frame). */
-void MoveSquare(u16 arg0, u16 arg1, u16 arg2, s16 arg3, u16 arg4, u16 arg5) {
+void MoveSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4, u16 arg5) {
     RECT rect;
 
     rect.x = arg0;
@@ -53,13 +46,8 @@ void MoveSquare(u16 arg0, u16 arg1, u16 arg2, s16 arg3, u16 arg4, u16 arg5) {
     rect.h = arg3;
     func_8009C93C(&rect, arg4, arg5);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80043510", MoveSquare);
-#endif
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, ugen temporaries: original lhu into t8/t9, IDO t0/t1 (register allocation, not the frame). */
-void StoreSquare(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4) {
+void StoreSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4) {
     RECT rect;
 
     rect.x = arg0;
@@ -68,9 +56,6 @@ void StoreSquare(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4) {
     rect.h = arg3;
     func_8009C8E0(&rect, arg4);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80043510", StoreSquare);
-#endif
 
 void func_80044434(void) {
 }

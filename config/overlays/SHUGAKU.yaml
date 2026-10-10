@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/SHUGAKU.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/SHUGAKU_undefined_funcs_auto.txt
@@ -56,6 +57,26 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, SHUGAKU]
-      - [0x8D10, rodata, SHUGAKU_rodata]
+      - [0x0, c, SHUGAKU/80132000]
+      - [0x1430, c, SHUGAKU/80133430]
+      - [0x1D60, c, SHUGAKU/80133D60]
+      - [0x24B0, c, SHUGAKU/801344B0]
+      - [0x2880, c, SHUGAKU/80134880]
+      - [0x3430, c, SHUGAKU/80135430]
+      - [0x4380, c, SHUGAKU/80136380]
+      - [0x58B0, c, SHUGAKU/801378B0]
+      - [0x6A60, c, SHUGAKU/80138A60]
+      - [0x7D00, c, SHUGAKU/80139D00]
+      - [0x8A70, c, SHUGAKU/8013AA70]
+      - [0x8D10, .rodata, SHUGAKU/80132000]
+      - [0x8D40, .rodata, SHUGAKU/80133430]
+      - [0x8D70, .rodata, SHUGAKU/80133D60]
+      - [0x8D80, .rodata, SHUGAKU/801344B0]
+      - [0x8D90, .rodata, SHUGAKU/80134880]
+      - [0x8DB0, .rodata, SHUGAKU/80136380]
+      - [0x8E20, .rodata, SHUGAKU/801378B0]
+      - [0x8EE0, .rodata, SHUGAKU/80138A60]
+      - [0x8F60, .rodata, SHUGAKU/80139D00]
+      - [0x8FB0, .rodata, SHUGAKU/8013AA70]
+      - [0x8FD0, data, SHUGAKU_data]
   - [0x30000]

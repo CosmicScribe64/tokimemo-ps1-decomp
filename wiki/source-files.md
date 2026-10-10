@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-10-09
-sources: ["tools/game_boundaries.py", "config/SLPM_86.053.yaml", "src/main/", "tools/cc.py"]
+sources: ["tools/game_boundaries.py", "tools/object_boundaries.py", "config/objects/", "config/SLPM_86.053.yaml", "src/main/", "tools/cc.py"]
 ---
 
 # Source files of the game code
@@ -57,7 +57,32 @@ Candidates rejected: data-only separation (single-file symbols below vs above a 
 ## Alignment in the build
 The linker script keeps `SUBALIGN(2)` (the SDK asm objects must be packed exactly), which would drop the original linker's 16-byte alignment of each C object. `tools/cc.py` therefore zero-pads every object's `.text` to a multiple of 16 after compiling (a uniform toolchain emulation of the original link, see CODING_STANDARDS 7a). Functions kept as `INCLUDE_ASM` already carry their trailing padding nops in their `.s`, so the padding is never doubled. Consequence: the last function of a file can now be decompiled; `func_80043504` (end of `80042A00`) and `func_8006CAE0` (end of `80062CD0`) were listed as unmatchable in [[matching-notes]] for this reason; `func_80043504` as `void func_80043504(void) {}` was checked to match with the padding, but was left as `INCLUDE_ASM` so that the split commit leaves the progress count unchanged (75/834).
 
-## Not split: rodata, data, bss
-They stay whole (`rodata`, `data`, `bss` subsegments). Only about 80 game functions reference `.rodata` directly (most strings are reached through `.data` pointer tables), and per-file `.data`/`.bss` blocks interleave with shared globals; cutting them needs symbol-level ownership. Tracked in [[tickets/T-0500-per-file-game-rodata-data-bss-split]].
+## Original objects, text and rodata (T-0500)
+`tools/docker.sh python3 tools/object_boundaries.py [--write] [-v] [UNIT...]` (tests `tools/test_objects.py`) derives the original objects (translation units) of the main game code and of all 26 overlays from the original bytes and splat's asm, and `--write` records them in `config/objects/<UNIT>.txt` (one `object` line per object: text range, rodata chunk, island yes/no, evidence for both starts; `rodata_end`; `orphan` chunks). `tools/split_objects.py` turns them into C files ([[build-system]], "Per-object C files").
+
+The link put the objects in the same order in every section and started each object's section on 16 bytes; IDO writes an object's `.rodata` as [strings and constants][jump tables] and pads it to 16. Evidence, by kind:
+
+| boundary | evidence | confidence | count (all units) |
+|---|---|---|---|
+| text | `pad`: zero words after a function up to the next 16-byte boundary (as in [[source-files#Evidence]] point 1) | high | 359 |
+| text | `rodata`: two rodata objects are used by functions of one padding-delimited text range; exactly one 16-aligned function start (no gap before it) lies between the last user of the first and the first user of the second | high | 25 |
+| text | `choice/N`: as `rodata` with N candidates; the one with the fewest calls crossing it is taken. The build cannot tell (every candidate links the same bytes; only functions between the users move) | low | 29 |
+| rodata | `jtbl-pad`: a jump table followed by zero words up to the next 16 bytes (table words are never zero) | high | 196 |
+| rodata | `jtbl-end`: a jump table followed by something that is not a table, its end already 16-aligned (tables end an object) | high | 36 |
+| rodata | `str-pad`: a string followed by more zeros than its 4-byte alignment needs, up to 16 | medium (an unreferenced zero constant would look the same) | 59 |
+| rodata | `owner`: symbols on both sides are used by different text objects (one 16-aligned symbol start in between) | high | 39 |
+| rodata end (overlays) | `last-jtbl` (20), `monotone-strings` (6): the end of the last table's object, extended over following string chunks while their users stay in text order and nothing in them is written by code or holds a pointer | medium | 26 |
+
+Totals: 440 objects (main 34, overlays 406), 357 rodata chunks, every chunk an island candidate (`island_check`: the order asm-processor reproduces equals the original, and every `INCLUDE_ASM` function is long enough for asm-processor to emit its tables). 3 orphan chunks stay asm: BUNKASAI `8015F730-8015FF70` and `8015FF70-80160380` (second and third chunk of the text object `801511E0`, so a text boundary there is hidden) and TACO `8015DA90-8015DAA0` (second chunk of `8013DB80`). Coverage: 880 of the 902 jump-table functions (782 KB of 810 KB) and 1495 of the 1518 functions that use game rodata lie in an island object.
+
+Cross-checks that hold: rodata order follows text order in every unit (users of consecutive chunks never overlap except in the three orphans); each object's `.data` also follows (OMIMAI: the tables of the three switch objects at `80134A60`, `80134B60`, `80134C30`); a full trial migration of all 27 units ([[tickets/T-0500-per-file-game-rodata-data-bss-split]]) rebuilt 27 of 27 sha1 from a clean `asm/`, which checks every island's size and content (not the low-confidence text cuts, see above).
+
+Problems the script reports (not used as evidence): 14 text gaps that are not object padding (as `0x80067E24-0x80067E34` in main), the three orphans, IDO tables that end on 16 bytes followed by 16 more zero bytes (TACO `8015E210`): the object ends at the table, the zeros belong to what follows (here `.data`); a boundary between two symbols gets a synthetic symbol `D_<address>` (splat names the first symbol of a subsegment so).
+
+Main exe: the 28 files become 34 objects. Six new text cuts are `choice/N` (`800420D0` among 3 candidates, which is the entry point of point 2 above, `800490C0`, `800674B0`, `800737A0`, `80059B40`, `8007C030`); the rodata start `800AFE00` of point 3 now separates `80059A20` (chunk `800AFDF0`, an `owner` cut) from `80059B40` (`choice/3`). Only `src/main/80062CD0.c` has been split so far (into `80062CD0` and `800674B0`); the other files follow when [[tickets/T-3050-run-per-object-migration-after-wave-2]] runs.
+
+## Not split: data, bss
+
+`.data` and `.bss` stay whole; rodata is split per object since T-0500 (above). Only about 80 game functions reference `.rodata` directly (most strings are reached through `.data` pointer tables), and per-file `.data`/`.bss` blocks interleave with shared globals; cutting them needs symbol-level ownership. Tracked in [[tickets/T-0500-per-file-game-rodata-data-bss-split]].
 
 Exception (T-1340): a C file that contains a jump-table function gets a rodata *island*, the chunk of rodata of one original object, provided by the C object itself (`.rodata` subsegment named like the file; `src/main/80053650.c` and `src/main/80079B10.c` have one). It is cut from the splat output, not from a claim about file ownership: the chunk is the strings and tables of one object up to its zero padding, and the sha1 check confirms it. See [[build-system]] (section "Jump tables: rodata islands"). The zero padding after a jump table is also a new rodata boundary witness for T-0500: tables ending in zero words up to a 16-byte boundary mark the end of an object (70 cases in the overlays).

@@ -34,6 +34,10 @@ import re
 import struct
 import sys
 
+import srcscan
+
+RODATA_MARK = "# T-1340 rodata (rodata_pieces.py)"  # rodata_pieces.MARK (that module imports yaml)
+
 SHT_SYMTAB = 2
 SHT_REL = 9
 SHT_NOBITS = 8
@@ -239,9 +243,10 @@ def pad_text_to(path, align):
 
 
 def trailing_words(path):
-    """Number of nop words after the `endlabel` line of a splat function file."""
+    """Number of nop words after the `endlabel` line of a splat function file. The rodata that
+    tools/rodata_pieces.py appends after a marker line (T-1340) is not part of the function."""
     with open(path) as f:
-        lines = f.read().splitlines()
+        lines = f.read().split(RODATA_MARK)[0].splitlines()
     ends = [i for i, l in enumerate(lines) if ENDLABEL_RE.match(l)]
     if not ends:
         fail("%s: no endlabel line" % path)
@@ -253,14 +258,9 @@ def trailing_words(path):
 
 
 def asm_dirs(src):
-    """Directories of splat function files for the C source `src`, or []."""
-    stem = os.path.splitext(os.path.basename(src))[0]
-    parts = os.path.normpath(src).split(os.sep)
-    if "ovl" in parts:
-        return ["asm/ovl/%s/%s/%s" % (stem, kind, stem) for kind in ("matchings", "nonmatchings")]
-    if "main" in parts:
-        return ["asm/%s/main/%s" % (kind, stem) for kind in ("matchings", "nonmatchings")]
-    return []
+    """Directories of splat function files for the C source `src`, or [] (srcscan's path rule;
+    src/main/<addr>.c, src/ovl/<NAME>.c and the per-object src/ovl/<NAME>/<addr>.c, T-0500)."""
+    return srcscan.asm_dirs_of_source(src)
 
 
 def find_asm(src, name, root="."):

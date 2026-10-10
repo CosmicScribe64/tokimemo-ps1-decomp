@@ -6,8 +6,11 @@ still INCLUDE_ASM it reads the generated splat asm (asm/nonmatchings/...) and re
 not, number of calls, and flags:
 
   L  has a loop (a backward branch)
-  J  has a jump table (jtbl_*): cannot be built, the .rodata is one asm blob (matching-notes)
-  S  references a string literal in .rodata: same reason
+  J  has a jump table (jtbl_*)
+  S  references a string literal in .rodata
+     J and S block only when the function's C file has no rodata island: then its rodata is an
+     asm blob the C object cannot provide. Per-object C files (tools/split_objects.py, T-0500)
+     give every object with rodata an island, so J and S are workable there (decompile-workflow).
   P  one trailing nop after the last jr (end address 12 mod 16): asm-processor needs 2 (matching-notes)
   R  T-0018 register promotion: one global scalar is loaded in two or more basic blocks outside
      loops into the same register (reloaded after calls or branches). Original uopt promotes the
@@ -177,7 +180,7 @@ def analyze(text, string_syms=frozenset()):
 def string_symbols(root):
     """Names of the .rodata symbols that hold a string (dlabel followed by .asciz)."""
     syms = set()
-    files = list(Path(root, "asm").glob("data/*rodata*.s")) + list(Path(root, "asm", "ovl").glob("*/data/*rodata*.s"))
+    files = list(Path(root, "asm").glob("data/**/*rodata*.s")) + list(Path(root, "asm", "ovl").glob("*/data/**/*rodata*.s"))
     for f in files:
         name = None
         for line in f.read_text(errors="replace").splitlines():
@@ -194,6 +197,7 @@ class Func(NamedTuple):
     name: str
     path: str
     facts: Facts
+    island: bool = False   # the C file has a rodata island: J and S do not block
 
     @property
     def leaf(self):
@@ -207,17 +211,16 @@ class Func(NamedTuple):
 
     @property
     def blocked(self):
-        return any(c in BLOCKERS for c in self.flags)
+        stop = BLOCKERS.replace("J", "").replace("S", "") if self.island else BLOCKERS
+        return any(c in stop for c in self.flags)
 
 
 def units(root):
-    """[(file label, C source path, asm dir of the matched functions)] for the main files and overlays."""
-    root = Path(root)
+    """[(file label, C source path, asm dir of the matched functions, has island)] for every C file
+    of the main exe and the overlays (srcscan.c_files: the `c` subsegments of the splat configs)."""
     out = []
-    for c in srcscan.source_files(root):
-        out.append((c.stem, c, root / "asm/matchings/main" / c.stem))
-    for c in sorted((root / "src" / "ovl").glob("*.c")):
-        out.append((c.stem, c, root / "asm/ovl" / c.stem / "matchings" / c.stem))
+    for cf in srcscan.c_files(root):
+        out.append((cf.label, cf.src, cf.matchings, cf.island))
     return out
 
 
@@ -226,18 +229,20 @@ def load(root=".", string_syms=None):
     if string_syms is None:
         string_syms = string_symbols(root)
     remaining, matched = [], []
-    for label, c, mdir in units(root):
+    for label, c, mdir, island in units(root):
         for e in srcscan.include_asm_entries(c):
             if Path(e.folder).name == "pad":
                 continue
             p = Path(root) / e.folder / (e.name + ".s")
             if p.exists():
-                remaining.append(Func(label, e.name, str(p), analyze(p.read_text(errors="replace"), string_syms)))
+                remaining.append(Func(label, e.name, str(p), analyze(p.read_text(errors="replace"), string_syms),
+                                      island))
         if mdir.is_dir():
             defined = srcscan.defined_functions(c)
             for p in sorted(mdir.glob("*.s")):
                 if p.stem in defined:
-                    matched.append(Func(label, p.stem, str(p), analyze(p.read_text(errors="replace"), string_syms)))
+                    matched.append(Func(label, p.stem, str(p), analyze(p.read_text(errors="replace"), string_syms),
+                                        island))
     return remaining, matched
 
 
@@ -281,9 +286,9 @@ def select(funcs, files):
 
 
 def print_table(funcs, dupes, out=sys.stdout):
-    out.write("%-4s %-9s %-26s %5s %-4s %5s %-6s %s\n" % ("rank", "file", "function", "size", "leaf", "calls", "flags", "dup"))
+    out.write("%-4s %-15s %-26s %5s %-4s %5s %-6s %s\n" % ("rank", "file", "function", "size", "leaf", "calls", "flags", "dup"))
     for n, f in enumerate(funcs, 1):
-        out.write("%-4d %-9s %-26s %5d %-4s %5d %-6s %s\n" % (
+        out.write("%-4d %-15s %-26s %5d %-4s %5d %-6s %s\n" % (
             n, f.file, f.name, f.facts.size, "leaf" if f.leaf else "call", f.facts.calls,
             f.flags or "-", "=" + dupes[f.name] if f.name in dupes else ""))
 
@@ -295,10 +300,10 @@ def summary(funcs, out=sys.stdout):
         d[0] += 1
         d[1] += f.blocked
         d[2] += f.leaf
-    out.write("%-10s %6s %8s %6s\n" % ("file", "left", "blocked", "leaf"))
+    out.write("%-16s %6s %8s %6s\n" % ("file", "left", "blocked", "leaf"))
     for k, (a, b, c) in sorted(per.items()):
-        out.write("%-10s %6d %8d %6d\n" % (k, a, b, c))
-    out.write("%-10s %6d %8d %6d\n" % ("total", len(funcs), sum(f.blocked for f in funcs), sum(f.leaf for f in funcs)))
+        out.write("%-16s %6d %8d %6d\n" % (k, a, b, c))
+    out.write("%-16s %6d %8d %6d\n" % ("total", len(funcs), sum(f.blocked for f in funcs), sum(f.leaf for f in funcs)))
     out.write("flags: " + " ".join("%s=%d" % (c, sum(c in f.flags for f in funcs)) for c in "LJSPRV") + "\n")
     out.write("R or V (T-0018 candidates): %d\n" % sum(("R" in f.flags or "V" in f.flags) for f in funcs))
 

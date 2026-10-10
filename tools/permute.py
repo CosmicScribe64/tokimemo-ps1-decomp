@@ -51,7 +51,7 @@ def find_source(root, func):
     """The src/main or src/ovl file that holds a C definition of `func`, or None."""
     pat = def_regex(func)
     for path in sorted(glob.glob(os.path.join(root, "src/main/*.c")) +
-                       glob.glob(os.path.join(root, "src/ovl/*.c"))):
+                       glob.glob(os.path.join(root, "src/ovl/**/*.c"), recursive=True)):
         with open(path) as f:
             if pat.search(f.read()):
                 return path
@@ -61,9 +61,9 @@ def find_source(root, func):
 def find_asm(root, func):
     """Path of the function's splat .s file, or None."""
     pats = ["asm/nonmatchings/main/*/%s.s", "asm/matchings/main/*/%s.s",
-            "asm/ovl/*/nonmatchings/*/%s.s", "asm/ovl/*/matchings/*/%s.s"]
+            "asm/ovl/*/nonmatchings/**/%s.s", "asm/ovl/*/matchings/**/%s.s"]
     for pat in pats:
-        hits = sorted(glob.glob(os.path.join(root, pat % func)))
+        hits = sorted(glob.glob(os.path.join(root, pat % func), recursive=True))
         if hits:
             return hits[0]
     return None
