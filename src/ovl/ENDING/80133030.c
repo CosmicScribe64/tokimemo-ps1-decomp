@@ -1,7 +1,27 @@
 #include "common.h"
 #include "ovl/ENDING.h"
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133030", func_80133030);
+typedef struct {
+    void (*f[16])();
+} FnTbl16; /* size 0x40 */
+extern FnTbl16 D_8013C370;
+
+void func_80133030(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl16 tbl;
+
+    tbl = D_8013C370;
+    func_80083808();
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    func_8007EDF8();
+    func_800846C0();
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    func_80083A10();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133030", func_801330E4);
 
