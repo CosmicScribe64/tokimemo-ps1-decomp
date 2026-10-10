@@ -182,5 +182,6 @@ void func_8013B104(void);
 void func_8013C780(void);
 void func_8013C978(void);
 extern s32 D_80149990;
+extern TaiikuPair D_801499B4[];
 
 #endif
