@@ -742,7 +742,17 @@ void func_8011A0F0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A144);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A1E4);
+void func_8011A1E4(void) {
+    if (D_800B1746 == 5 && D_8012531C == 0 && D_800EECBC == 2) {
+        if (D_800B1AF0++ == 0) {
+            func_8004A8EC(3);
+            func_80033E88();
+        }
+        func_8004CF30();
+        return;
+    }
+    func_80011DFC();
+}
 
 void func_8011A270(void) {
     if ((D_800B1746 == 9) && (D_800EECBC == 2)) {
@@ -824,7 +834,22 @@ s32 func_8011A874(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A8E4);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011AB00);
+typedef struct {
+    u16 v[21];
+} U16x21; /* size 0x2A */
+extern U16x21 D_801254D8;
+
+void func_8011AB00(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    U16x21 tbl;
+
+    tbl = D_801254D8;
+    if (func_8001496C() == 1) {
+        idx = D_801243B0;
+        func_800433D0(tbl.v[idx]);
+        func_80011DFC();
+    }
+}
 
 void func_8011AB94(void) {
     if ((u8) D_800B1AF6 >= 0x14U) {
