@@ -16,7 +16,7 @@ Wave 3 batch agent 10: match as many of the 131 listed functions (26188 bytes) a
 
 - [x] Work list processed in order, time-boxed per function (54 of 131 listed functions matched; 61 more from the same files).
 - [x] Clean build (`rm -rf asm build; configure.py; ninja`): 27 of 27 OK, `build/headers.ok`.
-- [x] T-0018 cases appended to [[data/t0018-cases]] (41 rows); new patterns in [[matching-notes]] ("Wave 3 list 10").
+- [x] T-0018 cases appended to [[data/t0018-cases]] (39 rows); new patterns in [[matching-notes]] ("Wave 3 list 10").
 - [x] Inline code review against CODING_STANDARDS recorded below.
 
 ## Notes
