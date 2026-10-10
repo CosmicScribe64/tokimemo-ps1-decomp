@@ -579,3 +579,6 @@ The original's strength-reduced loops keep 0x800E6280 in the base register and r
 
 ## [2026-10-10] ticket | T-5100 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-state-struct]]; no open findings. Branch o-gamestate, not merged.
+
+## [2026-10-10] ticket | T-6020 Wave 4 list 2 (created -> In Progress -> In Review -> Done)
+[[tickets/T-6020-wave-4-list-2]]: 13 of 151 listed functions matched (2580 bytes) in the 34 owned files; `ninja progress` 3539 -> 3552 of 6958; clean build 27 of 27 OK. Patterns in [[matching-notes]] ("Wave 4 list 2"), six rows in [[data/t0018-cases]]. Inline review recorded in the ticket; branch w4-2, not merged.
