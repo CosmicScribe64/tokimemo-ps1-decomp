@@ -30,12 +30,14 @@ kanban-plugin: board
 
 
 
+
 ## In Review
 
 
 
 
 ## Done
+- [ ] [[tickets/T-8080-wave-5-list-8|T-8080 Wave 5: list 8]]
 - [x] [[tickets/T-7020-loop-unrolling-and-scheduling|T-7020 Loop unrolling and instruction scheduling]]
 
 - [x] [[tickets/T-7000-shared-constants-lui-at-parameter-copies|T-7000 Shared constants, lui $at sharing and parameter copies]]

@@ -663,3 +663,12 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7030-tooling-w
 
 ## [2026-10-10] build | T-7000 merged with main (96cae6e) under K&R mode
 Merged main (T-7010, T-7020, T-7030, 170 dupes/neardupes copies). Clean build in K&R mode: one main function broke, TAIIKU `func_80144B40` (the original's `slti` on a byte: `(s32)` cast); all dupes/neardupes copies hold; no reverts. 27/27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK, all tool tests pass; progress 3967/6958 (EVENT `func_80116360` and RPG_BAT `func_8014F1D4` were also matched on main). K&R rules added to CODING_STANDARDS.md section 2; queue.py hint note in [[decompile-workflow]].
+
+## [2026-10-10] ticket | T-8080 started
+[[tickets/T-8080-wave-5-list-8]] moved to In Progress (wave-5 agent 8).
+
+## [2026-10-10] build | T-8080 matches (wave 5, list 8)
+56 functions, 16320 bytes matched in [[tickets/T-8080-wave-5-list-8]]: main 8005A0B0 menu and state machines, EVENT, GYOZI, RPG_BAT scene scripts, ETC, OLH, NAME_ENT, SHOUGATU. Progress 3967 -> 4023 functions. New patterns (`s32` return without a value, `*(u8 *)&D_800E6280.field` views, function-pointer tables with the index passed on, pad rules for menu arrays) in [[matching-notes]]; 19 open cases in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-8080 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8080-wave-5-list-8]]; no open findings. Branch w5-8, not merged.
