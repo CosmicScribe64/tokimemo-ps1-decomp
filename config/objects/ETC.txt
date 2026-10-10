@@ -17,3 +17,14 @@ object 80146400 801492C0 8014D4D0 8014D860 yes pad jtbl-end
 object 801492C0 8014ABD0 8014D860 8014D970 yes rodata jtbl-end
 object 8014ABD0 8014C2D0 8014D970 8014DB80 yes pad jtbl-end
 object 8014C2D0 8014C370 - - no:no_rodata pad -
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 80132880 8014DB80 8014F6C0 start owner-min/2 at:0,ref:792
+data 8013B1F0 8014F990 80150030 owner-min/2 owner at:0,ref:19
+data 8013BEF0 80150030 801500A0 owner owner at:0,ref:17
+data 8013F980 801500A0 801500E0 owner owner-min/2 at:0,ref:6
+data 80140F50 801500F0 80150130 owner-min/2 owner at:0,ref:4
+data 80143240 80150130 80150630 owner owner at:2,ref:9
+data 80146400 80150630 801507A0 owner owner-min/3 at:0,ref:23
+data 801492C0 80150870 80150EE0 owner-min/3 owner at:0,ref:27
+data 8014ABD0 80150EE0 80162000 owner end at:0,ref:33

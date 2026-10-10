@@ -38,3 +38,32 @@ object 800789E0 80079B10 800B1920 800B1E30 yes pad jtbl-pad
 object 80079B10 8007C030 800B1E30 800B2000 yes pad jtbl-pad
 object 8007C030 80085E30 800B2000 800B23B0 yes choice/4 jtbl-pad
 object 80085E30 80086810 - - no:no_rodata pad -
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 80042A00 800B3CA0 800B3D00 owner-min/35 owner-min/2 at:0,ref:3
+data 80043510 800B3D10 800B3D60 owner-min/2 owner at:2,ref:16
+data 800451D0 800B3D60 800B3D80 owner owner at:4,ref:3
+data 8004AD60 800B3D80 800B3DB0 owner owner at:0,ref:6
+data 8004C3F0 800B3DB0 800B3DC0 owner owner at:0,ref:1
+data 8004E500 800B3DC0 800B40F0 owner owner at:4,ref:14
+data 8004F870 800B40F0 800B4390 owner owner at:0,ref:23
+data 80053650 800B4390 800B58F0 owner owner at:0,ref:3
+data 800563F0 800B58F0 800B5920 owner owner at:0,ref:9
+data 80057390 800B5920 800B5950 owner owner-min/3 at:6,ref:3
+data 8005A0B0 800B5970 800B5A40 owner-min/3 owner at:0,ref:6
+data 80061710 800B5A40 800B5A60 owner owner at:0,ref:3
+data 80062CD0 800B5A60 800B5C10 owner owner at:0,ref:19
+data 800674B0 800B5C10 800B6740 owner owner at:0,ref:24
+data 8006CB30 800B6740 800B6760 owner owner at:0,ref:6
+data 800737A0 800B6760 800B6990 owner owner at:0,ref:18
+data 80075320 800B6990 800B6D30 owner owner at:3,ref:6
+data 800789E0 800B6D30 800B6D50 owner owner-min/82 at:0,ref:5
+data 8007C030 800C9F60 800CA380 owner-min/82 owner-min/82 at:3,ref:44
+data 80085E30 800E36F0 800E3700 owner-min/82 owner-min at:0,ref:2
+bss 80041000 800E6280 800E71F0 owner-min/21 owner at:0,ref:44
+bss 80042A00 800E71F0 800E73A0 owner owner at:0,ref:6
+bss 80047550 800E73A0 800E7940 owner owner-min/2 at:0,ref:14
+bss 80053650 800E7D10 8011ECD0 owner-min/2 owner-min/2 at:0,ref:26
+bss 80062CD0 8011ECE0 80125CB0 owner-min/2 owner-min/2 at:0,ref:265
+bss 80079B10 80125CC0 80126080 owner-min/2 owner at:0,ref:56
+bss 8007C030 80126080 80128A80 owner owner-min at:0,ref:2

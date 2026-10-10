@@ -12,3 +12,13 @@ object 80134500 80134F40 80138190 80138740 yes pad jtbl-pad
 object 80134F40 80135AC0 80138740 80138BB0 yes rodata jtbl-pad
 object 80135AC0 801364E0 80138BB0 80139110 yes rodata jtbl-pad
 object 801364E0 80136F60 80139110 801396E0 yes pad jtbl-pad
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 80132000 80139EE0 8013A000 owner-min/9 owner-min/8 at:0,ref:2
+data 80132420 8013A700 8013A820 owner-min/8 owner-min/8 at:0,ref:8
+data 80132FA0 8013AF20 8013AF40 owner-min/8 owner-min/9 at:0,ref:8
+data 80133B80 8013B740 8013B860 owner-min/9 owner-min/8 at:0,ref:8
+data 80134500 8013BF60 8013C080 owner-min/8 owner-min/8 at:0,ref:8
+data 80134F40 8013C780 8013C7A0 owner-min/8 owner-min/8 at:0,ref:8
+data 80135AC0 8013CEA0 8013CEC0 owner-min/8 owner-min/9 at:0,ref:7
+data 801364E0 8013D6C0 80162000 owner-min/9 end at:0,ref:8

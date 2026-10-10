@@ -26,3 +26,24 @@ object 80140A00 80141AF0 80144B00 80144B50 yes choice/8 str-pad
 object 80141AF0 801426D0 80144B50 80144B60 yes pad str-pad
 object 801426D0 80142760 - - no:no_rodata pad -
 object 80142760 80144710 80144B60 80144BA0 yes pad str-pad
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 801323E0 80144C50 80144D40 owner-min/12 owner at:0,ref:6
+data 801338F0 80144D40 80144E80 owner owner at:0,ref:1
+data 80134040 80144E80 80144F10 owner owner at:0,ref:6
+data 80134D10 80144F10 80146270 owner owner-min/2 at:0,ref:226
+data 801393C0 80146280 80146380 owner-min/2 owner at:0,ref:11
+data 80139910 80146380 801463E0 owner owner-min/4 at:0,ref:21
+data 8013AF80 80146600 80146630 owner-min/4 owner-min/2 at:0,ref:12
+data 8013B930 80146780 80146920 owner-min/2 owner-min/2 at:0,ref:7
+data 8013C4C0 801469F0 80146AA0 owner-min/2 owner at:0,ref:11
+data 8013C980 80146AA0 80146BC0 owner owner at:0,ref:11
+data 8013D0F0 80146BC0 80146C90 owner owner at:0,ref:11
+data 8013D4B0 80146C90 80146DA0 owner owner at:0,ref:11
+data 8013DB80 80146DA0 80146E50 owner owner at:0,ref:11
+data 8013DF70 80146E50 80146F90 owner owner at:0,ref:11
+data 8013EE40 80146F90 80147050 owner owner at:0,ref:11
+data 8013F360 80147050 80147300 owner owner at:0,ref:27
+data 80140A00 80147300 80147530 owner owner at:0,ref:18
+data 80141AF0 80147530 80147630 owner owner at:0,ref:14
+data 80142760 80147630 80162000 owner end at:0,ref:58

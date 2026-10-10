@@ -22,3 +22,22 @@ object 8010B360 8010BB90 8011FB60 8011FB80 yes pad jtbl-end
 object 8010BB90 8010FE10 8011FB80 8011FC30 yes pad owner
 object 8010FE10 8011C650 8011FC30 801200E0 yes pad jtbl-pad
 object 8011C650 8011F530 801200E0 801202D0 yes pad jtbl-pad
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 800F6000 801202E0 801205D0 owner-min/2 owner-min/13 at:0,ref:18
+data 800F7220 80120690 80120BF0 owner-min/13 owner at:0,ref:75
+data 800F9680 80120BF0 80120CF0 owner owner-min/5 at:0,ref:61
+data 800FBBF0 801211E0 80121360 owner-min/5 owner-min/3 at:0,ref:54
+data 800FD2F0 801215E0 80121800 owner-min/3 owner at:0,ref:7
+data 800FDC20 80121800 80121C60 owner owner-min/2 at:0,ref:59
+data 800FFBE0 80121D20 80122020 owner-min/2 owner-min/2 at:0,ref:55
+data 801011A0 801221D0 801224F0 owner-min/2 owner-min/2 at:0,ref:55
+data 801024B0 80122680 801229B0 owner-min/2 owner-min/3 at:0,ref:56
+data 80103B60 80122B30 80122C80 owner-min/3 owner-min/2 at:0,ref:55
+data 801050D0 80122F70 80123100 owner-min/2 owner-min/3 at:0,ref:55
+data 80106C20 80123430 80123880 owner-min/3 owner at:0,ref:55
+data 80107FC0 80123880 80123E90 owner owner at:0,ref:71
+data 8010A210 80123E90 80123F30 owner owner-min/2 at:0,ref:18
+data 8010B360 801240F0 80124120 owner-min/2 owner-min/25 at:0,ref:12
+data 8010FE10 80124340 801258C0 owner-min/25 owner at:0,ref:116
+data 8011C650 801258C0 80126000 owner end at:5,ref:16
