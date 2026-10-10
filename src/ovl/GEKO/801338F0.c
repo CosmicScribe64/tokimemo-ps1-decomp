@@ -29,7 +29,16 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801338F0", func_80133AA0);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801338F0", func_80133C50);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801338F0", func_80133F94);
+void func_80133F94(void) {
+    u32 cur;
+
+    D_80144C3C = (D_80144C3C + D_80144C50) - 1;
+    cur = D_80144C50;
+    if (cur == 0x64) {
+        D_80144C3C = 0x28;
+    }
+    func_8004284C();
+}
 
 void func_80133FE8(void) {
     D_80144C3C = 0x27;

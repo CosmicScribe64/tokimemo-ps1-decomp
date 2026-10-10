@@ -262,7 +262,10 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_two_select_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_two_select_main);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083338);
+void func_80083338(void) {
+    func_80083440(get_g_zyotai_h(D_800E71DF) & 0x7F);
+    func_8004284C();
+}
 
 void func_80083378(void) {
     func_80083440(0);

@@ -215,3 +215,12 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | GYOZI | `func_801399C0` | regorder | `D_800F5750 \|= 2`: original loads into $t8 with base $t7, IDO reuses $t7 as destination (T-4080) |
 | 8007C030 | `normal_date_girl_in` | regorder | same shape as `normal_date_move_place`: switch on lw global D_800E7384, original selector in $v1, IDO $v0 (T-4080) |
 | GEKO | `func_80135A6C` | regorder | `if (D++ == 1 && ...)` on lw global: original keeps it in $v1 and materialises the compare (`xori; sltiu 1; beqz`), IDO branches with `xori; bnez` (T-4080) |
+| 8007C030 | `normal_date_bg_fadein` | regorder | u8 global `+4`, clamp, store, compare: original keeps the masked temporary in $t7 and copies it to $v0, IDO propagates one register (T-4080) |
+| 8007C030 | `normal_date_bg_fadeout` | regorder | same shape as `normal_date_bg_fadein` with `-4` (T-4080) |
+| NAME_ENT | `func_80140B20` | regorder | u8 global `-2` stored to six bytes and back: original loads the global into $a0 and reuses it, IDO uses $v1/$v0/$a1 (T-4080) |
+| 8007C030 | `normal_date_girl_suddenin` | regorder | seven byte stores of 0x80: original keeps the constant in $v1/$v0 with a `move`, IDO emits a fresh `li` per store; chained assignments do not help (T-4080) |
+| TACO | `func_801368D8` | regorder | `u8` parameter used as modulus (`(u32)(*p + n + 1) % n`): IDO adds `move v0,a1` before the zero check and takes $v1 for the loaded byte (T-4080) |
+| GEKO | `func_80136F20` | regorder | `g = func_80051A68(x) & 0x7F` then compare chain: original `move v1,v0; andi t6,v1,0x7F; ...; move v1,t6` (copy kept), IDO folds to `andi v1,v0,0x7F` (T-4080) |
+| GEKO | `func_80137040` | regorder | same `& 0x7F` copy shape as `func_80136F20` (T-4080) |
+| GEKO | `func_801331A0` | regorder | same `& 0x7F` copy shape as `func_80136F20` (T-4080) |
+| 8007C030 | `func_80083628` | regorder | same `get_g_zyotai_h(x) & 0x7F` copy shape as GEKO `func_80136F20` (T-4080) |

@@ -111,8 +111,22 @@ void func_8013D9A8(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013D470", func_8013D9E8);
+void func_8013D9E8(void) {
+    if (((D_800F5638 << 0x1D) >> 0x1F) == (D_800F5488 >> 0x1C)) {
+        if (((u32)D_800F563A >> 4) == 7) {
+            D_801474A8 = 0xA;
+        } else {
+            D_801474A8 = 8;
+        }
+    }
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013D470", func_8013DA58);
+void func_8013DA58(void) {
+    if (((D_800F5638 << 0x1D) >> 0x1F) != (D_800F5488 >> 0x1C)) {
+        D_801474A8 = 4;
+    }
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013D470", func_8013DAA4);
