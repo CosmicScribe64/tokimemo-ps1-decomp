@@ -72,4 +72,9 @@ extern s16 D_80120666;
 extern u8 D_80120696;
 extern u8 D_80121874;
 void sprite_brightness();
+extern s16 D_8011F536;
+extern s16 D_8011F4F2;
+extern s32 D_801217D0;
+extern u8 D_8011ECD0[];
+
 #endif /* OVL_ENDING_H */

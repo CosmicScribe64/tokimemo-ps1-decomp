@@ -224,9 +224,32 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80135F4C);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80136BE0);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80136C5C);
+void func_80136C5C(s16 arg0) {
+    s16 i;
+    u8 *p;
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80136CD0);
+    for (i = 0; i < 0xC; i++) {
+        p = (u8 *)&D_801217D0 + i * 0x24;
+        *(s16 *)(p + 0x96) = *(s16 *)(p + 0x96) + arg0;
+    }
+    /* FAKE: D_8011F536 written as D_8011F4F2[0x22]; stops IDO hoisting the next load above this store (matching-notes, T-2100) */
+    (&D_8011F4F2)[0x22] += arg0;
+    D_8011F4F2 += arg0;
+}
+
+void func_80136CD0(s16 arg0) {
+    s16 i;
+    u8 *p;
+
+    for (i = 0; i < 3; i++) {
+        p = (u8 *)&D_801217D0 + i * 0x24;
+        *(s16 *)(p + 0x246) = *(s16 *)(p + 0x246) + arg0;
+    }
+    for (i = 0; i < 0xE; i++) {
+        p = D_8011ECD0 + i * 0x44;
+        *(s16 *)(p + 0x19AA) = *(s16 *)(p + 0x19AA) + arg0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80136D60);
 

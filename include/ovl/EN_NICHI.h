@@ -5,6 +5,7 @@
 
 /* Main-exe data and functions used by EN_NICHI (old names, see T-0750). */
 extern u8 D_800E62BE;
+extern u8 D_8011ECD0[];
 extern u8 D_800E738D;
 extern u8 D_80121531;
 void func_8004284C(void);
@@ -59,5 +60,15 @@ void func_8013556C(void);
 void func_80136A2C(void);
 void func_801338EC(void);
 void func_80132ADC(void);
+
+extern u8 D_80121313;
+extern s16 D_80121328;
+extern u8 D_80121357;
+extern s16 D_8012136C;
+extern u8 D_8012139B;
+extern s16 D_801213B0;
+extern u8 D_801213DF;
+extern s16 D_801213F4;
+extern u8 D_8013984C[];
 
 #endif /* OVL_EN_NICHI_H */

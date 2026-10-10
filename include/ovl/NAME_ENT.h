@@ -171,4 +171,6 @@ extern u8 D_80120C6F;
 extern s16 D_80120C92;
 extern s16 D_80120C96;
 
+extern s32 D_801217D0;
+
 #endif /* OVL_NAME_ENT_H */

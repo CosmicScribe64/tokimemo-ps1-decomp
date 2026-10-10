@@ -210,7 +210,22 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_801362A4);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80136700);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80136904);
+void func_80136904(s32 arg0, s32 arg1) {
+    D_80121313 = 0x84;
+    D_80121357 = 0x84;
+    D_8012139B = 0x84;
+    D_801213DF = 0x84;
+    D_80121328 = (arg0 % 10) + 0x23;
+    D_8012136C = (arg0 / 10) + 0x23;
+    if (arg0 < 0xA) {
+        D_80121357 = 0;
+    }
+    D_801213B0 = (arg1 % 10) + 0x23;
+    D_801213F4 = (arg1 / 10) + 0x23;
+    if (arg1 < 0xA) {
+        D_801213DF = 0;
+    }
+}
 
 void func_801369F4(s32 arg0) {
     if (D_80139B1C <= 0) {
@@ -235,31 +250,383 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80137E2C);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80137FEC);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_801381C8);
+s32 func_801381C8(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+    s32 xh;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_801382B4);
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    xh = x + 0x10;
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (xh >= px && px >= x - 0x10) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x8 >= py && py >= y - 0x8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (xh >= px && px >= x) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y - 0x8 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+s32 func_801382B4(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= x) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (x >= px && px >= x - 0x10) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x8 >= py && py >= y - 0x8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_801383A0);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138434);
+s32 func_80138434(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+    s32 xs;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138524);
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    xs = x + 8;
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= xs) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (xs >= px && px >= x) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 8 >= py && py >= y - 8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138614);
+s32 func_80138524(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+    s32 xs;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138708);
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    xs = x + 8;
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= xs) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (xs >= px && px >= x) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_801387FC);
+s32 func_80138614(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+    s32 xs;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138890);
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    xs = x + 8;
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= x - 0x10) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 8 >= py && py >= y - 8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (xs >= px && px >= x - 8) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138980);
+s32 func_80138708(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+    s32 xs;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138A18);
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    xs = x - 8;
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= xs) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (xs >= px && px >= x - 0x10) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 8 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138AB0);
+s32 func_801387FC(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138B9C);
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= x) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+s32 func_80138890(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+    s32 xa;
+    s32 xb;
+
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    xa = x + 8;
+    xb = x + 0x10;
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (xa >= px && px >= x - 8) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (xb >= px && px >= xa) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 8 >= py && py >= y - 8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+s32 func_80138980(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= x - 0x10) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 8 >= py && py >= y - 8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+s32 func_80138A18(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x10 >= px && px >= x - 0x8) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x8 >= py && py >= y - 0x8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+s32 func_80138AB0(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+    s32 xh;
+
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    xh = x + 0x10;
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (xh >= px && px >= x - 0x8) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x10 >= py && py >= y - 0x8) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    if (xh >= px && px >= x) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y - 0x8 >= py && py >= y - 0x10) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+s32 func_80138B9C(s32 arg0, s32 arg1) {
+    u8 *a;
+    u8 *b;
+    s16 x;
+    s16 y;
+    s16 px;
+    s16 py;
+
+    a = D_8011ECD0 + arg1 * 0x44;
+    x = *(s16 *)(a + 0x1C0E);
+    b = D_8011ECD0 + arg0 * 0x44;
+    px = *(s16 *)(b + 0x1A32);
+    if (x + 0x20 >= px && px >= x - 0x20) {
+        y = *(s16 *)(a + 0x1C0A);
+        py = *(s16 *)(b + 0x1A2E);
+        if (y + 0x20 >= py && py >= y - 0x20) {
+            if (a[0x1BE7] & 0x80) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80138C34);
 
