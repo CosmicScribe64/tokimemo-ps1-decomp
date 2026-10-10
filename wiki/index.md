@@ -61,6 +61,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-2010-wave2-date|T-2010]] Wave 2: DATE, 278 functions matched (Done)
 - [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
 - [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap, deferred (Backlog)
+- [[tickets/T-3100-identify-original-compiler|T-3100]] Identify the original game-code compiler (Done)
 - [[tickets/T-2070-wave-2-tt|T-2070]] Wave 2: TT, 49 functions matched (Done)
 - [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330]] Tooling: m2c context and decomp-permuter (Done)
 - [[tickets/T-1310-tooling-object-trailing-padding|T-1310]] Tooling: object-trailing padding (Done)
@@ -72,10 +73,11 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[source-files]] - the 28 `src/main/<address>.c` files: boundary evidence, alignment handling, what is not split
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
-- [[obin]] - O.BIN: ECOFF format, symbol table, mapping onto the main exe, stats, generated rename list
+- [[obin]] - O.BIN: ECOFF format and header fields (`obin_syms.py --headers`), symbol table, mapping onto the main exe, stats, generated rename list
 - [[toolchain]] - Docker image, pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms
+- [[original-compiler]] - T-3100: which compiler built the game code (O.BIN version stamps 3.18 = IDO 5.2-generation MIPS suite, big-endian ECOFF link host), header field table, ranked hypotheses, promotion experiments, rules for the T-1321 build step
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit
 - [[data/t0018-cases]] - data table: functions skipped for the T-0018 register-promotion gap (calibrates `tools/queue.py`)
@@ -83,6 +85,6 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[decompile-workflow]] - m2c -> edit -> build -> funcdiff -> commit; how to decompile a switch (T-1340)
 - [[build-system]] - configure.py / ninja pipeline and gotchas, jump tables and rodata islands (T-1340)
 - [[ci]] - GitHub Actions workflow, encrypted game bundle, objdiff report for decomp.dev
-- Raw sources (plain paths): `raw/disc-findings.md`, `raw/compiler-mismatch-research-sources.md`, `raw/ai-disclosure-research.md`
+- Raw sources (plain paths): `raw/disc-findings.md`, `wiki/raw/compiler-mismatch-research-sources.md`, `wiki/raw/ai-disclosure-research.md`, `wiki/raw/original-compiler-sources.md` (T-3100)
 
 ## Tooling

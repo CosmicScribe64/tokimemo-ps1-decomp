@@ -366,6 +366,8 @@ Tried without effect (on `func_8005A560`, `func_8005B798`, `func_8013A40C`): eve
 
 Not modelled as a pass: a binasm rewrite would have to redo uopt's register choice (`$v0`/`$v1` depends on interference the pass cannot see), which fails the uniform-rule test of CODING_STANDARDS 7a. Next experiments: (1) read uopt's register-promotion priority in the ido-decomp sources (live-range benefit and the loop-depth weight) and check whether a single weight change explains all 189 cases; (2) an older MIPS uopt (Ultrix/NEWS-OS/IRIX 4, [[tickets/T-0100-older-mips-compiler-emulation]]); (3) if (1) gives a one-line rule, consider patching that weight in a copy of uopt (a toolchain change, not a pass), gated on all matches staying green.
 
+Update (T-3100, [[original-compiler]]): "IDO does this only inside loops" is too strong. IDO 5.3 promotes a global in straight-line code once it has enough references. For example `if (D==1) { D++; g(); D += D; }` gives `lbu v1` with a reload into `$v1` after the call, and a `switch` with those cases gives `lbu v1; beqz v1; move v0,v1`, which is the original's shape. The original promotes at lower counts: one switch selector, or one compare plus a `D++` after a call. The register choice then follows from uopt's coloring order (switch temporary `$v0`, global `$v1`; if-chains `$v0`). So the gap is the promotion threshold, not the register order. `-Wo,-regr,N` changes the selector register but promotes nothing and regresses 194 matched functions.
+
 `LoadSquare`, `StoreSquare`, `MoveSquare` (original `lhu` into `t8,t9`, IDO `t0,t1`) are unchanged by every option, flag and pass mix above, and by K&R parameter declarations; still `NON_MATCHING`.
 
 ## Work queue and the T-0018 detector (T-1320)
