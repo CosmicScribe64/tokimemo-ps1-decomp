@@ -20,6 +20,7 @@ typedef struct {
     void (*f[44])();
 } FnTbl44; /* size 0xB0 */
 extern FnTbl44 D_80123D0C;
+extern FnTbl44 D_80123C5C;
 
 typedef struct {
     void (*f[52])();
@@ -512,7 +513,17 @@ void func_80109EB0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_80109EE8);
+void func_80109EE8(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl44 tbl;
+
+    tbl = D_80123C5C;
+    func_80078950("%d\n", D_800B1AF6);
+    tbl.f[D_800B1AF6](0x80);
+    if (D_800EECE0 != 0 && D_800B1AE4 % 120 == 0) {
+        func_80109FB0();
+    }
+}
 
 void func_80109FB0(void) {
     func_800433D0(0x500);
