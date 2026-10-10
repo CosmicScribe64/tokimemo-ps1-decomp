@@ -18,7 +18,14 @@ void func_8004E780(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", set_kanji_string);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_disp_start);
+void k_disp_start(s32 arg0) {
+    s32 i;
+
+    D_800B3F68 = 0;
+    for (i = 0; i < arg0; i++) {
+        D_800B3F68 += D_800B3DC0[i * 8 + 5];
+    }
+}
 
 void k_disp_switch(s32 arg0, s32 arg1) {
     if (arg1 > 0) {
