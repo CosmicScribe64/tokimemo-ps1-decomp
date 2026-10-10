@@ -143,7 +143,36 @@ void func_8013B65C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013AF80", func_8013B7D0);
+void func_8013B7D0(void) {
+    D_800E6280.unk_03E = 0x62;
+    D_800E6280.unk_03F = 2;
+    D_800E6280.unk_040 = 0x1C;
+    D_800E6280.unk_041 = 5;
+    D_800E6280.unk_F5F = 2;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_80137990();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145F10;
+    D_80146278 = D_8014604C;
+    D_8014627C = D_80146188;
+    func_800AE0F0(D_800CA19C, "近所の公園");
+    D_800CA368 = 0x14;
+    func_8004284C();
+}
 
 void func_8013B908(void) {
     bg_read_sub2(0x412C);
