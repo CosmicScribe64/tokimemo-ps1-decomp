@@ -116,7 +116,20 @@ void func_8013A31C(void) {
     D_8013D3B0 += 1;
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_8013A334);
+void func_8013A334(void) {
+    func_8004AE54(D_8013D3B8, 0x50, -0x3C, 6);
+    func_8004AE54(D_800E6280.unk_F5F & 0xF, -0x50, -0x3C, 6);
+    func_8004AE54(D_8013D3B0, 0x50, -0x28, 6);
+    func_8004AE54(D_8013D3B4, 0x50, -0x14, 6);
+    func_8004AE54(D_8013D3A4, 0x50, 0, 6);
+    func_8004B358(D_8013D3BC, -0x96, 8, 6);
+    func_8004AE54(D_8013D3A0, 0x50, 0x14, 6);
+    func_8004B358(D_8013D3CC, -0x96, 0x14, 6);
+    func_8004AE54(D_8013D39C, -0x50, 0xA - D_8013D39C * 0xA, 6);
+    func_8004AE54(D_8013E730, 0x50, 0x28, 6);
+    func_8004B358(D_8013D3E0, -0x96, 0x20, 6);
+    func_8004AE54(D_8013D3A8, 0x50, 0x3C, 6);
+}
 
 void func_8013A484(void) {
     func_80049A40(-0x50, -0x40, 0xB0, 0x90, 0xA, 0x1E021D, 0);

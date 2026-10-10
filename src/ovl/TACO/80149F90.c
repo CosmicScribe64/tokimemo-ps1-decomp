@@ -221,7 +221,20 @@ void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014B8B4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014BC80);
+void func_8014BC80(s32 arg0, s32 arg1) {
+    s32 i;
+    s32 n;
+    s32 *p;
+
+    /* FAKE: init statements on one source line; as1 schedules by source line and only this layout orders the prologue like the original. T-8030 */
+    i = 0; n = arg0; p = &D_8016001C[arg1];
+    for (; i < 3; ) {
+        func_801478F8(n, *p);
+        i++;
+        n++;
+        p++;
+    }
+}
 
 void func_8014BCEC(s32 arg0) {
     s32 i;

@@ -281,4 +281,6 @@ void func_801359B4(void);
 void func_80135994(void);
 s32 func_80135744(void);
 
+extern s32 D_8016001C[];
+
 #endif
