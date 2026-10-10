@@ -109,13 +109,12 @@ void func_801349E0(void) {
     }
     D_80120676 = t;
     if (t < -0x9E) {
-        /* FAKE: fields of the D_80120652 table reached through one symbol; separate names let as1 hoist the lbu of D_80120697 above the stores. T-4100 */
-        D_80120652 = 1;
-        *(s16 *)(&D_80120652 + 0x14) = 1;
-        *(s16 *)(&D_80120652 + 0x16) = 0;
-        *(s16 *)(&D_80120652 + 6) = 0;
-        (&D_80120652)[0x45] |= 0x80;
-        (&D_80120652)[0x44] = 5;
+        D_8011ECD0[0x1982] = 1;
+        *(s16 *)&D_8011ECD0[0x1996] = 1;
+        *(s16 *)&D_8011ECD0[0x1998] = 0;
+        *(s16 *)&D_8011ECD0[0x1988] = 0;
+        D_8011ECD0[0x19C7] |= 0x80;
+        D_8011ECD0[0x19C6] = 5;
         func_8004284C();
     }
 }

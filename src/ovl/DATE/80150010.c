@@ -152,13 +152,12 @@ void func_8015109C(void) {
 }
 
 void func_801510E8(void) {
-    /* FAKE: neighbouring globals reached as D_801206DA + offset (one base symbol); separate symbols let as1 hoist the lbu. Real source unknown. T-4010 */
-    ((u8 *)&D_801206DA)[5] = 0x80;
-    ((u8 *)&D_801206DA)[1] |= 0x80;
-    *(s16 *)((u8 *)&D_801206DA + 6) = 0;
-    *(s16 *)((u8 *)&D_801206DA + 0x14) = 4;
-    *(s16 *)((u8 *)&D_801206DA + 0x16) = 0;
-    D_801206DA = 1;
+    D_8011ECD0[0x1A0F] = 0x80;
+    D_8011ECD0[0x1A0B] |= 0x80;
+    *(s16 *)&D_8011ECD0[0x1A10] = 0;
+    *(s16 *)&D_8011ECD0[0x1A1E] = 4;
+    *(s16 *)&D_8011ECD0[0x1A20] = 0;
+    D_8011ECD0[0x1A0A] = 1;
     func_8004284C();
 }
 

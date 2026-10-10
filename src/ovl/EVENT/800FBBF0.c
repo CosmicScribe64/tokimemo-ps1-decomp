@@ -283,13 +283,12 @@ void func_800FCEF4(void) {
 }
 
 void func_800FCF40(void) {
-    /* FAKE: D_800EB02F and D_800EB02B reached through D_800EB02A; separate names let as1 hoist the lbu above the sb. T-4100 */
-    (&D_800EB02A)[5] = 0x80;
-    (&D_800EB02A)[1] |= 0x80;
-    D_800EB030 = 0;
-    D_800EB03E = 4;
-    D_800EB040 = 0;
-    D_800EB02A = 1;
+    D_800EAFA0[0x8F] = 0x80;
+    D_800EAFA0[0x8B] |= 0x80;
+    *(s16 *)&D_800EAFA0[0x90] = 0;
+    *(s16 *)&D_800EAFA0[0x9E] = 4;
+    *(s16 *)&D_800EAFA0[0xA0] = 0;
+    D_800EAFA0[0x8A] = 1;
     func_80011DFC();
 }
 

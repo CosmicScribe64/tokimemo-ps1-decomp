@@ -8,11 +8,10 @@ void func_80062CD0(s32 arg0) {
     D_800B5A60 = 0;
 }
 
-/* FAKE: D_8011F4CB reached as an indexed view of D_8011F50F (the record 0x44 bytes before) stops IDO from hoisting the later loads above the stores (see cal_sprite_disp_switch). Real source unknown. T-2090 */
 void func_80062D0C(s32 arg0) {
     if (arg0 == 0) {
-        D_8011F50F &= 0x7F;
-        (&D_8011F50F)[-0x44] &= 0x7F;
+        D_8011ECD0[0x83F] &= 0x7F;
+        D_8011ECD0[0x7FB] &= 0x7F;
         D_801217D0[0].unk_00 |= 0x80000000;
         D_801217D0[1].unk_00 |= 0x80000000;
         D_801217D0[2].unk_00 |= 0x80000000;

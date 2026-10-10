@@ -576,6 +576,8 @@ extern u8 D_800E96AB;
 extern s8 D_800E96EF;
 extern s8 D_800E9733;
 extern u8 D_800E9E63;
+/* 0x44-byte records like D_8011ECD0 (+3 flags, +7 value); EVENT reaches them through this base (T-5000). */
+extern u8 D_800EAFA0[];
 extern s8 D_800EAFA2;
 extern u8 D_800EAFA7;
 extern s16 D_800EAFB6;
