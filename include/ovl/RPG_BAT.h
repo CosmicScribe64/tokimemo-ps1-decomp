@@ -104,12 +104,16 @@ extern s32 D_8015EE78;
 extern s32 D_8015EE7C;
 extern s32 D_8015EE84;
 extern s32 D_8015EE88;
-extern s32 D_8015EC58;
-extern s32 D_8015EC5C;
-extern s32 D_8015EC60;
-extern s32 D_8015EC64;
-extern s32 D_8015EC68;
-extern s32 D_8015EC6C;
+/* T-5000: six words read and written as one object (the original keeps loads after the stores). */
+typedef struct RpgRec18 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+} RpgRec18; /* size 0x18 */
+extern RpgRec18 D_8015EC58;
 void func_80150DE0(void);
 extern s32 D_8015EEE8;
 extern s32 D_8015EC20;
