@@ -124,4 +124,6 @@ segments:
       - [0x2BF60, .rodata, TACO/8015A900]
       - [0x2BFF0, .rodata, TACO/8015ABF0]
       - [0x2C210, data, TACO_data]
+      - [0x2D5F0, .data, TACO/80143E80]
+      - [0x2D830, data, TACO_data_8015F830]
   - [0x30000]

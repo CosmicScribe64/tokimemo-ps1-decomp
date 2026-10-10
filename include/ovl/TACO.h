@@ -118,7 +118,7 @@ extern u8 D_8015EDC4;
 
 void func_8014394C(void);
 void func_8013F874(s32 arg0, s32 arg1, s32 arg2);
-void func_80143F40(void);
+s32 func_80143F40(void);
 void func_80143B58(void);
 void func_80133694(void);
 void func_80144094(void);
@@ -298,3 +298,11 @@ extern s32 D_8016001C[];
 void func_8014EDCC(s32 arg0);
 void func_8014B5F0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4);
 #endif
+
+typedef struct TacoCam {
+    /* 0x0 */ s16 a;
+    /* 0x2 */ s16 b;
+    /* 0x4 */ s16 c;
+    /* 0x6 */ s16 d;
+} TacoCam; /* size 0x8 */
+extern TacoCam D_8015F5F0;
