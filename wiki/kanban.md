@@ -34,6 +34,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340 Tooling: shared main-exe prototypes and byte-weighted queue]]
 - [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
 
 - [x] [[tickets/T-3320-tooling-near-duplicate-function-reuse|T-3320 Tooling: near-duplicate function reuse]]
