@@ -36,6 +36,11 @@ typedef struct Rec34Flags {
     u32 rest : 17;
 } Rec34Flags; /* size 0x04 */
 
+s32 func_80045288();
+void func_8004E93C();
+void func_80052000();
+void func_80061A3C();
+void func_80062634();
 /* 0x34-byte record of the table at D_800B0A04 (12 records; EVENT indexes it with stride 0x34). */
 typedef struct Rec34 {
     /* 0x00 */ s16 unk_00;
@@ -473,6 +478,7 @@ extern u8 D_800B3C6C;
 extern u8 D_800B3C70[];
 extern u8 D_800B3C88[];
 extern s8 D_800B3CA0;
+extern u8 D_800B3CFC;
 extern u8 D_800B3D24;
 extern u8 D_800B3D40;
 extern u8 D_800B3D44;
@@ -1044,6 +1050,8 @@ extern s32 D_80120860;
 extern s32 D_80120864;
 extern s16 D_8012089A;
 extern s16 D_801208DE;
+extern u8 D_801208FB;
+extern s16 D_80120912[];
 extern s16 D_80120922;
 extern s16 D_80120966;
 extern s16 D_801209AA;
@@ -1861,6 +1869,7 @@ s32 Vblnk_Timer(void);
 void Scroll(s32, s32, s32, s32, s32);
 void func_80085F0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void Default_Disp(void);
+void func_80086424();
 s32 func_8008667C(s32 a);
 void DecDCTReset(s32 mode);
 void func_800869A4(s32 a);

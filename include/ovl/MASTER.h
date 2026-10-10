@@ -85,5 +85,6 @@ extern s32 D_8013C560;
 extern s32 D_8013C564;
 extern s32 D_8013C568;
 extern s32 D_8013C56C;
+extern u8 D_8013C790;
 
 #endif /* OVL_MASTER_H */

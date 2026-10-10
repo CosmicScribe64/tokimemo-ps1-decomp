@@ -1148,6 +1148,11 @@ void func_8015908C(void);
 void func_801591BC(void);
 void func_80159354(void);
 void func_80158960(void);
+extern s8 D_8015B6A0;
+void func_8014DB08(void);
+void func_8014DCCC(void);
+void func_8014E2E8(void);
+void func_8014ECF0(void);
 
 void func_80153CEC(void);
 void func_80153E1C(void);

@@ -703,3 +703,11 @@ Created [[tickets/T-8030-wave-5-list-3]] (In Progress) for work list 3, branch w
 
 ## [2026-10-10] build | T-8030 wave 5 list 3 matched
 30 of 146 listed functions matched (7512 bytes), progress 3997 of 6958 functions. Clean rebuild 27 of 27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK. 20 rows added to [[data/t0018-cases]]; patterns and unsolved shapes in [[matching-notes]] (section "Wave 5, list 3 (T-8030)"). Inline review recorded in [[tickets/T-8030-wave-5-list-3]]; ticket moved to Done. Branch w5-3, not merged.
+## [2026-10-10] ticket | T-8020 created (In Progress)
+Wave 5 agent 2, list 2 (36 files). See [[tickets/T-8020-wave5-list-2]].
+
+## [2026-10-10] build | T-8020 wave 5 list 2: 21 functions matched
+Matched 21 of 133 listed functions (6,192 bytes) in worktree w5-2: main `func_800623E4`, `func_80062840`; DATE `func_8014D818`, `func_8014DE10`, `func_8014ECF0`, `func_8014D000`; DATE2 `func_8013775C`; SHUGAKU `func_8013A314`; ENDING `func_80133030`; MASTER `func_80139810`; GEKO `func_80141514`; RPG_BAT `func_80135D90`, `func_80159D50`; ETC `func_801408F0`; NAME_ENT `func_80143498`; OPTION `func_801371FC`, `func_80133AD8`, `func_80136A50`, `func_80135C0C`; BUNKA_SD `func_80134B88`; OLH `func_801332F8`. New patterns in [[matching-notes]] ("Wave 5, list 2 (T-8020)"); 17 rows added to [[data/t0018-cases]]. Clean rebuild after `rm -rf asm build`: 27/27 OK.
+
+## [2026-10-10] ticket | T-8020 (In Progress -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8020-wave5-list-2]]; no open findings. Branch w5-2, not merged.

@@ -5,7 +5,21 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80142A80);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80142E24);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80143498);
+void func_80143498(void) {
+    if ((func_800460EC() & 2) && D_8014D170 == 0) {
+        func_80046290(0x06000CBB, 0x12000E0C, 0xF);
+        func_80044750(0x300);
+        func_8004E58C();
+        func_8004E788(-0x90, 0x14, 0, "ここ、きらめき高校には、", 0);
+        func_8004E788(-0x90, 0x24, 0, "一つの伝説があります。", 0);
+        func_8004E788(-0x90, 0x34, 0, "校庭のはずれにある一本の古木。", 0);
+        func_8004E884(3);
+        func_8004E93C(0, 0);
+        func_8004E93C(1, 0);
+        func_8004E93C(2, 0);
+        D_8014D170 = 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80142A80", func_80143580);
 

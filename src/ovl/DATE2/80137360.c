@@ -83,7 +83,18 @@ void func_801376F0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_8013775C);
+void func_8013775C(void) {
+    if (D_80122CDC != 0) {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 1;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
+        /* FAKE: the U suffix makes the argument share the unsigned 0x38 register of the record index; T-8020 */
+        func_80084D3C(0x38U);
+        D_800E6280.unk_110A += 0xD;
+        return;
+    }
+    D_800CA148 += 1;
+    func_8004284C();
+}
 
 void func_8013780C(void) {
     u32 t;

@@ -38,7 +38,17 @@ void func_8013A2D8(void) {
     func_801386C4();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A314);
+void func_8013A314(void) {
+    if (D_80122CDC == 0) {
+        func_8007ED84(0x4225);
+        func_800AE0F0(D_800CA19C, "ホテル・ロビー");
+    } else {
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 void func_8013A37C(void) {
     D_800CA2DC += D_800CA2CC;

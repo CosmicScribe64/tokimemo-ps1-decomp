@@ -107,6 +107,7 @@ extern s8 D_8014D180;
 void func_80142E24();
 void func_80143580();
 s32 func_80140CCC(void);
+extern s32 D_8014D170;
 
 extern s32 D_8014D0E0;
 extern s32 D_8014D0E4;

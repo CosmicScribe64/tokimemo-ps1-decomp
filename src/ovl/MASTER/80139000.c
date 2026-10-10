@@ -48,7 +48,39 @@ void func_80139150(void) {
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_801391E4);
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_80139810);
+typedef struct {
+    s32 v[13];
+} Tbl13; /* size 0x34 */
+extern Tbl13 D_8013C7B4;
+
+void func_80139810(void) {
+    s32 pad1; /* FAKE: two unused locals declared before tbl reproduce the original frame (0x68); T-8020 */
+    s32 pad2;
+    Tbl13 tbl;
+
+    tbl = D_8013C7B4;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (D_8013C790 != 0xFF) {
+            func_80062CD0(tbl.v[D_8013C790]);
+            func_80042808();
+        } else {
+            D_8013C790 = 0xFF;
+            func_8004284C();
+        }
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        func_80042908(3);
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80086424();
+}
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_80139910);
 
