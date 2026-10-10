@@ -130,6 +130,32 @@ s32 func_80044F94(s32 arg0) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_8004500C);
+s32 func_8004500C(s32 arg0, s32 arg1) {
+    s32 *var_v0_2;
+
+    if (arg0 != 0) {
+        var_v0_2 = (s32 *)0x8002E800;
+    } else {
+        var_v0_2 = (s32 *)0x8001C000;
+    }
+    if ((*var_v0_2 & 0xFFFF) != 0x40) {
+        return -1;
+    }
+    if (arg0 == 0) {
+        func_80044750(0x22);
+        func_80044750(0x21);
+        func_80044750(0x2F);
+        func_80044750((arg1 | 0x200) & 0xFFFF);
+    } else {
+        func_80044750(0x23);
+        func_80044750(0x24);
+        func_80044750(0x2E);
+        func_80044750((arg1 | 0x200) & 0xFFFF);
+    }
+    D_800B3D44 = (u8) arg0;
+    D_800B3D48 = (u8) arg1;
+    D_800B3D40 = 1;
+    /* no return here: the original returns the v0 of the last func_80044750 call (implicit int) */
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80043510", func_800450F4);

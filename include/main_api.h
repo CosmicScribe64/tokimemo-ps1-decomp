@@ -504,6 +504,7 @@ extern s32 D_800B5950[];
 extern s32 D_800B5960[];
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
+extern u8 D_800B5BC8;
 extern s8 D_800B5BD4;
 extern s32 D_800B5BD8[];
 extern s32 D_800B5BE8[];
