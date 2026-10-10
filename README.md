@@ -92,8 +92,8 @@ port.
 
 AI coding agents (Claude Code) wrote most of the code and documentation here, directed by the maintainer.
 
-The English translation planned in the roadmap will also be made with AI, and will say so. Human translators are
-welcome and encouraged to take part.
+The English translation planned in the roadmap will also be made with AI as a placeholder for human translation. Human translators are
+welcome and encouraged to provide their own translations to replace the placeholders.
 
 ## Contributing
 
