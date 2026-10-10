@@ -595,7 +595,56 @@ void func_8013A424(void) {
     func_80042940(0x17);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A464);
+void func_8013A464(void) {
+    s32 pad; /* FAKE: unused slot above rect, the original frame has it (real source unknown). T-8070 */
+    RECT rect;
+    u8 sp2B;
+
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    sp2B = D_80122D08;
+    func_8008585C();
+    D_80122D08 = sp2B;
+    func_8004E9F4(1);
+    rect.x = 0x140;
+    rect.y = 0x1A0;
+    rect.w = 0x140;
+    rect.h = 0x58;
+    func_8009C7F8(&rect, 8, 0, 0);
+    rect.x = 0x2C0;
+    rect.y = 0xA0;
+    func_8009C7F8(&rect, 8, 0, 0);
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8007C740();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    func_80044750(0x205);
+    D_800CA21C = 1;
+    D_800CA220 = 1;
+    D_800CA21E = 1;
+    D_800CA224 = 1;
+    D_800CA228 = 1;
+    D_800CA226 = 1;
+    D_800CA22C = 1;
+    D_800CA230 = 1;
+    D_800CA22E = 1;
+    D_800CA234 = 0;
+    D_800CA238 = 0;
+    D_800CA236 = 0;
+    D_80122CDC = 0;
+    func_8007ED84(0x42CF);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A62C);
 
