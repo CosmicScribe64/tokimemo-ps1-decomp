@@ -1,7 +1,13 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801418B0);
+void func_801418B0(void) {
+    D_801487F0 = (u8 *)0x801D6360;
+    D_801487F4 = (u8 *)0x801D6384;
+    D_801487F8 = (u8 *)0x801D6414;
+    D_801487FC = *(s16 *)0x801D641C;
+    D_80148800 = (u8 *)0x801B0000;
+}
 
 void func_80141900(void) {
     D_80148804 = 0x801DDBB4;

@@ -145,17 +145,51 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013394C);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133AD8);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133C4C);
+s32 func_80133C4C(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80133718();
+        break;
+    case 1:
+        func_8013394C();
+        break;
+    case 2:
+        func_80133AD8();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133CB8);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133F50);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134210);
+void func_80134210(void) {
+    s32 i;
+
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 0; i < 16; i++) *(s16 *)&D_80125C10[i * 4] -= 200;
+    D_800E6280.unk_F6D = 0xF;
+    func_8006509C();
+    if ((u8)D_800E6280.unk_F6C % 3U != 2) {
+        D_800E6280.unk_F6D = 0xE;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801342A8);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013447C);
+void func_8013447C(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80133CB8();
+        return;
+    case 1:
+        func_80133F50();
+        return;
+    case 2:
+        func_801342A8();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801344E4);
 
@@ -302,7 +336,19 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801359A4);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135C0C);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135DE0);
+void func_80135DE0(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8013554C();
+        return;
+    case 1:
+        func_801359A4();
+        return;
+    case 2:
+        func_80135C0C();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135E48);
 
@@ -310,7 +356,19 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801361FC);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136434);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013661C);
+s32 func_8013661C(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80135E48();
+        break;
+    case 1:
+        func_801361FC();
+        break;
+    case 2:
+        func_80136434();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136688);
 
@@ -318,7 +376,19 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801368FC);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136A50);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136BC8);
+void func_80136BC8(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80136688();
+        return;
+    case 1:
+        func_801368FC();
+        return;
+    case 2:
+        func_80136A50();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136C30);
 
@@ -340,13 +410,42 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137C1C);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137E38);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137FA0);
+void func_80137FA0(void) {
+    s32 i;
+
+    func_80044750(0x74);
+    func_8004EAAC();
+    func_8004E93C(6, 1);
+    D_801206D8[0x1037] &= ~0x80;
+    D_801206D8[0x377] &= ~0x80;
+    D_801206D8[0x3BB] &= ~0x80;
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 0; i < 12; i++) D_801206D8[0x3FF + i * 0x44] &= ~0x80;
+    func_80042940(0);
+    D_801206D8[0x1037] = 0;
+    D_80121726 = 0x1000;
+    D_80121728 = 0x1000;
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80138080);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801383C4);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801385F0);
+void func_801385F0(void) {
+    s32 i;
+
+    func_8004E93C(6, 1);
+    func_8004EAAC();
+    D_801206D8[0x1037] &= ~0x80;
+    D_801206D8[0x377] &= ~0x80;
+    D_801206D8[0x3BB] &= ~0x80;
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 0; i < 12; i++) D_801206D8[0x3FF + i * 0x44] &= ~0x80;
+    func_80042940(0);
+    D_801206D8[0x1037] = 0;
+    D_80121726 = 0x1000;
+    D_80121728 = 0x1000;
+}
 
 void func_801386C8(void) {
     func_80048EB8(0);

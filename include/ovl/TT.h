@@ -19,7 +19,9 @@ typedef struct TtRec2 {
 } TtRec2; /* size 0x4 */
 extern u8 *D_80158A6C;
 extern u8 *D_80158AA4;
+extern u8 *D_80158AA8;
 extern u8 *D_80158A8C;
+extern u8 *D_80158A84;
 extern u8 *D_80158A78;
 extern u8 *D_80158A94;
 extern u8 *D_80158A98;
@@ -77,5 +79,10 @@ extern u8 *D_80158A88;
 extern u8 D_80155C78[];
 void func_801487D0(s16 arg0, s16 arg1, u8 arg2);
 void func_80148974(s16 arg0, s16 arg1, u8 *arg2);
+
+extern u8 D_80155C7E[];
+extern u8 D_80155C84[];
+extern s16 D_8014ED50;
+void func_80148DB0(void);
 
 #endif /* OVL_TT_H */

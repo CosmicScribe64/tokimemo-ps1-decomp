@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/TEL.h"
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80132000);
+void func_80132000(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_80132060();
+        return;
+    case 1:
+        func_80134BE0();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80132060(void) {
     D_800E6280.unk_1104.w += 1;
@@ -169,9 +181,47 @@ void func_801360E4(void) {
     func_80069128();
 }
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_801361CC);
+void func_801361CC(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_80050DFC(D_800B35F4[D_801405E4]);
+        func_80050E8C(D_80140D18[D_801405E4], 0, D_801405E4);
+        func_80052060(D_80140D44, D_80140D9C, D_801405E4, D_801405E4);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_8005215C();
+        break;
+    default:
+        func_80042940(0x20);
+        break;
+    }
+    menu_bar_show(0);
+    cal_base_show();
+}
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_801362B4);
+void func_801362B4(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_80050DFC(D_800B35F4[D_801405E4]);
+        func_80050E8C(D_80140F0C[D_801405E4], 0, D_801405E4);
+        func_80052060(D_80140F38, D_80140F90, D_801405E4, D_801405E4);
+        func_8004EAD4(0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_8005215C();
+        break;
+    default:
+        func_80042940(0x20);
+        break;
+    }
+    menu_bar_show(0);
+    cal_base_show();
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_8013639C);
 

@@ -49,7 +49,19 @@ void func_8014ADDC(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AE20);
+s32 func_8014AE20(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014ACB4();
+        break;
+    case 1:
+        func_8014AD94();
+        break;
+    case 2:
+        func_8014ADDC();
+        break;
+    }
+}
 
 s32 func_8014AE8C(void) {
     switch (D_800E6280.unk_110D) {
@@ -74,7 +86,16 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B0D0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B1B4);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B750);
+s32 func_8014B750(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014AE8C();
+        break;
+    case 1:
+        func_8014B1B4();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B7A4);
 
@@ -97,7 +118,16 @@ s32 func_8014B8CC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B978);
+s32 func_8014B978(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014B7A4();
+        break;
+    case 1:
+        func_8014B8CC();
+        break;
+    }
+}
 
 s32 func_8014B9CC(void) {
     s32 sp34; /* FAKE: unused local, the original frame is 8 bytes larger (T-3330 slot rule); source unknown. T-6040 */
@@ -147,7 +177,19 @@ s32 func_8014BB34(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BB94);
+s32 func_8014BB94(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014B9CC();
+        break;
+    case 1:
+        func_8014BA8C();
+        break;
+    case 2:
+        func_8014BB34();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BC00);
 
@@ -205,11 +247,29 @@ s32 func_8014BE98(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BF2C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014C018);
+s32 func_8014C018(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014BF2C();
+        break;
+    case 1:
+        func_8014BC00();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014C06C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014C250);
+s32 func_8014C250(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014BF2C();
+        break;
+    case 1:
+        func_8014C06C();
+        break;
+    }
+}
 
 void func_8014C2A4(void) {
     func_80072B5C(1);

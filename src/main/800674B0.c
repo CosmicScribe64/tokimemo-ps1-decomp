@@ -154,9 +154,52 @@ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A2CC);
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006AEC4);
+s32 func_8006AEC4(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 r;
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B014);
+    r = 0;
+    if (arg1 == 0xD) {
+        arg1 = 1;
+    }
+    if (arg1 == 0xC && arg2 == 0x18) {
+        return -1;
+    }
+    if (arg1 == 0xD) {
+        if (arg2 == 1) {
+            return -1;
+        }
+    }
+    if (arg1 == 1 && arg2 == 1) {
+        return -1;
+    }
+    if (arg1 >= 3 && arg0 >= 0x62) {
+        return -1;
+    }
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 0; i < 8; i++) if (arg1 == ((u32) D_800E6280.unk_54C[i].h[0] >> 12) && arg2 == (D_800E6280.unk_54C[i].h[1] & 0x1F)) r = i + 1;
+    return r;
+}
+
+typedef struct EntryFlags54C {
+    u32 pad : 25;
+    u32 nib : 4;
+    u32 b29 : 1;
+    u32 rest : 2;
+} EntryFlags54C;
+
+s32 func_8006B014(s32 arg0) {
+    s32 i;
+    s32 n;
+
+    n = 0;
+    for (i = 0; i < 8; i++) {
+        if (((EntryFlags54C *)&D_800E6280.unk_54C[i])->b29 && arg0 == ((EntryFlags54C *)&D_800E6280.unk_54C[i])->nib) {
+            n++;
+        }
+    }
+    return n;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B0C8);
 

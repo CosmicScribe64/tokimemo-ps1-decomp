@@ -8,7 +8,19 @@ void func_80135720(void) {
     D_8015F3FC = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_80135744);
+s32 func_80135744(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8013587C();
+        break;
+    case 1:
+        func_801359B4();
+        break;
+    case 2:
+        func_80135994();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80135720", func_801357B0);
 

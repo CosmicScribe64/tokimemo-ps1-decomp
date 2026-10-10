@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
 #include "common.h"
 #include "ovl/GEKO.h"
+
+extern u32 D_80122CD0;
 
 typedef struct {
     void (*f[22])();
@@ -27,7 +30,19 @@ void func_8013DF70(void) {
     D_801463B0 = 0x801CE000;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E040);
+void func_8013E040(void) {
+    switch (D_80122CD0) {
+    case 1:
+        func_8013E0A4();
+        return;
+    case 2:
+        func_8013E0E0();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_8013E0A4(void) {
     if (D_800E6280.unk_1109 == 0) {
@@ -55,7 +70,24 @@ void func_8013E11C(void) {
     func_8013E950();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E1A0);
+/* Bit 14 of a Rec38 flag word: IDO loads its byte into another register than the lui (T-7010). */
+typedef struct {
+    u32 pad0 : 14;
+    u32 f : 1;
+    u32 pad1 : 17;
+} Rec38Bit14;
+
+void func_8013E1A0(void) {
+    if (func_80052C88(9) >= 0x50U) {
+        D_800E6280.unk_1BC[9].unk_02 += 1;
+        D_800E6280.unk_1BC[9].unk_06 += 2;
+    } else {
+        ((Rec38Bit14 *)&D_800E6280.unk_1BC[9].unk_0C)->f = 1;
+        D_800E6280.unk_1BC[9].unk_06 += 1;
+    }
+    func_80084D3C();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E22C);
 

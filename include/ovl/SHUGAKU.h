@@ -468,5 +468,11 @@ void func_80138400(void);
 s16 func_801385A8(void);
 
 extern s16 D_8013C2E8;
+void func_8013AA70(void);
+s32 func_80137F90(void);
+void func_80138A60(void);
+extern u8 D_8013B090;
+void func_801378F0(void);
+void func_80134560(void);
 
 #endif /* OVL_SHUGAKU_H */

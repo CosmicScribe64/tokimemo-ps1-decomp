@@ -1,5 +1,10 @@
 #include "ovl/VALEN.h"
 
+typedef struct {
+    void (*f[12])();
+} FnTbl12; /* size 0x30 */
+extern FnTbl12 D_801346FC;
+
 void func_80133C70(void) {
     D_80134660 = 0x801B00DC;
     D_80134664 = 0x801B02AC;
@@ -42,7 +47,14 @@ void func_80133C70(void) {
     D_801346F8 = 0x801B155C;
 }
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80133C70", func_80133EE4);
+void func_80133EE4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl12 tbl;
+
+    tbl = D_801346FC;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_80133F58(void) {
     if (D_800E6280.unk_F5F == 9) {

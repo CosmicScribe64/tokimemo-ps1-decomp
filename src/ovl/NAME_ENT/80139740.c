@@ -478,7 +478,16 @@ void func_80140BA4(void) {
     D_8011ECA4 = 1;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140CCC);
+s32 func_80140CCC(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014068C();
+        break;
+    case 1:
+        func_80140BA4();
+        break;
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014BEB0);
 

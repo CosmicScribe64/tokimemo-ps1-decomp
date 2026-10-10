@@ -243,5 +243,9 @@ extern s32 D_80139AAC;
 extern s32 D_80139AB0;
 extern s32 D_80139AB4;
 extern s32 D_80139AB8;
+void func_801383D0(void);
+s32 func_80132290(void);
+extern u8 D_8013A2AC;
+void func_801341E8(void);
 
 #endif /* OVL_KANGEI_H */

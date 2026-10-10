@@ -71,4 +71,7 @@ void func_8010BB3C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010BB64);
+void func_8010BB64(void) {
+    func_800469F4(0x4600);
+    func_80011DFC();
+}

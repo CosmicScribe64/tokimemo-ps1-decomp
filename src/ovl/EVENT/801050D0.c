@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+extern FnTbl20 D_80123100;
+
 void func_801050D0(void) {
     D_80122F70 = 0x801D22F4;
     D_80122F74 = 0x801D22F8;
@@ -124,7 +129,14 @@ void func_80105868(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_80105910);
+void func_80105910(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80123100;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+}
 
 void func_80105998(void) {
     if (D_800B0A04[D_800B1746].unk_06 < 0x50) {
@@ -164,7 +176,21 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_80105DF8);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_80106150);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_80106258);
+void func_80106258(void) {
+    D_80120678 = D_80120578;
+    D_8012067C = D_80120594;
+    D_80120680 = D_801205B0;
+    func_80078970(D_80094784, "遊園地");
+    D_800B0A04[9].unk_02 += 1;
+    D_800B0A04[9].unk_06 += 1;
+    D_800B0A04[9].unk_0A -= 0x14;
+    func_8004C250();
+    func_801051A0();
+    func_80012D64(D_80122FAC, 0x11, 1, 2, 0);
+    func_8004C46C(D_80122FB0, D_80122FB4, D_80122FB8, D_80122FBC, D_80122FC0, D_80122FC4);
+    func_8004C6B0(D_80122FA0, D_80122FA4, D_80122F9C, D_80122FA8);
+    func_80011DFC();
+}
 
 void func_80106384(void) {
     D_80120678 = D_8012057C;
@@ -181,9 +207,35 @@ void func_80106384(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_8010649C);
+void func_8010649C(void) {
+    D_80120678 = D_80120580;
+    D_8012067C = D_8012059C;
+    D_80120680 = D_801205B8;
+    D_800B0A04[9].unk_02 += 1;
+    D_800B0A04[9].unk_06 += 1;
+    D_800B0A04[9].unk_0A -= 0x14;
+    func_8004C250();
+    func_80105300();
+    func_80012D64(D_80123004, 0x11, 1, 2, 0);
+    func_8004C46C(D_80123008, D_8012300C, D_80123010, D_80123014, D_80123018, D_8012301C);
+    func_8004C6B0(D_80122FF8, D_80122FFC, D_80122FF4, D_80123000);
+    func_80011DFC();
+}
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_801065B4);
+void func_801065B4(void) {
+    D_80120678 = D_80120584;
+    D_8012067C = D_801205A0;
+    D_80120680 = D_801205BC;
+    D_800B0A04[9].unk_02 += 3;
+    D_800B0A04[9].unk_06 += 2;
+    D_800B0A04[9].unk_0A -= 0x14;
+    func_8004C250();
+    func_801053B0();
+    func_80012D64(D_80123030, 0x11, 1, 2, 0);
+    func_8004C46C(D_80123034, D_80123038, D_8012303C, D_80123040, D_80123044, D_80123048);
+    func_8004C6B0(D_80123024, D_80123028, D_80123020, D_8012302C);
+    func_80011DFC();
+}
 
 void func_801066CC(void) {
     func_800469F4(0x3FDE);

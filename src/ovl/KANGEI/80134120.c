@@ -1,11 +1,17 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
+typedef struct {
+    void (*f[30])();
+} FnTbl30; /* size 0x78 */
+extern FnTbl30 D_80139B30;
+
 /* Bit 1 of the flag word of a Rec38 record (tested with sll 30 / bgez). */
 typedef struct KangeiFlagBits {
     u32 pad0 : 1;
     u32 flag : 1;
-    u32 rest : 30;
+    u32 flag2 : 1;
+    u32 rest : 29;
 } KangeiFlagBits;
 
 void func_80134120(void) {
@@ -20,7 +26,14 @@ void func_80134120(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801341E8);
+void func_801341E8(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl30 tbl;
+
+    tbl = D_80139B30;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x20);
+}
 
 void func_8013425C(void) {
     func_80044890(1, 0xBF98, 0xBF79, (&D_800B3688)[D_800E6280.unk_F5F], (&D_800B36C8)[D_800E6280.unk_F5F], (&D_800B3708)[D_800E6280.unk_F5F]);
@@ -162,7 +175,12 @@ void func_80135390(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80135438);
+/* Bits 1 and 2 of the current girl's flag word; the index is read again after the first store (T-7010). */
+void func_80135438(void) {
+    ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag = 1;
+    ((KangeiFlagBits *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C)->flag2 = 1;
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801354AC);
 

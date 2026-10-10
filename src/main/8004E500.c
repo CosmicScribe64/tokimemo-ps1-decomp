@@ -35,7 +35,14 @@ s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
     return ++D_800B3F60;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_disp_start);
+void k_disp_start(s32 arg0) {
+    s32 i;
+
+    D_800B3F68 = 0;
+    for (i = 0; i < arg0; i++) {
+        D_800B3F68 += D_800B3DC0[i * 8 + 5];
+    }
+}
 
 void k_disp_switch(s32 arg0, s32 arg1) {
     if (arg1 > 0) {
@@ -81,7 +88,20 @@ void k_sub_disp_start(s32 arg0) {
     k_disp_start(D_800B3F64 + arg0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", k_disp_goto_line_end);
+s16 k_disp_goto_line_end(void) {
+    s32 i;
+    s32 sum;
+
+    sum = 0;
+    for (i = 0; i < 0x34; i++) {
+        sum += D_800B3DC0[i * 8 + 5];
+        if (sum >= D_800B3F68) {
+            D_800B3F68 = sum;
+            return sum;
+        }
+    }
+    return -1;
+}
 
 void k_speed_set(u8 arg0) {
     D_800B3F66 = arg0;
@@ -120,7 +140,19 @@ u8 check_set_k(void) {
     return *(u8 *)&D_800B3F60;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", get_now_k);
+u8 get_now_k(void) {
+    s32 i;
+    s32 sum;
+
+    sum = 0;
+    for (i = 0; i < D_800B3F68; i++) {
+        sum += D_800B3DC0[i * 8 + 5];
+        if (sum >= D_800B3F68) {
+            return i;
+        }
+    }
+    return 0xFF;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", disp_string);
 

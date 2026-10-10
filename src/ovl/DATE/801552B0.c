@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32: selector in $v1 (main_api.h: s32) */
 #include "common.h"
 #include "ovl/DATE.h"
+
+extern u32 D_80122CD0;
 
 void func_801552B0(void) {
     D_8015F900 = 0x801CE080;
@@ -53,7 +56,25 @@ void func_801554C0(void) {
     D_8015F99C = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80155530);
+void func_80155530(void) {
+    switch (D_80122CD0) {
+    case 3:
+        func_80155D80();
+        return;
+    case 4:
+        func_80155E40();
+        return;
+    case 5:
+        func_801563A8();
+        return;
+    case 6:
+        func_80156494();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_801555C4(void) {
     D_8015E208 = D_8015DF00;

@@ -1,7 +1,38 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8013F190);
+typedef struct {
+    void (*f[11])();
+} FnTbl11; /* size 0x2C */
+extern FnTbl11 D_80146454;
+
+typedef struct {
+    void (*f[10])();
+} FnTbl10; /* size 0x28 */
+extern FnTbl10 D_8014633C;
+
+typedef struct {
+    void (*f[14])();
+} FnTbl14; /* size 0x38 */
+extern FnTbl14 D_80146304;
+
+typedef struct {
+    void (*f[17])();
+} FnTbl17; /* size 0x44 */
+extern FnTbl17 D_801462C0;
+
+typedef struct {
+    void (*f[12])();
+} FnTbl12; /* size 0x30 */
+extern FnTbl12 D_8014639C;
+
+void func_8013F190(void) {
+    D_80146130 = (u8 *)0x801D6360;
+    D_80146134 = (u8 *)0x801D6384;
+    D_80146138 = (u8 *)0x801D6414;
+    D_8014613C = *(s16 *)0x801D641C;
+    D_80146140 = (u8 *)0x801B0000;
+}
 
 void func_8013F1E0(void) {
     D_80146144 = 0x801DDBB4;
@@ -86,7 +117,15 @@ void func_80140144(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_801401DC);
+void func_801401DC(void) {
+    s16 v;
+
+    v = D_801206B0 + 0x200;
+    D_801206B0 = v;
+    if (v >= 0x1000) {
+        func_8004284C();
+    }
+}
 
 void func_80140220(void) {
     func_80046318(0x4D, 0x801B0000, 0xBDAC);
@@ -210,7 +249,14 @@ void func_80140D80(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140DC0);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140F54);
+void func_80140F54(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl17 tbl;
+
+    tbl = D_801462C0;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_80140FDC(void) {
     D_80145F2C = 3;
@@ -222,7 +268,14 @@ void func_80141004(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8014102C);
+void func_8014102C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl14 tbl;
+
+    tbl = D_80146304;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 typedef struct {
     u8 pad:2;
@@ -250,7 +303,14 @@ void func_80141138(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80141180);
+void func_80141180(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl10 tbl;
+
+    tbl = D_8014633C;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_801411FC(void) {
     D_80145F2C = 3;
@@ -277,7 +337,14 @@ void func_8014131C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80141358);
+void func_80141358(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl12 tbl;
+
+    tbl = D_8014639C;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_801413CC(void) {
     D_80145F2C = 3;
@@ -286,7 +353,11 @@ void func_801413CC(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_801413F4);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8014147C);
+void func_8014147C(void) {
+    ((Bits64B8 *)&D_800E6280.unk_1BC[6].unk_0C.b[0])->f = 1;
+    D_80145F2C = 4;
+    func_8004284C();
+}
 
 void func_801414B8(void) {
     func_80044750(0x505);
@@ -307,7 +378,14 @@ void func_801415A0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_801415C8);
+void func_801415C8(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl11 tbl;
+
+    tbl = D_80146454;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_80141650(void) {
     D_80145F2C = 3;

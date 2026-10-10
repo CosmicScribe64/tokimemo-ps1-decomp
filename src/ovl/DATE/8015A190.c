@@ -2,6 +2,11 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
+typedef struct {
+    void (*f[44])();
+} FnTbl44; /* size 0xB0 */
+extern FnTbl44 D_801609F8;
+
 extern u32 D_80122CD0;
 
 void func_8015A190(void) {
@@ -10,7 +15,14 @@ void func_8015A190(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8015A190", func_8015A1C8);
+void func_8015A1C8(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl44 tbl;
+
+    tbl = D_801609F8;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_8015A250(void) {
     func_80046318(0x3D, 0x801B0000, 0x8E7C);

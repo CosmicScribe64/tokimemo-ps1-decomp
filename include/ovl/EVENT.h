@@ -13,11 +13,13 @@
 #define MAIN_API_OVERRIDE_D_801206F0 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120720 /* EVENT overlay data at this address, s16 (main_api.h: s8) */
 #define MAIN_API_OVERRIDE_D_801206DC /* EVENT overlay data at this address, s32 (main_api.h: s8) */
+#define MAIN_API_OVERRIDE_D_801206D8 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
 #define MAIN_API_OVERRIDE_D_801206EC /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120724 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120730 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120734 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80121874 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
+#define MAIN_API_OVERRIDE_D_801206B0 /* EVENT overlay data at this address, s32 (main_api.h: volatile s16) */
 
 #include "common.h"
 #include "game.h"
@@ -1268,5 +1270,23 @@ void func_80101F24(void);
 void func_80102118(void);
 void func_801021FC(void);
 void func_801022C0(void);
+void func_80036A8C();
+void func_800372E0(s32 a);
+void func_80035774(void);
+void func_800358D0(void);
+void func_8010F4B8(void);
+s32 func_80116360(void);
+void func_80116460(void);
+void func_8011651C(void);
+void func_80118F40(void);
+void func_80118FC8(void);
+s32 func_80117A68();
+s32 func_80117A10(void);
+void func_80117CEC(void);
+extern u8 D_80124364;
+extern u8 D_80124368;
+void func_8011838C(void);
+void func_800FDBF4(void);
+void func_8010BB64(void);
 
 #endif /* OVL_EVENT_H */

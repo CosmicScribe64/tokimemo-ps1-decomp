@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
+typedef struct {
+    u8 s[0xCC3];
+} DateTxt; /* size 0xCC3 */
+extern DateTxt D_8013B1AC;
+
 void func_80132000(void) {
     D_8013AFD0 = 0x801B0478;
     D_8013AFD4 = 0x801B13A4;
@@ -184,7 +189,13 @@ void func_80132E20(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132E84);
+void func_80132E84(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    DateTxt tbl;
+
+    tbl = D_8013B1AC;
+    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8013B090 * 0x63 + D_80122CDC * 0x21]);
+}
 
 void func_80132F44(void) {
     D_800CA134 = &D_8013B084;

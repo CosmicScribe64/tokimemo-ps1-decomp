@@ -154,7 +154,7 @@ void func_8014F1D4(s32 arg0) {
     }
     if (arg0 != 0) {
         if ((D_8015EE44 - 3) >= arg0) {
-            func_8014EF6C(arg0);
+            func_8014EF6C();
         }
     }
 }

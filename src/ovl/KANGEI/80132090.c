@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
+typedef struct {
+    void (*f[22])();
+} FnTbl22; /* size 0x58 */
+extern FnTbl22 D_801399B0;
+
 void func_80132090(void) {
     D_80139950 = 0x801973AC;
     D_80139954 = 0x80197910;
@@ -28,9 +33,34 @@ void func_80132090(void) {
     D_801399AC = 0x801986DC;
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_80132214);
+void func_80132214(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl22 tbl;
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_80132290);
+    tbl = D_801399B0;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
+
+s32 func_80132290(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_800674B0();
+        D_800E6280.unk_110D += 1;
+    }
+    if (D_800E6280.unk_110D == 1) {
+        if (D_800E6280.unk_1104.u++ >= 0x400U) {
+            func_800452C4();
+            func_8004482C();
+            D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    return func_80072B5C(1);
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_80132354);
 
@@ -81,7 +111,12 @@ void func_80132514(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_801325D0);
+void func_801325D0(void) {
+    D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    func_800847B8(D_800E6280.unk_75D);
+    func_80132090();
+    func_8013260C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132090", func_8013260C);
 

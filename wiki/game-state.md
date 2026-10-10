@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-10-10
-sources: ["include/main_api.h", "tools/migrate_globals.py", "config/migrate_globals.txt", "tools/type_recovery.py", "asm/**/*.s"]
+sources: ["include/main_api.h", "tools/migrate_globals.py", "config/migrate_globals.txt", "tools/type_recovery.py", "tools/aggregate_audit.py", "asm/**/*.s"]
 ---
 
 # GameState: the main game-state struct (T-5100)
@@ -65,13 +65,45 @@ Unions: `GsWord` (`s32 w`, `u32 u`, `u16 h[2]`, `u8 b[4]`) and `GsHalf` (`u16 h`
 - **The block is one object.** 1459 C uses moved to `D_800E6280` fields and every matched function stayed byte-identical except the cases below. The INCLUDE_ASM functions whose original keeps a load of the block after a store to another of its fields (191 functions with such a pair from `tools/type_recovery.py`) were tried with plain m2c C and `migrate_globals.py --apply`: 47 match, and the same C with the old separate symbols matches none of them (IDO hoists the load). 7 `FAKE` "first symbol" tricks became plain field accesses (EN_NICHI `func_80132B40`, `func_80132C4C`, SHUGAKU `80134880.c`, DATE2 `80132DE0.c`, DATE `80152FC0.c`, main `func_80053CC0`, MASTER `func_80138374`).
 - **Array element versus member.** A constant-index array element is not the same as a struct member for IDO: a `switch` on `unk_1093[1]` gets `$v1` where the original (and a member `unk_1094`) has `$v0` (main `func_8005C414`, `func_8005E924`, ETC `func_8014979C`), and a sum of two elements of `GsRec0FC[9]` loads them in the other order (ETC `func_8014A32C`, as `RpgRec18` in [[data-types]]). So +0x1093/+0x1094 and the nine records at +0xFC are members.
 - **A cast of the struct address is not the old array view.** `((u8 *)&D_800E6280)[0x10A5 + i]` gives another induction variable than the old `u8 D_800E6280[]` view; the field access `D_800E6280.unk_10A5[i]` matches. All old byte views were rewritten as field accesses; none was kept.
-- **Kept old views** (`config/migrate_globals.txt`, declared in the "old names" block of `main_api.h`): SHOUGATU `func_8013E0F0` keeps `D_800E66E8` (`unk_1BC[12].unk_0C.w`): with the struct element IDO loads the other operand of the sum first. One use in one function.
+- **Kept old views**: none since T-7010. SHOUGATU `func_8013E0F0` kept `D_800E66E8` (`unk_1BC[12].unk_0C.w`) because the sum matched only on the scalar; written as a 3-bit field of the flag word (`D_80145F2C += f * 3 - 3`) it matches through `D_800E6280`.
 - **Unit-private selectors** (T-5010 U0): the struct does not change them. ETC `func_80145960` with a direct `switch (D_800E6280.unk_110A)` still gets `$v1`; its `FAKE` local copy stays. Of the 26 U0 functions whose selector lies in the block, one matches with plain C (main `func_80074D28`, a compare chain on `unk_69C[0].unk_00`), but it matches with the old scalar name too: a detector false positive, not a struct effect.
+
+## Views: one struct in every unit (T-7010)
+
+Wave 4 (lists 3, 5 and 7) reported about 20 functions that "reach a field as a separate symbol" and called it the top blocker. [[tickets/T-7010-game-state-view-audit]] audited every access of the original to the block and tested the claim. Verdict: the original source had one object, reached through `D_800E6280` by every unit; no unit had separate externs, aliases or a second aggregate for these fields. No per-unit view is declared, and `config/migrate_globals.txt` has no `keep` line.
+
+**What a separate symbol would change.** IDO 5.3 compiles a constant-offset member (`D_800E6280.unk_03A`) exactly like a scalar (`D_800E62BA`): the same `lui`/`%lo` words (the relocation `D_800E6280+0x3A` resolves to the field's address), the same registers, and uopt treats the members as distinct (`a = s.w; s.v = 5; b = s.w` keeps `a`). Two things differ, both alias rules:
+- as1 moves a load above a store to another symbol, but not above a store through the same symbol (`X += 1; Y += 1;` on two scalars: `lw X; lw Y; sw X; sw Y`; on two members: `lw X; sw X; lw Y; sw Y`);
+- uopt assumes a store through an indexed element or a pointer into the struct may change any member, so it reloads a member after such a store; a separate scalar stays in its register.
+A "symbol-direct" access (`lui %hi(D_X); lbu %lo(D_X)`) is therefore no evidence for a separate symbol: it is what every constant-offset member looks like.
+
+**Audit of the original** (`tools/aggregate_audit.py`, all 6958 functions, matched and unmatched):
+
+| kind | accesses | meaning |
+|---|---|---|
+| direct | 13625 | own `%hi`/`%lo` at the field address (member or scalar, see above) |
+| idx | 201 | `lui; addu index; l %lo(D_X)` (element of a member array, offset folded) |
+| ptr | 1040 | immediate offset from a register holding an address of the block |
+| ptridx | 1670 | the same after an index was added (strength-reduced loops) |
+| sharedhi | 9 | one `lui` serving two fields |
+| lo? | 272 | `%hi` set in another block (branch delay slot) |
+
+- Base-relative accesses (ptr, ptridx, sharedhi) come from 129 of the 277 original objects and from 21 of the 24 units that touch the block (all but BUNKA_SD, OLH and OMIMAI, which only reach single fields); they reach 52 of the 144 top-level fields, from `unk_000` to `unk_183C`. 91 fields are only ever reached directly (scalars: `unk_03E`, `unk_110A`, `unk_110D`, ...), which says nothing either way.
+- Read-modify-write pairs in one basic block (direct accesses, different words, independent values): inside the block 407 kept, **0 hoisted**; between globals outside every aggregate 954 kept, 27 hoisted (2.8%). At the outside rate about 11 hoisted pairs would be expected if the fields were separate symbols (chance of none about 1 in 85,000).
+- Reloads after indexed stores: `load_palette`, `load_csr_ab`, `load_csr_tp` (store a record of `unk_1328`/`unk_142C` through the index `unk_1428`/`unk_1429`, then reload the index for `+= 1`) and KANGEI `func_80135438` (reloads `unk_F5F` after a store into `unk_1BC[unk_F5F]`) do what only one object gives.
+
+**The wave-4 cases, re-diagnosed.** For 15 attributed functions an m2c draft was compiled twice, with the `GameState` members and with the old scalars: 13 give the same instruction words, `load_palette` and KANGEI `func_80135438` differ and the member form is the original's (reload). The real causes:
+- bit-fields (DATE `func_8015522C`, KANGEI `func_80135438`, SHOUGATU `func_8013E0F0`; matched): a bit-field store loads the byte into another register than its `lui` (`lui t9; lbu t0,%lo(D)(t9); ori; sb`), a scalar `D |= 0x40` loads into the `lui` register. `tools/aggregate_audit.py --bitfields` lists 56 such sites in the block;
+- line-based scheduling (DATE `func_8015745C`, matched with a marked `FAKE`);
+- register allocation and constant sharing of the T-0018 / T-3001 families (OPTION `func_80132AB8`, `func_801387E4`, `func_8013C780`, TACO `func_80136C60`, ENDING `func_80134B18`, DATE `func_8014E38C`, `func_801378BC`, `func_801386C8`, `func_80137B78`, `func_801395B4`, KANGEI `func_80132354`, OMIMAI `func_801337EC`, main `get_weekly_bg_sector`, `load_palette`): the scalar view gives the same words, so no view fixes them.
+
+**Rule for the future** (`tools/migrate_globals.py`): a `keep` line (a separate-symbol view for one file) is accepted only when the original object of that file has a hoisted read-modify-write pair on that address (`tools/aggregate_audit.py --pairs`); `--check` runs the audit on that object and rejects the line otherwise. A function that misses by registers, operand order or scheduling does not get a view.
 
 ## Tool and workflow
 
 - `tools/migrate_globals.py --apply` rewrites `D_X` inside an aggregate to the subobject at `X - base` whose type equals the old declaration (own `extern`, the overlay header's override, else `main_api.h`), removes the absorbed declarations and their `MAIN_API_OVERRIDE_` guards, and leaves a use it cannot map for a hand rewrite (it keeps that symbol's declarations). Re-runnable; a migrated tree is a no-op. Without a declaration it rewrites only an offset where exactly one scalar starts (or one array, for an indexed use).
-- `--check` (ninja, `build/globals.ok`): every use of an absorbed name with the field to use, every old view of the base (`D_800E6280[i]`), every declaration of an absorbed name.
+- `--check` (ninja, `build/globals.ok`): every use of an absorbed name with the field to use, every old view of the base (`D_800E6280[i]`), every declaration of an absorbed name, and every `keep` line without a hoisted pair in its original object (T-7010).
+- `tools/aggregate_audit.py` (T-7010): per access kind, per top-level field (`--fields`), per original object (`--units`), hoisted pairs (`--pairs`) and bit-field sites (`--bitfields`); `--json` for everything.
 - Decompiling against the block: keep the `extern` lines m2c prints for the old names above the function (or in the overlay header), run `tools/docker.sh python3 tools/migrate_globals.py --apply`, then build ([[decompile-workflow]] step 5a).
 
 ## Open

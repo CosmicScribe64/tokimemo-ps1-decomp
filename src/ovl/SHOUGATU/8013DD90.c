@@ -27,8 +27,15 @@ void func_8013E0C8(void) {
     func_8004284C();
 }
 
+/* Bits 9..11 of a Rec38 flag word (sll 20; srl 29). T-7010 */
+typedef struct {
+    u32 pad0 : 9;
+    u32 f : 3;
+    u32 pad1 : 20;
+} Rec38Bits9;
+
 void func_8013E0F0(void) {
-    D_80145F2C = (D_80145F2C + (((u32) (D_800E66E8 << 0x14) >> 0x1D) * 3)) - 3;
+    D_80145F2C += ((Rec38Bits9 *)&D_800E6280.unk_1BC[12].unk_0C)->f * 3 - 3;
     func_8004284C();
 }
 

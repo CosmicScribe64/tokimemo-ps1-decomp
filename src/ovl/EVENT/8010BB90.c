@@ -927,7 +927,27 @@ void func_8010EE2C(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F340);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F4B8);
+void func_8010F4B8(void) {
+    func_8004ACA8();
+    switch (D_800B1AF5) {                           /* irregular */
+    case 0:
+        func_8010F55C();
+        break;
+    case 1:
+        func_8010F74C();
+        break;
+    default:
+        func_80015FE0();
+        break;
+    }
+    func_80046A7C();
+    func_8004BB54();
+    func_800372E0(2);
+    func_800358D0();
+    func_80036A8C();
+    func_80035774();
+    func_8004AEB0();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010BB90", func_8010F55C);
 

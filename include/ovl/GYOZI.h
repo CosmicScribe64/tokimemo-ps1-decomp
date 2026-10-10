@@ -24,6 +24,7 @@ extern s32 D_80146360;
 void func_80137E84(void);
 extern s16 D_80147220;
 extern u8 D_80147240;
+extern s16 D_8014723C;
 extern u8 D_80145F60;
 void func_801343A4(void);
 extern u8 D_80145EC8;
@@ -551,5 +552,17 @@ void func_801388E0(void);
 void func_80138BF0(void);
 void func_80139920(void);
 void func_80139D34(void);
+void func_8013E1D0(void);
+void func_80134FD0(void);
+void func_80134C10(void);
+void func_80135900(void);
+void func_801436E4(void);
+void func_80143780(void);
+extern u8 *D_801487F0;
+extern u8 *D_801487F4;
+extern u8 *D_801487F8;
+extern s16 D_801487FC;
+extern u8 *D_80148800;
+void func_801418B0(void);
 
 #endif /* OVL_GYOZI_H */

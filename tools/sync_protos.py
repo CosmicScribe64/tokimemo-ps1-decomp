@@ -29,7 +29,10 @@ Modes (run from the repo root, inside Docker like every tool):
   sync_protos.py --check             the rules above; exit 1 with one message per problem, each with its fix
                                      (tools/check_headers.py runs this too, so ninja and CI enforce it)
   sync_protos.py --write             create or update include/main_api.h: adds declarations that other
-                                     headers hold, moves it to the definition's type, adds the override guards
+                                     headers hold, moves it to the definition's type, adds the override guards.
+                                     Everything in the globals and functions sections that is not a declaration
+                                     of a symbol stays (T-7030): comments, #if blocks, type definitions. A
+                                     comment moves with the declaration below it when the address order changes.
   sync_protos.py --fix               --write, then edit the headers: delete declarations that main_api.h now
                                      carries (same type, or another type nobody uses), keep the others as
                                      explicit overrides with an automatic reason, add the main_api.h include
@@ -704,15 +707,106 @@ def types_block(old):
     return old[start + len('#include "libgpu.h"\n'):end].strip("\n")
 
 
-def render_api(model, entries, guards, types=""):
+GLOBALS_MARK = "/* ---- globals ---- */"
+FUNCS_MARK = "/* ---- functions ---- */"
+
+
+def parse_foreign(old, names):
+    """The lines of an existing main_api.h that --write does not own (T-7030): comments, #if blocks other
+    than the override guards, type definitions and anything else that is not a declaration of one of
+    `names`. Returns (attach, tails): attach {name: [lines]} are the lines to emit right above the
+    declaration of `name` (they move with it when the address order changes); tails {'globals': [...],
+    'functions': [...]} are those with no declaration after them in their section.
+    Owned lines (regenerated): the section markers, the override guards, the closing #endif and every
+    declaration, single- or multi-line. A declaration of a symbol that is gone takes nothing with it:
+    the lines in front of it go to the next declaration that survives."""
+    lines = old.split("\n")
+    start = next((i + 1 for i, l in enumerate(lines) if l.strip() == GLOBALS_MARK), None)
+    if start is None:
+        incl = [i for i, l in enumerate(lines) if re.match(r'\s*#\s*include\b', l)]
+        start = (incl[-1] + 1) if incl else 0
+    attach, tails = {}, {"globals": [], "functions": []}
+    section, pending, stmt = "globals", [], []
+    in_comment, depth, conds = False, 0, []
+    gap = False                   # the previous line was blank
+
+    def add(line):
+        if not pending and gap:
+            pending.append("")      # keep the blank line that set the block apart
+        pending.append(line)
+
+    def take():
+        block = list(pending)
+        del pending[:]
+        while block and not block[-1].strip():
+            block.pop()
+        return block
+
+    for line in lines[start:]:
+        st = line.strip()
+        if in_comment:
+            pending.append(line)
+            in_comment = "*/" not in line
+            continue
+        if not st:
+            if pending:
+                pending.append(line)
+            gap = True
+            continue
+        try:
+            if depth > 0 or "{" in st:
+                add(line)
+                depth += st.count("{") - st.count("}")
+            elif st in (GLOBALS_MARK, FUNCS_MARK):
+                tails[section].extend(take())
+                section = "globals" if st == GLOBALS_MARK else "functions"
+            elif re.match(r"#\s*ifndef\s+" + OVERRIDE + r"\w+\s*$", st):
+                conds.append("guard")
+            elif re.match(r"#\s*(if|ifdef|ifndef)\b", st):
+                conds.append("foreign")
+                add(line)
+            elif re.match(r"#\s*endif\b", st):
+                if (conds.pop() if conds else "closing") == "foreign":
+                    add(line)
+            elif st.startswith("#") or "foreign" in conds:
+                add(line)         # inside an #if block of the file's own: all of it is foreign
+                in_comment = "/*" in st and "*/" not in st.rsplit("/*", 1)[1]
+            else:
+                code = re.sub(r"/\*.*?\*/", " ", st).strip()
+                if (not code or code.startswith("/*")) and not stmt:
+                    add(line)
+                    in_comment = "/*" in st and "*/" not in st.rsplit("/*", 1)[1]
+                else:
+                    if "/*" in code:      # a comment opening after code
+                        code = code.split("/*", 1)[0].strip()
+                        in_comment = True
+                    stmt.append(line)
+                    if code.endswith(";"):
+                        text = re.sub(r"/\*.*?\*/", " ", " ".join(stmt))
+                        stmt = []
+                        found = next((n for n in re.findall(r"[A-Za-z_]\w*", text) if n in names), None)
+                        if found is not None:   # an unknown name is a dropped declaration
+                            block = take()
+                            if block:
+                                attach.setdefault(found, []).extend(block)
+        finally:
+            gap = False
+    tails[section].extend(take())
+    return attach, tails
+
+
+def render_api(model, entries, guards, types="", keep=None):
     """main_api.h text. entries: {name: (type, line text)}; guards: symbols wrapped in #ifndef;
-    types: the type definitions to keep in front of the globals."""
+    types: the type definitions to keep in front of the globals; keep: parse_foreign() result, the
+    comments and other lines of the old file that stay where they were."""
+    attach, tails = keep if keep else ({}, {"globals": [], "functions": []})
     data = sorted((n for n, (t, _l) in entries.items() if not is_func(t)), key=lambda n: sort_key(model, n))
     funcs = sorted((n for n, (t, _l) in entries.items() if is_func(t)), key=lambda n: sort_key(model, n))
-    out = [HEADER_TEXT.rstrip("\n"), ""] + ([types, ""] if types else []) + ["/* ---- globals ---- */"]
+    out = [HEADER_TEXT.rstrip("\n"), ""] + ([types, ""] if types else []) + [GLOBALS_MARK]
 
     def emit(names):
         for n in names:
+            out.extend(attach.get(n, ()))
             line = entries[n][1]
             if n in guards:
                 out.extend(["#ifndef " + OVERRIDE + n, line, "#endif"])
@@ -720,8 +814,10 @@ def render_api(model, entries, guards, types=""):
                 out.append(line)
 
     emit(data)
-    out += ["", "/* ---- functions ---- */"]
+    out += tails["globals"]
+    out += ["", FUNCS_MARK]
     emit(funcs)
+    out += tails["functions"]
     out += ["", "#endif /* MAIN_API_H */", ""]
     return "\n".join(out)
 
@@ -779,7 +875,8 @@ def write_api(model, plan_, path=None):
     guards = all_overrides(model) & set(entries)
     path = path or os.path.join(model.inc, API)
     old = _read(path) if os.path.exists(path) else ""
-    text = render_api(model, entries, guards, types_block(old))
+    keep = parse_foreign(old, set(entries)) if old else None
+    text = render_api(model, entries, guards, types_block(old), keep)
     if old != text:
         _write(path, text)
     return old != text, len(entries), len(guards)
@@ -1242,6 +1339,53 @@ def add_implicit_overrides(model, changes, log=print):
 
 # ---------------------------------------------------------------------------------------------
 
+def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()):
+    """--write, or --fix when `fix`: update main_api.h (and clean the other headers). Returns the risky
+    view changes of a --fix run (a count, 0 otherwise). `before` is a snapshot() taken before the caller
+    edited the headers; without it the state on entry is the baseline. `ignore`: .c files whose view changes
+    do not count (the files the caller just gave new code, which see their own new declarations); callers such as tools/dupes.py use it after they
+    added declarations (T-7030)."""
+    model = model or Model(inc, src)
+    before = before if before is not None else (snapshot(model) if fix else None)
+    plan_ = plan(model)
+    changed, n, g = write_api(model, plan_)
+    log("%s: %d symbols" % (os.path.join(inc, API), n))
+    if fix:
+        model = Model(inc, src)
+        plan_ = plan(model)
+        for h in sorted(model.headers):
+            if h != API and h not in SDK_HEADERS:
+                fix_header(model, plan_, h, log=log)
+        model = Model(inc, src)
+        write_api(model, plan(model))
+        model = Model(inc, src)
+        add_implicit_overrides(model, view_changes(before, snapshot(model)), log=log)
+        model = Model(inc, src)
+    _c, n, g = write_api(model, plan(model))
+    log("%s: %d symbols, %d guarded" % (os.path.join(inc, API), n, g))
+    if fix:
+        after = snapshot(Model(inc, src))
+        old = {k: v for k, v in before.items() if k not in ignore}
+        new = {k: v for k, v in after.items() if k not in ignore}
+        _b, _c, risky = compare(old, new, out=_LogOut(log))
+        return risky
+    return 0
+
+
+class _LogOut:
+    """File-like adapter so compare() can write through a log function."""
+
+    def __init__(self, log):
+        self.log = log
+
+    def write(self, text):
+        if text.strip():
+            self.log(text.rstrip("\n"))
+
+    def flush(self):
+        pass
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--inc", default="include")
@@ -1291,27 +1435,8 @@ def main(argv=None):
         _b, _c, risky = compare(old, snapshot(model))
         return 1 if risky else 0
     if a.write or a.fix:
-        before = snapshot(model) if a.fix else None
-        plan_ = plan(model)
-        changed, n, g = write_api(model, plan_)
-        print("%s: %d symbols" % (os.path.join(a.inc, API), n))
-        if a.fix:
-            model = Model(a.inc, a.src)
-            plan_ = plan(model)
-            for h in sorted(model.headers):
-                if h != API and h not in SDK_HEADERS:
-                    fix_header(model, plan_, h)
-            model = Model(a.inc, a.src)
-            write_api(model, plan(model))
-            model = Model(a.inc, a.src)
-            add_implicit_overrides(model, view_changes(before, snapshot(model)))
-            model = Model(a.inc, a.src)
-        _c, n, g = write_api(model, plan(model))
-        print("%s: %d symbols, %d guarded" % (os.path.join(a.inc, API), n, g))
-        if a.fix:
-            _b, _c, risky = compare(before, snapshot(Model(a.inc, a.src)))
-            return 1 if risky else 0
-        return 0
+        risky = run_write(a.inc, a.src, fix=a.fix, model=model)
+        return 1 if risky else 0
     report(model)
     return 0
 

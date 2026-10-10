@@ -276,5 +276,9 @@ s32 func_80137BD8(void);
 void func_80137D00(void);
 void func_80137E48(void);
 void func_80137F54(void);
+s32 func_8013587C(void);
+void func_801359B4(void);
+void func_80135994(void);
+s32 func_80135744(void);
 
 #endif

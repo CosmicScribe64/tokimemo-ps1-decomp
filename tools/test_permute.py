@@ -4,8 +4,10 @@ Run: tools/docker.sh python3 tools/test_permute.py   (from the repo root)
 """
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest import mock
 
@@ -127,6 +129,27 @@ class Args(unittest.TestCase):
         self.assertEqual(a.unit, "TT")
         self.assertEqual(permute.parse_args(["setup", "func_1", "--unit", "TT"]).unit, "TT")
 
+    def test_options_work_anywhere(self):
+        """T-7030: --unit used to be accepted only after the subcommand."""
+        for argv in (["--unit", "TT", "func_1", "--time", "5"],
+                     ["--unit", "TT", "all", "func_1"],
+                     ["all", "--unit", "TT", "func_1"],
+                     ["all", "func_1", "--unit", "TT"],
+                     ["func_1", "--unit", "TT"],
+                     ["--time", "5", "--unit", "TT", "func_1"]):
+            a = permute.parse_args(argv)
+            self.assertEqual((a.cmd, a.func, a.unit), ("all", "func_1", "TT"), argv)
+        a = permute.parse_args(["--unit", "TT", "setup", "func_1", "--out", "x"])
+        self.assertEqual((a.cmd, a.unit, a.out), ("setup", "TT", "x"))
+        a = permute.parse_args(["--time", "7", "run", "build/permute/x", "-j", "2"])
+        self.assertEqual((a.cmd, a.time, a.j), ("run", 7, 2))
+
+    def test_defaults_and_a_subcommand_option_never_reset_a_top_option(self):
+        a = permute.parse_args(["func_1"])
+        self.assertEqual((a.unit, a.time, a.no_verify, a.allow_decl_edits), (None, 60, False, False))
+        a = permute.parse_args(["--unit", "TT", "all", "func_1", "--no-verify"])
+        self.assertEqual((a.unit, a.no_verify), ("TT", True))
+
     def test_run_takes_a_directory(self):
         self.assertEqual(permute.parse_args(["run", "build/permute/x", "--time", "3"]).directory, "build/permute/x")
 
@@ -149,8 +172,14 @@ class Text(unittest.TestCase):
         self.assertEqual(permute.strip_include_asm(src), "a;\nb;\n")
 
     def test_settings(self):
-        self.assertEqual(permute.settings_toml("func_1"),
+        self.assertEqual(permute.settings_toml("func_1", allow_decl_edits=True),
                          'func_name = "func_1"\ncompiler_type = "ido"\n')
+
+    def test_settings_forbid_declaration_passes_by_default(self):
+        t = permute.settings_toml("func_1")
+        self.assertIn("[weight_overrides]", t)
+        self.assertIn("perm_randomize_external_type = 0", t)
+        self.assertIn("perm_randomize_function_type = 0", t)
 
     def test_compile_script_uses_project_pipeline(self):
         s = permute.compile_script("/repo")
@@ -170,6 +199,178 @@ class Outputs(unittest.TestCase):
                 os.makedirs(os.path.join(d, n))
             self.assertEqual([(s, n) for s, n, _ in permute.list_outputs(d)],
                              [(0, 2), (5, 1), (20, 1)])
+
+
+class Running(unittest.TestCase):
+    """T-7030: --time is a wall-clock limit for the whole process group, with progress lines."""
+
+    def fake(self, body):
+        d = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, d)
+        path = os.path.join(d, "fake.py")
+        with open(path, "w") as f:
+            f.write(body)
+        return d, [sys.executable, path]
+
+    def test_a_permuter_that_ignores_sigint_and_leaves_a_worker_is_stopped_on_time(self):
+        pidfile = tempfile.mktemp()
+        d, cmd = self.fake(
+            "import os, signal, subprocess, sys, time\n"
+            "signal.signal(signal.SIGINT, signal.SIG_IGN)\n"
+            "child = subprocess.Popen([sys.executable, '-c', 'import signal,time\\n"
+            "signal.signal(signal.SIGINT, signal.SIG_IGN)\\ntime.sleep(600)'])\n"
+            "open(%r, 'w').write(str(child.pid))\n"
+            "time.sleep(600)\n" % pidfile)
+        lines = []
+        t0 = time.time()
+        outs = permute.run(d, 2, 1, progress=lines.append, interval=1, cmd=cmd)
+        took = time.time() - t0
+        self.assertLess(took, 25)
+        self.assertEqual(outs, [])
+        self.assertTrue(any("time limit reached" in l for l in lines), lines)
+        self.assertTrue(any("no output better than the base yet" in l for l in lines), lines)
+        with open(pidfile) as f:
+            pid = int(f.read())
+        time.sleep(0.3)
+        try:
+            with open("/proc/%d/stat" % pid) as f:
+                state = f.read().rsplit(")", 1)[1].split()[0]
+        except OSError:
+            state = "gone"
+        self.assertIn(state, ("Z", "gone"))      # the worker died with the group (a zombie is dead)
+
+    def test_progress_names_the_best_score_and_a_finished_permuter_returns_early(self):
+        d, cmd = self.fake(
+            "import os, sys, time\n"
+            "d = %r\n"
+            "os.makedirs(os.path.join(d, 'output-12-1'))\n"
+            "time.sleep(2.5)\n" % "{DIR}")
+        script = cmd[1]
+        with open(script) as f:
+            text = f.read().replace("{DIR}", d)
+        with open(script, "w") as f:
+            f.write(text)
+        lines = []
+        t0 = time.time()
+        outs = permute.run(d, 30, 1, progress=lines.append, interval=1, cmd=cmd)
+        self.assertLess(time.time() - t0, 10)
+        self.assertEqual([(o[0], o[1]) for o in outs], [(12, 1)])
+        self.assertTrue(any("best score 12" in l for l in lines), lines)
+
+
+class Verification(unittest.TestCase):
+    BASE = "extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n"
+
+    def test_function_range_and_outside_edits(self):
+        self.assertEqual(permute.function_range("a;\nvoid func_1(void) {\n  if (x) {\n  }\n}\nb;\n", "func_1")[0], 3)
+        same = "extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 3;\n}\n"
+        self.assertEqual(permute.outside_edits(self.BASE, same, "func_1"), [])
+        retyped = "extern u8 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n"
+        self.assertEqual(permute.outside_edits(self.BASE, retyped, "func_1"), [("s32", "u8")])
+        reformatted = "extern   s32\n D_1 ;\nvoid func_1(void)\n{ D_1 = 9 ; }\n"
+        self.assertEqual(permute.outside_edits(self.BASE, reformatted, "func_1"), [])
+
+    def test_replace_function_keeps_the_rest(self):
+        text = '#include "a.h"\n\nvoid g(void) {\n}\n\nvoid func_1(void) {\n    old();\n}\n\nvoid h(void) {\n}\n'
+        new = permute.replace_function(text, "func_1", "void func_1(void) {\n    new();\n}")
+        self.assertIn("new();", new)
+        self.assertNotIn("old();", new)
+        self.assertIn("void g(void) {\n}", new)
+        self.assertIn("void h(void) {\n}", new)
+        self.assertIsNone(permute.replace_function(text, "func_9", "x"))
+
+    def test_replace_function_replaces_the_non_matching_guard_as_a_whole(self):
+        text = ('a;\n#ifdef NON_MATCHING\nvoid func_1(void) {\n    old();\n}\n#else\n'
+                'INCLUDE_ASM("asm/x", func_1);\n#endif\nb;\n')
+        new = permute.replace_function(text, "func_1", "void func_1(void) {\n    new();\n}\n")
+        self.assertEqual(new, "a;\nvoid func_1(void) {\n    new();\n}\nb;\n")
+
+    def test_replace_include_asm_line(self):
+        text = 'a;\nINCLUDE_ASM("asm/x", func_1);\nb;\n'
+        self.assertEqual(permute.replace_function(text, "func_1", "void func_1(void) {\n}"),
+                         "a;\nvoid func_1(void) {\n}\nb;\n")
+
+    def make(self, cand):
+        root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, root)
+        src = touch(root, "src/ovl/TT/80132000.c", "void g(void) {\n}\n\nvoid func_1(void) {\n    old();\n}\n")
+        d = os.path.join(root, "build/permute/func_1")
+        touch(d, "base.c", self.BASE)
+        touch(d, "output-0-1/source.c", cand)
+        return root, src, os.path.join(d, "output-0-1")
+
+    class Runner:
+        def __init__(self, funcdiff_out, ninja_rc=0, seen=None):
+            self.funcdiff_out, self.ninja_rc, self.seen = funcdiff_out, ninja_rc, seen if seen is not None else []
+
+        def __call__(self, cmd, **kw):
+            with open(os.path.join(kw["cwd"], "src/ovl/TT/80132000.c")) as f:
+                self.seen.append((cmd[-1], f.read()))
+            if cmd[0] == "ninja":
+                return subprocess.CompletedProcess(cmd, self.ninja_rc, stdout="boom\n")
+            return subprocess.CompletedProcess(cmd, 0 if "MATCH" in self.funcdiff_out and "DIFF" not in self.funcdiff_out else 1,
+                                               stdout=self.funcdiff_out)
+
+    def test_a_candidate_that_builds_and_matches_is_verified_and_the_file_is_restored(self):
+        root, src, cand = self.make("extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")
+        with open(src) as f:
+            before = f.read()
+        seen = []
+        ok, report = permute.verify_candidate(root, {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"},
+                                              cand, self.Runner("TT:func_1: MATCH (relocations resolved)\n", seen=seen))
+        self.assertTrue(ok, report)
+        self.assertIn("D_1 = 2;", seen[0][1])          # the build saw the candidate
+        self.assertNotIn("old();", seen[0][1])
+        with open(src) as f:
+            self.assertEqual(f.read(), before)    # and the file is back
+        self.assertEqual(seen[0][0], "TT:func_1")
+
+    def test_funcdiff_difference_is_not_a_match_whatever_the_permuter_scored(self):
+        root, src, cand = self.make("extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")
+        with open(src) as f:
+            before = f.read()
+        ok, report = permute.verify_candidate(
+            root, {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"}, cand,
+            self.Runner("TT:func_1: DIFF (- expected, + built)\n  -lw v0\n  +lw v1\n"))
+        self.assertFalse(ok)
+        self.assertIn("DIFF", " ".join(report))
+        with open(src) as f:
+            self.assertEqual(f.read(), before)
+
+    def test_unit_sha1_failure_is_not_a_match(self):
+        root, src, cand = self.make("extern s32 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")
+        ok, report = permute.verify_candidate(
+            root, {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"}, cand,
+            self.Runner("TT:func_1: MATCH\n", ninja_rc=1))
+        self.assertFalse(ok)
+        self.assertIn("FAILED", " ".join(report))
+
+    def test_edited_extern_type_is_reported_as_the_cause(self):
+        root, src, cand = self.make("extern u8 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")
+        ok, report = permute.verify_candidate(
+            root, {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"}, cand,
+            self.Runner("TT:func_1: MATCH\n"))
+        self.assertFalse(ok)
+        self.assertIn("declarations outside the function were changed", report[0])
+        self.assertIn("'s32' -> 'u8'", report[0])
+
+    def test_one_line_statement_groups_are_reported_because_the_layout_matters(self):
+        """main func_8004111C: the permuter's `do { a; b; c; d; } while (0);` line builds the original's
+        store order; the same statements on lines of their own build the other one."""
+        body = "void f(void) {\n  RECT rect;\n do { rect.x = 0; rect.y = 0; } while (0);\n  g(&rect);\n}\n"
+        self.assertEqual(len(permute.layout_notes(body)), 1)
+        self.assertEqual(permute.layout_notes("void f(void) {\n  int i;\n  for (i = 0; i < 3; i++) {\n    g(i);\n  }\n}\n"), [])
+        root, src, cand = self.make("extern s32 D_1;\nvoid func_1(void) {\n do { D_1 = 2; D_1 = 3; } while (0);\n}\n")
+        ok, report = permute.verify_candidate(
+            root, {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"}, cand,
+            self.Runner("TT:func_1: MATCH\n"))
+        self.assertTrue(ok, report)
+        self.assertTrue(any(l.startswith("note: line") and "holds several statements" in l for l in report), report)
+
+    def test_scratch_source_cannot_be_verified(self):
+        ok, report = permute.verify_candidate("/", {"func": "f", "src": None}, "/x", None)
+        self.assertFalse(ok)
+        self.assertIn("scratch", report[0])
 
 
 if __name__ == "__main__":

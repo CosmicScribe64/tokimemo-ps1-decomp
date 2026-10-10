@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/GEKO.h"
+
+extern u32 D_80122CD0;
 
 void func_80140A00(void) {
     bg_read_sub2(0x4699);
@@ -63,7 +66,22 @@ void func_80140BA0(void) {
     D_80147344 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80140C50);
+void func_80140C50(void) {
+    switch (D_80122CD0) {
+    case 1:
+        func_80140CCC();
+        return;
+    case 2:
+        func_80140D08();
+        return;
+    case 4:
+        func_80140D44();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80140CCC(void) {
     if (D_800E6280.unk_1109 == 0) {

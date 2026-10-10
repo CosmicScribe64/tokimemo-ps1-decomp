@@ -181,7 +181,37 @@ s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052E60);
+s32 func_80052E60(u8 *arg0, s16 *arg1) {
+    s32 i;
+    s32 sum;
+    u8 *p;
+
+    if (*arg0 < 0x55U) {
+        return 0;
+    }
+    if (D_800E6280.unk_0F4.b[1] & 0xF) {
+        return 0;
+    }
+    i = 1;
+    p = D_800B4341;
+    do {
+        if ((u32) (&D_800E6280.unk_0FC)[i].unk_02 < p[-1]) {
+            return 0;
+        }
+        i++;
+        p++;
+    } while (i < 8);
+    sum = 0;
+    /* FAKE: loop body on the for line; IDO then schedules it as the original (line-based scheduling). T-7020 */
+    for (i = 1; i < 36; i++) sum += D_800E6280.unk_1BC[0].unk_14[i];
+    if (sum < 8) {
+        return 0;
+    }
+    if (D_800E6280.unk_1BC[0].unk_0A >= 0x33) {
+        return 0;
+    }
+    *arg1 = 0x311;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052F68);
 
@@ -189,4 +219,13 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80053418);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8005352C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80053564);
+s32 func_80053564(s32 arg0) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        if (arg0 == (u32)D_800E6280.unk_1BC[i].unk_0C.b[2] >> 4) {
+            return i;
+        }
+    }
+    return -1;
+}

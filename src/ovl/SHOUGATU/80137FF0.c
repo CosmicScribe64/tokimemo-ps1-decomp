@@ -1,9 +1,38 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
+typedef struct {
+    void (*f[24])();
+} FnTbl24; /* size 0x60 */
+extern FnTbl24 D_801450C0;
+
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+extern FnTbl20 D_80144F14;
+
+typedef struct {
+    void (*f[30])();
+} FnTbl30; /* size 0x78 */
+extern FnTbl30 D_80145048;
+
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80137FF0);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_8013808C);
+void func_8013808C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80144F14;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+    if (D_80144E08 == 1) {
+        if (D_80144E0C == 8) {
+            if (D_800E6280.unk_1104.w++ == 0) {
+                func_80044750(0x500);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138158);
 
@@ -11,7 +40,14 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_801381B8);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138240);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138354);
+void func_80138354(void) {
+    func_80137AB4();
+    if (D_800E6280.unk_1104.w++ == 0) {
+        if (D_80144E0C == 3) {
+            func_80044750(0x500);
+        }
+    }
+}
 
 void func_801383AC(void) {
     func_80044750(0x500);
@@ -30,9 +66,23 @@ void func_801383FC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_8013843C);
+void func_8013843C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl30 tbl;
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_801384B0);
+    tbl = D_80145048;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
+
+void func_801384B0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl24 tbl;
+
+    tbl = D_801450C0;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138524);
 

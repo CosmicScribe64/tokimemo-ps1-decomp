@@ -336,7 +336,19 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_init);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_main);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_two_select);
+void normal_date_two_select(void) {
+    switch (D_800E6280.unk_1104.u) {
+    case 0:
+        normal_date_two_select_init();
+        return;
+    case 1:
+        normal_date_two_select_main();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_two_select_init);
 

@@ -372,5 +372,83 @@ func_80100100:
         self.assertEqual((rc, out.strip()), (0, "LoadImage: MATCH"))
 
 
+class ExpectedObject(unittest.TestCase):
+    """T-7030: the original-side object is built from the original .s files, never copied by hand."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.old = os.getcwd()
+        os.chdir(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+        self.addCleanup(os.chdir, self.old)
+        import srcscan
+        self.m = "asm/ovl/AAA/matchings/AAA/80132000"
+        self.n = "asm/ovl/AAA/nonmatchings/AAA/80132000"
+        os.makedirs(self.m)
+        os.makedirs(self.n)
+        self.asm("%s/func_80132040.s" % self.n, "80132040")
+        self.asm("%s/early_name.s" % self.m, "80132000")          # renamed: ordered by its address
+        self.c = srcscan.CFile("AAA", "AAA/80132000", __import__("pathlib").Path("src/ovl/AAA/80132000.c"),
+                               __import__("pathlib").Path(self.n), __import__("pathlib").Path(self.m),
+                               "build/ovl/AAA/src/ovl/AAA/80132000.o", False, 0x80132000)
+        self.compiled = []
+
+    def asm(self, path, vram, body="jr $ra"):
+        with open(path, "w") as f:
+            f.write("nonmatching x, 0x8\n\nglabel x\n    /* 0 %s 03E00008 */  %s\n" % (vram, body))
+
+    def compile(self, stub, obj):
+        self.compiled.append(obj)
+        with open(obj, "w") as f:
+            f.write("obj")
+        return None
+
+    def test_stub_lists_every_function_in_address_order_from_both_folders(self):
+        funcs = funcdiff.asm_functions(self.c)
+        self.assertEqual([f[2] for f in funcs], ["early_name", "func_80132040"])
+        text = funcdiff.expected_stub(funcs)
+        self.assertIn('INCLUDE_ASM("%s", early_name);' % self.m, text)
+        self.assertLess(text.index("early_name"), text.index("func_80132040"))
+
+    def test_created_when_missing_and_reused_while_the_original_is_unchanged(self):
+        obj, problem = funcdiff.expected_object(self.c, compile_fn=self.compile)
+        self.assertEqual((obj, problem), ("expected/build/ovl/AAA/src/ovl/AAA/80132000.o", None))
+        funcdiff.expected_object(self.c, compile_fn=self.compile)
+        self.assertEqual(len(self.compiled), 1)
+
+    def test_refreshed_when_the_original_asm_changes_or_is_forced(self):
+        funcdiff.expected_object(self.c, compile_fn=self.compile)
+        self.asm("%s/func_80132040.s" % self.n, "80132040", "nop")
+        funcdiff.expected_object(self.c, compile_fn=self.compile)
+        self.assertEqual(len(self.compiled), 2)
+        funcdiff.expected_object(self.c, refresh=True, compile_fn=self.compile)
+        self.assertEqual(len(self.compiled), 3)
+
+    def test_editing_the_c_source_never_changes_the_reference(self):
+        os.makedirs("src/ovl/AAA", exist_ok=True)
+        with open("src/ovl/AAA/80132000.c", "w") as f:
+            f.write("void func_80132040(void) {}\n")
+        funcdiff.expected_object(self.c, compile_fn=self.compile)
+        with open("src/ovl/AAA/80132000.c", "w") as f:
+            f.write("void func_80132040(void) { int x; }\n")
+        funcdiff.expected_object(self.c, compile_fn=self.compile)
+        self.assertEqual(len(self.compiled), 1)
+
+    def test_a_failed_compile_is_a_problem_and_leaves_no_current_object(self):
+        obj, problem = funcdiff.expected_object(self.c, compile_fn=lambda s, o: "boom")
+        self.assertIsNone(obj)
+        self.assertEqual(problem, "boom")
+        obj, problem = funcdiff.expected_object(self.c, compile_fn=self.compile)
+        self.assertIsNone(problem)
+        self.assertEqual(len(self.compiled), 1)
+
+    def test_no_asm_is_an_error_not_an_empty_reference(self):
+        import shutil as sh
+        sh.rmtree("asm")
+        obj, problem = funcdiff.expected_object(self.c, compile_fn=self.compile)
+        self.assertIsNone(obj)
+        self.assertIn("asm/ is missing", problem)
+
+
 if __name__ == "__main__":
     unittest.main()

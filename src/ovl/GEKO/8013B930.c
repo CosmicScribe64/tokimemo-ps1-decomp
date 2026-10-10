@@ -1,5 +1,18 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32 (main_api.h: s32), T-6030 */
 #include "common.h"
 #include "ovl/GEKO.h"
+
+typedef struct {
+    void (*f[50])();
+} FnTbl50; /* size 0xC8 */
+extern FnTbl50 D_80146920;
+
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+extern FnTbl39 D_80146884;
+
+extern u32 D_80122CD0;
 
 void func_8013B930(void) {
     bg_read_sub2(0x46A3);
@@ -21,7 +34,22 @@ void func_8013B980(void) {
     D_80146798 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013B9F0);
+void func_8013B9F0(void) {
+    switch (D_80122CD0) {
+    case 1:
+        func_8013BA6C();
+        return;
+    case 2:
+        func_8013BAA8();
+        return;
+    case 3:
+        func_8013BAE4();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_8013BA6C(void) {
     if (D_800E6280.unk_1109 == 0) {
@@ -107,7 +135,14 @@ void func_8013BCBC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BD04);
+void func_8013BD04(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl39 tbl;
+
+    tbl = D_80146884;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_8013BD78(void) {
     func_80046290(0, 0, 0xC);
@@ -128,7 +163,14 @@ void func_8013BE20(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BE58);
+void func_8013BE58(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl50 tbl;
+
+    tbl = D_80146920;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 s32 func_8013BEE0(void) {
     func_80138AF8();

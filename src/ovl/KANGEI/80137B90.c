@@ -1,6 +1,16 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
+typedef struct {
+    u8 s[0xCC3];
+} DateTxt; /* size 0xCC3 */
+extern DateTxt D_8013A570;
+
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+extern FnTbl40 D_8013A4D0;
+
 void func_80137B90(void) {
     D_8013A170 = 0x801B00DC;
     D_8013A174 = 0x801B02AC;
@@ -130,7 +140,14 @@ void func_8013836C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_801383D0);
+void func_801383D0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
+
+    tbl = D_8013A4D0;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_8013844C(void) {
     D_80139AC0 = 0;
@@ -339,4 +356,10 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138F88);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_801392D4);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80139540);
+void func_80139540(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    DateTxt tbl;
+
+    tbl = D_8013A570;
+    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8013A2AC * 0x63 + D_80122CDC * 0x21]);
+}

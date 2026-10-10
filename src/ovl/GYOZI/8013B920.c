@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
+typedef struct {
+    void (*f[20])();
+} FnTbl20; /* size 0x50 */
+extern FnTbl20 D_80147908;
+
 void func_8013B920(void) {
     u8 sel = D_801474B8; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
@@ -31,7 +36,14 @@ void func_8013B980(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013B920", func_8013B9FC);
+void func_8013B9FC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80147908;
+    idx = D_800F647A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013B920", func_8013BA84);
 

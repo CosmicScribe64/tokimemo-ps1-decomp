@@ -632,3 +632,31 @@ The original promotes unsigned char/short to unsigned int (on `lbu`/`lhu` values
 
 ## [2026-10-10] ticket | T-7000 (In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7000-shared-constants-lui-at-parameter-copies]]; one finding (the `tools/cc.py` docstring did not name `-cckr`) fixed. Branch r4-consts, not merged; the `tools/cc.py` flag change is for the orchestrator's review.
+
+## [2026-10-10] ticket | T-7010 Game-state struct audit (created -> In Progress)
+[[tickets/T-7010-game-state-view-audit]] created and claimed (worktree r4-gsaudit): audit how the original reaches the `GameState` fields, choose the source model, implement it, retry the functions wave 4 attributed to "GameState field vs separate symbols".
+
+## [2026-10-10] decision | T-7010 GameState is one object in every unit
+`tools/aggregate_audit.py` classified all accesses of the original to 0x800E6280..0x800E7D10: 13625 direct, 201 indexed, 2719 base-relative (129 of 277 objects, 21 of 24 units); 0 of 407 read-modify-write pairs inside the block hoisted (27 of 981 outside). IDO compiles a constant-offset member like a scalar except for alias rules, and 13 of 15 functions wave 4 blamed on "separate symbols" give the same words with the old scalars. Model: one struct reached through `D_800E6280`, no per-unit view. `migrate_globals.py --check` now rejects a `keep` line without a hoisted pair in the original object; the last one (SHOUGATU `D_800E66E8`) is gone. [[game-state]], [[data-types]].
+
+## [2026-10-10] build | T-7010 matches
+Bit-field stores (`lui rA; lbu rB`, rB != rA) and one line-scheduling case: DATE `func_8015522C`, `func_8015745C`, SHOUGATU `func_8014147C`, GEKO `func_8013E1A0`, VALEN `func_80133B6C`, ETC `func_80147D74`, KANGEI `func_80135438`, EVENT `func_8010242C`, GYOZI `func_801399C0`; progress 3721 -> 3730 of 6958. Clean build 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Notes in [[matching-notes]] ("Game-state views audit (T-7010)").
+
+## [2026-10-10] ticket | T-7010 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7010-game-state-view-audit]]; no open findings. Branch r4-gsaudit, not merged.
+## [2026-10-10] ticket | T-7020 created (In Progress)
+[[tickets/T-7020-loop-unrolling-and-scheduling]]: loop unrolling the original does not do, and load/delay-slot scheduling differences (wave-4 blockers). Worktree r4-loops.
+
+## [2026-10-10] build | T-7020 loop unrolling and scheduling
+Verdict: both wave-4 blockers are source forms; no flag or pass. 28 functions matched (3721 -> 3749). Rules in [[matching-notes]], idioms in [[decompile-workflow]], [[toolchain]] updated. Ticket [[tickets/T-7020-loop-unrolling-and-scheduling]] stays In Progress (helper results pending, review not done).
+
+## [2026-10-10] ticket | T-7020 (In Progress -> In Review -> Done)
+25 helper matches applied (total 53, 3721 -> 3774 of 6958); one-line loops marked FAKE. Clean rebuild 27/27 OK, headers OK, globals OK; sync_protos --check-branch OK. Inline review in [[tickets/T-7020-loop-unrolling-and-scheduling]], no findings open.
+## [2026-10-10] ticket | T-7030 Tooling wave-4 bug fixes (created -> In Progress)
+[[tickets/T-7030-tooling-wave-4-bug-fixes]] created and claimed (worktree r4-fixes).
+
+## [2026-10-10] build | T-7030 tooling fixes (wave 4)
+Fixed in worktree r4-fixes: `tools/sync_protos.py` keeps comments and other lines it does not own; `tools/dupes.py` and `tools/neardupes.py` copy game-state fields, override views, file-local typedefs, address literals and prototypes (163 and 25 copies applied, 188 functions, progress 3721 -> 3909 of 6958; before 0 of 5 and 0 of 15); `tools/funcdiff.py` builds `expected/` from the original asm; `tools/permute.py` enforces `--time`, verifies score-0 candidates with ninja and funcdiff, and reports the cause of the discrepancy (several statements on one source line); `tools/m2c.py` takes callee argument counts from the callee's asm (`tools/m2c_args.py`) and repairs the post-increment order. Findings in [[matching-notes]] ("Tooling fixes, wave 4 (T-7030)"), usage in [[decompile-workflow]] and [[build-system]].
+
+## [2026-10-10] ticket | T-7030 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7030-tooling-wave-4-bug-fixes]]; no open findings. Branch r4-fixes, not merged.

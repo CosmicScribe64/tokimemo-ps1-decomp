@@ -3,21 +3,27 @@
 
 Compares `objdump -dr` of the built object of the source file that holds each function
 (build/src/main/<addr>.o or an overlay object; the file is the one whose INCLUDE_ASM or C definition
-names the function, tools/funcloc.py, T-5030) with the same object under
-expected/ (a copy of the all-INCLUDE_ASM build; see wiki/decompile-workflow.md) and
-prints MATCH or a short diff for each named function. Instruction
+names the function, tools/funcloc.py, T-5030) with the original object and
+prints MATCH or a short diff for each named function.
+
+The original object is made here (T-7030), never copied by hand: expected/<built path> is the
+all-INCLUDE_ASM object of the same C file, built from the original splat disassembly
+(asm/**/{matchings,nonmatchings}/<file>/*.s, whatever state the C is in) by tools/cc.py, the same
+pipeline as ninja. It is rebuilt whenever one of those .s files, or the list of them, changed
+(a sha1 of their contents is kept in expected/<path>.key), so an edited or stale reference cannot
+occur; `--refresh-expected` forces a rebuild, and `--expected OBJ` names an object yourself. Instruction
 addresses and absolute branch targets are stripped, so only instructions,
 relocations and symbol-relative targets are compared.
 
-Usage (in Docker): python3 tools/funcdiff.py [--unit UNIT|PATH] [--built OBJ] [--expected OBJ] [--resolve] [--no-build] [UNIT:]func_80042400 [func_...]
+Usage (in Docker): python3 tools/funcdiff.py [--unit UNIT|PATH] [--built OBJ] [--expected OBJ] [--refresh-expected] [--resolve] [--no-build] [UNIT:]func_80042400 [func_...]
 The function is looked up by definition, not by mention: the C file with its INCLUDE_ASM or its
 body. Overlays all load at 0x80132000, so a name such as func_8013xxxx exists in several of them;
 `--unit` (`main`, an overlay name, or a C/asm path such as src/ovl/TT/80147380.c; also a `UNIT:`
 prefix on the name) picks one. A name that is held by several files and not scoped is refused with
 the list of candidates.
 --built compares another object (e.g. a scratch compile or an overlay object)
-instead of the per-file object; --expected names the original-side object (default
-expected/<same path as built>, e.g. a copy of build/ovl/<NAME>/<NAME>.o).
+instead of the per-file object (the original side is then taken from the C file that holds the
+function); --expected names the original-side object yourself.
 --resolve compares the instruction words with the relocations applied instead of the text: a
 `lui/lh %hi/%lo(D_801D63C8)` against the original's symbol and `*(s16 *)0x801D63C8` in C give the
 same words, so the DIFF that only comes from that idiom (T-3300) disappears. Symbols that carry
@@ -33,6 +39,7 @@ Exit code 1 if any function differs or cannot be compared.
 """
 import argparse
 import difflib
+import hashlib
 import os
 import re
 import shutil
@@ -330,6 +337,79 @@ def check_fresh(obj, src, build=True, deps=()):
     return problem
 
 
+def asm_functions(c):
+    """[(vram, folder, name)] of every function of the C file `c` in the original disassembly
+    (matched or not), in address order: the .s files of its matchings and nonmatchings folders. The
+    address is the one of the first instruction (names such as bg_read_sub2 carry none)."""
+    out = []
+    for folder in (c.matchings, c.nonmatchings):
+        if not os.path.isdir(folder):
+            continue
+        for fn in sorted(os.listdir(folder)):
+            if not fn.endswith(".s"):
+                continue
+            with open(os.path.join(folder, fn), errors="replace") as fh:
+                m = re.search(r"^\s*/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{8}\s*\*/", fh.read(), re.M)
+            out.append((int(m.group(1), 16) if m else 0xFFFFFFFF, str(folder).replace(os.sep, "/"), fn[:-2]))
+    return sorted(out)
+
+
+def expected_stub(funcs):
+    """C text of the all-INCLUDE_ASM version of a file: one INCLUDE_ASM per original function."""
+    lines = ['#include "common.h"', ""]
+    lines += ['INCLUDE_ASM("%s", %s);' % (folder, name) for _v, folder, name in funcs]
+    return "\n".join(lines) + "\n"
+
+
+def expected_key(stub, funcs):
+    """sha1 of the stub and of the .s contents it includes: changes when the original changes."""
+    h = hashlib.sha1(stub.encode())
+    for _v, folder, name in funcs:
+        with open(os.path.join(folder, name + ".s"), "rb") as fh:
+            h.update(fh.read())
+    return h.hexdigest()
+
+
+def compile_expected(stub_path, obj):
+    """Compile the stub exactly like the build does (tools/cc.py, ido 5.3)."""
+    r = subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "cc.py"),
+                        stub_path, obj, "ido", "5.3"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    if r.returncode != 0:
+        return "compiling the all-INCLUDE_ASM object %s failed:\n%s" % (obj, "\n".join(r.stdout.strip().splitlines()[-15:]))
+    return None
+
+
+def expected_object(c, refresh=False, compile_fn=compile_expected):
+    """(path, problem): the original-side object of the srcscan.CFile `c` under expected/, created or
+    refreshed from the original .s files when it is missing, forced, or its key changed."""
+    funcs = asm_functions(c)
+    if not funcs:
+        return None, "no original disassembly found for %s (asm/ is missing: run configure.py and ninja first)" % c.src
+    obj = os.path.join("expected", c.obj)
+    stub = expected_stub(funcs)
+    key = expected_key(stub, funcs)
+    try:
+        with open(obj + ".key") as fh:
+            have = fh.read().strip()
+    except OSError:
+        have = None
+    if not refresh and have == key and os.path.exists(obj):
+        return obj, None
+    os.makedirs(os.path.dirname(obj), exist_ok=True)
+    stub_path = obj[:-2] + ".c" if obj.endswith(".o") else obj + ".c"
+    with open(stub_path, "w") as fh:
+        fh.write(stub)
+    for stale in (obj, obj + ".key"):
+        if os.path.exists(stale):
+            os.remove(stale)
+    problem = compile_fn(stub_path, obj)
+    if problem:
+        return None, problem
+    with open(obj + ".key", "w") as fh:
+        fh.write(key + "\n")
+    return obj, None
+
+
 def keys(rows):
     return [r[0] if isinstance(r, tuple) else r for r in rows]
 
@@ -351,6 +431,8 @@ def main(argv):
     ap.add_argument("names", nargs="+")
     ap.add_argument("--built")
     ap.add_argument("--expected")
+    ap.add_argument("--refresh-expected", action="store_true",
+                    help="rebuild the original-side object (expected/...) even if it looks current")
     ap.add_argument("--unit", help="unit (main or an overlay name) or C/asm path that holds the function")
     ap.add_argument("--resolve", action="store_true",
                     help="compare instruction words with the relocations applied")
@@ -363,6 +445,7 @@ def main(argv):
         sys.exit("funcdiff.py: run it from the repository root")
     get = resolved_functions if args.resolve else functions
     bad = 0
+    refreshed = set()
     for n in args.names:
         b, c = args.built, None
         try:
@@ -382,7 +465,21 @@ def main(argv):
                 print("%s: ERROR %s" % (n, problem))
                 bad += 1
                 continue
-        e = args.expected or "expected/" + b
+        e = args.expected
+        if e is None:
+            if c is None:       # a scratch object: the original side is that of the file holding the function
+                try:
+                    c = locate(name, scope)
+                except funcloc.LocateError as err:
+                    print("%s: ERROR %s" % (n, err))
+                    bad += 1
+                    continue
+            e, problem = expected_object(c, args.refresh_expected and c.obj not in refreshed)
+            refreshed.add(c.obj)
+            if problem:
+                print("%s: ERROR %s" % (n, problem))
+                bad += 1
+                continue
         got, want = get(b, [name])[name], get(e, [name])[name]
         if got is None or want is None:
             print("%s: missing in %s" % (n, "built" if got is None else "expected"))

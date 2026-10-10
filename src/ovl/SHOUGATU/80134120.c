@@ -1,7 +1,27 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_80134120);
+typedef struct {
+    void (*f[25])();
+} FnTbl25; /* size 0x64 */
+extern FnTbl25 D_80143D24;
+
+void func_80134120(void) {
+    void (**p)();
+    FnTbl25 tbl;
+
+    tbl = D_80143D24;
+    if (D_80143B20 != 0) {
+        p = &tbl.f[D_800E6280.unk_110A];
+        if (*p == normal_date_girl_in || tbl.f[D_800E6280.unk_110A] == normal_date_girl_out) {
+            tbl.f[D_800E6280.unk_110A] = func_8004284C;
+            /* FAKE: empty double test (decomp-permuter, score 0); it only shifts the register choice of base, index and pointer to the original's; real source unknown. T-4090 */
+            if (!D_800E6280.unk_110A && !D_800E6280.unk_110A) {
+            }
+        }
+    }
+    tbl.f[D_800E6280.unk_110A](0x80);
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_801341E4);
 

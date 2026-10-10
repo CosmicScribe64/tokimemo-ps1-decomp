@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* switched as u32: selector in $v1 (main_api.h: s32) */
 #include "common.h"
 #include "ovl/DATE.h"
+
+extern u32 D_80122CD0;
 
 typedef struct {
     void (*f[40])();
@@ -59,7 +62,25 @@ void func_80150200(void) {
     D_8015EAE4 = (u8 *)0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_801502B0);
+void func_801502B0(void) {
+    switch (D_80122CD0) {
+    case 2:
+        func_80150BCC();
+        return;
+    case 3:
+        func_80150ED4();
+        return;
+    case 4:
+        func_801511B4();
+        return;
+    case 5:
+        func_80151360();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80150344(void) {
     D_8015E208 = D_8015DE8C;

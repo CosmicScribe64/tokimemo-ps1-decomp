@@ -138,6 +138,27 @@ class LiteralTests(unittest.TestCase):
         self.assertIsNone(text)
         self.assertIn('maps to different', why)
 
+    def test_two_loaded_constants_that_become_one_are_refused(self):
+        """EVENT func_8011A2C4: sources 2 and 3 became 1 and 1; IDO shares `li v0,1`, the original has two `li at,1`."""
+        s = [neardupes.Const(neardupes.OP_ADDIU, 2, 16, [0], True), neardupes.Const(neardupes.OP_ADDIU, 3, 16, [1], True)]
+        t = [neardupes.Const(neardupes.OP_ADDIU, 1, 16, [0], True), neardupes.Const(neardupes.OP_ADDIU, 1, 16, [1], True)]
+        text, why = neardupes.substitute('if (a == 2 && b == 3) {}', s, t)
+        self.assertIsNone(text)
+        self.assertIn('IDO shares one register', why)
+        self.assertIn('0x2, 0x3', why)
+
+    def test_merging_offsets_or_zero_is_fine(self):
+        s = [neardupes.Const(neardupes.OP_ADDIU, 2, 16, [0], False), neardupes.Const(neardupes.OP_ADDIU, 3, 16, [1], False)]
+        t = [neardupes.Const(neardupes.OP_ADDIU, 1, 16, [0], False), neardupes.Const(neardupes.OP_ADDIU, 1, 16, [1], False)]
+        self.assertEqual(neardupes.substitute('x = a + 2; y = b + 3;', s, t)[0], 'x = a + 1; y = b + 1;')
+        s = [neardupes.Const(neardupes.OP_ADDIU, 2, 16, [0], True), neardupes.Const(neardupes.OP_ADDIU, 3, 16, [1], True)]
+        t = [neardupes.Const(neardupes.OP_ADDIU, 0, 16, [0], True), neardupes.Const(neardupes.OP_ADDIU, 0, 16, [1], True)]
+        self.assertEqual(neardupes.substitute('f(2); g(3);', s, t)[0], 'f(0); g(0);')
+
+    def test_consts_of_marks_literal_loads(self):
+        words = [(0, w(9, 0, 4, 5)), (1, w(9, 4, 5, 5)), (2, w(13, 0, 6, 7))]
+        self.assertEqual([c.loaded for c in neardupes.consts_of(words)], [True, False, True])
+
     def test_same_value_same_target_replaces_all(self):
         self.assertEqual(self.sub('f(5); g(5);', 5, 6, count=2)[0], 'f(6); g(6);')
 
@@ -162,6 +183,25 @@ class PlanTests(unittest.TestCase):
             self.assertIn('v = 0x80110040;', t)
             self.assertEqual(plans[0]['ndiff'], 3)
             self.assertEqual(plans[0]['bytes'], 0x28)
+        finally:
+            r.close()
+
+    def test_twin_with_new_externs_declares_them_and_applies(self):
+        """T-7030: ENDING's eight init-function twins used new externs; main-exe ones go to main_api.h
+        (sync_protos moves them), overlay ones to the overlay header, and the constants are substituted."""
+        src_asm = func_asm('fsrc', 'func_80041234', 5, 0x30, 0x8010, 0)
+        tgt_asm = func_asm('ftgt', 'func_80041300', 9, 0x2C, 0x8011, 0x40)
+        r = make_repo(src_asm, tgt_asm, SRC_C.replace('func_80140000', 'func_80041234'))
+        try:
+            r.write('include/ovl/AAA.h', '#ifndef A\n#define A\n#include "common.h"\n#include "game.h"\n'
+                    'void func_80041234(s32, s32);\n#endif\n')
+            r.write('include/main_api.h', '#ifndef M\n#define M\nvoid func_80041234(s32, s32);\n#endif\n')
+            r.write('config/overlays.txt', 'AAA 0x80132000 0x100\nBBB 0x80132000 0x100\n')
+            funcs, (plans, skipped, stats, nosrc) = plan(r)
+            self.assertEqual(len(plans), 1, skipped)
+            self.assertIn(('include/main_api.h', 'void func_80041300(s32, s32);'), plans[0]['decls'])
+            self.assertIn(('include/ovl/BBB.h', 'void ftgt(void);'), plans[0]['decls'])
+            self.assertIn('func_80041300(9, 0x2C);', plans[0]['text'])
         finally:
             r.close()
 
