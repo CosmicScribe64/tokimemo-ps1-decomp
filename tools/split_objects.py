@@ -27,7 +27,11 @@ selected unit the script
      defined in C that C code of another object calls and that no header declares;
   6. rewrites the yaml: one `c` subsegment per object, a `.rodata` island per island object,
      `rodata` asm pieces for the gaps, and (overlays) a `data` subsegment `<NAME>_data` from the
-     end of the rodata to the end of the file.
+     end of the rodata to the end of the file;
+  7. writes config/labels/<UNIT>.txt with the INCLUDE_RODATA symbols and adds it to the yaml's
+     symbol_addrs_path: splat names a rodata symbol only when something in the same subsegment
+     points at it, so strings reached through .data pointer tables need the list once the rodata
+     is cut into islands.
 Running it again on its own output changes nothing; on a changed tree it re-cuts from the
 current files, so it can be repeated after new C has been written. --dry-run prints the plan.
 Tests: tools/test_objects.py.
@@ -310,6 +314,7 @@ class Target:
             self.asm_dir = "asm/ovl/%s/nonmatchings/%s" % (unit, self.name)
             self.rodata_dir = "asm/ovl/%s/data/%s.rodata" % (unit, self.name)
         self.preamble = []        # include/pp/decl pieces in front
+        self.preambles = []       # top-of-file pieces of the old files its functions come from
         self.body = []            # [(piece, owner old file)] in order
         self.rodata = {}          # function name or None (end): [symbol]
         self.island = obj.island == "yes"
@@ -363,41 +368,36 @@ def plan_unit(root, unit, objs, old_files, funcs, items):
         pieces = [p for p in pieces if p.kind != "rodata"]
         first = next(k for k, p in enumerate(pieces) if p.kind in ("asm", "func", "cond"))
         pre, rest = pieces[:first], pieces[first:]
-        pending, groups = [], []      # groups: (function piece, [pieces in front])
+        pending, groups = [], []      # groups: [function piece, pieces in front, pieces after]
         for p in rest:
             if p.kind in ("asm", "func", "cond") and p.func:
-                groups.append((p, pending))
+                groups.append([p, pending, []])
                 pending = []
             else:
                 pending.append(p)
-        if pending:                   # tail after the last function
-            groups[-1][1].append(("after", pending))
+        groups[-1][2] = pending       # comments/declarations after the last function
         file_targets = []
-        for p, front in groups:
+        for p, front, after in groups:
             addr = address_of(p.func, by_name, syms)
             if addr is None:
                 raise SplitError("%s: no address for %s (static helper without splat symbol?)"
                                  % (cf.src, p.func))
             t = target_of(addr)
-            after = [x for x in front if isinstance(x, tuple)]
-            front = [x for x in front if not isinstance(x, tuple)]
             for x in front:
                 if x.kind == "decl":
                     shared_decls.append((x, t))
-            t.body += front + [p]
-            for _tag, ps in after:
-                t.body += ps
+            t.body += front + [p] + after
             if t not in file_targets:
                 file_targets.append(t)
         for t in file_targets:
-            t.preamble_src = getattr(t, "preamble_src", []) + [pre]
+            t.preambles.append(pre)
     # preambles: includes and pp lines always, declarations where used
     for t in targets:
         if not t.body:
             raise SplitError("%s: object %08X has no functions in the sources" % (unit, t.addr))
         body_text = "".join(p.text for p in t.body)
         seen = set()
-        for pre in getattr(t, "preamble_src", []):
+        for pre in t.preambles:
             for p in pre:
                 key = p.code.strip()
                 if key in seen:
@@ -536,12 +536,12 @@ def overlay_subsegments(unit, base, objs, ro_lo, ro_end):
     """Subsegment lines of an overlay's code segment."""
     lines = ["      - [0x%X, c, %s/%08X]\n" % (o.text_start - base, unit, o.text_start) for o in objs]
     lines += rodata_lines(unit, base, [o for o in objs if o.island == "yes"], ro_lo, ro_end,
-                          "%s_rodata_" % unit, lambda o: "%s/%08X" % (unit, o.text_start), list_form=True)
+                          "%s_rodata_" % unit, lambda o: "%s/%08X" % (unit, o.text_start))
     lines.append("      - [0x%X, data, %s_data]\n" % (ro_end - base, unit))
     return lines
 
 
-def rodata_lines(unit, delta, islands, lo, hi, prefix, iname, list_form, extra=()):
+def rodata_lines(unit, delta, islands, lo, hi, prefix, iname, extra=()):
     """`.rodata` island lines and `rodata` asm pieces covering [lo, hi). islands: Obj list;
     extra: [(start, end, name)] islands kept as they are."""
     marks = sorted([(o.ro_start, o.ro_end, iname(o)) for o in islands] + list(extra))
@@ -551,8 +551,6 @@ def rodata_lines(unit, delta, islands, lo, hi, prefix, iname, list_form, extra=(
     out, pos = [], lo
 
     def line(off, typ, name):
-        if list_form:
-            return "      - [0x%X, %s, %s]\n" % (off, typ, name)
         return "      - [0x%X, %s, %s]\n" % (off, typ, name)
     for s, e, n in marks:
         if s > pos:
@@ -602,7 +600,7 @@ def rewrite_main_yaml(text, split_files, rodata_lo):
             keep.append((q[0] + EXE_TEXT_OFF, parsed[i + 1][0] + EXE_TEXT_OFF, q[2]))
     islands = [o for objs in split_files.values() for o in objs if o.island == "yes"]
     new_ro = rodata_lines("main", EXE_TEXT_OFF, islands, rodata_lo, hi, "rodata_",
-                          lambda o: "main/%08X" % o.text_start, list_form=True, extra=keep)
+                          lambda o: "main/%08X" % o.text_start, extra=keep)
     out = []
     for i, l in enumerate(lines):
         q = parsed[i]
