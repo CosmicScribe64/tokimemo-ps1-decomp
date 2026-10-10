@@ -655,6 +655,9 @@ extern u8 *D_80146138;
 extern s16 D_8014613C;
 extern u8 *D_80146140;
 void func_8013F190(void);
+void func_801381B8(void);
+void func_80138524(void);
+void func_8013FA80(void);
 
 #endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;

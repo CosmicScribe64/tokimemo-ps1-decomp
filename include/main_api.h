@@ -1272,7 +1272,10 @@ extern s32 D_80125CB0;
 extern u16 D_80125CC0;
 extern Work80125D10 D_80125D10;
 extern s16 D_80125D38;
+extern u16 D_80125D4C;
+extern u16 D_80125D4E;
 extern u16 D_80125D50;
+extern u16 D_80125D52;
 extern s32 D_80125D60[];
 extern s32 D_80125D70[];
 extern s32 D_80125D80[];
@@ -1586,8 +1589,8 @@ void func_8005B798(void);
 void func_8005B830(void);
 void func_8005B8A0(void);
 void func_8005B8E0(void);
-void func_8005BD20();
 void func_8005B908();
+void func_8005BD20();
 void func_8005C4CC(s32 arg0);
 void func_8005D174(void);
 void func_8005D1B0();
@@ -1647,9 +1650,8 @@ void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);
 #ifndef MAIN_API_OVERRIDE_func_80066104
-void func_80066104(void);
-#endif
 void func_80066104();  /* the matched definition takes no parameter; pre_xmas_init passes a string through $a0 */
+#endif
 void func_8006612C();  /* callers pass one pointer, or nothing */
 void func_80066334();
 s32 func_80066A2C(void);
@@ -1773,6 +1775,15 @@ void func_8007AEC0(void);
 void func_8007AF0C(void);
 void func_8007B144();
 void func_8007B2B4();
+#ifndef MAIN_API_OVERRIDE_func_8007B3DC
+void func_8007B3DC(u16 arg0);
+#endif
+#ifndef MAIN_API_OVERRIDE_func_8007B460
+void func_8007B460(u16 arg0);
+#endif
+#ifndef MAIN_API_OVERRIDE_func_8007B4E4
+void func_8007B4E4(u16 arg0);
+#endif
 void func_8007B568(s32 arg0, s32 arg1);
 void func_8007B5CC();
 s32 func_8007B5EC(u16 a);

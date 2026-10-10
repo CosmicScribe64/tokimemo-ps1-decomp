@@ -1,7 +1,30 @@
 #include "common.h"
 #include "ovl/BUNKA_SD.h"
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80137B40", func_80137B40);
+s32 func_80137B40(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_80044890(1, 0xBEFB, 0xBEE2, 0xC9DC, 0xC997, 0xC988);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+    } else if (D_800E6280.unk_110D == 1) {
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        }
+    } else if (D_800E6280.unk_110D == 2) {
+        if (func_80044F94(1) == 1) {
+            D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+        }
+    } else if (D_800E6280.unk_110D == 3) {
+        func_80046318(0xD2, 0x80180000, 0x4CC8);
+        D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
+    } else if (D_800E6280.unk_110D == 4) {
+        if (func_800460CC() & 1) {
+            D_8013D98C = D_8013CEF0;
+            D_8013D990 = D_8013CFC8;
+            D_800E6280.unk_F5F = 0xE;
+            func_8004284C();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80137B40", func_80137CAC);
 

@@ -592,4 +592,6 @@ extern u8 *D_80148800;
 void func_801418B0(void);
 
 extern s32 D_8012E6C0;
+void func_80143858(void);
+
 #endif /* OVL_GYOZI_H */

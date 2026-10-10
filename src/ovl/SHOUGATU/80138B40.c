@@ -45,7 +45,16 @@ void func_80138C1C(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80138B40", func_80138CA4);
+extern FnTbl20 D_80145218;
+
+void func_80138CA4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80145218;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80138B40", func_80138D2C);
 

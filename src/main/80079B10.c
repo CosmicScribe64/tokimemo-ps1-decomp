@@ -1,3 +1,8 @@
+/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
+#define MAIN_API_OVERRIDE_func_8007B3DC /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+#define MAIN_API_OVERRIDE_func_8007B460 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+#define MAIN_API_OVERRIDE_func_8007B4E4 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+
 #include "common.h"
 #include "game.h"
 
@@ -299,11 +304,41 @@ void func_8007B358(u16 arg0) {
     func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B3DC);
+void func_8007B3DC(u16 arg0) {
+    s32 a;
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B460);
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D52 << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B4E4);
+void func_8007B460(u16 arg0) {
+    s32 a;
+
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D4C << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
+
+void func_8007B4E4(u16 arg0) {
+    s32 a;
+
+    /* FAKE: shift split in two keeps the lhu result out of the lui register; permuter result, real source unknown. T-8010 */
+    a = (((D_80125D4E << 2) << 6) & 0xFF00) | (((arg0 & 0xFF) >> 4) & 0xFF);
+    if (arg0 & 0x1000) {
+        func_8007B5CC(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+        return;
+    }
+    func_8007B568(a, ((arg0 & 0xF) * 4 + 0x18) << 8 & 0xFF00);
+}
 
 void func_8007B568(s32 arg0, s32 arg1) {
     func_80090D20();

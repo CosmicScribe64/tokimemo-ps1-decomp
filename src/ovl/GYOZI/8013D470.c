@@ -72,7 +72,16 @@ void func_8013D62C(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013D470", func_8013D6B4);
+extern FnTbl20 D_80147F54;
+
+void func_8013D6B4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl20 tbl;
+
+    tbl = D_80147F54;
+    idx = D_800F647A;
+    tbl.f[idx]();
+}
 
 void func_8013D73C(void) {
     func_80072734(0x658F);

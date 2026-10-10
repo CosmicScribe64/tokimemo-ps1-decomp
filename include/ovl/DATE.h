@@ -1158,4 +1158,9 @@ void func_80153CEC(void);
 void func_80153E1C(void);
 void func_80154004(void);
 void func_80154118(void);
+extern u8 D_8015B688;
+extern u8 D_8015BF2C;
+extern s16 D_8015BF30;
+s32 func_8013BA80(void);
+
 #endif /* OVL_DATE_H */
