@@ -547,4 +547,9 @@ void func_8013C670();
 void func_8013C6EC();
 void func_8013C774();
 
+void func_801388E0(void);
+void func_80138BF0(void);
+void func_80139920(void);
+void func_80139D34(void);
+
 #endif /* OVL_GYOZI_H */
