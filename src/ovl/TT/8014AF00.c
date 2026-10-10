@@ -11,9 +11,24 @@ u8 *func_8014AF00(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014AF3C);
+void func_8014AF3C(void) {
+    s32 i;
+    u8 *p;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014AF70);
+    for (i = 0, p = D_80158A98; i < 0x40; i++, p += 0x78) {
+        *p = 0;
+    }
+}
+
+void func_8014AF70(void) {
+    s32 i;
+    u8 *p;
+
+    for (i = 0, p = D_80158A98; i < 0x40; i++, p += 0x78) {
+        *p = 0;
+        *(s16 *)(p + 0x10) = 4;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014AFB8);
 

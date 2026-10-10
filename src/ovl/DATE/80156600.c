@@ -199,7 +199,15 @@ void func_80157594(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_801575CC);
+void func_801575CC(void) {
+    u8 s;
+
+    s = get_g_zyotai_s(D_800E71DF) & 0x7F;
+    if (s >= 2U) {
+        D_800CA150 = (u16)D_800CA150 + 3;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_8015761C);
 
