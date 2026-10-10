@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142D40);
+void func_80142D40(u8 *arg0, s16 arg1, s16 arg2) {
+    RECT r;
+    s32 i;
+
+    /* FAKE: w and h on one source line; IDO then stores h before w (line-based scheduling). T-6070 */
+    r.w = 0x100; r.h = 0x10;
+    r.x = arg1;
+    r.y = arg2;
+    for (i = 0; i < 0x2000; i += 0x20) {
+        *(s16 *)(arg0 + i) = 0;
+    }
+    func_8009C884(&r, arg0);
+}
 
 void func_80142DA8(void *arg0, s16 arg1, s16 arg2) {
     RECT r;
@@ -32,7 +44,63 @@ void func_80143570(void) {
     *D_80158A74 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80143580);
+void func_80143580(void) {
+    s32 i;
+    u8 *p;
+    u8 *q;
+    s8 v;
+
+    q = D_80158A74;
+    p = D_80158A78;
+    v = 8;
+    if (D_80158A64[0x22] != 0) {
+        switch (D_80158A60[0x52]) {
+        default:
+            v = 8;
+            q[0x53] = 0;
+            q[0x54] = 4;
+            q[0x55] = v;
+            p[0x92] = v;
+            break;
+        case 1:
+            v = 8;
+            q[0x53] = 0;
+            q[0x54] = 4;
+            q[0x55] = v;
+            p[0x92] = v;
+            break;
+        case 2:
+            v = 9;
+            q[0x53] = 0;
+            q[0x54] = 4;
+            q[0x55] = v;
+            p[0x92] = v;
+            break;
+        case 3:
+            v = 9;
+            q[0x53] = 0;
+            q[0x54] = 4;
+            q[0x55] = v;
+            p[0x92] = v;
+            break;
+        case 4:
+            q[0x53] = 1;
+            q[0x54] = 5;
+            q[0x55] = 0xA;
+            p[0x92] = 9;
+            for (i = 0; i != 3; i++) {
+                func_80147FD0(p);
+                p += 0xA4;
+            }
+            break;
+        }
+    } else {
+        q[0x53] = 0;
+        q[0x54] = 4;
+        q[0x55] = 8;
+        p[0x92] = v;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801436BC);
 
