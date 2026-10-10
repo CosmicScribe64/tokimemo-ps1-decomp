@@ -1,6 +1,14 @@
 #include "common.h"
 #include "ovl/OPTION.h"
 
+/* View of the 0x44-byte sprite records of the D_8011ECD0 table that the option menus number
+ * (D_80120650 is record 96; the menus write the s16 at +0x18 of records 107-113). T-9020 */
+typedef struct OptSpr44 {
+    /* 0x00 */ s32 unk_00[6];
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0x2A];
+} OptSpr44; /* size 0x44 */
+
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132000);
 
 void func_801320B0(void) {
@@ -216,7 +224,44 @@ void func_8013447C(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801344E4);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134804);
+void func_80134804(void) {
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
+    D_8011ECD0[0x1C2B] = 0x80;
+    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 3; i++, j += 2) {
+        if (i == sel) {
+            ((OptSpr44 *)D_80120650)[i + 11].unk_18 = j + 0x1B;
+        } else {
+            ((OptSpr44 *)D_80120650)[i + 11].unk_18 = j + 0x1C;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (sel) {
+        case 0:
+            func_80042940(3);
+            break;
+        case 1:
+            func_80042940(6);
+            break;
+        case 2:
+            if (*(u8 *)&D_800E6280.unk_F70 == 1) {
+                func_80042940(9);
+            }
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+        D_800E6280.unk_110D = 2;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013493C);
 
@@ -239,7 +284,42 @@ void func_80134B6C(void) {
     func_801320C0();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134C00);
+void func_80134C00(void) {
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    func_8004F984(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 2; i++, j += 2) {
+        if (i == sel) {
+            ((OptSpr44 *)D_80120650)[i + 14].unk_18 = j + 0x21;
+        } else {
+            ((OptSpr44 *)D_80120650)[i + 14].unk_18 = j + 0x22;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (sel) {
+        case 0:
+            D_800E6280.unk_F75 = 1;
+            D_800E6280.unk_1124 |= 0x10;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 1:
+            D_800E6280.unk_F75 = 0;
+            D_800E6280.unk_1124 |= 0x10;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+    }
+}
 
 void func_80134D38(void) {
     s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame (0x70) and array offsets; real source unknown. T-4070 */
@@ -279,7 +359,42 @@ void func_80134DD0(void) {
     func_801320C0();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80134E64);
+void func_80134E64(void) {
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    func_8004F984(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 2; i++, j += 2) {
+        if (i == sel) {
+            ((OptSpr44 *)D_80120650)[i + 16].unk_18 = j + 0x25;
+        } else {
+            ((OptSpr44 *)D_80120650)[i + 16].unk_18 = j + 0x26;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (sel) {
+        case 0:
+            D_800E6280.unk_F70 = 0;
+            D_800E6280.unk_1124 |= 0x40;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 1:
+            D_800E6280.unk_F70 = 1;
+            D_800E6280.unk_1124 |= 0x40;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+    }
+}
 
 void func_80134F9C(void) {
     s32 pad[2]; /* FAKE: unused 8-byte local declared first reproduces the original frame (0x70) and array offsets; real source unknown. T-4070 */
@@ -420,7 +535,48 @@ s32 func_8013661C(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136688);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801368FC);
+void func_801368FC(void) {
+    s32 i;
+    s32 j;
+    s32 sel;
+
+    /* one table: as1 keeps the loads after the store only when both go through D_8011ECD0 (T-9020) */
+    D_8011ECD0[0x1C2B] = 0x80;
+    func_8004F984(1, *(s16 *)&D_8011ECD0[0x26], *(s16 *)&D_8011ECD0[0x2A]);
+    func_8004FC10(1);
+    func_801320C0();
+    sel = D_800E6280.unk_1094;
+    for (i = 0, j = 0; i < 3; i++, j += 2) {
+        if (i == sel) {
+            ((OptSpr44 *)D_80120650)[i + 11].unk_18 = j + 0x2D;
+        } else {
+            ((OptSpr44 *)D_80120650)[i + 11].unk_18 = j + 0x2E;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (sel) {
+        case 0:
+            D_800E6280.unk_03C = 4;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 1:
+            D_800E6280.unk_03C = 3;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        case 2:
+            D_800E6280.unk_03C = 5;
+            func_8004284C();
+            func_80044750(0x501);
+            break;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_8004284C();
+        D_800E6280.unk_110D = 2;
+    }
+}
 
 void func_80136A50(void) {
     s32 i;
