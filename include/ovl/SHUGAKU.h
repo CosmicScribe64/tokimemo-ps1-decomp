@@ -464,4 +464,6 @@ extern s32 D_8013C864;
 extern s32 D_8013C868;
 extern s32 D_8013C86C;
 
+extern s16 D_8013C2E8;
+
 #endif /* OVL_SHUGAKU_H */
