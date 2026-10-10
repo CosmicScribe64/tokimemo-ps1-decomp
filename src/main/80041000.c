@@ -17,7 +17,35 @@ void func_80041000(void) {
     func_800410AC();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800410AC);
+/* Stack copies of the PsyQ DRAWENV (0x60 bytes here) and DISPENV (0x14 bytes); libgpu.h has only RECT. */
+typedef struct DrawEnv60 {
+    /* 0x00 */ RECT clip;
+    /* 0x08 */ u8 rest[0x58];
+} DrawEnv60; /* size 0x60 */
+
+typedef struct DispEnv14 {
+    /* 0x00 */ RECT disp;
+    /* 0x08 */ RECT screen;
+    /* 0x10 */ u8 rest[4];
+} DispEnv14; /* size 0x14 */
+
+void func_800410AC(void) {
+    DrawEnv60 draw;
+    DispEnv14 disp;
+
+    func_8009CCBC(&draw);
+    draw.clip.x = 0;
+    draw.clip.y = 0;
+    draw.clip.w = 320;
+    draw.clip.h = 240;
+    func_8009CC04(&draw);
+    func_8009D10C(&disp);
+    disp.disp.x = 1;
+    disp.disp.y = 1;
+    disp.disp.w = 320;
+    disp.disp.h = 240;
+    func_8009CCF4(&disp);
+}
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-0016, store order: the original stores h, w before x, y. */
