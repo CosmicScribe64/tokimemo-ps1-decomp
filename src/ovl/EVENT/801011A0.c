@@ -2,6 +2,10 @@
 #include "ovl/EVENT.h"
 
 typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+
+typedef struct {
     void (*f[67])();
 } FnTbl67; /* size 0x10C */
 
@@ -90,9 +94,6 @@ void func_801015B0(void) {
     func_80015FE0();
 }
 
-typedef struct {
-    void (*f[39])();
-} FnTbl39; /* size 0x9C */
 extern FnTbl39 D_801222AC;
 
 void func_80101610(void) {
@@ -250,6 +251,8 @@ void func_801020E4(void) {
     func_80078970(D_800947C4, "絶叫マシーンビビール");
     func_80011DFC();
 }
+
+extern FnTbl39 D_80122454;
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80102118);
 

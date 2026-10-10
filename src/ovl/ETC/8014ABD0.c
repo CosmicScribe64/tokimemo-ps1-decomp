@@ -12,7 +12,13 @@ void func_8014AD94(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014ADDC);
+void func_8014ADDC(void) {
+    func_8006612C("進路指導");
+    func_8004EA98();
+    func_8004EAD4(0);
+    func_80057390(0x80);
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AE20);
 

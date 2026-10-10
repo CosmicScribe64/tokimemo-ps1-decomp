@@ -43,7 +43,15 @@ void func_8013445C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_8013448C);
+void func_8013448C(void) {
+    func_80046318(3, 0x801B0000, 0xAF43);
+    func_80134F84();
+    if (!(D_800E699E & 8)) {
+        func_80044750(0x603);
+        func_8004E788(-0x28, 0x40, 2, "ピンポーン", 0);
+    }
+    func_8004284C();
+}
 
 void func_80134500(void) {
     func_80046318(3, 0x801B0000, 0xAF43);
