@@ -26,7 +26,17 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133208);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_801333F0);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133610);
+void func_80133610(void) {
+    func_800AE0F0(D_800CA1DC, "正月");
+    D_80143BC0 = 0;
+    D_80143B20 = 0;
+    D_80143B18 = 1;
+    D_80143B00 = 6;
+    D_80143AF4 = D_80143A48;
+    D_80143AF8 = D_80143A84;
+    D_80143AFC = D_80143AC0;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133698);
 

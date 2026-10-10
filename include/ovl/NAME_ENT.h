@@ -84,5 +84,9 @@ extern u8 D_8014BE00[];
 extern u8 D_8014BE10[];
 
 extern u8 D_80120721;
+extern s32 D_8014CCB8;
+extern s32 D_8014CCBC;
+extern s32 D_8014CCC0;
+extern s32 D_8014CCC4;
 
 #endif /* OVL_NAME_ENT_H */

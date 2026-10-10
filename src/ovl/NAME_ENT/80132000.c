@@ -211,7 +211,20 @@ void func_80134B18(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134B94);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134EB8);
+void func_80134EB8(void) {
+    if ((D_8014CCC0 >= 0) && (D_8014CCC4 >= 0)) {
+        D_80120CD6 = D_8014CCC0 * 0x10 - 0x71;
+        D_80120CDA = D_8014CCC4 * 0x10 - 0x29;
+        return;
+    }
+    if ((D_8014CCB8 >= 0) && (D_8014CCBC >= 0) && (D_8014CCB8 % 6 != 5)) {
+        D_80120CD6 = D_8014CCB8 * 0x10 - 0x71;
+        D_80120CDA = D_8014CCBC * 0x10 + 0x3F;
+        return;
+    }
+    D_80120CD6 = 0x100;
+    D_80120CDA = 0x100;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134F6C);
 

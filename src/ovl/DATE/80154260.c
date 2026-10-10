@@ -160,7 +160,10 @@ void func_80154D00(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_80154D38);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_80154E14);
+void func_80154E14(void) {
+    func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_80154E48);
 

@@ -101,7 +101,20 @@ void func_8013535C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80135390);
+void func_80135390(void) {
+    if ((D_80139AE0 == 2) && (D_800E71DF == 6)) {
+        D_80139AE4 = 2;
+    } else {
+        D_80139AE4 = 0;
+    }
+    func_80133EF8();
+    if ((D_80139AE0 == 3) && (D_800E7384++ == 0)) {
+        if (D_800E71DF == 6) {
+            func_80044750(0x503);
+            func_80047550();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80135438);
 
