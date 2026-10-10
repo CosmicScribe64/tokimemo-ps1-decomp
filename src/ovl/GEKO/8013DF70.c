@@ -55,7 +55,24 @@ void func_8013E11C(void) {
     func_8013E950();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E1A0);
+/* Bit 14 of a Rec38 flag word: IDO loads its byte into another register than the lui (T-7010). */
+typedef struct {
+    u32 pad0 : 14;
+    u32 f : 1;
+    u32 pad1 : 17;
+} Rec38Bit14;
+
+void func_8013E1A0(void) {
+    if (func_80052C88(9) >= 0x50U) {
+        D_800E6280.unk_1BC[9].unk_02 += 1;
+        D_800E6280.unk_1BC[9].unk_06 += 2;
+    } else {
+        ((Rec38Bit14 *)&D_800E6280.unk_1BC[9].unk_0C)->f = 1;
+        D_800E6280.unk_1BC[9].unk_06 += 1;
+    }
+    func_80084D3C();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E22C);
 

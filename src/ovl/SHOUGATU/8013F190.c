@@ -286,7 +286,11 @@ void func_801413CC(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_801413F4);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8014147C);
+void func_8014147C(void) {
+    ((Bits64B8 *)&D_800E6280.unk_1BC[6].unk_0C.b[0])->f = 1;
+    D_80145F2C = 4;
+    func_8004284C();
+}
 
 void func_801414B8(void) {
     func_80044750(0x505);
