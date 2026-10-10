@@ -414,4 +414,18 @@ extern s32 D_80148260;
 extern s32 D_80148268;
 
 extern u8 D_801474B0;
+void func_8013A2F4();
+void func_8013A4E8();
+void func_8013A5F4();
+void func_8013A76C();
+void func_8013A920();
+void func_8013AE80();
+void func_8013B920();
+void func_8013BFB4();
+void func_8013C4D0();
+void func_8013CDD0();
+void func_8013D120();
+void func_8013D550();
+void func_8013DB50();
+void func_8013A7C8();
 #endif /* OVL_GYOZI_H */
