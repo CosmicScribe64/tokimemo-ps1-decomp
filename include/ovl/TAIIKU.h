@@ -197,4 +197,9 @@ extern s32 D_8014A3DC;
 extern s16 D_8014A3FE;
 void func_80146C20(void);
 extern u8 D_8014A3D8[];
+/* Four s16 values added to the D_8011ECD0 records (func_8014038C copies them to a local). */
+typedef struct TkS16x4 {
+    /* 0x0 */ s16 v[4];
+} TkS16x4; /* size 0x8 */
+extern TkS16x4 D_80149F8C;
 #endif
