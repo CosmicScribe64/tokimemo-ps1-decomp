@@ -72,7 +72,13 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134B94);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134C98);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134D8C);
+s32 func_80134D8C(void) {
+    func_801343B0();
+    if ((D_800E6280.unk_1104.w++ == 1) && (D_800CA2E8 == 2)) {
+        D_80122D0C = 0;
+        func_80067DD4();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134DE8);
 

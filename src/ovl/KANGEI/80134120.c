@@ -38,7 +38,17 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134BC4);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134DB0);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134EA8);
+void func_80134EA8(void) {
+    s32 pad; /* FAKE: unused local above the saved selector (the original frame has the copy at sp+0x28), T-6050 */
+    s32 sp;
+
+    D_800E6280.unk_F5F = 0xE;
+    sp = D_800E6280.unk_110A;
+    func_80133EF8();
+    if (sp != D_800E6280.unk_110A) {
+        D_800E6280.unk_F5F = D_800E6280.unk_75D;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134F00);
 

@@ -7,7 +7,13 @@ void SetWorkBase(s32 arg0, s32 arg1) {
     D_800E6280.unk_01C[arg1].unk_04 = 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800490C0", GetWorkBase);
+s32 GetWorkBase(s32 arg0, s32 arg1) {
+    s32 ret;
+
+    ret = D_800E6280.unk_01C[arg1].unk_08 + (D_800E6280.unk_01C[arg1].unk_04 * 4);
+    D_800E6280.unk_01C[arg1].unk_04 += ((arg0 + 3) / 4) * 4;
+    return ret;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800490C0", sprite_set_gpu_poly_ft4);
 

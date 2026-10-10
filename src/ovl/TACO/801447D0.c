@@ -23,7 +23,19 @@ void func_80144CC0(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801447D0", func_80144D90);
+void func_80144D90(s32 arg0) {
+    RECT r;
+
+    if (arg0 < 0) {
+        arg0 = 0;
+    } else if (arg0 >= 8) {
+        arg0 = 7;
+    }
+    /* FAKE: the assignment pairs share a source line each; as1 orders the stores by line (T-3330), T-6050 */
+    r.x = arg0 * 8; r.y = 0x1F1;
+    r.w = 8; r.h = 1;
+    func_8009C93C(&r, 0xF8, 0x1F0);
+}
 
 void func_80144DF8(s32 arg0) {
     TcObj50 *o;

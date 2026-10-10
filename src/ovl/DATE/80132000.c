@@ -274,7 +274,21 @@ s32 func_80139054(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139154);
+void func_80139154(void) {
+    u8 temp_v0;
+
+    temp_v0 = func_80051A68(D_800E6280.unk_F5F);
+    if ((D_80122CDC == 0) && ((D_800E6280.unk_F5F == 0) || (D_800E6280.unk_F5F == 7)) && (D_800CA2FC == 0)) {
+        D_800CA148 = D_800CA148 + ((temp_v0 & 0x7F) >= 2U) + ((temp_v0 & 0x7F) >= 3U);
+    } else {
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 void func_80139210(void) {
     u32 t;

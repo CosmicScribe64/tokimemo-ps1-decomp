@@ -1,7 +1,14 @@
 #include "common.h"
 #include "ovl/BUNKA_SD.h"
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134540", func_80134540);
+s32 func_80134540(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_80046318(0x85, 0x80180000, 0x4BD4);
+        D_800E6280.unk_110D += 1;
+    } else if ((D_800E6280.unk_110D == 1) && (func_800460CC() & 1)) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134540", func_801345BC);
 

@@ -216,7 +216,14 @@ void func_80159F74(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_80159FAC);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_8015A114);
+s32 func_8015A114(void) {
+    func_8014C5C8();
+    if (D_800E6280.unk_1104.w++ == 1) {
+        if ((u16)D_800CA154 == 3) {
+            func_80083440(1);
+        }
+    }
+}
 
 void func_8015A170(void) {
     func_80044750(0x500);
