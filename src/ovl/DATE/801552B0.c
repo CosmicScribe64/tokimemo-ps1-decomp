@@ -179,6 +179,11 @@ typedef struct {
 } FnTbl38; /* size 0x98 */
 extern FnTbl38 D_8015F9D0;
 
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+extern FnTbl40 D_8015FB5C;
+
 void func_80155D80(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
     FnTbl38 tbl;
@@ -217,7 +222,19 @@ void func_801560B8(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801560E0);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801563A8);
+void func_801563A8(void) {
+    s32 pad; /* FAKE: unused slot above tbl, the original frame has it (T-3330 idiom, real source unknown). T-8010 */
+    FnTbl40 tbl;
+
+    tbl = D_8015FB5C;
+    if (D_800E6280.unk_110A < 0xB) {
+        func_801407D0();
+    }
+    if (D_800E6280.unk_110A == 0xB) {
+        func_80140788();
+    }
+    tbl.f[D_800E6280.unk_110A](0x80);
+}
 
 void func_8015645C(void) {
     func_80046318(0x3D, 0x801B0000, 0x8890);
