@@ -767,7 +767,36 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014420C);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80144720);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_801448D4);
+void func_801448D4(void) {
+    func_80083808();
+    switch (D_800E7389) {                           /* irregular */
+    case 0:
+        func_801449D4();
+        break;
+    case 1:
+        func_80144E20();
+        break;
+    case 2:
+        func_80149584();
+        break;
+    case 3:
+        func_80145D14();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    check_k_scroll();
+    k_disp_inc2();
+    if ((D_800E7389 != 0) || (D_800E738A != 0x45)) {
+        func_80066C08(2);
+    }
+    message_window_show();
+    func_80066334();
+    hizuke_show();
+    func_80083A10();
+    func_80047560();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_801449D4);
 
@@ -953,7 +982,31 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014AD9C);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014AF88);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014B080);
+void func_8014B080(void) {
+    D_80122760 = 0x64;
+    D_80122764 = 0x1E;
+    D_80122768 = -0x32;
+    D_8012276C = 0;
+    D_8012276D = 0;
+    D_8012276E = 0;
+    func_8009AD70(0, &D_80122760);
+    D_80122770 = 0x14;
+    D_80122774 = 0xA;
+    D_80122778 = -0x64;
+    D_8012277C = 0;
+    D_8012277D = 0;
+    D_8012277E = 0;
+    func_8009AD70(1, &D_80122770);
+    D_80122780 = -0x14;
+    D_80122784 = -0x14;
+    D_80122788 = -0x64;
+    D_8012278C = 0;
+    D_8012278D = 0;
+    D_8012278E = 0;
+    func_8009AD70(2, &D_80122780);
+    func_8009B310(0, 0, 0);
+    func_8009B340(0);
+}
 
 void func_8014B194(void) {
     D_8015DE40 += 1;
@@ -1001,7 +1054,20 @@ void func_8014C7D4(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014C7FC);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014C9A8);
+void func_8014C9A8(void) {
+    _sprite_set_light_effect1(0x120, -0xF8, 0xA0, 0x3C, -0xA0, 0x3C, 9, 0x808080, 0);
+    _sprite_set_light_effect1(0x120, -0xF8, 0x40, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0);
+    _sprite_set_light_effect1(0x120, -0xF8, 0x10, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0x40);
+    _sprite_set_light_effect1(0x120, -0xF8, -0x1C, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0x63);
+    _sprite_set_light_effect1(0x120, -0xF8, -0x50, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0x24);
+    _sprite_set_light_effect1(0x120, -0xF8, -0x8C, 0x3C, 0, 0xB4, 9, 0xA0A0A0, 0x73);
+    _sprite_set_light_effect1(0x120, -0xF8, -0xF0, 0x3C, 0, 0xB4, 9, 0xC0C0C0, 0x11);
+    _sprite_set_light_effect1(0x120, -0xF8, -0x140, 0x3C, 0, 0xB4, 9, 0xC0C0C0, 0x50);
+    _sprite_set_light_effect1(0x120, -0xF8, -0x30, 0x3C, 0, 0xB4, 9, 0x808080, 0);
+    dtd_on_tpage(0, 0, 9, 1, 0);
+    _sprite_set_light_effect1(-0x140, -0x118, -0x142, -0x141, -0xA2, -0x79, 9, 0x808080, 0);
+    dtd_on_tpage(0, 0, 9, 1, 0);
+}
 
 void func_8014CC40(void) {
     D_8015E220 = 0x801CE0F4;
@@ -1182,7 +1248,15 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014DFB0);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014E010);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014E108);
+void func_8014E108(void) {
+    func_8014EF1C(-0x96, -0x78, -0x9B, -0x78, -0x50, 0x28, -0x69, 0x28, 0xFFFF00, 0xFFFF00, 9, 1);
+    func_8014EF1C(-0xA0, -0x78, -0xA5, -0x78, -0x64, 0x28, -0x73, 0x28, 0xFFFFFF, 0xFFFFFF, 9, 1);
+    func_8014EF1C(-0xA2, -0x78, -0xA7, -0x78, -0x6E, 0x28, -0x87, 0x28, 0xFFFF00, 0xFFFF00, 9, 1);
+    dtd_on_tpage(0, 0, 9, 3, 0);
+    func_8014EF1C(-0x7D, -0x78, -0x82, -0x78, -0x28, 0x28, -0x32, 0x28, 0xFFFF00, 0xFFFF00, 0xD, 1);
+    func_8014EF1C(-0x84, -0x78, -0x89, -0x78, -0x3C, 0x28, -0x46, 0x28, 0xFFFFFF, 0xFFFFFF, 0xD, 1);
+    dtd_on_tpage(0, 0, 0xD, 3, 0);
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014E2E8);
 
@@ -1305,7 +1379,14 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014F500);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014F610);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014F744);
+void func_8014F744(void) {
+    func_8014F250();
+    load_palette(D_8015E6F8, 0x11, 1, 2, 0);
+    func_80084E90(D_8015E6FC, D_8015E700, D_8015E704, D_8015E708, D_8015E70C, D_8015E710);
+    func_800850D4(D_8015E6EC, D_8015E6F0, D_8015E6E8, D_8015E6F4);
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014F7F4);
 
@@ -1349,7 +1430,25 @@ void func_8014FA08(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014FA30);
+void func_8014FA30(void) {
+    D_80122CDC = 0;
+    D_800CA21C = 1;
+    D_800CA21E = 1;
+    D_800CA220 = 1;
+    D_800CA234 = 0;
+    D_800CA236 = 0;
+    D_800CA238 = 0;
+    D_800CA224 = 1;
+    D_800CA226 = 1;
+    D_800CA228 = 1;
+    D_800CA22C = 0;
+    D_800CA22E = 0;
+    D_800CA230 = 0;
+    func_8004284C();
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8014B1F0();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8014FAE0);
 
@@ -1740,7 +1839,28 @@ void func_801531D0(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80153280);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80153320);
+void func_80153320(void) {
+    D_8015E208 = D_8015DECC;
+    D_8015E20C = D_8015E008;
+    D_8015E210 = D_8015E144;
+    D_800CA21C = 1;
+    D_800CA220 = 2;
+    D_800CA21E = 4;
+    D_800CA224 = 1;
+    D_800CA228 = 2;
+    D_800CA226 = 3;
+    D_800CA22C = 0;
+    D_800CA230 = 2;
+    D_800CA22E = 4;
+    D_800CA234 = 0;
+    D_800CA238 = 1;
+    D_800CA236 = 2;
+    func_80152FC0();
+    load_palette(D_8015F170, 0x11, 1, 2, 0);
+    func_80084E90(D_8015F174, D_8015F178, D_8015F17C, D_8015F180, D_8015F184, D_8015F188);
+    func_800850D4(D_8015F164, D_8015F168, D_8015F160, D_8015F16C);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8015347C);
 
@@ -1811,7 +1931,20 @@ void func_80153BE8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80153C20);
+void func_80153C20(void) {
+    D_800CA150 = (u16) D_800CA150 + D_80122CDC;
+    if (D_80122CDC == 0) {
+        load_palette(D_8015F170, 0x11, 1, 2, 0);
+        D_8015E204 = 0;
+    } else if (D_80122CDC == 1) {
+        load_palette(D_8015F170, 0x11, 1, 2, 2);
+        D_8015E204 = 2;
+    } else {
+        load_palette(D_8015F170, 0x11, 1, 2, 1);
+        D_8015E204 = 1;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_80153CEC);
 
@@ -1936,7 +2069,14 @@ void func_801545B4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_8015460C);
+void func_8015460C(void) {
+    func_80154260();
+    load_palette(D_8015F530, 0x11, 1, 2, 0);
+    func_80084E90(D_8015F534, D_8015F538, D_8015F53C, D_8015F540, D_8015F544, D_8015F548);
+    func_800850D4(D_8015F524, D_8015F528, D_8015F520, D_8015F52C);
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE", func_801546BC);
 
