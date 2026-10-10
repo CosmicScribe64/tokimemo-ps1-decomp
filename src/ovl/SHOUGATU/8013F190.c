@@ -284,7 +284,35 @@ void func_80140AB0(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140AD8);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_80140BD8);
+void func_80140BD8(void) {
+    func_80065F34(0);
+    func_8004E9F4(1);
+    func_80140780();
+    load_palette(D_80146240, 0x11, 1, 2, 0);
+    func_80048F64(0x60);
+    D_80120651 = 1;
+    D_80120652 = 0;
+    D_80120688 = 0x01000000;
+    D_80120653 = 4;
+    D_8012065C = (u8 *)D_80146234;
+    D_80120660 = (u8 *)D_80146238;
+    D_80120684 = (u8 *)D_80146230;
+    D_80120664 = D_8014623C;
+    D_80120666 = 0;
+    D_80120668 = 0;
+    D_80120656 = 1;
+    D_80120693 = 0x11;
+    D_80120676 = -0xA0;
+    D_8012067A = -0x78;
+    D_80120657 = 0;
+    D_80120655 = 0;
+    D_80120654 = 0;
+    D_80145F2C = 0x13;
+    D_80145F20 = D_80145AFC;
+    D_80145F24 = D_80145B30;
+    D_80145F28 = D_80145B64;
+    func_8004284C();
+}
 
 void func_80140D30(void) {
     bg_read_sub2(0x41DC);
