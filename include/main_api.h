@@ -36,6 +36,9 @@ typedef struct Rec34Flags {
     u32 rest : 17;
 } Rec34Flags; /* size 0x04 */
 
+s32 func_80045288();
+void func_80061A3C();
+void func_80062634();
 /* 0x34-byte record of the table at D_800B0A04 (12 records; EVENT indexes it with stride 0x34). */
 typedef struct Rec34 {
     /* 0x00 */ s16 unk_00;
@@ -467,6 +470,7 @@ extern s32 D_800B372C;
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3C6C;
 extern s8 D_800B3CA0;
+extern u8 D_800B3CFC;
 extern u8 D_800B3D24;
 extern u8 D_800B3D40;
 extern u8 D_800B3D44;
