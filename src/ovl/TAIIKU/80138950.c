@@ -1,7 +1,15 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138950);
+void func_80138950(void) {
+    TaiikuTbl11 a;
+    TaiikuTbl11 b;
+
+    a = D_801498E8;
+    b = D_80149914;
+    func_80046290(a.v[D_801491DC], b.v[D_801491DC], D_801491DC);
+    func_80044750(0x300);
+}
 
 typedef struct {
     void (*f[9])();
