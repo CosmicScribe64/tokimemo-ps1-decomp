@@ -78,7 +78,16 @@ void func_8013AEFC(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013AF74);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B0AC);
+void func_8013B0AC(void) {
+    if (D_80149990 == 0) {
+        func_8013B104();
+    } else {
+        func_8013C978();
+    }
+    if ((u16)D_801499B0[0].unk0 == 0) {
+        func_8013C780();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B104);
 

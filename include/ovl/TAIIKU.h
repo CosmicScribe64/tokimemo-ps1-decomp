@@ -178,5 +178,9 @@ extern s32 D_80149950;
 extern s32 D_80149974;
 extern s32 D_80149988;
 extern s32 D_8014999C;
+void func_8013B104(void);
+void func_8013C780(void);
+void func_8013C978(void);
+extern s32 D_80149990;
 
 #endif

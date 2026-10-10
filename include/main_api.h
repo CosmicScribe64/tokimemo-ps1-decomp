@@ -1042,6 +1042,7 @@ void func_800504CC();
 s32 func_80050AB8();
 void menu_bar_show();
 void func_80050D60();
+s32 func_80051A68(s32);
 void gnsx(u8 *arg0);
 void sndisp();
 void get_g_name();

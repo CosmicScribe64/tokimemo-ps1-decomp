@@ -218,3 +218,4 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | TT | `func_8013C764` | regorder | two narrow (masked 0xFFFF) arguments copied back to $a0/$a1 (`or a1,t7` then `or a0,t6`); IDO moves the first one to $a2 or swaps the copy order (w3-3, T-4030) |
 | SHOUGATU | `func_801345C8` | regorder | switch/compare chain (0,1 skip; 2 and default) on `f() & 0x7F`: original keeps the selector in $t7, IDO puts it in $v1 (w3-3, T-4030) |
 | TACO | `func_80133410` | regorder | 16-record loop `p[i].unk13 &= ~0x20` unrolled 4x: same code, but IDO schedules the first record's load/and after the other three (w3-3, T-4030) |
+| DATE | `func_801551D0` | promo | `if (++D < 0x10) return 0;` (s32 return, global incremented): original keeps the global in $v1 (v0 is the return value), IDO uses $v0 (w3-3, T-4030) |
