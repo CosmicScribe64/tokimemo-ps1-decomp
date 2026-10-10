@@ -453,7 +453,38 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E018);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E150);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E2C0);
+void func_8005E2C0(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+        return;
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (D_800E6280.unk_1094) {
+        case 0:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "文字出力のスピードを遅くしました", 0);
+            k_speed_set(3);
+            func_8004284C();
+            return;
+        case 1:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "文字出力のスピードを普通にしました", 0);
+            k_speed_set(1);
+            func_8004284C();
+            return;
+        case 2:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "文字出力のスピードを速くしました", 0);
+            k_speed_set(0);
+            func_8004284C();
+            break;
+        }
+    }
+}
 
 void func_8005E40C(void) {
     k_disp_inc();
