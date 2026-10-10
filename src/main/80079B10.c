@@ -111,7 +111,14 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A6AC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A868);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A924);
+/* Indexed views of D_80125D58 keep IDO from hoisting the later loads (see cal_sprite_disp_switch). */
+void func_8007A924(s32 arg0) {
+    func_8007BA54();
+    D_80125D58[0] = D_80125D5E;
+    D_80125D58[1] = D_80125D58[4];
+    *(s32 *)(D_80125D58 - 0x44) |= 0x200;
+    func_80045414(0xD, arg0, D_80125D58);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A98C);
 

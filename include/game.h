@@ -822,5 +822,6 @@ extern u8 D_80125E70[];
 extern u8 *D_800E36C0[];
 void Hw_Clear();
 extern u8 D_800B41A0[];
+extern u8 D_80125D58[];
 
 #endif /* GAME_H */
