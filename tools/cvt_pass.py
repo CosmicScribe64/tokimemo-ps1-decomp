@@ -148,9 +148,7 @@ class Insn:
         self.words[0] = (self.words[0] & ~(0x1F << 16)) | (dtype << 16)
 
     def location(self):
-        """(memtype, block, offset, length) of a LOD/STR/RLOD record."""
-        if self.opc == OP["rlod"]:
-            return (self.mtype, self.words[1], self.words[3], self.words[2])
+        """(memtype, block, offset, length) of a LOD/STR/RLOD record (same field layout)."""
         return (self.mtype, self.words[1], self.words[3], self.words[2])
 
 
