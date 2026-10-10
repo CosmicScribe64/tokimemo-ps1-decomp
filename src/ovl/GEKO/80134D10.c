@@ -327,7 +327,23 @@ void func_80136FF8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80137040);
+void func_80137040(void) {
+    s32 v;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    v = (u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+    if (D_80145088 == 1) {
+        D_80145060 = 6;
+    }
+    if (v == 2) {
+        D_80145060 += 2;
+    } else if (v == 3) {
+        D_80145060 += 4;
+    } else if (v == 4) {
+        D_80145060 += 6;
+    }
+    func_8004284C();
+}
 
 void func_801370EC(void) {
     D_80145060 = (D_80122CDC * 2) + 0xD;

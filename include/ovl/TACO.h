@@ -281,4 +281,10 @@ void func_801359B4(void);
 void func_80135994(void);
 s32 func_80135744(void);
 
+void func_8015ACCC(s32 a, s32 b, TcPos c, TcPos d, TcPos e, s32 f, s32 g);
+extern TcPos D_801604D4;
+extern TcPos D_801604E4;
+
+extern TcPos D_801604DC;
+
 #endif
