@@ -6,6 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
+- [ ] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
 - [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap (deferred)]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
@@ -18,10 +20,10 @@ kanban-plugin: board
 
 ## Ready
 
+- [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
 
-- [ ] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 
 ## In Review
 
@@ -29,6 +31,7 @@ kanban-plugin: board
 
 ## Done
 
+- [x] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
 - [x] [[tickets/T-2040-wave-2-etc|T-2040 Wave 2: ETC]]
 - [ ] [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320 Tooling: work queue and blocker detector]]

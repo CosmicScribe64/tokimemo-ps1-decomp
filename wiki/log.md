@@ -380,3 +380,12 @@ Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri an
 
 ## [2026-10-09] ticket | T-0500 In Progress
 [[tickets/T-0500-per-file-game-rodata-data-bss-split]] Backlog -> In Progress. Scope widened by the orchestrator: find the original object boundaries of every overlay and of the main game code (text and rodata), split the C files per object so each object provides its own rodata (jump tables, strings), with a migration tool for the wave-2 tree; prove it on RENSYU, OMIMAI, OLH, TEL and `src/main/80062CD0.c`.
+
+## [2026-10-09] decision | T-0500 one C file per original object
+The overlays and the main game code are split into their original objects, each C object providing its own rodata island (jump tables, strings, constants). Rejected: one C file per overlay with an object-file pass that splits and reorders `.rodata` (a new emulation pass with no source fidelity); asm-processor `late_rodata`/`INCLUDE_RODATA` alone (places rodata inside one object only). Rationale in [[tickets/T-0500-per-file-game-rodata-data-bss-split]].
+
+## [2026-10-09] build | T-0500 object boundaries, migration tool, proof units
+`tools/object_boundaries.py` (440 objects, 357 rodata chunks, evidence and confidence in [[source-files]] and `config/objects/`), `tools/split_objects.py` (migration, idempotent, `config/labels/`), `tools/srcscan.py` C file list from the yaml files; configure, progress, queue, dupes, funcdiff, m2c, permute, trailing_pad, rodata_pieces, gen_overlay_configs, objdiff.json and CI follow ([[build-system]]). `tools/cc.py` compiles UTF-8 string literals as Shift-JIS ([[toolchain]]). Migrated: RENSYU, OMIMAI, TEL, OLH, `src/main/80062CD0.c`; a full trial migration of all 27 units on a copy built 27 of 27 OK. splat mis-split `func_80066A2C`/`func_80066A84` fixed by sizes in `config/symbol_addrs_main.txt`. 18 jump-table/string functions matched (main 2, OLH 12, OMIMAI 4). Clean build 27 of 27 OK, grand total 1184/6958 functions (was 1168/6962).
+
+## [2026-10-09] ticket | T-0500 Done; T-3050, T-3051, T-3052 new
+[[tickets/T-0500-per-file-game-rodata-data-bss-split]] In Progress -> Done after the inline code review (no open findings). New: [[tickets/T-3050-run-per-object-migration-after-wave-2]] (Ready: `tools/split_objects.py --all` after wave 2 merges), [[tickets/T-3051-review-low-confidence-object-boundaries]] (Backlog), [[tickets/T-3052-per-object-data-bss-split]] (Backlog).
