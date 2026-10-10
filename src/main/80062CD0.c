@@ -26,15 +26,13 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063668);
 void bustup_speech(void) {
     /* D_800E62BC is declared s8 in game.h; this function reads it as u8 (lbu) */
     if (*(u8 *)&D_800E62BC == 0 && !(D_8011F50E & 1)) {
-        /* FAKE: the no-op "& 0xFF" shifts IDO's temp numbering (ori in $t9, as in the original); T-1010 */
-        D_8011F50E = (D_8011F50E & 0xFF) | 0x11;
+        D_8011F50E |= 0x11;
     }
 }
 
 void bustup_wink(void) {
     if (!(D_8011F4CA & 1)) {
-        /* FAKE: the no-op "& 0xFF" shifts IDO's temp numbering (ori in $t8, as in the original); T-1010 */
-        D_8011F4CA = (D_8011F4CA & 0xFF) | 0x11;
+        D_8011F4CA |= 0x11;
     }
 }
 

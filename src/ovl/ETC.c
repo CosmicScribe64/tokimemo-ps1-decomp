@@ -2479,8 +2479,13 @@ void func_80145FA0(void) {
 }
 
 void func_80145FF0(void) {
+    u8 step;
+
     back_clear_switch(1);
-    switch (D_800E738D) {
+    /* switch on a local copy: with the global itself as the selector it would
+       be kept in a register through the cases (cvt_pass.py, T-1321) */
+    step = D_800E738D;
+    switch (step) {
     case 3:
         break;
     case 0:

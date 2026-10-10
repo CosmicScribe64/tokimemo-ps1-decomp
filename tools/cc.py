@@ -53,6 +53,9 @@ IDO_CFLAGS = ["-c", "-EL", "-O2", "-mips1", "-G", "0", "-non_shared",
 ASM_PROCESSOR = "/opt/asm-processor/build.py"
 ASM_PRELUDE = "include/asmproc_prelude.inc"
 FRAME_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frame_pass.py")
+CVT_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cvt_pass.py")
+# IDO passes replaced by a shim that runs a toolchain emulation pass and then the real pass.
+SHIMS = {"as1": FRAME_PASS, "uopt": CVT_PASS}
 
 
 def run_stage(cmd, data, env=None):
@@ -71,22 +74,25 @@ def compile_gcc(src, out, gcc_ver, aspsx_ver):
 
 
 def ido_frame_env(ido_ver, tmp):
-    """Environment that runs IDO with tools/frame_pass.py in front of as1.
+    """Environment that runs IDO with the toolchain emulation passes.
 
     IDO's cc finds its passes in USR_LIB. Point it at a directory holding
-    symlinks to every IDO file except as1, which is a shim that applies the
-    frame-layout emulation pass (T-0016) to ugen's output and runs the real
-    as1 on the result. The pass applies to every function; see frame_pass.py.
+    symlinks to every IDO file except the shimmed passes (SHIMS): `uopt` runs
+    the unsigned-load conversion pass (tools/cvt_pass.py, T-1321) around the
+    real uopt, and `as1` applies the frame-layout emulation pass
+    (tools/frame_pass.py, T-0016) to ugen's output before the real as1. Both
+    apply to every function; see the two modules.
     """
     ido = "/opt/ido/%s" % ido_ver
     for name in sorted(os.listdir(ido)):
-        if name != "as1":
+        if name not in SHIMS:
             os.symlink(os.path.join(ido, name), os.path.join(tmp, name))
-    shim = os.path.join(tmp, "as1")
-    with open(shim, "w") as f:
-        f.write('#!/bin/sh\nexec python3 "%s" --as1 "%s/as1" "$@"\n'
-                % (FRAME_PASS, ido))
-    os.chmod(shim, 0o755)
+    for name, script in sorted(SHIMS.items()):
+        shim = os.path.join(tmp, name)
+        with open(shim, "w") as f:
+            f.write('#!/bin/sh\nexec python3 "%s" --%s "%s/%s" "$@"\n'
+                    % (script, name, ido, name))
+        os.chmod(shim, 0o755)
     env = dict(os.environ)
     env["USR_LIB"] = tmp
     return env
