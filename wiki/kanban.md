@@ -22,6 +22,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-2060-wave2-shougatu|T-2060 Wave 2: SHOUGATU]]
+
 
 
 ## In Review
