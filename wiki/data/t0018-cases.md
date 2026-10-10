@@ -211,3 +211,14 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 80079B10 | `SD_DetectCDPeak` | regorder | same family as `SD_CalcCDAve` (T-2090) |
 | 80079B10 | `func_8007B2B4` | regorder | switch variable after a read-modify-write store: original reuses $v0, IDO allocates $v1 (T-2090) |
 | 80079B10 | `func_8007A6AC` | regorder | struct fields loaded into $t7/$a0/$v1 and spilled; IDO uses $t6/$a0/$a2 (T-2090) |
+| EVENT | `func_8010A790` | regorder | `u8` global loaded, clamped (`if (v >= 2) v = 1`), used twice after: original keeps it in $v0, IDO $v1 (T-4090) |
+| EVENT | `func_8010B614` | regorder | `D = 4; f(4);` keeps the constant in $a0 for the store in the original, IDO loads it into $t6 again (also with `f(D = 4)`) (T-4090) |
+| EVENT | `func_8010B678` | regorder | four `D += 0x40` on neighbouring halfword globals: original interleaves the loads differently (third and fourth load before the second store) (T-4090) |
+| GYOZI | `func_80135D64` | promo | `(u32)D_800F563A >> 4` compared twice: original loads the `u8` into $v1 and shifts into $v0, IDO loads into $v0 and shifts into $t7 (T-4090) |
+| GYOZI | `func_801361D4` | regorder | `D_800F62CF = D_800F5ACD; f(D_800F5ACD)`: original `lui a0; lbu a0`, IDO `lui v0; lbu a0,0(v0)` (also as `f(D = x)` and via a `u8` local) (T-4090) |
+| GYOZI | `func_801427E4` | promo | `s16` global `+= 0x200` then compared: original sign-extends into the same register ($v0 -> $t6 -> $v0, stores and compares $v0), IDO uses a fresh $t7 (also with a local) (T-4090) |
+| DATE | `func_8014FD30` | promo | `if (D == 0) {..calls..} if (D++ == 0x80) f();` on an `s32` global: original keeps it in $v1, materialises `sltiu v0,v0,1` and branches on it; IDO branches on the `xori` (also with `u32`) (T-4090) |
+| 80079B10 | `func_8007BE94` | regorder | `(u16)D == (s16)arg` branch: operands of the `bne` come in the other order (D first in the original) for every spelling tried (T-4090) |
+| 80079B10 | `func_8007B64C` | regorder | `u16` count read once into $v0, `return 0` path: IDO hoists `move v0,zero` and puts the count in $v1 (T-4090) |
+| 80079B10 | `func_80079C70` | regorder | loop over four flag bytes: the three mask constants (0x0F000000, 0xF0000000, 0x01000000) come in registers a2/a3/a0 in the original, IDO loads them in another order (T-4090) |
+| 80079B10 | `func_8007A50C` | regorder | `u16 t = D44 + D48` operands are loaded in the other order and the `s16` difference gets its own sign-extension temps (T-4090) |

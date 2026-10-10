@@ -412,5 +412,9 @@ extern s32 D_80148258;
 extern s32 D_8014825C;
 extern s32 D_80148260;
 extern s32 D_80148268;
+extern u8 D_801460C4[];
+extern s16 D_8012B920;
+extern u8 D_80148818;
+extern u8 D_80148828[];
 
 #endif /* OVL_GYOZI_H */

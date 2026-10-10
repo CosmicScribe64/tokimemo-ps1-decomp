@@ -238,5 +238,9 @@ void func_80137560(void);
 
 /* defined in C in one object, called from another (T-0500) */
 void func_80138AF8(void);
+extern s32 D_80145F1C;
+extern s32 D_80146058;
+extern s32 D_80146194;
+void func_8013BBE0(void);
 
 #endif

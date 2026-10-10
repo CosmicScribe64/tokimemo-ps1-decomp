@@ -19,9 +19,33 @@ void func_801349EC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134A20);
+void func_80134A20(void) {
+    if (D_8013C1BC != 0) {
+        normal_date_move_place();
+        return;
+    }
+    if (D_800E738D == 0) {
+        dec_bg_show_switch(1);
+        D_800E738D += 1;
+    }
+    func_8007C8A4();
+}
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134A8C);
+void func_80134A8C(void) {
+    func_800AE0F0(D_800CA19C, "ホテル・廊下");
+    func_801365F4();
+    D_8013BFFC = D_8013C5C4;
+    D_8013C000 = D_8013C700;
+    D_8013C004 = D_8013C83C;
+    D_800CA2E4 = 0;
+    D_800CA2E8 = 0;
+    if (D_800B593C != 0) {
+        D_8013C1BC = 1;
+    } else {
+        D_8013C1BC = 0;
+    }
+    func_8004284C();
+}
 
 void func_80134B2C(void) {
     func_80042908(D_800E69A1);
@@ -62,7 +86,18 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134F18);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_801350F4);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_801351CC);
+void func_801351CC(void) {
+    func_80137C3C();
+    if ((D_800E644C & 0xF) == D_800E62BF && ((u32) (D_800E644C << 0x17) >> 0x1B) == D_800E62C0) {
+        D_800E69A1 += 1;
+        (&D_800E71DF)[-0x83D] = 0; /* FAKE: storing through the symbol of the later load keeps that load after the store; matches, real source unknown. T-4090 */
+        D_800E69DD = D_800E71DF;
+        D_800E71DF = 0;
+        func_80042908(6);
+        return;
+    }
+    func_80042908((D_800E69A1 + 1) & 0xFF);
+}
 
 void func_80135278(void) {
     D_800E62BC = D_8013C1C0;

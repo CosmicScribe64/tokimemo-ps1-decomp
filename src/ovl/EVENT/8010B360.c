@@ -19,7 +19,14 @@ void func_8010B410(void) {
     func_8010B430();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B430);
+void func_8010B430(void) {
+    func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
+    if (D_800B1AF5 == 0) {
+        func_8010B490();
+    } else {
+        func_80015FE0();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B490);
 

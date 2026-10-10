@@ -5,7 +5,19 @@ extern u8 D_8014A161;
 extern u8 D_8014A185;
 extern u8 D_8014A1A9;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142240);
+typedef struct {
+    void (*f[10])();
+} FnTbl10; /* size 0x28 */
+extern FnTbl10 D_8014A254;
+
+void func_80142240(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl10 tbl;
+
+    tbl = D_8014A254;
+    idx = D_800E7389;
+    tbl.f[idx]();
+}
 
 void func_801422BC(void) {
     if (D_800E738A == 0) {

@@ -9,7 +9,22 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079B34);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079C70);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079D28);
+void func_80079D28(s16 arg0) {
+    s32 off;
+    s32 pad; /* FAKE: unused local; the original frame has 8 more bytes of locals (spill of off at sp+0x2C); real source unknown. T-4090 */
+
+    off = arg0 * 4;
+    if (func_8008C1B0(*(s32 *)((u8 *) D_80125D60 + off), arg0, *(s32 *)((u8 *) D_80125D80 + off)) == -1) {
+        func_80059B04(((arg0 << 8) & 0xFF00) | 0x01010000, arg0);
+        return;
+    }
+    D_80125D10 |= 0x10000 << arg0;
+    if (func_8008C620(*(s32 *)((u8 *) D_80125D70 + off), arg0) == -1) {
+        func_80059B04(((arg0 << 8) & 0xFF00) | 0x01020000, arg0);
+        return;
+    }
+    SsVabTransCompleted(1, arg0);
+}
 
 s32 func_80079E00(s32 arg0) {
     if ((D_80125D14 & (0x10000000 << (u16)D_80125D4C)) == 0) {
@@ -41,7 +56,24 @@ void func_80079E9C(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079F00);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A008);
+void func_8007A008(void) {
+    s32 v;
+
+    v = D_80125D14;
+    if (v != 0) {
+        if ((u32) v >> 24) {
+            func_80079C70();
+            v = D_80125D14;
+        }
+        if (v & 0xFF) {
+            func_8007ABE0();
+            v = D_80125D14;
+        }
+        if (v & 0xFF00) {
+            func_8007A4DC();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A080);
 
@@ -104,7 +136,38 @@ void func_8007A5BC(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A618);
+void func_8007A618(u32 arg0) {
+    D_80125D2E = 0x64;
+    switch (arg0) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        break;
+    case 6:
+        D_80125D2E = 0x7D;
+        break;
+    case 7:
+        D_80125D2E = 0x5F;
+        break;
+    case 9:
+    case 11:
+        D_80125D2E = 0x5F;
+        break;
+    case 10:
+        D_80125D2E = 0x5A;
+        break;
+    case 12:
+    case 13:
+        D_80125D2E = 0x6E;
+        break;
+    case 15:
+        D_80125D2E = 0x69;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A6AC);
 
@@ -277,7 +340,33 @@ void func_8007B844(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B8F8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B99C);
+void func_8007B99C(u16 arg0) {
+    s32 v;
+
+    v = func_800451D0();
+    switch (arg0) {
+    case 17:
+        D_80125D70[0] = v;
+        D_80125D70[1] = v + 0x10000;
+        break;
+    case 18:
+        D_80125D70[2] = v;
+        D_80125D70[3] = v + 0x28000;
+        break;
+    case 19:
+        D_80125D70[0] = v;
+        break;
+    case 20:
+        D_80125D70[1] = v;
+        break;
+    case 21:
+        D_80125D70[2] = v;
+        break;
+    case 22:
+        D_80125D70[3] = v;
+        break;
+    }
+}
 
 void func_8007BA54(void) {
     D_80125D54 = 0xC8;

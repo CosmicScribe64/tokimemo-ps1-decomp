@@ -2,7 +2,25 @@
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801320A0", func_801320A0);
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801320A0", func_801322E4);
+typedef struct {
+    void (*f[25])();
+} FnTbl25; /* size 0x64 */
+extern FnTbl25 D_80134AF0;
+
+void func_801322E4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl25 tbl;
+
+    tbl = D_80134AF0;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_800E738A < 0xEU) {
+        func_80066C08(1);
+        parameter_show();
+        return;
+    }
+    func_80066C08(2);
+}
 
 void func_80132398(void) {
     if ((D_800E62C0 == ((u32)(D_800E6378 << 0x17) >> 0x1B)) && (D_800E62BF == (D_800E6378 & 0xF))) {

@@ -149,4 +149,8 @@ void func_8014AB5C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014AB88);
+void func_8014AB88(void) {
+    func_80048E78();
+    func_800AE0B0("shinro %x \n", D_800E6377);
+    func_80072B5C(1);
+}

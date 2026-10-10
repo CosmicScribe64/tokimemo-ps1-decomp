@@ -55,5 +55,9 @@ void func_80132EE8();
 void func_80132DC4();
 
 extern s32 D_80139AFC;
+extern s32 D_80139B18;
+extern u8 D_80139A2C[];
+extern s32 D_80139278[];
+void func_80135ACC();
 
 #endif /* OVL_EN_NICHI_H */
