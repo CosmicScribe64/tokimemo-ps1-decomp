@@ -29,6 +29,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-3300-tooling-fix-wave-2-bugs|T-3300 Tooling: fix bugs reported by wave 2]]
+
 
 
 ## Done

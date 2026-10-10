@@ -450,3 +450,6 @@ Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1):
 
 ## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
 [[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.
+
+## [2026-10-09] ticket | T-3300 Tooling: fix bugs reported by wave 2 (In Review)
+[[tickets/T-3300-tooling-fix-wave-2-bugs]]: `tools/m2c.py` (explicit/inferred unit, ambiguous names refused, `%lo` workaround for an upstream m2c bug), `tools/funcdiff.py` (L names, ninja freshness check, host message, `--resolve`), `tools/srcscan.py` (K&R), `tools/identify_version.py` (zip/7z/chd; `tools/Dockerfile` gets p7zip-full and mame-tools). New tests `tools/test_srcscan.py`, `tools/test_funcdiff.py`, more in `tools/test_m2c.py` and `tools/test_identify_version.py`. Details in [[matching-notes]] ("Tooling fixes T-3300"), usage in [[decompile-workflow]], [[versions]], [[toolchain]].
