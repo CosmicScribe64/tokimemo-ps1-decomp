@@ -1839,5 +1839,6 @@ void func_800BCDF0();
 void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
+void func_80059BC0(void);
 
 #endif /* MAIN_API_H */
