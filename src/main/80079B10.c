@@ -163,7 +163,37 @@ void func_8007AD6C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007ADD8);
+void func_8007ADD8(s32 arg0) {
+    s32 a;
+
+    a = arg0 & 0xFFFF;
+    switch (a & 0xF000) {
+    case 0x0:
+        if (D_80125D14 & 1) {
+            D_80125D3C = a & 0xFF;
+            func_8007AD6C();
+            return;
+        }
+        if (D_80125D10 & 0x100) {
+            D_80125D3C = a & 0xFF;
+            func_8007B2B4(0xB1, a);
+            return;
+        }
+        D_80125D3A = a & 0xFF;
+        D_80125D3C = -1;
+        func_8007AEC0();
+        return;
+    case 0x1000:
+        func_8007B144(0x71, a);
+        return;
+    case 0x2000:
+        func_8007B144(0xE1, a);
+        return;
+    case 0x4000:
+        func_8007B144(0xF1, a);
+        return;
+    }
+}
 
 void func_8007AEC0(void) {
     if (func_80079E00(D_80125D4C) == 0) {
