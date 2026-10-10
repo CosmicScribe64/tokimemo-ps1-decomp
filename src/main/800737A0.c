@@ -1,6 +1,5 @@
 #include "common.h"
 #include "game.h"
-#include "main_only.h"
 
 void func_800737A0(void) {
     func_80072B5C(0);

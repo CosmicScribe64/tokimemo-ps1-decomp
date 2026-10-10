@@ -1,6 +1,5 @@
 #include "common.h"
 #include "game.h"
-#include "main_only.h"
 
 void func_80085E30(s32 arg0, s32 arg1) {
     draw2d3d(1, 0);

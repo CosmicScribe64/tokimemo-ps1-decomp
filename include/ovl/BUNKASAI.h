@@ -11,7 +11,6 @@ extern u32 D_801604F4;
 extern u32 D_801604F8;
 
 extern s32 D_8015D774;
-void func_800847B8(s32 arg0);
 
 /* defined in C in one object, called from another (T-0500) */
 void func_80132000(void);

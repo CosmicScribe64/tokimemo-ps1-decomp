@@ -1,16 +1,18 @@
 #ifndef OVL_GEKO_H
 #define OVL_GEKO_H
 
+/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
+#define MAIN_API_OVERRIDE_D_801206DA /* matched as u8 (main_api.h: s8) */
+#define MAIN_API_OVERRIDE_func_800847B8 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+
 #include "common.h"
 #include "game.h"
 
 /* Overlay-local externs (T-1300). */
 void func_80141BC0();
 extern u8 D_80145088;
-void normal_date_girl_in(void);
 extern u8 D_80144C58;
 s32 func_801322E8(void);
-void func_80046318(s32 arg0, s32 arg1, s32 arg2);
 void func_80134F84(void);
 void func_80134D10(void);
 extern s32 D_80145048;
@@ -28,8 +30,6 @@ extern s32 D_80144E80;
 extern s32 D_80144E84;
 extern s32 D_80144E88;
 extern s16 D_80145064;
-extern s16 D_800CA150;
-extern s16 D_800CA154;
 extern s32 D_80146274;
 extern s32 D_80146278;
 extern s32 D_8014627C;
@@ -38,16 +38,9 @@ extern s16 D_801476DC;
 extern s32 D_801476CC;
 extern s32 D_801476D0;
 extern s32 D_801476D4;
-void check_k_scroll();
-void func_80083808();
-void func_80083A10();
 void func_801429D4();
-void k_disp_inc2();
 
-extern u32 D_800E7378;
-extern u8 D_80120657;
 extern u8 D_801206DA;
-extern u8 D_801206DF;
 
 extern s32 D_80146780;
 extern s32 D_80146784;
@@ -219,72 +212,19 @@ extern s16 D_80144C3C;
 
 extern u8 D_80144C50;
 
-extern u8 D_800E682F;
-
-extern s8 D_800E683B;
-
-extern s16 D_8011F4EE;
-extern s16 D_8011F532;
-extern s16 D_801217F8;
-
-extern s32 D_80122CE0;
-
 extern s32 D_80144C30;
 extern s32 D_80144C34;
 extern s32 D_80144C38;
 extern u8 D_80144C40;
 
-extern u8 D_800E691C;
-
-extern u16 D_800E6374;
-extern u8 D_800E652A;
-
-extern s32 D_80122CD4;
-extern s32 D_80122CE4;
 extern u8 D_8014508C;
-extern s32 D_80122CF0;
-extern s32 D_80122CD0;
-extern s32 D_80122D38;
-extern s32 D_800E74BC;
 extern s8 D_80145070;
 extern s32 D_80144FD8;
 extern s32 D_8014500C;
 extern s32 D_80145040;
-extern s8 D_800CA368;
-extern s16 D_800E6636;
-extern s16 D_800E663A;
-extern u8 D_800E6641;
-extern s32 D_801217F4;
-extern s32 D_80122CF4;
 extern s8 D_80144C54;
-extern s8 D_800CA360;
-extern s32 D_800E7368;
 extern s8 D_8014507C;
-extern s8 D_80120698;
-extern u8 D_8011F4CF;
-extern u8 D_8011F513;
-extern s16 D_8011F524;
-extern s32 D_800E7510;
-extern s8 D_8012071D;
-extern s8 D_8012071E;
-extern s8 D_8012071F;
-extern s8 D_80120720;
-extern s8 D_80120721;
-extern s8 D_80120722;
-extern s8 D_80120723;
-extern s16 D_80120724;
-extern s32 D_80120728;
-extern s32 D_8012072C;
-extern s16 D_80120730;
-extern s16 D_80120732;
-extern s16 D_80120734;
-extern s16 D_80120742;
-extern s16 D_80120746;
-extern s32 D_80120750;
-extern s32 D_80120754;
-extern s8 D_8012075F;
 extern u8 D_80145074;
-
 
 void func_801394B0(void);
 void func_8013C5B0(void);
@@ -292,20 +232,11 @@ void func_8013D1E0(void);
 void func_8013DC70(void);
 void func_8013EF30(void);
 
-extern u8 D_800E6448[];
-extern u8 D_800E6807;
-extern u8 D_800E6808;
-extern u8 D_800E683E;
 extern u8 D_801476E0;
-extern s8 D_800B5BD4;
 
 void func_80137560(void);
 
 /* defined in C in one object, called from another (T-0500) */
 void func_80138AF8(void);
-void func_8007ED84();
-extern s32 D_800B3688[];
-extern s32 D_800B36C8[];
-extern s32 D_800B3708[];
 
 #endif

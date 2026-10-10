@@ -12,6 +12,15 @@ in one translation unit. Inside one closure there must be exactly one type per s
 With a source directory, the declarations and function definitions at the top level of each
 .c file are also compared with the headers it includes (conflicts only).
 
+Main-exe symbols have one home, include/main_api.h (T-3340): when that file exists, the checks of
+tools/sync_protos.py run too (a main-exe symbol declared in another header, an overlay view that
+differs from main_api.h without an explicit MAIN_API_OVERRIDE_<symbol>, ...). Each message names
+the fix.
+
+Headers are read with a small preprocessor (#include, #define, #ifdef/#ifndef/#else/#endif in
+file order), so a MAIN_API_OVERRIDE_<symbol> define in an overlay header hides the declaration
+of main_api.h in that overlay's translation units.
+
 Checked: `extern` objects and function prototypes (return type and parameter types; an
 unprototyped `()` list is compatible with any list). Exact repeats are reported too:
 they are harmless to the compiler but are clutter, so they fail the check as well.
@@ -77,9 +86,12 @@ def parse_declarator(d, base):
     return name, norm(base) + stars + rest
 
 
-def declarations(path, defs=False):
-    with open(path) as fh:
-        text = strip(fh.read())
+def declarations_text(text, defs=False):
+    """Yield (name, normalized type, raw statement) for the top-level declarations of C text.
+
+    `raw` is the statement with comments removed and white space collapsed (no `extern`, no `;`);
+    tools/sync_protos.py uses it to write declarations."""
+    text = strip(text)
     # drop brace bodies (typedef struct/enum/union bodies, inline code)
     out, depth = "", 0
     for ch in text:
@@ -112,7 +124,15 @@ def declarations(path, defs=False):
         for i, d in enumerate([d0] + decls[1:]):
             r = parse_declarator(d, base)
             if r:
-                yield r
+                yield r[0], r[1], re.sub(r"\s+", " ", (base + d if i == 0 else base + " " + d)).strip()
+
+
+def declarations(path, defs=False):
+    """Yield (name, normalized type) for the top-level declarations of one file."""
+    with open(path) as fh:
+        text = fh.read()
+    for name, typ, _raw in declarations_text(text, defs):
+        yield name, typ
 
 
 def includes(path):
@@ -120,6 +140,84 @@ def includes(path):
         src = fh.read()
     for m in re.finditer(r'^\s*#\s*include\s+"([^"]+)"', src, flags=re.M):
         yield m.group(1)
+
+
+_SEGMENTS = {}
+
+
+def segments(path):
+    """File as a list of ('decls', [(name, type, raw)]) and ('dir', keyword, argument), in order."""
+    if path in _SEGMENTS:
+        return _SEGMENTS[path]
+    with open(path) as fh:
+        text = fh.read()
+    # comments out (newlines kept), directive continuation lines joined
+    text = re.sub(r"/\*.*?\*/", lambda m: "\n" * m.group(0).count("\n"), text, flags=re.S)
+    text = re.sub(r"\\\n", " ", text)
+    segs, chunk = [], []
+
+    def flush():
+        if chunk:
+            segs.append(("decls", list(declarations_text("\n".join(chunk)))))
+            del chunk[:]
+
+    for line in text.split("\n"):
+        m = re.match(r"^\s*#\s*(\w+)\s*(.*)$", line)
+        if m:
+            flush()
+            segs.append(("dir", m.group(1), m.group(2).strip()))
+        else:
+            chunk.append(line)
+    flush()
+    _SEGMENTS[path] = segs
+    return segs
+
+
+def walk(path, inc, defines=None, seen=None, rel=None, out=None):
+    """Declarations visible after reading `path` (a header or a .c file) in order, with #include,
+    #define, #undef and #ifdef/#ifndef/#else/#endif evaluated (`#if` is read as true, `#if 0` as
+    false). Returns [(name, type, file relative to inc, raw)]; `defines` is updated in place."""
+    defines = set() if defines is None else defines
+    seen = set() if seen is None else seen
+    out = [] if out is None else out
+    rel = rel or os.path.relpath(path, inc)
+    seen.add(rel)
+    stack, active = [], True   # (parent active, this branch taken before)
+    for seg in segments(path):
+        if seg[0] == "decls":
+            if active:
+                for name, typ, raw in seg[1]:
+                    out.append((name, typ, rel, raw))
+            continue
+        _k, kw, arg = seg
+        word = arg.split()[0] if arg.split() else ""
+        if kw in ("ifdef", "ifndef"):
+            cond = (word in defines) == (kw == "ifdef")
+            stack.append((active, cond))
+            active = active and cond
+        elif kw == "if":
+            cond = arg.strip() != "0"
+            stack.append((active, cond))
+            active = active and cond
+        elif kw in ("elif", "else"):
+            parent, taken = stack[-1]
+            cond = (not taken) if kw == "else" else (not taken and arg.strip() != "0")
+            stack[-1] = (parent, taken or cond)
+            active = parent and cond
+        elif kw == "endif":
+            if stack:
+                active, _t = stack.pop()
+        elif not active:
+            continue
+        elif kw == "define":
+            defines.add(re.split(r"[\s(]", arg)[0])
+        elif kw == "undef":
+            defines.discard(word)
+        elif kw == "include":
+            m = re.match(r'"([^"]+)"', arg)
+            if m and m.group(1) not in seen and os.path.exists(os.path.join(inc, m.group(1))):
+                walk(os.path.join(inc, m.group(1)), inc, defines, seen, m.group(1), out)
+    return out
 
 
 NARROW = ("u8", "s8", "u16", "s16", "float")
@@ -142,29 +240,27 @@ def compatible(a, b):
     return False
 
 
-def check(inc, src=None):
+def header_files(inc):
+    """{path relative to inc: absolute path} of every header under inc."""
     headers = {}
     for root, _d, files in os.walk(inc):
         for f in files:
             if f.endswith(".h"):
                 headers[os.path.relpath(os.path.join(root, f), inc)] = os.path.join(root, f)
+    return headers
 
-    def closure(h, seen):
-        if h in seen or h not in headers:
-            return
-        seen.append(h)
-        for i in includes(headers[h]):
-            closure(i, seen)
 
-    own = {h: list(declarations(p)) for h, p in headers.items()}
+def check(inc, src=None, api=True):
+    _SEGMENTS.clear()
+    headers = header_files(inc)
     problems = set()
+    visible = {}   # header -> declarations visible after reading it as a root
     for h in sorted(headers):
-        files = []
-        closure(h, files)
+        items = walk(headers[h], inc)
+        visible[h] = items
         seen = {}
-        for f in files:
-            for name, typ in own[f]:
-                seen.setdefault(name, []).append((typ, f))
+        for name, typ, f, _raw in items:
+            seen.setdefault(name, []).append((typ, f))
         for name, lst in seen.items():
             for i in range(len(lst)):
                 for j in range(i + 1, len(lst)):
@@ -178,7 +274,7 @@ def check(inc, src=None):
     # a duplicate inside one header (same file twice)
     for h in sorted(headers):
         c = {}
-        for name, typ in own[h]:
+        for name, typ in declarations(headers[h]):
             c.setdefault(name, []).append(typ)
         for name, ts in c.items():
             for k in range(1, len(ts)):
@@ -193,16 +289,15 @@ def check(inc, src=None):
                     continue
                 path = os.path.join(root, f)
                 seen = {}
-                files_in = []
-                for i in includes(path):
-                    closure(i, files_in)
-                for hf in files_in:
-                    for name, typ in own[hf]:
-                        seen.setdefault(name, []).append((typ, hf))
+                for name, typ, hf, _raw in walk(path, inc, rel="<src>"):
+                    seen.setdefault(name, []).append((typ, hf))
                 for name, typ in declarations(path, defs=True):
                     for t2, hf in seen.get(name, []):
                         if not compatible(typ, t2):
                             problems.add("conflict %s: '%s' in %s vs '%s' in %s" % (name, typ, path, t2, hf))
+    if api and "main_api.h" in headers:
+        import sync_protos
+        problems.update(sync_protos.check_api(inc, src))
     return sorted(problems)
 
 

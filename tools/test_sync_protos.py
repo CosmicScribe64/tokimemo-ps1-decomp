@@ -1,0 +1,384 @@
+#!/usr/bin/env python3
+"""Tests for tools/sync_protos.py and the main_api.h rules of tools/check_headers.py (synthetic
+headers and sources, no game data).
+
+Run: tools/docker.sh python3 tools/test_sync_protos.py
+"""
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+import check_headers
+import sync_protos as sp
+
+API = """#ifndef MAIN_API_H
+#define MAIN_API_H
+#include "common.h"
+extern u8 D_800E7388;
+extern s32 D_800E7384;
+void func_80042808(void);
+#ifndef MAIN_API_OVERRIDE_func_80083440
+void func_80083440(u8 arg0);
+#endif
+#endif
+"""
+
+
+class Repo(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        self.inc = self.root / "include"
+        (self.inc / "ovl").mkdir(parents=True)
+        (self.root / "src" / "main").mkdir(parents=True)
+        (self.root / "src" / "ovl" / "AAA").mkdir(parents=True)
+        (self.root / "config").mkdir()
+        (self.root / "config" / "overlays.txt").write_text("AAA 0x80132000 0x100\nBBB 0x80132000 0x100\nEVT 0x800F6000 0x100\n")
+        (self.root / "config" / "symbol_addrs.txt").write_text("SenseMouse = 0x800460E0; // type:func\n")
+        self.write("common.h", "#ifndef COMMON_H\n#define COMMON_H\ntypedef signed char s8;\ntypedef unsigned char u8;\n"
+                   "typedef signed short s16;\ntypedef unsigned short u16;\ntypedef signed int s32;\n"
+                   "typedef unsigned int u32;\n#endif\n")
+        self.write("libgpu.h", "#ifndef LIBGPU_H\n#define LIBGPU_H\n#endif\n")
+        self.write("main_api.h", API)
+        self.write("game.h", '#ifndef GAME_H\n#define GAME_H\n#include "common.h"\n#include "main_api.h"\n#endif\n')
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def write(self, name, text):
+        p = self.inc / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(text)
+
+    def src(self, name, text):
+        p = self.root / "src" / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(text)
+
+    def ovl(self, name, body, head='#include "common.h"\n#include "game.h"\n'):
+        self.write("ovl/%s.h" % name, "#ifndef OVL_%s_H\n#define OVL_%s_H\n%s%s#endif\n" % (name, name, head, body))
+
+    def problems(self):
+        return check_headers.check(str(self.inc), str(self.root / "src"))
+
+    def has(self, text):
+        out = self.problems()
+        self.assertTrue(any(text in p for p in out), out)
+
+
+class CheckApiTest(Repo):
+    def test_clean(self):
+        self.ovl("AAA", "extern s32 D_80140000;\nvoid func_80132000(void);\n")
+        self.assertEqual(self.problems(), [])
+
+    def test_main_symbol_in_overlay_header_must_move(self):
+        self.ovl("AAA", "extern u8 D_800E7399;\n")
+        self.has("declare it in include/main_api.h")
+
+    def test_main_symbol_in_game_h_must_move(self):
+        self.write("game.h", '#ifndef GAME_H\n#define GAME_H\n#include "main_api.h"\nextern u8 D_800E7399;\n#endif\n')
+        self.has("main symbol D_800E7399 is declared in include/game.h")
+
+    def test_duplicate_of_the_api(self):
+        self.ovl("AAA", "extern u8 D_800E7388;\n")
+        self.has("duplicate D_800E7388")
+
+    def test_conflict_names_the_override(self):
+        self.ovl("AAA", "extern s8 D_800E7388;\n")
+        self.has("MAIN_API_OVERRIDE_D_800E7388")
+
+    def test_override_hides_the_api_declaration(self):
+        self.ovl("AAA", "extern s8 D_800E7388;\n", head='#define MAIN_API_OVERRIDE_D_800E7388 /* lb */\n'
+                 '#include "common.h"\n#include "game.h"\n')
+        self.write("main_api.h", API.replace("extern u8 D_800E7388;", "#ifndef MAIN_API_OVERRIDE_D_800E7388\n"
+                                             "extern u8 D_800E7388;\n#endif"))
+        self.assertEqual(self.problems(), [])
+
+    def test_override_must_be_guarded_in_the_api(self):
+        self.ovl("AAA", "extern s8 D_800E7388;\n", head='#define MAIN_API_OVERRIDE_D_800E7388 /* lb */\n'
+                 '#include "common.h"\n#include "game.h"\n')
+        self.has("is not guarded")
+
+    def test_override_needs_a_reason(self):
+        self.ovl("AAA", "void func_80083440(s32 a);\n", head='#define MAIN_API_OVERRIDE_func_80083440\n'
+                 '#include "common.h"\n#include "game.h"\n')
+        self.has("has no reason")
+
+    def test_redundant_override(self):
+        self.ovl("AAA", "void func_80083440(u8 arg0);\n", head='#define MAIN_API_OVERRIDE_func_80083440 /* why */\n'
+                 '#include "common.h"\n#include "game.h"\n')
+        self.has("is redundant")
+
+    def test_override_of_unknown_symbol(self):
+        self.ovl("AAA", "", head='#define MAIN_API_OVERRIDE_D_800E7777 /* why */\n#include "common.h"\n#include "game.h"\n')
+        self.has("does not declare")
+
+    def test_implicit_override_needs_no_declaration(self):
+        self.ovl("AAA", "", head='#define MAIN_API_OVERRIDE_func_80083440 /* implicit declaration, as matched */\n'
+                 '#include "common.h"\n#include "game.h"\n')
+        self.assertEqual(self.problems(), [])
+        self.ovl("AAA", "", head='#define MAIN_API_OVERRIDE_func_80083440 /* matched */\n#include "common.h"\n#include "game.h"\n')
+        self.has("has no declaration there")
+
+    def test_overlay_header_must_reach_the_api(self):
+        self.ovl("AAA", "extern s32 D_80140000;\n", head='#include "common.h"\n')
+        self.has("does not include main_api.h")
+
+    def test_definition_is_the_truth(self):
+        self.src("main/80042808.c", '#include "game.h"\nvoid func_80042808(s32 a) {\n}\n')
+        self.has("defines it as")
+
+    def test_k_and_r_api_entry_is_accepted_for_a_prototype_definition(self):
+        self.write("main_api.h", API.replace("void func_80042808(void);", "void func_80042808();"))
+        self.src("main/80042808.c", '#include "game.h"\nvoid func_80042808(s32 a) {\n}\n')
+        self.assertEqual(self.problems(), [])
+
+    def test_c_file_duplicate(self):
+        self.src("ovl/AAA/80132000.c", '#include "common.h"\n#include "ovl/AAA.h"\nextern u8 D_800E7388;\n')
+        self.ovl("AAA", "")
+        self.has("duplicate D_800E7388: src/ovl/AAA/80132000.c")
+
+    def test_renamed_symbol_counts_as_main(self):
+        self.ovl("AAA", "void SenseMouse(u16 a, u16 b);\n")
+        self.has("main symbol SenseMouse")
+
+    def test_event_range_is_the_overlays_own_unless_declared_elsewhere(self):
+        self.ovl("EVT", "extern s32 D_80120650;\n")
+        self.assertEqual(self.problems(), [])
+        self.ovl("AAA", "extern u8 D_80120650[];\n")
+        self.has("main symbol D_80120650 is declared in include/ovl/AAA.h")
+
+    def test_no_api_no_rules(self):
+        (self.inc / "main_api.h").unlink()
+        self.write("game.h", "extern u8 D_800E7399;\n")
+        self.ovl("AAA", "extern u8 D_800E7399;\n")
+        self.assertTrue(any(p.startswith("duplicate D_800E7399") for p in self.problems()))
+
+
+class PlanTest(Repo):
+    def plan(self):
+        return sp.plan(sp.Model(str(self.inc), str(self.root / "src")))
+
+    def test_definition_wins(self):
+        self.write("main_api.h", API.replace("void func_80042808(void);", ""))
+        self.ovl("AAA", "void func_80042808(s32 a);\n")
+        self.src("main/80042808.c", '#include "game.h"\nvoid func_80042808(u8 a) {\n}\n')
+        t, raw, why = self.plan()["func_80042808"]
+        self.assertEqual((t, why), ("voidF(u8)", "definition"))
+        self.assertEqual(raw, "void func_80042808(u8 a)")
+
+    def test_existing_api_entry_is_kept_over_overlay_views(self):
+        self.ovl("AAA", "extern s8 D_800E7388;\n")
+        self.assertEqual(self.plan()["D_800E7388"][0], "u8")
+
+    def test_unprototyped_entry_takes_the_call_site_prototype(self):
+        self.write("main_api.h", API.replace("void func_80042808(void);", "void func_80042808();"))
+        self.write("game.h", '#ifndef GAME_H\n#define GAME_H\n#include "main_api.h"\n#endif\n')
+        self.ovl("AAA", "void func_80042808(s32 a);\n")
+        # no definition: the call sites of the overlays are the evidence
+        self.write("main_api.h", "#ifndef MAIN_API_H\n#define MAIN_API_H\n#endif\n")
+        self.write("game.h", '#ifndef GAME_H\n#define GAME_H\nvoid func_80042808();\n#endif\n')
+        self.assertEqual(self.plan()["func_80042808"][0], "voidF(s32)")
+
+    def test_narrow_call_site_prototype_does_not_replace_unprototyped(self):
+        self.write("main_api.h", "#ifndef MAIN_API_H\n#define MAIN_API_H\n#endif\n")
+        self.write("game.h", '#ifndef GAME_H\n#define GAME_H\nvoid func_80042808();\n#endif\n')
+        self.ovl("AAA", "void func_80042808(u8 a);\n")
+        self.assertEqual(self.plan()["func_80042808"][0], "voidF()")
+
+    def test_most_used_overlay_view_wins_without_a_home(self):
+        self.write("main_api.h", "#ifndef MAIN_API_H\n#define MAIN_API_H\n#endif\n")
+        self.ovl("AAA", "extern s8 D_800E7399;\n")
+        self.ovl("BBB", "extern u8 D_800E7399;\n")
+        self.src("ovl/BBB/80132000.c", '#include "ovl/BBB.h"\nvoid f(void) {\n    D_800E7399 = 1;\n}\n')
+        self.assertEqual(self.plan()["D_800E7399"][0], "u8")
+
+    def test_type_only_the_header_knows_stays_out(self):
+        self.ovl("AAA", "typedef struct Rec {\n    s32 a;\n} Rec;\nextern Rec D_800E7399;\n")
+        self.assertNotIn("D_800E7399", self.plan())
+
+
+class WriteFixTest(Repo):
+    def model(self):
+        return sp.Model(str(self.inc), str(self.root / "src"))
+
+    def test_write_is_idempotent_and_keeps_comments(self):
+        self.write("main_api.h", API.replace("extern u8 D_800E7388;", "extern u8 D_800E7388; /* keep me */"))
+        self.ovl("AAA", "extern u8 D_800E7399; /* new one */\n")
+        m = self.model()
+        sp.write_api(m, sp.plan(m))
+        text = (self.inc / "main_api.h").read_text()
+        self.assertIn("extern u8 D_800E7388; /* keep me */", text)
+        self.assertIn("extern u8 D_800E7399; /* new one */", text)
+        m = self.model()
+        changed, _n, _g = sp.write_api(m, sp.plan(m))
+        self.assertFalse(changed)
+
+    def test_write_guards_overrides_and_sorts_by_address(self):
+        self.ovl("AAA", "extern s8 D_800E7388;\n", head='#define MAIN_API_OVERRIDE_D_800E7388 /* lb */\n'
+                 '#include "common.h"\n#include "game.h"\n')
+        self.ovl("BBB", "extern u8 D_800E7000;\n")
+        m = self.model()
+        sp.write_api(m, sp.plan(m))
+        sp.fix_header(self.model(), sp.plan(self.model()), "ovl/BBB.h", log=lambda *a: None)
+        text = (self.inc / "main_api.h").read_text()
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_D_800E7388\nextern u8 D_800E7388;\n#endif", text)
+        self.assertLess(text.index("D_800E7000"), text.index("D_800E7384"))
+        self.assertEqual(self.problems(), [])
+
+    def test_fix_drops_same_and_unused_and_marks_used_views(self):
+        self.ovl("AAA", "extern u8 D_800E7388;\nextern s8 D_800E7384;\nvoid func_80083440(s32 a);\nextern s32 D_80140000;\n")
+        self.src("ovl/AAA/80132000.c", '#include "common.h"\n#include "ovl/AAA.h"\n'
+                 "void f(void) {\n    func_80083440(D_800E7388);\n}\n")
+        m = self.model()
+        plan = sp.plan(m)
+        sp.fix_header(m, plan, "ovl/AAA.h", log=lambda *a: None)
+        text = (self.inc / "ovl/AAA.h").read_text()
+        self.assertNotIn("extern u8 D_800E7388;", text)        # same type
+        self.assertNotIn("D_800E7384", text)                    # other type, unused
+        self.assertIn("extern s32 D_80140000;", text)           # overlay symbol stays
+        self.assertIn("void func_80083440(s32 a);", text)       # used and different: kept as an override
+        self.assertIn("#define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */", text)
+        self.assertLess(text.index("MAIN_API_OVERRIDE"), text.index("#include"))
+        sp.write_api(self.model(), sp.plan(self.model()))
+        self.assertEqual(self.problems(), [])
+
+    def test_fix_adds_the_include_and_splits_multi_declarator_lines(self):
+        self.ovl("AAA", "extern u8 D_800E7388, D_80140000, D_800E7384;\n", head='#include "common.h"\n')
+        m = self.model()
+        sp.fix_header(m, sp.plan(m), "ovl/AAA.h", log=lambda *a: None)
+        text = (self.inc / "ovl/AAA.h").read_text()
+        self.assertIn('#include "main_api.h"', text)
+        self.assertIn("extern u8 D_80140000;", text)
+        self.assertNotIn("D_800E7388", text)
+
+    def test_prune_keeps_only_what_the_build_needs(self):
+        head = '#define MAIN_API_OVERRIDE_D_800E7388 /* lb */\n#define MAIN_API_OVERRIDE_D_800E7384 /* lw */\n' \
+               '#include "common.h"\n#include "game.h"\n'
+        self.ovl("AAA", "extern s8 D_800E7388;\nextern u32 D_800E7384;\n", head=head)
+        self.write("main_api.h", API.replace("extern u8 D_800E7388;", "#ifndef MAIN_API_OVERRIDE_D_800E7388\nextern u8 D_800E7388;\n#endif")
+                   .replace("extern s32 D_800E7384;", "#ifndef MAIN_API_OVERRIDE_D_800E7384\nextern s32 D_800E7384;\n#endif"))
+        asked = []
+
+        def run(target):
+            asked.append(target)
+            return "extern s8 D_800E7388;" in (self.inc / "ovl/AAA.h").read_text()
+
+        # the build "fails" whenever the s8 view is gone, passes when only the u32 view is removed
+        removed, kept = sp.prune(self.model(), run=run, log=lambda *a: None)
+        self.assertEqual(asked[0], "build/ovl/AAA.ok")
+        self.assertEqual(sorted(n for _f, n in removed), ["D_800E7384"])
+        self.assertEqual(sorted(n for _f, n in kept), ["D_800E7388"])
+        text = (self.inc / "ovl/AAA.h").read_text()
+        self.assertIn("extern s8 D_800E7388;", text)
+        self.assertNotIn("D_800E7384", text)
+
+    def test_remove_override_drops_the_empty_block_comment(self):
+        self.ovl("AAA", "extern s8 D_800E7388;\n", head="/* main_api.h overrides (T-3340): views */\n"
+                 "#define MAIN_API_OVERRIDE_D_800E7388 /* lb */\n#include \"common.h\"\n#include \"game.h\"\n")
+        sp.remove_override(str(self.inc / "ovl/AAA.h"), "D_800E7388")
+        text = (self.inc / "ovl/AAA.h").read_text()
+        self.assertNotIn("main_api.h overrides", text)
+        self.assertNotIn("D_800E7388", text)
+
+
+    def test_remove_override_in_a_c_file_keeps_code_untouched(self):
+        path = self.root / "src" / "main" / "80042808.c"
+        path.write_text("/* main_api.h overrides (T-3340): views */\n#define MAIN_API_OVERRIDE_func_80083440 /* implicit */\n\n"
+                        '#include "game.h"\n\nvoid f(void) {\n    if (D_800E7388) {\n        func_80083440(1);\n    }\n}\n')
+        sp.remove_override(str(path), "func_80083440")
+        self.assertEqual(path.read_text(), '#include "game.h"\n\nvoid f(void) {\n    if (D_800E7388) {\n'
+                                           '        func_80083440(1);\n    }\n}\n')
+
+
+class ViewsTest(Repo):
+    def views(self):
+        return sp.snapshot(sp.Model(str(self.inc), str(self.root / "src")))
+
+    def test_snapshot_and_compare(self):
+        self.ovl("AAA", "void func_80042808();\nextern s32 D_80140000;\n")
+        self.src("ovl/AAA/80132000.c", '#include "common.h"\n#include "ovl/AAA.h"\n'
+                 "void f(void) {\n    func_80042808();\n    D_80140000 = D_800E7388;\n}\n")
+        before = self.views()
+        self.assertIn("D_80140000", before["src/ovl/AAA/80132000.c"])
+        self.assertIn("D_800E7388", before["src/ovl/AAA/80132000.c"])
+        self.assertEqual(sp.view_changes(before, self.views()), [])
+        changes = sp.view_changes({"u": {"f": "voidF()", "g": "u8", "h": "voidF(s32)"}},
+                                  {"u": {"f": "voidF(s32,s32)", "g": "u8[]", "h": "voidF(u8)"}})
+        self.assertEqual({c[1]: c[5] for c in changes}, {"f": "benign", "g": "risky", "h": "risky"})
+
+    def test_implicit_to_narrow_prototype_is_risky(self):
+        self.src("ovl/AAA/80132000.c", '#include "common.h"\n#include "ovl/AAA.h"\nvoid f(void) {\n    func_80083440(1);\n}\n')
+        self.ovl("AAA", "")
+        old = {"src/ovl/AAA/80132000.c": {}}
+        changes = sp.view_changes(old, self.views())
+        self.assertEqual([(c[1], c[5]) for c in changes], [("func_80083440", "risky")])
+
+    def test_implicit_to_void_prototype_needs_the_build(self):
+        self.src("ovl/AAA/80132000.c", '#include "common.h"\n#include "ovl/AAA.h"\nvoid f(void) {\n    func_80042808();\n}\n')
+        self.ovl("AAA", "")
+        changes = sp.view_changes({"src/ovl/AAA/80132000.c": {}}, self.views())
+        self.assertEqual([(c[1], c[5]) for c in changes], [("func_80042808", "check")])
+
+    def test_snapshot_roundtrips_json(self):
+        self.ovl("AAA", "extern s32 D_80140000;\n")
+        self.src("ovl/AAA/80132000.c", '#include "common.h"\n#include "ovl/AAA.h"\nvoid f(void) {\n    D_80140000 = 1;\n}\n')
+        v = self.views()
+        self.assertEqual(json.loads(json.dumps(v)), v)
+
+
+class HelpersTest(unittest.TestCase):
+    def test_benign(self):
+        self.assertTrue(sp.benign("voidF()", "voidF(s32,s32)"))
+        self.assertTrue(sp.benign("voidF(void)", "voidF()"))
+        self.assertFalse(sp.benign("voidF()", "voidF(u8)"))
+        self.assertFalse(sp.benign("voidF(s32)", "voidF(s32,s32)"))
+        self.assertFalse(sp.benign("s32F()", "voidF()"))
+        self.assertFalse(sp.benign("u8", "u8[]"))
+
+    def test_effective_type(self):
+        self.assertEqual(sp.effective(["voidF()", "voidF(s32)", "voidF(void)"]), "voidF(s32)")
+        self.assertEqual(sp.effective(["voidF()", "voidF(void)"]), "voidF(void)")
+
+    def test_tokens_skip_comments_strings_and_include_asm(self):
+        t = sp.tokens('INCLUDE_ASM("asm/x", func_80042808);\n/* D_800E7388 */\nvoid f(void) {\n'
+                      '    g("D_800E7399");\n    func_80042900();\n}\n')
+        self.assertIn("func_80042900", t)
+        self.assertNotIn("func_80042808", t)
+        self.assertNotIn("D_800E7388", t)
+        self.assertNotIn("D_800E7399", t)
+
+    def test_is_main_symbol(self):
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "config").mkdir()
+            (Path(d) / "config" / "overlays.txt").write_text("EVT 0x800F6000 0x10\nAAA 0x80132000 0x10\n")
+            self.assertTrue(sp.is_main_symbol(d, "func_80042808", "AAA"))
+            self.assertFalse(sp.is_main_symbol(d, "func_80132000", "AAA"))
+            self.assertFalse(sp.is_main_symbol(d, "D_80120650", "EVT"))
+            self.assertTrue(sp.is_main_symbol(d, "D_80120650", "AAA"))
+            self.assertFalse(sp.is_main_symbol(d, "printf", "AAA"))
+
+    def test_repo_is_clean(self):
+        repo = Path(__file__).resolve().parent.parent
+        if (repo / "include" / "main_api.h").exists():
+            self.assertEqual(sp.check_api(str(repo / "include"), str(repo / "src")), [])
+
+
+class WalkTest(Repo):
+    def test_walk_evaluates_defines_and_guards(self):
+        self.write("a.h", '#ifndef NOPE\nextern s32 D_1;\n#else\nextern s16 D_1;\n#endif\n#ifdef YES\nextern u8 D_2;\n#endif\n')
+        self.write("b.h", '#define YES\n#include "a.h"\n')
+        names = [(n, t) for n, t, _f, _r in check_headers.walk(str(self.inc / "b.h"), str(self.inc))]
+        self.assertEqual(names, [("D_1", "s32"), ("D_2", "u8")])
+
+    def test_override_define_removes_the_conflict(self):
+        self.write("a.h", '#ifndef MAIN_API_OVERRIDE_D_1\nextern s32 D_1;\n#endif\n')
+        self.write("b.h", '#define MAIN_API_OVERRIDE_D_1 /* x */\n#include "a.h"\nextern u8 D_1;\n')
+        self.assertEqual(check_headers.check(str(self.inc), api=False), [])
+        self.write("b.h", '#include "a.h"\nextern u8 D_1;\n')
+        self.assertTrue(any("conflict D_1" in p for p in check_headers.check(str(self.inc), api=False)))
+
+
+if __name__ == "__main__":
+    unittest.main()

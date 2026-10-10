@@ -1,6 +1,5 @@
 #include "common.h"
 #include "game.h"
-#include "main_only.h"
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_GetCDLevel);
 

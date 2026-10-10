@@ -151,6 +151,25 @@ class PlanTests(unittest.TestCase):
         self.assertEqual(len(plans), 1)
         self.assertIn('func_80140000();', plans[0]['text'])
 
+    def test_main_exe_symbol_is_declared_in_main_api(self):
+        # T-3340: a main-exe symbol the target needs goes to include/main_api.h, overlay symbols to the overlay header
+        r = make_repo(SRC_C.replace('func_80140000', 'func_80041234'), TGT_C, src_hdr='void func_80041234(void);\n')
+        try:
+            r.write('asm/ovl/AAA/matchings/AAA/fsrc.s', func_asm('fsrc', 'D_80150000', 'D_80150004', 'func_80041234'))
+            r.write('asm/ovl/BBB/nonmatchings/BBB/ftgt.s', func_asm('ftgt', 'D_80151110', 'D_80151114', 'func_80042222'))
+            r.write('include/main_api.h', '#ifndef M\n#define M\n#endif\n')
+            funcs = dupes.load_funcs(r.root)
+            plans, skipped, stats = dupes.plan_all(r.root, funcs, {'aliases': dupes.load_aliases(r.root)})
+            self.assertEqual(len(plans), 1)
+            dest = {d[1]: d[0] for d in plans[0]['decls']}
+            self.assertEqual(dest['void func_80042222(void);'], 'include/main_api.h')
+            self.assertEqual(dest['extern s32 D_80151110;'], 'include/ovl/BBB.h')
+            dupes.apply_plan(r.root, plans[0])
+            self.assertIn('void func_80042222(void);', r.read('include/main_api.h'))
+            self.assertNotIn('func_80042222', r.read('include/ovl/BBB.h'))
+        finally:
+            r.close()
+
     def test_string_literal_is_skipped(self):
         r = make_repo(SRC_C.replace('D_80150004 = 0;', 'puts("x");'), TGT_C)
         try:

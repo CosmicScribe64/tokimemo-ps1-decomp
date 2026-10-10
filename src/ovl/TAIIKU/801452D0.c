@@ -1,6 +1,5 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
-extern u8 D_8011ECD0[]; /* 3 records of 0x44 bytes; s16 at +0x19EA is read */
 extern u8 D_8014A400[]; /* func_80146FA0: stride 0x1C */
 extern u8 D_8014A401;
 extern u8 D_8014A41D;
