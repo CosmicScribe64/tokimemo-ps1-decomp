@@ -140,9 +140,47 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_8006612C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066334);
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066A2C);
+s32 func_80066A2C(void) {
+    switch (D_800E62BF) {
+    case 3:
+    case 4:
+    case 5:
+    default:
+        return 0;
+    case 6:
+    case 7:
+    case 8:
+        return 1;
+    case 9:
+    case 10:
+    case 11:
+        return 2;
+    case 1:
+    case 2:
+    case 12:
+        return 3;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066A84);
+s32 func_80066A84(void) {
+    switch (D_800E62BF) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 10:
+    case 11:
+    case 12:
+    default:
+        return 0;
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        return 1;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066ACC);
 
