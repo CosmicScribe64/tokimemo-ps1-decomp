@@ -4,6 +4,7 @@
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_D_801206DA /* matched as u8 (main_api.h: s8) */
 #define MAIN_API_OVERRIDE_func_800847B8 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
+#define MAIN_API_OVERRIDE_func_80046094 /* matched with s32(): the result is compared unmasked (main_api.h: u8(void)) */
 
 #include "common.h"
 #include "game.h"
@@ -288,5 +289,10 @@ extern s32 D_80144C20;
 extern s32 D_80144C24;
 extern s32 D_80144C28;
 extern s32 D_80144C2C;
+extern s32 D_80145F1C;
+extern s32 D_80146058;
+extern s32 D_80146194;
+void func_8013BBE0(void);
+s32 func_80046094();
 
 #endif

@@ -40,7 +40,26 @@ void func_8013B8E4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013B91C);
+s32 func_8013B91C(void) {
+    if (D_800E683E != 0) {
+        if ((u32) D_800E7384++ < 0x78U) {
+            return 0;
+        }
+    }
+    D_800E71DF = 0xD;
+    D_800CA148 = 0;
+    D_800CA14C = 0;
+    func_800847B8(D_800E683E);
+    func_80132000();
+    D_800CA160 = D_8013C280;
+    D_800CA164 = D_8013C2C4;
+    D_800CA168 = D_8013C308;
+    if (D_800E683E != 0) {
+        D_800CA148 = 2;
+        D_800E738A += 0xA;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013B9F0);
 
@@ -48,6 +67,11 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BB9C);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BC58);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BDD8);
+void func_8013BDD8(s16 arg0) {
+    u8 *p;
+
+    p = D_8013CC48 + arg0 * 0x19;
+    k_disp_start(set_kanji_string((s16) (-func_800AE0E0(p) * 7 / 2), 0x50, 0, p, 0));
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BE64);

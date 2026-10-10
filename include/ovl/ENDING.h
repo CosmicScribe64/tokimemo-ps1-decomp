@@ -3,12 +3,14 @@
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
 #define MAIN_API_OVERRIDE_D_800E6280 /* matched as s16 (main_api.h: u8[]) */
+#define MAIN_API_OVERRIDE_set_kanji_string /* matched with s32(s16,s32,s32,void*,s32): the result is passed on (main_api.h: void) */
 
 #include "common.h"
 #include "libgpu.h"
 #include "main_api.h"
 
 extern u8 D_8013C3E0;
+s32 set_kanji_string(s16 arg0, s32 arg1, s32 arg2, void *arg3, s32 arg4);
 extern s32 D_8013C360;
 extern s8 D_8013C364;
 void func_80132000(void);
@@ -221,5 +223,9 @@ extern s32 D_8013CB64;
 extern s32 D_8013CB68;
 extern s32 D_8013CB6C;
 extern s32 D_8013CB70;
+extern s32 D_8013C280;
+extern s32 D_8013C2C4;
+extern s32 D_8013C308;
+extern u8 D_8013CC48[];
 
 #endif /* OVL_ENDING_H */

@@ -29,7 +29,7 @@ void func_80135600(void);
 void func_801359D0(void);
 void func_80135F54(void);
 void func_801369F4(s32 arg0);
-void func_80132B40(void);
+s32 func_80132B40(void);
 void func_80132D44(void);
 void func_80132E3C(void);
 void func_8013556C(void);
@@ -55,5 +55,11 @@ void func_80132EE8();
 void func_80132DC4();
 
 extern s32 D_80139AFC;
+extern s32 D_80139278[];
+void func_80135ACC();
+void func_80134C1C();
+void func_801339D4();
+void func_80134800();
+extern s32 D_8013921C;
 
 #endif /* OVL_EN_NICHI_H */

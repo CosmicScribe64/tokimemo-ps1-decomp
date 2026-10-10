@@ -54,7 +54,21 @@ void func_8013BB20(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BB4C);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BBE0);
+typedef struct {
+    void (*f[58])();
+} FnTbl58; /* size 0xE8 */
+extern FnTbl58 D_8014679C;
+
+void func_8013BBE0(void) {
+    s32 idx; /* unused: its stack slot sits above tbl (T-3330) */
+    FnTbl58 tbl;
+
+    tbl = D_8014679C;
+    if (D_800E738A == 0x1B) {
+        func_80044750(0xCF);
+    }
+    tbl.f[D_800E738A](0x80);
+}
 
 void func_8013BC74(void) {
     s32 cur; /* declared before prev: its stack slot sits above prev (T-3330) */
@@ -105,7 +119,21 @@ void func_8013BE20(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BE58);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BEE0);
+s32 func_8013BEE0(void) {
+    func_80138AF8();
+    if ((u16) D_800CA154 == 9 && check_end_k() != 0) {
+        if (*(u8 *) &D_800E62BC == 0 || (*(u8 *) &D_800E62BC != 0 && func_80046094() == 9)) {
+            D_80122CE4 = 0;
+            k_reset(1);
+            D_80122CF0 = 0;
+            D_8011ED5B &= 0xFF7F;
+            D_800CA2AC = 0;
+            D_800CA150 = (u16) D_800CA150 + 1;
+            D_800CA154 = 0;
+            func_8004284C();
+        }
+    }
+}
 
 void func_8013BFA4(void) {
     func_80044750(0x24);
@@ -146,7 +174,13 @@ void func_8013C330(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013C3C4);
+void func_8013C3C4(void) {
+    D_80146274 = D_80145F1C;
+    D_80146278 = D_80146058;
+    D_8014627C = D_80146194;
+    D_800CA368 = 0x51;
+    func_8004284C();
+}
 
 void func_8013C41C(void) {
     bg_read_sub2(0x4045);

@@ -9,7 +9,19 @@ void func_8013A500(void) {
     func_8013A600();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A500", func_8013A53C);
+typedef struct {
+    void (*f[27])();
+} FnTbl27; /* size 0x6C */
+extern FnTbl27 D_801456A0;
+
+void func_8013A53C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl27 tbl;
+
+    tbl = D_801456A0;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_8013A5B0(void) {
     func_80044750(0x502);
@@ -25,9 +37,19 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A500", func_8013A600);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A500", func_8013A688);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A500", func_8013A7B0);
+void func_8013A7B0(void) {
+    D_80144E08 = 0;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "近所の公園");
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A500", func_8013A7F4);
+void func_8013A7F4(void) {
+    D_80144E08 = 6;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "プール");
+    func_8004284C();
+}
 
 void func_8013A83C(void) {
     bg_read_sub2(0x42D8);

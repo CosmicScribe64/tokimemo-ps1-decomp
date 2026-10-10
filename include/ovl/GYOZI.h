@@ -449,5 +449,9 @@ extern s32 D_80145E98;
 extern s32 D_80145E9C;
 extern s32 D_80145EA0;
 extern s32 D_80145EA4;
+extern u8 D_801460C4[];
+extern u8 D_80148818;
+extern u8 D_80148828[];
+extern volatile s16 D_8012B920; /* volatile: func_801427E4 only matches with it (decomp-permuter, T-4090) */
 
 #endif /* OVL_GYOZI_H */

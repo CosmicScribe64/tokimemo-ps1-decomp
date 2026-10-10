@@ -333,3 +333,21 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 8007C030 | `select_girl2` | regorder | identical to `select_girl` (T-4080) |
 | NAME_ENT | `func_8013DAC4` | promo | signed byte global D_800E7313 compared with -1 twice and read again after a call: original keeps it in $v1 with -1 in $a1, IDO loads into $v0/$a0 (T-4080) |
 | BUNKA_SD | `func_801362EC` | promo | unsigned byte global D_800E738A tested in two range checks around a call: original keeps it in $a1 (loaded once, reloaded after the call), IDO uses $a0 or spills a local (T-4080) |
+| EVENT | `func_8010A790` | regorder | `u8` global loaded, clamped (`if (v >= 2) v = 1`), used twice after: original keeps it in $v0, IDO $v1 (T-4090) |
+| EVENT | `func_8010B614` | regorder | `D = 4; f(4);` keeps the constant in $a0 for the store in the original, IDO loads it into $t6 again (also with `f(D = 4)`) (T-4090) |
+| EVENT | `func_8010B678` | regorder | four `D += 0x40` on neighbouring halfword globals: original interleaves the loads differently (third and fourth load before the second store) (T-4090) |
+| GYOZI | `func_80135D64` | promo | `(u32)D_800F563A >> 4` compared twice: original loads the `u8` into $v1 and shifts into $v0, IDO loads into $v0 and shifts into $t7 (T-4090) |
+| GYOZI | `func_801361D4` | regorder | `D_800F62CF = D_800F5ACD; f(D_800F5ACD)`: original `lui a0; lbu a0`, IDO `lui v0; lbu a0,0(v0)` (also as `f(D = x)` and via a `u8` local) (T-4090) |
+| GYOZI | `func_801427E4` | promo | `s16` global `+= 0x200` then compared: original sign-extends into the same register ($v0 -> $t6 -> $v0, stores and compares $v0), IDO uses a fresh $t7 (also with a local) (T-4090) |
+| DATE | `func_8014FD30` | promo | `if (D == 0) {..calls..} if (D++ == 0x80) f();` on an `s32` global: original keeps it in $v1, materialises `sltiu v0,v0,1` and branches on it; IDO branches on the `xori` (also with `u32`) (T-4090) |
+| 80079B10 | `func_8007BE94` | regorder | `(u16)D == (s16)arg` branch: operands of the `bne` come in the other order (D first in the original) for every spelling tried (T-4090) |
+| 80079B10 | `func_8007B64C` | regorder | `u16` count read once into $v0, `return 0` path: IDO hoists `move v0,zero` and puts the count in $v1 (T-4090) |
+| 80079B10 | `func_80079C70` | regorder | loop over four flag bytes: the three mask constants (0x0F000000, 0xF0000000, 0x01000000) come in registers a2/a3/a0 in the original, IDO loads them in another order (T-4090) |
+| 80079B10 | `func_8007A50C` | regorder | `u16 t = D44 + D48` operands are loaded in the other order and the `s16` difference gets its own sign-extension temps (T-4090) |
+| EN_NICHI | `func_80133924` | regorder | loop with `i != 10` and `D == 7`: loop bound and the constant 7 are kept in $s2/$s3, the original has 10 in $s2 and 7 in $s3, IDO the reverse for every spelling tried (also `for`) (T-4090) |
+| TAIIKU | `func_801448D4` | regorder | clamp loop over three 0x24-byte records with a local `s32[3]`: all code matches, the address temporaries of `tbl[i]` are $t3/$t4 in IDO and $t4/$t5 in the original (T-4090) |
+| EN_NICHI | `func_80134784` | regorder | pointer loop `p += 0x30; while (p != end)` around a 5-entry switch: all code matches, IDO emits the `lui` of the end address and of the pointer in the other order (the pointer gets $v0 or the end address does, never the original pair $v1/$v0) (T-4090) |
+| EN_NICHI | `func_80135A48` | regorder | ring-buffer insert (`p = &tbl[idx]; if (*p <= 0 || *p >= 10) {..}`): IDO keeps `arg1` in $a1 and uses other temps than the original ($a2/$a3 copies of the arguments); permuter best score 660 (T-4090) |
+| SHUGAKU | `func_801350F4` | regorder | two `D_800E6280 + D_800E71DF * 0x38` record updates: the original keeps 0x38 in $a0 (also the call argument) and multiplies twice with `multu`, IDO shifts (T-4090) |
+| DATE | `func_8014F370` | regorder | four-case `switch (D_80122CD0)` (`s32` global) calling one function per case: original selector in $v1, IDO $v0, also with `u32`, a `u32` override and an `s32` return type (T-4090) |
+| 80043510 | `load_palette` | regorder | `if (D_800E76A8 < 0x20) { rec = D_800E6280 + D_800E76A8 * 8; ..4 stores..; D_800E76A8++; return 1; } return 0;` with `u8` parameters: IDO keeps the counter in $v1 and spills `arg0`; permuter best 60 (T-4090) |

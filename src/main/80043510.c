@@ -61,22 +61,23 @@ void func_80044434(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80043510", func_8004443C);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, original frame has 8 more bytes of locals (0x38 vs 0x30); unknown extra local. */
 void func_80044700(s32 arg0, s32 arg1, s32 arg2) {
     RECT rect;
+    s32 x;
 
-    rect.x = arg1 << 4;
+    x = arg1;
+    rect.x = x << 4;
     rect.y = arg0 + 0x1E0;
     rect.w = 0x10;
     rect.h = 1;
     func_8009C93C(&rect, 0x100, arg2 + 0x1E0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_80044700);
-#endif
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_80044750);
+s32 func_80044750(s32 arg0) {
+    func_80079B10(arg0 & 0xFFFF);
+    return 1;
+}
+
 
 s32 func_80044774(s32 arg0) {
     s32 *p;

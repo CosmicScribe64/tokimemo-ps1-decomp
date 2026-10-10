@@ -5,7 +5,19 @@ extern u8 D_8014A161;
 extern u8 D_8014A185;
 extern u8 D_8014A1A9;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80142240);
+typedef struct {
+    void (*f[10])();
+} FnTbl10; /* size 0x28 */
+extern FnTbl10 D_8014A254;
+
+void func_80142240(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl10 tbl;
+
+    tbl = D_8014A254;
+    idx = D_800E7389;
+    tbl.f[idx]();
+}
 
 void func_801422BC(void) {
     if (D_800E738A == 0) {
@@ -173,7 +185,26 @@ s32 func_801446A0(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144768);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144834);
+typedef struct {
+    s32 v[3];
+} Tri3; /* size 0xC */
+extern Tri3 D_8014A328;
+
+void func_80144834(void) {
+    s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    Tri3 tbl;
+
+    tbl = D_8014A328;
+    for (i = 0; i < 3; i++) {
+        if (i + 0x36 != *(s16 *) (D_8011ECD0 + i * 0x44 + 0x19DC)) {
+            if (*(s32 *) (D_8014A13C + i * 0x24 + 0x40) != 0) {
+                *(s32 *) (D_8014A13C + i * 0x24 + 0x2C) = tbl.v[i];
+            } else {
+                *(s32 *) (D_8014A13C + i * 0x24 + 0x2C) = -0x500;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801448D4);
 
