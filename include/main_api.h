@@ -745,6 +745,7 @@ extern s8 D_80121603;
 extern s8 D_80121647;
 extern s8 D_80121685;
 extern s8 D_8012168B;
+extern u8 D_80121750[];
 extern u8 D_801217A0[];
 extern s32 D_801217D0; /* first word of a table of 36-byte sprite entries; byte users take the address: (u8 *)&D_801217D0 + idx * 36 */
 extern s16 D_801217D4;
@@ -1011,7 +1012,7 @@ void func_8004DDD8();
 void func_8004DE1C(void);
 void func_8004DEAC();
 void func_8004DEE4();
-void srn_init(s32, s32, s32);
+void srn_init(s32, u32 *, s32);
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2);
 void func_8004E500(s32 arg0);
 void func_8004E58C(void);

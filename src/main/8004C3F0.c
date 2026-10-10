@@ -22,7 +22,30 @@ INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_set);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_init);
+void srn_init(s32 arg0, u32 *arg1, s32 arg2) {
+    u8 *p;
+
+    p = D_80121750 + arg0 * 0x28;
+    p[0xD] = (arg1[0] & 0xFF00) >> 8;
+    *(s16 *)(p + 2) = 0;
+    *(s16 *)(p + 6) = 0;
+    p[0xC] = 0;
+    *(u32 **)(p + 8) = arg1 + 5;
+    p[0xE] = (arg1[1] & 0xFF000000) >> 24;
+    p[0xF] = (arg1[1] & 0xFF0000) >> 16;
+    p[0x10] = (arg1[1] & 0xFF00) >> 8;
+    /* FAKE: the no-op "& 0xFF" consumes one IDO temp number, as in func_8004E44C. T-4070 */
+    p[0x11] = arg1[1] & 0xFF;
+    p[0x12] = (arg1[2] & 0xFF000000) >> 24;
+    p[0x13] = (arg1[2] & 0xFF0000) >> 16;
+    p[0x14] = (arg1[2] & 0xFF00) >> 8;
+    p[0x15] = arg1[2] & 0xFF; /* FAKE: same no-op mask as above. T-4070 */
+    *(s16 *)(p + 0x16) = 0;
+    *(s16 *)(p + 0x18) = 0x1E0;
+    *(u32 *)(p + 0x1C) = arg1[4];
+    *(u32 *)(p + 0x20) = arg1[3];
+    *(u8 **)(p + 0x24) = D_801217A0 + arg2 * 0x14;
+}
 
 void func_8004E44C(s32 arg0, u32 *arg1, s32 arg2) {
     u8 *p;
