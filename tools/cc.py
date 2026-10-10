@@ -23,6 +23,10 @@ after every function the C source defines, read from the function's splat disass
 asm/. That replaces the old per-site INCLUDE_ASM("src/ovl/pad", ...) stubs, which asm-processor
 could not do for a single nop. Rule and limits: wiki/toolchain.md, tools/trailing_pad.py.
 
+C sources are UTF-8. Before IDO, string and character literals with non-ASCII characters are
+re-encoded to Shift-JIS octal escapes (sjis_literals, T-0500; the rule of tools/asm.py), and the
+copy that is compiled is <out.o>.sjis.c. Non-ASCII text outside literals stops the compile.
+
 Also writes <out.o>.d (a make-style depfile) listing the asm/nonmatchings
 files named by INCLUDE_ASM, because the compiler cannot see them.
 Exits non-zero if any stage fails.
@@ -92,7 +96,52 @@ def ido_frame_env(ido_ver, tmp):
     return env
 
 
+def sjis_literals(text):
+    """C source text with every non-ASCII character inside a string or character literal
+    replaced by its Shift-JIS bytes as octal escapes (the game's text encoding; T-0500). The
+    sources are UTF-8 so the strings stay readable; IDO reads bytes, and a Shift-JIS second byte
+    0x5C would end a literal early, so escapes are the only safe form. Comments and code are
+    left alone."""
+    out, i, n = [], 0, len(text)
+    while i < n:
+        c = text[i]
+        if text.startswith("/*", i):
+            j = text.find("*/", i + 2)
+            j = n if j < 0 else j + 2
+            out.append(text[i:j])
+            i = j
+        elif text.startswith("//", i):
+            j = text.find("\n", i)
+            j = n if j < 0 else j
+            out.append(text[i:j])
+            i = j
+        elif c in "\"'":
+            j = i + 1
+            while j < n and text[j] != c:
+                j += 2 if text[j] == "\\" else 1
+            body = text[i + 1:j]
+            out.append(c + "".join(ch if ord(ch) < 0x80 else
+                                   "".join("\\%03o" % b for b in ch.encode("shift_jis"))
+                                   for ch in body) + c)
+            i = j + 1
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
+
+
 def compile_ido(src, out, ido_ver):
+    with open(src, encoding="utf-8") as f:
+        text = f.read()
+    if any(ord(c) >= 0x80 for c in text):
+        # compile a re-encoded copy next to the object (asm-processor and cfe only see ASCII)
+        text = sjis_literals(text)
+        bad = [c for c in text if ord(c) >= 0x80]
+        if bad:
+            sys.exit("cc.py: %s: non-ASCII character %r outside a string literal" % (src, bad[0]))
+        src = out + ".sjis.c"
+        with open(src, "w", encoding="ascii") as f:
+            f.write(text)
     cmd = (["python3", ASM_PROCESSOR, "--no-dep-file", "--drop-mdebug-gptab",
             "--convert-statics", "no",
             "--asm-prelude", ASM_PRELUDE, "/opt/ido/%s/cc" % ido_ver, "--"]
