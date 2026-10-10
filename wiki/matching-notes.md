@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-09
+updated: 2026-10-10
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -924,3 +924,12 @@ Left `INCLUDE_ASM`, not T-0018:
 - `D_800E7384` or `D_80120657` used before and after a call/loop (KANGEI `func_80137544`, `func_80137484`): IDO keeps the `u8` in a register across the loop.
 - GEKO fade loops with `u8 D_800B593C` thresholds (`func_80139D54`, `func_8013E69C`, `func_8013E760`, `func_80139C70`): base, mask and counter registers are assigned in another order.
 - T-0018 selectors: rows in [[data/t0018-cases]] (ETC dispatchers, GEKO `func_8013B030`, main dispatchers).
+
+## Recovered data types replace the "first symbol" trick (T-5000)
+
+- The "load hoisted above an earlier store" family is a type problem: the original reached those globals through one struct or array symbol, so it kept the load after the store; IDO does the same once the C declares the aggregate. 33 `FAKE` index tricks were replaced by real types with the same bytes (`Rec34`, `Rec38`, `Rec24`, `Work80125D10`, `RpgRec18`, and the base `D_8011ECD0` / `D_800EAFA0` of the 0x44-byte record tables); 7 load-hoist functions left as asm now match (GYOZI `func_80135C3C`, KANGEI `func_80135C18`, SHUGAKU `func_80135B68`, NAME_ENT `func_8013B51C`, EVENT `func_800F87BC`, DATE `func_8013C700`, `func_8013D9E8`). Method, counts, and the 20 functions retried: [[data-types]]. Tool: `tools/type_recovery.py --sym D_X`.
+- Struct, not array, when the fields are summed: RPG_BAT `func_801516E4` matches with `RpgRec18` and not with `s32[6]` (IDO orders the operands of array elements differently).
+- The base symbol is the one the original relocations use: `Rec24 D_801217D0[]` matches, `Rec24 D_801217AC[]` with `&T[1]` does not (IDO folds the element offset into the load offsets). splat's `D_801217AC` is entry `i - 1`.
+- A flag word read as a value and tested twice (`lw` once, two `sll; bltz`) is `D[i].flags.b12 || D[i].flags.b13` with a bit-field member; a pointer to the member reloads the word (EVENT `func_8011C514`).
+- The original sign-extends an `s16` argument in the callee (`sll/sra` of `$a0`); IDO 5.3 does not, with an ANSI or a K&R `s16` parameter (DATE `func_80148924`, main `func_80079F00`).
+- Still open: the main bss block `0x800E6248..0x800E7400` behaves as one object (SHUGAKU `func_80135994`, GEKO `func_8013B350` match only when `D_800E69A0` and `D_800E7388`, 0x9E8 apart, go through one symbol), and the full field layout of the 0x44-byte record table.

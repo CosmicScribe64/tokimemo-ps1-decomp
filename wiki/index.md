@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-09
+updated: 2026-10-10
 ---
 
 # Wiki Index
@@ -12,11 +12,13 @@ Read this first. Update on every ingest or new page.
 - [[SCHEMA]] - wiki layout summary (full rules in AGENTS.md)
 - [[log]] - append-only chronological record
 - [[kanban]] - ticket board (columns must match ticket frontmatter status)
+- [[data-types]] - structs and arrays recovered from the original's access patterns, `tools/type_recovery.py` (T-5000)
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
+- [[tickets/T-5000-type-recovery-arrays-structs|T-5000]] Type recovery: arrays and structs from access patterns (Done)
 - [[tickets/T-2060-wave2-shougatu|T-2060]] Wave 2: SHOUGATU, 152 functions (Done)
 - [[tickets/T-0001-project-scaffolding|T-0001]] Project scaffolding (Done)
 - [[tickets/T-0002-disc-extraction-and-exe-identification|T-0002]] Disc extraction & exe identification (Done)

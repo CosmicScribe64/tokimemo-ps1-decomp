@@ -543,3 +543,12 @@ Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 m
 
 ## [2026-10-10] tooling run | dupes + neardupes after wave 3
 tools/dupes.py kept 77 of 79 exact copies and tools/neardupes.py kept 17 of 31 near copies (3668 bytes). Clean build 27/27 OK, 3438/6958, 18.6% of code bytes.
+
+## [2026-10-10] ticket | T-5000 Type recovery: arrays and structs (Backlog -> In Progress)
+[[tickets/T-5000-type-recovery-arrays-structs]] created and claimed (worktree r3-types): recover arrays and structs from the access patterns of the original asm and replace the "first symbol" `FAKE` tricks with real aggregate types.
+
+## [2026-10-10] build | T-5000 type recovery: tool, conversions, retries
+tools/type_recovery.py (tests tools/test_type_recovery.py) clusters globals from the original asm of all functions: 1724 proposals, 654 high. Converted with the same bytes: `Rec34 D_800B0A04[]`, `Rec38 D_800E643C[]`, `Rec24 D_801217D0[]`, `Work80125D10 D_80125D10`, `RpgRec18 D_8015EC58`, and the 0x44-byte tables through their bases `D_8011ECD0` and `D_800EAFA0`; 33 first-symbol `FAKE`s removed (117 to 84). Overlays take unnamed bases from config/symbol_addrs_types.txt (configure.py adds it to build/main_names.ld). Of 20 load-hoist functions retried, 7 match. New page [[data-types]]; CODING_STANDARDS section 8 rule; step 5a in [[decompile-workflow]]; notes in [[matching-notes]]. Clean build 27/27 OK, 3445/6958.
+
+## [2026-10-10] ticket | T-5000 Type recovery (In Progress -> Done)
+[[tickets/T-5000-type-recovery-arrays-structs]]: inline review recorded in the ticket, no open findings. Branch r3-types, not merged.
