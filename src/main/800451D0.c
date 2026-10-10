@@ -1,5 +1,12 @@
 #include "common.h"
 #include "game.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/data/main/800451D0.data", D_800B3D60);
+INCLUDE_RODATA("asm/data/main/800451D0.data", D_800B3D64);
+INCLUDE_RODATA("asm/data/main/800451D0.data", D_800B3D68);
+INCLUDE_RODATA("asm/data/main/800451D0.data", D_800B3D6C);
+s32 D_800B3D70[4] = { 0, 0, 0, 0 };
 
 s32 func_800451D0(void) {
     return D_801255D8;
@@ -73,10 +80,17 @@ s32 func_80046274(void) {
 }
 
 s32 *func_80046284(void) {
-    return &D_800B3D70;
+    return D_800B3D70;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_80046290);
+void func_80046290(s32 arg0, s32 arg1, s32 arg2) {
+    s32 idx = arg2 & 0xF;
+
+    D_800B3D70[0] = idx;
+    D_800B3D70[2] = arg0;
+    D_800B3D70[3] = arg1;
+    D_800B3D70[1] = D_800B3648[idx];
+}
 
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2) {
     *arg2 = arg1;
