@@ -30,7 +30,41 @@ void func_800634FC(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063520);
+void func_80063520(u32 arg0) {
+    /* FAKE: the fields of the second record entry (+0x24) and +2 are reached through D_801217DC; separate names let as1 hoist the lbu loads above the sh stores. T-4100 */
+    switch (arg0) {
+    case 0:
+        *(s16 *)((u8 *)&D_801217DC + 0x24) = 7;
+        D_801217DC = 7;
+        return;
+    case 1:
+        *(s16 *)((u8 *)&D_801217DC + 0x24) = 7;
+        *((u8 *)&D_801217DC + 0x26) += 0x40;
+        D_801217DC = 7;
+        *((u8 *)&D_801217DC + 2) += 0x40;
+        return;
+    case 2:
+        *(s16 *)((u8 *)&D_801217DC + 0x24) = 8;
+        D_801217DC = 8;
+        return;
+    case 3:
+        *(s16 *)((u8 *)&D_801217DC + 0x24) = 8;
+        *((u8 *)&D_801217DC + 0x26) += 0x40;
+        D_801217DC = 8;
+        *((u8 *)&D_801217DC + 2) += 0x40;
+        return;
+    case 4:
+        *(s16 *)((u8 *)&D_801217DC + 0x24) = 9;
+        D_801217DC = 9;
+        return;
+    case 5:
+        *(s16 *)((u8 *)&D_801217DC + 0x24) = 9;
+        *((u8 *)&D_801217DC + 0x26) += 0x40;
+        D_801217DC = 9;
+        *((u8 *)&D_801217DC + 2) += 0x40;
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80063668);
 
