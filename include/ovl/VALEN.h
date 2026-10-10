@@ -27,4 +27,7 @@ extern s32 D_80134494;
 extern s16 D_8013449C;
 void func_80046318(s32 arg0, s32 arg1, s32 arg2); /* overlay view: main defines it with u8 arg0 */
 
+s32 strcmp(u8 *a, u8 *b);
+void strcpy(u8 *dst, u8 *src);
+
 #endif /* OVL_VALEN_H */

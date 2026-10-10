@@ -16,7 +16,13 @@ void func_80132398(void) {
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_801323F8);
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_801324BC);
+void func_801324BC(void) {
+    func_80044890(1, 0xBF98, 0xBF79, D_800B3688[D_800E69DD], D_800B36C8[D_800E69DD], D_800B3708[D_800E69DD]);
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_80132544);
 
@@ -112,7 +118,13 @@ void func_801334AC(void) {
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_80133500);
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_801335C4);
+void func_801335C4(void) {
+    func_80044890(1, 0xBF98, 0xBF79, D_800B3688[D_800E71DF], D_800B36C8[D_800E71DF], D_800B3708[D_800E71DF]);
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI", func_8013364C);
 

@@ -419,3 +419,5 @@ New [[original-compiler]] and raw note `wiki/raw/original-compiler-sources.md`.
 
 ## [2026-10-09] ticket | T-3100 In Progress -> In Review -> Done
 [[tickets/T-3100-identify-original-compiler]] done after the inline review (no open findings). Clean rebuild 27 of 27 sha1 OK.
+## [2026-10-09] ticket | T-2100 Wave 2 small overlays (In Progress -> Done)
+[[tickets/T-2100-wave2-small-overlays]]: 94 functions matched in ENDING (17), SHUGAKU (21), NAME_ENT (18), EN_NICHI (16), KANGEI (11), BUNKA_SD, DATE2 (3 each), OMIMAI, VALEN (2 each), OPTION (1); `ninja progress` 901 -> 995 of 6962, clean rebuild 27 of 27 OK, `tools/check_headers.py` OK. Patterns (hit-box tests with shared-bound temporaries, far-address reads, load-hoist trick, parameter width) and tooling notes in [[matching-notes]]; 3 rows added to [[data/t0018-cases]]. Inline review against CODING_STANDARDS found nothing open. Not merged.

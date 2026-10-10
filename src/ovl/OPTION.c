@@ -188,7 +188,19 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_801394F4);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_80139878);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_8013990C);
+void func_8013990C(void) {
+    D_801220EC = rsin(D_800E7384 << 5);
+    D_801220EE = rsin(D_800E7384 << 5);
+    D_801220F0 = D_800E7384 << 0xC;
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(0);
+    func_8004FC10(0);
+    func_8013A484();
+    func_80139A30();
+    k_disp_inc();
+    func_801394F4();
+    func_801399C0();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION", func_801399C0);
 

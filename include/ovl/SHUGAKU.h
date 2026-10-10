@@ -98,4 +98,41 @@ extern s32 D_8013BFFC;
 extern s32 D_8013C000;
 extern s32 D_8013C004;
 
+void check_para_limit(void);
+void func_80132BCC(void);
+
+extern s32 D_800E6378;
+extern s32 D_80122CE0;
+extern u16 D_800E6374;
+extern u8 D_800E652A;
+extern u8 D_8013C97C;
+void func_80083418(void);
+void func_800833F0(void);
+void func_80083440(s32 arg0);
+extern s32 D_8013BE74;
+extern s32 D_8013BEA8;
+extern s32 D_8013BEDC;
+extern s32 D_80122CF4;
+
+extern u8 D_80120695;
+extern s32 D_801206CC;
+extern s32 D_801206A0;
+extern s32 D_801206A4;
+extern s32 D_801206C8;
+extern s16 D_8013CAFC;
+extern s16 D_801206A8;
+extern s16 D_801206AC;
+extern u8 D_8012069A;
+extern u8 D_801206D7;
+extern s16 D_801206BA;
+extern s16 D_801206BE;
+extern u8 D_80120699;
+extern u8 D_80120698;
+
+void normal_date_girl_in();
+
+void func_8013282C();
+
+void func_80137C3C();
+
 #endif /* OVL_SHUGAKU_H */

@@ -38,5 +38,8 @@ void func_80046318(s32 arg0, s32 arg1, s32 arg2); /* overlay view: main defines 
 
 /* matched against the main-exe u8 prototype */
 void draw2d3d(u8 arg0, u8 arg1);
+extern s32 D_800B3688[];
+extern s32 D_800B36C8[];
+extern s32 D_800B3708[];
 
 #endif /* OVL_OMIMAI_H */

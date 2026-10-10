@@ -4,7 +4,14 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80132000);
 
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80132274);
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80132348);
+void func_80132348(void) {
+    D_800CA134 = (u8 *)&D_80134498;
+    D_800CA138 = (u8 *)&D_8013449C;
+    D_800CA13C = D_8013448C;
+    D_800CA140 = D_80134490;
+    D_800CA144 = D_80134494;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_801323D0);
 
@@ -66,7 +73,13 @@ void func_801334DC(void) {
     func_80042940(1);
 }
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN", func_80133510);
+void func_80133510(void) {
+    if (strcmp(D_800CA19C, D_800CA1DC) == 0) {
+        func_8004284C();
+    }
+    strcpy(D_800CA19C, D_800CA1DC);
+    func_8004284C();
+}
 
 void func_80133568(void) {
     if ((D_80134544 == 1) && (D_800E71DF == 9)) {
