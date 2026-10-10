@@ -37,6 +37,7 @@ typedef struct Rec34Flags {
 } Rec34Flags; /* size 0x04 */
 
 s32 func_80045288();
+void func_8004E93C();
 void func_80061A3C();
 void func_80062634();
 /* 0x34-byte record of the table at D_800B0A04 (12 records; EVENT indexes it with stride 0x34). */
