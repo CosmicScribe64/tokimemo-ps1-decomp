@@ -42,6 +42,7 @@ kanban-plugin: board
 - [x] [[tickets/T-2020-wave-2-gyozi|T-2020 Wave 2: GYOZI]]
 - [x] [[tickets/T-2000-wave2-event|T-2000 Wave 2: EVENT]]
 
+- [x] [[tickets/T-2080-wave2-taiiku-rpg-bat|T-2080 Wave 2: overlays TAIIKU, RPG_BAT]]
 - [ ] [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320 Tooling: work queue and blocker detector]]
 - [ ] [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330 Tooling: m2c context and decomp-permuter]]
 - [ ] [[tickets/T-1310-tooling-object-trailing-padding|T-1310 Tooling: object-trailing padding]]
