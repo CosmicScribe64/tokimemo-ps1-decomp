@@ -825,6 +825,7 @@ extern s32 D_80122D38;
 extern s32 D_80122EA0;
 extern s32 D_80122EAC;
 extern s32 D_80122EB8;
+extern s32 D_80122EBC;
 #ifndef MAIN_API_OVERRIDE_D_80122EC8
 extern s32 D_80122EC8;
 #endif
