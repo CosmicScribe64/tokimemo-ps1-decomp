@@ -1,0 +1,122 @@
+#include "common.h"
+#include "ovl/RPG_BAT.h"
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801504E0);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801505B8);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150AA4);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150B90);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150CD8);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150DE0);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150F84);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80151108);
+
+void func_80151380(s32 arg0) {
+    s32 temp_v0;
+
+    D_8012146B = arg0;
+    D_801214AF = arg0;
+    D_801214F3 = arg0;
+    if (arg0 < 0x80) {
+        temp_v0 = 0x80 - arg0;
+        D_80121603 = temp_v0;
+        D_80121647 = temp_v0;
+        D_8012168B = temp_v0;
+    }
+}
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801513C8);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801515F0);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801516E4);
+
+INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80151984);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D1B8);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D1C4);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D1D0);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D1E0);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D1F0);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D200);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D210);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D220);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D230);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D240);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D254);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D268);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D27C);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D290);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D2A4);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D2B8);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D2CC);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D2E0);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D2F4);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D308);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D31C);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D330);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D348);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D360);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D378);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D38C);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D3A0);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D3B8);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D3D0);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D3E8);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D400);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D41C);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D438);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D454);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D470);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D48C);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D4AC);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D4CC);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D4EC);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D50C);
+
+INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D52C);

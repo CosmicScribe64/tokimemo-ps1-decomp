@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/TAIIKU.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/TAIIKU_undefined_funcs_auto.txt
@@ -56,6 +57,33 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, TAIIKU]
-      - [0x16940, rodata, TAIIKU_rodata]
+      - [0x0, c, TAIIKU/80132000]
+      - [0xB40, c, TAIIKU/80132B40]
+      - [0xB90, c, TAIIKU/80132B90]
+      - [0xBD0, c, TAIIKU/80132BD0]
+      - [0x1BF0, c, TAIIKU/80133BF0]
+      - [0x1C30, c, TAIIKU/80133C30]
+      - [0x1C80, c, TAIIKU/80133C80]
+      - [0x6950, c, TAIIKU/80138950]
+      - [0xE810, c, TAIIKU/80140810]
+      - [0xF280, c, TAIIKU/80141280]
+      - [0xFB70, c, TAIIKU/80141B70]
+      - [0xFBB0, c, TAIIKU/80141BB0]
+      - [0xFC00, c, TAIIKU/80141C00]
+      - [0x10140, c, TAIIKU/80142140]
+      - [0x10180, c, TAIIKU/80142180]
+      - [0x10240, c, TAIIKU/80142240]
+      - [0x13210, c, TAIIKU/80145210]
+      - [0x132D0, c, TAIIKU/801452D0]
+      - [0x168F0, c, TAIIKU/801488F0]
+      - [0x16940, .rodata, TAIIKU/80132000]
+      - [0x16A40, .rodata, TAIIKU/80132BD0]
+      - [0x16A90, .rodata, TAIIKU/80133C80]
+      - [0x16B70, .rodata, TAIIKU/80138950]
+      - [0x16C80, .rodata, TAIIKU/80140810]
+      - [0x16D40, .rodata, TAIIKU/80141280]
+      - [0x16DA0, .rodata, TAIIKU/80141C00]
+      - [0x16E00, .rodata, TAIIKU/80142240]
+      - [0x16E60, .rodata, TAIIKU/801452D0]
+      - [0x16EC0, data, TAIIKU_data]
   - [0x30000]

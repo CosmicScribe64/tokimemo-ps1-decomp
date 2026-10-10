@@ -1,0 +1,11 @@
+// Rodata labels for the INCLUDE_RODATA lines of overlay KANGEI (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_8013980C = 0x8013980C;
+D_801398B0 = 0x801398B0;
+D_801398E0 = 0x801398E0;
+D_801398E8 = 0x801398E8;
+D_801398EC = 0x801398EC;
+D_801398F0 = 0x801398F0;
+D_801398F4 = 0x801398F4;

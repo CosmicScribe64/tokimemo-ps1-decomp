@@ -1,0 +1,68 @@
+#include "common.h"
+#include "ovl/ENDING.h"
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80133C10);
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80133F1C);
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80133F98);
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_8013408C);
+
+void func_80134140(void) {
+    func_80097D90(0x100, 0xF0, 0, 0, 0);
+    func_80098380();
+    func_80098490(0, 0, 0, 0xF0);
+    D_800E8C70 = 8;
+    D_800E8C74 = D_800E8CA0;
+    D_800E8C84 = 8;
+    D_800E8C88 = D_800E90A0;
+    func_80098530();
+    InitGeom();
+    D_800E6280 = 0x100;
+}
+
+void func_801341D8(void) {
+    func_80097D90(0x140, 0xF0, 0, 0, 0);
+    func_80098380();
+    func_80098490(0, 0, 0, 0xF0);
+    D_800E8C70 = 8;
+    D_800E8C74 = D_800E8CA0;
+    D_800E8C84 = 8;
+    D_800E8C88 = D_800E90A0;
+    func_80098530();
+    InitGeom();
+    D_800E6280 = 0x140;
+}
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80134270);
+
+void func_801349A8(void) {
+    func_80046318(0x78, 0x80180000, 0x7B58);
+    func_80133C10();
+    func_8004284C();
+}
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_801349E0);
+
+void func_80134AA8(void) {
+    if ((D_80120696 == 0) && (D_80120668 == 1) && (D_80120658 == 0x14)) {
+        D_80120666 = 2;
+        D_80120668 = 0;
+        D_80120658 = 0;
+        D_80120652 = 5;
+        func_8004284C();
+    }
+}
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80134B18);
+
+void func_80134BE8(void) {
+    if (D_80120668 == 2) {
+        if (D_80120658 == 0x2F) {
+            func_8004284C();
+        }
+    }
+}
+
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_80134C2C);

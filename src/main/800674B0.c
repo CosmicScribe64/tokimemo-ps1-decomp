@@ -130,6 +130,7 @@ void cal_sprite_disp_switch(s32 arg0) {
     (&D_801217D0)[18] |= 0x80000000;
     (&D_801217D0)[27] |= 0x80000000;
 }
+
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", cal_sprite_init);
 
 void data_save_load_class_init(void) {

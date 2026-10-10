@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/BUNKAKEN.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/BUNKAKEN_undefined_funcs_auto.txt
@@ -56,6 +57,41 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, BUNKAKEN]
-      - [0x21050, rodata, BUNKAKEN_rodata]
+      - [0x0, c, BUNKAKEN/80132000]
+      - [0x5640, c, BUNKAKEN/80137640]
+      - [0x7E50, c, BUNKAKEN/80139E50]
+      - [0x9510, c, BUNKAKEN/8013B510]
+      - [0x9FE0, c, BUNKAKEN/8013BFE0]
+      - [0xAF30, c, BUNKAKEN/8013CF30]
+      - [0xCB30, c, BUNKAKEN/8013EB30]
+      - [0xEF60, c, BUNKAKEN/80140F60]
+      - [0x108D0, c, BUNKAKEN/801428D0]
+      - [0x11DD0, c, BUNKAKEN/80143DD0]
+      - [0x12F70, c, BUNKAKEN/80144F70]
+      - [0x13E40, c, BUNKAKEN/80145E40]
+      - [0x14560, c, BUNKAKEN/80146560]
+      - [0x16ED0, c, BUNKAKEN/80148ED0]
+      - [0x186A0, c, BUNKAKEN/8014A6A0]
+      - [0x1C440, c, BUNKAKEN/8014E440]
+      - [0x1ED30, c, BUNKAKEN/80150D30]
+      - [0x20680, c, BUNKAKEN/80152680]
+      - [0x21050, .rodata, BUNKAKEN/80132000]
+      - [0x21760, .rodata, BUNKAKEN/80137640]
+      - [0x21B00, .rodata, BUNKAKEN/80139E50]
+      - [0x21DD0, .rodata, BUNKAKEN/8013B510]
+      - [0x21EC0, .rodata, BUNKAKEN/8013BFE0]
+      - [0x21FE0, .rodata, BUNKAKEN/8013CF30]
+      - [0x22240, .rodata, BUNKAKEN/8013EB30]
+      - [0x22560, .rodata, BUNKAKEN/80140F60]
+      - [0x22760, .rodata, BUNKAKEN/801428D0]
+      - [0x22920, .rodata, BUNKAKEN/80143DD0]
+      - [0x22AF0, .rodata, BUNKAKEN/80144F70]
+      - [0x22BF0, .rodata, BUNKAKEN/80145E40]
+      - [0x22C70, .rodata, BUNKAKEN/80146560]
+      - [0x23020, .rodata, BUNKAKEN/80148ED0]
+      - [0x23220, .rodata, BUNKAKEN/8014A6A0]
+      - [0x23720, .rodata, BUNKAKEN/8014E440]
+      - [0x23AF0, .rodata, BUNKAKEN/80150D30]
+      - [0x23D20, .rodata, BUNKAKEN/80152680]
+      - [0x23E90, data, BUNKAKEN_data]
   - [0x30000]

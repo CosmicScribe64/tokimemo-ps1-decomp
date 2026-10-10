@@ -56,8 +56,17 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, DATE2]
-      - [0x8020, rodata, DATE2_rodata]
-      - [0x8040, .rodata, DATE2]
-      - [0x82D0, rodata, DATE2_rodata_after_DATE2]
+      - [0x0, c, DATE2/80132000]
+      - [0x6F0, c, DATE2/801326F0]
+      - [0xDE0, c, DATE2/80132DE0]
+      - [0x4D50, c, DATE2/80136D50]
+      - [0x5360, c, DATE2/80137360]
+      - [0x5D50, c, DATE2/80137D50]
+      - [0x8020, .rodata, DATE2/80132000]
+      - [0x8040, .rodata, DATE2/801326F0]
+      - [0x8050, .rodata, DATE2/80132DE0]
+      - [0x82D0, .rodata, DATE2/80136D50]
+      - [0x8300, .rodata, DATE2/80137360]
+      - [0x8310, .rodata, DATE2/80137D50]
+      - [0x8380, data, DATE2_data]
   - [0x30000]

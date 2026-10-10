@@ -1,0 +1,75 @@
+#include "common.h"
+#include "ovl/GEKO.h"
+
+void func_8013C4C0(void) {
+    D_801469F0 = 0x801CE120;
+    D_801469F4 = 0x801CE124;
+    D_801469F8 = 0x801CE144;
+    D_801469FC = (*(s16 *)0x801CE158);
+    D_80146A00 = 0x801B0000;
+    D_80146A04 = 0x801B2000;
+    D_80146A08 = 0x801B6000;
+    D_80146A0C = 0x801BA000;
+    D_80146A10 = 0x801BE000;
+    D_80146A14 = 0x801C2000;
+    D_80146A18 = 0x801C6000;
+}
+
+void func_8013C570(void) {
+    if (D_80122CD0 == 1) {
+        func_8013C5B0();
+        return;
+    }
+    func_80046500();
+}
+
+void func_8013C5B0(void) {
+    if (D_800E7389 == 0) {
+        func_8013C5EC();
+        return;
+    }
+    func_80046500();
+}
+
+INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C4C0", func_8013C5EC);
+
+void func_8013C674(void) {
+    D_80122D10 = 2;
+    D_80120652 = 0;
+    func_8004284C();
+}
+
+void func_8013C6A4(void) {
+    if ((u16) D_800CA154 == 0) {
+        D_800E71DF = 0xE;
+    } else if ((u16) D_800CA154 == 1) {
+        D_800E71DF = 0xD;
+    } else {
+        D_800E71DF = 3;
+    }
+    func_80138AF8();
+}
+
+void func_8013C704(void) {
+    func_80046318(0x3D, 0x801B0000, 0x829A);
+    func_8013C4C0();
+    func_8004284C();
+}
+
+INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C4C0", func_8013C73C);
+
+void func_8013C87C(void) {
+    func_8013C4C0();
+    load_palette(D_80146A00, 0x11, 1, 2, 0);
+    func_80084E90(D_80146A04, D_80146A08, D_80146A0C, D_80146A10, D_80146A14, D_80146A18);
+    func_800850D4(D_801469F4, D_801469F8, D_801469F0, D_801469FC);
+    D_800CA360 = 1;
+    func_8004284C();
+}
+
+void func_8013C92C(void) {
+    bg_read_sub2(0x407A);
+    func_8004284C();
+}
+
+INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C4C0", func_8013C954);

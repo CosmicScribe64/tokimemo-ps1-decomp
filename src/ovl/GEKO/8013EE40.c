@@ -1,0 +1,69 @@
+#include "common.h"
+#include "ovl/GEKO.h"
+
+void func_8013EE40(void) {
+    D_80146F90 = 0x801CE124;
+    D_80146F94 = 0x801CE128;
+    D_80146F98 = 0x801CE148;
+    D_80146F9C = (*(s16 *)0x801CE15C);
+    D_80146FA0 = 0x801B0000;
+    D_80146FA4 = 0x801B2000;
+    D_80146FA8 = 0x801B6000;
+    D_80146FAC = 0x801BA000;
+    D_80146FB0 = 0x801BE000;
+    D_80146FB4 = 0x801C2000;
+    D_80146FB8 = 0x801C6000;
+}
+
+void func_8013EEF0(void) {
+    if (D_80122CD0 == 1) {
+        func_8013EF30();
+        return;
+    }
+    func_80046500();
+}
+
+void func_8013EF30(void) {
+    if (D_800E7389 == 0) {
+        func_8013EF6C();
+        return;
+    }
+    func_80046500();
+}
+
+INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013EE40", func_8013EF6C);
+
+void func_8013EFF4(void) {
+    func_80046318(0x3D, 0x801B0000, 0x8C0E);
+    func_8013EE40();
+    func_8004284C();
+}
+
+void func_8013F02C(void) {
+    if (D_800E6808 == 1 && D_800E6807 == 1) {
+        D_800CA150 = (u16) D_800CA150 + 4;
+        D_800CA154 = 0;
+    } else if (D_800E6807 >= 2U) {
+        D_800CA150 = (u16) D_800CA150 + 2;
+        D_800CA154 = 0;
+    }
+    func_8004284C();
+}
+
+INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013EE40", func_8013F0BC);
+
+void func_8013F25C(void) {
+    func_8013EE40();
+    load_palette(D_80146FA0, 0x11, 1, 2, 0);
+    func_80084E90(D_80146FA4, D_80146FA8, D_80146FAC, D_80146FB0, D_80146FB4, D_80146FB8);
+    func_800850D4(D_80146F94, D_80146F98, D_80146F90, D_80146F9C);
+    D_800CA360 = 1;
+    func_8004284C();
+}
+
+void func_8013F30C(void) {
+    bg_read_sub2(0x4045);
+    func_8004284C();
+}
+
+INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013EE40", func_8013F334);

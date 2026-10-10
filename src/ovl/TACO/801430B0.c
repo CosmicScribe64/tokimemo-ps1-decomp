@@ -1,0 +1,71 @@
+#include "common.h"
+#include "ovl/TACO.h"
+
+void func_801430B0(void) {
+    func_8004ACC8(0x800000);
+}
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801430D0);
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801432F0);
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143574);
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143644);
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801436D4);
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143730);
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143814);
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801438F0);
+
+void func_8014394C(void) {
+    D_80122760 = 0;
+    D_80122764 = 0;
+    D_80122768 = -0x64;
+    D_8012276C = 0xFF;
+    D_8012276D = 0xFF;
+    D_8012276E = 0xFF;
+    func_8009AD70(0, &D_80122760);
+    D_80122770 = 0;
+    D_80122774 = 0x64;
+    D_80122778 = -0x64;
+    D_8012277C = 0xFF;
+    D_8012277D = 0xFF;
+    D_8012277E = 0xFF;
+    func_8009AD70(1, &D_80122770);
+    D_80122780 = -0x64;
+    D_80122784 = 0;
+    D_80122788 = -0x64;
+    D_8012278C = 0xFF;
+    D_8012278D = 0xFF;
+    D_8012278E = 0xFF;
+    func_8009AD70(2, &D_80122780);
+    func_8009B310(0x800, 0x800, 0x800);
+    func_8009B340(0);
+}
+
+void func_80143A74(void) {
+    func_8009AD30(0x800);
+    D_80122740 = 0;
+    D_80122744 = 0;
+    D_80122748 = 0x800;
+    D_8012274C = 0;
+    D_80122750 = 0;
+    D_80122754 = 0;
+    D_80122758 = 0;
+    D_8012275C = 0;
+    func_80099540(&D_80122740);
+    func_8009AD50(-0x64);
+    func_8009AD60(0x7FFF);
+}
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143AF4);
+
+void func_80143B34(s32 arg0) {
+    func_80059688((arg0 * 2) + 2);
+}
+
+INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143B58);

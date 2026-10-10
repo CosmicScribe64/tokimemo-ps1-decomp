@@ -1,0 +1,40 @@
+#include "common.h"
+#include "ovl/SHOUGATU.h"
+
+void func_8013AF10(void) {
+    func_8013AF30();
+}
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013AF10", func_8013AF30);
+
+void func_8013AFA4(void) {
+    func_80137AB4();
+    if (D_80144E0C == 2) {
+        D_80122D20 = 1;
+        return;
+    }
+    D_80122D20 = 0;
+}
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013AF10", func_8013AFEC);
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013AF10", func_8013B114);
+
+void func_8013B158(void) {
+    bg_read_sub2(0x4016);
+    func_8004284C();
+}
+
+void func_8013B180(void) {
+    if ((u8) D_800E6723 < 2U) {
+        D_80144E08 += 1;
+    }
+    func_8004284C();
+}
+
+void func_8013B1C4(void) {
+    if ((u8) D_800E6723 >= 2U) {
+        D_80144E08 += 1;
+    }
+    func_8004284C();
+}

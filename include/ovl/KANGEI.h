@@ -131,4 +131,7 @@ void addr_init_bustup();
 void func_80084E4C();
 void func_801325D0();
 
+/* defined in C in one object, called from another (T-0500) */
+void func_80132E40(void);
+
 #endif /* OVL_KANGEI_H */

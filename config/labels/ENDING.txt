@@ -1,0 +1,6 @@
+// Rodata labels for the INCLUDE_RODATA lines of overlay ENDING (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_8013BFB8 = 0x8013BFB8;
+D_8013BFC0 = 0x8013BFC0;

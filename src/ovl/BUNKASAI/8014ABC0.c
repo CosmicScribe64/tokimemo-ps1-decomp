@@ -1,0 +1,34 @@
+#include "common.h"
+#include "ovl/BUNKASAI.h"
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014ABC0);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014AD34);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014B15C);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014B548);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014B9D8);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014BFE0);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014C528);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014CE94);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014D240);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014D558);
+
+INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014ABC0", func_8014D8F0);
+
+void func_8014DD28(void) {
+    func_800847B8(5);
+    func_80132270();
+    D_800CA14C = 0;
+    D_800CA160 = D_801604F0;
+    D_800CA164 = D_801604F4;
+    D_800CA168 = D_801604F8;
+    func_8004284C();
+}

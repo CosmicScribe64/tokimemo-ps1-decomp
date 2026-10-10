@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/labels/BUNKA_SD.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/BUNKA_SD_undefined_funcs_auto.txt
@@ -56,6 +57,26 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, BUNKA_SD]
-      - [0x7910, rodata, BUNKA_SD_rodata]
+      - [0x0, c, BUNKA_SD/80132000]
+      - [0x1540, c, BUNKA_SD/80133540]
+      - [0x2260, c, BUNKA_SD/80134260]
+      - [0x2540, c, BUNKA_SD/80134540]
+      - [0x3160, c, BUNKA_SD/80135160]
+      - [0x39B0, c, BUNKA_SD/801359B0]
+      - [0x4270, c, BUNKA_SD/80136270]
+      - [0x49D0, c, BUNKA_SD/801369D0]
+      - [0x5890, c, BUNKA_SD/80137890]
+      - [0x5B40, c, BUNKA_SD/80137B40]
+      - [0x68D0, c, BUNKA_SD/801388D0]
+      - [0x7910, .rodata, BUNKA_SD/80132000]
+      - [0x8090, .rodata, BUNKA_SD/80133540]
+      - [0x8A40, .rodata, BUNKA_SD/80134540]
+      - [0x8A60, .rodata, BUNKA_SD/80135160]
+      - [0x8A90, .rodata, BUNKA_SD/801359B0]
+      - [0x8AB0, .rodata, BUNKA_SD/80136270]
+      - [0x8AD0, .rodata, BUNKA_SD/801369D0]
+      - [0x8E30, .rodata, BUNKA_SD/80137890]
+      - [0x8E70, .rodata, BUNKA_SD/80137B40]
+      - [0x95F0, .rodata, BUNKA_SD/801388D0]
+      - [0x9670, data, BUNKA_SD_data]
   - [0x30000]

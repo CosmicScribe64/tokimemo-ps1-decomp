@@ -1,0 +1,32 @@
+// Rodata labels for the INCLUDE_RODATA lines of overlay BUNKASAI (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_8015D774 = 0x8015D774;
+D_80160380 = 0x80160380;
+D_80160388 = 0x80160388;
+D_80160390 = 0x80160390;
+D_80160398 = 0x80160398;
+D_801603A0 = 0x801603A0;
+D_801603A8 = 0x801603A8;
+D_801603B0 = 0x801603B0;
+D_801603B4 = 0x801603B4;
+D_801603BC = 0x801603BC;
+D_801603C4 = 0x801603C4;
+D_801603C8 = 0x801603C8;
+D_801603D0 = 0x801603D0;
+D_801603D8 = 0x801603D8;
+D_801603DC = 0x801603DC;
+D_801603E4 = 0x801603E4;
+D_801603EC = 0x801603EC;
+D_801603F4 = 0x801603F4;
+D_801603FC = 0x801603FC;
+D_80160404 = 0x80160404;
+D_8016040C = 0x8016040C;
+D_80160414 = 0x80160414;
+D_8016041C = 0x8016041C;
+D_80160424 = 0x80160424;
+D_8016042C = 0x8016042C;
+D_80160434 = 0x80160434;
+D_8016043C = 0x8016043C;
+D_80160444 = 0x80160444;

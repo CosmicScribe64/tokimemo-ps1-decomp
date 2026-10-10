@@ -1,0 +1,11 @@
+#include "ovl/MASTER.h"
+
+INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80138490", func_80138490);
+
+INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80138490", func_80138E58);
+
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80138490.rodata", D_8013BFB0);
+
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80138490.rodata", D_8013BFBC);
+
+INCLUDE_RODATA("asm/ovl/MASTER/data/MASTER/80138490.rodata", D_8013BFC8);

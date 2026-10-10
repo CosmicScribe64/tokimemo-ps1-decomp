@@ -1,0 +1,36 @@
+#include "common.h"
+#include "ovl/BUNKAKEN.h"
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_80139E50);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_80139FB8);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013A118);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013A2FC);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013A518);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013A6F4);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013A8CC);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013ABF0);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013ADC4);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013AF00);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013B170);
+
+INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013B2AC);
+
+void func_8013B4A0(void) {
+    func_800847B8(0);
+    func_801324E0();
+    D_800CA14C = 0;
+    D_800CA160 = D_80155E90;
+    D_800CA164 = D_80155E94;
+    D_800CA168 = D_80155E98;
+    func_8004284C();
+}

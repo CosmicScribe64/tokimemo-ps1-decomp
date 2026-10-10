@@ -1,0 +1,39 @@
+#include "common.h"
+#include "ovl/SHOUGATU.h"
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", func_8013C070);
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", func_8013C2E4);
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", func_8013D180);
+
+void func_8013D2A8(void) {
+    D_800CA134 = &D_80145F2C;
+    D_800CA138 = &D_80145F30;
+    D_800CA13C = D_80145F20;
+    D_800CA140 = D_80145F24;
+    D_800CA144 = D_80145F28;
+    func_80082764(D_80122CDC, 1, 0);
+}
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", func_8013D324);
+
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", func_8013D3B4);
+
+void func_8013D560(void) {
+    D_800CA134 = &D_800CA150;
+    D_800CA138 = &D_800CA154;
+    D_800CA13C = D_80145F34;
+    D_800CA140 = D_80145F38;
+    D_800CA144 = D_80145F3C;
+    func_80082764(0xFF, 1, 0);
+}
+
+void func_8013D5D8(void) {
+    D_800CA134 = (u8 *) &D_800CA150;
+    D_800CA138 = (u8 *) &D_800CA154;
+    D_800CA13C = D_80145F34;
+    D_800CA140 = D_80145F38;
+    D_800CA144 = D_80145F3C;
+    func_80082764(D_80122CDC, 1, 0);
+}

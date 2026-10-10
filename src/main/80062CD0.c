@@ -22,6 +22,7 @@ void func_80062D0C(s32 arg0) {
         (&D_801217D0)[45] |= 0x80000000;
     }
 }
+
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80062DBC);
 
 void func_800634FC(void) {
