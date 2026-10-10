@@ -36,11 +36,6 @@ typedef struct Rec34Flags {
     u32 rest : 17;
 } Rec34Flags; /* size 0x04 */
 
-s32 func_80045288();
-void func_8004E93C();
-void func_80052000();
-void func_80061A3C();
-void func_80062634();
 /* 0x34-byte record of the table at D_800B0A04 (12 records; EVENT indexes it with stride 0x34). */
 typedef struct Rec34 {
     /* 0x00 */ s16 unk_00;
@@ -459,9 +454,9 @@ extern s32 D_800B1C70;
 extern u8 D_800B3220;
 extern u8 *D_800B3288[];
 extern u8 *D_800B35F4[];
-#ifndef MAIN_API_OVERRIDE_D_800B3688
 extern u8 *D_800B3624;
 extern u8 *D_800B3630;
+#ifndef MAIN_API_OVERRIDE_D_800B3688
 extern s32 D_800B3688[];
 #endif
 extern s32 D_800B36AC;
