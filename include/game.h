@@ -433,7 +433,7 @@ void func_8006B648(void);
 void func_800625C0(void);
 void func_80042808(void);
 void xa_wait(void);
-void LoadSquare(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4);
+void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4);
 void load_palette();
 extern u8 D_800C9A60[];
 extern u8 D_800C9D60[];
