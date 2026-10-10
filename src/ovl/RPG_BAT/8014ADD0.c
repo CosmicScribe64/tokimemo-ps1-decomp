@@ -10,9 +10,9 @@ void func_8014B738(s32 arg0, s32 arg1, s32 arg2) {
     D_8015E740 = arg0;
     D_8015E744 = arg2;
     D_8015E748 = arg1;
-    D_8015EE44 = 0;
-    D_8015EE4C = 0;
-    D_8015EE48 = 1;
+    D_8015EE44.unk_00 = 0;
+    D_8015EE44.unk_08 = 0;
+    D_8015EE44.unk_04 = 1;
 }
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014B79C);
@@ -20,37 +20,37 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014ADD0", func_8014B79C);
 void func_8014BAA4(s32 arg0) {
     switch (arg0) {
     case 1:
-        D_8015EE48 = 0x80;
+        D_8015EE44.unk_04 = 0x80;
         return;
     case 2:
-        D_8015EE48 = 0x81;
+        D_8015EE44.unk_04 = 0x81;
         return;
     case 3:
-        D_8015EE48 = 0x82;
+        D_8015EE44.unk_04 = 0x82;
         return;
     case 4:
-        D_8015EE48 = 0x83;
+        D_8015EE44.unk_04 = 0x83;
         return;
     case 5:
-        D_8015EE48 = 0x84;
+        D_8015EE44.unk_04 = 0x84;
         return;
     case 6:
-        D_8015EE48 = 0x85;
+        D_8015EE44.unk_04 = 0x85;
         return;
     case 7:
-        D_8015EE48 = 0x86;
+        D_8015EE44.unk_04 = 0x86;
         return;
     case 8:
-        D_8015EE48 = 0x87;
+        D_8015EE44.unk_04 = 0x87;
         return;
     case 9:
-        D_8015EE48 = 0x88;
+        D_8015EE44.unk_04 = 0x88;
         return;
     case 10:
-        D_8015EE48 = 0x89;
+        D_8015EE44.unk_04 = 0x89;
         return;
     default:
-        D_8015EE48 = 1;
+        D_8015EE44.unk_04 = 1;
         return;
     }
 }

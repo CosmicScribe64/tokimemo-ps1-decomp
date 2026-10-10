@@ -179,4 +179,6 @@ segments:
       - [0x2C3E0, .rodata, RPG_BAT/80159D50]
       - [0x2C480, .rodata, RPG_BAT/8015A1F0]
       - [0x2C4F0, data, RPG_BAT_data]
+      - [0x2CD90, .data, RPG_BAT/8014E780]
+      - [0x2CE90, data, RPG_BAT_data_8015EE90]
   - [0x30000]
