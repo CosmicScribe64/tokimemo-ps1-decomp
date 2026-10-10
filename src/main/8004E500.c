@@ -14,7 +14,19 @@ INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B402C);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B4030);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B40E4);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004E500);
+void func_8004E500(s32 arg0) {
+    s32 i;
+    RECT r;
+
+    for (i = 0; i < arg0; i++) {
+        r.x = 0x320 + i * 0x40;
+        r.y = 0x100;
+        r.w = 0x20;
+        r.h = 0x100;
+        func_8009C7F8(&r, 0, 0, 0);
+    }
+    func_8009C674(0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004E58C);
 
