@@ -6,4 +6,69 @@
 
 /* Main-exe functions used by OLH come from game.h (T-1200). */
 
+/* OLH-local functions called from C (T-0500) */
+void func_801324EC(void);
+void func_80132614(void);
+void func_80132744(void);
+void func_80132884(void);
+void func_80132954(void);
+void func_80132AE8(void);
+void func_80132BD4(void);
+void func_80132CDC(void);
+void func_80132E54(void);
+void func_8013306C(void);
+void func_801331C8(void);
+void func_801332F8(void);
+void func_801333E4(void);
+void func_80133508(void);
+void func_8013362C(void);
+void func_8013376C(void);
+void func_801338C8(void);
+void func_80133A24(void);
+void func_80133C4C(void);
+void func_80133D74(void);
+void func_80133EA4(void);
+void func_80133F90(void);
+void func_80134060(void);
+void func_80134184(void);
+void func_80134254(void);
+void func_80134324(void);
+void func_801343F4(void);
+void func_801345CC(void);
+void func_801346F4(void);
+void func_80134824(void);
+void func_801348F4(void);
+void func_801349FC(void);
+void func_80134B3C(void);
+void func_80134C28(void);
+void func_80134D14(void);
+void func_80134E00(void);
+void func_8013500C(void);
+void func_80135190(void);
+void func_801352A0(void);
+void func_8013538C(void);
+void func_80135494(void);
+void func_8013559C(void);
+void func_801356DC(void);
+void func_80135828(void);
+void func_80135974(void);
+void func_80135B8C(void);
+void func_80135CB4(void);
+void func_80135DD4(void);
+void func_80135EC0(void);
+void func_80136000(void);
+void func_80136124(void);
+void func_80136210(void);
+void func_801362C4(void);
+void func_801363CC(void);
+void func_801365AC(void);
+void func_801366D4(void);
+void func_80136804(void);
+void func_80136960(void);
+void func_80136A30(void);
+void func_80136B00(void);
+void func_80136BD0(void);
+void func_80136CF4(void);
+void func_80136E18(void);
+
 #endif /* OVL_OLH_H */

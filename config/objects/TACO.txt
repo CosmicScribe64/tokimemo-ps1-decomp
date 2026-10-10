@@ -1,0 +1,47 @@
+# Original objects of overlay TACO (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8015E210 last-jtbl
+object 80132000 80132220 8015D410 8015D4D0 yes start start
+object 80132220 801335A0 8015D4D0 8015D540 yes pad jtbl-pad
+object 801335A0 80133870 - - no:no_rodata pad -
+object 80133870 80134930 8015D540 8015D640 yes pad jtbl-pad
+object 80134930 80135720 8015D640 8015D6C0 yes pad jtbl-pad
+object 80135720 80136B40 8015D6C0 8015D7C0 yes pad jtbl-pad
+object 80136B40 80137590 8015D7C0 8015D880 yes rodata jtbl-pad
+object 80137590 80137A60 8015D880 8015D890 yes rodata jtbl-end
+object 80137A60 80137F90 - - no:no_rodata pad -
+object 80137F90 80138280 - - no:no_rodata pad -
+object 80138280 80138450 8015D890 8015D8A0 yes pad str-pad
+object 80138450 80138680 8015D8A0 8015D8B0 yes rodata str-pad
+object 80138680 80138890 8015D8B0 8015D8C0 yes choice/2 str-pad
+object 80138890 80139170 8015D8C0 8015D980 yes pad str-pad
+object 80139170 8013B170 8015D980 8015D9B0 yes rodata jtbl-pad
+object 8013B170 8013B990 8015D9B0 8015D9E0 yes pad jtbl-end
+object 8013B990 8013D1E0 8015D9E0 8015DA40 yes choice/4 str-pad
+object 8013D1E0 8013DB80 - - no:no_rodata pad -
+object 8013DB80 80140DF0 8015DA40 8015DA90 yes pad owner
+object 80140DF0 80141DE0 - - no:no_rodata pad -
+object 80141DE0 80142820 - - no:no_rodata pad -
+object 80142820 801430B0 8015DAA0 8015DAE0 yes pad owner
+object 801430B0 80143E80 8015DAE0 8015DC00 yes pad jtbl-pad
+object 80143E80 801447D0 - - no:no_rodata pad -
+object 801447D0 80146D60 8015DC00 8015DC20 yes pad jtbl-pad
+object 80146D60 801480B0 - - no:no_rodata pad -
+object 801480B0 80148FE0 8015DC20 8015DC30 yes pad jtbl-pad
+object 80148FE0 80149F90 8015DC30 8015DC40 yes choice/2 str-pad
+object 80149F90 80151C30 8015DC40 8015DC90 yes rodata str-pad
+object 80151C30 80153AA0 - - no:no_rodata pad -
+object 80153AA0 80154230 - - no:no_rodata pad -
+object 80154230 80154960 - - no:no_rodata pad -
+object 80154960 80156A80 8015DC90 8015DCC0 yes pad jtbl-pad
+object 80156A80 80159090 8015DCC0 8015DF10 yes pad owner
+object 80159090 8015A900 8015DF10 8015DF60 yes choice/6 jtbl-pad
+object 8015A900 8015ABF0 8015DF60 8015DFF0 yes pad jtbl-pad
+object 8015ABF0 8015CF30 8015DFF0 8015E210 yes pad jtbl-pad
+object 8015CF30 8015D0D0 - - no:no_rodata pad -
+object 8015D0D0 8015D270 - - no:no_rodata pad -
+object 8015D270 8015D410 - - no:no_rodata pad -
+orphan 8015DA90 8015DAA0 second_chunk_of_8013DB80

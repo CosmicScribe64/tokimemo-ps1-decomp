@@ -42,4 +42,19 @@ extern s32 D_800B3688[];
 extern s32 D_800B36C8[];
 extern s32 D_800B3708[];
 
+/* three parallel tables per object (13 words each), indexed by a fixed slot per value of
+ * D_800E71DF (func_8013285C, func_80132EB0, func_801340E4; T-0500) */
+extern s32 D_80134A60[];
+extern s32 D_80134A90[];
+extern s32 D_80134AC0[];
+extern s32 D_80134B60[];
+extern s32 D_80134B94[];
+extern s32 D_80134BC8[];
+extern s32 D_80134C30[];
+extern s32 D_80134C64[];
+extern s32 D_80134C98[];
+
+extern u16 D_800E6374;
+void func_800AE0F0(void *dst, void *src); /* strcpy (SDK libc) */
+
 #endif /* OVL_OMIMAI_H */

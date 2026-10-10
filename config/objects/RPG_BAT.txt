@@ -1,0 +1,67 @@
+# Original objects of overlay RPG_BAT (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8015E4F0 last-jtbl
+object 80132000 801321D0 8015A9A0 8015A9E0 yes start start
+object 801321D0 80132FE0 8015A9E0 8015AA60 yes pad jtbl-pad
+object 80132FE0 801340F0 8015AA60 8015AC30 yes pad jtbl-end
+object 801340F0 80134A70 8015AC30 8015AD30 yes pad jtbl-end
+object 80134A70 80134D30 8015AD30 8015AD90 yes pad jtbl-pad
+object 80134D30 80135AE0 8015AD90 8015AE20 yes pad jtbl-pad
+object 80135AE0 80136070 8015AE20 8015AEB0 yes rodata jtbl-pad
+object 80136070 80136530 8015AEB0 8015AFA0 yes pad jtbl-pad
+object 80136530 801368B0 8015AFA0 8015B010 yes rodata jtbl-pad
+object 801368B0 80136D50 8015B010 8015B070 yes pad jtbl-pad
+object 80136D50 80137280 8015B070 8015B160 yes pad jtbl-end
+object 80137280 8013A480 8015B160 8015BA40 yes pad jtbl-end
+object 8013A480 8013A650 8015BA40 8015BA80 yes pad jtbl-pad
+object 8013A650 8013AD50 8015BA80 8015BB10 yes pad jtbl-pad
+object 8013AD50 8013B5B0 8015BB10 8015BBA0 yes pad jtbl-pad
+object 8013B5B0 8013C5D0 8015BBA0 8015BBE0 yes pad jtbl-pad
+object 8013C5D0 8013C890 8015BBE0 8015BC30 yes choice/3 jtbl-end
+object 8013C890 8013CC90 8015BC30 8015BC60 yes pad owner
+object 8013CC90 8013D780 8015BC60 8015BCB0 yes pad owner
+object 8013D780 8013E300 8015BCB0 8015BD80 yes pad owner
+object 8013E300 8013E4D0 8015BD80 8015BDC0 yes pad jtbl-pad
+object 8013E4D0 8013F4F0 8015BDC0 8015BEF0 yes pad owner
+object 8013F4F0 80141060 8015BEF0 8015C170 yes pad jtbl-pad
+object 80141060 80141C30 8015C170 8015C1E0 yes pad owner
+object 80141C30 80142000 8015C1E0 8015C260 yes pad jtbl-pad
+object 80142000 801421E0 8015C260 8015C2A0 yes rodata jtbl-pad
+object 801421E0 80142F70 8015C2A0 8015C3B0 yes pad jtbl-pad
+object 80142F70 80143830 8015C3B0 8015C420 yes pad jtbl-pad
+object 80143830 801439E0 8015C420 8015C460 yes pad jtbl-pad
+object 801439E0 80144010 8015C460 8015C4A0 yes pad jtbl-pad
+object 80144010 801447E0 8015C4A0 8015C520 yes pad jtbl-pad
+object 801447E0 801454F0 - - no:no_rodata pad -
+object 801454F0 80145CC0 8015C520 8015C5F0 yes pad jtbl-pad
+object 80145CC0 801468B0 8015C5F0 8015C790 yes pad jtbl-pad
+object 801468B0 801477E0 8015C790 8015CA00 yes pad jtbl-end
+object 801477E0 80147F10 8015CA00 8015CA80 yes pad jtbl-pad
+object 80147F10 801480F0 8015CA80 8015CAC0 yes pad jtbl-pad
+object 801480F0 801484E0 8015CAC0 8015CB30 yes pad jtbl-pad
+object 801484E0 80148F70 8015CB30 8015CBC0 yes pad jtbl-pad
+object 80148F70 801496F0 8015CBC0 8015CC30 yes pad jtbl-pad
+object 801496F0 801498C0 8015CC30 8015CC70 yes rodata jtbl-end
+object 801498C0 8014A660 8015CC70 8015CD40 yes pad jtbl-pad
+object 8014A660 8014ADD0 8015CD40 8015CDA0 yes pad jtbl-pad
+object 8014ADD0 8014D380 8015CDA0 8015CEA0 yes rodata jtbl-pad
+object 8014D380 8014DF60 8015CEA0 8015CF10 yes pad jtbl-pad
+object 8014DF60 8014E780 8015CF10 8015CF90 yes pad jtbl-pad
+object 8014E780 8014F790 8015CF90 8015CFB0 yes pad jtbl-pad
+object 8014F790 801504E0 8015CFB0 8015D150 yes pad jtbl-pad
+object 801504E0 80151C10 8015D150 8015D650 yes pad jtbl-end
+object 80151C10 80151FC0 8015D650 8015D750 yes pad jtbl-pad
+object 80151FC0 801525B0 8015D750 8015D890 yes pad jtbl-end
+object 801525B0 80154430 8015D890 8015DA80 yes pad jtbl-pad
+object 80154430 80155A70 8015DA80 8015DAE0 yes pad jtbl-end
+object 80155A70 80155CC0 8015DAE0 8015DB20 yes pad jtbl-pad
+object 80155CC0 801563A0 8015DB20 8015DBA0 yes pad jtbl-pad
+object 801563A0 80156870 8015DBA0 8015DC50 yes rodata jtbl-pad
+object 80156870 80156CC0 8015DC50 8015DD20 yes pad jtbl-end
+object 80156CC0 80157AE0 8015DD20 8015DE50 yes pad jtbl-pad
+object 80157AE0 80159D50 8015DE50 8015E3E0 yes pad jtbl-pad
+object 80159D50 8015A1F0 8015E3E0 8015E480 yes pad jtbl-pad
+object 8015A1F0 8015A9A0 8015E480 8015E4F0 yes pad jtbl-pad

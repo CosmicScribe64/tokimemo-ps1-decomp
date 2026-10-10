@@ -6,6 +6,8 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
+- [ ] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
 - [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap (deferred)]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
@@ -13,12 +15,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300 Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress]]
 - [ ] [[tickets/T-0301-sdk-rodata-data-split|T-0301 Split SDK rodata and data per library and object]]
 - [ ] [[tickets/T-0302-sdk-version-conflict|T-0302 Resolve mixed SDK vintages (libcd, libsnd, libpress newer than libgte, libc)]]
-- [ ] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-0200-event-gyozi-loader-and-address|T-0200 Find how EVENT and GYOZI overlays are loaded]]
 - [ ] [[tickets/T-0601-obin-med-confidence-review|T-0601 Review medium and low confidence O.BIN mappings]]
 
 ## Ready
 
+- [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
 
@@ -32,6 +34,7 @@ kanban-plugin: board
 ## Done
 
 - [ ] [[tickets/T-3100-identify-original-compiler|T-3100 Identify the original game-code compiler]]
+- [x] [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500 Split game rodata, data and bss per source file]]
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
 - [x] [[tickets/T-2040-wave-2-etc|T-2040 Wave 2: ETC]]
 - [ ] [[tickets/T-2010-wave2-date|T-2010 Wave 2: DATE]]

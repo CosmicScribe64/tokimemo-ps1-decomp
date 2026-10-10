@@ -1,0 +1,39 @@
+# Original objects of overlay GYOZI (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 80145E00 monotone-strings
+object 80134000 80134520 80145840 80145860 yes start start
+object 80134520 80134C10 80145860 801458A0 yes pad jtbl-pad
+object 80134C10 80134FD0 801458A0 801458E0 yes pad jtbl-pad
+object 80134FD0 80135900 801458E0 801458F0 yes rodata jtbl-pad
+object 80135900 80135CA0 801458F0 80145900 yes pad owner
+object 80135CA0 80136220 - - no:no_rodata pad -
+object 80136220 801372B0 80145900 801459B0 yes pad str-pad
+object 801372B0 80138510 801459B0 801459E0 yes pad jtbl-pad
+object 80138510 801388E0 - - no:no_rodata pad -
+object 801388E0 80138B50 801459E0 801459F0 yes pad jtbl-pad
+object 80138B50 80139920 801459F0 80145A80 yes choice/2 str-pad
+object 80139920 8013A140 80145A80 80145AB0 yes pad jtbl-pad
+object 8013A140 8013A920 80145AB0 80145B00 yes pad jtbl-pad
+object 8013A920 8013AE80 80145B00 80145B20 yes pad jtbl-pad
+object 8013AE80 8013B920 80145B20 80145B80 yes pad owner
+object 8013B920 8013BD50 80145B80 80145BA0 yes pad jtbl-pad
+object 8013BD50 8013C3B0 80145BA0 80145BB0 yes choice/6 str-pad
+object 8013C3B0 8013CDD0 80145BB0 80145BE0 yes pad str-pad
+object 8013CDD0 8013D120 80145BE0 80145C00 yes pad owner
+object 8013D120 8013D470 80145C00 80145C20 yes pad str-pad
+object 8013D470 8013DB50 80145C20 80145C40 yes choice/4 str-pad
+object 8013DB50 8013DE30 80145C40 80145C50 yes pad owner
+object 8013DE30 8013E1D0 - - no:no_rodata pad -
+object 8013E1D0 8013E5B0 80145C50 80145C60 yes pad str-pad
+object 8013E5B0 8013EB10 80145C60 80145C90 yes pad str-pad
+object 8013EB10 801400D0 80145C90 80145CF0 yes pad jtbl-pad
+object 801400D0 80140740 80145CF0 80145D20 yes pad jtbl-pad
+object 80140740 80140C90 80145D20 80145D40 yes pad str-pad
+object 80140C90 801418B0 80145D40 80145DB0 yes pad owner
+object 801418B0 80142D00 - - no:no_rodata pad -
+object 80142D00 80143110 - - no:no_rodata pad -
+object 80143110 80143AD0 80145DB0 80145DE0 yes pad jtbl-pad
+object 80143AD0 80145840 80145DE0 80145E00 yes pad jtbl-pad

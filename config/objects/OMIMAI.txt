@@ -1,0 +1,10 @@
+# Original objects of overlay OMIMAI (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 80134A60 last-jtbl
+object 80132000 801320A0 - - no:no_rodata start -
+object 801320A0 80132AD0 801348B0 801348F0 yes pad start
+object 80132AD0 801331B0 801348F0 80134920 yes pad jtbl-pad
+object 801331B0 801348B0 80134920 80134A60 yes pad jtbl-pad

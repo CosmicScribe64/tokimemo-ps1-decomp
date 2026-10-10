@@ -172,8 +172,10 @@ def main(argv):
     for name in islands(cfg):
         src = os.path.join(asm_path, "data", name + ".rodata.s")
         folder = os.path.join(asm_path, "nonmatchings", name)
-        if not os.path.exists(src) or not os.path.isdir(folder):
-            sys.exit("rodata_pieces.py: %s or %s not written by splat" % (src, folder))
+        if not os.path.exists(src):
+            sys.exit("rodata_pieces.py: %s not written by splat" % src)
+        if not os.path.isdir(folder):
+            os.makedirs(folder)       # every function of the file is C: all symbols are pieces
         n, free = process(src, folder, os.path.join(asm_path, "data", name + ".rodata"))
         print("%s: %d symbols into functions, %d unowned%s"
               % (src, n, len(free), (" (" + " ".join(free) + ")") if free else ""))

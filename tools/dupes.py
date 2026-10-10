@@ -31,7 +31,9 @@ import re
 import subprocess
 import sys
 
-ASM_RE = re.compile(r'^asm/(?:ovl/(\w+)/)?(non)?matchings/(?:main/)?(\w+)/(\w+)\.s$')
+# asm/[ovl/<NAME>/](non)matchings/[main/]<c subsegment name>/<func>.s; the name is <addr>, <NAME> or
+# <NAME>/<addr> (per-object overlay files, T-0500)
+ASM_RE = re.compile(r'^asm/(?:ovl/(\w+)/)?(non)?matchings/(?:main/)?([\w/]+)/(\w+)\.s$')
 INSN_RE = re.compile(r'^\s*/\*\s*([0-9A-Fa-f]+)\s+([0-9A-Fa-f]{8})\s+([0-9A-Fa-f]{8})\s*\*/\s*(\S+)\s*(.*?)\s*$')
 RELOC_RE = re.compile(r'%(hi|lo|gp_rel|got\w*)\(([^)]*)\)')
 SYM_RE = re.compile(r'^([A-Za-z_.$][\w.$]*)\s*(?:([+-])\s*(0x[0-9A-Fa-f]+|\d+))?$')
@@ -113,6 +115,8 @@ def load_funcs(root, units=None):
         unit = m.group(1) or 'main'
         if units and unit not in units:
             continue
+        if not os.path.exists(os.path.join(root, src_for_dir(unit, m.group(3)))):
+            continue          # a folder of an old source layout (asm/ is not cleaned by splat)
         with open(p) as f:
             key, relocs, bad = parse_asm(f.read())
         funcs.append(Func(m.group(4), unit, m.group(2) is None, rel, key, relocs, bad))
@@ -130,11 +134,15 @@ def group_funcs(funcs):
 
 # ---------------------------------------------------------------- source side
 
+def src_for_dir(unit, name):
+    """The src .c file of a splat folder name (the c subsegment name without `main/`)."""
+    return 'src/main/%s.c' % name if unit == 'main' else 'src/ovl/%s.c' % name
+
+
 def src_for(root, f):
-    """The src .c file holding function f (main: the address directory of its asm)."""
-    if f.unit == 'main':
-        return 'src/main/%s.c' % f.path.split('/')[-2]
-    return 'src/ovl/%s.c' % f.unit
+    """The src .c file holding function f (the splat folder of its asm, srcscan's path rule)."""
+    m = ASM_RE.match(f.path)
+    return src_for_dir(f.unit, m.group(3))
 
 
 def read(root, rel):

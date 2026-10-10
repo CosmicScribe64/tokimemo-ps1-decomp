@@ -94,5 +94,15 @@ class IncludeDeps(unittest.TestCase):
         self.assertEqual(cc.INCLUDE_ASM_RE.findall(text), [("a/b", "f1"), ("a/c", "D_1")])
 
 
+class SjisLiteralTest(unittest.TestCase):
+    def test_string_literals_become_octal_escapes(self):
+        src = 'f("図", \'a\'); /* 図 */ g("x\\"y");\n'
+        self.assertEqual(cc.sjis_literals(src), 'f("\\220\\175", \'a\'); /* 図 */ g("x\\"y");\n')
+
+    def test_second_byte_backslash_is_escaped(self):
+        # 表 is 0x95 0x5C in Shift-JIS: the 0x5C must not end up as a raw backslash
+        self.assertEqual(cc.sjis_literals('"表"'), '"\\225\\134"')
+
+
 if __name__ == "__main__":
     unittest.main()

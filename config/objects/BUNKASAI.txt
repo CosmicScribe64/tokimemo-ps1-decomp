@@ -1,0 +1,26 @@
+# Original objects of overlay BUNKASAI (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 801604F0 last-jtbl
+object 80132000 80132480 - - no:no_rodata start -
+object 80132480 801354B0 8015B900 8015BEC0 yes pad start
+object 801354B0 801362A0 8015BEC0 8015C050 yes pad jtbl-pad
+object 801362A0 80138A70 8015C050 8015C570 yes pad jtbl-pad
+object 80138A70 8013B190 8015C570 8015CA30 yes pad jtbl-pad
+object 8013B190 8013C430 8015CA30 8015CC60 yes pad jtbl-pad
+object 8013C430 8013FD90 8015CC60 8015D230 yes pad jtbl-pad
+object 8013FD90 80142700 8015D230 8015D6E0 yes pad jtbl-pad
+object 80142700 80143770 8015D6E0 8015D7E0 yes pad jtbl-end
+object 80143770 80146030 8015D7E0 8015DCB0 yes pad jtbl-pad
+object 80146030 80146FA0 8015DCB0 8015DE80 yes pad jtbl-pad
+object 80146FA0 80148040 8015DE80 8015DFD0 yes pad jtbl-pad
+object 80148040 8014ABC0 8015DFD0 8015E5B0 yes pad jtbl-pad
+object 8014ABC0 8014DD90 8015E5B0 8015EC20 yes pad jtbl-pad
+object 8014DD90 80150930 8015EC20 8015F140 yes pad jtbl-pad
+object 80150930 801511E0 8015F140 8015F1C0 yes pad jtbl-pad
+object 801511E0 8015AF90 8015F1C0 8015F730 yes pad jtbl-end
+object 8015AF90 8015B900 80160380 801604F0 yes pad jtbl-pad
+orphan 8015F730 8015FF70 second_chunk_of_801511E0
+orphan 8015FF70 80160380 second_chunk_of_801511E0

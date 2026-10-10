@@ -1,0 +1,14 @@
+# Original objects of overlay ENDING (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8013C280 monotone-strings
+object 80132000 80133030 8013BF00 8013BFA0 yes start start
+object 80133030 80133540 8013BFA0 8013BFB0 yes pad jtbl-end
+object 80133540 80133C10 8013BFB0 8013BFD0 yes pad owner
+object 80133C10 80134D20 8013BFD0 8013C010 yes pad str-pad
+object 80134D20 80137340 8013C010 8013C070 yes pad jtbl-pad
+object 80137340 801396E0 8013C070 8013C0B0 yes pad owner
+object 801396E0 8013B6A0 8013C0B0 8013C260 yes pad jtbl-pad
+object 8013B6A0 8013BF00 8013C260 8013C280 yes pad jtbl-pad

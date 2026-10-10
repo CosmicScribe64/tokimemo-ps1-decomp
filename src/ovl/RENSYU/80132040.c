@@ -1,28 +1,22 @@
 #include "ovl/RENSYU.h"
 
-void func_80132000(void) {
-    D_801342B0 = 0x801E990C;
-    D_801342B4 = 0x801E9C40;
-    D_801342B8 = 0x801EB2D8;
-}
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132040);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80132040);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_801320E0);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_801320E0);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132390);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80132390);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132A28);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80132A28);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132F10);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80132F10);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_8013325C);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_8013325C);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133628);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80133628);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133990);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80133990);
-
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU", func_80133CB8);
+INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80133CB8);
 
 void func_80133E5C(void) {
     switch (D_801342D0) {
@@ -100,4 +94,5 @@ void func_801340B0(void) {
     D_801343DC = *(s16 *)0x801A40B0;
     D_801343E0 = 0x80197000;
 }
+
 

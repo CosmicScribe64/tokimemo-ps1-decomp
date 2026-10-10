@@ -29,6 +29,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0009-progress-report-script|T-0009]] Progress reporting script (Done)
 - [[tickets/T-0010-sdk-lib-object-boundaries|T-0010]] SDK version and lib object boundaries (Done)
 - [[tickets/T-2040-wave-2-etc|T-2040]] Wave 2: ETC (Done)
+- [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050]] Run the per-object migration on the whole tree after wave 2 (Ready)
+- [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051]] Review low-confidence object boundaries and orphan rodata chunks (Backlog)
+- [[tickets/T-3052-per-object-data-bss-split|T-3052]] Split .data and .bss per original object (Backlog)
 - [[tickets/T-1300-reuse-c-across-identical-functions|T-1300]] Tooling: reuse C across identical functions (Done)
 - [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300]] Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress (Backlog)
 - [[tickets/T-0301-sdk-rodata-data-split|T-0301]] Split SDK rodata and data per library and object (Backlog)
@@ -37,7 +40,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-0013-identify-original-compiler-pipeline|T-0013]] Identify the original compiler pipeline (Done)
 - [[tickets/T-0014-find-exact-ucode-compiler|T-0014]] Find the exact MIPS ucode compiler (Done; frame follow-up T-0100)
 - [[tickets/T-0012-game-file-boundaries-and-shift-jis|T-0012]] Game file boundaries and Shift-JIS (Done)
-- [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500]] Split game rodata, data and bss per source file (Backlog)
+- [[tickets/T-0500-per-file-game-rodata-data-bss-split|T-0500]] Per-object C files and rodata for main and overlays (Done)
 - [[tickets/T-0200-event-gyozi-loader-and-address|T-0200]] EVENT/GYOZI loader and load address (Backlog)
 - [[tickets/T-0201-obin-format-and-symbols|T-0201]] O.BIN format and symbols (Done)
 - [[tickets/T-0600-apply-obin-renames|T-0600]] Apply the O.BIN rename list after the game.c split (Done)
@@ -72,7 +75,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
-- [[source-files]] - the 28 `src/main/<address>.c` files: boundary evidence, alignment handling, what is not split
+- [[source-files]] - the `src/main/<address>.c` files and the original objects of main and overlays (T-0500): boundary evidence and confidence, alignment handling, what is not split
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[obin]] - O.BIN: ECOFF format and header fields (`obin_syms.py --headers`), symbol table, mapping onto the main exe, stats, generated rename list

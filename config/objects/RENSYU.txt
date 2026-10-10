@@ -1,0 +1,8 @@
+# Original objects of overlay RENSYU (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 801342B0 last-jtbl
+object 80132000 80132040 - - no:no_rodata start -
+object 80132040 80134110 80134110 801342B0 yes pad start

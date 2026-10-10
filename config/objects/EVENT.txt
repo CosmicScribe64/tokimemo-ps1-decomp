@@ -1,0 +1,24 @@
+# Original objects of overlay EVENT (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 801202D0 last-jtbl
+object 800F6000 800F7220 8011F530 8011F580 yes start start
+object 800F7220 800F9680 8011F580 8011F5D0 yes pad jtbl-pad
+object 800F9680 800FBBF0 8011F5D0 8011F690 yes choice/4 jtbl-end
+object 800FBBF0 800FD2F0 8011F690 8011F6D0 yes pad jtbl-pad
+object 800FD2F0 800FDC20 8011F6D0 8011F720 yes pad jtbl-pad
+object 800FDC20 800FFBE0 8011F720 8011F770 yes pad str-pad
+object 800FFBE0 801011A0 8011F770 8011F810 yes pad jtbl-pad
+object 801011A0 801024B0 8011F810 8011F880 yes pad jtbl-pad
+object 801024B0 80103B60 8011F880 8011F900 yes pad jtbl-pad
+object 80103B60 801050D0 8011F900 8011F950 yes choice/8 jtbl-pad
+object 801050D0 80106C20 8011F950 8011F9C0 yes pad jtbl-pad
+object 80106C20 80107FC0 8011F9C0 8011FA30 yes pad jtbl-pad
+object 80107FC0 8010A210 8011FA30 8011FAD0 yes pad jtbl-pad
+object 8010A210 8010B360 8011FAD0 8011FB60 yes pad jtbl-pad
+object 8010B360 8010BB90 8011FB60 8011FB80 yes pad jtbl-end
+object 8010BB90 8010FE10 8011FB80 8011FC30 yes pad owner
+object 8010FE10 8011C650 8011FC30 801200E0 yes pad jtbl-pad
+object 8011C650 8011F530 801200E0 801202D0 yes pad jtbl-pad

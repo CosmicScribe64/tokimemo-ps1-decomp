@@ -56,7 +56,8 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, RENSYU]
-      - [0x2110, .rodata, RENSYU]
-      - [0x22B0, rodata, RENSYU_rodata_after_RENSYU]
+      - [0x0, c, RENSYU/80132000]
+      - [0x40, c, RENSYU/80132040]
+      - [0x2110, .rodata, RENSYU/80132040]
+      - [0x22B0, data, RENSYU_data]
   - [0x30000]
