@@ -450,3 +450,6 @@ Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1):
 
 ## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
 [[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.
+
+## [2026-10-09] ticket | T-3330 Local function-pointer table frame layout (Backlog -> In Progress -> In Review -> Done)
+[[tickets/T-3330-local-fptab-frame-layout]]. A scan of all splat asm found 236 table-copy functions in 15 overlays, none matched. Every one has 4 or more bytes above the table, which IDO's bare-table layout never has. IDO 5.3 experiments show the rule: once a local is in memory, every declared local gets a stack slot, top-down in declaration order. Declaring the index local before the table reproduces `sp+0x2C`/0x90, and `s32 cur; s32 prev;` fixes the GEKO spill. This is a source difference, so no pass and no `tools/cc.py` change; [[ido-52-evaluation]] agrees. Found along the way: one-line test C changes as1's prologue schedule. 18 functions matched in an uncommitted tree (27 of 27 sha1 OK, 2734 -> 2752 of 6958). Their C is in [[data/t3330-fptab-proof.patch]], to apply after T-1321. Notes in [[matching-notes]] (new section "Local function-pointer tables") and [[toolchain]].

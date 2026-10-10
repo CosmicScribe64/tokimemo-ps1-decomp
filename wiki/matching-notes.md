@@ -182,7 +182,7 @@ New patterns and limits:
 - **Compare operand order**: `D_A == expr` and `expr == D_B` forms differ in which side IDO loads first; try the swap when the first load lands in the wrong temp (OMIMAI `func_80132398`, MASTER `func_80135040`).
 - **`u8` vs `s8` constants**: `D = 0x80` on an `s8` gives `li -128`, the original `li 128` (use `u8`).
 - Functions with a `jr` jump table or a string literal cannot be built: the C object's own `.rodata` is not part of the link (overlay rodata is one asm blob until T-0500). They stay `INCLUDE_ASM` (e.g. RENSYU `func_801320E0`, `func_80133E5C`).
-- Left `INCLUDE_ASM`, new gaps: (a) a local table of function pointers copied from the overlay rodata and indexed by `D_800E7389` (RENSYU `func_80132040`, MASTER `func_80132140`, `func_80133A2C`): the original block-copies through `at`/`t9` with `v0` holding the local's address and a frame 8 bytes bigger than IDO's; (b) a global timeout counter `if (D++ >= 0x400)` (OMIMAI `func_80132544`, `func_8013364C`, VALEN `func_801324B4`): the original keeps the old value in `v1` and increments in place, IDO uses a fresh temp (structure and `xori` match, registers do not); (c) `D |= 2` on a `u8` global (VALEN `func_80133B6C`): the original keeps `&D` in its own register (`lui t7; lbu t8,lo(t7)`), same family as the T-0014 address CSE gap; (d) state-machine functions that m2c renders with `goto` (OMIMAI `func_801323F8`, `func_80133500`).
+- Left `INCLUDE_ASM`, new gaps: (a) a local table of function pointers copied from the overlay rodata and indexed by `D_800E7389` (RENSYU `func_80132040`, MASTER `func_80132140`, `func_80133A2C`): the original block-copies through `at`/`t9` with `v0` holding the local's address and a frame 8 bytes bigger than IDO's (update T-3330: one more local declared before the table, see the section at the end); (b) a global timeout counter `if (D++ >= 0x400)` (OMIMAI `func_80132544`, `func_8013364C`, VALEN `func_801324B4`): the original keeps the old value in `v1` and increments in place, IDO uses a fresh temp (structure and `xori` match, registers do not); (c) `D |= 2` on a `u8` global (VALEN `func_80133B6C`): the original keeps `&D` in its own register (`lui t7; lbu t8,lo(t7)`), same family as the T-0014 address CSE gap; (d) state-machine functions that m2c renders with `goto` (OMIMAI `func_801323F8`, `func_80133500`).
 ## Overlay batch B (T-0750): TEL, OLH, EN_NICHI
 12 functions matched (EN_NICHI 9, TEL 2, OLH 1; call sequences, one-global conditionals, a compare chain, a pure getter-style call). The rest of the three overlays is dominated by four patterns that IDO 5.3 plus the frame pass does not reproduce; the functions stay `INCLUDE_ASM`. Draft C came from `m2c`; verification by `funcdiff.py --expected expected/ovl/<NAME>.o`.
 
@@ -448,7 +448,7 @@ Ticket [[tickets/T-2010-wave2-date]]. 278 functions of `src/ovl/DATE.c` matched 
 - Shifts: `(u8) D >> 4` and `(u16) D >> 12` give `sra`, the original has `srl`: write `(u32) D >> 4`. Operand order of a compare of two shifted globals follows the original load order (swap the operands until the loads line up).
 - `s32` return that is always `0` in some paths (`or v0,zero,zero` in a branch delay slot) means the function returns `s32` with `return 0;` in those paths (`func_80140030`).
 - Byte tables and records: `*(s16 *)((u8 *)&D_800E6442 + D_800E71DF * 0x38) = 0x28;`, `D_80146168[D_80146158]` (`u8` array), `D_800E6280 + idx * 0x38 + off` all match when the multiply happens once; with two straight-line `idx * 0x38` the original keeps 0x38 in a register (`li; multu`) and IDO uses shifts (T-0018 row).
-- Left `INCLUDE_ASM`: 44 functions that copy a function-pointer table (0x60 to 0xF0 bytes) from `.data` into a local and call through it (e.g. `func_80137C28`, `func_801330C0`). C like `FnTbl tbl = D_xxx; tbl.f[i]();` gives the same code as the original but the local sits at `sp+0x28` and the frame is 0x88, the original has `sp+0x2C` and 0x90. Same as batch A gap (a); nothing in the C reaches the extra 8 bytes without a `FAKE` local.
+- Left `INCLUDE_ASM`: 44 functions that copy a function-pointer table (0x60 to 0xF0 bytes) from `.data` into a local and call through it (e.g. `func_80137C28`, `func_801330C0`). C like `FnTbl tbl = D_xxx; tbl.f[i]();` gives the same code as the original but the local sits at `sp+0x28` and the frame is 0x88, the original has `sp+0x2C` and 0x90. Same as batch A gap (a); nothing in the C reaches the extra 8 bytes without a `FAKE` local. Update (T-3330): a source difference, solved by declaring the index local before the table; see "Local function-pointer tables: one more local declared first".
 - T-0018 rows added: 22 (`regorder`/`promo`), see [[data/t0018-cases]]: `D |= 4` fresh temp, `func_80051A68(..) & 0x7F` result one temp later, `D = N; f(N)` keeping N in `a0`, `beq v0,v1` operand order with constants in registers.
 ## Wave 2, TT (T-2070)
 Ticket [[tickets/T-2070-wave-2-tt]]. 49 of 277 `INCLUDE_ASM` functions of `src/ovl/TT.c` matched (228 left; `queue.py` hid about 70 of them as R/V). Verification: `funcdiff.py --expected expected/ovl/TT.o` per function, `ninja` for the overlay sha1.
@@ -480,7 +480,7 @@ Left `INCLUDE_ASM` (tried, new blockers; six are rows in [[data/t0018-cases]]):
 - m2c prints `*(s16 *)0x801D0000` for a symbol it does not know; the real address comes from the `.s` (`%lo(D_801D63D0)`), check it.
 - Addresses of other overlays (0x801C0000 and up, splat names like `D_801CE158`) must be absolute casts `*(s16 *)0x801CE158`: with a symbol the `lui` and `lh` use other temporaries, with the cast the object differs only by the missing relocation and the linked bytes match.
 - m2c prints callee prototypes with the bodies (`s32 func_80051A68(u8);  /* extern */`); they belong in the overlay header once, not in the .c. A callee defined later in the file needs a prototype in the header (implicit int vs void).
-- Left `INCLUDE_ASM`, new gaps: the local function-pointer table copy (`M2C_MEMCPY_ALIGNED` + `(&sp[0])[D_800E738A](0x80)`, about 25 functions: known gap (a) of batch A); `func_8013BC74`/`func_8013BCBC` (`s32 t = D_800E738A; call(); if (t != D_800E738A)`: the original keeps the local at sp+0x28, IDO puts it at sp+0x2C); `func_80136E7C` (a bit-3 test of a word is `sll 28; bgez` in the original, `andi` from C); `func_801374A8` (two `D_800E6280 + idx * 0x38` uses: original keeps 56 in a register for `multu`, IDO shifts); `func_8013CC20` (`D = 7; f(7);` shares one register for the constant in the original).
+- Left `INCLUDE_ASM`, new gaps: the local function-pointer table copy (`M2C_MEMCPY_ALIGNED` + `(&sp[0])[D_800E738A](0x80)`, about 25 functions: known gap (a) of batch A; solved by T-3330, see the section at the end); `func_8013BC74`/`func_8013BCBC` (`s32 t = D_800E738A; call(); if (t != D_800E738A)`: the original keeps the local at sp+0x28, IDO puts it at sp+0x2C; T-3330: `s32 cur; s32 prev;` matches); `func_80136E7C` (a bit-3 test of a word is `sll 28; bgez` in the original, `andi` from C); `func_801374A8` (two `D_800E6280 + idx * 0x38` uses: original keeps 56 in a register for `multu`, IDO shifts); `func_8013CC20` (`D = 7; f(7);` shares one register for the constant in the original).
 ## Wave 2: GYOZI (T-2020)
 GYOZI 244 of 417 functions matched (178 new): event-script call wrappers, setters, table fills, small conditionals and compare-chain `switch`es. Ticket [[tickets/T-2020-wave-2-gyozi]].
 - `tools/m2c.py` picks the first `asm/ovl/*/nonmatchings/*/<name>.s` it finds, and overlays share addresses (`func_8013461C` exists in several), so drafts of an overlay function can come from another overlay. Workaround: `--root` pointing at a directory that links only `asm/ovl/<NAME>` and `include`.
@@ -491,7 +491,7 @@ GYOZI 244 of 417 functions matched (178 new): event-script call wrappers, setter
 - Value passed on and stored: `func_8008F618(D_800F62CF = D_800F5ACD)` loads once into `a0` and stores from it (`func_801361D4`). The same form with a constant does not match (`func_8013B43C`: IDO emits two `li`).
 - A record array reached as `base + idx*0x38 + 0x1B2` is a struct with a large leading pad (`GyoziWork { u8 pad[0x1A8]; GyoziGirl girl[11]; }`); `D_800F53A0.girl[i].unk_0A` matches where the idx is a `u8` (`func_80137AA8`). With an `s32` index, or two accesses in one function, the original uses `li 56; multu` (`func_80136124`, `func_80144A74`): not reproduced.
 - Declarations with the wrong width were the most common first failure (`lh` vs `lbu`); fixing the global's type in `include/ovl/GYOZI.h` turned about 10 failures into matches. `ninja build/ovl/GYOZI.bin` (sha1) is the regression check after a header type change.
-- Left `INCLUDE_ASM` (new patterns): (a) six pointer-table fills (`func_8013BEA0`, `func_8013C3B0`, `func_801418B0`, `func_80143AD0`, `func_80143BA0`, `func_80143C70`) whose last store copies an `s16` from another overlay: original `lui t9; lh t0,lo(t9)`, IDO reuses `t9` (T-0018 data rows). (b) Statement scheduling: three `|=`/`-=` updates of adjacent globals in program order in the original, IDO hoists the loads (`func_8013683C`, `func_80135C3C`). (c) Local function-pointer table copied from rodata and called by index (about 35 script-step functions, e.g. `func_80134520`; known gap (a) of batch A). (d) Init sequences with `func_8008F618(D_800F62CF = const)` (`func_8013AC38`, `func_8013B43C`, `func_8013BB0C`, `func_8013C118`, `func_8013CF2C`, `func_8013DC2C`, `func_8013C91C`). (e) Bitfield-like date compares (`func_8013D9E8`, `func_8013DA58`, `func_8013DAA4`, `func_80137D70`, `func_801378D0`, `func_80139858`): `(u32)D << 0x17 >> 0x1B` order of the loads differs.
+- Left `INCLUDE_ASM` (new patterns): (a) six pointer-table fills (`func_8013BEA0`, `func_8013C3B0`, `func_801418B0`, `func_80143AD0`, `func_80143BA0`, `func_80143C70`) whose last store copies an `s16` from another overlay: original `lui t9; lh t0,lo(t9)`, IDO reuses `t9` (T-0018 data rows). (b) Statement scheduling: three `|=`/`-=` updates of adjacent globals in program order in the original, IDO hoists the loads (`func_8013683C`, `func_80135C3C`). (c) Local function-pointer table copied from rodata and called by index (about 35 script-step functions, e.g. `func_80134520`; known gap (a) of batch A, solved by T-3330, see the section at the end). (d) Init sequences with `func_8008F618(D_800F62CF = const)` (`func_8013AC38`, `func_8013B43C`, `func_8013BB0C`, `func_8013C118`, `func_8013CF2C`, `func_8013DC2C`, `func_8013C91C`). (e) Bitfield-like date compares (`func_8013D9E8`, `func_8013DA58`, `func_8013DAA4`, `func_80137D70`, `func_801378D0`, `func_80139858`): `(u32)D << 0x17 >> 0x1B` order of the loads differs.
 ## Overlay batch EVENT (T-2000)
 - Table-init functions (store `0x801xxxxx` constants and one `s16` copy into `D_8012xxxx` globals) are the bulk of EVENT. A copy from another overlay buffer must be written as a raw-address load, `D_8012069C = *(s16 *)0x801CE13C;`, not through a named extern: the named global makes IDO hoist `lui; lh` above the previous store and reuse the address register (`lh t9,0(t9)`); the raw address keeps the original order and gives `lh t0,..(t9)`. The `lui` immediate in the `.s` is the high half only: take the full address from `lui` plus the signed `lh` offset (m2c printed `0x801D0000` for `lui 0x801D; lh 0x63C8`, wrong).
 - A pointer-table slot that `game.h` declares as `u8`/`s16` (`D_80120654`, `D_80120664`, `D_80120668`) is written `*(s32 *)&D_80120654 = 0x8019B034;` (CODING_STANDARDS 8a, address of the scalar). Without it IDO stores a small constant with `sb`/`sh`.
@@ -566,3 +566,79 @@ Functions that need other owners' files (not done):
 - The `D_800E36C0` mouse pair: `InitMouse` (`sw $a0` / `sw $a1,+4` after ONE `lui $at`), `func_80046290`, `dec_bg_reset`, `k_reset`, `k_disp_start`, `func_8004482C`, `menu_bar_color`: several stores to a global cluster share one `lui $at` in the original; IDO re-emits `lui $at` for every store, for scalars, arrays, structs and static data alike.
 
 Other near misses kept as `INCLUDE_ASM` (all differ only in scheduling or register choice, none by a missing idea): `func_800410AC` and `normal_date_three_select_init` (original frame has 8 more bytes of locals), `func_8007B734`/`func_8007A868` (loads the original hoists, IDO sinks), `hizuke_disp_switch`/`parameter_disp_switch` (order of the first load in the unrolled body), `func_80071038` (loop with a 0x38-byte entry and a large body: IDO unrolls the pointer form with a run-time remainder; the indexed form peels the first iteration), `func_8004636C`, `SD_CalcCDAve`/`SD_DetectCDPeak` (u16 loop temporaries), the `func_8007B358` family (four copies, `lhu` temp number).
+
+## Local function-pointer tables: one more local declared first (T-3330)
+Ticket [[tickets/T-3330-local-fptab-frame-layout]]. The "local function-pointer table" gap (batch A gap (a), SHOUGATU, GEKO and GYOZI sections above, DATE2 and BUNKASAI notes) is a source difference, not a toolchain one. No pass is needed, and `tools/cc.py` and `tools/frame_pass.py` stay unchanged. IDO 5.2 and 4.1 lay these functions out exactly like 5.3 ([[ido-52-evaluation]]).
+
+### The IDO rule behind it
+If a function keeps any local in memory (an address-taken array or struct, a struct copy, or a scalar spilled across a call), IDO gives every local declared in the function its own stack slot. That includes unused locals and locals that live in a register. Measured with IDO 5.3 and the frame pass on scratch C:
+- The slots fill the locals area from the top of the frame downwards, in declaration order: the first declared local has the highest address.
+- The area is rounded up to 8 bytes, and the rounding gap sits below the last local (at T+16 in a frame-pass layout, T = end of the register saves).
+
+| C (SHOUGATU `func_80137C28`, 0x60-byte table) | table at | frame |
+|---|---|---|
+| `FnTbl24 tbl; tbl = D_80144E20; tbl.f[D_800E738A]();` | sp+0x28 | 0x88 |
+| `s32 idx; FnTbl24 tbl; tbl = D_80144E20; idx = D_800E738A; tbl.f[idx]();` | **sp+0x2C** | **0x90** (original) |
+| `FnTbl24 tbl; s32 idx; ...` (index declared after the table) | sp+0x30 | 0x90 |
+| `int x; FnTbl24 tbl; ...` (`x` never used) | sp+0x2C | 0x90 |
+
+GEKO `func_8013BC74` (`prev = D_800E738A; func_8007C8A4(); cur = D_800E738A; if (prev != cur) ...`) is the same rule. With only `prev` declared, the spill lands at sp+0x2C. With `s32 cur; s32 prev;`, `cur`'s slot is at 0x2C and `prev` at 0x28, as in the original.
+
+### Evidence from the original
+A scan of every splat function file (`asm/**/{matchings,nonmatchings}`) looked for a block copy (`lw/sw $at` loop or unrolled copy from `%lo(table)`) followed by a `jalr`. It found 236 functions, all `INCLUDE_ASM`, in 15 overlays: GYOZI 56, SHOUGATU 50, DATE 34, GEKO 30, EVENT 25, SHUGAKU 11, KANGEI 9, DATE2 5, VALEN 4, ENDING 3, OMIMAI 3, TAIIKU 3, MASTER 1, BUNKAKEN 1, BUNKASAI 1. In the table below, `below` is the table address minus T+16 and `above` is the frame size minus the table's end.
+
+| below | above | table size mod 8 | functions | reading |
+|---|---|---|---|---|
+| 4 | 4 | 0 | 114 | one 4-byte local declared before the table and a rounding gap below it (a second 4-byte local after the table would give the same offsets) |
+| 0 | 4 | 4 | 99 | one 4-byte local before the table, no gap |
+| 8 | 4 | 4 | 10 | one local before, 4 or 8 bytes of locals after (the `p = &tbl.f[i]; if (*p == A \|\| *p == B) *p = C;` shape, e.g. SHOUGATU `func_80134120`) |
+| 0 / 4 | 8 | 0 / 4 | 5 | two words before (TAIIKU `func_80133C80`, `func_80138A34`, DATE `func_80155004`, EVENT `func_800FC040`, GEKO `func_8013B10C`) |
+| 12 | 4 | 0 / 4 | 2 | one before, 8 or 12 bytes after (GYOZI `func_80137798`, SHOUGATU `func_80136078`) |
+| other | | | 6 | large functions with other locals |
+
+All 236 have at least 4 bytes above the table. None has the bare-table layout that IDO gives for a table with no other local. The original source declared a scalar (almost always exactly one) before the table, and that scalar is the 4 bytes.
+
+### Idiom
+Declare the index local first, then the table, and assign the index after the copy:
+```c
+typedef struct {
+    void (*f[24])();
+} FnTbl24; /* size 0x60 */
+extern FnTbl24 D_80144E20;
+
+void func_80137C28(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl24 tbl;
+
+    tbl = D_80144E20;
+    idx = D_800E738A;
+    tbl.f[idx]();
+}
+```
+It is not a fakematch: `idx` is an ordinary used variable, and its slot comes from IDO's own rule above. A local that exists only to occupy a slot (unused, as in the `int x` row) would be a fakematch and must be marked `FAKE` (CODING_STANDARDS 7a). The two-word cases (TAIIKU) have no matched C yet for that reason.
+
+### Line breaks change as1's schedule
+Scratch tests must use normal multi-line C. If the same function is written on one line, IDO's as1 schedules the prologue as `lui t6; addiu t6; addiu v0,sp; move t0; addiu t9; sw ra`. The original, and the same C with one statement per line, give `lui t6; addiu v0,sp; addiu t6; sw ra; addiu t9; or t0`. Reordering the binasm instruction records by hand does not change as1's schedule, so the line records (`.loc`) are the likely input (inferred, not traced in as1). Before this was found, the one-line tests looked like a second toolchain difference.
+
+### Proof
+These 18 functions were matched in an uncommitted tree with the idiom: 16 table copies and the 2 GEKO spills.
+- SHOUGATU `func_80137C28`, `func_801330C0`
+- GEKO `func_8013BC74`, `func_8013BCBC`, `func_801323E0`
+- GYOZI `func_80134520`
+- RENSYU `func_80132040` (8-entry table, copy unrolled)
+- MASTER `func_80133A2C`
+- DATE `func_801585F0`, `func_8014FAE0`
+- EVENT `func_800F93FC`
+- KANGEI `func_80133C10`
+- SHUGAKU `func_801336A4`
+- VALEN `func_801323D0`
+- OMIMAI `func_80132D44`
+- DATE2 `func_801375D4`
+- ENDING `func_80133F1C`
+- BUNKASAI `func_80150930`
+
+With them, `ninja` gives 27 of 27 sha1 OK and the grand total goes from 2734 to 2752 of 6958. The C is in [[data/t3330-fptab-proof.patch]], to apply after T-1321; it also adds `extern u8 D_800E738A;` to `include/ovl/ENDING.h`. No tool changed, so no matched function can change.
+
+### Left
+- SHOUGATU `func_80134120` and GYOZI `func_80137798` get the frame and table offset right with `s32 idx; FnTbl tbl; void (**p)();`. The registers still differ: the original keeps `D_800E738A` in `$a1` across both reads and the table address in `$a2`, which is the register-promotion gap of [[tickets/T-1321-register-promotion-build-step]].
+- The remaining 218 table functions: apply the idiom per function (the queue can treat them as ordinary work now).
