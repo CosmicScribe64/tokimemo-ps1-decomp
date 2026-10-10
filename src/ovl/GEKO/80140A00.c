@@ -103,7 +103,12 @@ void func_80140D80(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80140DF4);
+void func_80140DF4(void) {
+    func_8004E788(-0x80, 0x30, 1, "ドン", 0);
+    func_80044750(0x24);
+    func_80044750(0x500);
+    func_8004284C();
+}
 
 typedef struct {
     void (*f[28])();

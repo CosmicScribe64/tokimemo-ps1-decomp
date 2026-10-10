@@ -73,7 +73,14 @@ void func_80106EE0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80106F90);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80107030);
+void func_80107030(void) {
+    func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
+    if (D_800B1AF5 == 0) {
+        func_80107090();
+        return;
+    }
+    func_80015FE0();
+}
 
 typedef struct {
     void (*f[35])();
