@@ -16,7 +16,15 @@ s32 Vblnk_Timer(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80085E30", Scroll);
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", Rot_2D);
+void Rot_2D(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4) {
+    s32 s;
+    s32 c;
+
+    s = rsin();
+    c = func_800A0140(arg0);
+    *arg3 = c * *arg1 / 4096 - *arg2 * s / 4096;
+    *arg4 = s * *arg1 / 4096 + *arg2 * c / 4096;
+}
 
 void Fade_Out_Init(void) {
     Vblnk_Timer_Init();

@@ -1,7 +1,24 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042A00);
+void func_80042A00(void) {
+    if (func_80042AC8() == 0) {
+        if (D_800E71F4 == 0) {
+            func_80042CB0();
+        } else if (D_800E71F4 != 0xFF) {
+            func_800430C0();
+        }
+        if (D_800B3CA0 != 0 && (D_800E7208 & 0xF9DF)) {
+            D_800B3CA0 = 0;
+        }
+        if ((D_800E7200 & 0xF00000) == 0xF00000) {
+            D_800B3CA0 = 1;
+        }
+        if (D_800E7208 & 0x08000000) {
+            D_800E71EE = 1 - (u8)D_800E71EE;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80042A00", func_80042AC8);
 

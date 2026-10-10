@@ -310,7 +310,20 @@ void magazine_base_show(void) {
     dtd_on(5);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", cal_sprite_disp_switch);
+/* Bit 31 of the first four 36-byte entries of the table at D_801217D0; indexing the symbol keeps IDO from hoisting the loads. */
+void cal_sprite_disp_switch(s32 arg0) {
+    if (arg0 == 1) {
+        D_801217D0 &= 0x7FFFFFFF;
+        (&D_801217D0)[9] &= 0x7FFFFFFF;
+        (&D_801217D0)[18] &= 0x7FFFFFFF;
+        (&D_801217D0)[27] &= 0x7FFFFFFF;
+        return;
+    }
+    D_801217D0 |= 0x80000000;
+    (&D_801217D0)[9] |= 0x80000000;
+    (&D_801217D0)[18] |= 0x80000000;
+    (&D_801217D0)[27] |= 0x80000000;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", cal_sprite_init);
 
