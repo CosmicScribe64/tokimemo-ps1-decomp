@@ -518,12 +518,18 @@ extern s8 D_800B3DB0;
 extern u8 D_800B3DC0[];
 extern u8 D_800B3DC7[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
 extern u8 D_800B3F58[];
-extern s16 D_800B3F60;  /* lh/sh; also lbu elsewhere */
-extern s16 D_800B3F62;
-extern s16 D_800B3F64;
-extern u8 D_800B3F66;
-extern s16 D_800B3F68;
-extern u8 D_800B3F6A;
+/* Text display state, defined in src/main/8004E500.c (T-9150). */
+typedef struct KWork {
+    /* 0x0 */ s16 count;   /* number of entries in D_800B3DC0 */
+    /* 0x2 */ s16 total;
+    /* 0x4 */ s16 mark;
+    /* 0x6 */ u8 speed;
+    /* 0x7 */ u8 pad_07;
+    /* 0x8 */ s16 pos;
+    /* 0xA */ u8 unk_6A;
+    /* 0xB */ u8 pad_0B;
+} KWork; /* size 0xC */
+extern KWork D_800B3F60;
 extern u8 D_800B41A0[];
 extern u8 D_800B4341[]; /* table read by func_80052E60 */
 extern s32 D_800B58E4;
