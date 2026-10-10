@@ -98,4 +98,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 ## Tooling
 - `tools/identify_version.py` (T-3200): identify which release a disc image or folder is, from `config/versions.txt`; reads bin/iso/cue, folders and zip/7z/chd (T-3300); tests `tools/test_identify_version.py`
+- `tools/prepare_disc.py` (T-3300): finds the game in `game/`, identifies it, unpacks it into `disc/`; ninja step `build/disc.stamp`; tests `tools/test_prepare_disc.py`
 - T-3300 tooling fixes: `tools/m2c.py --unit`, `funcdiff.py --resolve/--no-build`, K&R in `srcscan.py`, archives in `identify_version.py`; tests `tools/test_srcscan.py`, `tools/test_funcdiff.py`; details in [[matching-notes]] ("Tooling fixes T-3300")

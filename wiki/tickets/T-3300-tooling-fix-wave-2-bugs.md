@@ -20,6 +20,7 @@ Fix the tooling bugs the wave-2 agents reported, each with a regression test: m2
 - [x] `srcscan.py` accepts K&R definitions.
 - [x] `identify_version.py` reads zip, 7z and chd (all five archives of `versions/` identified).
 - [x] Unit tests for each; `wiki/decompile-workflow.md` updated.
+- [x] `game/` drop-in folder: `tools/prepare_disc.py`, ninja step, README Building, docs (scope extension from the user).
 - [x] Clean build 27 of 27 OK, headers OK, progress unchanged.
 
 ## Notes

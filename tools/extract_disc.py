@@ -137,13 +137,10 @@ def extract(img, lba, size, dest, depth, counts):
             counts["files"] += 1
 
 
-def main(argv):
-    if len(argv) != 3:
-        sys.exit(__doc__)
-    zip_path, out_dir = argv[1], argv[2]
-    os.makedirs(out_dir, exist_ok=True)
-    unzip_tracks(zip_path, out_dir)
-    img = Image(os.path.join(out_dir, "track1.bin"))
+def extract_image(img, out_dir, required="SLPM_86.053"):
+    """Write every file of the ISO9660 tree of `img` (raw 2352 or cooked 2048 sectors) to
+    <out_dir>/files. Returns {"files": n, "skipped": n}; exits if the image is truncated or
+    `required` is missing."""
     pvd, _ = img.read_sector(16)
     root = pvd[156:190]
     root_lba = struct.unpack("<I", root[2:6])[0]
@@ -153,8 +150,18 @@ def main(argv):
         extract(img, root_lba, root_size, os.path.join(out_dir, "files"), 0, counts)
     except EOFError as e:
         sys.exit("truncated image: %s" % e)
-    if not os.path.exists(os.path.join(out_dir, "files", "SLPM_86.053")):
-        sys.exit("SLPM_86.053 not found")
+    if not os.path.exists(os.path.join(out_dir, "files", required)):
+        sys.exit("%s not found" % required)
+    return counts
+
+
+def main(argv):
+    if len(argv) != 3:
+        sys.exit(__doc__)
+    zip_path, out_dir = argv[1], argv[2]
+    os.makedirs(out_dir, exist_ok=True)
+    unzip_tracks(zip_path, out_dir)
+    counts = extract_image(Image(os.path.join(out_dir, "track1.bin")), out_dir)
     print("extracted %d files, skipped %d (CD-DA/XA streams)" % (counts["files"], counts["skipped"]))
 
 

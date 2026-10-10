@@ -38,5 +38,7 @@ game-bundle.key
 /ci-bundle/
 /AGENTS.local.md
 /.claude/
+/game/*
+!/game/README.md
 /versions/*
 !/versions/README.md

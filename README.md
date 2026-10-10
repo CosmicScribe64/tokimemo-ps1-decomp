@@ -20,13 +20,11 @@ This project is independent. It is not affiliated with or endorsed by Konami.
 Everything runs in Docker, so Docker is the only thing you install. The image is linux/amd64 and builds on first
 use. On Apple Silicon it runs under emulation, which is slow but works.
 
-1. Put your Redump-style zip of the game in the repository root. The build expects the executable with SHA-1
-   `e823bd844a8f8fa4d05483b59c66bc54b8393b26` and a matching set of overlays.
-2. Extract the disc into `disc/` (gitignored):
-   ```
-   tools/docker.sh python3 tools/extract_disc.py "Tokimeki Memorial - Forever with You (Japan) (PlayStation the Best).zip" disc
-   ```
-3. Configure and build:
+1. Put your copy of the game in the `game/` folder (gitignored). BIN+CUE, CHD, ISO, or a `.zip` or `.7z` of those all
+   work, in any subfolder. The build expects the PlayStation the Best release: executable SHA-1
+   `e823bd844a8f8fa4d05483b59c66bc54b8393b26` and a matching set of overlays. Other releases are recognised and
+   refused with a message.
+2. Configure and build. The build finds the disc, checks the release, and unpacks it into `disc/` for you:
    ```
    tools/docker.sh python3 configure.py
    tools/docker.sh ninja

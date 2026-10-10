@@ -11,7 +11,7 @@ Status: written in [[tickets/T-0902-ci-progress-report]]. The workflow has not r
 ## Workflow steps
 `.github/workflows/progress.yml` runs on pushes to `main`, on pull requests and on manual dispatch.
 1. Checks that the two secrets exist. If they do not (forks, pull requests from forks, a new repository), it prints a notice and skips every later step, so the run stays green.
-2. Clones the private data repository and decrypts the bundle into `disc/files/` (27 files).
+2. Clones the private data repository and decrypts the bundle into `disc/files/` (27 files). The build's `build/disc.stamp` step (T-3300) finds `game/` empty and accepts the populated `disc/files/SLPM_86.053`, so the workflow needs no change.
 3. Builds the Docker image, runs `configure.py` and `ninja`, and requires all 27 sha1 checks (`build/SLPM_86.053.ok` plus `build/ovl/*.ok`).
 4. Runs `ninja progress`, then `tools/report_objs.py` and `objdiff-cli report generate`, and uploads `build/report.json` as the artifact `SLPM_86.053_report`.
 

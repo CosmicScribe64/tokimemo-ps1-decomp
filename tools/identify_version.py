@@ -311,7 +311,7 @@ def main(argv):
             else:
                 files = read_tree(open_image(path), wanted)
         res = identify(files, db)
-    except (OSError, ValueError, EOFError) as e:
+    except (OSError, ValueError, EOFError, struct.error) as e:
         print("error: %s" % e, file=sys.stderr)
         return 2
     print(report(res, db))
