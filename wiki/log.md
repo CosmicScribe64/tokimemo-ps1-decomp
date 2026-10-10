@@ -366,3 +366,6 @@ Re-ran tools/dupes.py --apply --check after the jump-table merge: 4 copies kept 
 
 ## [2026-10-09] ticket | T-2000 Wave 2: EVENT started
 New [[tickets/T-2000-wave2-event]], In Progress. Matching functions in `src/ovl/EVENT.c`.
+
+## [2026-10-09] ticket | T-2000 Wave 2: EVENT done
+[[tickets/T-2000-wave2-event]] In Progress -> Done after the inline review (no open findings). 421 of 781 EVENT functions matched in `src/ovl/EVENT.c`, clean rebuild 27 of 27 OK, `ninja progress` grand total 1322/6962. 11 rows added to [[data/t0018-cases]]; new patterns in [[matching-notes]] (raw-address loads, `*(s32 *)&` for narrow game.h scalars).

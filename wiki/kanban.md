@@ -22,7 +22,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-2000-wave2-event|T-2000 Wave 2: EVENT]]
 
 
 ## In Review
@@ -30,6 +29,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [x] [[tickets/T-2000-wave2-event|T-2000 Wave 2: EVENT]]
 
 - [ ] [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320 Tooling: work queue and blocker detector]]
 - [ ] [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330 Tooling: m2c context and decomp-permuter]]
