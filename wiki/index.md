@@ -82,6 +82,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-3310-native-docker-image|T-3310]] Native Docker image for Apple Silicon (Done)
 - [[tickets/T-3330-local-fptab-frame-layout|T-3330]] Local function-pointer table frame layout (Done)
 - [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340]] Tooling: shared main-exe prototypes (`include/main_api.h`) and byte-weighted queue (Done)
+- [[tickets/T-4080-wave-3-list-8|T-4080]] Wave 3, list 8: 32 functions matched in 800451D0, 8007C030 and 17 overlay files (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list

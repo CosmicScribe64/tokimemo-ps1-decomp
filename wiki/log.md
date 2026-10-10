@@ -513,3 +513,6 @@ Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 m
 
 ## [2026-10-09] ticket | T-4080 Wave 3: list 8 (Backlog -> In Progress)
 [[tickets/T-4080-wave-3-list-8]] created; work list of 127 functions in 26 files, worktree w3-8.
+
+## [2026-10-10] ticket | T-4080 Wave 3: list 8 (In Progress -> Done)
+[[tickets/T-4080-wave-3-list-8]]: 32 of the 127 listed functions matched (4908 bytes; grand total 2837 of 6958 functions, 309952 bytes), 19 rows added to [[data/t0018-cases]], patterns and left-overs in [[matching-notes]] ("Wave 3, list 8"). Clean rebuild: 27 of 27 sha1 OK, `build/headers.ok`. Inline review against CODING_STANDARDS.md found nothing open; two `FAKE` unused locals (TAIIKU `func_80133C80`, EVENT `func_800FE090`). Tooling: `funcdiff.py func_X` resolves an overlay name to the wrong object and can print `MATCH` while the overlay fails sha1.
