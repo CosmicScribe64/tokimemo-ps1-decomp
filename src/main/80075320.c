@@ -83,7 +83,15 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077900);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077BE0);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077C50);
+void func_80077C50(void) {
+    func_8006A044(0, 0);
+    func_8004E58C();
+    func_8006612C("情報誌");
+    func_8006A2CC();
+    icon_disp_switch(0);
+    hizuke_disp_switch(0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80077CA8);
 
@@ -97,7 +105,18 @@ void magazine_exit(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_init);
+void holiday_tel_init(void) {
+    func_8004E58C();
+    func_80048E78();
+    func_80065F34(0);
+    icon_disp_switch(0);
+    telephone_class_init();
+    k_sub_reset_point_set();
+    gnsx(D_800E6354);
+    sndi((u8 *)"誰に電話かけようかな？）", 0, 0x1F);
+    k_sub_disp_start(2);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_call);
 
@@ -105,7 +124,15 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_tel_exit);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", telephone_class_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", holiday_club_init);
+void holiday_club_init(void) {
+    func_80065F34(0);
+    func_8004E58C();
+    x_taku_string_set("クラブ活動をする", "クラブをやめる", 0, 2);
+    x_taku_menu_set(1, 2);
+    D_800E7314 = 0;
+    k_disp_start(2);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
 
