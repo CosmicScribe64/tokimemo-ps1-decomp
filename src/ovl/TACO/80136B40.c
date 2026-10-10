@@ -57,7 +57,16 @@ void func_80136E08(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80136B40", func_80136E70);
+void func_80136E70(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 v;
+
+    if (arg4 < 0x1800) {
+        v = (arg4 << 7) / 4096;
+    } else {
+        v = 0xC0;
+    }
+    func_80139424(arg0, arg1, 3, v, (arg2 * 12 - 0x6C) * arg4 / 4096, (arg3 * 22 - 0x42) * arg4 / 4096 - 0x14, arg4, arg4, arg5);
+}
 
 void func_80136F4C(void) {
     func_8013A790(1, 0);

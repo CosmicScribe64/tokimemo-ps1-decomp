@@ -286,7 +286,14 @@ void func_8007B5CC(void) {
     func_80090D20();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B5EC);
+s32 func_8007B5EC(u16 a) {
+    if (D_80125CC0 >= 0x20) {
+        return -1;
+    }
+    D_80125CC0++;
+    (&D_80125CC0)[D_80125CC0] = a;
+    return 0;
+}
 
 void func_8007B640(void) {
     D_80125CC0 = 0;

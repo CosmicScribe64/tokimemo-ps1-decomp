@@ -7,7 +7,11 @@ void func_80132000(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132048);
+void func_80132048(u8 arg0) {
+    if ((D_800E6280.unk_F88 & 0x40) || (D_800E6280.unk_10F8 & 0x2FF) == 0x2FF) {
+        func_80042878(arg0);
+    }
+}
 
 void func_80132098(void) {
     switch (D_800E6280.unk_1109) {

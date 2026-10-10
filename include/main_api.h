@@ -1244,6 +1244,7 @@ extern s16 D_80125E64;
 extern s16 D_80125E66;
 extern s16 D_80125E68;
 extern u8 D_80125E70[];
+extern s16 D_80126080[]; /* two 0x200-entry s16 tables (+0, +0x400), SD_CalcCDAve */
 extern s32 D_8012749C;
 extern s32 D_801274A0;
 extern u8 D_80129F40[];

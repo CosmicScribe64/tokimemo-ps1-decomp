@@ -3,7 +3,37 @@
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_GetCDLevel);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_DetectCDPeak);
+void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n) {
+    u16 i;
+    u16 step;
+    s16 a;
+    s16 b;
+
+    i = 0;
+    if (n != 0) {
+        step = 0x100 / n;
+        do {
+            a = D_80126080[pos];
+            b = D_80126080[pos + 0x200];
+            if (a & 0x8000) {
+                a = ~(a - 1);
+            }
+            if (b & 0x8000) {
+                b = ~(b - 1);
+            }
+            if (*l < a) {
+                *l = a;
+            }
+            if (*r < b) {
+                *r = b;
+            }
+            pos += step;
+            i++;
+        } while (i < n);
+    }
+    *l *= 2;
+    *r *= 2;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_CalcCDAve);
 
