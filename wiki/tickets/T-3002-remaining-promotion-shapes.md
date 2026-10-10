@@ -26,3 +26,4 @@ From the T-1321 sample (cases under `build/t1321`, scratch):
 - [ ] Each shape has a C form, a rule, or a recorded verdict.
 
 ## Comments
+- 2026-10-10 (T-9000): the `if (D++ == K)` shape (`xori; sltiu; beqz`) is an `s32` function without a return value; SHUGAKU `func_80134024`, GEKO `func_8013E56C`, `func_80140EBC`, SHOUGATU `func_80138158` match that way. The other shapes are covered by the T-9000 cluster verdicts in [[matching-notes]].
