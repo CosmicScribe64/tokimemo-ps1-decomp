@@ -261,6 +261,19 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80137484);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80137544);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80137638);
+typedef struct {
+    u32 pad0 : 25;
+    u32 grade : 2;
+    u32 pad1 : 5;
+} KgSlot;
+
+s32 func_80137638(void) {
+    if (((KgSlot *) &D_800E6280.unk_66C[(u32) D_800E6280.unk_0F4.h >> 12])->grade < 3) {
+        func_80042808();
+        return 0;
+    }
+    D_800B5BD4 = 0xA;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_8013769C);

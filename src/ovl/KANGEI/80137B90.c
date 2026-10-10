@@ -137,7 +137,18 @@ void func_8013844C(void) {
     func_80133C84();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138470);
+void func_80138470(void) {
+    if (D_80122CDC != 0) {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 1;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
+        func_80084D3C();
+        D_80139AC0 = 1;
+        D_800E6280.unk_110A += 0x38;
+        return;
+    }
+    D_80139ADC += 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_8013852C);
 
