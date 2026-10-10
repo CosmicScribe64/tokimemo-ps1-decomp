@@ -1,0 +1,9 @@
+# Original objects of overlay TEL (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 80140550 last-jtbl
+object 80132000 801397D0 8013E430 8013F9E0 yes start start
+object 801397D0 8013CCD0 8013F9E0 80140450 yes pad jtbl-pad
+object 8013CCD0 8013E430 80140450 80140550 yes pad jtbl-pad

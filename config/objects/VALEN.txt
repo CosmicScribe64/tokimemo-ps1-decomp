@@ -1,0 +1,11 @@
+# Original objects of overlay VALEN (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 801343F0 last-jtbl
+object 80132000 801323D0 - - no:no_rodata start -
+object 801323D0 80132760 80134320 80134330 yes pad start
+object 80132760 801339D0 80134330 801343B0 yes pad str-pad
+object 801339D0 80133C70 801343B0 801343C0 yes pad jtbl-pad
+object 80133C70 80134320 801343C0 801343F0 yes pad owner

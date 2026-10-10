@@ -1,0 +1,17 @@
+# Original objects of overlay BUNKA_SD (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8013B670 last-jtbl
+object 80132000 80133540 80139910 8013A090 yes start start
+object 80133540 80134260 8013A090 8013AA40 yes pad jtbl-end
+object 80134260 80134540 - - no:no_rodata pad -
+object 80134540 80135160 8013AA40 8013AA60 yes pad jtbl-pad
+object 80135160 801359B0 8013AA60 8013AA90 yes pad owner
+object 801359B0 80136270 8013AA90 8013AAB0 yes pad jtbl-pad
+object 80136270 801369D0 8013AAB0 8013AAD0 yes pad owner
+object 801369D0 80137890 8013AAD0 8013AE30 yes pad jtbl-end
+object 80137890 80137B40 8013AE30 8013AE70 yes pad owner
+object 80137B40 801388D0 8013AE70 8013B5F0 yes pad jtbl-pad
+object 801388D0 80139910 8013B5F0 8013B670 yes pad jtbl-pad

@@ -1,0 +1,25 @@
+# Original objects of overlay TAIIKU (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 80148EC0 last-jtbl
+object 80132000 80132B40 80148940 80148A40 yes start start
+object 80132B40 80132B90 - - no:no_rodata pad -
+object 80132B90 80132BD0 - - no:no_rodata pad -
+object 80132BD0 80133BF0 80148A40 80148A90 yes pad jtbl-pad
+object 80133BF0 80133C30 - - no:no_rodata pad -
+object 80133C30 80133C80 - - no:no_rodata pad -
+object 80133C80 80138950 80148A90 80148B70 yes pad jtbl-pad
+object 80138950 80140810 80148B70 80148C80 yes choice/13 jtbl-pad
+object 80140810 80141280 80148C80 80148D40 yes pad jtbl-end
+object 80141280 80141B70 80148D40 80148DA0 yes pad jtbl-pad
+object 80141B70 80141BB0 - - no:no_rodata pad -
+object 80141BB0 80141C00 - - no:no_rodata pad -
+object 80141C00 80142140 80148DA0 80148E00 yes pad jtbl-pad
+object 80142140 80142180 - - no:no_rodata pad -
+object 80142180 80142240 - - no:no_rodata pad -
+object 80142240 80145210 80148E00 80148E60 yes pad owner
+object 80145210 801452D0 - - no:no_rodata pad -
+object 801452D0 801488F0 80148E60 80148EC0 yes pad jtbl-pad
+object 801488F0 80148940 - - no:no_rodata pad -

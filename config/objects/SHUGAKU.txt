@@ -1,0 +1,17 @@
+# Original objects of overlay SHUGAKU (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8013AFD0 monotone-strings
+object 80132000 80133430 8013AD10 8013AD40 yes start start
+object 80133430 80133D60 8013AD40 8013AD70 yes pad jtbl-pad
+object 80133D60 801344B0 8013AD70 8013AD80 yes pad jtbl-pad
+object 801344B0 80134880 8013AD80 8013AD90 yes pad str-pad
+object 80134880 80135430 8013AD90 8013ADB0 yes pad owner
+object 80135430 80136380 - - no:no_rodata pad -
+object 80136380 801378B0 8013ADB0 8013AE20 yes pad owner
+object 801378B0 80138A60 8013AE20 8013AEE0 yes pad jtbl-pad
+object 80138A60 80139D00 8013AEE0 8013AF60 yes pad owner
+object 80139D00 8013AA70 8013AF60 8013AFB0 yes pad jtbl-end
+object 8013AA70 8013AD10 8013AFB0 8013AFD0 yes pad owner

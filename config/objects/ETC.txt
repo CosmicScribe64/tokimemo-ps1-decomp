@@ -1,0 +1,19 @@
+# Original objects of overlay ETC (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 8014DB80 last-jtbl
+object 80132000 80132880 8014C370 8014C420 yes start start
+object 80132880 8013B1F0 8014C420 8014C5C0 yes pad str-pad
+object 8013B1F0 8013BEF0 8014C5C0 8014CA90 yes pad jtbl-pad
+object 8013BEF0 8013F980 8014CA90 8014CB70 yes pad jtbl-pad
+object 8013F980 8013FF80 8014CB70 8014CB80 yes choice/4 jtbl-end
+object 8013FF80 80140F50 8014CB80 8014CBC0 yes rodata str-pad
+object 80140F50 80142B80 8014CBC0 8014D190 yes pad jtbl-pad
+object 80142B80 80143240 8014D190 8014D1F0 yes rodata jtbl-pad
+object 80143240 80146400 8014D1F0 8014D4D0 yes choice/2 jtbl-pad
+object 80146400 801492C0 8014D4D0 8014D860 yes pad jtbl-end
+object 801492C0 8014ABD0 8014D860 8014D970 yes rodata jtbl-end
+object 8014ABD0 8014C2D0 8014D970 8014DB80 yes pad jtbl-end
+object 8014C2D0 8014C370 - - no:no_rodata pad -

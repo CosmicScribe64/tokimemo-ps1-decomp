@@ -1,0 +1,33 @@
+# Original objects of overlay SHOUGATU (T-0500). Written by tools/object_boundaries.py --write
+# (do not edit by hand; re-run it); read by tools/split_objects.py.
+# object <text start> <text end> <rodata start|-> <rodata end|-> <island> <text evidence> <rodata evidence>
+# island: yes = the C object provides the rodata chunk; no:<reason> = it stays asm.
+# Evidence names: tools/object_boundaries.py docstring and wiki/source-files.md.
+rodata_end 80143A40 monotone-strings
+object 80132000 80132550 80143540 80143560 yes start start
+object 80132550 80132D00 80143560 801435A0 yes pad jtbl-pad
+object 80132D00 801330C0 801435A0 801435E0 yes pad jtbl-pad
+object 801330C0 80133D10 801435E0 80143630 yes rodata jtbl-pad
+object 80133D10 80134120 80143630 80143640 yes pad owner
+object 80134120 80134890 - - no:no_rodata pad -
+object 80134890 80135B90 80143640 801436E0 yes pad str-pad
+object 80135B90 80136F90 801436E0 80143710 yes pad jtbl-pad
+object 80136F90 80137BB0 80143710 80143760 yes pad jtbl-pad
+object 80137BB0 80137FF0 80143760 80143770 yes pad jtbl-pad
+object 80137FF0 80138B40 80143770 801437D0 yes pad owner
+object 80138B40 801390C0 801437D0 801437F0 yes pad jtbl-pad
+object 801390C0 801397D0 801437F0 80143800 yes pad str-pad
+object 801397D0 8013A190 80143800 80143830 yes pad str-pad
+object 8013A190 8013A500 80143830 80143850 yes pad str-pad
+object 8013A500 8013A950 80143850 80143870 yes pad str-pad
+object 8013A950 8013AF10 80143870 80143890 yes pad str-pad
+object 8013AF10 8013B210 80143890 801438A0 yes pad owner
+object 8013B210 8013B5B0 - - no:no_rodata pad -
+object 8013B5B0 8013BA00 801438A0 801438B0 yes pad owner
+object 8013BA00 8013C070 801438B0 801438E0 yes pad str-pad
+object 8013C070 8013D660 801438E0 80143940 yes pad jtbl-pad
+object 8013D660 8013DD90 80143940 80143960 yes pad jtbl-pad
+object 8013DD90 8013E330 80143960 80143980 yes pad str-pad
+object 8013E330 8013F190 80143980 801439F0 yes pad owner
+object 8013F190 80141780 801439F0 80143A20 yes pad jtbl-pad
+object 80141780 80143540 80143A20 80143A40 yes pad jtbl-pad
