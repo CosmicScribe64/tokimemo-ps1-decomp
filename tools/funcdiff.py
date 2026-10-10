@@ -2,7 +2,8 @@
 """Per-function diff of the built object against the original object.
 
 Compares `objdump -dr` of the built object of the source file that holds each function
-(build/src/main/<addr>.o, found by searching src/main/*.c; T-0012) with the same object under
+(build/src/main/<addr>.o or an overlay object, found by searching the C files; T-0012, T-0500) with
+the same object under
 expected/ (a copy of the all-INCLUDE_ASM build; see wiki/decompile-workflow.md) and
 prints MATCH or a short diff for each named function. Instruction
 addresses and absolute branch targets are stripped, so only instructions,
@@ -24,11 +25,12 @@ import srcscan
 
 
 def object_of(name):
-    """Built object path of the src/main file that mentions `name`, or None."""
+    """Built object path of the C file (main exe or overlay, srcscan.c_files) that mentions
+    `name`, or None."""
     pat = re.compile(r"\b%s\b" % re.escape(name))
-    for c in srcscan.source_files():
-        if pat.search(c.read_text()):
-            return "build/src/main/%s.o" % c.stem
+    for c in srcscan.c_files():
+        if c.src.exists() and pat.search(c.src.read_text()):
+            return c.obj
     return None
 
 

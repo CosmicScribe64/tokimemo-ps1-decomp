@@ -196,6 +196,11 @@ class Project(unittest.TestCase):
             r = Path(d)
             (r / "src/main").mkdir(parents=True)
             (r / "src/ovl").mkdir(parents=True)
+            (r / "config").mkdir()
+            (r / "config/overlays.txt").write_text("# none\n")
+            (r / "config/SLPM_86.053.yaml").write_text(
+                "segments:\n  - name: main\n    type: code\n    start: 0x800\n    vram: 0x80041000\n"
+                "    subsegments:\n      - { start: 0x800, type: c, name: main/80041000 }\n")
             (r / "src/main/80041000.c").write_text(
                 'INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041000);\n'
                 "void func_80041010(void) {\n}\n")

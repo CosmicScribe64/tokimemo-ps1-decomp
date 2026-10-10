@@ -215,11 +215,22 @@ class AsmLookup(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 tp.trailing_words(p)
 
+    def test_appended_rodata_is_ignored(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "f.s")
+            with open(p, "w") as f:
+                f.write("glabel f\n    /* 0 80000000 00000000 */  jr $ra\nendlabel f\n"
+                        "    /* 8 80000008 00000000 */  nop\n\n%s\n.section .late_rodata\n"
+                        "dlabel jtbl_1\n    .word .L1\nenddlabel jtbl_1\n" % tp.RODATA_MARK)
+            self.assertEqual(tp.trailing_words(p), 1)
+
     def test_dirs_and_lookup(self):
         self.assertEqual(tp.asm_dirs("src/ovl/TT.c"),
                          ["asm/ovl/TT/matchings/TT", "asm/ovl/TT/nonmatchings/TT"])
         self.assertEqual(tp.asm_dirs("src/main/8004E500.c"),
                          ["asm/matchings/main/8004E500", "asm/nonmatchings/main/8004E500"])
+        self.assertEqual(tp.asm_dirs("src/ovl/TT/80132000.c"),
+                         ["asm/ovl/TT/matchings/TT/80132000", "asm/ovl/TT/nonmatchings/TT/80132000"])
         self.assertEqual(tp.asm_dirs("src/other/x.c"), [])
         with tempfile.TemporaryDirectory() as tmp:
             self.mk(tmp, "asm/ovl/TT/matchings/TT", "f1", "")

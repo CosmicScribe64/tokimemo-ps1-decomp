@@ -9,6 +9,8 @@ segment (C-capable, IDO) up to that point, then the rest of the 0x30000-byte
 file (rodata, data, checksum trailer) as one rodata segment.
 config/overlays.txt lists `<NAME> <load address> <text size>` for configure.py.
 Load addresses: wiki/overlays.md. O.BIN is not code and is skipped.
+An existing yaml keeps its `subsegments:` list (rodata islands, T-1340; per-object C files and
+their rodata, tools/split_objects.py, T-0500); only the options are rewritten.
 """
 import glob
 import hashlib
@@ -92,6 +94,19 @@ segments:
 """
 
 
+def keep_subsegments(new, old):
+    """`new` with its subsegment lines replaced by those of `old` (same layout: the lines after
+    `subsegments:` up to the segment end `  - [0x...]`)."""
+    def block(text):
+        lines = text.splitlines(True)
+        k = next(i for i, l in enumerate(lines) if l.strip() == "subsegments:")
+        e = next(i for i in range(k + 1, len(lines)) if not lines[i].startswith("      "))
+        return lines, k, e
+    nl, nk, ne = block(new)
+    ol, ok, oe = block(old)
+    return "".join(nl[:nk + 1] + ol[ok + 1:oe] + nl[ne:])
+
+
 def main():
     rows = []
     for path in sorted(glob.glob(DIR + "/*.EXN")):
@@ -107,14 +122,19 @@ def main():
             print("%s: non-zero bytes in the alignment gap" % name)
         base = BASE.get(name, DEFAULT_BASE)
         sha1 = hashlib.sha1(data).hexdigest()
-        with open("config/overlays/%s.yaml" % name, "w") as f:
-            extra = ""
-            if name in EXTRA_SYMS:
-                extra = "\n    - config/overlays/%s_symbols.txt" % name
-                with open("config/overlays/%s_symbols.txt" % name, "w") as g:
-                    g.write(EXTRA_SYMS[name])
-            f.write(TEMPLATE.format(name=name, base=base, text=text, extra=extra,
-                                    size=SIZE, dir=DIR, sha1=sha1))
+        ypath = "config/overlays/%s.yaml" % name
+        extra = ""
+        if name in EXTRA_SYMS:
+            extra = "\n    - config/overlays/%s_symbols.txt" % name
+            with open("config/overlays/%s_symbols.txt" % name, "w") as g:
+                g.write(EXTRA_SYMS[name])
+        if os.path.exists("config/labels/%s.txt" % name):     # tools/split_objects.py (T-0500)
+            extra += "\n    - config/labels/%s.txt" % name
+        new = TEMPLATE.format(name=name, base=base, text=text, extra=extra, size=SIZE, dir=DIR, sha1=sha1)
+        if os.path.exists(ypath):
+            new = keep_subsegments(new, open(ypath).read())
+        with open(ypath, "w") as f:
+            f.write(new)
         with open("config/overlays/%s.sha1" % name, "w") as f:
             f.write("%s  %s.EXN\n" % (sha1, name))
         rows.append("%s 0x%08X 0x%X" % (name, base, text))

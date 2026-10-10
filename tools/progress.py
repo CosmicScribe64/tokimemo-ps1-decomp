@@ -5,8 +5,12 @@ Counts functions still included via INCLUDE_ASM in the C sources against functio
 written in C, using sizes from the splat `nonmatching <name>, <size>` headers of the asm
 files. A function counts as decompiled only if a C definition exists in the source (the
 ninja build sha1 check guarantees it matches).
-  main game: src/main/*.c against asm/{nonmatchings,matchings}/main/<addr>/*.s, one row per file
-  overlays:  src/ovl/<NAME>.c against asm/ovl/<NAME>/{nonmatchings,matchings}/<NAME>/*.s, one row per overlay
+  main game: src/main/<addr>.c against asm/{nonmatchings,matchings}/main/<addr>/*.s, one row per file
+  overlays:  the C files of each overlay (src/ovl/<NAME>.c, or src/ovl/<NAME>/<addr>.c per original
+             object after tools/split_objects.py, T-0500) against their splat folders, one row
+             per overlay
+  The C files and their folders come from the `c` subsegments of the splat configs (srcscan.c_files),
+  so stale folders of an old layout under asm/ are not counted.
   grand total = main game + overlays
   SDK libs:  the asm-only PsyQ library functions (asm/*.s). Reported on a separate line and
              NOT counted in any total; there is no C for them (T-0010).
@@ -96,20 +100,28 @@ def sdk_totals(files):
     return n, b
 
 
+def file_totals(cf):
+    """Totals of one srcscan.CFile: its splat folders against its C source."""
+    sizes = read_sizes([f for d in (cf.nonmatchings, cf.matchings) if d.is_dir() for f in sorted(d.glob("*.s"))])
+    rows = unit_totals(sizes, [cf.src])
+    return sum_totals(rows.values())
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--root", default=".")
     root = Path(ap.parse_args().root)
 
     try:
-        main_sizes = read_sizes(asm_files(root / "asm"))
-        if not main_sizes:
+        main_rows, ovl_rows = {}, {}
+        for cf in srcscan.c_files(root):
+            t = file_totals(cf)
+            if cf.unit == "main":
+                main_rows[cf.label] = t
+            else:
+                ovl_rows[cf.unit] = sum_totals([ovl_rows.get(cf.unit, ZERO), t])
+        if not sum_totals(main_rows.values()).functions:
             raise ValueError("no asm/nonmatchings found (run ninja first)")
-        main_rows = unit_totals(main_sizes, srcscan.source_files(root))
-        ovl_rows = {}
-        for d in sorted((root / "asm" / "ovl").iterdir()):
-            sizes = read_sizes(asm_files(d))
-            ovl_rows[d.name] = unit_totals(sizes, [root / "src" / "ovl" / (d.name + ".c")]).get(d.name, ZERO)
         sdk = sdk_totals(sorted((root / "asm").glob("*.s")))
     except (ValueError, OSError) as e:
         print("error: %s" % e, file=sys.stderr)

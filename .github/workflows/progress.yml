@@ -98,7 +98,9 @@ jobs:
           m = json.load(open("build/report.json"))["measures"]
           print("units", m["total_units"], "functions", m["matched_functions"], "/", m["total_functions"],
                 "code", m["matched_code"], "/", m["total_code"])
-          assert m["total_units"] == 54 and m["matched_functions"] > 0
+          # one unit per C file (objdiff.json); per-object files (T-0500) make more than 54
+          units = len(json.load(open("objdiff.json"))["units"])
+          assert m["total_units"] == units and units >= 54 and m["matched_functions"] > 0
           PY
 
       # The artifact holds only report.json: function names, sizes and match percentages.

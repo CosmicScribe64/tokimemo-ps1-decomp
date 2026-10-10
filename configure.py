@@ -18,6 +18,9 @@ import sys
 import ninja_syntax
 import yaml
 
+sys.path.insert(0, "tools")
+import srcscan  # noqa: E402  (tools/srcscan.py: the C files of every unit, from the yaml files)
+
 EXE = "SLPM_86.053"
 HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
 HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
@@ -94,6 +97,13 @@ def overlay_data_files(name):
     return out
 
 
+def symbol_files(path):
+    """The symbol_addrs_path files of a splat config (inputs of its split step)."""
+    with open(path) as f:
+        cfg = yaml.safe_load(f)
+    return list(cfg["options"].get("symbol_addrs_path", []))
+
+
 def overlay_targets(n, overlays):
     """Write the split/compile/link/check rules for every overlay."""
     n.rule("osplit",
@@ -123,24 +133,27 @@ def overlay_targets(n, overlays):
         ld = "build/ovl/%s.ld" % name
         data_ss = overlay_data_files(name)
         n.build([stamp, ld] + data_ss, "osplit",
-                ["config/overlays/%s.yaml" % name, "config/symbol_addrs.txt",
-                 "config/reloc_addrs.txt"],
+                ["config/overlays/%s.yaml" % name, "config/reloc_addrs.txt"]
+                + symbol_files("config/overlays/%s.yaml" % name),
                 implicit=["disc/files/CDROM/EXEDIR/%s.EXN" % name],
                 variables=v)
-        c = "src/ovl/%s.c" % name
-        c_o = "build/ovl/%s/%s.o" % (name, c[:-2])
-        n.build(c_o, "cc", c,
-                variables={"toolchain": " ".join(OVL_C_TOOLCHAIN)},
-                implicit=[stamp, HEADERS_OK, "include/common.h", "include/include_asm.h",
-                          "include/asmproc_prelude.inc",
-                          "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
+        # one C file per `c` subsegment: src/ovl/<NAME>.c, or src/ovl/<NAME>/<addr>.c per
+        # original object once tools/split_objects.py has run (T-0500)
+        c_os = []
+        for cf in srcscan.unit_c_files(name):
+            n.build(cf.obj, "cc", str(cf.src),
+                    variables={"toolchain": " ".join(OVL_C_TOOLCHAIN)},
+                    implicit=[stamp, HEADERS_OK, "include/common.h", "include/include_asm.h",
+                              "include/asmproc_prelude.inc",
+                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
+            c_os.append(cf.obj)
         data_os = []
         for data_s in data_ss:
             data_o = "build/ovl/%s/%s.o" % (name, data_s[:-2])
             n.build(data_o, "as", data_s, implicit=[stamp, "include/macro.inc"])
             data_os.append(data_o)
         elf = "build/ovl/%s.elf" % name
-        n.build(elf, "old", [c_o] + data_os, implicit=[stamp, ld, "build/main_names.ld"], variables=v)
+        n.build(elf, "old", c_os + data_os, implicit=[stamp, ld, "build/main_names.ld"], variables=v)
         n.build("build/ovl/%s.bin" % name, "objcopy", elf)
         ok = "build/ovl/%s.ok" % name
         n.build(ok, "osha1", "build/ovl/%s.bin" % name, variables=v)
@@ -184,9 +197,7 @@ def main():
            description="SHA1 CHECK $in")
 
     stamp = "build/split.stamp"
-    split_in = ["config/%s.yaml" % EXE, "config/symbol_addrs.txt", "config/symbol_addrs_sdk.txt",
-                "config/symbol_addrs_obin.txt",
-                "config/reloc_addrs.txt"]
+    split_in = ["config/%s.yaml" % EXE, "config/reloc_addrs.txt"] + symbol_files("config/%s.yaml" % EXE)
     n.build([stamp, "build/%s.ld" % EXE] + ASM_FILES, "split", split_in, implicit=["disc/files/" + EXE])
 
     objs = []
@@ -217,15 +228,15 @@ def main():
         "base_path": "build/" + c[:-2] + ".o",
         "metadata": {"source_path": c, "progress_categories": ["main"]},
     } for c in sorted(C_FILES)]
-    # Overlays (T-0902): the object `cc` writes for src/ovl/<NAME>.c; the target is the
-    # all-INCLUDE_ASM copy in expected/ovl/ (see wiki/decompile-workflow.md).
+    # Overlays (T-0902): the object `cc` writes for each overlay C file (src/ovl/<NAME>.c or
+    # src/ovl/<NAME>/<addr>.c, T-0500); the target is the all-INCLUDE_ASM copy in expected/ovl/
+    # (see wiki/decompile-workflow.md).
     units += [{
-        "name": "src/ovl/" + name,
-        "target_path": "expected/ovl/%s.o" % name,
-        "base_path": "build/ovl/%s/src/ovl/%s.o" % (name, name),
-        "metadata": {"source_path": "src/ovl/%s.c" % name,
-                     "progress_categories": ["overlays"]},
-    } for name, _base, _text in read_overlays()]
+        "name": str(cf.src)[:-2],
+        "target_path": "expected/ovl/%s.o" % cf.name,
+        "base_path": cf.obj,
+        "metadata": {"source_path": str(cf.src), "progress_categories": ["overlays"]},
+    } for name, _base, _text in read_overlays() for cf in srcscan.unit_c_files(name)]
     with open("objdiff.json", "w") as f:
         json.dump({"$schema": "https://raw.githubusercontent.com/encounter/"
                    "objdiff/main/config.schema.json",
