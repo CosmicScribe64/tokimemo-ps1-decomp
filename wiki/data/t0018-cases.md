@@ -224,3 +224,4 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | GEKO | `func_80137040` | regorder | same `& 0x7F` copy shape as `func_80136F20` (T-4080) |
 | GEKO | `func_801331A0` | regorder | same `& 0x7F` copy shape as `func_80136F20` (T-4080) |
 | 8007C030 | `func_80083628` | regorder | same `get_g_zyotai_h(x) & 0x7F` copy shape as GEKO `func_80136F20` (T-4080) |
+| TAIIKU | `func_80136DA4` | regorder | `v = D_8014929C + D_80149218`: original loads the first global straight into the result register $v1, IDO loads into $t6 and adds into $v1 (T-4080) |

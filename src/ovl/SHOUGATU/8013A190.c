@@ -9,7 +9,19 @@ void func_8013A190(void) {
     func_8013A27C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A190", func_8013A1CC);
+typedef struct {
+    void (*f[26])();
+} FnTbl26; /* size 0x68 */
+extern FnTbl26 D_801455E0;
+
+void func_8013A1CC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl26 tbl;
+
+    tbl = D_801455E0;
+    idx = D_800E738A;
+    tbl.f[idx]();
+}
 
 void func_8013A254(void) {
     func_80044750(0x502);

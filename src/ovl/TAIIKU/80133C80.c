@@ -5,7 +5,20 @@ extern u8 D_80149232;
 extern u8 D_80149256;
 extern u8 D_8014927A;
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80133C80);
+typedef struct {
+    void (*f[10])();
+} FnTbl10; /* size 0x28 */
+extern FnTbl10 D_8014933C;
+
+void func_80133C80(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    s32 pad; /* FAKE: unused local; the original frame has a second word above tbl (two-word case, T-3330), real source unknown. T-4080 */
+    FnTbl10 tbl;
+
+    tbl = D_8014933C;
+    idx = D_800E7389;
+    tbl.f[idx]();
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80133CFC);
 
