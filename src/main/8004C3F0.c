@@ -5,7 +5,13 @@ INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_tpage_show);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", srn_vram_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", move_255_line);
+void move_255_line(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+
+    for (i = arg0; i <= arg1; i++) {
+        MoveSquare((i * 0x40 + 0x3F) & 0xFFFF, 0, 1, 0xFF, ((arg2 & 0xF) << 6) + i - arg0, ((arg2 & 0x10) * 0x10) & 0xFFFF);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004C3F0", mod_trans_vram);
 
