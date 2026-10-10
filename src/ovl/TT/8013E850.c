@@ -49,4 +49,13 @@ void func_8013EF38(void) {
     func_8009CAAC(p + 0x8008, 0x10);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E850", func_8013EFAC);
+void func_8013EFAC(void) {
+    s32 pad; /* FAKE: unused slot above p, the original frame has it (T-3330 idiom, real source unknown). T-6010 */
+    u8 *p;
+
+    p = D_80158AB4 + *(s32 *)(D_80158A68 + 8) * 0x80B8;
+    func_8009C210(1);
+    func_8009CC04(p + 0x8048);
+    func_8009CCF4(p + 0x80A4);
+    func_8009CB9C(p + 0x8044);
+}
