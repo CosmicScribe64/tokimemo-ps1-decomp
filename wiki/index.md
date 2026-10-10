@@ -20,6 +20,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-6070-wave-4-list-7|T-6070]] Wave 4: list 7 (Done)
+- [[tickets/T-7030-tooling-wave-4-bug-fixes|T-7030]] Tooling: wave-4 bug fixes (Done)
 - [[tickets/T-5100-game-state-struct|T-5100]] Recover the main game-state struct (Done)
 - [[tickets/T-6040-wave-4-list-4|T-6040]] Wave 4: list 4, 28 functions in 36 files (Done)
 - [[tickets/T-5000-type-recovery-arrays-structs|T-5000]] Type recovery: arrays and structs from access patterns (Done)
@@ -129,5 +130,6 @@ See [[kanban]]. Template: [[tickets/_template]].
 - `tools/migrate_globals.py` (T-5100): rewrites the old `D_` names of aggregate fields (`GameState`) into field accesses, removes their declarations; `--check` in ninja (`build/globals.ok`); config `config/migrate_globals.txt`; tests `tools/test_migrate_globals.py`; [[game-state]]
 - `tools/sync_protos.py` (T-3340): lists, generates and checks `include/main_api.h`, the one declaration of every main-exe symbol; overrides, `--prune`, `--snapshot/--compare`; tests `tools/test_sync_protos.py`; rules in CODING_STANDARDS 8a and [[decompile-workflow]]
 - T-5030 tooling fixes: `tools/funcloc.py` (find the C file by definition; used by `funcdiff.py`, `permute.py`), `funcdiff.py --unit` and string/rename resolution, `permute.py all`/K&R, `sync_protos.py` speed-up and `--check-branch`, `queue.py` cache; tests `tools/test_funcloc.py` and the tests of each tool; details in [[matching-notes]] ("Tooling fixes T-5030"), [[decompile-workflow]] ("Before finishing")
+- T-7030 tooling wave-4 fixes: `sync_protos.py` keeps comments, `dupes.py`/`neardupes.py` copy game-state fields, overrides, file-local types, address literals and prototypes (163 + 25 functions applied), `funcdiff.py` builds `expected/` itself, `permute.py` time limit and build verification, `m2c.py` callee argument counts and post-increment order; tests `tools/test_dupes.py`, `test_neardupes.py`, `test_funcdiff.py`, `test_permute.py`, `test_sync_protos.py`, `test_m2c_args.py`; details in [[matching-notes]] ("Tooling fixes, wave 4 (T-7030)") and [[decompile-workflow]]
 - `tools/queue.py` (T-1320, T-3340): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags; calibration in [[matching-notes]]
 - `tools/queue.py` (T-1320, T-3340, T-5010): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags (entry rule in `tools/entry_rule.py`, tests `tools/test_entry_rule.py`); calibration in [[matching-notes]]

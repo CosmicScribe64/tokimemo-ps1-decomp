@@ -48,11 +48,12 @@ COMMENT_RE = re.compile(r'/\*.*?\*/|//[^\n]*', re.S)
 class Const:
     """One constant of a function: the immediate of one op, or a lui+ori/addiu pair."""
 
-    def __init__(self, op, value, bits, idxs):
+    def __init__(self, op, value, bits, idxs, loaded=False):
         self.op = op
         self.value = value       # unsigned, modulo 2**bits
         self.bits = bits
         self.idxs = idxs         # instruction indices carrying it
+        self.loaded = loaded     # loaded into a register from $zero (a literal, not an offset or mask)
 
 
 def consts_of(imm_words):
@@ -64,7 +65,7 @@ def consts_of(imm_words):
             continue
         op, rt, imm = w >> 26, (w >> 16) & 31, w & 0xFFFF
         if op != OP_LUI:
-            out.append(Const(op, imm, 16, [i]))
+            out.append(Const(op, imm, 16, [i], op in (OP_ADDIU, OP_ORI) and (w >> 21) & 31 == 0))
             continue
         pair = None
         for m in range(n + 1, len(imm_words)):
@@ -75,14 +76,14 @@ def consts_of(imm_words):
                 pair = (m, j, w2)
                 break
         if pair is None:
-            out.append(Const(OP_LUI, imm << 16, 32, [i]))
+            out.append(Const(OP_LUI, imm << 16, 32, [i], True))
             continue
         m, j, w2 = pair
         used.add(m)
         lo = w2 & 0xFFFF
         if w2 >> 26 == OP_ADDIU and lo & 0x8000:
             lo -= 0x10000
-        out.append(Const(OP_LUI, ((imm << 16) + lo) & 0xFFFFFFFF, 32, [i, j]))
+        out.append(Const(OP_LUI, ((imm << 16) + lo) & 0xFFFFFFFF, 32, [i, j], True))
     return out
 
 
@@ -170,6 +171,16 @@ def substitute(text, scons, tcons):
         if mapping.setdefault(k, t.value) != t.value:
             return None, 'value 0x%X maps to different constants (0x%X, 0x%X)' % (s.value, mapping[k], t.value)
         count[k] = count.get(k, 0) + 1
+    # two source constants that become one value: IDO loads a literal once and shares the register,
+    # the original (same instruction count) loads it twice, so no plain C of this shape builds it
+    merged = {}
+    for s, t in zip(scons, tcons):
+        if s.loaded and t.loaded and t.value != 0:
+            merged.setdefault((t.bits, t.value), set()).add(s.value)
+    for (bits, tv), svs in sorted(merged.items()):
+        if len(svs) > 1:
+            return None, 'constants %s all become 0x%X: IDO shares one register, the original loads each' % (
+                ', '.join('0x%X' % v for v in sorted(svs)), tv)
     code = text
     lits = find_literals(code)
     edits = []
@@ -333,38 +344,8 @@ def report(args, funcs, plans, skipped, stats, nosrc):
 
 
 def apply_plans(args, root, plans):
-    kept = []
-    for p in plans:
-        print('PLAN %s <- %s (%s, %d consts)' % (p['name'], p['src'], p['unit'], p['ndiff']))
-    by_unit = {}
-    for p in plans:
-        by_unit.setdefault(p['unit'], []).append(p)
-    for unit, ps in sorted(by_unit.items()):
-        saved_all = {}
-        for p in ps:
-            for k, v in dupes.apply_plan(root, p).items():
-                saved_all.setdefault(k, v)
-        if not args.check:
-            kept += ps
-            continue
-        ok, out = dupes.build_ok(root, unit)
-        if ok:
-            kept += ps
-            print('OK %s: %d copies' % (unit, len(ps)))
-            continue
-        dupes.restore(root, saved_all)
-        print('FAIL %s: reverting, retrying one by one' % unit)
-        for p in ps:
-            saved = dupes.apply_plan(root, p)
-            ok, out = dupes.build_ok(root, unit)
-            if ok:
-                kept.append(p)
-                print('  keep %s' % p['name'])
-            else:
-                if args.v:
-                    print('\n'.join(out.splitlines()[-12:]))
-                dupes.restore(root, saved)
-                print('  reject %s' % p['name'])
+    kept = dupes.apply_all(root, plans, args.check, args.v,
+                           describe=lambda p: '%s <- %s (%s, %d consts)' % (p['name'], p['src'], p['unit'], p['ndiff']))
     print('applied %d of %d (%d bytes)' % (len(kept), len(plans), sum(p['bytes'] for p in kept)))
     return kept
 

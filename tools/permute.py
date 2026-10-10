@@ -6,6 +6,8 @@ Usage (in Docker, repo root as cwd):
     python3 tools/permute.py all func_80044700 --time 300 -j 4    # the same, `all` is optional
     python3 tools/permute.py setup func_80044700 [--src FILE] [--out DIR] [--unit UNIT]
     python3 tools/permute.py run build/permute/func_80044700 --time 300
+Options (--unit, --src, --out, --time, -j, --no-verify, --allow-decl-edits) are accepted before or
+after the subcommand and the function name: `permute.py --unit TT func_8013C764 --time 120` works.
 
 The function is found by its C definition, not by a mention (tools/funcloc.py, T-5030). All overlays
 load at 0x80132000, so a name such as func_8013xxxx exists in several of them: pass `--unit` (`main`,
@@ -22,14 +24,26 @@ setup builds the directory decomp-permuter wants:
 - compile.sh: `tools/cc.py <in> <out> ido 5.3`, the same IDO 5.3 + -Wo,-nokpicopt + frame pass +
   asm-processor + padding that ninja uses, so a score of 0 means the build would match.
 - settings.toml: func_name and compiler_type = "ido".
-run starts permuter.py, stops it (SIGINT) after --time seconds or at score 0, and lists the best
-outputs. Outputs are candidates, not results: read the diff, keep only plain C a programmer would
-write, rebuild with ninja and check with funcdiff.py. If it needs a dummy variable, forced cast or
-similar to hit the bytes it is a fakematch and must carry a FAKE comment (CODING_STANDARDS section 7).
-The permuter cannot fix compiler gaps (register promotion of globals, T-0018; ugen temporary order).
+run starts permuter.py in its own process group and enforces --time as a wall-clock limit for the
+whole group (SIGINT at the limit, SIGKILL ten seconds later; the limit also covers the Loading
+phase, T-7030). It prints a progress line every 10 s (elapsed time, best score so far) and lists the
+best outputs at the end.
+
+Outputs are candidates, not results (T-7030): the permuter compiles one stripped, preprocessed
+function, ninja compiles the whole file with its headers. Every output of score 0 is therefore put
+into the real C file (a copy of the function body; the file is restored afterwards), built with
+ninja, compared with `funcdiff.py --resolve`, and the unit's sha1 target is built; only a
+candidate that passes all of it is called a match. The permuter can also edit what stands outside
+the function (types of externs, return and parameter types of called functions); those passes
+have weight 0 in settings.toml (`--allow-decl-edits` restores them), and a candidate whose
+declarations differ from base.c is flagged. Read the diff, keep only plain C a programmer would
+write. If it needs a dummy variable, forced cast or similar to hit the bytes it is a fakematch and
+must carry a FAKE comment (CODING_STANDARDS section 7). The permuter cannot fix compiler gaps
+(register promotion of globals, T-0018; ugen temporary order).
 """
 import argparse
 import glob
+import json
 import os
 import re
 import signal
@@ -94,8 +108,17 @@ def strip_include_asm(text):
     return INCLUDE_ASM_LINE.sub("", text)
 
 
-def settings_toml(func):
-    return 'func_name = "%s"\ncompiler_type = "ido"\n' % func
+# Passes that edit declarations outside the function body: the types of extern variables and the
+# return/parameter types of the function and its callees. Their results do not carry over to the
+# real file (T-7030), so they are off unless --allow-decl-edits.
+DECL_PASSES = ("perm_randomize_external_type", "perm_randomize_function_type")
+
+
+def settings_toml(func, allow_decl_edits=False):
+    text = 'func_name = "%s"\ncompiler_type = "ido"\n' % func
+    if not allow_decl_edits:
+        text += "\n[weight_overrides]\n" + "".join("%s = 0\n" % p for p in DECL_PASSES)
+    return text
 
 
 def compile_script(root):
@@ -119,8 +142,15 @@ def list_outputs(directory):
     return sorted(found)
 
 
+SH_TIMEOUT = 300   # seconds for any single helper command (preprocessor, assembler)
+
+
 def sh(cmd, **kw):
-    proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, **kw)
+    try:
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                              timeout=SH_TIMEOUT, **kw)
+    except subprocess.TimeoutExpired:
+        sys.exit("permute.py: %s did not finish in %d s" % (" ".join(cmd[:2]), SH_TIMEOUT))
     if proc.returncode != 0:
         sys.exit("permute.py: %s failed:\n%s" % (" ".join(cmd[:2]), proc.stderr or proc.stdout))
     return proc.stdout
@@ -164,7 +194,13 @@ def build_target(root, asm_path, out_obj):
     cc.pad_text(out_obj)
 
 
-def setup(root, func, src=None, out=None, unit=None):
+def scratch_free(src, root):
+    """True when `src` is a file of the project's src/ tree (a --src scratch file cannot be verified)."""
+    rel = os.path.relpath(os.path.abspath(src), os.path.abspath(root)).replace(os.sep, "/")
+    return rel.startswith("src/")
+
+
+def setup(root, func, src=None, out=None, unit=None, allow_decl_edits=False):
     func, unit = funcloc.split_scope(func, unit)
     try:
         src = src or find_source(root, func, unit)
@@ -186,70 +222,308 @@ def setup(root, func, src=None, out=None, unit=None):
         f.write(compile_script(root))
     os.chmod(script, 0o755)
     with open(os.path.join(out, "settings.toml"), "w") as f:
-        f.write(settings_toml(func))
+        f.write(settings_toml(func, allow_decl_edits))
+    with open(os.path.join(out, "meta.json"), "w") as f:     # what `run DIR` needs to verify a candidate
+        json.dump({"func": func, "unit": unit, "src": os.path.relpath(src, root) if scratch_free(src, root) else None,
+                   "scratch": not scratch_free(src, root)}, f)
     return out
 
 
-def run(directory, seconds, jobs, extra=()):
-    """Run permuter.py for at most `seconds`; returns the list_outputs result."""
-    cmd = [sys.executable, os.path.join(PERMUTER, "permuter.py"), directory, "-j", str(jobs),
-           "--stop-on-zero", "--best-only", "--quiet", "--stack-diffs"] + list(extra)
-    proc = subprocess.Popen(cmd)
-    deadline = time.time() + seconds
-    while proc.poll() is None and time.time() < deadline:
-        time.sleep(0.5)
-    if proc.poll() is None:
-        proc.send_signal(signal.SIGINT)
+def kill_group(proc, sig):
+    try:
+        os.killpg(proc.pid, sig)
+    except (ProcessLookupError, PermissionError):
+        pass
+
+
+def run(directory, seconds, jobs, extra=(), progress=print, interval=10, clock=time.time, sleep=time.sleep,
+        cmd=None):
+    """Run permuter.py for at most `seconds` of wall-clock time; returns the list_outputs result.
+
+    The permuter runs in its own process group. At the limit the whole group gets SIGINT, and ten
+    seconds later SIGKILL (its worker processes ignore a SIGINT that arrives while they compile; a
+    plain proc.kill() left them running and the call never returned, T-7030). Every `interval`
+    seconds `progress` gets a line with the elapsed time and the best score so far."""
+    cmd = cmd or [sys.executable, os.path.join(PERMUTER, "permuter.py"), directory, "-j", str(jobs),
+                  "--stop-on-zero", "--best-only", "--quiet", "--stack-diffs"] + list(extra)
+    start = clock()
+    deadline = start + seconds
+    proc = subprocess.Popen(cmd, start_new_session=True)
+    progress("permute.py: started %s (limit %d s, %d threads)" % (os.path.basename(directory.rstrip("/")), seconds, jobs))
+    last = start
+    try:
+        while proc.poll() is None and clock() < deadline:
+            sleep(0.5)
+            if clock() - last >= interval:
+                last = clock()
+                outs = list_outputs(directory)
+                best = ("best score %d (%s)" % (outs[0][0], os.path.basename(outs[0][2]))) if outs \
+                    else "no output better than the base yet"
+                progress("permute.py: %d/%d s, %s" % (clock() - start, seconds, best))
+        if proc.poll() is None:
+            progress("permute.py: time limit reached, stopping the permuter")
+            kill_group(proc, signal.SIGINT)
+            stop = clock() + 10
+            while proc.poll() is None and clock() < stop:
+                sleep(0.2)
+    finally:
+        kill_group(proc, signal.SIGKILL)       # workers that outlive the parent
         try:
-            proc.wait(timeout=20)
+            proc.wait(timeout=10)
         except subprocess.TimeoutExpired:
-            proc.kill()
+            pass
     return list_outputs(directory)
 
 
-def parse_args(argv):
-    """Parsed command line; a bare function name means `all <func>`, `all <func>` works too."""
+# ---------------------------------------------------------------------------------------------
+# verification of candidates against the real build (T-7030)
+
+TOKEN_RE = re.compile(r"[A-Za-z_]\w*|0[xX][0-9A-Fa-f]+|\d+|\S")
+
+
+def tokens(text):
+    return TOKEN_RE.findall(text)
+
+
+def match_brace(text, i):
+    """Index after the `}` that closes the `{` at text[i]; -1 if unbalanced."""
+    depth = 0
+    for j in range(i, len(text)):
+        if text[j] == "{":
+            depth += 1
+        elif text[j] == "}":
+            depth -= 1
+            if depth == 0:
+                return j + 1
+    return -1
+
+
+def function_range(text, func):
+    """(start, end) of the C definition of `func` in `text` (ANSI or K&R), or None."""
+    m = def_regex(func).search(text)
+    if not m:
+        return None
+    end = match_brace(text, m.end() - 1)
+    return (m.start(), end) if end > 0 else None
+
+
+def declarations_outside(text, func):
+    """Token list of `text` without the definition of `func`: what the permuter must not edit."""
+    r = function_range(text, func)
+    return tokens(text[:r[0]] + text[r[1]:]) if r else tokens(text)
+
+
+def outside_edits(base_text, cand_text, func):
+    """[(old, new)] token runs that differ between base.c and a candidate outside the function; the
+    permuter's printer and gcc -E spell declarations alike, so any difference is a real edit."""
+    import difflib
+    a, b = declarations_outside(base_text, func), declarations_outside(cand_text, func)
+    out = []
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
+        if op != "equal":
+            out.append((" ".join(a[i1:i2]), " ".join(b[j1:j2])))
+    return out
+
+
+GUARD_RE = re.compile(r"^[ \t]*#[ \t]*if(?:def[ \t]+NON_MATCHING|[ \t]+defined\(NON_MATCHING\))[^\n]*\n", re.M)
+
+
+def replace_function(text, func, body):
+    """`text` with the definition of `func` (or its INCLUDE_ASM line) replaced by `body`. A
+    `#ifdef NON_MATCHING ... #else INCLUDE_ASM ... #endif` block around it is replaced as a whole,
+    because ninja builds without NON_MATCHING. Returns None when the function is not in `text`."""
+    body = body.strip("\n") + "\n"
+    r = function_range(text, func)
+    inc = re.search(r'^[ \t]*INCLUDE_ASM\([^)]*,\s*%s\s*\);[ \t]*\n?' % re.escape(func), text, re.M)
+    where = r or (inc.span() if inc else None)
+    if where is None:
+        return None
+    for g in GUARD_RE.finditer(text):
+        # the matching #endif of this guard
+        depth, pos, end = 1, g.end(), None
+        for line in re.finditer(r"^[ \t]*#[ \t]*(if|endif)\w*[^\n]*\n?", text[g.end():], re.M):
+            depth += 1 if line.group(1) == "if" else -1
+            if depth == 0:
+                end = g.end() + line.end()
+                break
+        if end and g.start() <= where[0] and where[1] <= end:
+            return text[:g.start()] + body + text[end:]
+    if r and text[r[1]:r[1] + 1] == "\n":
+        return text[:r[0]] + body.rstrip("\n") + text[r[1]:]
+    return text[:where[0]] + body + text[where[1]:]
+
+
+def layout_notes(body):
+    """Lines of the candidate body that hold several statements. IDO numbers the stores of one source
+    line together, so `a = 0; b = 0;` on a line is not the same code as the two statements on lines of
+    their own (main `func_8004111C`: the permuter's `do { rect.x = 0; ... } while (0);` line matches, the
+    reformatted statements store in the other order). A score-0 candidate has to be copied with its line
+    layout, then simplified one change at a time with ninja as the judge."""
+    notes = []
+    for n, line in enumerate(body.splitlines(), 1):
+        stmts = line.count(";") - 2 * len(re.findall(r"\bfor\s*\(", line))
+        if stmts > 1:
+            notes.append("line %d of the body holds several statements: %s" % (n, line.strip()[:90]))
+    return notes
+
+
+def unit_target(unit):
+    return "build/SLPM_86.053.ok" if unit in (None, "main") else "build/ovl/%s.ok" % unit
+
+
+def verify_candidate(root, meta, cand_dir, runner=subprocess.run):
+    """Put the candidate's function body into the real C file, build it with ninja and compare with
+    funcdiff --resolve; the file is restored. Returns (ok, [report lines]).
+
+    The permuter judged a stripped, preprocessed copy of the function; this is the check that counts.
+    Reasons a score-0 candidate fails here: declarations outside the function that the permuter
+    changed (reported first), or a context the stripped copy does not have (the other functions of
+    the file, the real headers), in which case the funcdiff lines show where the bytes differ."""
+    report = []
+    if not meta.get("src"):
+        return False, ["not verified: the function was permuted from a scratch file (--src)"]
+    src = os.path.join(root, meta["src"])
+    func, unit = meta["func"], meta.get("unit")
+    with open(os.path.join(cand_dir, "source.c")) as f:
+        cand_text = f.read()
+    base_path = os.path.join(os.path.dirname(cand_dir.rstrip("/")), "base.c")
+    if os.path.exists(base_path):
+        with open(base_path) as f:
+            edits = outside_edits(f.read(), cand_text, func)
+        for old, new in edits[:6]:
+            report.append("declarations outside the function were changed by the permuter: '%s' -> '%s'"
+                          % (old[:100], new[:100]))
+    r = function_range(cand_text, func)
+    if not r:
+        return False, report + ["candidate has no definition of %s" % func]
+    with open(src) as f:
+        original = f.read()
+    new = replace_function(original, func, cand_text[r[0]:r[1]])
+    if new is None:
+        return False, report + ["%s is not in %s" % (func, meta["src"])]
+    scope = "%s:%s" % (unit, func) if unit else func
+    try:
+        with open(src, "w") as f:
+            f.write(new)
+        fd = runner([sys.executable, os.path.join(root, "tools", "funcdiff.py"), "--resolve", scope], cwd=root,
+                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        fd_ok = fd.returncode == 0 and "MATCH" in fd.stdout
+        report.append("ninja object + funcdiff --resolve: %s" % ("MATCH" if fd_ok else "DIFF"))
+        if fd_ok:
+            report += ["note: " + n + " (IDO orders the stores of one source line together: keep the layout)"
+                       for n in layout_notes(cand_text[r[0]:r[1]])]
+        if not fd_ok:
+            report += ["    " + l for l in fd.stdout.strip().splitlines()[:14]]
+            return False, report
+        nj = runner(["ninja", unit_target(unit)], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        report.append("ninja %s (unit sha1): %s" % (unit_target(unit), "OK" if nj.returncode == 0 else "FAILED"))
+        if nj.returncode != 0:
+            report += ["    " + l for l in nj.stdout.strip().splitlines()[-6:]]
+            return False, report
+    finally:
+        with open(src, "w") as f:
+            f.write(original)
+    return not any("outside the function" in l for l in report), report
+
+
+SUBCOMMANDS = ("setup", "run", "all")
+VALUE_OPTIONS = ("--unit", "--src", "--out", "--time", "-j", "--args")
+
+
+def with_subcommand(argv):
+    """argv with `all` inserted before the first positional when none of the subcommands is given
+    (`permute.py func_1`, `permute.py --unit TT func_1 --time 5`)."""
     argv = list(argv)
-    if argv and argv[0] not in ("setup", "run", "all") and not argv[0].startswith("-"):
-        argv = ["all"] + argv
+    i = 0
+    while i < len(argv):
+        tok = argv[i]
+        if tok in VALUE_OPTIONS:
+            i += 2
+        elif tok.startswith("-"):
+            i += 1
+        else:
+            return argv if tok in SUBCOMMANDS else argv[:i] + ["all"] + argv[i:]
+    return argv
+
+
+def parse_args(argv):
+    """Parsed command line. Every option works before or after the subcommand and the function;
+    a bare function name means `all <func>`."""
+    argv = with_subcommand(argv)
+    S = argparse.SUPPRESS
+
+    def options(p, top):
+        # the sub-parsers must not overwrite what the top parser read (default SUPPRESS)
+        d = (lambda v: v) if top else (lambda v: S)
+        p.add_argument("--unit", default=d(None), help="unit (main or overlay name) or C/asm path that holds the function")
+        p.add_argument("--src", default=d(None), help="C file to take the function from (default: find it in src/)")
+        p.add_argument("--out", default=d(None), help="permuter directory (default build/permute/<func>)")
+        p.add_argument("--time", type=int, default=d(60), help="wall-clock limit in seconds (default 60)")
+        p.add_argument("-j", type=int, default=d(os.cpu_count() or 1), help="threads")
+        p.add_argument("--no-verify", action="store_true", default=d(False),
+                       help="do not check score-0 candidates against the real build")
+        p.add_argument("--allow-decl-edits", action="store_true", default=d(False),
+                       help="let the permuter change extern and function types (off by default: those edits "
+                            "do not carry over to the real file)")
+        if not top:
+            p.add_argument("--args", nargs=argparse.REMAINDER, default=[], help="extra permuter.py args")
+
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    options(ap, True)
     sub = ap.add_subparsers(dest="cmd", required=True)
-
-    def setup_args(p):
+    for name in ("setup", "all"):
+        p = sub.add_parser(name)
         p.add_argument("func")
-        p.add_argument("--src", help="C file to take the function from (default: find it in src/)")
-        p.add_argument("--out", help="permuter directory (default build/permute/<func>)")
-        p.add_argument("--unit", help="unit (main or overlay name) or C/asm path that holds the function")
-
-    def run_args(p):
-        p.add_argument("--time", type=int, default=60, help="seconds to run (default 60)")
-        p.add_argument("-j", type=int, default=os.cpu_count() or 1, help="threads")
-        p.add_argument("--args", nargs=argparse.REMAINDER, default=[], help="extra permuter.py args")
-
-    setup_args(sub.add_parser("setup"))
-    all_p = sub.add_parser("all")
-    setup_args(all_p)
-    run_args(all_p)
+        options(p, False)
     run_p = sub.add_parser("run")
     run_p.add_argument("directory")
-    run_args(run_p)
+    options(run_p, False)
     return ap.parse_args(argv)
+
+
+def report_outputs(outs, directory, root, args, out=print):
+    """Print the best outputs; verify the score-0 ones against the build. Returns True when a verified
+    match exists."""
+    for score, n, path in outs[:5]:
+        out("score %d: %s/source.c" % (score, path))
+    zeros = [o for o in outs if o[0] == 0]
+    if not zeros:
+        out("permute.py: no score-0 candidate; candidates only, keep plain C and mark any trick FAKE.")
+        return False
+    if args.no_verify:
+        out("permute.py: score 0 is not a match until ninja and funcdiff agree (verification skipped by --no-verify).")
+        return False
+    meta_path = os.path.join(directory, "meta.json")
+    if not os.path.exists(meta_path):
+        out("permute.py: %s has no meta.json (set up by an older version): rerun setup to verify." % directory)
+        return False
+    with open(meta_path) as f:
+        meta = json.load(f)
+    good = False
+    for score, n, path in zeros[:3]:
+        ok, lines = verify_candidate(root, meta, path)
+        out("verify %s: %s" % (path, "MATCH" if ok else "NOT A MATCH"))
+        for l in lines:
+            out("  " + l)
+        good = good or ok
+    out("permute.py: %s" % ("verified candidate above: put its body into src/, strip permuter noise, rebuild."
+                            if good else "score 0 did not survive the real build (see the cause above); not a match."))
+    return good
 
 
 def main(argv):
     args = parse_args(argv)
     if args.cmd == "setup":
-        print(setup(".", args.func, args.src, args.out, args.unit))
-        return
-    directory = args.directory if args.cmd == "run" else setup(".", args.func, args.src, args.out, args.unit)
+        print(setup(".", args.func, args.src, args.out, args.unit, args.allow_decl_edits))
+        return 0
+    directory = args.directory if args.cmd == "run" else setup(".", args.func, args.src, args.out, args.unit,
+                                                               args.allow_decl_edits)
     outs = run(directory, args.time, args.j, args.args)
     if not outs:
         print("permute.py: no output better than the base in %d s (%s)" % (args.time, directory))
-        return
-    for score, n, path in outs[:5]:
-        print("score %d: %s/source.c" % (score, path))
-    print("permute.py: candidates only; keep plain C, mark any trick FAKE, then rebuild and funcdiff.")
+        return 0
+    return 0 if report_outputs(outs, directory, ".", args) or outs[0][0] != 0 else 1
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    sys.exit(main(sys.argv[1:]))

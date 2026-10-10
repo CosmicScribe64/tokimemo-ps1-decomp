@@ -17,7 +17,16 @@ What it adds over a bare `m2c <file>.s`:
   segment's *.rodata.s, so `switch` statements come out as `switch`, not as computed jumps;
 - rewrites `%lo(D_<addr>)` after a `lui` with a literal high half (splat's form for an address that
   has no symbol of its own) to the signed low half; m2c drops such a %lo (T-3300, fix_lo_literals);
-- uses the IDO little-endian target (`mipsel-ido-c`), the compiler family of the game code.
+- uses the IDO little-endian target (`mipsel-ido-c`), the compiler family of the game code;
+- gives m2c real argument counts (T-7030): a callee that the context declares with `()` or not at all
+  gets the prototype `ret f(s32, ...)` with as many parameters as its own asm reads (tools/m2c_args.py;
+  94% of the 313 prototyped main-exe functions agree), because m2c otherwise counts every argument
+  register that happens to hold a value at the call, stale ones included (`abs(x, 1, 0, y)`).
+  Callees with a prototype in main_api.h or the overlay header keep it. The counts used are listed on
+  stderr. `--no-callee-args` turns it off;
+- turns m2c's `D += 1; if (D >= N)` into `if (D++ >= N)` where the asm compares the register that
+  holds the value from before the increment (m2c compares the variable after the store, the other
+  order; matching-notes, post-increment compares). Listed on stderr; `--no-postinc` turns it off.
 The draft goes to stdout (body only); declarations m2c invented for symbols missing from the
 headers go to stderr, so the C can be pasted into src/ without the noise. Output is a starting
 point: clean it to C89 and our types (CODING_STANDARDS), and verify with funcdiff.py.
@@ -29,6 +38,9 @@ import re
 import subprocess
 import sys
 import tempfile
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import m2c_args  # noqa: E402
 
 DEFAULT_TARGET = "mipsel-ido-c"
 CPP = ["gcc", "-E", "-P", "-Iinclude", "-D__sgi"]
@@ -254,7 +266,57 @@ def drop_declaration(text, name):
     return pat.sub("", text)
 
 
-def build_context(root, heads, out_path, drop=None):
+JAL_RE = re.compile(r"\bjal\s+([A-Za-z_]\w*)")
+KR_DECL = r"^([A-Za-z_][^;{}()=]*?)\b%s\s*\(\s*\)\s*;[ \t]*$"
+
+
+def callee_asm(root, overlay, name):
+    """Text of the asm of function `name`, looked up in the overlay first, then the main exe; None if
+    it has none (an SDK function, a name that exists in several files of one unit)."""
+    pats = []
+    if overlay:
+        pats += ["asm/ovl/%s/nonmatchings/**/%s.s" % (overlay, name), "asm/ovl/%s/matchings/**/%s.s" % (overlay, name)]
+    pats += ["asm/nonmatchings/main/*/%s.s" % name, "asm/matchings/main/*/%s.s" % name]
+    for pat in pats:
+        hits = sorted(glob.glob(os.path.join(root, pat), recursive=True))
+        if len(hits) == 1:
+            with open(hits[0], errors="replace") as f:
+                return f.read()
+        if hits:
+            return None
+    # SDK library code lives in whole-file asm/lib*.s without one file per function
+    for lib in sorted(glob.glob(os.path.join(root, "asm", "*.s"))):
+        with open(lib, errors="replace") as f:
+            text = f.read()
+        m = re.search(r"^glabel %s\s*$" % re.escape(name), text, re.M)
+        if m:
+            end = re.search(r"^(?:endlabel\s+%s|glabel\s)" % re.escape(name), text[m.end():], re.M)
+            return text[m.start():m.end() + end.start()] if end else text[m.start():]
+    return None
+
+
+def callee_prototypes(root, overlay, asm_text, context):
+    """(context with prototypes added, {name: argument count}) for the callees of `asm_text` that the
+    context declares with `()` or not at all and whose own asm reads at least one parameter."""
+    counts, text = {}, context
+    for name in dict.fromkeys(JAL_RE.findall(asm_text)):
+        proto = re.search(r"\b%s\s*\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*;" % re.escape(name), context)
+        if proto and proto.group(1).strip():
+            continue                      # a real prototype, (void) included: keep it
+        body = callee_asm(root, overlay, name)
+        n = m2c_args.arity(body) if body else None
+        if not n:
+            continue
+        counts[name] = n
+        old = re.search(KR_DECL % re.escape(name), text, re.M)
+        ret = old.group(1).strip() if old else "s32"
+        if old:
+            text = text[:old.start()] + text[old.end():]
+        text += "%s %s(%s);\n" % (ret, name, ", ".join(["s32"] * n))
+    return text, counts
+
+
+def build_context(root, heads, out_path, drop=None, asm_text=None, overlay=None, log=None):
     """Preprocess the headers into a pycparser-readable context file. Raises on cpp errors."""
     src = context_text(heads)
     proc = subprocess.run(CPP + ["-x", "c", "-"], input=src, text=True, cwd=root,
@@ -262,6 +324,11 @@ def build_context(root, heads, out_path, drop=None):
     if proc.returncode != 0:
         raise RuntimeError("preprocessing the context failed:\n" + proc.stderr)
     out = drop_declaration(proc.stdout, drop) if drop else proc.stdout
+    if asm_text is not None:
+        out, counts = callee_prototypes(root, overlay, asm_text, out)
+        if counts and log:
+            log("m2c.py: argument counts from the callees' asm: %s" % ", ".join(
+                "%s %d" % kv for kv in sorted(counts.items())))
     with open(out_path, "w") as f:
         f.write(out)
 
@@ -286,8 +353,10 @@ def func_name(arg):
 
 
 def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=(), blind=False,
-            unit=None):
-    """Return m2c's raw output for function `name` (`unit`: see locate())."""
+            unit=None, callee_args=True, postinc=True, log=None):
+    """Return m2c's output for function `name` (`unit`: see locate()), with the argument counts and the
+    post-increment order fixed unless `callee_args`/`postinc` are off."""
+    log = log or (lambda msg: sys.stderr.write(msg + "\n"))
     asm, overlay = locate(root, name, unit)
     sys.stderr.write("m2c.py: %s (%s)\n" % (os.path.relpath(asm, root), overlay or "main"))
     name = func_name(name)
@@ -295,7 +364,10 @@ def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=
         cmd = ["m2c", "-t", target]
         if context:
             ctx = os.path.join(tmp, "ctx.c")
-            build_context(root, context_sources(root, overlay), ctx, name if blind else None)
+            with open(asm, errors="replace") as f:
+                own = f.read()
+            build_context(root, context_sources(root, overlay), ctx, name if blind else None,
+                          own if callee_args else None, overlay, log)
             cmd += ["--context", ctx]
         func_text = open(asm).read()
         asm_in = os.path.join(tmp, os.path.basename(asm))
@@ -314,7 +386,13 @@ def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=
         proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if proc.returncode != 0:
             raise RuntimeError("m2c failed:\n" + proc.stderr)
-        return proc.stdout
+        out = proc.stdout
+        if postinc:
+            out, done = m2c_args.rewrite_post_increment(out, m2c_args.post_increment_old(func_text))
+            if done:
+                log("m2c.py: the asm compares the value from before the increment of %s: wrote `%s++` "
+                    "in the condition (m2c compared the variable after the store)" % (", ".join(done), done[0]))
+        return out
 
 
 def main(argv):
@@ -334,10 +412,15 @@ def main(argv):
     ap.add_argument("--blind", action="store_true",
                     help="hide the function's own prototype from the context (for evaluation)")
     ap.add_argument("--raw", action="store_true", help="print m2c output unsplit")
+    ap.add_argument("--no-callee-args", action="store_true",
+                    help="keep m2c's own guess of the argument counts of callees the headers do not prototype")
+    ap.add_argument("--no-postinc", action="store_true",
+                    help="do not rewrite m2c's `D += 1; if (D ...)` to the old-value compare `D++`")
     args = ap.parse_args(argv)
     try:
         text = run_m2c(args.root, args.func, args.target, not args.no_context,
-                       not args.no_rodata, extra, args.blind, args.unit)
+                       not args.no_rodata, extra, args.blind, args.unit,
+                       not args.no_callee_args, not args.no_postinc)
     except (LookupError, RuntimeError) as e:
         sys.exit("m2c.py: %s" % e)
     if args.raw:

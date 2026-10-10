@@ -215,6 +215,61 @@ class WriteFixTest(Repo):
         changed, _n, _g = sp.write_api(m, sp.plan(m))
         self.assertFalse(changed)
 
+    def test_write_keeps_comments_and_other_lines_it_does_not_own(self):
+        """T-7030: --write rebuilt the globals and functions sections from the declarations and deleted
+        every comment, #if block and type definition among them (the comment above D_800EAFA0)."""
+        old = (sp.HEADER_TEXT + "\n/* ---- globals ---- */\n"
+               "/* Sector buffer. Two views: this one and the u16 one in ovl/AAA.h. */\n"
+               "extern u8 D_800E7388;\n"
+               "\n"
+               "/* several lines\n"
+               " * of comment */\n"
+               "#if 0\n"
+               "extern u8 not_a_main_symbol;\n"
+               "#endif\n"
+               "typedef struct Tail {\n    s32 a;\n} Tail;\n"
+               "extern s32 D_800E7384; /* trailing */\n"
+               "/* last comment of the section */\n"
+               "\n/* ---- functions ---- */\n"
+               "/* about func_80042808 */\n"
+               "void func_80042808(void);\n"
+               "/* why this one is u8 */\n"
+               "void func_80083440(u8 arg0);\n"
+               "/* final note */\n"
+               "\n#endif /* MAIN_API_H */\n")
+        self.write("main_api.h", old)
+        self.ovl("AAA", "extern u8 D_800E7000;\n")      # sorts before D_800E7384: the order changes
+        self.write("ovl/BBB.h", "")
+        m = self.model()
+        sp.write_api(m, sp.plan(m))
+        text = (self.inc / "main_api.h").read_text()
+        for keep in ("/* Sector buffer. Two views: this one and the u16 one in ovl/AAA.h. */\nextern u8 D_800E7388;",
+                     "/* several lines\n * of comment */\n#if 0\n",
+                     "typedef struct Tail {\n    s32 a;\n} Tail;\nextern s32 D_800E7384; /* trailing */",
+                     "/* last comment of the section */",
+                     "/* about func_80042808 */\nvoid func_80042808(void);",
+                     "/* why this one is u8 */",
+                     "/* final note */"):
+            self.assertIn(keep, text)
+        self.assertIn("extern u8 not_a_main_symbol;", text)
+        self.assertEqual(text.count("#if 0"), 1)
+        lines = text.split("\n")
+        self.assertEqual(sum(l.startswith("#endif") for l in lines), sum(l.startswith("#if") for l in lines))
+        m = self.model()
+        changed, _n, _g = sp.write_api(m, sp.plan(m))
+        self.assertFalse(changed, "second run must not change the file")
+        self.assertEqual((self.inc / "main_api.h").read_text(), text)
+
+    def test_write_keeps_a_comment_with_its_declaration_when_the_order_changes(self):
+        self.write("main_api.h", sp.HEADER_TEXT + "\n/* ---- globals ---- */\n/* second */\nextern u8 D_800E7388;\n"
+                   "\n/* ---- functions ---- */\n\n#endif /* MAIN_API_H */\n")
+        self.ovl("AAA", "extern u8 D_800E7000;\n")
+        m = self.model()
+        sp.write_api(m, sp.plan(m))
+        text = (self.inc / "main_api.h").read_text()
+        self.assertLess(text.index("D_800E7000"), text.index("/* second */"))
+        self.assertIn("/* second */\nextern u8 D_800E7388;", text)
+
     def test_write_keeps_the_type_definitions(self):
         types = "/* ---- aggregate types ---- */\ntypedef struct Rec {\n    /* 0x00 */ s32 a;\n} Rec; /* size 0x04 */"
         self.write("main_api.h", sp.HEADER_TEXT + "\n" + types + "\n\n/* ---- globals ---- */\nextern u8 D_800E7388;\n"
