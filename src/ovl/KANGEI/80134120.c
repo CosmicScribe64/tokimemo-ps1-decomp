@@ -121,7 +121,16 @@ void func_80135250(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801352A4);
+void func_801352A4(void) {
+    if ((u8)D_800E6280.unk_F5F < 4U) {
+        func_8007ED84(0x42A9);
+        func_800AE0F0(D_800CA19C, "ロビー");
+    } else {
+        func_8007ED84(0x4296);
+        func_800AE0F0(D_800CA19C, "グランド");
+    }
+    func_8004284C();
+}
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80134120.rodata", D_8013980C);
 
