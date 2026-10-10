@@ -363,3 +363,7 @@ New [[tickets/T-1340-tooling-jump-table-functions]], In Review -> Done after the
 
 ## [2026-10-09] tooling | dupes.py re-run after T-1340
 Re-ran tools/dupes.py --apply --check after the jump-table merge: 4 copies kept (DATE, EVENT, GEKO, KANGEI), 3 rejected. Clean build 27/27 OK, progress 901/6962.
+
+## [2026-10-09] ticket | T-2090 wave 2 main executable: 61 functions matched
+[[tickets/T-2090-wave2-main-executable]] Backlog -> In Progress -> Done (inline review, no open findings). 61 functions matched in 15 `src/main/*.c` files (`ninja progress` grand total 901 -> 962 of 6962), clean rebuild 27 of 27 sha1 OK. New idioms in [[matching-notes]] (section "Main exe wave 2"): byte-flag loops over the 0x38-byte entries, bit-field flag words, `u16`/`s32` parameter types that decide spill and reload code (`LoadSquare` family), indexed symbol views against load hoisting (marked FAKE). 34 T-0018 rows appended to [[data/t0018-cases]]. Tooling bugs: `tools/funcdiff.py` cannot diff names starting with `L`; `tools/srcscan.py` does not see old-style definitions (`ninja progress` aborts). Open blockers: return types fixed by other owners' overlay headers, jump-table functions need a yaml island, T-0018 register choices.
+

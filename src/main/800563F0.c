@@ -57,11 +57,7 @@ void strKickCD(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", func_80056BA8);
 
-/* Old-style definition: the u8 parameter lives in its home slot and is reloaded with lbu, as in the original. */
-void func_800570B8(arg0, arg1)
-s32 arg0;
-u8 arg1;
-{
+void func_800570B8(s32 arg0, u8 arg1) {
     s32 t;
 
     t = arg1;

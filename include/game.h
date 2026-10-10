@@ -717,7 +717,7 @@ void InitHeap();
 void func_80042134();
 s32 func_80046274(void);
 void SD_GetCDLevel();
-void func_8007AB24();
+void func_8007AB24(u16 arg0);
 void func_8008B750();
 void func_80090D60();
 s32 func_80079524();
