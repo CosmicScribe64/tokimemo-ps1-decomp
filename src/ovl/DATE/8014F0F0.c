@@ -242,7 +242,17 @@ void func_8014FD08(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014F0F0", func_8014FD30);
+s32 func_8014FD30(void) {
+    if (D_800E7384 == 0) {
+        func_8007BFA8();
+        func_80044750(0xB1);
+        func_80044750(0x501);
+        func_80047550();
+    }
+    if (D_800E7384++ == 0x80) {
+        func_8004284C();
+    }
+}
 
 s32 func_8014FDA0(void) {
     s32 unused; /* FAKE: extra local moves the spill slot of sel to sp+0x28; real source unknown. T-4090 */

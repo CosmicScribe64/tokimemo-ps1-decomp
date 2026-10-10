@@ -53,7 +53,15 @@ void func_80142790(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801427E4);
+void func_801427E4(void) {
+    s16 v;
+
+    v = D_8012B920 + 0x200;
+    D_8012B920 = v;
+    if (v >= 0x1000) {
+        func_8004DE1C();
+    }
+}
 
 void func_80142828(void) {
     func_80051DD8(0x4D, 0x801B0000, 0xB0C5);

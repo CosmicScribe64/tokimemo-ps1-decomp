@@ -5,7 +5,24 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_801492C0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149394);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149468);
+typedef struct {
+    u32 pad0 : 25;
+    u32 grade : 2;
+    u32 pad1 : 3;
+    u32 flag : 1;
+    u32 pad2 : 1;
+} EtcSlot;
+
+s32 func_80149468(void) {
+    s32 i;
+
+    for (i = 0; i < 11; i++) {
+        if (((EtcSlot *) (D_800E6280 + 0x66C + i * 4))->grade >= 3 && ((EtcSlot *) (D_800E6280 + 0x66C + i * 4))->flag) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_801495CC);
 
@@ -96,7 +113,26 @@ void func_80149E68(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149F48);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A180);
+s32 func_8014A180(void) {
+    if (D_80120652 & 1) {
+        D_800E7384 = 0;
+        return;
+    }
+    if (D_80120658 == 0) {
+        if (D_80120666 != 0) {
+            func_80044750(0x502);
+        } else {
+            func_80044750(0x501);
+        }
+    }
+    if (D_80120658++ >= 0x3D) {
+        if (D_80150E94 >= 0xA) {
+            D_800E738D += 1;
+            return;
+        }
+        D_800E738D -= 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A258);
 

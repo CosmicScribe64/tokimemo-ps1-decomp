@@ -87,9 +87,53 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132A74);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132ADC);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132B40);
+s32 func_80132B40(void) {
+    s32 i;
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132C4C);
+    if (D_8013921C == 0x7C) {
+        D_8013921C = 0x80;
+        for (i = 0; i < 64; i++) {
+            D_8011ECD0[0x1987 + i * 0x44] = 0x80;
+        }
+        D_800E62B6 = 0x40;
+        D_800E62B7 = 0x40;
+        D_800E62B8 = 0x80;
+        return;
+    }
+    if (D_8013921C < 0x80) {
+        D_8013921C += 4;
+        for (i = 0; i < 64; i++) {
+            D_8011ECD0[0x1987 + i * 0x44] += 4;
+        }
+        D_800E62B6 += 2;
+        (&D_800E62B6)[1] += 2; /* FAKE: indexing the first symbol keeps the loads after the stores; matches, real source unknown. T-4090 */
+        (&D_800E62B6)[2] += 4;
+    }
+}
+
+void func_80132C4C(void) {
+    s32 i;
+
+    if (D_8013921C == 4) {
+        D_8013921C = 0;
+        for (i = 0; i < 64; i++) {
+            D_8011ECD0[0x1987 + i * 0x44] = 0;
+        }
+        D_800E62B6 = 0;
+        D_800E62B7 = 0;
+        D_800E62B8 = 0;
+        return;
+    }
+    if (D_8013921C > 0) {
+        D_8013921C -= 4;
+        for (i = 0; i < 64; i++) {
+            D_8011ECD0[0x1987 + i * 0x44] -= 4;
+        }
+        D_800E62B6 -= 2;
+        (&D_800E62B6)[1] -= 2; /* FAKE: indexing the first symbol keeps the loads after the stores; matches, real source unknown. T-4090 */
+        (&D_800E62B6)[2] -= 4;
+    }
+}
 
 void func_80132D44(void) {
     switch (D_80139AF8) {                           /* irregular */
@@ -213,7 +257,37 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134F2C);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135044);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_8013515C);
+void func_8013515C(s32 arg0, s32 arg1) {
+    u8 *p;
+
+    p = D_8013984C + arg0 * 0x30;
+    if (*(s32 *) (p + 0x28) < 3) {
+        switch (*(s32 *) (p + 4)) {
+        case 1:
+            if (arg1 < 0xC4) {
+                if (!(func_800AE0D0() & 1)) {
+                    *(s32 *) (p + 0x2C) = 0;
+                } else {
+                    *(s32 *) (p + 0x2C) = 1;
+                }
+                *(s32 *) (p + 0x28) = *(s32 *) (p + 8) * 2 + 4;
+                *(s32 *) (p + 0x24) = func_800AE0D0() % 15 + 0x1E;
+            }
+            break;
+        case 2:
+            if (arg1 < 0x384) {
+                if (!(func_800AE0D0() & 1)) {
+                    *(s32 *) (p + 0x2C) = 0;
+                } else {
+                    *(s32 *) (p + 0x2C) = 1;
+                }
+                *(s32 *) (p + 0x28) = *(s32 *) (p + 8) * 2 + 4;
+                *(s32 *) (p + 0x24) = func_800AE0D0() % 15 + 0x1E;
+            }
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135274);
 

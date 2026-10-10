@@ -6,9 +6,37 @@ typedef struct {
 } FnTbl25; /* size 0x64 */
 extern FnTbl25 D_801460E0;
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80135CA0", func_80135CA0);
+void func_80135CA0(void) {
+    void (**p)();
+    FnTbl25 tbl;
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80135CA0", func_80135D64);
+    tbl = D_801460E0;
+    if (D_80145F60 != 0) {
+        p = &tbl.f[D_800F647A];
+        if (*p == D_800896E0 || tbl.f[D_800F647A] == D_800898F0) {
+            tbl.f[D_800F647A] = func_8004DE1C;
+            /* FAKE: empty double test (decomp-permuter, score 0); it only shifts the register choice of base, index and pointer to the original's; real source unknown. T-4090 */
+            if (!D_800F647A && !D_800F647A) {
+            }
+        }
+    }
+    tbl.f[D_800F647A](0x80);
+}
+
+void func_80135D64(void) {
+    u32 sel;
+
+    if (D_800F62CF == 4) {
+        sel = (u32) D_800F563A >> 4;
+        if (sel == 6 && D_80145EB8 == 1) {
+            D_80145EB8 = 2;
+        /* FAKE: `* 0` makes the compare reload D_800F563A (decomp-permuter, score 0); the plain test is `== 0`; real source unknown. T-4090 */
+        } else if (sel == 7 && D_80145EB8 == (D_800F563A * 0)) {
+            D_80145EB8 = 1;
+        }
+    }
+    func_801343A4();
+}
 
 void func_80135DE8(void) {
     func_801343A4();
@@ -108,4 +136,11 @@ void func_801361A8(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80135CA0", func_801361D4);
+void func_801361D4(void) {
+    u32 v;
+
+    v = (D_800F62CF = D_800F5ACD);
+    func_8008F618(v);
+    D_8012E66C = D_8012E67C;
+    func_8004DE1C();
+}

@@ -415,7 +415,13 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BCFC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BDE8);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BE94);
+void func_8007BE94(s16 arg0) {
+    /* FAKE: `^ 0` turns the left operand into an expression, which makes uopt swap the operands of the compare (decomp-permuter, score 0); real source unknown. T-4090 */
+    if ((arg0 ^ 0) == (u16) D_80125D4C && (D_80125D10 & 0x100)) {
+        func_8007AD6C();
+    }
+    D_80125D14 |= 0x01000000 << arg0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BF04);
 

@@ -67,6 +67,11 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BB9C);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BC58);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BDD8);
+void func_8013BDD8(s16 arg0) {
+    u8 *p;
+
+    p = D_8013CC48 + arg0 * 0x19;
+    k_disp_start(set_kanji_string((s16) (-func_800AE0E0(p) * 7 / 2), 0x50, 0, p, 0));
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BE64);
