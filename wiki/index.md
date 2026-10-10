@@ -22,6 +22,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
 - [[tickets/T-6070-wave-4-list-7|T-6070]] Wave 4: list 7 (Done)
 - [[tickets/T-7030-tooling-wave-4-bug-fixes|T-7030]] Tooling: wave-4 bug fixes (Done)
+- [[tickets/T-8020-wave5-list-2|T-8020]] Wave 5, list 2: 21 functions matched (Done)
 - [[tickets/T-5100-game-state-struct|T-5100]] Recover the main game-state struct (Done)
 - [[tickets/T-6040-wave-4-list-4|T-6040]] Wave 4: list 4, 28 functions in 36 files (Done)
 - [[tickets/T-5000-type-recovery-arrays-structs|T-5000]] Type recovery: arrays and structs from access patterns (Done)

@@ -36,6 +36,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [x] [[tickets/T-8020-wave5-list-2|T-8020 Wave 5: list 2]]
 - [x] [[tickets/T-7020-loop-unrolling-and-scheduling|T-7020 Loop unrolling and instruction scheduling]]
 
 - [x] [[tickets/T-7000-shared-constants-lui-at-parameter-copies|T-7000 Shared constants, lui $at sharing and parameter copies]]

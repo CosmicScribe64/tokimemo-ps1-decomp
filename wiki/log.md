@@ -663,3 +663,12 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7030-tooling-w
 
 ## [2026-10-10] build | T-7000 merged with main (96cae6e) under K&R mode
 Merged main (T-7010, T-7020, T-7030, 170 dupes/neardupes copies). Clean build in K&R mode: one main function broke, TAIIKU `func_80144B40` (the original's `slti` on a byte: `(s32)` cast); all dupes/neardupes copies hold; no reverts. 27/27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK, all tool tests pass; progress 3967/6958 (EVENT `func_80116360` and RPG_BAT `func_8014F1D4` were also matched on main). K&R rules added to CODING_STANDARDS.md section 2; queue.py hint note in [[decompile-workflow]].
+
+## [2026-10-10] ticket | T-8020 created (In Progress)
+Wave 5 agent 2, list 2 (36 files). See [[tickets/T-8020-wave5-list-2]].
+
+## [2026-10-10] build | T-8020 wave 5 list 2: 21 functions matched
+Matched 21 of 133 listed functions (6,192 bytes) in worktree w5-2: main `func_800623E4`, `func_80062840`; DATE `func_8014D818`, `func_8014DE10`, `func_8014ECF0`, `func_8014D000`; DATE2 `func_8013775C`; SHUGAKU `func_8013A314`; ENDING `func_80133030`; MASTER `func_80139810`; GEKO `func_80141514`; RPG_BAT `func_80135D90`, `func_80159D50`; ETC `func_801408F0`; NAME_ENT `func_80143498`; OPTION `func_801371FC`, `func_80133AD8`, `func_80136A50`, `func_80135C0C`; BUNKA_SD `func_80134B88`; OLH `func_801332F8`. New patterns in [[matching-notes]] ("Wave 5, list 2 (T-8020)"); 17 rows added to [[data/t0018-cases]]. Clean rebuild after `rm -rf asm build`: 27/27 OK.
+
+## [2026-10-10] ticket | T-8020 (In Progress -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8020-wave5-list-2]]; no open findings. Branch w5-2, not merged.
