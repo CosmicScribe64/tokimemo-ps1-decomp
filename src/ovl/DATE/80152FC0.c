@@ -86,10 +86,9 @@ void func_8015347C(void) {
     D_8015E208 = D_8015DED0;
     D_8015E20C = D_8015E00C;
     D_8015E210 = D_8015E148;
-    D_800E65C6 += 1;
-    /* FAKE: D_800E65CA and D_800E65CE are reached through D_800E65C6 so that as1 does not hoist their loads above the earlier stores; real source unknown. T-4050 */
-    (&D_800E65C6)[2] += 1;
-    (&D_800E65C6)[4] -= 0x14;
+    D_800E643C[7].unk_02 += 1;
+    D_800E643C[7].unk_06 += 1;
+    D_800E643C[7].unk_0A -= 0x14;
     func_80084D3C();
     func_80153070();
     func_80043914(D_8015F19C, 0x11, 1, 2, 0);
@@ -112,9 +111,8 @@ void func_80153928(void) {
     D_8015E208 = D_8015DEDC;
     D_8015E20C = D_8015E018;
     D_8015E210 = D_8015E154;
-    D_800E65C6 += 3;
-    /* FAKE: indexing the first symbol keeps as1 from hoisting this load above the previous store (matches; real source unknown). T-4050 */
-    (&D_800E65C6)[2] += 2;
+    D_800E643C[7].unk_02 += 3;
+    D_800E643C[7].unk_06 += 2;
     func_80084D3C();
     func_8004284C();
 }
@@ -231,10 +229,11 @@ void func_80153E90(void) {
         func_80042940(0x24);
         return;
     }
-    /* FAKE: D_800E681D (= D_800E65CA + 0x253) is stored through D_800E65CA, and D_800E65CE is read through it, so that as1 keeps the loads after the stores; real source unknown. T-4050 */
-    *((s8 *)&D_800E65CA + 0x253) = 1;
-    D_800E65CA -= 1;
-    (&D_800E65CA)[2] += 0xA;
+    /* FAKE: D_800E681D, 0x253 bytes after D_800E643C[7].unk_06 and outside the record table, is stored
+     * through that field so that as1 keeps the next load after the store; real source unknown. T-4050 */
+    *((s8 *)&D_800E643C[7].unk_06 + 0x253) = 1;
+    D_800E643C[7].unk_06 -= 1;
+    D_800E643C[7].unk_0A += 0xA;
     func_80084D3C();
     func_8004284C();
 }

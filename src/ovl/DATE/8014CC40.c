@@ -87,15 +87,13 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D298);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D57C);
 
-/* The three s16 counters at D_800E65FE, +4, +8 are reached through one base so that as1 keeps the
- * loads in program order, as in the original (T-4060). */
 void func_8014D6B0(void) {
     D_8015E208 = D_8015DE60;
     D_8015E20C = D_8015DF9C;
     D_8015E210 = D_8015E0D8;
-    (&D_800E65FE)[0] += 1;
-    (&D_800E65FE)[2] += 1;
-    (&D_800E65FE)[4] -= 0x14;
+    D_800E643C[8].unk_02 += 1;
+    D_800E643C[8].unk_06 += 1;
+    D_800E643C[8].unk_0A -= 0x14;
     func_80084D3C();
     func_8014CE50();
     func_80043914(D_8015E2B4, 0x11, 1, 2, 0);

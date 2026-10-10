@@ -1,8 +1,5 @@
-#define MAIN_API_OVERRIDE_D_800E6636 /* matched as an s16 array: one base symbol keeps the loads behind the stores (T-4070) */
 #include "common.h"
 #include "ovl/DATE.h"
-
-extern s16 D_800E6636[];
 
 void func_80157880(void) {
     D_801600A0 = 0x801CE090;
@@ -72,9 +69,9 @@ void func_80157FE4(void) {
     D_8015E208 = D_8015DF3C;
     D_8015E20C = D_8015E078;
     D_8015E210 = D_8015E1B4;
-    D_800E6636[0] += 3;
-    D_800E6636[2] += 2;
-    D_800E6636[4] -= 0x14;
+    D_800E643C[9].unk_02 += 3;
+    D_800E643C[9].unk_06 += 2;
+    D_800E643C[9].unk_0A -= 0x14;
     func_80084D3C();
     func_80157A90();
     func_80043914(D_80160134, 0x11, 1, 2, 0);

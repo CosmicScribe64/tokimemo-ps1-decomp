@@ -54,6 +54,20 @@ typedef struct Rec34 {
     /* 0x2E */ u8 pad2E[6];
 } Rec34; /* size 0x34 */
 
+/* 0x38-byte record of the table at D_800E643C (16 records: a loop walks it with stride 0x38 up to
+ * D_800E67BC; DATE, KANGEI and SHOUGATU index it). The first 0xC bytes are walked as four 0xC-byte
+ * steps elsewhere, and +0x0C..+0x37 are read as bit-fields through bytes and words; those fields
+ * keep their own D_ names until a layout reproduces every user (wiki/data-types.md). */
+typedef struct Rec38 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 unk_0C[0x2C];
+} Rec38; /* size 0x38 */
+
 /* ---- globals ---- */
 extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
@@ -332,34 +346,21 @@ extern s16 D_800E638E;
 extern s16 D_800E6392;
 extern s16 D_800E6396;
 extern s16 D_800E639E;
-extern s16 D_800E643E[];
-extern s16 D_800E6442;
+extern Rec38 D_800E643C[]; /* 16 records */
 extern u8 D_800E6448[];
 extern u8 D_800E644A;
 extern s32 D_800E644C;
 extern u8 D_800E646A;
-extern s16 D_800E6476[];
 extern s32 D_800E6480;
 extern u8 D_800E64B8;
 extern u8 D_800E64BA;
-extern s16 D_800E64E6;
 extern u8 D_800E652A;
 extern s32 D_800E6560;
-extern s16 D_800E658E;
 extern s32 D_800E6598;
 extern u8 D_800E65A4;
-extern s16 D_800E65C6;
-extern s16 D_800E65CA;
-extern s16 D_800E65CE;
-extern s16 D_800E65FE;
 extern u8 D_800E661F;
-#ifndef MAIN_API_OVERRIDE_D_800E6636
-extern s16 D_800E6636;
-#endif
 extern s16 D_800E663A;
 extern u8 D_800E6641;
-extern s16 D_800E666E;
-extern s16 D_800E6672;
 extern u8 D_800E66B3;
 extern s32 D_800E66E8;
 extern u8 D_800E6723;

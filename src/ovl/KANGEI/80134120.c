@@ -56,7 +56,7 @@ void func_801350E0(void) {
 }
 
 void func_8013512C(void) {
-    *(s16 *)((u8 *)&D_800E6442 + D_800E71DF * 0x38) = 0x32;
+    D_800E643C[D_800E71DF].unk_06 = 0x32;
     func_80044750(0x24);
     func_80135438();
 }
@@ -88,7 +88,7 @@ void func_80135220(void) {
 }
 
 void func_80135250(void) {
-    *(s16 *)((u8 *)&D_800E6442 + D_800E71DF * 0x38) = 0x46;
+    D_800E643C[D_800E71DF].unk_06 = 0x46;
     D_80139ADC = 3;
     func_801349D4();
     func_8004284C();
