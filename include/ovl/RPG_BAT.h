@@ -33,7 +33,7 @@ void func_8014F524(void);
 
 void func_80141C70(void);
 void func_80141E38(void);
-void func_80137280(void);
+s32 func_80137280(void);
 void func_8014EF8C(void);
 
 extern s32 D_8015ED64[][4];
@@ -74,7 +74,7 @@ extern s32 D_8015EBB4;
 extern s32 D_8015EBB8;
 extern s32 D_8015EC14;
 extern s32 D_8015EC74;
-void func_801373A8(void);
+s32 func_801373A8(void);
 extern s32 D_8015EB9C;
 s32 func_80144C84();
 s32 func_801452C0();
@@ -204,6 +204,8 @@ void func_8013F220();
 
 extern u8 D_8015E850[];
 extern u8 D_8015E878[];
+extern u8 D_8015EA08[];
+extern u8 D_8015EA30[];
 #endif
 extern u8 D_8015E9E0[];
 extern u8 D_8015EB70[];

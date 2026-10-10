@@ -20,15 +20,141 @@ s32 func_80157AE0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80157BA4);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_80157BA4(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E828, "番長「男の意地にかけて、");
+        func_800AE0F0(D_8015E850, "負ける訳にはいかねぇ！");
+        func_8014B738(D_8015E8F0, 2, 0xDC);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1E000083, 0x1A00008B, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x1E000094, 0x1C00009E, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(0);
+        return;
+    case 5:
+        func_8013F220();
+        func_8014EF3C();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80157CCC);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80157E20);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_80157E20(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E828, "番長「ふっ！　情けない。");
+        func_800AE0F0(D_8015E850, "俺様に楯突こうとは十年早いわ！");
+        func_8014B738(D_8015E8F0, 2, 0x118);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1F000099, 0x1C0000A0, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x08000019, 0x05000027, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(0);
+        return;
+    case 5:
+        func_8013F220();
+        func_8014EF3C();
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80157F48);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_80157F48(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E9E0, "番長「ふっ、恐れ入ったぜっ");
+        func_800AE0F0(D_8015EA08, "俺様を倒せるやつが、");
+        func_800AE0F0(D_8015EA30, "この世にいたとはな・・・。");
+        func_8014B738(D_8015EB70, 3, 0xC8);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1C00007A, 0x0C000083, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x0300006F, 0x0C000076, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(2);
+        return;
+    case 5:
+        func_8013F1C4(0x160000A5, 0x080000AC, 2);
+        D_8015ED8C[0] += 1;
+        return;
+    case 6:
+        func_8013F250(0);
+        return;
+    case 7:
+        func_8013F220();
+        func_8014F500();
+    }
+}
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_801580C4);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801580C4(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E9E0, "番長「いや、");
+        func_800AE0F0(D_8015EA08, "その名はもう俺にはふさわしくない。");
+        func_800AE0F0(D_8015EA30, "これからは、お前が番長だ。");
+        func_8014B738(D_8015EB70, 3, 0xE6);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x03000077, 0x0D000078, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x160000AD, 0x090000B7, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(2);
+        return;
+    case 5:
+        func_8013F1C4(0x140000AC, 0x0A0000B7, 2);
+        D_8015ED8C[0] += 1;
+        return;
+    case 6:
+        func_8013F250(0);
+        return;
+    case 7:
+        func_8013F220();
+        func_8014F500();
+    }
+}
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80158240(void) {
@@ -140,9 +266,73 @@ s32 func_801585B0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_8015868C);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_8015868C(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E828, "番長「男の意地にかけて、");
+        func_800AE0F0(D_8015E850, "負ける訳にはいかねぇ！");
+        func_8014B738(D_8015E8F0, 2, 0xE6);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1E000083, 0x1A00008B, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x1E000094, 0x1C00009E, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(0);
+        return;
+    case 5:
+        func_8013F220();
+        func_8014EF3C();
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_801587B4);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801587B4(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E828, "番長「俺様が・・・");
+        func_800AE0F0(D_8015E850, "番長のこの俺様が・・・");
+        func_800AE0F0(D_8015E878, "こんな所で負ける訳にはいかん！");
+        func_8014B738(D_8015E8F0, 3, 0xFA);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x09000001, 0x02000006, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x10000099, 0x070000A2, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(2);
+        return;
+    case 5:
+        func_8013F1C4(0x05000036, 0x06000044, 2);
+        D_8015ED8C[0] += 1;
+        return;
+    case 6:
+        func_8013F250(0);
+        return;
+    case 7:
+        func_8013F220();
+        func_8014EF3C();
+        return;
+    }
+}
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80158930(void) {
