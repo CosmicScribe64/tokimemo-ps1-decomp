@@ -513,3 +513,6 @@ Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 m
 
 ## [2026-10-09] ticket | T-4050 Wave 3: list 5 (Backlog -> In Progress)
 [[tickets/T-4050-wave-3-list-5]]. Batch agent 5 of wave 3: 134 functions in 27 C files (main 80041000, BUNKASAI, BUNKA_SD, DATE, DATE2, ETC, EVENT, GYOZI, MASTER, OPTION, TACO, TEL, TT, VALEN).
+
+## [2026-10-10] ticket | T-4050 Wave 3: list 5 (In Progress -> Done)
+[[tickets/T-4050-wave-3-list-5]]. 67 functions matched in 27 files (63 of the 134 listed, 9232 bytes in all); `ninja progress` 2805 -> 2872 of 6958; clean rebuild 27 of 27 OK. 37 rows added to [[data/t0018-cases]]. New patterns in [[matching-notes]]: bit-field tests for `sll; bgez`, post-increment compares, `(u32)` addresses and index-through-first-symbol fakematches, table size and frame offset of local function-pointer tables, variadic `func_800AE0B0`. Inline review against CODING_STANDARDS recorded in the ticket.
