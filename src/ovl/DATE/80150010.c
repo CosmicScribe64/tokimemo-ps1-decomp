@@ -86,7 +86,16 @@ void func_8015109C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_801510E8);
+void func_801510E8(void) {
+    /* one base symbol for the byte table: separate symbols let as1 hoist the lbu (wave 2 ETC note) */
+    ((u8 *)&D_801206DA)[5] = 0x80;
+    ((u8 *)&D_801206DA)[1] |= 0x80;
+    *(s16 *)((u8 *)&D_801206DA + 6) = 0;
+    *(s16 *)((u8 *)&D_801206DA + 0x14) = 4;
+    *(s16 *)((u8 *)&D_801206DA + 0x16) = 0;
+    D_801206DA = 1;
+    func_8004284C();
+}
 
 void func_8015114C(void) {
     func_80044750(0x500);
@@ -114,6 +123,24 @@ void func_80151328(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80151360);
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+extern FnTbl40 D_8015ECC4;
+
+void func_80151360(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
+
+    tbl = D_8015ECC4;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_80122D04 != 0) {
+        D_801206DB |= 0x80;
+        D_801206DF = D_800B593C;
+        return;
+    }
+    D_801206DB &= 0xFF7F;
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80151424);

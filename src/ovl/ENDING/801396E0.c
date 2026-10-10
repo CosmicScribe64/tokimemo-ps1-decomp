@@ -1,9 +1,70 @@
 #include "common.h"
 #include "ovl/ENDING.h"
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_801396E0);
+void func_801396E0(void) {
+    D_8013CAC0 = 0x80180308;
+    D_8013CAC4 = 0x80180728;
+    D_8013CAC8 = 0x80180BCC;
+    D_8013CACC = 0x80180ED4;
+    D_8013CAD0 = 0x801812E4;
+    D_8013CAD4 = 0x80181648;
+    D_8013CAD8 = 0x80181A84;
+    D_8013CADC = 0x80181ED0;
+    D_8013CAE0 = 0x80182258;
+    D_8013CAE4 = 0x80182684;
+    D_8013CAE8 = 0x80182AB4;
+    D_8013CAEC = 0x80182C74;
+    D_8013CAF0 = 0x801835E4;
+    D_8013CAF4 = 0x80183CC4;
+    D_8013CAF8 = 0x80184008;
+    D_8013CAFC = 0x80180314;
+    D_8013CB00 = 0x80180734;
+    D_8013CB04 = 0x80180BD8;
+    D_8013CB08 = 0x80180EE0;
+    D_8013CB0C = 0x801812F0;
+    D_8013CB10 = 0x80181654;
+    D_8013CB14 = 0x80181A90;
+    D_8013CB18 = 0x80181EDC;
+    D_8013CB1C = 0x80182264;
+    D_8013CB20 = 0x80182690;
+    D_8013CB24 = 0x80182AC0;
+    D_8013CB28 = 0x80182C80;
+    D_8013CB2C = 0x8018360C;
+    D_8013CB30 = 0x80183CD4;
+    D_8013CB34 = 0x80184014;
+    D_8013CB38 = 0x801803DC;
+    D_8013CB3C = 0x801807FC;
+    D_8013CB40 = 0x80180CA0;
+    D_8013CB44 = 0x80180FA8;
+    D_8013CB48 = 0x801813B8;
+    D_8013CB4C = 0x8018171C;
+    D_8013CB50 = 0x80181B58;
+    D_8013CB54 = 0x80181FA4;
+    D_8013CB58 = 0x8018232C;
+    D_8013CB5C = 0x80182758;
+    D_8013CB60 = 0x80182B88;
+    D_8013CB64 = 0x80182D48;
+    D_8013CB68 = 0x801839E4;
+    D_8013CB6C = 0x80183DB8;
+    D_8013CB70 = 0x801840DC;
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_801399B4);
+typedef struct {
+    void (*f[14])();
+} FnTbl14; /* size 0x38 */
+extern FnTbl14 D_8013CB74;
+
+void func_801399B4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl14 tbl;
+
+    tbl = D_8013CB74;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_80122CD4 != 0) {
+        func_80139AA0(0x404040);
+    }
+}
 
 void func_80139A58(void) {
     if (D_800E71DF == 0xD) {
@@ -61,6 +122,13 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013A2E8);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013B510);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013B5E4);
+s32 func_8013B5E4(void) {
+    if ((u32)D_800E7384++ < 0x80U) {
+        return 0;
+    }
+    func_8004E884(D_80122CD0);
+    D_80122CD4 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013B640);

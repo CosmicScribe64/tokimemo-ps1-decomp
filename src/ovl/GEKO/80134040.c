@@ -3,7 +3,19 @@
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134040);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_801341A0);
+typedef struct {
+    void (*f[29])();
+} FnTbl29; /* size 0x74 */
+extern FnTbl29 D_80144E94;
+
+void func_801341A0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl29 tbl;
+
+    tbl = D_80144E94;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134228);
 

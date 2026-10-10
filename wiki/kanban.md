@@ -25,6 +25,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-4010-wave-3-list-1|T-4010 Wave 3: list 1]]
 
 
 

@@ -1,6 +1,14 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
+typedef struct {
+    void (*f[67])();
+} FnTbl67; /* size 0x10C */
+
+typedef struct {
+    void (*f[46])();
+} FnTbl46; /* size 0xB8 */
+
 void func_801011A0(void) {
     D_801221D0 = 0x801CE0EC;
     D_801221D4 = 0x801CE0F0;
@@ -75,7 +83,19 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80101510);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_801015B0);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80101610);
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+extern FnTbl39 D_801222AC;
+
+void func_80101610(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl39 tbl;
+
+    tbl = D_801222AC;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+}
 
 void func_80101684(void) {
     func_80015D28(0x3D, 0x801B0000, 0x8287);
@@ -180,7 +200,16 @@ void func_80101EFC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80101F24);
+extern FnTbl67 D_80122348;
+
+void func_80101F24(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl67 tbl;
+
+    tbl = D_80122348;
+    func_80078950(" %d %d\n", D_800B1AF6, (&D_801243A4)[D_800EECBC]);
+    tbl.f[D_800B1AF6](0x80);
+}
 
 void func_80101FC8(void) {
     func_80015D28(0x45, 0x801B0000, 0x82C4);
@@ -200,7 +229,16 @@ void func_801021C4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_801021FC);
+extern FnTbl46 D_801224F0;
+
+void func_801021FC(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl46 tbl;
+
+    tbl = D_801224F0;
+    func_80078950("%d\n", D_800B1AF6);
+    tbl.f[D_800B1AF6](0x80);
+}
 
 void func_80102288(void) {
     func_80015D28(0x3D, 0x801B0000, 0x834E);

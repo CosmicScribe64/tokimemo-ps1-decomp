@@ -1,6 +1,18 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
+typedef struct {
+    void (*f[15])();
+} FnTbl15; /* size 0x3C */
+
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+
+typedef struct {
+    void (*f[38])();
+} FnTbl38; /* size 0x98 */
+
 void func_800FFBE0(void) {
     D_80121D20 = 0x801CE218;
     D_80121D24 = 0x801CE21C;
@@ -75,7 +87,16 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_800FFF50);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100010);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100070);
+extern FnTbl38 D_80121DFC;
+
+void func_80100070(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl38 tbl;
+
+    tbl = D_80121DFC;
+    func_80078950("s%d %d\n", D_800B1AF6, D_800E9E63);
+    tbl.f[D_800B1AF6](0x80);
+}
 
 void func_8010010C(void) {
     func_80015D28(0x3D, 0x801B0000, 0x80A0);
@@ -95,7 +116,19 @@ void func_801001BC(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_801001F4);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100254);
+typedef struct {
+    void (*f[21])();
+} FnTbl21; /* size 0x54 */
+extern FnTbl21 D_80121E94;
+
+void func_80100254(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl21 tbl;
+
+    tbl = D_80121E94;
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_801002C8);
 
@@ -195,7 +228,19 @@ void func_80100CC4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100CEC);
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+extern FnTbl40 D_80121EE8;
+
+void func_80100CEC(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl40 tbl;
+
+    tbl = D_80121EE8;
+    func_80078950("%d\n", D_800B1AF6);
+    tbl.f[D_800B1AF6](0x80);
+}
 
 void func_80100D78(void) {
     func_800433D0(0x500);
@@ -210,7 +255,16 @@ void func_80100DA0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100DD8);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100E30);
+extern FnTbl38 D_80121F88;
+
+void func_80100E30(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl38 tbl;
+
+    tbl = D_80121F88;
+    func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
+    tbl.f[D_800B1AF6](0x80);
+}
 
 void func_80100ECC(void) {
     func_80015D28(0x3D, 0x801B0000, 0x811A);
@@ -218,7 +272,19 @@ void func_80100ECC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100F04);
+typedef struct {
+    void (*f[51])();
+} FnTbl51; /* size 0xCC */
+extern FnTbl51 D_80122020;
+
+void func_80100F04(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl51 tbl;
+
+    tbl = D_80122020;
+    func_80078950("%d\n", D_800B1AF6);
+    tbl.f[D_800B1AF6](0x80);
+}
 
 void func_80100F88(void) {
     func_80015D28(0x3D, 0x801B0000, 0x8157);
@@ -226,7 +292,14 @@ void func_80100F88(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80100FC0);
+void func_80100FC0(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl42 tbl;
+
+    tbl = *(FnTbl42 *)&D_801220EC;
+    func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
+    tbl.f[D_800B1AF6](0x80);
+}
 
 void func_80101054(void) {
     func_800433D0(0x502);
@@ -241,4 +314,13 @@ void func_8010107C(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_801010B4);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_80101104);
+extern FnTbl15 D_80122194;
+
+void func_80101104(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    FnTbl15 tbl;
+
+    tbl = D_80122194;
+    func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
+    tbl.f[D_800B1AF6](0x80);
+}
