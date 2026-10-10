@@ -56,6 +56,11 @@ segments:
     start: 0x0
     vram: 0x80132000
     subsegments:
-      - [0x0, c, TEL]
-      - [0xC430, rodata, TEL_rodata]
+      - [0x0, c, TEL/80132000]
+      - [0x77D0, c, TEL/801397D0]
+      - [0xACD0, c, TEL/8013CCD0]
+      - [0xC430, .rodata, TEL/80132000]
+      - [0xD9E0, .rodata, TEL/801397D0]
+      - [0xE450, .rodata, TEL/8013CCD0]
+      - [0xE550, data, TEL_data]
   - [0x30000]
