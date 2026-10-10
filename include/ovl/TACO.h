@@ -258,4 +258,6 @@ void func_8014EC4C();
 void func_8014EE3C();
 void func_80135418(void);
 void func_80138160(void);
+extern s32 D_8015F440[];
+
 #endif

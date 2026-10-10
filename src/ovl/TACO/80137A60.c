@@ -44,7 +44,15 @@ s32 func_80137BD8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137CBC);
+void func_80137CBC(s32 arg0) {
+    s32 *p;
+    s32 i;
+
+    i = arg0; /* FAKE: copy of the argument reproduces the original's `move t6,a0`; real source unknown. T-6070 */
+    p = &D_8015F440[i * 2];
+    func_80046290(p[0], p[1], 8);
+    func_80044750(0x300);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80137A60", func_80137D00);
 
