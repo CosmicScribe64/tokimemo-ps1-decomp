@@ -93,6 +93,41 @@ typedef struct Rec24 {
     /* 0x20 */ s32 unk_20;
 } Rec24; /* size 0x24 */
 
+/* Work area at D_80125D10 (0x50 bytes; main 80079B10 and 8007C030 only). The original keeps its
+ * stores and loads in source order, as for one object (wiki/data-types.md); unk_44 and unk_48 are
+ * message buffers passed to func_80045414. */
+typedef struct Work80125D10 {
+    /* 0x00 */ u32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ s16 unk_20;
+    /* 0x22 */ s16 unk_22;
+    /* 0x24 */ u16 unk_24;
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ s16 unk_28;
+    /* 0x2A */ s16 unk_2A;
+    /* 0x2C */ s16 unk_2C;
+    /* 0x2E */ s16 unk_2E;
+    /* 0x30 */ s16 unk_30;
+    /* 0x32 */ s16 unk_32;
+    /* 0x34 */ u16 unk_34;
+    /* 0x36 */ u16 unk_36;
+    /* 0x38 */ u16 unk_38;
+    /* 0x3A */ s16 unk_3A;
+    /* 0x3C */ s16 unk_3C;
+    /* 0x3E */ s16 unk_3E;
+    /* 0x40 */ u16 unk_40;
+    /* 0x42 */ u16 unk_42;
+    /* 0x44 */ u8 unk_44[4];
+    /* 0x48 */ u8 unk_48[8];
+} Work80125D10; /* size 0x50 */
+
 /* ---- globals ---- */
 extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
@@ -1068,39 +1103,7 @@ extern s32 D_80125CA8;
 extern s32 D_80125CAC;
 extern s32 D_80125CB0;
 extern u16 D_80125CC0;
-extern u32 D_80125D10;
-extern s32 D_80125D14;
-extern s32 D_80125D18;
-extern s32 D_80125D1C;
-extern s32 D_80125D20;
-extern s32 D_80125D24;
-extern s32 D_80125D28;
-extern s16 D_80125D2C;
-extern s16 D_80125D2E;
-extern s16 D_80125D30;
-extern s16 D_80125D32;
-extern u16 D_80125D34;
-extern s16 D_80125D36;
-extern s16 D_80125D38;
-extern s16 D_80125D3A;
-extern s16 D_80125D3C;
-extern s16 D_80125D3E;
-extern s16 D_80125D40;
-extern s16 D_80125D42;
-extern u16 D_80125D44;
-extern u16 D_80125D46;
-extern u16 D_80125D48;
-extern s16 D_80125D4A;
-extern s16 D_80125D4C;
-extern s16 D_80125D4E;
-extern u16 D_80125D50;
-extern u16 D_80125D52;
-extern u8 D_80125D54;
-extern u8 D_80125D58[];
-extern u8 D_80125D5C;
-extern u8 D_80125D5D;
-extern u8 D_80125D5E;
-extern u8 D_80125D5F;
+extern Work80125D10 D_80125D10;
 extern s32 D_80125D60[];
 extern s32 D_80125D70[];
 extern s32 D_80125D80[];
