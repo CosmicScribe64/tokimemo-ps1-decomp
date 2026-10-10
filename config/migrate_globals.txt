@@ -1,7 +1,11 @@
 # tools/migrate_globals.py (T-5100): aggregates whose fields splat names as separate D_ globals.
 #   aggregate <base symbol> <type> <header>   every D_ address inside the type is a field of the base
-#   keep <src file> <symbol> <reason>          a use that matches only on the old view (see wiki/game-state.md)
+#   keep <src file> <symbol> <reason>          a separate-symbol view of one field for one original object
+#
+# Views (T-7010, wiki/game-state.md): every unit reaches GameState through D_800E6280. The audit of
+# the original (tools/aggregate_audit.py) finds no load hoisted over a store between two GameState
+# fields (407 read-modify-write pairs kept, 0 hoisted; 27 of 981 hoisted between other globals),
+# and IDO compiles a constant-offset member exactly like a separate symbol otherwise. So no unit
+# has a separate view. A keep line is accepted only for an object whose original asm has such a
+# hoisted pair on that symbol (migrate_globals.py --check runs the audit on it).
 aggregate D_800E6280 GameState include/main_api.h
-# Uses that match only through the old symbol (IDO orders the operands of a struct-array element
-# differently from a scalar extern); the symbol stays declared in include/main_api.h for them.
-keep src/ovl/SHOUGATU/8013DD90.c D_800E66E8 func_8013E0F0: the sum loads Rec38[12].unk_0C first only as a scalar extern

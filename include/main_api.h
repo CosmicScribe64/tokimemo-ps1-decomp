@@ -631,7 +631,6 @@ extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
 extern GameState D_800E6280;
-extern s32 D_800E66E8;  /* old name of D_800E6280.unk_1BC[12].unk_0C.w, kept for one use (config/migrate_globals.txt) */
 extern s32 D_800E7D10;
 extern u8 D_800E7D11[];
 extern u8 D_800E7D14[];
