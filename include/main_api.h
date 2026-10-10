@@ -1239,7 +1239,7 @@ void check_k_scroll();
 void wait_sub_sub(s16 arg0);
 void func_80081190(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
 void func_80081D30();
-void func_80082764();
+s32 func_80082764();
 void normal_date_three_select(void);
 void normal_date_three_select_init(void);
 void normal_date_three_select_main(void);

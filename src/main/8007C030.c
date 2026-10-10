@@ -465,9 +465,23 @@ void don_init2(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", don_wait);
+void don_wait(void) {
+    if ((u32)D_800E7384++ >= 0x81U) {
+        k_reset(1);
+        func_8004284C();
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_speak_1line);
+void normal_date_speak_1line(void) {
+    D_800CA134 = (u8 *)&D_800CA148;
+    D_800CA138 = (u8 *)&D_800CA14C;
+    D_800CA13C = D_800CA160;
+    D_800CA140 = D_800CA164;
+    D_800CA144 = D_800CA168;
+    if (func_80082764(D_80122CDC, 1, 0) == 1) {
+        func_8004284C();
+    }
+}
 
 void normal_date_speak_012(void) {
     D_800CA134 = &D_800CA148;
