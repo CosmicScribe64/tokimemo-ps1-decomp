@@ -70,13 +70,13 @@ void func_8014BA8C(void) {
 }
 
 s32 func_8014BB34(void) {
-    switch (D_800E738D) {                           /* irregular */
+    switch (D_800E6280.unk_110D) {                           /* irregular */
     case 0:
         func_80051DBC();
         break;
     case 1:
         func_80042908(2);
-        D_800E738D = 2;
+        D_800E6280.unk_110D = 2;
         break;
     }
 }
