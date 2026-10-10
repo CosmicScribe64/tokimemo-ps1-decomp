@@ -586,3 +586,11 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-stat
 40 functions, 6724 bytes matched in the main exe and DATE, ENDING, EVENT, GEKO, GYOZI, OMIMAI, RPG_BAT, SHOUGATU, SHUGAKU, TT; 17 T-0018 rows in [[data/t0018-cases]]; progress 3539 -> 3579 of 6958 functions. New patterns (jump-table switches, function-table dispatchers, unsigned compares that unshare constants, in-place loop pointer) and blockers in [[matching-notes]], "Wave 4, list 6 (T-6060)". Inline review in [[tickets/T-6060-wave-4-list-6]]; branch w4-6, not merged.
 ## [2026-10-10] ticket | T-6030 wave 4 list 3 (In Progress -> Done)
 19 of 144 functions matched (3384 bytes, progress 3539 -> 3558 of 6958) on branch w4-3, not merged: [[tickets/T-6030-wave-4-list-3]]. New idioms (read a global back through the global, post-increment compare, `u8` switch without return, `u32` override for a switch, local bit-field views) and the unsolved shapes are in [[matching-notes]] ("Wave 4, list 3"); 5 rows appended to [[data/t0018-cases]]. Inline review recorded in the ticket.
+## [2026-10-10] ticket | T-6010 Wave 4 list 1 (Backlog -> In Progress)
+Created [[tickets/T-6010-wave-4-list-1]]; 127 listed functions, 39860 bytes, branch w4-1.
+
+## [2026-10-10] build | T-6010 wave 4 list 1: 17 functions
+17 functions turned into C in the 35 owned files (16 listed, 3412 bytes, plus TEL `func_801360E4`, 232 bytes); grand total 3539 -> 3556 of 6958, clean build 27 of 27 OK. New patterns (bit-field flag stores, word-aligned record copies, `*arg++` call argument, goto-shared block) and the unmatched families are in [[matching-notes]]; 9 rows in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-6010 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6010-wave-4-list-1]]; no open findings. Branch w4-1, not merged.

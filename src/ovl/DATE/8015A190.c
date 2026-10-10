@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80122CD0 /* matched as u32 (main_api.h: s32), switch selector in $v1 (T-6010) */
 #include "common.h"
 #include "ovl/DATE.h"
+
+extern u32 D_80122CD0;
 
 void func_8015A190(void) {
     func_80046318(0x3D, 0x801B0000, 0x8E3F);
@@ -33,9 +36,32 @@ void func_8015A378(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8015A190", func_8015A3B0);
+void func_8015A3B0(void) {
+    switch (D_80122CD0) {
+    case 3:
+        func_8015A4A8();
+        return;
+    case 5:
+        func_8015A58C();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8015A190", func_8015A414);
+void func_8015A414(void) {
+    func_80065F34(1);
+    D_800E6280.unk_F5F = 0xB;
+    func_800AE0F0(D_800CA188, "謎の女");
+    func_80085B3C(0xB, D_80122D08);
+    D_8015E208 = D_8015DF80;
+    D_8015E20C = D_8015E0BC;
+    D_8015E210 = D_8015E1F8;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8004284C();
+}
 
 typedef struct {
     void (*f[20])();

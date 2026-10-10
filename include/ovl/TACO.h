@@ -261,5 +261,9 @@ void func_80138160(void);
 void func_801438F0();
 extern s8 D_8015EDD0;
 extern s32 D_8015EDD4;
+void func_801532C4();
+void func_801536BC();
+
+void func_801534E0(s32 arg0);
 
 #endif
