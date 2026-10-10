@@ -109,3 +109,5 @@ void func_80143580();
 s32 func_80140CCC(void);
 
 #endif /* OVL_NAME_ENT_H */
+extern u8 D_8014CC70;
+void func_801377E8();

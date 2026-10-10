@@ -307,7 +307,31 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80136808);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801372A0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137608);
+void func_80137608(s32 arg0) {
+    s32 pad; /* FAKE: unused locals around the two cursor values, which the original reads without ever assigning them (T-3330 layout) */
+    s32 sp30;
+    s32 sp2C;
+    s32 pad2;
+
+    if (sp30 >= -0x9D && sp30 < -0x80 && sp2C >= 0x51 && sp2C < 0x60) {
+        D_8012093F |= 0x80;
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_801377E8();
+            func_8004284C();
+        }
+    } else {
+        D_8012093F &= 0x7F;
+    }
+    if (D_8014CC70 == 3) {
+        D_801208FB |= 0x80;
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_801377E8(arg0);
+            func_8004284C();
+        }
+    } else {
+        D_801208FB &= 0x7F;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137708);
 
