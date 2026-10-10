@@ -45,4 +45,19 @@ void func_80046318(s32 arg0, s32 arg1, s32 arg2);
 void func_80048E78(void);
 void func_80041584(void);
 
+extern s32 D_800E7384;
+extern s16 D_801220EC;
+extern s16 D_801220EE;
+extern s16 D_8011ECF6;
+extern s16 D_8011ECFA;
+extern s32 D_801220F0;
+s32 rsin();
+void menu_check();
+void menu_bar_show();
+void func_8004FC10();
+void func_80139A30();
+void k_disp_inc();
+void func_801394F4();
+void func_801399C0();
+
 #endif /* OVL_OPTION_H */

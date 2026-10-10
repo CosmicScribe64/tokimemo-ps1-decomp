@@ -121,4 +121,14 @@ void func_801355F0();
 extern s32 D_80139E10;
 void place_init();
 
+extern s32 D_800B36C8;
+extern s32 D_800B3708;
+extern s32 D_800B3688;
+
+extern s32 D_800E7368;
+void func_8008585C();
+void addr_init_bustup();
+void func_80084E4C();
+void func_801325D0();
+
 #endif /* OVL_KANGEI_H */

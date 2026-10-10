@@ -40,7 +40,30 @@ void func_801326F8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80132760);
+void func_80132760(void) {
+    if (D_800E69A1 != 6) {
+        func_80085B3C(0xA, 0x29);
+    } else {
+        switch (D_800CA2CC) {                       /* irregular */
+        case 0:
+            func_80085B3C(0xA, 0x2A);
+            break;
+        case 1:
+            func_80085B3C(0xA, 0x2B);
+            break;
+        default:
+            func_80085B3C(0xA, 0x2C);
+            break;
+        }
+    }
+    func_80132000();
+    func_8013282C();
+    if ((D_800B593C != 0) && (D_80122CF8 != 0)) {
+        D_800CA2F0 = 1;
+        return;
+    }
+    D_800CA2F0 = 0;
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_8013282C);
 

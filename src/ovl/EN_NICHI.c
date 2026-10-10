@@ -91,9 +91,36 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80132B40);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80132C4C);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80132D44);
+void func_80132D44(void) {
+    switch (D_80139AF8) {                           /* irregular */
+    case 0:
+        func_801333B0();
+        return;
+    case 1:
+        func_8013358C();
+        return;
+    case 2:
+        func_80132EE8();
+        return;
+    case 3:
+        func_80132DC4();
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI", func_80132DC4);
+void func_80132DC4(void) {
+    if (D_80139AFC == 0) {
+        func_80044750(0x504);
+    }
+    D_80139AFC += 1;
+    D_80121548 = 0x1E;
+    func_80132E3C();
+    if (D_80139AFC >= 0xB4) {
+        D_80121533 = 0;
+        D_80121531 = 3;
+        func_80042808();
+    }
+}
 
 void func_80132E3C(void) {
     func_801330D0();

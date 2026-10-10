@@ -224,4 +224,37 @@ void func_80098490();
 void func_80098530();
 void InitGeom();
 
+void func_801341D8();
+
+extern s32 D_8013C5F0;
+extern s32 D_8013C5F4;
+extern s32 D_8013C5F8;
+extern s16 D_8013C5FC;
+extern s32 D_8013C600;
+extern s32 D_8013C604;
+extern s32 D_8013C608;
+extern s32 D_8013C60C;
+extern s32 D_8013C610;
+extern s32 D_8013C614;
+extern s32 D_8013C618;
+extern s32 D_8013C61C;
+
+void func_80139B48();
+void dtd_on();
+
+void func_80139AA0();
+
+extern s32 D_8013CBB0;
+extern s32 D_8013CBB4;
+extern s32 D_8013CBB8;
+extern s16 D_8013CBBC;
+extern s32 D_8013CBC0;
+extern s32 D_8013CBC4;
+extern s32 D_8013CBC8;
+extern s32 D_8013CBCC;
+extern s32 D_8013CBD0;
+extern s32 D_8013CBD4;
+extern s32 D_8013CBD8;
+extern s32 D_8013CBDC;
+
 #endif /* OVL_ENDING_H */

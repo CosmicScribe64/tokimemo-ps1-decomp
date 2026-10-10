@@ -213,4 +213,24 @@ extern s16 D_80120732;
 
 void func_80048F64();
 
+extern u8 D_80120697;
+
+s32 rand();
+
+extern s32 D_800E7200;
+void k_disp_switch();
+void dtd_on_tpage();
+
+extern u8 D_80120696;
+extern u8 D_80120695;
+extern s32 D_801206CC;
+extern s32 D_801206A0;
+extern s32 D_801206A4;
+extern s32 D_801206C8;
+extern s16 D_801206AA;
+extern u8 D_80120698;
+extern u8 D_80120699;
+extern s16 D_801206BA;
+extern s16 D_801206BE;
+
 #endif /* OVL_NAME_ENT_H */

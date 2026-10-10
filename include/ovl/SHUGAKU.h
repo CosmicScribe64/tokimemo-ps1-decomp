@@ -131,4 +131,8 @@ extern u8 D_80120698;
 
 void normal_date_girl_in();
 
+void func_8013282C();
+
+void func_80137C3C();
+
 #endif /* OVL_SHUGAKU_H */
