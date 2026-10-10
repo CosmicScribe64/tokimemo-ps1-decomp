@@ -234,9 +234,43 @@ void func_8014BED8(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014BF38);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014C0D4);
+void func_8014C0D4(s32 arg0) {
+    s32 i;
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014C1DC);
+    if (arg0 < 0xA) {
+        for (i = 0; i < 5; i++) {
+            func_80147674(i + 1, D_80160040[i], 1, 0, 0);
+        }
+        for (i = 0; i < 9; i++) {
+            func_80147674(i + 0x13, D_80160054[i], 1, 0, 0);
+        }
+        for (i = 0; i < 10; i++) {
+            func_80147674(i + 7, D_80160078[i], 1, 0, 0);
+        }
+        for (i = 0; i < 2; i++) {
+            func_80147674(i + 0x1D, D_801600A0[i], 1, 0, 0);
+        }
+    }
+}
+
+void func_8014C1DC(s32 arg0) {
+    s32 i;
+
+    if (arg0 < 0xA) {
+        for (i = 0; i < 5; i++) {
+            func_80147674(i + 1, D_80160040[i], 2, 0, 0);
+        }
+        for (i = 0; i < 9; i++) {
+            func_80147674(i + 0x13, D_80160054[i], 2, 0, 0);
+        }
+        for (i = 0; i < 10; i++) {
+            func_80147674(i + 7, D_80160078[i], 2, 0, 0);
+        }
+        for (i = 0; i < 2; i++) {
+            func_80147674(i + 0x1D, D_801600A0[i], 2, 0, 0);
+        }
+    }
+}
 
 void func_8014C2E4(void) {
     s32 i;
@@ -276,7 +310,23 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014C978);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014CB24);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014D200);
+void func_8014D200(void) {
+    s32 i;
+
+    for (i = 0; i < 5; i++) {
+        func_801478F8(i + 1, D_801600C0[i]);
+    }
+    for (i = 0; i < 3; i++) {
+        func_801478F8(i + 0x19, D_801600D4[i]);
+    }
+    for (i = 0; i < 2; i++) {
+        func_801478F8(i + 0x1D, D_801600E0[i]);
+    }
+    func_801478F8(8, D_801600E8);
+    for (i = 0; i < 2; i++) {
+        func_801478F8(i + 0x15, D_801600EC[i]);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014D2E0);
 

@@ -1203,4 +1203,6 @@ extern s32 D_8012398C;
 void func_80108D00(void);
 void func_801087A8(void);
 void func_800FCF40(void);
+void func_800FC46C(void);
+void func_80103208(void);
 #endif /* OVL_EVENT_H */
