@@ -3,7 +3,36 @@
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014ABD0);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014ACB4);
+void func_8014ACB4(void) {
+    s32 temp_v0;
+    s32 sp28;
+
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80048E78();
+    func_800438F0(1);
+    func_80048390();
+    func_80041584();
+    func_8006BC28(0);
+    func_800649D4();
+    func_80064FA4(0);
+    func_80063930(0);
+    func_80064E84();
+    func_8004E58C();
+    func_80065F34(0);
+    func_80057390(0);
+    temp_v0 = func_8005742C(0x4055, 1);
+    sp28 = temp_v0;
+    if (temp_v0 != -1) {
+        if ((temp_v0 == 0) || (temp_v0 == 1)) {
+            func_8004284C();
+            func_8004284C();
+            func_80057418(1, sp28);
+        }
+    } else {
+        func_8004284C();
+    }
+}
 
 void func_8014AD94(void) {
     if (func_800460CC() & 1) {

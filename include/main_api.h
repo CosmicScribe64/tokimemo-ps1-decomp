@@ -1870,5 +1870,10 @@ extern u8 D_800E62BE;
 extern u8 D_800E62BF;
 extern u8 D_800E7312;
 extern u8 D_800E738D;
+void func_80057418(s32, s32);
+void func_80063930(s32);
+void func_800649D4();
+void func_80064E84();
+void func_80064FA4(s32);
 
 #endif /* MAIN_API_H */
