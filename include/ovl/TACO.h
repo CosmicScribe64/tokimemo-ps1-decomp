@@ -191,4 +191,16 @@ void func_8014C8DC(void);
 void func_8014C978(s32 arg0);
 void func_8014D200(void);
 
+/* T-1321 */
+void func_8013506C(void);
+void func_80135418(void);
+void func_8013546C(void);
+void func_80135638(void);
+extern s32 D_800E7378;
+void func_80132FE8(void);
+void func_8013801C(void);
+void func_80138160(void);
+void func_8013822C(void);
+void func_8013F250(void);
+
 #endif
