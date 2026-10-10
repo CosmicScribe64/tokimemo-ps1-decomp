@@ -28,13 +28,13 @@ kanban-plugin: board
 
 
 
-
 ## In Review
 
 
 
 
 ## Done
+- [x] [[tickets/T-6050-wave-4-list-5|T-6050 Wave 4: list 5]]
 - [x] [[tickets/T-5100-game-state-struct|T-5100 Recover the main game-state struct]]
 - [x] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
 - [x] [[tickets/T-5020-loop-unrolling-and-lui-sharing|T-5020 Loop unrolling and lui sharing]]

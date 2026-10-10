@@ -109,7 +109,7 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147304);
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014738C);
 
 void func_80147414(void) {
-    s16 *mode;
+    s16 *mode; /* pointer local: the switch reads the flag through it, as the permuter-found form that matches (T-6050) */
     if (D_800E6280.unk_1104.w == 0x20) {
         D_80120652 |= 1;
     }
@@ -129,7 +129,7 @@ void func_80147414(void) {
             func_8004284C();
         }
     }
-    func_8004EC24();
+    k_disp_inc();
 }
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801474FC);

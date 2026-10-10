@@ -981,5 +981,4 @@ extern u8 D_8015099C[];
 extern u8 D_801509B0[];
 extern u8 D_801509C4[];
 extern u8 *D_80150CCC[];
-
 #endif /* OVL_ETC_H */
