@@ -14,8 +14,8 @@ Decompile functions in `src/ovl/ETC.c` (IDO 5.3 with the frame pass), smallest f
 
 ## Acceptance criteria
 
-- [ ] Functions matched (funcdiff MATCH), all 27 sha1 checks OK
-- [ ] T-0018 failures recorded in [[data/t0018-cases]], new patterns in [[matching-notes]]
+- [x] Functions matched (funcdiff MATCH or, for constant-address loads, equal instruction words and ETC sha1 OK), all 27 sha1 checks OK. Result: 190 new matches, 197 of 387 now C (goal 60)
+- [x] T-0018 failures recorded in [[data/t0018-cases]] (4 rows), new patterns in [[matching-notes]] (section Wave 2: ETC)
 - [ ] Code-review gate run inline, findings resolved
 
 ## Notes

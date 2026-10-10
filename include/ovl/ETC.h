@@ -14,7 +14,7 @@ void func_80145C00(void);
 void func_8014AA74(void);
 extern s32 D_80150E9C;
 
-/* 0x801xxxxx data table entries of the ETC loaders (T-2040). */
+/* A 15-bit color and its three masked channels (func_80132880, T-2040). */
 typedef struct Rgb555Split {
     /* 0x00 */ u16 color;
     /* 0x02 */ u16 pad;
