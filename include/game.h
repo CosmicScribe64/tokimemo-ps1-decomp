@@ -437,7 +437,6 @@ void LoadSquare(u16 arg0, u16 arg1, s16 arg2, s16 arg3, void *arg4);
 void load_palette();
 extern u8 D_800C9A60[];
 extern u8 D_800C9D60[];
-void draw2d3d(u8 arg0, u8 arg1);
 void func_80048DAC(s32 arg0);
 void func_80041584(void);
 void set_dec_bri(u8 arg0);

@@ -369,3 +369,6 @@ New [[tickets/T-2030-wave-2-taco]] (In Progress): matching `src/ovl/TACO.c`.
 
 ## [2026-10-09] ticket | T-2030 Wave 2: TACO done
 [[tickets/T-2030-wave-2-taco]] In Progress -> Done after the inline code review (no open findings). 70 functions matched in `src/ovl/TACO.c` (TACO 7 -> 77 of 406), clean build 27 of 27 sha1 OK, `ninja progress` grand total 971 of 6962. 7 rows added to [[data/t0018-cases]]; new patterns in [[matching-notes]] (section "Wave 2 batch TACO"). Tooling bug: `tools/m2c.py` resolves a function name to the first overlay with that name, so a draft for a TACO function can come from another overlay.
+
+## [2026-10-09] merge | wave 2 TACO
+Merged [[tickets/T-2030-wave-2-taco]] (70 matches). Header check found draw2d3d declared u8 in game.h and s32 in overlay headers: the u8 view moved to include/main_only.h (src/main/80043510.c and 8005A0B0.c include it), OMIMAI keeps its u8 view in include/ovl/OMIMAI.h, and a duplicate back_clear_switch left include/ovl/TACO.h. Clean build 27/27 OK, 971/6962.

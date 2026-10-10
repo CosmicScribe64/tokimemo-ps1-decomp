@@ -16,4 +16,7 @@ void func_8007B99C(u16 arg0);
 void func_8007BE94(s32 arg0);
 void func_8007BF04(s32 arg0);
 
+/* T-2030: overlays call it with s32 arguments, see include/ovl/*.h */
+void draw2d3d(u8 arg0, u8 arg1);
+
 #endif /* MAIN_ONLY_H */

@@ -105,7 +105,6 @@ void func_80134FB8(void);
 void func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5);
 void func_8014F820(void);
 void func_8013AFDC(void);
-void back_clear_switch(s32 arg0);
 void func_8013A790(s32 arg0, s32 arg1);
 void func_8014F210(void);
 void func_8015185C(void);
