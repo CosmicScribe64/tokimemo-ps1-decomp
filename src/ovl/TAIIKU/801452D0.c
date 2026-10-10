@@ -1,5 +1,11 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+
+typedef struct {
+    s32 v[3];
+} Lim3; /* size 0xC */
+extern Lim3 D_8014A5FC;
+extern u8 D_8014A400[];
 extern u8 D_8014A400[]; /* func_80146FA0: stride 0x1C */
 extern u8 D_8014A401;
 extern u8 D_8014A41D;
@@ -63,7 +69,28 @@ void func_8014684C(void) {
     func_80146A60();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146884);
+void func_80146884(void) {
+    if (D_8014A460 != 0) {
+        D_8014A3F4 = -0x300;
+        return;
+    }
+    if (D_800E7208 & 0x20) {
+        D_8014A3C4 = 1;
+        return;
+    }
+    if (D_8014A3EC >= 0x10) {
+        if (D_8014A3C4 != 0) {
+            if (D_8014A3F8 < 0) {
+                D_8014A3F8 = 0;
+            }
+            D_8014A3F4 = D_8014A3D0;
+        } else {
+            D_8014A3F4 = -0x300;
+        }
+        D_8014A3EC = 0;
+        D_8014A3C4 = 0;
+    }
+}
 
 void func_8014692C(void) {
     if ((u32)D_8014A3F0 >= 0xB) {
@@ -84,7 +111,18 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146A60);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146B8C);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146C20);
+void func_80146C20(void) {
+    D_8014A3E0 += D_8014A3F4;
+    if (D_8014A3D4 < D_8014A3E0) {
+        D_8014A3E0 = D_8014A3D4;
+    }
+    if (D_8014A3E0 < 0 || (D_8014A3F4 < 0 && D_8014A3FE < -0x9F)) {
+        D_8014A3E0 = 0;
+    }
+    D_8014A3DC += D_8014A3E0; /* the fixed-point high half (+2) is read as an s16 below */
+    func_80085F0C(((s16 *)&D_8014A3DC)[1] / 2 % 640, 0xF, 0, 0x70, 0x280);
+    func_80085F0C(((s16 *)&D_8014A3DC)[1] % 128, 0xF, 0x70, 0x80, 0x80);
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146D18);
 
@@ -119,7 +157,19 @@ void func_80147068(void) {
     func_80147318();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_801470A0);
+void func_801470A0(void) {
+    s32 i;
+    Lim3 lim;
+
+    lim = D_8014A5FC;
+    for (i = 0; i < 3; i++) {
+        if (D_8014A454[i * 0x1C + 0x28] != 0) {
+            *(s32 *)(D_8014A400 + i * 0x1C + 0x10) = -0x4000;
+        } else {
+            *(s32 *)(D_8014A400 + i * 0x1C + 0x10) = lim.v[i];
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147120);
 

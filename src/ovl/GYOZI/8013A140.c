@@ -31,7 +31,80 @@ void func_8013A140(void) {
     D_80147498 = 0x8019EDB0;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A140", func_8013A2F4);
+void func_8013A2F4(void) {
+    func_8008E6AC();
+    switch (D_800F6479) {
+    case 0:
+        func_8013A5F4();
+        break;
+    case 1:
+        func_8013A76C();
+        break;
+    case 2:
+        func_8013A7C8();
+        break;
+    case 3:
+        func_80089244();
+        if (D_800F647A != 0) {
+            func_8004DDD8();
+        }
+        break;
+    case 4:
+        switch (D_801474B0) {
+        case 0:
+            func_80052060();
+            break;
+        case 1:
+            func_8013C4D0();
+            break;
+        case 2:
+            func_8013AE80();
+            break;
+        case 3:
+            func_8013B920();
+            break;
+        case 4:
+            func_8013D550();
+            break;
+        case 5:
+            func_8013CDD0();
+            break;
+        case 6:
+            func_8013D120();
+            break;
+        case 7:
+            func_8013BFB4();
+            break;
+        case 8:
+            func_8013A920();
+            break;
+        case 9:
+            func_80052060();
+            break;
+        case 10:
+            func_8013DB50();
+            break;
+        default:
+            func_80052060();
+            break;
+        }
+        break;
+    case 5:
+        func_8013A4E8();
+        break;
+    default:
+        func_80052060();
+        break;
+    }
+    func_8008A148();
+    func_8008F54C();
+    func_80076450(2);
+    func_80074A14();
+    func_80075BFC();
+    func_800748B8();
+    func_8008E8B4();
+    func_800530E0();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A140", func_8013A4E8);
 
@@ -48,7 +121,12 @@ void func_8013A7A0(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A140", func_8013A7C8);
+void func_8013A7C8(void) {
+    func_80051DD8(0x10, 0x80197000, 0xA3B8);
+    func_8013A140();
+    D_801474B0 = D_800F5A2D[D_800F5AAC * 4];
+    func_8004DDD8();
+}
 
 void func_8013A820(void) {
     D_800D9234 = (u8 *)&D_801474A8;

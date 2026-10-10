@@ -950,4 +950,5 @@ extern s32 D_801500CC;
 extern s32 D_801500D0;
 extern s32 D_801500D4;
 
+void func_801327AC(void);
 #endif /* OVL_ETC_H */

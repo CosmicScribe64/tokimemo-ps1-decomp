@@ -48,6 +48,7 @@ kanban-plugin: board
 
 - [x] [[tickets/T-4030-wave-3-list-3|T-4030 Wave 3: list 3]]
 - [x] [[tickets/T-4070-wave-3-list-7|T-4070 Wave 3: list 7]]
+- [x] [[tickets/T-4100-wave-3-list-10|T-4100 Wave 3: list 10]]
 - [x] [[tickets/T-3300-tooling-fix-wave-2-bugs|T-3300 Tooling: fix bugs reported by wave 2]]
 - [x] [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340 Tooling: shared main-exe prototypes and byte-weighted queue]]
 - [x] [[tickets/T-4060-wave-3-list-6|T-4060 Wave 3: list 6]]

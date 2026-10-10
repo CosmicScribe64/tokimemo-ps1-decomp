@@ -411,3 +411,42 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | TT | `func_80133C1C` | regorder | constant 1 stored as `sb` and `sh` shares $v0 in the original, IDO loads it twice (T-4070) |
 | OPTION | `func_8013357C` | regorder | dead `li v0,0x60` ahead of a 64-record loop in the original, IDO has none (T-4070) |
 | OPTION | `func_801387E4` | regorder | unsigned byte global read into $v0 before `addiu sp` and returned after `-= 2`, IDO loads it into $a0 (T-4070) |
+| 800737A0 | `get_weekly_bg_sector` | promo | `u8` global index kept in $v1 and the table value in $a0 across the `!= 4` test; IDO uses $t6/$v1 (T-4100) |
+| GEKO/80139910 | `func_8013A5E8` | promo | `s32` global read, compared with 0, reloaded after a call and compared with 0x40 (`xori; sltiu`): original keeps it in $v1, IDO uses $v0 or spills it (T-4100) |
+| GEKO/8013DF70 | `func_8013E56C` | promo | `D_800E7384++ == 1` followed by a `u16` compare: original `xori; sltiu; beqz`, IDO `xori; bnez` (`++ == 0` and `++ >= N` do match, see matching-notes) (T-4100) |
+| DATE/801594B0 | `func_8015A114` | promo | same shape as GEKO `func_8013E56C` (T-4100, not built separately) |
+| ETC/80132000 | `func_8013275C` | promo | two-case dispatch on `u8 D_800E738A`: selector in $v1 in the original, $v0 in IDO (`switch`, `if` chain, local copy, `s32` return all tried) (T-4100) |
+| ETC/80132000 | `func_80132148` | promo | same shape as `func_8013275C` (T-4100, asm read) |
+| ETC/80132000 | `func_80132204` | promo | same shape as `func_8013275C` (T-4100, asm read) |
+| ETC/80132000 | `func_80132290` | promo | same shape as `func_8013275C` (T-4100, asm read) |
+| ETC/80132000 | `func_80132670` | promo | same shape as `func_8013275C`, one call with an argument (T-4100, asm read) |
+| ETC/80132000 | `func_801326FC` | promo | same shape as `func_8013275C` on `D_800E7389` (T-4100, asm read) |
+| ETC/80132000 | `func_80132098` | promo | four-case compare chain on `D_800E7389`, selector in $v1 (T-4100, asm read) |
+| ETC/80132000 | `func_801323D0` | promo | four-case compare chain on `D_800E7389`, selector in $v1 (T-4100, asm read) |
+| GEKO/8013AF80 | `func_8013B030` | promo | `s32 D_80122CD0` compare chain (1, 7, default): original $v1, IDO $v0; `switch`, `if` chain, `u32` override and local copy give the same $v0 (T-4100) |
+| GEKO/8013C980 | `func_8013CA30` | promo | same shape as GEKO `func_8013B030` (cases 1 and 8; T-4100, asm read) |
+| GEKO/8013DF70 | `func_8013E040` | promo | same shape as GEKO `func_8013B030` (cases 1 and 2; T-4100, asm read) |
+| 80075320 | `func_80075468` | promo | two-case dispatch on `u8 D_800E738A`, selector in $v1 (T-4100, asm read) |
+| 80075320 | `func_80077BE0` | promo | three-case dispatch, selector in $v1 (T-4100, asm read) |
+| 80075320 | `holiday_club` | promo | four-case dispatch, selector in $v1 plus a copy in $v0 (T-4100, asm read) |
+| 80075320 | `func_80076EC0` | promo | four-case dispatch, selector in $v1 (T-4100, asm read) |
+| 80075320 | `func_8007894C` | promo | four-case dispatch, selector in $v1 (T-4100, asm read) |
+| 80075320 | `func_80075FA0` | promo | same as `get_weekly_bg_sector` (index in $v1, value in $a0) (T-4100, asm read) |
+| TAIIKU/801452D0 | `func_80146B8C` | promo | `u32` global read once into $v1 for two range tests and a `u8` global in $v0; IDO swaps them and emits a second `lui $at` for the paired stores (T-4100) |
+| 80062CD0 | `parameter_change` | regorder | `*(s32 *)(p + 0xFC) += arg1; if (< 0)`: the sum lives in the temp $t9 in the original, IDO keeps it in the variable register $v1 (pointer, local and struct forms tried) (T-4100) |
+| KANGEI/80135F10 | `func_80137544` | reverse | `D_80120657 -= 8` before a counted loop and a test after it: IDO keeps the `u8` value in $a2 across the loop, the original reloads it (T-4100) |
+| KANGEI/80135F10 | `func_80137484` | reverse | same as `func_80137544` with `+= 8` (T-4100) |
+| KANGEI/80135F10 | `func_8013614C` | regorder | `u8` table value in $v1 and the character index in a temp in the original; IDO promotes the index to $v1 and puts the table value in $a1 (T-4100) |
+| TACO/80149F90 | `func_8014EDCC` | regorder | constant 1 stored with `sb` and compared with the argument: the original compares against `li at,1`, IDO shares one register for both (T-3001 family) (T-4100) |
+| TACO/80149F90 | `func_8014B2A4` | regorder | constant 1 kept in $v1 for the compares and the store in the original; IDO loads it per use (T-3001 family) (T-4100) |
+| EVENT/801024B0 | `func_80102C0C` | regorder | one `li v0,8` shared by two byte stores in the original, IDO loads the constant per store (T-3001 family) (T-4100) |
+| ENDING/80133C10 | `func_80134B18` | regorder | `u8` local kept in $v1 behind a temp (`andi t6; move v1,t6`), IDO uses $v0/$a0 (T-4100) |
+| TACO/80149F90 | `func_8014BC80` | regorder | counted loop with argument copy and table pointer: original counter $s0, copy $s1, pointer $s2; all declaration orders give another assignment (T-4100) |
+| TACO/80149F90 | `func_801511C0` | regorder | same family as `func_8014BC80` (T-4100) |
+| DATE2/80137360 | `func_8013775C` | regorder | two `idx * 0x38` uses with `li 0x38; multu` in a register, IDO shifts (known gap, T-4100) |
+| GYOZI/801372B0 | `func_80137BEC` | regorder | same as DATE2 `func_8013775C` (T-4100) |
+| GYOZI/8013A140 | `func_8013A4E8` | regorder | same as DATE2 `func_8013775C` (T-4100) |
+| TAIIKU/801452D0 | `func_80146A60` | promo | `s32` global `D_800E7200` tested with two masks (0xA, 0x5) in several blocks: original keeps it in $v0 and the 0xA mask in $v1, IDO swaps them (`u32` override too) (T-4100) |
+| RPG_BAT/801504E0 | `func_80150CD8` | promo | `s32` state `D_8015EC74` switched (cases 0, 1, 2) and reloaded for `+= 1` in each case: original keeps it in $v1, IDO uses $v0 and loads the constant 1 into $v1 (T-4100) |
+| BUNKASAI/801354B0 | `func_801354B0` | promo | `s32` selector `D_80122EB8` (cases 0, 1): original $v1, IDO $v0 (T-4100) |
+| 80075320 | `func_80077E30` | promo | five-entry jump table on `u8 D_800E738D` (cases 0 to 3 + `case 4:` with default), selector in $v1 and reused for `+= 1` in case 1, reloaded into $v1 in case 2; IDO $v0 and $t0 (T-4100) |

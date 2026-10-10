@@ -228,4 +228,18 @@ extern s32 D_8013C2C4;
 extern s32 D_8013C308;
 extern u8 D_8013CC48[];
 
+void func_80134140();
+void func_80137BB4();
+void func_80137E40();
+void func_80137F64();
+void func_801380B0();
+void func_80138278();
+void func_8013855C();
+void func_801387B0();
+void func_80138A9C();
+void func_80138C70();
+void func_80138DC8();
+void func_80138FC8();
+void func_801391E4();
+void func_80139498();
 #endif /* OVL_ENDING_H */

@@ -1,6 +1,16 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
+typedef struct {
+    void (*f[24])();
+} FnTbl24; /* size 0x60 */
+extern FnTbl24 D_80139F4C;
+
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+extern FnTbl40 D_80139E70;
+
 void func_80135F10(void) {
     D_80139DB0 = 0x801B4400;
     D_80139DB4 = 0x801B6400;
@@ -23,7 +33,14 @@ void func_80135F84(void) {
     D_80139DEC = 0x801B4400;
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136018);
+void func_80136018(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
+
+    tbl = D_80139E70;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_80136094(void) {
     s16 i;
@@ -59,7 +76,14 @@ void func_801361F8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136238);
+void func_80136238(void) {
+    func_80133EF8();
+    if (D_800E7384++ == 0 && D_80139AE0 == 3) {
+        if (D_80139DF4[(u8)D_80139DF0] == 0 && D_80139E0C == 0) {
+            func_80044750(0x503);
+        }
+    }
+}
 
 void func_801362BC(void) {
     func_80044750(0x500);
@@ -76,9 +100,32 @@ void func_80136494(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136520);
+void func_80136520(void) {
+    if (D_800E7384++ == 0) {
+        if (D_80139DF4[(u8)D_80139DF0] == 0) {
+            func_80044750(0x204);
+        } else {
+            func_80044750(0x205);
+        }
+    }
+    if (D_80139DF4[(u8)D_80139DF0] == 1) {
+        func_8007E81C();
+        return;
+    }
+    func_80085368();
+}
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_801365C4);
+void func_801365C4(void) {
+    if (D_80139DF4[(u8)D_80139DF0] != 0) {
+        func_8007E934();
+        return;
+    }
+    if (D_80139E0C != 0) {
+        func_800853FC();
+        return;
+    }
+    func_80136630();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136630);
 
@@ -123,7 +170,19 @@ void func_80136CD8(void) {
     LoadSquare(0x328, 0x100, 4, 0xC, &D_80139E10);
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136D58);
+void func_80136D58(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl24 tbl;
+
+    tbl = D_80139F4C;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_800E738A >= 9U) {
+        if (D_800E738A < 0x14U) {
+            func_801370A0();
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80135F10.rodata", D_801398E8);
 
@@ -143,7 +202,11 @@ void func_80136E54(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136EB4);
+void func_80136EB4(void) {
+    func_80081190(-0x2C, 0x50, 0, ((s32 *)D_80139AD0->unk_34)[4], 0, "", "", 0);
+    D_80139AE0 = 5;
+    func_8004284C();
+}
 
 void func_80136F1C(void) {
     D_80139AE4 = 2;
@@ -166,7 +229,17 @@ void func_80136F90(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136FDC);
+void func_80136FDC(void) {
+    if (func_80044E8C() == 1) {
+        func_80044750(0x203);
+        func_8004284C();
+    }
+    if (D_800E7384++ >= 0x400U) {
+        func_800452C4();
+        func_8004482C();
+        func_80042940((D_800E738A - 1) & 0xFF);
+    }
+}
 
 void func_80137064(void) {
     func_80046318(0x6E, 0x801B4400, 0xBBA5);

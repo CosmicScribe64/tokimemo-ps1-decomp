@@ -154,4 +154,20 @@ extern s32 D_8015EBE4;
 
 extern s32 D_8015ED8C[2]; /* [1] is D_8015ED90; one base symbol keeps loads behind stores (T-4070) */
 
+void func_80134A70();
+void func_8013E300();
+void func_80136530();
+void func_8013C5D0();
+void func_80147F10();
+void func_80143830();
+void func_80141C30();
+void func_8013A480();
+void func_80132000();
+void func_801454F0();
+void func_801496F0();
+void func_8014B738();
+void func_8014ED80();
+void func_8014EE98();
+void func_80150F84();
+extern u8 D_8015E814;
 #endif

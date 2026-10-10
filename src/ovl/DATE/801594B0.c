@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
+typedef struct {
+    void (*f[44])();
+} FnTbl44; /* size 0xB0 */
+extern FnTbl44 D_80160890;
+
 void func_801594B0(void) {
     D_801607E0 = 0x801CE0F4;
     D_801607E4 = 0x801CE0F8;
@@ -59,13 +64,84 @@ void func_801596C0(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_80159770);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_80159804);
+void func_80159804(void) {
+    D_8015E208 = D_8015DF64;
+    D_8015E20C = D_8015E0A0;
+    D_8015E210 = D_8015E1DC;
+    /* FAKE: the later fields reached through D_800E666E; separate names let as1 hoist their loads above the stores. T-4100 */
+    D_800E666E += 1;
+    (&D_800E666E)[2] += 1;
+    (&D_800E666E)[4] -= 0xA;
+    check_para_limit();
+    func_801594B0();
+    func_80043914(D_801607F0, 0x11, 1, 2, 0);
+    func_80084E90(D_801607F4, D_801607F8, D_801607FC, D_80160800, D_80160804, D_80160808);
+    func_800850D4(D_801607E4, D_801607E8, D_801607E0, D_801607EC);
+    D_800CA360 = 1;
+    D_800CA224 = 2;
+    D_800CA226 = 2;
+    D_800CA228 = 2;
+    D_800CA234 = 1;
+    D_800CA236 = 1;
+    D_800CA238 = 1;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_8015996C);
+void func_8015996C(void) {
+    D_8015E208 = D_8015DF68;
+    D_8015E20C = D_8015E0A4;
+    D_8015E210 = D_8015E1E0;
+    func_800AE0F0(D_800CA1DC, "池");
+    /* FAKE: the later fields reached through D_800E666E; separate names let as1 hoist their loads above the stores. T-4100 */
+    D_800E666E += 3;
+    (&D_800E666E)[2] += 2;
+    (&D_800E666E)[4] -= 0x14;
+    check_para_limit();
+    func_80159560();
+    func_80043914(D_8016081C, 0x11, 1, 2, 0);
+    func_80084E90(D_80160820, D_80160824, D_80160828, D_8016082C, D_80160830, D_80160834);
+    func_800850D4(D_80160810, D_80160814, D_8016080C, D_80160818);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_80159A98);
+void func_80159A98(void) {
+    D_8015E208 = D_8015DF6C;
+    D_8015E20C = D_8015E0A8;
+    D_8015E210 = D_8015E1E4;
+    /* FAKE: the later fields reached through D_800E6672; separate names let as1 hoist their loads above the stores. T-4100 */
+    D_800E6672 += 2;
+    (&D_800E6672)[2] -= 0xA;
+    check_para_limit();
+    func_80159610();
+    func_80043914(D_80160848, 0x11, 1, 2, 0);
+    func_80084E90(D_8016084C, D_80160850, D_80160854, D_80160858, D_8016085C, D_80160860);
+    func_800850D4(D_8016083C, D_80160840, D_80160838, D_80160844);
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_80159BA4);
+void func_80159BA4(void) {
+    D_8015E208 = D_8015DF70;
+    D_8015E20C = D_8015E0AC;
+    D_8015E210 = D_8015E1E8;
+    /* FAKE: the later fields reached through D_800E666E; separate names let as1 hoist their loads above the stores. T-4100 */
+    D_800E666E += 2;
+    (&D_800E666E)[2] += 1;
+    (&D_800E666E)[4] -= 0x14;
+    check_para_limit();
+    func_801596C0();
+    func_80043914(D_80160874, 0x11, 1, 2, 0);
+    func_80084E90(D_80160878, D_8016087C, D_80160880, D_80160884, D_80160888, D_8016088C);
+    func_800850D4(D_80160868, D_8016086C, D_80160864, D_80160870);
+    D_800CA360 = 1;
+    D_800CA224 = 2;
+    D_800CA226 = 2;
+    D_800CA228 = 2;
+    D_800CA234 = 1;
+    D_800CA236 = 1;
+    D_800CA238 = 1;
+    func_8004284C();
+}
 
 void func_80159D0C(void) {
     bg_read_sub2(0x4821);
@@ -122,7 +198,14 @@ void func_80159E9C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801594B0", func_80159EC4);
+void func_80159EC4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl44 tbl;
+
+    tbl = D_80160890;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_80159F4C(void) {
     func_80044750(0x508);

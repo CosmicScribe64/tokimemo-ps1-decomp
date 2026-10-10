@@ -5,17 +5,176 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801504E0);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801505B8);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150AA4);
+void func_80150AA4(void) {
+    switch (D_8015EB9C) {
+    case 0:
+        func_80134A70();
+        return;
+    case 1:
+        func_8013E300();
+        return;
+    case 2:
+        func_80136530();
+        return;
+    case 3:
+        func_8013C5D0();
+        return;
+    case 4:
+        func_80147F10();
+        return;
+    case 5:
+        func_80143830();
+        return;
+    case 6:
+        func_80141C30();
+        return;
+    case 7:
+        func_8013A480();
+        return;
+    case 8:
+        func_80132000();
+        return;
+    case 9:
+        func_801454F0();
+        return;
+    case 10:
+        func_801496F0();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150B90);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150CD8);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150DE0);
+void func_80150DE0(void) {
+    switch (D_8015EB9C) {
+    case 0:
+        D_8015EC68 = 4;
+        D_8015EC6C = 0;
+        break;
+    case 1:
+        D_8015EC68 = 5;
+        D_8015EC6C = -2;
+        break;
+    case 2:
+        D_8015EC68 = 6;
+        D_8015EC6C = 2;
+        break;
+    case 3:
+        D_8015EC68 = 5;
+        D_8015EC6C = 2;
+        break;
+    case 4:
+        D_8015EC68 = 5;
+        D_8015EC6C = 2;
+        break;
+    case 5:
+        D_8015EC68 = 5;
+        D_8015EC6C = 2;
+        break;
+    case 6:
+        D_8015EC68 = 3;
+        D_8015EC6C = 2;
+        break;
+    case 7:
+        D_8015EC68 = 4;
+        D_8015EC6C = 1;
+        break;
+    case 8:
+        D_8015EC68 = 5;
+        D_8015EC6C = 1;
+        break;
+    case 9:
+        D_8015EC68 = 2;
+        D_8015EC6C = 0;
+        break;
+    case 10:
+        D_8015EC68 = 8;
+        D_8015EC6C = 2;
+        break;
+    }
+    /* FAKE: D_8015EC68 and D_8015EC6C are reread through D_8015EC58; separate names let as1 hoist the loads above the stores. T-4100 */
+    D_8015EC58 = 0x118;
+    (&D_8015EC58)[1] = 0x88;
+    (&D_8015EC58)[2] = 0x118 - (&D_8015EC58)[4];
+    (&D_8015EC58)[3] = 0x60 - (&D_8015EC58)[5];
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150F84);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80151108);
+void func_80151108(void) {
+    switch (D_8015EDB0) {
+    case 0:
+        func_80150F84();
+        func_8014B738(&D_8015E814, 3, 0x5A);
+        func_8013E7C0(0x34, 3, 1, 1);
+        func_8014EBD0();
+        return;
+    case 1:
+        if (D_800E7208 & 0x40) {
+            func_8014EBD0();
+            return;
+        }
+        func_8014ED80(0x3C);
+        return;
+    case 2:
+        func_8013E7C0(0x34, 4, 5, 1);
+        func_8014EBD0();
+        return;
+    case 3:
+        if (D_80121438 == 1) {
+            func_8013F0F4(0x511, 0, 3);
+        }
+        func_8014EE98(1);
+        return;
+    case 4:
+        func_8013E7C0(0x34, 3, 1, 1);
+        func_8014EBD0();
+        return;
+    case 5:
+        if (D_800E7208 & 0x40) {
+            func_8014EBD0();
+            return;
+        }
+        func_8014ED80(0x32);
+        return;
+    case 6:
+        func_8013E7C0(0x34, 4, 5, 1);
+        func_8014EBD0();
+        return;
+    case 7:
+        if (D_80121438 == 1) {
+            func_8013F0F4(0x511, 0, 1);
+        }
+        func_8014EE98(2);
+        return;
+    case 8:
+        func_8013E7C0(0x34, 3, 1, 1);
+        func_8014EBD0();
+        return;
+    case 9:
+        if (D_800E7208 & 0x40) {
+            func_8014EBD0();
+            return;
+        }
+        func_8014ED80(0x32);
+        return;
+    case 10:
+        func_8013E7C0(0x34, 4, 5, 1);
+        func_8014EBD0();
+        return;
+    case 11:
+        if (D_80121438 == 1) {
+            func_8013F0F4(0x511, 0, 2);
+        }
+        func_8014EE98(3);
+        return;
+    case 12:
+        func_8014EBA8();
+        return;
+    }
+}
 
 void func_80151380(s32 arg0) {
     s32 temp_v0;
@@ -33,7 +192,26 @@ void func_80151380(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801513C8);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801515F0);
+s32 func_801515F0(void) {
+    switch (D_8015EDC4 & 0xFFFF0000) {
+    case 0x100000:
+        func_8013E810(0x35, 9, 1, 0);
+        func_8013E810(0x36, 9, 1, 0);
+        func_8013E810(0x37, 9, 1, 0);
+        *(u8 *)&D_80121603 = 0x80;
+        *(u8 *)&D_80121647 = 0x80;
+        *(u8 *)&D_8012168B = 0x80;
+        break;
+    case 0x200000:
+        func_8013E810(0x35, 9, 1, 0);
+        *(u8 *)&D_80121603 = 0x80;
+        break;
+    case 0x400000:
+        func_8013E810(0x35, 9, 1, 0);
+        *(u8 *)&D_80121603 = 0x80;
+        break;
+    }
+}
 
 void func_801516E4(void) {
     switch (D_8015EDB0) {

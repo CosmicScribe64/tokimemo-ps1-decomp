@@ -302,4 +302,22 @@ extern u8 D_8014755C;
 
 void func_80141BFC(void);
 
+void func_8013CC9C(void);
+void func_8013E950(void);
+void func_8013A180(void);
+void func_8013E11C(void);
+void func_80139B44(void);
+void func_8013E4F0(void);
+void func_8013B2C8(void);
+void func_8013CAD0(void);
+void func_80139E1C(void);
+extern s32 D_801463B4, D_801463B8, D_801463BC, D_801463C4, D_801463C8, D_801463CC, D_801463D0, D_801463D4, D_801463D8, D_801463DC;
+extern s16 D_801463C0;
+void func_801399DC(void);
+extern s32 D_80146AA0, D_80146AA4, D_80146AA8, D_80146AB0, D_80146AB4, D_80146AB8, D_80146ABC, D_80146AC0, D_80146AC4, D_80146AC8;
+extern s16 D_80146AAC;
+extern s32 D_80146E50, D_80146E54, D_80146E58, D_80146E60, D_80146E64, D_80146E68, D_80146E6C, D_80146E70, D_80146E74, D_80146E78;
+extern s16 D_80146E5C;
+void func_8013CE98(void);
+void func_8013E448(void);
 #endif

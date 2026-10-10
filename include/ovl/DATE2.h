@@ -76,4 +76,5 @@ extern s32 D_8013A3F8;
 extern s32 D_8013A3FC;
 extern s32 D_8013A400;
 
+extern s32 D_8013A79C, D_8013A7D0, D_8013A804;
 #endif /* OVL_DATE2_H */

@@ -13,9 +13,54 @@ void func_80138ADC(void) {
     func_80138B3C();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80138B3C);
+void func_80138B3C(void) {
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    switch (D_800E738A) {
+    case 0:
+        func_80134260();
+        func_80044750(0x7F);
+        return;
+    case 1:
+        func_801389DC();
+        return;
+    case 2:
+        func_80138C34();
+        return;
+    case 3:
+        func_80134418();
+        return;
+    case 4:
+        func_80138CAC();
+        return;
+    case 5:
+        func_8004E9F4(1);
+        func_8004284C();
+        return;
+    case 6:
+        func_8013987C();
+        return;
+    case 7:
+        func_801388D0();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80138C34);
+void func_80138C34(void) {
+    if (func_800460EC() & 4) {
+        if (D_800E7380++ >= 1U) {
+            func_80138D48();
+            func_8004284C();
+            func_80045414(9, 0, 0);
+        }
+    } else {
+        D_800E7380 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80138CAC);
 

@@ -191,4 +191,12 @@ void func_8013C978(void);
 extern s32 D_80149990;
 extern TaiikuPair D_801499B4[];
 
+extern u8 D_8014A3C4;
+extern s32 D_8014A3D0;
+extern u32 D_8014A3EC;
+extern u8 D_8014A460;
+extern s32 D_8014A3E0;
+extern s32 D_8014A3DC;
+extern s16 D_8014A3FE;
+void func_80146C20(void);
 #endif
