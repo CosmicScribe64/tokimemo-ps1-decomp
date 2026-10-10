@@ -394,3 +394,8 @@ Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri an
 
 ## [2026-10-09] ticket | T-2020 Wave 2: GYOZI (In Progress -> Done)
 [[tickets/T-2020-wave-2-gyozi]]: 178 GYOZI functions matched (GYOZI 244 of 417), 6 rows added to [[data/t0018-cases]], new patterns in [[matching-notes]] ("Wave 2: GYOZI"). Clean build 27 of 27 sha1 OK. Inline review done, no open findings. Not merged.
+## [2026-10-09] ticket | T-2000 Wave 2: EVENT started
+New [[tickets/T-2000-wave2-event]], In Progress. Matching functions in `src/ovl/EVENT.c`.
+
+## [2026-10-09] ticket | T-2000 Wave 2: EVENT done
+[[tickets/T-2000-wave2-event]] In Progress -> Done after the inline review (no open findings). 421 of 781 EVENT functions matched in `src/ovl/EVENT.c`, clean rebuild 27 of 27 OK, `ninja progress` grand total 1322/6962. 11 rows added to [[data/t0018-cases]]; new patterns in [[matching-notes]] (raw-address loads, `*(s32 *)&` for narrow game.h scalars).
