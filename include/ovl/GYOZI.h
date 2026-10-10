@@ -594,4 +594,11 @@ void func_801418B0(void);
 extern s32 D_8012E6C0;
 void func_80143858(void);
 
+/* Bit 2 of GyoziGirl.unk_10[0], set as a bit-field store: `|= 4` gives one temporary too many (T-9000, same idiom as SHOUGATU Bits64B8) */
+typedef struct {
+    u8 pad:2;
+    u8 f:1;
+    u8 rest:5;
+} GirlFlag4;
+
 #endif /* OVL_GYOZI_H */

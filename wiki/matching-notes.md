@@ -1404,3 +1404,48 @@ Other measured facts that the data tools rely on:
 
 Matched (7): RPG_BAT `func_8014EBA8`, `func_8014EBD0`, `func_8014EB58`, `func_8014F230`, `func_8014F500`, `func_8014F524`; main `func_80046290`.
 
+## T-0018 rows under K&R: re-test, clusters, pass verdict (T-9000)
+Ticket [[tickets/T-9000-t0018-register-order-rule-or-build-step]]. Question: after the move to K&R (`-cckr`, T-7000), which rows of [[data/t0018-cases]] are now plain C, which shapes are left, and does a uniform ucode pass (like `tools/cvt_pass.py`) reproduce any of them?
+
+### Method
+- Row state: 683 rows, 537 distinct functions; 237 are C now (matched by later waves), 300 are still `INCLUDE_ASM` or `NON_MATCHING`.
+- Drafts: the C bodies the wave agents left in their scratch directories (602 distinct bodies for 291 of the open functions). A scratch harness (not committed) splices each body over the function's `INCLUDE_ASM` line, applies `migrate_globals.rewrite_text` (old `D_800E6xxx` names), adds the agent's own `extern` lines when cfe reports an undefined symbol, compiles with the build's `cc.compile_ido` (K&R, cvt pass, frame pass) and runs `funcdiff.py --resolve --built`. Header return types can be overridden per test (`#define f f_hdr` before the includes).
+- Result: 201 of the 291 functions compile (the rest are raw m2c drafts); 2 match unchanged (RPG_BAT `func_80144640`, DATE `func_80145DF0`). The diffs were then classified by shape (same opcodes with other registers, same multiset in another order, extra or missing opcodes).
+
+### Rows that are source idioms (21 matched, 20 in the build)
+- **Implicit `int` (K&R function without a return value).** Retyping every `void` draft to `s32` (no `return`) matched 10 more functions: SHUGAKU `func_80134024`, `func_8013A980`, GEKO `func_8013E56C`, `func_80140EBC`, SHOUGATU `func_80138158`, DATE `func_80148924`, RPG_BAT `func_80142544`, TACO `func_8014E1A0`, OLH `func_80136210` (plus its string literal). Two asm signatures point to it:
+  - `xori v0,v1,k; sltiu v0,v0,1; ...; beqz v0` for `if (D++ == k)`: IDO branches on the `xori` result (`bnez`) in a `void` function and keeps the materialised compare when `$v0` is live at the end (an `int` function that falls off its end). The 8 matched functions with this shape in the original are all `s32` without a return (GEKO `func_8013A5E8`, `func_80135A6C`, GYOZI `func_8013AA48`, ...). This is the T-3002 "`D++ == K`" shape; it is solved.
+  - The switch-temporary copy `or v0,v1,zero` in a delay slot (T-1321, T-8080), also for OLH `func_80136210`.
+  The m2c drafts compare the new value (`D += 1; if (D == k)`); the original compares the old one (`if (D++ == k)`).
+- **Flag set as a bit-field store** (T-6010 idiom): `((GirlFlag4 *)&girl[i].unk_10[0])->f = 1` instead of `|= 4` removes the "skipped temporary" (`lbu t0` where IDO gives `t9`) in all nine GYOZI/SHOUGATU rows of that family. `GirlFlag4` is in `include/ovl/GYOZI.h`; SHOUGATU's `Bits64B8` moved from two `.c` files to `include/ovl/SHOUGATU.h`.
+- **Chain assignment to array elements** (T-7000 idiom): EVENT `func_8010AC40`, `D_800EAFA0[4] = D_800EAFA0[0x48] = 8;`.
+- `func_80148924` writes the `Rec24` fields (`D_801217D0[4].unk_06`, ...) instead of byte offsets from `D_80121866`.
+- Not in the build: RPG_BAT `func_80142544` matches as `s32` but reads `D_8012121C` as `s16`, and `include/ovl/EVENT.h` declares that main-exe symbol `s32`; it needs the 8a declaration settled first.
+
+### Clusters of the open rows
+By shape of the best draft (181 open functions with a compiling draft):
+| shape | functions | what decides it | uniform pass? |
+|---|---|---|---|
+| extra or missing opcodes, other | 53 | mixed: wrong draft, frames, loops | - |
+| `andi 0xff` into the value register (`ori t7; andi v0,t7,0xff; sb v0`) | 27 | the original keeps the narrow global (or a `u8` copy) in a register and truncates after each change | no, see below |
+| one `li` per store where the original keeps the constant (`+li`) | 24 | constant kept in a register across straight-line stores | no, see below |
+| registers and order both differ | 17 | follows from a register difference | - |
+| `nop` only | 13 | mostly a consequence of another register or order difference | no |
+| `move` only (`or v0,..`; the `return 0` in a `jr` slot) | 10 | implicit int (fixed above) or the slot choice at a return | no |
+| `$v0`/`$v1`/`$aN` against a temporary, `$aN` rotation, `$v0`/`$v1` swap, temporaries shifted | 8 + 8 + 5 + 5 | uopt colouring order | no |
+| `li k; multu` against shifts | 5 | the original keeps the stride constant in a register (T-0017) | no |
+| order only | 4 | as1 schedule | no |
+By symptom text (all 397 open rows): `a0`-`a3` order 72, phantom registers and kept constants 62, other 60, selector copy and `$v0`/`$v1` selector 54, global kept across blocks 51, temporary order 33, `nop`/delay slot 31, `$v0`/`$v1` of a value 20, frame 10, operand order 4.
+
+### Per cluster: the property and the pass verdict
+- **Selector copy `or v0,v1,zero`.** Source: an `int` function without a return value (above). Where the selector is loaded after a call or branch and the original still has `$v1` (U1), nothing in IDO's input changes the allocation (T-5010). No pass.
+- **Unsigned narrow global kept across blocks** (including the `andi` cluster). Property: uopt's register-promotion priority (the benefit of a live range against its save cost), not visible in the ucode. Evidence that no ucode-local rule separates it: of the narrow unsigned globals that a function loads before its first branch and also stores, the original keeps 81 in a register and leaves 80 in temporaries among the matched functions alone (IDO already reproduces both); the sharpest case is one variable: main `bustup_wink` (matched) and ENDING `func_80137574` are both `if (!(D_8011F4CA & 1)) D_8011F4CA |= k` (k = 0x11 and 3); the original gives `ori t8,v0,0x11; sb t8` in the first and `ori t7,v0,3; andi v0,t7,0xff; sb v0` in the second. The ucode of the two differs only in the constant, so whatever made the second keep a truncated `u8` in `$v0` (possibly a `u8` local in the source; IDO compiles `u8 v = D; if (!(v & 1)) { v |= 3; D = v; }` without the `andi`, tested) is not something a ucode rule can see. The same `andi` shape is in main `func_80067DD4`, `func_80067DFC` and GEKO `func_80134538`. Same verdict as T-1321/T-5010.
+- **`a0`-`a3` order and "phantom" registers.** Property: uopt's colouring order, which depends on every other live range in the procedure. Example: main `func_8005E150` has the same loop as the matched `func_8005E7F0`; only its later `get_k_speed()` switch differs, and IDO then gives the loop pointers one register later (`a0..a3, v1` against the original's `v1, a0..a2, v0`); `-Wo,-zcopy:0`, an `s32` selector or no local change nothing. A pass would have to redo the colouring.
+- **Constants kept in a register.** Two sources:
+  - Chain assignment. cfe writes `a = b = k` on scalars as `LDC k; STR b; LOD b; STR a` (no `LOC` record between), and uopt's constant propagation turns the `LOD b` into a new `LDC`, so ugen loads the constant once per store. For indirect stores (array elements, or `*&x`) uopt keeps one register. EVENT `func_8011B5A8` stores 0x80 to `D_800EC1A6, A5, A4, CA, C9, C8` and `D_800E9E63` from one `$v0`, in descending address order inside each RGB triple: that is `r = g = b = 0x80` evaluated right to left. Written as a chain of `*&D_x` targets, IDO keeps `$v0` but schedules the first store into the `jal` delay slot (the original puts the last one there); a rewrite to the indirect form in a pre-uopt pass would carry that same order difference, and DATE `func_8013DCC0` keeps its three chain constants in ugen temporaries (`t6..t8`), not in uopt registers. Not adopted; the evidence is recorded for a later attempt.
+  - Straight-line constants (`li a0,56; multu` twice where IDO shifts and adds; one `li` reused by separate statements): uopt's constant-in-register policy, unchanged by every option (T-0017, T-3001). The same variables are stored with one `li` per statement in matched code (DATE `func_80154D38`), so it is not a property of the data.
+- **`nop` kept in a delay slot, the `return 0` slot.** The original fills a `jr` slot with the last store and moves the value move up in 8 sites (main `func_80042808` family, `normal_date_girl_in_init`) and keeps the value move in the slot in 16 (matched `k_disp_inc` and others); IDO matches both kinds elsewhere. No as1 rule; the remaining `nop` rows follow from a different register choice before the slot.
+- **Temporary order** beyond the bit-field case (ETC `func_80140AE4`, DATE `func_80149F48`, TT `func_80133AD0`): ugen numbers temporaries round robin, so one extra expression in the original's ucode shifts every later temporary by one. Which expression is extra is per function (the bit-field case was one); no general rule found.
+
+### What a pass would need
+IDO 5.2, which carries the original's version stamp 3.18, generates the same code as 5.3 (T-3110), so the remaining differences come from a differently built or configured uopt (likely Sony's toolchain build of the 3.18 suite), and they live in register allocation and constant propagation, not in a ucode record that a pass can add or delete. A faithful build step would have to be a re-implementation of uopt's colouring with the original's priorities, checked against every matched function, which T-1321's threshold patches already failed. Until the original uopt (or its options) is found, these rows stay asm. The idioms above go to [[decompile-workflow]].

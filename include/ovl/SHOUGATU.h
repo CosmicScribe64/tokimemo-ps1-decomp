@@ -659,5 +659,12 @@ void func_801381B8(void);
 void func_80138524(void);
 void func_8013FA80(void);
 
+/* Bit 2 of the first byte of a Rec38 flag word, set as a bit-field store: `|= 4` gives one temporary too many (T-6010, T-9000) */
+typedef struct {
+    u8 pad:2;
+    u8 f:1;
+    u8 rest:5;
+} Bits64B8;
+
 #endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;

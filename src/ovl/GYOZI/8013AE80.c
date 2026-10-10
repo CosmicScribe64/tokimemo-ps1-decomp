@@ -157,11 +157,30 @@ void func_8013B5E8(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013AE80", func_8013B644);
+void func_8013B644(void) {
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
+    D_801474A8 = 0xE;
+    D_801474AC = 0;
+    func_800BCE10(&D_800D92A0, "教室");
+    func_800BCE10(&D_800D92E0, "実験室");
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013AE80", func_8013B6CC);
+void func_8013B6CC(void) {
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
+    D_801474A8 = 0x12;
+    D_801474AC = 0;
+    func_800BCE10(&D_800D92A0, "実験室");
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013AE80", func_8013B740);
+void func_8013B740(void) {
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
+    D_801474A8 = 0x17;
+    D_801474AC = 0;
+    func_800BCE10(&D_800D92A0, "実験室");
+    func_8004DE1C();
+}
 
 void func_8013B7B4(void) {
     func_8008A0D4(0x3FFF);

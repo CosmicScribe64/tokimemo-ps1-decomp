@@ -15,7 +15,24 @@ s32 func_801445E8(s32 arg0) {
     return func_8013EA00(0x28, 0x1E) + 0x3C;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80144010", func_80144640);
+s32 func_80144640(void) {
+    switch (D_8015EDC4 & ~0xFFFF) {
+    case 0x10000:
+    case 0x20000:
+    case 0x40000:
+        return 0x14A;
+    case 0x8000000:
+        return 0x168;
+    case 0x80000000:
+        return D_8015EBDC + 0x96;
+    case 0x100000:
+        return D_8015EBDC + 0x96;
+    case 0x200000:
+        return D_8015EBDC + 0x96;
+    case 0x400000:
+        return D_8015EBDC + 0x96;
+    }
+}
 
 s32 func_801446F8(void) {
     switch (D_8015EB9C) {

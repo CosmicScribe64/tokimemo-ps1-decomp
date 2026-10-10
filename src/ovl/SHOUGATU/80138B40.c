@@ -65,9 +65,21 @@ void func_80138E1C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80138B40", func_80138E60);
+void func_80138E60(void) {
+    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_80144E08 = 8;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "美術室");
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80138B40", func_80138ED4);
+void func_80138ED4(void) {
+    ((Bits64B8 *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[0])->f = 1;
+    D_80144E08 = 0xB;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "音楽室");
+    func_8004284C();
+}
 
 void func_80138F48(void) {
     bg_read_sub2(0x4071);

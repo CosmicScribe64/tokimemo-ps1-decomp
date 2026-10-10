@@ -20,6 +20,8 @@ Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only g
 
 Update (T-7000): the build runs IDO in K&R mode with the widening of narrow globals ([[matching-notes]], "K&R promotion rules (T-7000)"). Rows now matched with plain C: TACO `func_8014EDCC`, EVENT `func_8011A2C4`, `func_8011A4A4`, `func_80119600`, `func_80102C0C`, DATE `func_8013BDB4`, TT `func_8013C764`, main `func_8007B5EC`, `SD_DetectCDPeak`. The `li at,k` per compare and the K&R parameter copies are no longer T-0018 shapes; U1 selectors after a call (main `func_800626B0`, `func_8005AE60`) still are.
 
+Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-notes]], "T-0018 rows under K&R: re-test, clusters, pass verdict (T-9000)"). Rows now matched in plain C: GYOZI `func_8013B6CC`, `func_8013B740`, `func_8013CAA4`, `func_8013BC40`, `func_8013BCB4`, `func_8013B644`, SHOUGATU `func_80138E60`, `func_80138ED4`, `func_80139E54` (bit-field flag store); SHUGAKU `func_80134024`, `func_8013A980`, GEKO `func_8013E56C`, `func_80140EBC`, SHOUGATU `func_80138158`, DATE `func_80148924`, TACO `func_8014E1A0`, OLH `func_80136210` (`s32` without a return value); EVENT `func_8010AC40` (chain assignment); RPG_BAT `func_80144640`, DATE `func_80145DF0` (draft unchanged). RPG_BAT `func_80142544` matches as `s32` but waits for the `D_8012121C` declaration. Before recording a new row, try `s32` without a return value and a bit-field store ([[decompile-workflow]]).
+
 | file | function | category | symptom |
 |---|---|---|---|
 | TEL | `func_8013A40C` | promo | compare chain on a global, original loads it into $v1, IDO $v0 (batch B) |

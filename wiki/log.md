@@ -736,3 +736,11 @@ Islands RPG_BAT `8014E780` and main `800451D0`; 7 functions matched (RPG_BAT `fu
 
 ## [2026-10-10] ticket | T-9010 and T-3052 (-> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9010-per-object-data-shared-lui-at]]; two split_objects findings fixed. [[tickets/T-3052-per-object-data-bss-split]] closed by T-9010. Branch r5-data, not merged.
+## [2026-10-10] ticket | T-9000 created (In Progress)
+Tooling round 5, worktree r5-regs: re-test and cluster the [[data/t0018-cases]] rows under the K&R build, decide on a register-order pass. See [[tickets/T-9000-t0018-register-order-rule-or-build-step]].
+
+## [2026-10-10] build | T-9000 T-0018 rows re-tested under K&R
+Re-tested the open rows of [[data/t0018-cases]] with the wave agents' scratch drafts (201 functions compiled, scratch harness not committed). 20 matched as source idioms (implicit `int` without a return value, bit-field flag stores, chain assignment, two unchanged drafts); `GirlFlag4` added to `include/ovl/GYOZI.h`, `Bits64B8` moved to `include/ovl/SHOUGATU.h`. Clusters and the per-cluster verdict (no uniform ucode pass) in [[matching-notes]]; guidance in [[decompile-workflow]]; note in [[toolchain]]. Clean build 27/27 OK, progress 4227 -> 4247.
+
+## [2026-10-10] ticket | T-9000 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9000-t0018-register-order-rule-or-build-step]]; no open findings. Branch r5-regs, not merged.

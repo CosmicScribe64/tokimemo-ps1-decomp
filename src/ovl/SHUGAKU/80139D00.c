@@ -160,6 +160,14 @@ void func_8013A918(void) {
     normal_date_bg_fadein();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A980);
+s32 func_8013A980(void) {
+    func_8007E99C();
+    if (D_800CA2CC == 1) {
+        D_8012069B = D_800B593C;
+        if ((u8) D_800B593C < 8U) {
+            D_80120697 &= 0x7F;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A9E0);

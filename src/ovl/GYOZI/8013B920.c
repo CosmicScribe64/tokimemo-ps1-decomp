@@ -67,9 +67,21 @@ void func_8013BBFC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013B920", func_8013BC40);
+void func_8013BC40(void) {
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
+    D_801474A8 = 8;
+    D_801474AC = 0;
+    func_800BCE10(&D_800D92A0, "美術室");
+    func_8004DE1C();
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013B920", func_8013BCB4);
+void func_8013BCB4(void) {
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
+    D_801474A8 = 0xB;
+    D_801474AC = 0;
+    func_800BCE10(&D_800D92A0, "音楽室");
+    func_8004DE1C();
+}
 
 void func_8013BD28(void) {
     func_8008A0D4(0x4011);

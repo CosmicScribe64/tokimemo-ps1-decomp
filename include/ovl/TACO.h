@@ -232,7 +232,7 @@ void func_8014B2A4(s32 arg0);
 void func_8014B8B4(s32 arg0, s32 arg1, s32 arg2);
 void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4);
 void func_8014DA6C(s32 arg0);
-void func_8014E1A0(s32 arg0);
+s32 func_8014E1A0(s32 arg0);
 void func_8014E048(void);
 extern s16 *D_801600C0[];
 extern s16 *D_801600D4[];

@@ -39,6 +39,7 @@ kanban-plugin: board
 - [x] [[tickets/T-9030-wave-5-tool-fixes|T-9030 Wave-5 tool fixes]]
 - [x] [[tickets/T-9010-per-object-data-shared-lui-at|T-9010 Per-object .data/.bss/.rodata ownership to unlock shared lui $at]]
 - [x] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
+- [ ] [[tickets/T-9000-t0018-register-order-rule-or-build-step|T-9000 T-0018 register order, general rule or build step]]
 - [x] [[tickets/T-8050-wave-5-list-5|T-8050 Wave 5: list 5]]
 - [x] [[tickets/T-8010-wave-5-list-1|T-8010 Wave 5: list 1]]
 - [x] [[tickets/T-8060-wave-5-list-6|T-8060 Wave 5: list 6]]

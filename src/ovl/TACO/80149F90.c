@@ -554,7 +554,60 @@ void func_8014E048(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E1A0);
+s32 func_8014E1A0(s32 arg0) {
+    if (arg0 < 0x14) {
+        func_80146F74(0, 0, 0, -0x12C, 0, 0, 0, 0x32, 0x32);
+    } else if (arg0 >= 0x14 && arg0 < 0x2F) {
+        func_80146F74(0, 0, 0, 0x320, 0, 0, 0, 0x14, 0x1E);
+    } else if (arg0 >= 0x32 && arg0 < 0x50) {
+        func_80146F74(0, 0, 0, -0x208, 0, 0, 0, 0x32, 0x32);
+    }
+    if (arg0 >= 0x2D && arg0 < 0x37) {
+        D_8015EDB4[17].pad0[1] = 0x40;
+        D_8015EDB4[17].unk78 = 0x800;
+        D_8015EDB4[17].unk84[0] = 0x14;
+        D_8015EDB4[18].pad0[1] = 0x40;
+        D_8015EDB4[18].unk78 = 0x800;
+        D_8015EDB4[18].unk84[0] = 0x14;
+        D_8015EDB4[19].pad0[1] = 0x40;
+        D_8015EDB4[19].unk78 = 0x800;
+        D_8015EDB4[19].unk84[0] = 0x14;
+        D_8015EDB4[20].pad0[1] = 0x40;
+        D_8015EDB4[20].unk78 = 0x800;
+        D_8015EDB4[20].unk84[0] = 0x14;
+        D_8015EDB4[21].pad0[1] = 0x40;
+        D_8015EDB4[21].unk78 = 0x800;
+        D_8015EDB4[21].unk84[0] = 0x14;
+        D_8015EDB4[22].pad0[1] = 0x40;
+        D_8015EDB4[22].unk78 = 0x800;
+        D_8015EDB4[22].unk84[0] = 0x14;
+        D_8015EDB4[23].pad0[1] = 0x40;
+        D_8015EDB4[23].unk78 = 0x800;
+        D_8015EDB4[23].unk84[0] = 0x14;
+        D_8015EDB4[24].pad0[1] = 0x40;
+        D_8015EDB4[24].unk78 = 0x800;
+        D_8015EDB4[24].unk84[0] = 0x14;
+        D_8015EDB4[25].pad0[1] = 0x40;
+        D_8015EDB4[25].unk78 = 0x800;
+        D_8015EDB4[25].unk84[0] = 0x14;
+        D_8015EDB4[26].pad0[1] = 0x40;
+        D_8015EDB4[26].unk78 = 0x800;
+        D_8015EDB4[26].unk84[0] = 0x14;
+    }
+    if (arg0 == 0x37) {
+        D_8015EDB4[16].pad0[1] = 0x80;
+        D_8015EDB4[17].pad0[1] = 0x80;
+        D_8015EDB4[18].pad0[1] = 0x80;
+        D_8015EDB4[19].pad0[1] = 0x80;
+        D_8015EDB4[20].pad0[1] = 0x80;
+        D_8015EDB4[21].pad0[1] = 0x80;
+        D_8015EDB4[22].pad0[1] = 0x80;
+        D_8015EDB4[23].pad0[1] = 0x80;
+        D_8015EDB4[24].pad0[1] = 0x80;
+        D_8015EDB4[25].pad0[1] = 0x80;
+        D_8015EDB4[26].pad0[1] = 0x80;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E4A4);
 

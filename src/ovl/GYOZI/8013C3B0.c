@@ -131,7 +131,13 @@ void func_8013CA5C(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013CAA4);
+void func_8013CAA4(void) {
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F62CF].unk_10[0])->f = 1;
+    D_801474A8 = 0xA;
+    D_801474AC = 0;
+    func_800BCE10(&D_800D92A0, "図書室");
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013CB18);
 
