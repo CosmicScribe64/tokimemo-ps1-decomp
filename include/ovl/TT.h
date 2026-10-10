@@ -4,6 +4,8 @@
 #include "common.h"
 #include "libgpu.h"
 extern u8 D_80156784;
+extern u8 D_80156780;
+u8 func_800460DC(void);
 extern u8 *D_80158A74;
 void func_80138300(void);
 void func_8004111C(void);
@@ -54,5 +56,15 @@ extern s16 D_80155A20[];
 extern s16 D_80155A28[];
 extern u8 D_80155A30[];
 extern u8 *D_80158AA8;
+extern u8 *D_80158AAC;
+extern u8 *D_80158A68;
+extern u8 *D_80158AB0;
+extern u8 D_80152CA4[];
+extern u8 D_80152CB0[];
+extern u8 D_80152CC4[];
+extern u8 D_80151A50[];
+extern u8 D_80150978[];
+extern u8 D_80155B54[];
+void func_8013AE3C(void);
 
 #endif /* OVL_TT_H */
