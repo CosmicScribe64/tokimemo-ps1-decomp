@@ -315,7 +315,23 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116620);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801166A8);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116888);
+void func_80116888(void) {
+    u32 v;
+
+    if (D_80125328 == 0) {
+        D_80094730 = 9;
+        v = D_800B1746;
+        if (v == 7) {
+            D_80094730 = 0xA;
+        } else if (v == 2 || v == 9) {
+            D_80094730 = 8;
+        } else if (v == 4 || v == 8 || v == 5 || v == 0xA) {
+            D_80094730 = 7;
+        }
+        D_800B1AF6 += 0x14;
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116940);
 
@@ -386,7 +402,17 @@ void func_8011749C(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117538);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011760C);
+void func_8011760C(void) {
+    u8 v;
+
+    v = func_8002328C(D_800B1746) & 0x7F;
+    D_80094730 = ((v >= 2U) + (v >= 3U)) * 2;
+    D_80094734 = 0;
+    D_8012439E = 0;
+    D_8012439C = 0;
+    D_801243A0 = 0;
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011767C);
 
