@@ -1205,4 +1205,6 @@ void func_801087A8(void);
 void func_800FCF40(void);
 void func_800FC46C(void);
 void func_80103208(void);
+void func_80109948(void);
+void func_800FC994(void);
 #endif /* OVL_EVENT_H */
