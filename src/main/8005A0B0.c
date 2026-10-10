@@ -252,9 +252,43 @@ s32 func_8005BAE0(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BB84);
+s32 func_8005BB84(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80044750(0x502);
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, "メモリーカードを認識できません", 0);
+        k_sub_disp_start(1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            func_8005C4CC(1);
+            func_80042908(0);
+            func_80042940(2);
+        }
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BC38);
+s32 func_8005BC38(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80044750(0x502);
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, "メモリーカードに空きがありません", 0);
+        k_sub_disp_start(1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            func_8005C4CC(1);
+            func_80042908(0);
+            func_80042940(2);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BCEC);
 
