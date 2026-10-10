@@ -384,3 +384,6 @@ Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri an
 
 ## [2026-10-09] ticket | T-2060 Wave 2 SHOUGATU In Progress -> Done
 [[tickets/T-2060-wave2-shougatu]]: 152 SHOUGATU functions matched (overlay 30 -> 182 of 400), 22 T-0018 rows in [[data/t0018-cases]], notes in [[matching-notes]]. Inline review against CODING_STANDARDS: no open findings. Tooling bug: `tools/m2c.py` locates the wrong overlay's asm for shared addresses. Not merged.
+## [2026-10-09] ticket | T-2070 wave 2 TT: 49 functions matched
+[[tickets/T-2070-wave-2-tt]] In Progress -> In Review -> Done after the inline review (no open findings). `src/ovl/TT.c`: 277 -> 228 `INCLUDE_ASM`; clean rebuild 27 of 27 sha1 OK, `ninja progress` TT 75/303, grand total 950/6962. New patterns, left-over blockers and a `tools/m2c.py` bug (first overlay wins when a function name exists in several overlays) are in [[matching-notes]]; six `regorder` rows added to [[data/t0018-cases]].
+

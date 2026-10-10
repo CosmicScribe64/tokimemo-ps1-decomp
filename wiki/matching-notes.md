@@ -448,3 +448,28 @@ Ticket [[tickets/T-2010-wave2-date]]. 278 functions of `src/ovl/DATE.c` matched 
 - Byte tables and records: `*(s16 *)((u8 *)&D_800E6442 + D_800E71DF * 0x38) = 0x28;`, `D_80146168[D_80146158]` (`u8` array), `D_800E6280 + idx * 0x38 + off` all match when the multiply happens once; with two straight-line `idx * 0x38` the original keeps 0x38 in a register (`li; multu`) and IDO uses shifts (T-0018 row).
 - Left `INCLUDE_ASM`: 44 functions that copy a function-pointer table (0x60 to 0xF0 bytes) from `.data` into a local and call through it (e.g. `func_80137C28`, `func_801330C0`). C like `FnTbl tbl = D_xxx; tbl.f[i]();` gives the same code as the original but the local sits at `sp+0x28` and the frame is 0x88, the original has `sp+0x2C` and 0x90. Same as batch A gap (a); nothing in the C reaches the extra 8 bytes without a `FAKE` local.
 - T-0018 rows added: 22 (`regorder`/`promo`), see [[data/t0018-cases]]: `D |= 4` fresh temp, `func_80051A68(..) & 0x7F` result one temp later, `D = N; f(N)` keeping N in `a0`, `beq v0,v1` operand order with constants in registers.
+## Wave 2, TT (T-2070)
+Ticket [[tickets/T-2070-wave-2-tt]]. 49 of 277 `INCLUDE_ASM` functions of `src/ovl/TT.c` matched (228 left; `queue.py` hid about 70 of them as R/V). Verification: `funcdiff.py --expected expected/ovl/TT.o` per function, `ninja` for the overlay sha1.
+
+Tooling bug: `tools/m2c.py` takes the first match of `sorted(glob(...))` when a name exists in several overlays (every overlay has `func_80132000`, `func_80133B3C` and so on), so the draft can come from another overlay. Scratch fix used here (not committed): import `m2c`, replace `m2c.locate` with a lookup in `asm/ovl/TT/nonmatchings/TT` first. `funcdiff.py` is not affected when `--expected/--built` are given.
+
+New patterns:
+- Unrolled slot-clear loops are plain index loops. IDO unrolls them by 4 itself: `for (i = 0; i < 0x40; i++) p[0x56 + i] = 0;` gives the `addiu v1,4` loop with `sb 0x57..0x59` and `sb 0x52` after the pointer add (TT `func_80133B3C`, `func_80142740`; word stores `func_80142774`). Do not write the unrolled body by hand.
+- A pointer loop `p += 0xA4; p[-0xA4] = 0;` with the counter declared before the pointer matches `func_80147CE0` (declare order decides `$v0`/`$v1`).
+- Slot-spawn loops (`p = func_8014AF00(p, p + 0x1E00); ... p += 0x78;` then nine reset stores): the original stores the reset block relative to the already advanced pointer. Writing `i += 1; p += 0x78; *(s16 *)(p - 0x1A) = 0; ...` matches (`func_8014BA54`, `func_8014BC74`, `func_8014BE60`, `func_8014B4A4`, `func_8014C0B0`, `func_8014B67C`); marked `FAKE`. The flag parameter must be `u8 arg0` (the `andi` is at function entry); a `u8`/`s32` local copy does not give that.
+- Register numbers follow the source order of the temporaries: when two loads swap registers (`lh t0`/`lh t9`, `lbu`/`addu` before a `multu`), swap the two statements or the two operands (`func_8014AAE8`, `func_80134924`, `func_8014BD68`).
+- A store of the same value that was loaded: `*(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);` placed first in the then-block is CSE'd away; the original reloads it. Write it after the `p + 0x24` store (`func_80135A54`, `func_80138178`, `func_8013F588`).
+- `u16` field compared with `sltiu`: `(u32)*(u16 *)(p + 0x5E) >= 0x19`; a `u16` local compared with `0xC81U` also works. `do { ... } while (i++ < 0x10000 && f() == 0);` gives `slt` with the increment in the branch delay slot (`func_80133A60`).
+- Pointer kept across a call: `u8 *p = D_80158A74;` declared before the call is spilled at `sp+0x2C` like the original (`func_80149E44`, `func_801381E8` family). Nested `switch` on two `u16` fields of one global matches as written by m2c (`func_8013F7B0`, `func_80140CBC`).
+- `-f() * 0x600` (negate first) and `if (cond) a = -d; else a = d;` (two arms) reproduce the `negu`/`sll` order of `func_8014B5A4` and `func_80145508`.
+- The earlier T-1070 note on `func_8014742C` (`D = x; return`) is obsolete: `arg0[0] = 1; *(u16 *)(arg0 + 2) = arg1;` matches. Its row in [[data/t0018-cases]] stays (rows are never edited).
+
+Left `INCLUDE_ASM` (tried, new blockers; six are rows in [[data/t0018-cases]]):
+- A constant used as a `case` label and stored again to a halfword shares one register in the original (`li s2,0x40` for both); IDO keeps two registers or no register: `func_80149108`, `func_80134ADC`; `func_8014B088` passes the shared constant through a `u16` prototype (`andi a1,s5,0xffff`).
+- Frame layout: oversized local at `sp+0x30` before a spill slot (`func_8013A810`, `func_8013A8B8`), spill slots 4 bytes off (`func_80133D14`, `func_80134874`, `func_8013EFAC`, `func_80133AD0`).
+- Unused constant hoisted into a saved register (`li s3,0x40` never read): `func_80134BBC`.
+- Two reads of one global after a branch that the original does not CSE (`D_80158A60` pad word): `func_80149400`, `func_8013EC64`.
+- `negu` of a division result into the same register (`func_8014B198`), multiply operand order that the scheduler decides (`func_8014BB30`, `func_8014BF54`), ugen temporary numbering off by one (`func_8014A198`, `func_80148974`).
+- Packet-building functions (`func_8013D2E0` and kin) need the libgpu `P_TAG` bit-field insert (`addr:24`); a local bit-field struct builds the same code but the register choice is off.
+- `func_801473BC`, `func_801473E8`: stores in element order 0,1,3,4,5,2 with a `+0x208` pointer; a plain loop gives another order.
+- `func_80148714`: `divu` by 10 with `break 7` means the divisor is a register variable; no plain C found.
