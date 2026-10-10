@@ -564,3 +564,21 @@ Update (T-7000): the build runs IDO in K&R mode with the widening of narrow glob
 | 8005A0B0 | `func_8005B040` | reverse | table lookup `D_800B5970[D_800E62C2 & 7]` (8-byte rows): original takes $t0/$t1/$t2 for the index chain ($t9 skipped), IDO $t9/$t0/$t1 (T-6040) |
 | 8005A0B0 | `func_8005B2BC` | reverse | table lookup `D_800B37D4[D_8011F414]` at the end of a long `&&` chain: original $t8 base and $t7 index, IDO $t7 and $t6 (T-6040) |
 | 8005A0B0 | `func_8005B1A8` | reverse | table lookup `D_800B3B9C[idx][flag]` (16-byte rows) after a long `&&` chain: original frame 0x38 with $t8/$t0/$t2, IDO frame 0x30 and one register less (T-6040) |
+| RPG_BAT | `func_80144640` | promo | switch on `D_8015EDC4 & 0xFFFF0000` (8 cases, compare chain): original selector in $v0, IDO $v1 with s32/u32 local (T-8070) |
+| ETC | `func_801428EC` | promo | u8 GameState field * 0x10101 + const as call arg: original loads it into $v0, IDO $t7 (permuter best 80) (T-8070) |
+| DATE | `func_801551D0` | promo | `if (++D < 0x10) return 0;` on GameState word: original keeps the incremented value in $v1, IDO $v0 (permuter best 35) (T-8070) |
+| DATE | `func_8013E6A4` | promo | `if (D_800E7384++ == 1)` after two calls: original loads the old value into $a0 (xori v1,a0,1; addiu a0,a0,1), IDO $v1/$v0 (T-8070) |
+| DATE | `func_8013E3C4` | promo | `D_800E71DF == 0xA && ...` twice: original selector in $v1 and 0xA in $v0 (`bne v0,v1`), IDO swaps the two (local u8/u32/s32 copies tried) (T-8070) |
+| GEKO | `func_8013E56C` | promo | `if (D_800E7384++ == 1)` (xori; sltiu v0,v0,1; addiu v1 after): original old value in $v1 and flag reuses $v0, IDO $v0 / $t6 (T-8070) |
+| GYOZI | `func_80137188` | promo | `v = D & 7; if (v) v = (u8)(v-1);` kept in $v0 with the global load in $t6; IDO loads straight into $v0 and keeps v in $v1 (T-8070) |
+| DATE | `func_8013A344` | promo | if/else chain on s32 D_80122E9C (0,1,2,3): original `bne v1,v0` (const 3 in v1 hoisted), IDO `bne v0,v1`; local copies/swapped operands/switch tried (T-8070) |
+| SHOUGATU | `func_80137DE4` | promo | `D_80144E0C == 3 || == 0xB`, `== 5 || == 0xD` (s16): original selector in $v1, IDO $v0 (local s16/s32/u16, switch tried) (T-8070) |
+| KANGEI | `func_80137484` | promo | `D_80120657 += 8` before a 19-trip loop, compared again after it: original reloads the u8 global after the loop (lbu t8), IDO keeps it in $a2 across the loop (T-8070) |
+| SHOUGATU | `func_80138E60` | reverse | `Rec38[F5F].unk_0C.b[0] or-assign 4` (stride 0x38 index chain t6/t7/t8): original loads the byte into $t0 (skips $t9), IDO $t9 (T-8070) |
+| SHOUGATU | `func_80138ED4` | reverse | same shape as `func_80138E60`: byte load in $t0 expected, $t9 built (T-8070) |
+| KANGEI | `func_80136BF4` | promo | `t = D_80139DF4[(u8)D_80139DF0]; if (t == 2) .. else if (t == 1) .. else switch`: original compares `bne v1,v0` / `bne a0,v0` (constants first, kept in registers), IDO `bne v0,v1` (u8/s32 local, swapped operands tried) (T-8070) |
+| 8007C030 | `normal_date_bg_fadein` | promo | `D = min(D + 4, 0x80)` on a u8 global then `if (D >= 0x7D)`: original keeps the clamped value in $v0 (copy from $t7), IDO uses $v1 (u8/s32/u32 locals, permuter best 325) (T-8070) |
+| 8007C030 | `normal_date_bg_fadeout` | promo | same shape as `normal_date_bg_fadein` (`D - 4`, clamp to 0): $v0 expected, $v1 built (T-8070) |
+| GYOZI | `func_80140780` | promo | local function table call then `D_8012B8D6 + 1` s16 increment returned through the call's $v0: original keeps the increment in $v0 (sll/sra in place), IDO $v1 / extra frame slot with a result variable (T-8070) |
+| RPG_BAT | `func_80150CD8` | promo | 3-case switch on s32 D_8015EC74 plus `D_801213B0 == 1` (s16) sharing the constant 1: original selector $v1 / const $v0, IDO swaps them (u32 selector gives $v1 but then the constant is not shared; cast tried) (T-8070) |
+| TT | `func_8014BB30` | reverse | `(v + 0x100000) * (arg0[0x50] - 2)` after two func_800A0070 branches: original temps t0 (v+C), t1 (byte), t2 (byte-2); IDO t2/t0/t1 (operand order, temp variables, separate statements tried) (T-8070) |

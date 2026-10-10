@@ -91,7 +91,28 @@ void addr_init_bustup(void) {
     D_800CA130 = 0x801800AC;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007C784);
+void func_8007C784(void) {
+    s32 pad; /* FAKE: unused slot above the byte locals, the original frame has it (real source unknown). T-8070 */
+    u8 sp2B;
+    u8 sp2A;
+    u8 sp29;
+
+    if (func_800460CC() & 1) {
+        func_8004284C();
+        return;
+    }
+    if ((u32)D_800E6280.unk_1104.w++ >= 0x401) {
+        func_800452C4();
+        sp29 = D_800B5939;
+        sp2A = *(u8 *)&D_800B5948;
+        sp2B = D_800B593C;
+        dec_bg_reset();
+        *(u8 *)&D_800B5948 = sp2A;
+        D_800B593C = sp2B;
+        D_800B5939 = sp29;
+        D_800E6280.unk_110A -= 1;
+    }
+}
 
 void func_8007C844(void) {
     D_80122CF8 = 1;
@@ -434,7 +455,20 @@ void return_step(void) {
     func_80042940(D_800E6280.unk_722);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", k_disp_inc2);
+void k_disp_inc2(void) {
+    s32 pad; /* FAKE: unused slot above sp2B, the original frame has it (real source unknown). T-8070 */
+    u8 sp2B;
+
+    if (D_80122CFC-- < 1) {
+        D_80122CFC = 0;
+        sp2B = get_k_speed();
+        if (D_800E6280.unk_F80 & 0x600060) {
+            k_speed_set(0);
+        }
+        k_disp_inc();
+        k_speed_set(sp2B);
+    }
+}
 
 void yosi_trans(void) {
     func_8004500C(0, 0x200);
