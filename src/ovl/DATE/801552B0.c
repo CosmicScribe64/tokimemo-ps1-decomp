@@ -108,7 +108,19 @@ void func_80155D58(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80155D80);
+typedef struct {
+    void (*f[38])();
+} FnTbl38; /* size 0x98 */
+extern FnTbl38 D_8015F9D0;
+
+void func_80155D80(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl38 tbl;
+
+    tbl = D_8015F9D0;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 void func_80155E08(void) {
     func_80046318(0x3D, 0x801B0000, 0x8816);
@@ -155,6 +167,18 @@ void func_80156538(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_80156570);
+/* Bit 14 of the word is tested as a bit-field: the original has sll 17; bgez, not andi (T-4050) */
+typedef struct {
+    u32 pad : 14;
+    u32 b14 : 1;
+    u32 rest : 17;
+} Flags14; /* size 4 */
+
+void func_80156570(void) {
+    if (((Flags14 *)&D_800E6560)->b14) {
+        D_800CA150 = (u16)D_800CA150 + 1;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801552B0", func_801565B4);

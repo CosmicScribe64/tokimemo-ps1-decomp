@@ -1192,4 +1192,9 @@ void func_801103A0();
 void func_800FBE90();
 void func_800F7640();
 
+extern u8 D_8012436C;
+extern s16 D_80124370;
+extern u8 D_80125314;
+void func_800FA25C();
+
 #endif /* OVL_EVENT_H */

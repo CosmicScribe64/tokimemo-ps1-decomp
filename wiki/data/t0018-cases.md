@@ -211,3 +211,8 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 80079B10 | `SD_DetectCDPeak` | regorder | same family as `SD_CalcCDAve` (T-2090) |
 | 80079B10 | `func_8007B2B4` | regorder | switch variable after a read-modify-write store: original reuses $v0, IDO allocates $v1 (T-2090) |
 | 80079B10 | `func_8007A6AC` | regorder | struct fields loaded into $t7/$a0/$v1 and spilled; IDO uses $t6/$a0/$a2 (T-2090) |
+| EVENT/800FD2F0 | `func_800FD360` | regorder | 3-case switch on an `s32` global: selector in $v1 in the original, IDO $v0; `u32` override and an if-chain do not help (T-4050) |
+| EVENT/800F9680 | `func_800FA194` | regorder | two 4..0x12 loops over 0x24-byte records (`s16` counter, array base, 0x24 and mask constants in registers): original colours a2/v1/a0/a3, IDO a1/a0/v1/a2; permuter best 380 (T-4050) |
+| EVENT/800F9680 | `func_800FA0D0` | regorder | `s16` loop over 0x24-byte records with a promoted `u8` global (`lbu a1`, base a2, constant a3, counter a0): IDO loads it into $a0 and copies to $a3; original frame is 8 bytes larger (T-4050) |
+| GYOZI/80140740 | `func_80140780` | regorder | function-pointer table call whose result is returned (`ret` local, `s32`): original keeps `ret` in $v0 through the branches, IDO puts it in $v1 and copies to $v0 at the end (T-4050) |
+| GYOZI/8013B920 | `func_8013BB0C` | regorder | `D_800F62CF = 3; f(3)` keeps the constant in $a0 for both the store and the call; IDO emits two `li` (same as the recorded wave-2 GYOZI init sequences) (T-4050) |

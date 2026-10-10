@@ -76,7 +76,16 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_801535D8);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_801537C0);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80153928);
+void func_80153928(void) {
+    D_8015E208 = D_8015DEDC;
+    D_8015E20C = D_8015E018;
+    D_8015E210 = D_8015E154;
+    D_800E65C6 += 3;
+    /* FAKE: indexing the first symbol keeps as1 from hoisting this load above the previous store (matches; real source unknown). T-4050 */
+    (&D_800E65C6)[2] += 2;
+    func_80084D3C();
+    func_8004284C();
+}
 
 void func_801539A4(void) {
     bg_read_sub2(0x486E);
