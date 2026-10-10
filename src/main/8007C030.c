@@ -135,7 +135,20 @@ void normal_date_bg_out(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007D8AC);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in);
+void normal_date_girl_in(void) {
+    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    case 0:
+        normal_date_girl_in_init();
+        break;
+    case 1:
+        normal_date_girl_in_main();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80057D28(1);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_init);
 
@@ -163,7 +176,19 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bg_fadeout);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadeout);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_move_place);
+void normal_date_move_place(void) {
+    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    case 0:
+        normal_date_move_place_init();
+        return;
+    case 1:
+        normal_date_move_place_main();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void normal_date_move_place_init(void) {
     k_reset(1);

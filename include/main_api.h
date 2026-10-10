@@ -1861,5 +1861,8 @@ void func_80090580(s16);
 void func_800907E0(s16);
 void func_80090E60(s16);
 extern s16 D_80125D38;
+void func_80057D28(s32);
+void normal_date_girl_in_init();
+void normal_date_girl_in_main();
 
 #endif /* MAIN_API_H */
