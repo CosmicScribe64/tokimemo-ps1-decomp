@@ -54,7 +54,23 @@ void set_c_girl(u8 arg0) {
     D_800E6280.unk_F5F = arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_g_name);
+s32 get_g_name(u8 *arg0, s32 arg1) {
+    if (arg1 == 0) {
+        strcpy(arg0, "詩織");
+    } else if (arg1 == 0xA) {
+        strcpy(arg0, D_800B3630);
+        strcat(arg0, "ちゃん");
+    } else if (arg1 == 0xC) {
+        strcpy(arg0, D_800B3624);
+    } else {
+        strcpy(arg0, D_800B35F4[arg1 & 0xF]);
+        strcat(arg0, "さん");
+    }
+    if (arg1 >= 0x10 || arg1 < 0) {
+        return -1;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_p_name);
 
