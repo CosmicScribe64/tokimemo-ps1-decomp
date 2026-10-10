@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-10-10
-sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py"]
+sources: ["tools/type_recovery.py", "tools/test_type_recovery.py", "include/main_api.h", "config/symbol_addrs_types.txt", "wiki/matching-notes.md", "tools/migrate_globals.py", "tools/aggregate_audit.py"]
 ---
 
 # Data types recovered from access patterns (T-5000)
@@ -52,7 +52,7 @@ Linking: a base that no original instruction names has no label. Overlays get su
 ## Open work
 
 - The 0x44-byte table at `D_8011ECD0` (160 records; `D_80120650` is record 96) is still a `u8[]` view: its users read the same offsets as `u8` and `s8` and some words as `s32` or pointers, so one struct does not fit all of them yet.
-- The main bss block is `GameState D_800E6280` (0x800E6280..0x800E7D10, T-5100): [[game-state]] has the layout, the evidence and what is still unknown. Its old `D_` names are rejected by ninja; `tools/migrate_globals.py --apply` rewrites them, also in new code.
+- The main bss block is `GameState D_800E6280` (0x800E6280..0x800E7D10, T-5100): [[game-state]] has the layout, the evidence and what is still unknown. Its old `D_` names are rejected by ninja; `tools/migrate_globals.py --apply` rewrites them, also in new code. Every unit reaches it through the base symbol (T-7010, [[game-state]] "Views").
 - `Rec38` +0x0C and +0x10 are `GsWord` unions (word and byte views of bit-field words); a bit-field struct that fits every user is still open.
 - Main `D_80121818`, `D_8012183C`, `D_80121860`, `D_80121864`, `D_80121884` stay declared because EVENT has its own data at those addresses.
 
@@ -61,4 +61,10 @@ Linking: a base that no original instruction names has no label. Overlays get su
 Once an aggregate is declared, its fields must not be used through their splat names: separate symbols let IDO hoist loads that the original kept behind stores. `config/migrate_globals.txt` lists the aggregates (`aggregate <base> <type> <header>`) and the few uses that match only through the old symbol (`keep <file> <symbol> <reason>`). `tools/migrate_globals.py --apply` rewrites every C use of a `D_` name inside an aggregate into the field access (the old declaration picks the field: a byte of a union, an array, a record element) and deletes the old declarations; `--check` runs in ninja. Findings from the `GameState` migration that hold for any type here:
 - A constant-index array element is not a struct member for IDO: a `switch` on it and a sum of two of them compile differently. Use separate members where the matched code needs them.
 - `((u8 *)&S)[k + i]` is not the same as the old `u8 S[]` view: it changes the induction variable. Write the field access.
-- Struct-array elements in a sum can swap the load order against a scalar extern; keep that use on the old name (`keep`) when no C form matches.
+- Struct-array elements in a sum can swap the load order against a scalar extern. The one such case (SHOUGATU `func_8013E0F0`) was a bit-field and matches through the struct (T-7010); there is no `keep` line now.
+
+## Member or separate symbol: what IDO changes (T-7010)
+
+- IDO 5.3 compiles a constant-offset member of an extern struct like a scalar extern at that address: same instruction words after relocation, same registers, and uopt keeps members apart (a member value survives a store to another member). Only alias rules differ: as1 does not move a load above a store through the same symbol (it does for two symbols), and uopt reloads a member after a store through an indexed element or a pointer into the struct. A diff in registers or operand order is never fixed by switching between the two views; check with both before blaming the declaration.
+- Evidence for a separate symbol in the original is therefore a load hoisted above a store between two fields of an aggregate (`tools/aggregate_audit.py --pairs`). For `GameState` there is none (407 pairs kept, 0 hoisted), and `tools/migrate_globals.py --check` accepts a `keep` line only with such a pair in that file's original object.
+- `lui rA; lbu rB,%lo(D)(rA); ori/andi; sb` with rB different from rA is a bit-field store, not a separate symbol: IDO computes a bit-field member's address apart from the load. Write a bit-field view of the word (a local `typedef struct { u32 pad0 : 14; u32 f : 1; u32 pad1 : 17; }` cast on the member, LSB first, as the neighbouring files do); `tools/aggregate_audit.py --bitfields` lists the sites in the aggregates (56 in `GameState`), and the same shape appears on `Rec34` (`unk_0C.b14`) and EVENT/GYOZI flag bytes.

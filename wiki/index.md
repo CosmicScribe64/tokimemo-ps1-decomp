@@ -13,12 +13,13 @@ Read this first. Update on every ingest or new page.
 - [[log]] - append-only chronological record
 - [[kanban]] - ticket board (columns must match ticket frontmatter status)
 - [[data-types]] - structs and arrays recovered from the original's access patterns, `tools/type_recovery.py` (T-5000)
-- [[game-state]] - `GameState D_800E6280`, the main game-state struct (0x800E6280..0x800E7D10): field map, evidence, confidence, `tools/migrate_globals.py` (T-5100)
+- [[game-state]] - `GameState D_800E6280`, the main game-state struct (0x800E6280..0x800E7D10): field map, evidence, confidence, `tools/migrate_globals.py` (T-5100); one view for every unit, access audit (T-7010)
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
+- [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
 - [[tickets/T-6070-wave-4-list-7|T-6070]] Wave 4: list 7 (Done)
 - [[tickets/T-5100-game-state-struct|T-5100]] Recover the main game-state struct (Done)
 - [[tickets/T-6040-wave-4-list-4|T-6040]] Wave 4: list 4, 28 functions in 36 files (Done)
@@ -127,6 +128,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - T-3300 tooling fixes: `tools/m2c.py --unit`, `funcdiff.py --resolve/--no-build`, K&R in `srcscan.py`, archives in `identify_version.py`; tests `tools/test_srcscan.py`, `tools/test_funcdiff.py`; details in [[matching-notes]] ("Tooling fixes T-3300")
 - `tools/identify_version.py` (T-3200): identify which release a disc image or folder is, from `config/versions.txt`; tests `tools/test_identify_version.py`
 - `tools/migrate_globals.py` (T-5100): rewrites the old `D_` names of aggregate fields (`GameState`) into field accesses, removes their declarations; `--check` in ninja (`build/globals.ok`); config `config/migrate_globals.txt`; tests `tools/test_migrate_globals.py`; [[game-state]]
+- `tools/aggregate_audit.py` (T-7010): how the original reaches the fields of each aggregate (direct, indexed, base-relative), read-modify-write pairs kept or hoisted, bit-field sites; used by `migrate_globals.py --check` for `keep` lines; tests `tools/test_aggregate_audit.py`; [[game-state]]
 - `tools/sync_protos.py` (T-3340): lists, generates and checks `include/main_api.h`, the one declaration of every main-exe symbol; overrides, `--prune`, `--snapshot/--compare`; tests `tools/test_sync_protos.py`; rules in CODING_STANDARDS 8a and [[decompile-workflow]]
 - T-5030 tooling fixes: `tools/funcloc.py` (find the C file by definition; used by `funcdiff.py`, `permute.py`), `funcdiff.py --unit` and string/rename resolution, `permute.py all`/K&R, `sync_protos.py` speed-up and `--check-branch`, `queue.py` cache; tests `tools/test_funcloc.py` and the tests of each tool; details in [[matching-notes]] ("Tooling fixes T-5030"), [[decompile-workflow]] ("Before finishing")
 - `tools/queue.py` (T-1320, T-3340): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags; calibration in [[matching-notes]]

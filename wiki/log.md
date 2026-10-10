@@ -618,3 +618,15 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6070-wave-4-li
 
 ## [2026-10-10] ticket | T-6040 (In Progress -> In Review -> Done)
 Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6040-wave-4-list-4]]; no open findings. Branch w4-4, not merged.
+
+## [2026-10-10] ticket | T-7010 Game-state struct audit (created -> In Progress)
+[[tickets/T-7010-game-state-view-audit]] created and claimed (worktree r4-gsaudit): audit how the original reaches the `GameState` fields, choose the source model, implement it, retry the functions wave 4 attributed to "GameState field vs separate symbols".
+
+## [2026-10-10] decision | T-7010 GameState is one object in every unit
+`tools/aggregate_audit.py` classified all accesses of the original to 0x800E6280..0x800E7D10: 13625 direct, 201 indexed, 2719 base-relative (129 of 277 objects, 21 of 24 units); 0 of 407 read-modify-write pairs inside the block hoisted (27 of 981 outside). IDO compiles a constant-offset member like a scalar except for alias rules, and 13 of 15 functions wave 4 blamed on "separate symbols" give the same words with the old scalars. Model: one struct reached through `D_800E6280`, no per-unit view. `migrate_globals.py --check` now rejects a `keep` line without a hoisted pair in the original object; the last one (SHOUGATU `D_800E66E8`) is gone. [[game-state]], [[data-types]].
+
+## [2026-10-10] build | T-7010 matches
+Bit-field stores (`lui rA; lbu rB`, rB != rA) and one line-scheduling case: DATE `func_8015522C`, `func_8015745C`, SHOUGATU `func_8014147C`, GEKO `func_8013E1A0`, VALEN `func_80133B6C`, ETC `func_80147D74`, KANGEI `func_80135438`, EVENT `func_8010242C`, GYOZI `func_801399C0`; progress 3721 -> 3730 of 6958. Clean build 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Notes in [[matching-notes]] ("Game-state views audit (T-7010)").
+
+## [2026-10-10] ticket | T-7010 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-7010-game-state-view-audit]]; no open findings. Branch r4-gsaudit, not merged.
