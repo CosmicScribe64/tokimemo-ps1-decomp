@@ -9,7 +9,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]
 
 - [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
-- [ ] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
 - [ ] [[tickets/T-0018-ugen-temp-register-order|T-0018 ugen temporary register order differs]]
 - [ ] [[tickets/T-0950-match-nokpicopt-unblocked-functions|T-0950 Match functions unblocked by -Wo,-nokpicopt]]
 - [ ] [[tickets/T-0100-older-mips-compiler-emulation|T-0100 Run an older MIPS ucode compiler (+16 frame)]]
@@ -37,6 +36,8 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-9010-per-object-data-shared-lui-at|T-9010 Per-object .data/.bss/.rodata ownership to unlock shared lui $at]]
+- [x] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
 - [x] [[tickets/T-8050-wave-5-list-5|T-8050 Wave 5: list 5]]
 - [x] [[tickets/T-8010-wave-5-list-1|T-8010 Wave 5: list 1]]
 - [x] [[tickets/T-8060-wave-5-list-6|T-8060 Wave 5: list 6]]

@@ -719,3 +719,18 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8020-wave5-lis
 
 ## [2026-10-10] ticket | T-8080 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-8080-wave-5-list-8]]; no open findings. Branch w5-8, not merged.
+
+## [2026-10-10] ticket | T-9010 created (In Progress)
+Tooling round 5, worktree r5-data: per-object `.data`/`.bss` ownership ([[tickets/T-3052-per-object-data-bss-split]]) to unlock the shared `lui $at` groups of [[data/shared-at-groups]]. Ticket [[tickets/T-9010-per-object-data-shared-lui-at]].
+
+## [2026-10-10] decision | IDO shares `lui $at` for data defined in the file (T-9010)
+IDO 5.3's as1 shares one `lui $at` between stores to one symbol that the C file defines (initialised, static or `.lcomm`) and re-emits for externs, commons and different variables: the original's rule. No as1 pass; the data has to be defined in its object's C file. Corrects the T-5020 note in [[matching-notes]] and [[data/shared-at-groups]].
+
+## [2026-10-10] build | Per-object data ranges and data islands (T-9010)
+`tools/object_boundaries.py --data --write`: 248 `data`/`bss` lines in `config/objects/*.txt` ([[source-files]]). New `tools/data_island.py` (opt-in `.data` island per object plus INCLUDE_RODATA piece lines), `tools/data_pieces.py` (pieces and `PROVIDE` file, in the split rules of `configure.py`), `tools/split_objects.py` keeps islands, tests `tools/test_data_islands.py`. Workflow in [[decompile-workflow]], build notes in [[build-system]].
+
+## [2026-10-10] build | T-9010 matches
+Islands RPG_BAT `8014E780` and main `800451D0`; 7 functions matched (RPG_BAT `func_8014EBA8`, `func_8014EBD0`, `func_8014EB58`, `func_8014F230`, `func_8014F500`, `func_8014F524`; main `func_80046290`), 13 RPG_BAT files moved to the new struct members. Clean build 27/27, progress 4227 -> 4234.
+
+## [2026-10-10] ticket | T-9010 and T-3052 (-> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9010-per-object-data-shared-lui-at]]; two split_objects findings fixed. [[tickets/T-3052-per-object-data-bss-split]] closed by T-9010. Branch r5-data, not merged.
