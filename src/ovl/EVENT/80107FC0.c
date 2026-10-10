@@ -347,7 +347,37 @@ void func_8010917C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_801092C8);
+void func_801092C8(void) {
+    D_800B1746 = 0xA;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    D_80123988 = 0;
+    D_8012398C = 0;
+    func_8004BC20(D_800B1746);
+    func_800F6000();
+    D_80120678 = D_801205DC;
+    D_8012067C = D_801205F8;
+    D_80120680 = D_80120614;
+    func_80078970(D_80094784, "玄関");
+    func_80078970(D_800947C4, "自宅前");
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_80109404);
 

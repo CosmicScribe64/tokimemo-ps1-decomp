@@ -51,7 +51,37 @@ void func_8013D290(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013D0F0", func_8013D2C8);
+void func_8013D2C8(void) {
+    D_800E6280.unk_F5F = 1;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8006612C("");
+    D_8011ED9F = 0;
+    D_8011EDE3 = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    func_800847B8(1);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145F54;
+    D_80146278 = D_80146090;
+    D_8014627C = D_801461CC;
+    func_800AE0F0(D_800CA19C, "廊下");
+    D_800E6280.unk_1BC[1].unk_02 += 1;
+    D_800E6280.unk_1BC[1].unk_06 += 2;
+    func_80084D3C();
+    D_800CA368 = 8;
+    func_8004284C();
+}
 
 void func_8013D408(void) {
     func_8013D0F0();

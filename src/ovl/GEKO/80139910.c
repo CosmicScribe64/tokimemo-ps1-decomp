@@ -196,7 +196,36 @@ INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013A6D0);
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013A820);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013AA1C);
+void func_8013AA1C(void) {
+    D_800E6280.unk_F5F = 0;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8006612C("");
+    D_8011ED9F = 0;
+    D_8011EDE3 = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145EDC;
+    D_80146278 = D_80146018;
+    D_8014627C = D_80146154;
+    func_800AE0F0(D_800CA19C, "自宅前");
+    D_800E6280.unk_11C.unk_02 -= 1;
+    func_80084D3C();
+    D_800CA368 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013AB4C);
 
