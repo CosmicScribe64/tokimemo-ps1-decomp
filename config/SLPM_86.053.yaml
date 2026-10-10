@@ -44,6 +44,8 @@ options:
     - config/symbol_addrs_sdk.txt
     # provisional game names from O.BIN (T-0600), hypotheses; see wiki/obin.md
     - config/symbol_addrs_obin.txt
+    # main-exe-only function sizes (T-0500)
+    - config/symbol_addrs_main.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/undefined_funcs_auto.txt

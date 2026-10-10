@@ -142,19 +142,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066334);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066A2C);
 
-s32 func_80066A68(void) {
-    return 1;
-}
-
-s32 func_80066A70(void) {
-    return 2;
-}
-
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066A78);
-
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066A84);
-
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066AC0);
 
 INCLUDE_ASM("asm/nonmatchings/main/80062CD0", func_80066ACC);
 
