@@ -13,7 +13,18 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132098);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132148);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132198);
+void func_80132198(void) {
+    s32 i;
+
+    for (i = 0x60; i < 0xA0; i++) {
+        func_80048F64(i);
+    }
+    func_8004E58C();
+    func_8006612C("告白判定");
+    func_800649D4();
+    k_disp_start(1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132204);
 
@@ -26,7 +37,15 @@ void func_80132254(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132290);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_801322E0);
+void func_801322E0(void) {
+    func_80044774(0);
+    func_80046290(0x3000656, 0xB000E0C, 0xF);
+    func_80044750(0x300);
+    func_8004E58C();
+    func_8006612C("女々しい野郎どもへ");
+    k_disp_start(1);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132344);
 
@@ -41,7 +60,19 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_801323D0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132460);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_801324B0);
+void func_801324B0(void) {
+    if (D_800E738D == 0) {
+        func_80044890(0, 0, 0, 0xCE6D, 0xCE33, 0xCE1E);
+        D_800E738D += 1;
+    } else if (func_80044E8C() == 1) {
+        func_80044750(0x201);
+        func_80048EB8(0);
+        func_8004E58C();
+        func_8006612C("告白シーンデータリード");
+        k_disp_start(1);
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80132000", func_80132558);
 

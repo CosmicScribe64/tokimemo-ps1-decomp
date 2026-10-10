@@ -940,4 +940,5 @@ void func_80144CC4(void);
 void func_80145318(void);
 void func_801451D4(void);
 
+void func_801327AC(void);
 #endif /* OVL_ETC_H */
