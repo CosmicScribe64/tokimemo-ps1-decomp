@@ -136,7 +136,7 @@ void normal_date_bg_out(void) {
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007D8AC);
 
 void normal_date_girl_in(void) {
-    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    switch (D_800E6280.unk_1104.u) {
     case 0:
         normal_date_girl_in_init();
         break;
@@ -190,7 +190,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bg_fadeout);
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadeout);
 
 void normal_date_move_place(void) {
-    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    switch (D_800E6280.unk_1104.u) {
     case 0:
         normal_date_move_place_init();
         return;
@@ -423,7 +423,7 @@ void func_800847B8(u8 arg0) {
 }
 
 void select_girl(void) {
-    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    switch (D_800E6280.unk_1104.u) {
     case 0:
         select_girl_init(0);
         return;
@@ -437,7 +437,7 @@ void select_girl(void) {
 }
 
 void select_girl2(void) {
-    switch (D_800E6280.unk_1104.u) {                           /* irregular */
+    switch (D_800E6280.unk_1104.u) {
     case 0:
         select_girl_init(1);
         return;

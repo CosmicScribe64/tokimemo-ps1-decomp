@@ -136,9 +136,9 @@ void func_8014BA8C(void) {
 }
 
 s32 func_8014BB34(void) {
-    switch (D_800E6280.unk_110D) {                           /* irregular */
+    switch (D_800E6280.unk_110D) {
     case 0:
-        func_80051DBC();
+        xa_wait();
         break;
     case 1:
         func_80042908(2);

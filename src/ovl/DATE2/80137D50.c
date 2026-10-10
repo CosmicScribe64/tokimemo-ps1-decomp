@@ -104,7 +104,7 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013820C);
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013850C);
 
 void func_8013856C(void) {
-    switch (D_800E6280.unk_110D) {                           /* irregular */
+    switch (D_800E6280.unk_110D) {
     case 0:
         func_801385CC();
         return;

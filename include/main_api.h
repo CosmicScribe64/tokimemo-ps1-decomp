@@ -1864,7 +1864,6 @@ extern s16 D_80125D38;
 void func_80057D28(s32);
 void normal_date_girl_in_init();
 void normal_date_girl_in_main();
-void func_80051DBC();
 extern u8 D_800B5BC8;
 void func_80057418(s32, s32);
 void func_80063930(s32);

@@ -7,7 +7,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005A1A0);
 
 void func_8005A2A8(void) {
     D_800E6280.unk_1104.w += 1;
-    switch (D_800E6280.unk_110A) {                           /* irregular */
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_8005A37C();
         break;
@@ -316,7 +316,7 @@ void func_8005D174(void) {
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D1B0);
 
 void func_8005D31C(void) {
-    switch (D_800E6280.unk_110D) {                           /* irregular */
+    switch (D_800E6280.unk_110D) {
     case 0:
         func_80053CE0();
         D_800E6280.unk_110D += 1;

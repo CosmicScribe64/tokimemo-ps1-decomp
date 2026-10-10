@@ -2,7 +2,7 @@
 #include "game.h"
 
 void func_80059B40(void) {
-    switch (D_800E6280.unk_110A) {                           /* irregular */
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80059E00();
         return;
