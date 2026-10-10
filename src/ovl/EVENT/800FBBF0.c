@@ -212,7 +212,16 @@ void func_800FCEF4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FCF40);
+void func_800FCF40(void) {
+    /* FAKE: D_800EB02F and D_800EB02B reached through D_800EB02A; separate names let as1 hoist the lbu above the sb. T-4100 */
+    (&D_800EB02A)[5] = 0x80;
+    (&D_800EB02A)[1] |= 0x80;
+    D_800EB030 = 0;
+    D_800EB03E = 4;
+    D_800EB040 = 0;
+    D_800EB02A = 1;
+    func_80011DFC();
+}
 
 void func_800FCFA4(void) {
     func_800433D0(0x500);

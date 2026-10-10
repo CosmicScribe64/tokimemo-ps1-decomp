@@ -173,4 +173,8 @@ void func_8013AF1C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013AF44);
+void func_8013AF44(void) {
+    func_800634FC(get_g_zyotai_h(0));
+    bg_read_sub2(0x4156);
+    func_8004284C();
+}

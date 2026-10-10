@@ -48,7 +48,12 @@ void func_8013A7A0(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A140", func_8013A7C8);
+void func_8013A7C8(void) {
+    func_80051DD8(0x10, 0x80197000, 0xA3B8);
+    func_8013A140();
+    D_801474B0 = D_800F5A2D[D_800F5AAC * 4];
+    func_8004DDD8();
+}
 
 void func_8013A820(void) {
     D_800D9234 = (u8 *)&D_801474A8;

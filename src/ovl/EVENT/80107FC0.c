@@ -161,7 +161,12 @@ void func_80108734(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_801087A8);
+void func_801087A8(void) {
+    if (((u8)func_8002328C(D_800B1746) & 0x7F) >= 2U) {
+        D_80094714 += 2;
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_801087F8);
 

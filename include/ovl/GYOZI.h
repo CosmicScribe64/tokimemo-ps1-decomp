@@ -413,4 +413,5 @@ extern s32 D_8014825C;
 extern s32 D_80148260;
 extern s32 D_80148268;
 
+extern u8 D_801474B0;
 #endif /* OVL_GYOZI_H */
