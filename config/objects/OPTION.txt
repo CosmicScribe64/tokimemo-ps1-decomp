@@ -7,3 +7,8 @@ rodata_end 8013D180 last-jtbl
 object 80132000 801389A0 8013C880 8013CC10 yes start start
 object 801389A0 8013A550 8013CC10 8013CCE0 yes pad jtbl-pad
 object 8013A550 8013C880 8013CCE0 8013D180 yes pad jtbl-end
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 80132000 8013D180 8013D360 start owner at:0,ref:7
+data 801389A0 8013D360 8013E740 owner owner at:0,ref:41
+data 8013A550 8013E740 80162000 owner end at:0,ref:6

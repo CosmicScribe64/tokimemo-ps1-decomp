@@ -6,7 +6,7 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801439E0", func_801439E0);
 void func_80143C28(s32 arg0, s32 arg1) {
     s32 temp_v0;
 
-    switch (D_8015EE08) {
+    switch (D_8015EE00.unk_08) {
     case 0:
         func_8013E7C0(0x1D, arg0, 1, 1);
         func_8014F258();
@@ -27,7 +27,7 @@ void func_80143C28(s32 arg0, s32 arg1) {
 void func_80143CE8(s32 arg0, s32 arg1) {
     s32 temp_v0;
 
-    switch (D_8015EE08) {
+    switch (D_8015EE00.unk_08) {
     case 0:
         func_8013E7C0(0x1D, arg0, 1, 1);
         func_8014F258();
@@ -57,29 +57,29 @@ void func_80143DA8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 }
 
 void func_80143ECC(void) {
-    if (!(D_8015EE0C & 1)) {
+    if (!(D_8015EE00.unk_0C & 1)) {
         D_8011ECD0[0x2643] |= 0x80;
         D_8011ECD0[0x2137] |= 0x80;
     } else {
         D_8011ECD0[0x2643] &= 0xFF7F;
         D_8011ECD0[0x2137] &= 0xFF7F;
     }
-    D_8015EE0C += 1;
-    if (D_8015EE0C >= 0x3C) {
+    D_8015EE00.unk_0C += 1;
+    if (D_8015EE00.unk_0C >= 0x3C) {
         func_8014F230();
     }
 }
 
 void func_80143F68(void) {
-    if (!(D_8015EE0C & 1)) {
+    if (!(D_8015EE00.unk_0C & 1)) {
         D_8011ECD0[0x2643] |= 0x80;
         D_8011ECD0[0x2137] |= 0x80;
     } else {
         D_8011ECD0[0x2643] &= 0xFF7F;
         D_8011ECD0[0x2137] &= 0xFF7F;
     }
-    D_8015EE0C += 1;
-    if (D_8015EE0C >= 0x3D) {
+    D_8015EE00.unk_0C += 1;
+    if (D_8015EE00.unk_0C >= 0x3D) {
         func_8014F230();
     }
 }

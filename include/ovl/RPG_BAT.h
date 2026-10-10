@@ -14,8 +14,6 @@ extern s32 D_8015EC28;
 extern s32 D_8015EC2C;
 extern s32 D_8015EC6C;
 extern s32 D_8015E744;
-extern s32 D_8015EE44;
-extern s32 D_8015EE48;
 extern s32 D_8015ED98;
 extern s32 D_8015EDC4;
 extern s32 D_8015EDF0;
@@ -25,13 +23,11 @@ void func_8013EA60(s32, s32, s32, s32);
 extern s32 D_8015EBAC;
 extern s32 D_8015EBB0;
 void func_8014EBA8(void);
-extern s32 D_8015EDB8;
 void func_8014EBD0(void);
 void func_8014F230(void);
 extern s32 D_8015EE10;
 void func_8014F258(void);
 void func_8014F500(void);
-extern s32 D_8015EE3C;
 void func_8014F524(void);
 
 void func_80141C70(void);
@@ -44,14 +40,31 @@ extern s32 D_8015ED94;
 
 extern s32 D_8015E740;
 extern s32 D_8015E748;
-extern s32 D_8015EE4C;
 void func_8013415C(void);
 void func_80134570(void);
 void func_80134984(void);
 void func_80135B4C(void);
 void func_80135D90(void);
 void func_80135E80(void);
-extern s32 D_8015EDB0;
+extern s32 D_8015EDA8[2]; /* defined in RPG_BAT/8014E780.c (T-9010) */
+/* Counters that functions of RPG_BAT/8014E780.c reset together: one variable each, because the
+ * original shares one `lui $at` between the stores (T-9010). Defined in RPG_BAT/8014E780.c. */
+typedef struct RpgBatWords3 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+} RpgBatWords3; /* size 0x0C */
+typedef struct RpgBatWords4 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+} RpgBatWords4; /* size 0x10 */
+extern RpgBatWords3 D_8015EDB0;
+extern RpgBatWords4 D_8015EE00;
+extern RpgBatWords4 D_8015EE30;
+extern RpgBatWords3 D_8015EE44;
+extern RpgBatWords3 D_8015EE50;
 void func_80139510(void);
 void func_8013F82C(void);
 void func_801596E8(void);
@@ -60,7 +73,6 @@ extern s32 D_8015EBB4;
 extern s32 D_8015EBB8;
 extern s32 D_8015EC14;
 extern s32 D_8015EC74;
-extern s32 D_8015EDB4;
 void func_801373A8(void);
 extern s32 D_8015EB9C;
 s32 func_80144C84();
@@ -124,7 +136,6 @@ extern s32 D_8015EDC8;
 extern s32 D_8015EDE8;
 extern s32 D_8015EDF4;
 extern s32 D_8015EE40;
-extern s32 D_8015EE50;
 void func_8013C1CC(void);
 void func_8013C2A0(void);
 void func_8013C32C(void);
@@ -175,7 +186,6 @@ void func_8014ED80();
 void func_8014EE98();
 void func_80150F84();
 extern u8 D_8015E814;
-extern s32 D_8015EE08;
 extern s32 D_8015EC18;
 void func_8013F1C4();
 extern u8 D_8015E904[];
@@ -186,7 +196,6 @@ extern s32 D_8015EC54;
 extern s32 D_8015EDEC;
 void func_8014EF6C(void);
 void func_8014F1D4(s32 arg0);
-extern s32 D_8015EE04;
 void func_8014F278();
 void func_8014F350();
 void func_8013F250();

@@ -208,8 +208,10 @@ def parse_c(text):
             p = Piece("asm", text[start:i], code)
             p.func = INCLUDE_ASM_RE.match(code.strip()).group(2)
         elif INCLUDE_RODATA_RE.match(code.strip()):
-            p = Piece("rodata", text[start:i], code)
-            p.func = INCLUDE_RODATA_RE.match(code.strip()).group(2)
+            m = INCLUDE_RODATA_RE.match(code.strip())
+            # a `.data` piece (T-9010) is part of the object's data, not regenerated rodata
+            p = Piece("data" if m.group(1).endswith(".data") else "rodata", text[start:i], code)
+            p.func = m.group(2)
         else:
             p = Piece("decl", text[start:i], code)
             p.names, p.definition = declared_names(code)
@@ -376,6 +378,10 @@ def plan_unit(root, unit, objs, old_files, funcs, items):
             else:
                 pending.append(p)
         groups[-1][2] = pending       # comments/declarations after the last function
+        addrs = [address_of(g[0].func, by_name, syms) for g in groups]
+        if any(p.kind == "data" for p in pieces) and len({target_of(a).addr for a in addrs if a is not None}) > 1:
+            raise SplitError("%s: the file has a data island (T-9010) and would be cut into several "
+                             "objects; move its data by hand" % cf.src)
         file_targets = []
         for p, front, after in groups:
             addr = address_of(p.func, by_name, syms)
@@ -402,11 +408,14 @@ def plan_unit(root, unit, objs, old_files, funcs, items):
                 key = p.code.strip()
                 if key in seen:
                     continue
-                if p.kind == "decl" and p.names and not any(uses(body_text, nm) for nm in p.names):
-                    continue
+                if p.kind == "decl" and p.names and not any(uses(body_text, nm) for nm in p.names) \
+                        and not (p.definition and len(t.preambles) == 1):
+                    continue        # a definition stays in its file's only object (T-9010 data)
                 if p.kind == "decl" and p.definition:
-                    users = [u for u in targets if any(uses("".join(x.text for x in u.body), nm)
-                                                      for nm in p.names)]
+                    # objects cut from the same file; others reach a defined global through its
+                    # header declaration (T-9010)
+                    users = [u for u in targets if any(pre is q for q in u.preambles)
+                             and any(uses("".join(x.text for x in u.body), nm) for nm in p.names)]
                     if len(users) > 1:
                         raise SplitError("%s: %s defined at file scope is used by objects %s"
                                          % (unit, "/".join(sorted(p.names)),
@@ -576,10 +585,16 @@ def parse_sub_line(line):
 
 
 def rewrite_overlay_yaml(text, unit, base, objs, ro_lo, ro_end):
+    """The yaml with the subsegments regenerated; `data`/`.data` lines from the end of the
+    rodata on (data islands, T-9010) are kept as they are."""
     lines = text.splitlines(True)
     k = next(i for i, l in enumerate(lines) if l.strip() == "subsegments:")
     e = next(i for i in range(k + 1, len(lines)) if not lines[i].startswith("      "))
-    return "".join(lines[:k + 1] + overlay_subsegments(unit, base, objs, ro_lo, ro_end) + lines[e:])
+    subs = overlay_subsegments(unit, base, objs, ro_lo, ro_end)
+    kept = [l for l in lines[k + 1:e] if (parse_sub_line(l) or (0, ""))[1] in ("data", ".data")]
+    if kept and parse_sub_line(kept[0])[0] == ro_end - base:
+        subs = [l for l in subs if parse_sub_line(l)[1] != "data"] + kept
+    return "".join(lines[:k + 1] + subs + lines[e:])
 
 
 def rewrite_main_yaml(text, split_files, rodata_lo):

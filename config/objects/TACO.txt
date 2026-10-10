@@ -45,3 +45,25 @@ object 8015CF30 8015D0D0 - - no:no_rodata pad -
 object 8015D0D0 8015D270 - - no:no_rodata pad -
 object 8015D270 8015D410 - - no:no_rodata pad -
 orphan 8015DA90 8015DAA0 second_chunk_of_8013DB80
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 801335A0 8015E220 8015E270 owner-min/2 owner-min/10 at:0,ref:6
+data 80133870 8015EDB0 8015EDC0 owner-min/10 owner-min/3 at:0,ref:1
+data 80134930 8015EDE0 8015F3F0 owner-min/3 owner at:0,ref:4
+data 80135720 8015F3F0 8015F400 owner owner at:0,ref:4
+data 80136B40 8015F400 8015F440 owner owner at:0,ref:5
+data 80137A60 8015F440 8015F490 owner owner at:0,ref:1
+data 80138890 8015F490 8015F4B0 owner owner at:0,ref:7
+data 80139170 8015F4B0 8015F500 owner owner at:0,ref:8
+data 8013B990 8015F500 8015F560 owner owner at:0,ref:3
+data 8013DB80 8015F560 8015F580 owner owner at:0,ref:4
+data 80140DF0 8015F580 8015F590 owner owner at:0,ref:2
+data 80141DE0 8015F590 8015F5A0 owner owner-min/2 at:0,ref:1
+data 80143E80 8015F5F0 8015F830 owner-min/2 owner at:4,ref:2
+data 801480B0 8015F830 8015FA80 owner owner at:0,ref:4
+data 80148FE0 8015FA80 8015FCC0 owner owner at:0,ref:6
+data 80149F90 8015FCC0 80160290 owner owner at:0,ref:50
+data 80151C30 80160290 80160460 owner owner-min/2 at:0,ref:15
+data 80154960 80160470 80160480 owner-min/2 owner at:0,ref:1
+data 80156A80 80160480 801604F0 owner owner-min/2 at:0,ref:3
+data 8015ABF0 801605E0 80162000 owner-min/2 end at:0,ref:11

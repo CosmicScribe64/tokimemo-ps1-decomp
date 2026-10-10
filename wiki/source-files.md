@@ -81,7 +81,14 @@ Problems the script reports (not used as evidence): 14 text gaps that are not ob
 
 Main exe: the 28 files become 34 objects. Six new text cuts are `choice/N` (`800420D0` among 3 candidates, which is the entry point of point 2 above, `800490C0`, `800674B0`, `800737A0`, `80059B40`, `8007C030`); the rodata start `800AFE00` of point 3 now separates `80059A20` (chunk `800AFDF0`, an `owner` cut) from `80059B40` (`choice/3`). Only `src/main/80062CD0.c` has been split so far (into `80062CD0` and `800674B0`); the other files follow when [[tickets/T-3050-run-per-object-migration-after-wave-2]] runs.
 
-## Not split: data, bss
+## Data and bss ranges (T-9010)
+`tools/object_boundaries.py --data --write` adds one `data` (main exe also `bss`) line per object it can place to `config/objects/<UNIT>.txt`. Regions: overlays from the end of the rodata to the end of the 0x30000 file (no `.bss`: every overlay variable is in the file); main exe `.data` 0x800B3220-0x800E3800 (game and SDK) and `.bss` 0x800E3800-0x8012B538.
+
+Evidence per data symbol (splat item): **at** (weight 10) the symbol is stored through a `lui $at` that a function of the object shares with another store (IDO and the original share `$at` only for one variable defined in the same file); **ref** (weight 1) the functions of exactly one object name it, or its pointer words all point into one object. The heaviest chain of evidence whose objects never decrease in address order places the objects (the link put every object's data in text order). A neighbour pair without a 16-aligned item start between them drops the weaker item (a global of the other object that only one object uses; reported). Boundaries are 16-aligned item starts: `owner` (exactly one candidate), `owner-min/N` (N candidates, the tightest range for each side, the bytes between stay without owner), `start`/`end` (region edge). Measured over the overlays: 173 of 216 single-user transitions to a later object fall on a 16-aligned address, 28 go back to an earlier object (globals).
+
+Result (2026-10-10): 248 ranges over the 27 units (main: 20 `.data`, 7 `.bss`); most are `owner-min` on one side. Low confidence where only `ref` evidence places an object (a global defined in another file but used by one object looks the same). Known gaps: TACO objects `801430B0`-`80149F90` and TT/TAIIKU objects whose data starts unaligned (no range), main `D_800E36C0` (shared `$at` in `InitMouse`, out of object order), RPG_BAT objects 2-45 (data is one pool of globals: no single-user evidence). `.bss` of the main exe: GameState `D_800E6280` falls to the first object, many single-user items are struct members (T-5100), so these ranges are weak.
+
+## Not split: data, bss (before T-9010)
 
 `.data` and `.bss` stay whole; rodata is split per object since T-0500 (above). Only about 80 game functions reference `.rodata` directly (most strings are reached through `.data` pointer tables), and per-file `.data`/`.bss` blocks interleave with shared globals; cutting them needs symbol-level ownership. Tracked in [[tickets/T-0500-per-file-game-rodata-data-bss-split]].
 

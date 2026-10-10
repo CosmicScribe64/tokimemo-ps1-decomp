@@ -6,3 +6,7 @@
 rodata_end 801391E0 last-jtbl
 object 80132000 80136B10 801390D0 80139170 yes start start
 object 80136B10 801390D0 80139170 801391E0 yes choice/2 jtbl-pad
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 80132000 80139200 80139C30 owner-min/3 owner at:0,ref:43
+data 80136B10 80139C30 80162000 owner end at:0,ref:23

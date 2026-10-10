@@ -24,3 +24,10 @@ object 801511E0 8015AF90 8015F1C0 8015F730 yes pad jtbl-end
 object 8015AF90 8015B900 80160380 801604F0 yes pad jtbl-pad
 orphan 8015F730 8015FF70 second_chunk_of_801511E0
 orphan 8015FF70 80160380 second_chunk_of_801511E0
+# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+data 80142700 80160520 80160640 owner-min/2 owner at:0,ref:5
+data 80146FA0 80160640 80160810 owner owner at:0,ref:40
+data 80150930 80160810 80160AD0 owner owner at:0,ref:1
+data 801511E0 80160AD0 80160AE0 owner owner at:0,ref:1
+data 8015AF90 80160AE0 80162000 owner end at:0,ref:5

@@ -482,7 +482,8 @@ extern u8 D_800B3D54[];
 extern u8 D_800B3D60;
 extern s32 D_800B3D68;
 extern s32 D_800B3D6C;
-extern s32 D_800B3D70;  /* only sw and &D_800B3D70 seen */
+extern s32 D_800B3D70[4]; /* defined in src/main/800451D0.c (T-9010) */
+extern s32 D_800B3648[16];
 extern u8 D_800B3D80;
 extern s8 D_800B3DB0;
 extern u8 D_800B3DC0[];
@@ -1360,7 +1361,7 @@ u8 func_800460CC(void);
 u8 func_800460DC(void);
 u8 func_800460EC(void);
 s32 func_80046274(void);
-void func_80046290();
+void func_80046290(s32, s32, s32);
 void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 #ifndef MAIN_API_OVERRIDE_func_800462C8
 void func_800462C8(u8 arg0, s32 arg1, s32 arg2);

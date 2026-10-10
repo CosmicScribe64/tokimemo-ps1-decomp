@@ -103,7 +103,7 @@ void func_80150DE0(void) {
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150F84);
 
 void func_80151108(void) {
-    switch (D_8015EDB0) {
+    switch (D_8015EDB0.unk_00) {
     case 0:
         func_80150F84();
         func_8014B738(&D_8015E814, 3, 0x5A);
@@ -213,7 +213,7 @@ s32 func_801515F0(void) {
 }
 
 void func_801516E4(void) {
-    switch (D_8015EDB0) {
+    switch (D_8015EDB0.unk_00) {
     case 0:
         func_80150DE0();
         func_8013E97C(0x1D, 0x118, 0x88);
@@ -227,13 +227,13 @@ void func_801516E4(void) {
         break;
     case 1:
         func_8013E97C(0x1D,
-                      (D_8015EC58.unk_08 - D_8015EC58.unk_00) * D_8015EDB8 / 100 + D_8015EC58.unk_00,
-                      (D_8015EC58.unk_0C - D_8015EC58.unk_04) * D_8015EDB8 / 100 + D_8015EC58.unk_04);
+                      (D_8015EC58.unk_08 - D_8015EC58.unk_00) * D_8015EDB0.unk_08 / 100 + D_8015EC58.unk_00,
+                      (D_8015EC58.unk_0C - D_8015EC58.unk_04) * D_8015EDB0.unk_08 / 100 + D_8015EC58.unk_04);
         func_8013E97C(0x32,
-                      (D_8015EC58.unk_08 - D_8015EC58.unk_00) * D_8015EDB8 / 100 + D_8015EC58.unk_00 + D_8015EC58.unk_10,
-                      (D_8015EC58.unk_0C - D_8015EC58.unk_04) * D_8015EDB8 / 100 + D_8015EC58.unk_04 + D_8015EC58.unk_14);
-        D_8015EDB8 = D_8015EDB8 + 4;
-        if (D_8015EDB8 >= 0x65) {
+                      (D_8015EC58.unk_08 - D_8015EC58.unk_00) * D_8015EDB0.unk_08 / 100 + D_8015EC58.unk_00 + D_8015EC58.unk_10,
+                      (D_8015EC58.unk_0C - D_8015EC58.unk_04) * D_8015EDB0.unk_08 / 100 + D_8015EC58.unk_04 + D_8015EC58.unk_14);
+        D_8015EDB0.unk_08 = D_8015EDB0.unk_08 + 4;
+        if (D_8015EDB0.unk_08 >= 0x65) {
             func_8014EBD0();
         }
         break;

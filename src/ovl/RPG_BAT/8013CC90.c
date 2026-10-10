@@ -22,7 +22,7 @@ void func_8013D030(void) {
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013CC90", func_8013D0D4);
 
 void func_8013D1D0(void) {
-    if (!(D_8015EDB4 & 1)) {
+    if (!(D_8015EDB0.unk_04 & 1)) {
         D_80121423 |= 0x80;
         if (D_8015EB9C != 0xE) {
             D_80120E07 |= 0x80;
@@ -33,14 +33,14 @@ void func_8013D1D0(void) {
             D_80120E07 &= ~0x80;
         }
     }
-    D_8015EDB4++;
-    if (D_8015EDB4 >= 0x3C) {
+    D_8015EDB0.unk_04++;
+    if (D_8015EDB0.unk_04 >= 0x3C) {
         func_8014EBA8();
     }
 }
 
 void func_8013D290(void) {
-    if (!(D_8015EDB4 & 1)) {
+    if (!(D_8015EDB0.unk_04 & 1)) {
         D_80121423 |= 0x80;
         if (D_8015EB9C != 0xE) {
             D_80120E07 |= 0x80;
@@ -51,8 +51,8 @@ void func_8013D290(void) {
             D_80120E07 &= ~0x80;
         }
     }
-    D_8015EDB4++;
-    if (D_8015EDB4 >= 0x3D) {
+    D_8015EDB0.unk_04++;
+    if (D_8015EDB0.unk_04 >= 0x3D) {
         func_8014EBA8();
     }
 }
@@ -72,16 +72,16 @@ void func_8013D3E4(void) {
 }
 
 void func_8013D418(void) {
-    switch (D_8015EDB0) {
+    switch (D_8015EDB0.unk_00) {
     case 0:
         func_8013E97C(0x30, 0, 0);
         func_8013E7C0(0x30, 1, 1, 1);
         func_8014EBD0();
         return;
     case 1:
-        func_8013E97C(0x30, -D_8015EDB8, 0);
-        D_8015EDB8 += 2;
-        if (D_8015EDB8 >= 0x21) {
+        func_8013E97C(0x30, -D_8015EDB0.unk_08, 0);
+        D_8015EDB0.unk_08 += 2;
+        if (D_8015EDB0.unk_08 >= 0x21) {
             func_8013E7C0(0x30, 0, 1, 0);
             func_8013E97C(0x34, 0, 0);
             if (D_8015EDC4 & 0x600000) {
@@ -96,8 +96,8 @@ void func_8013D418(void) {
         }
         return;
     case 2:
-        D_8015EDB8 += 1;
-        if (D_8015EDB8 == 1) {
+        D_8015EDB0.unk_08 += 1;
+        if (D_8015EDB0.unk_08 == 1) {
             func_8013F15C(0x503, 1, 0);
         }
         func_8014EDFC(0x34);

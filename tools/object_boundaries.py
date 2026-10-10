@@ -74,6 +74,7 @@ class Func(NamedTuple):
     refs: frozenset     # symbols named by %hi/%lo
     stores: frozenset   # symbols written (store with %lo)
     calls: frozenset    # jal target names
+    at_groups: tuple = ()   # symbol sets stored through one shared `lui $at` (T-9010)
 
 
 class Item(NamedTuple):
@@ -149,7 +150,48 @@ def parse_function(text):
             calls.add(im.group(3).strip())
     if addr is None:
         return None
-    return Func(m.group(1), addr, int(m.group(2), 0), frozenset(refs), frozenset(stores), frozenset(calls))
+    return Func(m.group(1), addr, int(m.group(2), 0), frozenset(refs), frozenset(stores), frozenset(calls),
+                at_groups(text))
+
+
+AT_LUI_RE = re.compile(r'^lui\s+\$at,\s*%hi\((\w+)\)')
+AT_STORE_RE = re.compile(r'%lo\((\w+)\)\(\$at\)')
+AT_WRITE_RE = re.compile(r'^\w+\s+\$at\b')
+
+
+def at_groups(text):
+    """Symbol sets of two or more symbols that one `lui $at` serves for stores (T-9010): from a
+    `lui $at, %hi(X)` to the next label or other write of $at, the symbols of the stores through
+    $at. IDO shares `$at` only for stores through one symbol defined in the same file, so every
+    group is one variable of the function's own object."""
+    out = []
+    cur = None
+    for line in text.splitlines():
+        if line.lstrip().startswith(".L"):
+            cur = None
+            continue
+        im = INSN_RE.match(line)
+        if not im:
+            continue
+        ins = "%s %s" % (im.group(2), im.group(3))
+        m = AT_LUI_RE.match(ins)
+        if m:
+            if cur and len(cur) > 1:
+                out.append(frozenset(cur))
+            cur = set()
+            continue
+        if im.group(2) in STORES:
+            sm = AT_STORE_RE.search(im.group(3))
+            if sm and cur is not None:
+                cur.add(sm.group(1))
+            continue
+        if AT_WRITE_RE.match(ins):
+            if cur and len(cur) > 1:
+                out.append(frozenset(cur))
+            cur = None
+    if cur and len(cur) > 1:
+        out.append(frozenset(cur))
+    return tuple(out)
 
 
 def parse_items(text):
@@ -468,6 +510,240 @@ def analyze(unit, funcs, items, data):
     return Result(unit.name, objects, ro_end, ro_end_ev, orphans, problems)
 
 
+# ------------------------------------------------------------------ .data and .bss (T-9010)
+
+MAIN_DATA = (0x800B3220, 0x800E3800)      # main exe .data (game and SDK), splat `data`
+MAIN_BSS = (0x800E3800, 0x8012B538)       # main exe .bss, splat `bss`
+OVERLAY_SIZE = 0x30000                    # every overlay file is one 192 KiB slot; no .bss
+
+
+class DataRange(NamedTuple):
+    kind: str           # data or bss
+    obj: int            # text start of the object
+    start: int
+    end: int
+    start_ev: str
+    end_ev: str
+    evidence: str       # at:<n>,ref:<m> items that placed the object
+
+
+def data_regions(unit, ro_end):
+    """[(kind, lo, hi)] of the unit's .data/.bss address ranges."""
+    if unit.name == "main":
+        return [("data",) + MAIN_DATA, ("bss",) + MAIN_BSS]
+    return [("data", ro_end, unit.text[0] + OVERLAY_SIZE)]
+
+
+COMMENT_RE = re.compile(r'/\*([^*]*)\*/')
+
+
+def parse_data_items(text):
+    """[(addr, name, wrefs)] of one splat data or bss file (dlabel blocks; a bss line has only
+    the address in its comment)."""
+    out = []
+    cur = None
+
+    def close():
+        if cur is not None and cur[1] is not None:
+            out.append((cur[1], cur[0], frozenset(cur[2])))
+    for line in text.splitlines():
+        m = DLABEL_RE.match(line)
+        if m:
+            close()
+            cur = [m.group(1), None, set()]
+            continue
+        if cur is None:
+            continue
+        if line.startswith("enddlabel"):
+            close()
+            cur = None
+            continue
+        cm = COMMENT_RE.search(line)
+        if cm and cur[1] is None:
+            toks = cm.group(1).split()
+            vr = [t for t in toks[:2] if len(t) == 8 and t.upper().startswith("80")]
+            if vr:
+                cur[1] = int(vr[0], 16)
+        cur[2].update(WORD_SYM_RE.findall(line))
+    close()
+    return out
+
+
+def load_data_items(unit, root, lo, hi):
+    """[(addr, name, wrefs)] in [lo, hi) from the unit's split data files, sorted."""
+    pat = "asm/data/**/*.s" if unit.name == "main" else "asm/ovl/%s/data/**/*.s" % unit.name
+    found = {}
+    for p in glob.glob(os.path.join(root, pat), recursive=True):
+        with open(p, errors="replace") as f:
+            for a, n, w in parse_data_items(f.read()):
+                if lo <= a < hi:
+                    found.setdefault(a, (a, n, w))
+    return [found[a] for a in sorted(found)]
+
+
+def data_evidence(funcs, obj_starts, items):
+    """({name: (object index, weight)}, problems). Weight 10: the name is in a shared-`$at`
+    group of a function of that object (IDO shares `$at` only for one variable defined in the
+    same file). Weight 1: the functions of exactly one object name it, or it is a pointer
+    table whose function pointers all point into one object."""
+    oi = lambda a: bisect.bisect_right(obj_starts, a) - 1
+    fobj = {f.name: oi(f.addr) for f in funcs}
+    users = {}
+    for f in funcs:
+        for r in f.refs:
+            users.setdefault(r, set()).add(fobj[f.name])
+    for _a, n, w in items:
+        for x in w:
+            if x in fobj:
+                users.setdefault(n, set()).add(fobj[x])
+    strong, problems = {}, []
+    for f in funcs:
+        for g in f.at_groups:
+            for n in g:
+                if n in strong and strong[n] != fobj[f.name]:
+                    problems.append("%s shares $at in two objects" % n)
+                strong[n] = fobj[f.name]
+    ev = {}
+    for _a, n, _w in items:
+        if n in strong:
+            ev[n] = (strong[n], 10)
+        elif len(users.get(n, ())) == 1:
+            ev[n] = (next(iter(users[n])), 1)
+    return ev, problems
+
+
+def _chain(seq):
+    """The heaviest subsequence of [(k, (object, weight))] whose objects never decrease."""
+    best, prev = [], []
+    for i, (_k, (o, w)) in enumerate(seq):
+        b, p = w, -1
+        for j in range(i):
+            if seq[j][1][0] <= o and best[j] + w > b:
+                b, p = best[j] + w, j
+        best.append(b)
+        prev.append(p)
+    chain = []
+    i = max(range(len(seq)), key=lambda x: best[x]) if seq else -1
+    while i >= 0:
+        chain.append(seq[i])
+        i = prev[i]
+    return chain[::-1]
+
+
+def data_bounds(items, ev, lo, hi, kind="data"):
+    """([(object index, start, end, start ev, end ev, evidence)], problems) for one region.
+
+    items: [(addr, name, ...)] sorted; ev: {name: (object index, weight)}. The original link
+    put every object's .data (and .bss) in text order, each 16-aligned (IDO aligns and pads the
+    sections to 16). The heaviest chain of evidence items whose objects never decrease in
+    address order places the objects; items off the chain are globals used elsewhere. Between
+    the last item of one object and the first of the next, a boundary is a 16-aligned item
+    start: `owner` when there is exactly one, else `owner-min/N` (the tightest range for each
+    side; the bytes between stay without owner). The first object starts at the last 16-aligned
+    item start before its first item (`owner-min/N`, `start` when that is the region start);
+    the last ends at the first one after its last item (`end` when that is the region end)."""
+    addr = [it[0] for it in items]
+    aligned = lambda a, b: [x for x in addr if a < x <= b and x % 16 == 0]
+    dropped, hard = set(), []
+    while True:
+        chain = _chain([(k, ev[it[1]]) for k, it in enumerate(items)
+                        if it[1] in ev and k not in dropped])
+        per = {}
+        for k, (o, w) in chain:
+            f, l, na, nr = per.get(o, (k, k, 0, 0))
+            per[o] = (min(f, k), max(l, k), na + (w >= 10), nr + (w < 10))
+        order = sorted(per)
+        # two neighbouring objects without a 16-aligned item start between them: the lighter
+        # evidence item is a global of the other object (used elsewhere); drop it and retry
+        clash = next(((per[a][1], per[b][0]) for a, b in zip(order, order[1:])
+                      if not aligned(addr[per[a][1]], addr[per[b][0]])), None)
+        if clash is None:
+            break
+        la, fb = clash
+        wa, wb = ev[items[la][1]][1], ev[items[fb][1]][1]
+        if wa >= 10 and wb >= 10:
+            hard.append("%s: shared-$at items %s and %s of two objects have no 16-aligned "
+                        "boundary between them" % (kind, items[la][1], items[fb][1]))
+        weight = lambda k: (ev[items[k][1]][1], sum(per[ev[items[k][1]][0]][2:]))
+        dropped.add(la if weight(la) < weight(fb) else fb)
+    problems = hard
+    for k, it in enumerate(items):
+        if it[1] in ev and ev[it[1]][1] >= 10 and not any(k == c[0] for c in chain):
+            problems.append("%s %s: shared-$at item is out of object order" % (kind, it[1]))
+    if dropped:
+        problems.append("%s: %d single-user items are globals of another object (%s)" % (
+            kind, len(dropped), " ".join(items[k][1] for k in sorted(dropped)[:5])))
+    bounds = {}
+    for a, b in zip(order, order[1:]):
+        la, fb = per[a][1], per[b][0]
+        cands = aligned(addr[la], addr[fb])
+        ev_ = "owner" if len(cands) == 1 else "owner-min/%d" % len(cands)
+        bounds[(a, "end")] = (cands[0], ev_)
+        bounds[(b, "start")] = (cands[-1], ev_)
+    if order:
+        first, last = order[0], order[-1]
+        cands = [x for x in addr if lo <= x <= addr[per[first][0]] and x % 16 == 0]
+        if cands:
+            bounds[(first, "start")] = (cands[-1], "start" if cands == [lo] else
+                                        "owner-min/%d" % len(cands))
+        else:
+            bounds[(first, "start")] = None
+        nxt = per[last][1] + 1
+        cands = [x for x in addr[nxt:] if x % 16 == 0] + ([hi] if hi % 16 == 0 else [])
+        bounds[(last, "end")] = (cands[0], "end" if cands[0] == hi else "owner-min") if cands else None
+    out = []
+    for o in order:
+        s, e = bounds.get((o, "start")), bounds.get((o, "end"))
+        if s is None or e is None:
+            continue
+        out.append((o, s[0], e[0], s[1], e[1], "at:%d,ref:%d" % per[o][2:]))
+    return out, problems
+
+
+def analyze_data(unit, funcs, objs, ro_end, root="."):
+    """([DataRange], problems) for one unit."""
+    starts = [o.text_start for o in objs]
+    ranges, problems = [], []
+    for kind, lo, hi in data_regions(unit, ro_end):
+        items = load_data_items(unit, root, lo, hi)
+        ev, p = data_evidence(funcs, starts, items)
+        problems += p
+        res, p = data_bounds(items, ev, lo, hi, kind)
+        problems += p
+        ranges += [DataRange(kind, starts[o], s, e, se, ee, n) for o, s, e, se, ee, n in res]
+    return ranges, problems
+
+
+def format_data(ranges):
+    return "".join("%s %08X %08X %08X %s %s %s\n" % (r.kind, r.obj, r.start, r.end, r.start_ev,
+                                                       r.end_ev, r.evidence) for r in ranges)
+
+
+def read_data(path):
+    """[DataRange] from a config/objects file."""
+    out = []
+    with open(path) as f:
+        for line in f:
+            p = line.split()
+            if p and p[0] in ("data", "bss"):
+                out.append(DataRange(p[0], int(p[1], 16), int(p[2], 16), int(p[3], 16), p[4], p[5], p[6]))
+    return out
+
+
+DATA_HEADER = """# data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
+# object's .data/.bss range; written by tools/object_boundaries.py --data --write.
+"""
+
+
+def write_data(path, ranges):
+    """Replace the data/bss lines (and their header) of a config/objects file."""
+    with open(path) as f:
+        lines = [l for l in f if not l.split()[:1] or l.split()[0] not in ("data", "bss")]
+    text = "".join(lines).replace(DATA_HEADER, "")
+    with open(path, "w") as f:
+        f.write(text + (DATA_HEADER + format_data(ranges) if ranges else ""))
+
+
 def objects_path(unit, root="."):
     return os.path.join(root, "config/objects/%s.txt" % unit)
 
@@ -529,6 +805,8 @@ def main(argv=None):
     ap.add_argument("--root", default=".")
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--verbose", "-v", action="store_true")
+    ap.add_argument("--data", action="store_true",
+                    help="only the .data/.bss ranges, from the objects already in config/objects")
     a = ap.parse_args(argv)
     for u in units(a.root):
         if a.units and u.name not in a.units:
@@ -536,6 +814,21 @@ def main(argv=None):
         funcs, items = load(u, a.root)
         if not funcs:
             sys.exit("object_boundaries.py: no functions for %s (run ninja first)" % u.name)
+        if a.data:
+            path = objects_path(u.name, a.root)
+            objs, ro_end, _o = read_objects(path)
+            ranges, problems = analyze_data(u, funcs, objs, ro_end, a.root)
+            print("%-9s data ranges %3d of %3d objects (%s), problems %d" % (
+                u.name, len(ranges), len(objs), " ".join(
+                    "%s=%d" % (k, sum(1 for r in ranges if r.start_ev.split("/")[0] == k))
+                    for k in ("start", "owner", "owner-min")), len(problems)))
+            if a.verbose:
+                print(format_data(ranges), end="")
+                for p in problems:
+                    print("  problem: " + p)
+            if a.write:
+                write_data(path, ranges)
+            continue
         with open(u.binary, "rb") as f:
             data = f.read()
         res = analyze(u, funcs, items, data)

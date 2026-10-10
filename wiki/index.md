@@ -20,6 +20,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9030-wave-5-tool-fixes|T-9030]] Wave-5 tool fixes (Done)
+- [[tickets/T-9010-per-object-data-shared-lui-at|T-9010]] Per-object .data ranges and data islands; shared `lui $at` matched (Done)
 - [[tickets/T-8080-wave-5-list-8|T-8080]] Wave 5: list 8 (Done)
 - [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
 - [[tickets/T-8010-wave-5-list-1|T-8010]] Wave 5: list 1 (Done)
@@ -43,7 +44,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-2040-wave-2-etc|T-2040]] Wave 2: ETC (Done)
 - [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050]] Run the per-object migration on the whole tree after wave 2 (Ready)
 - [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051]] Review low-confidence object boundaries and orphan rodata chunks (Backlog)
-- [[tickets/T-3052-per-object-data-bss-split|T-3052]] Split .data and .bss per original object (Backlog)
+- [[tickets/T-3052-per-object-data-bss-split|T-3052]] Split .data and .bss per original object (Done via T-9010)
 - [[tickets/T-1300-reuse-c-across-identical-functions|T-1300]] Tooling: reuse C across identical functions (Done)
 - [[tickets/T-3320-tooling-near-duplicate-function-reuse|T-3320]] Tooling: near-duplicate function reuse (Done)
 - [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300]] Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress (Backlog)
