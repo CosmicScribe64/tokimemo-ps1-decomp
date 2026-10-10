@@ -1524,7 +1524,7 @@ void func_80059B04();
 void func_80059B40(void);
 void func_80059BC0(void);
 void func_80059BE8(void);
-void func_80059E00();
+s32 func_80059E00(void);
 void func_8005A37C(void);
 void func_8005A560(void);
 void func_8005A3E8(void);
