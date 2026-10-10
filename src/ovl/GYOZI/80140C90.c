@@ -47,6 +47,60 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80140F90);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_801412A4);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80141550);
+void func_80141550(void) {
+    switch (D_800F62CF) {
+    case 1:
+        D_80148614 = D_801481E4;
+        D_80148618 = D_80148218;
+        D_8014861C = D_8014824C;
+        return;
+    case 2:
+        D_80148614 = D_801481D8;
+        D_80148618 = D_8014820C;
+        D_8014861C = D_80148240;
+        return;
+    case 3:
+        D_80148614 = D_801481DC;
+        D_80148618 = D_80148210;
+        D_8014861C = D_80148244;
+        return;
+    case 4:
+        D_80148614 = D_801481F4;
+        D_80148618 = D_80148228;
+        D_8014861C = D_8014825C;
+        return;
+    case 5:
+        D_80148614 = D_801481E8;
+        D_80148618 = D_8014821C;
+        D_8014861C = D_80148250;
+        return;
+    case 6:
+        D_80148614 = D_801481EC;
+        D_80148618 = D_80148220;
+        D_8014861C = D_80148254;
+        return;
+    case 7:
+        D_80148614 = D_801481E0;
+        D_80148618 = D_80148214;
+        D_8014861C = D_80148248;
+        return;
+    case 8:
+        D_80148614 = D_801481D0;
+        D_80148618 = D_80148204;
+        D_8014861C = D_80148238;
+        return;
+    case 9:
+        D_80148614 = D_801481F0;
+        D_80148618 = D_80148224;
+        D_8014861C = D_80148258;
+        return;
+    case 10:
+        D_80148614 = D_80148200;
+        D_80148618 = D_80148234;
+        D_8014861C = D_80148268;
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80141790);
