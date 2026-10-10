@@ -197,4 +197,13 @@ extern s16 *D_80160034[];
 extern s16 *D_8016001C[];
 void func_8014BED8(void);
 void func_8014BCEC(s32 arg0);
+extern u8 D_8015FE94[];
+void func_8014F5F0();
+void func_80147674(s32 arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8014BE14(s32 arg0);
+void func_80147928(s32 arg0, s32 arg1, s32 arg2, void *arg3, void *arg4, s32 arg5);
+extern s16 *D_8016024C[];
+extern s16 *D_80160264;
+extern s16 *D_80160280;
+void func_801511C0(s32 arg0, s32 arg1);
 #endif

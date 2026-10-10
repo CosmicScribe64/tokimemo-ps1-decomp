@@ -172,7 +172,11 @@ void func_80136E54(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136EB4);
+void func_80136EB4(void) {
+    func_80081190(-0x2C, 0x50, 0, ((s32 *)D_80139AD0->unk_34)[4], 0, "", "", 0);
+    D_80139AE0 = 5;
+    func_8004284C();
+}
 
 void func_80136F1C(void) {
     D_80139AE4 = 2;

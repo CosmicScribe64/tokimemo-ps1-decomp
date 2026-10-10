@@ -55,7 +55,26 @@ void func_801349A8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133C10", func_801349E0);
+void func_801349E0(void) {
+    s16 t;
+    s16 i;
+
+    t = D_80120676 - 1;
+    for (i = 0; i < 6; i++) {
+        *(s16 *)((u8 *)&D_801217D0 + i * 0x24 + 0x94) -= 1;
+    }
+    D_80120676 = t;
+    if (t < -0x9E) {
+        /* FAKE: fields of the D_80120652 table reached through one symbol; separate names let as1 hoist the lbu of D_80120697 above the stores. T-4100 */
+        D_80120652 = 1;
+        *(s16 *)(&D_80120652 + 0x14) = 1;
+        *(s16 *)(&D_80120652 + 0x16) = 0;
+        *(s16 *)(&D_80120652 + 6) = 0;
+        (&D_80120652)[0x45] |= 0x80;
+        (&D_80120652)[0x44] = 5;
+        func_8004284C();
+    }
+}
 
 void func_80134AA8(void) {
     if ((D_80120696 == 0) && (D_80120668 == 1) && (D_80120658 == 0x14)) {

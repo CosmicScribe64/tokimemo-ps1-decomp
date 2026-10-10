@@ -1192,4 +1192,10 @@ void func_801103A0();
 void func_800FBE90();
 void func_800F7640();
 
+void func_800FC040();
+void func_80102950();
+void func_80102A24();
+void func_801085C0();
+void func_80108680();
+void func_801087F8();
 #endif /* OVL_EVENT_H */

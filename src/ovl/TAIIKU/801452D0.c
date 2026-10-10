@@ -1,5 +1,11 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+
+typedef struct {
+    s32 v[3];
+} Lim3; /* size 0xC */
+extern Lim3 D_8014A5FC;
+extern u8 D_8014A400[];
 extern u8 D_8014A400[]; /* func_80146FA0: stride 0x1C */
 extern u8 D_8014A401;
 extern u8 D_8014A41D;
@@ -140,7 +146,19 @@ void func_80147068(void) {
     func_80147318();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_801470A0);
+void func_801470A0(void) {
+    s32 i;
+    Lim3 lim;
+
+    lim = D_8014A5FC;
+    for (i = 0; i < 3; i++) {
+        if (D_8014A454[i * 0x1C + 0x28] != 0) {
+            *(s32 *)(D_8014A400 + i * 0x1C + 0x10) = -0x4000;
+        } else {
+            *(s32 *)(D_8014A400 + i * 0x1C + 0x10) = lim.v[i];
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147120);
 

@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/EVENT.h"
 
+typedef struct {
+    void (*f[41])();
+} FnTbl41; /* size 0xA4 */
+extern FnTbl41 D_80121360;
+
 void func_800FBBF0(void) {
     D_801211E0 = 0x801D21D8;
     D_801211E4 = 0x801D21E0;
@@ -71,7 +76,14 @@ void func_800FBE90(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FBF40);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FBFE0);
+void func_800FBFE0(void) {
+    func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
+    if (D_800B1AF5 == 0) {
+        func_800FC040();
+        return;
+    }
+    func_80015FE0();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FC040);
 
@@ -168,7 +180,15 @@ void func_800FCCE4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FBBF0", func_800FCD0C);
+void func_800FCD0C(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl41 tbl;
+
+    tbl = D_80121360;
+    func_80078950("%d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx]();
+}
 
 void func_800FCDA0(void) {
     func_80015D28(0x35, 0x801B0000, 0x7DD4);

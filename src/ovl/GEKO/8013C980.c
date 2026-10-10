@@ -26,9 +26,19 @@ void func_8013CB58(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013CB90);
+void func_8013CB90(void) {
+    D_800B5A60 = 1;
+    D_800E71DF = 0xE;
+    func_800AE0F0(D_800CA188, "男子１");
+    D_80120666 = 4;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013CBE4);
+void func_8013CBE4(void) {
+    func_800AE0F0(D_800CA188, "男子２");
+    D_80120666 = 5;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013CC20);
 
