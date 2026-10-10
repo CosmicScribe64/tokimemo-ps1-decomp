@@ -333,7 +333,14 @@ void func_801023F4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_8010242C);
+void func_8010242C(void) {
+    if (D_800EECBC != 0) {
+        D_80094714 += 1;
+    } else {
+        D_800B0A04[1].unk_0C.b14 = 1;
+    }
+    func_80011DFC();
+}
 
 void func_80102484(void) {
     func_8011C6C4();

@@ -20,7 +20,33 @@ void func_80139994(void) {
     func_80081D30(1);
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80139920", func_801399C0);
+/* Bit 1 of a girl flag byte: IDO loads its byte into another register than the lui (T-7010). */
+typedef struct {
+    u8 pad0 : 1;
+    u8 f : 1;
+    u8 pad1 : 6;
+} GyoziBit1;
+
+void func_801399C0(void) {
+    if (D_80147240 != 0) {
+        ((GyoziBit1 *)&D_800F53A0.girl[9].unk_10[0])->f = 1;
+    }
+    if (D_8014723C >= 7) {
+        D_80147198 = 0;
+    } else if (D_8014723C >= 5) {
+        D_80147198 = 1;
+    } else if (D_8014723C >= 3) {
+        D_80147198 = 2;
+    } else if (D_8014723C > 0) {
+        D_80147198 = 3;
+    } else {
+        D_80147198 = 4;
+    }
+    D_8014718C = D_801470F4;
+    D_80147190 = D_80147128;
+    D_80147194 = D_8014715C;
+    func_8004DE1C();
+}
 
 void func_80139A98(void) {
     func_8008A0D4(0x40ED);
