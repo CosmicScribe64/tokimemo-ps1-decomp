@@ -1202,7 +1202,10 @@ extern s32 D_80122D44;
 extern s32 D_80122D4C;
 extern s32 D_80122EA0;
 extern s32 D_80122EAC;
+#ifndef MAIN_API_OVERRIDE_D_80122EB8
 extern s32 D_80122EB8;
+#endif
+extern s32 D_80122EBC;
 extern s32 D_80122EC0;
 #ifndef MAIN_API_OVERRIDE_D_80122EC8
 extern s32 D_80122EC8;
