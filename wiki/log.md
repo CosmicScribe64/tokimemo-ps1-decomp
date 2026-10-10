@@ -450,3 +450,9 @@ Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1):
 
 ## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
 [[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.
+
+## [2026-10-09] tooling | T-3320 near-duplicate function reuse
+[[tickets/T-3320-tooling-near-duplicate-function-reuse]]: new `tools/neardupes.py` (tests `tools/test_neardupes.py`, usage in [[decompile-workflow]] and [[build-system]]). It fingerprints functions with ALU immediates masked as well, groups equal shapes with different constants, copies the matched C through `dupes.plan_copy` and substitutes each differing constant by value when unambiguous. `tools/dupes.py` gained an optional immediate-masking mode (`parse_asm(imm=...)`, `load_funcs(near=True)`); exact mode is unchanged. Report on the tree before the proof: 178 near groups, 19 with a matched source, 66 functions / 34592 bytes fillable (1974 constants), 10 skipped (target header declares a symbol differently 7, no C literal 1, value maps to two constants 1, missing type 1); 59 groups (193 functions, 41972 bytes) have no matched member; 1438 unmatched jump-table and string functions are not fingerprinted (same limit as dupes.py). Proof with `--apply --check` on EN_NICHI, KANGEI, SHUGAKU: 7 of 7 kept, first build, 3408 bytes. Bulk application waits for T-1321 (it changes ETC/TACO C).
+
+## [2026-10-09] ticket | T-3320 In Progress -> In Review -> Done
+[[tickets/T-3320-tooling-near-duplicate-function-reuse]] done after the inline review (unused code removed, no open findings). Proof applied in this branch: `src/ovl/EN_NICHI/80136B10.c`, `src/ovl/KANGEI/*.c`, `src/ovl/SHUGAKU/*.c` (7 functions, 3408 bytes) plus the headers the copies needed. Clean build 27 of 27 OK, headers OK, progress 2734 -> 2741 of 6958.

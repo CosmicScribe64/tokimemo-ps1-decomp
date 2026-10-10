@@ -33,6 +33,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051]] Review low-confidence object boundaries and orphan rodata chunks (Backlog)
 - [[tickets/T-3052-per-object-data-bss-split|T-3052]] Split .data and .bss per original object (Backlog)
 - [[tickets/T-1300-reuse-c-across-identical-functions|T-1300]] Tooling: reuse C across identical functions (Done)
+- [[tickets/T-3320-tooling-near-duplicate-function-reuse|T-3320]] Tooling: near-duplicate function reuse (Done)
 - [[tickets/T-0300-sdk-object-split-remaining-libs|T-0300]] Object-level split of libcd, libsnd, libspu, libgs, libgpu, libpress (Backlog)
 - [[tickets/T-0301-sdk-rodata-data-split|T-0301]] Split SDK rodata and data per library and object (Backlog)
 - [[tickets/T-0302-sdk-version-conflict|T-0302]] Resolve mixed SDK vintages (Backlog)
