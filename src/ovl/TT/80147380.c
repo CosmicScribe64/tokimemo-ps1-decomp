@@ -20,7 +20,31 @@ void func_8014742C(u8 *arg0, u16 arg1) {
     *(u16 *)(arg0 + 2) = arg1;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_8014743C);
+void func_8014743C(s16 arg0, u16 arg1, u8 arg2) {
+    u8 *p;
+
+    p = func_80147380(D_80158A94, D_80158A94 + 0x270);
+    if (p != 0) {
+        *(s32 *)(p + 0x20) = arg0 << 16;
+        *(s32 *)(p + 0x24) = 0xFFF00000;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = (arg2 << 14) + 0x10000;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        *(s16 *)(p + 0x52) = 0x1000;
+        func_8014742C(p, arg1);
+        if (arg1 == 0x30) {
+            func_8013BF9C(p);
+        }
+        *(s16 *)(p + 4) = 0x40;
+        *(s16 *)(p + 0xA) = 0;
+        *(s16 *)(p + 8) = 0;
+        *(s16 *)(p + 6) = 0;
+        p[0xF] = 0;
+        p[0xE] = 0;
+        p[0xD] = 0;
+    }
+}
 
 void func_8014750C(u8 *arg0) {
     *(s32 *)(arg0 + 0x20) += *(s32 *)(arg0 + 0x28);

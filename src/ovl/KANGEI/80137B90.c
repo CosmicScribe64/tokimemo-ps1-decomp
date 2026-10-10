@@ -101,7 +101,16 @@ void func_80138264(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_8013828C);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138320);
+void func_80138320(void) {
+    u8 s;
+
+    s = get_g_zyotai_s(0) & 0x7F;
+    if (s >= 2U) {
+        D_800E738A -= 0xB;
+        return;
+    }
+    func_8004284C();
+}
 
 void func_8013836C(void) {
     if (((u32)(D_800E6378 << 0x17) >> 0x1B) == D_800E62C0 && (D_800E6378 & 0xF) == D_800E62BF) {
@@ -131,11 +140,47 @@ void func_801385E0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138640);
+void func_80138640(void) {
+    s32 unused; /* FAKE: the original frame has one more 4-byte local above sp2A (same extra scalar as the T-3330 table functions); its real use is unknown. T-4040 */
+    s16 sp2A;
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_801386C4);
+    sp2A = (s16) D_80122CDC;
+    func_80134374();
+    D_80122CDC = (s32) sp2A;
+    D_80139AC0 = 0;
+    D_800E71DF = 0;
+    func_800847B8(0U);
+    D_80139AD0 = (KObj *) D_8013A210;
+    D_80139AD4 = D_8013A244;
+    D_80139AD8 = D_8013A278;
+    D_80139ADC = 4;
+}
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138728);
+void func_801386C4(void) {
+    u8 s;
+
+    s = get_g_zyotai_s(0) & 0x7F;
+    if ((s < 2U) && (D_80122CDC < 2)) {
+        func_80062CD0(0x5774);
+    } else {
+        func_80062CD0(0x55DF);
+    }
+    func_8004284C();
+}
+
+void func_80138728(void) {
+    u8 s;
+
+    s = get_g_zyotai_s(0) & 0x7F;
+    if (s == 2) {
+        D_80139ADC += 2;
+    } else if (s == 3) {
+        D_80139ADC += 4;
+    } else if (s == 4) {
+        D_80139ADC += 6;
+    }
+    func_8004284C();
+}
 
 void func_801387B8(void) {
     func_80083440(D_80122CDC + 1);
@@ -158,9 +203,21 @@ void func_8013885C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138884);
+void func_80138884(void) {
+    u8 s;
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_801388E4);
+    s = get_g_zyotai_s(0) & 0x7F;
+    D_80139ADC = (s >= 2U) * 2 + (s >= 3U) * 2 + (s >= 4U) * 2 + 0x16;
+    func_8004284C();
+}
+
+void func_801388E4(void) {
+    u8 s;
+
+    s = get_g_zyotai_s(0) & 0x7F;
+    D_80139ADC = (s >= 2U) * 2 + (s >= 3U) * 2 + (s >= 4U) * 2 + 6;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138944);
 

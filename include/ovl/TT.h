@@ -69,4 +69,9 @@ extern u8 *D_80158A90;
 extern u8 D_80152CD0[];
 extern u8 D_80152CE4[];
 
+extern u8 *D_80158A9C;
+
+extern u8 *D_80158A80;
+extern u8 *D_80158A88;
+
 #endif /* OVL_TT_H */

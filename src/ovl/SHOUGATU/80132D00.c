@@ -8,7 +8,10 @@ void func_80132D88(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80132D00", func_80132DB0);
+void func_80132DB0(void) {
+    func_800AE0F0(D_800CA1DC, "正月");
+    func_8004284C();
+}
 
 void func_80132DE4(void) {
     bg_read_sub2(0x4144);

@@ -513,3 +513,8 @@ Ran tools/neardupes.py --apply --check over the whole tree after T-1321/T-3330 m
 
 ## [2026-10-10] ticket | T-4060 Wave 3 list 6 (In Progress -> Done)
 [[tickets/T-4060-wave-3-list-6]]. 26 functions, 3832 bytes matched in 28 files of the list (DATE, DATE2, GYOZI, MASTER, OMIMAI, RPG_BAT, SHOUGATU, TT, VALEN, main 80085E30); clean build 27 of 27 OK, grand total 2831/6958. 17 rows added to [[data/t0018-cases]]. New patterns in [[matching-notes]] ("Wave 3 list 6"): adjacent globals reached through one base keep the original's load order, loop init order for the TT record loops, fptab functions with return values. Blockers: RPG_BAT counters that need an array view in the header, main-bss symbols also declared in EVENT.h, pointer-end loops that IDO unrolls and the original does not, a libgte routine in TACO. Tooling: `funcdiff.py func_X` resolves to a caller's file; objects are not rebuilt while `check_headers.py` fails (stale MATCH).
+## [2026-10-09] ticket | T-4040 Wave 3: list 4 (Backlog -> In Progress)
+[[tickets/T-4040-wave-3-list-4]]: 119 functions in 27 files (main 8006CB30, BUNKAKEN, DATE, ENDING, EVENT, GEKO, KANGEI, RPG_BAT, SHOUGATU, TACO, TAIIKU, TT).
+
+## [2026-10-10] ticket | T-4040 Wave 3: list 4 (In Progress -> Done)
+[[tickets/T-4040-wave-3-list-4]]: 44 functions matched (4924 bytes) in the overlays DATE, TT, SHOUGATU, KANGEI, EVENT, GEKO, BUNKAKEN, TACO, ENDING, RPG_BAT; 28 register-order rows added to [[data/t0018-cases]]; new patterns in [[matching-notes]] (u8 local for masked call results, post-increment compare, `/ -64`, counter-first slot loops, FAKE frames). Clean build 27/27 OK, inline review done, no open findings.

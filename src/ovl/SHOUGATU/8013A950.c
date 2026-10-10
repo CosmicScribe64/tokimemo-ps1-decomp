@@ -28,11 +28,26 @@ void func_8013AB34(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A950", func_8013AB5C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A950", func_8013AC7C);
+void func_8013AC7C(void) {
+    D_80144E08 = 0;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "教室");
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A950", func_8013ACC0);
+void func_8013ACC0(void) {
+    D_80144E08 = 0xC;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "グランド");
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A950", func_8013AD08);
+void func_8013AD08(void) {
+    D_80144E08 = 0xF;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "グランド");
+    func_8004284C();
+}
 
 void func_8013AD50(void) {
     if (((u8) D_800E62BF >= 6U) && ((u8) D_800E62BF < 0xAU)) {

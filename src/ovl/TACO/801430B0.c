@@ -11,7 +11,23 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801432F0);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143574);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143644);
+void func_80143644(void) {
+    D_800E7312 = 1;
+    if (D_800E7208 & 0x1000) {
+        if (D_800E7313 != 0) {
+            D_800E7313 -= 1;
+        } else {
+            D_800E7313 = D_800E7310 - 1;
+        }
+    }
+    if (D_800E7208 & 0x4000) {
+        if ((u32)D_800E7313 < (u32)(D_800E7310 - 1)) {
+            D_800E7313 += 1;
+            return;
+        }
+        D_800E7313 = 0;
+    }
+}
 
 void func_801436D4(void) {
     s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */
@@ -29,7 +45,16 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143730);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143814);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801438F0);
+void func_801438F0(s32 arg0, s32 arg1, u8 *arg2) {
+    s32 pad[3]; /* FAKE: 12 bytes of unused locals above sp28 reproduce the original frame (0x38, sp28 at 0x28); real source unknown. T-4040 */
+    s32 sp28;
+
+    sp28 = arg0 + 4;
+    func_8009B3C0(sp28);
+    func_8009B430(sp28 + 8, arg2 + 4, arg1, sp28);
+    *(u8 **)(arg2 + 8) = arg2 + 0x14;
+    *(s32 *)(arg2 + 4) = 0;
+}
 
 void func_8014394C(void) {
     D_80122760 = 0;
