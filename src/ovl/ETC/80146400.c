@@ -113,15 +113,75 @@ void func_80146C68(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146D4C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014716C);
+void func_8014716C(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第一日目の試験科目は 語学だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801471F4);
+void func_801471F4(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第二日目の試験科目は 数学だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014727C);
+void func_8014727C(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第三日目の試験科目は 理科だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147304);
+void func_80147304(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第四日目の試験科目は 社会だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014738C);
+void func_8014738C(void) {
+    func_8004E58C();
+    func_8006612C("期末試験");
+    func_80050DFC(D_800E6280.unk_0D4);
+    func_8004E884(2);
+    func_80050E8C("第五日目の試験科目は 美術だ。）", 0, 0x1F);
+    if (func_80146D4C() < 2) {
+        func_80146C68(1);
+    } else {
+        func_80146C68(0);
+    }
+    func_8004284C();
+}
 
 void func_80147414(void) {
     s16 *mode; /* pointer local: the switch reads the flag through it, as the permuter-found form that matches (T-6050) */
