@@ -975,5 +975,6 @@ void func_80132840(void);
 s32 func_80149394(void);
 s32 func_801495CC(void);
 void func_80149E68(void);
+extern u8 D_80150720[];
 
 #endif /* OVL_ETC_H */

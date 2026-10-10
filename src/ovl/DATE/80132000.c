@@ -99,7 +99,16 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135804);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135A34);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135B4C);
+void func_80135B4C(void) {
+    D_800CA160 = D_8015BDF8;
+    D_800CA164 = D_8015BE64;
+    D_800CA168 = D_8015BED0;
+    D_8015B658 = 0;
+    func_800AE0F0(D_800CA19C, "ショッピング街");
+    func_8007ED84(0x4520);
+    func_80085B3C(1, 2);
+    func_8004284C();
+}
 
 void func_80135BCC(void) {
     if (D_800E6280.unk_110D == 0) {
@@ -172,7 +181,14 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137DF4);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137FAC);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013808C);
+void func_8013808C(void) {
+    func_8007ED84(0x432B);
+    if (D_8015B67C != 0) {
+        func_80044750(0x200);
+    }
+    func_800AE0F0(D_800CA1DC, "遊園地");
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801380E4);
 

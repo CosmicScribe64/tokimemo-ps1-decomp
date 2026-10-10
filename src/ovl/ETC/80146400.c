@@ -63,7 +63,20 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146AC0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146B40);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146BC4);
+s32 func_80146BC4(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80046318(9U, 0x801E0000, *(s32 *)&D_80150720[-(func_80066A84() * 4)]);
+        D_800E6280.unk_110D = 1;
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_8007C6A8(1 - func_80066A84());
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 void func_80146C68(s32 arg0) {
     func_80048F64(0x60);
