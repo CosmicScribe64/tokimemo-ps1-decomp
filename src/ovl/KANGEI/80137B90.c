@@ -158,7 +158,13 @@ void func_8013885C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138884);
+void func_80138884(void) {
+    u8 s;
+
+    s = get_g_zyotai_s(0) & 0x7F;
+    D_80139ADC = (s >= 2U) * 2 + (s >= 3U) * 2 + (s >= 4U) * 2 + 0x16;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_801388E4);
 

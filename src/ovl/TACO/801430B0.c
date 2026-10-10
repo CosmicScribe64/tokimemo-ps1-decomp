@@ -11,7 +11,23 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_801432F0);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143574);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143644);
+void func_80143644(void) {
+    D_800E7312 = 1;
+    if (D_800E7208 & 0x1000) {
+        if (D_800E7313 != 0) {
+            D_800E7313 -= 1;
+        } else {
+            D_800E7313 = D_800E7310 - 1;
+        }
+    }
+    if (D_800E7208 & 0x4000) {
+        if ((u32)D_800E7313 < (u32)(D_800E7310 - 1)) {
+            D_800E7313 += 1;
+            return;
+        }
+        D_800E7313 = 0;
+    }
+}
 
 void func_801436D4(void) {
     s32 pad; /* FAKE: unused 4-byte local puts rect at the original offset; real source unknown. T-2040 */

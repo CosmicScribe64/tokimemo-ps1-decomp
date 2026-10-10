@@ -26,6 +26,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-4040-wave-3-list-4|T-4040 Wave 3: list 4]]
+
 
 
 

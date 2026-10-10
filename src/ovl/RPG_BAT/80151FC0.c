@@ -1,7 +1,24 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80151FC0", func_80151FC0);
+void func_80151FC0(void) {
+    if (D_8015EB98 == 0x40000) {
+        func_8013E7C0(0x38, 3, 5, 1);
+    } else {
+        func_8013E7C0(0x38, 4, 5, 1);
+    }
+    switch (D_8015EB98) {
+    case 0x10000:
+        func_8013F15C(0x505, 1, 0);
+        return;
+    case 0x20000:
+        func_8013F15C(0x506, 1, 0);
+        return;
+    case 0x40000:
+        func_8013F15C(0x505, 1, 0);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80151FC0", func_80152080);
 

@@ -3,9 +3,18 @@
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80144F70);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80145500);
+void func_80145500(void) {
+    if (D_800E738A != 0) {
+        D_800E738A = 0;
+        D_80122EC0 += 1;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80145530);
+void func_80145530(void) {
+    D_800E7389 = 0;
+    D_800E738A = 0;
+    D_80122EC0 = 8;
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80144F70", func_80145550);
 

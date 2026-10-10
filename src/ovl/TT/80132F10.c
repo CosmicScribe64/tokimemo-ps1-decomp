@@ -11,9 +11,24 @@ u8 *func_80132F10(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_80132F4C);
+void func_80132F4C(void) {
+    s32 i;
+    u8 *p;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_80132F80);
+    for (i = 0, p = D_80158A9C; i < 0x20; i++, p += 0x78) {
+        *p = 0;
+    }
+}
+
+void func_80132F80(void) {
+    s32 i;
+    u8 *p;
+
+    for (i = 0, p = D_80158A9C; i < 0x20; i++, p += 0x78) {
+        *p = 0;
+        *(s16 *)(p + 0x10) = 0xC;
+    }
+}
 
 void func_80132FC8(u8 *arg0, u16 arg1, s32 arg2) {
     arg0[0] = 1;

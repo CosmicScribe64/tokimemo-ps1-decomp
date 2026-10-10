@@ -48,11 +48,26 @@ void func_80139C90(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139CCC);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139D80);
+void func_80139D80(void) {
+    D_80144E08 = 0;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "図書室");
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139DC4);
+void func_80139DC4(void) {
+    D_80144E08 = 3;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "図書室");
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139E0C);
+void func_80139E0C(void) {
+    D_80144E08 = 6;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "図書室");
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139E54);
 

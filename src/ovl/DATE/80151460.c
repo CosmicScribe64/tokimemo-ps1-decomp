@@ -57,7 +57,21 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_801518B8);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80151A20);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80151C54);
+/* FAKE: D_800E64EA and D_800E64EE written as indexed views of D_800E64E6; stops IDO hoisting the later loads above the stores (same as func_80062D0C). Real source unknown. T-4040 */
+void func_80151C54(void) {
+    D_8015E208 = D_8015DEBC;
+    D_8015E20C = D_8015DFF8;
+    D_8015E210 = D_8015E134;
+    func_801515C0();
+    func_80043914(D_8015EDD8, 0x11, 1, 2, 0);
+    func_80084E90(D_8015EDDC, D_8015EDE0, D_8015EDE4, D_8015EDE8, D_8015EDEC, D_8015EDF0);
+    func_800850D4(D_8015EDCC, D_8015EDD0, D_8015EDC8, (s32) D_8015EDD4);
+    D_800E64E6 += 2;
+    (&D_800E64E6)[2] += 1;
+    (&D_800E64E6)[4] -= 0x14;
+    func_80084D3C();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80151D68);
 
@@ -142,7 +156,19 @@ void func_80152B7C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152BB4);
+typedef struct {
+    void (*f[47])();
+} FnTbl47; /* size 0xBC */
+extern FnTbl47 D_8015F09C;
+
+void func_80152BB4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl47 tbl;
+
+    tbl = D_8015F09C;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152C3C);
 
@@ -152,7 +178,24 @@ void func_80152CA8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152CE0);
+/* FAKE: D_800E64EA and D_800E64EE written as indexed views of D_800E64E6; stops IDO hoisting the later loads above the stores (same as func_80151C54). Real source unknown. T-4040 */
+void func_80152CE0(void) {
+    if (D_80122CDC == 1) {
+        D_800CA150 = (u16)D_800CA150 + 2;
+        D_800CA154 = 0;
+        D_800E64E6 += 2;
+        (&D_800E64E6)[2] += 2;
+        (&D_800E64E6)[4] -= 0x14;
+        func_80084D3C();
+        func_8004284C();
+    } else {
+        D_800E64E6 += 3;
+        (&D_800E64E6)[2] += 1;
+        (&D_800E64E6)[4] -= 0x14;
+        func_80084D3C();
+    }
+    func_8004284C();
+}
 
 void func_80152DBC(void) {
     if (D_80122CDC == 0) {
