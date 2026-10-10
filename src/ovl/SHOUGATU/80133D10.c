@@ -72,4 +72,14 @@ void func_80134058(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80133D10", func_80134094);
+void func_80134094(void) {
+    if (D_80122CDC != 0) {
+        D_800E6280.unk_1BC[5].unk_06 -= 1;
+        D_800E6280.unk_1BC[5].unk_02 -= 1;
+        D_800E6280.unk_1BC[5].unk_0A += 0xA;
+    } else {
+        D_800E6280.unk_1BC[5].unk_02 += 1;
+    }
+    func_80084D3C();
+    func_8004284C();
+}

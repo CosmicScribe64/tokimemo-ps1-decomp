@@ -77,7 +77,21 @@ void func_80156B20(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80156C40);
+void func_80156C40(void) {
+    D_8015E208 = D_8015DF20;
+    D_8015E20C = D_8015E05C;
+    D_8015E210 = D_8015E198;
+    func_80156760();
+    func_80043914(D_8015FD48, 0x11, 1, 2, 0);
+    func_80084E90(D_8015FD4C, D_8015FD50, D_8015FD54, D_8015FD58, D_8015FD5C, D_8015FD60);
+    func_800850D4(D_8015FD3C, D_8015FD40, D_8015FD38, (s32) D_8015FD44);
+    D_800CA360 = 1;
+    D_800E6280.unk_1BC[6].unk_02 += 2;
+    D_800E6280.unk_1BC[6].unk_06 += 2;
+    D_800E6280.unk_1BC[6].unk_0A -= 0xA;
+    func_80084D3C();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80156D60);
 

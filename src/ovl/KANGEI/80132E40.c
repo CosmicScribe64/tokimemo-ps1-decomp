@@ -90,6 +90,11 @@ void func_801338B4(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132E40", func_801338EC);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132E40", func_80133A14);
+void func_80133A14(void) {
+    D_800E6280.unk_1104.w += 1;
+    if (D_800E6280.unk_110A == 0) {
+        func_80133A54();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132E40", func_80133A54);

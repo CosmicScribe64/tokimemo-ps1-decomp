@@ -39,7 +39,16 @@ void func_80135960(void) {
     func_80042908(5);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135994);
+void func_80135994(void) {
+    D_80122CE0 = 7;
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    D_800E6280.unk_720 = D_800E6280.unk_1108;
+    D_800E6280.unk_721 = D_800E6280.unk_1109;
+    D_800E6280.unk_722 = 0x38;
+    func_8004E9F4(0);
+    func_80042878(0x81);
+}
 
 void func_80135A04(void) {
     func_80046318(0x25, 0x801B0000, 0x8240);

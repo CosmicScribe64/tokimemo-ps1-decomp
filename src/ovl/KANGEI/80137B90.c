@@ -99,7 +99,17 @@ void func_80138264(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_8013828C);
+void func_8013828C(void) {
+    D_800E6280.unk_71E |= 4;
+    func_80083440(func_80051B48(D_800E6280.unk_F5F));
+    D_80139AD0 = (KObj *) D_8013A174;
+    D_80139AD4 = D_8013A1A8;
+    D_80139AD8 = D_8013A1DC;
+    D_80139ADC = 1;
+    D_80139AE0 = 0;
+    func_801392D4();
+    func_8004284C();
+}
 
 void func_80138320(void) {
     u8 s;

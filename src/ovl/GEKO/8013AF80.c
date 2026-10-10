@@ -55,7 +55,15 @@ void func_8013B2C8(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013AF80", func_8013B350);
+void func_8013B350(void) {
+    D_80122CE0 = 6;
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    D_800E6280.unk_720 = D_800E6280.unk_1108;
+    D_800E6280.unk_721 = D_800E6280.unk_1109;
+    D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
+    func_80042878(0x81);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013AF80", func_8013B3C0);
 

@@ -14,11 +14,21 @@ void func_800737A0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800737A0", week_day);
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", week_day_exit);
+void week_day_exit(void) {
+    D_800E6280.unk_1104.w += 1;
+    if (D_800E6280.unk_110A == 0) {
+        week_day_exit0();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800737A0", week_day_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", week_day_main);
+void week_day_main(void) {
+    D_800E6280.unk_1104.w += 1;
+    if (D_800E6280.unk_110A == 0) {
+        week_day_main0();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800737A0", get_weekly_bg_sector);
 

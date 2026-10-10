@@ -169,13 +169,73 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A360);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A534);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A6D4);
+void func_8014A6D4(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80149928();
+        return;
+    case 1:
+        func_80149A08();
+        return;
+    case 2:
+        func_80149AC4();
+        return;
+    case 3:
+        func_80149BC0();
+        return;
+    case 4:
+        func_80149D3C();
+        return;
+    case 5:
+        func_80149DD8();
+        return;
+    case 6:
+        func_8014A258();
+        return;
+    case 7:
+        func_8014A534();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A7A4);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A8A8);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A9A4);
+void func_8014A9A4(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014A7A4();
+        return;
+    case 1:
+        func_80149A08();
+        return;
+    case 2:
+        func_8014A8A8();
+        return;
+    case 3:
+        func_80149BC0();
+        return;
+    case 4:
+        func_80149D3C();
+        return;
+    case 5:
+        func_80149DD8();
+        return;
+    case 6:
+        func_8014A258();
+        return;
+    case 7:
+        func_8014A534();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014AA74);
 

@@ -54,7 +54,19 @@ void func_801321EC(void) {
     D_800E6280.unk_F6F = 1;
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132278);
+void func_80132278(void) {
+    func_80048390();
+    func_80048E78();
+    func_8006BC28(0);
+    D_800E6280.unk_036 = 0;
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_038 = 0;
+    func_800438F0(1);
+    D_800E6280.unk_F6F = (s8) D_80139B14;
+    func_80042878((s32) D_800E6280.unk_720);
+    func_80042908((s32) D_800E6280.unk_721);
+    func_80042940((s32) D_800E6280.unk_722);
+}
 
 void func_80132308(void) {
     if (D_800E6280.unk_110D == 0) {

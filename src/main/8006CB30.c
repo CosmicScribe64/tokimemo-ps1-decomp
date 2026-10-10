@@ -315,7 +315,35 @@ void func_80072C68(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072CA0);
+void func_80072CA0(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80072D70();
+        return;
+    case 1:
+        func_80073198();
+        return;
+    case 2:
+        func_800732F8();
+        return;
+    case 3:
+        func_800733D8();
+        return;
+    case 5:
+        func_800734C4();
+        return;
+    case 6:
+        func_800735B8();
+        return;
+    case 7:
+        func_800736AC();
+        return;
+    default:
+        func_80042908(0xFF);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072D70);
 

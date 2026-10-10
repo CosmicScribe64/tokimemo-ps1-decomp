@@ -1075,5 +1075,8 @@ extern s32 D_80160488;
 extern s32 D_8016048C;
 extern s32 D_80160490;
 extern s32 D_80160494;
+extern s16 D_8015E310;
+extern s16 D_8015E314;
+extern s8 D_8015F5D0;
 
 #endif /* OVL_DATE_H */

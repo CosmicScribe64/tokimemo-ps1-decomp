@@ -3,7 +3,33 @@
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80132000);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80132060);
+void func_80132060(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80132138();
+        break;
+    case 1:
+        func_8013226C();
+        break;
+    case 2:
+        func_80132FC4();
+        break;
+    case 3:
+        func_80133D54();
+        break;
+    case 4:
+        func_801345C4();
+        break;
+    }
+    func_80066C08(1);
+    func_800646CC();
+    func_80064F48();
+    func_80064DEC();
+    func_80067870();
+    func_80066334();
+    func_8006BA40();
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80132138);
 

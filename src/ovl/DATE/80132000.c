@@ -394,7 +394,15 @@ void func_8013A254(void) {
     func_80136F2C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A2E0);
+void func_8013A2E0(void) {
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    func_8004E9F4(0);
+    D_800E6280.unk_720 = D_800E6280.unk_1108;
+    D_800E6280.unk_721 = D_800E6280.unk_1109;
+    D_800E6280.unk_722 = 0x3A;
+    func_80042878(0x82);
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A344);
 

@@ -317,8 +317,10 @@ class Mapping:
         self.expr, self.typ, self.inner = expr, typ, inner   # inner: (array expr, k)
 
 
-def find_mapping(agg, sym, view_spell, indexed):
-    """Mapping for `sym` (old view `view_spell` or None), or (None, reason)."""
+def find_mapping(agg, sym, view_spell, indexed, stores_only=False):
+    """Mapping for `sym` (old view `view_spell` or None), or (None, reason). With stores_only (every
+    use in the file is a plain store), a scalar of the same width but other signedness also fits:
+    sb/sh/sw do not depend on it."""
     addr = int(SYM_RE.match(sym).group(1), 16)
     rel = addr - agg.addr
     subs = subobjects(agg.type, rel)
@@ -337,6 +339,10 @@ def find_mapping(agg, sym, view_spell, indexed):
         for path, t in reversed(subs):
             if t.same(want):
                 return Mapping(pre + path, t), None
+        if stores_only and want.kind == "scalar":
+            for path, t in reversed(subs):
+                if t.kind == "scalar" and t.size == want.size:
+                    return Mapping(pre + path, t), None
         return None, "no %s field at offset 0x%X (there: %s)" % (
             want.spell(), rel, ", ".join("%s %s" % (t.spell(), p) for p, t in subs) or "nothing")
     # no declaration (new code): only an unambiguous offset, where one scalar and nothing else starts
@@ -350,6 +356,16 @@ def find_mapping(agg, sym, view_spell, indexed):
     return None, "no declaration and offset 0x%X is ambiguous (%s): declare the old view in %s or write " \
         "the field" % (rel, ", ".join("%s %s" % (t.spell(), p) for p, t in starts) or "nothing starts there",
                        agg.header)
+
+
+def stores_only(text, sym, skip=()):
+    """True when every use of sym in text is the target of a plain `=` store."""
+    for s, e, tok in code_tokens(text):
+        if tok != sym or any(a <= s < b for a, b in skip):
+            continue
+        if not re.match(r"\s*=(?!=)", text[e:]):
+            return False
+    return True
 
 
 def match_bracket(text, i):
@@ -401,7 +417,10 @@ def base_of(aggs, sym):
 def rewrite_text(text, aggs, keep, views, decl_view=None):
     """(new text, problems) for one .c file. decl_view: callable(sym) -> old view or None."""
     out, problems, last = [], [], 0
+    decl_spans = [(m.start(), m.end()) for m in DECL_RE.finditer(text)]   # removed later, not rewritten
     for s, e, tok in code_tokens(text):
+        if any(a <= s < b for a, b in decl_spans):
+            continue
         g = agg_for(aggs, tok)
         b = base_of(aggs, tok) if g is None else None
         if g is None and b is None:
@@ -433,7 +452,7 @@ def rewrite_text(text, aggs, keep, views, decl_view=None):
             continue
         indexed = nxt.startswith("[")
         view = decl_view(tok) if decl_view else None
-        mp, why = find_mapping(g, tok, view, indexed)
+        mp, why = find_mapping(g, tok, view, indexed, stores_only(text, tok, decl_spans))
         if mp is None:
             problems.append((line, tok, why))
             continue
