@@ -377,3 +377,5 @@ New [[tickets/T-2040-wave-2-etc]], In Progress -> Done after the inline code rev
 
 ## [2026-10-09] merge | wave 2 ETC
 Merged [[tickets/T-2040-wave-2-etc]] (190 matches). Header check: set_dec_bri and dec_bg_cd_read prototypes moved from game.h to include/main_only.h (ETC calls them unprototyped, MASTER keeps its u8 view of set_dec_bri in include/ovl/MASTER.h), six duplicate declarations dropped from include/ovl/ETC.h. Clean build 27/27 OK, 1168/6962.
+## [2026-10-09] ticket | T-2010 Wave 2: DATE, 278 functions matched
+[[tickets/T-2010-wave2-date]] In Progress -> Done after the inline review (no open findings). `src/ovl/DATE.c`: 278 functions matched (INCLUDE_ASM 637 -> 359), 9 `regorder` rows in [[data/t0018-cases]], new patterns in [[matching-notes]] (section "Wave 2: DATE"). Clean build 27 of 27 sha1 OK, `ninja progress` grand total 901 -> 1179 of 6962.
