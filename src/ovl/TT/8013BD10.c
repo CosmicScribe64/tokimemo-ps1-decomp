@@ -11,6 +11,7 @@ u8 *func_8013BD10(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
+/* i = 0 before p = D_80158A90 gives the original's registers ($v0 counter, $v1 pointer); T-4060 */
 void func_8013BD4C(void) {
     s32 i;
     u8 *p;

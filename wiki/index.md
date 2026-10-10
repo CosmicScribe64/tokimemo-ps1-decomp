@@ -82,6 +82,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-3310-native-docker-image|T-3310]] Native Docker image for Apple Silicon (Done)
 - [[tickets/T-3330-local-fptab-frame-layout|T-3330]] Local function-pointer table frame layout (Done)
 - [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340]] Tooling: shared main-exe prototypes (`include/main_api.h`) and byte-weighted queue (Done)
+- [[tickets/T-4060-wave-3-list-6|T-4060]] Wave 3 list 6: 26 functions in DATE, DATE2, GYOZI, MASTER, OMIMAI, RPG_BAT, SHOUGATU, TT, VALEN and main (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list

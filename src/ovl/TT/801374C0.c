@@ -91,7 +91,19 @@ void func_80138D10(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138D94);
+void func_80138D94(void) {
+    u8 *base;
+    s32 i;
+
+    base = D_80158A8C;
+    for (i = 2; i < 6; i++) {
+        if (base[i + 0x351] != 0) {
+            func_80142AF0(D_80152CD0, i);
+        } else {
+            func_80142AF0(D_80152CE4, i);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138E28);
 

@@ -62,11 +62,6 @@ INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_801337EC);
 
 INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801331B0", func_8013388C);
 
-extern s32 D_80134C5C;
-extern s32 D_80134C90;
-extern s32 D_80134CC4;
-extern u8 D_80134CCC;
-
 s32 func_80134030(void) {
     if (D_800E71DF == 9) {
         if (D_800CA148 == 2) {

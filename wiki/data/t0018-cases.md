@@ -211,3 +211,20 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 80079B10 | `SD_DetectCDPeak` | regorder | same family as `SD_CalcCDAve` (T-2090) |
 | 80079B10 | `func_8007B2B4` | regorder | switch variable after a read-modify-write store: original reuses $v0, IDO allocates $v1 (T-2090) |
 | 80079B10 | `func_8007A6AC` | regorder | struct fields loaded into $t7/$a0/$v1 and spilled; IDO uses $t6/$a0/$a2 (T-2090) |
+| DATE | `func_8015A3B0` | promo | switch (s32 global D_80122CD0, two cases): original selector in $v1, IDO $v0 (u32 cast no help) (T-4060) |
+| 800674B0 | `func_80067DD4` | regorder | `if (!(D & 1)) D = (D or 3) & 0xFF` on u8: original keeps the load in $v0 and stores `andi v0,t7,0xFF`; IDO drops the andi or promotes to $v1 (T-4060) |
+| 800674B0 | `func_8006C934` | promo | s16 global compared, then `D += 1` / `D = 0x48` in separate arms: original keeps D in $v0, increments with sll/sra and stores in the delay slot of `jr`; IDO reloads/adds without the sign extension (T-4060) |
+| 800674B0 | `func_80067DFC` | regorder | same shape as `func_80067DD4` on D_80120652 (T-4060) |
+| 80085E30 | `func_80086640` | regorder | swap of two s16 globals (temp = A; A = B; B = temp): original loads B into $v1, IDO uses $t6 (T-4060) |
+| DATE | `func_8014E38C` | promo | `D_800E7384 += 1` then unsigned compare with 0x10: original keeps the global in $v1, IDO uses $v0 (T-4060) |
+| SHOUGATU | `func_80138158` | promo | `D_800E7384 += 1; if (D_800E7384 == 1)`: original keeps the global in $v1 (xori/sltiu compare), IDO uses $v0 (T-4060) |
+| ETC | `func_801428EC` | regorder | call argument `u8 * 0x10101 + 0x141414`: original loads the u8 global into $v0 and computes in $t6/$v0, IDO uses $t7/$t8/$t9 (T-4060) |
+| SHOUGATU | `func_801388F0` | regorder | `rec[idx].b or 4` on a byte record field then a string copy: original loads into $t0, ori into $t1, constant into $t2 (a temp skipped); IDO uses $t9/$t0/$t1 (T-4060) |
+| SHOUGATU | `func_80138964` | regorder | same as `func_801388F0` with the constant 0x17 (T-4060) |
+| SHOUGATU | `func_80138E60` | regorder | same as `func_801388F0` with the constant 8 (T-4060) |
+| SHOUGATU | `func_80138ED4` | regorder | same as `func_801388F0` with the constant 0xB (T-4060) |
+| GYOZI | `func_8013B6CC` | regorder | `girl[i].unk_10[0] or 4` then a string copy: same skipped-temp pattern as SHOUGATU `func_801388F0` (T-4060) |
+| GYOZI | `func_8013B740` | regorder | same as `func_8013B6CC` with the constant 0x17 (T-4060) |
+| BUNKA_SD | `func_8013261C` | regorder | `if (A != 4 && B == 0x14)`: original compares `bne v0,t0` (constant 0x14 kept in $v0 across both compares), IDO emits `bne t0,v0` (T-4060) |
+| RPG_BAT | `func_80144640` | regorder | switch on `D & 0xFFFF0000` (compare chain, 8 cases): same chain order as the original, but the selector sits in $v1 (original $v0, loaded into $v0 and copied with `or v0,t6,zero` for the default) (T-4060) |
+| TT | `func_8013BE08` | regorder | switch on `arg1 & 0xFFFF` (5 cases 40..44, jump table): original keeps the masked selector in $t6 and stores it to the record, IDO puts it in $v0; case constants load in another order (T-4060) |
