@@ -29,6 +29,26 @@ void func_801364F0(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80136270", func_80136578);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80136270", func_80136904);
+void func_80136904(void) {
+    if (D_80122EAC == 3) {
+        switch (D_800E7384) {
+        case 0x14C:
+            func_80044750(0x501);
+            return;
+        case 0x1BF:
+            func_80044750(0x502);
+            return;
+        }
+    } else {
+        switch (D_800E7384) {
+        case 0x157:
+            func_80044750(0x501);
+            return;
+        case 0x1CA:
+            func_80044750(0x502);
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80136270", func_801369AC);

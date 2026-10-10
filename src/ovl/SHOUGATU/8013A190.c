@@ -32,9 +32,19 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A190", func_8013A27C);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A190", func_8013A2F8);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A190", func_8013A3FC);
+void func_8013A3FC(void) {
+    D_80144E08 = 0;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "グランド");
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A190", func_8013A440);
+void func_8013A440(void) {
+    D_80144E08 = 5;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "グランド");
+    func_8004284C();
+}
 
 void func_8013A488(void) {
     bg_read_sub2(0x4097);
