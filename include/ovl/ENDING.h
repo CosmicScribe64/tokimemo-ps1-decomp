@@ -257,4 +257,8 @@ extern s32 D_8013CA10;
 extern s32 D_8013CA14;
 extern s32 D_8013CA18;
 
+extern s32 D_8013C2BC;
+extern s32 D_8013C300;
+extern s32 D_8013C344;
+
 #endif /* OVL_ENDING_H */

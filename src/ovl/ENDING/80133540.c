@@ -101,7 +101,23 @@ void func_801338B8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80133540", func_801338F8);
+s32 func_801338F8(void) {
+    if ((u32)D_800E6280.unk_1BC[14].unk_0C.w << 0x14 >> 0x1D < 3U) {
+        func_80042808();
+        return 0;
+    }
+    D_8013C3E0 = D_800E6280.unk_F5F;
+    D_800E6280.unk_F5F = 0xC;
+    D_800E6280.unk_75D = 0xC;
+    D_800CA148 = 0;
+    D_800CA14C = 0;
+    func_800AE0F0(D_800CA188, "外井");
+    func_80132000();
+    D_800CA160 = D_8013C2BC;
+    D_800CA164 = D_8013C300;
+    D_800CA168 = D_8013C344;
+    func_8004284C();
+}
 
 INCLUDE_RODATA("asm/ovl/ENDING/data/ENDING/80133540.rodata", D_8013BFB8);
 
