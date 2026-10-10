@@ -606,12 +606,12 @@ extern u8 D_800CA188[];
 extern u8 D_800CA190[];
 extern u8 D_800CA19C[];
 extern u8 D_800CA1DC[];
-/* Four 3-value rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
+/* Four s16[4] rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
  * with one chain assignment, which gives the original's shared register only for array elements. */
-extern s16 D_800CA21C[3];
-extern s16 D_800CA224[3];
-extern s16 D_800CA22C[3];
-extern s16 D_800CA234[3];
+extern s16 D_800CA21C[4];
+extern s16 D_800CA224[4];
+extern s16 D_800CA22C[4];
+extern s16 D_800CA234[4];
 extern u8 D_800CA23C[];
 extern u8 D_800CA25C[];
 extern u8 D_800CA2A4;
