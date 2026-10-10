@@ -13,11 +13,32 @@ void func_800FD2F0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD360);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD3DC);
+void func_800FD3DC(void) {
+    func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
+    if (D_800B1AF5 == 0) {
+        func_800FD4FC();
+        return;
+    }
+    func_80015FE0();
+}
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD43C);
+void func_800FD43C(void) {
+    func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
+    if (D_800B1AF5 == 0) {
+        func_800FD604();
+        return;
+    }
+    func_80015FE0();
+}
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD49C);
+void func_800FD49C(void) {
+    func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
+    if (D_800B1AF5 == 0) {
+        func_800FD6E0();
+        return;
+    }
+    func_80015FE0();
+}
 
 typedef struct {
     void (*f[51])();

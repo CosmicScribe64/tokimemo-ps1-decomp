@@ -396,7 +396,10 @@ void func_800FB8B4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB8EC);
+void func_800FB8EC(void) {
+    func_80078970(D_800947C4, "観覧車");
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FB920);
 
