@@ -1,10 +1,10 @@
 ---
 id: T-3001
 title: Constants reused across stores and compare/store types
-status: Backlog
-assignee:
+status: Done
+assignee: r3-consts
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-10
 links: ["[[tickets/T-1321-register-promotion-build-step]]", "[[matching-notes]]"]
 ---
 
@@ -19,6 +19,8 @@ Find the rule for two constant-register differences that `tools/cvt_pass.py` (T-
 
 ## Acceptance criteria
 
-- [ ] A rule for each case or a written verdict.
+- [x] A rule for each case or a written verdict.
 
 ## Comments
+
+- 2026-10-10 (r3-consts, with [[tickets/T-5020-loop-unrolling-and-lui-sharing]]): verdict toolchain, no fix. Over the corpus the original re-loads a repeated straight-line store constant 1052 times and reuses a register 124 times; IDO with `-Wo,-nokpicopt` always re-loads, stock IDO always reuses (in `$v0/$v1`), and the same function can do both in the original (`func_800419FC` re-loads 0x28 four times; DATE `func_8013DCC0` reuses 3/4/2). Locals, `register` locals, chain assignment and 40 uopt option settings do not change IDO's output. The `li at,1` per compare and the straight-line `li 0x38; multu` are the same family. Details: [[matching-notes]], section (a). Review: documentation only, no code; done.

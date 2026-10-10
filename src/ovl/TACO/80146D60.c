@@ -35,7 +35,20 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_801471D0);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_801472D4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147400);
+/* s32 counter against a u32 bound: IDO cannot count the trips and keeps the loop rolled, like the
+ * original (T-5020). */
+void func_80147400(u8 *arg0) {
+    s32 i;
+    u32 n;
+    u8 *p;
+
+    n = *(u32 *)(arg0 + 8);
+    p = arg0 + 0x1C;
+    for (i = 1; i < n + 1; i++) {
+        D_8015F290[i] = *(s32 *)p;
+        p += 0x1C;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147444);
 

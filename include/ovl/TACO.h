@@ -205,6 +205,8 @@ extern u8 D_8015E221;
 
 extern u8 D_8015E222[];
 
+extern s32 D_8015F290[];
+
 extern s16 *D_80160034[];
 void func_8014BED8(void);
 void func_8014BCEC(s32 arg0);

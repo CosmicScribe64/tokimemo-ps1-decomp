@@ -6,7 +6,6 @@ kanban-plugin: board
 
 ## Backlog
 - [ ] [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000 Re-match R/V-flagged functions with cvt_pass.py and retune the T-0018 detector]]
-- [ ] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
 - [ ] [[tickets/T-3002-remaining-promotion-shapes|T-3002 Register shapes left after the unsigned-load conversion pass]]
 
 - [ ] [[tickets/T-3051-review-low-confidence-object-boundaries|T-3051 Review the low-confidence object boundaries and the orphan rodata chunks]]
@@ -36,6 +35,8 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-3001-shared-constant-registers|T-3001 Constants reused across stores and compare/store types]]
+- [x] [[tickets/T-5020-loop-unrolling-and-lui-sharing|T-5020 Loop unrolling and lui sharing]]
 - [x] [[tickets/T-4010-wave-3-list-1|T-4010 Wave 3: list 1]]
 
 - [x] [[tickets/T-4040-wave-3-list-4|T-4040 Wave 3: list 4]]
