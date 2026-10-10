@@ -178,4 +178,6 @@ extern u8 D_8015E814;
 extern s32 D_8015EE08;
 extern s32 D_8015EC18;
 
+extern s32 D_8015EDEC;
+
 #endif
