@@ -79,7 +79,18 @@ void func_80132788(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801320A0", func_801327BC);
+void func_801327BC(void) {
+    func_800847B8(D_800E6280.unk_75D);
+    D_800E6280.unk_F5F = 0xE;
+    func_800AE0F0(D_800CA188, "母親");
+    D_800CA148 = D_800E6280.unk_75D > 0;
+    D_800CA14C = 0;
+    func_801320A0();
+    D_800CA160 = D_80134A8C;
+    D_800CA164 = D_80134ABC;
+    D_800CA168 = D_80134AEC;
+    func_8004284C();
+}
 
 void func_8013285C(void) {
     switch (D_800E6280.unk_F5F) {
