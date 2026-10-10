@@ -325,7 +325,26 @@ void func_8011630C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116360);
+s32 func_80116360(void) {
+    if ((D_800B1746 == 0) && (D_80094730 == 0xA) && (D_800EECBC == 0)) {
+        func_80011DFC();
+        return 0;
+    }
+    if (((D_800B1746 == 1) || (D_800B1746 == 4) || (D_800B1746 == 9)) && (D_80094730 == 6) && (D_800EECBC == 0)) {
+        func_80011DFC();
+        return 0;
+    }
+    if ((D_800B1746 == 0xA) && (D_80094730 == 6) && (D_800EECBC == 0)) {
+        func_80011DFC();
+        func_80011DFC();
+        func_80011DFC();
+        return 0;
+    }
+    func_80011DFC();
+    func_80011DFC();
+    func_80011DFC();
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116460);
 
@@ -599,7 +618,30 @@ void func_80118690(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118764);
+void func_80118764(void) {
+    if (D_800EECBC == 2) {
+        if ((D_800B1746 == 2) || (D_800B1746 == 3)) {
+            func_80011DFC();
+            return;
+        }
+        if (D_800B1746 == 8) {
+            func_8004A7F4();
+            return;
+        }
+        if ((D_800B1746 == 5) && (D_800B0A04[5].unk_17 == 0)) {
+            func_80011DFC();
+            return;
+        }
+        if ((D_800B1746 == 5) && (D_800B0A04[5].unk_17 != 0)) {
+            D_80094730 += 1;
+            func_8004A7C4();
+            return;
+        }
+        func_8004A7C4();
+        return;
+    }
+    func_80011DFC();
+}
 
 void func_80118848(void) {
     func_80011DFC();
@@ -662,7 +704,16 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119440);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119518);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119600);
+s32 func_80119600(void) {
+    if ((D_800B1746 == 1) && (D_800B0896 >= 6) && (D_800B0896 < 9) && (D_800EECBC == 1)) {
+        func_80011DFC();
+        return 0;
+    }
+    func_80011DFC();
+    func_80011DFC();
+    func_80011DFC();
+    func_80011DFC();
+}
 
 void func_80119688(void) {
     func_80011DFC();
@@ -886,7 +937,13 @@ void func_8011A440(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A4A4);
+void func_8011A4A4(void) {
+    if ((D_800B1746 == 0xA) && (D_800EECBC == 1) && (D_8012531C == 1)) {
+        func_8004CF30();
+        return;
+    }
+    func_80011DFC();
+}
 
 void func_8011A508(void) {
     if (D_800B1746 == 0xA) {
