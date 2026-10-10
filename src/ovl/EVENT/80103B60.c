@@ -19,15 +19,8 @@ void func_80103BC0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80103BF8);
 
-/* D_800B0B14 read as a bit-field (bit 14): IDO tests it with sll 17 / bltz, as the original does (T-4070). */
-typedef struct {
-    unsigned pad:14;
-    unsigned f:1;
-    unsigned rest:17;
-} BitsB14;
-
 void func_80103C3C(void) {
-    if (!((BitsB14 *)&D_800B0B14)->f) {
+    if (!D_800B0A04[5].unk_0C.b14) {
         D_80094714 += 1;
     }
     func_80011DFC();
@@ -155,10 +148,9 @@ void func_801044CC(void) {
     func_80012D64(D_80122B98, 0x11, 1, 2, 0);
     func_8004C46C(D_80122B9C, D_80122BA0, D_80122BA4, D_80122BA8, D_80122BAC, D_80122BB0);
     func_8004C6B0(D_80122B8C, D_80122B90, D_80122B88, D_80122B94);
-    /* FAKE: the two later fields reached through D_800B0B3E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0B3E += 3;
-    (&D_800B0B3E)[2] += 2;
-    (&D_800B0B3E)[4] -= 0x14;
+    D_800B0A04[6].unk_02 += 3;
+    D_800B0A04[6].unk_06 += 2;
+    D_800B0A04[6].unk_0A -= 0x14;
     func_8004C250();
     func_80011DFC();
 }

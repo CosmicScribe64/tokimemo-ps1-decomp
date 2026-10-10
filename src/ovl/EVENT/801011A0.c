@@ -145,10 +145,9 @@ void func_801019A4(void) {
     func_80012D64(D_80122238, 0x11, 1, 2, 0);
     func_8004C46C(D_8012223C, D_80122240, D_80122244, D_80122248, D_8012224C, D_80122250);
     func_8004C6B0(D_8012222C, D_80122230, D_80122228, D_80122234);
-    /* FAKE: the two later fields reached through D_800B0A3A; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0A3A += 1;
-    (&D_800B0A3A)[2] += 2;
-    (&D_800B0A3A)[4] -= 0x14;
+    D_800B0A04[1].unk_02 += 1;
+    D_800B0A04[1].unk_06 += 2;
+    D_800B0A04[1].unk_0A -= 0x14;
     func_8004C250();
     func_80011DFC();
 }
@@ -253,10 +252,9 @@ void func_80102000(void) {
     D_801243A4 = 2;
     D_801243A6 = 2;
     D_801243A8 = 2;
-    /* FAKE: D_800B0A3E/42 as D_800B0A3A + 4/8 (one base symbol); separate symbols let as1 hoist the loads. T-4010 */
-    D_800B0A3A -= 2;
-    (&D_800B0A3A)[2] -= 1;
-    (&D_800B0A3A)[4] += 0x14;
+    D_800B0A04[1].unk_02 -= 2;
+    D_800B0A04[1].unk_06 -= 1;
+    D_800B0A04[1].unk_0A += 0x14;
     func_8004C250();
     func_80011DFC();
 }

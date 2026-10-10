@@ -156,10 +156,9 @@ void func_800FC46C(void) {
     func_80012D64(D_8012120C, 0x11, 1, 2, 0);
     func_8004C46C(D_80121210, D_80121214, D_80121218, D_8012121C, D_80121220, D_80121224);
     func_8004C6B0(0, 0, 0, 0);
-    /* FAKE: D_800B0A72 and D_800B0A76 reached through D_800B0A6E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0A6E += 3;
-    (&D_800B0A6E)[2] += 2;
-    (&D_800B0A6E)[4] -= 0x14;
+    D_800B0A04[2].unk_02 += 3;
+    D_800B0A04[2].unk_06 += 2;
+    D_800B0A04[2].unk_0A -= 0x14;
     func_8004C250();
     func_80011DFC();
 }
@@ -194,10 +193,9 @@ void func_800FC994(void) {
     D_800EB02F = 0;
     D_800EB02D = 0;
     D_800EB02C = 0;
-    /* FAKE: D_800B0A72 and D_800B0A76 reached through D_800B0A6E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0A6E += 3;
-    (&D_800B0A6E)[2] += 2;
-    (&D_800B0A6E)[4] -= 0x14;
+    D_800B0A04[2].unk_02 += 3;
+    D_800B0A04[2].unk_06 += 2;
+    D_800B0A04[2].unk_0A -= 0x14;
     func_8004C250();
     func_80011DFC();
 }

@@ -321,9 +321,9 @@ void func_8010917C(void) {
     D_8012067C = D_801205E4;
     D_80120680 = D_80120600;
     if (((u8)func_8002328C(0xA) & 0x7F) < 2U) {
-        D_800B0C0E += 1;
+        D_800B0A04[10].unk_02 += 1;
     }
-    D_800B0C12 += 2;
+    D_800B0A04[10].unk_06 += 2;
     func_8004C250();
     func_80011DFC();
 }
@@ -336,10 +336,9 @@ void func_80109704(void) {
     D_80120678 = D_801205CC;
     D_8012067C = D_801205E8;
     D_80120680 = D_80120604;
-    /* FAKE: the two later fields reached through D_800B0C0E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0C0E += 1;
-    (&D_800B0C0E)[2] += 1;
-    (&D_800B0C0E)[4] -= 0xA;
+    D_800B0A04[10].unk_02 += 1;
+    D_800B0A04[10].unk_06 += 1;
+    D_800B0A04[10].unk_0A -= 0xA;
     func_8004C250();
     func_80108070();
     func_80012D64(D_801238BC, 0x11, 1, 2, 0);
@@ -354,9 +353,8 @@ void func_80109948(void) {
     D_80120678 = D_801205D4;
     D_8012067C = D_801205F0;
     D_80120680 = D_8012060C;
-    /* FAKE: D_800B0C16 reached through D_800B0C12; a separate name lets as1 hoist its load above the store. T-4100 */
-    D_800B0C12 += 2;
-    (&D_800B0C12)[2] -= 0xA;
+    D_800B0A04[10].unk_06 += 2;
+    D_800B0A04[10].unk_0A -= 0xA;
     func_8004C250();
     func_801081D0();
     func_80012D64(D_80123914, 0x11, 1, 2, 0);
@@ -369,10 +367,9 @@ void func_80109A4C(void) {
     D_80120678 = D_801205D8;
     D_8012067C = D_801205F4;
     D_80120680 = D_80120610;
-    /* FAKE: the two later fields reached through D_800B0C0E; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0C0E += 2;
-    (&D_800B0C0E)[2] += 1;
-    (&D_800B0C0E)[4] -= 0x14;
+    D_800B0A04[10].unk_02 += 2;
+    D_800B0A04[10].unk_06 += 1;
+    D_800B0A04[10].unk_0A -= 0x14;
     func_8004C250();
     func_80108280();
     func_80012D64(D_80123940, 0x11, 1, 2, 0);

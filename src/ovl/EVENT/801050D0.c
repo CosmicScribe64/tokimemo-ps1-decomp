@@ -127,21 +127,21 @@ void func_80105868(void) {
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_80105910);
 
 void func_80105998(void) {
-    if (*(s16 *) ((u8 *) &D_800B0A0A + D_800B1746 * 0x34) < 0x50) {
+    if (D_800B0A04[D_800B1746].unk_06 < 0x50) {
         D_80094714 += 2;
     }
     func_80011DFC();
 }
 
 void func_801059FC(void) {
-    if (*(s16 *) ((u8 *) &D_800B0A0A + D_800B1746 * 0x34) < 0x50) {
+    if (D_800B0A04[D_800B1746].unk_06 < 0x50) {
         D_800B1AF6 += 0xE;
     }
     func_80011DFC();
 }
 
 void func_80105A60(void) {
-    if (*(s16 *) ((u8 *) &D_800B0A0A + D_800B1746 * 0x34) >= 0x50) {
+    if (D_800B0A04[D_800B1746].unk_06 >= 0x50) {
         func_80011DFC();
         func_80011DFC();
         func_80011DFC();
@@ -170,10 +170,9 @@ void func_80106384(void) {
     D_80120678 = D_8012057C;
     D_8012067C = D_80120598;
     D_80120680 = D_801205B4;
-    /* FAKE: the two later fields reached through D_800B0BDA; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0BDA += 2;
-    (&D_800B0BDA)[2] += 1;
-    (&D_800B0BDA)[4] -= 0x14;
+    D_800B0A04[9].unk_02 += 2;
+    D_800B0A04[9].unk_06 += 1;
+    D_800B0A04[9].unk_0A -= 0x14;
     func_8004C250();
     func_80105250();
     func_80012D64(D_80122FD8, 0x11, 1, 2, 0);

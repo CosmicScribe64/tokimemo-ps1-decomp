@@ -170,7 +170,7 @@ void func_80102CC4(void) {
     D_8012067C = D_80120464;
     D_80120680 = D_80120480;
     func_80078970(D_80094784, "廊下");
-    D_800B0B0A += 1;
+    D_800B0A04[5].unk_02 += 1;
     func_8004C250();
     func_80011DFC();
 }
@@ -183,10 +183,9 @@ void func_80102D40(void) {
     func_80012D64(D_801226BC, 0x11, 1, 2, 0);
     func_8004C46C(D_801226C0, D_801226C4, D_801226C8, D_801226CC, D_801226D0, D_801226D4);
     func_8004C6B0(D_801226B0, D_801226B4, D_801226AC, D_801226B8);
-    /* FAKE: the two later fields reached through D_800B0B0A; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0B0A += 2;
-    (&D_800B0B0A)[2] += 1;
-    (&D_800B0B0A)[4] -= 0xA;
+    D_800B0A04[5].unk_02 += 2;
+    D_800B0A04[5].unk_06 += 1;
+    D_800B0A04[5].unk_0A -= 0xA;
     func_8004C250();
     func_80011DFC();
 }
@@ -201,10 +200,9 @@ void func_801030F4(void) {
     func_80012D64(D_80122714, 0x11, 1, 2, 0);
     func_8004C46C(D_80122718, D_8012271C, D_80122720, D_80122724, D_80122728, D_8012272C);
     func_8004C6B0(D_80122708, D_8012270C, D_80122704, D_80122710);
-    /* FAKE: the two later fields reached through D_800B0B0A; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0B0A += 3;
-    (&D_800B0B0A)[2] += 2;
-    (&D_800B0B0A)[4] -= 0x14;
+    D_800B0A04[5].unk_02 += 3;
+    D_800B0A04[5].unk_06 += 2;
+    D_800B0A04[5].unk_0A -= 0x14;
     func_8004C250();
     func_80011DFC();
 }
@@ -217,10 +215,9 @@ void func_80103208(void) {
     func_80012D64(D_80122730, 0x11, 1, 2, 0);
     func_8004C46C(D_80122734, D_80122738, D_8012273C, D_80122740, D_80122744, D_80122748);
     func_8004C6B0(0, 0, 0, 0);
-    /* FAKE: D_800B0B0E and D_800B0B12 reached through D_800B0B0A; separate names let as1 hoist their loads above the stores. T-4100 */
-    D_800B0B0A += 1;
-    (&D_800B0B0A)[2] += 1;
-    (&D_800B0B0A)[4] -= 0x14;
+    D_800B0A04[5].unk_02 += 1;
+    D_800B0A04[5].unk_06 += 1;
+    D_800B0A04[5].unk_0A -= 0x14;
     func_8004C250();
     func_80011DFC();
 }

@@ -22,6 +22,38 @@
 #include "common.h"
 #include "libgpu.h"
 
+/* ---- aggregate types (T-5000) ----
+ * Records whose fields splat names as separate D_ globals. tools/type_recovery.py proposes them from
+ * the original asm (indexed accesses with one stride, pointer walks, ordered store/load pairs);
+ * evidence and limits: wiki/data-types.md. Field names stay unk_XX until the meaning is known. */
+
+/* Flag word of Rec34; EVENT tests bits 12-14 one at a time (sll; bltz/bgez in the original). */
+typedef struct Rec34Flags {
+    u32 pad : 12;
+    u32 b12 : 1;
+    u32 b13 : 1;
+    u32 b14 : 1;
+    u32 rest : 17;
+} Rec34Flags; /* size 0x04 */
+
+/* 0x34-byte record of the table at D_800B0A04 (12 records; EVENT indexes it with stride 0x34). */
+typedef struct Rec34 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ Rec34Flags unk_0C;
+    /* 0x10 */ u8 pad10[7];
+    /* 0x17 */ u8 unk_17;
+    /* 0x18 */ u8 pad18[0xA];
+    /* 0x22 */ u8 unk_22;
+    /* 0x23 */ u8 pad23[0xA];
+    /* 0x2D */ u8 unk_2D;
+    /* 0x2E */ u8 pad2E[6];
+} Rec34; /* size 0x34 */
+
 /* ---- globals ---- */
 extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
@@ -53,23 +85,9 @@ extern u32 D_800B0940;
 extern s16 D_800B0956;
 extern s16 D_800B095E;
 extern s16 D_800B0966;
-extern s16 D_800B0A06;
-extern s16 D_800B0A0A;
-extern u8 D_800B0A10[];
-extern u8 D_800B0A31[];
-extern s16 D_800B0A3A;
-extern s16 D_800B0A3E;
-extern s16 D_800B0A42;
-extern u8 D_800B0A65;
-extern s16 D_800B0A6E;
-extern s16 D_800B0B0A;
-extern s32 D_800B0B14;
-extern u8 D_800B0B53;
+extern Rec34 D_800B0A04[]; /* 12 records */
 extern u8 D_800B0B64[];
 extern u8 D_800B0B6C[];
-extern u8 D_800B0BC6;
-extern s16 D_800B0C0E;
-extern s16 D_800B0C12;
 extern s8 D_800B0E31;
 extern u8 D_800B0E42;
 extern u8 D_800B0E43;
@@ -1698,9 +1716,7 @@ void func_800BCDF0();
 void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
-extern s16 D_800B0BDA;
 extern u8 D_800B1AF9;
-extern s16 D_800B0B3E;
 extern u8 D_800E6528;
 
 #endif /* MAIN_API_H */

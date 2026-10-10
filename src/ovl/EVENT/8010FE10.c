@@ -393,14 +393,14 @@ void func_80116D18(void) {
         D_800B1AF6 += 0xC;
         return;
     }
-    if (D_800B0A31[D_800B1746 * 0x34] != 0) {
+    if (D_800B0A04[D_800B1746].unk_2D != 0) {
         D_8012437C += 1;
     }
     func_80011DFC();
 }
 
 void func_80116DC0(void) {
-    if (D_800B0A31[D_800B1746 * 0x34] == 0) {
+    if (D_800B0A04[D_800B1746].unk_2D == 0) {
         D_8012437C += 1;
     }
     func_80011DFC();
@@ -600,7 +600,7 @@ void func_80119008(void) {
         func_8004A7C4();
         return;
     }
-    if ((D_800B1746 == 1) && (D_800B0A65 == 0)) {
+    if ((D_800B1746 == 1) && (D_800B0A04[1].unk_2D == 0)) {
         func_8004A734();
         return;
     }
@@ -640,10 +640,9 @@ void func_80119A60(void) {
         func_8004A8EC(4);
         func_80033E88();
         D_80094730 = 5;
-        D_800B0A06 += 1;
-        /* FAKE: D_800B0A0A and D_800B0A0E are reached through D_800B0A06 so that as1 does not hoist their loads above the earlier stores; real source unknown. T-4050 */
-        (&D_800B0A06)[2] += 1;
-        (&D_800B0A06)[4] -= 0x14;
+        D_800B0A04[0].unk_02 += 1;
+        D_800B0A04[0].unk_06 += 1;
+        D_800B0A04[0].unk_0A -= 0x14;
         func_8004C250();
         func_80011EC4(0x5C);
         return;
@@ -665,7 +664,7 @@ void func_80119B58(void) {
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119B78);
 
 void func_80119C40(void) {
-    if ((D_800B1746 == 6) && (D_800B0B53 != 0) && (D_800EECBC == 2)) {
+    if ((D_800B1746 == 6) && (D_800B0A04[6].unk_17 != 0) && (D_800EECBC == 2)) {
         D_800EECBC = 3;
     }
     func_80011DFC();
@@ -761,7 +760,7 @@ void func_8011A0D0(void) {
 }
 
 void func_8011A0F0(void) {
-    if ((D_800B1746 == 8) && (D_800B0BC6 != 0)) {
+    if ((D_800B1746 == 8) && (D_800B0A04[8].unk_22 != 0)) {
         D_800B1AF6 += 0x19;
     }
     func_80011DFC();
@@ -997,18 +996,8 @@ void func_8011C3F4(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C470);
 
-typedef struct {
-    u32 pad : 12;
-    u32 b12 : 1;
-    u32 b13 : 1;
-    u32 rest : 18;
-} EvFlags; /* size 4; bits 12 and 13 are tested as bit-fields (sll; bltz/bgez in the original) */
-
 void func_8011C514(void) {
-    EvFlags *f;
-
-    f = (EvFlags *)(D_800B0A10 + D_800B1746 * 0x34);
-    if (f->b12 || f->b13) {
+    if (D_800B0A04[D_800B1746].unk_0C.b12 || D_800B0A04[D_800B1746].unk_0C.b13) {
         func_80011DFC();
         return;
     }
