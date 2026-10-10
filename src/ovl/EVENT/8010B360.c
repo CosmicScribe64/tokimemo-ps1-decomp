@@ -28,7 +28,23 @@ void func_8010B430(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B490);
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+extern FnTbl42 D_80124120;
+
+void func_8010B490(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl42 tbl;
+
+    tbl = D_80124120;
+    func_80078950("s%d %d\n", D_800B1AF6, D_80094714);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_8012411C != 0) {
+        func_80033E88();
+    }
+}
 
 void func_8010B538(void) {
     func_80015D28(0x3D, 0x801B0000, 0x8C15);

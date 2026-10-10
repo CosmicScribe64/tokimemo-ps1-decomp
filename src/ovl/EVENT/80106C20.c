@@ -159,7 +159,7 @@ void func_801073FC(void) {
     D_800B0A04[4].unk_02 += 3;
     D_800B0A04[4].unk_06 += 2;
     D_800B0A04[4].unk_0A -= 0x14;
-    *(s16 *)((u8 *)D_800B0A04 - 0xB6) += 0xA; /* D_800B094E, addressed from the table so the load keeps its place */
+    *(s16 *)((u8 *)D_800B0A04 - 0xB6) += 0xA; /* FAKE: this is D_800B094E; addressing it from the table keeps IDO from hoisting its load */
     func_8004C250();
     func_80011DFC();
 }

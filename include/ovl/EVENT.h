@@ -1294,4 +1294,6 @@ void func_800FCFC4(void);
 
 void func_80107030(void);
 
+extern u8 D_8012411C;
+
 #endif /* OVL_EVENT_H */

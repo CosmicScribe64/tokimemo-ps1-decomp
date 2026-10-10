@@ -452,6 +452,7 @@ extern u8 D_800B1AF9;
 extern s32 D_800B1C1C;
 extern s32 D_800B1C70;
 extern u8 D_800B3220;
+extern u8 *D_800B3288[];
 extern u8 *D_800B35F4[];
 #ifndef MAIN_API_OVERRIDE_D_800B3688
 extern s32 D_800B3688[];
@@ -1958,6 +1959,7 @@ s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
 void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */
 void strcpy(u8 *dst, u8 *src);
+void func_800AE100(void *dst, void *src);
 void func_800AE120(s32 arg0);
 s32 strcmp(u8 *a, u8 *b);
 s32 SetSp();
