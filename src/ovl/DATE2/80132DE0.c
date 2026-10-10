@@ -23,7 +23,20 @@ void func_80132E5C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80132EC8);
+void func_80132EC8(void) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    temp_v0 = D_800E6280.unk_1104.w * 0x1400;
+    func_800AE0A0(temp_v0 + 0x80180000, temp_v0 + 0x801A0000, 0x1400);
+    temp_v0_2 = D_800E6280.unk_1104.w + 1;
+    D_800E6280.unk_1104.w = temp_v0_2;
+    if (temp_v0_2 == 0x12) {
+        D_800E6280.unk_F5F = 0;
+        func_80051508(D_800CA17C, 0);
+        func_8004284C();
+    }
+}
 
 void func_80132F48(void) {
     s32 pad; /* FAKE: unused local that moves rect to sp+0x2C like the original (T-3330 frame rule). T-4050 */

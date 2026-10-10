@@ -129,4 +129,16 @@ INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062840);
 
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062948);
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_80062C28);
+void func_80062C28(void) {
+    set_movie_offset(0, 0);
+    func_80056BA8(0, 0xA7, 0x190);
+    func_80088070();
+    func_80045414(9, 0, 0);
+    func_80045414(0xA, 0, 0);
+    func_80053650(0x80167000, 0x80162000, 0x80162000);
+    func_8009C210(1);
+    func_80041168(0);
+    func_8009C674(0);
+    back_clear_switch(1);
+    func_80042878(0);
+}

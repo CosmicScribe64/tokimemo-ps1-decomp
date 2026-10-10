@@ -20,7 +20,15 @@ void func_8013A1B4(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A1D4);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A274);
+void func_8013A274(void) {
+    if (D_800E6280.unk_F5F == 2) {
+        func_80083440(3);
+    }
+    if (D_800E6280.unk_F5F == 7 && D_800CA2F4 == 0) {
+        func_80083440(4);
+    }
+    func_8004284C();
+}
 
 void func_8013A2D8(void) {
     if (D_80122CDC == 0) {
