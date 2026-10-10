@@ -127,6 +127,14 @@ extern s8 D_8014D09C;
 extern s8 D_8014D0A0;
 extern s8 D_8014D0A4;
 
+extern s32 D_8014CD28;
+extern s32 D_8014CD2C;
+extern s32 D_8014CD30;
+extern s32 D_8014CD34;
+extern s32 D_8014CD38;
+extern s32 D_8014CD3C;
+extern s32 D_8014CD40;
+extern s32 D_8014CD48;
 #endif /* OVL_NAME_ENT_H */
 extern u8 D_8014CC70;
 void func_801377E8();

@@ -210,7 +210,17 @@ INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.rodata", D_8014B4A4);
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.rodata", D_8014B4AC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132FD4);
+void func_80132FD4(void) {
+    func_8004E788(-0x78, 0x38, 0xA, D_8014CD28, 0);
+    func_8004E788(-0x18, 0x38, 0xA, D_8014CD2C, 0);
+    func_8004E788(0x48, 0x38, 0xA, D_8014CD30, 0);
+    func_8004E788(-0x78, 0x48, 0xA, D_8014CD34, 0);
+    func_8004E788(-0x18, 0x48, 0xA, D_8014CD38, 0);
+    func_8004E788(0x48, 0x48, 0xA, D_8014CD3C, 0);
+    func_8004E788(-0x78, 0x58, 0xA, D_8014CD40, 0);
+    func_8004E788(-0x18, 0x58, 0xA, "やゆよ　わ", 0);
+    func_8004E788(0x48, 0x58, 0xA, D_8014CD48, 0);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801330E8);
 
