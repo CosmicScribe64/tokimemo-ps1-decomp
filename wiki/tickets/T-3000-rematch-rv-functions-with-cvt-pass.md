@@ -22,4 +22,6 @@ links: ["[[tickets/T-1321-register-promotion-build-step]]", "[[tickets/T-1320-to
 
 T-1321 sample: of 148 flagged functions with C written, 40 match only with the pass, 19 matched without it (detector false positives), 89 still differ for other reasons.
 
+Open decision (T-1321 merge): `tools/cvt_pass.py` is not in the build because 20 of main's matched switches on unsigned globals keep `$v0` in the original while the same C gives `$v1` under the pass. Either find the variable property that separates them (T-3100: promotable scalar vs struct/array data) and encode it in the C, then enable the pass (`tools/cc.py` `SHIMS`), or leave the pass out. Scratch C for 40 pass-only matches is listed in [[tickets/T-1321-register-promotion-build-step]].
+
 ## Comments

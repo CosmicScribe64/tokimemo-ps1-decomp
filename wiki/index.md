@@ -63,7 +63,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200]] Fix conflicting extern declarations after batch merges (Done)
 - [[tickets/T-2010-wave2-date|T-2010]] Wave 2: DATE, 278 functions matched (Done)
 - [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
-- [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap: unsigned-load conversion pass (Done)
+- [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap: cause found, unsigned-load conversion pass kept out of the build (Done)
 - [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000]] Re-match R/V-flagged functions with cvt_pass.py, retune the detector (Backlog)
 - [[tickets/T-3001-shared-constant-registers|T-3001]] Constants reused across stores and compare/store types (Backlog)
 - [[tickets/T-3002-remaining-promotion-shapes|T-3002]] Register shapes left after the unsigned-load conversion pass (Backlog)

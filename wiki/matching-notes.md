@@ -348,7 +348,7 @@ Regression check (scratch harness compiling each `src/**/*.c` and comparing ever
 Matched with the new flag (were blocked): `func_80048E78`, `tpage_buf_clear`, `get_h_tokimeki_table`, `get_h_yuukou_table` (main), `func_80135F54` (EN_NICHI), `func_8013815C`, `func_801446A0`, `func_80146FA0` (TAIIKU, out of `NON_MATCHING`), and the `multu` loops `func_80140788` (DATE), `func_8011C11C`, `func_80103B60` (EVENT), `func_8014261C` (GYOZI), `func_8013FFD0` (SHOUGATU). `ninja progress` 151 -> 164 functions, 8132 -> 9580 bytes. Side effect on the frame pass: a local array indexed in a loop now gets its address hoisted (`addiu s1,sp,N`), which the pass already adjusts like any `$sp` immediate; the IDO snippets in `tools/test_frame_pass.py` cover both forms. The remaining ~1200 functions with hoisted constants are now ordinary matching work ([[tickets/T-0950-match-nokpicopt-unblocked-functions]]).
 
 ## Register promotion of globals (T-0018)
-Ticket: [[tickets/T-0018-ugen-temp-register-order]]. Not solved; this is a compiler difference. Update (T-1321): solved for unsigned globals by `tools/cvt_pass.py`; the cause is IDO's `CVT` on unsigned loads and its copy propagation of switch temporaries, not a loop-only allocator (section "Unsigned-load conversion pass (T-1321)" below).
+Ticket: [[tickets/T-0018-ugen-temp-register-order]]. Not solved; this is a compiler difference. Update (T-1321): the cause is IDO's `CVT` on unsigned loads and its copy propagation of switch temporaries, not a loop-only allocator; `tools/cvt_pass.py` models both but is not in the build (section "Unsigned-load conversion pass (T-1321)" below).
 
 The T-0750 "compare chain on a `u8` global gets `$v1`" is one symptom. When a function reads a scalar global in several basic blocks (switch or `if` chain, then `D++` after a call), the original keeps every load of that global in one register, re-loading it into the same register after each call (`lui v1; lbu v1,%lo(D)(v1)` before the chain and again after `jal`, then `addiu t6,v1,1; sb t6,%lo(D)(at)`). IDO 5.3 and 7.1 do this only inside loops: in straight-line code the compare chain gets a CSE temporary (`$v0`) and each later load gets a fresh ugen temporary (`$t6`, `$t8`, ...), which also shifts every later temporary.
 
@@ -371,6 +371,8 @@ Update (T-3100, [[original-compiler]]): "IDO does this only inside loops" is too
 `LoadSquare`, `StoreSquare`, `MoveSquare` (original `lhu` into `t8,t9`, IDO `t0,t1`) are unchanged by every option, flag and pass mix above, and by K&R parameter declarations; still `NON_MATCHING`.
 
 ## Unsigned-load conversion pass (T-1321)
+**Status: not in the build.** After the merge with main (per-object layout, 2734 matched functions) the pass changes 26 functions that match without it: 20 switches on unsigned globals that the original keeps in `$v0` (all of GYOZI's and SHOUGATU's, DATE2 `func_80133A6C`, SHUGAKU `func_80132760`/`func_80137C3C`/`func_80138154`, ETC `func_80145960`/`func_80145FF0`, DATE `func_801448D4`, GEKO `func_80132244`, main `func_80078A0C`), 4 promotions the original does not make (ETC `func_80145FF0`, DATE `func_801448D4`, GEKO `func_80141D74`, `func_80143EA4`; even without the switch rule), and `bustup_speech`/`bustup_wink`, whose FAKE masks it makes unnecessary. The C of the `$v0` and `$v1` switches is the same (`switch (D)` on an extern `u8`), so no rule on the C or the ucode separates them; the original's discriminator is a property of the variable that the C does not encode (T-3100's model: a promotable scalar vs struct or array data, see [[original-compiler]]). A third rule found during the merge is kept in the tool: IDO puts the constant first in `cvt(D) == k`, so after uopt the pass swaps `D == k` back (DATE `func_8013E184`, GEKO `func_8013F02C`). Open in [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]].
+
 Ticket [[tickets/T-1321-register-promotion-build-step]]; tool `tools/cvt_pass.py` ([[toolchain]]). Supersedes the "Not solved" verdict of the T-0018 section above: IDO 5.3 does keep globals in registers across blocks and calls in straight-line code (a `s32` global compared and reloaded after a call, GEKO `func_8013A5E8`, comes out exactly like the original); what stops it for the recorded cases is two IDO details, not the allocator.
 
 How it was found (scratch tools, not committed: a ucode reader, a pass-by-pass IDO driver, uopt's `-Wo,-zdbug:6` coloring trace written to a list file):
@@ -386,7 +388,7 @@ Rejected or not needed:
 - Patching uopt's thresholds (prototype on a scratch copy of the recompiled uopt, never committed): `adjsave > 0` to `>= 0` in `compute_save` together with the two split/color comparisons of `globalcolor` promotes `D_800E738D` but also puts compare constants and `lui` addresses into registers; `func_80145960` and DATE2 `func_8013279C` stop matching and `func_8005A560` still differs. The difference is the conversion, not the threshold.
 - Dropping `VREG` records, `-nordstore`/`-zstor:0`, mapping the temporary to a fixed register: each fixes at most part of the switch cases.
 
-Matched corpus: with the pass every function that matched before still matches except `bustup_speech`, `bustup_wink` (their FAKE `& 0xFF` masks are no longer needed: plain `D |= 0x11` matches), ETC `func_80145FF0` and `func_80145960` (switch on a local copy now). Clean build 27 of 27 sha1 OK.
+Matched corpus before the merge (1168 functions): with the pass every function that matched before still matched except `bustup_speech`, `bustup_wink` (their FAKE `& 0xFF` masks are no longer needed: plain `D |= 0x11` matches), ETC `func_80145FF0` and `func_80145960` (switch on a local copy now). Clean build 27 of 27 sha1 OK.
 
 Measured on a sample (C written by agents for 148 R/V-flagged functions of at most 400 bytes plus the recorded `promo` rows, compared with and without the pass; scratch, not committed):
 | | functions |
@@ -395,11 +397,11 @@ Measured on a sample (C written by agents for 148 R/V-flagged functions of at mo
 | match with and without (detector false positive) | 19 |
 | differ in both | 89 (switch placement in implicit-int functions, the shapes of [[tickets/T-3002-remaining-promotion-shapes]], frames, header prototypes) |
 | match without, not with | 0 |
-So the R/V detector's precision for "blocked by this gap" is 40 of 59 resolved functions (68%); 13 larger R-flagged functions (540-804 bytes, RPG_BAT and TACO) matched with plain C and did not need the pass either, so the R rule over-reports (it fires on `s32` globals, which IDO already keeps in registers). Matched into the build by T-1321: the 26 pass-only ETC/TACO functions (80-300 bytes) and the 13 larger ones.
+So the R/V detector's precision for "blocked by this gap" is 40 of 59 resolved functions (68%); 13 larger R-flagged functions (540-804 bytes, RPG_BAT and TACO) matched with plain C and did not need the pass either, so the R rule over-reports (it fires on `s32` globals, which IDO already keeps in registers). After the merge only the 13 larger plain-C ones are in the build; the 40 pass-only matches stay scratch C.
 
 Not reproduced by the pass (open): TACO `func_8013760C` (two switches and a loop; the copy `or v0,v1,zero` and `$v1` do not appear even with copy propagation off), ETC `func_8013E89C` (selector in `$a1`), RPG_BAT `func_8013B2F0`/`func_8013CC90` (two globals, `$v1` vs `$v0` swapped).
 
-Batch-agent guidance (also for [[decompile-workflow]]):
+Batch-agent guidance for when the pass is adopted (T-3000); with the current build these functions stay `INCLUDE_ASM`:
 - A compare chain or switch on an unsigned global with `$v1` and reloads into `$v1` after calls: write the natural C, `switch (D)` directly on the global.
 - The same with `$v0`: switch on a local copy (`u8 mode = D; switch (mode)`).
 - `or v0,v1,zero` in the first delay slot of the chain: the function returns `int` and has no `return` (implicit int); declare it `s32 f(void)` without a return statement (DATE2-era K&R style). Example: `func_80072944` matches as `s32 func_80072944(void) { switch (D_800E738A) { case 0: f0(); break; case 1: f1(); break; } }`.

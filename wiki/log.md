@@ -459,3 +459,6 @@ Nine archives in versions/ hold five distinct discs (compared by track-1 SHA-1):
 
 ## [2026-10-09] ticket | T-3200 In Progress -> In Review -> Done
 [[tickets/T-3200-catalog-game-versions]] done after the inline review (no open findings). No build files touched.
+
+## [2026-10-09] merge | T-1321 merged with main
+[[tickets/T-1321-register-promotion-build-step]]: merged main (per-object C, wave 2). `tools/cvt_pass.py` changes 26 of main's 2734 matched functions, so it is out of the build (tool, tests and an `extra_shims` hook in `tools/cc.py` remain); new constant-first rule in the tool. 13 plain-C matches ported to the per-object files. Clean build 27/27, check_headers OK, progress 2747/6958. Open decision moved to [[tickets/T-3000-rematch-rv-functions-with-cvt-pass]]. Notes in [[matching-notes]], [[toolchain]].
