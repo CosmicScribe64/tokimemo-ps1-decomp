@@ -193,9 +193,11 @@ def main():
     # old D_ names of aggregate fields (T-5100): tools/migrate_globals.py --check over every C file
     n.rule("globals", command="python3 tools/migrate_globals.py --check && touch $out",
            description="CHECK GLOBALS")
+    # a `keep` line is checked against the asm of its object (T-7010), so the split runs first
     n.build(GLOBALS_OK, "globals",
-            implicit=["tools/migrate_globals.py", "config/migrate_globals.txt"] + HEADER_FILES
-            + sorted(glob.glob("src/**/*.c", recursive=True)))
+            implicit=["tools/migrate_globals.py", "tools/aggregate_audit.py", "config/migrate_globals.txt"]
+            + HEADER_FILES + sorted(glob.glob("src/**/*.c", recursive=True)),
+            order_only=["build/split.stamp"] + ["build/ovl/%s.stamp" % o[0] for o in read_overlays()])
     n.build("globals", "phony", GLOBALS_OK)
     n.rule("as", command="python3 tools/asm.py $in $out", description="AS $in")
     n.rule("cc",

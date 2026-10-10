@@ -161,13 +161,42 @@ class MigrateTest(unittest.TestCase):
         self.assertEqual(self.apply(), 1)
         self.assertIn("return D_80100004;", self.get("src/main/a.c"))
 
+    def put_asm(self, hoisted):
+        """Original asm of object 80010000: D_80100002 += 1; D_80100004 += 1; with the second load
+        above the first store (separate symbols, as1) or after it (one symbol)."""
+        x, y = "D_80100002", "D_80100004"
+        lx = ["lui $t6, %%hi(%s)" % x, "lh $t6, %%lo(%s)($t6)" % x]
+        sx = ["lui $at, %%hi(%s)" % x, "addiu $t7, $t6, 1", "sh $t7, %%lo(%s)($at)" % x]
+        ly = ["lui $t8, %%hi(%s)" % y, "lw $t8, %%lo(%s)($t8)" % y]
+        sy = ["lui $at, %%hi(%s)" % y, "addiu $t9, $t8, 1", "sw $t9, %%lo(%s)($at)" % y]
+        body = lx + ly + sx + sy if hoisted else lx + sx + ly + sy
+        d = os.path.join(self.root, "asm", "nonmatchings", "main", "80010000")
+        os.makedirs(d, exist_ok=True)
+        lines = ["glabel f"] + ["    /* 0 %08X 00000000 */  %s" % (0x80010000 + 4 * i, b) for i, b in enumerate(body)]
+        self.put("asm/nonmatchings/main/80010000/f.s", "\n".join(lines) + "\nendlabel f\n")
+
+    def test_keep_needs_a_hoisted_pair(self):
+        self.put("config/migrate_globals.txt", CONFIG + "keep src/main/80010000.c D_80100002 reason\n")
+        self.put("src/main/80010000.c", '#include "main_api.h"\nvoid f(void) { D_80100002 = 1; }\n')
+        self.assertEqual(self.apply(), 0)
+        msgs = mg.check(self.root, *mg.load_config(self.root))
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("no asm of the original object", msgs[0])
+        self.put_asm(hoisted=False)
+        msgs = mg.check(self.root, *mg.load_config(self.root))
+        self.assertEqual(len(msgs), 1)
+        self.assertIn("no evidence for a separate symbol", msgs[0])
+        self.put_asm(hoisted=True)
+        self.assertEqual(mg.check(self.root, *mg.load_config(self.root)), [])
+
     def test_keep_and_base_views(self):
-        self.put("config/migrate_globals.txt", CONFIG + "keep src/main/a.c D_80100002 matched only as a scalar\n")
-        self.put("src/main/a.c", '#include "main_api.h"\nvoid f(void) { D_80100002 = 1; }\n')
+        self.put_asm(hoisted=True)
+        self.put("config/migrate_globals.txt", CONFIG + "keep src/main/80010000.c D_80100002 matched only as a scalar\n")
+        self.put("src/main/80010000.c", '#include "main_api.h"\nvoid f(void) { D_80100002 = 1; }\n')
         self.put("src/main/b.c", '#include "main_api.h"\nvoid g(s32 i) { D_80100002 = 2; D_80100000[i] = 0; '
                  "h(&D_80100000); D_80100000.unk_00 = 1; }\n")
         self.assertEqual(self.apply(), 1)            # the u8[] view of the base needs a hand rewrite
-        self.assertIn("D_80100002 = 1;", self.get("src/main/a.c"))
+        self.assertIn("D_80100002 = 1;", self.get("src/main/80010000.c"))
         b = self.get("src/main/b.c")
         self.assertIn("D_80100000.unk_02 = 2;", b)
         self.assertIn("D_80100000[i] = 0;", b)

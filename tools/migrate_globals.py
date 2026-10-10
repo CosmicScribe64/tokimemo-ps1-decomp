@@ -10,8 +10,17 @@ and the old names hide the layout. This tool does that rewrite and keeps it done
 Configuration, config/migrate_globals.txt:
   aggregate <base symbol> <type> <header>     every D_XXXXXXXX inside [base, base + sizeof(type))
                                               is a field of <base>; <type> is parsed from <header>
-  keep <src file> <symbol> <reason ...>       a use that matched only on the old view: the file keeps
-                                              <symbol> (declared in the header with its old type)
+  keep <src file> <symbol> <reason ...>       a separate-symbol view for one original object: the file
+                                              keeps <symbol> (declared in the header with its old type)
+
+A `keep` line needs evidence from the original code (T-7010): in the original object of that file
+(`src/main/<addr>.c` -> `asm/*matchings/main/<addr>/`, `src/ovl/<NAME>/<addr>.c` -> its overlay
+directory) a read-modify-write of the symbol's address and one of another field of the aggregate
+must form a "hoisted" pair (tools/aggregate_audit.py: the later load placed above the earlier
+store). IDO compiles a constant-offset member exactly like a separate symbol except for as1's
+load-over-store scheduling, so this is the only thing a separate view changes; a function that
+misses by registers or operand order does not get one. `--check` runs the audit on that object's
+asm (configure.py must have run) and rejects a keep line without such a pair.
 
 The layout comes from the header itself: `typedef struct|union Name { ... } Name;` blocks with
 fields of the fixed-width types, pointers, arrays, bit-fields (packed into u32 units) and other
@@ -608,7 +617,56 @@ def check(root, aggs, keep):
         for sym in sorted(syms):
             if sym not in views.main:
                 lines.append("%s: %s: kept symbol %s is not declared in include/main_api.h" % (CONFIG, p, sym))
+            ok, why = keep_evidence(root, aggs, p, sym)
+            if not ok:
+                lines.append("%s: %s: keep %s: %s" % (CONFIG, p, sym, why))
     return lines
+
+
+def object_asm_files(root, rel):
+    """The function asm of the original object that the C file `rel` holds, [] if none."""
+    rel = rel.replace(os.sep, "/")
+    m = re.match(r"^src/ovl/(\w+)/([0-9A-Fa-f]{8})\.c$", rel)
+    if m:
+        dirs = ["asm/ovl/%s/%s/%s/%s" % (m.group(1), k, m.group(1), m.group(2)) for k in ("matchings", "nonmatchings")]
+    else:
+        m = re.match(r"^src/ovl/(\w+)\.c$", rel)
+        if m:
+            dirs = ["asm/ovl/%s/%s/%s" % (m.group(1), k, m.group(1)) for k in ("matchings", "nonmatchings")]
+        else:
+            m = re.match(r"^src/main/([0-9A-Fa-f]{8})\.c$", rel)
+            dirs = ["asm/%s/main/%s" % (k, m.group(1)) for k in ("matchings", "nonmatchings")] if m else []
+    out = []
+    for d in dirs:
+        for dirpath, _d, files in os.walk(os.path.join(root, d)):
+            out += [os.path.join(dirpath, f) for f in sorted(files) if f.endswith(".s")]
+    return sorted(out)
+
+
+def keep_evidence(root, aggs, rel, sym):
+    """(True, function) when the original object of `rel` has a hoisted read-modify-write pair inside
+    an aggregate that involves sym's address (tools/aggregate_audit.py); else (False, reason)."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import aggregate_audit as aa
+    import type_recovery as tr
+    m = SYM_RE.match(sym)
+    if not m or not agg_for(aggs, sym):
+        return False, "not a field of an aggregate"
+    addr = int(m.group(1), 16)
+    files = object_asm_files(root, rel)
+    if not files:
+        return False, "no asm of the original object for %s (run configure.py; per-object C files only)" % rel
+    unit = rel.replace(os.sep, "/").split("/")[2].split(".")[0] if rel.startswith("src/ovl") else "main"
+    syms = tr.load_labels({k: v for k, v in tr.data_files(root).items() if k in ("main", unit)})
+    ranges = aa.Ranges((g.base, g.addr, g.end) for g in aggs)
+    for path in files:
+        name, lines = tr.parse_function_file(path)
+        for where, how, x, y in aa.analyze_function(name, lines, unit, syms, ranges).pairs:
+            if where == "in" and how == "hoisted" and addr in (x, y):
+                return True, name
+    return False, ("no evidence for a separate symbol: the original object has no load of %s hoisted "
+                   "over a store to another field (tools/aggregate_audit.py --pairs); write the field "
+                   "access and fix the function another way (wiki/game-state.md)" % sym)
 
 
 def main(argv=None):
