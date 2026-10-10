@@ -235,7 +235,22 @@ void func_8005B8E0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B908);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BAE0);
+s32 func_8005BAE0(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80044750(0x502);
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, "データが壊れています", 0);
+        k_sub_disp_start(1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            func_80042940(6);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BB84);
 
