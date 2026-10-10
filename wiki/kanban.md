@@ -23,7 +23,6 @@ kanban-plugin: board
 
 
 ## In Progress
-- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
 
 
 ## In Review
@@ -31,6 +30,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-1321-register-promotion-build-step|T-1321 Build step for the register-promotion gap]]
 
 - [ ] [[tickets/T-2030-wave-2-taco|T-2030 Wave 2: TACO]]
 - [x] [[tickets/T-2040-wave-2-etc|T-2040 Wave 2: ETC]]

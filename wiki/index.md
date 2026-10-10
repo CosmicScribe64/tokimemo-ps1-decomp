@@ -58,7 +58,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-1050-overlay-batch-i-kangei-shugaku|T-1050]] Overlay batch I: KANGEI, SHUGAKU (Done)
 - [[tickets/T-1200-fix-conflicting-extern-declarations|T-1200]] Fix conflicting extern declarations after batch merges (Done)
 - [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320]] Tooling: work queue and blocker detector (Done)
-- [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap: unsigned-load conversion pass (In Progress)
+- [[tickets/T-1321-register-promotion-build-step|T-1321]] Build step for the register-promotion gap: unsigned-load conversion pass (Done)
 - [[tickets/T-3000-rematch-rv-functions-with-cvt-pass|T-3000]] Re-match R/V-flagged functions with cvt_pass.py, retune the detector (Backlog)
 - [[tickets/T-3001-shared-constant-registers|T-3001]] Constants reused across stores and compare/store types (Backlog)
 - [[tickets/T-3002-remaining-promotion-shapes|T-3002]] Register shapes left after the unsigned-load conversion pass (Backlog)

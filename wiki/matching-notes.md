@@ -386,6 +386,17 @@ Rejected or not needed:
 
 Matched corpus: with the pass every function that matched before still matches except `bustup_speech`, `bustup_wink` (their FAKE `& 0xFF` masks are no longer needed: plain `D |= 0x11` matches), ETC `func_80145FF0` and `func_80145960` (switch on a local copy now). Clean build 27 of 27 sha1 OK.
 
+Measured on a sample (C written by agents for 148 R/V-flagged functions of at most 400 bytes plus the recorded `promo` rows, compared with and without the pass; scratch, not committed):
+| | functions |
+|---|---|
+| match only with the pass | 40 (ETC 23, TACO 3, main/small overlays 14) |
+| match with and without (detector false positive) | 19 |
+| differ in both | 89 (switch placement in implicit-int functions, the shapes of [[tickets/T-3002-remaining-promotion-shapes]], frames, header prototypes) |
+| match without, not with | 0 |
+So the R/V detector's precision for "blocked by this gap" is 40 of 59 resolved functions (68%); 13 larger R-flagged functions (540-804 bytes, RPG_BAT and TACO) matched with plain C and did not need the pass either, so the R rule over-reports (it fires on `s32` globals, which IDO already keeps in registers). Matched into the build by T-1321: the 26 pass-only ETC/TACO functions (80-300 bytes) and the 13 larger ones.
+
+Not reproduced by the pass (open): TACO `func_8013760C` (two switches and a loop; the copy `or v0,v1,zero` and `$v1` do not appear even with copy propagation off), ETC `func_8013E89C` (selector in `$a1`), RPG_BAT `func_8013B2F0`/`func_8013CC90` (two globals, `$v1` vs `$v0` swapped).
+
 Batch-agent guidance (also for [[decompile-workflow]]):
 - A compare chain or switch on an unsigned global with `$v1` and reloads into `$v1` after calls: write the natural C, `switch (D)` directly on the global.
 - The same with `$v0`: switch on a local copy (`u8 mode = D; switch (mode)`).
