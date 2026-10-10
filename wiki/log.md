@@ -666,3 +666,6 @@ Merged main (T-7010, T-7020, T-7030, 170 dupes/neardupes copies). Clean build in
 
 ## [2026-10-10] ticket | T-8030 wave 5 list 3 started
 Created [[tickets/T-8030-wave-5-list-3]] (In Progress) for work list 3, branch w5-3.
+
+## [2026-10-10] build | T-8030 wave 5 list 3 matched
+30 of 146 listed functions matched (7512 bytes), progress 3997 of 6958 functions. Clean rebuild 27 of 27 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK. 20 rows added to [[data/t0018-cases]]; patterns and unsolved shapes in [[matching-notes]] (section "Wave 5, list 3 (T-8030)"). Inline review recorded in [[tickets/T-8030-wave-5-list-3]]; ticket moved to Done. Branch w5-3, not merged.

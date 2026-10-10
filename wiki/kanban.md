@@ -24,7 +24,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-8030-wave-5-list-3|T-8030 Wave 5: list 3]]
 
 
 
@@ -37,6 +36,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-8030-wave-5-list-3|T-8030 Wave 5: list 3]]
 - [x] [[tickets/T-7020-loop-unrolling-and-scheduling|T-7020 Loop unrolling and instruction scheduling]]
 
 - [x] [[tickets/T-7000-shared-constants-lui-at-parameter-copies|T-7000 Shared constants, lui $at sharing and parameter copies]]
