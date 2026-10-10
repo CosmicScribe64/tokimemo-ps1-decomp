@@ -293,4 +293,13 @@ void func_8013D1E0(void);
 void func_8013DC70(void);
 void func_8013EF30(void);
 
+extern u8 D_800E6448[];
+extern u8 D_800E6807;
+extern u8 D_800E6808;
+extern u8 D_800E683E;
+extern u8 D_801476E0;
+extern s8 D_800B5BD4;
+
+void func_80137560(void);
+
 #endif

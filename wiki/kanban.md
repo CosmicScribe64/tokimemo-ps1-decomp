@@ -22,7 +22,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-2050-wave2-geko|T-2050 Wave 2: GEKO]]
 
 
 ## In Review
@@ -30,6 +29,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-2050-wave2-geko|T-2050 Wave 2: GEKO]]
 
 - [ ] [[tickets/T-1320-tooling-work-queue-and-blocker-detector|T-1320 Tooling: work queue and blocker detector]]
 - [ ] [[tickets/T-1330-tooling-m2c-context-and-permuter|T-1330 Tooling: m2c context and decomp-permuter]]

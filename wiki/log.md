@@ -363,3 +363,6 @@ New [[tickets/T-1340-tooling-jump-table-functions]], In Review -> Done after the
 
 ## [2026-10-09] tooling | dupes.py re-run after T-1340
 Re-ran tools/dupes.py --apply --check after the jump-table merge: 4 copies kept (DATE, EVENT, GEKO, KANGEI), 3 rejected. Clean build 27/27 OK, progress 901/6962.
+
+## [2026-10-09] ticket | T-2050 Wave 2: GEKO, 176 functions matched
+[[tickets/T-2050-wave2-geko]] In Progress -> Done after the inline code review. GEKO went from 367 to 191 `INCLUDE_ASM`; 8 rows added to [[data/t0018-cases]]; notes in [[matching-notes]] (m2c picks the wrong overlay for shared function names; absolute casts for other-overlay addresses). Clean build 27 of 27 OK, `ninja progress` grand total 1077 of 6962.
