@@ -82,6 +82,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-3310-native-docker-image|T-3310]] Native Docker image for Apple Silicon (Done)
 - [[tickets/T-3330-local-fptab-frame-layout|T-3330]] Local function-pointer table frame layout (Done)
 - [[tickets/T-3340-shared-main-prototypes-and-byte-queue|T-3340]] Tooling: shared main-exe prototypes (`include/main_api.h`) and byte-weighted queue (Done)
+- [[tickets/T-4020-wave-3-list-2|T-4020]] Wave 3, list 2: 60 functions in DATE, SHUGAKU, EVENT, TACO, TT, GYOZI, GEKO, ENDING (Done)
 
 ## Entities / concepts / sources
 - [[disc-layout]] - disc images, extraction, file list
@@ -95,7 +96,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms
 - [[ido-52-evaluation]] - T-3110: IDO 5.2 and 4.1 (decomp.me archives, private) against the game code: 5.2 = 5.3 byte for byte, 4.1 ugen reproduces the frame pass, nothing reproduces the T-1321 behaviours; recommendation, CI options, licensing facts
-- [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms, local function-pointer tables (T-3330)
+- [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms, local function-pointer tables (T-3330), wave 3 list 2 patterns (T-4020)
 - [[original-compiler]] - T-3100: which compiler built the game code (O.BIN version stamps 3.18 = IDO 5.2-generation MIPS suite, big-endian ECOFF link host), header field table, ranked hypotheses, promotion experiments, rules for the T-1321 build step
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit

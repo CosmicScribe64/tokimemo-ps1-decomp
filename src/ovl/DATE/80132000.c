@@ -439,6 +439,7 @@ s32 func_8013AE5C(void) {
     D_800CA144 = D_8015BEF4;
     x = func_80051A68(D_800E71DF);
     t = x & 0x7F;
+    /* 2U: with two plain 2 IDO shares one constant register, the original does not (T-4020) */
     if ((D_8015B654 == 2U) && (D_8015BF08 == 2) && (t >= 2U)) {
         func_80083440(3);
     }
@@ -597,6 +598,7 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013D23C);
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013D2C8);
 
 s32 func_8013D3B0(void) {
+    /* 1U: keeps the two constants 1 apart, as in the original (T-4020) */
     if ((D_800E71DF == 1) && (D_800E62BF >= 6U) && (D_800E62BF < 9U) && (D_80122CDC == 1U)) {
         func_8004284C();
         return 0;
@@ -805,6 +807,7 @@ void func_8013E614(void) {
     s32 cur;
     s32 prev;
 
+    /* 1U: keeps the two constants 1 apart, as in the original (T-4020) */
     if ((D_800E71DF == 0xA) && (D_80122CDC == 1U) && ((u8) D_8015B68C == 2) && (D_800CA2FC == 1)) {
         prev = D_800E738A;
         func_80085A60();

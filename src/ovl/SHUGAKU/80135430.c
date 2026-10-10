@@ -57,6 +57,7 @@ void func_80135A3C(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80135430", func_80135A80);
 
+/* One symbol for the whole 0x44-byte-entry table: as1 then keeps the later lbu below the earlier stores (T-2040, T-4020). */
 void func_80135AF4(void) {
     D_80120650[3] |= 0x80;
     *(s16 *) &D_80120650[0x16] = 8;

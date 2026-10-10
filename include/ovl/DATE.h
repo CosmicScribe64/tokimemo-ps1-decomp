@@ -663,16 +663,11 @@ extern s32 D_8015B630;
 extern u8 D_8015BF1C;
 extern u8 D_8015BF20;
 extern s16 D_8015BF04;
-extern u8 D_8015B694;
 extern u8 *D_8015B540;
 extern u8 *D_8015B544;
-extern u8 *D_8015B5B0;
-extern u8 *D_8015B5B4;
 extern s16 D_8015BF08;
 extern s16 D_8015BF14;
 extern u8 D_8015BF18;
 void func_8013C190(void);
-extern s32 D_8015B644;
-extern u8 D_8015B6A0;
 
 #endif /* OVL_DATE_H */

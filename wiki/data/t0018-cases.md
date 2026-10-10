@@ -211,3 +211,48 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | 80079B10 | `SD_DetectCDPeak` | regorder | same family as `SD_CalcCDAve` (T-2090) |
 | 80079B10 | `func_8007B2B4` | regorder | switch variable after a read-modify-write store: original reuses $v0, IDO allocates $v1 (T-2090) |
 | 80079B10 | `func_8007A6AC` | regorder | struct fields loaded into $t7/$a0/$v1 and spilled; IDO uses $t6/$a0/$a2 (T-2090) |
+| DATE | `func_801378BC` | regorder | global index in $t6 (load, shifts, base) where IDO promotes it to $v0; same shape in `func_801381B4`, `func_801386C8` (T-4020) |
+| DATE | `func_801381B4` | regorder | same shape as `func_801378BC` (T-4020) |
+| DATE | `func_801386C8` | regorder | same shape as `func_801378BC` (T-4020) |
+| DATE | `func_8013BEB8` | regorder | constants 2/3 stored to ten globals: original loads each constant once and reuses it, IDO reloads per store (T-4020) |
+| DATE | `func_8013FA6C` | regorder | constant 0x80 stored to eight byte globals: original keeps it in $v0, IDO loads it per store (T-4020) |
+| DATE | `func_8013A2E0` | regorder | two statements `A = B; C = D;` in a row: original loads D after the first store, IDO hoists the load above it (T-4020) |
+| DATE | `func_80139154` | promo | address high half of D_800E71DF kept in $v1 across a call and reused for the reload; IDO uses a fresh register (T-4020) |
+| DATE | `func_8013A898` | regorder | two `idx * 0x38` in straight line: original keeps 0x38 in a register (li; multu), IDO uses shifts (T-4020) |
+| DATE | `func_80139944` | regorder | six `idx * 0x24` accesses: original keeps 0x24 in $v1 and uses multu, IDO uses shifts (T-4020) |
+| DATE | `func_8013F544` | regorder | three `idx * 0x38` accesses: original keeps 0x38 in a register (li; multu), IDO uses shifts (T-4020) |
+| DATE | `func_8013D23C` | regorder | constant 1 shared by two compares: second `bne` has the operands as ($v0,$v1) in the original, ($v1,$v0) in IDO; `1U` on one side removes the sharing instead (T-4020) |
+| DATE | `func_8013D2C8` | regorder | same shape as `func_8013D23C` (T-4020) |
+| DATE | `func_80136F2C` | regorder | loop over two s16 arrays: hoisted base addresses in $t0/$t1 are swapped (T-4020) |
+| DATE | `func_8013D9E8` | regorder | three read-modify-write statements on adjacent globals: original loads after the earlier store, IDO hoists (T-4020) |
+| DATE | `func_80140D38` | regorder | u8 counter with wrap: original keeps the sum in $v0 and the masked copy in $t8, IDO uses $t8/$v1 (T-4020) |
+| DATE | `func_80145DF0` | regorder | read-modify-write before a call: original schedules the `sb` one slot later (T-4020) |
+| DATE | `func_80149268` | regorder | struct copy loop: original keeps the entry pointer in $v0 and copies it to the two walkers $t2/$t3, IDO derives both from $t3 (T-4020) |
+| DATE | `func_8013D174` | reverse | D_800E62BF read twice in the original (once per compare), IDO keeps one copy in $v1 (T-4020) |
+| DATE | `func_801395B4` | regorder | `lui $v0` for D_800E71DE sits one slot earlier in the original (before the store to D_800CA148) (T-4020) |
+| DATE | `func_8013E6A4` | regorder | u8 local spilled across two calls: original at sp+0x2B, IDO at sp+0x2F (one more word local above it in the original) (T-4020) |
+| DATE | `func_80138418` | regorder | dead store of D_800E738A to a stack local kept in the original, IDO removes it (T-4020) |
+| SHUGAKU | `func_80135994` | regorder | consecutive `A = B; C = D;` byte copies: original loads D after the first store, IDO hoists the load (T-4020) |
+| SHUGAKU | `func_8013A9E0` | regorder | same family as `func_80135994` (T-4020) |
+| SHUGAKU | `func_80135A80` | regorder | return value of the last of four byte copies: original loads D_800B593C with `lui $v0`, IDO uses `$v1` as address register (T-4020) |
+| SHUGAKU | `func_80135B68` | regorder | `return -0x81` after the last halfword store: original puts the store in the `jr` delay slot, IDO puts the `addiu $v0` there (T-4020) |
+| SHUGAKU | `func_801385A8` | promo | s16 global loaded into $v0 before a branch with three calls and reloaded after them into $v0; IDO spills it to the stack (T-4020) |
+| SHUGAKU | `func_80138DD8` | regorder | `bne` operand order of a compare against a constant held in $v0 (T-4020) |
+| SHUGAKU | `func_8013A980` | regorder | epilogue `lw $ra` is duplicated into a branch delay slot in the original (T-4020) |
+| SHUGAKU | `func_8013A274` | regorder | global loaded into $t6/$t7 for two compares around a call, IDO uses $v0 twice (T-4020) |
+| SHUGAKU | `func_80138320` | promo | switch on an s32 global, compare chain on $v1 in the original and $v0 in IDO (T-4020) |
+| SHUGAKU | `func_80135DB8` | regorder | two `idx * 0x38` with the constant shared with the call argument 0x38: original li; multu, IDO shifts (T-4020) |
+| 80042540 | `func_80042808` | regorder | `return 0` after the last store: original puts the store in the `jr` delay slot, IDO puts `or $v0,$zero,$zero` there (T-4020) |
+| 80042540 | `func_8004284C` | regorder | same shape as `func_80042808` (T-4020) |
+| 80042540 | `func_80042908` | regorder | same shape as `func_80042808` (T-4020) |
+| 80042540 | `func_80042940` | regorder | same shape as `func_80042808` (T-4020) |
+| GYOZI | `func_80142D40` | promo | index global re-read after the table call into $v1, IDO uses a temporary; compare operand order differs (T-4020) |
+| GYOZI | `func_80134D9C` | regorder | three `idx * 0x38` accesses with 0x38 shared with the call argument: original li; multu, IDO shifts (T-4020) |
+| TACO | `func_80136C60` | regorder | u8 counter times 3 with multu: original loads into $v0 and keeps 3 in $v1 and the new value in $v0, IDO uses $v1/$a0 (T-4020) |
+| TT | `func_80142DA8` | regorder | RECT stores: original stores the halfword at sp+0x2C after the other fields, IDO stores it earlier (T-4020) |
+| TT | `func_80146BE0` | regorder | unrolled byte clear: pointer in $v1, counter $v0, bound $a0 in the original; IDO picks $a0/$v1/$v0 (T-4020) |
+| TT | `func_80146C14` | regorder | same shape as `func_80146BE0` (T-4020) |
+| TT | `func_80148210` | regorder | same shape as `func_80146BE0` (T-4020) |
+| TT | `func_80148714` | regorder | u16 parameter reduced modulo 100 in place: original keeps it in $a0 and the divisor 10 in $v1, IDO uses $v1/$a2 (T-4020) |
+| BUNKA_SD | `func_80134418` | regorder | constant 0x80 for a loop store and a global store: original reuses $v1 (the old counter), IDO uses $v0 and moves the pointer to $v1 (T-4020) |
+| EVENT | `func_8010564C` | regorder | loop with two calls: the constants 84, 130, 8, 0x24 are kept in saved registers and used as division operands in the original; IDO uses immediates (T-4020) |
