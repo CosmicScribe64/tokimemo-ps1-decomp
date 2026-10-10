@@ -236,7 +236,16 @@ typedef struct {
 } FnTbl43; /* size 0xAC */
 extern FnTbl43 D_8015E7D4;
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014F0F0", func_8014FBA0);
+void func_8014FBA0(void) {
+    s32 idx; /* FAKE: never read; declared first so tbl lands at the original frame offset (T-3330) */
+    FnTbl43 tbl;
+
+    tbl = D_8015E7D4;
+    if (D_800E6280.unk_110A < 0xAU && D_800B593C == 0x80) {
+        func_8006B900();
+    }
+    tbl.f[D_800E6280.unk_110A]();
+}
 
 void func_8014FC48(void) {
     func_80046318(0x45, 0x801B0000, 0x7FA6);
