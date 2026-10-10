@@ -246,3 +246,4 @@ Update (T-1321): `tools/cvt_pass.py` now reproduces most `promo` rows (switch or
 | DATE2/80137360 | `func_8013775C` | regorder | two `idx * 0x38` uses with `li 0x38; multu` in a register, IDO shifts (known gap, T-4100) |
 | GYOZI/801372B0 | `func_80137BEC` | regorder | same as DATE2 `func_8013775C` (T-4100) |
 | GYOZI/8013A140 | `func_8013A4E8` | regorder | same as DATE2 `func_8013775C` (T-4100) |
+| TAIIKU/801452D0 | `func_80146A60` | promo | `s32` global `D_800E7200` tested with two masks (0xA, 0x5) in several blocks: original keeps it in $v0 and the 0xA mask in $v1, IDO swaps them (`u32` override too) (T-4100) |
