@@ -11,7 +11,19 @@ typedef struct {
 } FnTbl22; /* size 0x58 */
 extern FnTbl22 D_80146B64;
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013C980);
+void func_8013C980(void) {
+    D_80146AA0 = 0x801CE218;
+    D_80146AA4 = 0x801CE21C;
+    D_80146AA8 = 0x801CE25C;
+    D_80146AAC = *(s16 *)0x801CE27C;
+    D_80146AB0 = 0x801B0000;
+    D_80146AB4 = 0x801B2000;
+    D_80146AB8 = 0x801B6000;
+    D_80146ABC = 0x801BA000;
+    D_80146AC0 = 0x801BE000;
+    D_80146AC4 = 0x801C2000;
+    D_80146AC8 = 0x801C6000;
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013CA30);
 

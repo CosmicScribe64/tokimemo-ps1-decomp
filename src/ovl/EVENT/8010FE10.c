@@ -479,7 +479,22 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117D80);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118010);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801182B8);
+s32 func_801182B8(void) {
+    u8 x;
+    u32 t;
+
+    x = func_8002328C(D_800B1746);
+    if (D_800B1AF9++ == 0) {
+        t = x & 0x7F;
+        D_8012435C = (t >= 2U) + (t >= 3U) + (t >= 4U);
+    }
+    D_8009471C = (u8 *) &D_8012435C;
+    D_80094720 = (u8 *) &D_80124360;
+    D_80094724 = D_80124268;
+    D_80094728 = D_801242D4;
+    D_8009472C = D_80124340;
+    return func_80049B20(D_800EECBC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011838C);
 

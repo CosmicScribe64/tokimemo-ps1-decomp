@@ -5,7 +5,19 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_80141780);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_80141850);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_80141920);
+void func_80141920(void) {
+    D_80146510 = (u8 *)0x801D22D0;
+    D_80146514 = (u8 *)0x801D22D8;
+    D_80146518 = (u8 *)0x801D233C;
+    D_8014651C = *(s16 *)0x801D2358;
+    D_80146520 = (u8 *)0x801B0000;
+    D_80146524 = (u8 *)0x801B2000;
+    D_80146528 = (u8 *)0x801B6000;
+    D_8014652C = (u8 *)0x801BA000;
+    D_80146530 = (u8 *)0x801BE000;
+    D_80146534 = (u8 *)0x801C2000;
+    D_80146538 = (u8 *)0x801C6000;
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_801419D0);
 
@@ -100,7 +112,11 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_8014265C);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_80142784);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_80142844);
+void func_80142844(void) {
+    func_8004435C(0x280, 0, 0x40, 0x80, D_801464E0);
+    D_800E74D0 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_8014288C);
 

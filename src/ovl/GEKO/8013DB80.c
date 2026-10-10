@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/GEKO.h"
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DB80", func_8013DB80);
+void func_8013DB80(void) {
+    D_80146DA0 = 0x801CE124;
+    D_80146DA4 = 0x801CE128;
+    D_80146DA8 = 0x801CE148;
+    D_80146DAC = *(s16 *)0x801CE15C;
+    D_80146DB0 = 0x801B0000;
+    D_80146DB4 = 0x801B2000;
+    D_80146DB8 = 0x801B6000;
+    D_80146DBC = 0x801BA000;
+    D_80146DC0 = 0x801BE000;
+    D_80146DC4 = 0x801C2000;
+    D_80146DC8 = 0x801C6000;
+}
 
 void func_8013DC30(void) {
     if (D_80122CD0 == 1) {

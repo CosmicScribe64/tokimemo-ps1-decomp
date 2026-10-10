@@ -207,7 +207,16 @@ void func_8013F0F4(s32 a, s32 b, s32 c) {
     D_8015ED3C[c] -= 1;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013F15C);
+void func_8013F15C(s32 a, s32 b, s32 c) {
+    if (b == 0) {
+        b = -1;
+    }
+    if (D_8015ED3C[c] == 0) {
+        func_80044750((u16)((a & 0xFF) | 0x500));
+        D_8015ED3C[c] = b;
+    }
+    D_8015ED3C[c] -= 1;
+}
 
 void func_8013F1C4(s32 a, s32 b, s32 c) {
     s32 *p;

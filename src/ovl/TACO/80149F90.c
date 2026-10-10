@@ -589,6 +589,19 @@ void func_80151678(void) {
     func_8009B340(0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_801517AC);
+void func_801517AC(s32 arg0) {
+    s32 level;
+    s32 color;
+
+    level = arg0;
+    if (level < 0x100) {
+        color = level * 0x10101;
+    } else {
+        color = 0xFFFFFF;
+    }
+    func_80049A40(-0x100, -0x78, 0x100, 0xF0, 1, color, 0x81);
+    func_80049A40(0, -0x78, 0x100, 0xF0, 1, color, 0x81);
+    dtd_on_tpage(0, 0, 1, 1, 1);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8015185C);

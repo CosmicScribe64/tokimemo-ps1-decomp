@@ -242,4 +242,22 @@ void func_80138DC8();
 void func_80138FC8();
 void func_801391E4();
 void func_80139498();
+extern s32 D_8013C9D8;
+extern s32 D_8013C9DC;
+extern s32 D_8013C9E0;
+extern s16 D_8013C9E4;
+extern s32 D_8013C9E8;
+extern s32 D_8013C9EC;
+extern s32 D_8013C9F0;
+extern s32 D_8013C9F4;
+extern s32 D_8013C9F8;
+extern s32 D_8013C9FC;
+extern s32 D_8013CA00;
+extern s32 D_8013CA04;
+extern s32 D_8013CA08;
+extern s32 D_8013CA0C;
+extern s32 D_8013CA10;
+extern s32 D_8013CA14;
+extern s32 D_8013CA18;
+
 #endif /* OVL_ENDING_H */

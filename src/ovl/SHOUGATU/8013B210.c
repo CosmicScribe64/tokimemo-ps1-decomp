@@ -65,4 +65,11 @@ void func_8013B484(void) {
     func_80083A10();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013B210", func_8013B528);
+void func_8013B528(void) {
+    D_800CA134 = (u8 *) &D_80145A08;
+    D_800CA138 = (u8 *) &D_80145A0C;
+    D_800CA13C = D_801459FC;
+    D_800CA140 = D_80145A00;
+    D_800CA144 = D_80145A04;
+    func_80082764(D_80122CDC, 1, 0);
+}

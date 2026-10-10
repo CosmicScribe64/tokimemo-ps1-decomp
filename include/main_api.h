@@ -1698,5 +1698,9 @@ void func_800BCDF0();
 void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
+extern s16 D_800B0BDA;
+extern u8 D_800B1AF9;
+extern s16 D_800B0B3E;
+extern u8 D_800E6528;
 
 #endif /* MAIN_API_H */

@@ -170,4 +170,6 @@ void func_8014ED80();
 void func_8014EE98();
 void func_80150F84();
 extern u8 D_8015E814;
+extern s32 D_8015EE08;
+
 #endif

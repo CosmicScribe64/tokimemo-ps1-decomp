@@ -52,9 +52,26 @@ void func_80133738(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133760);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133874);
+void func_80133874(void) {
+    D_80143B00 = 7;
+    D_80143AF4 = D_80143A48;
+    D_80143AF8 = D_80143A84;
+    D_80143AFC = D_80143AC0;
+    func_8004284C();
+    D_800E738A -= 5;
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_801338DC);
+void func_801338DC(void) {
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    if (((u8)func_80051A68(D_800E71DF) & 0x7F) != 4) {
+        D_80143B00 += 1;
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+        return;
+    }
+    func_8004284C();
+}
 
 void func_80133948(void) {
     if (D_80122CDC == 0) {
@@ -65,7 +82,24 @@ void func_80133948(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_8013397C);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_801339DC);
+void func_801339DC(void) {
+    s32 temp_t6;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    temp_t6 = (u8)func_80051A68(D_800E71DF) & 0x7F;
+    switch (temp_t6) {
+    case 0:
+        break;
+    case 1:
+    case 2:
+        D_80143B00 += 1;
+        break;
+    case 3:
+        D_80143B00 += 2;
+        break;
+    }
+    func_8004284C();
+}
 
 void func_80133A60(void) {
     D_80143B00 = 0x27;

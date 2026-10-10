@@ -137,7 +137,21 @@ void func_801018FC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_801019A4);
+void func_801019A4(void) {
+    D_80120678 = D_80120338;
+    D_8012067C = D_8012034C;
+    D_80120680 = D_80120360;
+    func_80101300();
+    func_80012D64(D_80122238, 0x11, 1, 2, 0);
+    func_8004C46C(D_8012223C, D_80122240, D_80122244, D_80122248, D_8012224C, D_80122250);
+    func_8004C6B0(D_8012222C, D_80122230, D_80122228, D_80122234);
+    /* FAKE: the two later fields reached through D_800B0A3A; separate names let as1 hoist their loads above the stores. T-4100 */
+    D_800B0A3A += 1;
+    (&D_800B0A3A)[2] += 2;
+    (&D_800B0A3A)[4] -= 0x14;
+    func_8004C250();
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80101AB8);
 

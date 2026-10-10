@@ -1,9 +1,46 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013C3B0);
+void func_8013C3B0(void) {
+    D_80147AD0 = (u8 *)0x801E60CC;
+    D_80147AD4 = (u8 *)0x801E60D0;
+    D_80147AD8 = (u8 *)0x801E60E4;
+    D_80147ADC = *(s16 *)0x801E60F0;
+    D_80147AE0 = (u8 *)0x801AE000;
+    D_80147AE4 = (u8 *)0x801B0000;
+    D_80147AE8 = (u8 *)0x801B2000;
+    D_80147AEC = (u8 *)0x801B6000;
+    D_80147AF0 = (u8 *)0x801BA000;
+    D_80147AF4 = (u8 *)0x801BE000;
+    D_80147AF8 = (u8 *)0x801C2000;
+    D_80147AFC = (u8 *)0x801C6000;
+    D_80147B00 = (u8 *)0x801CE000;
+    D_80147B04 = (u8 *)0x801D2000;
+    D_80147B08 = (u8 *)0x801D6000;
+    D_80147B0C = (u8 *)0x801DA000;
+    D_80147B10 = (u8 *)0x801DE000;
+    D_80147B14 = (u8 *)0x801E2000;
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013C4D0);
+void func_8013C4D0(void) {
+    switch (D_801474B8) {
+    case 0:
+        func_8013C560();
+        return;
+    case 1:
+        func_8013C5E8();
+        return;
+    case 2:
+        func_8013C670();
+        return;
+    case 3:
+        func_8013C6EC();
+        return;
+    default:
+        func_8013C774();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013C560);
 

@@ -14,7 +14,17 @@ void func_8013425C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801342EC);
+void func_801342EC(void) {
+    if (func_80044E8C() == 1) {
+        func_80044750(0x200);
+        func_8004284C();
+    }
+    if ((u32) D_800E7384++ >= 0x400U) {
+        func_800452C4();
+        func_8004482C();
+        func_80042940((D_800E738A - 1) & 0xFF);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134374);
 

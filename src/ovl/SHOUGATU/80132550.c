@@ -12,7 +12,17 @@ void func_801325CC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80132550", func_80132634);
+void func_80132634(void) {
+    if (func_80044E8C() == 1) {
+        func_80044750(0x200);
+        func_8004284C();
+    }
+    if ((u32) D_800E7384++ >= 0x400U) {
+        func_800452C4();
+        func_8004482C();
+        func_80042940((D_800E738A - 1) & 0xFF);
+    }
+}
 
 void func_801326BC(void) {
     func_80046318(0x34, 0x80197000, 0xAF48);

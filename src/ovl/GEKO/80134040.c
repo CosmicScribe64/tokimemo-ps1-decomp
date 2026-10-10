@@ -35,7 +35,16 @@ s32 func_8013431C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_801343DC);
+void func_801343DC(void) {
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    if ((u32) D_800E7384++ >= 0x400U) {
+        func_800452C4();
+        func_8004482C();
+        func_80042940((D_800E738A - 1) & 0xFF);
+    }
+}
 
 void func_8013445C(void) {
     k_reset(1);

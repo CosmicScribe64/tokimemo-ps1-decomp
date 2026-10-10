@@ -1,7 +1,19 @@
 #include "common.h"
 #include "ovl/SHUGAKU.h"
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801344B0", func_801344B0);
+void func_801344B0(void) {
+    D_8013C0C0 = (u8 *)0x801D22B8;
+    D_8013C0C4 = (u8 *)0x801D22C0;
+    D_8013C0C8 = (u8 *)0x801D2310;
+    D_8013C0CC = *(s16 *)0x801D2328;
+    D_8013C0D0 = (u8 *)0x801B0000;
+    D_8013C0D4 = (u8 *)0x801B2000;
+    D_8013C0D8 = (u8 *)0x801B6000;
+    D_8013C0DC = (u8 *)0x801BA000;
+    D_8013C0E0 = (u8 *)0x801BE000;
+    D_8013C0E4 = (u8 *)0x801C2000;
+    D_8013C0E8 = (u8 *)0x801C6000;
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801344B0", func_80134560);
 

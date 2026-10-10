@@ -57,7 +57,16 @@ void func_80142B20(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80142760", func_80142BB8);
+void func_80142BB8(void) {
+    if (func_80044E8C() == 1) {
+        func_8004284C();
+    }
+    if ((u32) D_800E7384++ >= 0x400U) {
+        func_800452C4();
+        func_8004482C();
+        func_80042940((D_800E738A - 1) & 0xFF);
+    }
+}
 
 void func_80142C38(void) {
     func_80044750(0x200);

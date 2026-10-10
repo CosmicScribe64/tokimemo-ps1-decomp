@@ -3,9 +3,18 @@
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80142700", func_80142700);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80142700", func_80142B98);
+void func_80142B98(void) {
+    if (D_800E738A != 0) {
+        D_800E738A = 0;
+        D_80122EC0 += 1;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80142700", func_80142BC8);
+void func_80142BC8(void) {
+    D_800E7389 = 0;
+    D_800E738A = 0;
+    D_80122EC0 = 8;
+}
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80142700", func_80142BE8);
 

@@ -5,13 +5,59 @@ typedef struct {
     void (*f[40])();
 } FnTbl40; /* size 0xA0 */
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150010);
+void func_80150010(void) {
+    D_8015EA40 = 0x801B0000;
+    D_8015EA44 = 0x801B2000;
+    D_8015EA48 = 0x801B6000;
+    D_8015EA4C = 0x801BA000;
+    D_8015EA50 = 0x801BE000;
+    D_8015EA54 = 0x801C2000;
+    D_8015EA58 = 0x801C6000;
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150080);
+void func_80150080(void) {
+    D_8015EA5C = (u8 *)0x801CE1A4;
+    D_8015EA60 = (u8 *)0x801CE1A8;
+    D_8015EA64 = (u8 *)0x801CE1E0;
+    D_8015EA68 = *(s16 *)0x801CE1FC;
+    D_8015EA6C = (u8 *)0x801B0000;
+    D_8015EA70 = (u8 *)0x801B2000;
+    D_8015EA74 = (u8 *)0x801B6000;
+    D_8015EA78 = (u8 *)0x801BA000;
+    D_8015EA7C = (u8 *)0x801BE000;
+    D_8015EA80 = (u8 *)0x801C2000;
+    D_8015EA84 = (u8 *)0x801C6000;
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150130);
+void func_80150130(void) {
+    D_8015EA88 = (u8 *)0x801D2370;
+    D_8015EA8C = (u8 *)0x801D2374;
+    D_8015EA90 = (u8 *)0x801D23A4;
+    D_8015EA94 = *(s16 *)0x801D23C0;
+    D_8015EA98 = (u8 *)0x801B0000;
+    D_8015EA9C = (u8 *)0x801D2000;
+    D_8015EAA0 = (u8 *)0x801B2000;
+    D_8015EAA4 = (u8 *)0x801B6000;
+    D_8015EAA8 = (u8 *)0x801BA000;
+    D_8015EAAC = (u8 *)0x801BE000;
+    D_8015EAB0 = (u8 *)0x801C2000;
+    D_8015EAB4 = (u8 *)0x801C6000;
+    D_8015EAB8 = (u8 *)0x801CE000;
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150200);
+void func_80150200(void) {
+    D_8015EABC = (u8 *)0x801D2174;
+    D_8015EAC0 = (u8 *)0x801D217C;
+    D_8015EAC4 = (u8 *)0x801D21A8;
+    D_8015EAC8 = *(s16 *)0x801D21C4;
+    D_8015EACC = (u8 *)0x801B0000;
+    D_8015EAD0 = (u8 *)0x801B2000;
+    D_8015EAD4 = (u8 *)0x801B6000;
+    D_8015EAD8 = (u8 *)0x801BA000;
+    D_8015EADC = (u8 *)0x801BE000;
+    D_8015EAE0 = (u8 *)0x801C2000;
+    D_8015EAE4 = (u8 *)0x801C6000;
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_801502B0);
 

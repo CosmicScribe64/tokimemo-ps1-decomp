@@ -29,7 +29,19 @@ void func_80153070(void) {
     D_8015F1B4 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80153120);
+void func_80153120(void) {
+    D_8015F1B8 = (u8 *)0x801CE088;
+    D_8015F1BC = (u8 *)0x801CE08C;
+    D_8015F1C0 = (u8 *)0x801CE0A0;
+    D_8015F1C4 = *(s16 *)0x801CE0B4;
+    D_8015F1C8 = (u8 *)0x801B0000;
+    D_8015F1CC = (u8 *)0x801B2000;
+    D_8015F1D0 = (u8 *)0x801B6000;
+    D_8015F1D4 = (u8 *)0x801BA000;
+    D_8015F1D8 = (u8 *)0x801BE000;
+    D_8015F1DC = (u8 *)0x801C2000;
+    D_8015F1E0 = (u8 *)0x801C6000;
+}
 
 void func_801531D0(void) {
     D_8015F1E4 = 0x801CE0F4;

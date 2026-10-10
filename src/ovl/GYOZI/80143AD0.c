@@ -5,7 +5,19 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143AD0);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143BA0);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143C70);
+void func_80143C70(void) {
+    D_80148BC0 = 0x801D22D0;
+    D_80148BC4 = 0x801D22D8;
+    D_80148BC8 = 0x801D233C;
+    D_80148BCC = *(s16 *)0x801D2358;
+    D_80148BD0 = 0x801B0000;
+    D_80148BD4 = 0x801B2000;
+    D_80148BD8 = 0x801B6000;
+    D_80148BDC = 0x801BA000;
+    D_80148BE0 = 0x801BE000;
+    D_80148BE4 = 0x801C2000;
+    D_80148BE8 = 0x801C6000;
+}
 
 typedef struct {
     void (*f[39])();

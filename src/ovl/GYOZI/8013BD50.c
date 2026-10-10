@@ -13,7 +13,26 @@ void func_8013BD78(void) {
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013BD50", func_8013BDA0);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013BD50", func_8013BEA0);
+void func_8013BEA0(void) {
+    D_801479B0 = (u8 *)0x801E8088;
+    D_801479B4 = (u8 *)0x801E808C;
+    D_801479B8 = (u8 *)0x801E80A0;
+    D_801479BC = *(s16 *)0x801E80B4;
+    D_801479C0 = (u8 *)0x801B0000;
+    D_801479C4 = (u8 *)0x801B2000;
+    D_801479C8 = (u8 *)0x801B4000;
+    D_801479CC = (u8 *)0x801B8000;
+    D_801479D0 = (u8 *)0x801BC000;
+    D_801479D4 = (u8 *)0x801C0000;
+    D_801479D8 = (u8 *)0x801C4000;
+    D_801479DC = (u8 *)0x801C8000;
+    D_801479E0 = (u8 *)0x801D0000;
+    D_801479E4 = (u8 *)0x801D4000;
+    D_801479E8 = (u8 *)0x801D8000;
+    D_801479EC = (u8 *)0x801DC000;
+    D_801479F0 = (u8 *)0x801E0000;
+    D_801479F4 = (u8 *)0x801E4000;
+}
 
 void func_8013BFB4(void) {
     func_8013BFD4();

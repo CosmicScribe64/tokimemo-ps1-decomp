@@ -48,7 +48,13 @@ void func_80132FB0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_8013301C);
+void func_8013301C(void) {
+    func_800AE0A0((void *)(0x801A0000 + D_800E7384 * 0x1400), 0x80180000 + D_800E7384 * 0x1400, 0x1400);
+    D_800E7384 += 1;
+    if (D_800E7384 == 0x12) {
+        func_80083474();
+    }
+}
 
 void func_80133088(void) {
     RECT rect;

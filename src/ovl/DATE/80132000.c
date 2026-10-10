@@ -571,7 +571,10 @@ void func_8013C664(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013C6C0);
+void func_8013C6C0(void) {
+    func_80083440((&D_800CA224)[D_80122CDC]);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013C700);
 

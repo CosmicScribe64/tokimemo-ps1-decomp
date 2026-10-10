@@ -1,7 +1,26 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_801397D0);
+void func_801397D0(void) {
+    D_801453B0 = (u8 *)0x801E60CC;
+    D_801453B4 = (u8 *)0x801E60D0;
+    D_801453B8 = (u8 *)0x801E60E4;
+    D_801453BC = *(s16 *)0x801E60F0;
+    D_801453C0 = (u8 *)0x801AE000;
+    D_801453C4 = (u8 *)0x801B0000;
+    D_801453C8 = (u8 *)0x801B2000;
+    D_801453CC = (u8 *)0x801B6000;
+    D_801453D0 = (u8 *)0x801BA000;
+    D_801453D4 = (u8 *)0x801BE000;
+    D_801453D8 = (u8 *)0x801C2000;
+    D_801453DC = (u8 *)0x801C6000;
+    D_801453E0 = (u8 *)0x801CE000;
+    D_801453E4 = (u8 *)0x801D2000;
+    D_801453E8 = (u8 *)0x801D6000;
+    D_801453EC = (u8 *)0x801DA000;
+    D_801453F0 = (u8 *)0x801DE000;
+    D_801453F4 = (u8 *)0x801E2000;
+}
 
 void func_801398F0(void) {
     switch (D_80144E14) {
