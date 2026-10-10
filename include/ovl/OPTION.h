@@ -31,5 +31,7 @@ void func_801399C0();
 
 extern u8 D_8013D3F4;
 extern s8 D_8013D180;
+void func_80138A24(void);
+void func_80138A8C();
 
 #endif /* OVL_OPTION_H */

@@ -5,7 +5,13 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014DF60);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014E1A4);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014E28C);
+void func_8014E28C(void) {
+    func_800AE0F0(D_8015E904, "鏡「でなおしてらっしゃい！");
+    func_8014B738(D_8015E9CC, 1, 0x64);
+    func_8013F1C4(0x1F000069, 0x1300006D, 0);
+    func_8013E7C0(0x1D, 6, 1, 1);
+    func_8014F230();
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014E300);
 

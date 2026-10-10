@@ -1,7 +1,22 @@
 #include "common.h"
 #include "ovl/OPTION.h"
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801389A0);
+void func_801389A0(void) {
+    D_800E6280.unk_1100 += 1;
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_80138A24();
+        break;
+    case 1:
+        func_80138A8C();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80066C08(0);
+    func_80066334();
+}
 
 void func_80138A24(void) {
     if (D_800E6280.unk_110D == 0) {
