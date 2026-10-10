@@ -582,3 +582,9 @@ Inline review against CODING_STANDARDS.md recorded in [[tickets/T-5100-game-stat
 
 ## [2026-10-10] ticket | T-6040 Wave 4: list 4 (created -> In Progress)
 [[tickets/T-6040-wave-4-list-4]] created and claimed (worktree w4-4): 185 functions in 36 files of work list 4.
+
+## [2026-10-10] build | T-6040 wave 4 list 4 matches
+28 functions of 185 matched (3972 bytes): implicit-int dispatchers, `unk_1104.u` switches, narrow locals, frame-slot locals; progress 3539 -> 3567 of 6958. Blocked shapes (shared `lui $at`, shared constants, end-symbol pointer loops, unprototyped callees, `$t9` skipped in table lookups) and 13 T-0018 rows are in [[matching-notes]] and [[data/t0018-cases]]. Clean rebuild 27/27 OK, `sync_protos.py --check-branch` OK.
+
+## [2026-10-10] ticket | T-6040 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-6040-wave-4-list-4]]; no open findings. Branch w4-4, not merged.

@@ -452,3 +452,16 @@ Update (T-5010): `tools/cvt_pass.py` is in the build, with an entry rule (only g
 | RPG_BAT/801504E0 | `func_80150CD8` | promo | `s32` state `D_8015EC74` switched (cases 0, 1, 2) and reloaded for `+= 1` in each case: original keeps it in $v1, IDO uses $v0 and loads the constant 1 into $v1 (T-4100) |
 | BUNKASAI/801354B0 | `func_801354B0` | promo | `s32` selector `D_80122EB8` (cases 0, 1): original $v1, IDO $v0 (T-4100) |
 | 80075320 | `func_80077E30` | promo | five-entry jump table on `u8 D_800E738D` (cases 0 to 3 + `case 4:` with default), selector in $v1 and reused for `+= 1` in case 1, reloaded into $v1 in case 2; IDO $v0 and $t0 (T-4100) |
+| 80085E30 | `func_80086640` | promo | swap of two s16 globals (D_80120666, D_801206EE): original loads them into $v1 and $v0 and stores crosswise, IDO uses $t6 and $v0 (T-6040) |
+| BUNKA_SD/80135160 | `func_80135440` | promo | `s32` field unk_1104 (D_800E7384) tested ==0 then +1, reloaded: original keeps it in $v0, IDO $v1 (T-6040) |
+| 8007C030 | `normal_date_bg_fadein` | reverse | u8 global +4 clamped at 0x80: original adds in place in $v0 and keeps the masked copy in $t7 (move v0,t7), IDO promotes the global to $v1 (T-6040) |
+| 8007C030 | `k_disp_inc2` | promo | `s32` counter D_80122CFC decremented, tested `< 1` (slti) and cleared: original keeps it in $v1, IDO $v0 and fuses the branch (bgtz) (T-6040) |
+| BUNKAKEN/8013BFE0 | `func_8013BFE0` | promo | `s32` selector D_80122EB8 (cases 0, 1): original $v1, IDO $v0 (u32 declaration does not change it) (T-6040) |
+| EN_NICHI/80132000 | `func_80132ADC` | promo | `s32` counter D_80139B24 incremented, wrapped at 0x36, tested twice: original $v0 with $t6/$t7 constants, IDO $v1 (T-6040) |
+| GYOZI/8013AE80 | `func_8013B644` | reverse | read-modify-write of one byte of a GyoziWork girl record (stride 56): original takes $t0/$t1/$t2 after the index chain ($t9 never used), IDO $t9/$t0/$t1 (T-6040) |
+| GYOZI/8013AE80 | `func_8013B6CC` | reverse | same shape as func_8013B644 (girl record byte ored with 4): original $t0/$t1/$t2, IDO $t9/$t0/$t1 (T-6040) |
+| GYOZI/8013AE80 | `func_8013B740` | reverse | same shape as func_8013B644 (girl record byte ored with 4): original $t0/$t1/$t2, IDO $t9/$t0/$t1 (T-6040) |
+| 80079B10 | `func_8007B5EC` | reverse | `u16` global D_80125CC0 tested, incremented and used as index: original reloads it after the check and keeps the `andi` copy of the argument in $t6 then $a0, IDO promotes the global to $v1 (T-6040) |
+| 8005A0B0 | `func_8005B040` | reverse | table lookup `D_800B5970[D_800E62C2 & 7]` (8-byte rows): original takes $t0/$t1/$t2 for the index chain ($t9 skipped), IDO $t9/$t0/$t1 (T-6040) |
+| 8005A0B0 | `func_8005B2BC` | reverse | table lookup `D_800B37D4[D_8011F414]` at the end of a long `&&` chain: original $t8 base and $t7 index, IDO $t7 and $t6 (T-6040) |
+| 8005A0B0 | `func_8005B1A8` | reverse | table lookup `D_800B3B9C[idx][flag]` (16-byte rows) after a long `&&` chain: original frame 0x38 with $t8/$t0/$t2, IDO frame 0x30 and one register less (T-6040) |

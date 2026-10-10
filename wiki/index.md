@@ -20,6 +20,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-5100-game-state-struct|T-5100]] Recover the main game-state struct (Done)
+- [[tickets/T-6040-wave-4-list-4|T-6040]] Wave 4: list 4, 28 functions in 36 files (Done)
 - [[tickets/T-5000-type-recovery-arrays-structs|T-5000]] Type recovery: arrays and structs from access patterns (Done)
 - [[tickets/T-2060-wave2-shougatu|T-2060]] Wave 2: SHOUGATU, 152 functions (Done)
 - [[tickets/T-0001-project-scaffolding|T-0001]] Project scaffolding (Done)
@@ -105,7 +106,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms
 - [[ido-52-evaluation]] - T-3110: IDO 5.2 and 4.1 (decomp.me archives, private) against the game code: 5.2 = 5.3 byte for byte, 4.1 ugen reproduces the frame pass, nothing reproduces the T-1321 behaviours; recommendation, CI options, licensing facts
-- [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms, local function-pointer tables (T-3330), wave 3 list 2 patterns (T-4020), selector register rule (T-5010)
+- [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms, local function-pointer tables (T-3330), wave 3 list 2 patterns (T-4020), selector register rule (T-5010), wave 4 list 4 patterns (T-6040)
 - [[original-compiler]] - T-3100: which compiler built the game code (O.BIN version stamps 3.18 = IDO 5.2-generation MIPS suite, big-endian ECOFF link host), header field table, ranked hypotheses, promotion experiments, rules for the T-1321 build step
 - [[compiler-mismatch-research]] - T-0015: PS1/Konami compilers, +16 frame candidates, how other decomps treat compiler differences, licensing, ranked recommendation
 - [[decompile-workflow]] - queue.py work list -> m2c -> edit -> build -> funcdiff -> commit
