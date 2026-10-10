@@ -1,10 +1,10 @@
 ---
 id: T-4100
 title: Wave 3: list 10
-status: In Progress
+status: Done
 assignee: claude
 created: 2026-10-09
-updated: 2026-10-09
+updated: 2026-10-10
 links: ["[[decompile-workflow]]", "[[matching-notes]]", "[[data/t0018-cases]]"]
 ---
 
@@ -14,11 +14,24 @@ Wave 3 batch agent 10: match as many of the 131 listed functions (26188 bytes) a
 
 ## Acceptance criteria
 
-- [ ] Work list processed in order, time-boxed per function.
-- [ ] Clean build (`rm -rf asm build; configure.py; ninja`): 27 of 27 OK.
-- [ ] T-0018 cases appended to [[data/t0018-cases]]; new patterns in [[matching-notes]].
-- [ ] Inline code review against CODING_STANDARDS recorded below.
+- [x] Work list processed in order, time-boxed per function (51 of 131 listed functions matched; 49 more from the same files).
+- [x] Clean build (`rm -rf asm build; configure.py; ninja`): 27 of 27 OK, `build/headers.ok`.
+- [x] T-0018 cases appended to [[data/t0018-cases]] (39 rows); new patterns in [[matching-notes]] ("Wave 3 list 10").
+- [x] Inline code review against CODING_STANDARDS recorded below.
 
 ## Notes
 
+Result: 100 functions (16832 bytes) turned into C in 27 owned files; `ninja progress` grand total 2806 -> 2898 of 6958 at the last checkpoint. Method and patterns: [[matching-notes]], section "Wave 3 list 10 (T-4100)". Fakematches: 15, all marked `FAKE` (14 single-symbol read-modify-write accesses, one empty `if` in main `func_80066ACC`).
+
 ## Comments
+
+Inline review against CODING_STANDARDS (2026-10-10):
+- Matches verified: every kept function was compared with `expected/` objects (scratch driver and `funcdiff.py` after `ninja <object>`), and the full `ninja` ends with all 27 sha1 checks OK; an earlier stale `funcdiff.py --built` MATCH (two main functions) was caught by the sha1 and fixed.
+- No `NON_MATCHING` blocks added; unmatched functions stay `INCLUDE_ASM` (section 6).
+- C89: variables at block top, `/* */` comments only, no `//`, no mixed declarations; local `typedef` tables as in the T-3330 proof.
+- Fakematches: 15, each with a `FAKE` comment (reason, ticket); no unmarked tricks. `s32 idx;` before a table is the T-3330 idiom, not a fake.
+- Types: fixed-width; the new function-pointer tables carry a size comment.
+- Declarations (8a): new main-exe symbols went to `include/main_api.h` (no overrides added); overlay symbols and prototypes were appended to `include/ovl/<NAME>.h`; declarations whose function stayed `INCLUDE_ASM` were removed again; `check_headers.py` passes in every build.
+- Strings are literals (Shift-JIS through `tools/cc.py`), no extern string symbols.
+- Commits: small, ticket id, Co-Authored-By; no `asm/`, `build/`, `expected/`, `disc/`.
+- Findings: none open. Tooling bug reported in [[matching-notes]]: `funcdiff.py --built` does not rebuild; `queue.py` over many files dies in Docker.
