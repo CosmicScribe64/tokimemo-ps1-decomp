@@ -925,7 +925,7 @@ void func_8011B09C(void) {
         D_80124344 = 0xC;
         /* FAKE: D_800B1AF6 (= D_800B1746 + 0x3B0) is updated through D_800B1746 so that as1 keeps the next load of D_800B1746 after the store; real source unknown. T-4050 */
         (&D_800B1746)[0x3B0] += 0xF;
-        /* The record address goes through (u32) so IDO does not keep D_800B1746 in a register across the halfword stores (the original reloads it each time). T-4050 */
+        /* FAKE: the record address goes through (u32) so IDO does not keep D_800B1746 in a register across the halfword stores (the original reloads it each time); real source unknown. T-4050 */
         q = (u8 *)((u32)D_800B0860 + D_800B1746 * 0x34);
         *(s16 *)(q + 0x1A6) -= 1;
         q = (u8 *)((u32)D_800B0860 + D_800B1746 * 0x34);

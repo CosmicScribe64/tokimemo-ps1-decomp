@@ -121,8 +121,8 @@ void func_80137F94(void) {
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80138088);
 
-/* The address goes through (u32): a store through a pointer derived from the array symbol does not
- * let IDO keep D_800E71DE in a register across the stores, the original reloads it each time (T-4050). */
+/* FAKE: the address goes through (u32) so that IDO does not keep D_800E71DE in a register across the
+ * stores (the original reloads it each time); real source unknown. T-4050 */
 void func_80138374(void) {
     *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x75E) = D_800E71DF;
     *(u8 *)((u32)D_800E6280 + D_800E71DE * 8 + 0x760) = 0x15;
