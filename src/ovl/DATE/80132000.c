@@ -1364,7 +1364,22 @@ s32 func_8013EB1C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013EB8C);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013EE3C);
+void func_8013EE3C(void) {
+    /* FAKE: 4 spare bytes reproduce the original frame (0x60) and the table's offset 0x30; real locals unknown. T-9180 */
+    s32 pad;
+    Tbl21 tbl;
+
+    tbl = D_8015B9B0;
+    if (func_80044E8C() == 1) {
+        func_80044750(tbl.v[D_800CA2F8]);
+        func_8004284C();
+    }
+    if ((u32) D_800E6280.unk_1104.w++ >= 0x400U) {
+        func_800452C4();
+        func_8004482C();
+        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+    }
+}
 
 void func_8013EF1C(void) {
     if ((u8) D_800E6280.unk_110A >= 0x14U) {

@@ -1163,4 +1163,9 @@ extern u8 D_8015BF2C;
 extern s16 D_8015BF30;
 s32 func_8013BA80(void);
 
+typedef struct Tbl21 {
+    /* 0x00 */ u16 v[21];
+} Tbl21; /* size 0x2A */
+extern Tbl21 D_8015B9B0;
+
 #endif /* OVL_DATE_H */
