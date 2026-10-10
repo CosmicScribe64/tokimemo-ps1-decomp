@@ -940,4 +940,10 @@ void func_80144CC4(void);
 void func_80145318(void);
 void func_801451D4(void);
 
+extern s32 D_801500C8;
+extern s32 D_801500CC;
+extern s32 D_801500D0;
+extern s32 D_801500D4;
+
+
 #endif /* OVL_ETC_H */
