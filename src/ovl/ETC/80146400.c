@@ -308,7 +308,20 @@ void func_80147F0C(void) {
     func_80148BC8();
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147F7C);
+s32 func_80147F7C(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8014790C();
+        break;
+    case 1:
+        func_80147D74();
+        break;
+    case 2:
+        func_80147F0C();
+        break;
+    }
+}
 
 void func_80147FFC(void) {
     parameter_show_init();

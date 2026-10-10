@@ -668,3 +668,26 @@ typedef struct {
 
 #endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;
+extern s32 D_801464B0;
+extern s32 D_801464B4;
+extern s32 D_801464B8;
+extern s16 D_801464BC;
+extern s32 D_801464C0;
+extern s32 D_801464C4;
+extern s32 D_801464C8;
+extern s32 D_801464CC;
+extern s32 D_801464D0;
+extern s32 D_801464D4;
+extern s32 D_801464D8;
+extern s32 D_801464DC;
+extern s32 D_801464E4;
+extern s32 D_801464E8;
+extern s32 D_801464EC;
+extern s16 D_801464F0;
+extern s32 D_801464F4;
+extern s32 D_801464F8;
+extern s32 D_801464FC;
+extern s32 D_80146500;
+extern s32 D_80146504;
+extern s32 D_80146508;
+extern s32 D_8014650C;

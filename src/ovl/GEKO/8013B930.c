@@ -150,7 +150,12 @@ void func_8013BD78(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013BDB0);
+s32 func_8013BDB0(void) {
+    if ((u32)D_800E6280.unk_1104.w++ >= 0x11U) {
+        func_8004E9F4(1);
+        func_8004284C();
+    }
+}
 
 void func_8013BDF8(void) {
     func_80044750(0x500);
