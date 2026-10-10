@@ -111,12 +111,14 @@ def overlay_targets(n, overlays):
     """Write the split/compile/link/check rules for every overlay."""
     n.rule("osplit",
            command=("python3 -m splat split config/overlays/$name.yaml && "
-                    "python3 tools/rodata_pieces.py config/overlays/$name.yaml && touch $out"),
+                    "python3 tools/rodata_pieces.py config/overlays/$name.yaml && "
+                    "python3 tools/data_pieces.py config/overlays/$name.yaml && touch $out"),
            description="splat split $name")
     n.rule("old",
            command=("mips-linux-gnu-ld -EL -T build/ovl/$name.ld "
                     "-T build/ovl/${name}_undefined_funcs_auto.txt "
                     "-T build/ovl/${name}_undefined_syms_auto.txt "
+                    "-T build/ovl/${name}_data_syms.ld "
                     "-T build/main_names.ld "
                     "-Map build/ovl/$name.map -o $out"),
            description="LD $out")
@@ -136,10 +138,11 @@ def overlay_targets(n, overlays):
         stamp = "build/ovl/%s.stamp" % name
         ld = "build/ovl/%s.ld" % name
         data_ss = overlay_data_files(name)
-        n.build([stamp, ld] + data_ss, "osplit",
+        # build/ovl/<NAME>_data_syms.ld: labels inside C-defined data (tools/data_pieces.py, T-9010)
+        n.build([stamp, ld, "build/ovl/%s_data_syms.ld" % name] + data_ss, "osplit",
                 ["config/overlays/%s.yaml" % name, "config/reloc_addrs.txt"]
                 + symbol_files("config/overlays/%s.yaml" % name),
-                implicit=[DISC_STAMP],
+                implicit=[DISC_STAMP, "tools/data_pieces.py"],
                 variables=v)
         # one C file per `c` subsegment: src/ovl/<NAME>.c, or src/ovl/<NAME>/<addr>.c per
         # original object once tools/split_objects.py has run (T-0500)
@@ -184,7 +187,8 @@ def main():
                                                   "config/%s.sha1" % EXE])
     n.rule("split",
            command=("python3 -m splat split config/%s.yaml && python3 tools/rodata_pieces.py "
-                    "config/%s.yaml && touch $out") % (EXE, EXE),
+                    "config/%s.yaml && python3 tools/data_pieces.py config/%s.yaml && touch $out")
+           % (EXE, EXE, EXE),
            description="splat split")
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
@@ -206,8 +210,8 @@ def main():
     n.rule("ld",
            command=("mips-linux-gnu-ld -EL -T build/%s.ld "
                     "-T build/undefined_funcs_auto.txt "
-                    "-T build/undefined_syms_auto.txt -Map build/%s.map "
-                    "-o $out") % (EXE, EXE),
+                    "-T build/undefined_syms_auto.txt -T build/%s_data_syms.ld "
+                    "-Map build/%s.map -o $out") % (EXE, EXE, EXE),
            description="LD $out")
     n.rule("objcopy", command="mips-linux-gnu-objcopy -O binary $in $out",
            description="OBJCOPY $out")
@@ -218,7 +222,8 @@ def main():
 
     stamp = "build/split.stamp"
     split_in = ["config/%s.yaml" % EXE, "config/reloc_addrs.txt"] + symbol_files("config/%s.yaml" % EXE)
-    n.build([stamp, "build/%s.ld" % EXE] + ASM_FILES, "split", split_in, implicit=[DISC_STAMP])
+    n.build([stamp, "build/%s.ld" % EXE, "build/%s_data_syms.ld" % EXE] + ASM_FILES, "split", split_in,
+            implicit=[DISC_STAMP, "tools/data_pieces.py"])
 
     objs = []
     headers = sorted(glob.glob("include/**/*.h", recursive=True) + glob.glob("include/**/*.inc", recursive=True))
