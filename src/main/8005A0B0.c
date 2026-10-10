@@ -1,7 +1,36 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005A0B0);
+/* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
+void func_8005A0B0(void) {
+    switch (*(u8 *)&D_800E6280.unk_1109) {
+    case 0:
+        func_8005A2A8();
+        break;
+    case 1:
+        func_8005AE60();
+        break;
+    case 2:
+        func_8005B798();
+        break;
+    case 3:
+        func_8005B908();
+        break;
+    case 4:
+        func_8005D9B4();
+        break;
+    case 5:
+        join_club();
+        break;
+    case 0xFF:
+        func_8005A1A0();
+        break;
+    }
+    if (*D_8011F3FF & 0x80) {
+        func_80067870();
+    }
+    func_80066C08(0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005A1A0);
 
