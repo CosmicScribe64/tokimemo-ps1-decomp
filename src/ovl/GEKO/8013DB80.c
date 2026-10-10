@@ -19,7 +19,19 @@ void func_8013DC70(void) {
     func_80046500();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DB80", func_8013DCAC);
+typedef struct {
+    void (*f[33])();
+} FnTbl33; /* size 0x84 */
+extern FnTbl33 D_80146DCC;
+
+void func_8013DCAC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl33 tbl;
+
+    tbl = D_80146DCC;
+    idx = D_800E738A;
+    tbl.f[idx]();
+}
 
 void func_8013DD20(void) {
     func_80046318(0x3D, 0x801B0000, 0x8947);

@@ -419,4 +419,38 @@ extern u8 D_8012B907;
 extern s32 D_8012E668;
 void func_80140050();
 
+extern s16 D_8012B8C8;
+void func_80144018();
+
+/* Three consecutive records at D_8012B8C0 (T-4070): accessing the flag bytes through one base symbol
+ * keeps IDO from hoisting loads above earlier stores, as in the original. */
+typedef struct GyoziRec44 {
+    /* 0x00 */ u8 pad00[2];
+    /* 0x02 */ s8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ s8 unk_04;
+    /* 0x05 */ u8 pad05[2];
+    /* 0x07 */ s8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad0A[2];
+    /* 0x0C */ s32 unk_0C; /* gives the record word alignment */
+    /* 0x10 */ u8 pad10[6];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0x2A];
+} GyoziRec44; /* size 0x44 */
+extern GyoziRec44 D_8012B8C0[3];
+
+extern s32 D_80148BC0;
+extern s32 D_80148BC4;
+extern s32 D_80148BC8;
+extern s16 D_80148BCC;
+extern s32 D_80148BD0;
+extern s32 D_80148BD4;
+extern s32 D_80148BD8;
+extern s32 D_80148BDC;
+extern s32 D_80148BE0;
+extern s32 D_80148BE4;
+extern s32 D_80148BE8;
+
 #endif /* OVL_GYOZI_H */

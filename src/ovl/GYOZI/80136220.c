@@ -66,7 +66,15 @@ void func_801367D4(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80136220", func_8013683C);
+void func_8013683C(void) {
+    D_8012B8C0[0].unk_03 |= 0x80;
+    D_8012B8C0[1].unk_02 = 1;
+    D_8012B8C0[1].unk_03 |= 0x80;
+    D_8012B8C0[2].unk_02 = 1;
+    D_8012B8C0[2].unk_03 |= 0x80;
+    D_801461A0 = 1;
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80136220", func_801368B8);
 

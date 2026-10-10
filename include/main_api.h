@@ -250,7 +250,9 @@ extern u8 D_800E652A;
 extern s32 D_800E6598;
 extern u8 D_800E65A4;
 extern u8 D_800E661F;
+#ifndef MAIN_API_OVERRIDE_D_800E6636
 extern s16 D_800E6636;
+#endif
 extern s16 D_800E663A;
 extern s16 D_800E663E;
 extern u8 D_800E6641;
