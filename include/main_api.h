@@ -1839,5 +1839,6 @@ void func_800BCDF0();
 void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
+extern u8 D_800E738D;
 
 #endif /* MAIN_API_H */

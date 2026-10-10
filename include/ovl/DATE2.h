@@ -182,5 +182,7 @@ extern s32 D_8013B5B4;
 extern s32 D_8013B5B8;
 extern s32 D_8013B5BC;
 extern s32 D_8013B5C0;
+void func_801385CC();
+void func_801388C0();
 
 #endif /* OVL_DATE2_H */
