@@ -69,7 +69,13 @@ void func_8014EE98(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014EEF4);
+void func_8014EEF4(void) {
+    s32 i;
+
+    for (i = 0x28; i < 0x30; i++) {
+        func_8013E97C(i, 0, 0);
+    }
+}
 
 void func_8014EF3C(void) {
     D_8015EDD8++;

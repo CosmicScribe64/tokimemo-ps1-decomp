@@ -142,7 +142,22 @@ void func_8014DAE0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DB08);
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+extern FnTbl42 D_8015E31C;
+
+void func_8014DB08(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl42 tbl;
+
+    tbl = D_8015E31C;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_80122D04 != 0) {
+        func_8014DB98();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DB98);
 
@@ -174,9 +189,23 @@ void func_8014DF1C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DF54);
+void func_8014DF54(void) {
+    func_80085368();
+    D_80120650[0x8B] |= 0x80;
+    D_80120650[0xCF] |= 0x80;
+    D_80120650[0x8F] = D_80120650[7];
+    D_80120650[0xD3] = D_80120650[7];
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DFB0);
+void func_8014DFB0(void) {
+    func_800853FC();
+    if (D_80120650[7] == 0) {
+        D_80120650[0x8B] &= 0xFF7F;
+        D_80120650[0xCF] &= 0xFF7F;
+    }
+    D_80120650[0x8F] = D_80120650[7];
+    D_80120650[0xD3] = D_80120650[7];
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E010);
 

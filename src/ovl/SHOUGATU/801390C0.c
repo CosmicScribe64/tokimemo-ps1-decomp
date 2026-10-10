@@ -7,7 +7,24 @@ void func_801391D4(void) {
     func_801391F4();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801390C0", func_801391F4);
+typedef struct {
+    void (*f[62])();
+} FnTbl62; /* size 0xF8 */
+extern FnTbl62 D_801452B8;
+
+void func_801391F4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl62 tbl;
+
+    tbl = D_801452B8;
+    idx = D_800E738A;
+    tbl.f[idx](0x80);
+    if (D_80144E08 == 0) {
+        if (D_80144E0C == 3) {
+            D_80122CF4 = 0;
+        }
+    }
+}
 
 void func_801392A4(void) {
     k_reset(1);

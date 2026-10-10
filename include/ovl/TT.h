@@ -65,5 +65,6 @@ extern u8 D_80151A50[];
 extern u8 D_80150978[];
 extern u8 D_80155B54[];
 void func_8013AE3C(void);
+extern u8 *D_80158A90;
 
 #endif /* OVL_TT_H */

@@ -804,6 +804,7 @@ extern s32 D_80122CF0;
 extern s32 D_80122CF4;
 extern s32 D_80122CF8;
 extern s32 D_80122CFC;
+extern s32 D_80122D04;
 extern s32 D_80122D08;
 extern s32 D_80122D0C;
 extern s32 D_80122D10;
