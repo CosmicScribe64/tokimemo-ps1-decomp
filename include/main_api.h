@@ -1559,7 +1559,7 @@ s32 func_80060B24();
 void func_80060B78(void);
 void uwasa_exit0(void);
 s32 uwasa0();
-void pre_xmas_init(void);
+s32 pre_xmas_init(void);
 s32 func_80060EA0();
 s32 pre_syogatu_init();
 s32 func_80061634();
@@ -1603,7 +1603,7 @@ void func_8006509C(void);
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);
-void func_80066104(void);
+void func_80066104();  /* the matched definition takes no parameter; pre_xmas_init passes a string through $a0 */
 void func_8006612C();  /* callers pass one pointer, or nothing */
 void func_80066334();
 s32 func_80066A2C(void);

@@ -659,7 +659,31 @@ void uwasa_main(void) {
     func_800578F4(0);
     func_80066C08(1);
 }
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_xmas_init);
+s32 pre_xmas_init(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8004E58C();
+        func_80048E78();
+        func_80041584();
+        func_80066104("自宅");
+        gnsx(D_800E6280.unk_0D4);
+        parameter_show_init();
+        parameter_show_init();
+        hizuke_init();
+        message_window_init();
+        parameter_disp_switch(1);
+        icon_disp_switch(0);
+        tpage_buf_clear();
+        sndisp("今日は伊集院の家で、 クリスマスパーティだ。 会場に行こうかな）", 0, 0x1F);
+        k_disp_start(6);
+        func_8006BC28(0);
+        func_8005AB4C();
+        return;
+    case 1:
+        func_8005ABD0();
+        return;
+    }
+}
 
 s32 pre_xmas(void) {
     switch (D_800E6280.unk_110D) {
