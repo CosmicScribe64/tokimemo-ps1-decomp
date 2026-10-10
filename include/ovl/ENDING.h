@@ -211,4 +211,17 @@ extern s32 D_800E6758;
 
 void func_801396A4(s16 arg0, u8 arg1);
 
+extern s32 D_800E8C70;
+extern u8 D_800E8CA0[];
+extern u8 *D_800E8C74;
+extern s32 D_800E8C84;
+extern u8 D_800E90A0[];
+extern u8 *D_800E8C88;
+extern s16 D_800E6280;
+void func_80097D90();
+void func_80098380();
+void func_80098490();
+void func_80098530();
+void InitGeom();
+
 #endif /* OVL_ENDING_H */

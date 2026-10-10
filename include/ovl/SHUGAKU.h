@@ -129,4 +129,6 @@ extern s16 D_801206BE;
 extern u8 D_80120699;
 extern u8 D_80120698;
 
+void normal_date_girl_in();
+
 #endif /* OVL_SHUGAKU_H */

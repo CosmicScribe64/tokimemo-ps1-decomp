@@ -174,9 +174,31 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80133F98);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_8013408C);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80134140);
+void func_80134140(void) {
+    func_80097D90(0x100, 0xF0, 0, 0, 0);
+    func_80098380();
+    func_80098490(0, 0, 0, 0xF0);
+    D_800E8C70 = 8;
+    D_800E8C74 = D_800E8CA0;
+    D_800E8C84 = 8;
+    D_800E8C88 = D_800E90A0;
+    func_80098530();
+    InitGeom();
+    D_800E6280 = 0x100;
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_801341D8);
+void func_801341D8(void) {
+    func_80097D90(0x140, 0xF0, 0, 0, 0);
+    func_80098380();
+    func_80098490(0, 0, 0, 0xF0);
+    D_800E8C70 = 8;
+    D_800E8C74 = D_800E8CA0;
+    D_800E8C84 = 8;
+    D_800E8C88 = D_800E90A0;
+    func_80098530();
+    InitGeom();
+    D_800E6280 = 0x140;
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING", func_80134270);
 

@@ -565,7 +565,17 @@ void func_80138D24(void) {
     normal_date_girl_out();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80138D64);
+void func_80138D64(void) {
+    u8 **p;
+
+    p = (u8 **)D_800CA2D4;
+    if (p[D_800CA2DC][D_800CA2E0] == 9) {
+        func_8004284C();
+        D_8013C974 = 1;
+        return;
+    }
+    normal_date_girl_in();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU", func_80138DD8);
 
