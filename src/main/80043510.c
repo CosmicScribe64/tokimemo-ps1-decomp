@@ -1,5 +1,25 @@
 #include "common.h"
 #include "game.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D10);
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D14);
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D18);
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D1C);
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D20);
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D24);
+u8 D_800B3D28 = 0;
+u8 D_800B3D2C = 0;
+s32 D_800B3D30 = 0;
+s32 D_800B3D34 = 0;
+s32 D_800B3D38 = 0;
+s32 D_800B3D3C = 0;
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D40);
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D44);
+INCLUDE_RODATA("asm/data/main/80043510.data", D_800B3D48);
+u8 D_800B3D4C = 0;
+u8 D_800B3D50 = 0;
+u8 D_800B3D54[12] = { 0 };
 
 INCLUDE_ASM("asm/nonmatchings/main/80043510", func_80043510);
 
@@ -107,7 +127,21 @@ u8 func_8004481C(void) {
     return D_800B3D44;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", func_8004482C);
+
+void func_8004482C(void) {
+    D_800B3D54[0] = 0;
+    D_800B3D54[1] = 0;
+    D_800B3D44 = 0xFF;
+    D_800B3D30 = 0;
+    D_800B3D34 = 0;
+    D_800B3D38 = 0;
+    D_800B3D3C = 0;
+    D_800B3D28 = 0;
+    D_800B3D2C = 0;
+    D_800B3D4C = 0;
+    D_800B3D50 = 0;
+    D_800B3D48 = 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80043510", func_80044890);
 
