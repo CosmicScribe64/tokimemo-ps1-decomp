@@ -93,6 +93,7 @@ segments:
       - { start: 0x198B0, type: c, name: main/8005A0B0 }
       - { start: 0x20F10, type: c, name: main/80061710 }
       - { start: 0x224D0, type: c, name: main/80062CD0 }
+      - { start: 0x26CB0, type: c, name: main/800674B0 }
       - { start: 0x2C330, type: c, name: main/8006CB30 }
       - { start: 0x34B20, type: c, name: main/80075320 }
       - { start: 0x381E0, type: c, name: main/800789E0 }
@@ -165,11 +166,14 @@ segments:
       - [0x6E7B0, asm, libapi_3]   # vram 0x800AEFB0
       - [0x6E830, asm, libapi_counter]   # vram 0x800AF030
       - [0x6E9A0, asm, libapi_4]   # vram 0x800AF1A0
-      - [0x6EB40, rodata, rodata]
+      - [0x6EB40, rodata, rodata_800AF340]
       - [0x6F3F0, .rodata, main/80053650]
-      - [0x6F5E0, rodata, rodata_after_80053650]
+      - [0x6F5E0, rodata, rodata_800AFDE0]
+      - [0x70700, .rodata, main/80062CD0]
+      - [0x70790, .rodata, main/800674B0]
+      - [0x70940, rodata, rodata_800B1140]
       - [0x71630, .rodata, main/80079B10]
-      - [0x71800, rodata, rodata_after_80053650_after_80079B10]
+      - [0x71800, rodata, rodata_800B2000]
       - [0x72A20, data, data]
       - { start: 0xA3000, type: bss, name: bss, vram: 0x800E3800 }
   - [0xA3000]
