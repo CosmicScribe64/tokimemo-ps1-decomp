@@ -124,7 +124,50 @@ void func_80134ED4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80134880", func_80134F18);
+typedef struct {
+    s32 w[17];
+} Words17; /* size 0x44 */
+
+typedef struct {
+    s32 w[17];
+} Words17; /* size 0x44 */
+
+typedef struct {
+    s32 w[17];
+} Words17; /* size 0x44 */
+
+typedef struct {
+    s32 w[17];
+} Words17; /* size 0x44 */
+
+void func_80134F18(void) {
+    func_801365F4();
+    D_8013BFFC = D_8013C5C4;
+    D_8013C000 = D_8013C700;
+    D_8013C004 = D_8013C83C;
+    func_80134880();
+    func_80043914(D_8013C1A0, 0x11, 1, 2, 0);
+    func_80084E90(D_8013C1A4, D_8013C1A8, D_8013C1AC, D_8013C1B0, D_8013C1B4, D_8013C1B8);
+    func_800850D4(D_8013C194, D_8013C198, D_8013C190, D_8013C19C);
+    D_80120698 = 8;
+    D_80120654 = 8;
+    D_801206AC = 3;
+    /* FAKE: D_80120650 and D_801206D8 (+0x88) are one object in the original: the loads stay behind the stores. T-9310 */
+    *(Words17 *)&D_80120650[0x88] = *(Words17 *)D_80120650;
+    D_80120650[0x8A] = 0x40;
+    *(s16 *)&D_80120650[0xA0] = 0x28;
+    D_80120650[0x89] -= 1;
+    D_800CA2E4 = 3;
+    D_800CA2E8 = 0;
+    D_800E6280.unk_1228[5] = -1;
+    D_800E6280.unk_1228[6] = -1;
+    D_800E6280.unk_1228[7] = -1;
+    D_800E6280.unk_1228[8] = -1;
+    D_800E6280.unk_1228[9] = -1;
+    D_80122D0C = 1;
+    D_8013C1C0 = *(u8 *)&D_800E6280.unk_03C;
+    func_8004284C();
+}
 
 void func_801350F4(void) {
     if (D_80122CDC != 0) {
