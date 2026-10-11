@@ -1312,3 +1312,4 @@ void func_800FEA38(void);
 void func_800FF61C();
 void func_800FF770();
 void func_800FF82C();
+extern u8 D_8011F81C[];
