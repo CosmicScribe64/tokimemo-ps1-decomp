@@ -814,3 +814,14 @@ Seven fixes in `tools/funcdiff.py`, `tools/data_island.py`, `tools/sync_protos.p
 
 ## [2026-10-10] ticket | T-9220 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers OK, globals OK, progress 4521/6958, `sync_protos.py --check-branch` OK. Inline review recorded in the ticket, no open findings. Branch r6-fixes, not merged.
+## [2026-10-10] ticket | T-9200 (Backlog -> In Progress)
+Tooling round 6, gcc-built objects inside overlays: [[tickets/T-9200-gcc-built-sdk-objects-in-overlays]]. Branch r6-gcc.
+
+## [2026-10-10] decision | T-9200 which wave-6 "gcc" functions are gcc
+`tools/gcc_fingerprint.py` ([[gcc-objects]]): 8 overlay functions carry the PsyQ fingerprint. The six rotation helpers are hand-written (not gcc output at any version 2.6.3 to 2.91.66); TAIIKU `func_801488F0` is gcc 2.8.1-psx C; TT `func_8014D260` is gcc 2.7-class C. TACO `func_801420DC`/`func_801421AC` are IDO C, not gcc.
+
+## [2026-10-10] build | T-9200 per-object toolchain and gcc on arm64
+`config/toolchains.txt` read by `configure.py`; `tools/Dockerfile` builds gcc 2.7.2-psx and 2.8.1-psx from source on arm64 (output identical to the amd64 binaries on 110 sources); `tools/cc.py` gcc path runs maspsx `--expand-div`. Matched TAIIKU `func_801488F0` (gcc), TACO `func_801420DC`, `func_801421AC` (IDO). Clean build 27/27 OK, progress 4521 -> 4524. Details: [[toolchain]].
+
+## [2026-10-10] ticket | T-9200 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9200-gcc-built-sdk-objects-in-overlays]]; no open findings.

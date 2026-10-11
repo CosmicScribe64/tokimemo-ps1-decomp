@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
+- [[tickets/T-9200-gcc-built-sdk-objects-in-overlays|T-9200]] gcc-built SDK objects inside overlays: fingerprint, per-object toolchain, gcc 2.7.2/2.8.1 on arm64 (Done)
 - [[tickets/T-9140-wave-6-list-4|T-9140]] Wave 6: list 4, 28 functions matched (OLH help pages, text/state templates, data scalars); idioms in [[matching-notes]] "Wave 6, list 4" (Done)
 - [[tickets/T-9030-wave-5-tool-fixes|T-9030]] Wave-5 tool fixes (Done)
 - [[tickets/T-9010-per-object-data-shared-lui-at|T-9010]] Per-object .data ranges and data islands; shared `lui $at` matched (Done)
@@ -115,6 +116,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[executable]] - SLPM_86.053 header, memory map, bss, segment layout
 - [[overlays]] - the 26 .EXN overlays: loader, load addresses, entries, split and build
 - [[obin]] - O.BIN: ECOFF format and header fields (`obin_syms.py --headers`), symbol table, mapping onto the main exe, stats, generated rename list
+- [[gcc-objects]] - PsyQ-gcc-built objects inside overlays: fingerprint (`tools/gcc_fingerprint.py`), verdicts, per-object toolchain table (T-9200)
 - [[toolchain]] - Docker image (native arm64/amd64, T-3310), pinned versions, compiler choice (IDO 5.3 for game code), frame-layout emulation pass
 - [[psyq-sdk]] - per-library SDK versions, lib/object layout, signature method
 - [[matching-notes]] - compiler verdict, evidence, frame layout rule and evidence table, constants in registers (T-0017), register promotion of globals (T-0018), work queue and T-0018 detector (T-1320), matched/unmatched functions, idioms

@@ -110,6 +110,41 @@ class KandRPromotion(unittest.TestCase):
         self.assertRegex(out, r"move\ta1,t6")
 
 
+def gcc_disasm(code, tmp, ver):
+    src = os.path.join(tmp, "g.c")
+    obj = os.path.join(tmp, "g.o")
+    with open(src, "w") as f:
+        f.write(code)
+    cc.compile_gcc(src, obj, ver, "2.79")
+    return subprocess.run(["mips-linux-gnu-objdump", "-d", "-M", "no-aliases", obj], check=True,
+                          stdout=subprocess.PIPE, text=True).stdout
+
+
+@unittest.skipUnless(os.path.exists("/opt/gcc/2.7.2-psx/cc1") and os.path.exists("/opt/gcc/2.8.1-psx/cc1"),
+                     "old gcc not installed")
+class GccPath(unittest.TestCase):
+    """The PsyQ gcc path (T-9200) on synthetic C; both versions run natively on arm64 too."""
+
+    def test_division_has_aspsx_checks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = gcc_disasm("int f(int a, int b) { return a / b; }\n", tmp, "2.7.2-psx")
+        self.assertIn("break\t0x7", out)
+        self.assertIn("break\t0x6", out)
+
+    def test_move_is_addu_zero(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = gcc_disasm("int *f(int *a) { return a; }\n", tmp, "2.7.2-psx")
+        self.assertRegex(out, r"addu\tv0,a0,zero")
+
+    def test_28_epilogue_releases_the_stack_in_the_jr_slot(self):
+        code = "void g(int);\nvoid f(int *p) { g(p[0]); g(p[1]); }\n"
+        for ver, in_slot in (("2.7.2-psx", False), ("2.8.1-psx", True)):
+            with tempfile.TemporaryDirectory() as tmp:
+                lines = [l for l in gcc_disasm(code, tmp, ver).splitlines() if "\t" in l]
+            jr = [i for i, l in enumerate(lines) if "\tjr\t" in l][0]
+            self.assertEqual("addiu\tsp,sp" in lines[jr + 1], in_slot, ver)
+
+
 class IncludeDeps(unittest.TestCase):
     def test_include_asm_and_include_rodata_are_dependencies(self):
         text = 'INCLUDE_ASM("a/b", f1);\nINCLUDE_RODATA("a/c", D_1);\nint x;\n'
