@@ -1,5 +1,22 @@
 #include "common.h"
 #include "ovl/EN_NICHI.h"
+
+typedef struct {
+    /* 0x00 */ u32 tag;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ s16 x1;
+    /* 0x0E */ s16 y1;
+    /* 0x10 */ s16 x2;
+    /* 0x12 */ s16 y2;
+    /* 0x14 */ s16 x3;
+    /* 0x16 */ s16 y3;
+} EnPolyF4; /* size 0x18 */
+
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139200);
@@ -463,7 +480,40 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135FBC);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801362A4);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80136700);
+void func_80136700(void) {
+    s32 pad; /* FAKE: unused word above poly, puts poly at sp+0x30 as in the original (T-3330 slot rule) */
+    EnPolyF4 *poly;
+
+    poly = func_800490F0(0x18, D_8011ECA0);
+    func_8009F02C(poly);
+    func_8009EF84(poly, 1);
+    poly->r0 = D_80139B20;
+    poly->g0 = D_80139B20;
+    poly->b0 = D_80139B20;
+    poly->x0 = D_800E6280.unk_014[D_8011ECA0] - 0x58;
+    poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x40;
+    poly->x1 = D_800E6280.unk_014[D_8011ECA0] + 0x58;
+    poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x40;
+    poly->x2 = D_800E6280.unk_014[D_8011ECA0] - 0x58;
+    poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
+    poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x58;
+    poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
+    func_8009EED0(D_8011ECA0 * 0x400 + 8 + D_800E8CA0, poly);
+    func_800494BC(0, 0, 2, 2, 0);
+    if (D_80139B20 == 0) {
+        D_801215FF = 0x80;
+    }
+    D_80139B20 += 2;
+    D_80121603 = D_80139B20;
+    if (D_80139B20 >= 0x80) {
+        *(u8 *) &D_80121603 = 0x80;
+    }
+    if (D_80139B20 == 0xA0) {
+        D_80121634 = 0x01000000;
+        D_8012163F = 0x11;
+        func_8004284C();
+    }
+}
 
 void func_80136904(s32 arg0, s32 arg1) {
     D_80121313 = 0x84;
