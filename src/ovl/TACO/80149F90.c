@@ -1100,7 +1100,48 @@ void func_801508D0(void) {
     D_8015EDB4[19].unk3 += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_80150B3C);
+void func_80150B3C(s32 arg0) {
+    s32 i;
+
+    if (arg0 < 0xA) {
+        for (i = 0; i != 6; i++) {
+            func_80147674(i + 7, D_80160268[i], 1, 0, 0);
+        }
+        func_80147674(0x1B, D_80160280, 1, 0, 0);
+    } else if (arg0 >= 0xE && arg0 < 0x18) {
+        for (i = 0; i != 4; i++) {
+            func_80147674(i + 7, D_80160268[i], 2, 0, 0);
+        }
+    } else if (arg0 >= 0x1C && arg0 < 0x26) {
+        for (i = 0; i != 5; i++) {
+            func_80147674(i + 7, D_80160268[i], 3, 0, 0);
+            func_80154820(i + 7, 0x17);
+        }
+    } else if (arg0 >= 0x2A && arg0 < 0x34) {
+        for (i = 0; i != 5; i++) {
+            func_80147674(i + 7, D_80160268[i], 4, 0, 0);
+            func_80154820(i + 7, -0x17);
+        }
+    } else if (arg0 >= 0x38 && arg0 < 0x42) {
+        for (i = 0; i != 4; i++) {
+            func_80147674(i + 7, D_80160268[i], 5, 0, 0);
+        }
+    } else if (arg0 >= 0x46 && arg0 < 0x50) {
+        for (i = 0; i != 6; i++) {
+            func_80147674(i + 7, D_80160268[i], 6, 0, 0);
+        }
+        func_80147674(0x1B, D_80160280, 6, 0, 0);
+    }
+    if (arg0 >= 0x24 && arg0 < 0x2C) {
+        D_8015EDB4[20].pad0[1] = 0x40;
+        D_8015EDB4[20].unk78 = 0x800;
+        D_8015EDB4[20].unk84[0] = 0x1E;
+        return;
+    }
+    if (arg0 == 0x2C) {
+        D_8015EDB4[20].pad0[1] = 0x80;
+    }
+}
 
 void func_80150DE8(void) {
     s32 i;

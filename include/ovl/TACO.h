@@ -365,3 +365,4 @@ extern s16 *D_80160268[];
 extern s16 *D_80160280;
 void func_80150F44(s32 arg0);
 void func_8014C578(s32 arg0);
+void func_80150B3C(s32 arg0);
