@@ -54,7 +54,17 @@ void func_80075C24(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075C84);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80075FA0);
+s32 func_80075FA0(void) {
+    u8 x;
+    u16 h;
+
+    x = D_800E6280.unk_71C;
+    if (D_800E6280.unk_69C[x].unk_01 != 4) {
+        return D_800B699C[D_800E6280.unk_69C[x].unk_01];
+    }
+    h = D_800E6280.unk_0F4.h;
+    return D_800B6780[h >> 0xC];
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076000);
 

@@ -120,7 +120,20 @@ void func_80153068(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801531E8);
+void func_801531E8(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 j;
+
+    if (arg2 < 0x0A) {
+        for (i = 0, j = arg0; i != 0x15; i += 3, j += 3, arg1++) {
+            func_80147674(j, D_801603F0[arg1], 14, 0, 0);
+        }
+    } else if (arg2 >= 0x0A && arg2 < 0x14) {
+        for (i = 0, j = arg0; i != 0x15; i += 3, j += 3, arg1++) {
+            func_80147674(j, D_801603F0[arg1], 15, 0, 0);
+        }
+    }
+}
 
 void func_801532C4(void) {
     u8 temp;

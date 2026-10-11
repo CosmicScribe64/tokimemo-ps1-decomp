@@ -1441,6 +1441,7 @@ extern s32 D_8012749C;
 extern s32 D_801274A0;
 extern s32 D_80129F10;
 extern u8 D_80129F40[];
+extern s32 D_800B699C[];
 
 /* ---- functions ---- */
 void func_80010678();

@@ -62,6 +62,13 @@ void func_80132244(void) {
     func_80083A10();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80132000", func_801322E8);
+s32 func_801322E8(void) {
+    D_800CA134 = &D_80144C3C;
+    D_800CA138 = &D_80144C40;
+    D_800CA13C = D_80144C30;
+    D_800CA140 = D_80144C34;
+    D_800CA144 = D_80144C38;
+    func_80082764(D_80122CDC, 1, 0);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80132000", func_80132364);
