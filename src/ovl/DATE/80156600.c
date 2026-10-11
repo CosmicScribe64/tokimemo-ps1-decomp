@@ -290,7 +290,26 @@ void func_801572BC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_801572E4);
+/* FAKE: byte-workspace and element-zero views preserve load/store ordering;
+ * the copied record layout is incomplete. T-9550 */
+void func_801572E4(void) {
+    typedef struct {
+        /* 0x00 */ u32 words[17];
+    } DateWords44; /* size 0x44 */
+    s16 i;
+
+    *(DateWords44 *)&D_8011ECD0[0x1A08] = *(DateWords44 *)&D_8011ECD0[0x1980];
+    D_801206EE = 4;
+    D_801206DA = 9;
+    for (i = 0; i < 6; i++) {
+        D_801217D0[i + 4].unk_00 |= 0x80000000;
+    }
+    D_8011ECD0[0x1983] &= 0xFF7F;
+    D_8011ECD0[0x19C7] &= 0xFF7F;
+    D_80122CF8 = 0;
+    (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_037)[0] = (&D_800E6280.unk_038)[0] = 0x7F;
+    func_8004284C();
+}
 
 s32 func_801573F0(void) {
     D_800E6280.unk_036 += 0x10;

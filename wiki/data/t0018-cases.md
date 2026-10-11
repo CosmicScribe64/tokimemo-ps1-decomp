@@ -1121,3 +1121,22 @@ Historical rows above remain unchanged. Resolution records:
 - The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
 
 Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
+
+## T-9550 bounded experiments (2026-10-11)
+
+| File | Function | Shape | Evidence |
+|---|---|---|---|
+| 800674B0 | `func_80067DD4` | promo | original retains `andi v0,t7,0xff` and stores v0 after the flag update; current C removes that conversion and stores t8; 25-second permuter stayed at score 110, reverted (T-9550) |
+| 800674B0 | `func_80067DFC` | promo | sibling flag update also removes the original `andi v0,t7,0xff` and stores t8; 25-second permuter best 105, reverted (T-9550) |
+| 800674B0 | `func_8006C700` | regorder | after a typed u16 array declaration and reordered locals, original retains index/offset/result in a0/a1/v1 but IDO rotates them; bounded variants and 25-second permuter fail, API declaration and C reverted (T-9550) |
+| 80085E30 | `func_80086640` | regorder | halfword swap with one or two locals: expected right operand in v1, plain C uses t6; 25-second permuter does not reach a match, reverted (T-9550) |
+| DATE/80132000 | `func_8013E6A4` | promo | explicit result local fixes the saved-byte frame slot, but post-call counter load/increment remains v0/t6 instead of original a0/v1; two variants and 25-second permuter best 85, reverted (T-9550) |
+| DATE/80132000 | `func_80136F2C` | regorder | explicit halfword-array loop otherwise matches, but IDO reverses the t0/t1 bases of D_800CA224 and D_800CA22C; 25-second permuter stays at score 30, reverted (T-9550) |
+| DATE/80132000 | `func_80139DD0` | promo | narrow accumulated result introduces sll/sra where the original retains a wider temporary through the merged switch tail; narrow/wide local variants fail, reverted (T-9550) |
+| 800674B0 | `func_8006BA40` | promo | unsigned byte state kept across conditionals loses the original conversion/store register and shifts clamp temporaries; explicit aggregate migration and two variants still differ, reverted (T-9550) |
+| GEKO/80139910 | `func_80139C70` | promo | byte loaded after func_800853FC is expected directly in a0 for three colour stores; IDO uses v1 plus a move to a0. Narrow/wide variants and 25-second permuter best 60 fail; Rec24 fields already used, reverted (T-9550) |
+| DATE/80132000 | `func_8013E3C4` | regorder | direct and selector-local forms retain opposite compare operands; selector-first local order fixes the saved-state slot but gives v0/at instead of the original v1/v0 selector/constant and changes reload scheduling; bounded variants restored (T-9550) |
+| GYOZI/8013E5B0 | `func_8013E638` | regorder | GyoziWork member fixes the index alias view, but loop counter/record pointer remain v0/v1 instead of v1/v0 and the 56 constant moves into the loop tail; 25-second permuter best 255, restored (T-9550) |
+| GEKO/80139910 | `func_8013A2EC` | promo | scalar index declared before the 55-entry local table gives the correct copy/frame; reusing it for the post-call selector still loads t4 instead of original v1 and shifts comparison/flag temporaries; both bounded retries restored (T-9550) |
+| 80058D20 | `func_800590CC` | regorder | assigning existing GameState dimension members in call arguments still fails to share the original a0/a1 constants across the two branches; separate constant registers and store scheduling remain, restored (T-9550) |
+| 80058D20 | `func_800591D8` | regorder | sibling dimension-switch call-argument assignments likewise fail to preserve original shared a0/a1 width/height and first width load in a0; bounded variants restored (T-9550) |

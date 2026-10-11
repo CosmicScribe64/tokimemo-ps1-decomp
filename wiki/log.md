@@ -943,3 +943,103 @@ Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its kanban 
 ## [2026-10-11] build | T-9410 clean proof and review complete
 
 Clean Docker configure/ninja build after deleting asm and build: 27/27 SHA1 OK. build/headers.ok and build/globals.ok exist; tools/sync_protos.py --check-branch exits zero; tools/test_register_shapes.py passes all three synthetic tests; git diff --check passes. Progress: 4734/6958, 729612 bytes, +5 functions/+2768 bytes over baseline. Inline standards/spec review found no unresolved findings. Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its card to Done; full evidence in [[register-allocation-wave7]]. Uncommitted changes left for the orchestrator; no existing r7-fixes tooling files changed.
+
+## [2026-10-11] ticket | Claim wave 8 list 5
+
+Created [[tickets/T-9550-wave-8-list-5]] In Progress and synchronized [[kanban]]. Read the shared wave8-brief.md and [[register-allocation-wave7]] before matching. Work is isolated to branch w8-5, with uncommitted edits for the orchestrator.
+
+## [2026-10-11] build | Limit list-5 baseline concurrency
+
+First configure generated build.ninja. Initial build overlapped the other wave-8 builds; stopped only this worktree's own container and restarted ninja with two jobs to limit shared-host contention. [[tickets/T-9550-wave-8-list-5]] remains In Progress.
+
+## [2026-10-11] build | Wave-8 list-5 baseline and drafts
+
+Main executable and completed overlay baseline checks pass. Captured list-order m2c drafts in scratchpad/w8-5/ and prepared array/member rewrites guided by [[data-types]] and [[game-state]]. [[tickets/T-9550-wave-8-list-5]] records this batch; no candidate is claimed matched yet.
+
+## [2026-10-11] build | Wave-8 list-5 baseline passes
+
+Docker configure and ninja -j 2 completed with all 27 unit SHA1 checks OK, build/headers.ok and build/globals.ok. Starting bounded list-order candidate verification for [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] query | List-5 reuse and aggregate evidence
+
+Owned-file dupes.py and neardupes.py each applied zero copies. type_recovery.py found no aggregate proposal for D_800B6708, and a high-confidence unsigned-halfword array rooted at D_800B670A, stride 2, absorbing D_800B6710. Bounded C attempts will use this evidence. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] decision | First list-5 promotion time-box
+
+Restored func_80067DD4 after a real instruction difference and bounded permuter run. Recorded its retained-conversion symptom in [[data/t0018-cases]] and [[matching-notes]]. Also recorded the register_shapes.py positional-argument discrepancy for the orchestrator. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] decision | List-5 flag-update sibling
+
+func_80067DFC repeats the retained-conversion difference of func_80067DD4. Its bounded permuter did not match (best 105), so restored assembly and appended evidence to [[data/t0018-cases]]. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | First 30 list-5 attempts restored
+
+Recorded first 30 bounded attempts in scratchpad/w8-5/results-1.jsonl; no C candidates survived this pass. Corrected draft preparation for union-field aliases by retaining their temporary inferred declarations during migrate_globals.py, as required by [[decompile-workflow]]. Retesting the affected drafts and near misses before continuing the remaining list. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] decision | List-5 first verified C matches
+
+[[tickets/T-9550-wave-8-list-5]] keeps DATE `func_801572E4` (268 bytes) and TAIIKU `func_80143D24` (172 bytes), each verified by Docker resolved function diff. [[matching-notes]] records the common-table load ordering and overlapping coordinate views. Other corrected retries remain time-boxed and restored; batch checksums are running.
+
+## [2026-10-11] build | Corrected list-5 retry batch passes
+
+Docker ninja completed successfully with all 27 checksum checks after the ten corrected retries. Two function matches (440 bytes) remain; all failed C and temporary API declarations were restored. [[tickets/T-9550-wave-8-list-5]] continues with list positions 31–152, using typed byte-pointer fields and bounded variants.
+
+## [2026-10-11] query | List-5 data-island evidence
+
+Consulted `config/objects/main.txt`, `config/objects/TAIIKU.txt`, and TAIIKU's generated data piece. The existing island places `D_8014A1D0` in `src/ovl/TAIIKU/80142240.c` and its four bytes are zero. [[matching-notes]] records a bounded C-definition retry for `func_8014430C`; no tooling or raw source edits. [[tickets/T-9550-wave-8-list-5]] has completed attempts for list positions 31–50 and is checking their restored outputs.
+
+## [2026-10-11] decision | Reuse Rec24 field layout in list-5 drafts
+
+Compared `cal_sprite_init`'s scalar addresses with the documented 0x24-byte `Rec24` layout in `include/main_api.h`. Prepared field-based candidates for this table rather than new globals, retaining EVENT's separate data interpretation. [[matching-notes]] records the boundary evidence; [[tickets/T-9550-wave-8-list-5]] continues its bounded list sweep.
+
+## [2026-10-11] build | List-5 positions 31–50 restored and verified
+
+All twenty functions were attempted or time-boxed; failed drafts and temporary declarations were restored. Docker ninja passes 27 checksums. The GYOZI `func_8013E638` diff hoists the scalar `D_800F62CF`; the existing `GyoziWork.unk_F2F` member documents the correct T-9210 reload view, prepared for subsequent drafts and a bounded retry. [[tickets/T-9550-wave-8-list-5]] continues at position 51.
+
+## [2026-10-11] query | List-5 SDK argument evidence
+
+Read `asm/libgs.s` and the callers in the owned `80058D20` object. `initLight` explicitly clears a2 for `GsSetAmbient`; `func_8009B430` uses a0–a2 as inputs. [[matching-notes]] records a third-argument fix and a three-argument file-view retry under standards 8a; retention requires real function and unit checks. [[tickets/T-9550-wave-8-list-5]] continues the list sweep.
+
+## [2026-10-11] build | List-5 positions 51–70 verified
+
+All twenty entries reached a bounded result; no additional matches retained. Restored sources and header views pass all 27 checksums in Docker. [[tickets/T-9550-wave-8-list-5]] continues with positions 71–90. Scratch retries now include real Rec24 fields, GyoziWork index aliases, SDK argument corrections, named CharFlags bit tests and generated prototype guards.
+
+## [2026-10-11] build | List-5 positions 71–90 verified
+
+Twenty more entries were attempted or time-boxed, with no new C retained. Docker ninja passes all 27 checksums after restoring them. [[tickets/T-9550-wave-8-list-5]] continues at position 91. Full checksum rebuilds are reserved for retained matches (still within the brief's 5–10-match interval) and final verification; each candidate continues to get a real fresh-object function diff.
+
+## [2026-10-11] decision | List-5 positions 91–110 time-boxed
+
+Twenty entries reached bounded compiler/diff or draft-shape results; none added matching C. Source and declaration snapshots were restored. [[tickets/T-9550-wave-8-list-5]] proceeds to 111–130, then the remaining entries and the concrete type/argument/frame retries recorded in [[matching-notes]]. The last retained-match tree remains the two verified functions (440 bytes).
+
+## [2026-10-11] decision | List-5 positions 111–130 time-boxed
+
+All twenty entries reached bounded results and were restored; no additional C retained. [[tickets/T-9550-wave-8-list-5]] now sweeps the final 22 entries. Added a table heading for this ticket's new [[data/t0018-cases]] rows, leaving historical rows unchanged.
+
+## [2026-10-11] decision | List-5 full sweep completed
+
+All 152 listed functions reached a bounded compiler/diff result or draft-shape time-box; failed C and temporary declaration snapshots were restored. [[tickets/T-9550-wave-8-list-5]] now tests thirteen prepared retries with concrete type, SDK-arity, local-layout or implicit-int hypotheses. Complete per-function evidence remains in scratchpad/w8-5/results-*.jsonl; no raw sources or tooling files changed.
+
+## [2026-10-11] decision | List-5 aggregate and SDK-arity matches
+
+Resolved Docker function diffs additionally match `cal_sprite_init` (828 bytes) and `initLight` (272 bytes). Four functions, 1,540 bytes, are retained. The completeness audit covers all 152 entries; [[matching-notes]] records successes and the bounded member/data-island/model-view failures. [[tickets/T-9550-wave-8-list-5]] proceeds to final local-allocation retries and validation.
+
+## [2026-10-11] build | List-5 four-match batch verified
+
+Docker ninja -j 2 completed all 27 checksum checks, headers and globals. The final two local-allocation retries failed resolved function diffs and were restored. [[matching-notes]] records the outcomes; [[data/t0018-cases]] now has fourteen appended T-9550 cases.
+
+## [2026-10-11] ticket | List-5 enters inline review
+
+Moved [[tickets/T-9550-wave-8-list-5]] to In Review with matching [[kanban]] and [[index]] entries. Standards review of the uncommitted HEAD diff found undocumented incomplete aggregate views; marked DATE, TAIIKU and light scalar views FAKE and tracked the reasons. Spec review accounts for 152/152 entries and confirms allowed-file isolation. Final Docker guards, checksums and owned-file reuse scan remain pending.
+
+## [2026-10-11] query | List-5 final owned-file reuse audit
+
+Ran Docker dupes.py --apply --check with the exact 36 owned C paths. Applied zero copies; no additional source or declaration changes. [[tickets/T-9550-wave-8-list-5]] now runs final branch/global guards, fresh diffs for all four retained functions, incremental ninja and explicit 27-binary SHA1 verification.
+
+## [2026-10-11] build | List-5 final verification passes
+
+Docker branch prototypes report zero new disagreements (17 known), GameState migration audit passes, and all four fresh resolved function diffs MATCH after FAKE-comment edits. Incremental ninja exits zero; all 27 unit checksums and explicit final SHA1 verification pass with header/global stamps. Progress: grand total 4738/6958 functions, 731152/2279368 bytes (32.1%); SDK 722 functions excluded. Full evidence is scratchpad/w8-5/final-validation.log. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] ticket | List-5 reviewed and Done
+
+Inline code-review skill against HEAD completed along standards and shared-brief spec axes. Three missing FAKE-documentation findings resolved, zero outstanding on either axis. Moved [[tickets/T-9550-wave-8-list-5]] to Done with [[kanban]] and [[index]] synchronized. All 152 entries attempted/time-boxed; four matches (1,540 bytes), fourteen [[data/t0018-cases]] rows. Changes stay uncommitted for the orchestrator; no tools, raw sources or Git state modified.
