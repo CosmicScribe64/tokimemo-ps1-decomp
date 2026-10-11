@@ -1326,6 +1326,7 @@ extern s32 D_801255D8;
 extern u8 D_801255DC;
 extern s16 D_801255E0;
 extern s16 D_801255E2;
+extern u32 D_801255F0[];
 extern s32 D_80125C04;
 extern s32 D_80125C08;
 extern s32 D_80125C0C;

@@ -11,9 +11,45 @@ u8 *func_80147380(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_801473BC);
+void func_801473BC(void) {
+    u8 *p;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_801473E8);
+    p = D_80158A94;
+    do { /* FAKE: one-pass loop keeps p in $v0 (permuter); real source unknown. T-9320 */
+        p[0] = 0;
+    } while (0);
+    p[0x68] = 0;
+    p[0x138] = 0;
+    p[0x1A0] = 0;
+    p += 0x208;
+    p[0] = 0;
+    p[-0x138] = 0;
+}
+
+void func_801473E8(void) {
+    u8 *p;
+
+    p = D_80158A94;
+    if (1) { /* FAKE: block, one-pass loop and empty test keep p in $v0 (permuter); real source unknown. T-9320 */
+        *(s16 *)(p + 0x10) = 5;
+        *(s16 *)(p + 0x78) = 5;
+        *(s16 *)(p + 0x148) = 5;
+        *(s16 *)(p + 0x1B0) = 5;
+        *(s16 *)(p + 0x218) = 5;
+        do {
+            p[0] = 0;
+        } while (0);
+        p[0x68] = 0;
+        p[0x138] = 0;
+    }
+    p[0x1A0] = 0;
+    if (p) {
+    }
+    p += 0x208;
+    p[0] = 0;
+    p[-0x138] = 0;
+    *(s16 *)(p - 0x128) = 5;
+}
 
 void func_8014742C(u8 *arg0, u16 arg1) {
     arg0[0] = 1;
