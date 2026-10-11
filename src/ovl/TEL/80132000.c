@@ -43,7 +43,35 @@ void func_80132060(void) {
     func_8006BA40();
 }
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80132138);
+void func_80132138(void) {
+    if (*(u8 *)&D_800E6280.unk_110D == 0) {
+        func_80051010("Ｔｒｒｒｒ…", 0, 0x2F);
+        func_80044750(0x508);
+        func_8004EAD4(0);
+        D_801230D0 = (func_800AE0D0() & 3) + 1;
+        *(u8 *)&D_800E6280.unk_110D = 1;
+    } else if (*(u8 *)&D_800E6280.unk_110D == 1) {
+        if ((D_800E6280.unk_1104.u & 0x7F) == 1) {
+            func_8004EAAC();
+            func_80051010("Ｔｒｒｒｒ…", 0, 0x2F);
+            func_8004EAD4(0);
+            if (D_801230D0 != 0) {
+                D_801230D0 -= 1;
+            }
+            if (D_801230D0 > 0) {
+                func_80044750(0x508);
+            }
+        }
+        if (D_801230D0 <= 0 || (D_800E6280.unk_F88 & 0x40)) {
+            func_80044750(0x1508);
+            func_80044750(0x50B);
+            func_8004284C();
+        }
+    }
+    func_80050B54(0);
+    func_80069128();
+    func_8004EC24();
+}
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_8013226C);
 
