@@ -1154,6 +1154,10 @@ extern s16 D_80120F3E;
 extern u8 D_8012117A;
 extern u8 D_801211BE;
 extern u8 D_80121202;
+extern s16 D_8012121A;
+#ifndef MAIN_API_OVERRIDE_D_8012121C
+extern s16 D_8012121C;
+#endif
 extern s32 D_80121238;
 extern u8 D_80121246;
 extern s32 D_8012127C;
