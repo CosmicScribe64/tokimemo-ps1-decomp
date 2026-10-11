@@ -1031,3 +1031,5 @@ extern u8 D_80150984[];
 extern u8 D_80150954[];
 extern u8 D_801508EC[];
 s32 func_80149468();
+extern u8 D_801500F0[];
+extern u8 D_8015010C[];
