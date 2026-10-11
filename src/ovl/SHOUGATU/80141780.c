@@ -162,7 +162,7 @@ void func_80142784(void) {
     D_800CA150 = (u16)D_800CA150 + 2;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
-    func_80084D3C(sizeof(Rec38));
+    func_80084D3C();
     func_8004284C();
 }
 

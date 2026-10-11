@@ -183,7 +183,17 @@ void func_8014491C(void) {
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_8014494C);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80144A74);
+void func_80144A74(void) {
+    if (D_8012E66C == 0) {
+        D_800F647A += 0x18;
+        return;
+    }
+    *(u16 *)&D_800D9250 += 2;
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += 1;
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 2;
+    func_8008FB00();
+    func_8004DE1C();
+}
 
 void func_80144B28(void) {
     func_8004F860(0x280, 0, 0x40, 0x80, D_80148B90);

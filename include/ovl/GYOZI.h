@@ -215,6 +215,8 @@ typedef struct GyoziWork {
     /* 0x018 */ s16 unk_018[2];
     /* 0x01C */ u8 unk_01C[0x18C];
     /* 0x1A8 */ GyoziGirl girl[11];
+    /* 0x410 */ u8 unk_410[0xB1F];
+    /* 0xF2F */ u8 unk_F2F;   /* D_800F62CF, the girl index; read as a member where the original reloads it after a girl[] store (T-9210) */
 } GyoziWork;
 extern GyoziWork D_800F53A0;
 void func_8013D5B0();

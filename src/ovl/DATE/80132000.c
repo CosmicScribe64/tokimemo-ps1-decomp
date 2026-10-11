@@ -1454,7 +1454,7 @@ void func_8013F544(void) {
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 -= 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 1;
         D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
-        func_80084D3C(sizeof(Rec38));
+        func_80084D3C();
         return;
     }
     func_8004284C();
