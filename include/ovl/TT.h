@@ -106,12 +106,6 @@ void func_801478D0();
 typedef struct TtRecord54 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 pad_01[3];
-#ifndef OVL_TT_MATCHED_VIEWS_T9520
-#define OVL_TT_MATCHED_VIEWS_T9520
-typedef struct TtState58 {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 unk_01;
-    /* 0x02 */ u16 unk_02;
     /* 0x04 */ u16 unk_04;
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s16 unk_08;
@@ -130,6 +124,17 @@ typedef struct TtState58 {
     /* 0x46 */ u8 pad_46[0xE];
 } TtRecord54; /* size 0x54 */
 #endif /* OVL_TT_W8_3_TYPES_H */
+
+#ifndef OVL_TT_MATCHED_VIEWS_T9520
+#define OVL_TT_MATCHED_VIEWS_T9520
+typedef struct TtState58 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u16 unk_02;
+    /* 0x04 */ u16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
     /* 0x0C */ u8 unk_0C;
     /* 0x0D */ u8 unk_0D;
     /* 0x0E */ u8 unk_0E;
