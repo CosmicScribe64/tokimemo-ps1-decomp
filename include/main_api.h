@@ -524,6 +524,7 @@ extern s32 D_800B3D6C;
 extern s32 D_800B3D70[4]; /* defined in src/main/800451D0.c (T-9010) */
 extern s32 D_800B3648[16];
 extern u8 D_800B3D80;
+extern u8 D_800B3D84[];
 extern s8 D_800B3DB0;
 extern u8 D_800B3DC0[];
 extern u8 D_800B3DC7[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
@@ -732,10 +733,12 @@ extern s8 D_800E96EF;
 extern s8 D_800E9733;
 extern u8 D_800E9E5F;
 extern u8 D_800E9E63;
+extern s16 D_800E9E74;
 extern u8 D_800EAFA0[];
 extern s8 D_800EAFA2;
 extern u8 D_800EAFA7;
 extern s16 D_800EAFB6;
+extern s16 D_800EAFB8;
 extern s32 D_800EAFD8;
 extern u8 D_800EAFEB;
 extern s8 D_800EB029;
@@ -1362,6 +1365,7 @@ extern s32 D_801255D8;
 extern u8 D_801255DC;
 extern s16 D_801255E0;
 extern s16 D_801255E2;
+extern u32 D_801255F0[];
 extern s32 D_80125C04;
 extern s32 D_80125C08;
 extern s32 D_80125C0C;

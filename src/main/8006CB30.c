@@ -462,7 +462,37 @@ void func_80072CA0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072D70);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80073198);
+s32 func_80073198(void) {
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_80066104("怪我");
+        gnsx(&D_800E6280.unk_0D4[0]);
+        sndi("怪我をしてしまった）", 0, 0x1F);
+        D_800E6280.unk_0F4.b[1] = (D_800E6280.unk_0F4.b[1] & 0xFFF0) | 1;
+        k_disp_start(3);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        if ((u32)D_800E6280.unk_1104.w >= 0x3D) {
+            if (((u32)D_800E6280.unk_1104.w >= 0x101) || (D_800E6280.unk_F88 != 0)) {
+                D_800E6280.unk_110D += 1;
+                return;
+            }
+        }
+        return;
+    case 2:
+        if (((u32)(D_800E6280.unk_10F8 & 0xFF) < 0x19U) && (D_800E6280.unk_56C[0x4B] == 0) && (D_800E6280.unk_03D == 0)) {
+            func_80042878(0x5D);
+            D_80122CD4 = 0xB;
+            D_80122CD0 = 2;
+            D_800E6280.unk_56C[0x4B] = 1;
+            return 1;
+        }
+        func_80042908(0xFF);
+        break;
+    }
+}
 
 s32 func_800732F8(void) {
     switch (D_800E6280.unk_110D) {

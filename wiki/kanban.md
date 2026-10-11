@@ -45,6 +45,7 @@ kanban-plugin: board
 - [x] [[tickets/T-9370-wave-7-list-7|T-9370 Wave 7 list 7]]
 - [x] [[tickets/T-9330-wave-7-list-3|T-9330 Wave 7: list 3]]
 - [x] [[tickets/T-9310-wave-7-list-1|T-9310 Wave 7 list 1]]
+- [ ] [[tickets/T-9320-wave-7-list-2|T-9320 Wave 7 list 2]]
 - [x] [[tickets/T-9210-wave-6-codegen-shapes|T-9210 Wave-6 codegen shapes]]
 - [x] [[tickets/T-9220-wave-6-tool-fixes|T-9220 Wave-6 tool fixes]]
 - [x] [[tickets/T-9200-gcc-built-sdk-objects-in-overlays|T-9200 gcc-built SDK objects inside overlays]]

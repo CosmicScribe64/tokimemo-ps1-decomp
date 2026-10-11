@@ -252,3 +252,4 @@ void func_80138F54(void);
 void func_80134DB0(void);
 
 #endif /* OVL_KANGEI_H */
+extern u8 D_80139DF8;

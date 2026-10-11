@@ -885,3 +885,11 @@ Clean rebuild (`rm -rf asm build`, configure, ninja) all sha1 OK, headers OK, gl
 
 ## [2026-10-10] build | T-9310 wave 7 list 1, update (34 functions)
 Four more matches after the entry above: EVENT `func_800F8C2C`, TACO `func_801573C8`, `func_80157AE0`, `func_8015800C` (4,908 bytes). Totals: 34 functions, 15,400 bytes, 4558 -> 4592 of 6958; clean rebuild all OK again. Details in [[matching-notes]] ("Wave 7, list 1") and [[tickets/T-9310-wave-7-list-1]].
+## [2026-10-10] ticket | T-9320 wave 7 list 2 (In Progress)
+Ticket [[tickets/T-9320-wave-7-list-2]] created; worktree w7-2 built 27/27.
+
+## [2026-10-10] build | T-9320 wave 7 list 2
+39 functions matched in branch w7-2 (18116 bytes; EVENT 5, TACO 19, TT 2, TEL 2, SHOUGATU 2, KANGEI 2, GEKO 1, RPG_BAT 1, OLH 1, main 4). New patterns in [[matching-notes]] "Wave 7, list 2" (TACO range-chain template, two-counter table loops, repeated expression against temp variable, permuter burn tricks). 29 rows added to [[data/t0018-cases]]. Clean rebuild 27/27 OK, progress 4597/6958.
+
+## [2026-10-10] ticket | T-9320 (In Progress -> In Review -> Done)
+Inline review in [[tickets/T-9320-wave-7-list-2]], no open findings; `sync_protos.py --check-branch` OK, `migrate_globals.py --check` OK. Not merged.

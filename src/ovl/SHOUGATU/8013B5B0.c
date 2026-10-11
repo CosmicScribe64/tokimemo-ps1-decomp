@@ -42,7 +42,43 @@ void func_8013B71C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013B5B0", func_8013B758);
+void func_8013B758(void) {
+    s16 i;
+
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_800AE0F0(D_800CA19C, "廊下");
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    func_8007C740();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-9320 */
+    func_800847B8(*(u8 *)&D_800E6280.unk_F5F = 0xC);
+    func_8013B210();
+    D_801459FC = D_8014596C;
+    D_80145A00 = D_801459A0;
+    D_80145A04 = D_801459D4;
+    D_80145A08 = 0;
+    D_80145A0C = 0;
+    D_80145A10 = 0;
+    for (i = 0; i < 0xB; i++) {
+        if (D_800E6280.unk_1BC[i].unk_0C.b[1] & 1) {
+            D_80145A10 = 1;
+        }
+    }
+    func_8004284C();
+}
 
 void func_8013B8CC(void) {
     func_80085B3C(7, 0);

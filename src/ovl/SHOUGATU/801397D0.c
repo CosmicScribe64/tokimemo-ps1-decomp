@@ -159,7 +159,27 @@ void func_80139E54(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139EC8);
+void func_80139EC8(void) {
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
+    D_80144E08 = 0xD;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "演劇部");
+    func_801397D0();
+    if (((u8)D_800E6280.unk_03F >= 6U) && ((u8)D_800E6280.unk_03F < 0xAU)) {
+        func_80043914((s32)D_801453C0, 0x11, 1, 2, 0);
+        func_80084E90((s32)D_801453C8, (s32)D_801453CC, (s32)D_801453D0, (s32)D_801453D4, (s32)D_801453D8, (s32)D_801453DC);
+        func_800850D4((s32)D_801453B4, (s32)D_801453B8, (s32)D_801453B0, (s32)D_801453BC);
+    } else {
+        func_80043914((s32)D_801453C4, 0x11, 1, 2, 0);
+        func_80084E90((s32)D_801453E0, (s32)D_801453E4, (s32)D_801453E8, (s32)D_801453EC, (s32)D_801453F0, (s32)D_801453F4);
+        func_800850D4((s32)D_801453B4, (s32)D_801453B8, (s32)D_801453B0, (s32)D_801453BC);
+    }
+    D_80120688 |= 0x80000000;
+    D_80120666 = 0;
+    D_80122D0C = 1;
+    D_800E6280.unk_F5F = 0xE;
+    func_8004284C();
+}
 
 void func_8013A098(void) {
     bg_read_sub2(0x40BC);

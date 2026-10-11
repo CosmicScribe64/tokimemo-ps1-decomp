@@ -194,6 +194,25 @@ INCLUDE_ASM("asm/nonmatchings/main/8004E500", disp_string);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", load_string);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", vload_font);
+void vload_font(arg0)
+s32 arg0;
+{
+    func_8004F4F0(arg0, D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
+    if (D_800B3F60.total < 0x80) {
+        D_800B3F60.total = D_800B3F60.total;
+        LoadSquare((D_800B3F60.total & 7) * 4 + 0x320, (D_800B3F60.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
+    } else if (D_800B3F60.total < 0x100) {
+        D_800B3F60.total = D_800B3F60.total;
+        LoadSquare((D_800B3F60.total & 7) * 4 + 0x360, (D_800B3F60.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
+    } else {
+        D_800B3F60.total = D_800B3F60.total;
+        LoadSquare((D_800B3F60.total & 7) * 4 + 0x3A0, (D_800B3F60.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
+    }
+    func_8009C674(0);
+    D_800B3F60.total += 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004F4F0);

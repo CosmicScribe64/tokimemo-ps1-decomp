@@ -78,7 +78,31 @@ void func_8010B678(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B6E4);
+void func_8010B6E4(void) {
+    func_800F7074();
+    if (D_80094718 == 2) {
+        D_800EECD0 = 0;
+        D_800E9E5F |= 0x80;
+        (&D_800E9E5F)[-0x44] |= 0x80; /* FAKE: D_800E9E1B, 0x44 below D_800E9E5F (as in func_8010B570); the record table is unknown. T-9320 */
+        D_800E9E74 = 0;
+        *(s32 *)D_800EC190 &= 0x7FFFFFFF;
+        *(s32 *)(D_800EC190 + 0x24) &= 0x7FFFFFFF;
+        if (D_800B1AE4 % 240U == 0) {
+            func_8003424C();
+        }
+    } else {
+        D_800EECD0 = 1;
+        D_800E9E5F |= 0x80;
+        (&D_800E9E5F)[-0x44] |= 0x80; /* FAKE: D_800E9E1B, 0x44 below D_800E9E5F (as in func_8010B570); the record table is unknown. T-9320 */
+        *(s32 *)D_800EC190 &= 0x7FFFFFFF;
+        *(s32 *)(D_800EC190 + 0x24) &= 0x7FFFFFFF;
+        D_800EAFA2 = 0;
+        D_800EAFB8 = 0;
+        if (D_800B1AE4 % 240U == 0x78) {
+            func_80038388();
+        }
+    }
+}
 
 void func_8010B844(void) {
     D_80094714 = (u16) D_80094714 + D_800B1746;
