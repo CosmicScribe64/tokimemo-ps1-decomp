@@ -646,3 +646,11 @@ extern s32 D_8012E698;
 extern s32 D_8012E69C;
 void func_8013CB18(void);
 void func_8013D764(void);
+
+#ifndef OVL_GYOZI_W8_3_TYPES_H
+#define OVL_GYOZI_W8_3_TYPES_H
+typedef struct GyoziCallbackTable30 {
+    /* 0x00 */ void (*callback[30])();
+} GyoziCallbackTable30; /* size 0x78 */
+extern GyoziCallbackTable30 D_801461A4;
+#endif /* OVL_GYOZI_W8_3_TYPES_H */

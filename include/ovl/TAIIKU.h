@@ -242,3 +242,43 @@ s32 func_80137C44();
 s32 func_80137EA8();
 void func_80134D94(void);
 void func_80138224();
+
+#ifndef OVL_TAIIKU_W8_3_TYPES_H
+#define OVL_TAIIKU_W8_3_TYPES_H
+/* Local random-selection table: eleven rows of ten signed halfwords.
+ * Both the block copy and row stride are visible in func_80135D24. T-9530. */
+typedef struct TaiRandomTable {
+    /* 0x00 */ s16 value[11][10];
+} TaiRandomTable; /* size 0xDC */
+extern TaiRandomTable D_80149570;
+extern s16 D_801491EC;
+
+typedef struct TaiWords4 {
+    /* 0x00 */ s32 value[4];
+} TaiWords4; /* size 0x10 */
+typedef struct TaiWords11 {
+    /* 0x00 */ s32 value[11];
+} TaiWords11; /* size 0x2C */
+typedef struct TaiSlot24 {
+    /* 0x00 */ u8 pad_00[2];
+    /* 0x02 */ u8 index;
+    /* 0x03 */ u8 pad_03[0x1D];
+    /* 0x20 */ union {
+        s32 word;
+        struct {
+            s16 low;
+            s16 high;
+        } halves;
+    } unk_20;
+} TaiSlot24; /* size 0x24 */
+typedef struct TaiValue44 {
+    /* 0x00 */ u8 pad_00[0x16];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ u8 pad_18[0x2C];
+} TaiValue44; /* size 0x44 */
+extern TaiWords4 D_801498AC;
+extern TaiWords11 D_801498BC;
+extern s16 D_80149320[];
+extern u8 D_80149208[];
+extern s32 D_8014929C;
+#endif /* OVL_TAIIKU_W8_3_TYPES_H */

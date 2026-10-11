@@ -124,7 +124,20 @@ s32 func_80139E08(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139EC4);
+void func_80139EC4(void) {
+    s16 i;
+
+    D_80121874 += 4;
+    if (D_80121874 >= 0x80) {
+        D_80121874 = 0x80;
+        func_8004284C();
+    }
+    for (i = 4; i < 0xA; i++) {
+        /* FAKE: the comma expression preserves the brightness register.
+         * Use the existing unprototyped callee view. T-9530. */
+        func_80084C98(i, (0, D_80121874));
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139F3C);
 

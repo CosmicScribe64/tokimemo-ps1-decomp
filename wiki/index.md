@@ -18,7 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
-- [[tickets/T-9530-wave-8-list-3|T-9530]] Wave 8: list 3 (Done; +9 functions / 4040 bytes)
+- [[tickets/T-9530-wave-8-list-3|T-9530]] Wave 8: list 3 (Done; deep pass +13 functions / 3,344 bytes, batch total 22 / 7,384)
 - [[tickets/T-9400-wave-7-tool-fixes|T-9400]] Wave-7 tool fixes (Done)
 - [[tickets/T-9410-register-allocation-shapes-after-wave-7|T-9410]] Register-allocation shapes after wave 7 (Done; +5 functions)
 See [[kanban]]. Template: [[tickets/_template]].

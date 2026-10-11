@@ -289,6 +289,67 @@ void func_8014AAE8(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014AB48);
+void func_8014AB48(void) {
+    s32 i;
+    u32 limit;
+    u16 state;
+    TtRecord54 *record;
+
+    record = (TtRecord54 *)D_80158A80;
+    i = 0;
+    for (limit = 12; i != limit;) {
+        if (record->unk_00 != 0) {
+            state = record->unk_04;
+            switch (state) {
+            case 0x20:
+                func_8014A958((u8 *)record, i);
+                record->unk_04 = 0x40U;
+                record->unk_0A = 0;
+                record->unk_08 = 0;
+                record->unk_06 = 0;
+                record->unk_0F = 0;
+                record->unk_0E = 0;
+                record->unk_0D = 0;
+                break;
+            case 0x80:
+                record->unk_42 = 0xD0;
+                record->unk_43 = 0xD0;
+                record->unk_44 = 1U;
+                record->unk_04 = 0x81U;
+                record->unk_0A = 0;
+                record->unk_08 = 0;
+                record->unk_06 = 0;
+                record->unk_0F = 0;
+                record->unk_0E = 0;
+                record->unk_0D = 0;
+                record->unk_2C = 0;
+                record->unk_28 = 0;
+                break;
+            case 0x81:
+                if (--record->unk_44 == 0) {
+                    record->unk_04 = 0x82U;
+                }
+                break;
+            case 0x82:
+                record->unk_42 = 0xE0;
+                record->unk_43 = 0xD0;
+                record->unk_44 = 1U;
+                record->unk_04 = 0x83U;
+                break;
+            case 0x83:
+                if (--record->unk_44 == 0) {
+                    record->unk_04 = 0xA0U;
+                }
+                break;
+            case 0xA0:
+                record->unk_00 = 0;
+                break;
+            }
+            func_8014AAE8((u8 *)record);
+        }
+        i += 1;
+        record++;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014ACEC);

@@ -225,7 +225,45 @@ INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/80132000.rodata", D_80139EDC);
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/80132000.rodata", D_80139EF4);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80132000", func_80132DFC);
+void func_80132DFC(void) {
+    if (D_800E6280.unk_1104.w == 1) {
+        set_kanji_string(-0x78, 0x30, 0, (s32) "題目", 0);
+        switch (D_80122EAC) {
+        case 0:
+            set_kanji_string(-0x56, 0x30, 0, (s32) "「僕の高校生活」", 0);
+            break;
+        case 1:
+            set_kanji_string(-0x56, 0x30, 0, (s32) "「僕の存在」", 0);
+            if (!(D_800E6280.unk_F80 & 0x20)) {
+                func_80046290(0x1E00004C, 0x10000051, 0xE);
+                func_80044750(0x300);
+            }
+            break;
+        case 2:
+            set_kanji_string(-0x56, 0x30, 0, (s32) "「高校生活を振り返って」", 0);
+            if (!(D_800E6280.unk_F80 & 0x20)) {
+                func_80046290(0x1C0002E9, 0x410002F3, 0);
+                func_80044750(0x300);
+            }
+            break;
+        case 3:
+            set_kanji_string(-0x56, 0x30, 0, (s32) "「貧血と私」", 0);
+            break;
+        case 4:
+        default:
+            set_kanji_string(-0x56, 0x30, 0, (s32) "「届け私の想い」", 0);
+            if (!(D_800E6280.unk_F80 & 0x20)) {
+                func_80046290(0x1F0000AD, 0x100000B3, 0xB);
+                func_80044750(0x300);
+            }
+            break;
+        }
+    } else if ((func_800460EC() == 2) && (check_end_k() != 0)) {
+        func_8004284C();
+    }
+    check_k_scroll();
+    k_disp_inc();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80132000", func_80132FF0);
 

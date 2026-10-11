@@ -176,9 +176,46 @@ void func_800F9EEC(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800F9F24);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FA0D0);
+void func_800FA0D0(void) {
+    s16 i;
+    Rec24 *records;
+    s32 before;
+    s32 after;
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FA194);
+    before = D_800B1AF6;
+    func_8004C984();
+    records = (Rec24 *)D_800EC190;
+    for (i = 4; i < 19; i++) {
+        if (D_800F19AB < 96) {
+            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800F19AB;
+        }
+    }
+    after = D_800B1AF6;
+    if (before != after) {
+        for (i = 4; i < 19; i++) {
+            records[i].unk_00 |= 0x80000000;
+        }
+    }
+}
+
+void func_800FA194(void) {
+    s16 i;
+    Rec24 *records;
+
+    if (D_800B1AF0 == 0) {
+        records = (Rec24 *)D_800EC190;
+        for (i = 4; i < 19; i++) {
+            records[i].unk_00 &= 0x7FFFFFFF;
+        }
+    }
+    func_8004C90C();
+    records = (Rec24 *)D_800EC190;
+    for (i = 4; i < 19; i++) {
+        if (D_800F19AB < 97) {
+            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800F19AB;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FA25C);
 
@@ -215,7 +252,22 @@ void func_800FA664(void) {
     func_80015FE0();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FA6A0);
+void func_800FA6A0(void) {
+    u8 index;
+    EventCallbackTable47 table;
+
+    table = D_80120E24;
+    index = D_800B1AF6;
+    table.callback[index](0x80);
+    index = D_800B1AF6;
+    if (func_8004C90C == table.callback[index]) {
+        D_800EB02B |= 0x80;
+    }
+    if (func_8004C984 == table.callback[index]) {
+        D_800EB02B &= 0xFF7F;
+    }
+    func_800FA850();
+}
 
 void func_800FA784(void) {
     func_80015D28(0x45, 0x801B0000, 0x7D4A);

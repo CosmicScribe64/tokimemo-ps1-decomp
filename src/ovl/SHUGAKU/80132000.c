@@ -139,7 +139,16 @@ INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_8013282C);
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132B50);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132BCC);
+void func_80132BCC(void) {
+    if (D_800E6280.unk_721 != 6) {
+        /* FAKE: the comma expression preserves the original argument register.
+         * Original spelling unknown; found by permute.py. T-9530. */
+        func_80042908((0, (s32) D_800E6280.unk_721));
+        func_80042940((s32) D_800E6280.unk_722);
+        return;
+    }
+    func_8013ABAC(D_800E6280.unk_721);
+}
 
 void func_80132C1C(void) {
     if (D_800E6280.unk_721 == 6) {

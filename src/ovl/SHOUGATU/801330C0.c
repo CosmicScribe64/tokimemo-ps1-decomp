@@ -20,7 +20,16 @@ void func_80133134(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_8013315C);
+s32 func_8013315C(void) {
+    func_801323D4();
+    if (D_800E6280.unk_1104.w++ == 0) {
+        if (((u8 **)D_80143AF8)[D_80143B00][D_80143B04 - 1] == 7) {
+            if (func_800AEEB0(((s32 **)D_80143AF4)[D_80143B00][D_80143B04 - 1], "ガチャ") == 0) {
+                func_80044750(0x60C);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801330C0", func_80133208);
 

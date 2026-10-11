@@ -24,7 +24,41 @@ void func_80139170(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80139170", func_8013920C);
+void func_8013920C(void) {
+    s32 previous;
+
+    func_8013A764();
+    func_8013AFDC();
+    func_800450F4(0, 0x202);
+    D_800E6280.unk_036 = 0;
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_038 = 0;
+    back_clear_switch(1);
+    D_8015EDB0 = 0;
+    /* FAKE: the scalar address view and shared source line retain the two
+     * score-load registers and their order. Original spelling unknown. T-9530 */
+    func_80059048(); previous = *(s32 *)&D_8015EDF8;
+    if (previous < D_8015EDF0) {
+        D_8015F4D8 = 0;
+        D_8015EE00 = D_8015EDFC;
+        D_8015EDF8 = D_8015EDF0;
+        D_8015EDFC = previous;
+        func_800AE090(D_8015EE0C, D_8015EE08, 4);
+        func_800AE090(D_8015EE08, D_8015EE04, 4);
+        func_800AE090(D_8015EE04, "   ", 4);
+    } else if (D_8015EDFC < D_8015EDF0) {
+        D_8015F4D8 = 1;
+        D_8015EE00 = D_8015EDFC;
+        D_8015EDFC = D_8015EDF0;
+        func_800AE090(D_8015EE0C, D_8015EE08, 4);
+        func_800AE090(D_8015EE08, "   ", 4);
+    } else {
+        D_8015F4D8 = 2;
+        D_8015EE00 = D_8015EDF0;
+        func_800AE090(D_8015EE0C, "   ", 4);
+    }
+    func_8004284C();
+}
 
 void func_80139394(void) {
     D_800E6280.unk_110D += 1;

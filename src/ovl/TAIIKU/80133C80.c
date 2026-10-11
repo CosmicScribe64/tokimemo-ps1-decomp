@@ -1,6 +1,5 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
-extern u8 D_80149208[]; /* 3 slots of 0x24 bytes; byte at +0x2A is read */
 extern u8 D_80149232;
 extern u8 D_80149256;
 extern u8 D_8014927A;
@@ -161,7 +160,23 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135830);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135AD0);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135D24);
+s32 func_80135D24(void) {
+    s32 row;
+    s32 random;
+    TaiRandomTable table;
+
+    table = D_80149570;
+    random = func_800AE0D0() % 11;
+    row = random;
+    if (random >= D_801491EC) {
+        row = random + 1;
+    }
+    if (row >= 11) {
+        row = func_800AE0D0() % 10;
+    }
+    random = func_800AE0D0();
+    return table.value[row][random % 10];
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135DF8);
 
@@ -209,7 +224,23 @@ void func_80136AB0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136B18);
+void func_80136B18(void) {
+    TaiSlot24 *state;
+
+    state = (TaiSlot24 *)D_80149208;
+    if (D_80149218 < 0 || D_8014929A == 0) {
+        ((TaiSlot24 *)D_80149208)->unk_20.word -= D_8014929C;
+    } else {
+        ((TaiSlot24 *)D_80149208)->unk_20.word = ((TaiSlot24 *)D_80149208)->unk_20.word + 0x8000;
+    }
+    if (state->unk_20.halves.high >= -0x1F) {
+        state->unk_20.halves.high = -0x20;
+    }
+    if (state->unk_20.halves.high < -0x9F) {
+        state->unk_20.halves.high = -0xA0;
+    }
+    D_80120676 = state->unk_20.halves.high;
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136BB4);
 
@@ -307,7 +338,39 @@ s32 func_8013815C(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80138224);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80138680);
+s32 func_80138680(s32 arg0, s32 arg1) {
+    s32 key;
+    s32 slot;
+    TaiWords4 small;
+    TaiWords11 large;
+
+    small = D_801498AC;
+    large = D_801498BC;
+    key = arg0 + 1;
+    if (key == D_801491E0[0]) {
+        slot = 0;
+    }
+    if (key == D_801491E0[1]) {
+        slot = 1;
+    }
+    if (key == D_801491E0[2]) {
+        slot = 2;
+    }
+    if (key == D_801491E0[3]) {
+        slot = 3;
+    }
+    if (arg1 != 0) {
+        slot = slot * 4 + arg0 * 16;
+    } else {
+        slot = small.value[slot];
+        if (D_80122E94 == 1 && slot == 4) {
+            slot += large.value[D_80149320[D_801491DC]];
+        } else {
+            slot += large.value[((TaiValue44 *)D_8011ECD0)[((TaiSlot24 *)D_80149208)[arg0].index + 46].unk_16 >> 3];
+        }
+    }
+    return slot;
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80138800);
 

@@ -1356,3 +1356,12 @@ void func_800F8B50(void);
 void func_800F93FC(void);
 void func_800F9558(void);
 extern s8 D_801218DC[];
+
+#ifndef OVL_EVENT_W8_3_TYPES_H
+#define OVL_EVENT_W8_3_TYPES_H
+typedef struct EventCallbackTable47 {
+    /* 0x00 */ void (*callback[47])(s32);
+} EventCallbackTable47; /* size 0xBC */
+extern EventCallbackTable47 D_80120E24;
+void func_800FA850(void);
+#endif /* OVL_EVENT_W8_3_TYPES_H */

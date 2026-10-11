@@ -12,7 +12,24 @@ void func_80136220(void) {
     D_80146174 = 0x801C2000;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80136220", func_801362A0);
+void func_801362A0(void) {
+    u8 index;
+    GyoziCallbackTable30 table;
+
+    table = D_801461A4;
+    if (D_80145F60 != 0) {
+        if (table.callback[D_800F647A] == D_80089BD4) {
+            table.callback[D_800F647A] = D_80089B6C;
+        }
+    }
+    index = D_800F647A;
+    table.callback[index](0x40, index);
+    if ((u8)D_801461A0 != 0) {
+        func_800904A8(-0xA0, -0x78, 0x140, 0x64, 0xD, 0xE0FF, 0xFFFF);
+        func_800904A8(-0xA0, -0x14, 0x140, 0x3C, 0xD, 0x6060, 0xE0FF);
+        func_80054FCC(0xD);
+    }
+}
 
 void func_801363BC(void) {
     func_80136220();

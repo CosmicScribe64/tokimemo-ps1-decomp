@@ -99,3 +99,28 @@ void func_8014AFB8(u8 *arg0, u16 arg1, s32 arg2);
 #endif /* OVL_TT_H */
 void func_8013EC1C(void);
 void func_801478D0();
+
+#ifndef OVL_TT_W8_3_TYPES_H
+#define OVL_TT_W8_3_TYPES_H
+/* State-machine records at D_80158A80, walked by func_8014AB48. T-9530. */
+typedef struct TtRecord54 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 pad_01[3];
+    /* 0x04 */ u16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 pad_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ u8 pad_10[0x18];
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ u8 pad_30[0x12];
+    /* 0x42 */ u8 unk_42;
+    /* 0x43 */ u8 unk_43;
+    /* 0x44 */ u16 unk_44;
+    /* 0x46 */ u8 pad_46[0xE];
+} TtRecord54; /* size 0x54 */
+#endif /* OVL_TT_W8_3_TYPES_H */

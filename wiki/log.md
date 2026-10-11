@@ -979,3 +979,57 @@ Owned-file duplicate scans applied zero copies before and after configure; scope
 
 ## [2026-10-11] build | T-9530 final proof and Done
 Final incremental Docker ninja passes; independent current-binary SHA1 verification is 27/27 OK. All nine gained functions match resolved funcdiff, including review-touched GYOZI/KANGEI functions rechecked after corrections. Headers/globals stamps exist, branch prototype guard reports zero new disagreements, aggregate check and git diff --check pass, staging is empty. Inline standards/spec review against CODING_STANDARDS.md has no unresolved findings. Moved [[tickets/T-9530-wave-8-list-3]] and its kanban card to Done. Progress: 4743/6958, 733632/2279368 bytes (32.2%); +9 functions / 4040 bytes, eleven T-0018 retry rows. Changes remain uncommitted for the orchestrator.
+
+## [2026-10-11] ticket | T-9530 reopened for a deep second pass
+User committed the first pass and requested sustained per-function iteration plus missing aggregate/local-copy recovery. Reopened [[tickets/T-9530-wave-8-list-3]] and moved its card to In Progress. Started 09:15:09 UTC; work for at least three hours (12:15:09 UTC) or until the list is exhausted. Rank cached resolved diffs, then inspect target asm alongside candidates and verify every retained match in the actual linked unit. Changes remain uncommitted.
+
+## [2026-10-11] query | T-9530 rejected-draft ranking
+Ranked 39 compilable remaining drafts by resolved differing-line count; 88 recovery candidates remain. The closest SHUGAKU function differs by two branch operand swaps. Started a five-minute permutation run and systematic experiments with live current-state locals, signedness, declaration order, return type, and structured/goto control flow while reading its original assembly. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 deep-pass SHUGAKU permutation gain
+After ten minutes of typed selector/control-flow/call-view experiments, the 300-second permutation search found `func_80132BCC` with a comma expression in its first call argument. Retained it with a FAKE explanation. Actual resolved funcdiff matches and Docker ninja verifies the SHUGAKU binary SHA1. Gain: one function / 80 bytes. The first close SHUGAKU function still differs only by two branch operand swaps after 200 structured probes; further comma-expression probes follow this new evidence. ENDING typed scroll-loop trials and its five-minute permutation run continue. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 ENDING argument and TAIIKU aggregate gains
+Retained ENDING `func_80139EC4` (120 bytes) with the existing unprototyped callee and a marked comma argument. Recovered `TaiRandomTable` (eleven ten-halfword rows) and retained TAIIKU `func_80135D24` (212 bytes) using an explicit column-call assignment. Actual funcdiff and each overlay SHA1 pass. Second-pass total: three functions / 412 bytes. Recorded the scroll-loop and TACO predicate/increment deep time boxes; missing DATE/GYOZI function-pointer tables and TT records are being recovered in scratch. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 callback table type recovery
+GYOZI `func_801362A0` now matches with a 30-entry local callback table and one byte index before the table. Generated the two opaque main callback-address declarations with scoped `sync_protos --fix`; actual resolved diff and GYOZI SHA1 pass. Second-pass gain: four functions / 696 bytes. TACO's next near miss has a scratch permutation match undergoing layout minimization. Reconstructed the missing PsyQ 3.x POLY_G4 declaration once in include/libgpu.h for drawing-helper trials, as CODING_STANDARDS section 3 requires; discard it if no dependent match is retained. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 TACO score-load permutation gain
+Minimized the permutation output for TACO `func_8013920C` to one shared call/load source line plus its scalar address view, both marked FAKE. Actual resolved funcdiff matches and the whole TACO binary SHA1 passes. Five second-pass matches / 1,088 bytes. TT record views, TAIIKU copied lookup tables, the DATE callback table, and SDK quadrilateral field forms remain in deep scratch iteration. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 copied lookup arrays match
+TAIIKU `func_80138680` matches naturally after recovering both word-table copies, reusing the selector for its result, and declaring key before selector. Used record fields from their actual array bases; generated D_80122E94 in main_api.h. Actual resolved diff and TAIIKU SHA1 pass. Six second-pass functions / 1,472 bytes. Recorded sustained negative trials for the TT state and phantom-constant functions and ENDING's quadrilateral helper; failed C stays assembly. Regenerating and checking owned-file duplicate opportunities. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 direct callback elements and motion-word union
+Retained EVENT `func_800FA6A0` (228 bytes) through direct table-element comparisons with a reused byte index, and TAIIKU `func_80136B18` (156 bytes) through the recovered word/high-halfword union. Both actual resolved comparisons and full unit SHA1 checks pass. Eight second-pass gains / 1,856 bytes. Removed the unused callback local and exploratory SDK declaration. Corrected the split postprocessing omission and reran failed verification sequentially after a Ninja deps-log race. Fresh scoped duplicate scans apply zero copies; their inventory double-counts stale asm artifacts after resplit, unlike funcdiff's filtering. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 sustained second-pass timeboxes
+
+Recorded the DATE branch-order, TAIIKU table/loop/counter, TT constant-order and ENDING brightness experiments in [[tickets/T-9530-wave-8-list-3]]. Failed bodies remain assembly. The counter routine has shared `$at` bases but no object-owned data range. Further typed-record experiments reduce the EVENT brightness loop to four edits and TT state dispatcher to twelve; verification remains pending.
+
+## [2026-10-11] build | T-9530 EVENT record pointer and chained colours
+
+EVENT `func_800FA194` passes resolved funcdiff and the overlay SHA1 after using a local Rec24 base and chained colour stores. Its neighbour `func_800FA0D0` passes the resolved comparison with explicit before/after callback-index locals; checksum verification is in progress. Removed unused draft locals, keeping ordinary formatting and no FAKE. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 explicit fifth switch case and pointer tables
+
+The second EVENT loop's checksum passes. BUNKA_SD `func_80132DFC` matches its 500 bytes after the missing explicit case 4 is restored; both unit and linked original-assembly reference SHA1 agree, and linked funcdiff resolves the unsupported object PC16 relocation. SHOUGATU `func_8013315C` matches 172 bytes with the corrected pre-increment test, pointer-table indexing and s32/no-return idiom. Twelve deep-pass gains / 2,924 bytes, with failed bodies still assembly. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | Wave 8 list 3 deep-pass checkpoint
+
+All 27 unit SHA1 checks pass after twelve second-pass gains. Owned-file duplicate and near-duplicate scans find no applicable copies. Recorded sustained calendar, brightness, actor and control-record experiments and their closest resolved differences in [[tickets/T-9530-wave-8-list-3]]. Failed drafts remain scratch-only; aggregate repair continues.
+
+## [2026-10-11] build | T-9530 late record repairs and inline review
+
+Recorded the EVENT initializer, TAIIKU motion/actor, BUNKA_SD offset, GYOZI girl-selector and main SDK-line experiments in [[tickets/T-9530-wave-8-list-3]]. Added two new rows and historical match resolutions to [[data/t0018-cases]]. TT's 0x54-byte state machine now matches in cleaned scratch C after direct timer pre-decrements and a bound initialized in the for header; real unit verification is pending. Inline review added guards to the new overlay type blocks and their missing offset comment; all 27 unit checks pass. [[matching-notes]].
+
+## [2026-10-11] ticket | T-9530 second deep pass reviewed and complete
+
+The second pass reached its three-hour minimum (09:15:09–12:15:09 UTC). Thirteen additional matches / 3,344 bytes are left uncommitted, bringing the batch to 22 / 7,384. TT's actual resolved comparison passes; final sequential Docker Ninja checks all 27 unit SHA1 values, headers and globals. Prototype branch and GameState checks pass. Inline CODING_STANDARDS review findings are resolved, failed drafts remain INCLUDE_ASM, and only two new T-0018 rows were added. Returned [[tickets/T-9530-wave-8-list-3]] and [[kanban]] to Done, updated [[index]] and appended the final result to [[matching-notes]]. Progress: `grand total   4756/6958   736976/2279368  32.3%`. Remaining data-ownership blocker and object PC16 resolver issue are documented in the ticket.
+
+## [2026-10-11] query | T-9530 final owned duplicate scan
+
+The final thirteen-gain exact-owned-file scan finds zero copy plans and applies zero changes. Verified header/global stamps, clean whitespace and empty staging; recorded the evidence in [[tickets/T-9530-wave-8-list-3]].
+
+Final sequential `ninja progress` completed successfully (`deep-final-progress-sequential.log`) and confirms `grand total   4756/6958   736976/2279368  32.3%`.
