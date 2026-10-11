@@ -106,3 +106,16 @@ void func_80137E2C(void);
 s32 func_80137FEC();
 #endif /* OVL_EN_NICHI_H */
 extern s32 D_80139B24;
+
+#ifndef OVL_EN_NICHI_T9720_TABLES
+#define OVL_EN_NICHI_T9720_TABLES
+/* Local copies in func_80137FEC: twelve halfwords and 33 callbacks. */
+typedef struct EnHalf12 {
+    /* 0x00 */ s16 value[12];
+} EnHalf12; /* size 0x18 */
+typedef struct EnFn33 {
+    /* 0x00 */ s32 (*f[33])();
+} EnFn33; /* size 0x84 */
+extern EnHalf12 D_80139D04;
+extern EnFn33 D_80139D1C;
+#endif

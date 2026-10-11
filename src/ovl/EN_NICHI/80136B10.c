@@ -1,5 +1,16 @@
 #include "common.h"
 #include "ovl/EN_NICHI.h"
+
+typedef struct EnWork1C20 {
+    /* 0x0000 */ u8 pad0000[0x1A2E];
+    /* 0x1A2E */ s16 unk_1A2E;
+    /* 0x1A30 */ u8 pad1A30[2];
+    /* 0x1A32 */ s16 unk_1A32;
+    /* 0x1A34 */ u8 pad1A34[0x1C8];
+    /* 0x1BFC */ s16 unk_1BFC;
+    /* 0x1BFE */ u8 pad1BFE[0x1E];
+    /* 0x1C1C */ s32 unk_1C1C;
+} EnWork1C20; /* size 0x1C20 */
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80136B10.data", D_80139C30);
@@ -126,7 +137,52 @@ void func_80137E2C(void) {
     func_8009EED0((D_8011ECA0 << 10) + 0xC + D_800E8CA0, p, w);
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80137FEC);
+/* FAKE: local reuse and the callback comma expression retain the table slots
+ * and post-call decrement scheduling. T-9720. */
+s32 func_80137FEC(s32 arg0) {
+    s32 i;
+    s32 value;
+    s32 outside;
+    EnHalf12 limits;
+    EnFn33 calls;
+    EnWork1C20 *record;
+    s16 limit;
+
+    limits = D_80139D04;
+    calls = D_80139D1C;
+    outside = 0;
+    record = (EnWork1C20 *)((u8 *)D_8011ECD0 + arg0 * 0x44);
+    i = 0;
+    value = -0x78;
+    do {
+        if (record->unk_1A32 < value && ((limit = limits.value[i], record->unk_1A2E < -limit) || limit < D_801206FE)) {
+            outside = 1;
+        }
+        i++;
+        value += 8;
+    } while (i < 12);
+    i = 11;
+    if (outside != 0) {
+        D_80139C4C[arg0] = 0xFF;
+        return 0;
+    }
+    record = (EnWork1C20 *)((u8 *)D_8011ECD0 + 11 * 0x44);
+loop:
+    if ((outside = calls.f[record->unk_1BFC](arg0, i), i--, outside != 0)) {
+        value = record->unk_1C1C;
+        if (!(value & 0x40000000)) {
+            record->unk_1C1C = value | 0x40000000;
+            D_80139C4C[arg0] = record->unk_1BFC;
+            return 1;
+        }
+    }
+    record = (EnWork1C20 *)((u8 *)record - 0x44);
+    if (i < 0) {
+        D_80139C4C[arg0] = 0xFF;
+        return 0;
+    }
+    goto loop;
+}
 
 s32 func_801381C8(s32 arg0, s32 arg1) {
     u8 *a;

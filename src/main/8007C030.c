@@ -229,7 +229,15 @@ s32 normal_date_girl_in_init(void)
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_main);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenin);
+/* FAKE: the implicit return and byte-array chains retain the original v1-to-v0
+ * constant copy and store ordering. D_80121808 is a byte view here. T-9720. */
+s32 normal_date_girl_suddenin(void) {
+    D_80122CF4 = 1;
+    D_8011F513 = 0x80;
+    ((u8 *)&D_801217E4)[0] = ((u8 *)&D_801217E5)[0] = ((u8 *)&D_801217E6)[0] = 0x80;
+    ((u8 *)&D_80121808)[0] = ((u8 *)&D_80121809)[0] = ((u8 *)&D_8012180A)[0] = 0x80;
+    func_8004284C();
+}
 
 void normal_date_girl_out(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -353,7 +361,56 @@ void bg_read_sub2(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", check_k_scroll);
+/* FAKE: the chained next-index assignment keeps a0 across the call, and the
+ * unsigned comparison keeps the target branch operand order. T-9720. */
+void check_k_scroll(void) {
+    s32 sp38;
+    Entry8 *sp48;
+    s16 temp_v1;
+    s32 temp_a0;
+    s32 temp_v0;
+    s32 var_a0;
+    s32 var_s0;
+    u32 temp_s2;
+    Entry8 *temp_v0_2;
+    Entry8 *temp_v0_3;
+
+    get_ksys();
+    temp_v0 = get_now_k();
+    temp_s2 = temp_v0 & 0xFF;
+    sp48 = (Entry8 *) get_k_work(temp_v0);
+    temp_a0 = (var_a0 = temp_s2 + 1);
+    sp38 = temp_a0;
+    get_k_work(temp_a0);
+    if (sp48->unk_02 >= 0x60) {
+        var_a0 = sp38;
+        if (D_800CA2BC != 0) {
+            var_s0 = 1;
+            if (temp_s2 >= 2U) {
+                do {
+                    temp_v0_2 = (Entry8 *) get_k_work(var_s0);
+                    temp_v1 = temp_v0_2->unk_02;
+                    if ((u32) temp_v1 == 0x30U) {
+                        temp_v0_2->unk_07 = 0;
+                    } else {
+                        temp_v0_2->unk_02 = (s16) (temp_v1 - 0x10);
+                    }
+                    var_s0 = (s32) ((s16) (var_s0 + 1));
+                }
+                while (((u32) var_s0) < temp_s2);
+            }
+            D_800CA2BC = 0;
+            sp48->unk_02 = 0x50;
+            sp48->unk_07 = 1;
+            var_a0 = sp38;
+        }
+    }
+    temp_v0_3 = (Entry8 *) get_k_work(var_a0);
+    if (temp_v0_3->unk_02 >= 0x60) {
+        D_800CA2BC = 1;
+        temp_v0_3->unk_07 = 0;
+    }
+}
 
 void wait_sub_sub(s16 arg0) {
     s32 t = D_800E6280.unk_1104.w + 1;

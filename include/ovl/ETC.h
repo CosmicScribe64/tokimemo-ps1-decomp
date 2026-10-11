@@ -1046,3 +1046,15 @@ typedef struct EtcStateFlagsView {
     /* 0x694 */ GsRec69C records[34];
 } EtcStateFlagsView; /* size 0x71C */
 #endif /* ETC_STATE_FLAGS_VIEW_DEFINED */
+
+#ifndef OVL_ETC_W9_2_GLOBALS_H
+#define OVL_ETC_W9_2_GLOBALS_H
+/* Positive and negative values select the record fade direction. T-9720. */
+extern s32 D_8015018C;
+#endif
+
+#ifndef OVL_ETC_W9_2_COORD_TABLE_H
+#define OVL_ETC_W9_2_COORD_TABLE_H
+/* Byte coordinate pairs read by func_80143758, T-9720. */
+extern u8 D_801503C8[];
+#endif

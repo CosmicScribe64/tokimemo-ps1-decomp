@@ -273,7 +273,25 @@ void func_801089FC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_80108A24);
+/* FAKE: an implicit s32 return keeps the narrowed phase in v0; the void form
+ * uses t0. Callers ignore the return value. T-9720. */
+s32 func_80108A24(void) {
+    s16 phase;
+
+    if (D_800B1AF0 == 0) {
+        D_800EB02B |= 0x80;
+        D_800EB044 = 0;
+        D_800EB042 = 0;
+    }
+    phase = D_800EB042 += 0x80;
+    D_800EB044 += 0x80;
+    if (phase >= 0x1000) {
+        D_800EB02B &= 0xFF7F;
+        D_80123988 = 1;
+        func_80011DFC();
+    }
+    D_800B1AF0 += 1;
+}
 
 void func_80108AD8(void) {
     func_80108B24(-0xA0, -0x78, 0x140, 0xA0, 0xFFFFFF, 0xA, 0);

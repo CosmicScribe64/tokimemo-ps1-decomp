@@ -318,3 +318,20 @@ typedef struct RpgFlagRecord44 { /* size 0x44 */
     /* 0x04 */ u8 unk_04[0x40];
 } RpgFlagRecord44;
 
+
+#ifndef OVL_RPG_ASSET_WORDS_T9720
+#define OVL_RPG_ASSET_WORDS_T9720
+/* Word values copied into 0x44-byte draw records by func_8013E54C. */
+extern s32 D_8015EE8C;
+extern s32 D_8015EE90;
+extern s32 D_8015EE9C;
+extern s32 D_8015EEA0;
+extern s32 D_8015EEA4;
+extern s32 D_8015EEA8;
+extern s32 D_8015EEB4;
+extern s32 D_8015EEB8;
+extern s32 D_8015EEBC;
+extern s32 D_8015EEC0;
+extern s32 D_8015EECC;
+extern s32 D_8015EED0;
+#endif
