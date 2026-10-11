@@ -11,6 +11,9 @@ not, number of calls, and flags:
      J and S block only when the function's C file has no rodata island: then its rodata is an
      asm blob the C object cannot provide. Per-object C files (tools/split_objects.py, T-0500)
      give every object with rodata an island, so J and S are workable there (decompile-workflow).
+  O  its jump table lies in an orphan rodata chunk (config/objects/<UNIT>.txt `orphan` lines: no single
+     object owns it), so no C object can provide it and the function cannot be built even with an island
+     (BUNKASAI func_80158EB0 in second_chunk_of_801511E0, T-9220). Blocks always, P(match) 0.
   P  one trailing nop after the last jr (end address 12 mod 16): asm-processor needs 2 (matching-notes);
      or a function whose first instruction is a nop (an alignment pad in front, T-9030): agents skip these
   R  T-0018 register promotion of an UNSIGNED narrow global (lbu/lhu): loaded in two or more basic
@@ -50,7 +53,7 @@ Usage (inside Docker, from the repo root after `ninja` has generated asm/):
   python3 tools/queue.py --by bytes --plan 60 --agents 4
                                                 split the next 60 best functions into 4 work lists, no C file
                                                 (`--exclusive unit`: no overlay) shared between lists
-  python3 tools/queue.py --blocked              only functions with a blocker flag (R V U J S P)
+  python3 tools/queue.py --blocked              only functions with a blocker flag (R V U J S O P)
   python3 tools/queue.py --summary              counts per file and per flag
   python3 tools/queue.py --calibrate            detector precision/recall
   python3 tools/queue.py --no-cache ...         ignore build/queue-cache.json (see below)
@@ -89,9 +92,11 @@ from pathlib import Path
 from typing import NamedTuple
 
 import entry_rule
+import object_boundaries as ob
 import srcscan
 
-BLOCKERS = "JSPRVU"
+BLOCKERS = "JSPRVUO"
+JTBL_RE = re.compile(r"\bjtbl_([0-9A-Fa-f]{8})\b")
 BRANCHES = {"b", "beq", "bne", "beqz", "bnez", "bgez", "bgtz", "blez", "bltz", "bgezal", "bltzal",
             "beql", "bnel", "beqzl", "bnezl", "bgezl", "bgtzl", "blezl", "bltzl"}
 CALLS = {"jal", "jalr"}
@@ -125,6 +130,7 @@ class Facts(NamedTuple):
     dispatch: bool   # flag V
     selector: str = ""   # flag U: register of the switch / compare-chain selector ("v0", "v1", ...)
     hint: bool = False   # flag T: V shape on a signed or word global: try declaring it unsigned
+    tables: tuple = ()   # addresses of the jump tables the function reads (jtbl_<addr>)
 
 
 def parse_asm(text):
@@ -261,7 +267,8 @@ def analyze(text, string_syms=frozenset(), legacy=False):
                 hint = True
     if selector:
         dispatch = hint = False
-    return Facts(len(insns) * 4, calls, bool(loops), jtbl, strings, pad, reload, dispatch, selector, hint and not legacy)
+    return Facts(len(insns) * 4, calls, bool(loops), jtbl, strings, pad, reload, dispatch, selector, hint and not legacy,
+                 tuple(sorted({int(a, 16) for i in insns for a in JTBL_RE.findall(i.args)})))
 
 
 def string_symbols(root):
@@ -286,6 +293,7 @@ class Func(NamedTuple):
     facts: Facts
     island: bool = False   # the C file has a rodata island: J and S do not block
     unit: str = ""         # "main" or the overlay name ("" in synthetic data: derived from `file`)
+    orphan: bool = False   # flag O: a jump table of the function is in an orphan rodata chunk
 
     @property
     def leaf(self):
@@ -299,7 +307,7 @@ class Func(NamedTuple):
     def flags(self):
         f = self.facts
         sel = "U" + {"v0": "0", "v1": "1"}.get(f.selector, "x") if f.selector else ""
-        return "".join(c for c, on in (("L", f.loop), ("J", f.jtbl), ("S", f.strings), ("P", f.pad),
+        return "".join(c for c, on in (("L", f.loop), ("J", f.jtbl), ("S", f.strings), ("O", self.orphan), ("P", f.pad),
                                        ("R", f.reload), ("V", f.dispatch), ("T", f.hint)) if on) + sel
 
     @property
@@ -317,6 +325,19 @@ class Func(NamedTuple):
         """Blocked only by U (switch selector, cause unknown): `--include-unknown` lets it through."""
         stop = BLOCKERS.replace("J", "").replace("S", "") if self.island else BLOCKERS
         return self.blocked and not any(c in stop.replace("U", "") for c in self.flags)
+
+
+def orphan_ranges(root, unit):
+    """[(start, end)] of the orphan rodata chunks of `unit` (config/objects/<unit>.txt)."""
+    path = ob.objects_path(unit, root)
+    if not os.path.exists(path):
+        return []
+    return [(a, b) for a, b, _why in ob.read_objects(path)[2]]
+
+
+def in_orphan(facts, ranges):
+    """True when a jump table of `facts` lies in one of the orphan `ranges`."""
+    return any(a <= t < b for t in facts.tables for a, b in ranges)
 
 
 def units(root):
@@ -347,27 +368,30 @@ def load(root=".", string_syms=None, legacy=False, files=None):
     if string_syms is None:
         string_syms = string_symbols(root)
     remaining, matched = [], []
+    orphans = {}
     for label, c, mdir, island, unit in units(root):
         if not file_wanted(label, files):
             continue
+        if unit not in orphans:
+            orphans[unit] = orphan_ranges(root, unit)
         for e in srcscan.include_asm_entries(c):
             if Path(e.folder).name == "pad":
                 continue
             p = Path(root) / e.folder / (e.name + ".s")
             if p.exists():
-                remaining.append(Func(label, e.name, str(p), analyze(p.read_text(errors="replace"), string_syms, legacy),
-                                      island, unit))
+                fa = analyze(p.read_text(errors="replace"), string_syms, legacy)
+                remaining.append(Func(label, e.name, str(p), fa, island, unit, in_orphan(fa, orphans[unit])))
         if mdir.is_dir():
             defined = srcscan.defined_functions(c)
             for p in sorted(mdir.glob("*.s")):
                 if p.stem in defined:
-                    matched.append(Func(label, p.stem, str(p), analyze(p.read_text(errors="replace"), string_syms, legacy),
-                                        island, unit))
+                    fa = analyze(p.read_text(errors="replace"), string_syms, legacy)
+                    matched.append(Func(label, p.stem, str(p), fa, island, unit, in_orphan(fa, orphans[unit])))
     return remaining, matched
 
 
 CACHE = Path("build") / "queue-cache.json"
-CACHE_VERSION = 1
+CACHE_VERSION = 2
 TOOL_FILES = ("queue.py", "dupes.py", "neardupes.py")
 
 
@@ -393,12 +417,13 @@ def tree_signature(root):
 
 
 def func_to_json(f):
-    return [f.file, f.name, f.path, list(f.facts), f.island, f.unit]
+    return [f.file, f.name, f.path, list(f.facts), f.island, f.unit, f.orphan]
 
 
 def func_from_json(row):
-    file, name, path, facts, island, unit = row
-    return Func(file, name, path, Facts(*facts), island, unit)
+    file, name, path, facts, island, unit, orphan = row
+    facts[-1] = tuple(facts[-1])
+    return Func(file, name, path, Facts(*facts), island, unit, orphan)
 
 
 class Cache:
@@ -515,7 +540,7 @@ def p_match(f):
     """Chance that a try on this function ends in a match (an estimate, not a measurement: see the
     constants in GAIN). 0 for functions that cannot be built."""
     fa = f.facts
-    if fa.pad:
+    if fa.pad or f.orphan:
         return 0.0
     p = GAIN["base"] - GAIN["call"] * min(fa.calls, GAIN["call_cap"]) - (GAIN["loop"] if fa.loop else 0.0)
     if fa.jtbl:
@@ -700,7 +725,7 @@ def summary(funcs, out=None):
     for k, (a, b, c) in sorted(per.items()):
         out.write("%-16s %6d %8d %6d\n" % (k, a, b, c))
     out.write("%-16s %6d %8d %6d\n" % ("total", len(funcs), sum(f.blocked for f in funcs), sum(f.leaf for f in funcs)))
-    out.write("flags: " + " ".join("%s=%d" % (c, sum(c in f.flags for f in funcs)) for c in "LJSPRVTU") + "\n")
+    out.write("flags: " + " ".join("%s=%d" % (c, sum(c in f.flags for f in funcs)) for c in "LJSOPRVTU") + "\n")
     out.write("R, V or U (T-0018 candidates): %d, of which U (blocked-unknown): %d\n" % (
         sum(any(c in f.flags for c in "RVU") for f in funcs), sum("U" in f.flags for f in funcs)))
 

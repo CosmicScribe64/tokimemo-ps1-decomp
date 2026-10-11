@@ -805,3 +805,12 @@ Wave 6 list 6 started: [[tickets/T-9160-wave-6-list-6]].
 
 ## [2026-10-10] ticket | T-9160 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, `headers OK`, `globals OK`, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md in [[tickets/T-9160-wave-6-list-6]]; no open findings. Branch w6-6, not merged.
+
+## [2026-10-10] ticket | T-9220 (Backlog -> In Progress)
+Round-6 tool fixes started: [[tickets/T-9220-wave-6-tool-fixes]].
+
+## [2026-10-10] build | T-9220 tool fixes
+Seven fixes in `tools/funcdiff.py`, `tools/data_island.py`, `tools/sync_protos.py`, `tools/queue.py` with tests; `include/main_api.h` gained `D_800B66E0`/`D_800B66F4` (moved from `src/main/800674B0.c`). Details in [[tickets/T-9220-wave-6-tool-fixes]]; workflow notes in [[decompile-workflow]].
+
+## [2026-10-10] ticket | T-9220 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, headers OK, globals OK, progress 4521/6958, `sync_protos.py --check-branch` OK. Inline review recorded in the ticket, no open findings. Branch r6-fixes, not merged.

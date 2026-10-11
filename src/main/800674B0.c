@@ -1,9 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-extern s16 D_800B66E0[];
-extern s16 D_800B66F4[];
-
 void func_800674B0(void) {
     u8 v;
     s32 i;

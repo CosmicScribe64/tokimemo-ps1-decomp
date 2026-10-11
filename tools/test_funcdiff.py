@@ -402,6 +402,92 @@ func_80100100:
         self.assertEqual((rc, out.strip()), (0, "LoadImage: MATCH"))
 
 
+@unittest.skipUnless(HAVE_BINUTILS, "needs binutils")
+class TableAndOffsetDiffs(unittest.TestCase):
+    """T-9220: jump-table functions and GameState offsets."""
+
+    HEAD = ".set noat\n.set noreorder\n"
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+
+    def assemble(self, name, text):
+        s, o = os.path.join(self.tmp, name + ".s"), os.path.join(self.tmp, name + ".o")
+        with open(s, "w") as f:
+            f.write(self.HEAD + text)
+        subprocess.run(["mips-linux-gnu-as", "-EL", "-march=r3000", "-mabi=32", "-o", o, s], check=True)
+        return o
+
+    def run_main(self, exp, got, *argv):
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            rc = funcdiff.main(["--built", got, "--expected", exp] + list(argv))
+        return rc, out.getvalue()
+
+    GLOBL = ".globl jtbl_80100100\n"
+    TABLE = """.section .rodata
+%s:
+.word f
+.word f
+.section .text
+.globl f
+f:
+    lui $at, %%hi(%s)
+    sll $t6, $a0, 2
+    addu $at, $at, $t6
+    lw $t6, %%lo(%s)($at)
+    jr $t6
+    nop
+"""
+
+    def test_jump_table_function_matches_without_manual_resolve(self):
+        exp = self.assemble("e", self.GLOBL + self.TABLE % ("jtbl_80100100", "jtbl_80100100", "jtbl_80100100"))
+        got = self.assemble("g", self.TABLE % ("L1", "L1", "L1"))
+        rc, out = self.run_main(exp, got, "f")
+        self.assertEqual(rc, 0, out)
+        self.assertIn("MATCH (relocations resolved automatically", out)
+        self.assertIn("unit sha1", out)
+
+    def test_jump_table_function_with_another_instruction_is_still_a_diff(self):
+        exp = self.assemble("e", self.GLOBL + self.TABLE % ("jtbl_80100100", "jtbl_80100100", "jtbl_80100100"))
+        got = self.assemble("g", (self.TABLE % ("L1", "L1", "L1")).replace("sll $t6, $a0, 2", "sll $t6, $a1, 2"))
+        rc, out = self.run_main(exp, got, "f")
+        self.assertEqual(rc, 1)
+        self.assertIn("REAL DIFFERENCE", out)
+
+    FIELD = """.section .text
+.globl f
+f:
+    lui $t9, %%hi(%s)
+    lbu $t0, %%lo(%s)($t9)
+    jr $ra
+    nop
+"""
+
+    def test_naming_only_difference_is_labelled_as_such(self):
+        exp = self.assemble("e", self.FIELD % ("D_800E738D", "D_800E738D"))
+        got = self.assemble("g", self.FIELD % ("D_800E6280 + 0x110D", "D_800E6280 + 0x110D"))
+        rc, out = self.run_main(exp, got, "f")
+        self.assertEqual(rc, 1)
+        self.assertIn("differ only in symbol naming", out)
+        self.assertEqual(self.run_main(exp, got, "--resolve", "f")[0], 0)
+
+    def test_wrong_gamestate_offset_is_a_real_diff(self):
+        exp = self.assemble("e", self.FIELD % ("D_800E738D", "D_800E738D"))
+        got = self.assemble("g", self.FIELD % ("D_800E6280 + 0x110C", "D_800E6280 + 0x110C"))
+        rc, out = self.run_main(exp, got, "f")
+        self.assertEqual(rc, 1)
+        self.assertIn("REAL DIFFERENCE", out)
+        self.assertNotIn("differ only in symbol naming", out)
+        self.assertEqual(self.run_main(exp, got, "--resolve", "f")[0], 1)
+
+    def test_other_relocation_types_keep_their_addend(self):
+        a = funcdiff.resolve([[0x10, "x", [("R_MIPS_32", "D_800E6280", 0x10)]]])
+        b = funcdiff.resolve([[0x10, "x", [("R_MIPS_32", "D_800E6280", 0x14)]]])
+        self.assertNotEqual(a[0][0], b[0][0])
+
+
 class ExpectedObject(unittest.TestCase):
     """T-7030: the original-side object is built from the original .s files, never copied by hand."""
 
@@ -439,6 +525,27 @@ class ExpectedObject(unittest.TestCase):
         text = funcdiff.expected_stub(funcs)
         self.assertIn('INCLUDE_ASM("%s", early_name);' % self.m, text)
         self.assertLess(text.index("early_name"), text.index("func_80132040"))
+
+    def test_stale_copy_of_a_function_that_changed_state_is_ignored(self):
+        self.asm("%s/func_80132040.s" % self.m, "80132040", "nop")     # stale: now INCLUDE_ASM again
+        self.asm("%s/early_name.s" % self.n, "80132000", "nop")        # stale: now defined in C
+        os.makedirs("src/ovl/AAA", exist_ok=True)
+        with open("src/ovl/AAA/80132000.c", "w") as f:
+            f.write('void early_name() {\n}\nINCLUDE_ASM("%s", func_80132040);\n' % self.n)
+        stale = []
+        funcs = funcdiff.asm_functions(self.c, stale)
+        self.assertEqual(funcs, [(0x80132000, self.m, "early_name"), (0x80132040, self.n, "func_80132040")])
+        self.assertEqual(sorted(os.path.basename(x) for x in stale), ["early_name.s", "func_80132040.s"])
+        text = funcdiff.expected_stub(funcs)
+        self.assertEqual(text.count("early_name"), 1)
+        self.assertEqual(text.count("func_80132040"), 1)
+
+    def test_stale_copy_without_a_readable_c_file_is_decided_by_age(self):
+        self.asm("%s/func_80132040.s" % self.m, "80132040", "nop")
+        os.utime("%s/func_80132040.s" % self.m, (1, 1))
+        funcs = funcdiff.asm_functions(self.c)
+        self.assertEqual(sum(1 for f in funcs if f[2] == "func_80132040"), 1)
+        self.assertIn(self.n, [f[1] for f in funcs if f[2] == "func_80132040"])
 
     def test_created_when_missing_and_reused_while_the_original_is_unchanged(self):
         obj, problem = funcdiff.expected_object(self.c, compile_fn=self.compile)

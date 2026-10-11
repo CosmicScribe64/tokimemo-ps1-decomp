@@ -561,6 +561,8 @@ extern s32 D_800B5BD8[];
 extern s32 D_800B5BE8[];
 extern s32 D_800B5BF8[];
 extern s16 D_800B5C08;
+extern s16 D_800B66E0[];
+extern s16 D_800B66F4[];
 extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];

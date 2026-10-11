@@ -177,9 +177,18 @@ class ObjInfo:
     """What `resolve` needs to know about one object's .rodata: its bytes and the offsets of the
     symbols defined there."""
 
-    def __init__(self, rodata=b"", symbols=None):
+    def __init__(self, rodata=b"", symbols=None, tables=None):
         self.rodata = rodata
         self.symbols = symbols or {}   # name -> offset in .rodata (the section symbol is ".rodata", 0)
+        self.tables = tables or set()  # .rodata offsets that hold a code address (R_MIPS_32): jump tables
+
+    def is_table(self, name, add):
+        """True when .rodata `name` + add is a jump table: the original's `jtbl_<addr>` symbols, or a place
+        of .rodata that holds relocated code addresses (IDO's own table, `.rodata`+off)."""
+        if name.startswith("jtbl_"):
+            return True
+        base = 0 if name == ".rodata" else self.symbols.get(name)
+        return base is not None and (base + add) in self.tables
 
     def string_at(self, name, add):
         """Bytes up to the NUL at .rodata `name` + add, or None if name is no .rodata symbol or the
@@ -198,8 +207,8 @@ class ObjInfo:
         return text or None
 
 
-def parse_object_info(symtab, contents):
-    """ObjInfo from `objdump -t` and `objdump -s -j .rodata` texts."""
+def parse_object_info(symtab, contents, relocs=""):
+    """ObjInfo from `objdump -t`, `objdump -s -j .rodata` and `objdump -r -j .rodata` texts."""
     syms = {}
     for line in symtab.splitlines():
         if "\t" not in line:
@@ -217,7 +226,12 @@ def parse_object_info(symtab, contents):
     for off in sorted(data):
         buf.extend(b"\0" * (off - len(buf)))
         buf[off:off + len(data[off])] = data[off]
-    return ObjInfo(bytes(buf), syms)
+    tables = set()
+    for line in relocs.splitlines():
+        m = re.match(r"^([0-9a-f]+)\s+R_MIPS_32\s", line)
+        if m:
+            tables.add(int(m.group(1), 16))
+    return ObjInfo(bytes(buf), syms, tables)
 
 
 _info_cache = {}
@@ -231,7 +245,7 @@ def object_info(obj):
             r = subprocess.run(["mips-linux-gnu-objdump"] + list(args) + [obj], stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE, text=True)
             return r.stdout
-        _info_cache[key] = parse_object_info(run("-t"), run("-s", "-j", ".rodata"))
+        _info_cache[key] = parse_object_info(run("-t"), run("-s", "-j", ".rodata"), run("-r", "-j", ".rodata"))
     return _info_cache[key]
 
 
@@ -252,6 +266,25 @@ def parse_insns(lines):
     return insns
 
 
+TABLE_REF = "jump-table"
+
+
+def _paired_low(insns, i, sym, addend):
+    """Immediate of the %lo that goes with the %hi of insns[i]: the first following LO16 of the same
+    symbol and addend, else of the same symbol; 0 when there is none."""
+    same_sym = None
+    for w2, _t2, r2 in insns[i + 1:]:
+        if w2 is None:
+            continue
+        for t, s2, a2 in r2:
+            if t == "R_MIPS_LO16" and s2 == sym:
+                if a2 == addend:
+                    return sext16(w2)
+                if same_sym is None:
+                    same_sym = sext16(w2)
+    return same_sym or 0
+
+
 def resolve(insns, info=None, names=None):
     """[(key, display)] with the relocations of the instructions applied where the target is known.
     key is what gets compared. Known: a symbol with its address in the name or renamed (`names`),
@@ -264,15 +297,20 @@ def resolve(insns, info=None, names=None):
             continue
         left = []
         for typ, sym, addend in relocs:
+            if typ in ("R_MIPS_HI16", "R_MIPS_LO16"):
+                imm = sext16(word) if typ == "R_MIPS_LO16" else _paired_low(insns, i, sym, addend)
+                if sym.startswith("jtbl_") or (info is not None and info.is_table(sym, addend + imm)):
+                    # a jump-table address: the built table is IDO's own (`.rodata`+off), the original's is
+                    # `jtbl_<addr>`; they never agree by name or address, so the reference is compared as
+                    # "a table" and the table contents are left to the unit sha1 (T-9220)
+                    word &= 0xFFFF0000
+                    left.append("%s %s" % (typ, TABLE_REF))
+                    continue
             if info is not None and typ in ("R_MIPS_HI16", "R_MIPS_LO16"):
                 if typ == "R_MIPS_LO16":
                     imm = sext16(word)
                 else:
-                    imm = 0
-                    for w2, _t2, r2 in insns[i + 1:]:
-                        if w2 is not None and any(t == "R_MIPS_LO16" and s == sym for t, s, _a in r2):
-                            imm = sext16(w2)
-                            break
+                    imm = _paired_low(insns, i, sym, addend)
                 lit = info.string_at(sym, addend + imm)
                 if lit is not None:
                     word &= 0xFFFF0000
@@ -284,16 +322,12 @@ def resolve(insns, info=None, names=None):
             elif typ == "R_MIPS_LO16":
                 word = (word & 0xFFFF0000) | ((base + sext16(word)) & 0xFFFF)
             elif typ == "R_MIPS_HI16":
-                low = 0
-                for w2, _t2, r2 in insns[i + 1:]:
-                    if w2 is not None and any(t == "R_MIPS_LO16" and s == sym for t, s, _a in r2):
-                        low = sext16(w2)
-                        break
+                low = _paired_low(insns, i, sym, addend)
                 word = (word & 0xFFFF0000) | (((base + low + 0x8000) >> 16) & 0xFFFF)
             elif typ == "R_MIPS_26":
                 word = (word & 0xFC000000) | (((base + ((word & 0x3FFFFFF) << 2)) >> 2) & 0x3FFFFFF)
             else:
-                left.append("%s %s" % (typ, sym))
+                left.append("%s %s%s" % (typ, sym, "+0x%x" % addend if addend else ""))   # addend is a real difference
         key = "%08x" % word + "".join(" " + x for x in left)
         out.append((key, "%s  ; %s" % (key, text)))
     return out
@@ -367,20 +401,45 @@ def _header_problem(build):
     return "\n".join(problems[:15]) if problems else None
 
 
-def asm_functions(c):
+def asm_functions(c, stale=None):
     """[(vram, folder, name)] of every function of the C file `c` in the original disassembly
     (matched or not), in address order: the .s files of its matchings and nonmatchings folders. The
-    address is the one of the first instruction (names such as bg_read_sub2 carry none)."""
-    out = []
+    address is the one of the first instruction (names such as bg_read_sub2 carry none).
+
+    A function that flipped between C and INCLUDE_ASM leaves its .s in the folder of the old state
+    next to the new one (splat never deletes), and both in one stub is "symbol already defined"
+    (T-9220). Only the copy of the folder that matches the C file's state is used: matchings when the C
+    file defines the function, else nonmatchings (when the C file cannot be read: the newer file). The
+    ignored copies are appended to `stale` (a list) when given."""
+    found = {}
     for folder in (c.matchings, c.nonmatchings):
         if not os.path.isdir(folder):
             continue
         for fn in sorted(os.listdir(folder)):
             if not fn.endswith(".s"):
                 continue
-            with open(os.path.join(folder, fn), errors="replace") as fh:
+            path = os.path.join(folder, fn)
+            with open(path, errors="replace") as fh:
                 m = re.search(r"^\s*/\*\s*[0-9A-Fa-f]+\s+([0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{8}\s*\*/", fh.read(), re.M)
-            out.append((int(m.group(1), 16) if m else 0xFFFFFFFF, str(folder).replace(os.sep, "/"), fn[:-2]))
+            found.setdefault(fn[:-2], []).append(
+                (int(m.group(1), 16) if m else 0xFFFFFFFF, str(folder).replace(os.sep, "/"), fn[:-2], path))
+    try:
+        defined = srcscan.defined_functions(c.src)
+    except OSError:
+        defined = None
+    out = []
+    for name, copies in found.items():
+        if len(copies) > 1:
+            if defined is not None:
+                want = str(c.matchings if name in defined else c.nonmatchings).replace(os.sep, "/")
+                keep = next((x for x in copies if x[1] == want), None)
+            else:
+                keep = None
+            keep = keep or max(copies, key=lambda x: os.path.getmtime(x[3]))
+            if stale is not None:
+                stale += [x[3] for x in copies if x is not keep]
+            copies = [keep]
+        out.append(copies[0][:3])
     return sorted(out)
 
 
@@ -409,10 +468,10 @@ def compile_expected(stub_path, obj):
     return None
 
 
-def expected_object(c, refresh=False, compile_fn=compile_expected):
+def expected_object(c, refresh=False, compile_fn=compile_expected, stale=None):
     """(path, problem): the original-side object of the srcscan.CFile `c` under expected/, created or
     refreshed from the original .s files when it is missing, forced, or its key changed."""
-    funcs = asm_functions(c)
+    funcs = asm_functions(c, stale)
     if not funcs:
         return None, "no original disassembly found for %s (asm/ is missing: run configure.py and ninja first)" % c.src
     obj = os.path.join("expected", c.obj)
@@ -456,6 +515,19 @@ def diff_lines(want, got):
     return rows
 
 
+def resolved_verdict(built, expected, name):
+    """How the text DIFF of `name` looks once relocations are applied (T-9220): ("table", None) when the
+    resolved words agree and a jump table is involved, ("same", None) when they agree (naming noise only),
+    ("real", diff rows) when they differ (a wrong symbol+offset, for example a GameState field), or None
+    when the resolved comparison cannot be made."""
+    got, want = resolved_functions(built, [name])[name], resolved_functions(expected, [name])[name]
+    if got is None or want is None:
+        return None
+    if keys(got) == keys(want):
+        return ("table" if any(TABLE_REF in k for k in keys(want)) else "same"), None
+    return "real", diff_lines(want, got)
+
+
 def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("names", nargs="+")
@@ -475,7 +547,7 @@ def main(argv):
         sys.exit("funcdiff.py: run it from the repository root")
     get = resolved_functions if args.resolve else functions
     bad = 0
-    refreshed = set()
+    refreshed, noted = set(), set()
     for n in args.names:
         b, c = args.built, None
         try:
@@ -504,8 +576,13 @@ def main(argv):
                     print("%s: ERROR %s" % (n, err))
                     bad += 1
                     continue
-            e, problem = expected_object(c, args.refresh_expected and c.obj not in refreshed)
+            stale = []
+            e, problem = expected_object(c, args.refresh_expected and c.obj not in refreshed, stale=stale)
             refreshed.add(c.obj)
+            if stale and c.obj not in noted:
+                noted.add(c.obj)
+                print("note: ignored %d stale asm file(s) of functions that changed between C and INCLUDE_ASM "
+                      "(e.g. %s); `rm` them or rebuild asm/ to clean up" % (len(stale), stale[0]))
             if problem:
                 print("%s: ERROR %s" % (n, problem))
                 bad += 1
@@ -523,10 +600,24 @@ def main(argv):
         elif keys(got) == keys(want):
             print("%s: MATCH%s" % (n, " (relocations resolved)" if args.resolve else ""))
         else:
+            verdict = None if args.resolve else resolved_verdict(b, e, name)
+            if verdict and verdict[0] == "table":
+                print("%s: MATCH (relocations resolved automatically: the function reads a jump table, whose "
+                      "references and .L labels never agree by name; the table contents are not compared, "
+                      "the unit sha1 of ninja decides)" % n)
+                continue
             bad += 1
             print("%s: DIFF (- expected, + built)" % n)
             for d in diff_lines(want, got):
                 print("  " + d)
+            if verdict and verdict[0] == "same":
+                print("  resolved: the words are identical once relocations are applied; the rows above differ "
+                      "only in symbol naming (`D_800E6448` against `D_800E6280+0x1C8`). --resolve says MATCH.")
+            elif verdict:
+                print("  resolved: REAL DIFFERENCE, not naming. Symbol+offset or immediate differ after relocation "
+                      "(- expected, + built):")
+                for d in verdict[1]:
+                    print("    " + d)
     return 1 if bad else 0
 
 
