@@ -1769,3 +1769,112 @@ TAIIKU `func_801485C4` (180 bytes) matches after replacing separate camera symbo
 DATE `func_80144720` (436 bytes) matches after three semantic type repairs: all four sprite flag words use signed views (one shared 0x81000000 register), the unsigned girl byte is stored through a u32 view of D_80122CD4 (no extra move), and clearing record 31 byte 7 through the real 0x44 scene view schedules it before the following flag load. No same-line FAKE is needed. Separate raw flag arithmetic has not been converted to typed flags because that variant changes the output. Resolved funcdiff and DATE SHA1 passed.
 
 Main `strNextVlc` (172 bytes): declare the VLC result before the timeout counter. That alone changes its spill from sp+0x30 to the original sp+0x34. An ordinary u8-pointer interface with a MovieVlcState prefix view keeps the bytes and avoids a local main-exe prototype. Strict `funcdiff --resolve --expected` against an object made from the original executable bytes, and clean main SHA1, both passed. The custom expected object is needed because the default resolver treats the absolute D_7FFFFF loop constant as unknown.
+## Wave 8, list 4 (T-9540)
+
+Completed with 0 gains (0 bytes), 176 time-boxed functions and 3 T-0018 rows.
+Baseline and final Docker ninja pass all 27 unit SHA1 checks,
+headers and GameState validation. Drafts and bounded comparison results are kept
+in the shared scratchpad's w8-4 directory. Rejected candidates return to
+INCLUDE_ASM; accepted C requires resolved function verification and unit checks.
+
+TT `func_80141A1C`: repaired m2c's byte-buffer selectors and pointer types, but
+the resulting packet-link expressions differ in register allocation, mask
+hoisting and frame size (0x40 versus original 0x48). Time-boxed; no source retained.
+
+`sprite_brightness` ABI experiments: changing its definition to K&R preserves
+the callee bytes, but changes callers' brightness loads from `$a1` to `$v0`.
+An `s32` index with the narrowing inside the callee makes `func_80085368`
+match alone, but shifts the existing callee's temporary numbers and leaves one
+branch-operand swap in `func_800853FC`. A call-site function-pointer cast emits
+`jalr` instead of the original `jal`. All three experiments were restored;
+no shared prototype change is retained.
+
+Tooling/brief discrepancy: `tools/register_shapes.py FUNC` is not accepted by
+the current inventory-only CLI. Importing `inventory()` and filtering its
+function records identifies the clusters without changing the tool:
+SHOUGATU `func_8013AE0C` is temporary numbering/order; SHUGAKU
+`func_80138DD8` and OPTION `func_8013357C` are constant allocation/sharing.
+
+The ordered pass covered all 176 functions. Three near matches also received
+40-second permuter runs; five functions received additional bounded type,
+constant, aggregate or loop rewrites. No candidate survived resolved byte
+verification. Three new bounded-recheck rows are appended to
+[[data/t0018-cases]]. Other time boxes chiefly involved incomplete m2c
+record/pointer/prototype views, shared constants and frame/layout differences.
+
+Concrete non-T-0018 ownership blocker: main `InitMouse` stores the two pointer
+table entries at `D_800E36C0` and `D_800E36C4` through one shared `$at` base
+([[data/shared-at-groups]]). `config/objects/main.txt` has no data range for
+`80059710`, so the brief's own-data recipe cannot be applied in this batch.
+Its draft also incorrectly prints both stores as `*D_800E36C0`; the second
+must target pointer-table element 1. A future ownership repair should address
+this small function before broad register searches.
+
+Final proof/review: 27/27 SHA1 OK, branch check reports zero new disagreements,
+GameState check OK, git diff --check clean. Progress remains
+4734/6958 functions, 729612/2279368 bytes (32.0%). Inline standards/spec review
+has no unresolved findings. T-9540 is Done; only uncommitted wiki edits remain.
+
+### Deep second pass, T-9540
+
+The user rejected the first pass as insufficiently deep. Reopened the ticket at 09:08 UTC. Resolved-diff ranking starts with SHUGAKU func_80138DD8 (2 lines), normal_date_girl_in_init and OPTION func_8013357C (3 each), InitMouse and ETC func_801451D4 (4 each). Ranking evidence: scratchpad/w8-4/deep-rank.jsonl. SHUGAKU experiments now compare nested/combined predicates, early exits, signedness and local declaration shapes before a five-minute permuter run. Existing neighbor types include TtOtTag in TT.h and EtcMat2 in ETC/80143240.c; aggregate repairs should reuse their evidence rather than infer widths across unrelated pointers.
+
+SHUGAKU func_80138DD8 matched after control-flow and signedness experiments: load D_800CA2CC into a u8 local inside the first two successful tests, then compare the local to 1. This gives bne t8,v0 rather than bne v0,t8. Resolved comparison and SHUGAKU unit SHA1 both pass. Evidence: scratchpad/w8-4/deep-shugaku.log.
+
+Deep normal_date_girl_in_init: s32 return plus an explicit u8 store fixes the wrong store width and restores the target return value, but the final sb/jr scheduling differs (4 diff lines). A 300-second permuter run found no improvement; retained nothing. InitMouse corrected array elements reduce the diff to one extra lui, confirming the shared-at ownership obstacle in a real build. Further source variants remain pending. SHUGAKU multiline cleanup passed the resolved diff.
+
+EVENT func_80102118 matched by replacing the opaque 0x9C memcpy with FnTbl39 assignment and an s32 index declared before the table, as neighboring matched functions do. The real index supplies the original stack layout without padding tricks. Resolved diff MATCH and EVENT SHA1 OK. Rich source context alone did not make m2c infer the local-copy type; explicit C aggregate assignment was required. Evidence: scratchpad/w8-4/deep-small.log.
+
+T-9540 deep pass: OPTION func_8013357C (108 bytes) matches with a counted
+loop starting at 0x60 and an s32 return spelling without an explicit return.
+The otherwise dead initial counter load is retained in v0; pointer induction
+still replaces the loop counter. Both resolved comparison and OPTION SHA1
+pass. This return spelling is a matching artifact, not proof of a meaningful
+return value. Running gains: 3 functions, 384 bytes. normal_date_girl_in_init
+was retried for 723 seconds (best one missing return-value load), and ETC
+func_801451D4 for 579 seconds (best four branch/selector lines); both five-minute
+searches failed and their source/header experiments were restored.
+
+T-9540 brightness: main func_800853FC (156 bytes) matches with the existing
+func_80084C98/sprite_brightness alias declared locally as (s32, u8), and a u8
+state local loaded after normal_date_bg_fadeout. The wider index view leaves
+conversion inside the matched callee and the byte value load in a1. The alias
+now has an explicit main symbol address, and main SHA1 passes. The scoped view
+is marked FAKE. Retained running gains: 4 functions, 540 bytes.
+
+The first caller func_80085368 (148 bytes) has now been reapplied: resolved
+MATCH and main executable SHA1 OK with the alias address. Both brightness
+callers are retained. Running gains: 5 functions, 688 bytes. Full incremental
+ninja and an exact-owned-files duplicate scan follow this five-match batch.
+
+Aggregate repair comparisons are isolated while the five-gain full build runs.
+They are ranking evidence only. The initial wrapper included main_api.h before
+EVENT's overrides and produced declaration conflicts; those failed trials do
+not count as code-generation evidence, and the corrected wrapper follows each
+owned source's include order. Recovered copied extents include Fn53/Fn39/Fn40,
+SHUGAKU Fn68, SHOUGATU 7x5 names and EN_NICHI 12/13/64-halfword tables. Rec44
+views now represent each word as overlapping s32/s16/u16/u8 members, so word
+stores spanning two halfwords preserve their full width.
+
+Main func_8008585C (140 bytes) now passes its real-source resolved comparison
+and main SHA1. The m2c draft scaled the address as both a word index and byte
+offset; a simple s16 counted word-array loop fixes it. Running gains: 6
+functions, 828 bytes. The initial scalar-backed view is being reviewed for an
+explicit array declaration override or a precise FAKE annotation.
+
+SHUGAKU func_80139D40 (332 bytes) matches after defining ShugakuFn68 (68
+function pointers, copied 0x110 bytes). Two byte locals before the aggregate
+supply the observed frame/table offset; the replacement branch indexes through
+a byte local. The indirect call passes only 0x40: the draft's extra index
+argument changed the base/index allocation even though the target leaves an
+index in a1. All 48 declaration/local/call variants are measured in
+scratchpad/w8-4/type-follow-real.log; the final ordinary C passes resolved
+comparison and SHUGAKU SHA1. Running gains: 7 functions, 1160 bytes.
+
+T-9540 deep pass: OPTION func_80136F3C (260 bytes) matches with a scoped FlagsWork24 view of D_800E7D10 (word +0x00, fourteen byte flags +0x14). Raw D_800E7D11 indexing reached ten differing lines but chose a different peeled-loop base/displacement; `D_800E7D10.flags[i]` recovers the exact base after peeling two iterations. Canonical scalar view remains available elsewhere through a generated override guard; the minimum aggregate view is explicitly FAKE until the complete backing object is recovered. Resolved comparison and OPTION unit SHA1 both pass.
+
+T-9540 deep pass: normal_date_girl_in_init (112 bytes) and SHOUGATU func_8013AE0C (96 bytes) bring the gains to 10 functions, 1628 bytes. The initializer uses an explicitly FAKE local-zero alias and s32/no-return definition; its raw permutation score was 20 but real resolved comparison is MATCH, followed by main SHA1 OK. SHOUGATU's marked FAKE dead byte test fixes temporary numbering; reversing the compared operands closes the final branch difference, followed by SHOUGATU SHA1 OK.
+
+Retained-source cleanup: OPTION func_8013357C now uses documented OptDraw44 members (flag byte +3 and signed halfwords +0x18/+0x26/+0x2A, stride 0x44), replacing byte-pointer arithmetic. Real resolved comparison and OPTION SHA1 still pass. The clearing function uses an explicitly scoped minimum word-array view instead of first-symbol indexing. Failed aggregate views for more than 36 drafts remain scratch-only; MouseState's sustained actual typed retries and 300-second search finish at nineteen differing lines.
+
+Final deep-pass proof supersedes the historical first-pass result above: 10 functions, 1628 bytes gained. From 09:07:54 to 12:27:26 UTC, sustained near-miss iteration, aggregate repair and permutation were followed by ten fresh resolved MATCH results and a full 27/27 SHA1 build. headers/globals stamps exist, branch check reports zero new disagreements (seventeen known), exact-owned dupes applies zero copies and git diff --check is clean. Progress is 4744/6958 functions, 731240/2279368 bytes (32.1%). Nine historical T-0018 rows were added, four now resolved. InitMouse's missing owned data range remains the concrete ownership blocker. Inline standards review has no unresolved findings; T-9540 is Done and all changes remain uncommitted.

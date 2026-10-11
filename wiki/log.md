@@ -1232,3 +1232,144 @@ All 36 aggregate/local-copy rejects have valid resolved comparisons after recons
 ## [2026-10-11] ticket | T-9570 deep second pass complete
 
 Inline CODING_STANDARDS review is complete with no unresolved findings. Fourteen retained functions (4,628 bytes; twelve/3,788 beyond the original pair) pass fresh resolved comparisons and all 27 unit SHA1 checks. The movie timeout uses a strict original-byte expected object to bypass the reported low-constant resolver bug. Headers/globals pass; prototype branch check has zero new and seventeen known disagreements; scoped dupes applied zero copies; final incremental Ninja and git diff --check pass. All 129 list functions have attempts, 62 have deep valid comparisons, and all 36 aggregate rejects received reconstructed types and valid retries during more than three hours of deep work. Five T-0018 rows added. Updated [[tickets/T-9570-wave-8-list-7]], [[kanban]] and [[index]] to Done. Progress: grand total 4748/6958, 734240/2279368 bytes, 32.2%. All changes left uncommitted.
+## [2026-10-11] ticket | Start wave-8 list 4
+
+Created [[tickets/T-9540-wave-8-list-4]] In Progress and synchronized [[kanban]] and [[index]]. Read [[decompile-workflow]], [[register-allocation-wave7]], CODING_STANDARDS.md and the shared wave-8 brief. Started Docker configure/build to generate the initially absent assembly.
+## [2026-10-11] build | Wave-8 list-4 baseline and first bounded attempt
+
+Docker configure/ninja completed with all 27 unit SHA1 checks OK and headers/globals OK. Started ordered drafts for [[tickets/T-9540-wave-8-list-4]]. Repaired TT func_80141A1C's m2c byte-buffer and pointer expressions; resolved diff still shows real mask/register/frame differences, so restored INCLUDE_ASM. Evidence recorded in [[matching-notes]] and the w8-4 scratchpad.
+## [2026-10-11] decision | Wave-8 list-4 ABI and near-match limits
+
+Prepared all 176 assigned m2c drafts and bounded repaired-C comparisons. Three 40-second permuter attempts (SHUGAKU func_80138DD8, TT func_801475C8, main func_80085368) found no verified score-zero candidate. Restored all sprite_brightness declaration/callee/call-site experiments: a matching caller alone did not preserve the existing callee or direct-call encoding. Documented evidence and the register_shapes.py positional-argument discrepancy in [[matching-notes]] for [[tickets/T-9540-wave-8-list-4]].
+## [2026-10-11] decision | Complete the wave-8 list-4 time boxes
+
+All 176 functions in [[tickets/T-9540-wave-8-list-4]] reached a bounded draft/repair/comparison attempt. Additional source-idiom retries for five early candidates and the three permuter runs found no retained match. Restored every experimental C/header edit. Appended three measured register/constant recheck rows to [[data/t0018-cases]] and recorded limits in [[matching-notes]]. Started the exact-owned-files duplicate check before final verification.
+## [2026-10-11] ticket | Wave-8 list-4 inline review
+
+Owned-files dupes --apply --check reports zero plans/copies. Moved [[tickets/T-9540-wave-8-list-4]] to In Review and synchronized [[kanban]]/[[index]]. Source, headers, configs and tooling are restored; only wiki records remain. Inline review and final Docker branch/global/build verification are in progress.
+## [2026-10-11] query | InitMouse ownership follow-up
+
+Read the small main InitMouse result: the original shares one $at base for D_800E36C0/D_800E36C4, as recorded in [[data/shared-at-groups]], while config/objects/main.txt supplies no data range for its 80059710 object. The m2c draft also collapses the two stores onto element 0. Recorded this concrete non-T-0018 blocker in [[matching-notes]] for [[tickets/T-9540-wave-8-list-4]]; no config or source changes made.
+## [2026-10-11] build | Wave-8 list-4 final proof and review complete
+
+Final Docker ninja passed 27/27 SHA1 checks; headers/globals stamps exist. sync_protos.py --check-branch reports zero new disagreements (17 known), migrate_globals.py --check passes, and git diff --check is clean. Grand total remains 4734/6958 functions and 729612/2279368 bytes (32.0%): 0 new functions/0 bytes. Inline standards/spec review found no unresolved findings. Completed all 176 time boxes, added 3 measured rows in [[data/t0018-cases]], recorded limits and tooling observations in [[matching-notes]], and moved [[tickets/T-9540-wave-8-list-4]]/[[kanban]] to Done with [[index]] synchronized. Source/headers/configs/tools are unchanged; wiki edits left uncommitted for the orchestrator.
+
+## [2026-10-11] ticket | Reopen wave-8 list 4 for a deep second pass
+
+User review found the initial draft comparisons too shallow. Reopened [[tickets/T-9540-wave-8-list-4]] and synchronized [[kanban]] and [[index]]. Deep pass starts at 09:08 UTC; rank resolved differences, iterate source/type/control-flow changes, and run five-minute near-miss searches. Minimum three hours unless the assigned list is exhausted.
+
+## [2026-10-11] query | Rank rejected wave-8 list-4 drafts
+
+[[tickets/T-9540-wave-8-list-4]] deep pass ranked successful draft builds by resolved differing lines; smallest cases and neighbor-type evidence recorded in [[matching-notes]]. Sustained SHUGAKU comparison experiments are running, with a 300-second permutation search next. Scratch evidence is in scratchpad/w8-4/deep-rank.jsonl and deep-shugaku.log.
+
+## [2026-10-11] build | Match SHUGAKU final predicate byte
+
+[[tickets/T-9540-wave-8-list-4]] gained func_80138DD8 (104 bytes) with a u8 local for the final compare. funcdiff --resolve MATCH and SHUGAKU unit SHA1 OK. Source and idiom recorded in [[matching-notes]]; testing multiline formatting before retaining the final form.
+
+## [2026-10-11] build | Measure return scheduling and shared-base near misses
+
+[[tickets/T-9540-wave-8-list-4]]: normal_date_girl_in_init is four resolved lines away after return/store repairs; its five-minute search found no improvement and source/prototype were restored. Corrected InitMouse is one extra lui away. SHUGAKU gain survives multiline formatting. Measurements and pending follow-ups recorded in [[matching-notes]].
+
+## [2026-10-11] build | Match EVENT copied function table
+
+[[tickets/T-9540-wave-8-list-4]] gained func_80102118 (172 bytes): existing FnTbl39 assignment and scalar-before-table declaration order. Resolved diff MATCH and EVENT SHA1 OK. [[matching-notes]] records the type/context result. Deep pass now retains 2 functions, 276 bytes.
+
+## [2026-10-11] build | Match OPTION counted sprite loop
+
+[[tickets/T-9540-wave-8-list-4]] gained func_8013357C (108 bytes). The s32 return spelling and counted loop preserve the target's dead initial counter load. Resolved diff MATCH and OPTION SHA1 OK; [[matching-notes]] records the return-value limitation and the failed sustained normal-date/ETC follow-ups. Running gains: 3 functions, 384 bytes.
+
+## [2026-10-11] query | Recover aggregate layouts and time-box TT initializer
+
+[[tickets/T-9540-wave-8-list-4]]: TT func_801475C8 finished 708 seconds of 56 initialization/type/loop variants and a 300-second search; best still eight resolved lines, restored. Aggregate repair now uses neighboring matched judging buffers, Rec24/TaiikuBig elements, copied function-table extents, SDK RECT and a five-halfword CD-level record. Scratch repair scripts retain experiments only after resolved comparison and unit SHA1; [[matching-notes]] will record verified gains and bounded failures.
+
+## [2026-10-11] decision | Verify promoted-index brightness alias
+
+[[tickets/T-9540-wave-8-list-4]]: func_80085368 resolves exactly with a scoped promoted-index declaration for the existing func_80084C98/sprite_brightness alias. Added its main-exe alias address to config/symbol_addrs.txt after the initial unit link reported an undefined reference. Main executable SHA1 then passed. The sequential trial will restore this first body on its initial failed check, so it must be reapplied and reverified before counting it. No gain counted yet; follow-up compares the second caller's operand order.
+
+## [2026-10-11] build | Match second brightness caller
+
+[[tickets/T-9540-wave-8-list-4]] gained main func_800853FC (156 bytes). The promoted-index alias view removes redundant call-site narrowing; a post-call u8 selector local fixes compare operands. Real resolved diff and main executable SHA1 pass. [[matching-notes]] records the scoped-view artifact; retained gains total 4 functions, 540 bytes.
+
+## [2026-10-11] build | Retain first brightness caller and check five gains
+
+[[tickets/T-9540-wave-8-list-4]] gained func_80085368 (148 bytes), reapplied after alias-link repair and reverified by resolved diff plus main SHA1. Total retained gains: 5 functions, 688 bytes. Started full incremental ninja for this five-match batch; [[matching-notes]] records the result and pending owned duplicate scan.
+
+## [2026-10-11] query | Rank repaired aggregate drafts without disturbing full build
+
+[[tickets/T-9540-wave-8-list-4]]: isolated Docker compilation compares the repaired aggregate drafts while full ninja checks the retained batch. The OPTION flag counter is ten lines away (equivalent base/displacement spelling); ETC scene links 24 lines; TACO aggregate arguments 38 lines. Several compile failures expose missing scalar backing declarations or late overlay overrides, being repaired before judging code generation. Added explicit field/array repairs for all 33 drafts containing opaque/local-copy markers; other type-error drafts remain separate. Scratch evidence is aggregate-isolated.log and aggregate-scores.txt. Isolated matches will still require real source resolved diff and unit SHA1.
+
+## [2026-10-11] build | Verify five retained gains across all units
+
+[[tickets/T-9540-wave-8-list-4]] five-gain incremental ninja completed successfully: 26 overlay SHA1 checks OK plus the already-current main executable SHA1 OK (27 units total). Header/global checks passed. Running exact-owned-files dupes and real-source verification of the isolated s16 loop match. New near-miss type/control experiments remain scratch-only until verification.
+
+## [2026-10-11] build | Match signed halfword array-clearing loop
+
+[[tickets/T-9540-wave-8-list-4]] gained main func_8008585C (140 bytes), correcting m2c's double-scaled table access and retaining the original s16 counter. Resolved MATCH and main SHA1 OK. [[matching-notes]] records the pending final array-view cleanup. Running gains: 6 functions, 828 bytes. The first duplicate invocation used multiple arguments where the CLI requires one comma-separated --files value; no edits occurred, corrected scan remains pending.
+
+## [2026-10-11] query | Narrow judging and EVENT table frame gaps
+
+[[tickets/T-9540-wave-8-list-4]] repaired aggregate retry ranks geko_judge at ten resolved lines and EVENT func_800FD00C at twelve. The judging buffers are 16 bytes too high, with a counter increment scheduled across one branch; EVENT's table is four bytes too low and one byte load needs a v1 base. Testing scalar/buffer/table declaration order and real local value types. Corrected EVENT func_800FEAE8's copied object: 41 unsigned-halfword bound pairs (0xA4), not a function table, plus an SDK RECT passed by value. Scratch failures from wrong wrapper/include order or incomplete types are not counted as negative code-generation evidence.
+
+## [2026-10-11] build | Match SHUGAKU copied dispatch table
+
+[[tickets/T-9540-wave-8-list-4]] gained func_80139D40 (332 bytes). Added a guarded overlay-local 68-pointer aggregate, byte index/kind locals, and one indirect-call argument. Resolved diff MATCH and SHUGAKU SHA1 OK; [[matching-notes]] records the ABI and frame findings. Running gains: 7 functions, 1160 bytes. OPTION flag-counter first sustained trial finished 465 seconds including 300-second permutation with no gain, restored; a corrected root-base follow-up is running.
+
+## [2026-10-11] decision | Correct the frame-variant generator before counting its evidence
+
+[[tickets/T-9540-wave-8-list-4]]: the first judging frame matrix used a declaration block in the wrong order, so its buffer-length/order replacements did not apply. Only its counter-placement variations are valid evidence. Corrected the generator to replace the actual declaration block and started isolated comparisons of the proper variants. All unsuccessful real-source trials remain temporary and are restored automatically. Continued aggregate repairs include a distinct OPTION scene descriptor (RGB bytes at +0x10, pointer at +0x14), missing backing-table declarations in isolated context, and removal of m2c's mistaken scalar dereferences.
+
+## [2026-10-11] build | Bounded callback and judging retries
+
+[[tickets/T-9540-wave-8-list-4]]: EVENT func_800FD00C's 24 actual declaration/type variants reached eight resolved lines; its 300-second permutation ended at raw score 10 and was restored. Inspecting that candidate with resolved comparison rather than assuming a positive raw score fails. Started the corrected judging buffer/declaration matrix and a scoped aggregate flag-block view. Larger aggregate drafts have been repaired with copied-table, coordinate-array, scene-record and SDK RECT types; failed type-only trials are kept in scratch, not retained source.
+
+## [2026-10-11] build | Match OPTION counted flags with aggregate view
+
+[[tickets/T-9540-wave-8-list-4]] gained func_80136F3C, 260 bytes. Recovered word-at-zero and fourteen flags at +0x14 as FlagsWork24; a scoped generated-header override preserves other callers' word view. The original peeled-loop address and field displacement now match. Resolved diff MATCH and OPTION SHA1 OK. Running gains: 8 functions, 1420 bytes; [[matching-notes]] records the type and bounded failed byte-pointer experiments.
+
+## [2026-10-11] query | Extend recovered aggregate retries
+
+[[tickets/T-9540-wave-8-list-4]]: corrected the final OPTION four-record byte-flag cursor to Rec44 (func_8013493C now compiles, 152 resolved differing lines). MouseState now has an inferred four-byte output aggregate, tested against the original signed packet loads and neighboring MouseOut. The halfword queue uses a count plus 32 entries, inferred from matched enqueue/reset functions; testing the saved first-entry load independently from the shift loop. EVENT func_801022C0's copied 53-pointer table compiles and member-based Rec24 writes reduce the difference to 36 lines; further declaration/expression iteration remains.
+
+## [2026-10-11] query | Packet layouts from matched TT neighbors
+
+[[tickets/T-9540-wave-8-list-4]]: matched TT func_8013EF38 shows the +8 buffer selector and 0x80B8 buffer stride, with packet cursor at +4. Defined scratch render-context/buffer and 0x30-byte packet views for func_80141A1C and func_80141EBC; both now compile with the signed-coordinate and unsigned-clut fields recovered from loads. Tag-member assignment improves the first comparison to 188/189 lines, still far behind the close candidates. Queue count/32-entry and MouseState four-byte output variants also compile; their failed trial types remain scratch-only.
+
+## [2026-10-11] decision | Retained-source review cleanup
+
+[[tickets/T-9540-wave-8-list-4]]: removed duplicate include pairs, marked OPTION's s32/no-return allocation artifact, and replaced the main clearing function's unmarked first-symbol expression with an explicitly scoped minimum word-array view. func_8008585C still reports resolved MATCH. The exact-owned-files duplicate plan has zero copies (six other candidates are skipped outside the accepted scope/types). Failed judging and callback variants were restored; the next sustained actual trial covers repaired ETC scene links, the nibble comparison, the main selector and MouseState.
+
+## [2026-10-11] decision | Record sustained near-miss limits
+
+[[tickets/T-9540-wave-8-list-4]] added four measured deep-pass rows to [[data/t0018-cases]] for normal_date_girl_in_init, TT func_801475C8, ETC func_801451D4 and geko_judge. Rows distinguish compiling variants from rejected prototypes and bounded experiments from impossibility claims, following [[register-allocation-wave7]]. The two first-pass rows now matched are explicitly resolved without deleting history. Positive raw permutation candidates are being rechecked with resolved comparisons; zero raw score is not used as the only gate.
+
+## [2026-10-11] query | Positive permutation score hides a resolved candidate
+
+[[tickets/T-9540-wave-8-list-4]]: normal_date_girl_in_init's raw-score-20 output compares at zero resolved lines in isolated compilation. It uses an explicitly FAKE alias of a local zero and s32/no-return spelling; replaced bare int locals with s32 and rechecking before actual full-source/unit verification. It is not yet counted as a retained gain. The current SHOUGATU func_8013AE0C trial reaches four resolved lines with a dead raw-value test, improving its earlier twenty-line candidate; its mandatory five-minute permutation is running.
+
+## [2026-10-11] query | Stage two zero-difference candidates
+
+[[tickets/T-9540-wave-8-list-4]]: fixed-width local-zero alias variant of normal_date_girl_in_init still compares at zero in isolated compilation; its void spelling lacks one instruction, so the staged candidate retains the explicitly FAKE s32/no-return view. SHOUGATU func_8013AE0C also reaches zero by reversing the compared operands after the dead raw-value test. Neither is counted until real funcdiff and unit SHA1 verification. The sustained main selector trial completed with fourteen resolved lines and 300-second permutation, restored; MouseState's actual typed trials continue.
+
+## [2026-10-11] decision | Complete the minimum deep-pass duration
+
+[[tickets/T-9540-wave-8-list-4]] passed the three-hour minimum at 12:07:54 UTC. MouseState completed 24 actual typed/flow variants and 300-second permutation in 590 seconds; best nineteen resolved differing lines, all experimental C/API types restored. More than 36 aggregate/local-copy drafts were retried with recovered table, queue, packet and field views; far candidates remain scratch-only. Two staged zero-difference candidates are now in real-unit verification. OPTION's already-matched record loop also compares at zero using documented struct members; checking that cleanup before retaining it.
+
+## [2026-10-11] build | Verify two late gains and record-member cleanup
+
+[[tickets/T-9540-wave-8-list-4]] gained normal_date_girl_in_init (112 bytes) and SHOUGATU func_8013AE0C (96 bytes), each real resolved MATCH plus unit SHA1 OK. Gains now total 10 functions, 1628 bytes. OPTION's previously matched 108-byte draw loop also passes with documented OptDraw44 members. [[matching-notes]] records the source idioms; [[data/t0018-cases]] preserves historical rows and adds resolution notes plus the bounded main selector case. Header branch check reports zero new disagreements and seventeen known; GameState check passes.
+
+## [2026-10-11] query | Resolve positive-score rechecks
+
+[[tickets/T-9540-wave-8-list-4]] rechecked positive raw-score outputs for the main selector, MouseState, geko_judge, EVENT callback and ETC scene-link function after fixed-width normalization. Only the already-kept initializer compares at zero. EVENT func_800FD00C's best output was additionally tested in the real source: four resolved lines remain in the u8 load's lui register, and the entire draft/header view was restored. Added its bounded narrow-global row to [[data/t0018-cases]], bringing this ticket's historical rows added to nine.
+
+## [2026-10-11] ticket | Review the deep-pass result
+
+Moved [[tickets/T-9540-wave-8-list-4]] to In Review; [[kanban]] and [[index]] agree. Inline standards review covers ten retained definitions, documented type layouts and explicit matching artifacts. Remove one duplicated FAKE comment, then rerun resolved comparisons, exact-owned duplicate check and all 27 unit SHA1 checks before Done.
+
+## [2026-10-11] build | Full deep-pass build is byte-identical
+
+[[tickets/T-9540-wave-8-list-4]]: final incremental Docker ninja completed 523 steps with all 27 unit SHA1 checks OK. Removed the duplicated OPTION comment before this build. Exact-owned duplicate application produced zero plans/copies, and git diff --check is clean. Rechecking all ten retained functions with fresh resolved comparisons, branch/global guards and progress before closing the ticket.
+
+## [2026-10-11] ticket | Complete the reviewed deep pass
+
+[[tickets/T-9540-wave-8-list-4]] is Done after inline CODING_STANDARDS.md review with no unresolved findings; [[kanban]] and [[index]] agree. Ten functions/1628 bytes gained, every retained function freshly resolved MATCH, full 27/27 SHA1 OK, headers/globals stamps present, zero new branch disagreements (seventeen known), GameState check OK, exact-owned dupes zero copies. Corrected the new EVENT row's file path during review. [[matching-notes]] records final progress: 4744/6958 functions, 731240/2279368 bytes (32.1%). The deep pass ran from 09:07:54 to final proof at 12:27:26 UTC. Nine rows added to [[data/t0018-cases]], four subsequently resolved; all failed drafts/types restored. Changes remain uncommitted.

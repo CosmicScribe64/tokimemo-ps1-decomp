@@ -344,7 +344,18 @@ void func_801020E4(void) {
 
 extern FnTbl39 D_80122454;
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801011A0", func_80102118);
+void func_80102118(void) {
+    s32 idx;
+    FnTbl39 tbl;
+
+    tbl = D_80122454;
+    func_80078950(" %d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800B1AF6 >= 0xF && D_800B1AF6 < 0x12) {
+        func_8010AFE4();
+    }
+}
 
 void func_801021C4(void) {
     func_80015D28(0x45, 0x801B0000, 0x8309);

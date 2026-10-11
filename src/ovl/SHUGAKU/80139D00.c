@@ -8,7 +8,27 @@ void func_80139D00(void) {
     D_8013CB00 = 0x801E0000;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_80139D40);
+void func_80139D40(void) {
+    u8 kind;
+    u8 index;
+    ShugakuFn68 tbl;
+
+    tbl = D_8013CB08;
+    if (D_800CA2EC != 0) {
+        index = D_800E6280.unk_110A;
+        if (tbl.f[index] == normal_date_two_select) {
+            tbl.f[index] = normal_date_three_select;
+        }
+    }
+    tbl.f[D_800E6280.unk_110A](0x40);
+    if (tbl.f[D_800E6280.unk_110A] == func_8013864C && D_8013CB04 == 0) {
+        kind = ((u8 **)D_800CA2D4)[D_800CA2DC][D_800CA2E0];
+        if (kind == 8 || kind == 3) {
+            func_80044750(0x207);
+            D_8013CB04 = 1;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_80139E8C);
 

@@ -478,3 +478,11 @@ void func_80134560(void);
 void func_80133A68(void);
 
 #endif /* OVL_SHUGAKU_H */
+
+#ifndef T9540_SHUGAKU_FN68
+#define T9540_SHUGAKU_FN68
+typedef struct ShugakuFn68 { /* 0x00 */ void (*f[68])(); } ShugakuFn68; /* size 0x110 */
+extern ShugakuFn68 D_8013CB08;
+extern u8 D_8013CB04;
+void func_8013864C();
+#endif

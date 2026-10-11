@@ -70,3 +70,21 @@ void func_80132384();
 extern u8 D_8013E740;
 extern s32 D_8013E844[];
 #endif /* OVL_OPTION_H */
+
+#ifndef T9540_OPT_DRAW44
+#define T9540_OPT_DRAW44
+typedef union OptDrawWord {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ u8 b[4];
+} OptDrawWord; /* size 0x04 */
+typedef struct OptDraw44 {
+    /* 0x00 */ OptDrawWord unk_00;
+    /* 0x04 */ u8 pad04[0x14];
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0x0C];
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ u8 pad28[2];
+    /* 0x2A */ s16 unk_2A;
+    /* 0x2C */ u8 pad2C[0x18];
+} OptDraw44; /* size 0x44 */
+#endif
