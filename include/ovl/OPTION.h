@@ -67,4 +67,5 @@ void func_8013ACD4(void);
 s32 func_8013AD10(void);
 void func_80132384();
 
+extern u8 D_8013E740;
 #endif /* OVL_OPTION_H */

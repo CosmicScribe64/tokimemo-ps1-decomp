@@ -128,7 +128,29 @@ INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CE30);
 
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CE38);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013B410);
+void func_8013B410(void) {
+    s32 i;
+    s32 pad[1]; /* FAKE: one unused word above the arrays reproduces the original array offsets; real source unknown. T-9310 */
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    func_8006BC28(0);
+    for (i = 0; i < 16; i++) {
+        a[i] = 0x20;
+        b[i] = i * 0xC - 0x60;
+        c[i] = 0x10;
+        d[i] = 0xC;
+    }
+    func_8004F870(0, 0x10, a, b, c, d);
+    func_8004E58C();
+    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー３", 0);
+    func_8004E788(-0x80, 0, 0xF, (s32)"女の子データ", 0);
+    func_8004E788(0x40, -0x18, 0xF, (&D_800B3538)[D_8013E740 & 0xF], 0);
+    func_8004E884(3);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013B568);
 
