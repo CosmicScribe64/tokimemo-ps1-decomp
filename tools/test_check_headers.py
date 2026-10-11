@@ -25,6 +25,24 @@ class CheckHeadersTest(unittest.TestCase):
     def problems(self):
         return check_headers.check(str(self.inc))
 
+
+    def test_unterminated_conditional_and_nested_typedef(self):
+        self.write("ovl/A.h", "#ifndef A\n#define A\n#if 0\n"
+                   "typedef struct Outer {\n int x;\n"
+                   "typedef struct Other { int y; } Other;\n} Outer;\n#endif\n")
+        out = self.problems()
+        self.assertTrue(any("ovl/A.h:1: unterminated #ifndef" in p for p in out), out)
+        self.assertTrue(any("ovl/A.h:6: typedef inside struct/union body" in p for p in out), out)
+        self.write("ovl/A.h", "#else\n#endif\n")
+        self.assertTrue(any("#else without an opening #if" in p for p in self.problems()))
+
+    def test_nested_aggregate_members_are_valid(self):
+        self.write("game.h", "#ifndef G\n#define G\n"
+                   "/* typedef struct Broken { */\n"
+                   "typedef struct S { union { int x; struct { int y; } inner; } v; } S;\n"
+                   "#if 1\nextern int x;\n#else\nextern int y;\n#endif\n#endif\n")
+        self.assertEqual(self.problems(), [])
+
     def test_clean(self):
         self.write("game.h", "extern s32 D_1;\nvoid f(s32 a);\n")
         self.write("ovl/A.h", '#include "game.h"\nextern s16 D_2;\n')

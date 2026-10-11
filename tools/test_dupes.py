@@ -399,6 +399,50 @@ class WaveFourTests(unittest.TestCase):
         r.write('config/migrate_globals.txt', 'aggregate D_800E6280 GameState include/main_api.h\n')
         return r
 
+
+    def test_interior_byte_view_maps_effective_address_not_base(self):
+        # Source fields are four bytes apart, target fields eight bytes apart:
+        # copying the old +4 index would silently access target pad_09.
+        r = self.gs_repo(('D_800F6476', 'D_800F647A'), ('D_800E6284', 'D_800E628C'),
+                         '    D_800F6476 = 1;\n    (&D_800F6476)[4] += 5;\n',
+                         tgt_main=self.GS.replace('extern u8 D_800F647A;',
+                                                  'extern u8 D_800F6476;\nextern u8 D_800F647A;'))
+        plans, skipped = self.plan(r)
+        self.assertEqual(len(plans), 1, skipped)
+        self.assertIn('D_800E6280.unk_0C[0] += 5;', plans[0]['text'])
+        self.assertNotIn('(&D_800E6280.unk_04)[4]', plans[0]['text'])
+
+
+
+    def test_interior_cast_with_conflicting_source_view_is_skipped(self):
+        r = self.gs_repo(('D_800F6476', 'D_800F647A'), ('D_800E6284', 'D_800E628C'),
+                         '    D_800F6476 = 1;\n    ((u8 *)&D_800F6476)[4] += 5;\n',
+                         tgt_main=self.GS.replace('extern u8 D_800F647A;',
+                                                  'extern s32 D_800F6476;\nextern s32 D_800F647A;'))
+        plans, skipped = self.plan(r)
+        self.assertEqual(plans, [])
+        self.assertIn('different access type', skipped[0][1][0])
+
+    def test_near_copier_uses_same_interior_view_mapping(self):
+        import neardupes
+        r = self.gs_repo(('D_800E6284', 'D_800E6288'), ('D_800E6288', 'D_800E628C'),
+                         '    D_800E6280.unk_04 = 1;\n'
+                         '    ((u8 *)&D_800E6280.unk_04)[4] += 5;\n')
+        funcs = dupes.load_funcs(r.root, near=True)
+        src = next(f for f in funcs if f.matched)
+        tgt = next(f for f in funcs if not f.matched)
+        plan, why = neardupes.plan_near(r.root, src, tgt, {'aliases': dupes.load_aliases(r.root)})
+        self.assertIsNotNone(plan, why)
+        self.assertIn('D_800E6280.unk_0C[0] += 5;', plan['text'])
+
+    def test_cast_interior_game_state_view_uses_access_type(self):
+        r = self.gs_repo(('D_800E6284', 'D_800E6288'), ('D_800E6288', 'D_800E628C'),
+                         '    D_800E6280.unk_04 = 1;\n'
+                         '    *((u8 *)&D_800E6280.unk_04 + 4) += 5;\n')
+        plans, skipped = self.plan(r)
+        self.assertEqual(len(plans), 1, skipped)
+        self.assertIn('D_800E6280.unk_0C[0] += 5;', plans[0]['text'])
+
     def test_game_state_field_in_the_source_is_kept_for_the_same_address(self):
         r = self.gs_repo(('D_800E6284', 'D_800E6284'), ('D_800E6284', 'D_800E6284'),
                          '    D_800E6280.unk_04 = 1;\n    D_800E6280.unk_04 += 2;\n')

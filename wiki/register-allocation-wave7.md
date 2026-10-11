@@ -15,7 +15,10 @@ T-9000. All experiments use IDO 5.3, `-cckr`, the cvt pass and frame pass.
 Run `tools/docker.sh python3 tools/register_shapes.py` after configuring the
 assembly. Optional `--json PATH` emits each row's line, unit, function, source,
 assembly path, features and state. `--root` and `--rows` accept alternate inputs.
-Unresolved identities or missing assembly fail rather than silently disappearing.
+T-9600: pass a function name, optionally with --unit UNIT (or UNIT:function), to
+filter the rows and print its merged shape. Missing original assembly is skipped
+with a stderr note naming the unit, function and expected path; these rows are
+excluded from counts. Unresolved row identities still fail explicitly.
 
 Baseline before T-9410: 1,088 rows, 718 distinct `(unit, function)` pairs;
 344 already C, 374 still assembly. These are symptom clusters, not proven

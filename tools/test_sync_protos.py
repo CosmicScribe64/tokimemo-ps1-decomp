@@ -692,5 +692,28 @@ class BranchTest(Repo):
         self.assertIn("declare it in include/main_api.h", out.getvalue())
 
 
+class MergeStructureTests(unittest.TestCase):
+    def test_fix_rejects_broken_headers_without_writing(self):
+        import io
+        from contextlib import redirect_stdout
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            inc = Path(tmp) / "include"
+            inc.mkdir()
+            bad = "#if 1\ntypedef struct A { int x;\ntypedef struct B { int y; } B;\n} A;\n"
+            (inc / "broken.h").write_text(bad)
+            out = io.StringIO()
+            with redirect_stdout(out):
+                rc = sp.main(["--inc", str(inc), "--src", tmp, "--fix"])
+            self.assertEqual(rc, 1)
+            self.assertIn("unterminated #if", out.getvalue())
+            self.assertIn("typedef inside struct/union body", out.getvalue())
+            self.assertEqual((inc / "broken.h").read_text(), bad)
+            self.assertFalse((inc / "main_api.h").exists())
+            messages = []
+            self.assertGreater(sp.run_write(str(inc), tmp, fix=True, log=messages.append), 0)
+            self.assertFalse((inc / "main_api.h").exists())
+
+
 if __name__ == "__main__":
     unittest.main()

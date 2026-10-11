@@ -10,6 +10,9 @@ from collections import Counter
 import json
 from pathlib import Path
 import re
+import sys
+
+import funcloc
 
 import srcscan
 
@@ -69,32 +72,40 @@ def shape(unit, name, symptom, feat):
     return 'other register/promotion'
 
 
-def inventory(root, table):
+def inventory(root, table, name=None, unit=None, note=None):
+    """Inventory historical rows, optionally scoped; absent asm is noted and skipped."""
+    note = note or (lambda msg: print(msg, file=sys.stderr))
+    if name:
+        name, unit = funcloc.split_scope(name, unit)
     by_name = {}
     for c in srcscan.c_files(root):
         text = c.src.read_text()
         includes = set(srcscan.INCLUDE_ASM_RE.findall(text))
         names = srcscan.defined_functions(c.src) | {n for _, n in includes}
-        for name in names:
-            by_name.setdefault((c.unit, name), []).append((c, any(n == name for _, n in includes)))
+        for fn in names:
+            by_name.setdefault((c.unit, fn), []).append((c, any(n == fn for _, n in includes)))
     records = []
     for row in rows(table.read_text()):
-        unit = row['file'].split('/')[0]
-        if re.fullmatch(r'[0-9A-Fa-f]{8}', unit) or unit == 'main':
-            unit = 'main'
-        hits = by_name.get((unit, row['name']), [])
+        row_unit = row['file'].split('/')[0]
+        if re.fullmatch(r'[0-9A-Fa-f]{8}', row_unit) or row_unit == 'main':
+            row_unit = 'main'
+        if (name and row['name'] != name) or (unit and row_unit != unit):
+            continue
+        hits = by_name.get((row_unit, row['name']), [])
         if len(hits) != 1:
-            row.update(unit=unit, state='unresolved', shape='unresolved', features={})
+            row.update(unit=row_unit, state='unresolved', shape='unresolved', features={})
         else:
             c, unmatched = hits[0]
             paths = [p / (row['name'] + '.s') for p in (c.nonmatchings, c.matchings)]
             asm = next((p for p in paths if p.exists()), None)
             if asm is None:
-                raise ValueError('missing original asm: ' + str(paths[0]))
+                note('register_shapes.py: skipping %s:%s: missing original asm (%s)' %
+                     (row_unit, row['name'], paths[0]))
+                continue
             feat = features(asm.read_text())
-            row.update(unit=unit, state='open' if unmatched else 'C',
+            row.update(unit=row_unit, state='open' if unmatched else 'C',
                        features=feat, asm=str(asm), source=str(c.src),
-                       shape=shape(unit, row['name'], row['symptom'], feat))
+                       shape=shape(row_unit, row['name'], row['symptom'], feat))
         records.append(row)
     unique = {}
     for row in records:
@@ -110,13 +121,18 @@ def inventory(root, table):
     return records, list(unique.values())
 
 
-def main():
+def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument('func', nargs='?', help='function name or UNIT:function')
+    ap.add_argument('--unit', help='main or overlay name')
     ap.add_argument('--root', type=Path, default=Path('.'))
     ap.add_argument('--rows', type=Path, default=Path('wiki/data/t0018-cases.md'))
     ap.add_argument('--json', type=Path)
-    args = ap.parse_args()
-    records, unique = inventory(args.root, args.rows)
+    args = ap.parse_args(argv)
+    records, unique = inventory(args.root, args.rows, args.func, args.unit)
+    for row in unique if args.func else []:
+        print('%s:%s: %s (%s); %s' % (row['unit'], row['name'], row['shape'],
+                                     row['state'], row['symptom']))
     print(f'{len(records)} rows; {len(unique)} unique functions; states {dict(Counter(r["state"] for r in unique))}')
     print('| Shape | Rows | Unique | Open |')
     print('|---|---:|---:|---:|')

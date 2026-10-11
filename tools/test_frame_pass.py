@@ -129,6 +129,34 @@ class IndexedLocals(unittest.TestCase):
         out = run(recs)
         self.assertEqual(imms(out)[2:4], [108, 112])
 
+
+    def test_negative_displacement_of_biased_index_moves_with_local(self):
+        # A year-derived index embeds a +1080 bias; the folded local displacement
+        # is negative. The local still moves up by 16 (SHOUGATU year/table shape).
+        recs = self.leaf(code(Z["zaddu"], fp.F_FRRR, T8, SP, r3=T9),
+                         mem(Z["zlbu"], V0, -1080, base=T8))
+        self.assertEqual(imms(run(recs))[2], -1064)
+        recs = proc(alloc(Z["zsubu"], 64), mask(1 << RA, -44), frame(64),
+                    code(Z["zaddu"], fp.F_FRRR, T8, SP, r3=T9),
+                    code(Z["zaddiu"], fp.F_FRRI, V0, T8, -1052),
+                    alloc(Z["zaddu"], 64))
+        self.assertEqual(imms(run(recs))[2], -1036)
+
+
+    def test_negative_offset_on_plain_sp_copy_still_fails(self):
+        with self.assertRaisesRegex(fp.PassError, r"negative \$sp offset"):
+            run(self.leaf(code(Z["zmove"], fp.F_FRR, T8, SP),
+                          mem(Z["zlbu"], V0, -4, base=T8)))
+        # Copying a genuinely indexed base keeps the bias information.
+        recs = self.leaf(code(Z["zaddu"], fp.F_FRRR, T8, SP, r3=T9),
+                         code(Z["zmove"], fp.F_FRR, A0, T8),
+                         mem(Z["zlbu"], V0, -1080, base=A0))
+        self.assertEqual(imms(run(recs))[3], -1064)
+
+    def test_negative_direct_sp_offset_still_fails(self):
+        with self.assertRaisesRegex(fp.PassError, "negative \$sp offset"):
+            run(self.leaf(mem(Z["zlbu"], V0, -4)))
+
     def test_use_after_label_fails(self):
         recs = self.leaf(code(Z["zaddu"], fp.F_FRRR, T8, SP, r3=T9),
                          raw(fp.I_ILAB), mem(Z["zlw"], V0, 92, base=T8))
@@ -242,6 +270,14 @@ class IdoIntegration(unittest.TestCase):
                                   check=True, stdout=subprocess.PIPE, text=True).stdout
         finally:
             shutil.rmtree(tmp)
+
+
+    def test_biased_year_index_into_real_local_table(self):
+        dis = self.compile("extern void g(unsigned char *); int f(int year) { "
+                           "unsigned char table[48]; g(table); return table[12 * (year - 95)]; }")
+        # Array origin is sp+40 after emulation: 40 - 12*95 == -1100.
+        self.assertIn("lbu\tv0,-1100(v0)", dis)
+        self.assertIn("addiu\ta0,sp,40", dis)
 
     def test_snippets(self):
         for name, (text, expected) in SNIPPETS.items():

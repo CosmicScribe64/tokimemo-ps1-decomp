@@ -166,6 +166,74 @@ class KnrBase(unittest.TestCase):
         self.assertNotIn("D = 2", base)   # the other function is stripped to a prototype
 
 
+
+    def test_knr_mutations_including_reported_delete_seeds(self):
+        import copy
+        sys.path.insert(0, permute.PERMUTER)
+        from src import ast_types
+        old = ast_types.build_typemap
+        try:
+            permute.install_permuter_compat()
+            from src import ast_util, randomizer
+            from perm_pycparser import c_parser
+            # Imported references must see the adapter, as in the worker process.
+            old_randomizer = randomizer.build_typemap
+            randomizer.build_typemap = ast_types.build_typemap
+            text = ("typedef unsigned char u8; typedef struct { int x; } Point; "
+                    "int f(arg, p, narrow) Point arg; int *p; u8 narrow; "
+                    "{ int r; r = delete(p); if (narrow) { r += arg.x; } return r; }")
+            ast = c_parser.CParser().parse(text)
+            ast_util.normalize_ast(ast.ext[-1], ast)
+            weights = {m.__name__: 0.0 if m.__name__ in permute.DECL_PASSES else 1.0
+                       for m in randomizer.RANDOMIZATION_PASSES}
+            try:
+                for seed in [64421914767651019259, 95846227872599346217] + list(range(100)):
+                    randomizer.Randomizer(weights, seed).randomize(copy.deepcopy(ast), "f")
+            finally:
+                randomizer.build_typemap = old_randomizer
+        finally:
+            ast_types.build_typemap = old
+
+    def test_worker_entrypoint_runs_upstream(self):
+        proc = subprocess.run([sys.executable, permute.__file__, "_worker", "--help"],
+                              text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("--stop-on-zero", proc.stdout)
+
+    def test_function_pointer_knr_parameter_is_preserved(self):
+        text = "int other(a) int a; { return a; }\nint f(cb)\nint (*cb)(int);\n{ return cb(1); }\n"
+        stripped = permute.strip_functions(text, "f")
+        self.assertIn("int other();", stripped)
+        self.assertIn("int (*cb)(int);", stripped)
+        self.assertIsNotNone(permute.function_range(stripped, "f"))
+
+    def test_knr_typemap_and_implicit_callee_preserve_source(self):
+        sys.path.insert(0, permute.PERMUTER)
+        from perm_pycparser import c_parser, c_ast as ca
+        from src import ast_types
+        text = ("typedef unsigned char u8; typedef struct { int x; } Point;\n"
+                "int other(a) int a; { return a; }\n"
+                "int f(arg, p, narrow, implicit)\nPoint arg; int *p; u8 narrow;\n"
+                "{ return delete(p) + arg.x + narrow + implicit; }\n")
+        stripped = permute.strip_functions(text, "f")
+        self.assertIn("int other();", stripped)
+        self.assertIn("Point arg; int *p; u8 narrow;", stripped)
+        ast = c_parser.CParser().parse(stripped)
+        fn = ast.ext[-1]
+        old = ast_types.build_typemap
+        try:
+            permute.install_permuter_compat()
+            tm = ast_types.build_typemap(ast, fn)
+            for name in ("arg", "p", "narrow", "implicit"):
+                self.assertIn(name, tm.local_vars)
+                self.assertIn(name, tm.var_types)
+            self.assertIsInstance(tm.var_types["p"], ca.PtrDecl)
+            self.assertEqual(ast_types.expr_type(fn.body.block_items[0].expr.left.left.left, tm).type.names,
+                             ["int"])
+        finally:
+            ast_types.build_typemap = old
+
+
 class Text(unittest.TestCase):
     def test_strip_include_asm(self):
         src = 'a;\nINCLUDE_ASM("asm/x", f1);\n  INCLUDE_ASM("asm/y", f2)\nb;\n'

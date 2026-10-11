@@ -41,6 +41,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-9600-wave-8-tool-fixes|T-9600 Wave-8 tool fixes]]
 - [ ] [[tickets/T-9530-wave-8-list-3|T-9530 Wave 8: list 3]]
 
 - [ ] [[tickets/T-9570-wave-8-list-7|T-9570 Wave 8: list 7]]

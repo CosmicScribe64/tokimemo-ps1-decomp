@@ -18,12 +18,14 @@ unit.
 setup builds the directory decomp-permuter wants:
 - base.c: the C source file with `INCLUDE_ASM` lines removed, preprocessed (`gcc -E -P -D__sgi
   -DNON_MATCHING`, so a NON_MATCHING variant is the one permuted), stripped to the one function
-  by the permuter's own strip_other_fns. `--src` names a scratch file instead of src/.
+  by a K&R-aware body stripper. `--src` names a scratch file instead of src/.
 - target.o: the original bytes, i.e. the function's splat .s (asm/{nonmatchings,matchings}/...)
   assembled with the build's assembler flags and zero-padded to 16 bytes like every compiled object.
 - compile.sh: `tools/cc.py <in> <out> ido 5.3`, the same IDO 5.3 + -Wo,-nokpicopt + frame pass +
   asm-processor + padding that ninja uses, so a score of 0 means the build would match.
 - settings.toml: func_name and compiler_type = "ido".
+The worker adapts upstream type lookup for K&R parameter declarations, default-int
+parameters and implicit C89 callees; compiler input stays unchanged.
 run starts permuter.py in its own process group and enforces --time as a wall-clock limit for the
 whole group (SIGINT at the limit, SIGKILL ten seconds later; the limit also covers the Loading
 phase, T-7030). It prints a progress line every 10 s (elapsed time, best score so far) and lists the
@@ -46,6 +48,7 @@ import glob
 import json
 import os
 import re
+import runpy
 import signal
 import subprocess
 import sys
@@ -67,7 +70,7 @@ SCORE_RE = re.compile(r"output-(\d+)-(\d+)$")
 def def_regex(func):
     """Matches the opening of a C definition of `func` (not a call, not INCLUDE_ASM): the ANSI form
     `T f(params) {` and the K&R form `T f(a, b)` + parameter declarations + `{` (T-5030)."""
-    return re.compile(r"^[A-Za-z_][^;{}()\n]*[ \t*]%s\([^;{}]*\)\s*(?:[^;{}()]+;\s*)*\{" % re.escape(func), re.M)
+    return re.compile(r"^[A-Za-z_][^;{}()\n]*[ \t*]%s\([^;{}]*\)\s*(?:[^;{}]+;\s*)*\{" % re.escape(func), re.M)
 
 
 def find_source(root, func, unit=None):
@@ -156,6 +159,63 @@ def sh(cmd, **kw):
     return proc.stdout
 
 
+def install_permuter_compat():
+    """Fill upstream's missing K&R/implicit-call types without rewriting compiler input.
+
+    K&R param_decls live outside the function body, which upstream's type visitor
+    skips. Undeclared C89 callees have type int (). Install before importing the
+    randomizer so its imported build_typemap reference sees this adapter.
+    """
+    sys.path.insert(0, PERMUTER)
+    from src import ast_types
+    from perm_pycparser import c_ast as ca
+    original = ast_types.build_typemap
+
+    def build_typemap(ast, target_fn):
+        tm = original(ast, target_fn)
+        for decl in target_fn.param_decls or []:
+            tm.var_types[decl.name] = ast_types.get_decl_type(decl)
+            tm.local_vars.add(decl.name)
+        args = target_fn.decl.type.args
+        for param in args.params if args else []:
+            if isinstance(param, ca.ID) and param.name not in tm.local_vars:
+                tm.var_types[param.name] = ast_types.basic_type("int")
+                tm.local_vars.add(param.name)
+
+        class Calls(ca.NodeVisitor):
+            def visit_FuncCall(self, node):
+                if isinstance(node.name, ca.ID) and node.name.name not in tm.var_types:
+                    tm.var_types[node.name.name] = ca.FuncDecl(
+                        args=None, type=ast_types.basic_type("int"))
+                self.generic_visit(node)
+
+        Calls().visit(target_fn.body)
+        return tm
+
+    ast_types.build_typemap = build_typemap
+
+
+def strip_functions(pre, func):
+    """Strip other ANSI and K&R bodies, preserving the target text/line layout."""
+    names = set(re.findall(r"^[A-Za-z_][^;{}()\n]*[ \t*](\w+)\([^;{}]*\)\s*(?:[^;{}]+;\s*)*\{", pre, re.M))
+    edits = []
+    for name in names:
+        if name == func or name.startswith("PERM"):
+            continue
+        rng = function_range(pre, name)
+        if rng is None:
+            continue
+        a, b = rng
+        opening = def_regex(name).search(pre, a)
+        sig = pre[a:opening.end() - 1].rstrip()
+        if re.search(r"\)\s*[^{}]+;\s*$", sig):
+            sig = sig[:sig.index("(")] + "()"
+        edits.append((a, b, sig + ";"))
+    for a, b, replacement in sorted(edits, reverse=True):
+        pre = pre[:a] + replacement + pre[b:]
+    return pre
+
+
 def build_base(root, src, func):
     """Preprocessed, single-function C for the permuter."""
     with open(src) as f:
@@ -167,11 +227,9 @@ def build_base(root, src, func):
         pre = sh(CPP + [tmp], cwd=root)
     finally:
         os.unlink(tmp)
-    sys.path.insert(0, PERMUTER)
-    import strip_other_fns  # noqa: E402  (from decomp-permuter)
     if not def_regex(func).search(pre):
         sys.exit("permute.py: no C definition of %s in %s" % (func, src))
-    return strip_other_fns.strip_other_fns(pre, func)
+    return strip_functions(pre, func)
 
 
 def target_source(asm_text):
@@ -244,7 +302,7 @@ def run(directory, seconds, jobs, extra=(), progress=print, interval=10, clock=t
     seconds later SIGKILL (its worker processes ignore a SIGINT that arrives while they compile; a
     plain proc.kill() left them running and the call never returned, T-7030). Every `interval`
     seconds `progress` gets a line with the elapsed time and the best score so far."""
-    cmd = cmd or [sys.executable, os.path.join(PERMUTER, "permuter.py"), directory, "-j", str(jobs),
+    cmd = cmd or [sys.executable, os.path.abspath(__file__), "_worker", directory, "-j", str(jobs),
                   "--stop-on-zero", "--best-only", "--quiet", "--stack-diffs"] + list(extra)
     start = clock()
     deadline = start + seconds
@@ -540,4 +598,9 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    if sys.argv[1:2] == ["_worker"]:
+        install_permuter_compat()
+        sys.argv = [os.path.join(PERMUTER, "permuter.py")] + sys.argv[2:]
+        runpy.run_path(sys.argv[0], run_name="__main__")
+    else:
+        sys.exit(main(sys.argv[1:]))

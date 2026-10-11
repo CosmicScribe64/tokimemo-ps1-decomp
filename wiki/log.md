@@ -4041,3 +4041,23 @@ Inline standards/spec review against df5bc9f resolves all findings; permitted-pa
 ## [2026-10-11] lint | T-9550 final wiki consistency
 
 Ticket frontmatter, index and the single kanban card agree on Done; final acceptance checks are checked and review history remains appended after the matching entries. git diff --check passes. The card returns to its committed Done position, so wiki/kanban.md has no net second-pass diff. [[tickets/T-9550-wave-8-list-5]], [[kanban]], [[matching-notes]].
+
+## [2026-10-11] ticket | Start wave-8 tool fixes
+
+Created [[tickets/T-9600-wave-8-tool-fixes]] and claimed its board card. Read shared tooling8 brief, standards and relevant wiki reports. Negative-SP case is SHOUGATU func_80140314 (detailed in [[tickets/T-9580-wave-8-list-8]]); InitMouse exposes the m2c table-store issue; the clone report maps GYOZI func_80137D70 to SHOUGATU func_80136770.
+
+## [2026-10-11] decision | Wave-8 tool regression fixes and upstream workaround
+
+Implemented the seven reports under [[tickets/T-9600-wave-8-tool-fixes]] with synthetic regressions. [[matching-notes]] records the exact frame rule, copier effective-address mapping, relocation semantics and upstream InitMouse workaround; [[toolchain]] and [[register-allocation-wave7]] updated. Baseline Docker build passed and progress is 4868/6958, 776304 bytes. Reported RPG_BAT PC16 functions, TACO string function and strNextVlc pass fresh resolved diffs with the fixes. Clean final build and review pending.
+
+## [2026-10-11] ticket | Wave-8 fixes in review
+
+Moved [[tickets/T-9600-wave-8-tool-fixes]] to In Review. First full Docker suite passed 584 tests, clean build passed 27 SHA1 checks, stamps exist, branch guard passes, and progress remains 4868/6958. Inline standards/spec review tightened negative-offset tracking to variable-index bases, rejecting plain sp copies, and added cast-width and 102-seed mutation regressions. Final verification follows these refinements; no source/header edits or function gains.
+
+## [2026-10-11] build | Wave-8 fixes final proof and review
+
+[[tickets/T-9600-wave-8-tool-fixes]] final Docker suite: 587 tests pass. Final clean configure/ninja: 27/27 SHA1 OK, headers/global stamps present, branch guard passes (zero new, 17 known), progress unchanged at 4868/6958 and 776304 bytes. Reported relocation functions now compare normally; read-only clone replay selects GameState.unk_110A. Inline standards/spec review has zero unresolved findings. No source/header edits or function gains; changes left uncommitted for orchestrator review/commit.
+
+## [2026-10-11] ticket | Complete T-9600 and lint its wiki links
+
+Moved [[tickets/T-9600-wave-8-tool-fixes]] from In Review to Done after final proof/review. Ticket, board and index agree. [[matching-notes]], [[toolchain]] and [[register-allocation-wave7]] document the rules and upstream m2c workaround; historical wave observations are retained and superseded by the T-9600 section. Scoped wiki lint: no missing links or contradictory current ticket status. git diff --check passes.

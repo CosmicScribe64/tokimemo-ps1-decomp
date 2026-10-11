@@ -208,6 +208,28 @@ class LoLiteral(unittest.TestCase):
             self.assertIn("0x801D8010", fixed)         # lui 0x801E + lb -0x7FF0
 
 
+class SharedTableBase(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("m2c"), "m2c is only in Docker")
+    def test_distinct_low_symbols_are_upstream_table_store_bug(self):
+        text = ("glabel f\n lui $at, %hi(D_80010000)\n"
+                " sw $a0, %lo(D_80010000)($at)\n jr $ra\n"
+                " sw $a1, %lo(D_80010004)($at)\n")
+        self.assertEqual(m2c.fix_lo_literals(text), text)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = touch(tmp, "f.s", text)
+            ctx = touch(tmp, "ctx.c", "extern signed char *D_80010000[];\n")
+            def draft():
+                return subprocess.run(["m2c", "-t", m2c.DEFAULT_TARGET, "--context", ctx, path],
+                                      check=True, text=True, stdout=subprocess.PIPE).stdout
+            raw = draft()
+            self.assertIn("*D_80010000 = arg0;", raw)
+            self.assertIn("*D_80010000 = arg1;", raw)
+            _decls, body = m2c.split_draft(raw, "f")
+            self.assertIn("*D_80010000 = arg0;", body)
+            self.assertIn("*D_80010000 = arg1;", body)
+
+
+
 class Draft(unittest.TestCase):
     def test_split_at_definition(self):
         text = "? func_2();   /* extern */\nu32 D_1 = 1;\n\nvoid func_1(void) {\n    func_2();\n}\n"

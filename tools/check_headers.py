@@ -278,8 +278,61 @@ def header_files(inc):
     return headers
 
 
+def structure_problems(inc):
+    """Validate raw header structure before declaration extraction or any rewrite.
+
+    Inactive #if branches are checked too: an interleaved merge must not be
+    hidden by include guards or discarded when brace bodies are stripped.
+    """
+    problems = []
+    for name, path in sorted(header_files(inc).items()):
+        with open(path) as fh:
+            text = fh.read()
+        text = re.sub(r"/\*.*?\*/|//[^\n]*|\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'",
+                      lambda m: " " * len(m.group(0)) if "\n" not in m.group(0)
+                      else "\n" * m.group(0).count("\n"), text, flags=re.S)
+        stack = []
+        for line_no, line in enumerate(text.splitlines(), 1):
+            m = re.match(r"\s*#\s*(if|ifdef|ifndef|elif|else|endif)\b", line)
+            if not m:
+                continue
+            kw = m[1]
+            if kw in ("if", "ifdef", "ifndef"):
+                stack.append((kw, line_no))
+            elif not stack:
+                problems.append("%s:%d: #%s without an opening #if" % (name, line_no, kw))
+            elif kw == "endif":
+                stack.pop()
+        for kw, line_no in stack:
+            problems.append("%s:%d: unterminated #%s (missing #endif)" % (name, line_no, kw))
+        text = re.sub(r"^[ \t]*#.*$", "", text, flags=re.M)
+        braces = []
+        for m in re.finditer(r"\b(?:struct|union)(?:\s+\w+)?\s*\{|[{}]|\btypedef\b", text):
+            token = m[0]
+            line_no = text.count("\n", 0, m.start()) + 1
+            if token == "typedef":
+                if any(aggregate for aggregate, _line in braces):
+                    opening = next(line for aggregate, line in braces if aggregate)
+                    problems.append("%s:%d: typedef inside struct/union body opened at line %d; "
+                                    "likely interleaved struct blocks" % (name, line_no, opening))
+            elif token == "}":
+                if braces:
+                    braces.pop()
+                else:
+                    problems.append("%s:%d: closing brace without an opening body" % (name, line_no))
+            else:
+                braces.append((token != "{", line_no))
+        for aggregate, line_no in braces:
+            problems.append("%s:%d: unterminated %s body (missing })" %
+                            (name, line_no, "struct/union" if aggregate else "brace"))
+    return problems
+
+
 def check(inc, src=None, api=True):
     drop_cache()
+    structural = structure_problems(inc)
+    if structural:
+        return structural
     headers = header_files(inc)
     problems = set()
     visible = {}   # header -> declarations visible after reading it as a root

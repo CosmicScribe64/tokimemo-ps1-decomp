@@ -5,7 +5,9 @@ from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from register_shapes import features, inventory, rows, shape
+from register_shapes import features, inventory, main, rows, shape
+import io
+from contextlib import redirect_stdout
 
 
 class RegisterShapesTest(unittest.TestCase):
@@ -40,8 +42,23 @@ class RegisterShapesTest(unittest.TestCase):
                 self.assertEqual(unresolved[0]['state'], 'unresolved')
                 table.write_text('| TT | `f` | regorder | pointer |\n')
                 (root / 'TT/f.s').unlink()
-                with self.assertRaisesRegex(ValueError, 'missing original asm'):
-                    inventory(root, table)
+                notes = []
+                missing, _ = inventory(root, table, note=notes.append)
+                self.assertEqual(missing, [])
+                self.assertIn('skipping TT:f: missing original asm', notes[0])
+                table.write_text('| TT | `f` | regorder | pointer |\n'
+                                 '| DATE | `f` | regorder | selector |\n')
+                kept, _ = inventory(root, table, note=notes.append)
+                self.assertEqual([r['unit'] for r in kept], ['DATE'])
+                for argv in (['f'], ['--unit', 'DATE', 'f'], ['DATE:f']):
+                    out = io.StringIO()
+                    with redirect_stdout(out):
+                        main(['--root', str(root), '--rows', str(table)] + argv)
+                    self.assertIn('DATE:f: selector/compare chain (C)', out.getvalue())
+                scoped, _ = inventory(root, table, 'f', 'TT', note=notes.append)
+                self.assertEqual(scoped, [])
+                absent, _ = inventory(root, table, 'other', note=notes.append)
+                self.assertEqual(absent, [])
 
     def test_rows_keep_history_and_family_anchor(self):
         table = '''| file | function | category | symptom |

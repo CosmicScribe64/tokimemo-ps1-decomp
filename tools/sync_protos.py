@@ -1491,6 +1491,11 @@ def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()
     do not count (the files the caller just gave new code, which see their own new declarations); callers such as tools/dupes.py use it after they
     added declarations (T-7030). `only`: header names (relative to include/) --fix may rewrite; the
     default is every header (T-9030: an agent passes the headers it owns)."""
+    structural = ch.structure_problems(inc)
+    if structural:
+        for problem in structural:
+            log("sync_protos.py: " + problem)
+        return len(structural)
     model = model or Model(inc, src)
     before = before if before is not None else (snapshot(model) if fix else None)
     plan_ = plan(model)
@@ -1553,6 +1558,11 @@ def main(argv=None):
                    help="before finishing: header rules plus alias and void-result disagreements (T-5030)")
     g.add_argument("--update-known", action="store_true", help="rewrite %s from the current findings" % KNOWN)
     a = ap.parse_args(argv)
+    structural = ch.structure_problems(a.inc)
+    if structural:
+        for problem in structural:
+            print("sync_protos.py: " + problem)
+        return 1
     if a.check_branch:
         n = check_branch(a.inc, a.src)
         print("branch check FAILED" if n else "branch check OK")

@@ -17,6 +17,8 @@ For every procedure that has a stack frame (frame size F > 0 in `.frame`):
   * a 16-byte unused hole is inserted at offset H, and every stack-pointer
     relative offset >= H moves up by 16 (locals, spill temporaries, address-of
     -local computations, and the incoming-argument homes above the frame);
+  * on sp+variable-index bases, negative displacements that cancel a positive
+    index bias also move up by 16 with the local; plain copies of sp do not;
   * H is the end of the register-save block when the procedure saves $ra
     (non-leaf procedures, and leaf procedures that use $ra as a register), so
     the saves and the outgoing-argument area stay where IDO puts them and the
@@ -41,8 +43,9 @@ instruction decoding.
 Handled: memory operations based on $sp, `addu/addiu rd,$sp,imm`, frame
 allocation and release, `.frame`, `.mask`, and `addu rd,$sp,rs` (variable
 index into a local array) with the register's later uses within the same basic
-block. Anything else that reads $sp, a register derived from it in a way the
-pass cannot follow, a frame-pointer frame, saved FP registers, or an unknown
+block, including negative displacements that cancel a biased variable index.
+Direct negative $sp offsets and plain copies of $sp still fail. Anything else
+that reads $sp, a register derived from it in a way the pass cannot follow, a frame-pointer frame, saved FP registers, or an unknown
 record layout aborts with PassError (the build fails; nothing is guessed).
 
 Usage as the as1 shim:  frame_pass.py --as1 /opt/ido/5.3/as1 <as1 args...>
@@ -228,13 +231,16 @@ def transform_proc(recs, start, end):
         saves_move = True
 
     tainted = {}      # register -> still in the basic block of its definition
+    indexed_regs = set()  # derived bases containing a variable index, not just a copy of sp
     n_alloc = 0
 
-    def shift(rec):
+    def shift(rec, indexed=False):
         off = rec.imm
-        if off < 0:
+        if off < 0 and not indexed:
             raise PassError("negative $sp offset %d" % off)
-        if off >= hole:
+        # A variable local-array index can contain a positive bias (e.g. year).
+        # Its negative displacement still selects a local, above the frame hole.
+        if off >= hole or (indexed and off < 0):
             rec.set_imm(off + FRAME_EXTRA)
 
     for rec in body:
@@ -269,11 +275,13 @@ def transform_proc(recs, start, end):
             elif base in tainted:
                 if not tainted[base]:
                     raise PassError("$sp-derived register $%d used after a label" % base)
-                shift(rec)
+                shift(rec, indexed=base in indexed_regs)
             if op in LOADS and r1 in tainted and r1 != base:
                 del tainted[r1]
+                indexed_regs.discard(r1)
             elif op in LOADS and r1 == base and base in tainted:
                 del tainted[base]
+                indexed_regs.discard(base)
             continue
         # $sp or derived register read as a source
         srcs = []
@@ -289,11 +297,21 @@ def transform_proc(recs, start, end):
                 if s != SP and not tainted[s]:
                     raise PassError("$sp-derived register $%d used after a label" % s)
             if form == F_FRRI and op in ADD_RRI and len(carriers) == 1:
-                shift(rec)               # address of a local / element
+                shift(rec, indexed=carriers[0] in indexed_regs)  # address of a local / element
                 tainted.pop(r1, None)
+                indexed_regs.discard(r1)
             elif form == F_FRRR and op in ADD_RRR:
+                has_index = any(s in indexed_regs or (s not in carriers and s != 0) for s in srcs)
+                if has_index:
+                    indexed_regs.add(r1)
+                else:
+                    indexed_regs.discard(r1)
                 tainted[r1] = True
             elif form == F_FRR and op == Z["zmove"]:
+                if r2 in indexed_regs:
+                    indexed_regs.add(r1)
+                else:
+                    indexed_regs.discard(r1)
                 tainted[r1] = True
             else:
                 raise PassError("op %d reads $sp or a derived register" % op)
@@ -305,6 +323,7 @@ def transform_proc(recs, start, end):
         # plain definition kills any taint on the destination
         if op not in NO_DEF and form not in (F_FI, F_FOA) and r1 in tainted:
             del tainted[r1]
+            indexed_regs.discard(r1)
         if op == Z["zjalr"] or op in NO_DEF:
             continue
 

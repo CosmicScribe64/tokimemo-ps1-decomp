@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-10
+updated: 2026-10-11
 sources: ["tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
 sources: ["wiki/original-compiler.md", "tools/Dockerfile", "tools/test_cc.py", "tools/trailing_pad.py", "tools/test_trailing_pad.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py", "tools/cvt_pass.py"]
 sources: ["tools/docker.sh", "tools/Dockerfile", "tools/m2c.py", "tools/permute.py", "tools/test_cc.py", "raw/disc-findings.md", "configure.py", "tools/cc.py", "tools/frame_pass.py"]
@@ -98,3 +98,6 @@ Mechanics: the pass edits the relocatable ELF itself (symbol values, `.text` sec
 Coverage scan (all `asm/**/{non,}matchings` function files): 392 functions have nops after `endlabel`: 30 in the main exe (27 at the end of a `src/main` file, previously handled by `pad_text`; 2 odd 4/5-nop tails that are not 16-aligned) and 362 in overlays (1 nop 124, 2 nops 98, 3 nops 132, 4+ nops 8; 11 of them end off a 16-byte boundary). Because the count comes from the data, not from an alignment formula, the odd tails need no special case. Replaceable: the C stays ordinary; a real compiler/linker pair would produce the padding itself.
 
 `pad_text` side fix: it now edits the ELF in Python; `objcopy --update-section .text=` with a longer section silently dropped every relocation of the object (never hit before because no object with relocations needed padding).
+
+
+T-9600 frame-pass clarification: a negative displacement on a tracked sp+variable-index register can cancel a positive index bias (SHOUGATU year/table addressing). It moves up by 16 with the local, just like positive local offsets. Direct negative sp offsets, including through plain copies of sp, remain unsupported. Synthetic binasm and real IDO table[12*(year-95)] tests cover the rule; details in [[matching-notes]], "Tooling fixes, wave 8".

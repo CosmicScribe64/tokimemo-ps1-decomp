@@ -29,7 +29,9 @@ What it adds over a bare `m2c <file>.s`:
   order; matching-notes, post-increment compares). Listed on stderr; `--no-postinc` turns it off.
 The draft goes to stdout (body only); declarations m2c invented for symbols missing from the
 headers go to stderr, so the C can be pasted into src/ without the noise. Output is a starting
-point: clean it to C89 and our types (CODING_STANDARDS), and verify with funcdiff.py.
+point: upstream can collapse distinct LO16 table stores sharing one HI16 (InitMouse);
+write the actual elements explicitly (D_800E36C0[0]/[1]) and verify against the asm.
+See wiki/matching-notes.md, T-9600. Clean drafts to C89 and our types (CODING_STANDARDS), and verify with funcdiff.py.
 """
 import argparse
 import glob

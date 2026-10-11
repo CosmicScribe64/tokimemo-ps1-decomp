@@ -30,7 +30,10 @@ same words, so the DIFF that only comes from that idiom (T-3300) disappears. Sym
 their address in the name (`<prefix>_<8 hex digits>`), and renamed ones (config/obin_renames.txt,
 config/symbol_addrs*.txt) are resolved to it. A relocation into the object's own .rodata (a string
 literal: `.rodata` + offset in the built object, `D_8013xxxx` in the original) is compared by the
-bytes it points at, up to the NUL. Any other relocation is still compared by type and symbol.
+bytes it points at, up to the NUL. Scheduled string HI16s compare as string-base references;
+the LO16s independently compare the actual contents. PC16 branches use section symbol offsets
+or the named function VRAM, including the encoded -4 addend. Short D_ hexadecimal symbols
+such as D_7FFFFF are absolute constants. Any other relocation is still compared by type and symbol.
 The built object is checked first: `ninja <object>` is run (skipped with --no-build or without
 build.ninja), and an object that is missing, older than its C source or than any header it
 includes, or whose build fails, is an error, never a MATCH. The check also applies to `--built`
@@ -51,7 +54,7 @@ import srcscan
 
 # internal labels: stay inside the current function
 LABEL_RE = re.compile(r"^(L[0-9A-Fa-f]{8}|\.L\w+|jtbl_\w+)$")
-SYM_ADDR_RE = re.compile(r"_([0-9A-Fa-f]{8})$")
+SYM_ADDR_RE = re.compile(r"(?:_|^\.?L)([0-9A-Fa-f]{8})$|^D_([0-9A-Fa-f]{1,7})$")
 INSN_RE = re.compile(r"^\s*[0-9a-f]+:\s+([0-9a-f]{8})\s+(.*)$")
 RELOC_RE = re.compile(r"^\s*[0-9a-f]+:\s+(R_MIPS_\w+)\s+([^\s+]+)(?:\+0x([0-9a-f]+))?\s*$")
 NO_DOCKER = ("funcdiff.py: mips-linux-gnu-objdump not found. The tools only run in Docker: "
@@ -145,7 +148,7 @@ def renamed_addresses(root="."):
                     if len(parts) == 2 and not line.lstrip().startswith("#"):
                         m = SYM_ADDR_RE.search(parts[0])
                         if m:
-                            out[parts[1]] = int(m.group(1), 16)
+                            out[parts[1]] = int(m.group(1) or m.group(2), 16)
         except OSError:
             pass
         try:
@@ -167,20 +170,21 @@ def sym_address(sym, addend=0, names=None):
     (`bg_read_sub2` -> func_8007ED84, `names`: renamed_addresses()), or None."""
     m = SYM_ADDR_RE.search(sym)
     if m:
-        addr = int(m.group(1), 16)
+        addr = int(m.group(1) or m.group(2), 16)
     else:
         addr = (renamed_addresses() if names is None else names).get(sym)
-    return addr + addend if addr is not None and addr >= 0x80000000 else None
+    return addr + addend if addr is not None else None
 
 
 class ObjInfo:
     """What `resolve` needs to know about one object's .rodata: its bytes and the offsets of the
     symbols defined there."""
 
-    def __init__(self, rodata=b"", symbols=None, tables=None, original=()):
+    def __init__(self, rodata=b"", symbols=None, tables=None, original=(), text_symbols=None):
         self.rodata = rodata
         self.symbols = symbols or {}   # name -> offset in .rodata (the section symbol is ".rodata", 0)
         self.tables = tables or set()  # .rodata offsets that hold a code address (R_MIPS_32): jump tables
+        self.text_symbols = text_symbols or {}  # name -> offset in .text
         self.original = original      # (original VRAM, bytes) ranges, expected side only
 
     def is_table(self, name, add):
@@ -220,14 +224,17 @@ class ObjInfo:
 
 def parse_object_info(symtab, contents, relocs=""):
     """ObjInfo from `objdump -t`, `objdump -s -j .rodata` and `objdump -r -j .rodata` texts."""
-    syms = {}
+    syms, text_syms = {}, {}
     for line in symtab.splitlines():
         if "\t" not in line:
             continue
         left, right = line.split("\t", 1)
         lt, rt = left.split(), right.split()
-        if len(lt) >= 3 and lt[-1] == ".rodata" and len(rt) >= 2:
-            syms[rt[1]] = int(lt[0], 16)
+        if len(lt) >= 3 and len(rt) >= 2:
+            if lt[-1] == ".rodata":
+                syms[rt[1]] = int(lt[0], 16)
+            elif lt[-1] == ".text":
+                text_syms[rt[1]] = int(lt[0], 16)
     data = {}
     for line in contents.splitlines():
         m = re.match(r"^ ([0-9a-f]+) ([0-9a-f ]{35})", line)
@@ -242,7 +249,7 @@ def parse_object_info(symtab, contents, relocs=""):
         m = re.match(r"^([0-9a-f]+)\s+R_MIPS_32\s", line)
         if m:
             tables.add(int(m.group(1), 16))
-    return ObjInfo(bytes(buf), syms, tables)
+    return ObjInfo(bytes(buf), syms, tables, text_symbols=text_syms)
 
 
 _info_cache = {}
@@ -260,6 +267,13 @@ def object_info(obj):
     return _info_cache[key]
 
 
+class Insn(list):
+    """Three-item instruction record with its section offset for PC-relative relocs."""
+    def __init__(self, word, text, offset):
+        super().__init__([word, text, []])
+        self.offset = offset
+
+
 def parse_insns(lines):
     """[[word, text, [(reloc type, symbol, addend)]]] of one function's objdump lines.
     A line that is no instruction (`...` for folded zero words) has word None."""
@@ -267,7 +281,8 @@ def parse_insns(lines):
     for line in lines:
         m = INSN_RE.match(line)
         if m:
-            insns.append([int(m.group(1), 16), re.sub(r"\s+", " ", m.group(2).strip()), []])
+            insns.append(Insn(int(m.group(1), 16), re.sub(r"\s+", " ", m.group(2).strip()),
+                              int(line.split(":", 1)[0].strip(), 16)))
             continue
         r = RELOC_RE.match(line)
         if r and insns:
@@ -296,7 +311,7 @@ def _paired_low(insns, i, sym, addend):
     return same_sym or 0
 
 
-def resolve(insns, info=None, names=None):
+def resolve(insns, info=None, names=None, text_base=None):
     """[(key, display)] with the relocations of the instructions applied where the target is known.
     key is what gets compared. Known: a symbol with its address in the name or renamed (`names`),
     and, with `info` (ObjInfo of the object), a string in the object's own .rodata (compared by
@@ -321,11 +336,28 @@ def resolve(insns, info=None, names=None):
                 if typ == "R_MIPS_LO16":
                     imm = sext16(word)
                 else:
-                    imm = _paired_low(insns, i, sym, addend)
+                    imm = ((word & 0xFFFF) << 16) + _paired_low(insns, i, sym, addend)
                 lit = info.string_at(sym, addend + imm)
                 if lit is not None:
                     word &= 0xFFFF0000
-                    left.append("%s string %r" % (typ, lit))
+                    # A scheduled HI16 can feed different LO16s on different branches.
+                    # Its first linker-paired LO is not a unique string identity; compare
+                    # the high reference as a string base, and every LO by its bytes.
+                    left.append("%s string %r" % (typ, lit) if typ == "R_MIPS_LO16"
+                                else "R_MIPS_HI16 string-base")
+                    continue
+            if typ == "R_MIPS_PC16":
+                offset = getattr(insns[i], "offset", None)
+                target = info.text_symbols.get(sym) if info is not None else None
+                base = sym_address(sym, addend, names)
+                if offset is not None and target is not None:
+                    delta = target + addend + (sext16(word) << 2) - offset
+                elif offset is not None and base is not None and text_base is not None:
+                    delta = base + (sext16(word) << 2) - (text_base + offset)
+                else:
+                    delta = None
+                if delta is not None and delta % 4 == 0 and -0x8000 <= delta // 4 < 0x8000:
+                    word = (word & 0xFFFF0000) | ((delta // 4) & 0xFFFF)
                     continue
             base = sym_address(sym, addend, names)
             if base is None:
@@ -365,8 +397,14 @@ def resolved_functions(obj, wanted, original_file=None):
     funcs = split_functions(disassemble(obj))
     info = object_info(obj) if any(k in funcs for k in wanted) else None
     if info is not None and original_file is not None:
-        info = ObjInfo(info.rodata, info.symbols, info.tables, original_rodata(original_file))
-    return {k: (resolve(parse_insns(funcs[k]), info) if k in funcs else None) for k in wanted}
+        info = ObjInfo(info.rodata, info.symbols, info.tables, original_rodata(original_file), info.text_symbols)
+    result = {}
+    for k in wanted:
+        addr = sym_address(k)
+        start = info.text_symbols.get(k) if info is not None else None
+        base = addr - start if addr is not None and start is not None else None
+        result[k] = resolve(parse_insns(funcs[k]), info, text_base=base) if k in funcs else None
+    return result
 
 
 _checked = {}

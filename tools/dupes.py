@@ -444,6 +444,65 @@ def resolve_path(agg, path):
     return off, t, dyn
 
 
+def interior_views(root, body, fwd, cache, stext, sheads):
+    """Resolve constant pointer views before translating their base symbols.
+
+    Relocations map effective addresses, not base+old-index expressions. In
+    particular (&byte)[N] may reach a different GameState field after copying.
+    Canonical source symbols let the ordinary migrate_globals mapping select
+    the target member, retaining an explicit cast's access width.
+    """
+    import migrate_globals as mg
+    aggs = load_aggregates(root, cache)
+    atom = r"D_[0-9A-Fa-f]{8}(?:\s*\.\s*\w+|\s*\[\s*(?:0x[0-9A-Fa-f]+|\d+)\s*\])*"
+    number = r"-?(?:0x[0-9A-Fa-f]+|\d+)"
+    patterns = [
+        r"\(\s*&\s*(?P<base>" + atom + r")\s*\)\s*\[\s*(?P<index>" + number + r")\s*\]",
+        r"\(\s*\(\s*(?P<view>\w+)\s*\*\s*\)\s*&\s*(?P<base>" + atom + r")\s*\)\s*\[\s*(?P<index>" + number + r")\s*\]",
+        r"\*\s*\(\s*\(\s*(?P<view>\w+)\s*\*\s*\)\s*&\s*(?P<base>" + atom + r")\s*\+\s*(?P<index>" + number + r")\s*\)",
+    ]
+    edits, declarations = [], []
+    for pattern in patterns:
+        for m in re.finditer(pattern, body):
+            base = re.sub(r"\s+", "", m["base"])
+            sym, _, path = base.partition(".")
+            agg = next((a for a in aggs if a.base == sym), None)
+            if path and agg:
+                resolved = resolve_path(agg, "." + path)
+                if resolved is None or resolved[2]:
+                    return body, [], "cannot resolve interior view " + m[0]
+                offset, typ, _dyn = resolved
+                addr = agg.addr + offset
+            elif not path:
+                addr = int(sym[2:], 16)
+                decl, _where = effective_decl(sym, stext, sheads, False)
+                view = mg.declarations(decl + "\n").get(sym) if decl else None
+                typ = mg.parse_view(view, {}) if view else None
+            else:
+                continue
+            cast = m.groupdict().get("view")
+            if cast:
+                typ = mg.parse_view(cast, agg.types if agg else {})
+            if typ is None or typ.kind not in ("scalar", "ptr"):
+                return body, [], "unknown element type of interior view " + m[0]
+            addr += int(m["index"], 0) * typ.size
+            if sym_key("D_%08X" % addr, cache["aliases"]) not in fwd:
+                return body, [], "interior view address 0x%08X is not in the relocation sequence" % addr
+            ident = "D_%08X" % addr
+            decl, _where = effective_decl(ident, stext, sheads, False)
+            declared_view = mg.declarations(decl + "\n").get(ident) if decl else None
+            declared_type = mg.parse_view(declared_view, {}) if declared_view else None
+            if declared_type is not None and not declared_type.same(typ):
+                return body, [], "interior view of %s has a different access type; rewrite by hand" % ident
+            # This inferred declaration describes the source expression, not a
+            # production header. The target is mapped by find_mapping below.
+            declarations.append("extern %s %s;" % (typ.spell(), ident))
+            edits.append((m.start(), m.end(), ident))
+    for a, b, text in sorted(edits, reverse=True):
+        body = body[:a] + text + body[b:]
+    return body, declarations, None
+
+
 def game_state_edits(root, body, fwd, tname, cache):
     """Rewrite the aggregate field accesses of a source body (`D_800E6280.unk_110D`) for the target.
 
@@ -581,12 +640,16 @@ def plan_copy(root, src, tgt, cache):
     thp = target_headers(root, tfile, tgt, cache)
     theads = [read(root, h) for h in thp]
     tall = '\n'.join(theads) + '\n' + ttext
+    body, inferred, why = interior_views(root, body, fwd, cache, stext, sheads)
+    if why:
+        return None, why
+    sheads += inferred
+    orig_body = body
     # fields of the game-state aggregate (T-5100): resolved through their addresses
     body, gs_spans, pseudo, why = game_state_edits(root, body, fwd, tname, cache)
     if why:
         return None, why
     # symbols of the body: the text before the field rewrite, with the aggregate paths blanked
-    orig_body = stext[rng[0]:rng[1]]
     code = strip_comments(blank_spans(orig_body, gs_spans))
     # every game symbol and every called name in the body must come from the relocations
     used = {}
@@ -682,7 +745,7 @@ def plan_copy(root, src, tgt, cache):
         sover = override_reason(sheads + [stext], ident)
         sd, swhere = effective_decl(ident, stext, sheads, sover is not None)
         agg = next((g for g in aggs if fwd[k][0] == 'a' and g.holds(fwd[k][1])), None)
-        if agg is not None and not any(g.holds(k[1]) for g in aggs if k[0] == 'a'):
+        if agg is not None and not any(g.base == ident for g in aggs):
             # the target reads a field of the game-state aggregate, the source a plain global (T-5100)
             import migrate_globals as mg
             view = mg.declarations(sd + '\n').get(ident) if sd else None

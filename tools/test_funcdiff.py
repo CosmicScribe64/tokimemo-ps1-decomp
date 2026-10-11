@@ -638,5 +638,48 @@ class ExpectedObject(unittest.TestCase):
         self.assertIn("asm/ is missing", problem)
 
 
+class Wave8Relocations(unittest.TestCase):
+    def test_short_absolute_symbol_and_low_carry(self):
+        self.assertEqual(funcdiff.sym_address("D_7FFFFF"), 0x7FFFFF)
+        self.assertIsNone(funcdiff.sym_address("unknown"))
+        self.assertIsNone(funcdiff.sym_address("my_dead"))
+        reloc = [[0x3c010000, "lui", [("R_MIPS_HI16", "D_7FFFFF", 0)]],
+                 [0x2421ffff, "addiu", [("R_MIPS_LO16", "D_7FFFFF", 0)]]]
+        self.assertEqual(funcdiff.keys(funcdiff.resolve(reloc)), ["3c010080", "2421fffe"])
+        # A symbol holding 0x7fffff with zero low addend produces the literal constant.
+        reloc[1][0] = 0x24210000
+        self.assertEqual(funcdiff.keys(funcdiff.resolve(reloc)), ["3c010080", "2421ffff"])
+
+    def test_pc16_section_positions_and_absolute_target(self):
+        ins = funcdiff.parse_insns(["  24: 1000ffff b", "  24: R_MIPS_PC16 .L80100010"])
+        info = funcdiff.ObjInfo(text_symbols={".L80100010": 0x30})
+        self.assertEqual(funcdiff.keys(funcdiff.resolve(ins, info)), ["10000002"])
+        self.assertEqual(funcdiff.keys(funcdiff.resolve(ins, text_base=0x800fffe0)), ["10000002"])
+        ins[0][2] = [("R_MIPS_PC16", ".L80100010", 4)]
+        self.assertEqual(funcdiff.keys(funcdiff.resolve(ins, info)), ["10000003"])
+        ins[0][2] = [("R_MIPS_PC16", "missing", 0)]
+        self.assertIn("R_MIPS_PC16 missing", funcdiff.resolve(ins, info)[0][0])
+
+    def test_scheduled_string_highs_do_not_inherit_first_low_identity(self):
+        original = funcdiff.ObjInfo(original=[(0x80100000, b"first\0second\0")])
+        built = funcdiff.ObjInfo(rodata=b"first\0second\0")
+        # Two delay-slot highs precede both lows: first-LO matching gives both
+        # built highs 'first', although one path uses 'second'. The linker high
+        # is shared; each LO still checks its actual string contents.
+        want = [[0x3c040000, "lui", [("R_MIPS_HI16", "D_80100000", 0)]],
+                [0x3c040000, "lui", [("R_MIPS_HI16", "D_80100006", 0)]],
+                [0x24840000, "addiu", [("R_MIPS_LO16", "D_80100000", 0)]],
+                [0x24840000, "addiu", [("R_MIPS_LO16", "D_80100006", 0)]]]
+        got = [[0x3c040000, "lui", [("R_MIPS_HI16", ".rodata", 0)]],
+               [0x3c040000, "lui", [("R_MIPS_HI16", ".rodata", 0)]],
+               [0x24840000, "addiu", [("R_MIPS_LO16", ".rodata", 0)]],
+               [0x24840006, "addiu", [("R_MIPS_LO16", ".rodata", 0)]]]
+        self.assertEqual(funcdiff.keys(funcdiff.resolve(want, original)),
+                         funcdiff.keys(funcdiff.resolve(got, built)))
+        got[3][0] = 0x24840000
+        self.assertNotEqual(funcdiff.keys(funcdiff.resolve(want, original)),
+                            funcdiff.keys(funcdiff.resolve(got, built)))
+
+
 if __name__ == "__main__":
     unittest.main()
