@@ -446,7 +446,6 @@ extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
 extern s32 D_8007E850[];
 extern s8 D_8008093C;
-extern u8 D_80089C84;
 extern u16 D_80094714;
 extern u16 D_80094718;
 extern u8 *D_8009471C;
@@ -2233,3 +2232,5 @@ void func_801040F0(void);
 s32 func_80067DFC(void);
 
 #endif /* MAIN_API_H */
+
+extern u8 D_80089C84;

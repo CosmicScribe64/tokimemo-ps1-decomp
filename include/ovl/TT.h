@@ -248,6 +248,9 @@ typedef struct TtButtons06 {
     /* 0x04 */ u16 unk_04;
 } TtButtons06; /* accessed prefix size 0x06 */
 void func_80132CCC(void);
+#endif
+
+
 #ifndef OVL_TT_ACTOR_T9760
 #define OVL_TT_ACTOR_T9760
 typedef struct TtActor68 {
