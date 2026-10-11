@@ -88,6 +88,8 @@ extern s32 D_8014CCB8;
 extern s32 D_8014CCBC;
 extern s32 D_8014CCC0;
 extern s32 D_8014CCC4;
+extern s32 D_8014CCCC;
+extern s32 D_8014CCD0[];
 extern u8 D_8014CE6C[];
 extern u8 D_8014CEE4[];
 extern u8 D_8014CF5C[];
