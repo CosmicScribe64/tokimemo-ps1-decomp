@@ -830,3 +830,6 @@ Tooling round 6, worktree r6-shapes. Six shapes left open by wave 6 ([[matching-
 
 ## [2026-10-10] build | T-9210 wave-6 codegen shapes (partial)
 Idioms in [[decompile-workflow]] and [[matching-notes]] "Wave-6 codegen shapes (T-9210)". 15 functions matched in branch r6-shapes (TACO 2, GEKO 3, GYOZI 3, SHUGAKU 1, TT 4, EVENT 2) plus the K&R rewrite of TT `func_80148974`; `tools/check_headers.py` reads K&R parameter declarations correctly (test added). Sweeps of shape 1 and shape 5 run in branches r6-shapes-m1 and r6-shapes-m5, not merged yet. Ticket [[tickets/T-9210-wave-6-codegen-shapes]] stays In Progress.
+
+## [2026-10-10] ticket | T-9210 (In Progress -> In Review -> Done)
+Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-branch` OK, progress 4539/6958. Inline review in [[tickets/T-9210-wave-6-codegen-shapes]], no open findings. Sweep branches had no confirmed matches; nothing cherry-picked.
