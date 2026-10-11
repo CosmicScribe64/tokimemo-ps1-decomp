@@ -1,5 +1,14 @@
 #include "common.h"
 #include "ovl/DATE.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+s16 D_8015DDD0[0x2C] = { 0 };
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014A1B0.data", D_8015DE28);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014A1B0.data", D_8015DE2C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014A1B0.data", D_8015DE30);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014A1B0.data", D_8015DE34);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014A1B0.data", D_8015DE38);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014A1B0.data", D_8015DE3C);
 
 void func_8014A1B0(void) {
     D_8015DE28 = 0x80195000;
@@ -64,7 +73,28 @@ s32 func_8014A39C(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014A4DC);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014A810);
+void func_8014A810(void) {
+    s32 i;
+    s32 j;
+
+    func_8014AD9C(0, D_8015DE34, 0);
+    D_80122640[0] = 0;
+    D_8015DDD0[0] = 0x32;
+    D_8015DDD0[2] = 0x32;
+    D_8015DDD0[1] = 0xD2;
+    func_8014AD9C(1, D_8015DE38, 0);
+    D_80122640[4] = 0;
+    D_8015DDD0[4] = 0x4B;
+    D_8015DDD0[6] = -0x32;
+    D_8015DDD0[5] = 0xC3;
+    for (i = 2, j = 0; i != 0xB; i++) {
+        func_8014AD9C(i, D_8015DE3C, j);
+        j++;
+        D_80122640[i * 4] = 0;
+    }
+    D_8015DE4C = 0;
+    func_8014B1C4();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014A8FC);
 
