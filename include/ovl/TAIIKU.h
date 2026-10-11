@@ -215,11 +215,6 @@ extern u8 D_8014A120[];
 extern s32 D_8014A130[];
 extern s16 D_8014A1CE;
 
-typedef struct TaiikuWords48 {
-    /* 0x00 */ s32 unk_00[12][4];
-} TaiikuWords48; /* size 0xC0 */
-extern TaiikuWords48 D_80149030;
-extern TaiikuWords48 D_801490F0;
 #endif
 extern s32 D_80149954;
 extern s16 D_80149958;
@@ -338,3 +333,9 @@ typedef struct TkCoordsView {
     /* 0x19E8 */ TkCoord32 pos[2];
 } TkCoordsView; /* accessed prefix size 0x19F0 */
 #endif
+
+typedef struct TaiikuWords48 {
+    /* 0x00 */ s32 unk_00[12][4];
+} TaiikuWords48; /* size 0xC0 */
+extern TaiikuWords48 D_80149030;
+extern TaiikuWords48 D_801490F0;
