@@ -1,0 +1,3 @@
+// TACO-only symbols. Overlays share VRAM, so these must not go in config/symbol_addrs.txt.
+D_8015FAE0 = 0x8015FAE0;
+D_8015FBF8 = 0x8015FBF8;
