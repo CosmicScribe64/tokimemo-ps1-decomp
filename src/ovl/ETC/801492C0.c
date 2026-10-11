@@ -3,7 +3,29 @@
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_801492C0);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149394);
+s32 func_80149394(void) {
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80048E78();
+    func_800438F0(1);
+    func_80048390();
+    func_80041584();
+    func_80064FA4(0);
+    func_800639D8();
+    func_80063930(1);
+    func_80064E84();
+    func_8004E58C();
+    func_8006612C("就職・進学");
+    func_8004EA98();
+    func_8004EAD4(0);
+    func_80065F34(0);
+    func_800578F4(0);
+    D_80150E94 = 0;
+    D_80150EA0 = func_800AE0D0() % 12;
+    D_80150E98 = 0;
+    D_80150E9C = 0;
+    func_8004284C();
+}
 
 typedef struct {
     u32 pad0 : 25;

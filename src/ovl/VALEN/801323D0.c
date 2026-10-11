@@ -41,7 +41,37 @@ void func_8013253C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/801323D0", func_80132578);
+void func_80132578(void) {
+    D_800E6280.unk_71E |= 0x10;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_800AE0F0(D_800CA19C, "廊下");
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    func_8007C740();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    func_80132000();
+    D_8013448C = D_80134400;
+    D_80134490 = D_80134434;
+    D_80134494 = D_80134468;
+    D_80134498 = 0;
+    D_8013449C = 0;
+    D_800E6280.unk_F5F = 0xC;
+    func_800847B8(0xC);
+    D_800E6280.unk_71E |= 8;
+    func_8004284C();
+}
 
 void func_801326B8(void) {
     bg_read_sub2(0x4045);

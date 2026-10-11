@@ -44,6 +44,8 @@ kanban-plugin: board
 - [x] [[tickets/T-9180-wave-6-list-8|T-9180 Wave 6: list 8]]
 - [ ] [[tickets/T-9170-wave-6-list-7|T-9170 Wave 6: list 7]]
 - [x] [[tickets/T-9110-wave-6-list-1|T-9110 Wave 6: list 1]]
+
+- [x] [[tickets/T-9120-wave-6-list-2|T-9120 Wave 6: list 2]]
 - [x] [[tickets/T-9030-wave-5-tool-fixes|T-9030 Wave-5 tool fixes]]
 - [x] [[tickets/T-9010-per-object-data-shared-lui-at|T-9010 Per-object .data/.bss/.rodata ownership to unlock shared lui $at]]
 - [x] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]
