@@ -137,7 +137,46 @@ void func_8013B0AC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B104);
+void func_8013B104(void) {
+    switch (D_80149940) {
+    case 0:
+        func_8013B200();
+        break;
+    case 1:
+        func_8013B3B0();
+        break;
+    case 2:
+        func_8013B5C0();
+        break;
+    case 3:
+        func_8013B608();
+        break;
+    case 4:
+        func_8013B78C();
+        break;
+    case 5:
+        func_8013B94C();
+        break;
+    case 6:
+        func_8013BB3C();
+        break;
+    case 7:
+        func_8013BCEC();
+        break;
+    case 8:
+        func_8013BEF8();
+        break;
+    case 9:
+        func_8013C0E4();
+        break;
+    case 10:
+        func_8013C33C();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B200);
 
