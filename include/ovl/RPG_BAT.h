@@ -393,3 +393,54 @@ extern s32 D_8015EED0;
 /* Dispatcher has no result read by its callers. T-9750. */
 void func_8013FF28(void);
 #endif /* OVL_RPG_BAT_W9_FF28_H */
+
+#ifndef W9_RPG_BAT_func_8013A98C
+#define W9_RPG_BAT_func_8013A98C
+void func_8013A98C(void);
+#endif
+
+#ifndef W9_RPG_BAT_func_8013ACA4
+#define W9_RPG_BAT_func_8013ACA4
+void func_8013ACA4(void);
+#endif
+
+
+#ifndef W9_RPG_BAT_D_8015EBA4
+#define W9_RPG_BAT_D_8015EBA4
+extern s32 D_8015EBA4;
+#endif
+
+#ifndef W9_RPG_BAT_D_8015EED4
+#define W9_RPG_BAT_D_8015EED4
+extern s32 D_8015EED4;
+#endif
+
+#ifndef W9_RPG_BAT_D_8015EED8
+#define W9_RPG_BAT_D_8015EED8
+extern s32 D_8015EED8;
+#endif
+
+#ifndef W9_RPG_BAT_D_8015EEDC
+#define W9_RPG_BAT_D_8015EEDC
+extern s32 D_8015EEDC;
+#endif
+
+#ifndef W9_RPG_BAT_D_8015EEE0
+#define W9_RPG_BAT_D_8015EEE0
+extern s32 D_8015EEE0;
+#endif
+
+#ifndef W9_RPG_BAT_D_8015EEEC
+#define W9_RPG_BAT_D_8015EEEC
+extern s32 D_8015EEEC;
+#endif
+
+#ifndef W9_RPG_BAT_func_80155E80
+#define W9_RPG_BAT_func_80155E80
+void func_80155E80(void);
+#endif
+
+#ifndef W9_RPG_TEXT_E92C
+#define W9_RPG_TEXT_E92C
+extern u8 D_8015E92C[]; /* text destination; size unknown, func_801563A0. T-9710 */
+#endif

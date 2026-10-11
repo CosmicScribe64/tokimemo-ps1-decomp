@@ -256,6 +256,19 @@ void func_80132CCC(void);
 typedef struct TtActor68 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
+#ifndef OVL_TT_W9_RENDER_TYPES
+#define OVL_TT_W9_RENDER_TYPES
+typedef union TtPositionWord {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ struct { s16 lo; s16 hi; } h;
+} TtPositionWord; /* size 0x04 */
+typedef union TtHalfwordBytes {
+    /* 0x00 */ u16 h;
+    /* 0x00 */ struct { u8 lo; u8 hi; } b;
+} TtHalfwordBytes; /* size 0x02; actor +0x40 has both lhu and lbu accesses. T-9710. */
+typedef struct TtActor78 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 pad_01;
     /* 0x02 */ u16 unk_02;
     /* 0x04 */ u16 unk_04;
     /* 0x06 */ s16 unk_06;
@@ -339,4 +352,75 @@ extern u16 D_80155DD0[];
 #define OVL_TT_T9720_COORDINATES
 /* Signed halfword coordinates consumed by func_80138B90. */
 extern s16 D_80152C40[];
+    /* 0x20 */ TtPositionWord unk_20;
+    /* 0x24 */ TtPositionWord unk_24;
+    /* 0x28 */ u8 pad_28[0x10];
+    /* 0x38 */ u8 unk_38;
+    /* 0x39 */ u8 unk_39;
+    /* 0x3A */ u8 unk_3A;
+    /* 0x3B */ u8 unk_3B;
+    /* 0x3C */ s16 unk_3C;
+    /* 0x3E */ s16 unk_3E;
+    /* 0x40 */ TtHalfwordBytes unk_40;
+    /* 0x42 */ u16 unk_42;
+    /* 0x44 */ u16 unk_44;
+    /* 0x46 */ u8 unk_46;
+    /* 0x47 */ u8 unk_47;
+    /* 0x48 */ u8 pad_48[4];
+    /* 0x4C */ u8 unk_4C;
+    /* 0x4D */ u8 unk_4D;
+    /* 0x4E */ u8 unk_4E;
+    /* 0x4F */ u8 unk_4F;
+    /* 0x50 */ u8 unk_50;
+    /* 0x51 */ u8 unk_51;
+    /* 0x52 */ u8 pad_52[6];
+    /* 0x58 */ u16 unk_58;
+    /* 0x5A */ u16 unk_5A;
+    /* 0x5C */ u8 unk_5C;
+    /* 0x5D */ u8 unk_5D;
+    /* 0x5E */ u8 pad_5E[0x10];
+    /* 0x6E */ s16 unk_6E;
+    /* 0x70 */ u8 pad_70[8];
+} TtActor78; /* size 0x78; allocator walks 64 slots in 0x1E00 bytes. T-9710. */
+
+#endif
+
+#ifndef W9_TT_func_8014B198
+#define W9_TT_func_8014B198
+void func_8014B198(u8 *arg0);
+#endif
+
+#ifndef W9_TT_func_8014B414
+#define W9_TT_func_8014B414
+void func_8014B414(u8 *arg0);
+#endif
+
+#ifndef W9_TT_func_8014B5A4
+#define W9_TT_func_8014B5A4
+void func_8014B5A4(u8 *arg0);
+#endif
+
+#ifndef W9_TT_func_8014BD68
+#define W9_TT_func_8014BD68
+void func_8014BD68(u8 *arg0);
+#endif
+
+#ifndef W9_TT_func_8014BF54
+#define W9_TT_func_8014BF54
+void func_8014BF54(void *arg0);
+#endif
+
+#ifndef W9_TT_func_8014C1BC
+#define W9_TT_func_8014C1BC
+void func_8014C1BC(u8 *arg0);
+#endif
+
+#ifndef W9_TT_func_8014C4AC
+#define W9_TT_func_8014C4AC
+void func_8014C4AC(u8 *arg0);
+#endif
+
+#ifndef W9_TT_func_8014C580
+#define W9_TT_func_8014C580
+void func_8014C580(u8 *arg0);
 #endif

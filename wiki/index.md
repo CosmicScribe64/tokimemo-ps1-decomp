@@ -26,6 +26,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-9730-wave-9-list-3|T-9730]] Wave 9: list 3 (Done; +5 functions / 1,828 bytes)
 - [[tickets/T-9770-wave-9-list-7|T-9770]] Wave 9: list 7 (Done; 6 functions / 1,108 bytes)
 - [[tickets/T-9750-wave-9-list-5|T-9750]] Wave 9: list 5 (Done; 7 functions / 3,256 bytes)
+- [[tickets/T-9710-wave-9-list-1|T-9710]] Wave 9: list 1 (Done; +10 functions / 5,596 bytes).
 - [[tickets/T-9600-wave-8-tool-fixes|T-9600]] Wave-8 tool fixes (Done; seven reports covered, 587 tests, no function gains)
 - [[tickets/T-9530-wave-8-list-3|T-9530]] Wave 8: list 3 (Done; deep pass +13 functions / 3,344 bytes, batch total 22 / 7,384)
 - [[tickets/T-9570-wave-8-list-7|T-9570]] Wave 8: list 7, 14 functions matched (4,628 bytes), 5 T-0018 rows (Done; deep second pass)

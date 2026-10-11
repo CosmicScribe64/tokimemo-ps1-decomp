@@ -6499,3 +6499,1343 @@ FAKE tradeoffs. Ticket/kanban/index synchronized, all changes uncommitted.
 [[tickets/T-9750-wave-9-list-5]] frontmatter, [[kanban]] Done card and
 [[index]] agree; nine own rows in [[data/t0018-cases]], final review/check
 evidence present in ticket and [[matching-notes]]. Own-scope lint passes.
+## [2026-10-11] ticket | Start wave 9 list 1
+
+Created [[tickets/T-9710-wave-9-list-1]] In Progress and its board/index links.
+Read the shared wave-9 brief, standards, [[decompile-workflow]] and
+[[register-allocation-wave7]]. Own 149 functions in 34 files; four-hour work
+window starts at 14:59 UTC. Use Docker tooling and leave uncommitted edits.
+
+## [2026-10-11] build | Configure isolated wave-9 worktree
+
+Initial ninja had no build.ninja; Docker configure succeeded and the baseline
+build is preparing local disc/generated assembly. No source/config edits yet.
+[[tickets/T-9710-wave-9-list-1]] records ownership and the four-hour window.
+
+## [2026-10-11] decision | Wave-9 draft transport
+
+The Docker wrapper does not forward stdin in a non-TTY session; Python scripts
+must be passed with `python3 -c` rather than `python3 -`. Corrected personal
+scratch runners, without changing tools/docker.sh. Read-only draft generation
+can overlap the baseline build. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | Initial wave-9 assembly/type evidence
+
+Added the initial T-9710 section to [[matching-notes]]. Confirmed TAIIKU's
+missing data island is still outside batch configuration scope, and identified
+narrow parameters/temporary order and checksum byte views as deep-pass targets.
+
+## [2026-10-11] build | Wave-9 baseline passes
+
+Docker configure plus ninja -j4 completed all 27 binary SHA1 checks in the
+isolated worktree. Read-only m2c generation continues; draft/build/diff pass
+starts from this verified baseline. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Repair priorities after raw drafts
+
+T-9710 deep-pass preparation: use established GameState views when m2c's inferred
+signed type cannot migrate; repair EN_NICHI's eight-byte slot records and TT's
+0x78 actors/0x80B8 render buffers using shared PsyQ packet types. Correct ranking
+counts the indented resolved diff rows; draft score zero alone is not a match.
+[[tickets/T-9710-wave-9-list-1]], [[matching-notes]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134F2C
+
+EN_NICHI:func_80134F2C: best 46 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80141A1C
+
+TT:func_80141A1C: best 214 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132A74
+
+EN_NICHI:func_80132A74: best 20 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 first pass completed
+
+All 149 assigned functions received m2c, compile, and resolved diff attempts.
+No raw draft matched; all were restored to assembly. Saved drafts/diffs and
+started the repaired build pass to rank codegen misses. [[matching-notes]],
+[[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80135A48
+
+EN_NICHI:func_80135A48: best 46 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8004636C
+
+main:func_8004636C: best 44 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013AE14
+
+TAIIKU:func_8013AE14: best 49 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800FAA04
+
+EVENT:func_800FAA04: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C5F8
+
+TT:func_8014C5F8: best 14 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800463E8
+
+main:func_800463E8: best 12 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8015B828
+
+BUNKASAI:func_8015B828: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800FA25C
+
+EVENT:func_800FA25C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80136A2C
+
+EN_NICHI:func_80136A2C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80045318
+
+main:func_80045318: best 73 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013A63C
+
+TAIIKU:func_8013A63C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013ACBC
+
+TAIIKU:func_8013ACBC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | Repaired near misses ready for deep pass
+
+The first twelve repairs expose main func_800463E8 (12 changed instruction
+lines), TT func_8014C5F8 (14), and EN_NICHI func_80132A74 (20). These get
+bounded source iteration/permutation after the repair sweep. Larger frame and
+shared-$at misses remain unresolved. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013C4E4
+
+TAIIKU:func_8013C4E4: best 21 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013CF88
+
+TAIIKU:func_8013CF88: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8015D0D0
+
+TACO:func_8015D0D0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014CC04
+
+TT:func_8014CC04: best 130 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014CFEC
+
+TT:func_8014CFEC: best 142 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80136AD8
+
+TT:func_80136AD8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076DA0
+
+main:func_80076DA0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013C780
+
+TAIIKU:func_8013C780: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013D114
+
+TAIIKU:func_8013D114: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801354E0
+
+EN_NICHI:func_801354E0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80136830
+
+TT:func_80136830: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014E994
+
+RPG_BAT:func_8014E994: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013F948
+
+TAIIKU:func_8013F948: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80155004
+
+DATE:func_80155004: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014F278
+
+RPG_BAT:func_8014F278: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800754C0
+
+main:func_800754C0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014CDBC
+
+TT:func_8014CDBC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013CD34
+
+TAIIKU:func_8013CD34: best 100 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80139E34
+
+TAIIKU:func_80139E34: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014EF8C
+
+RPG_BAT:func_8014EF8C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801330D0
+
+EN_NICHI:func_801330D0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014BB30
+
+TT:func_8014BB30: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013D788
+
+TAIIKU:func_8013D788: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80141EBC
+
+TT:func_80141EBC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80139FD4
+
+SHUGAKU:func_80139FD4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801337E0
+
+EN_NICHI:func_801337E0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80145550
+
+BUNKAKEN:func_80145550: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801400D8
+
+TAIIKU:func_801400D8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801388D8
+
+SHUGAKU:func_801388D8: best 86 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014DCCC
+
+DATE:func_8014DCCC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80103774
+
+EVENT:func_80103774: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013275C
+
+EN_NICHI:func_8013275C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80139FE4
+
+TAIIKU:func_80139FE4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C360
+
+RPG_BAT:func_8014C360: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800F9730
+
+EVENT:func_800F9730: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80133760
+
+SHOUGATU:func_80133760: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013A314
+
+TAIIKU:func_8013A314: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80139AB0
+
+TAIIKU:func_80139AB0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800764AC
+
+main:func_800764AC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076B48
+
+main:func_80076B48: best 22 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80074DE0
+
+main:func_80074DE0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80139E8C
+
+SHUGAKU:func_80139E8C: best 36 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014EBEC
+
+RPG_BAT:func_8014EBEC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013655C
+
+TEL:func_8013655C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80138E10
+
+GEKO:func_80138E10: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80075AF8
+
+main:func_80075AF8: best 29 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013B608
+
+TAIIKU:func_8013B608: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013B200
+
+TAIIKU:func_8013B200: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80135ACC
+
+EN_NICHI:func_80135ACC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013B78C
+
+TAIIKU:func_8013B78C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801035BC
+
+EVENT:func_801035BC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800741B8
+
+main:func_800741B8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Narrow source repairs and prototype hypothesis
+
+Documented Rec24 reuse, the history array/local layout, and the main implicit-int
+prototype experiment in [[matching-notes]]. Generated prototype updates are
+required before judging that return-type variant; rejected builds remain restored.
+[[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80135274
+
+EN_NICHI:func_80135274: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132834
+
+EN_NICHI:func_80132834: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013B94C
+
+TAIIKU:func_8013B94C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013C118
+
+GYOZI:func_8013C118: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014B7A8
+
+TT:func_8014B7A8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801355E8
+
+GEKO:func_801355E8: best 137 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013FC5C
+
+TAIIKU:func_8013FC5C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013B3B0
+
+TAIIKU:func_8013B3B0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80141450
+
+TT:func_80141450: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800460FC
+
+main:func_800460FC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80142220
+
+TACO:func_80142220: best 94 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013C0E4
+
+TAIIKU:func_8013C0E4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80135600
+
+EN_NICHI:func_80135600: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134800
+
+EN_NICHI:func_80134800: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801358CC
+
+GEKO:func_801358CC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014B274
+
+TT:func_8014B274: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132670
+
+OMIMAI:func_80132670: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80077694
+
+main:func_80077694: best 163 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132EE8
+
+EN_NICHI:func_80132EE8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Wave-9 aggregate and stride repairs
+
+Prepared typed-stride and RECT-local variants for TACO func_80142220 and SHUGAKU func_80139E8C. No match claim before resolved diff and unit SHA1. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076C7C
+
+main:func_80076C7C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Wave-9 missing views and forward declarations
+
+Prepared the D_801255D0 byte-array and GEKO Rec38 view repairs, plus temporary overlay forward declarations from existing definitions. All are subject to resolved diff, header guard and unit SHA1 checks. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013BA7C
+
+SHOUGATU:func_8013BA7C: best 132 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014E300
+
+RPG_BAT:func_8014E300: best 199 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | Distance helper target shape
+
+Read EN_NICHI func_80132A74 target: unsigned products reuse the magnitude registers. Prioritized unsigned magnitudes with explicit square updates for its bounded deep search. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013C978
+
+TAIIKU:func_8013C978: best 308 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Bound unresolved-type draft probes
+
+The repair runner now avoids redundant signature and spill-alias probes when a draft still contains an unresolved `?` type or invalid negative field selector. Such drafts retain their evidence for aggregate recovery; the ranked deep pass remains focused on compilable candidates. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8007866C
+
+main:func_8007866C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8007437C
+
+main:func_8007437C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] ingest | EN_NICHI reset-table layout
+
+Read the reset assembly and existing data-piece boundaries. Recorded the 15×12 eight-byte layout and prepared bounded C variants in personal scratch. No raw source or generated assembly modified. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Keep repair probes relevant to compile failures
+
+Quick repair probes stop signature-only variants after a structural compile error (undefined object/member, unresolved selector or syntax). These failures require aggregate recovery; K&R spelling and removing a spill alias cannot fix them. Compilable near misses still receive all prepared variants and ranked deep searches. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80077900
+
+main:func_80077900: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076630
+
+main:func_80076630: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80133B44
+
+SHOUGATU:func_80133B44: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80137120
+
+GEKO:func_80137120: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Main signature repair coverage
+
+A quick-repair error for main func_8007437C showed the runner only synchronized void/s32/u32 signatures; its existing u8 prototype was missed. Expanded the temporary synchronization check to all fixed-width return types. This fixes the personal runner, with no project tooling change. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | More main aggregate-view candidates
+
+Prepared direct GameState array accesses for func_8007437C and a marked buffer-size hypothesis for func_80076630. Retention requires resolved diff and full main SHA1. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80075320
+
+main:func_80075320: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013240C
+
+TACO:func_8013240C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013639C
+
+TEL:func_8013639C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134258
+
+EN_NICHI:func_80134258: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801372D4
+
+GEKO:func_801372D4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C84C
+
+TT:func_8014C84C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Reuse EN_NICHI actor layout
+
+Prepared shared EnObj repairs for direct and stride-indexed D_8013984C pointers, including typed aliases and one-record increments. Scheduled func_80134800 and func_80134258 retries after the active sweep. [[tickets/T-9710-wave-9-list-1]], [[matching-notes]].
+
+## [2026-10-11] query | Scoped duplicate inventory
+
+Docker dupes/neardupes scans restricted to the 34 owned paths found no ready copies. The wider offset/shift fingerprint reports two potential siblings totaling 760 bytes for manual inspection. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80102E54
+
+EVENT:func_80102E54: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013358C
+
+EN_NICHI:func_8013358C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | TT paired-byte zero hypothesis
+
+Prepared eight-bit u8 bit-fields for the two actor bytes that share a materialized zero in func_8014C5F8. Temporary header view is discarded on failure; only resolved diff plus TT checksum can retain it. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076FDC
+
+main:func_80076FDC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80135FBC
+
+EN_NICHI:func_80135FBC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Keep deep repairs repeatable
+
+Adjusted the personal runner so a previously repaired history-buffer draft is not parsed again as raw m2c, and the EN_NICHI two-record clear handles fields already normalized by the generic EnObj repair. This prevents redundant deep-stage parsing failures. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8007739C
+
+main:func_8007739C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | Wider duplicate ownership check
+
+Inspected the wider fingerprint targets: both are outside w9-1 ownership. The report's extra count is global, unlike its filtered plan list. Recorded the clarification and excluded both targets. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80141DE0
+
+TACO:func_80141DE0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801339D4
+
+EN_NICHI:func_801339D4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | Owned OMIMAI initializer sibling
+
+The declaration-view near-duplicate scan has one fillable OMIMAI func_801320A0 candidate. Scheduled a checksum-gated copy restricted to that owned file and function, with resolved-diff review afterward. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Prioritize the close repair candidates
+
+Quick repairs now stop signature-only probes once a compiled draft still differs by at least 200 instruction lines. Those large differences need control-flow/type recovery; the upcoming ranked pass targets the closest repaired C and explicit aggregate hypotheses. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | Queue packet copy extent
+
+Read the dispatcher frame and enqueue memcpy extent. Corrected the personal candidate's overlapping payload/flag model and prepared the dispatcher buffer retry. No candidate retained without resolved function and full-unit proof. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80045414
+
+main:func_80045414: best 144 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80138AA8
+
+TAIIKU:func_80138AA8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Preserve verified candidates during repeated ranking
+
+The personal repair runner skips functions already retained as C, so duplicate ranked records cannot reinsert temporary local typedefs or rerun a verified body. Rejected variants continue restoring the prior source and headers. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Bound distant signature/layout sweeps
+
+Quick mode retains at most the first three signature/layout probes when none gets below 100 differing lines; close candidates still receive every prepared form. The dispatcher is covered by its explicit buffer repair retry rather than further spill-alias probes. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014ADD0
+
+RPG_BAT:func_8014ADD0: best 216 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Distance parameter spelling constraint
+
+Inspected the initial header failure: ANSI four-s16 func_80132A74 conflicts with the existing old-style overlay declaration, while K&R compiles. Restricted the bounded search to K&R definitions with signed narrow parameters. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013D2B4
+
+TAIIKU:func_8013D2B4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80073CB0
+
+main:func_80073CB0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | Queue modulo calculation order
+
+Compared enqueue target with the repaired C. The target starts the head modulo first; the draft starts with the tail increment. Prepared signed/unsigned head-modulo locals to test that interference difference before the bounded permuter. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801424A8
+
+TACO:func_801424A8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80133CA8
+
+EN_NICHI:func_80133CA8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | EN_NICHI allocation cursor live ranges
+
+Compared func_80135A48 target with the typed draft. Prepared one index and cursor across the range check/increment, replacing m2c's distinct SSA temporaries; pointer-add operand order is also varied. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014BFE4
+
+RPG_BAT:func_8014BFE4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] setup | Queue the sequential deep pass
+
+Started the personal deep driver waiting for all 149 repair records. It then runs the owned OMIMAI sibling check, curated repairs, bounded distance/checksum/reset searches, and the ranked short permuters sequentially. This keeps source/header mutations isolated. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | History helper parent-pointer accesses
+
+Read func_80076DA0 target in full and staged the parent-pointer loop-word/final-byte accesses alongside its typed history buffer. These are ordinary field accesses; its cross-member history write remains explicitly marked FAKE. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013F3A4
+
+TAIIKU:func_8013F3A4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Existing workspace view blocks scalar draft
+
+The header guard rejected a temporary s16 declaration for D_80120888 against EVENT's FnTbl41 view. Restored it and adjusted the personal runner to detect existing source/header views of main symbols before add-global. Broader shared-workspace type recovery is outside this owned-file batch. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013E894
+
+TAIIKU:func_8013E894: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013D9B4
+
+TAIIKU:func_8013D9B4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | Combine queue ordering and K&R parameter homes
+
+Added K&R versions of the explicit head-modulo queue variants. This preserves the original unprototyped narrow parameter ABI if the ANSI prototype would change a caller. Every retained form must still pass the complete main checksum. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80137CFC
+
+SHUGAKU:func_80137CFC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Queue candidate repeatability check
+
+Kept the queue payload typedef preparation unconditional while guarding only repeated head-modulo insertion. This lets later ranked records reuse the ordered body without duplicate locals or missing types. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C2F8
+
+TT:func_8014C2F8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014B294
+
+RPG_BAT:func_8014B294: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C680
+
+TT:func_8014C680: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] ingest | TT command-stream layout
+
+Read func_8014C2F8 target and neighboring D_80158A70 users. Prepared six-byte command and 0x20-byte timeline types with documented offsets and a separate guarded header block. Scheduled typed quick/deep retry. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt parameter_up_down
+
+main:parameter_up_down: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801563A0
+
+RPG_BAT:func_801563A0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014B79C
+
+RPG_BAT:func_8014B79C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014D298
+
+DATE:func_8014D298: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] ingest | TT actor update layout
+
+Read func_8014C680 and render users, extended the personal actor-layout candidate without changing its 0x78 size, and scheduled the typed update-loop retry after the paired-byte initializer probe. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132450
+
+EN_NICHI:func_80132450: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt telephone_class_init
+
+main:telephone_class_init: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013DDB8
+
+TAIIKU:func_8013DDB8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80079070
+
+main:func_80079070: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80155CC0
+
+RPG_BAT:func_80155CC0: best 5 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | BUNKASAI local table load order
+
+Read func_8015B828 target in full. Adjusted the scalar-before-copy initialization and unsigned halfword shift in its typed table draft. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800755B4
+
+main:func_800755B4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013E1FC
+
+TAIIKU:func_8013E1FC: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013EC60
+
+TAIIKU:func_8013EC60: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800767A4
+
+main:func_800767A4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014BB80
+
+RPG_BAT:func_8014BB80: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80156064
+
+RPG_BAT:func_80156064: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80136C64
+
+TT:func_80136C64: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801420E4
+
+GEKO:func_801420E4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013A6FC
+
+TAIIKU:func_8013A6FC: best 348 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 deep match func_8013A650
+
+RPG_BAT:func_8013A650, 828 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013A650
+
+RPG_BAT:func_8013A650: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014D11C
+
+RPG_BAT:func_8014D11C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801328B0
+
+TACO:func_801328B0: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | T-9710 RPG_BAT call-delay argument inference
+
+Compared the three-argument C/assembly callee `func_8014B738` with its inferred two-argument calls. Incoming `$a2` is saved in the first call's delay slot, after the inference pass has applied call clobbers. Added a personal-runner literal-argument repair and queued `func_80155CC0` for immediate checksum-gated retry. Details in [[matching-notes]]; tool sources are unchanged.
+
+## [2026-10-11] build | Wave-9 repair attempt func_80138DF8
+
+TAIIKU:func_80138DF8: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80142F70
+
+RPG_BAT:func_80142F70: best 2 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80144F70
+
+BUNKAKEN:func_80144F70: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 recover final empty switch case
+
+`RPG_BAT:func_80142F70` is down to a 15-versus-14 jump-table range guard. Added a personal-runner variant with explicit empty case 14 and queued a quick retry, with resolved diff and unit SHA1 required. Evidence in [[matching-notes]].
+
+## [2026-10-11] query | T-9710 scoped follow-up queue
+
+Requested the next twenty functions by bytes, restricted to the 34 owned C files, while the last quick repair and queued deep pass complete. This read-only query identifies optional work after the supplied list is attempted; no unowned files are eligible. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132FC4
+
+TEL:func_80132FC4: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 remove repeated unused spill aliases
+
+Compared typed EN_NICHI `func_80134F2C` with the target: an unused m2c alias is assigned twice and survives the initial cleanup. Added guarded multi-assignment alias cleanup and four natural angle-wrap variants to the personal deep runner. Details in [[matching-notes]]; no tool-source edits.
+
+## [2026-10-11] query | T-9710 batch-wide delay-slot arity scan
+
+A read-only personal scan confirms the RPG_BAT dropped-third-argument case in all three owned callers. It also flags incoming argument saves after calls in existing SDK/main callees and EN_NICHI `func_801369F4` / TAIIKU `func_80133928`; compare generated call sites with their existing declarations before applying any correction. Evidence is in personal scratch `arity-fast.jsonl`, with the inference limitation described in [[matching-notes]].
+
+## [2026-10-11] build | T-9710 scoped near-duplicate rejection
+
+The owned OMIMAI near-twin was restored after its copied scalar stores failed against the existing table declarations. Preparing a fresh draft and element-zero accesses for another checksum-gated attempt. The scoped next-twenty queue adds no new eligible functions. Details in [[matching-notes]].
+
+## [2026-10-11] build | Wave-9 deep match func_80142F70
+
+RPG_BAT:func_80142F70, 2240 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80142F70
+
+RPG_BAT:func_80142F70: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 OMIMAI table initializer retry
+
+A fresh m2c draft identifies three adjacent 0x30-byte initializer tables. Converted each element store to the existing s32 array declaration, with no added globals, and queued a checksum-gated repair. Layout evidence and the older header-comment discrepancy are recorded in [[matching-notes]].
+
+## [2026-10-11] ingest | T-9710 explicit empty switch case matched
+
+Filed the confirmed empty-case idiom and both verified RPG_BAT gains in [[matching-notes]]. `func_80142F70` adds 2,240 bytes and `func_8013A650` adds 828; resolved diffs and the overlay checksum pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 deep match func_80155CC0
+
+RPG_BAT:func_80155CC0, 448 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80155CC0
+
+RPG_BAT:func_80155CC0: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076B48
+
+main:func_80076B48: best 22 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80075AF8
+
+main:func_80075AF8: best 26 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800754C0
+
+main:func_800754C0: best 51 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 third RPG_BAT caller retry
+
+Prepared an append-only byte-array declaration for the text destination used by `func_801563A0`, and a serial personal-runner follow-up to restore its call-delay third argument. Filed the verified 448-byte `func_80155CC0` gain in [[matching-notes]]. No shared tool files were changed; [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076DA0
+
+main:func_80076DA0: best 45 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80136A2C
+
+EN_NICHI:func_80136A2C: best 162 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8015B828
+
+BUNKASAI:func_8015B828: best 28 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800FAA04
+
+EVENT:func_800FAA04: best 79 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800FA25C
+
+EVENT:func_800FA25C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 typed RPG_BAT reset loops
+
+Prepared typed word/flag-loop candidates for two owned RPG_BAT reset helpers, with small scalar definitions replacing existing owned data-island pieces for shared-AT stores. Initializer values were checked against each original four-byte piece. All changes remain subject to resolved funcdiff plus full overlay SHA1; rejected candidates restore source and headers. Details in [[matching-notes]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800F9730
+
+EVENT:func_800F9730: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800460FC
+
+main:func_800460FC: best 124 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801358CC
+
+GEKO:func_801358CC: best 117 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80139E8C
+
+SHUGAKU:func_80139E8C: best 4 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80142220
+
+TACO:func_80142220: best 92 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8007437C
+
+main:func_8007437C: best 99999 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 SHUGAKU selector address retry
+
+The SDK RECT conversion reduces `func_80139E8C` to the four-line selector-address difference already recorded by T-8020/T-9160. Added wider-local and marked byte-address variants for the deep pass; fixed personal-runner retries to avoid inserting a second RECT declaration. Details in [[matching-notes]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076630
+
+main:func_80076630: best 88 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134800
+
+EN_NICHI:func_80134800: best 188 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 serial full-build checkpoints
+
+Added a full incremental ninja checkpoint inside the serial personal runner at each fifth verified gain. It runs while that runner owns the source/header mutation interval, and rejects the new candidate if the full build fails. This avoids concurrent builds against temporary candidates and follows the wave brief. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134258
+
+EN_NICHI:func_80134258: best 40 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80045414
+
+main:func_80045414: best 144 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 checksum addition order
+
+Compared the checksum target's two additions and intervening index update with the scripted candidates. Added two natural split-addition forms before the existing masked-sum forms, preserving the fifteen-minute search bound. Evidence and earlier cluster symptoms in [[matching-notes]].
+
+## [2026-10-11] build | Wave-9 deep match func_801563A0
+
+RPG_BAT:func_801563A0, 336 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801563A0
+
+RPG_BAT:func_801563A0: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014F278
+
+RPG_BAT:func_8014F278: best 69 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014EF8C
+
+RPG_BAT:func_8014EF8C: best 70 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 bound deep searches with best-candidate permutation
+
+Changed the personal distance/checksum drivers to ten-minute source searches followed by five-minute permutation of the closest candidate. Both keep only freshly resolved matches plus unit SHA1 and restore rejected candidates. Details in [[matching-notes]].
+
+## [2026-10-11] build | T-9710 five-match full-build checkpoint
+
+Incremental full ninja returned 0 after the next five verified function gains. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 deep match func_801320A0
+
+OMIMAI:func_801320A0, 580 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801320A0
+
+OMIMAI:func_801320A0: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C2F8
+
+TT:func_8014C2F8: best 131 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C5F8
+
+TT:func_8014C5F8: best 14 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C680
+
+TT:func_8014C680: best 24 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 correct shared-AT reset hypothesis
+
+Reread T-9010: different scalar variables re-emit the high-half load, even when defined in the same file. The rejected reset candidates therefore used the wrong ownership model. Queued marked single-owned-symbol aggregate views, natural explicit pointer bounds, and declarations for the existing main-table anchors via sync_protos. Details in [[matching-notes]]; failed source/data/header changes were restored.
+
+## [2026-10-11] ingest | T-9710 five verified functions
+
+Filed the third RPG_BAT caller and the OMIMAI array initializer in [[matching-notes]]. Retained total: five functions / 4,432 bytes, with resolved diffs, unit SHA1s, and the full incremental build checkpoint passing. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 restart distance search with recognized K&R layout
+
+Confirmed the distance failures were function-location errors: `{` followed the last parameter declaration on the same line. Corrected to a separate line, interrupted only two owned containers (the distance search and obsolete read-only scan), and verified that INCLUDE_ASM was restored. Resuming from the distance phase with deduplicated closest-function ranking. Details in [[matching-notes]].
+
+## [2026-10-11] query | T-9710 merged close-function shape inventory
+
+Read the merged register-shape rows for the eight closest historical cases before classifying the new deep-pass evidence. The existing clusters include selector/compare chains, constant sharing, pointer/base/CSE and scheduling; the complete filtered output is in personal scratch `shapes-close.txt`. [[register-allocation-wave7]] and [[matching-notes]] provide the idioms to try before appending rows.
+
+## [2026-10-11] decision | T-9710 TT actor dispatcher selector variants
+
+Compared the typed actor dispatcher with the target. Added natural constant-left state comparisons and command-local/member-selector variants to the serial deep runner. All target object accesses now use the recovered 0x78-byte record. Details in [[matching-notes]].
+
+## [2026-10-11] lint | T-9710 preliminary inline standards review
+
+Applied the local code-review skill's Standards and Spec axes inline per the explicit wave brief. Found one aggregate-access cleanup in the retained RPG_BAT dispatcher: EDB4 is an existing EDB0 member. Recorded the pending checksum-gated correction in [[tickets/T-9710-wave-9-list-1]] and [[matching-notes]]. Other retained source/header changes satisfy the checked C89, placeholder, scope and verification rules; final review remains pending.
+
+## [2026-10-11] decision | T-9710 serialize aggregate review correction
+
+Queued the EDB0 member correction at the next script boundary before the checksum search. It will test resolved funcdiff, remove only the redundant declaration newly appended by this batch, and require RPG_BAT SHA1. On any rejection it restores the prior verified source/header and keeps the finding pending. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 distance magnitude assignment hypothesis
+
+The corrected distance search reaches 16 lines when the first magnitude precedes the second raw delta. Added three natural chain/coordinate-first assignment forms and one serial bounded follow-up, which will skip if the dedicated search already matched. Details in [[matching-notes]].
+
+## [2026-10-11] decision | T-9710 checksum narrow parameter variants
+
+Added narrow K&R u8 count-parameter forms to the personal checksum search, preserving independent pointer/sum initialization orders and the ten-minute bound. The target's single incoming-byte mask motivates this ABI/type variant; details in [[matching-notes]].
+
+## [2026-10-11] build | T-9710 distance deep pass
+
+Ten-minute source search plus five-minute permuter: restored assembly. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 typed EN_NICHI flag tables
+
+Recovered two remaining owned flag-table drafts using the existing EnObj record and a ten-byte flag array. Queued checksum-gated serial follow-ups after the ring allocator, with marked explicit unrolling and append-only overlay declarations. Also added explicit s16-coordinate casts on s32 distance parameters as an ABI/source-type alternative. Details in [[matching-notes]].
+
+## [2026-10-11] lint | T-9710 aggregate review correction
+
+EDB0 member matches; removed redundant newly appended EDB4 alias. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 natural matrix pointer loops
+
+Added two natural column-pointer matrix loops ahead of the manual peeled/unrolled candidates. Verified the target's two trailing globals use separate LUI instructions, so no shared-data ownership repair applies there. Details in [[matching-notes]].
+
+## [2026-10-11] lint | T-9710 interim standards and shape audit
+
+Reviewed the five retained definitions and append-only RPG_BAT declarations against CODING_STANDARDS.md. The previously recorded aggregate finding is resolved by the existing EDB0 member and reverified unit SHA1. Refreshed tools/register_shapes.py inventory before classifying retries; transient source states and draft-generation scores are not match evidence. See [[matching-notes]] and [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 distance copy order
+
+Extended the queued exclusive distance follow-up with reverse and mixed assignment-chain directions to test the observed signed-delta/unsigned-magnitude allocation swap. Existing finite searches remain evidence of unresolved source spelling, not impossibility. See [[matching-notes]].
+
+## [2026-10-11] build | Checksum source search
+
+main func_8004636C: 151 variants, best 20 instruction lines; restored assembly. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 explicit checksum tail bytes
+
+Dedicated checksum search completed 151 forms, best 20 differing instruction lines. Prepared a serial retry that declares the final two byte values explicitly and tests their types plus pointer/byte operand orders. See [[matching-notes]] and [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 final verification recipe
+
+Prepared a personal Docker-only final verifier that discovers retained definitions from the source diff, reruns resolved diffs and prototype/global guards, builds all targets, explicitly checks every linked binary against its existing config SHA1, and reports progress. It will run after the serial mutation driver exits. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 checksum deep pass
+
+Ten-minute source search plus five-minute permuter: restored assembly. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | EN_NICHI reset matrix search
+
+func_801354E0: best 0 differing instruction lines; retained resolved match and unit SHA1. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 deep match func_80139E8C
+
+SHUGAKU:func_80139E8C, 328 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80139E8C
+
+SHUGAKU:func_80139E8C: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 EN_NICHI matrix match
+
+func_801354E0 gains 140 bytes with a real 15-by-12 eight-byte-record matrix and natural nested loops. Resolved diff and EN_NICHI unit SHA1 pass; six retained functions total 4,572 bytes. Cleanup of two unused template declarations is queued for final exclusive review. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 SHUGAKU selector match
+
+func_80139E8C gains 328 bytes using the existing GameState aggregate's byte view for the target a0 address allocation, marked FAKE. Resolved diff and SHUGAKU SHA1 pass; historical T-0018 rows receive an append-only resolution note. Seven retained functions total 4,900 bytes. [[matching-notes]], [[data/t0018-cases]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 deep match func_80132A74
+
+EN_NICHI:func_80132A74, 104 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132A74
+
+EN_NICHI:func_80132A74: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 exclusive retained cleanup
+
+Queued review cleanup at the next serial script boundary: remove the reset matrix's unused pointer declarations and make the SHUGAKU FAKE comment explain its observed a0/v0 difference. Each edit is independently gated by resolved diff and unit SHA1, with rollback on failure. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 distance helper match
+
+func_80132A74 gains 104 bytes after mixed assignment-chain copy order and bounded permutation. Retained line grouping is marked FAKE; resolved function diff and EN_NICHI SHA1 pass. Historical T-0018 rows receive an append-only resolution note. Eight retained functions total 5,004 bytes. [[matching-notes]], [[data/t0018-cases]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8004636C
+
+main:func_8004636C: best 8 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 retained source cleanup
+
+EN_NICHI:func_801354E0: unused template declarations removed / FAKE reason clarified, resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 retained source cleanup
+
+EN_NICHI:func_80132A74: unused template declarations removed / FAKE reason clarified, resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 retained source cleanup
+
+SHUGAKU:func_80139E8C: unused template declarations removed / FAKE reason clarified, resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 cleanup findings resolved
+
+Exclusive cleanup of EN_NICHI matrix declarations, distance indentation and SHUGAKU FAKE explanation passed fresh resolved diffs and unit SHA1s. No pending retained-source cleanup remains. The checksum follow-up restored assembly after eight differing lines and a bounded permuter. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 deep match func_800463E8
+
+main:func_800463E8, 144 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800463E8
+
+main:func_800463E8: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 checksum sum promotion and loop layout
+
+Prepared one serial follow-up on the eight-line residual: u32/u16/s32 sum types, mask/counter source-line grouping and split byte additions with the already corrected tail values. The dedicated search's time limit had ended before unsigned-sum forms. Marked line-grouped candidates FAKE. [[matching-notes]].
+
+## [2026-10-11] build | T-9710 coordinate renderer match
+
+func_800463E8 gains 144 bytes with the documented s32 fallthrough idiom and generated API synchronization. Resolved diff and main executable SHA1 pass. Nine retained functions total 5,148 bytes; historical T-0018 rows receive an append-only resolution note. [[matching-notes]], [[data/t0018-cases]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 new main declaration review
+
+Clarification of the coordinate match entry: no main_api declaration existed, so no return-type synchronization occurred during that probe. Queued a generated canonical declaration for newly matched main definitions using tools/sync_protos.py's API writer; no manual header declaration will be added. This review item remains pending until the final exclusive generation and all-unit verification. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C5F8
+
+TT:func_8014C5F8: best 14 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076B48
+
+main:func_80076B48: best 22 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 TT initializer remains open
+
+Typed actor/point repair and bounded deep search leave func_8014C5F8 at 14 resolved differing lines. After consulting the refreshed inventory and existing pointer/base/CSE rows, appended one T-0018 symptom row; rejected C and declarations restored. [[data/t0018-cases]], [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 personal driver API staging correction
+
+Diagnosed the main selector's aborted permuter as a stale declaration from the last trial. Fixed only the scratch driver to restage the selected candidate and its API consistently, and queued a fresh exclusive retry. Original assembly and headers were restored; the failed run is not counted as compiler-search evidence. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 random record classifier source forms
+
+Read target assembly alongside the typed classifier draft. Added typed output-parameter calls, outcome-local reuse, initialization-order and counted-loop forms to the future exclusive EN_NICHI classifier retry. [[matching-notes]].
+
+## [2026-10-11] decision | T-9710 four-hour checkpoint
+
+The requested minimum duration is satisfied: 14:59:41..18:59:45 UTC. Nine functions totaling 5,148 bytes have resolved and unit SHA1 evidence. Continuing ranked source retries before final API generation, all-unit verification and inline review. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8004636C
+
+main:func_8004636C: best 8 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C680
+
+TT:func_8014C680: best 4 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 independent dispatcher source fixes
+
+Identified that the direct-member switch and reversed state comparisons had been combined: the remaining four lines are only the reversed comparisons. Added the independent direct-switch/original-compare form. SIGINT stopped only the verified owned TT probe, which restored assembly and headers; the serial parent continues. Corrected dispatcher and declaration-staging selector retries are prioritized at the next script boundary. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 checksum bounded search complete
+
+Final checksum source/layout retry restores assembly at eight resolved differing lines. Explicit byte locals repaired the tail; addition and loop mask/copy scheduling remain. Appended one symptom row to the existing scheduling/order cluster. Two T-0018 rows have been added so far. [[data/t0018-cases]], [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80075AF8
+
+main:func_80075AF8: best 26 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 two-case dispatcher switch
+
+Independent command-selector repair leaves only two lower branch-operand swaps; reversing equality spelling does not affect them. Added a two-case switch and word selector types, following control-flow-first matching. Personal checkpoint counter now includes the standalone matrix result. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C680
+
+TT:func_8014C680: best 4 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076B48
+
+main:func_80076B48: best 22 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 drawing callee API view
+
+Final scoped API recipe now includes missing callees from newly added main C lines. func_80049FF0 is assembly and was matched through a default-int unprototyped call; the generated declaration will preserve that view. Final branch/header and all-unit checks remain pending. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 selector valid retry complete
+
+Consistent candidate/API staging lets the selector's five-minute permutation run. No verified match; 22 resolved differing lines remain and assembly/API were restored. Appended a selector/compare-chain symptom row after consulting the refreshed historical cluster. Three new T-0018 rows now recorded. [[data/t0018-cases]], [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8015B828
+
+BUNKASAI:func_8015B828: best 28 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 BUNKASAI table retry complete
+
+Correct aggregate/frame repair leaves 28 resolved differing lines in GameState base/index scheduling and temporaries. Five-minute permuter finds no verified match, and assembly/header views restore. Appended one historical-frame-cluster follow-up row; four new T-0018 rows now recorded. [[data/t0018-cases]], [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 five-match full-build checkpoint
+
+Incremental full ninja returned 0 after the next five verified function gains. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 deep match func_8014C680
+
+TT:func_8014C680, 460 bytes; resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8014C680
+
+TT:func_8014C680: best 0 differing instruction lines; kept verified C. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | T-9710 TT dispatcher and full checkpoint
+
+func_8014C680 gains 460 bytes from typed actor/direct member dispatch plus verified marked FAKE permutation. TT resolved diff and unit SHA1 pass. Full ninja at the tenth actual gain completed 488 steps with rc 0. Ten functions total 5,608 bytes; selector/empty-statement cleanup is queued for final exclusive review. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134258
+
+EN_NICHI:func_80134258: best 40 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 classifier output aggregate
+
+Read the classifier's actual resolved diff and the T-9610 frame rule: addressed outputs sit 16 bytes too high. Queued an eight-byte aggregate for the contiguous words and a direct classification/count-order source form. No compiler-gap claim is made while this concrete layout hypothesis remains. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076DA0
+
+main:func_80076DA0: best 45 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 classifier scalar homes
+
+The documented scalar-home rule suggests the draft's four random-result declarations account for the excess frame. Added a natural one-local form plus direct classification/count order, with scalar and aggregate output alternatives. Queued a distinct next-boundary retry because the pair-only search was already captured. [[matching-notes]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134258
+
+EN_NICHI:func_80134258: best 36 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 remaining source-search gate
+
+All assigned functions have initial and typed repair evidence; the four-hour floor is satisfied. Remaining ranked candidates still receive their concrete type/control/declaration variants. Restricted future generic permuter runs to 50 or fewer resolved differing lines, retaining the five-minute search for every under-20 candidate; larger layout/type failures need additional recovery before permutation. Dedicated classifier and flag retries continue. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 angle expression record access
+
+Read the existing owned-file EN_OBJ spill-placement note and prepared its expression-access form for the angle routine's remaining frame/spill differences. Removed only candidate-local pointer/spill aliases; marked the source spelling FAKE. Queued after the classifier's minimal-local retry. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134F2C
+
+EN_NICHI:func_80134F2C: best 38 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] decision | T-9710 final retained-artifact cleanup recipe
+
+Prepared an exclusive Docker cleanup for TT's unused selector, empty statement, pointer call views, indentation and unused types from rejected drafts. Each edit has resolved diff + unit SHA1 gating and rollback. Added a main fallthrough explanation and unused-classifier-type cleanup to the recipe. It runs only after the mutation driver exits. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | T-9710 classifier frame explained by excess locals
+
+One reused random scalar gives the target 0x68 frame and output homes in EN_NICHI `func_80134258`; direct classification before the count reduces the diff to 22 lines. Earlier aggregate-only frame misses are explained by m2c's extra local homes. Recorded in [[matching-notes]]; bounded search pending, not a match. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134258
+
+EN_NICHI:func_80134258: best 22 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80134F2C
+
+EN_NICHI:func_80134F2C: best 38 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] query | T-9710 minimal classifier and angle retries conclude
+
+EN_NICHI classifier retry reaches 22 resolved differing lines with the correct frame; angle expression retry remains at 38 lines. Both five-minute searches finish without verified C and restore assembly. Recorded bounded conclusions in [[matching-notes]]. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80135A48
+
+EN_NICHI:func_80135A48: best 46 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80132EE8
+
+EN_NICHI:func_80132EE8: best 245 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_8013358C
+
+EN_NICHI:func_8013358C: best 77 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800754C0
+
+main:func_800754C0: best 51 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80045318
+
+main:func_80045318: best 73 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_800FAA04
+
+EVENT:func_800FAA04: best 79 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_801388D8
+
+SHUGAKU:func_801388D8: best 86 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80076630
+
+main:func_80076630: best 88 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] build | Wave-9 repair attempt func_80142220
+
+TACO:func_80142220: best 92 differing instruction lines; restored assembly and temporary declarations. Evidence saved in personal scratch. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 unused TT selector
+
+resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 empty TT statement
+
+resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 TT pointer call views
+
+resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 TT indentation
+
+resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 unused TT draft types
+
+resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 drawing fallthrough explanation
+
+resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 TT canonical flag member
+
+rejected cleanup restored; original marked FAKE retained. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 TT byte-view explanation
+
+resolved diff and unit SHA1 pass. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 TT mixed-width aggregate review
+
+typed halfword/byte union passes resolved diff and TT SHA1. The original uses both byte and halfword loads at actor +0x40. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] ticket | T-9710 enters In Review
+
+Ten retained matches / 5,608 bytes. Checksum-gated cleanup removes unused declarations/statements/types, uses proper pointer casts and a typed mixed-width union; targeted sync_protos API generation adds only two declarations. Owned-file dupes apply/check yields zero plans. Final checks running; status agrees with [[kanban]] and [[index]]. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 final inline standards and spec review
+
+Review against CODING_STANDARDS.md and the wave-9 brief passes both axes, zero unresolved findings. Scope and append-only audits pass; all search artifacts were removed or explicitly marked. Actual retained function sizes total 5,596 bytes: RPG_BAT func_80142F70 contributes 2,228, 12 fewer than its work-list extent. Final Docker resolved checks, 27 SHA1s, full ninja and prototype/header/global guards pass. Evidence in personal scratchpad/w9-1/final-verify.log. [[matching-notes]], [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] ticket | T-9710 Done
+
+Ten matches / 5,596 bytes; grand total 4880/6958, 782256/2279368 (34.3%). Completed after 5.26 hours, exceeding the four-hour floor. Four T-0018 rows; TAIIKU missing data-island configuration and m2c_args call-delay arity bug reported for orchestration. Status agrees with [[kanban]] and [[index]]. All work uncommitted. [[tickets/T-9710-wave-9-list-1]].
+
+## [2026-10-11] lint | T-9710 final wiki and diff consistency
+
+Done ticket, single Done board card and index entry agree; acceptance items checked. Final git diff --check passes, with only allowed files and the new ticket changed. [[tickets/T-9710-wave-9-list-1]], [[kanban]], [[index]].

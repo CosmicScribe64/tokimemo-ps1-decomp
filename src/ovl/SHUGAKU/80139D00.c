@@ -30,7 +30,47 @@ void func_80139D40(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_80139E8C);
+/* FAKE: byte view keeps selector base in a0; direct member access uses v0. Original source unknown. T-9710. */
+void func_80139E8C(void) {
+    u8 var_a0;
+    RECT rect;
+
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8008585C();
+    func_8004E9F4(1);
+    rect.x = 0x140;
+    rect.y = 0x1A0;
+    rect.w = 0x140;
+    rect.h = 0x58;
+    func_8009C7F8(&rect, 8, 0, 0);
+    rect.x = 0x2C0;
+    rect.y = 0xA0;
+    func_8009C7F8(&rect, 8, 0, 0);
+    var_a0 = ((u8 *)&D_800E6280)[0xF5F];
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    if (var_a0 >= 0xEU) {
+        var_a0 = 0xD;
+    }
+    D_800E6280.unk_F5F = var_a0;
+    func_800847B8(var_a0);
+    func_8007C740();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    D_80122CE0 = 0xFF;
+    D_800CA2F4 = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_80139FD4);
 

@@ -1,7 +1,64 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80155CC0", func_80155CC0);
+void func_80155CC0(void) {
+    switch (D_8015EDAC) {
+    case 0:
+        func_800AE0F0(D_8015E74C, "　　　　　　火の鳥サーブ　　　　　　");
+        func_8014B738((s32) &D_8015E814, 1, 0x5A);
+        func_80144480();
+        func_8013EEAC(D_8015EBAC);
+        func_80148F70();
+        func_8013E54C(3);
+        func_8014EBA8();
+        func_8014EBA8();
+        return;
+    case 2:
+        func_8013D418();
+        return;
+    case 3:
+        func_8013E7C0(0x34, 3, 5, 1);
+        func_8014EBA8();
+        return;
+    case 4:
+        func_8014ED44(0x29);
+        return;
+    case 5:
+        func_80155E80();
+        return;
+    case 6:
+        func_8013E810(0x33, 6, 5, 1);
+        func_8013F0F4(0x510, 0, 2);
+        func_8014EBA8();
+        return;
+    case 7:
+        func_8014EDBC(0x33);
+        return;
+    case 8:
+        func_80156064();
+        return;
+    case 9:
+        func_8013E54C(0xFF);
+        func_8013D3E4();
+        func_8014EBA8();
+        return;
+    case 10:
+        func_8013E7C0(0x34, 2, 1, 1);
+        func_8014EBA8();
+        return;
+    case 11:
+        func_8014ED44(0x14);
+        return;
+    case 12:
+        func_8013D59C();
+        return;
+    case 13:
+        func_8014EBEC();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 void func_80155E80(void) {
     func_8013F0F4(0x50E, 0, 3);
