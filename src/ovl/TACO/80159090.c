@@ -54,7 +54,7 @@ void func_80159F60(s32 arg0) {
 }
 
 void func_8015A164(s32 arg0) {
-    /* the family's position locals (see func_80156F50): p0 is unused and keeps its stack slot. T-9180 */
+    /* FAKE: unused leading TcPos local reproduces the frame (see func_80156F50); real locals unknown. T-9180 */
     TcPos p0;
     TcPos pos;
     TcPos vel;

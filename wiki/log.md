@@ -755,3 +755,9 @@ Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` 
 
 ## [2026-10-10] ticket | T-9180 created (In Progress)
 Wave 6 list 8, worktree w6-8: [[tickets/T-9180-wave-6-list-8]].
+
+## [2026-10-10] build | T-9180 wave 6 list 8
+38 functions matched (13,328 bytes) in 36 files: see [[tickets/T-9180-wave-6-list-8]] and [[matching-notes]] ("Wave 6, list 8 (T-9180)"). Main `src/main/80057390.c` now defines its own `.data` (`tools/data_island.py`), `config/symbol_addrs_types.txt` exports `D_800B5920`. 22 tried functions have rows in [[data/t0018-cases]].
+
+## [2026-10-10] ticket | T-9180 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, `headers OK`, `globals OK`, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9180-wave-6-list-8]]; no open findings. Branch w6-8, not merged.

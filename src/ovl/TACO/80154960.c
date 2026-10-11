@@ -4,7 +4,7 @@
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80154960);
 
 void func_80154F74(void) {
-    /* the family's position locals (see func_80156F50): p0 is unused and keeps its stack slot. T-9180 */
+    /* FAKE: unused leading TcPos local reproduces the frame (see func_80156F50); real locals unknown. T-9180 */
     TcPos p0;
     TcPos pos;
     TcPos vel;
@@ -68,7 +68,7 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801553AC);
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801557E8);
 
 void func_8015595C(void) {
-    /* the family's position locals (see func_80156F50): p1 is unused and keeps its stack slot. T-9180 */
+    /* FAKE: unused TcPos local reproduces the frame and the offsets of pos and vel (see func_80156F50); real locals unknown. T-9180 */
     TcPos pos;
     TcPos p1;
     TcPos vel;
