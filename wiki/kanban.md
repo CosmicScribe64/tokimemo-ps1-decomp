@@ -34,7 +34,9 @@ kanban-plugin: board
 
 
 
+
 ## In Review
+
 
 
 
@@ -42,6 +44,8 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch|T-9800 uopt register allocation: trace and uniform patch]]
+
+- [ ] [[tickets/T-9810-permuter-farm-for-near-misses|T-9810 Permuter farm for near misses]]
 - [ ] [[tickets/T-9600-wave-8-tool-fixes|T-9600 Wave-8 tool fixes]]
 - [ ] [[tickets/T-9610-aggregate-and-local-copy-types|T-9610 Aggregate and local-copy types]]
 - [ ] [[tickets/T-9530-wave-8-list-3|T-9530 Wave 8: list 3]]

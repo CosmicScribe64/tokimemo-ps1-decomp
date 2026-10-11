@@ -228,3 +228,108 @@ or buffer inflation is not a justified compiler pass; retain assembly until
 source or broad compiler evidence resolves it.
 
 Reproduce the synthetic frame checks with `tools/docker.sh python3 tools/test_local_aggregate_frames.py`.
+
+## Resumable CPU permuter farm (T-9810)
+
+`tools/permuter_farm.py` collects existing near-miss C from `scratchpad/w*-*/`
+(JSONL inline drafts, draft paths and measured diff counts, plus standalone C),
+`NON_MATCHING` blocks, and T-0018 rows pointing to drafts. It only queues functions
+still held by `INCLUDE_ASM` in this worktree. Overlay scope is mandatory when a
+function name is ambiguous. Missing drafts and already matched functions are
+excluded; unknown scores sort last. Queue records contain function, unit, immutable
+normalized draft path, last best score, source path and draft fingerprint. Initial
+instruction-diff counts and upstream permuter scores are separate metrics.
+
+Use the launcher from the repository root (all Python, compilers and builds run
+inside Docker; the launcher needs only Docker and Bash on the host):
+
+```sh
+export SCRATCHPAD=/path/to/scratchpad
+# Reuses IMG=tokimemo-decomp-arm64 by default; set IMG for another existing image.
+tools/permuter_farm.sh collect
+tools/permuter_farm.sh run -j 4 --time 1200 --wall-time 3600
+tools/permuter_farm.sh status
+```
+
+`run` starts detached, persistent containers, one CPU per worker and one container
+per worker; no GPU or Docker socket is passed. The repository is mounted read-only.
+Without `-j`, half the Docker CPU cores are used. Without `--wall-time`, workers
+continue until the queue is exhausted. Each candidate gets 20 minutes by default;
+`--max-time` caps extensions (80 minutes by default), and `--patience` defaults to
+two non-improving attempts before a candidate is marked hopeless. Setup time is
+outside the worker's wall-time search window; verification can finish after it.
+
+Worker roots, generated asm/builds, temporary files, queue/state JSON, search logs
+and wins all live under `$SCRATCHPAD/r9-farm/`. `containers.tsv` records only the
+containers created by the launcher. Inspect `worker-N.log` and
+`searches/<unit>/<func>/<fingerprint>/run-*.log` for live progress. To stop this farm,
+send SIGTERM only to its recorded running containers; do not stop unrelated Docker
+jobs. Re-run the same `run` command to resume. Numeric worker-slot locks prevent two
+live jobs sharing a private build root; owner locks release automatically on death,
+allowing recovery of abandoned claims without timeouts or stealing live work.
+
+An improving search resumes from its best C and doubles the next budget up to the
+cap. State preserves attempts, scores and elapsed time per attempt. A new draft
+fingerprint resets exhausted state; unchanged hopeless and won entries are skipped.
+Recollect explicitly when wave agents produce new drafts. Collection and claims
+are locked and state updates are atomic across containers.
+
+Every score-zero output (including an unchanged score-zero seed) is checked using
+`tools/permute.py`'s verifier in a private full build: `funcdiff --resolve UNIT:FUNC`
+and `ninja` on the unit's sha1 target. Known jump-table relocation naming differences
+are accepted only when the whole unit sha1 passes. Only the target body is applied
+in that private copy and restored afterwards. Verified bodies are exported to
+`wins/<unit>/<func>.c` with a verification JSON report. The farm never edits the
+worktree's `src/`; the orchestrator applies wins. All exported output is conservatively
+labelled `FAKE` with T-9810 and a warning about ordering, dummy locals, casts or line
+layout; manual review must identify and explain any surviving trick before applying
+it (CODING_STANDARDS 7/7a). No per-function compiler emulation pass is introduced.
+
+Synthetic tests (queue scoping/ranking, missing drafts, stale claims, budget
+extensions, source isolation, rejected verification, sha1 and FAKE export):
+
+```sh
+# TMPDIR is also inside the farm scratch root.
+docker run --rm -e TMPDIR=/scratch/r9-farm/tmp -e PYTHONDONTWRITEBYTECODE=1 \
+  -v "$PWD":/work:ro -v "$SCRATCHPAD":/scratch -w /work "$IMG" \
+  python3 -m unittest discover -s tools -p test_permuter_farm.py -v
+```
+
+`tools/permuter_farm.sh report` writes `r9-farm/report.md` (time per candidate
+attempt) and `report.json` (scores, budgets, verification notes and errors), and
+prints only the queue/win/attempt summary. `status` prints counts and active elapsed
+seconds. Build-error rows whose diff counters default to zero are ranked as unknown,
+not as measured zero-diff drafts. Recollection preserves live claims; new draft
+fingerprints take effect after the current attempt finishes.
+
+T-9810 also removed exponential backtracking from the wrapper's definition scan:
+`strip_functions` collects signature prefixes and `def_regex` recognizes K&R
+parameter declarations with disjoint type/name and whitespace starts. A real
+54,221-byte preprocessed context that stalled now scans in about three seconds;
+synthetic tests cover long declaration sequences and multiline ANSI helpers.
+
+When both a DIFF listing and a fallback `lines`/`edits` counter exist, the actual
+instruction listing wins; some wave logs initialize those counters to zero.
+`stem`/`label` also provide overlay scope. Timing reports merge the append-only
+worker journals with current state, so changing a draft fingerprint does not lose
+older attempt timings or double-count them.
+
+The default conservative FAKE marker can be removed after an inline review finds
+ordinary C and no compiler-forcing construct. Record that review in the win's JSON
+report and preserve the verified function body and line layout; an identified
+trick receives a precise FAKE explanation instead.
+
+T-9810 validation run (2026-10-11): 1,090 queued candidates, four CPU workers,
+60.92 minutes, 25 completed attempts on 21 functions. Four existing drafts passed
+real verification: RPG_BAT `func_80138170` (60.066 s) and `func_8014FDBC`
+(114.300 s), TACO `func_801522B0` (48.324 s), TT `func_80133970` (47.141 s).
+No new random-mutation win was found. The complete per-attempt table is in
+`scratchpad/r9-farm/report.md`; `hour-summary.json` separates the hour from earlier
+helper failures. The exported C is awaiting orchestrator application. All 65
+combined tests pass; a separate existing-C control also passed real funcdiff and
+unit SHA-1 verification with source restoration asserted. See
+[[tickets/T-9810-permuter-farm-for-near-misses]].
+
+Queue/state/search paths use the container `/scratch` prefix; on the host replace
+it with `$SCRATCHPAD`. Every collected score-zero output is verified, including
+outputs encountered after an earlier verified zero for the same function.
