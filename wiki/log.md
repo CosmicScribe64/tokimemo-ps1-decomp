@@ -755,3 +755,6 @@ Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` 
 
 ## [2026-10-10] ticket | T-9150 (Ready -> In Progress)
 Wave 6 list 5 started; see [[tickets/T-9150-wave-6-list-5]].
+
+## [2026-10-10] ticket | T-9150 (In Progress -> Done)
+Wave 6 list 5: 24 functions, 4,764 bytes matched, 14 T-0018 rows, idioms in [[matching-notes]]; review recorded in [[tickets/T-9150-wave-6-list-5]].
