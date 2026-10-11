@@ -216,3 +216,4 @@ extern s16 D_8014A3DE;
 extern s32 D_80149954;
 extern s16 D_80149958;
 extern s16 D_8014995A;
+extern u8 D_801499D4[];
