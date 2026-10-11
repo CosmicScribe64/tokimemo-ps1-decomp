@@ -304,7 +304,38 @@ void func_8014BED8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014BF38);
+void func_8014BF38(u32 arg0) {
+    s32 i;
+    s32 j;
+    u8 t;
+
+    t = D_8015EDB4[22].unk2;
+    if (t < 0xA) {
+        if (arg0 < D_8015EDB4[22].unk3) {
+            if (D_8015EDB4[23].unk84[2] == 0) {
+                func_8014C0D4(t);
+                t = D_8015EDB4[22].unk2;
+            } else if (D_8015EDB4[23].unk84[2] != 0) {
+                func_8014C1DC(t);
+                t = D_8015EDB4[22].unk2;
+            }
+            D_8015EDB4[22].unk2 = t + 1;
+            D_8015EDB4[22].unk3 = 0;
+            t = D_8015EDB4[22].unk2;
+        }
+    }
+    if (t >= 0xA) {
+        if (D_8015EDB4[23].unk84[2] != 0) {
+            D_8015EDB4[23].unk84[2] = 0;
+            D_8015EDB4[22].unk3 = D_8015EDB4[22].unk2 = D_8015EDB4[22].unk84[2] = D_8015EDB4[23].unk84[2];
+            for (i = 1, j = 0; i != 0x1F; i++, j++) {
+                func_801472D4(i, 0x1D, D_8015FEF8[j * 2 - 2], D_8015FEF8[j * 2 - 1], D_8015FFE2[j * 2 - 2], D_8015FFE2[j * 2 - 1]);
+            }
+        }
+    } else {
+        D_8015EDB4[22].unk3 += 1;
+    }
+}
 
 void func_8014C0D4(s32 arg0) {
     s32 i;
