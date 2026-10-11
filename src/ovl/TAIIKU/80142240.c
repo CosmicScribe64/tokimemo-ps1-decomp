@@ -202,7 +202,24 @@ void func_80143CC0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143D24);
+/* FAKE: overlapping word/halfword views use the existing byte data island;
+ * its coordinate record layout remains incomplete. T-9550 */
+void func_80143D24(void) {
+    if (*(s32 *)&D_8014A13C[8] < 0 || D_8014A1CE == 0) {
+        if (D_8014A1D0 != 0) {
+            *(s32 *)&D_8014A13C[0x14] -= D_8014A1D0;
+        }
+    } else {
+        *(s32 *)&D_8014A13C[0x14] += (s32)D_8014A12C >> 2;
+    }
+    if (*(s16 *)&D_8014A13C[0x16] >= -0x1F) {
+        *(s16 *)&D_8014A13C[0x16] = -0x20;
+    }
+    if (*(s16 *)&D_8014A13C[0x16] < -0x9F) {
+        *(s16 *)&D_8014A13C[0x16] = -0xA0;
+    }
+    D_80120676 = *(s16 *)&D_8014A13C[0x16];
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143DD0);
 

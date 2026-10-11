@@ -65,4 +65,10 @@ extern s32 D_80156330;
 extern s32 D_80156334;
 extern s32 D_80156338;
 
+/* func_80152F4C copies a 4-by-4 word grid and indexes two two-bit fields. */
+typedef struct BunkakenGrid4 { /* size 0x40 */
+    /* 0x00 */ s32 values[4][4];
+} BunkakenGrid4;
+extern BunkakenGrid4 D_801564E0;
+
 #endif

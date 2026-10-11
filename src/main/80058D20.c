@@ -16,7 +16,33 @@ void initView(void) {
     func_8009AD60(0x10000);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", initLight);
+/* FAKE: retain the shared scalar light views until the libgs light aggregate
+ * is available in project headers. T-9550 */
+void initLight(void) {
+    D_80122760 = 0;
+    D_80122764 = 0;
+    D_80122768 = 0x64;
+    D_8012276C = 0xFF;
+    D_8012276D = 0xFF;
+    D_8012276E = 0xFF;
+    func_8009AD70(0, (s32) &D_80122760);
+    D_80122770 = 0;
+    D_80122774 = 0x64;
+    D_80122778 = 0;
+    D_8012277C = 0;
+    D_8012277D = 0xFF;
+    D_8012277E = 0;
+    func_8009AD70(1, (s32) &D_80122770);
+    D_80122780 = 0x64;
+    D_80122784 = 0;
+    D_80122788 = 0;
+    D_8012278C = 0xFF;
+    D_8012278D = 0;
+    D_8012278E = 0;
+    func_8009AD70(2, (s32) &D_80122780);
+    GsSetAmbient(0, 0, 0);
+    func_8009B340(0);
+}
 
 void initCoordinate(void) {
     TaiikuBig *p;

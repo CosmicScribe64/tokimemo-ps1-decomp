@@ -197,4 +197,41 @@ void func_80138E0C(void);
 void func_80138F8C(void);
 void func_801391A0(void);
 void func_801393B4(void);
+/* Copied by DATE2 threshold walkers; lengths follow their signed halfword loops. */
+typedef struct Date2Threshold30 { /* size 0x3C */
+    /* 0x00 */ s16 values[30];
+} Date2Threshold30;
+extern Date2Threshold30 D_8013B6B8;
+void func_801395C8();
+
+/* func_80138F8C copies 0x66 bytes and scans 51 signed halfwords. */
+typedef struct Date2Threshold51 { /* size 0x66 */
+    /* 0x00 */ s16 values[51];
+} Date2Threshold51;
+extern Date2Threshold51 D_8013B6F4;
+
+/* func_801391A0: local copy is 0x4e bytes, scanned as 39 halfwords. */
+typedef struct Date2Threshold39 { /* size 0x4e */
+    /* 0x00 */ s16 values[39];
+} Date2Threshold39;
+extern Date2Threshold39 D_8013B75C;
+
+/* func_801393B4: local copy is 0xa2 bytes, scanned as 81 halfwords. */
+typedef struct Date2Threshold81 { /* size 0xa2 */
+    /* 0x00 */ s16 values[81];
+} Date2Threshold81;
+extern Date2Threshold81 D_8013B7AC;
+
+/* func_80138A90 copies four pairs of word-sized load parameters plus two fallback pairs. */
+typedef struct Date2LoadPair { /* size 0x08 */
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} Date2LoadPair;
+typedef struct Date2LoadPairs4 { /* size 0x20 */
+    /* 0x00 */ Date2LoadPair pair[4];
+} Date2LoadPairs4;
+extern Date2LoadPairs4 D_8013B688;
+extern Date2LoadPair D_8013B6A8, D_8013B6B0;
+extern u8 D_8013B5CC;
+
 #endif /* OVL_DATE2_H */

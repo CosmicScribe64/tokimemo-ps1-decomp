@@ -79,7 +79,14 @@ void func_8013CBE4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013C980", func_8013CC20);
+/* FAKE: scalar byte store followed by member read preserves argument/constant scheduling. T-9550 */
+void func_8013CC20(void) {
+    D_800B5A60 = 0;
+    *(u8 *)&D_800E6280.unk_F5F = 7;
+    func_800847B8(D_800E6280.unk_F5F);
+    D_80120666 = 2;
+    func_8004284C();
+}
 
 void func_8013CC60(void) {
     if (D_800E6280.unk_1109 == 0) {

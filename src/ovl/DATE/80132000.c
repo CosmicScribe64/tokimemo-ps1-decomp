@@ -1962,7 +1962,15 @@ s32 func_80140C6C(void) {
     return func_80082764(D_80122CDC, 1, 0);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80140D38);
+/* FAKE: unsigned byte view and integer fallthrough retain palette-state address scheduling. T-9550 */
+s32 func_80140D38(void) {
+
+    if ((u32)D_800E6280.unk_10F8 % 7U == 0) {
+        (*(u8 *)&D_8015B6A0)++;
+        if (*(u8 *)&D_8015B6A0 >= 4U) D_8015B6A0 = 0;
+        load_palette((s32)D_8015B644, 0x11, 1, 3, *(u8 *)&D_8015B6A0);
+    }
+}
 
 void func_80140DB4(void) {
     normal_date_girl_in();

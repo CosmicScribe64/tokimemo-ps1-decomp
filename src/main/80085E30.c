@@ -75,7 +75,18 @@ void Default_Disp(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_8008647C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80085E30", func_80086640);
+/* FAKE: same-line swap and pointer read retain the original halfword load order. T-9550 */
+s32 func_80086640(void)
+{
+
+  s16 *right;
+  s16 old_right;
+  s16 old_left;
+  old_left = D_80120666; right = &D_801206EE; old_right = *right; D_80120666 = old_right; D_801206EE = old_left;
+  D_80120668 = 0;
+  D_801206F0 = 0;
+  D_80120658 = 0;
+}
 
 s32 func_8008667C(s32 a) {
     /* FAKE: the (u8) cast reserves the extra temp the original has (same as GYOZI func_80140D7C); real return type unknown. T-4060 */

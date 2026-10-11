@@ -3786,3 +3786,258 @@ Moved [[tickets/T-9560-wave-8-list-6]] and its kanban card to In Review; index a
 ## [2026-10-11] ticket | T-9560 second pass Done
 
 Moved [[tickets/T-9560-wave-8-list-6]] and its kanban card to Done; index agrees. The requested three-hour deep-pass minimum is met. Changes remain uncommitted.
+## [2026-10-11] ticket | Claim wave 8 list 5
+
+Created [[tickets/T-9550-wave-8-list-5]] In Progress and synchronized [[kanban]]. Read the shared wave8-brief.md and [[register-allocation-wave7]] before matching. Work is isolated to branch w8-5, with uncommitted edits for the orchestrator.
+
+## [2026-10-11] build | Limit list-5 baseline concurrency
+
+First configure generated build.ninja. Initial build overlapped the other wave-8 builds; stopped only this worktree's own container and restarted ninja with two jobs to limit shared-host contention. [[tickets/T-9550-wave-8-list-5]] remains In Progress.
+
+## [2026-10-11] build | Wave-8 list-5 baseline and drafts
+
+Main executable and completed overlay baseline checks pass. Captured list-order m2c drafts in scratchpad/w8-5/ and prepared array/member rewrites guided by [[data-types]] and [[game-state]]. [[tickets/T-9550-wave-8-list-5]] records this batch; no candidate is claimed matched yet.
+
+## [2026-10-11] build | Wave-8 list-5 baseline passes
+
+Docker configure and ninja -j 2 completed with all 27 unit SHA1 checks OK, build/headers.ok and build/globals.ok. Starting bounded list-order candidate verification for [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] query | List-5 reuse and aggregate evidence
+
+Owned-file dupes.py and neardupes.py each applied zero copies. type_recovery.py found no aggregate proposal for D_800B6708, and a high-confidence unsigned-halfword array rooted at D_800B670A, stride 2, absorbing D_800B6710. Bounded C attempts will use this evidence. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] decision | First list-5 promotion time-box
+
+Restored func_80067DD4 after a real instruction difference and bounded permuter run. Recorded its retained-conversion symptom in [[data/t0018-cases]] and [[matching-notes]]. Also recorded the register_shapes.py positional-argument discrepancy for the orchestrator. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] decision | List-5 flag-update sibling
+
+func_80067DFC repeats the retained-conversion difference of func_80067DD4. Its bounded permuter did not match (best 105), so restored assembly and appended evidence to [[data/t0018-cases]]. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | First 30 list-5 attempts restored
+
+Recorded first 30 bounded attempts in scratchpad/w8-5/results-1.jsonl; no C candidates survived this pass. Corrected draft preparation for union-field aliases by retaining their temporary inferred declarations during migrate_globals.py, as required by [[decompile-workflow]]. Retesting the affected drafts and near misses before continuing the remaining list. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] decision | List-5 first verified C matches
+
+[[tickets/T-9550-wave-8-list-5]] keeps DATE `func_801572E4` (268 bytes) and TAIIKU `func_80143D24` (172 bytes), each verified by Docker resolved function diff. [[matching-notes]] records the common-table load ordering and overlapping coordinate views. Other corrected retries remain time-boxed and restored; batch checksums are running.
+
+## [2026-10-11] build | Corrected list-5 retry batch passes
+
+Docker ninja completed successfully with all 27 checksum checks after the ten corrected retries. Two function matches (440 bytes) remain; all failed C and temporary API declarations were restored. [[tickets/T-9550-wave-8-list-5]] continues with list positions 31–152, using typed byte-pointer fields and bounded variants.
+
+## [2026-10-11] query | List-5 data-island evidence
+
+Consulted `config/objects/main.txt`, `config/objects/TAIIKU.txt`, and TAIIKU's generated data piece. The existing island places `D_8014A1D0` in `src/ovl/TAIIKU/80142240.c` and its four bytes are zero. [[matching-notes]] records a bounded C-definition retry for `func_8014430C`; no tooling or raw source edits. [[tickets/T-9550-wave-8-list-5]] has completed attempts for list positions 31–50 and is checking their restored outputs.
+
+## [2026-10-11] decision | Reuse Rec24 field layout in list-5 drafts
+
+Compared `cal_sprite_init`'s scalar addresses with the documented 0x24-byte `Rec24` layout in `include/main_api.h`. Prepared field-based candidates for this table rather than new globals, retaining EVENT's separate data interpretation. [[matching-notes]] records the boundary evidence; [[tickets/T-9550-wave-8-list-5]] continues its bounded list sweep.
+
+## [2026-10-11] build | List-5 positions 31–50 restored and verified
+
+All twenty functions were attempted or time-boxed; failed drafts and temporary declarations were restored. Docker ninja passes 27 checksums. The GYOZI `func_8013E638` diff hoists the scalar `D_800F62CF`; the existing `GyoziWork.unk_F2F` member documents the correct T-9210 reload view, prepared for subsequent drafts and a bounded retry. [[tickets/T-9550-wave-8-list-5]] continues at position 51.
+
+## [2026-10-11] query | List-5 SDK argument evidence
+
+Read `asm/libgs.s` and the callers in the owned `80058D20` object. `initLight` explicitly clears a2 for `GsSetAmbient`; `func_8009B430` uses a0–a2 as inputs. [[matching-notes]] records a third-argument fix and a three-argument file-view retry under standards 8a; retention requires real function and unit checks. [[tickets/T-9550-wave-8-list-5]] continues the list sweep.
+
+## [2026-10-11] build | List-5 positions 51–70 verified
+
+All twenty entries reached a bounded result; no additional matches retained. Restored sources and header views pass all 27 checksums in Docker. [[tickets/T-9550-wave-8-list-5]] continues with positions 71–90. Scratch retries now include real Rec24 fields, GyoziWork index aliases, SDK argument corrections, named CharFlags bit tests and generated prototype guards.
+
+## [2026-10-11] build | List-5 positions 71–90 verified
+
+Twenty more entries were attempted or time-boxed, with no new C retained. Docker ninja passes all 27 checksums after restoring them. [[tickets/T-9550-wave-8-list-5]] continues at position 91. Full checksum rebuilds are reserved for retained matches (still within the brief's 5–10-match interval) and final verification; each candidate continues to get a real fresh-object function diff.
+
+## [2026-10-11] decision | List-5 positions 91–110 time-boxed
+
+Twenty entries reached bounded compiler/diff or draft-shape results; none added matching C. Source and declaration snapshots were restored. [[tickets/T-9550-wave-8-list-5]] proceeds to 111–130, then the remaining entries and the concrete type/argument/frame retries recorded in [[matching-notes]]. The last retained-match tree remains the two verified functions (440 bytes).
+
+## [2026-10-11] decision | List-5 positions 111–130 time-boxed
+
+All twenty entries reached bounded results and were restored; no additional C retained. [[tickets/T-9550-wave-8-list-5]] now sweeps the final 22 entries. Added a table heading for this ticket's new [[data/t0018-cases]] rows, leaving historical rows unchanged.
+
+## [2026-10-11] decision | List-5 full sweep completed
+
+All 152 listed functions reached a bounded compiler/diff result or draft-shape time-box; failed C and temporary declaration snapshots were restored. [[tickets/T-9550-wave-8-list-5]] now tests thirteen prepared retries with concrete type, SDK-arity, local-layout or implicit-int hypotheses. Complete per-function evidence remains in scratchpad/w8-5/results-*.jsonl; no raw sources or tooling files changed.
+
+## [2026-10-11] decision | List-5 aggregate and SDK-arity matches
+
+Resolved Docker function diffs additionally match `cal_sprite_init` (828 bytes) and `initLight` (272 bytes). Four functions, 1,540 bytes, are retained. The completeness audit covers all 152 entries; [[matching-notes]] records successes and the bounded member/data-island/model-view failures. [[tickets/T-9550-wave-8-list-5]] proceeds to final local-allocation retries and validation.
+
+## [2026-10-11] build | List-5 four-match batch verified
+
+Docker ninja -j 2 completed all 27 checksum checks, headers and globals. The final two local-allocation retries failed resolved function diffs and were restored. [[matching-notes]] records the outcomes; [[data/t0018-cases]] now has fourteen appended T-9550 cases.
+
+## [2026-10-11] ticket | List-5 enters inline review
+
+Moved [[tickets/T-9550-wave-8-list-5]] to In Review with matching [[kanban]] and [[index]] entries. Standards review of the uncommitted HEAD diff found undocumented incomplete aggregate views; marked DATE, TAIIKU and light scalar views FAKE and tracked the reasons. Spec review accounts for 152/152 entries and confirms allowed-file isolation. Final Docker guards, checksums and owned-file reuse scan remain pending.
+
+## [2026-10-11] query | List-5 final owned-file reuse audit
+
+Ran Docker dupes.py --apply --check with the exact 36 owned C paths. Applied zero copies; no additional source or declaration changes. [[tickets/T-9550-wave-8-list-5]] now runs final branch/global guards, fresh diffs for all four retained functions, incremental ninja and explicit 27-binary SHA1 verification.
+
+## [2026-10-11] build | List-5 final verification passes
+
+Docker branch prototypes report zero new disagreements (17 known), GameState migration audit passes, and all four fresh resolved function diffs MATCH after FAKE-comment edits. Incremental ninja exits zero; all 27 unit checksums and explicit final SHA1 verification pass with header/global stamps. Progress: grand total 4738/6958 functions, 731152/2279368 bytes (32.1%); SDK 722 functions excluded. Full evidence is scratchpad/w8-5/final-validation.log. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] ticket | List-5 reviewed and Done
+
+Inline code-review skill against HEAD completed along standards and shared-brief spec axes. Three missing FAKE-documentation findings resolved, zero outstanding on either axis. Moved [[tickets/T-9550-wave-8-list-5]] to Done with [[kanban]] and [[index]] synchronized. All 152 entries attempted/time-boxed; four matches (1,540 bytes), fourteen [[data/t0018-cases]] rows. Changes stay uncommitted for the orchestrator; no tools, raw sources or Git state modified.
+
+## [2026-10-11] ticket | Reopen list-5 for deep second pass
+
+User committed the first pass as df5bc9f and requested sustained per-function experiments rather than first-mismatch rejection. Reopened [[tickets/T-9550-wave-8-list-5]] and synchronized [[kanban]] and [[index]]. Starting at 11:08:23 UTC, spend at least three hours or exhaust the remaining list; rank resolved diff sizes, compare target asm, iterate types/control flow/source order, run five-minute near-miss permutations, and retain only function-plus-unit verified matches. Aggregate/local-copy repairs follow the closest candidates.
+
+## [2026-10-11] query | Rank rejected list-5 drafts for deep experiments
+
+Docker parsed all first-pass result files and ranked each remaining function's best resolved diff. [[matching-notes]] records the nearest nine functions and separates compile/type failures. Starting with DATE `func_80140D38`: target code differs only by a hoisted address load in the best draft. Prepared ten control-flow/byte-local/return-view candidates; its existing object data island also contains a four-byte zero piece at D_8015B6A0, available for a bounded ownership retry. [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep list-5 first match
+
+DATE `func_80140D38` (124 bytes) passes fresh resolved funcdiff and DATE SHA1. The `s32` fallthrough return view removes the address-load scheduling difference; byte-local alternatives and a C definition of the zero data piece failed to improve the nearest void draft. [[matching-notes]] records the successful T-9000 idiom and restored data experiment. [[tickets/T-9550-wave-8-list-5]] proceeds to the halfword swap with signed/unsigned temporary widths, declaration/load orders, line grouping and both return views.
+
+## [2026-10-11] build | Deep halfword swap matched
+
+Main `func_80086640` (60 bytes) passes resolved funcdiff and main SHA1 after 216 explicit variants and a five-minute-bound permutation search. Its same-line swap/pointer-alias shape is marked FAKE and recorded in [[matching-notes]] and the append-only resolution note in [[data/t0018-cases]]. [[tickets/T-9550-wave-8-list-5]] has two deep-pass gains (184 bytes); now testing flag-update return/local forms with generated canonical API views, correcting the first pass's incompatible void prototype experiment.
+
+## [2026-10-11] query | Deep flag and threshold type experiments
+
+Main `func_80067DD4` narrowed from seven to four resolved differing lines through promoted-byte assignment forms and corrected canonical return views; running its full 300-second permutation search. Identified four DATE2 local-copy tables as 30/51/39/81 signed halfwords from copy sizes and loop bounds. Prepared a documented 60-byte aggregate retry for the first walker, including correct word string-pointer loads and declaration/frame variants. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep promoted-byte flag matched
+
+Main `func_80067DD4` (40 bytes) passes real resolved funcdiff and main SHA1 after explicit return/expression/local-width experiments and a 268-second permutation/verification run. A signed-halfword stage followed by a byte alias retains the target's final ANDI and byte store. Pruning redundant permutation syntax and applying the proven family shape to its sibling next. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep sibling flag and syntax cleanup verified
+
+Removed redundant nested assignment and XOR-zero from `func_80067DD4`; resolved diff and main SHA1 still pass. Adapted the remaining promoted-halfword/byte-alias idiom to `func_80067DFC`; fresh resolved diff and main SHA1 pass (40-byte function plus original padding). Four unique deep-pass matches, 264 function bytes; starting DATE `func_80136F2C` array-base ordering experiments. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] query | Aggregate retries grounded in neighboring source
+
+DATE2's already matched `func_80138048` copies a 13-entry callable-word struct and declares its scalar index before the table. GYOZI `func_80142D40` has the same aggregate copy pattern over 27 words; prepared a typed retry with both scalar/table declaration orders and observed frame offsets. RPG_BAT `func_801564F0` target supplies a third call argument (0x82) missing from its draft; prepared corrected call and direct byte-symbol variants. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep DATE array loop time-boxed
+
+`func_80136F2C` remains an eight-line t0/t1 array-base swap after 28 valid explicit variants and full 300-second permutation, about 13 minutes total. Restored all source experiments; integer-return declaration conflicts excluded from codegen conclusions. Canonical API layout for the two matched main flags regenerated with tools/sync_protos from baseline declaration order (minimal type/addition diff). Continuing with the next ranked DATE function. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep DATE branch function narrowed to six lines
+
+`func_8013E3C4` now has the original saved-state stack offset with an extra four-byte local declared first (FAKE). Seven minutes of integer/narrow local widths, declaration orders, equality operands and return views leave six lines: comparison operand order and a scheduled constant. Testing explicit else-if/shared-exit flow and source grouping, then a full five-minute permutation. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] query | Owned-file duplicate scan after deep flag matches
+
+Read-only Docker dupes.py scan restricted to the 36 list-5 paths reports zero plans and one skipped copy. Its reported matched count is based on generated asm directories and predates the new C definitions; rerun the prescribed scoped apply/check after further matches. DATE branch-flow tests did not improve six differing lines; now running the full 300-second permutation. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | T-9550 deep DATE control-flow timeout and aggregate retry
+
+[[tickets/T-9550-wave-8-list-5]]: restored DATE func_8013E3C4 after explicit return/frame/control-flow experiments and full 300-second permutation; closest resolved diff has six differing lines. [[matching-notes]] records the result. DATE2 threshold struct-copy repair compiles; inspecting exact frame and narrow-argument differences before further bounded experiments.
+
+## [2026-10-11] build | T-9550 first aggregate-copy match
+
+DATE2 func_80138E0C matches 384 bytes after signed-halfword aggregate, declaration/frame placement and redundant narrow-conversion experiments. Fresh funcdiff --resolve and full DATE2 SHA1 pass. [[matching-notes]] records the genuine copy type and the two marked FAKE details; [[tickets/T-9550-wave-8-list-5]] has the verification result. Deep pass now has five unique gains, 648 bytes.
+
+## [2026-10-11] build | T-9550 DATE2 nested-expression copy match
+
+DATE2 func_80138F8C matches 532 bytes after aggregate length/tail correction and named-local versus expression-temporary experiments. Real resolved diff and overlay SHA1 pass. [[matching-notes]] records the stack spill and multiplication finding; [[tickets/T-9550-wave-8-list-5]] records the gain. Six unique deep matches, 1,180 bytes.
+
+## [2026-10-11] build | T-9550 DATE2 39-entry sibling match
+
+The typed sibling expression immediately matches DATE2 func_801391A0 (532 bytes); real resolved diff and DATE2 checksum pass. [[matching-notes]] and [[tickets/T-9550-wave-8-list-5]] updated. Seven unique second-pass gains, 1,712 bytes; checking the 81-entry sibling next.
+
+## [2026-10-11] build | T-9550 DATE2 threshold family complete
+
+DATE2 func_801393B4 (532 bytes) completes the four repaired aggregate-copy walkers. [[matching-notes]] records their true copy extents, expression temporaries and marked frame/conversion details. Eight unique deep gains total 2,244 bytes. Full 27-unit/check-guard checkpoint and scoped owned-file duplicate application are running.
+
+## [2026-10-11] build | T-9550 eight-match checkpoint passes
+
+Docker ninja and explicit SHA1 verification pass all 27 binaries; header/global guards pass. Corrected the scratch duplicate invocation to its documented comma-separated --files argument; scoped --apply --check applies zero copies. Evidence: scratchpad/w8-5/deep-checkpoint-retry.log. [[tickets/T-9550-wave-8-list-5]] remains In Progress; ranked GEKO scheduling experiments resume.
+
+## [2026-10-11] build | T-9550 GEKO argument-store scheduling match
+
+GEKO func_8013CC20 matches 64 bytes via scalar-byte member store followed by plain member read as argument. Fresh funcdiff --resolve and GEKO SHA1 pass. Specific FAKE reason added; final verification will follow comments. [[matching-notes]] records the idiom. Nine unique deep gains, 2,308 bytes; repairing the ranked RPG_BAT call's missing third argument next.
+
+## [2026-10-11] build | T-9550 RPG_BAT aggregate flag match
+
+RPG_BAT func_801564F0 matches 620 bytes after correcting the missing call argument and using one typed record-table view for all three flag bytes. Fresh resolved diff and whole overlay SHA1 pass; no new scalar main API declarations retained. [[matching-notes]] records the aliasing evidence and marked remaining view. Ten unique deep gains total 2,928 bytes.
+
+## [2026-10-11] build | T-9550 GEKO colour-loop match
+
+GEKO func_80139C70 matches 228 bytes through a genuine unsigned byte local and correctly ordered assignment chain. Fresh real diff and GEKO SHA1 pass. [[matching-notes]] records the fix. Eleven unique deep gains, 3,156 bytes; bounded model-linker declaration/control-flow experiments next.
+
+## [2026-10-11] build | T-9550 model-linker deep timeout
+
+Restored initModelingData_init and its generated guarded three-argument SDK view after about fifteen minutes, explicit copy/ordering variants and two full five-minute permutations. Closest whole-file resolved comparison has two differing lines; no candidate retained. [[matching-notes]] records the experiment. Correcting the next ranked DATE helper's old-value postincrement comparison.
+
+## [2026-10-11] query | Deep DATE counter and TACO aggregate evidence
+
+DATE func_8013E6A4 compares the old counter with one before storing its increment; corrected 48 explicit return/local/byte-view variants reach twelve differing lines, solely counter/condition registers. Full 300-second permutation is running. TACO func_8013D1E0 homes all four argument registers and copies two eight-byte values with unaligned stores: the existing TcPos type fits both by-value arguments. Neighboring particle arrays have sixteen 0x14-byte entries with two TcPos members and four byte fields. Typed retries prepared; no SDK types invented. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep DATE old-counter timeout
+
+Restored DATE func_8013E6A4 after approximately fifteen minutes of corrected control flow, local/argument allocation and full 300-second permutation. Closest resolved diff stays twelve differing lines; weighted permutation score improved 85 to 50. [[matching-notes]] records the limits. Starting the typed TACO by-value-copy retry under [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep TACO by-value aggregate match
+
+TACO func_8013D1E0 matches 192 bytes after recovering two TcPos arguments and a 0x14-byte particle record. The integer fallthrough-return idiom resolves the last pointer/value register swap; fresh real diff and TACO checksum pass. [[matching-notes]] records the ABI evidence; [[tickets/T-9550-wave-8-list-5]] records the gate. Twelve unique deep gains, 3,348 bytes.
+
+## [2026-10-11] build | Deep typed TACO loop reaches one instruction
+
+Forty-eight typed counter/postincrement/layout variants bring func_8013D348 within one missing move-to-zero at loop entry. Eighteen explicit returned-value variants add saved-register work and do not improve it. A full 300-second permutation and initialization/return-shape probes follow; no failed loop body or declaration is retained. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep TACO loop timeout
+
+Restored func_8013D348 and its unsuccessful header additions after approximately ten minutes, including full 300-second permutation and explicit initialization/induction/result variants. One entry initialization remains missing; recorded as a source/return-shape gap rather than a proved T-0018 case. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep TACO initializer sibling match
+
+func_8013D2A0 matches 168 bytes immediately with the recovered particle aggregate, promoted narrow parameters and marked integer fallthrough idiom. Fresh resolved diff and whole TACO SHA1 pass. Thirteen unique deep gains, 3,516 bytes; the larger particle-update sibling follows. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep TACO update permutation narrows existing row
+
+The recovered func_8013D3F4 member view reaches eighteen differing resolved lines: one moved pointer addition and condition registers. Full 300-second permutation improves weighted score 85 to 55 without matching, the same remaining shape recorded by T-9330 at the historical row. Local-width/return-type and pointer-initialization placement experiments are the final retry. Also removed obsolete flag comments and corrected two declaration indents; final real diff/checksum gates will cover these review edits. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep TACO update timeout and grid-copy retry
+
+Restored func_8013D3F4 after approximately ten minutes, explicit allocation variants and full 300-second permutation. Whole-file insertion of the best candidate fixes the pointer order but leaves sixteen register-only differing lines; the earlier T-9330 row is preserved without duplication. Added the missing precise FAKE explanation to the matched DATE palette helper. Starting BUNKAKEN's recovered 4-by-4 grid copy. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep BUNKAKEN grid reaches final address register
+
+The 64-byte aggregate copy and all frame offsets match. Inlining row and column expressions removes the temporary-register chain, reducing twenty-eight differing lines to four: final stack address in v0 rather than v1. Twenty further return/expression/pointer variants do not improve it; full 300-second permutation follows. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep BUNKAKEN grid timeout
+
+Restored the grid function and declarations after approximately ten minutes: copy/frame/type repair, indexed expression rewrites, return joins and full 300-second permutation. Closest explicit view remains four differing lines; [[matching-notes]] records the bound. DATE2's three parameter-pair aggregate copies are the next repair under [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Correction: final BUNKAKEN candidate matched
+
+The immediately preceding timeout entry misread the final scratch result. The first whole-file permutation-candidate retry actually MATCHED func_80152F4C (248 bytes), with fresh resolved diff and whole BUNKAKEN SHA1 pass. The signed returned local preserves the target's final address/value allocation. Source and grid aggregate are retained; [[matching-notes]] corrected. Fourteen unique deep gains, 3,764 bytes; [[tickets/T-9550-wave-8-list-5]] contains the successful gates.
+
+## [2026-10-11] build | Deep fourteen-match checkpoint and swap pruning
+
+The full Docker build and explicit SHA1 pass all 27 binaries, with header/global guards and owned-file dupes --apply --check (zero plans). Scratch evidence: deep-checkpoint-14.log. The matched main swap also passes real diff and main SHA1 after removing do/while(0), removing its redundant pointer alias and naming the locals. DATE2 func_80138A90's three recovered copies agree except for local offsets; padding types/placement are being tested. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep DATE2 parameter-copy match
+
+func_80138A90 matches 348 bytes after recovering three word-pair aggregates and declaring one byte of padding before them. Fresh resolved diff and DATE2 checksum pass. Fifteen unique deep gains, 4,112 bytes. Updated the main swap's final FAKE explanation and removed trailing whitespace; final gates will cover those comment/format edits. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep main position helper match
+
+func_8006C700 matches 96 bytes after 96 explicit width/order/expression variants, bit-extraction inlining and direct struct-member indexing. Generated main API unsigned halfword table declaration retained; fresh resolved diff and main SHA1 pass. Sixteen unique second-pass gains, 4,208 bytes (twenty batch gains, 5,748 bytes including the committed first pass). One further 0x44-byte aggregate flag-loop retry precedes final review. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep final candidate restored and review cleanup verified
+
+BUNKA_SD func_80134850 remains 51 differing lines after approximately twelve minutes of record alignment, loop extent/control-flow and counter/quotient experiments; source and declarations restored. The second pass ran from 11:08:23 UTC past 14:14 UTC, satisfying the three-hour requirement. Main position cleanup removes unused locals and uses an unsigned left shift without changing bytes. BUNKAKEN's unused word demonstrably fixes the table offset; renamed to pad and documented. Both cleanup candidates pass fresh resolved diffs and unit SHA1. Added historical-row resolution prose, with zero new T-0018 rows. Full final verification follows. [[matching-notes]], [[data/t0018-cases]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] build | Deep final checks and inline review pass
+
+All twenty retained functions pass fresh funcdiff --resolve; sixteen are new in this pass, totaling 4,208 bytes (twenty/5,748 bytes across both passes). New TACO fields renamed to unk_XX during standards review, then both affected functions and the full build rechecked. Docker ninja, explicit 27/27 SHA1 checks, header/global guards and prototype/global checks pass; zero new prototype disagreements (17 known), zero scoped duplicate copies. Final progress: grand total 4754/6958 functions, 735360/2279368 bytes (32.3%). Evidence in scratchpad/w8-5/deep-final-validation.log and deep-final-taco-review.log. [[matching-notes]], [[tickets/T-9550-wave-8-list-5]].
+
+## [2026-10-11] ticket | T-9550 deep pass Done
+
+Inline standards/spec review against df5bc9f resolves all findings; permitted-path audit and git diff --check pass. The sustained deep pass exceeds three hours and stops on the duration condition, with larger type repairs remaining documented rather than claimed exhausted. Sixteen additional matches retained, every failed candidate restored, no new T-0018 rows. Updated ticket, index and kanban to Done. No Git mutation; changes stay uncommitted. [[tickets/T-9550-wave-8-list-5]], [[matching-notes]], [[kanban]].
+
+## [2026-10-11] lint | T-9550 final wiki consistency
+
+Ticket frontmatter, index and the single kanban card agree on Done; final acceptance checks are checked and review history remains appended after the matching entries. git diff --check passes. The card returns to its committed Done position, so wiki/kanban.md has no net second-pass diff. [[tickets/T-9550-wave-8-list-5]], [[kanban]], [[matching-notes]].

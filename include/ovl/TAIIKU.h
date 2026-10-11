@@ -215,6 +215,8 @@ extern u8 D_8014A120[];
 extern s32 D_8014A130[];
 extern s16 D_8014A1CE;
 
+extern s32 D_8014A1D0;
+
 #endif
 extern s32 D_80149954;
 extern s16 D_80149958;
