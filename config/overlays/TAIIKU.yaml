@@ -86,4 +86,6 @@ segments:
       - [0x16E00, .rodata, TAIIKU/80142240]
       - [0x16E60, .rodata, TAIIKU/801452D0]
       - [0x16EC0, data, TAIIKU_data]
+      - [0x18110, .data, TAIIKU/80142240]
+      - [0x18390, data, TAIIKU_data_8014A390]
   - [0x30000]

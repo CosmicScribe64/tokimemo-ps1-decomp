@@ -1,6 +1,9 @@
 #include "common.h"
 #include "game.h"
 
+extern s16 D_800B66E0[];
+extern s16 D_800B66F4[];
+
 void func_800674B0(void) {
     u8 v;
     s32 i;
@@ -210,7 +213,17 @@ void func_8006B640(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B648);
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B900);
+void func_8006B900(void) {
+    s32 i;
+
+    _sprite_set_light_effect1(-0x120, -0xF8, D_800B66E0[0], 0x3C, 0xA0, 0x3C, 9, 0xA0A0A0, D_800B66F4[0]);
+    for (i = 1; i < 9; i++) {
+        _sprite_set_light_effect1(-0x120, -0xF8, D_800B66E0[i], 0x3C, 0, 0xB4, 9, 0xA0A0A0, D_800B66F4[i]);
+    }
+    dtd_on_tpage(0, 0, 9, 1, 0);
+    _sprite_set_light_effect1(-0x140, -0x118, -0x142, -0x141, -0xA2, -0x79, 9, 0x808080, 0);
+    dtd_on_tpage(0, 0, 9, 1, 0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
 

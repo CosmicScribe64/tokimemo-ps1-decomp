@@ -64,4 +64,6 @@ segments:
       - [0xAC10, .rodata, OPTION/801389A0]
       - [0xACE0, .rodata, OPTION/8013A550]
       - [0xB180, data, OPTION_data]
+      - [0xB360, .data, OPTION/801389A0]
+      - [0xC740, data, OPTION_data_8013E740]
   - [0x30000]

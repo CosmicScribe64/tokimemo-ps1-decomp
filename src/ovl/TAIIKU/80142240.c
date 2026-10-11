@@ -1,5 +1,48 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A110);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A118);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A11C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A120);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A124);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A128);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A12C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A130);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A134);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A138);
+u8 D_8014A13C[0x90] = { 0 };
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1CC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1D0);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1D4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1E8);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1EC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A1FC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A208);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A228);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A254);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A27C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A290);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A2A4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A2C4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A2F0);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A304);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A318);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A320);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A328);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A334);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A340);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A34C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A358);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A360);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A370);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A374);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A378);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A37C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A380);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A384);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80142240.data", D_8014A388);
 extern u8 D_8014A13C[]; /* func_801446A0: same shape as D_80149208 */
 extern u8 D_8014A161;
 extern u8 D_8014A185;
@@ -112,7 +155,17 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_8014357C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143814);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143AC8);
+void func_80143AC8(void) {
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        *(s32 *)(D_8014A13C + i * 0x24 + 4) += 1;
+        *(s32 *)(D_8014A13C + i * 0x24 + 0x10) += 1;
+        *(u16 *)(D_8014A13C + i * 0x24 + 0x1A) += 1;
+        *(u16 *)(D_8014A13C + i * 0x24 + 0x18) += 1;
+    }
+    D_8014A118 += 1;
+}
 
 void func_80143C04(void) {
     if ((D_80120778 != 0x2D) && (D_80120778 != 0x39)) {
@@ -183,7 +236,29 @@ s32 func_801446A0(void) {
     return 4;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144768);
+typedef struct {
+    s16 v[3];
+} Tri3S; /* size 0x6 */
+extern Tri3S D_8014A320;
+
+void func_80144768(void) {
+    s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    Tri3S tbl;
+
+    tbl = D_8014A320;
+    for (i = 0; i < 3; i++) {
+        if (*(u16 *)&D_8014A13C[i * 0x24 + 0x3C] >= 0x33U) {
+            if (i + 0x36 == *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC]) {
+                *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC] = tbl.v[i];
+            }
+        }
+    }
+    func_80144834();
+    func_801448D4();
+    func_801449A0();
+    func_80144B40();
+    func_80144C70();
+}
 
 typedef struct {
     s32 v[3];
@@ -206,7 +281,33 @@ void func_80144834(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801448D4);
+extern Tri3 D_8014A334;
+
+void func_801448D4(void) {
+    s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    Tri3 tbl;
+    u8 *q;
+    u8 *r;
+    s32 v;
+
+    tbl = D_8014A334;
+    for (i = 0, q = D_8011ECD0; i < 3; i++, q += 0x44) {
+        if (i + 0x36 != *(s16 *)(q + 0x19DC)) {
+            r = D_8014A13C + i * 0x24;
+            if (*(u32 *)(r + 0x34) >= 0xBU) {
+                v = *(s32 *)(r + 0x30) += *(s32 *)(r + 0x2C);
+                if (v < 0) {
+                    *(s32 *)(r + 0x30) = 0;
+                    v = 0;
+                }
+                if (tbl.v[i] < v) {
+                    *(s32 *)(r + 0x30) = tbl.v[i];
+                }
+                *(s32 *)(r + 0x34) = 0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801449A0);
 
@@ -236,7 +337,40 @@ void func_80144B40(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144C70);
+extern Tri3S D_8014A358;
+
+void func_80144C70(void) {
+    s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    Tri3S tbl;
+    u8 *q;
+    u8 *r;
+
+    tbl = D_8014A358;
+    for (i = 0, q = D_8011ECD0; i < 3; i++, q += 0x44) {
+        if (i + 0x36 != *(s16 *)(q + 0x19DC)) {
+            r = D_8014A13C + i * 0x24;
+            if (*(s32 *)(r + 0x28) == 0 && (r[0x24] == 2 || r[0x24] == 6) && *(s32 *)(r + 0x40) == 1 &&
+                tbl.v[i] < (func_800AE0D0() & 0xFF) && r[0x26] == 1) {
+                *(s32 *)(r + 0x40) = 0;
+                *(s16 *)(r + 0x3E) = 0;
+                *(s32 *)(r + 0x30) = 0;
+                *(s16 *)(q + 0x19DC) = func_800AE0D0() % 3 + i * 9 + 0x18;
+            }
+        }
+    }
+    for (i = 0, q = D_8011ECD0; i != 3; i++, q += 0x44) {
+        if (i + 0x36 != *(s16 *)(q + 0x19DC)) {
+            r = D_8014A13C + i * 0x24;
+            if (*(s32 *)(r + 0x40) == 0 && *(u16 *)(r + 0x3E) >= 0x1EU) {
+                *(s32 *)(r + 0x40) = 1;
+                *(s16 *)(r + 0x3C) = 0;
+                r[0x24] = 0;
+                r[0x26] = 0;
+                *(s16 *)(q + 0x19DC) = i + 0x36;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144E54);
 

@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
+
+void func_80083440(s32 arg0);
 
 void func_80135B90(void) {
     D_80143EB0 = 0x801B0478;
@@ -93,7 +96,19 @@ void func_80136148(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136178);
+void func_80136178(void) {
+    u32 temp_t8;
+
+    temp_t8 = (u8)func_80051A68(5) & 0x7F;
+    if (D_800E6280.unk_F5F == 5 && temp_t8 < 2U && D_80143B20 == 0) {
+        if (D_800E6280.unk_1104.w++ == 0) {
+            D_80143B00 = 0x2A;
+        }
+        func_801323D4();
+        return;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136204);
 
@@ -163,7 +178,26 @@ void func_80136B9C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136BD4);
+void func_80136BD4(void) {
+    D_800E6280.unk_71E |= 8;
+    if ((u32)((u8)func_80051A68(D_800E6280.unk_F5F) & 0x7F) >= 2U) {
+        D_800E6280.unk_110A += 8;
+        return;
+    }
+    if (D_800E6280.unk_F5F == 0 && D_80143B24 == 1) {
+        func_80085B3C(0xD, 0x2D);
+    } else {
+        func_80085B3C(0xD, 0x2C);
+    }
+    D_800E6280.unk_71E |= 4;
+    D_80143AF4 = D_80143A70;
+    D_80143AF8 = D_80143AAC;
+    D_80143AFC = D_80143AE8;
+    D_80143B00 = 0;
+    D_80143B04 = 0;
+    func_80083440(func_80051B48(D_800E6280.unk_F5F));
+    func_8004284C();
+}
 
 void func_80136CE0(void) {
     D_800CA148 = 1;

@@ -27,7 +27,30 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80134A18);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80134D8C);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80134EBC);
+void func_80134EBC(void) {
+    s32 i;
+
+    D_8015EDB0 = 0;
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_036 = 0;
+    D_8015EDE8 = 0;
+    D_800E6280.unk_038 = 0;
+    func_80059048();
+    func_800438DC(1, 1);
+    func_80048DAC(1);
+    func_8004E9F4(0);
+    func_800443F0(0, 0x1EF, 0x100, 1, &D_800E6280.unk_163C[0]);
+    for (i = 56; i < 72; i++) {
+        D_800E6280.unk_163C[i] = 0;
+    }
+    for (i = 0; i < 0x80; i++) {
+        D_800E6280.unk_163C[128 + i] = 0;
+    }
+    func_80043914(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
+    func_80134FB8();
+    func_80134930();
+    func_8004284C();
+}
 
 void func_80134FB8(void) {
     func_80048F64(1);
@@ -47,7 +70,23 @@ void func_80134FB8(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013506C);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_8013515C);
+s32 func_8013515C(void) {
+    s32 i;
+    s32 n;
+
+    n = 0;
+    for (i = 56; i < 72; i++) {
+        if (D_800E6280.unk_163C[i] == 0) {
+            if ((func_800AE0D0() & 0xFF) < 0x7F && n == 0) {
+                D_800E6280.unk_163C[i] = ((s32 *)D_800E6280.unk_1A6C)[i];
+            } else {
+                n++;
+            }
+        }
+    }
+    func_80043914(&D_800E6280.unk_163C[0], 0x1F, 1, 1, 0);
+    return n;
+}
 
 void func_80135220(void) {
     if ((u32)D_800E6280.unk_1104.w >= 0xD1U) {

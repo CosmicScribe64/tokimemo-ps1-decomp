@@ -218,3 +218,4 @@ extern s16 D_80149958;
 extern s16 D_8014995A;
 extern u8 D_801499D4[];
 void func_8013B5C0(void);
+extern u8 D_8014A118;

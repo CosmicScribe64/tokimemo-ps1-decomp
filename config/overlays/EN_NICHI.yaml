@@ -61,4 +61,6 @@ segments:
       - [0x70D0, .rodata, EN_NICHI/80132000]
       - [0x7170, .rodata, EN_NICHI/80136B10]
       - [0x71E0, data, EN_NICHI_data]
+      - [0x7200, .data, EN_NICHI/80132000]
+      - [0x7C30, data, EN_NICHI_data_80139C30]
   - [0x30000]
