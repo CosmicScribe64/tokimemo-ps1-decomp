@@ -440,7 +440,20 @@ void func_8014E2E8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E38C);
+/* FAKE: the GameState pointer local moves the incremented counter to $v1 as in the original (T-9380, found with the permuter) */
+s32 func_8014E38C(void) {
+    GameState *g;
+    u32 n;
+
+    g = &D_800E6280;
+    n = ++g->unk_1104.u;
+    if (n < 0x10) {
+        return 0;
+    }
+    func_80046318(0x3D, 0x801B0000, 0x7E55);
+    func_8014CDA0();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E3E8);
 
