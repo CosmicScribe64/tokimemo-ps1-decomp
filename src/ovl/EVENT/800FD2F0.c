@@ -73,7 +73,20 @@ void func_800FD4FC(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FD2F0", func_800FD588);
+void func_800FD588(void) {
+    u32 r;
+
+    func_800F7074();
+    r = D_800B1AE4 % 60;
+    if (r == (D_800B1AE4 * 0)) { /* FAKE: the no-op multiply moves the load into $v1, as in func_800FCDD8 (T-9350) */
+        func_800433D0(0x504);
+        r = D_800B1AE4 % 60;
+    }
+    if (r == 0x1E) {
+        func_800433D0(0x503);
+    }
+    func_80011DFC();
+}
 
 typedef struct {
     void (*f[37])();
