@@ -112,7 +112,67 @@ s32 func_801375F8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_801376D4);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801376D4(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E9E0, "番長「俺様は、この世界の番長だ！");
+        func_800AE0F0(D_8015EA08, "子分達が随分と世話になったようだな。");
+        func_800AE0F0(D_8015EA30, "だが、茶番はここまでだ！");
+        func_800AE0F0(D_8015EA58, "礼をさせてもらうぞ。");
+        func_800AE0F0(D_8015EA80, "これでもくらえぇーい！");
+        func_800AE0F0(D_8015EAA8, "超眼力！");
+        func_8014B738(D_8015EB70, 6, 0x10E);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x04000002, 0x03000011, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x1A000096, 0x150000A3, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(2);
+        return;
+    case 5:
+        func_8013F1C4(0x1A0000A4, 0x160000B0, 2);
+        D_8015ED8C[0] += 1;
+        return;
+    case 6:
+        func_8013F250(3);
+        return;
+    case 7:
+        func_8013F1C4(0x1B000082, 0x0800008A, 3);
+        D_8015ED8C[0] += 1;
+        return;
+    case 8:
+        func_8013F250(4);
+        return;
+    case 9:
+        func_8013F1C4(0x1B000095, 0x0A0000A0, 4);
+        D_8015ED8C[0] += 1;
+        return;
+    case 10:
+        func_8013F250(5);
+        return;
+    case 11:
+        func_8013F1C4(0x190000AA, 0x140000B7, 5);
+        D_8015ED8C[0] += 1;
+        return;
+    case 12:
+        func_8013F250(0);
+        return;
+    case 13:
+        func_8013F220();
+        func_8014F500();
+        return;
+    }
+}
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_8013794C(void) {
@@ -188,7 +248,58 @@ s32 func_80137AC8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137C44);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_80137C44(void) {
+    if (func_8013E90C(0x30) != 0) {
+        func_8013E7C0(0x30, 0, 1, 1);
+    }
+    if (D_8015ED8C[0] >= 4) {
+        if (D_8015ED94 != D_8015EDA0) {
+            func_8013F15C(0x504, 2, 5);
+        }
+        D_8015ED94 += 9;
+        if (D_8015EDA0 < D_8015ED94) {
+            D_8015ED94 = D_8015EDA0;
+        }
+    }
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E9E0, "そうよ、あなたにならできるわ！");
+        func_800AE0F0(D_8015EA08, "新しい力をあげる。");
+        func_800AE0F0(D_8015EA30, "彼女を・・・守ってあげて！");
+        func_8014B738(D_8015EB70, 3, 0xF0);
+        D_8015ED8C[0] += 1;
+        break;
+    case 1:
+        func_8013F1C4(0x05000028, 0x05000035, 0);
+        D_8015ED8C[0] += 1;
+        break;
+    case 2:
+        func_8013F250(1);
+        break;
+    case 3:
+        func_8013F1C4(0x06000003, 0x0400000C, 1);
+        D_8015ED8C[0] += 1;
+        break;
+    case 4:
+        func_8013F250(2);
+        break;
+    case 5:
+        func_8013F1C4(0x0600000D, 0x05000017, 2);
+        D_8015ED8C[0] += 1;
+        break;
+    case 6:
+        func_8013F250(0);
+        break;
+    case 7:
+        if (D_8015ED94 == D_8015EDA0) {
+            func_8013F220();
+            func_8013E7C0(0x30, 0, 1, 1);
+            func_8014F500();
+        }
+        break;
+    }
+}
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80137E74(void) {
@@ -212,7 +323,51 @@ s32 func_80137E74(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80137F50);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_80137F50(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E9E0, "番長「こわっぱが、");
+        func_800AE0F0(D_8015EA08, "超眼力を見切った程度で図に乗りおって");
+        func_800AE0F0(D_8015EA30, "俺様の真の力を見せてくれる。");
+        func_800AE0F0(D_8015EA58, "ゆくぞーっ！");
+        func_8014B738(D_8015EB70, 4, 0x118);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1A00007B, 0x1200007F, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x1A000080, 0x1300008D, 1);
+        D_8015ED8C[0] += 1;
+        return;
+    case 4:
+        func_8013F250(2);
+        return;
+    case 5:
+        func_8013F1C4(0x0300005C, 0x0A00006A, 2);
+        D_8015ED8C[0] += 1;
+        return;
+    case 6:
+        func_8013F250(3);
+        return;
+    case 7:
+        func_8013F1C4(0x1E00009F, 0x1D0000A4, 3);
+        D_8015ED8C[0] += 1;
+        return;
+    case 8:
+        func_8013F250(0);
+        return;
+    case 9:
+        func_8013F220();
+        func_8014F500();
+        return;
+    }
+}
 
 void func_80138120(void) {
     switch (D_8015EDD8) {
