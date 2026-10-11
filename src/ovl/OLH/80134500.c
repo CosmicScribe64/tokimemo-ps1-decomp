@@ -33,7 +33,28 @@ void func_80134500(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134500", func_801345CC);
+void func_801345CC(void) {
+    s32 i;
+    s32 r;
+    s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame; real source unknown. T-9320 */
+    s16 a[8];
+    s16 b[8];
+    s16 c[8];
+    s16 d[8];
+
+    func_8004EAAC();
+    func_8004E788(-0x50, -0x40, 0xF, (s32)"アイコン", 0);
+    for (i = 0; i < 8; i++) {
+        a[i] = -0x60;
+        b[i] = i * 0x10 - 0x32;
+        c[i] = 0xE8;
+        d[i] = 0x10;
+        r = func_8004E788(a[i], b[i], 0xF, (&D_8013BF60)[i], 0);
+    }
+    func_8004F870(0, 8, a, b, c, d);
+    func_8004E884(r);
+    func_8004284C();
+}
 
 void func_801346F4(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
