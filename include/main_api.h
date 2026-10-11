@@ -475,7 +475,6 @@ extern u32 D_800B0940;
 extern s16 D_800B094E;
 extern s16 D_800B0956;
 extern s16 D_800B095E;
-extern s16 D_800B0962;
 extern s16 D_800B0966;
 extern s16 D_800B096E;
 extern Rec34 D_800B0A04[]; /* 12 records */
@@ -1524,9 +1523,7 @@ s32 load_palette();
 s32 load_csr_tp();
 void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4);
 void func_8004435C(u16 arg0, u16 arg1, u16 arg2, u16 arg3, s32 arg4);
-#ifndef MAIN_API_OVERRIDE_func_80044750
 s32 func_80044750(s32 arg0);
-#endif
 s32 func_80044774(s32 arg0);
 u8 func_8004480C(void);
 void func_8004482C(void);
@@ -2254,3 +2251,6 @@ s32 func_80049FF0();
 extern u32 D_800B0C4C;
 extern u8 D_800E94A0[];
 extern u8 D_800FD4A0[];
+
+extern s16 D_800B0962;
+#ifndef MAIN_API_OVERRIDE_func_80044750
