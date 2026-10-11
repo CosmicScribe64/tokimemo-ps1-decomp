@@ -63,9 +63,60 @@ void func_80150AA4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150B90);
+/* returns int without a value, selector read as a word: the switch temporary stays in $v1/$v0 (T-8080, T-9330) */
+s32 func_80150B90(void) {
+    switch (*(u32 *) &D_8015EC74) {
+    case 0:
+        func_8013E810(0x32, 6, 5, 1);
+        D_8015EC74 += 1;
+        return;
+    case 1:
+        D_8015EC78 += 1;
+        if (D_8015EC78 >= 0xF) {
+            D_8015EC74 += 1;
+        }
+        return;
+    case 2:
+        func_8013E7C0(0x34, 0xC, 1, 1);
+        func_8013E97C(0x33, 0, 0);
+        func_8013E7C0(0x33, 8, 1, 1);
+        func_8013F0F4(0x513, 0, 5);
+        D_8015EC74 += 1;
+        return;
+    case 3:
+        D_8015EC78 += 1;
+        if (D_8015EC78 >= 0x1F) {
+            func_8013E7C0(0x33, 8, 1, 0);
+            D_8015EC74 += 1;
+        }
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150CD8);
+/* (u32) on the s16 compare: its constant 1 is then the unsigned 1 of the case label and shares $v0 (T-9330) */
+void func_80150CD8(void) {
+    switch (*(u32 *) &D_8015EC74) {
+    case 0:
+        func_8013E810(0x32, 7, 5, 1);
+        D_8015EC74 += 1;
+        return;
+    case 1:
+        if ((u32) D_801213B0 == 1) {
+            func_8013E97C(0x33, 0, 0);
+            func_8013E7C0(0x33, 8, 1, 1);
+            func_8013F0F4(0x512, 0, 5);
+            D_8015EC74 += 1;
+            return;
+        }
+    case 2:
+        D_8015EC78 += 1;
+        if (D_8015EC78 >= 0x1F) {
+            func_8013E7C0(0x33, 8, 1, 0);
+            D_8015EC74 += 1;
+        }
+        return;
+    }
+}
 
 void func_80150DE0(void) {
     switch (D_8015EB9C) {
