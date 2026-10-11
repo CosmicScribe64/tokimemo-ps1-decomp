@@ -836,3 +836,9 @@ Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-bra
 
 ## [2026-10-10] ticket | T-9350 wave 7 list 5 (In Progress)
 [[tickets/T-9350-wave-7-list-5]] created, branch w7-5.
+
+## [2026-10-10] build | T-9350 wave 7 list 5 (16 functions)
+16 functions matched (about 4880 bytes) in branch w7-5, 20 rows in [[data/t0018-cases]], notes in [[matching-notes]] ("Wave 7, list 5"). Progress 4574/6958.
+
+## [2026-10-10] ticket | T-9350 (In Progress -> In Review -> Done)
+Inline review in [[tickets/T-9350-wave-7-list-5]], no open findings. Clean rebuild of all 27 units not finished (Docker host overloaded); every touched unit rebuilt from clean and OK.
