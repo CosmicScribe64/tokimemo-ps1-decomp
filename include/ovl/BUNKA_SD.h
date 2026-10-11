@@ -72,5 +72,6 @@ extern u8 D_8013CFC8[];
 extern u8 *D_8013D98C;
 extern u8 *D_8013D990;
 s32 func_80137B40(void);
+void func_801346D4(void);
 
 #endif /* OVL_BUNKA_SD_H */

@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80120656 /* 0x82 must not sign-extend (main_api.h: s8) */
 #include "common.h"
 #include "ovl/BUNKA_SD.h"
+
+extern u8 D_80120656;
 
 s32 func_80134540(void) {
     if (D_800E6280.unk_110D == 0) {
@@ -10,7 +13,35 @@ s32 func_80134540(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134540", func_801345BC);
+/* FAKE: the D_8012069A store shares a source line with the loop head; as1 schedules by line and this gives the original's order of the loop setup (T-7020, T-9380) */
+void func_801345BC(void) {
+    s32 i;
+
+    if ((D_800E6280.unk_110A >= 3) && (D_800E6280.unk_110A < 7)) {
+        if (D_800E6280.unk_F80 & 0x20) {
+            func_801346D4();
+            D_80120656 = 0x82;
+            D_8012069A = 0x82; for (i = 0; i < 2; i++) {
+                D_8011ED58[(i + 1) * 0x110 + 0x18BA] = 0x82;
+                D_8011ED58[(i + 1) * 0x110 + 0x18FE] = 0x82;
+                D_8011ED58[(i + 1) * 0x110 + 0x1942] = 0x82;
+                D_8011ED58[(i + 1) * 0x110 + 0x1876] = 0x82;
+            }
+        } else {
+            D_80120656 = 1;
+            D_8012069A = 1; for (i = 0; i < 2; i++) {
+                D_8011ED58[(i + 1) * 0x110 + 0x18BA] = 1;
+                D_8011ED58[(i + 1) * 0x110 + 0x18FE] = 1;
+                D_8011ED58[(i + 1) * 0x110 + 0x1942] = 1;
+                D_8011ED58[(i + 1) * 0x110 + 0x1876] = 1;
+            }
+        }
+    }
+    if ((D_800E6280.unk_110A >= 3) && (D_800E6280.unk_110A < 6) && (D_800E6280.unk_F80 & 0x40)) {
+        func_80042940(5);
+    }
+    func_801346D4();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134540", func_801346D4);
 
