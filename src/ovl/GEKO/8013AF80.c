@@ -80,7 +80,45 @@ void func_8013B350(void) {
     func_80042878(0x81);
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013AF80", func_8013B3C0);
+void func_8013B3C0(void) {
+    s32 pad; /* FAKE: unused scalar reproduces RECT home at +0x2C; original local unknown. T-9770 */
+    RECT r;
+
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8008585C();
+    func_8004E9F4(1);
+    r.x = 0x140;
+    r.y = 0x100;
+    r.w = 0x140;
+    r.h = 0xF8;
+    func_8009C7F8(&r, 8, 0, 0);
+    r.x = 0x2C0;
+    r.y = 0;
+    func_8009C7F8(&r, 8, 0, 0);
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    /* FAKE: scalar byte store then member read preserves argument scheduling; sibling func_8013CC20 uses the same idiom. T-9770 */
+    *(u8 *)&D_800E6280.unk_F5F = 2;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8007C740();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    func_80137990();
+    D_80146274 = D_80145F10;
+    D_80146278 = D_8014604C;
+    D_8014627C = D_80146188;
+    func_8004284C();
+}
 
 void func_8013B510(void) {
     D_800E6280.unk_F5F = 2;

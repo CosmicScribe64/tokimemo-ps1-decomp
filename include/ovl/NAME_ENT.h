@@ -210,3 +210,9 @@ typedef struct NameRecord44 {
     /* 0x3C */ u8 pad3C[8];
 } NameRecord44; /* size 0x44 */
 #endif
+
+#ifndef OVL_NAME_ENT_T9770_SELECTION_GLOBALS
+#define OVL_NAME_ENT_T9770_SELECTION_GLOBALS
+extern s32 D_8014CCAC; /* Word reset in func_801341A8. T-9770 */
+extern s32 D_8014CCB4; /* Word selection and old-value snapshot. T-9770 */
+#endif

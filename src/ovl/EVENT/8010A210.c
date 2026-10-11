@@ -126,7 +126,21 @@ void func_8010A658(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A6E4);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A790);
+void func_8010A790(void) {
+    u8 value;
+
+    /* FAKE: byte alias retains the loaded address in V0. T-9770 */
+    value = *(u8 *)&D_800B0E72;
+    if (value >= 2U) {
+        value = 1;
+    }
+    D_80094714 += value;
+    /* FAKE: empty condition delays the final store address load. T-9770 */
+    if ((value && value) && value) {
+    }
+    D_800B0E72 = value + 1;
+    func_80011DFC();
+}
 
 void func_8010A7E0(void) {
     D_800B1746 = 0xB;

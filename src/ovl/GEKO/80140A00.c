@@ -163,7 +163,20 @@ void func_80140F44(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80140FD0);
+void func_80140FD0(void) {
+    u32 value;
+    GameState *g;
+
+    g = &D_800E6280;
+    value = g->unk_1BC[11].unk_0C.f.f9;
+    if (value >= 5U) {
+        g->unk_1BC[11].unk_0C.f.f9 = 4;
+        value = D_800E6280.unk_1BC[11].unk_0C.f.f9;
+    }
+    D_800CA150 = (u16)D_800CA150 + value * 2;
+    g->unk_1BC[11].unk_0C.f.f9++;
+    func_8004284C();
+}
 
 void func_8014107C(void) {
     func_80065F34(0);

@@ -306,7 +306,17 @@ void func_80133FC4(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134110);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801341A8);
+void func_801341A8(void) {
+    s32 prev;
+
+    prev = D_8014CCB4;
+    if ((D_800E6280.unk_F88 & 0x20) && D_8014CCB8 != -1 && D_8014CCBC != -1) {
+        D_8014CCB4 = D_8014CCBC * 15 + D_8014CCB8 % 6 + D_8014CCB8 / 6 * 5;
+        if (D_8014CCB4 != prev) {
+            D_8014CCAC = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134248);
 
