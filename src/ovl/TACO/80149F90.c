@@ -27,7 +27,31 @@ void func_80149F90(void) {
     func_80133374();
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014A070);
+void func_8014A070(void) {
+    s32 i;
+    s32 j;
+
+    if (D_8015EDBC == 0) {
+        func_80151678();
+        func_80146D60(0);
+        func_801471D0(0x801A7000);
+        func_80147400(0x801A7000);
+        func_80143730(0x80162000, 8);
+        func_80143730(0x80172000, 0xA);
+        func_80146F74(0, D_8015EDB4->unk74, D_8015EDB4->unk76 - 0xBB8, -0x3A98, 0x1E, 0xB4, 0, 0, 0);
+        for (i = 1, j = 0; i < 0x22; i++, j++) {
+            func_801472D4(i, 0, D_8015FD18[j * 2 - 2], D_8015FD18[j * 2 - 1], D_8015FE1A[j * 2 - 2], D_8015FE1A[j * 2 - 1]);
+            (&D_80127090)[j].unk0 = 0; /* FAKE: strides from D_80127090, not D_80127080[]; the aggregate is unknown. T-9320 */
+        }
+        D_80128880[0].x = 0x1E;
+        D_80128880[0].y = 0xB4;
+        D_80128880[0].z = 0;
+        for (i = 0x10; i != 0x3F; i++) {
+            func_80143B34(i);
+        }
+        func_8004284C();
+    }
+}
 
 void func_8014A1D4(void) {
     func_8014F210();
