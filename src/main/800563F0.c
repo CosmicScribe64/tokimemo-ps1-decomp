@@ -19,7 +19,28 @@ INCLUDE_ASM("asm/nonmatchings/main/800563F0", strSetDefDecEnv);
 
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strCallback);
 
-INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNextVlc);
+s32 strNextVlc(u8 *arg0) {
+    s32 vlc;
+    s32 timeout;
+
+    timeout = 0x800000;
+    vlc = strNext(arg0);
+    while (vlc == 0) {
+        if (--timeout == 0) {
+            return -1;
+        }
+        func_80088CB0(vlc);
+        vlc = strNext(arg0);
+    }
+    if (((MovieVlcState *)arg0)->index != 0) {
+        ((MovieVlcState *)arg0)->index = 0;
+    } else {
+        ((MovieVlcState *)arg0)->index = 1;
+    }
+    func_80086870(vlc, ((MovieVlcState *)arg0)->buffers[((MovieVlcState *)arg0)->index]);
+    func_80088CB0(vlc);
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNext);
 

@@ -36,4 +36,9 @@ typedef struct FileReq {
     /* 0x20 */ s32 retry;
 } FileReq; /* size 0x24 */
 
+typedef struct MovieVlcState {
+    /* 0x00 */ s32 buffers[2];
+    /* 0x08 */ s32 index;
+} MovieVlcState; /* accessed prefix, size 0x0C. T-9570 */
+
 #endif /* GAME_H */

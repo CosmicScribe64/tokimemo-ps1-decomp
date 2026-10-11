@@ -11,11 +11,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3D4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3D8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3E0);
-TkCnt D_8014A3E4 = { 0, 0, 0 };
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3F0);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3F4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3F8);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3FC);
+TaiikuController D_8014A3E4 = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A400);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A454);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A45C);
@@ -235,7 +231,22 @@ void func_8014692C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146994);
+void func_80146994(void) {
+    if ((D_80120668 != 3) && ((D_8014A460 == 0) || (D_8014A3E0 != 0))) {
+        if ((D_8014A3F4 < 0) || (D_8014A3DE == 0)) {
+            D_8014A3E4.position.w -= D_8014A3E0;
+        } else {
+            D_8014A3E4.position.w += 0x8000;
+        }
+    }
+    if (D_8014A3E4.position.h[1] >= -0x1F) {
+        D_8014A3E4.position.h[1] = -0x20;
+    }
+    if (D_8014A3E4.position.h[1] < -0x9F) {
+        D_8014A3E4.position.h[1] = -0xA0;
+    }
+    D_80120676 = D_8014A3E4.position.h[1];
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146A60);
 
@@ -399,7 +410,29 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_801482BC);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80148370);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_801485C4);
+s32 func_801485C4(void) {
+    s32 index;
+    s32 chosen;
+    u8 *p;
+
+    p = D_8014A3D8;
+    index = 0;
+    do {
+        if (*p == 1) {
+            chosen = index;
+        }
+        index++;
+        p++;
+    } while (index < 4);
+    if (chosen * 48 - 64 < ((TaiikuScene44 *)D_8011ECD0)[104].position.h[1]) {
+        ((TaiikuScene44 *)D_8011ECD0)[104].position.w += 0xFFFE8000;
+        return 0;
+    }
+    ((TaiikuScene44 *)D_8011ECD0)[104].unk_02 = 64;
+    ((TaiikuScene44 *)D_8011ECD0)[104].unk_18 = 61;
+    func_80085ED0();
+    return 1;
+}
 
 s32 func_80148678(void) {
     s32 i;
