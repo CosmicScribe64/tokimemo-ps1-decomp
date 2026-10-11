@@ -481,7 +481,8 @@ def worker(args, number):
             if item is None:
                 break
             cand, seconds = item
-            seconds = max(1, min(seconds, int(deadline - time.monotonic())))
+            if deadline != float('inf'):  # no --wall-time: keep the claimed budget
+                seconds = max(1, min(seconds, int(deadline - time.monotonic())))
             result = search(root, private, farm, cand, seconds, str(number))
             result['actual_budget'] = seconds
             finish(farm, cand, result, args.time, args.max_time, args.patience)
