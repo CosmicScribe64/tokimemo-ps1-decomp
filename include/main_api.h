@@ -730,7 +730,6 @@ extern u8 D_800E7D49;
 extern u8 D_800E7D4A;
 extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
-extern u8 D_800E7D4E;
 extern u8 D_800E7D4F;
 extern s32 D_800E7D50;
 extern u8 D_800E7D68;
@@ -1367,14 +1366,10 @@ extern s32 D_80122D44;
 extern s32 D_80122D4C;
 extern u8 D_80122DD0[];
 extern s32 D_80122E94;
-extern s32 D_80122E98;
 extern u32 D_80122E9C;
 extern s32 D_80122EA0;
 extern s32 D_80122EA4;
-extern s32 D_80122EA8;
 extern s32 D_80122EAC;
-extern s32 D_80122EB0;
-extern s32 D_80122EB4;
 #ifndef MAIN_API_OVERRIDE_D_80122EB8
 extern s32 D_80122EB8;
 #endif
@@ -1479,6 +1474,9 @@ extern u8 D_80123324[];
 extern u8 D_800B0E72;
 extern u32 D_800B5970[16];
 extern u32 D_800B59B0[16];
+extern u32 D_800B0C4C;
+extern u8 D_800E94A0[];
+extern u8 D_800FD4A0[];
 
 /* ---- functions ---- */
 void func_80010678();
@@ -1528,7 +1526,9 @@ s32 load_palette();
 s32 load_csr_tp();
 void LoadSquare(u16 arg0, u16 arg1, u16 arg2, u16 arg3, void *arg4);
 void func_8004435C(u16 arg0, u16 arg1, u16 arg2, u16 arg3, s32 arg4);
+#ifndef MAIN_API_OVERRIDE_func_80044750
 s32 func_80044750(s32 arg0);
+#endif
 s32 func_80044774(s32 arg0);
 u8 func_8004480C(void);
 void func_8004482C(void);
@@ -2251,11 +2251,11 @@ s32 func_80053418();
 s32 func_800463E8(void);
 s32 func_80049FF0();
 
-#endif /* MAIN_API_H */
-
-extern u32 D_800B0C4C;
-extern u8 D_800E94A0[];
-extern u8 D_800FD4A0[];
-
 extern s16 D_800B0962;
-#ifndef MAIN_API_OVERRIDE_func_80044750
+extern u8 D_800E7D4E;
+extern s32 D_80122E98;
+extern s32 D_80122EA8;
+extern s32 D_80122EB0;
+extern s32 D_80122EB4;
+
+#endif /* MAIN_API_H */
