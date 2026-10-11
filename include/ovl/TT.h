@@ -91,5 +91,9 @@ void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2);
 extern u8 D_80155D02;
 
 void func_80143580(void);
+typedef struct TtOtTag {
+    /* 0x00 */ u32 addr : 24;
+    /* 0x03 */ u32 len : 8;
+} TtOtTag; /* size 0x04 */
 #endif /* OVL_TT_H */
 void func_8013EC1C(void);

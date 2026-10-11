@@ -426,7 +426,51 @@ void func_8014CBD0(void) {
     }
 }
 
+/* NON_MATCHING: T-9380, one instruction: the first ordering-table address is `addu t9,t8,v0` here, `addu t9,v0,t8` in the original (all else matches; TtOtTag is the 24-bit address field of a GPU tag) */
+#ifdef NON_MATCHING
+void func_8014CC04(u8 *arg0) {
+    u8 *p;
+    u8 *v;
+    u32 r;
+    u32 g;
+    u32 b;
+
+    p = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    v = *(u8 **)(p + 4);
+    *(u8 **)(p + 4) = v + 0x10;
+    v[3] = 3;
+    v[7] = arg0[0x3B];
+    if (*(u16 *)(arg0 + 0x44) & 8) {
+        r = (arg0[0x38] * D_80158A64[0x1D]) >> 7;
+        if ((s32)r >= 0x100) {
+            r = 0xFF;
+        }
+        g = (arg0[0x39] * D_80158A64[0x1E]) >> 7;
+        if ((s32)g >= 0x100) {
+            g = 0xFF;
+        }
+        b = (arg0[0x3A] * D_80158A64[0x1F]) >> 7;
+        if ((s32)b >= 0x100) {
+            b = 0xFF;
+        }
+        v[4] = r;
+        v[5] = g;
+        v[6] = b;
+    } else {
+        v[4] = arg0[0x38];
+        v[5] = arg0[0x39];
+        v[6] = arg0[0x3A];
+    }
+    *(s16 *)(v + 8) = *(s16 *)(arg0 + 0x14);
+    *(s16 *)(v + 0xA) = *(s16 *)(arg0 + 0x16);
+    *(s16 *)(v + 0xC) = *(s16 *)(arg0 + 0x3C);
+    *(s16 *)(v + 0xE) = *(s16 *)(arg0 + 0x3E);
+    ((TtOtTag *)v)->addr = *(u32 *)(p + *(u16 *)(arg0 + 0x10) * 4 + 0x8008);
+    ((TtOtTag *)(p + *(u16 *)(arg0 + 0x10) * 4 + 0x8008))->addr = (u32)v;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CC04);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CDBC);
 
