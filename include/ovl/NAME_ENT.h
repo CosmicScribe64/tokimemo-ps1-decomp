@@ -180,6 +180,7 @@ void func_80134F6C();
 void func_80137B84(s32 arg0, s32 arg1, s32 arg2);
 void func_80137CA0();
 
+
 #ifndef OVL_NAME_ENT_T9510_RECORD44
 #define OVL_NAME_ENT_T9510_RECORD44
 /* T-9510: 0x44-byte records in D_8011ECD0, initialized starting at record 96.

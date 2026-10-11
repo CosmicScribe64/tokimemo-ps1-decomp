@@ -1178,7 +1178,6 @@ extern s8 D_80120DC1;
 extern s8 D_80120E05;
 extern u8 D_80120E07;
 extern s16 D_80120E1C;
-extern s8 D_80120E49;
 extern u8 D_80120E4E;
 extern s16 D_80120E60;
 extern s16 D_80120EE6;
@@ -2229,3 +2228,5 @@ s32 func_800BDC20();
 void func_801040F0(void);
 
 #endif /* MAIN_API_H */
+
+extern s8 D_80120E49;

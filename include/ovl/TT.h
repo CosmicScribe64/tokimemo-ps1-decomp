@@ -159,6 +159,9 @@ typedef struct TtPoint14 {
     /* 0x0C */ s32 x;
     /* 0x10 */ s32 y;
 } TtPoint14; /* size 0x14; func_801320F0 reads these coordinates */
+#endif
+
+
 #ifndef OVL_TT_T9510_ANIM_TYPES
 #define OVL_TT_T9510_ANIM_TYPES
 /* T-9510: D_80151A50 is a table of pointers to frame-array pointers. */

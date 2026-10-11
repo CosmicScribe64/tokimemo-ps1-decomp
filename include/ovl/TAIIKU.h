@@ -310,6 +310,9 @@ typedef struct TaiikuScene44 {
     /* 0x28 */ u8 pad_28[0x1C];
 } TaiikuScene44; /* size 0x44; camera record 104 and related records. T-9570 */
 
+#endif
+
+
 /* T-9510: coordinate bounds loaded with LH in func_8013C5C8. */
 extern s16 D_801499A4;
 extern s16 D_801499A6;
