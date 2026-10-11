@@ -184,7 +184,32 @@ void func_80136BB8(void) {
     func_800AE0F0(D_800CA19C, &D_801398E0);
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136BF4);
+void func_80136BF4(void) {
+    if (D_80139DF4[(u8)D_80139DF0] == 2) {
+        func_8007ED84(0x42B3);
+    } else if (D_80139DF4[(u8)D_80139DF0] == 1) {
+        func_8007ED84(0x477D);
+    } else {
+        switch (D_80139DF8) {
+        case 0:
+            func_8007ED84(0x4787);
+            break;
+        case 1:
+            func_8007ED84(0x478E);
+            break;
+        case 2:
+            func_8007ED84(0x4797);
+            break;
+        case 3:
+            func_8007ED84(0x47A9);
+            break;
+        default:
+            func_8007ED84(0x47B2);
+            break;
+        }
+    }
+    func_8004284C();
+}
 
 void func_80136CD8(void) {
     place_init();
