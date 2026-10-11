@@ -164,7 +164,24 @@ void func_8005ABD0(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005AC70);
+void func_8005AC70(s32 arg0) {
+    s32 i;
+
+    icon_can_use_set(0xA, 0);
+    icon_can_use_set(8, 0);
+    icon_can_use_set(9, 0);
+    if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+        icon_can_use_set(0xE, 0);
+    }
+    if ((D_800E6280.unk_0F4.h >> 0xC) == 0xB) {
+        icon_can_use_set(4, 0);
+    }
+    if (arg0 != 0) {
+        for (i = 0; i != 8; i++) {
+            icon_can_use_set(i, 0);
+        }
+    }
+}
 
 void func_8005AD1C(void) {
     LoadSquare(0x3F0, 0x160, 0x10, 0x18, D_800C9A60);

@@ -3,7 +3,27 @@
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_801388D0);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_801389DC);
+s32 func_801389DC(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_80046318(0x56, 0x80180000, 0x4F1D);
+        D_800E6280.unk_110D += 1;
+    } else if (D_800E6280.unk_110D == 1 && (func_800460CC() & 1)) {
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80046290(0x3F, 0x0500039C, 0xF);
+            break;
+        case 0x60:
+            func_80046290(0x0500005B, 0x05000450, 0xF);
+            break;
+        default:
+        case 0x61:
+            func_80046290(0x02000062, 0x080003F6, 0xF);
+            break;
+        }
+        func_80044750(0x300);
+        func_8004284C();
+    }
+}
 
 void func_80138ADC(void) {
     if ((u32)D_800E6280.unk_110A >= 3 && (u32)D_800E6280.unk_110A < 6 && (D_800E6280.unk_F80 & 0x40)) {

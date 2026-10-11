@@ -226,7 +226,6 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 | SHOUGATU | `func_80138158` | promo | `D_800E7384 += 1; if (D_800E7384 == 1)`: original keeps the global in $v1 (xori/sltiu compare), IDO uses $v0 (T-4060) |
 | ETC | `func_801428EC` | regorder | call argument `u8 * 0x10101 + 0x141414`: original loads the u8 global into $v0 and computes in $t6/$v0, IDO uses $t7/$t8/$t9 (T-4060) |
 | SHOUGATU | `func_801388F0` | regorder | `rec[idx].b or 4` on a byte record field then a string copy: original loads into $t0, ori into $t1, constant into $t2 (a temp skipped); IDO uses $t9/$t0/$t1 (T-4060) |
-| SHOUGATU | `func_80138964` | regorder | same as `func_801388F0` with the constant 0x17 (T-4060) |
 | SHOUGATU | `func_80138E60` | regorder | same as `func_801388F0` with the constant 8 (T-4060) |
 | SHOUGATU | `func_80138ED4` | regorder | same as `func_801388F0` with the constant 0xB (T-4060) |
 | GYOZI | `func_8013B6CC` | regorder | `girl[i].unk_10[0] or 4` then a string copy: same skipped-temp pattern as SHOUGATU `func_801388F0` (T-4060) |
@@ -779,3 +778,30 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 | TACO/80154960 | `func_80155C64` | regorder | every instruction reproduced (styles per statement: array for the stores and loads through the first pointer, `(arg0 + D_8015EDB4)->` for the call argument, `unk78 = unk80`, the `& 1` test and the last block; `unk7C + (...)` operand order; `(0x3E8 - x) * f()`); the two pointers of `unk78 = unk80` and of the last block are in $a0 in IDO's output, $v1 in the original (T-9180) |
 | TACO/80137A60 | `func_80137D00` | regorder | selector `unk_110D` chain (void) with case 0 storing 0xFF00 (u16) and 0x28 through the pointer `D_801FAA84` loaded once: all instructions right with a local pointer; original pointer in $v1 (reusing the selector register) and 0xFF00 in $a1, IDO takes $t9 and $v1 (T-9180) |
 | GEKO/801323E0 | `func_80133024` | regorder | struct copy of a 0x18-byte table of s16 into a local (offset sp+0x38, frame 0x58) plus a loop over `unk_03F - 1`: operations right, but the local lands at sp+0x40 for every declaration order and spare-slot trick tried (frame 0x58 only with the table at the top) (T-9180) |
+| GYOZI/801372B0 | `func_80137F48` | regorder | four copies then `((D_800F62CF * 3) + D_800F53DE) - 0x60`: original loads the u8 into `$v0` before the 4th store and reuses `$t5/$t6/$t7`, IDO rotates `$t9..$t2` (T-9170) |
+| GYOZI/801372B0 | `func_80137BEC` | promo | stride 0x38: original keeps `li a0,56` and reloads `D_800F62CF` for a second `multu`, IDO folds to shifts (T-9170) |
+| GYOZI/801372B0 | `func_801381DC` | regorder | `D |= 8; r = f(g)`: original stores the byte before loading `$a0` and keeps a `nop` in the `jal` slot, IDO moves the `sb` into the slot (T-9170) |
+| GYOZI/8013BD50 | `func_8013BDA0` | regorder | two flags as `$v0`/`$v1` set by `bne`+`li` in the original, IDO puts them in `$v1`/`$a0` (T-9170) |
+| EVENT/8010B360 | `func_8010B8A4` | regorder | original holds `-129` in `$v0` (dead `li` at the end) and loads the global with `lui a1; lbu a1`, IDO `lui v0` (T-9170) |
+| EVENT/8010B360 | `func_8010B614` | regorder | `D_800B1746 = 4; f(4)`: original `li a0,4; sb a0` before the `jal` (shared), no spelling of the scalar u8 target shares `$a0` (T-9170) |
+| 8005A0B0 | `func_8005B040` | regorder | `D_800E62C2 & 7` index: original skips `$t9` (andi into `$t0`), IDO `$t9` (T-9170) |
+| 8004F870 | `func_8005352C` | regorder | `u16 >> 12` range test: original keeps the shift in `$v1`, IDO `$t6` (T-9170) |
+| 8004F870 | `menu_bar_color` | other | one `lui $at` shared by `sw D_800E3680` and `sw D_800E3684`; the data is not inside the object's `data` range (T-9170) |
+| 8004F870 | `menu_check_2` | regorder | three parameters spilled (`sw a1,4(sp)`), `-1` kept in `$t0`, base pointer in `$v0`/`$a3`: IDO allocates `$a1`/`$a2` for the index and pointer (T-9170) |
+| NAME_ENT/80139740 | `func_80140B20` | promo | u8 global modified in place, original keeps it in `$a0` (`addiu a0,a0,-2; andi t6,a0,0xff`), IDO `$v1`/`$v0` (T-9170) |
+| NAME_ENT/80139740 | `func_80140574` | regorder | switch with `% 13U` table call: every temporary after the first is one register higher in the original (`$t6` skipped), same C otherwise (T-9170) |
+| ETC/80140F50 | `func_80142AE8` | regorder | two loops over 2 records with chain stores: loop end pointer in `$v0` in the original (global still in `$v0` before), IDO `$a1` and the value in `$v0` (T-9170) |
+| ETC/80140F50 | `func_801428EC` | regorder | `D * 0x10101 + 0x141414` stack argument: original loads the u8 into `$v0`, IDO `$t7` (T-9170) |
+| ETC/80140F50 | `func_80141ABC` | regorder | 256-record loop with an unaligned 8-byte copy: `$s3`/`$s4` swapped, `$t6` vs `$t5`, and `f(.., D = 1)` store in the `jal` slot (T-9170) |
+| TT/801478D0 | `func_80147FD0` | regorder | chain stores of `0` use `$v1`/`$a1` (`move v1,zero; move a1,zero`) in the original, IDO uses `$zero` (T-9170) |
+| TT/801487D0 | `func_80148B6C` | promo | modified u8 parameter kept in its home slot (`sb t1,0x54(sp)`) and s16 parameters converted at entry (callee K&R); IDO keeps them in registers (T-9170) |
+| TT/801487D0 | `func_80148C04` | promo | same as `func_80148B6C` (s16 parameters reloaded from the stack, narrow conversions at entry) (T-9170) |
+| BUNKA_SD/80134260 | `func_80134418` | regorder | fade loop over 64 records: global promoted to `$v1` and end pointer in `$a0` in the original, IDO swaps them (T-9170) |
+| SHOUGATU/8013AF10 | `func_8013AFEC` | regorder | `f(D_F5F = D_75D = 10)` shares `$a0` with two byte stores (struct members); a bit-field `|= 8` also uses other temporaries (T-9170) |
+| 80075320 | `func_80076C7C` | other | two local buffers (0x100 and 0x20 bytes): IDO puts both 4 bytes higher than the original (T-9170) |
+| TACO/80141DE0 | `func_801421AC` | other | gcc-shaped (`beq a0,v1; nop`, constants in `$a0/$a1`): not compilable with IDO, no per-object compiler for overlays (T-9170) |
+| TACO/80141DE0 | `func_801420DC` | other | same as `func_801421AC` (T-9170) |
+| NAME_ENT/80139740 | `func_80140D6C` | regorder | search loop `p[4] == 1` over 15 bytes: loop end pointer in `$a0` and the constant 1 in `$v1` in the original, `$v1`/`$a0` in IDO (T-9170) |
+| 8005A0B0 | `join_club_select` | regorder | `unk_0F4.b[1] = (x * 0x10) \| (b & 0xFF0F)`: the original loads the byte into `$t5` after the shift (`$t4`), IDO hoists the `lbu` into `$t2` (T-9170) |
+| TT/801478D0 | `func_801478D0` | regorder | animation step on a 3-level table (`*D_80151A50[p[5]]` as `TtRec4 *`, local `r`): C right up to the third block; IDO evaluates `p[6]` before `p[5]` in `*tbl[p[5]] + p[6]` and numbers the temporaries `$t6..` where the original has `$t4..` (T-9170) |
+| NAME_ENT/80139740 | `func_8013FB8C` | regorder | `unk_1093 / 7` and `% 7` after `!= -1`: the original holds the s8 global in `$v1` with `move v0,v1`, the divisor in `$a0` and `-1` in `$a1`; IDO uses `$v0`, `$v1`, `$a0` (also `func_8013F0DC`) (T-9170) |

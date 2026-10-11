@@ -771,3 +771,5 @@ Wave 6 list 8, worktree w6-8: [[tickets/T-9180-wave-6-list-8]].
 
 ## [2026-10-10] ticket | T-9180 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, `headers OK`, `globals OK`, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9180-wave-6-list-8]]; no open findings. Branch w6-8, not merged.
+## [2026-10-10] ticket | T-9170 wave 6, list 7 (In Progress -> Done)
+31 functions matched (7344 bytes) from list 7: shared-base accesses, `s32` without return, remainder-first unrolling, string call sequences (OLH help pages, NAME_ENT album prompts, GEKO/EVENT/ETC setups). 24 T-0018 rows added to [[data/t0018-cases]]; patterns in [[matching-notes]] ("Wave 6, list 7"). Clean rebuild 27/27 OK, `ninja progress` grand 4298/6958 functions; inline review recorded in [[tickets/T-9170-wave-6-list-7]]. Branch w6-7, not merged.

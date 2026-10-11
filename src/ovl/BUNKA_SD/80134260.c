@@ -22,7 +22,27 @@ void func_80134260(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134260", func_80134314);
+s32 func_80134314(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_80044890(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
+        D_800E6280.unk_110D += 1;
+    } else if (D_800E6280.unk_110D == 1) {
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        }
+    } else {
+        func_80048390();
+        func_80048E78();
+        if (D_80122EB8 == 1) {
+            func_800573AC();
+            func_800438F0(1);
+        }
+        func_8006492C(1);
+        func_8004EBEC(*(u8 *)&D_8013C700);
+        func_80042908(0x10);
+        func_80044750(0x200);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134260", func_80134418);
 

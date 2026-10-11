@@ -65,7 +65,49 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013ACA4);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013AF78);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B0A0);
+s32 func_8013B0A0(void) {
+    s32 a;
+    s32 b;
+    s32 c;
+    s32 d;
+
+    a = 0;
+    b = 0;
+    if (D_800E6280.unk_1109 == 0) {
+        return 0;
+    }
+    c = 0;
+    d = 0;
+    if (D_800E6280.unk_110A < 0xA0U) {
+        a = 1;
+    } else if (D_800E6280.unk_110A < 0xC0U) {
+        b = 1;
+    } else if (D_800E6280.unk_110A < 0xE0U) {
+        c = 1;
+    } else {
+        d = 1;
+    }
+    if (a != 0) {
+        D_80120650[0xCF] |= 0x80;
+    } else {
+        D_80120650[0xCF] &= ~0x80;
+    }
+    if (b != 0) {
+        D_80120650[0x47] |= 0x80;
+    } else {
+        D_80120650[0x47] &= ~0x80;
+    }
+    if (c != 0) {
+        D_80120650[3] |= 0x80;
+    } else {
+        D_80120650[3] &= ~0x80;
+    }
+    if (d != 0) {
+        D_80120650[0x8B] |= 0x80;
+    } else {
+        D_80120650[0x8B] &= ~0x80;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B1D8);
 
@@ -401,7 +443,22 @@ void func_8013E3C8(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E430);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E59C);
+void func_8013E59C(void) {
+    s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
+    u8 buf[0x100];
+
+    func_8004E58C();
+    func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
+    strcat(buf, "番アルバムを");
+    func_8004E788(-0x40, 0x20, 0xF, buf, 0);
+    func_8004E788(-0x40, 0x30, 0xF, "やりなおします。", 0);
+    func_8004E788(-0x40, 0x40, 0xF, D_800B3C70, 0);
+    func_8004E788(0x14, 0x40, 1, func_8006CA9C(), 0);
+    func_8004E788(-0x40, 0x50, 0xF, D_800B3C88, 0);
+    func_8004E788(0x14, 0x50, 2, func_8006CAE0(), 0);
+    func_8004E884(6);
+    func_8004284C();
+}
 
 void func_8013E6A8(void) {
     if (D_800E6280.unk_F88 & 0x40) {
@@ -466,7 +523,21 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F208);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F454);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F5B0);
+void func_8013F5B0(void) {
+    u8 buf[0x108]; /* FAKE: 8 bytes more than the neighbours give the original frame (0x140). T-9170 */
+
+    func_8004E58C();
+    func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
+    strcat(buf, "番アルバムに");
+    func_8004E788(-0x40, 0x20, 0xF, buf, 0);
+    func_8004E788(-0x40, 0x30, 0xF, "上書きしてもいいですか？", 0);
+    func_8004E788(-0x40, 0x40, 0xF, D_800B3C70, 0);
+    func_8004E788(0x14, 0x40, 1, func_8006CA9C(), 0);
+    func_8004E788(-0x40, 0x50, 0xF, D_800B3C88, 0);
+    func_8004E788(0x14, 0x50, 2, func_8006CAE0(), 0);
+    func_8004E884(6);
+    func_8004284C();
+}
 
 void func_8013F6BC(void) {
     if (D_800E6280.unk_F88 & 0x20) {
@@ -507,7 +578,22 @@ void func_8013FB08(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013FB8C);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013FCBC);
+void func_8013FCBC(void) {
+    s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
+    u8 buf[0x100];
+
+    func_8004E58C();
+    func_800AE0F0(buf, D_800B3288[D_800E6280.unk_1118]);
+    strcat(buf, "番アルバムを");
+    func_8004E788(-0x40, 0x20, 0xF, buf, 0);
+    func_8004E788(-0x40, 0x30, 0xF, "本当に消去していいですか？", 0);
+    func_8004E788(-0x40, 0x40, 0xF, D_800B3C70, 0);
+    func_8004E788(0x14, 0x40, 1, func_8006CA9C(), 0);
+    func_8004E788(-0x40, 0x50, 0xF, D_800B3C88, 0);
+    func_8004E788(0x14, 0x50, 2, func_8006CAE0(), 0);
+    func_8004E884(6);
+    func_8004284C();
+}
 
 void func_8013FDC8(void) {
     if (D_800E6280.unk_F88 & 0x20) {
@@ -670,7 +756,21 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140F90);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80141820);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80141FA4);
+s32 func_80141FA4(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80140F54();
+        break;
+    case 1:
+        func_80140F90();
+        break;
+    case 2:
+        func_80141820();
+        break;
+    }
+    D_800E6280.unk_1092 = 0;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80142028);
 
@@ -708,4 +808,9 @@ s32 func_801429BC(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80142A3C);
+void func_80142A3C(void) {
+    s32 i;
+
+    /* FAKE: loop body on the for line; as1 schedules by source line and then fills the delay slot like the original. T-9170 */
+    for (i = 0; i < 13; i++) D_801217D0[i].unk_00 = 0x80000000;
+}

@@ -327,3 +327,4 @@ typedef struct TacoCam {
     /* 0x6 */ s16 d;
 } TacoCam; /* size 0x8 */
 extern TacoCam D_8015F5F0;
+void func_80139118(void);

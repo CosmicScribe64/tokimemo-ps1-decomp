@@ -121,7 +121,22 @@ void func_8013BEA8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013B5B0", func_8013C1CC);
+/* s32 without a return: $v0 stays live at the exit, so as1 leaves the first branch slot as a nop (T-9000) */
+s32 func_8013C1CC(void) {
+    if (!(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EDF0 & 0xFF)) {
+        if (D_8015EDC4 & 0x100000) {
+            if (D_8015EBC0 == 0 || D_8015EBC4 == 0 || D_8015EBC8 == 0) {
+                D_8015EE1C = 1;
+            }
+        } else if (D_8015EDC4 & 0x600000) {
+            if (D_8015EDC0 == 0) {
+                D_8015EE1C = 1;
+            }
+        } else if ((D_8015EDC4 & 0x08000000) && D_8015EDC0 == 0) {
+            D_8015EE1C = 1;
+        }
+    }
+}
 
 void func_8013C2A0(void) {
     if (D_8015EE1C == 1) {
