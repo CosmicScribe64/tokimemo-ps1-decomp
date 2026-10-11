@@ -204,4 +204,23 @@ void func_80158DBC(s16 arg0, s16 arg1, s16 arg2) {
     func_8015ACCC(0x10, 0x16, D_801604D4, pos, D_801604E4, 8, 0x70);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80158F48);
+void func_80158F48(s32 arg0) {
+    TcPos pos;
+
+    if ((arg0 + D_8015EDB4)->unk7A % 20 == 0) {
+        pos.x = (arg0 + D_8015EDB4)->unk74;
+        pos.y = (arg0 + D_8015EDB4)->unk76;
+        pos.z = (arg0 + D_8015EDB4)->unk78;
+        func_8013DB80(pos, 0x80, 0x80);
+    }
+    (arg0 + D_8015EDB4)->unk76 += 0x20;
+    if ((arg0 + D_8015EDB4)->unk76 > 0x400) {
+        (arg0 + D_8015EDB4)->unk2 = 0xFE;
+    }
+    if ((arg0 + D_8015EDB4)->unk7C == 0) {
+        /* FAKE: call and increment on one source line make as1 place the reload of the spilled index as the original does. T-9310 */
+        func_8015C0A0(0, arg0); (arg0 + D_8015EDB4)->unk7C += 1;
+    } else {
+        func_8015C0A0(1, arg0);
+    }
+}
