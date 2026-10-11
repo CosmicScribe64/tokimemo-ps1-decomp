@@ -121,7 +121,13 @@ void func_80046318(u8 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_8004636C);
 
-INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_800463E8);
+/* s32 fallthrough preserves original constant scheduling (T-9710). */
+s32 func_800463E8(void) {
+    if ((D_8011ED17 & 0x80) && (D_800E6280.unk_10F8 & 4)) {
+        func_80049FF0(0x9E, 0x5A, 0x9E, 0x62, 0xFFFF00, 0xFFFF00, 0x80);
+        func_80049FF0(0x9D, 0x5A, 0x9D, 0x62, 0xFFFF00, 0xFFFF00, 0x80);
+    }
+}
 
 void func_80046478(void) {
     s32 i;

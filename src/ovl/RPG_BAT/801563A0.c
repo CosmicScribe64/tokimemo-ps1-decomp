@@ -1,7 +1,38 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801563A0", func_801563A0);
+void func_801563A0(void) {
+    switch (*D_8015ED8C) {
+    case 0:
+        func_800AE0F0(D_8015E904, "朝日奈「ねえ、ねえっ。");
+        func_800AE0F0(D_8015E92C, "聞いて、聞いてっ！");
+        func_8014B738((s32) D_8015E9CC, 2, 0xA0);
+        *D_8015ED8C += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x1F000015, 0x05000017, 0);
+        func_8013E7C0(0x1D, 7, 1, 1);
+        *D_8015ED8C += 1;
+        return;
+    case 2:
+        func_8013F250(1);
+        return;
+    case 3:
+        func_8013F1C4(0x1F000018, 0x0600001D, 1);
+        func_8013E7C0(0x1D, 8, 1, 1);
+        *D_8015ED8C += 1;
+        return;
+    case 4:
+        func_8013F250(2);
+        return;
+    case 5:
+        func_8013F220();
+        func_8014F230();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 /* FAKE: typed 0x44-byte record view coexists with unresolved shared byte-table/scalar declarations. T-9550 */
 void func_801564F0(void) {

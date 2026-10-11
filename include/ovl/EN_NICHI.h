@@ -106,3 +106,14 @@ void func_80137E2C(void);
 s32 func_80137FEC();
 #endif /* OVL_EN_NICHI_H */
 extern s32 D_80139B24;
+
+#ifndef W9_EN_RESET_TABLE
+#define W9_EN_RESET_TABLE
+typedef struct EnResetSlot8 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+} EnResetSlot8; /* size 0x08, 15 rows of 12 records, T-9710. */
+extern EnResetSlot8 D_801392AC[15][12];
+#endif

@@ -538,7 +538,106 @@ void func_8014C580(u8 *arg0) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C5F8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C680);
+/* FAKE: permuter source layout preserves branch operand order; original source unknown. T-9710. */
+void func_8014C680(void)
+{
+    s32 var_s1;
+    u16 temp_v0;
+
+    TtActor78 *var_s0;
+    func_8014C2F8();
+    var_s0 = (TtActor78 *) D_80158A98;
+    var_s1 = 0;
+    do
+    {
+        if (var_s0->unk_00 != 0)
+        {
+            temp_v0 = var_s0->unk_04;
+            switch (temp_v0)
+            {
+            case 0x71:
+                break;
+
+            case 0x40:
+                switch (var_s0->unk_02)
+                {
+                case 0x40:
+                    func_8014B198((u8 *) var_s0);
+                    break;
+
+                case 0x41:
+
+                case 0x42:
+                    func_8014B414((u8 *) var_s0);
+                    break;
+
+                case 0x43:
+                    func_8014B5A4((u8 *) var_s0);
+                    break;
+
+                case 0x44:
+                    func_8014B7A8((s32) var_s0);
+                    break;
+
+                case 0x45:
+                    func_8014BB30((s32) var_s0);
+                    break;
+
+                case 0x46:
+                    func_8014BD68((u8 *) var_s0);
+                    break;
+
+                case 0x47:
+                    func_8014BF54((void *) var_s0);
+                    break;
+
+                case 0x48:
+                    func_8014C1BC((u8 *) var_s0);
+                    break;
+
+                }
+
+                break;
+
+            case 0x70:
+                func_8014C580((u8 *) var_s0);
+                var_s0->unk_04 = 0x71U;
+                var_s0->unk_0A = 0;
+                var_s0->unk_08 = 0;
+                var_s0->unk_06 = 0;
+                var_s0->unk_0F = 0;
+                var_s0->unk_0E = 0;
+                var_s0->unk_0D = 0;
+                break;
+
+            case 0x80:
+                var_s0->unk_00 = 0;
+                var_s0->unk_51 = 0;
+                break;
+
+            }
+
+            func_8014C4AC((u8 *) var_s0);
+
+            if (0x40 == var_s0->unk_04)
+            {
+                func_80132000((s32) (&var_s0->unk_38), (s32) (&var_s0->unk_5C), (s32) (&var_s0->unk_5D));
+            }
+            else
+            if (0x71 == var_s0->unk_04)
+            {
+                func_801478D0((s32) (&var_s0->unk_38));
+                if (var_s0->unk_40.b.lo & 1)
+                {
+                    var_s0->unk_00 = 0;
+                }
+            }
+        }
+        var_s1 += 1;
+        var_s0 += 1;
+    }
+    while (var_s1 != 0x40);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C84C);
 

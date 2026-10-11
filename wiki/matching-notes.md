@@ -2287,3 +2287,173 @@ four packet/matrix refactors. Prototype branch check has zero new disagreements
 4870/6958 functions, 776660/2279368 bytes: **+2 functions / +356 bytes**.
 Inline standards/spec review resolved the DR_TPAGE size discrepancy and has
 no outstanding findings. T-9610 is Done; edits remain uncommitted.
+
+## Wave 9, list 1 (T-9710)
+
+Owner: w9-1. Scope is 149 functions in 34 original-object C files.
+All scratch evidence is under scratchpad/w9-1/; project tooling is unchanged.
+
+### Initial evidence
+
+- TAIIKU/80138950 still has no data-island INCLUDE_RODATA lines, although
+  config/objects/TAIIKU.txt assigns data 0x80149940..0x80149FA0 to it.
+  The wave-8 note remains current: enabling the island requires a yaml edit
+  outside this batch's scope. Shared-$at cases need an orchestrator config task.
+- Main `func_8004636C` needs byte accesses for the final two-byte checksum,
+  despite m2c's opaque `void *temp_a0`. EN_NICHI `func_80132A74` homes four
+  signed-halfword parameters and preserves separate copies of both differences.
+  These are source-variant targets for the deep pass, not immediate rejections.
+
+### First pass and repairs
+
+All 149 assigned functions received a fresh m2c draft and an object build/resolved
+funcdiff attempt. No raw draft matched. The first-pass evidence is firstpass.jsonl
+in personal scratch; scores are recomputed from indented instruction rows.
+Type repairs now distinguish opaque-struct failures from true codegen differences.
+The TT actor prefix uses halfword fields and word/halfword position unions; TILE
+and POLY_FT4 come from psx_types.h rather than copied SDK declarations.
+
+### Deep source hypotheses
+
+- Main func_80076B48's `or v0,v1,zero` and second selector in v0 indicate the
+  documented implicit-int fallthrough shape. Its baseline main_api prototype is
+  void, so rejected s32 builds are declaration errors, not negative codegen
+  evidence. Test a generated `sync_protos.py --fix` update, restoring on rejection.
+- Main func_80076DA0's frame/array homes fit three scalars before a three-word
+  history array and two after it. This gives a meaningful local-layout experiment
+  without adding unused padding. Its dynamic byte view still needs a FAKE marker
+  until the history members are unified.
+- EVENT func_800FAA04's sprite loop uses existing Rec24. The indexed halfword
+  store based at D_80120CE8 needs a corrected byte-stride view; m2c's inferred
+  s32-pointer arithmetic scales it incorrectly. Any retained scalar-base view
+  remains explicitly marked FAKE pending aggregate recovery.
+
+- Deep-pass preparation: TACO `func_80142220` has an m2c byte-stride expressed as `Tc14 * += 0x14`; the typed stride is one record. SHUGAKU `func_80139E8C` passes four contiguous halfwords to the shared `RECT` API; repair uses one `RECT` local after the scalar, following the aggregate-local frame rule. These are candidates awaiting verification.
+
+- Further repair candidates: main `func_800460FC` reads/writes bytes 0..3 of the four-byte state at D_801255D0; use a shared `u8[4]` declaration rather than m2c's opaque object. GEKO `func_801358CC` uses a stride-indexed Rec38 flag word; replace the inferred parent-pointer arithmetic by `unk_1BC[index].unk_0C.u`. Overlay drafts calling later matched definitions need their actual prototypes to avoid implicit-int/void redeclaration errors; temporary declarations are discarded with rejected drafts.
+
+- EN_NICHI `func_80132A74` target uses `multu` and writes each product back to its absolute-difference register before the final add. The manual search therefore prioritizes `u32` absolute magnitudes and separate `x *= x; y *= y;` statements, while retaining signed difference tests and narrow K&R parameters.
+
+- EN_NICHI `func_801354E0`: table extent D_801392AC..D_8013984C is 0x5A0, exactly 15 rows × 12 eight-byte records. Stores clear offsets 2 and 6. Prepared natural nested-loop and explicit peeling variants over one typed matrix; explicit unrolling is marked FAKE. `data_island.py` confirms the owned file already contains the island, so no configuration change is needed for these probes.
+
+- Main `func_8007437C` accesses the day array at GameState +0x44 and a +0x69C byte-record member; staged repairs use the declared arrays directly. Main `func_80076630` passes its opaque local to the text-writing helper `func_800764AC`; a 128-byte buffer variant is explicitly marked FAKE because only frame extent and callee use are known.
+
+- Owned-file duplicate inventory: exact scan has zero fillable plans; near scan also has zero ordinary plans. Two additional matches appear only when memory offsets and shifts are masked (760 bytes), so these require manual field/scale mapping rather than automatic reuse. Reports are in personal scratch.
+
+- TT `func_8014C5F8`: target materializes zero once for bytes 0x0D/0x0E, but uses `$zero` directly for the other cleared fields. Added a byte-width bit-field declaration probe for those two fields, in addition to the previous chain-assignment probes. This is a game-layout hypothesis awaiting byte verification; no SDK type is redefined.
+
+- Duplicate report scope clarification: the offset/shift-masked extra count is repository-wide, even when `--files` limits normal plans. Its two targets are GYOZI/80135CA0 `func_80136124` and TACO/801480B0 `func_80148D6C`, both outside this work list; neither will be edited here.
+
+- Near-duplicate declaration-view retry identifies OMIMAI `func_801320A0` (580 bytes), within the owned OMIMAI/801320A0 file but outside the initial 149 entries. `--lenient` finds one candidate from an existing matched scene initializer, with 36 changed constants. Scheduled scoped `--apply --check` after the repair sweep; the tool restores rejected copies and checks the complete unit.
+
+- Queue payload correction: `func_80045318` copies all 16 bytes at record +8, including the trailing flag at +0x17; represent that overlap as a 16-byte union rather than a 15-byte array followed by a flag. The calling dispatcher `func_80045414` passes a local whose target extent from sp+0x38 to frame end is 16 bytes; prepared a marked 16-byte packet-buffer variant instead of m2c's single-byte local.
+
+- EN_NICHI distance-search refinement: the shared overlay declaration is old-style `s32 func_80132A74();`. The header guard rejects ANSI four-s16 definitions; K&R definitions preserve both that declaration and the target's parameter conversion. Removed redundant ANSI probes from the manual search rather than changing the header view.
+
+- Queue allocation hypothesis: target begins the head-index modulo before loading/calculating the next tail index. m2c precomputes the next index first, which changes the divisor/record/argument register interference and spills arg2. Added explicit head-modulo locals before next-index and record calculation, preserving the original order without forcing registers.
+
+- EN_NICHI `func_80135A48`: m2c splits the initial cursor from its incremented cursor and reloads the global index in the allocation branch. Target mutates one cursor and one index. Prepared one-cursor/index forms, including both plain pointer-add operand orders, to remove the extra live ranges and arg1 home-slot spill.
+
+- Main history target uses the parent GameState pointer for the word read inside the loop, the indexed record stores afterward, and the final high-byte read; other word/index loads retain direct global addresses. Adjusted the prepared `func_80076DA0` draft to reflect those distinct pointer/global accesses rather than relying on address CSE.
+
+- TAIIKU `func_8013F3A4` draft infers a scalar at main-bss D_80120888, already declared as EVENT's FnTbl41 workspace in an unowned source file. The header guard correctly rejects a competing scalar declaration. The runner now checks existing main-symbol declarations outside the immediate header closure before adding an inferred view; no conflicting declaration is retained.
+
+- TT `func_8014C2F8` consumes six-byte commands: s16 time at 0, u16 opcode at 2, and byte arguments at 4/5. D_80158A70's pointed object has a word/high-half union at 0 and command pointer at 4; a matched clear uses 0x20 bytes. Prepared a typed timeline/command view with one-record cursor increments, preserving the legacy shared s32-pointer declaration.
+
+- TT `func_8014C680` provides more actor-layout evidence: u16 subtype at +2, byte +0x51, texture halfwords +0x58/+0x5A, texture bytes +0x5C/+0x5D and s16 +0x6E. Prepared a typed 0x78-stride update loop. Its animation flag reads the low byte at +0x40, while the render path reads a halfword there; the new draft uses an explicit byte view of that member.
+
+- BUNKASAI lookup target loads the scalar index before its 64-byte local table copy and reads GameState +0x0F4 with `lhu; srl 12`. Corrected the prepared copied-table draft to that initialization order and explicit unsigned halfword view; the two real scalar homes precede the table to reproduce frame 0x58/table sp+0x10.
+
+T-9710 RPG_BAT argument recovery: `func_8014B738` consumes three arguments; its first call saves incoming `$a2` in the call delay slot. The m2c argument inference processes call clobbers before that delay slot and reports arity two. `func_80155CC0` consequently loses the literal third argument 90 and stops five instruction lines from matching. The personal repair runner now restores literal `$a2` arguments from each original caller's call delay slot; tool sources remain unchanged. Verify the restored caller with resolved funcdiff and its unit checksum before retaining it.
+
+T-9710 RPG_BAT `func_80142F70`: after declarations are supplied, the sole resolved difference is the last jump-table guard `sltiu ...,15` versus the draft's 14. Retry with explicit empty case 14 before concluding an instruction/allocation gap; the target has a fifteenth default-target table entry. The whole-overlay checksum decides the table contents.
+
+T-9710 EN_NICHI `func_80134F2C`: the typed draft's unused spill alias is assigned in two switch arms, so the prior single-assignment cleanup missed it. Generalized the personal runner to remove an alias only when every use is its declaration or a simple assignment. Added natural in-place/subtract-then-store angle-wrap variants, with both void and s32 fallthrough forms, before the deep permuter attempt; target pointer spill is at stack 0x28 and frame is 0x30.
+
+T-9710 scoped near-duplicate apply rejected OMIMAI `func_801320A0` at compilation: the copied scalar assignments to `D_80134A90` and `D_80134AC0` conflict with this overlay's existing parallel s32 table declarations. These stores address table element zero, so retry from a fresh m2c draft or use `[0]` accesses rather than change the existing array views. No copied candidate was retained. The read-only follow-up queue only repeats functions already on the supplied list.
+
+T-9710 OMIMAI follow-up: the fresh draft writes three contiguous 12-word tables at `D_80134A60`, `D_80134A90`, and `D_80134AC0`. These tables are already declared as s32 arrays in `include/ovl/OMIMAI.h`; express all stores as table indices 0..11 and discard inferred per-element externs. The personal deep driver now tests this natural array form after the curated repairs. Existing header comments describe thirteen words, but the three bases are 0x30 bytes apart; this batch does not edit that older comment.
+
+T-9710 verified result: RPG_BAT `func_80142F70` MATCHes (2,240 bytes) when the final switch includes explicit empty case 14. The sole 15-versus-14 guard difference was an omitted source case, not register allocation; resolved funcdiff and RPG_BAT SHA1 both pass. Together with the call-delay argument repair in `func_8013A650` (828 bytes), two functions / 3,068 bytes are retained so far.
+
+T-9710 third RPG_BAT call-delay candidate: `func_801563A0` only needs the text destination at `D_8015E92C` declared as an unknown-size byte array and its missing literal third argument 0xA0 restored. The personal runner now has a sequential follow-up for this owned function after the curated main helper attempts; it snapshots/restores its own source and headers and retains only a resolved MATCH plus RPG_BAT SHA1. `func_80155CC0` is now verified (448 bytes), bringing the retained total to 3 / 3,516 bytes.
+
+T-9710 RPG_BAT reset retry (`func_8014EF8C`, `func_8014F278`): write the three zero-clear loops as s32 pointer post-increments, and use the existing `RpgFlagRecord44` for the last four-store loop. The biased byte-table view and explicit four-record body are marked FAKE. Existing per-object data islands permit natural scalar definitions for the shared-AT pairs: EDC4=1/EDC8=2, or EDF0=1/EDF4=2/EDFC=4, taken from their four-byte data pieces. The personal runner restores the island source and all headers on rejection, and keeps definitions only if the entire RPG_BAT checksum passes. EE04/0C/08 stores use the already-defined EE00 aggregate members.
+
+T-9710 SHUGAKU `func_80139E8C`: replacing four halfword locals with the SDK RECT gives a correct 0x38 frame, all constants/calls, and only four differing lines for `lui v0; lbu a0` versus `lui a0; lbu a0`. Existing T-8020/T-9160 rows describe precisely this remaining symptom. The deep retry now tests unsigned wider selector locals and explicit byte-address views before the five-minute permuter; unusual address views carry a FAKE comment. RECT conversion is idempotent when retrying the typed draft.
+
+T-9710 checksum deep search also prioritizes separate byte additions with the index increment between or after them, matching the target's independent index update between the two additions. The earlier inline-bound/pointer-role near miss is recorded in T-9310; these expression variants test source structure before the bounded permuter.
+
+T-9710 distance/checksum deep searches: reserve ten minutes for natural declaration/expression variants and five minutes for the best candidate's permuter. A score-zero permutation is reinserted with a FAKE scheduling/layout comment, rebuilt with resolved funcdiff, then checked against the entire unit SHA1. Rejected candidates restore the original source. This keeps each search near fifteen minutes while still following up its closest result.
+
+T-9710 reset correction: separate scalar definitions do not share `$at`; T-9010 explicitly requires one owned symbol with aggregate offsets. The first reset retries were restored (69/70 lines). For the deep pass, retain the existing scalar declarations with marked aggregate casts based on the single owned EDC4 or EDFC symbol, and leave the other island pieces untouched. Typed explicit word bounds test the pointer/bound register roles; existing standalone `D_8011F770` / `D_8011FDD0` assembly anchors get generated byte-array declarations to avoid computing a loop bound from the broader table base inside the loop. All unusual legacy views are marked FAKE and require complete overlay checksum validation.
+
+T-9710 verified milestone: `func_801563A0` adds 336 RPG_BAT bytes after the text-array declaration and third-argument restoration. OMIMAI `func_801320A0` adds 580 bytes with the three existing array views. Five functions / 4,432 bytes are retained; the incremental full ninja checkpoint returns zero, including header/global guards and unchanged unit hashes.
+
+T-9710 distance-driver correction: the personal K&R signature placed `{` on the last parameter declaration's line; `srcscan.KR_DEF_RE` requires it on a new line. Thus the function locator returned “no INCLUDE_ASM or C definition” for every probe, before compilation. Corrected the layout and restarted after SIGINT of only the owned distance container; its finally block restored INCLUDE_ASM. The obsolete slow read-only arity scan was also interrupted; the completed fast scan provides the evidence. The resumed deep driver keeps one closest record per function, skips the already searched checksum/distance helpers, and skips TAIIKU functions blocked by the missing allowed-scope data island.
+
+T-9710 TT `func_8014C680`: the recovered 0x78-byte actor view reduces the draft to 24 differing lines. Eight are the operand order of two state comparisons / following temporaries, and most others are the inner command selector loaded into v0 instead of t7. The deep pass now tests constant-left state comparisons, signed/unsigned 32-bit command locals, and a direct member selector before permutation. The packet/actor layout itself matches the target offsets and pointer stride.
+
+T-9710 preliminary review: `func_8013A650`'s EDB4 counter is already `D_8015EDB0.unk_04` in the existing RpgBatWords3 aggregate. Test the member form at the next exclusive mutation interval; no old header declaration needs changing, only the newly appended scalar alias should be removed if the member form preserves the match. This remains a review finding until resolved and reverified.
+
+T-9710 distance follow-up hypothesis: moving the magnitude assignment before the second raw delta changes the residual allocation from 18 to 16 lines. Try chained raw-delta/magnitude assignments, or load the magnitude from the incoming coordinate before subtracting the second coordinate, to allocate the magnitude before the signed comparison local. A single serial follow-up is queued after the first close SHUGAKU attempt; it skips instantly if the dedicated distance search already matched, otherwise tests three natural forms plus one five-minute permuter.
+
+T-9710 checksum type variant: test a narrow K&R u8 first parameter with direct shift/subtraction, alongside the s32 parameter with explicit byte mask. The target's entry masks the incoming argument once, and the existing main_api declaration is unprototyped. Each signature has independent sum/index and pointer initialization orders. K&R braces are placed on their own line for source discovery.
+
+T-9710 EN_NICHI flag-table follow-ups: `func_80132EE8` clears/reclassifies the word at EnObj offset zero across ten 0x30-byte records, with two peeled records then a four-record loop. `func_8013358C` walks ten byte flags at D_80139B08 in pairs and updates the corresponding EnObj words/counters. Prepared typed EnObj pointers and real byte-array flag accesses instead of unknown pointers, scalar neighbour aliases and byte dereferences of word flags. Explicit unrolled/peeled bodies carry FAKE comments; the two owned functions are queued serially after the ring allocator's deep attempt.
+
+T-9710 reset matrix search now starts with a column-pointer outer loop and a rolled fifteen-row inner loop, using the actual 15-by-12 EnResetSlot8 table. This lets IDO produce the target's three peeled rows plus four-row body naturally; compare do/for outer forms and chained/separate halfword stores before explicit unrolling. Unused outer index declarations are removed in those natural variants. The target's final two counter stores each have their own high-half load, so their existing scalar declarations are appropriate and no data-definition change is needed.
+
+T-9710 preliminary aggregate review finding is resolved: the retained RPG counter now uses `D_8015EDB0.unk_04`, and the redundant newly appended EDB4 declaration was removed. The resolved function diff and RPG_BAT unit SHA1 passed after both changes. A refreshed register-shape inventory identifies existing scheduling, pointer/base, constant and frame clusters for the close retries; its source states are transient while probes replace INCLUDE_ASM, and are not verification results. Early draft scores in the ticket likewise describe draft generation, not retained matches; firstpass.jsonl and checksum-gated deep results are the verification evidence.
+
+T-9710 distance follow-up also tests both directions of the raw-delta/magnitude assignment chains independently. The best previous source has the second signed delta in t0 and magnitude in t1, opposite the target; assigning the unsigned magnitude before the signed copy is a natural source-order hypothesis for those two values, rather than a register-forcing transformation. Both narrow K&R and explicit s16-cast signatures are queued.
+
+T-9710 checksum follow-up: the dedicated 151-form search reaches 20 differing instruction lines with a narrow K&R parameter and unsigned index. Its tail leaves byte loads in temporary registers rather than the target's a2/a3. Queued a serial follow-up with explicit high/low byte locals of u32, u8 and s32, both pointer-add operand orders and both checksum byte-add orders, followed by bounded permutation. This combines the improved loop with the original draft's explicit tail values.
+
+T-9710 EN_NICHI `func_801354E0` MATCH, 140 bytes: ordinary nested `for (i=0; i<12; i++)` and `for (j=0; j<15; j++)` loops over `EnResetSlot8 D_801392AC[15][12]` produce the target's three peeled rows plus four-row body automatically. Separate halfword stores at offsets 2 and 6 are sufficient; no explicit unrolling or FAKE spelling is retained. Resolved function diff and full EN_NICHI SHA1 pass. The two unused pointer declarations left by the search template will be removed and reverified during final review.
+
+T-9710 SHUGAKU `func_80139E8C` MATCH, 328 bytes: a `u8` selector declared before the SDK `RECT` gives the correct frame, and `((u8 *)&D_800E6280)[0xF5F]` gives the original a0 base/load where the ordinary `unk_F5F` member read used v0. The byte view remains marked FAKE; all stores use existing members. Resolved diff and SHUGAKU SHA1 pass. This resolves the T-8020/T-9160 symptom rows for this function without changing headers or compiler passes. Seven retained functions total 4,900 bytes.
+
+T-9710 EN_NICHI `func_80132A74` MATCH, 104 bytes: the follow-up's mixed chain directions (`x = dx = ...`, `dy = y = ...`) change the problematic second delta/magnitude allocation. A bounded permuter then groups both assignments and signed tests on one source line, reproducing the copies and delay slots. K&R four-s16 parameters and unsigned magnitude products remain. The retained grouping is explicitly FAKE. Fresh resolved diff and EN_NICHI SHA1 pass, resolving the T-9160/T-9580 distance rows. Eight retained functions total 5,004 bytes.
+
+T-9710 retained cleanup is verified at a serial boundary: removed both unused reset-matrix pointer declarations, normalized the distance function's indentation without changing line grouping, and changed the SHUGAKU FAKE comment to explain the required a0 base versus v0 from member access. Each resolved diff and corresponding unit SHA1 passed after cleanup. The checksum explicit-byte follow-up ended at eight differing lines and restored assembly; its five-minute permuter did not yield a verified candidate.
+
+T-9710 final checksum source hypothesis keeps the improved explicit tail and tests unsigned word/halfword sums plus mask/counter line grouping and two-stage byte additions. The earlier ten-minute search expired before reaching its unsigned-sum forms, so these variants are new codegen evidence. The observed remaining operand swap may come from mixed signed sum and K&R unsigned-byte promotions. Line-grouped variants are marked FAKE and queued after the coordinate helper's serial retry.
+
+T-9710 main `func_800463E8` MATCH, 144 bytes: the ordinary drawing-call body matches when the definition is `s32` with no return statement, reproducing the implicit-int fallthrough scheduling documented in T-9000. Generated main_api declaration synchronization accompanies the new definition. Resolved diff and main executable SHA1 pass; final branch/header checks will verify caller consistency. This resolves the T-9120/T-9310/T-9520 scheduling rows. Nine retained functions total 5,148 bytes.
+
+T-9710 API review clarification: main `func_800463E8` had no existing main_api declaration, so the candidate runner's return-type synchronization condition did not invoke the generator. The implementation and main unit remain verified. Prepared a final exclusive generator step using `sync_protos.Model`, `definitions` and `write_api` to add canonical declarations from only this batch's newly matched main definitions while preserving all existing API views. Final branch/header checks and all-unit hashes will gate those generated entries.
+
+T-9710 TT `func_8014C5F8` deep search ends at 14 resolved differing lines after recovered actor/point types, bit-field and chain-zero forms, return-type and narrow K&R variants plus a five-minute permuter. The residual reload uses v1 instead of a2 and does not reproduce the target's a0 zero for bytes 0x0D/0x0E. Assembly and temporary declarations restored. Added one symptom row to the existing pointer/base/CSE cluster; this is bounded evidence, not a proof about IDO.
+
+T-9710 personal-driver correction: main `func_80076B48`'s initial permuter could not compile because the selected best void body was staged with the last trial's s32 API declaration. No C was retained. Future permutation setup now goes through the same candidate runner as builds, restoring/synchronizing the selected body's API view first. Queued a fresh exclusive selector retry after TT's dispatcher; the failed initial permutation is not negative codegen evidence or a repository-tool bug.
+
+T-9710 EN_NICHI `func_80134258` source retry now passes its two output locals through the actual s32-pointer helper prototype, reuses one random-outcome local across the three classifications, and compares pointer/counter initialization order plus a natural counted record loop. The target keeps ten as both record-loop bound and probability-product constant, so these source forms test the shared induction/constant allocation before the bounded permuter.
+
+T-9710 TT dispatcher priority correction: the direct command-member variant reached four lines, exactly two lower-state branch operand swaps. It had also reversed the lower equality operands. Added the direct switch to the original state-comparison spelling as an independent variant. Interrupted only the owned TT container's permuter after confirming its mount and function argument; its finally block restored C and declarations. The serial parent continued normally. Queued the corrected dispatcher and the API-staging selector retry at the next driver boundary before further ranked work.
+
+T-9710 checksum retry is complete: corrected tail-byte locals preserve the target a2/a3 loads and pointer-add order, but eight lines remain around the first commutative add and mask/phi-copy schedule in the loop. Additional signed/unsigned/halfword sums, split additions and source-line forms plus another bounded permuter did not match. Assembly restored. Added one scheduling/order symptom row after consulting merged historical rows; no universal compiler limitation is claimed.
+
+T-9710 TT's direct command switch is independently repaired, but both operand spellings of the later equality tests still produce the same two reversed branch operands. New control-flow hypothesis: the two lower states were written as a switch, rather than the draft's if/else chain. Queued a natural two-case switch and signed/unsigned word state locals at the next exclusive boundary. Also corrected the scratch checkpoint counter to include the matrix match recorded outside its standard match-line format, so every fifth actual gain triggers the full build.
+
+T-9710 shared-API review also finds `func_80049FF0` has no existing declaration. It is still assembly and the two new drawing calls were verified under C89's implicit-int/unprototyped view. The final scoped generator will publish that same old-style s32 declaration, rather than invent narrow argument types or alter verified call conversions. Only newly added main call sites are considered; all existing API entries are preserved and the resulting hashes must still pass.
+
+T-9710 main `func_80076B48`'s corrected exclusive retry completed a valid five-minute permutation setup, still 22 resolved differing lines. The selector remains in v1 where the target copies it to v0 before later branches; original assembly and API view restored. The s32 trial stopped at declaration-view checking, so it contributes no codegen evidence. Added one row to its existing selector/compare-chain cluster, replacing the earlier aborted permutation with valid bounded evidence.
+
+T-9710 BUNKASAI `func_8015B828` restores assembly after the typed 4-by-4 local table, correct 0x58 frame and halfword view reach 28 resolved differing lines. A five-minute permutation produces no verified match. Residual GameState base/index loads and temporary order remain; added one bounded-evidence row referencing its historical frame/spill cluster, rather than describing the now-fixed frame as still broken.
+
+T-9710 TT `func_8014C680` MATCH, 460 bytes: recovered 0x78-byte actor fields and a direct member command switch reduce the draft to the two lower state comparisons. A bounded permuter then uses direct post-call state members and source layout that matches those branches. The layout spelling remains marked FAKE. Resolved function diff, TT SHA1 and the ten-match full ninja checkpoint (488 steps, rc 0) pass. Ten functions total 5,608 bytes. The permuter left an unused selector declaration and an empty statement; final exclusive review will test removing each without changing the line count, keeping only any proven-needed artifact with a specific FAKE explanation.
+
+T-9710 classifier frame review identifies a 16-byte excess: sp64/sp60 were two separately addressed scalars, while target output pointers are adjacent words at sp+0x64/+0x60. Prepared a real eight-byte output aggregate after scalar locals, per T-9610. Also tested direct record classification before incrementing the output count, so arithmetic temporaries can be numbered before the counter's load/add/store while as1 fills division latency. Prioritized both forms at the next serial boundary, with append-only game type and checksum gating.
+
+T-9710 classifier refinement from the full T-9610 table: IDO may retain scalar homes even when optimization makes a temporary short-lived. The draft has four separate random-result locals; one reused random local is sufficient across these sequential classifications. Added minimal scalar-output and aggregate-output forms, with direct classification before count increment. The initial output-pair-only probe had already started, so this new minimal-local retry has its own next-boundary marker.
+
+T-9710 angle routine pointer hypothesis uses the established EN_OBJ macro from the same owned file: the T-3330/T-9330 comment on its matched dispatcher documents expression access as a spill-placement workaround. Prepared expression-based record access in place of the local pointer, removing unused explicit spill aliases and marking this reused idiom FAKE. The follow-up is queued after the minimal classifier retry at an exclusive driver boundary.
+
+Classifier `func_80134258`: replacing four m2c random temporaries with one reused scalar restores the exact 0x68 frame and adjacent output homes at 0x64/0x60. Directly storing the `% 3 + 1` classification before incrementing its output count reduces the resolved diff to 22 lines. The earlier aggregate-only drafts retained excess local homes; their larger frame is a source-layout failure, not evidence of a compiler frame rule. The bounded search is still running; no match is claimed.
+
+The minimal-local classifier search finished with a 22-line best result and no verified match; assembly and temporary declarations were restored. The angle expression-access follow-up likewise retained no C (best 38 lines, including the still-unexplained 0x30/0x40 frame difference). These are bounded source-search results, not proven compiler limitations. Final review is reserved for the retained ten-function diff after all serial probes and cleanup finish.
+
+TT actor +0x40 has a low-byte load in `func_8014C680` and halfword loads in `func_8014CDBC` / `func_8014CFEC`; final aggregate probe: typed halfword/byte union passes resolved diff and TT SHA1. T-9710.
+
+T-9710 final: ten matches add **5,596 actual splat bytes**, not the 5,608 work-list extents previously summed. RPG_BAT `func_80142F70` has a 2,228-byte function header versus the list's 2,240-byte extent; the extra 12 bytes explain the difference. Fresh resolved diffs, full default ninja, all 27 independently recomputed SHA1s, headers/globals and zero-new-disagreement prototype guard pass. Progress: `grand total   4880/6958   782256/2279368  34.3%`. Inline standards/spec review has zero unresolved findings; ticket/board/index are Done after 5.26 hours. Four new T-0018 symptom rows. TAIIKU data-island configuration and the incoming-a2 call-delay arity bug are handed to orchestration; no tool/config edits or commits. [[tickets/T-9710-wave-9-list-1]].

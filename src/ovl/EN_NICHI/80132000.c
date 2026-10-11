@@ -149,7 +149,24 @@ void func_80132A0C(void) {
     func_801338EC();
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132A74);
+/* FAKE: permuter expression/layout spelling preserves target scheduling; original source unknown. T-9710. */
+s32 func_80132A74(arg0, arg1, arg2, arg3)
+s16 arg0;
+s16 arg1;
+s16 arg2;
+s16 arg3;
+{
+    s32 dx;
+    s32 dy;
+    u32 x;
+    u32 y;
+    x = (dx = arg0 - arg2); dy = (y = arg1 - arg3); if (dx < 0) { x = -dx; } if (dy < 0) {
+        y = -dy;
+    }
+    x *= x;
+    y *= y;
+    return x + y;
+}
 
 void func_80132ADC(void) {
     D_80139B24 += 1;
@@ -590,7 +607,19 @@ void func_8013515C(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135274);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801354E0);
+void func_801354E0(void) {
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 12; i++) {
+        for (j = 0; j < 15; j++) {
+            D_801392AC[j][i].unk_02 = 0;
+            D_801392AC[j][i].unk_06 = 0;
+        }
+    }
+    D_801392A4 = 0;
+    D_801392A8 = 0;
+}
 
 void func_8013556C(void) {
     D_80139220 += 1;
