@@ -65,7 +65,18 @@ void func_80132274(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_801322F0);
+void func_801322F0(void) {
+    GameState *state;
+    s32 previous;
+
+    state = &D_800E6280;
+    previous = (s32) D_800E6280.unk_110A;
+    func_80139018();
+    if (((state->unk_110A != (previous + 3)) || ((u8) D_800CA2F0 != 0)) && (state->unk_110A == (previous + 4)) && ((u8) D_800CA2F0 == 0)) {
+        state->unk_110A -= 1;
+        dec_bg_show_switch(1);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132364);
 

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psx_types.h"
 #include "ovl/ETC.h"
 
 typedef struct {
@@ -74,7 +75,45 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013D32C);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013D570);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013DEA0);
+void func_8013DEA0(s32 arg0) {
+    SPRT *temp_v0;
+    SPRT *temp_v0_2;
+
+    temp_v0 = (SPRT *)func_800490F0(0x14, D_8011ECA0);
+    func_8009F0A4(temp_v0);
+    func_8009EF84(temp_v0, 0);
+    func_8009EFB0(temp_v0, 0);
+    temp_v0->r0 = 0x80;
+    temp_v0->g0 = 0x80;
+    temp_v0->b0 = 0x80;
+    if (arg0 == 1) {
+        temp_v0->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0);
+        temp_v0->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x65);
+        temp_v0->v0 = 0;
+        temp_v0->u0 = 0;
+        /* FAKE: paired stores share a source line for the original as1 order. T-9930. */
+        temp_v0->w = 0xC0; temp_v0->h = 0xA0;
+    }
+    func_8009EED0((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, temp_v0);
+    func_800493A8(0x140, 0x100, 0xD, 0, 2);
+    temp_v0_2 = (SPRT *)func_800490F0(0x14, D_8011ECA0);
+    func_8009F0A4(temp_v0_2);
+    func_8009EF84(temp_v0_2, 0);
+    func_8009EFB0(temp_v0_2, 0);
+    temp_v0_2->r0 = 0x80;
+    temp_v0_2->g0 = 0x80;
+    temp_v0_2->b0 = 0x80;
+    if (arg0 == 1) {
+        temp_v0_2->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20);
+        temp_v0_2->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x65);
+        temp_v0_2->v0 = 0;
+        temp_v0_2->u0 = 0;
+        /* FAKE: same dimension-store scheduling dependency as above. T-9930. */
+        temp_v0_2->w = 0x80; temp_v0_2->h = 0xA0;
+    }
+    func_8009EED0((D_8011ECA0 << 0xA) + 0x34 + D_800E8CA0, temp_v0_2);
+    func_800493A8(0x200, 0x100, 0xD, 0, 2);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013E094);
 

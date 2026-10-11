@@ -66,3 +66,18 @@ typedef struct SpriteSlot24 {
     /* 0x20 */ u32 unk_20;
 } SpriteSlot24; /* size 0x24 */
 #endif
+
+#ifndef GAME_STR_DEC_ENV_T9930
+#define GAME_STR_DEC_ENV_T9930
+typedef struct StrDecEnv30 {
+    /* 0x00 */ u8 *buffer0;
+    /* 0x04 */ u8 *buffer1;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ u8 *buffer2;
+    /* 0x10 */ RECT rect0;
+    /* 0x18 */ RECT rect1;
+    /* 0x20 */ s32 index;
+    /* 0x24 */ RECT rect2;
+    /* 0x2C */ s32 flag;
+} StrDecEnv30; /* size 0x30; decoder environment, T-9930. */
+#endif

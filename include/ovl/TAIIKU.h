@@ -398,4 +398,8 @@ extern s16 D_8018EC68;
 extern s16 D_8018EC6C;
 extern s16 D_8018EC70;
 extern s16 D_8018EC74;
+/* T-9930: calls from the race-state dispatcher; matched definitions below it. */
+void func_80143AC8(void);
+void func_80143C04(void);
+void func_80144768(void);
 #endif

@@ -15,7 +15,51 @@ void strInit(s32 arg0, s32 arg1) {
     strKickCD(arg0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800563F0", strSetDefDecEnv);
+void strSetDefDecEnv(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+    u32 width;
+    u32 height;
+    StrDecEnv30 *env;
+
+    env = arg0;
+    env->buffer0 = (u8 *) (D_80125C58 + 0x12D44);
+    env->buffer1 = (u8 *) (D_80125C58 + 0x48D44);
+    env->unk_08 = 0;
+    env->buffer2 = (u8 *) (D_80125C58 + 0x10044);
+    env->index = 0;
+    env->flag = 0;
+    width = 0x140;
+    height = 0xF0;
+    if (D_800B5900 & 1) {
+        width = 0x1E0;
+        height = 0xF0;
+        /* FAKE: one source line gives as1 the original halfword-store order. T-9930. */
+        env->rect0.w = width; env->rect0.h = height;
+        env->rect0.x = arg1;
+        env->rect0.y = arg2;
+        env->rect1.x = arg3;
+        env->rect1.y = arg4;
+        env->rect1.h = height;
+        env->rect1.w = width;
+        env->rect2.w = 0x18;
+        env->rect2.h = height;
+        env->rect2.y = arg2;
+        env->rect2.x = arg1;
+        return;
+    }
+    env->rect0.x = arg1;
+    env->rect0.y = arg2;
+    env->rect0.w = width;
+    env->rect0.h = height;
+    env->rect1.x = arg3;
+    env->rect1.y = arg4;
+    env->rect1.h = height;
+    env->rect1.w = width;
+    env->rect2.w = 0x10;
+    env->rect2.h = height;
+    env->rect2.y = arg2;
+    env->rect2.x = arg1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strCallback);
 

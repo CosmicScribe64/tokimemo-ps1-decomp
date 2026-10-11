@@ -36,11 +36,90 @@ void back_clear_switch(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", load_palette);
+/* Read queue counters directly and write records through g to preserve the
+ * original register allocation. K&R parameters keep narrow home slots. T-9930. */
+s32 load_palette(arg0, arg1, arg2, arg3, arg4)
+s32 arg0;
+u8 arg1;
+u8 arg2;
+u8 arg3;
+u8 arg4;
+{
+    u32 index;
+    GameState *g;
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", load_csr_ab);
+    g = &D_800E6280;
+    index = D_800E6280.unk_1428;
+    if (index < 32) {
+        g->unk_1328[index].unk_00 = arg0;
+        g->unk_1328[index].unk_04 = arg1;
+        g->unk_1328[index].unk_05 = arg2;
+        g->unk_1328[index].unk_06 = arg3;
+        g->unk_1328[index].unk_07 = arg4;
+        g->unk_1428++;
+        return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/80043510", load_csr_tp);
+s32 load_csr_ab(arg0, arg1, arg2, arg3, arg4, arg5)
+s32 arg0;
+u8 arg1;
+u16 arg2;
+u16 arg3;
+u16 arg4;
+u16 arg5;
+{
+    u32 index;
+    GameState *g;
+
+    g = &D_800E6280;
+    index = D_800E6280.unk_1429;
+    if (index < 32) {
+        g->unk_142C[index].unk_00 = arg0;
+        g->unk_142C[index].unk_04 = arg1;
+        g->unk_142C[index].unk_05 = 0;
+        g->unk_142C[index].unk_06 = 0;
+        g->unk_142C[index].unk_07 = 0;
+        g->unk_142C[index].unk_08 = arg2;
+        g->unk_142C[index].unk_0A = arg3;
+        g->unk_142C[index].unk_0C = arg4;
+        g->unk_142C[index].unk_0E = arg5;
+        g->unk_1429++;
+        return 1;
+    }
+    return 0;
+}
+
+s32 load_csr_tp(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+s32 arg0;
+u8 arg1;
+u8 arg2;
+u16 arg3;
+u16 arg4;
+u16 arg5;
+u16 arg6;
+{
+    u32 index;
+    GameState *g;
+
+    g = &D_800E6280;
+    index = D_800E6280.unk_1429;
+    if (index < 32) {
+        g->unk_142C[index].unk_00 = arg0;
+        g->unk_142C[index].unk_04 = arg1;
+        g->unk_142C[index].unk_05 = arg2;
+        g->unk_142C[index].unk_06 = 0;
+        g->unk_142C[index].unk_07 = 0;
+        g->unk_142C[index].unk_08 = arg3;
+        g->unk_142C[index].unk_0A = arg4;
+        g->unk_142C[index].unk_0C = arg5;
+        g->unk_142C[index].unk_0E = arg6;
+        g->unk_1429++;
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80043510", csr_load_vram);
 

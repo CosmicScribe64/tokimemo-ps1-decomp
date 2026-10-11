@@ -7839,3 +7839,67 @@ Ten matches / 5,596 bytes; grand total 4880/6958, 782256/2279368 (34.3%). Comple
 ## [2026-10-11] lint | T-9710 final wiki and diff consistency
 
 Done ticket, single Done board card and index entry agree; acceptance items checked. Final git diff --check passes, with only allowed files and the new ticket changed. [[tickets/T-9710-wave-9-list-1]], [[kanban]], [[index]].
+
+## [2026-10-11] ticket | Wave 10 list 3 started
+
+Created [[tickets/T-9930-wave-10-list-3]] in progress and synchronized [[kanban]]. Read shared wave-10 brief and [[decompile-workflow]]; work is restricted to the 48 assigned files, with Docker verification and no commits. Started at 20:19 UTC, with at least four hours requested.
+
+## [2026-10-11] query | T-9930 initial source evidence
+
+Recorded matrix-copy and loader-return evidence in [[matching-notes]] under Wave 10 list 3. Baseline build and m2c generation run in Docker; early missing overlay asm is build sequencing, not a decompiler defect. Retry those drafts after the initial split finishes.
+
+## [2026-10-11] ingest | Historical seeds for T-9930
+
+Copied 140 assigned-function drafts from the farm's saved queue into scratchpad/w10-3/historical/. No farm state was modified. [[tickets/T-9930-wave-10-list-3]] records the source; fresh diffs will rank deep attempts rather than trusting historical zero/default scores.
+
+## [2026-10-11] build | T-9930 baseline passes
+
+The initial Docker configure and ninja build passed all 27 unit SHA-1 checks. Beginning owned-file duplicate reuse and draft measurement for [[tickets/T-9930-wave-10-list-3]].
+
+## [2026-10-11] build | T-9930 deep probes begin
+
+Owned-file exact and near duplicate reuse produced no new functions. DATE and SHUGAKU source sweeps are recorded in scratchpad/w10-3/; current misses and NAME_ENT narrowing evidence are tracked by [[tickets/T-9930-wave-10-list-3]]. No match claims from unverified historical scores.
+
+## [2026-10-11] build | T-9930 screening checkpoint
+
+Completed raw and historical candidate screening for [[tickets/T-9930-wave-10-list-3]]. Restored rejected drafts and passed incremental Docker ninja. Deep source searches continue; palette pointer/index source shape removes the spill, while SHUGAKU's close helper retains two branch-operand swaps. Supporting types are recovered only into private scratch until a verified source result needs them.
+
+## [2026-10-11] query | Palette and CSR pointer/index idiom
+
+Recorded the direct counter read plus local GameState pointer idiom in [[matching-notes]]. All three small upload-queue helpers match isolated original-object comparisons; `load_palette` also passes full-file funcdiff. A generated same-address alias declaration is required for header consistency. Whole-program checks remain pending; see [[tickets/T-9930-wave-10-list-3]].
+
+## [2026-10-11] build | T-9930 load_palette verified
+
+`load_palette` now matches as C (108 bytes). Full-file funcdiff and all 27 linked unit SHA-1 checks pass, including callers of both the canonical and old alias names. [[tickets/T-9930-wave-10-list-3]] records the result; [[matching-notes]] records the source idiom.
+
+## [2026-10-11] build | T-9930 three upload helpers verified
+
+The two CSR queue loaders join `load_palette` as byte-identical C: three functions, 368 bytes. Full-file funcdiff and the subsequent 27-unit Docker ninja run pass. Generated declarations and the original narrow K&R parameters are covered by the build; [[tickets/T-9930-wave-10-list-3]] and [[matching-notes]] hold the details.
+
+## [2026-10-11] build | T-9930 fourth retained match
+
+Three upload queue helpers pass the complete 27-unit regression; SHUGAKU `func_801322F0` then passes resolved diff and unit SHA1. Four functions / 484 bytes retained. Recorded the direct-read/local-pointer source idiom in [[matching-notes]] and [[tickets/T-9930-wave-10-list-3]]. Private scratch keeps rejected variants and original-object comparisons.
+
+## [2026-10-11] build | T-9930 decoder and dispatcher candidates
+
+Full-file resolved diffs match main `strSetDefDecEnv` and TAIIKU `func_80142D90`. The decoder's aggregate and single-line scheduling dependency are documented; its unused local was removed with verification. Full regression/API review remains before both are counted as final. See [[tickets/T-9930-wave-10-list-3]] and [[matching-notes]].
+
+## [2026-10-11] build | T-9930 fifth verified match
+
+TAIIKU `func_80142D90` passes the complete 27-unit regression, bringing verified retained progress to five functions / 1,036 bytes. Decoder API synchronization and its follow-up build are running. [[tickets/T-9930-wave-10-list-3]].
+
+## [2026-10-11] build | T-9930 sixth verified match
+
+The decoder environment addition passes its complete affected-unit regression. Six functions / 1,276 bytes retained so far. `func_80052060` has a new plain-C matching candidate using adjacent array elements and generated global declarations; full verification follows. [[tickets/T-9930-wave-10-list-3]].
+
+## [2026-10-11] build | T-9930 verified function candidates and frame repairs
+
+Full-file diffs match GYOZI `func_80136124` and main `func_80052060`; final unit regression is pending. Documented the GYOZI FAKE after reducing the permuter output, and the plain array-pair idiom. Two SHUGAKU drafts now isolate a frame-size issue and a store-scheduling issue after semantic/type repair. [[matching-notes]], [[tickets/T-9930-wave-10-list-3]].
+
+## [2026-10-11] build | T-9930 nine retained functions
+
+The selector/GYOZI regression passes; RPG_BAT `func_80142DF4` adds 372 bytes with a post-increment counter read and verified redundant-assignment cleanup. Nine functions / 2,032 bytes retained. Scoped dupes produces no changes. After register_shapes and bounded source/permuter retries, appended GEKO and TAIIKU symptom rows to [[data/t0018-cases]]. ETC SDK SPRT repair is under full-file verification. [[tickets/T-9930-wave-10-list-3]].
+
+## [2026-10-11] decision | T-9930 serialize retained-source verification
+
+ETC `func_8013DEA0` passes its settled full-file comparison. An overlapping default build hit transient parse errors during staging, so a fresh serialized default build is running. No retained result is accepted solely from that failed run. Source mutations and real-file builds will be sequential; scratch-only probes remain independent. [[tickets/T-9930-wave-10-list-3]].

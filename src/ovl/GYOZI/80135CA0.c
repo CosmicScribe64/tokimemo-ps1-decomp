@@ -133,7 +133,20 @@ void func_801360DC(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80135CA0", func_80136124);
+void func_80136124(void)
+{
+    GyoziWork *work;
+    work = &D_800F53A0;
+    func_8008F618(D_8012E66C);
+    work->girl[D_8012E66C].unk_06 += 5;
+    work->girl[D_8012E66C].unk_0A += 1;
+    func_8008FB00(0x38, D_8012E66C);
+    /* FAKE: this empty test preserves the incoming girl load in a0. T-9930. */
+    if (D_8012E66C) {
+    }
+    D_800F53A0.unk_F2F = 0xE;
+    func_8004DE1C();
+}
 
 void func_801361A8(void) {
     D_8012E67C = D_8012E66C;

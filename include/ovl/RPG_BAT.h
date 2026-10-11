@@ -444,3 +444,8 @@ void func_80155E80(void);
 #define W9_RPG_TEXT_E92C
 extern u8 D_8015E92C[]; /* text destination; size unknown, func_801563A0. T-9710 */
 #endif
+
+#ifndef RPG_BAT_MOTION_T9930
+#define RPG_BAT_MOTION_T9930
+void func_80142DF4(void);
+#endif
