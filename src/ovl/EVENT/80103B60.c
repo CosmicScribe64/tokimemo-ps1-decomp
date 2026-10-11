@@ -96,7 +96,28 @@ void func_80103F40(void) {
     D_80122C08 = 0x801C6000;
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80103FF0);
+void func_80103FF0(void) {
+    switch (D_800EECB0) {
+    case 1:
+        func_80104090();
+        return;
+    case 2:
+        func_801049B4();
+        return;
+    case 3:
+        func_80104B50();
+        return;
+    case 4:
+        func_80104E64();
+        return;
+    case 5:
+        func_80104F80();
+        return;
+    default:
+        func_80015FE0();
+        return;
+    }
+}
 
 void func_80104090(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
