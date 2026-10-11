@@ -392,4 +392,20 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055AFC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80056070);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80056284);
+void func_80056284(void) {
+    s32 i;
+
+    func_80053D10();
+    func_80054C4C();
+    D_800E7D14[0] = 0;
+    D_800E7D15 = 0;
+    /* FAKE: the store inside the for-init places it after the loop prologue as in the original; real source unknown. T-9140 */
+    for (i = 0, D_800E7D16 = 0; i < 3; i++) {
+        D_800E7D13[i * 4 + 5] = 0;
+        D_800E7D13[i * 4 + 6] = 0;
+        D_800E7D13[i * 4 + 7] = 0;
+        D_800E7D13[i * 4 + 4] = 0;
+    }
+    func_80053CE0();
+    D_800E8BEE = 0;
+}

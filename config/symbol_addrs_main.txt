@@ -3,3 +3,5 @@
 // follow its `jr $ra` were taken as functions of their own (jump-table targets, `jlabel`).
 func_80066A2C = 0x80066A2C; // type:func size:0x58
 func_80066A84 = 0x80066A84; // type:func size:0x48
+// T-9140 u8 view of D_800E7D11 plus 2, the 4-byte record table that func_80056284 clears.
+D_800E7D13 = 0x800E7D13;
