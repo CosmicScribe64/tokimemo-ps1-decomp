@@ -38,7 +38,55 @@ void func_80132134(void) {
         return;
     }
 }
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132198);
+/* FAKE: an empty statement after initialization preserves base-load/store scheduling. T-9910. */
+void func_80132198(void)
+{
+  if (D_800E6280.unk_110D == 0)
+  {
+    func_8004E58C();
+    func_8004E750(0x10);
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048E78();
+    func_8006BC28(0);
+    func_8006BD6C(0);
+    back_clear_switch(1);
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_036 = 0;
+    D_800E6280.unk_038 = 0;
+    tpage_buf_clear();
+    func_80041168(0);
+    D_800E6280.unk_10A2 = 0;
+    dec_bg_reset();
+    dec_bg_show_switch(2);
+    func_800462C8(0xAU, 0x80162000, 0xAA18);
+    D_800E6280.unk_F6F = 3;
+    D_800B593C = 0;
+    D_800E6280.unk_110D = 1;
+ ;
+  }
+  else
+    if (D_800E6280.unk_110D == 1)
+  {
+    if (func_800460CC() & 1)
+    {
+      func_80053650(0x80167000, 0x80188000, 0x80162000);
+      func_800536AC(0x140, 0x100, 0x140, 0xF0);
+      func_80046318(0x36U, 0x80190000, 0xA9E2);
+      D_800E6280.unk_110D += 1;
+    }
+  }
+  else
+    if (D_800E6280.unk_110D == 2)
+  {
+    if (func_800460CC() & 1)
+    {
+      func_80046318(6U, 0x801E0000, 0x9DBF);
+      func_8004284C();
+    }
+  }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132320);
 

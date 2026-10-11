@@ -282,4 +282,29 @@ void func_80142A4C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142AE8);
+void func_80142AE8(void) {
+    s32 i;
+    u8 v;
+    u8 a;
+
+    if (D_8015018C > 0) {
+        for (i = 0; i < 2; i++) {
+            v = D_801217D0[i].unk_14;
+            a = v + 1;
+            if (v < 0x80) {
+                D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[i].unk_14 = a;
+            }
+        }
+    }
+    if (D_8015018C < 0) {
+        for (i = 0; i < 2; i++) {
+            v = D_801217D0[i].unk_14;
+            a = v - 1;
+            if (v != 0) {
+                D_801217D0[i].unk_15 = D_801217D0[i].unk_16 = D_801217D0[i].unk_14 = a;
+            } else {
+                D_801217D0[i].unk_00 = 0x80000000;
+            }
+        }
+    }
+}

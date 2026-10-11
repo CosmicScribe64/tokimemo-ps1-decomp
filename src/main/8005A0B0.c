@@ -1272,7 +1272,28 @@ void join_club_init(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_select);
+s32 join_club_select(void) {
+    menu_check(1, (s32) D_8011ECF6, (s32) D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042908(0);
+        if (D_800E6280.unk_1108 == 0x34) {
+            func_80042940(2);
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x20) {
+        if (D_800E6280.unk_1094 == 0xB) {
+            func_80042908(0);
+            if (D_800E6280.unk_1108 == 0x34) {
+                func_80042940(2);
+            }
+        } else if (D_800E6280.unk_1094 != -1) {
+            ((GsByteNibbles *)&D_800E6280.unk_0F4.b[1])->high = D_800E6280.unk_1094;
+            func_8004284C();
+        }
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_message);
 
