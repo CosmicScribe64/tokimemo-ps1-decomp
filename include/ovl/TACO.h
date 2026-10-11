@@ -377,3 +377,4 @@ void func_8014F9B0(void);
 void func_8014FDC0(void);
 void func_801508D0(void);
 void func_80150DE8(void);
+void func_8014D530(s32 arg0, s32 arg1);
