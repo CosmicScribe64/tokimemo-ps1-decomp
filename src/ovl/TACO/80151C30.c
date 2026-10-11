@@ -22,7 +22,23 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80151D1C);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80151F94);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152110);
+/* The table is indexed (D_801603F0[arg1]), not walked with a local pointer: uopt then knows the
+ * loads do not alias the stack, and as1 leaves the stack-argument store for the jal delay slot
+ * (T-9210). */
+void func_80152110(s32 arg0, s32 arg1, s32 arg2) {
+    s32 i;
+    s32 j;
+
+    if (arg2 < 0x14) {
+        for (i = 0, j = arg0; i != 0x15; i += 3, j += 3, arg1++) {
+            func_80147674(j, D_801603F0[arg1], 1, 0, 0);
+        }
+    } else if (arg2 >= 0x14 && arg2 < 0x28) {
+        for (i = 0, j = arg0; i != 0x15; i += 3, j += 3, arg1++) {
+            func_80147674(j, D_801603F0[arg1], 2, 0, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801521EC);
 

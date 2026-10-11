@@ -26,7 +26,26 @@ void func_80148FE0(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_801490B4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_8014927C);
+void func_8014927C(void) {
+    s32 i;
+
+    func_80151D1C(3);
+    func_8015266C(6);
+    func_80152808(4);
+    func_801532C4();
+    for (i = 0; i < 0xC; i++) {
+        func_801497EC(D_8015FCA8[i], i, D_8015FCD8, D_8015FCB4, D_8015FCC0);
+    }
+    if (D_800E6280.unk_1104.u % 240 == 0 && func_800AE0D0() % 3 == 0) {
+        func_801335A0(0, 0x500);
+    }
+    if (D_800E6280.unk_1104.u < 0x12C) {
+        func_80146F74(0, 0, -2, -0x28, 0, 0, 0, 0x3C, 0x3C);
+    } else {
+        func_8004284C();
+    }
+    D_800E6280.unk_1104.u++;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_801493D4);
 
