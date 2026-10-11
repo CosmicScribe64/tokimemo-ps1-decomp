@@ -1462,6 +1462,14 @@ extern u8 D_80129F40[];
 extern s32 D_800B699C[];
 extern s8 D_80120E49;
 extern u16 D_800B670A[];
+extern u8 D_80089C84;
+extern u8 D_800CA2BC;
+extern s16 D_800EB042;
+extern s16 D_800EB044;
+extern u8 D_80123324[];
+extern u8 D_800B0E72;
+extern u32 D_800B5970[16];
+extern u32 D_800B59B0[16];
 
 /* ---- functions ---- */
 void func_80010678();
@@ -1539,7 +1547,6 @@ void func_800462C8(u8 arg0, s32 arg1, s32 arg2);
 #endif
 void func_80046318(u8 arg0, s32 arg1, s32 arg2);
 s32 func_8004636C();
-s32 func_800463E8(void);
 s32 func_80046500(void);
 void func_800469F4();
 void func_80046A7C();
@@ -1568,7 +1575,6 @@ void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
 void func_80049A40(s16 a, s16 b, s16 c, s16 d, s32 e, s32 f, s32 g);
 #endif
 s32 func_80049B20();
-s32 func_80049FF0();
 void func_8004A1A0();
 void func_8004A2C4();
 void func_8004A4D8();
@@ -2232,18 +2238,8 @@ void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
 s32 func_80067DFC(void);
+s32 func_80053418();
+s32 func_800463E8(void);
+s32 func_80049FF0();
 
 #endif /* MAIN_API_H */
-
-extern u8 D_80089C84;
-
-extern u8 D_800CA2BC;
-extern s16 D_800EB042;
-extern s16 D_800EB044;
-extern u8 D_80123324[];
-
-extern u8 D_800B0E72;
-extern u32 D_800B5970[16];
-extern u32 D_800B59B0[16];
-
-s32 func_80053418();

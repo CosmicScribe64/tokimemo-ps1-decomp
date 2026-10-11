@@ -118,6 +118,9 @@ typedef struct EnFn33 {
 } EnFn33; /* size 0x84 */
 extern EnHalf12 D_80139D04;
 extern EnFn33 D_80139D1C;
+#endif
+
+
 #ifndef W9_EN_RESET_TABLE
 #define W9_EN_RESET_TABLE
 typedef struct EnResetSlot8 {

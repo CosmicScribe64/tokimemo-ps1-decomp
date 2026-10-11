@@ -256,19 +256,6 @@ void func_80132CCC(void);
 typedef struct TtActor68 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 unk_01;
-#ifndef OVL_TT_W9_RENDER_TYPES
-#define OVL_TT_W9_RENDER_TYPES
-typedef union TtPositionWord {
-    /* 0x00 */ s32 w;
-    /* 0x00 */ struct { s16 lo; s16 hi; } h;
-} TtPositionWord; /* size 0x04 */
-typedef union TtHalfwordBytes {
-    /* 0x00 */ u16 h;
-    /* 0x00 */ struct { u8 lo; u8 hi; } b;
-} TtHalfwordBytes; /* size 0x02; actor +0x40 has both lhu and lbu accesses. T-9710. */
-typedef struct TtActor78 {
-    /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 pad_01;
     /* 0x02 */ u16 unk_02;
     /* 0x04 */ u16 unk_04;
     /* 0x06 */ s16 unk_06;
@@ -352,6 +339,36 @@ extern u16 D_80155DD0[];
 #define OVL_TT_T9720_COORDINATES
 /* Signed halfword coordinates consumed by func_80138B90. */
 extern s16 D_80152C40[];
+#endif
+
+
+#ifndef OVL_TT_W9_RENDER_TYPES
+#define OVL_TT_W9_RENDER_TYPES
+typedef union TtPositionWord {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ struct { s16 lo; s16 hi; } h;
+} TtPositionWord; /* size 0x04 */
+typedef union TtHalfwordBytes {
+    /* 0x00 */ u16 h;
+    /* 0x00 */ struct { u8 lo; u8 hi; } b;
+} TtHalfwordBytes; /* size 0x02; actor +0x40 has both lhu and lbu accesses. T-9710. */
+typedef struct TtActor78 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 pad_01;
+    /* 0x02 */ u16 unk_02;
+    /* 0x04 */ u16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ u16 unk_10;
+    /* 0x12 */ u8 pad_12[2];
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ u8 pad_18[8];
     /* 0x20 */ TtPositionWord unk_20;
     /* 0x24 */ TtPositionWord unk_24;
     /* 0x28 */ u8 pad_28[0x10];

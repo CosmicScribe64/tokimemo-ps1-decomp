@@ -321,7 +321,6 @@ typedef struct RpgFlagRecord44 { /* size 0x44 */
 void func_80148654(void);
 
 /* T-9780: second dialogue text buffer. */
-extern u8 D_8015E92C[];
 s32 func_80142544(void);
 void func_801426B0(void);
 void func_80142CB8(void);
@@ -393,6 +392,7 @@ extern s32 D_8015EED0;
 /* Dispatcher has no result read by its callers. T-9750. */
 void func_8013FF28(void);
 #endif /* OVL_RPG_BAT_W9_FF28_H */
+
 
 #ifndef W9_RPG_BAT_func_8013A98C
 #define W9_RPG_BAT_func_8013A98C
