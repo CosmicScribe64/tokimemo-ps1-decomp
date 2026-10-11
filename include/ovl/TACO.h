@@ -332,6 +332,10 @@ extern Tc14 D_8015E4F0[];
 extern Tc14 D_8015E630[];
 extern Tc14 D_8015E770[];
 
+void func_801493D4(void);
+void func_80149D1C(void);
+void func_80151C30();
+
 #endif
 
 typedef struct TacoCam {
