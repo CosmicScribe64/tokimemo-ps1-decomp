@@ -42,3 +42,27 @@ typedef struct MovieVlcState {
 } MovieVlcState; /* accessed prefix, size 0x0C. T-9570 */
 
 #endif /* GAME_H */
+
+#ifndef GAME_SPRITE_SLOT24_T9740
+#define GAME_SPRITE_SLOT24_T9740
+/* T-9740: 0x24-byte records at D_801220D0, cleared by func_8004164C. */
+typedef struct SpriteSlot24 {
+    /* 0x00 */ u32 unk_00;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ s16 unk_0C;
+    /* 0x0E */ s16 unk_0E;
+    /* 0x10 */ u8 unk_10;
+    /* 0x11 */ u8 unk_11;
+    /* 0x12 */ u8 unk_12;
+    /* 0x13 */ u8 pad_13;
+    /* 0x14 */ u32 unk_14;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ s16 unk_1E;
+    /* 0x20 */ u32 unk_20;
+} SpriteSlot24; /* size 0x24 */
+#endif

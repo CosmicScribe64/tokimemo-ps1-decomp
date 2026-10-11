@@ -376,7 +376,15 @@ void func_801478B4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801478E0);
+void func_801478E0(void) {
+    s32 i;
+
+    for (i = 0; i < 128; i++) {
+        D_800E6280.unk_163C[i] = 0x7FFF7FFF;
+    }
+    D_800E6280.unk_163C[0] = 0x7FFF0000;
+    func_80043914((s32)&D_800E6280.unk_163C[0], 0xE, 1, 2, 0);
+}
 
 void func_80147950(void) {
     s32 unused; /* FAKE: unused 4-byte local, the original frame keeps the spill slot of var_v0 one word lower; real source unknown. T-6020 */

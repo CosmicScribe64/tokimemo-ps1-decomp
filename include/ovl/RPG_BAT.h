@@ -342,4 +342,27 @@ typedef struct RpgHealthBlock {
 extern s32 D_8015EDBC;
 extern s32 D_8015EE14;
 extern s32 D_8015ED14;
+#ifndef OVL_RPG_BAT_TRANSITION_T9740
+#define OVL_RPG_BAT_TRANSITION_T9740
+
+/* Packed shade used by the scene transition renderer. T-9740. */
+typedef union RpgColorWord {
+    /* 0x00 */ u32 word;
+    /* 0x00 */ struct {
+        /* 0x00 */ u8 r;
+        /* 0x01 */ u8 g;
+        /* 0x02 */ u8 b;
+        /* 0x03 */ u8 code;
+    } rgb;
+} RpgColorWord; /* size 0x04 */
+
+/* Three words rooted at D_8015EE08; the last advances by two per frame. */
+typedef struct RpgTransition0C {
+    /* 0x00 */ u32 unk_00;
+    /* 0x04 */ u32 unk_04;
+    /* 0x08 */ s32 unk_08;
+} RpgTransition0C; /* size 0x0C */
+
+void func_80150120(void);
+
 #endif

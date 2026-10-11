@@ -701,3 +701,28 @@ extern s32 D_80146500;
 extern s32 D_80146504;
 extern s32 D_80146508;
 extern s32 D_8014650C;
+
+#ifndef OVL_SHOUGATU_RECORDS_T9740
+#define OVL_SHOUGATU_RECORDS_T9740
+/* T-9740: the 28 callbacks copied by func_8013E330. */
+typedef struct ShoCalendarFn28 {
+    /* 0x00 */ void (*f[28])();
+} ShoCalendarFn28; /* size 0x70 */
+extern ShoCalendarFn28 D_8014605C;
+
+/* Record 96 of D_8011ECD0; byte and halfword widths verified in the wrapper. */
+typedef struct ShoSprite44 {
+    /* 0x00 */ u8 pad_00[7];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad_0A[0xC];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad_1A[0x2A];
+} ShoSprite44; /* size 0x44 */
+s32 func_8013E330(void);
+#endif
+
+/* Scene initializer; original byte stores at D_80143B1C (T-9740). */
+extern u8 D_80143B1C;
+void func_801326F8(void);

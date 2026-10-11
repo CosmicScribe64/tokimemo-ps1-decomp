@@ -2405,3 +2405,228 @@ SHOUGATU func_8013AFEC's native CharFlags.b3 store and chained byte assignments 
 Final SHOUGATU func_8013AFEC real-file permuter verification and unsigned/signed byte-view trials reach five edit lines: original li a0,10 versus IDO li v0,10 plus andi a0, and one store retains v0. A temporary unprototyped caller view also fails and is discarded; no override remains. register_shapes identifies the older temporary-order row. Added followup evidence rows for this function and RPG palette fade (twelve batch rows total). All nine retained functions pass fresh resolved real-file comparisons after final formatting; full-build review is running.
 
 Final review: first-pass drafts were built/diffed for all 162 assigned functions, followed by ranked iterative and aggregate repairs within the 36 owned files. Nine retained functions / 3,148 bytes pass fresh resolved comparisons and the 27-unit SHA1 build; headers, branch prototypes (zero new disagreements) and globals pass. Progress is 4879/6958, 779808/2279368, 34.2%. The final low-byte bit-field argument-view experiment remains eight lines away and is restored; no prototype override or trial type remains. Exact-twin audit with the nine current C donors finds no additional plan. All seven marked matching tricks are tracked in T-9760; inline Standards and Spec review has no unresolved code finding. Twelve followup rows are appended in data/t0018-cases; top non-register blocker remains TAIIKU's incorrect existing prototype.
+## Wave 9, list 4 (T-9740)
+
+Ticket [[tickets/T-9740-wave-9-list-4]]. Ordered first pass over 135 functions
+in 35 owned files, then deep attempts ranked by resolved instruction differences.
+Only byte-verified C is retained. Scratch evidence: scratchpad/w9-4/.
+
+First-pass triage: GEKO func_80144198 copies 24 bytes containing twelve signed
+month lengths, then patches February for year 0x60. The draft invents an
+undeclared sp18 object; a 0x18 GekoMonthTable assignment is prepared for the
+deep pass. Its output month/year arithmetic uses full-width registers in the
+target. Main palette/cursor drafts also need narrow formal parameters and
+explicit success/failure returns before register differences can be assessed.
+
+Typed scratch probes: SHOUGATU func_8013E330 is a 28-entry (0x70) callback
+wrapper. Scalar-before-table reproduces the 0xA0 frame and table at +0x2C;
+eight differing lines remain around the D_80120668 load/exit scheduling.
+GEKO func_80144198 has the recovered 0x18 month table, but four scalar homes
+produce a larger frame and a spilled incoming selector. Cursor upload
+csr_load_vram can use the existing GsRec142C records and LoadSquare's narrow
+parameters; that draft has 30 operand/temporary-order differences, with the
+frame and unused incoming-argument home already correct.
+
+Main func_80041168 needs a RECT, not four separately addressed halfword
+locals. Three distinct recursive-loop counters, RECT, then a masked-index
+temporary reproduce frame 0x50/RECT +0x3C. Calculating the masked index
+directly in the loop condition removes the remaining folded-zero instruction
+difference. A standalone scratch object adds trailing alignment zeros; a real
+whole-file build must decide this candidate, not its scratch padding.
+
+Retained **main func_80041168 (376 bytes)**: the direct masked-index condition
+and three separate counters need no artificial temporary or padding. Main
+SHA1 and whole-file resolved funcdiff both pass. No declaration changes.
+
+Retained **RPG_BAT func_8014FDBC (868 bytes)**: the only actual draft omission
+was func_8014B738's third argument, 0x3C, set in the jal delay slot. The
+callee's inferred two-argument count missed this call-site argument. Adding
+it removes the 35 reported differences (mostly shifted exit branches).
+Overlay SHA1 and resolved funcdiff pass, including the 24-way jump table.
+
+Retained **EVENT func_8010B8A4 (204 bytes)**: the record view at D_800E9620
+has stride 0x44, with bytes +3/+7 in records 30/31; D_800EC190 holds
+0x24-byte packets with 32-bit tags. These views reproduce all the separate
+scalar alias addresses without new main globals. A real u8 value snapshot
+after the first call gives the first global load its a1 address. The signed
+bit-clear mask and s32/no-return definition preserve the final -129 literal.
+No FAKE needed. Real EVENT SHA1 and resolved diff pass. Types/prototype
+appended to the overlay header, closing historical T-9170/T-9320 evidence.
+
+Retained **NAME_ENT func_801478E0 (112 bytes)**: fill the existing
+GameState.unk_163C[128] word array with 0x7FFF7FFF, set word zero to
+0x7FFF0000, and upload its palette. A plain s32-indexed 128-trip for loop
+reproduces the four-store unrolling and every pointer offset. The draft's
+unknown GameState members and byte-stride pointer advances were unnecessary.
+Whole-file resolved diff and NAME_ENT SHA1 pass; no FAKE or new declarations.
+
+Further bounded probes: ETC func_801464D4 uses the canonical 256-entry
+GameState.unk_75E array; removing the redundant type-byte snapshot reduces
+the scratch diff to 14 instructions plus alignment, chiefly input a0 copied
+to a2 while the current year takes a0. GYOZI func_8013506C's draft incorrectly
+tests the incremented counter: the target tests the old value. Correcting
+that and reusing a byte offset for both pointer tables leaves register/order
+differences, not a control-flow ambiguity. Main palette/cursor variants and
+ETC's partially unfolded reset did not match. RPG_BAT func_80150120 also
+needs a missing third argument (0x5A) and a four-byte color union; its
+remaining differences are dominated by the global word counter's registers.
+Scoped exact and near-duplicate scans after four matches applied zero.
+
+Second set of deep attempts: BUNKASAI func_8013B190's five-minute permutation
+finds a pointer-to-selector form with the correct v1 allocation; only the
+selector load's position and scratch trailing alignment remain. ETC's
+five-minute event-search permutation produces no improvement over eight
+differences. RPG_BAT func_8014AB84 needs a four-word local ID array, not four
+independent scalar locals: the array repairs frame 0x48 to the observed 0x38
+and all spill offsets. Its remaining 22 differences are in the incoming slot
+reload and the slot-table/base-product register choices. Main func_80041F48's
+five pointer loops are reproduced with whole-GameState byte walks, but IDO
+keeps one shared base instead of rebuilding it for each loop (24 differences).
+TACO func_8013CE78 must walk actors 16..63 at stride 0x88; the draft wrongly
+scales byte advances by sizeof(TcActor). Indexed and repaired pointer forms
+still disagree in pointer lifetime/registers and an initial 16 literal.
+No rejected types or code retained.
+
+Retained **RPG_BAT func_80150120 (960 bytes)**: the packed four-byte color
+union reproduces the switch's stack word. A three-word transition view rooted
+at D_8015EE08 exposes selector +0 and signed counter +8; direct compound
+increments of the counter remove the 102-line register difference. Both
+selector and counter now use that view. The caller sees func_80049A40 without
+a prototype, matching the target's full-width dynamic coordinates; its
+canonical narrow prototype inserted extra conversions. A documented main-api
+override is confined to this file, whose other retained C does not call it.
+Restore func_8014B738's omitted third argument 0x5A. Overlay SHA1 passes,
+including both switches and strings; types and the dispatcher's needed void
+prototype are appended to RPG_BAT.h. Running gain: 5 / 2,520 bytes.
+
+Clarification on func_8014AB84: repeated `arg0 * 3 + k` expressions let IDO
+create the four observed spills itself. This needs no explicit local ID
+array and reproduces frame 0x38, with 12 remaining differences around the
+arg0 reload after the first call. Its five-minute permutation is underway.
+
+Retained **main func_8004164C (500 bytes)**: an indexed 0x24-byte sprite
+record view recovers every original store and IDO four-way unrolling. A
+GameState pointer holds the parallel flag array base and reproduces the
+a2/a3 end-pointer allocation. No dummy values, unusual casts or FAKE. Main
+SHA1 and resolved real diff pass. Type moved to include/game.h per standards
+8a; final header regression follows. Total 6 functions / 3,020 bytes.
+
+The six-match full header rebuild passes all 27 unit SHA1 checks and headers/
+globals checks. An empty duplicate filter was caught during planning and its
+own Docker run stopped before mutation; status still contains only intended
+files. The rerun uses all 35 owned file identifiers as a nonempty CSV.
+
+Retained **BUNKASAI func_8013B190 (204 bytes)** and **SHOUGATU func_8013E330
+(224 bytes)**: the dispatcher needs one two-word state view at D_80122EB8;
+the callback wrapper needs one 0x44-byte sprite record view, record 96 of
+D_8011ECD0, for its byte +7 and halfwords +8/+0x16/+0x18. The typed aggregates
+resolve the last load scheduling gaps naturally. Both real unit SHA1 and
+resolved diffs pass. New types/prototypes appended to their overlay headers;
+formatting/type migration regression follows. Total 8 functions / 3,448 bytes.
+
+Own-data clarification: TAIIKU/80133C80 has a data ownership range
+0x801491C0..0x80149940, but no active .data island. data_island --dry-run
+proposes 87 pieces and a YAML change, prohibited by the batch brief. This is
+a configuration prerequisite, not missing ownership evidence.
+
+Retained **KANGEI func_80137484 (192 bytes)**: use D_8011ECD0 records 96/97
+for the formerly scalar byte aliases as well as records 0x61..0x73 in the
+loop. The common array view keeps the first byte increment and the later
+reload separate, exactly as the target. Real KANGEI SHA1 and resolved diff
+pass. Type/prototype appended to KANGEI.h; no FAKE. Total 9 / 3,640 bytes.
+ETC event search now has zero differing instructions with a GameState pointer
+and direct year-field reads; real whole-file proof is next.
+
+Retained **ETC func_801464D4 (292 bytes)**: use a GameState pointer and
+direct year-field comparisons in the canonical 256-record event array.
+Removing the inferred year snapshot fixes comparison operand order. The
+local mode copy is unnecessary: using the mode parameter directly still
+matches. No extra alias/type or FAKE. Real ETC SHA1 and resolved diff pass.
+Prototype appended to ETC.h. Total 10 functions / 3,932 bytes, closing the
+historical T-8040 constant-allocation row.
+
+Fourteen bounded deep-pass rows appended to the T-0018 inventory after
+register_shapes classification, plus resolutions of five historical
+functions. Rejected probe code/types remain in scratch only. Ten-match
+full rebuild passes all 27 unit checks and headers/globals checks.
+
+The live-C duplicate wrapper sees all 4,880 current matches rather than the
+stale generated-folder count of 4,870. Both owned-file exact and near scans
+apply zero additional functions. The wrapper lives in scratch only; repository
+tools and configs are unchanged.
+
+Late bounded attempts: KANGEI func_801370A0 needs signed 32-bit x-coordinate
+then a narrow third draw argument, and a left shift before multiplication.
+These repair missing instruction shapes but leave 76 differing lines and
+saved-register/base order. ENDING func_80137E40's phase/counter aggregate and
+integer-result variants do not close its established selector/boolean gap.
+TAIIKU func_80138800 uses true 0x44 records, with relative records 95 and 106
+after incrementing the sprite pointer. Native loop-header variants reduce
+the scratch diff to 19 lines; a 300-second minimal-context permutation follows.
+KANGEI func_80137544's sprite view resolves the historical byte reload, leaving
+only mask-load scheduling (four differing lines); bounded mask variants follow.
+
+Retained **KANGEI func_80137544 (244 bytes)**: the same sprite array view
+fixes the historical post-loop reload; using the signed mask for both the
+record-96 clear and the loop clear removes the last scheduling difference.
+An integer definition without an explicit return reproduces the original
+result-register lifetime. No FAKE. Real KANGEI SHA1/resolved diff pass.
+Total 11 functions / 4,176 bytes. Prototype/comment regression follows.
+
+Retained **SHOUGATU func_801326F8 (364 bytes)**: canonical GameState fields
+and an indexed Rec38 bit-field loop, using `b1 >= 1`, reproduce all loop
+scheduling. Explicit GameState/output-array pointers initialized before the
+loop match; no FAKE. Scratch trailing nop is alignment only: real SHOUGATU
+SHA1/resolved diff pass. Moved the overlay byte declaration/prototype to its
+header and renamed the loop counter. Total 12 functions / 4,540 bytes.
+TAIIKU's 300-second permutation finds no zero; assembly retained.
+
+Inline review found an existing complete `Rec24` view for D_800EC190 in
+EVENT neighbours: coordinate halves at +4/+6, color bytes at +0x14, and
+its control word at +0. This is a game record, distinct from SDK POLY_G4.
+Reuse Rec24 instead of the new prefix-only EventPacket24 view. Removed the
+redundant type; resolved-diff and full regression follow.
+
+Final late probes: KANGEI func_80136970's call-order repair is necessary but
+24 width/order variants retain its historical constant allocation gap (52
+lines). Added one classified row. TAIIKU func_80138800's native loop and
+300-second permutation retain 19 lines; added one classified row. Total
+new unresolved T-0018 rows: 16. SHOUGATU func_8013E50C needs two true
+seven-halfword local tables, but repaired do/for/while and argument-count
+variants retain frame/local placement and pointer/loop reuse (best 159
+lines); no probe types or declarations retained.
+
+Inline standards/spec review: all 12 bodies replace assigned INCLUDE_ASM
+entries in address order, with C89 declarations and SDK RECT. No new FAKE,
+NON_MATCHING, forced registers, dummy locals, tool/config changes, or raw
+source changes. Canonical GameState fields and documented aggregate views
+are used. The one main-api override explains the verified full-width caller
+view. RGB offsets were completed, integer-definition intent was commented,
+and the redundant EVENT prefix type was replaced by existing Rec24. EVENT
+SHA1/resolved diff still pass after that review fix. Final branch checks and
+whole-project regression follow.
+
+Final retained gain: **12 functions / 4,540 bytes**. All 27 unit SHA1 checks
+and fresh resolved diffs for all 12 pass after review. Prototype branch check
+has zero new/17 known disagreements; globals OK. Scoped append-only/ownership/
+wiki lint passes. Final live-C exact/near scans apply zero additional matches.
+Progress: `grand total   4882/6958   781192/2279368  34.3%`.
+
+Last bounded probes: main func_8004F6B0's raw m2c draft loses the button-word
+reload on the loop back edge. The original reloads D_800E6280.unk_F80 after
+each frame and uses that value for the next iteration; the draft retains its
+initial snapshot. Repairing the reload and positive exit branch, with 40
+scalar/aggregate/promotion/control variants, leaves 72 differing lines.
+No scratch global aliases or code retained. This is a concrete m2c semantic
+loss, independent of the remaining register-allocation gap.
+
+Main func_8004F4F0 expands 18 source bytes into a true 144-byte temporary
+bit buffer and packs six pairs of output rows, eight and four nibbles per
+word. Native and repaired pointer/goto forms compile, but 32 width/pointer/
+loop variants retain at least 139 differing lines, chiefly the shift counter,
+shared bound, and store schedule. No oversized local or FAKE was used, and
+no probe declaration retained. Both functions stay assembly.
+
+T-9740 completed after the explicit four-hour work requirement (14:59 to
+at least 19:00 UTC). Inline review findings resolved; all required checks
+pass. Final gain 12 / 4,540 bytes and 16 new unresolved T-0018 rows. No commits.

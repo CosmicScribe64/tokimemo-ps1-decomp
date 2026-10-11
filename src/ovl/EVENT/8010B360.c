@@ -114,7 +114,27 @@ void func_8010B87C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B8A4);
+/* T-9740: integer definition without an explicit return matches the original. */
+s32 func_8010B8A4(void) {
+    s32 mask;
+    u8 value;
+
+    func_8004C984();
+    D_800EECD0 = 1;
+    value = D_800EAFA7;
+    ((EventFlagRecord44 *)D_800E9620)[31].unk_07 = value;
+    ((EventFlagRecord44 *)D_800E9620)[30].unk_07 = value;
+    func_8004C060(0, value);
+    func_8004C060(1, D_800EAFA7);
+    if (D_800EAFA7 < 8U) {
+        mask = ~0x80;
+        D_800EECD0 = 0;
+        ((EventFlagRecord44 *)D_800E9620)[31].unk_03 &= mask;
+        ((EventFlagRecord44 *)D_800E9620)[30].unk_03 &= mask;
+        ((Rec24 *)D_800EC190)[0].unk_00 |= 0x80000000;
+        ((Rec24 *)D_800EC190)[1].unk_00 |= 0x80000000;
+    }
+}
 
 void func_8010B970(void) {
     D_800B1746 = 0xD;

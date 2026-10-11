@@ -279,3 +279,20 @@ typedef struct KangeiStateView {
 #endif /* OVL_KANGEI_H */
 extern u8 D_80139DF8;
 void func_80138D40(void);
+
+#ifndef OVL_KANGEI_SPRITE_T9740
+#define OVL_KANGEI_SPRITE_T9740
+/* T-9740: 0x44-byte D_8011ECD0 records used by func_80137484. */
+typedef struct KangeiSprite44 {
+    /* 0x00 */ u8 pad_00[2];
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 pad_04[3];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 pad_08[0x3C];
+} KangeiSprite44; /* size 0x44 */
+void func_80137484(void);
+#endif
+
+/* Integer definition retains the original fade-out result register (T-9740). */
+s32 func_80137544(void);

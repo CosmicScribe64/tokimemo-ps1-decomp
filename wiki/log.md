@@ -4633,3 +4633,761 @@ Inline Standards and Spec reviews have no unresolved implementation finding. All
 ## [2026-10-11] ticket | T-9760 Done after four-hour gate
 
 The requested minimum has elapsed since 14:59:44 UTC. Final inline Standards and Spec review has no unresolved finding. Nine functions / 3,148 bytes pass fresh resolved diffs, 27/27 SHA1 checks and header/prototype/global guards. Progress: grand total 4879/6958, 779808/2279368, 34.2%. Twelve T-0018 rows added. [[tickets/T-9760-wave-9-list-6]], [[kanban]] and [[index]] move together to Done. Changes are uncommitted; raw sources, asm, tools and configs remain untouched.
+## [2026-10-11] ticket | T-9740 wave 9 list 4 started
+
+Created [[tickets/T-9740-wave-9-list-4]] in In Progress and added its board/index
+links. Read the wave-9 brief, standards, workflow, prior overlay findings,
+[[register-allocation-wave7]], and T-9600/T-9610 tool/type changes.
+
+## [2026-10-11] ingest | T-9740 generated assembly and prior drafts
+
+Initial worktree generation is in progress. Prior wave-8 drafts remain in the
+shared scratchpad. main load_palette's target returns 1 on successful append
+and 0 when full; the prior void draft omitted those paths. [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 baseline checks passed
+
+Docker configure and initial ninja completed successfully: 27 linked units
+remain byte-identical, headers OK and globals OK. Draft collection and exact
+owned-file duplicate inventory are underway. [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 duplicate baseline and ordered pass
+
+Scoped duplicate and near-duplicate scans applied zero functions. Baseline
+progress is 4870/6958 functions, 776660/2279368 bytes (34.1%). Ordered draft,
+build and resolved comparison pass started; failures restore INCLUDE_ASM.
+Evidence: scratchpad/w9-4/. [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 first pass EVENT:func_8010B8A4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 204 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80147F78
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 360 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:load_palette
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 108 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:load_csr_ab
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 128 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:load_csr_tp
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 132 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_80146AC0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 128 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass GEKO:func_80144198
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 216 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass EVENT:func_8010B614
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 100 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_801478E0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 112 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80145EA4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 208 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_801368B8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 312 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80137228
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 260 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass KANGEI:func_80137484
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 192 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass KANGEI:func_801370A0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 928 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80136DA4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 220 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TT:func_80142AF0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 384 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_801464D4
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 292 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass SHOUGATU:func_8013E330
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 224 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80138800
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 228 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] ingest | T-9740 local calendar extent
+
+Read GEKO func_80144198 alongside its draft: copied extent is twelve signed
+halfwords, February patch is local +2, target frame 0x40/local +0x18. Prepared
+an aggregate-based scratch candidate for the deep pass. [[matching-notes]];
+[[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80137090
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 408 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80135DF8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 324 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:csr_load_vram
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 240 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80137440
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 260 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_8004F4F0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 448 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TT:func_80142570
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 384 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_8004164C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 500 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass GYOZI:func_8013E638
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 236 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass KANGEI:func_80137544
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 244 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80147A80
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 364 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80149144
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 364 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_8013CE78
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 352 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_80146400
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 212 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass BUNKASAI:func_8013B190
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 204 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ENDING:func_80137E40
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 292 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] query | T-9740 pointer draft repair method
+
+m2c --valid-syntax exposes field widths as M2C_FIELD accesses, useful for
+scratch-only compilation and diff ranking. Retained code will use actual
+record types and SDK types rather than these draft macros. TT's first
+64-record loop and second 32-record loop share the counter; the first stays
+rolled and the second is unrolled by four. [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 first pass main:func_80041F48
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 272 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80145FB0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 296 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80137C44
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 612 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass GYOZI:func_8013506C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 172 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass KANGEI:func_80136970
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 180 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TT:func_801330D8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 432 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_801469D0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 364 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80135480
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 608 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_801455E4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 380 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80136EC0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 380 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_80136A9C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 316 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80135830
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 672 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80137EA8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 692 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_8014AB84
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 240 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_800419FC
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 560 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_80132B34
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 432 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:load_string
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 252 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80149B08
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 484 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_801365C8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 752 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_801328C4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 464 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass GYOZI:func_80135518
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 272 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_80041C2C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 796 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_80057710
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 484 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TT:func_801336F8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 632 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_80046754
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 884 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_8004443C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 708 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_801473AC
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 484 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_801486F8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 484 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass EVENT:func_8010F340
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 376 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_8014AC74
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 348 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_8013F980
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 252 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80135AD0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 596 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass EVENT:func_8010F55C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 496 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_80041168
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 376 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_801342CC
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 388 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80137784
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1216 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass SHOUGATU:func_8013288C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 424 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ENDING:func_80137BB4
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 652 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_8004F6B0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 448 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_8004E58C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 452 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_8008647C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 452 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass KANGEI:func_80136A70
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 328 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80144B44
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 328 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass GYOZI:func_8013E824
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 748 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ENDING:func_801387B0
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 748 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80144C8C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 780 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_801345D4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 376 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_8013CC40
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 560 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80137544
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 576 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_8013C1F4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 588 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass KANGEI:func_801362F0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 420 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_8013CC90
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 928 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_8013C440
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 660 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_80148BC8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 720 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass SHOUGATU:func_8013E50C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 472 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_801449D8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 744 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:Scroll
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 760 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass SHOUGATU:func_801326F8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 364 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_8013FC64
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 796 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass EVENT:func_801002C8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 384 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_80148F7C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 836 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TT:func_801427A8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 840 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80133CFC
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 868 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ENDING:func_80137730
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 888 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass SHOUGATU:func_8013EA98
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 920 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_80145DC4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 936 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_800412E0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 676 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_8014616C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1512 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_80146754
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1548 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:disp_string
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1112 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80138224
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1116 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_80152384
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 556 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80149840
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 668 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass SHUGAKU:func_801337FC
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 620 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_80145650
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1908 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80146624
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 752 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_8014D380
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 3040 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_801321D0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 376 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80135F3C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1676 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_801346FC
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1688 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80145AC4
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 992 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80144FDC
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 924 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_8013BAC4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1840 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_80144E3C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1888 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | Wave 9 list 4 typed probes and RECT candidate
+
+[[tickets/T-9740-wave-9-list-4]]: recovered the SHOUGATU callback wrapper
+(8 differing lines), GEKO 12-month table (frame/selector spill unresolved),
+main cursor records (30 differences), and TT animation prefix (174 differences).
+Main func_80041168 now has a genuine RECT and distinct loop counters; the best
+scratch candidate has matching instruction lines but extra trailing alignment
+zeros. Whole-file proof remains pending while the ordered first pass runs.
+Scratch outputs live in scratchpad/w9-4/. Findings appended to [[matching-notes]].
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_8014826C
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 1120 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TT:func_801333D4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 804 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_8014790C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1128 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | Wave 9 list 4 first retained match
+
+Main func_80041168 (376 bytes) now uses a genuine RECT and three recursive
+loop counters. Direct masked-index tests preserve the target's first andi.
+Whole-file ninja build/SLPM_86.053.ok and resolved funcdiff both pass.
+No FAKE or declaration changes. [[matching-notes]] and
+[[tickets/T-9740-wave-9-list-4]] record the proof.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_80132348
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1404 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass KANGEI:func_8013769C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1268 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass main:func_80046AC8
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 2696 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_80152080
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 772 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_8014FDBC
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 868 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_8014F88C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1328 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_80150120
+
+[[tickets/T-9740-wave-9-list-4]]: diff, 960 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TAIIKU:func_80134060
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1348 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass TACO:func_8013C6D4
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1388 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_80146D4C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1056 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass RPG_BAT:func_8014A660
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1316 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass ETC:func_801480D0
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 2808 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass NAME_ENT:func_80149E3C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 1944 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | T-9740 first pass GEKO:func_80142C9C
+
+[[tickets/T-9740-wave-9-list-4]]: build-error, 3656 bytes; draft/build/resolved comparison evidence in scratchpad/w9-4/first-pass.jsonl.
+
+## [2026-10-11] build | Wave 9 list 4 first-pass coverage complete
+
+[[tickets/T-9740-wave-9-list-4]] finished ordered draft/build/resolved-diff
+attempts for all 135 functions: 15 compiled differing drafts and 120
+compilation failures. Every rejected source was restored. The deep-pass
+RECT match remains. Wipe func_80057710 is down to 16 scheduling differences.
+SHOUGATU's 300-second permutation reached score 350, no zero; large-header
+permute preparation stalled before its timed worker, so a small equivalent
+scratch context was used without modifying tools. [[matching-notes]].
+
+## [2026-10-11] build | Wave 9 list 4 RPG scene dispatcher match
+
+RPG_BAT func_8014FDBC (868 bytes) passes overlay SHA1 and resolved funcdiff.
+Its draft omitted func_8014B738's third argument 0x3C; restoring that call-site
+argument resolves all 35 differences, including shifted exits. Running gain
+2 functions / 1,244 bytes. [[matching-notes]] and
+[[tickets/T-9740-wave-9-list-4]] updated.
+
+## [2026-10-11] build | Wave 9 list 4 typed EVENT match
+
+EVENT func_8010B8A4 (204 bytes) passes real resolved diff and overlay SHA1.
+The 0x44-byte table records at D_800E9620 and 0x24-byte packets at D_800EC190
+replace missing scalar aliases and byte-pointer tag stores. A byte snapshot
+of D_800EAFA7 reproduces the first load through a1; s32/no-return plus the
+real bit-clear mask preserve the original final mask literal. Types and
+prototype appended to include/ovl/EVENT.h. Gain: 3 / 1,448 bytes.
+Historical T-9170/T-9320 row resolved; [[matching-notes]] and
+[[tickets/T-9740-wave-9-list-4]] updated.
+
+## [2026-10-11] build | Wave 9 list 4 palette reset match and full regression
+
+NAME_ENT func_801478E0 (112 bytes) matches with the canonical 128-word
+GameState palette array and a plain for loop. NAME_ENT SHA1/resolved diff
+pass. Total 4 functions / 1,560 bytes. The preceding complete rebuild after
+EVENT.h changed passed all 27 unit checksums, headers and globals. Retained
+EVENT/RPG_BAT diffs pass again. [[matching-notes]] and
+[[tickets/T-9740-wave-9-list-4]] record the findings and proofs.
+
+## [2026-10-11] query | Wave 9 list 4 additional bounded probes
+
+Scoped exact/near-duplicate scans applied zero functions. ETC's event search
+is reduced to a small register-order difference using GameState.unk_75E.
+GYOZI's counter test requires postincrement, correcting a draft semantic
+error. Palette/cursor and reset variants remain differing; RPG color dispatch
+has a second missing call-site argument and a recovered four-byte color
+aggregate. An in-process comparison using the official funcdiff helpers was
+validated against the retained NAME_ENT match to speed scratch variants.
+No additional C retained. [[matching-notes]],
+[[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] query | Wave 9 list 4 frame and pointer findings
+
+BUNKASAI's 300-second permutation improves its selector register but leaves
+load scheduling; ETC's 300-second permutation produces no better candidate.
+RPG_BAT func_8014AB84's four-word ID array fixes its frame and spills, leaving
+22 register differences. Main reset loops retain the historical shared-base
+gap; TACO actor-walk drafts require byte-stride repair and remain differing.
+EVENT voice and NAME_ENT texture drafts now have bounded aggregate views
+for further probes. All four retained matches unchanged. [[matching-notes]],
+[[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | Wave 9 list 4 RPG color transition match
+
+RPG_BAT func_80150120 (960 bytes) passes the real overlay SHA1 with a packed
+color union and a three-word transition view. Direct compound increments of
+the member at +8 solve the counter's register allocation. Restore the
+0x5A third argument and use the byte-verified unprototyped coordinate call
+view. Types and void prototype appended to include/ovl/RPG_BAT.h. Total
+5 functions / 2,520 bytes; full regression and real diffs running.
+[[matching-notes]], [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | Wave 9 list 4 sprite reset match
+
+Main func_8004164C (500 bytes) passes the real main SHA1 and resolved diff.
+The recovered 0x24-byte record and a GameState pointer reproduce the loop
+and end-pointer registers. Type moved to include/game.h; final regression
+pending. Six matches / 3,020 bytes. [[matching-notes]],
+[[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | Wave 9 list 4 six-match regression
+
+All 27 units and header/global checks pass after moving the sprite record
+type to game.h. Duplicate scanning was restarted with an explicit nonempty
+owned-file CSV after catching an empty filter before changes. Worktree
+status remains scoped. [[matching-notes]], [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | Wave 9 list 4 aggregate scheduling matches
+
+BUNKASAI func_8013B190 and SHOUGATU func_8013E330 pass their real unit SHA1
+and resolved diffs. Two-word state and 0x44-byte sprite views close the load
+ordering gaps without FAKE. Overlay types/prototypes appended; total
+8 functions / 3,448 bytes. TAIIKU data ownership exists, but its island needs
+a prohibited YAML change; dry-run evidence recorded. [[matching-notes]],
+[[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | Wave 9 list 4 sprite fade match
+
+KANGEI func_80137484 (192 bytes) passes real unit SHA1 and resolved diff
+with one sprite-array view. Scalar byte promotion was hiding the aliasing
+that keeps the post-loop reload. New overlay type/prototype appended;
+9 functions / 3,640 bytes. Eight-match full rebuild passed 27/27 checks.
+[[matching-notes]], [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | Wave 9 list 4 event search match
+
+ETC func_801464D4 (292 bytes) passes real unit SHA1 and resolved diff with
+a GameState pointer and direct event-array fields. No year snapshot or mode
+copy needed. Prototype appended to ETC.h. Ten matches / 3,932 bytes.
+[[matching-notes]], [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] query | Wave 9 list 4 bounded-gap inventory
+
+Appended 14 bounded deep-pass T-0018 rows after register_shapes classification
+and documented five historical resolutions. Ten-match regression passes
+27/27 binary, header and global checks. [[data/t0018-cases]],
+[[matching-notes]], [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] query | T-9740 live duplicate classification
+
+Ten-match full rebuild passes 27/27 SHA1 and headers/globals. The scoped duplicate scan still classifies 4,870 functions from generated assembly folders, so a scratch-only wrapper checks live C definitions before the same owned-file apply/check scan. No repository tool changes. Corrected the new csr_load_vram row to register_shapes' other register/promotion cluster in [[data/t0018-cases]]. See [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] query | T-9740 late aggregate probes
+
+Live-C owned-file exact/near scans apply zero additional matches. KANGEI particles improve to 76 differing lines but retain saved-register/base order; ENDING phase/counter views do not resolve its known selector/boolean gap. TAIIKU two-loop native views reach 19 differing lines and enter a 300-second permutation; the KANGEI fade-out view reaches four lines. Rejected drafts remain scratch-only. See [[matching-notes]] and [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 eleventh match, KANGEI fade-out
+
+KANGEI func_80137544 matches (244 bytes), real overlay SHA1/resolved diff pass. The recovered sprite view repairs the historical reload gap, and one signed mask shared by both clears repairs scheduling. Integer definition without explicit return matches the original lifetime. Added prototype and explanatory comments; regression follows. Total 11 / 4,176 bytes. See [[matching-notes]], [[data/t0018-cases]], and [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 twelfth match, SHOUGATU initializer
+
+SHOUGATU func_801326F8 matches (364 bytes), real unit SHA1 and resolved diff pass. Canonical fields plus the b1 >= 1 loop resolve the historical scheduling case; scratch trailing nop was alignment. Move byte declaration/prototype to overlay header, rename loop counter, document RGB-byte offsets and integer-definition intent. Eleven-match full regression already passed 27/27; final regression follows these cleanup changes. TAIIKU permutation found no match. Total 12 / 4,540 bytes. See [[matching-notes]], [[data/t0018-cases]], and [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] decision | T-9740 review reuses complete EVENT record
+
+Inline standards review found EVENT neighbours already use the complete shared Rec24 layout for D_800EC190. Its coordinate/color offsets differ from SDK POLY_G4, so it is a game record. Reuse Rec24 for the new two control-word stores and remove the redundant EventPacket24 prefix view. Verification follows. See [[matching-notes]] and [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] ticket | T-9740 In Review, sixteen blocker rows
+
+Inline standards/spec review completed for 12 retained matches. RGB offsets, integer-definition comments, and reuse of EVENT Rec24 resolve the review findings; EVENT SHA1/resolved diff still pass. Added classified KANGEI random-choice and TAIIKU two-loop rows, total 16 new unresolved rows. SHOUGATU table probes retain frame/local placement differences and are rejected. Move own ticket/card/index to In Review while final checks run. See [[matching-notes]], [[data/t0018-cases]], and [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] build | T-9740 final twelve-match verification
+
+Final incremental ninja passes 27/27 SHA1 checks after the review change. Fresh resolved diffs pass all 12 retained functions; prototype branch check has zero new/17 known disagreements and globals OK. Final live-C owned-file exact/near scans apply zero. Progress: grand total 4882/6958, 781192/2279368 bytes (34.3%). Gain 12 / 4,540 bytes, 16 new blocker rows. User four-hour floor remains pending. See [[tickets/T-9740-wave-9-list-4]] and [[matching-notes]].
+
+## [2026-10-11] lint | T-9740 scope and wiki consistency
+
+Append-only checks pass for all seven shared headers, [[log]], [[data/t0018-cases]], and own [[matching-notes]] additions. All nine changed C files are assigned; no tools/config/raw/asm changes, staging or commits. Own ticket/card/index agree in In Review and all new wikilinks resolve. The ticket remains In Review until the elapsed-work floor is met.
+
+## [2026-10-11] query | T-9740 final controller and bitmap probes
+
+Controller func_8004F6B0 raw m2c loses the button reload on the back edge; repaired native/scalar/aggregate forms still differ by 72 lines. Bitmap func_8004F4F0 needs an actual 144-byte local bit buffer; 32 width/pointer/goto variants retain at least 139 differences in counters/bounds/store schedule. Both stay assembly, all probe aliases scratch-only. Direct header check also passes, with current header/global stamps. See [[matching-notes]] and [[tickets/T-9740-wave-9-list-4]].
+
+## [2026-10-11] ticket | T-9740 Done after four-hour session
+
+Worked from 14:59 through 19:00 UTC, meeting the user's explicit four-hour minimum. Retained 12 functions / 4,540 bytes; fresh resolved diffs, 27/27 unit SHA1 checks, header/prototype/global checks and scoped append-only/ownership/wiki lint pass. Inline standards/spec findings resolved. Own ticket/card/index move to Done; 16 new unresolved T-0018 rows. No commits, pushes or merges. See [[tickets/T-9740-wave-9-list-4]] and [[matching-notes]].
+
+## [2026-10-11] lint | T-9740 completed-state audit
+
+Final scoped lint passes with ticket/card/index in Done: seven headers and shared log/inventory/notes remain append-only, all nine changed C files are assigned, 16 new unresolved rows counted, and new wikilinks resolve. Whitespace check passes. type_recovery proposals for the EVENT control region were broad heuristics; the verified neighbouring Rec24 accesses justify the retained complete view. All requested work is uncommitted. See [[tickets/T-9740-wave-9-list-4]].

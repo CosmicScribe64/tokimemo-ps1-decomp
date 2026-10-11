@@ -305,9 +305,51 @@ void func_80137440(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80137484);
+void func_80137484(void) {
+    s16 i;
+    KangeiSprite44 *sprite;
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80137544);
+    ((KangeiSprite44 *)D_8011ECD0)[96].unk_03 |= 0x80;
+    ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 += 8;
+    for (i = 0x61; i < 0x74; i++) {
+        sprite = &((KangeiSprite44 *)D_8011ECD0)[i];
+        sprite->unk_03 |= 0x80;
+        sprite->unk_07 += 8;
+    }
+    ((KangeiSprite44 *)D_8011ECD0)[96].unk_02 = 5;
+    if (((KangeiSprite44 *)D_8011ECD0)[96].unk_07 >= 0x80U) {
+        ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 = 0x80;
+        ((KangeiSprite44 *)D_8011ECD0)[97].unk_07 = 0x80;
+        func_8004284C();
+    }
+}
+
+/* T-9740: integer definition without an explicit return matches the original. */
+s32 func_80137544(void) {
+    s16 i;
+    s32 mask;
+    KangeiSprite44 *sprite;
+    ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 -= 8;
+    for (i = 0x61; i < 0x74; i++) {
+        sprite = &((KangeiSprite44 *)D_8011ECD0)[i];
+        sprite->unk_07 -= 8;
+    }
+    /* The signed mask is shared by the scalar and loop flag clears. */
+    mask = ~0x80;
+    if (((KangeiSprite44 *)D_8011ECD0)[96].unk_07 < 9U) {
+        ((KangeiSprite44 *)D_8011ECD0)[96].unk_07 = 0;
+        ((KangeiSprite44 *)D_8011ECD0)[96].unk_03 &= mask;
+        for (i = 0x61; i < 0x74; i++) {
+            sprite = &((KangeiSprite44 *)D_8011ECD0)[i];
+            sprite->unk_07 = 0;
+            sprite->unk_03 &= mask;
+        }
+        D_800B5BD4 = 0xF;
+        func_80041584();
+        func_8004500C(0, 0x200);
+        func_8004284C();
+    }
+}
 
 typedef struct {
     u32 pad0 : 25;

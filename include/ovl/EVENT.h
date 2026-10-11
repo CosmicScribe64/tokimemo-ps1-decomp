@@ -1368,3 +1368,17 @@ void func_80105B00(void);
 void func_80105BC4(void);
 
 #endif /* OVL_EVENT_W8_3_TYPES_H */
+
+#ifndef OVL_EVENT_RECORDS_T9740
+#define OVL_EVENT_RECORDS_T9740
+/* View of the 0x44-byte D_800E9620 records 30/31 (T-9740).
+ * D_800EC190 uses the shared Rec24 game-record layout. */
+typedef struct EventFlagRecord44 {
+    /* 0x00 */ u8 pad0[3];
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 pad4[3];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 pad8[0x3C];
+} EventFlagRecord44; /* size 0x44 */
+s32 func_8010B8A4(void);
+#endif
