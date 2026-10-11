@@ -833,3 +833,12 @@ Idioms in [[decompile-workflow]] and [[matching-notes]] "Wave-6 codegen shapes (
 
 ## [2026-10-10] ticket | T-9210 (In Progress -> In Review -> Done)
 Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-branch` OK, progress 4539/6958. Inline review in [[tickets/T-9210-wave-6-codegen-shapes]], no open findings. Sweep branches had no confirmed matches; nothing cherry-picked.
+
+## [2026-10-10] ticket | T-9380 started
+[[tickets/T-9380-wave-7-list-8]] In Progress: wave 7 list 8.
+
+## [2026-10-11] build | T-9380 wave 7 list 8 (27 functions matched)
+Matched BUNKA_SD `func_801345BC`, DATE `func_8013FA6C`, `func_8013A344`, `func_8013D174`, `func_80136A74`, `func_8014E38C` and the ten-function date-spot family (`func_80137920` + nine twins), SHOUGATU `func_80133D98`, NAME_ENT `func_8014A848`, `func_80146BCC`, EN_NICHI `func_801383A0`, `func_80137E2C`, RPG_BAT `func_8013A2F4`, `func_8013D59C`, `func_801439E0`, ENDING `func_80137160`, TT `func_8014AFB8`, `func_8014D168`. Three drafts behind NON_MATCHING (EN_NICHI `func_80137C58`, TT `func_8014CC04`, `func_8014B088`). Data islands DATE `8014CC40`/`80132000`, NAME_ENT `80144AD0`, EN_NICHI `80136B10`. Patterns in [[matching-notes]] "Wave 7, list 8"; 21 rows in [[data/t0018-cases]]. Tooling bug: `tools/data_island.py` omits the INCLUDE_RODATA lines of pointer-only labels (NAME_ENT/80144AD0), the overlay sha1 then fails.
+
+## [2026-10-11] ticket | T-9380 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, headers OK, globals OK, `--check-branch` OK, progress 4585/6958. Inline review in [[tickets/T-9380-wave-7-list-8]], no open findings. Not merged or pushed.
