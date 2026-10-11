@@ -343,7 +343,32 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005478C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054884);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054AF4);
+s32 func_80054AF4(s32 arg0) {
+    u8 name[0x1C];
+    s32 max;
+    s32 i;
+    s32 fd;
+
+    if (arg0 != 0) {
+        max = 8;
+    } else {
+        max = 0x10;
+    }
+    func_80056070(name, arg0);
+    i = 0;
+    fd = open(name, 2);
+    D_800B58E4 = fd;
+    while (fd == -1) {
+        i++;
+        if (max < i) {
+            return 0;
+        }
+        fd = open(name, 2);
+        D_800B58E4 = fd;
+    }
+    close(D_800B58E4);
+    return 1;
+}
 
 void func_80054BA8(void) {
     if (func_80054AF4(0) != 0) {
