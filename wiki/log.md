@@ -6219,3 +6219,283 @@ content is preserved. No project tools/config/raw sources changed. Remaining
 non-register blocker is aggregate/type recovery. Tool reports in
 [[tickets/T-9770-wave-9-list-7]] cover regex stall, queue shadowing and stale
 dupes matched flags; only scratch workarounds were used.
+## [2026-10-11] ticket | Start wave 9 list 5
+
+Created [[tickets/T-9750-wave-9-list-5]] In Progress and its [[kanban]] card.
+Read the shared wave-9 brief, standards, [[decompile-workflow]],
+[[register-allocation-wave7]] and relevant [[matching-notes]]. Scope: 123
+functions in 36 owned objects; scratchpad/w9-5; leave changes uncommitted.
+
+## [2026-10-11] query | List 5 baseline and historical blockers
+
+[[tickets/T-9750-wave-9-list-5]] baseline initialization is still generating
+assembly. Historical [[data/t0018-cases]] records identify TAIIKU pointer-base
+rematerialization and BUNKA_SD fade-register sharing; these will receive fresh
+source experiments rather than being dismissed from the historical rows.
+The first-pass harness saves each draft/build/resolved diff in scratchpad/w9-5.
+
+## [2026-10-11] build | List 5 baseline verifies all binaries
+
+[[tickets/T-9750-wave-9-list-5]]: Docker configure/ninja completes with all 27
+SHA1 checks OK, headers OK and globals OK. Beginning scoped duplicate scans
+and the first-pass draft/build/diff inventory in scratchpad/w9-5.
+
+## [2026-10-11] query | List 5 exact duplicates
+
+Scoped Docker tools/dupes.py --apply across the 36 owned objects applies zero
+copies (zero plans, three skipped candidates). Baseline progress: 4870/6958
+functions, 776660/2279368 bytes (34.1%). [[tickets/T-9750-wave-9-list-5]].
+
+## [2026-10-11] query | List 5 near duplicates
+
+Scoped Docker tools/neardupes.py --apply --check across owned objects also
+applies zero copies (zero bytes). First-pass inventory now runs sequentially
+with source restoration after rejected drafts. [[tickets/T-9750-wave-9-list-5]].
+
+## [2026-10-11] query | List 5 type repairs and arity limitation
+
+[[tickets/T-9750-wave-9-list-5]] first-pass diagnostics distinguish usable
+near misses from missing aggregates and stale absorbed symbols. Filed the
+TT/ETC/TACO type mappings and TACO func_801404FC unused-home-argument arity
+limitation in the batch's [[matching-notes]] section. Deep variants remain in
+scratchpad/w9-5 until the first pass releases the source files.
+
+## [2026-10-11] query | Correct TACO by-value argument diagnosis
+
+The complete func_801404FC call setup copies eight record bytes into a1/a2;
+func_801407D4 reads those homes. Filed the corrected by-value position reading
+in [[matching-notes]], superseding the initial unused-home diagnosis. No
+confirmed new tooling bug. [[tickets/T-9750-wave-9-list-5]].
+
+## [2026-10-11] build | Complete list 5 first-pass inventory
+
+All 123 functions received a fresh m2c draft: zero immediate matches, 16
+usable diffs, 70 compile/type errors and 37 malformed aggregate/table drafts.
+All rejected source edits restored. Closest diffs: ETC func_8014BF2C (3 lines),
+InitMouse (4, collapsed-store draft needs correction), SHOUGATU func_801347E0
+(10), func_801341E4 (17), MouseState (23), ETC func_8013D32C (24).
+Beginning type repair and deep iteration; this inventory alone is not counted
+as a deep attempt. [[tickets/T-9750-wave-9-list-5]].
+
+## [2026-10-11] ingest | Repair list 5 declarations and existing aggregate views
+
+Added main D_800B5B24 as s16 through tools/sync_protos.py --add-global, based on
+its original lh/sh accesses. Type-pass declarations are appended only to the
+relevant overlay headers; old Rec24/RpgStat/controller aliases are rewritten
+through existing aggregates. Retention still requires a real function diff
+and unit SHA1. [[tickets/T-9750-wave-9-list-5]], [[matching-notes]].
+
+## [2026-10-11] build | List 5 deep-pass match
+
+[[tickets/T-9750-wave-9-list-5]]: ETC func_8013EEFC (344 bytes), repaired types and aggregates; resolved
+function diff MATCH and unit SHA1 OK. Source src/ovl/ETC/8013BEF0.c.
+
+## [2026-10-11] build | List 5 type repair complete
+
+[[tickets/T-9750-wave-9-list-5]]: recompiled all 70 error drafts with typed
+pointer and aggregate repairs. Retained ETC func_8013EEFC (344 bytes); other
+failures restored. New closest misses ETC func_8013F498 and RPG_BAT
+func_8013FF28 join the deeper source/permuter pass. Details in [[matching-notes]].
+
+## [2026-10-11] build | List 5 deep-pass match
+
+[[tickets/T-9750-wave-9-list-5]]: ETC func_8013F498 (740 bytes), selector halfword u16; resolved
+function diff MATCH and unit SHA1 OK. Source src/ovl/ETC/8013BEF0.c.
+
+## [2026-10-11] build | List 5 constant-width match and selector timeboxes
+
+[[tickets/T-9750-wave-9-list-5]]: ETC func_8013F498 matches (740 bytes) with
+unsigned halfword stores. Redundant func_8013EEFC assignments can be removed
+without changing its match. MouseState and ETC func_8014BF2C each received
+explicit variants and a 300-second permuter; restored and added two new rows
+in [[data/t0018-cases]]. Details in [[matching-notes]].
+
+## [2026-10-11] query | List 5 permuter setup regex hang
+
+[[tickets/T-9750-wave-9-list-5]]: our SHOUGATU func_801341E4 permuter remained
+in strip_functions re.findall before its timed search. Interrupted only the
+owned process in our worktree container; traceback confirms tools/permute.py
+line 200. Recorded in [[matching-notes]]; bounded future calls in external
+scratch orchestration without editing repository tools.
+
+## [2026-10-11] build | List 5 round-one checksum checkpoint
+
+[[tickets/T-9750-wave-9-list-5]]: all 27 checksum checks passed after rejected
+trial restoration; assigned-file duplicate scan applied zero copies. Recorded
+InitMouse's shared data-base LUI gap and remaining selector/operand-order gaps
+in [[matching-notes]]. Continued into the second aggregate/loop pass.
+
+## [2026-10-11] ingest | List 5 aggregate and ABI evidence
+
+[[tickets/T-9750-wave-9-list-5]]: RPG_BAT func_8013FF28 verified matching;
+captured OLH menu-array and ETC packet-pointer allocation gaps, TACO's by-value
+position argument, and ETC's incorrect pre-existing void prototype in
+[[matching-notes]]. Prepared fresh follow-up trials within assigned sources.
+
+## [2026-10-11] ingest | List 5 output arrays, controller spacing and loader tables
+
+[[tickets/T-9750-wave-9-list-5]]: target/callee assembly establishes the
+TAIIKU spacing correction and controller array, ETC's two output-buffer
+extents and bit-field access, and four loader arguments with two 90-word
+tables. Appended the controller declaration; queued bounded source trials.
+Evidence recorded in [[matching-notes]].
+
+## [2026-10-11] build | List 5 controller declaration conflict corrected
+
+[[tickets/T-9750-wave-9-list-5]]: new D_8014A400 typed header declaration
+conflicted with baseline byte-array declarations in the owned C object.
+Restored that declaration view and retained an explicit controller cast for
+the new trial. Five blocked 430A0 variants are excluded from code-generation
+evidence and queued for a fresh retry; details in [[matching-notes]].
+
+## [2026-10-11] build | List 5 deep-pass match
+
+[[tickets/T-9750-wave-9-list-5]]: RPG_BAT func_8013FF28 (680 bytes), permuter candidate; review pending; resolved
+function diff MATCH and unit SHA1 OK. Source src/ovl/RPG_BAT/8013F4F0.c.
+
+## [2026-10-11] build | List 5 deep-pass match
+
+[[tickets/T-9750-wave-9-list-5]]: TACO func_80156244 (416 bytes), base pointer with targeted operand mask 6; resolved
+function diff MATCH and unit SHA1 OK. Source src/ovl/TACO/80154960.c.
+
+## [2026-10-11] build | List 5 second checksum checkpoint and targeted pointer match
+
+[[tickets/T-9750-wave-9-list-5]]: all 27 checksums passed after round-two
+restoration. The partial RPG_BAT search was restored cleanly. TACO
+func_80156244 then matched with targeted address operand spelling, bringing
+the retained total to four functions and 2,180 bytes. Recorded evidence in
+[[matching-notes]]; continued bounded fresh aggregate trials.
+
+## [2026-10-11] query | List 5 real scalar homes fix output-buffer offsets
+
+[[tickets/T-9750-wave-9-list-5]]: applied the existing scalar-before-buffer
+rule to the ETC output-array trial, removing all frame-offset differences.
+Four scheduling lines remain under bounded search. Restored the partial
+BUNKASAI trial before reprioritizing; recorded both in [[matching-notes]].
+
+## [2026-10-11] query | List 5 packet and choice-table allocation probes
+
+[[tickets/T-9750-wave-9-list-5]]: fresh bounded searches restored ETC's
+four-line buffer scheduling candidate and twenty-line packet candidate.
+BUNKASAI's real table/count stack positions now agree; its remaining register
+rotation is under search. Prepared buffer-loop, neighboring-call-view and
+signed-result retries and syntax-checked scratch orchestration in Docker.
+Recorded evidence and pending comparisons in [[matching-notes]].
+
+## [2026-10-11] query | List 5 dispatcher result and scratch identifier repairs
+
+[[tickets/T-9750-wave-9-list-5]]: BUNKASAI completed its bounded search;
+OLH stayed distant. Diagnosed 430A0's implicit-int/void helper conflict and
+the EVENT scratch rewrite's leftover loop identifiers, excluded blocked
+results from allocation claims, and prepared valid retries. RPG_BAT's word
+clamp trial reaches a 16-line spill/store gap. Details in [[matching-notes]].
+
+## [2026-10-11] build | List 5 deep-pass match
+
+[[tickets/T-9750-wave-9-list-5]]: ETC func_8013EB90 (332 bytes), result s32 index s32 cached 0; resolved
+function diff MATCH and unit SHA1 OK. Source src/ovl/ETC/8013BEF0.c.
+
+## [2026-10-11] build | List 5 loader-table match and pre-review guards
+
+[[tickets/T-9750-wave-9-list-5]]: five verified matches total 2,512 bytes.
+The new loader uses two real tables and the original four caller words;
+no statement grouping is required. Global guard and branch check pass
+(zero new disagreements). Recorded completed/restored searches, blocked
+controller/global-field trials and corrected follow-ups in [[matching-notes]].
+Started the five-match all-unit checksum checkpoint.
+
+## [2026-10-11] build | List 5 checksum checkpoint and scope restoration
+
+[[tickets/T-9750-wave-9-list-5]]: checkpoint passed all 27 checksums.
+A misquoted duplicate-scan inventory yielded an empty scope and one unowned
+EVENT copy. Restored its source/header and generated main globals exactly;
+all affected diffs are empty. Reran with a validated literal list of all 36
+assigned stems: zero copies. Recorded the correction in [[matching-notes]].
+Continued matching beyond four hours into corrected near-miss trials.
+
+## [2026-10-11] build | List 5 output-buffer match and BUNKASAI gap
+
+[[tickets/T-9750-wave-9-list-5]]: ETC func_8014B0D0 matches with real local
+homes and documented loop-line scheduling; fresh diff and unit SHA1 pass.
+Six functions total 2,740 bytes. BUNKASAI's word-result variants and second
+bounded search remain a 38-line register rotation; restored and filed a
+third new row in [[data/t0018-cases]]. Details in [[matching-notes]].
+
+## [2026-10-11] build | List 5 deep-pass match
+
+[[tickets/T-9750-wave-9-list-5]]: ETC func_8014B0D0 (228 bytes), init and do grouped; resolved
+function diff MATCH and unit SHA1 OK. Source src/ovl/ETC/8014ABD0.c.
+
+## [2026-10-11] query | List 5 final scheduling retries
+
+[[tickets/T-9750-wave-9-list-5]]: fresh typed callback/packet and real-slot
+retries leave SHOUGATU at 18/7, RPG_BAT at 12 and ETC at 20 resolved lines.
+RPG_BAT and ETC completed bounded 300-second searches; SHOUGATU setup calls
+hit the documented regex hang and were interrupted only within our own
+child process. Rejected bodies restored; three new rows appended to
+[[data/t0018-cases]] after allocation-inventory consultation. Details in
+[[matching-notes]]. Matching elapsed time already exceeds four hours.
+
+## [2026-10-11] build | List 5 deep-pass match
+
+[[tickets/T-9750-wave-9-list-5]]: ETC func_8013F77C (516 bytes), loop body on header line; resolved
+function diff MATCH and unit SHA1 OK. Source src/ovl/ETC/8013BEF0.c.
+
+## [2026-10-11] build | List 5 type repair closes initializer gap
+
+[[tickets/T-9750-wave-9-list-5]]: final typed/manual checks restore SHOUGATU
+at seven, EVENT at 32 and TAIIKU at 69 resolved lines. BUNKA_SD completed
+its second 300-second search at 23. Three new inventory-consulted rows in
+[[data/t0018-cases]]. ETC's recovered config records and merged initialization
+loop leave only four scheduling lines; a short additional loop retry is
+justified by that new result. Details in [[matching-notes]].
+
+## [2026-10-11] ticket | List 5 enters inline review
+
+[[tickets/T-9750-wave-9-list-5]] moves In Progress to In Review. Seven
+functions / 3,256 bytes verified individually and by unit SHA1. Matching
+work ran from approximately 15:00 through 19:49 UTC. Standards and Spec
+review use the uncommitted diff against HEAD b1e5c6df17f1bc24e3dd32b7f0acd09ce50ed524,
+CODING_STANDARDS.md, CONTRIBUTING.md and the wave-9 brief. No reviewer agents.
+Cleanup removes unused declarations/locals and documents retained FAKE views.
+Final full checks remain pending; [[matching-notes]] records the results.
+
+## [2026-10-11] decision | List 5 inline review cleanup
+
+[[tickets/T-9750-wave-9-list-5]]: seven matches / 3,256 bytes. The new ETC
+initializer passed resolved diff and unit SHA1. Inline Standards findings
+resolved: unused RPG local removed, grouping limited to case 6, conventional
+buffer loop verified, required unsigned/byte-stride and BSS views marked
+FAKE with reasons. Spec scope audit restored unused header append blocks;
+only ETC/RPG_BAT declarations and four assigned C files remain changed.
+Review against CODING_STANDARDS.md and CONTRIBUTING.md found no remaining
+manual code findings. Full checksum/prototype checks remain pending.
+See [[matching-notes]].
+
+## [2026-10-11] decision | Canonical buffer-helper declaration
+
+[[tickets/T-9750-wave-9-list-5]] inline Standards audit found the newly
+matched buffer selector used an existing implicit main helper. Generated
+one canonical `s32 func_80053418();` in include/main_api.h using the
+sync_protos.py parser/model/API writer, preserving the original implicit
+K&R ABI. No overlay/local duplicate or override. Callee assembly confirms
+16 byte and 16 halfword output entries, validating the buffer extents.
+All seven fresh resolved diffs, 27 SHA1s, header/global and branch checks
+passed before this addition and are repeated afterward. [[matching-notes]].
+
+## [2026-10-11] ticket | List 5 Done after inline review
+
+[[tickets/T-9750-wave-9-list-5]] moves In Review to Done after Standards
+and Spec review, with all findings resolved. Seven functions / 3,256 bytes;
+approximately 4h49m of matching before final review. Fresh post-prototype
+full build: 27/27 SHA1 OK; seven resolved diffs MATCH; headers/globals OK;
+branch check zero new disagreements (17 known). Scoped dupes applied zero,
+scope and diff checks pass. Progress 4877/6958, 779916/2279368 bytes, 34.2%.
+Nine new rows in [[data/t0018-cases]]; [[matching-notes]] has evidence and
+FAKE tradeoffs. Ticket/kanban/index synchronized, all changes uncommitted.
+
+## [2026-10-11] lint | List 5 final wiki consistency
+
+[[tickets/T-9750-wave-9-list-5]] frontmatter, [[kanban]] Done card and
+[[index]] agree; nine own rows in [[data/t0018-cases]], final review/check
+evidence present in ticket and [[matching-notes]]. Own-scope lint passes.

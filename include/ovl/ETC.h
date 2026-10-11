@@ -1064,4 +1064,34 @@ extern s32 D_8015018C;
 #define OVL_ETC_W9_2_COORD_TABLE_H
 /* Byte coordinate pairs read by func_80143758, T-9720. */
 extern u8 D_801503C8[];
+#ifndef OVL_ETC_W9_SCALARS_24892_H
+#define OVL_ETC_W9_SCALARS_24892_H
+/* Access widths recovered from the original assembly. T-9750. */
+extern s32 D_80150050;
+extern s32 D_80150068;
+extern s32 D_80150070;
+#endif /* OVL_ETC_W9_SCALARS_24892_H */
+
+#ifndef OVL_ETC_W9_LOADTABLE90_H
+#define OVL_ETC_W9_LOADTABLE90_H
+/* Adjacent 90-word tables, 0x8014F6C0..0x8014F990. T-9750. */
+extern s32 D_8014F6C0[90];
+extern s32 D_8014F828[90];
+/* Target caller supplies four words; argument counts vary across old-style users. */
+void func_8013B1F0();
+#endif
+
+#ifndef OVL_ETC_W9_CONFIG8_VIEW_H
+#define OVL_ETC_W9_CONFIG8_VIEW_H
+/* Eight-byte records represented by existing adjacent main BSS field labels. T-9750. */
+typedef struct EtcConfig8 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+} EtcConfig8; /* size 0x08 */
 #endif

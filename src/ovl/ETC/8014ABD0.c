@@ -82,7 +82,28 @@ s32 func_8014AE8C(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AF28);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B0D0);
+s32 func_8014B0D0(void) {
+    s32 var_s7;
+    u8 *var_s1;
+    u8 temp_v0;
+    s32 var_s2;
+    u8 sp70[16];
+    s16 sp50[16];
+    s32 var_s0;
+
+    func_80053418(sp70, sp50);
+    var_s2 = 0x3C;
+    var_s7 = 0;
+    for (var_s0 = 1, var_s1 = &sp70[1]; var_s0 != 11; var_s0++, var_s1++) {
+        func_800AE0B0("%d %d \n", var_s0, *var_s1);
+        temp_v0 = *var_s1;
+        if ((var_s2 < temp_v0) && D_800E6280.unk_1BC[var_s0].unk_0C.f.b1) {
+            var_s7 = var_s0;
+            var_s2 = temp_v0;
+        }
+    }
+    return var_s7;
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B1B4);
 
