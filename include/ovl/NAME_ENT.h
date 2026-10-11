@@ -149,3 +149,5 @@ void func_8013635C();
 void func_801372A0();
 extern s32 D_8014CCC8;
 void func_80134F6C();
+void func_80137B84(s32 arg0, s32 arg1, s32 arg2);
+void func_80137CA0();

@@ -412,7 +412,24 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137708);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801377E8);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137AA0);
+void func_80137AA0(void) {
+    s32 i;
+    s32 y;
+
+    for (i = 1, y = -0x70; i < 0xA; i++, y += 0x18) {
+        func_80137B84(i, y, 8);
+    }
+    for (i = 0, y = 0x70; i < 2; i++, y += 0x18) {
+        func_80137CA0(i + 0xA, y, 8);
+    }
+    for (i = 0, y = -0x68; i < 0xB; i++, y += 0x18) {
+        func_80137CA0(i + 0xC, y, 0x18);
+    }
+    for (i = 0, y = -0x68; i != 9; i++, y += 0x18) {
+        func_80137CA0(i + 0x17, y, 0x28);
+    }
+    func_800493A8(0x140, 0, 2, 0, 0);
+}
 
 void func_80137B84(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
