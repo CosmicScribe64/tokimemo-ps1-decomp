@@ -1064,6 +1064,9 @@ extern s32 D_8015018C;
 #define OVL_ETC_W9_2_COORD_TABLE_H
 /* Byte coordinate pairs read by func_80143758, T-9720. */
 extern u8 D_801503C8[];
+#endif
+
+
 #ifndef OVL_ETC_W9_SCALARS_24892_H
 #define OVL_ETC_W9_SCALARS_24892_H
 /* Access widths recovered from the original assembly. T-9750. */

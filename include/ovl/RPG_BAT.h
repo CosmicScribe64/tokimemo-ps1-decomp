@@ -387,6 +387,7 @@ extern s32 D_8015EECC;
 extern s32 D_8015EED0;
 #endif
 
+
 #ifndef OVL_RPG_BAT_W9_FF28_H
 #define OVL_RPG_BAT_W9_FF28_H
 /* Dispatcher has no result read by its callers. T-9750. */

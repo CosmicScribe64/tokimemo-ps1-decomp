@@ -1676,7 +1676,6 @@ u32 get_h_tokimeki(s32 arg0);
 u32 get_h_yuukou(s32 arg0);
 s32 birth_day_check_days(s32 arg0, s32 arg1, s32 arg2);
 void func_800530E0();
-s32 func_80053418();
 s32 func_8005352C();
 void func_80053650(s32 arg0, s32 arg1, s32 arg2);
 s32 func_800536AC();
@@ -2244,3 +2243,5 @@ extern u8 D_80123324[];
 extern u8 D_800B0E72;
 extern u32 D_800B5970[16];
 extern u32 D_800B59B0[16];
+
+s32 func_80053418();
