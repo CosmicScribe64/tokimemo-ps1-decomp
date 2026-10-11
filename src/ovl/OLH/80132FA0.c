@@ -33,7 +33,33 @@ void func_80132FA0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132FA0", func_8013306C);
+void func_8013306C(void) {
+    s32 i;
+    s32 r;
+    s32 padx[1]; /* FAKE: unused words above and below the arrays reproduce the original frame 0xC0 and array offsets; real source unknown. T-9310 */
+    s16 a[8];
+    s16 b[8];
+    s16 c[8];
+    s16 d[8];
+    s32 pady[1];
+
+    func_8004EAAC();
+    func_8004E788(-0x50, -0x40, 0xF, (s32)"メモリーカード", 0);
+    for (i = 0; i < 8; i++) {
+        a[i] = -0x60;
+        b[i] = i * 0x10 - 0x32;
+        c[i] = 0xE8;
+        d[i] = 0x10;
+        if (i < 4) {
+            func_8004E788(a[i], b[i], 0xF, (&D_8013AF20)[i], 0);
+        }
+    }
+    c[4] = c[5] = c[6] = 0;
+    r = func_8004E788(a[7], b[7], 0xF, D_8013AF3C, 0);
+    func_8004F870(0, 8, a, b, c, d);
+    func_8004E884(r);
+    func_8004284C();
+}
 
 void func_801331C8(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
