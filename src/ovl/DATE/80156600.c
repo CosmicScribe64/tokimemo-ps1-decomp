@@ -155,7 +155,26 @@ void func_80156C40(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80156D60);
+void func_80156D60(void) {
+    D_8015E208 = D_8015DF24;
+    D_8015E20C = D_8015E060;
+    D_8015E210 = D_8015E19C;
+    if ((u8)(func_80051A68(6) & 0x7F) < 2) {
+        D_800E6280.unk_1BC[6].unk_02 += 3;
+        D_800E6280.unk_1BC[6].unk_06 += 2;
+    } else {
+        D_800E6280.unk_1BC[6].unk_02 += 1;
+        D_800E6280.unk_1BC[6].unk_06 += 3;
+    }
+    D_800E6280.unk_1BC[6].unk_0A -= 0x14;
+    func_80084D3C();
+    func_80156810();
+    load_palette(D_8015FD74, 0x11, 1, 2, 0);
+    func_80084E90(D_8015FD78, D_8015FD7C, D_8015FD80, D_8015FD84, D_8015FD88, D_8015FD8C);
+    func_800850D4(D_8015FD68, D_8015FD6C, D_8015FD64, D_8015FD70);
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
 void func_80156EC0(void) {
     bg_read_sub2(0x4860);
