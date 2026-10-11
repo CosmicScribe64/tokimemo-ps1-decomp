@@ -56,35 +56,7 @@ void func_801354F0(void) {
     func_8004DE1C();
 }
 
-s32 func_80135518(void) {
-    s32 i;
-
-    if (D_8012E66C == 0xB) {
-        func_80135730(D_8012E66C);
-        return 0;
-    }
-    i = D_8012E66C;
-    if (D_800F62CF == i && D_80145EC4 != 0) {
-        func_8004DE1C();
-        return 0;
-    }
-    if (D_800F53A0.girl[D_8012E66C].unk_10[3] == 0) {
-        D_80145EB4 = 0;
-        D_80145EA8 = D_80145E34;
-        D_80145EAC = D_80145E6C;
-        D_80145EB0 = D_80145EA4;
-        func_8008F618(D_8012E66C);
-        func_8004DE1C();
-        return 0;
-    }
-    D_800F62CF = i;
-    func_80134938(D_8012E66C);
-    func_8008F618(D_800F62CF);
-    D_80145EB4 = 9;
-    func_8004DE1C();
-    func_8004DE1C();
-    func_8004DE1C();
-}
+INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134FD0", func_80135518);
 
 void func_80135628(void) {
     D_80145EB4 = 7;

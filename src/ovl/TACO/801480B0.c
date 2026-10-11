@@ -26,7 +26,22 @@ void func_801480B0(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_80148184);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_80148308);
+void func_80148308(void) {
+    s32 i;
+    u32 t;
+
+    func_8013A790(1, 1);
+    t = D_800E6280.unk_1104.u;
+    if (t < 0x47E) {
+        D_800E6280.unk_1104.u = t; /* FAKE: the original writes the counter back before the call (store in the jal delay slot), source unknown. T-9370 */
+        func_8014AB50(t);
+    } else {
+        func_80148B58(1);
+        for (i = 1; i < 0x1F; i++) D_80127080[i].unk0 = 0;
+        func_8004284C();
+    }
+    D_800E6280.unk_1104.u += 1;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801483B0);
 

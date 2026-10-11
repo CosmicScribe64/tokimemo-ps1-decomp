@@ -1616,6 +1616,7 @@ void func_8005493C();
 void func_800549E8();
 s32 func_80054AF4(s32 arg0);
 void *func_80054B60();
+void func_80054C4C(void);
 s32 func_80055A38(s32);
 s32 func_80055AFC(s32 arg0);
 void func_80056070(u8 *buf, s32 arg1);
