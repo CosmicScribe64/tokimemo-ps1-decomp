@@ -842,3 +842,6 @@ Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-bra
 
 ## [2026-10-10] ticket | T-9310 (In Progress -> In Review -> Done)
 Clean rebuild (`rm -rf asm build`, configure, ninja) all sha1 OK, headers OK, globals OK; `sync_protos.py --check-branch` OK; `migrate_globals.py --check` OK. Inline review in [[tickets/T-9310-wave-7-list-1]], no open findings. Not merged or pushed.
+
+## [2026-10-10] build | T-9310 wave 7 list 1, update (34 functions)
+Four more matches after the entry above: EVENT `func_800F8C2C`, TACO `func_801573C8`, `func_80157AE0`, `func_8015800C` (4,908 bytes). Totals: 34 functions, 15,400 bytes, 4558 -> 4592 of 6958; clean rebuild all OK again. Details in [[matching-notes]] ("Wave 7, list 1") and [[tickets/T-9310-wave-7-list-1]].
