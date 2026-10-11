@@ -789,3 +789,11 @@ Started [[tickets/T-9120-wave-6-list-2]] on branch w6-2.
 
 ## [2026-10-10] ticket | T-9120 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK, `migrate_globals.py --check` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9120-wave-6-list-2]]; no open findings. Branch w6-2, not merged.
+## [2026-10-10] ticket | T-9140 wave 6 list 4 (In Progress)
+Created [[tickets/T-9140-wave-6-list-4]], worktree w6-4.
+
+## [2026-10-10] build | T-9140 wave 6 list 4
+28 functions matched (7,804 bytes), progress 4295/6958: GYOZI `func_8013B43C`, main `strSync` and 80079B10/800563F0/80053650 helpers, 13 OLH help pages (mechanical template), DATE2/EVENT/RPG_BAT/BUNKA_SD/ENDING/BUNKASAI init and dispatch functions. Idioms and the open near misses in [[matching-notes]] ("Wave 6, list 4 (T-9140)"); 22 rows in [[data/t0018-cases]]. Declarations changed: `include/main_api.h` (scalar views of splat data pieces, `func_8007BF04` takes `s16`), `include/ovl/OLH.h`, `DATE2.h`, `EVENT.h`; `config/symbol_addrs_main.txt` gained `D_800E7D13`.
+
+## [2026-10-10] ticket | T-9140 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9140-wave-6-list-4]]; no open findings (two FAKE marks, `func_80056284` and `func_8013FD90`). Branch w6-4, not merged.

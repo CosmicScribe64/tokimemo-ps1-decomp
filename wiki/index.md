@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 See [[kanban]]. Template: [[tickets/_template]].
+- [[tickets/T-9140-wave-6-list-4|T-9140]] Wave 6: list 4, 28 functions matched (OLH help pages, text/state templates, data scalars); idioms in [[matching-notes]] "Wave 6, list 4" (Done)
 - [[tickets/T-9030-wave-5-tool-fixes|T-9030]] Wave-5 tool fixes (Done)
 - [[tickets/T-9010-per-object-data-shared-lui-at|T-9010]] Per-object .data ranges and data islands; shared `lui $at` matched (Done)
 - [[tickets/T-9110-wave-6-list-1|T-9110]] Wave 6, list 1: 29 functions matched (6,688 bytes), new idioms in [[matching-notes]], 31 rows in [[data/t0018-cases]] (Done)

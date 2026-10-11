@@ -87,7 +87,38 @@ s32 func_8013B91C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013B9F0);
+void func_8013B9F0(void) {
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_8006BD6C(0);
+    func_800438F0(1);
+    func_800482FC();
+    D_800E6280.unk_1228[28] = 1;
+    D_800E6280.unk_1228[29] = 1;
+    D_800E6280.unk_1228[30] = 1;
+    func_8004E58C();
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    func_8013B6A0();
+    func_80043914(D_8013CBC4, 0x11, 1, 2, 0);
+    func_80043914(D_8013CBC0, 0x12, 1, 2, 0);
+    func_80084E90(D_8013CBC8, D_8013CBCC, D_8013CBD0, D_8013CBD4, D_8013CBD8, D_8013CBDC);
+    func_800850D4(D_8013CBB4, D_8013CBB8, D_8013CBB0, D_8013CBBC);
+    D_801217D0[61].unk_0A = D_801217D0[62].unk_0A = D_801217D0[63].unk_0A = 0x70;
+    func_80048F64(0x61);
+    D_80120666 = 0;
+    D_80120654 = 8;
+    D_80120693 = 0x12;
+    D_80120652 = 0;
+    D_80120653 = 4;
+    func_8004284C();
+}
 
 typedef struct {
     s32 w[4];

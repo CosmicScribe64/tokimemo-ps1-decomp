@@ -23,11 +23,9 @@ INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNextVlc);
 
 INCLUDE_ASM("asm/nonmatchings/main/800563F0", strNext);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-0016, T-0017. One delay slot: IDO's as1 fills the loop's
- * back branch with the volatile load at the loop head, the original leaves a
- * nop there. Frame and constant hoisting match (with -Wo,-nokpicopt). */
-void strSync(SyncObj *arg0, s32 arg1) {
+/* Implicit-int return type with no return statement: it changes how as1 fills the loop's
+ * back-branch delay slot (T-9140, found by the permuter in T-1330). */
+u32 strSync(SyncObj *arg0, s32 arg1) {
     volatile s32 timeout = 0x800000;
 
     while (arg0->flag == 0) {
@@ -44,9 +42,6 @@ void strSync(SyncObj *arg0, s32 arg1) {
     }
     arg0->flag = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800563F0", strSync);
-#endif
 
 void strKickCD(s32 arg0) {
     while (func_800879D0(0x15, arg0, 0) == 0) {

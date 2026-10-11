@@ -343,7 +343,32 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005478C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054884);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054AF4);
+s32 func_80054AF4(s32 arg0) {
+    u8 name[0x1C];
+    s32 max;
+    s32 i;
+    s32 fd;
+
+    if (arg0 != 0) {
+        max = 8;
+    } else {
+        max = 0x10;
+    }
+    func_80056070(name, arg0);
+    i = 0;
+    fd = open(name, 2);
+    D_800B58E4 = fd;
+    while (fd == -1) {
+        i++;
+        if (max < i) {
+            return 0;
+        }
+        fd = open(name, 2);
+        D_800B58E4 = fd;
+    }
+    close(D_800B58E4);
+    return 1;
+}
 
 void func_80054BA8(void) {
     if (func_80054AF4(0) != 0) {
@@ -392,4 +417,20 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80055AFC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80056070);
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80056284);
+void func_80056284(void) {
+    s32 i;
+
+    func_80053D10();
+    func_80054C4C();
+    D_800E7D14[0] = 0;
+    D_800E7D15 = 0;
+    /* FAKE: the store inside the for-init places it after the loop prologue as in the original; real source unknown. T-9140 */
+    for (i = 0, D_800E7D16 = 0; i < 3; i++) {
+        D_800E7D13[i * 4 + 5] = 0;
+        D_800E7D13[i * 4 + 6] = 0;
+        D_800E7D13[i * 4 + 7] = 0;
+        D_800E7D13[i * 4 + 4] = 0;
+    }
+    func_80053CE0();
+    D_800E8BEE = 0;
+}
