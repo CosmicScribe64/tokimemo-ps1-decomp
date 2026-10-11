@@ -666,7 +666,19 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801373C8);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801376A8);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137864);
+void func_80137864(void) {
+    s32 i;
+    s16 m;
+
+    D_8012170F &= (m = 0xFF7F); /* FAKE: keeps the mask in $a0 for the loop's `and`, as the original; real source unknown. T-9340 */
+    for (i = 0; i < 2; i++) {
+        D_80120650[0x3FF + i * 0x44] &= ~0x80;
+    }
+    func_80042940(0);
+    D_8012170F = 0;
+    D_80121726 = 0x1000;
+    D_80121728 = 0x1000;
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801378DC);
 

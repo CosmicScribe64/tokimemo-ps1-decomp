@@ -1,7 +1,41 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80145E60", func_80145E60);
+s32 func_80145E60(void) {
+    u8 *a;
+    u8 *b;
+    u16 v;
+    u16 k;
+
+    a = D_80158A60;
+    b = D_80158A6C;
+    v = *(u16 *)(b + 8);
+    if (v < *(u16 *)(a + 0x30)) {
+        *(u16 *)(a + 0x3C) = *(u16 *)(a + 0x36);
+        *(u16 *)(a + 0x36) = *(u16 *)(a + 0x30);
+        *(u16 *)(a + 0x30) = *(u16 *)(b + 8);
+        func_800AE0A0(a + 0x3E, a + 0x38, 3);
+        func_800AE0A0(a + 0x38, a + 0x32, 3);
+        *(u16 *)(b + 0x18) = 0;
+    } else if (v < *(u16 *)(a + 0x36)) {
+        *(u16 *)(a + 0x3C) = *(u16 *)(a + 0x36);
+        *(u16 *)(a + 0x36) = *(u16 *)(b + 8);
+        func_800AE0A0(a + 0x3E, a + 0x38, 3);
+        *(u16 *)(b + 0x18) = 1;
+    } else if (v < *(u16 *)(a + 0x3C)) {
+        *(u16 *)(a + 0x3C) = *(u16 *)(b + 8);
+        *(u16 *)(b + 0x18) = 2;
+    } else {
+        return 0;
+    }
+    a[*(u16 *)(b + 0x18) * 6 + 0x32] = 0xA;
+    a[*(u16 *)(b + 0x18) * 6 + 0x33] = 0x2F;
+    a[*(u16 *)(b + 0x18) * 6 + 0x34] = 0x2F;
+    a[*(u16 *)(b + 0x18) * 6 + 0x35] = 0xFF;
+    k = *(u16 *)(b + 0x18);
+    func_801486D8(a + 0x32 + k * 6, k + 0x2B);
+    return 1;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80145E60", func_80146000);
 

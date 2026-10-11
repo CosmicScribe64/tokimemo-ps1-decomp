@@ -669,6 +669,12 @@ typedef struct {
 void func_8013E19C(void);
 
 void func_8013C2E4(void);
+/* Three Shift-JIS strings of 9 bytes (27 bytes, so the struct copy ends with lwl/swl). */
+typedef struct SjisStr3 {
+    u8 s[3][9];
+} SjisStr3;
+extern SjisStr3 D_80143D88;
+
 #endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;
 extern s32 D_801464B0;

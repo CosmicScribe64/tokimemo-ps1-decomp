@@ -54,7 +54,28 @@ void func_8013436C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_80134400);
+void func_80134400(void) {
+    s32 pad; /* FAKE: unused local declared first puts tbl at sp+0x28 as in the original; real source unknown. T-9340 */
+    SjisStr3 tbl;
+
+    tbl = D_80143D88;
+    D_80143D20 = D_80122CDC;
+    D_80143B00 += D_80122CDC;
+    func_800AE0F0(D_800CA250, tbl.s[D_80122CDC]);
+    if (D_80143B20 == 0 && D_800E6280.unk_75D == 3 && D_80122CDC == 2) {
+        func_800AE0F0(D_800CA250, tbl.s[1]);
+    }
+    if (D_80122CDC == 0) {
+        D_800E6280.unk_100.unk_02 += 0xA;
+        D_800E6280.unk_104.unk_02 += 0xA;
+        D_800E6280.unk_F5F = 0xE;
+    } else if (D_80122CDC == 1) {
+        D_800E6280.unk_0FC.unk_02 += 0x19;
+        D_800E6280.unk_F5F = 0xE;
+    }
+    func_80084D3C();
+    func_8004284C();
+}
 
 void func_80134554(void) {
     u8 sel = D_80143D20; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */

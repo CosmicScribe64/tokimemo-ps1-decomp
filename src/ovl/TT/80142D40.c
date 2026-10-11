@@ -166,7 +166,49 @@ void func_80143FE8(void) {
     *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144094);
+typedef struct {
+    s32 w[9];
+} TtBlk36; /* a 0x24-byte struct copy: IDO copies it in a 3-trip loop of 3 words */
+
+void func_80144094(void) {
+    s32 pad; /* FAKE: unused local declared first puts sp38/sp34 at the original slots; real source unknown. T-9340 */
+    u8 *sp38;
+    s32 *sp34;
+    u8 *p;
+    u8 *q;
+
+    sp38 = D_80158A6C;
+    sp34 = D_80158A70;
+    p = D_80158A74;
+    q = D_80158A7C;
+    func_80133AD0(0x610);
+    func_80133AD0(0x607);
+    if (*(u16 *)((u8 *)sp34 + 2) < 0x401) {
+        *(s32 *)(sp38 + 4) = 0x8000;
+        *(s32 *)sp38 = 0x8000;
+    }
+    p[0x52] = 1;
+    p[0x56] = 1;
+    p[0x53] = 0;
+    *(s32 *)(p + 0x28) = 0;
+    *(s32 *)(p + 0x2C) = 0x10000;
+    *(u8 **)(p + 0x38) = D_80151A50;
+    p[0x3C] = 0;
+    p[0x3D] = 1;
+    p[0x3E] = 0;
+    p[0x40] = 0x80;
+    func_801478D0(p + 0x38);
+    *(TtBlk36 *)(q + 0x14) = *(TtBlk36 *)(p + 0x14);
+    *(s32 *)(q + 0x28) = 0;
+    *(s32 *)(q + 0x2C) = 0;
+    *(u8 **)(q + 0x38) = D_80151A50;
+    q[0x3C] = 0;
+    q[0x3D] = 2;
+    q[0x3E] = 0;
+    q[0x40] = 0x80;
+    func_801478D0(q + 0x38);
+    *(s32 *)(q + 0x98) = 0;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801441BC);
 

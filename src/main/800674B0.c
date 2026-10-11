@@ -1,6 +1,14 @@
 #include "common.h"
 #include "game.h"
 
+/* Flag word of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
+typedef struct {
+    u32 pad : 25;
+    u32 nib : 4;
+    u32 b29 : 1;
+    u32 rest : 2;
+} TelEntryFlags; /* size 4 */
+
 void func_800674B0(void) {
     u8 v;
     s32 i;
@@ -203,7 +211,20 @@ s32 func_8006B014(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B0C8);
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B5BC);
+void func_8006B5BC(GsWord arg0) {
+    s32 i;
+
+    i = 0;
+    if (((TelEntryFlags *)&D_800E6280.unk_54C[i])->b29) {
+        if (i) { /* FAKE: the empty test keeps i from folding to 0, the original has `sll t9,zero,2; addu v0,t9,base`; real source unknown. T-9340 */
+        }
+        do {
+            i++;
+        } while (((TelEntryFlags *)&D_800E6280.unk_54C[i])->b29 && i != 8);
+    }
+    D_800E6280.unk_54C[i] = arg0;
+    func_8006B0C8();
+}
 
 void func_8006B640(void) {
 }
