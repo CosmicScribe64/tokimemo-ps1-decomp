@@ -220,3 +220,4 @@ void func_80147F10(void);
 extern s16 D_8014A3DE;
 
 #endif
+extern u8 D_8014A118;
