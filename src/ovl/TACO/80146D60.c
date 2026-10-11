@@ -50,7 +50,18 @@ void func_80147400(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147444);
+void func_80147444(void *arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    RECT rect;
+    /* FAKE: preserve the original frame extent (T-9510). */
+    s32 pad[2];
+
+    rect.x = arg1;
+    rect.y = arg2;
+    rect.w = 0x100;
+    rect.h = arg3;
+    func_8009C884(&rect, arg0);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80147488);
 

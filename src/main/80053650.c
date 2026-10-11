@@ -337,7 +337,26 @@ s32 func_80054694(s32 arg0) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054704);
+s32 func_80054704(s32 arg0) {
+    /* FAKE: retain the observed final stack counter write (T-9510). */
+    volatile s32 counter;
+    u8 name[32];
+    s32 retry;
+
+    func_80056070(name, arg0);
+    if (delete(name) != 1) {
+        /* Original code reads this counter before initialization. */
+        retry = counter;
+        do {
+            retry++;
+            if (retry >= 3) {
+                return -1;
+            }
+        } while (delete(name) != 1);
+        counter = retry;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005478C);
 

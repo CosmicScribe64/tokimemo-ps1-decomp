@@ -1683,3 +1683,23 @@ Permute's false negative came from its final outside-declaration veto even when 
 ## Register-allocation shapes after wave 7 (T-9410)
 
 Inventory, exact cluster counts, experiment bounds and proof: [[register-allocation-wave7]]. tools/register_shapes.py joins the 1,088 historical rows to original asm and current source state: 718 distinct functions, initially 374 open. Five gains (2,768 bytes): main func_8005AE60, ENDING func_80138278/func_8013855C/func_80138FC8/func_801391E4. The main selector uses a plain u8 local after the call. ENDING uses a marked FAKE dead dividend test before `% 240`; func_8013855C also uses a marked FAKE s16 constant local for comparison operand order. Idioms in [[decompile-workflow]]. Two row anchors are now resolved; three gains were family members without separate rows. Final progress 4734/6958, clean 27/27 checksums and all guards pass. Constant ordering, DATE product CSE and fade/girl copies remain open; finite spelling searches do not prove them impossible from C. No compiler pass added.
+
+## T-9510 — Wave 8 list 1
+
+TACO func_80147444 (68 bytes): SDK RECT, s32 coordinates, x/y/w/h assignment order. An unused two-word padding local is marked FAKE to preserve the 0x38-byte frame. Resolved funcdiff and TACO binary SHA1 both pass. Bounded attempts and per-function results are in the w8-1 orchestrator scratch directory.
+
+TAIIKU/80138950 owns data 0x80149940..0x80149FA0. data_island.py --dry-run TAIIKU/80138950 proposes 60 pieces. Applying it also writes config/overlays/TAIIKU.yaml, forbidden by the wave-8 batch scope, so the island was not applied. Shared-$at cases (func_8013A63C/func_8013AE14) remain assembly; the orchestrator can enable the island in a separate config task.
+
+NAME_ENT func_80148F08 (528 bytes): direct state switch and CD background setup from the m2c draft, migrated to GameState fields and canonical callee names. Resolved funcdiff and NAME_ENT SHA1 pass without a FAKE or new declaration.
+
+Main func_80054704 (136 bytes): name[32], volatile s32 counter, then s32 retry. The original reads the stack counter without initialization. The volatile local is marked FAKE: without it IDO deletes the final store and speculates the next increment into the branch delay slot; casting the FileReq retry address preserves a store through s2 instead of sp. The chosen local produces the observed sp+0x5C load/store and passes resolved funcdiff plus main SHA1.
+
+Tooling observations: permute.py on this helper hits decomp-permuter KeyError: delete in ast_types.py (implicit SDK callee; reproduced seeds 64421914767651019259 and 95846227872599346217). The bounded run still terminates and produces no verified candidate. The brief register_shapes.py <func> spelling is unsupported: the current CLI inventories rows and accepts --rows/--json; used its inventory API to classify owned functions instead. No tooling edited.
+
+RPG_BAT func_8014DF60 (580 bytes): the dispatcher draft already matched once include/ovl/RPG_BAT.h gained forward declarations for existing void helpers func_8014E1A4 and func_8014E28C. Without them IDO treated the calls as implicit int and rejected the later void definitions. Resolved funcdiff and RPG_BAT SHA1 pass. No FAKE needed.
+
+Nine T-0018 symptom rows appended after consulting the wave-7 clusters/inventory. NAME_ENT func_80145378 with the corrected post-increment is down to selector-copy and ra-store order; two switch exit forms and 12s permuter failed. Symptom labels do not prove a compiler cause. Other rejected drafts include unrecovered table/stack types, mixed-width views and incorrectly scaled typed pointers.
+
+Inline review: replaced RPG_BAT dispatcher workspace byte offset 0x2179 with D_80120E49, declared once by sync_protos --add-global in main_api.h. Added a source comment on the original uninitialized retry-counter read and removed m2c switch noise. Final checksum/guard verification follows these cleanups.
+
+Final T-9510 result: 4 functions / 1,312 bytes; all 156 list entries attempted, 152 restored/time-boxed. Resolved diffs, all 27 binary checksums, headers/globals guards and prototype branch guard pass after review cleanups. Grand progress: 4738/6958, 730924/2279368 (32.1%). Scoped duplicate pass gained 0 functions; its one checksum-failing candidate was reverted. Inline standards review passed with no open findings. Nine T-0018 rows retained. Full per-function coverage and final evidence: [[tickets/T-9510-wave-8-list-1]]. Changes left uncommitted.

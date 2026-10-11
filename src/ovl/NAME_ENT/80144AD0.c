@@ -455,7 +455,52 @@ void func_80148EDC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80148F08);
+void func_80148F08(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80046318(0x31U, 0x801A4000, 0xAB49);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_80046318(9U, 0x801F0000, 0xAC91);
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        if (func_800460CC() & 1) {
+            dec_bg_cd_read(0xAD0B, 1);
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 3:
+        if ((func_800460CC() & 1) && !(D_80120652 & 1)) {
+            dec_bg_show_set(1, func_8005751C(1));
+            if (D_800B594C == -1) {
+                dec_bg_reset();
+                dec_bg_cd_read(0xAD0B, 1);
+            } else {
+                func_80048E78();
+                func_80145FB0(0x801A4000, 0xF);
+                func_800AE0A0((void *)0x80180000, 0x801F0000, 0x4800);
+                D_80120695 = 9;
+                D_80120696 = 0x40;
+                D_801206CC = 0x41000000;
+                D_80120697 = 0xA4;
+                D_801206A0 = 0x801800F4;
+                D_801206A4 = 0x80180114;
+                D_801206C8 = 0x801800F0;
+                D_801206AC = 4;
+                D_80120699 = 0x80;
+                D_801206BA = -0xA0;
+                D_801206BE = -0x78;
+                func_80042808();
+            }
+        }
+        break;
+    }
+    func_800578F4(1);
+}
 
 void func_80149118(void) {
     if (D_800E6280.unk_110A == 0) {

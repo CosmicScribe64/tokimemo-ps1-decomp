@@ -1121,3 +1121,19 @@ Historical rows above remain unchanged. Resolution records:
 - The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
 
 Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
+
+## Wave 8 list 1 (T-9510)
+
+Symptoms observed after bounded trials; labels do not prove a compiler cause.
+
+| Overlay | Function | Shape | Evidence |
+| --- | --- | --- | --- |
+| OPTION | `func_80139F8C` | regorder | GameState mask selector loaded into $v1, IDO $v0; tail byte in $t1 then copied to $a0, IDO promotes it to $v0. Void/s32 bounded attempts failed (T-9510). |
+| OPTION | `func_80139878` | regorder | Fade byte is loaded into $v1 and narrowed sum kept in $v0; IDO reverses the allocation / adds a separate temporary (T-9510). |
+| ETC | `func_801428EC` | regorder | Original loads the fade byte in $v0 for the 0x10101 shift/add argument; IDO uses $t7 and later temporaries (T-9510). |
+| ETC | `func_80142AE8` | promo | Two Rec24 fade loops: original frees $v0 for the second end pointer; IDO retains a separate address/value allocation and changes pointer CSE. Four corrected loop variants failed (T-9510). |
+| NAME_ENT | `func_80145EA4` | regorder | Palette word loop pointer in $v1 and masks in $a0/$a1/$a2; IDO first pointer in $a0 and loop pointer in $v0, with different constant allocation (T-9510). |
+| SHOUGATU | `func_80136340` | regorder | Masked selector copy/temporary order differs; original reloads B20 and keeps constant 9 in $v0, IDO promotes B20 and uses $a0 (T-9510). |
+| BUNKASAI | `func_801354B0` | regorder | Selector in $v1 before stores; IDO $v0 later. Flag-byte address/value use separate temporaries in original, one register in IDO; bit-field/return and short permuter attempts fail (T-9510). |
+| BUNKASAI | `func_80146030` | regorder | Nested selector in $v1 before stores, IDO $v0 afterward; corrected GameState fields and bounded permuter still differ (T-9510). |
+| NAME_ENT | `func_80145378` | regorder | Correct post-increment gives the counter/xori shape; original keeps selector in $v1, IDO inserts move v0,v1 then compares $v0. Also ra-store scheduling differs; two exit forms and 12s permuter fail (T-9510). |
