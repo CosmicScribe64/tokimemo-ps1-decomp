@@ -101,7 +101,19 @@ void func_8015595C(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80155C64);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80155E10);
+void func_80155E10(s32 arg0) {
+    (arg0 + D_8015EDB4)->unk74 = ((func_800A0070((arg0 + D_8015EDB4)->unk7A * 0x3C + 0x800) * (0x3E8 - (D_8015EDB4 + arg0)->unk7A * 0xA)) >> 0xD) + (D_8015EDB4 + arg0)->unk7C;
+    (arg0 + D_8015EDB4)->unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk7A * 0x3C + 0x800) * (0x3E8 - (D_8015EDB4 + arg0)->unk7A * 0xA)) >> 0xD) + (D_8015EDB4 + arg0)->unk7E;
+    (arg0 + D_8015EDB4)->unk78 = (arg0 + D_8015EDB4)->unk80;
+    if ((arg0 + D_8015EDB4)->unk7A >= 0x65) {
+        func_8015C208(arg0);
+    }
+    if (((arg0 + D_8015EDB4)->unk7A & 1) == 0) {
+        func_8015C0A0(1, arg0);
+    } else {
+        func_8015C0A0(0, arg0);
+    }
+}
 
 void func_80155F98(s32 arg0) {
     TcPos pos;
