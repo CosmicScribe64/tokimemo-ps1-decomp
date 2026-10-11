@@ -93,7 +93,7 @@ def split_functions(out):
     """{function: [objdump lines]} of an `objdump -dr` text; internal labels stay in their function."""
     funcs, cur = {}, None
     for line in out.splitlines():
-        m = re.match(r"^[0-9a-f]+ <(\w+)>:", line)
+        m = re.match(r"^[0-9a-f]+ <([^>]+)>:", line)
         if m and LABEL_RE.match(m.group(1)):
             continue
         if m:
@@ -177,10 +177,11 @@ class ObjInfo:
     """What `resolve` needs to know about one object's .rodata: its bytes and the offsets of the
     symbols defined there."""
 
-    def __init__(self, rodata=b"", symbols=None, tables=None):
+    def __init__(self, rodata=b"", symbols=None, tables=None, original=()):
         self.rodata = rodata
         self.symbols = symbols or {}   # name -> offset in .rodata (the section symbol is ".rodata", 0)
         self.tables = tables or set()  # .rodata offsets that hold a code address (R_MIPS_32): jump tables
+        self.original = original      # (original VRAM, bytes) ranges, expected side only
 
     def is_table(self, name, add):
         """True when .rodata `name` + add is a jump table: the original's `jtbl_<addr>` symbols, or a place
@@ -198,13 +199,23 @@ class ObjInfo:
         elif name in self.symbols:
             base = self.symbols[name]
         else:
+            # Matched .s files contain only text: their strings are external to the
+            # all-INCLUDE_ASM expected object. Read those from this unit's original
+            # rodata ranges, never from a different overlay sharing the address.
+            addr = sym_address(name, add)
+            if addr is not None:
+                for start, data in self.original:
+                    if start <= addr < start + len(data):
+                        off = addr - start
+                        end = data.find(b"\0", off)
+                        return data[off:end] if end >= 0 else None
             return None
         off = base + add
         if not 0 <= off < len(self.rodata):
             return None
         end = self.rodata.find(b"\0", off)
         text = self.rodata[off:end if end >= 0 else len(self.rodata)]
-        return text or None
+        return text if end >= 0 else None
 
 
 def parse_object_info(symtab, contents, relocs=""):
@@ -333,10 +344,28 @@ def resolve(insns, info=None, names=None):
     return out
 
 
-def resolved_functions(obj, wanted):
+def original_rodata(c):
+    """Original (VRAM, bytes) ranges for the expected side of this specific unit.
+    Converted functions' matched asm lacks the strings emitted by C; the original
+    binary and yaml ranges provide them without guessing a relocation's address."""
+    if c is None:
+        return []
+    path = "config/SLPM_86.053.yaml" if c.unit == "main" else "config/overlays/%s.yaml" % c.unit
+    cfg = srcscan._load_yaml(path)
+    rows = srcscan.subsegments(cfg)
+    with open(cfg["options"]["target_path"], "rb") as f:
+        blob = f.read()
+    return [(off + delta, blob[off:rows[i + 1][0]])
+            for i, (off, typ, _name, delta) in enumerate(rows[:-1])
+            if typ in ("rodata", ".rodata")]
+
+
+def resolved_functions(obj, wanted, original_file=None):
     """{name: [(key, display)] or None}: like functions(), with relocations resolved."""
     funcs = split_functions(disassemble(obj))
     info = object_info(obj) if any(k in funcs for k in wanted) else None
+    if info is not None and original_file is not None:
+        info = ObjInfo(info.rodata, info.symbols, info.tables, original_rodata(original_file))
     return {k: (resolve(parse_insns(funcs[k]), info) if k in funcs else None) for k in wanted}
 
 
@@ -515,12 +544,13 @@ def diff_lines(want, got):
     return rows
 
 
-def resolved_verdict(built, expected, name):
+def resolved_verdict(built, expected, name, original_file=None):
     """How the text DIFF of `name` looks once relocations are applied (T-9220): ("table", None) when the
     resolved words agree and a jump table is involved, ("same", None) when they agree (naming noise only),
     ("real", diff rows) when they differ (a wrong symbol+offset, for example a GameState field), or None
     when the resolved comparison cannot be made."""
-    got, want = resolved_functions(built, [name])[name], resolved_functions(expected, [name])[name]
+    got = resolved_functions(built, [name])[name]
+    want = resolved_functions(expected, [name], original_file)[name]
     if got is None or want is None:
         return None
     if keys(got) == keys(want):
@@ -593,14 +623,15 @@ def main(argv):
                   % (n, problem))
             bad += 1
             continue
-        got, want = get(b, [name])[name], get(e, [name])[name]
+        got = get(b, [name])[name]
+        want = (resolved_functions(e, [name], c) if args.resolve else get(e, [name]))[name]
         if got is None or want is None:
             print("%s: missing in %s" % (n, "built" if got is None else "expected"))
             bad += 1
         elif keys(got) == keys(want):
             print("%s: MATCH%s" % (n, " (relocations resolved)" if args.resolve else ""))
         else:
-            verdict = None if args.resolve else resolved_verdict(b, e, name)
+            verdict = ("real", diff_lines(want, got)) if args.resolve else resolved_verdict(b, e, name, c)
             if verdict and verdict[0] == "table":
                 print("%s: MATCH (relocations resolved automatically: the function reads a jump table, whose "
                       "references and .L labels never agree by name; the table contents are not compared, "
@@ -614,10 +645,14 @@ def main(argv):
                 print("  resolved: the words are identical once relocations are applied; the rows above differ "
                       "only in symbol naming (`D_800E6448` against `D_800E6280+0x1C8`). --resolve says MATCH.")
             elif verdict:
-                print("  resolved: REAL DIFFERENCE, not naming. Symbol+offset or immediate differ after relocation "
-                      "(- expected, + built):")
-                for d in verdict[1]:
-                    print("    " + d)
+                if not args.resolve:
+                    print("  after relocation (- expected, + built):")
+                    for d in verdict[1]:
+                        print("    " + d)
+                print("  resolved: REAL DIFFERENCE, not naming. Symbol+offset or instruction words differ "
+                      "after relocation.")
+            else:
+                print("  resolved: UNAVAILABLE; the function is missing from the resolved comparison.")
     return 1 if bad else 0
 
 

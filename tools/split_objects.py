@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Move the C sources and the splat config of a unit to one C file per original object (T-0500).
 
-usage: split_objects.py [--dry-run] UNIT [UNIT...]      UNIT = an overlay name, `main/<address>`
-                                                         (one src/main file) or `main` (all of them)
+usage: split_objects.py [--dry-run] UNIT [UNIT...]      UNIT = a unit name (all its files), or
+                                                         `UNIT/<address>` (one C file)
        split_objects.py [--dry-run] --all               every overlay and every src/main file
 (run in Docker from the repo root after a full `ninja`, so asm/ matches the current yaml files;
 then `python3 configure.py && ninja`)
@@ -632,7 +632,7 @@ def rewrite_main_yaml(text, split_files, rodata_lo):
 # ------------------------------------------------------------------ driver
 
 def unit_of(arg):
-    return "main" if arg == "main" or arg.startswith("main/") else arg
+    return arg.split("/", 1)[0]
 
 
 def plan(root, args, out=sys.stdout):
@@ -648,10 +648,10 @@ def plan(root, args, out=sys.stdout):
         objs, ro_end, _orph = ob.read_objects(ob.objects_path(unit, root))
         all_c = srcscan.unit_c_files(unit, root)
         cfiles = all_c
-        if unit == "main" and "main" not in sel:
+        if unit not in sel:
             cfiles = [c for c in all_c if c.name in sel]
             if len(cfiles) != len(set(sel)):
-                raise SplitError("main: no such c subsegment among %s" % ", ".join(sel))
+                raise SplitError("%s: no such c subsegment among %s" % (unit, ", ".join(sel)))
         text_end = units[unit].text[1]
         ends = {c.name: (all_c[k + 1].start if k + 1 < len(all_c) else text_end) for k, c in enumerate(all_c)}
         groups = {}

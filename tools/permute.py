@@ -396,7 +396,7 @@ def verify_candidate(root, meta, cand_dir, runner=subprocess.run):
         with open(base_path) as f:
             edits = outside_edits(f.read(), cand_text, func)
         for old, new in edits[:6]:
-            report.append("declarations outside the function were changed by the permuter: '%s' -> '%s'"
+            report.append("note: candidate declarations outside the function differ (not applied): '%s' -> '%s'"
                           % (old[:100], new[:100]))
     r = function_range(cand_text, func)
     if not r:
@@ -435,7 +435,9 @@ def verify_candidate(root, meta, cand_dir, runner=subprocess.run):
     finally:
         with open(src, "w") as f:
             f.write(original)
-    return not any("outside the function" in l for l in report), report
+    # Only the function was inserted: real headers and declarations stayed in place.
+    # Outside edits may explain a failure, but cannot invalidate a passing unit sha1.
+    return True, report
 
 
 SUBCOMMANDS = ("setup", "run", "all")

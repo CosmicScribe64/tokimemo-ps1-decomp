@@ -30,6 +30,7 @@ import os
 import re
 import sys
 
+import data_pieces as dp
 import object_boundaries as ob
 import split_objects as so
 
@@ -56,25 +57,22 @@ def piece_dir(unit, addr):
 
 
 def split_starts(items, start, code_refs):
-    """([(addr, name)] variable starts, [(addr, name, owner)] interior labels) of the aligned items.
-    A variable starts at the range start or where code names the symbol (`%hi/%lo`). An aligned label
-    that only a data word names (a pointer table entry into the middle of an array: TACO
-    `D_8015F718` inside `D_8015F604`, T-9220) is listed as interior of the variable before it; the
-    object's C file then defines the whole array, and a line for it would duplicate its bytes."""
-    starts, interior = [], []
-    for a, n, _w in items:
-        if a % 4:
-            continue
-        if starts and a != start and n not in code_refs:
-            interior.append((a, n, starts[-1][1]))
+    """All piece starts plus advisory pointer-only labels (not ownership evidence).
+    Every aligned label starts a piece even if only a data pointer names it.
+    When defining an aggregate, replace all includes covered by it together."""
+    starts = dp.piece_starts([(a, n) for a, n, _w in items])
+    interior, owner = [], None
+    for a, n in starts:
+        if owner is not None and a != start and n not in code_refs:
+            interior.append((a, n, owner))
         else:
-            starts.append((a, n))
+            owner = n
     return starts, interior
 
 
 def insert_block(text, lines, interior=()):
     """C text with `lines` after the last top-of-file #include/#define line. `interior`
-    ([(addr, name, owner)]) are named in the block comment, not given a line."""
+    ([(addr, name, owner)]) are advisory aggregate candidates; they still get an include."""
     rows = text.splitlines(True)
     last = -1
     for i, r in enumerate(rows):
@@ -82,7 +80,7 @@ def insert_block(text, lines, interior=()):
             last = i
         elif r.startswith(("INCLUDE_ASM", "INCLUDE_RODATA")) or re.match(r"^\w[^;]*\)\s*\{", r):
             break
-    notes = ["/* not a variable start (named only by a data pointer, inside %s): %s */\n" % (o, n)
+    notes = ["/* pointer-only label %s may be inside %s; replace its include too. */\n" % (n, o)
              for _a, n, o in interior]
     block = [BLOCK_HEAD] + [l + "\n" for l in lines] + notes   # no blank line: as split_objects.py renders it
     return "".join(rows[:last + 1] + block + rows[last + 1:])
@@ -164,8 +162,8 @@ def main(argv=None):
             print("%s: .data %08X-%08X (%s/%s), %d INCLUDE_RODATA lines%s"
                   % (arg, r.start, r.end, r.start_ev, r.end_ev, n, " (dry run)" if a.dry_run else ""))
             for _a, name, owner in interior:
-                print("  %s: no line, %s is not a variable start (no code names it, only a data pointer)"
-                      "; if it is its own variable add the INCLUDE_RODATA line for it" % (name, "inside " + owner))
+                print("  %s: included; may be inside %s (only a data pointer names it);"
+                      " replace all covered includes when defining an aggregate" % (name, owner))
             if not a.dry_run:
                 for p, t in writes:
                     with open(os.path.join(a.root, p), "w") as f:

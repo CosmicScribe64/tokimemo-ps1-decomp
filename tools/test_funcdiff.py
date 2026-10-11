@@ -394,7 +394,7 @@ func_80100100:
         self.assertEqual(info.symbols, {".rodata": 0, "D_80100010": 0x10})
         self.assertEqual(info.string_at("D_80100010", 0), b"hello")
         self.assertEqual(info.string_at(".rodata", 0x11), b"ello")
-        self.assertIsNone(info.string_at(".rodata", 0))          # a NUL: no string
+        self.assertEqual(info.string_at(".rodata", 0), b"")     # a valid empty literal
         self.assertIsNone(info.string_at("elsewhere", 0))
 
     def test_function_starting_with_L(self):
@@ -455,6 +455,57 @@ f:
         rc, out = self.run_main(exp, got, "f")
         self.assertEqual(rc, 1)
         self.assertIn("REAL DIFFERENCE", out)
+
+    def test_internal_label_headers_are_naming_only(self):
+        exp = self.assemble("e", ".text\n.globl f, .L80100100\nf:\nnop\n.L80100100:\njr $ra\nnop\n")
+        got = self.assemble("g", ".text\n.globl f\nf:\nnop\njr $ra\nnop\n")
+        rc, out = self.run_main(exp, got, "f", "--resolve")
+        self.assertEqual(rc, 0, out)
+
+    def test_resolve_real_diff_always_has_a_verdict(self):
+        exp = self.assemble("e", self.FIELD % ("D_800E738D", "D_800E738D"))
+        got = self.assemble("g", self.FIELD % ("D_800E738E", "D_800E738E"))
+        rc, out = self.run_main(exp, got, "f", "--resolve")
+        self.assertEqual(rc, 1)
+        self.assertIn("resolved: REAL DIFFERENCE", out)
+        self.assertTrue(out.splitlines()[-1].strip().startswith("resolved:"), out)
+
+    def test_missing_resolved_comparison_has_an_explicit_verdict(self):
+        exp = self.assemble("e", self.FIELD % ("D_800E738D", "D_800E738D"))
+        got = self.assemble("g", self.FIELD % ("D_800E738E", "D_800E738E"))
+        with mock.patch.object(funcdiff, "resolved_verdict", return_value=None):
+            rc, out = self.run_main(exp, got, "f")
+        self.assertEqual(rc, 1)
+        self.assertIn("resolved: UNAVAILABLE", out)
+
+    def test_external_original_strings_and_empty_literals_resolve(self):
+        # Converted .s files have external string symbols instead of their rodata.
+        original = funcdiff.ObjInfo(original=[(0x80144A40, b"\0\0\0\0hello\0")])
+        built = funcdiff.ObjInfo(b"\0\0\0\0hello\0")
+        for addr, off in (("D_80144A40", 0), ("D_80144A44", 4)):
+            want = [[0x3c040000, "lui", [("R_MIPS_HI16", addr, 0)]],
+                    [0x24840000, "addiu", [("R_MIPS_LO16", addr, 0)]]]
+            got = [[0x3c040000, "lui", [("R_MIPS_HI16", ".rodata", 0)]],
+                   [0x24840000 + off, "addiu", [("R_MIPS_LO16", ".rodata", 0)]]]
+            self.assertEqual(funcdiff.keys(funcdiff.resolve(want, original)),
+                             funcdiff.keys(funcdiff.resolve(got, built)))
+        self.assertIsNone(original.string_at("D_80144A50", 0))
+
+    def test_original_string_fallback_is_scoped_to_one_overlay(self):
+        with in_repo_dir():
+            os.makedirs("config/overlays", exist_ok=True)
+            for unit, literal in (("A", b"first"), ("B", b"other")):
+                with open(unit + ".bin", "wb") as f:
+                    f.write(bytes(16) + literal + bytes(16 - len(literal)))
+                with open("config/overlays/%s.yaml" % unit, "w") as f:
+                    f.write("options: {target_path: %s.bin}\nsegments:\n"
+                            "  - start: 0\n    vram: 0x80132000\n    type: code\n"
+                            "    subsegments: [[0, c, %s], [16, .rodata, %s], [32, data, data]]\n"
+                            % (unit, unit, unit))
+            a = funcdiff.ObjInfo(original=funcdiff.original_rodata(mock.Mock(unit="A")))
+            b = funcdiff.ObjInfo(original=funcdiff.original_rodata(mock.Mock(unit="B")))
+            self.assertEqual(a.string_at("D_80132010", 0), b"first")
+            self.assertEqual(b.string_at("D_80132010", 0), b"other")
 
     FIELD = """.section .text
 .globl f

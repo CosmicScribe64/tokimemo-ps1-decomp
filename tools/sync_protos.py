@@ -59,6 +59,7 @@ import sys
 from collections import defaultdict
 
 import check_headers as ch
+import srcscan
 
 MAIN_LO, MAIN_HI = 0x80041000, 0x8012B538   # main exe image: text, data and bss (wiki/executable.md)
 API = "main_api.h"
@@ -387,8 +388,15 @@ def definitions(model):
     for path, info in model.sources.items():
         if os.sep + "main" + os.sep not in path.replace(os.path.sep, os.sep) and "/main/" not in path:
             continue
-        for name, typ, raw in ch.declarations_text(info["text"], defs=True):
-            if is_func(typ) and re.search(r"\b" + re.escape(name) + r"\s*\([^;{]*\)\s*\{", info["text"]):
+        text = ch.strip(info["text"])
+        # Parameter declarations in an old-style definition do not declare a prototype.
+        knr = re.compile(r'(^[A-Za-z_][\w \t*]*[ \t*]\w+)\(\s*'
+                         r'(?:\w+\s*(?:,\s*\w+\s*)*)?\)\s*'
+                         r'(?:[A-Za-z_][^;{}()]*;\s*)+\{', re.M)
+        text = knr.sub(r'\1() {', text)
+        defined = set(srcscan.DEF_RE.findall(text)) | set(srcscan.KR_DEF_RE.findall(text))
+        for name, typ, raw in ch.declarations_text(text, defs=True):
+            if is_func(typ) and name in defined:
                 out[name] = (typ, raw)
     return out
 
@@ -423,7 +431,7 @@ def choose(model, name, group, defs):
     """(type, raw, why) of the canonical declaration of `name`."""
     if name in defs:
         t, r = defs[name]
-        if name in model.api and benign(model.api[name][0], t):
+        if name in model.api and benign(model.api[name][0], t) and not t.endswith("F()"):
             # a K&R `()` kept on purpose: callers pass another number of arguments than the definition takes
             return model.api[name][0], model.api[name][1], "main_api.h"
         return t, r, "definition"

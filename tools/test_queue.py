@@ -343,6 +343,19 @@ class Project(unittest.TestCase):
         self.assertEqual(g, f)
         self.assertTrue(g.blocked and not g.unknown)
 
+    def test_string_in_an_orphan_chunk_is_blocked_despite_an_island(self):
+        facts = wq.analyze(asm("f", ["lui $a0, %hi(D_8015DA90)",
+                                   "addiu $a0, $a0, %lo(D_8015DA90)", "jr $ra", " nop"]),
+                         {"D_8015DA90"})
+        self.assertEqual(facts.string_refs, (0x8015DA90,))
+        self.assertTrue(wq.in_orphan(facts, [(0x8015DA90, 0x8015DAA0)]))
+        self.assertFalse(wq.in_orphan(facts, [(0x8015DAA0, 0x8015DAB0)]))
+        f = wq.Func("TACO/8013DB80", "f", "x", facts, True, "TACO", True)
+        self.assertIn("O", f.flags)
+        self.assertTrue(f.blocked)
+        self.assertEqual(wq.p_match(f), 0.0)
+        self.assertEqual(wq.func_from_json(__import__("json").loads(__import__("json").dumps(wq.func_to_json(f)))), f)
+
 
 def sel(file, name, size, selector, island=False):
     return wq.Func(file, name, "x.s", wq.Facts(size, 0, False, False, False, False, False, False, selector), island)

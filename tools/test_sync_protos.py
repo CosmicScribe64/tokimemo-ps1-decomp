@@ -160,6 +160,17 @@ class PlanTest(Repo):
     def plan(self):
         return sp.plan(sp.Model(str(self.inc), str(self.root / "src")))
 
+    def test_write_turns_knr_definition_into_unprototyped_declaration(self):
+        for definition in ('void func_80042808(a, b)\nu8 a;\ns16 b;\n{\n}\n',
+                           'void func_80042808(a) int a; { }\n'):
+            self.src("main/80042808.c", definition)
+            model = sp.Model(str(self.inc), str(self.root / "src"))
+            self.assertEqual(sp.definitions(model)["func_80042808"],
+                             ("voidF()", "void func_80042808()"))
+            sp.write_api(model, sp.plan(model))
+            self.assertIn("void func_80042808();", (self.inc / "main_api.h").read_text())
+            self.assertNotIn("func_80042808(void)", (self.inc / "main_api.h").read_text())
+
     def test_definition_wins(self):
         self.write("main_api.h", API.replace("void func_80042808(void);", ""))
         self.ovl("AAA", "void func_80042808(s32 a);\n")

@@ -101,13 +101,18 @@ def relocations(lines):
     return out
 
 
+def piece_starts(labels):
+    """Aligned piece labels; shared with data_island's C include generation."""
+    return [(v, s) for v, s in labels if v % 4 == 0]
+
+
 def pieces(labels, relocs, blob, rom0, vram0, size):
     """[(symbol, text)] for an island of `size` bytes at vram0 whose bytes start at blob[rom0]."""
     if vram0 % 16 or size % 16:
         raise PieceError("island %08X+%X is not 16-aligned" % (vram0, size))
     if not labels or labels[0][0] != vram0:
         raise PieceError("island %08X does not start with a symbol" % vram0)
-    starts = [(v, s) for v, s in labels if v % 4 == 0]
+    starts = piece_starts(labels)
     out = []
     for k, (v, sym) in enumerate(starts):
         end = starts[k + 1][0] if k + 1 < len(starts) else vram0 + size

@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-9400-wave-7-tool-fixes|T-9400]] Wave-7 tool fixes (Done)
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9200-gcc-built-sdk-objects-in-overlays|T-9200]] gcc-built SDK objects inside overlays: fingerprint, per-object toolchain, gcc 2.7.2/2.8.1 on arm64 (Done)
 - [[tickets/T-9140-wave-6-list-4|T-9140]] Wave 6: list 4, 28 functions matched (OLH help pages, text/state templates, data scalars); idioms in [[matching-notes]] "Wave 6, list 4" (Done)

@@ -245,5 +245,18 @@ class PlanTests(unittest.TestCase):
             r.close()
 
 
+class FilesFilterTest(unittest.TestCase):
+    def test_apply_edits_only_the_exact_overlay_object(self):
+        from unittest import mock
+        plans = [dict(tgtfile='src/ovl/GEKO/80132000.c'), dict(tgtfile='src/ovl/TEL/80132000.c'),
+                 dict(tgtfile='src/main/80132000.c')]
+        with mock.patch.object(dupes, 'load_funcs', return_value=[]), \
+                mock.patch.object(dupes, 'load_aliases', return_value={}), \
+                mock.patch.object(neardupes, 'plan_all', return_value=(plans, [], {}, [])), \
+                mock.patch.object(neardupes, 'apply_plans', return_value=[]) as apply:
+            neardupes.main(['--apply', '--files', 'GEKO/80132000'])
+        self.assertEqual(apply.call_args.args[2], plans[:1])
+
+
 if __name__ == '__main__':
     unittest.main()

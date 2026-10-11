@@ -353,7 +353,8 @@ def apply_plans(args, root, plans):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--root', default='.')
-    ap.add_argument('--files', help='only edit these C files (queue.py --files syntax, comma separated)')
+    ap.add_argument('--files', help='only edit exact main/<addr> or OVL/<addr> paths, comma separated; '
+                                    'bare addresses select main')
     ap.add_argument('--report', action='store_true')
     ap.add_argument('--apply', action='store_true')
     ap.add_argument('--check', action='store_true', help='with --apply: build each object, revert failures')

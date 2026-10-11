@@ -901,3 +901,18 @@ Matched BUNKA_SD `func_801345BC`, DATE `func_8013FA6C`, `func_8013A344`, `func_8
 
 ## [2026-10-11] ticket | T-9380 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers OK, globals OK, `--check-branch` OK, progress 4585/6958. Inline review in [[tickets/T-9380-wave-7-list-8]], no open findings. Not merged or pushed.
+
+## [2026-10-11] ticket | Claim wave-7 tool fixes
+Read shared brief, standards and wiki; created [[tickets/T-9400-wave-7-tool-fixes]] in In Progress. Baseline clean Docker build passed all 27 checksums.
+
+## [2026-10-11] build | Wave-7 tooling regressions and orphan placement
+Fixed exact duplicate-copy selection, complete data-island includes, K&R canonical declarations, funcdiff labels/external and empty strings, permuter false rejection, and shared-symbol guard. Synthetic Docker tooling suite passed; additional one-overlay-file split regression passed. OPTION table noise and GEKO string noise now resolve. An isolated TACO split at 8013F250 rebuilt its sha1 and assigned both orphan string blocks to the new island; source-owned files unchanged. Recorded the supported recipe in [[build-system]] and current data-island guidance in [[decompile-workflow]]; details in [[matching-notes]] and [[tickets/T-9400-wave-7-tool-fixes]].
+
+## [2026-10-11] ticket | T-9400 In Progress -> In Review
+Final clean Docker build passed 27/27 sha1, headers/globals/symbols stamps exist, progress 4729/6958 unchanged, branch check has 0 new disagreements (17 known). All 30 tooling test modules passed, plus targeted reruns after later changes. Inline standards review recorded in [[tickets/T-9400-wave-7-tool-fixes]], no unresolved findings; the TACO C draft is a follow-up using the proven split recipe in [[build-system]].
+
+## [2026-10-11] lint | T-9400 ticket and board
+Checked the touched ticket/board/index links and status: one T-9400 card, correct Done column, linked ticket present; relevant wiki pages refreshed. Existing log entries left unchanged.
+
+## [2026-10-11] ticket | T-9400 In Review -> Done
+Inline CODING_STANDARDS review resolved all findings; 46 funcdiff tests passed on final code, final ninja recheck passed all 27 checksums and branch check OK. [[tickets/T-9400-wave-7-tool-fixes]] complete. Uncommitted tooling/tests/wiki edits left for orchestrator; no source/header/config-object changes or function gains.

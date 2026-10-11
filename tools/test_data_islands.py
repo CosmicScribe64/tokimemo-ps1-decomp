@@ -99,11 +99,11 @@ class DataIslandTest(unittest.TestCase):
 
 
 class SplitStartsTest(unittest.TestCase):
-    def test_label_named_only_by_a_data_pointer_is_interior(self):
+    def test_pointer_only_label_still_gets_a_piece_start(self):
         items = [(0x100, "D_A", frozenset()), (0x110, "D_B", frozenset()), (0x118, "D_C", frozenset()),
                  (0x11A, "D_odd", frozenset()), (0x120, "D_P", frozenset({"D_C"}))]
         starts, interior = data_island.split_starts(items, 0x100, {"D_B", "D_P"})
-        self.assertEqual(starts, [(0x100, "D_A"), (0x110, "D_B"), (0x120, "D_P")])
+        self.assertEqual(starts, [(0x100, "D_A"), (0x110, "D_B"), (0x118, "D_C"), (0x120, "D_P")])
         self.assertEqual(interior, [(0x118, "D_C", "D_B")])
 
     def test_range_start_always_starts(self):
@@ -114,6 +114,28 @@ class SplitStartsTest(unittest.TestCase):
         out = data_island.insert_block('#include "common.h"\n', ["L1"], [(0x118, "D_C", "D_B")])
         self.assertIn("D_C", out)
         self.assertNotIn("INCLUDE_RODATA", out)
+
+    def test_generated_includes_cover_the_island_byte_for_byte(self):
+        import re
+        import struct
+        labels, lines = dp.parse_island(ISLAND_S)
+        items = [(v, n, frozenset()) for v, n in labels]
+        starts, advisory = data_island.split_starts(items, labels[0][0], {labels[0][1]})
+        text = data_island.insert_block('#include "common.h"\n',
+                                       ['INCLUDE_RODATA("p", %s);' % n for _v, n in starts], advisory)
+        included = re.findall(r'INCLUDE_RODATA\("p", (\w+)\);', text)
+        blob = bytes([1, 0, 0, 0, 7, 8, 0, 0, 0, 0x20, 0, 0x80, 0, 0, 0, 0])
+        pieces = dict(dp.pieces(labels, dp.relocations(lines), blob, 0, labels[0][0], len(blob)))
+        self.assertEqual(included, list(pieces))
+        self.assertTrue(advisory)
+        rebuilt = bytearray()
+        for sym in included:
+            for line in pieces[sym].splitlines():
+                if ".byte " in line:
+                    rebuilt.extend(int(b.strip(), 16) for b in line.split(".byte ")[1].split(","))
+                elif ".word func_80002000" in line:
+                    rebuilt.extend(struct.pack("<I", 0x80002000))
+        self.assertEqual(bytes(rebuilt), blob)
 
 
 def func_s(name, addr, body):

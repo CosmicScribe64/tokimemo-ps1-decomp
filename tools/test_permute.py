@@ -375,13 +375,13 @@ class Verification(unittest.TestCase):
         self.assertFalse(ok)
         self.assertIn("FAILED", " ".join(report))
 
-    def test_edited_extern_type_is_reported_as_the_cause(self):
+    def test_unused_declaration_edits_cannot_reject_a_real_build_match(self):
         root, src, cand = self.make("extern u8 D_1;\nvoid func_1(void) {\n    D_1 = 2;\n}\n")
         ok, report = permute.verify_candidate(
             root, {"func": "func_1", "unit": "TT", "src": "src/ovl/TT/80132000.c"}, cand,
             self.Runner("TT:func_1: MATCH\n"))
-        self.assertFalse(ok)
-        self.assertIn("declarations outside the function were changed", report[0])
+        self.assertTrue(ok, report)
+        self.assertIn("candidate declarations outside the function differ (not applied)", report[0])
         self.assertIn("'s32' -> 'u8'", report[0])
 
     def test_one_line_statement_groups_are_reported_because_the_layout_matters(self):

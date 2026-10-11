@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-10
+updated: 2026-10-11
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -1676,3 +1676,7 @@ Ticket [[tickets/T-9380-wave-7-list-8]]. 27 functions matched (about 5,800 bytes
 - **GPU tag address field is a 24-bit bit-field** (TT `func_8014CC04`, behind `NON_MATCHING`): `typedef struct { u32 addr : 24; u32 len : 8; } TtOtTag` and `((TtOtTag *)v)->addr = ot_word;` gives the original's `and; xor; sll 8; srl 8; xor` exactly (one `addu` operand order left).
 - **Own data**: `data_island.py NAME_ENT/80144AD0` leaves out the labels that only a data pointer names (60 pieces exist, 13 `INCLUDE_RODATA` lines are written) and the overlay sha1 then fails; the missing lines must be added by hand (every `.s` in `asm/ovl/<NAME>/data/<NAME>/<obj>.data/`, in address order). Islands added: DATE `8014CC40` and `80132000`, NAME_ENT `80144AD0`, EN_NICHI `80136B10` (the last one with `u16 D_80139C58` and the `u8 D_80139C34[8]`, `D_80139C3C[8]`, `D_80139C44[8]`, `s16 D_80139C4C[6]` tables).
 - **Open families** (details in the data file): the NAME_ENT quartet `func_80147F78`/`func_801469D0`/`func_80147A80`/`func_80149144` (1,450 bytes; all instructions match, `a` sits in `$v1`/sum in `$a0` against `$a1`/`$v1`, frame 0x38); the DATE table readers `func_801366A4`, `func_80136B70`, `func_80136D3C`, `func_80139944`, ... (repeated `li k; multu` for six identical products: IDO CSEs them, no spelling found); the selector `$v1` against `$v0` (BUNKAKEN `func_801428D0`, RPG_BAT `func_80136A9C`, NAME_ENT `func_80145378`); the promoted-global register (`$v1`/`$a0` against `$v0`: DATE `func_8013E6A4`, `func_80140D38`, `func_8014DB98`, `func_8014E010`, NAME_ENT `func_80140B20`, EVENT `func_8010A790`).
+
+## Tooling fixes, wave 7 (T-9400)
+[[tickets/T-9400-wave-7-tool-fixes]]: dupes/neardupes --files selects exact main/<addr> or OVL/<addr> paths; a bare address selects main only, never another overlay with the same stem. data_island emits all data_pieces starts, including pointer-only labels; define an aggregate by replacing every covered include. sync_protos --write takes () from K&R definitions. funcdiff ignores internal .L headers, resolves external original strings from the scoped unit's rodata (including empty literals), and ends every DIFF with a verdict. OPTION func_8013C52C is now an automatic table-reference MATCH; GEKO func_8013CD18 resolves to naming-only and --resolve MATCH. The unit checksum still verifies actual table and string placement.
+Permute's false negative came from its final outside-declaration veto even when only the body was inserted and both funcdiff and sha1 passed. Outside edits are advisory; the unchanged real declarations plus full build are the judge. build/symbols.ok rejects overlay addresses in the shared main symbol file. Orphan strings require separate objects when they follow an earlier object's tables: the isolated TACO hidden-boundary split passed sha1; recipe and limitations in [[build-system]]. No source functions were gained in this tooling ticket.

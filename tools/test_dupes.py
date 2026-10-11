@@ -452,8 +452,15 @@ class FilesFilterTests(unittest.TestCase):
     def test_empty_spec_keeps_everything(self):
         self.assertTrue(all(dupes.wanted_file(p['tgtfile'], None) for p in self.PLANS))
 
-    def test_stems_and_prefixes_case_insensitive(self):
-        self.assertTrue(dupes.wanted_file('src/main/80041000.c', '8004'))
+    def test_exact_unit_and_address_case_insensitive(self):
+        self.assertTrue(dupes.wanted_file('src/main/80041000.c', 'main/80041000'))
+        self.assertTrue(dupes.wanted_file('src/main/80041000.c', '80041000'))
+        self.assertFalse(dupes.wanted_file('src/main/80041000.c', '8004'))
+        self.assertTrue(dupes.wanted_file('src/ovl/GEKO/80132000.c', 'geko/80132000'))
+        self.assertFalse(dupes.wanted_file('src/ovl/GEKO/80132000.c', '80132000'))
+        self.assertFalse(dupes.wanted_file('src/ovl/GEKO/80132000.c', 'TEL/80132000'))
+        self.assertFalse(dupes.wanted_file('src/ovl/GEKO/80132000.c', 'GEKO/80132'))
+        self.assertFalse(dupes.wanted_file('src/ovl/GEKO/80132000.c', 'GEKO'))
         self.assertTrue(dupes.wanted_file('src/ovl/TEL.c', 'tel'))
         self.assertFalse(dupes.wanted_file('src/ovl/DATE.c', 'TEL,80041000'))
 
@@ -461,10 +468,21 @@ class FilesFilterTests(unittest.TestCase):
         class T:
             def __init__(self, path):
                 self.path = path
-        skipped = [(T('x/TEL.c'), ['r']), (T('x/DATE.c'), ['r'])]
-        plans, sk = dupes.restrict_files(self.PLANS, skipped, 'TEL,8004', lambda t: t.path)
+        skipped = [(T('src/ovl/TEL.c'), ['r']), (T('src/ovl/DATE.c'), ['r'])]
+        plans, sk = dupes.restrict_files(self.PLANS, skipped, 'TEL,main/80041000', lambda t: t.path)
         self.assertEqual([p['name'] for p in plans], ['a', 'b'])
         self.assertEqual(len(sk), 1)
+
+    def test_apply_filters_before_writing(self):
+        from unittest import mock
+        plans = [dict(tgtfile='src/main/80132000.c'), dict(tgtfile='src/ovl/GEKO/80132000.c'),
+                 dict(tgtfile='src/ovl/TEL/80132000.c')]
+        with mock.patch.object(dupes, 'load_funcs', return_value=[]), \
+                mock.patch.object(dupes, 'load_aliases', return_value={}), \
+                mock.patch.object(dupes, 'plan_all', return_value=(plans, [], {'groups': 0, 'cand': 0})), \
+                mock.patch.object(dupes, 'apply_all', return_value=[]) as apply:
+            dupes.main(['--apply', '--files', '80132000'])
+        self.assertEqual(apply.call_args.args[1], plans[:1])
 
 
 class ApplyAllTests(unittest.TestCase):

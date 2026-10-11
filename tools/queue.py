@@ -11,7 +11,7 @@ not, number of calls, and flags:
      J and S block only when the function's C file has no rodata island: then its rodata is an
      asm blob the C object cannot provide. Per-object C files (tools/split_objects.py, T-0500)
      give every object with rodata an island, so J and S are workable there (decompile-workflow).
-  O  its jump table lies in an orphan rodata chunk (config/objects/<UNIT>.txt `orphan` lines: no single
+  O  its table or string lies in an orphan rodata chunk (config/objects/<UNIT>.txt `orphan` lines: no single
      object owns it), so no C object can provide it and the function cannot be built even with an island
      (BUNKASAI func_80158EB0 in second_chunk_of_801511E0, T-9220). Blocks always, P(match) 0.
   P  one trailing nop after the last jr (end address 12 mod 16): asm-processor needs 2 (matching-notes);
@@ -131,6 +131,7 @@ class Facts(NamedTuple):
     selector: str = ""   # flag U: register of the switch / compare-chain selector ("v0", "v1", ...)
     hint: bool = False   # flag T: V shape on a signed or word global: try declaring it unsigned
     tables: tuple = ()   # addresses of the jump tables the function reads (jtbl_<addr>)
+    string_refs: tuple = ()  # addresses of named string literals, for orphan ownership
 
 
 def parse_asm(text):
@@ -268,7 +269,9 @@ def analyze(text, string_syms=frozenset(), legacy=False):
     if selector:
         dispatch = hint = False
     return Facts(len(insns) * 4, calls, bool(loops), jtbl, strings, pad, reload, dispatch, selector, hint and not legacy,
-                 tuple(sorted({int(a, 16) for i in insns for a in JTBL_RE.findall(i.args)})))
+                 tuple(sorted({int(a, 16) for i in insns for a in JTBL_RE.findall(i.args)})),
+                 tuple(sorted({int(m[-8:], 16) for i in insns for m in HI_RE.findall(i.args)
+                               if m in string_syms and re.search(r'_[0-9A-Fa-f]{8}$', m)})))
 
 
 def string_symbols(root):
@@ -293,7 +296,7 @@ class Func(NamedTuple):
     facts: Facts
     island: bool = False   # the C file has a rodata island: J and S do not block
     unit: str = ""         # "main" or the overlay name ("" in synthetic data: derived from `file`)
-    orphan: bool = False   # flag O: a jump table of the function is in an orphan rodata chunk
+    orphan: bool = False   # flag O: a table or string is in an orphan rodata chunk
 
     @property
     def leaf(self):
@@ -336,8 +339,8 @@ def orphan_ranges(root, unit):
 
 
 def in_orphan(facts, ranges):
-    """True when a jump table of `facts` lies in one of the orphan `ranges`."""
-    return any(a <= t < b for t in facts.tables for a, b in ranges)
+    """True when a table or string lies in an orphan chunk, even if the file has an island."""
+    return any(a <= t < b for t in facts.tables + facts.string_refs for a, b in ranges)
 
 
 def units(root):
@@ -391,7 +394,7 @@ def load(root=".", string_syms=None, legacy=False, files=None):
 
 
 CACHE = Path("build") / "queue-cache.json"
-CACHE_VERSION = 2
+CACHE_VERSION = 3
 TOOL_FILES = ("queue.py", "dupes.py", "neardupes.py")
 
 
@@ -422,7 +425,9 @@ def func_to_json(f):
 
 def func_from_json(row):
     file, name, path, facts, island, unit, orphan = row
-    facts[-1] = tuple(facts[-1])
+    for i in (10, 11):
+        if len(facts) > i:
+            facts[i] = tuple(facts[i])
     return Func(file, name, path, Facts(*facts), island, unit, orphan)
 
 

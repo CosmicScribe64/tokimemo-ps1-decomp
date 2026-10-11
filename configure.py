@@ -26,6 +26,7 @@ import srcscan  # noqa: E402  (tools/srcscan.py: the C files of every unit, from
 EXE = "SLPM_86.053"
 DISC_STAMP = "build/disc.stamp"  # tools/prepare_disc.py: disc/files is unpacked from game/ (T-3300)
 HEADERS_OK = "build/headers.ok"  # tools/check_headers.py passed (T-1200)
+SYMBOLS_OK = "build/symbols.ok"  # no overlay symbols in shared main config (T-9400)
 GLOBALS_OK = "build/globals.ok"  # tools/migrate_globals.py --check passed (T-5100)
 HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
 
@@ -191,7 +192,7 @@ def overlay_targets(n, overlays):
         for cf in srcscan.unit_c_files(name):
             n.build(cf.obj, "cc", str(cf.src),
                     variables={"toolchain": " ".join(OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN))},
-                    implicit=[stamp, HEADERS_OK, "include/common.h", "include/include_asm.h",
+                    implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "include/common.h", "include/include_asm.h",
                               "include/asmproc_prelude.inc",
                               "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
             c_os.append(cf.obj)
@@ -232,6 +233,10 @@ def main():
                     "config/%s.yaml && python3 tools/data_pieces.py config/%s.yaml && touch $out")
            % (EXE, EXE, EXE),
            description="splat split")
+    n.rule("symbols", command="python3 tools/check_symbols.py && touch $out",
+           description="CHECK SYMBOLS")
+    n.build(SYMBOLS_OK, "symbols", implicit=["tools/check_symbols.py", "config/symbol_addrs.txt"])
+    n.build("symbols", "phony", SYMBOLS_OK)
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
     n.build(HEADERS_OK, "headers", implicit=["tools/check_headers.py"] + HEADER_FILES)
@@ -272,7 +277,7 @@ def main():
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, HEADERS_OK, "tools/cc.py", "tools/frame_pass.py"] + headers)
+                implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "tools/cc.py", "tools/frame_pass.py"] + headers)
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"
@@ -286,7 +291,7 @@ def main():
     n.rule("progress", command="python3 tools/progress.py", description="PROGRESS", pool="console")
     n.build("progress", "progress")
     oks = overlay_targets(n, read_overlays())
-    n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK])
+    n.default(["build/%s.ok" % EXE] + oks + [GLOBALS_OK, SYMBOLS_OK])
     n.close()
 
     units = [{

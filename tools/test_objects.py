@@ -312,6 +312,28 @@ class SplitTest(unittest.TestCase):
         with self.assertRaises(so.SplitError):
             so.plan(self.root, ["AAA"], out=io.StringIO())
 
+    def test_split_only_the_selected_overlay_file(self):
+        self.run_split()
+        # Cut a hidden text boundary without padding. Split only that existing
+        # file, preserving all other sources and the prior rodata island.
+        p = "config/objects/AAA.txt"
+        text = self.read(p)
+        old = "object 80132040 80132080 80132100 80132110 yes"
+        self.assertIn(old, text)
+        self.write(p, text.replace(old, "object 80132040 80132060 80132100 80132110 yes")
+                   + "object 80132060 80132080 - - no:no_rodata choice/1 -\n")
+        # Existing fixture has only one function in that file, so add a later
+        # INCLUDE_ASM function at the proposed boundary.
+        p = "src/ovl/AAA/80132040.c"
+        self.write(p, self.read(p) + '\nINCLUDE_ASM("asm/ovl/AAA/nonmatchings/AAA/80132040", func_80132060);\n')
+        self.write("asm/ovl/AAA/nonmatchings/AAA/80132040/func_80132060.s",
+                   func_s("func_80132060", BASE + 0x60, 0x20))
+        writes, _protos = so.plan(self.root, ["AAA/80132040"], out=io.StringIO())
+        paths = {p for p, _t in writes}
+        self.assertIn("src/ovl/AAA/80132060.c", paths)
+        self.assertNotIn("src/ovl/AAA/80132000.c", paths)
+        self.assertNotIn("src/ovl/AAA/80132080.c", paths)
+
 
 class MainYamlTest(unittest.TestCase):
     YAML = """      - { start: 0x800, type: c, name: main/80041000 }

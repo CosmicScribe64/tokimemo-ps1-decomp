@@ -995,12 +995,23 @@ def file_stem(path):
 
 
 def wanted_file(path, spec):
-    """True when the C file `path` is named by `spec` (queue.py --files syntax: comma separated main
-    address stems / overlay names, matched case-insensitively as prefixes). Everything when spec is empty."""
+    """Exact unit/object selection, case-insensitive. A bare address selects main only.
+    Accept queue labels (main address, OVL/address, legacy OVL) or main/address;
+    never infer an overlay from an address basename or accept a prefix."""
     if not spec:
         return True
-    stem = file_stem(path).lower()
-    return any(w and stem.startswith(w.strip().lower()) for w in spec.split(','))
+    path = str(path).replace(os.sep, '/')
+    m = re.search(r'(?:^|/)src/(main/[^/]+|ovl/.+)\.c$', path)
+    if not m:
+        return False
+    name = m.group(1).removeprefix('ovl/').lower()
+    wanted = set()
+    for word in spec.split(','):
+        word = word.strip().lower()
+        if re.fullmatch(r'[0-9a-f]{8}', word):
+            word = 'main/' + word
+        wanted.add(word)
+    return name in wanted
 
 
 def restrict_files(plans, skipped, spec, tgt_path):
@@ -1013,8 +1024,8 @@ def restrict_files(plans, skipped, spec, tgt_path):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--root', default='.')
-    ap.add_argument('--files', help='only edit these C files (queue.py --files syntax: main address stems / overlay '
-                                    'names, comma separated); default is the whole tree')
+    ap.add_argument('--files', help='only edit exact main/<addr> or OVL/<addr> paths, comma separated; '
+                                    'bare addresses select main; default is the whole tree')
     ap.add_argument('--apply', action='store_true')
     ap.add_argument('--check', action='store_true', help='with --apply: build each object, revert failures')
     ap.add_argument('--unit', action='append')

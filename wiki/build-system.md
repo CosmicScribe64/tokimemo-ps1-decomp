@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-09
+updated: 2026-10-11
 sources: ["tools/dupes.py", "tools/neardupes.py", "tools/progress.py", "configure.py", "config/SLPM_86.053.yaml", "config/overlays.txt", "tools/gen_overlay_configs.py", "README.md"]
 sources: ["tools/progress.py", "configure.py", "tools/rodata_pieces.py", "tools/rodata_island.py", "tools/split_objects.py", "tools/object_boundaries.py", "tools/srcscan.py", "config/SLPM_86.053.yaml", "config/overlays.txt", "tools/gen_overlay_configs.py", "README.md"]
 ---
@@ -14,6 +14,8 @@ Status: OK build. `build/SLPM_86.053.bin` is byte-identical to the original (sha
 1. Put your copy of the game in `game/` (gitignored; BIN+CUE, CHD, ISO, or a .zip/.7z of those, any depth; see `game/README.md`). No manual extraction: `configure.py` adds the ninja step `build/disc.stamp` (rule `disc`, `tools/prepare_disc.py`, T-3300). It finds the image(s) in `game/`, identifies the release with `tools/identify_version.py`, and unpacks the one whose exe has the SHA-1 of `config/SLPM_86.053.sha1` into `disc/files/` (`tools/extract_disc.py`; raw 2352 or cooked 2048-byte sectors, the build needs only the files). Other releases (rev1, rev2, rev4, shokai) fail with a message naming what was found; no image and no `disc/files/SLPM_86.053` fails with a message pointing to `game/`. An already-populated `disc/` (CI, or `extract_disc.py` by hand) is enough if `game/` is empty. The step reruns only when an image in `game/`, one of the tools or `config/versions.txt` changes, and a new file in `game/` regenerates `build.ninja` (the directories are inputs of the generator). The splits depend on the stamp, not on `disc/files/*`. The repo-root zip is no longer searched.
 2. `tools/docker.sh python3 configure.py` writes `build.ninja` (ninja regenerates it when `configure.py` changes) and `objdiff.json`.
 3. `tools/docker.sh ninja` splits, assembles, compiles, links and checks the sha1 of the main exe and of all 26 overlays (default target). `ninja overlays` builds only the overlays, `ninja build/ovl/TT.ok` one overlay.
+
+T-9400 adds `build/symbols.ok` beside the header/global checks: `tools/check_symbols.py` rejects any active assignment at or above `0x80132000` in `config/symbol_addrs.txt`. Put overlay symbols in `config/symbols_<OVL>.txt`, referenced from that overlay's yaml. C compilation and the default build depend on the guard; changing the shared symbol file invalidates its stamp.
 
 ## Progress and per-function diff
 - `tools/docker.sh ninja progress` (or `tools/docker.sh python3 tools/progress.py`, tests `tools/test_progress.py`, T-0602) prints decompiled versus total functions and bytes, counting functions still `INCLUDE_ASM` against sizes from the splat `nonmatching` headers. Sections: one row per `src/main` file against `asm/{nonmatchings,matchings}/main/<addr>/` and a `main game` subtotal (834 functions, 284428 bytes); one row per overlay (all its C files, `src/ovl/<NAME>.c` or the per-object `src/ovl/<NAME>/<addr>.c`, each against its own `asm/ovl/<NAME>/{nonmatchings,matchings}/<name>/`; the file list comes from the yaml files through `tools/srcscan.py`, T-0500; the overlay configs set `disassemble_all` so decompiled functions keep their size) and an `overlays` subtotal (6128 functions, 1994940 bytes); a `grand total` (main + overlays, 6962 functions, 2279368 bytes); and a separate `SDK libs` line (722 functions, 165212 bytes from the top-level `asm/*.s`) that is asm-only and counted in no denominator. Snapshot (T-1310): main 268/834, overlays 458/6128, grand 726/6962.
@@ -96,3 +98,17 @@ A C object can provide a range of `.data`, so the variables its C file defines l
 - **Limits.** Islands are 16-aligned; objects whose original data starts unaligned (some TACO and TT objects, [[source-files]]) get no range. `.bss` islands are not built yet (no `.bss` subsegment type is used; overlays have no `.bss`, all their data is in the file). A C variable without initialiser goes to `.bss`/common and breaks the layout (sha1).
 - **Proof (T-9010).** RPG_BAT `8014E780` (`8015ED90-8015EE90`, 64 pieces) and main `800451D0` (`800B3D60-800B3D80`): byte-identical with the pieces alone, then with the C definitions; clean build 27/27.
 
+## Orphan strings and hidden object boundaries (T-9400)
+
+An orphan chunk cannot simply be appended to an existing island when its ordering differs from IDO's `[strings][tables][padding]`. TACO `8013DB80` has tables at `8015DA40–8015DA90`, followed by the orphan strings at `8015DA90–8015DAA0` used by `func_8013F250`. Merging the ranges into one `.rodata` would place those literals before the tables. A second island with the same C name cannot help: the linker has one input `.rodata` section for that object and cannot select a separate part of it using the current section model.
+
+The general solution is a hidden text-object split between the users of the two chunks. Confirm a function boundary where no function uses rodata from both sides, split the `object` line in `config/objects/<UNIT>.txt`, assign the orphan range to the new object with `island yes`, remove its `orphan` line, then run `tools/docker.sh python3 tools/split_objects.py UNIT/<old-address>` and rebuild. T-9400 adds overlay `UNIT/<address>` selection, so unrelated source files are kept. Moving functions may require header prototypes or moving file-local declarations; the splitter checks these and the checksum decides. If there is no safe function boundary, the current one-section compiler/island pipeline cannot own the chunk; keep the function in asm until the object or section model can represent it.
+
+TACO trial recipe (verified in an isolated Docker copy, not applied to the shared source-owned work): replace `object 8013DB80 80140DF0 8015DA40 8015DA90 yes pad owner` by:
+
+```text
+object 8013DB80 8013F250 8015DA40 8015DA90 yes pad owner
+object 8013F250 80140DF0 8015DA90 8015DAA0 yes choice/1 owner
+```
+
+Remove `orphan 8015DA90 8015DAA0 second_chunk_of_8013DB80`, run `split_objects.py TACO/8013DB80`, configure and build `build/ovl/TACO.ok`. Trial: four planned writes, no added prototypes, TACO sha1 OK, and both string blocks handed to `func_8013F250.s` in the new island. This proves placement for the existing asm and matched C in the file; the pending C draft still needs its own checksum verification after conversion. The exact historical boundary remains a hypothesis (`choice/1`), not a claim about the original source. Queue's `O` flag now covers orphan strings as well as tables, even when their C file already has another island.
