@@ -211,6 +211,9 @@ void func_80147068(void);
 void func_80147520(void);
 void func_80147F10(void);
 extern s16 D_8014A3DE;
+extern u8 D_8014A120[];
+extern s32 D_8014A130[];
+extern s16 D_8014A1CE;
 
 #endif
 extern s32 D_80149954;

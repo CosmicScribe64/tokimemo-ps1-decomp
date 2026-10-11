@@ -309,7 +309,53 @@ void func_801448D4(void) {
     }
 }
 
+extern Tri3 D_8014A340;
+
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-9210, 17 diff lines: the original reloads y after the D_8014A120[n] store
+ * (D_8014A120..D_8014A1CB is probably one object) and walks the string with a fresh pointer. */
+void func_801449A0(void) {
+    s32 i;
+    s32 d;
+    u8 *q;
+    Tri3 tbl;
+    s32 y;
+    s32 n;
+
+    tbl = D_8014A340;
+    d = D_8014A1CE;
+    for (i = 0; i < 3; i++) {
+        *(s32 *)&D_8014A13C[i * 0x24 + 0x38] += *(s32 *)&D_8014A13C[i * 0x24 + 0x30];
+        y = *(s16 *)&D_8014A13C[i * 0x24 + 0x3A] - d;
+        *(s16 *)&D_8011ECD0[i * 0x44 + 0x19EA] = y - 0xA0;
+        if (i + 0x36 != *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC] && D_8014A130[i] > 0) {
+            *(s32 *)&D_8014A13C[i * 0x24 + 0x38] += tbl.v[i];
+            D_8014A130[i] -= tbl.v[i];
+            y = *(s16 *)&D_8014A13C[i * 0x24 + 0x3A] - d;
+        }
+        if (*(s16 *)&D_8011ECD0[0x1AFA] + i * 8 + 8 < y - 0x60 && D_8014A13C[i * 0x24 + 0x25] == 0) {
+            *(s16 *)&D_8011ECD0[0x1B30] = 0x32;
+            *(s16 *)&D_8011ECD0[0x1B3E] = *(s16 *)&D_8011ECD0[0x1AFA] + 0x20;
+            n = 0;
+            q = D_8014A120;
+            while (*q != 0) {
+                n++;
+                q++;
+            }
+            D_8014A120[n] = i + 2;
+            D_8014A13C[i * 0x24 + 0x25] = 1;
+            y = *(s16 *)&D_8014A13C[i * 0x24 + 0x3A] - d;
+        }
+        if (y >= 0x1E1 || y < -0xA0) {
+            D_8011ECD0[i * 0x44 + 0x19C7] = 0;
+        } else {
+            D_8011ECD0[i * 0x44 + 0x19C7] = 0xA4;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801449A0);
+#endif
 
 extern Tri3 D_8014A34C;
 
