@@ -319,7 +319,45 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801339D4);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80133CA8);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80133F00);
+void func_80133F00(arg0, arg1)
+s32 arg0;
+s32 arg1;
+{
+    u8 *rec;
+    s32 j;
+    u8 *e;
+    s16 x;
+    s16 y;
+
+    j = arg0 * 2;
+    rec = D_8011ECD0 + j * 0x44;
+    rec[0x1983] = 4;
+    rec[0x19C7] = 5;
+    if (arg1 == 1) {
+        e = D_8013984C + arg0 * 0x30;
+        if (*(s32 *) e == 4) {
+            if (!(*(s32 *) (e + 0xC) & 1)) {
+                x = *(s16 *) (e + 0x16);
+                y = *(s16 *) (e + 0x1A);
+                rec[0x1983] |= 0x80;
+                rec[0x19C7] |= 0x80;
+                *(s16 *) (rec + 0x19A6) = x - 0x10;
+                *(s16 *) (rec + 0x19AA) = y - 7;
+                *(s16 *) (rec + 0x19EA) = x + 0x10;
+                *(s16 *) (rec + 0x19EE) = y + 7;
+            }
+        } else if (!(*(s32 *) (e + 0xC) & 1)) {
+            x = *(s16 *) (e + 0x16);
+            y = *(s16 *) (e + 0x1A);
+            rec[0x1983] |= 0x80;
+            rec[0x19C7] |= 0x80;
+            *(s16 *) (rec + 0x19A6) = x - 0x10;
+            *(s16 *) (rec + 0x19AA) = y - 7;
+            *(s16 *) (rec + 0x19EA) = x + 0x10;
+            *(s16 *) (rec + 0x19EE) = y + 7;
+        }
+    }
+}
 
 s32 func_80134008(s32 arg0) {
     s32 v;
