@@ -226,7 +226,54 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152060);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152268);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152684);
+typedef struct {
+    s32 a;
+    s32 b;
+} DtEnt;
+typedef struct {
+    DtEnt e[4];
+} DtTbl; /* size 0x20 */
+extern DtTbl D_8015EF14;
+
+typedef struct {
+    s32 a;
+    s32 b;
+} DtEnt;
+typedef struct {
+    DtEnt e[4];
+} DtTbl; /* size 0x20 */
+extern DtTbl D_8015EF14;
+
+typedef struct {
+    s32 a;
+    s32 b;
+} DtEnt;
+typedef struct {
+    DtEnt e[4];
+} DtTbl; /* size 0x20 */
+extern DtTbl D_8015EF14;
+
+void func_80152684(arg0, arg1, arg2)
+    s16 arg0;
+    s16 arg1;
+    s16 arg2;
+{
+    /* FAKE: 8 unused bytes above tbl give the original's frame (0x78) and tbl offset (0x50); the real locals are unknown. T-9310 */
+    s32 pad[2];
+    DtTbl tbl;
+
+    tbl = D_8015EF14;
+    if (arg0 < 0x140) {
+        func_80152E34(0x140, -0x118, 0xA0 - arg0, 0x28, (0xA0 - arg0) + (s16)(arg0 / 32 + 0xA), 0x28, tbl.e[*(u8 *)&D_8015EE24[arg1]].a, tbl.e[*(u8 *)&D_8015EE24[arg1]].b, arg2, 1);
+        return;
+    }
+    if (arg0 < 0x154) {
+        func_80152E34(0x140, -0x118, -0xA0, 0x28 - (s16)((arg0 * 7 - 0x8C0) / 8), -0xA0, 0x28, tbl.e[*(u8 *)&D_8015EE24[arg1]].a, tbl.e[*(u8 *)&D_8015EE24[arg1]].b, arg2, 1);
+        func_80152E34(0x140, -0x118, -0xA0, 0x28, (s16)(arg0 / 32 + 0xA) - arg0 + 0xA0, 0x28, tbl.e[*(u8 *)&D_8015EE24[arg1]].a, tbl.e[*(u8 *)&D_8015EE24[arg1]].b, arg2, 1);
+        return;
+    }
+    func_80152E34(0x140, -0x118, -0xA0, 0x28 - (s16)((arg0 * 7 - 0x8C0) / 8), -0xA0, (0x28 - (s16)((arg0 * 7 - 0x8C0) / 8)) + (s16)(0xF - (arg0 - 0x140) / 32), tbl.e[*(u8 *)&D_8015EE24[arg1]].a, tbl.e[*(u8 *)&D_8015EE24[arg1]].b, arg2, 1);
+}
 
 void func_80152948(void) {
     func_80046318(0x65, 0x801B0000, 0x82D7);
