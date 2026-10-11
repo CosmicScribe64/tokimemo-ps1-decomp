@@ -60,9 +60,37 @@ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067C28);
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067DD4);
+/* FAKE: promoted halfword and byte alias retain the final andi before flag storage. T-9550 */
+s32 func_80067DD4(void)
+{
+  u8 *byte;
+  s16 promoted;
+  u8 value;
+  promoted = D_80120696;
+  value = promoted;
+  byte = &value;
+  if (((*byte) & 1) == 0)
+  {
+    value |= 3;
+    D_80120696 = *byte;
+  }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067DFC);
+/* FAKE: promoted halfword and byte alias retain the final andi before flag storage. T-9550 */
+s32 func_80067DFC(void)
+{
+  u8 *byte;
+  s16 promoted;
+  u8 value;
+  promoted = D_80120652;
+  value = promoted;
+  byte = &value;
+  if (((*byte) & 1) == 0)
+  {
+    value |= 3;
+    D_80120652 = *byte;
+  }
+}
 
 void func_80067E34(void) {
     func_80048F64(0x60);
@@ -340,7 +368,14 @@ void func_8006C308(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C334);
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C700);
+s32 func_8006C700(void) {
+    s32 result;
+    result = -(s32)D_800B670A[D_800E6280.unk_0F8 & 0xF] - (((u32)D_800E6280.unk_0F8 << 23) >> 27) + 0x1563;
+    if ((D_800E6280.unk_0F8 & 0xF) == 4 && (((u32)D_800E6280.unk_0F8 << 23) >> 27) < 4U) {
+        result = -(s32)D_800B670A[3] - (((u32)D_800E6280.unk_0F8 << 23) >> 27) + 0x1582;
+    }
+    return result;
+}
 
 void func_8006C760(s32 arg0) {
     func_80048F64(0xF);

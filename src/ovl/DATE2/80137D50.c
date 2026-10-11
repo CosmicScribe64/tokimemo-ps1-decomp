@@ -156,7 +156,28 @@ s32 func_80138A3C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_80138A90);
+/* FAKE: leading byte fixes copy offsets; integer fallthrough retains allocation. T-9550 */
+s32 func_80138A90(void) {
+    u8 pad[1];
+    Date2LoadPairs4 loads;
+    Date2LoadPair first;
+    Date2LoadPair second;
+    loads = D_8013B688;
+    first = D_8013B6A8;
+    second = D_8013B6B0;
+    D_80122D20 = 1;
+    func_80044750(0xBF);
+    if (D_8013B5CC < 2U || D_80122CDC == 1 || D_80122CDC == 2) {
+        func_80046290(loads.pair[D_80122CDC].unk_00, loads.pair[D_80122CDC].unk_04, 15);
+    } else if (D_80122CDC == 0) {
+        func_80046290(first.unk_00, first.unk_04, 15);
+    } else {
+        func_80046290(second.unk_00, second.unk_04, 15);
+    }
+    func_80044750(0x300);
+    D_8013B5C8 = 0;
+    D_800E6280.unk_110D++;
+}
 
 void func_80138BEC(void) {
     u8 t;
@@ -199,12 +220,104 @@ void func_80138BEC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_80138E0C);
+/* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
+void func_80138E0C(void) {
+    s16 index;
+    s16 selected;
+    Date2Threshold30 thresholds;
+    u8 pad[8];
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_80138F8C);
+    thresholds = D_8013B6B8;
+    selected = 0xFF;
+    index = 0;
+    do {
+        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        index++;
+    } while (index < 30);
+    if (D_8013B5C8 == 200) {
+        func_8004E788(-116, 54, 0, (s32)((u8 **)D_8013B5D4)[0], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(((u8 **)D_8013B5D4)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D4)[1], 0));
+    }
+    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+        func_8004E9F4(1);
+        func_801395C8((s16)(selected | 0));
+    }
+    if (D_8013B5C8 == 3540) func_8004E9F4(1);
+}
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801391A0);
+/* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
+void func_80138F8C(void) {
+    s16 index;
+    s16 selected;
+    Date2Threshold51 thresholds;
+    u8 pad[4];
+    thresholds = D_8013B6F4;
+    selected = 0xFF;
+    index = 0;
+    do {
+        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        index++;
+    } while (index < 51);
+    if (D_8013B5C8 == 1500) {
+        func_8004E788(-116, 54, 0, (s32)((u8 **)D_8013B5D8)[0], 0);
+        func_8004E788((s16)(func_800AE0E0(((u8 **)D_8013B5D8)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[1], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(((u8 **)D_8013B5D8)[0]) * 7 + func_800AE0E0(((u8 **)D_8013B5D8)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5D8)[2], 0));
+    }
+    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+        func_8004E9F4(1);
+        func_801395C8((s16)(selected | 0));
+    }
+    if (D_8013B5C8 == 6364) func_8004E9F4(1);
+}
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801393B4);
+/* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
+void func_801391A0(void) {
+    s16 index;
+    s16 selected;
+    Date2Threshold39 thresholds;
+    u8 pad[4];
+    thresholds = D_8013B75C;
+    selected = 0xFF;
+    index = 0;
+    do {
+        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        index++;
+    } while (index < 39);
+    if (D_8013B5C8 == 1200) {
+        func_8004E788(-116, 54, 0, (s32)((u8 **)D_8013B5DC)[0], 0);
+        func_8004E788((s16)(func_800AE0E0(((u8 **)D_8013B5DC)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[1], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(((u8 **)D_8013B5DC)[0]) * 7 + func_800AE0E0(((u8 **)D_8013B5DC)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5DC)[2], 0));
+    }
+    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+        func_8004E9F4(1);
+        func_801395C8((s16)(selected | 0));
+    }
+    if (D_8013B5C8 == 5400) func_8004E9F4(1);
+}
+
+/* FAKE: padding fixes table offset; OR-zero preserves conversion; string pointers retain scalar views. T-9550 */
+void func_801393B4(void) {
+    s16 index;
+    s16 selected;
+    Date2Threshold81 thresholds;
+    u8 pad[4];
+    thresholds = D_8013B7AC;
+    selected = 0xFF;
+    index = 0;
+    do {
+        if (D_8013B5C8 >= thresholds.values[index]) selected = index;
+        index++;
+    } while (index < 81);
+    if (D_8013B5C8 == 30) {
+        func_8004E788(-116, 54, 0, (s32)((u8 **)D_8013B5E0)[0], 0);
+        func_8004E788((s16)(func_800AE0E0(((u8 **)D_8013B5E0)[0]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[1], 0);
+        func_8004E884(func_8004E788((s16)(func_800AE0E0(((u8 **)D_8013B5E0)[0]) * 7 + func_800AE0E0(((u8 **)D_8013B5E0)[1]) * 7 - 116), 54, 0, (s32)((u8 **)D_8013B5E0)[2], 0));
+    }
+    if (selected != 0xFF && D_8013B5C8 == thresholds.values[selected]) {
+        func_8004E9F4(1);
+        func_801395C8((s16)(selected | 0));
+    }
+    if (D_8013B5C8 == 4620) func_8004E9F4(1);
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_801395C8);

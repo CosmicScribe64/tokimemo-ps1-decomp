@@ -57,4 +57,17 @@ INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/80152680.rodata", D_80155DE4);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80152680", func_80152680);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80152680", func_80152F4C);
+/* FAKE: unused word fixes the table offset; expression layout retains address/value allocation. T-9550 */
+s32 func_80152F4C(void)
+{
+  s32 result;
+  u32 pad;
+  BunkakenGrid4 choices;
+  choices = D_801564E0;
+  if ((((D_80122EBC == 2) && ((D_800E6280.unk_1BC[2].unk_0C.b[2] >> 4) == 3)) && (func_8008667C(2) < 4)) && (D_80122EA4 != 2))
+  {
+    return 3;
+  }
+  result = choices.values[(D_800E6280.unk_1BC[D_80122EBC].unk_10.u << 21) >> 30][(((u32) D_800E6280.unk_0F8) << 21) >> 30];
+  return result;
+}
