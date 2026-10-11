@@ -286,7 +286,35 @@ void func_8013D62C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D6C0);
+/* Original implicit-int dispatch falls through without a return statement. */
+s32 func_8013D6C0(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            D_800E6280.unk_110D += 1;
+        } else if (D_800E6280.unk_1115 == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xD0)) {
+            func_80053D10();
+            func_80042908(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            func_8013B59C();
+            func_80042940(0x21);
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014B998);
 

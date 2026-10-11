@@ -462,4 +462,48 @@ void func_80137AA8();
 
 extern u8 D_8013CAA0;
 
+
+/* T-9580: symbols recovered from list-8 assembly. */
+extern s32 D_8013C284;
+extern s32 D_8013C288;
+extern s32 D_8013C28C;
+extern s32 D_8013C290;
+extern s32 D_8013C294;
+extern s32 D_8013C298;
+extern s32 D_8013C29C;
+extern s32 D_8013C2A0;
+extern s32 D_8013C2A4;
+extern s32 D_8013C2A8;
+extern s32 D_8013C2AC;
+extern s32 D_8013C2B0;
+extern s32 D_8013C2B8;
+extern s32 D_8013C2C0;
+extern s32 D_8013C2C8;
+extern s32 D_8013C2CC;
+extern s32 D_8013C2D0;
+extern s32 D_8013C2D4;
+extern s32 D_8013C2D8;
+extern s32 D_8013C2DC;
+extern s32 D_8013C2E0;
+extern s32 D_8013C2E4;
+extern s32 D_8013C2E8;
+extern s32 D_8013C2EC;
+extern s32 D_8013C2F0;
+extern s32 D_8013C2F4;
+extern s32 D_8013C2FC;
+extern s32 D_8013C304;
+extern s32 D_8013C30C;
+extern s32 D_8013C310;
+extern s32 D_8013C314;
+extern s32 D_8013C318;
+extern s32 D_8013C31C;
+extern s32 D_8013C320;
+extern s32 D_8013C324;
+extern s32 D_8013C328;
+extern s32 D_8013C32C;
+extern s32 D_8013C330;
+extern s32 D_8013C334;
+extern s32 D_8013C338;
+extern s32 D_8013C340;
+extern s32 D_8013C348;
 #endif /* OVL_ENDING_H */

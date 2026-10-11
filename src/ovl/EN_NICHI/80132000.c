@@ -476,7 +476,61 @@ s32 arg0;
     func_80134800(arg0);
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134D74);
+void func_80134D74(s32 arg0, s32 arg1) {
+    s32 temp_v0;
+    EnObj *temp_s0;
+
+    temp_s0 = EN_OBJ(arg0);
+    if (temp_s0->unk_28 < 3) {
+        temp_v0 = temp_s0->unk_04;
+        switch (temp_v0) {
+        case 1:
+            if (arg1 < 0x844) {
+                temp_s0->unk_28 = (s32) ((temp_s0->unk_08 * 2) + 4);
+                temp_s0->unk_24 = (s32) ((func_800AE0D0() % 15) + 0x1E);
+                if (!(func_800AE0D0() & 1)) {
+                    temp_s0->unk_2C = 0;
+                } else {
+                    temp_s0->unk_2C = 1;
+                }
+                if (arg1 >= 0x191) {
+                    temp_s0->unk_24 = 8;
+                    if (!(func_800AE0D0() & 1)) {
+                        temp_s0->unk_2C = 0x80;
+                    } else {
+                        temp_s0->unk_2C = 0x40;
+                    }
+                }
+            }
+            break;
+        case 2:
+            if (arg1 < 0xF04) {
+                temp_s0->unk_28 = (s32) ((temp_s0->unk_08 * 2) + 4);
+                temp_s0->unk_24 = (s32) ((func_800AE0D0() % 15) + 0x1E);
+                if (!(func_800AE0D0() & 1)) {
+                    temp_s0->unk_2C = 0;
+                } else {
+                    temp_s0->unk_2C = 1;
+                }
+                if (arg1 >= 0x191) {
+                    temp_s0->unk_24 = 4;
+                    if (!(func_800AE0D0() & 1)) {
+                        temp_s0->unk_2C = 0x81;
+                    } else {
+                        temp_s0->unk_2C = 0x41;
+                    }
+                }
+            }
+            break;
+        }
+        if (temp_s0->unk_1C >= 0x1000) {
+            temp_s0->unk_1C -= 0x1000;
+        }
+        if (temp_s0->unk_1C < 0) {
+            temp_s0->unk_1C += 0x1000;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134F2C);
 

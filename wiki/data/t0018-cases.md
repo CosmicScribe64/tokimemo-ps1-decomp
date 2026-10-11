@@ -1121,3 +1121,9 @@ Historical rows above remain unchanged. Resolution records:
 - The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
 
 Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
+| DATE/80149310 | `func_80149F48` | regorder | Copy-chain draft: first `lh` goes to `$t6` instead of original `$v0`, and loads run ahead of the original interleaved stores; restored after resolved comparison (T-9580). |
+| EN_NICHI/80132000 | `func_80132A74` | regorder | K&R four-s16 distance helper: second difference and first absolute value swap `$t1`/`$v1`; products use `$t6/$t7` instead of the original `$v1/$t0` (T-9580). |
+| TT/80133970 | `func_80134ADC` | regorder | Typed buffer-update draft: original retains halfword loads in `$v1/$t5` and clamp constant in `$a2`; IDO promotes loads to `$v0` and uses `$v1` for the constant (T-9580). |
+| GYOZI/80135CA0 | `func_80136124` | regorder | Original repeats `multu a1,a0` with hoisted 0x38 for two girl-record accesses; ordinary aggregate fields combine the product into one sll/subu/sll base and hoist the second `lh` (T-9580). |
+| RPG_BAT/801447E0 | `func_801453B4` | regorder | Three word counters occupy original `$v1/$a1/$a2`; the draft uses `$a1/$a2/$a3` for the sum, constant stores, and decrements, with an extra copy in one branch (T-9580). |
+| DATE/80150010 | `func_801511B4` | regorder | FnTbl40 and leading scalar reproduce frame and instructions except `D_800B593C` address: original `lui v1; lbu v0`, IDO `lui v0; lbu v0`; 15-second permuter, literal view, local pointer, and assignment chain did not match (T-9580). |
