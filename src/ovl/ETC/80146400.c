@@ -3,7 +3,37 @@
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146400);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801464D4);
+s32 func_801464D4(s32 mode) {
+    u32 i;
+    GameState *g;
+
+    g = &D_800E6280;
+    for (i = 0; i < 256; i++) {
+        if (g->unk_75E[i].unk_04 == 0) {
+            break;
+        }
+        if (g->unk_03E == g->unk_75E[i].unk_04 &&
+            g->unk_03F == g->unk_75E[i].unk_05) {
+            if (mode == 8 && g->unk_75E[i].unk_02 == 2 &&
+                g->unk_75E[i].unk_01 == 0x3B) {
+                return 9;
+            }
+            if (mode == 0xB && g->unk_75E[i].unk_02 == 0xB &&
+                g->unk_75E[i].unk_01 == 0xF) {
+                return 1;
+            }
+            if (g->unk_75E[i].unk_02 == 0 && g->unk_75E[i].unk_01 == 0xF) {
+                if (mode == 0xF) {
+                    return 1;
+                }
+                if (mode == g->unk_75E[i].unk_00) {
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
 
 void func_801465F8(void) {
     s32 *p;

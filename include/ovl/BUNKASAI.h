@@ -79,3 +79,13 @@ typedef struct BunkSelectWords {
 } BunkSelectWords; /* size 0x08 */
 
 #endif
+
+#ifndef OVL_BUNKASAI_MODE_T9740
+#define OVL_BUNKASAI_MODE_T9740
+/* Two-word state at D_80122EB8, used by func_8013B190 (T-9740). */
+typedef struct BunkModePair {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} BunkModePair; /* size 0x08 */
+void func_8013B190(void);
+#endif

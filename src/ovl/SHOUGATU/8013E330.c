@@ -1,7 +1,22 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E330);
+/* T-9740: integer definition without an explicit return matches the original. */
+s32 func_8013E330(void) {
+    s32 idx;
+    ShoCalendarFn28 table;
+
+    table = D_8014605C;
+    idx = D_800E6280.unk_110A;
+    table.f[idx](0x80);
+    ((ShoSprite44 *)D_8011ECD0)[96].unk_07 = D_800B593C;
+    if (((ShoSprite44 *)D_8011ECD0)[96].unk_18 == 0 && ((ShoSprite44 *)D_8011ECD0)[96].unk_08 == 0) {
+        ((ShoSprite44 *)D_8011ECD0)[96].unk_16 += 1;
+        if (((ShoSprite44 *)D_8011ECD0)[96].unk_16 >= 3) {
+            ((ShoSprite44 *)D_8011ECD0)[96].unk_16 = 0;
+        }
+    }
+}
 
 void func_8013E410(void) {
     u8 kind;

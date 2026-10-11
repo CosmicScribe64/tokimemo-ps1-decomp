@@ -1305,3 +1305,46 @@ T-9550 deep-pass resolution: `main:func_80086640` now matches with a marked FAKE
 2026-10-11 T-9550 deep-pass resolution: `main:func_80067DD4` and `main:func_80067DFC` now MATCH with fresh resolved diffs and main unit SHA1. Signed-halfword promotion followed by a byte local and address alias preserves the final `andi v0,t7,0xff`; five-minute-bound permutation found the first shape, and removal of redundant nested self-assignment / XOR-zero still matches. Historical promo rows are retained above.
 
 2026-10-11 T-9550 deep-pass resolutions: GEKO `func_8013CC20` matches with an explicit byte store followed by the GameState member read; GEKO `func_80139C70` matches with a post-call byte local and chained Rec24 colour fields. BUNKAKEN `func_80152F4C` matches with a copied 4-by-4 aggregate, inlined field indices, signed result and marked frame-padding word. Main `func_8006C700` matches with member-indexed halfwords and inlined unsigned bit extraction. All have fresh resolved diffs and unit SHA1 passes. Historical rows remain as evidence; no new symptom rows were added in the deep pass.
+
+## T-9740 wave 9 list 4 bounded deep pass (2026-10-11)
+
+Historical rows for EVENT `func_8010B8A4`, BUNKASAI `func_8013B190`,
+SHOUGATU `func_8013E330`, KANGEI `func_80137484`, and ETC `func_801464D4`
+are resolved by this batch. Real unit SHA1 and resolved function diffs pass.
+The first four use genuine aggregate views to model neighbouring fields;
+the event search uses a GameState pointer and direct record-field comparisons.
+Older rows remain as historical evidence. See [[matching-notes]] and
+[[tickets/T-9740-wave-9-list-4]].
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| main/80043510 | `load_palette` | regorder | Forty bounded parameter/promotion and index-width variants reproduce the canonical GameState palette array but retain 24 differing lines, chiefly index/address and byte-temp allocation. register_shapes identifies pointer/base/CSE; rejected source stays assembly (T-9740). |
+| main/80043510 | `load_csr_ab` | regorder | Correct narrow dimensions and the GameState cursor array; signed success-result local repairs index/address reuse but leaves 26 differing lines, including an extra result temporary and shifted stores. Declaration/order, result-width and common/early-return variants did not match. Pointer/base/CSE cluster; assembly retained (T-9740). |
+| main/80043510 | `csr_load_vram` | regorder | GameState pointer before the index reduces the upload loop to 26 differing lines. Thirty-six mode-width, coordinate-expression and pointer-init variants retain the first LoadSquare argument's offset/base operand and temporary order. Other register/promotion cluster; assembly retained (T-9740). |
+| main/80057390 | `func_80057710` | regorder | Typed nested wipe loops reproduce the control flow, bounds and width clamps. Sixteen source-line variants and a 300-second permutation do not close 16 differing lines: original loop-back delay slots are nops, as1 schedules loop-head work there. Scheduling/order cluster; assembly retained (T-9740). |
+| EVENT/8010B360 | `func_8010B614` | regorder | Recovered 0x1B0-byte prefix plus 24 voice records of stride 0x34. Twenty aggregate/mask/call-assignment variants still fail to share the original a0=4 between the byte store and helper argument; best dereferenced-byte form has 31 differing lines. Constant allocation/sharing cluster; assembly retained (T-9740). |
+| GYOZI/80134FD0 | `func_8013506C` | promo | Correct the m2c semantic error: test the old postincrement counter, not its incremented value. Sixteen signed-result, boolean-snapshot and common-byte-offset variants retain 31 differing lines around old-counter/test and pointer-table temporaries. Other register/promotion cluster; assembly retained (T-9740). |
+| GYOZI/8013E5B0 | `func_8013E638` | regorder | Existing GameGyoziWork members replace the index alias; func_8008FB00 correctly takes no argument. Twelve loop/counter/pointer variants still swap the original v1 counter/v0 record pointer and alter the 0x38 constant schedule, 23 differing lines. Constant allocation/sharing cluster; assembly retained (T-9740). |
+| RPG_BAT/8014A660 | `func_8014AB84` | regorder | Recovered slot-table fields and repeated arg0*3+k expressions let IDO create the original four spills and frame 0x38 without an explicit ID array. Twelve differing lines remain at the first post-call arg0 reload (t9 versus a3) and following shifts. A 300-second permutation does not improve it. Pointer/base/CSE cluster; assembly retained (T-9740). |
+| TT/80142570 | `func_80142570` | regorder | Genuine 0x78-byte records and a reused counter reproduce the first 64-trip rolled loop and second 32-trip four-way unroll. Fifty-six differing lines remain: original counter/0x70/0x40 use a1/a3/a2, generated v1/a1/a0. Known phantom-register constant-allocation cluster; assembly retained (T-9740). |
+| TT/80142570 | `func_80142AF0` | regorder | Recovered 24 script records of stride 0x14 and enabled/index byte arrays at +0x310/+0x328. Eighteen root-pointer, index-width and negative-mask variants compile but retain pointer reuse/reload and script/index register differences, best 103 differing lines. Pointer/base/CSE cluster; no probe declarations retained (T-9740). |
+| NAME_ENT/80144AD0 | `func_80145FB0` | regorder | Native six-element address array fixes the partial two-plus-four unroll and frame. Multiplication by 0x4000 improves shift-based drafts to 66 differing lines; 24 width/expression/result variants retain base-product CSE, pointer and stack-local placement differences. Constant allocation/sharing cluster; assembly retained (T-9740). |
+| NAME_ENT/80144AD0 | `func_80145EA4` | regorder | Typed 127-word palette walk and sixteen native pointer/index/promotion/precomputed-mask variants still disagree in loop unrolling, pointer and three-mask allocation. Historical constant-allocation/sharing cluster remains; no absolute-buffer probe code retained (T-9740). |
+| main/8004E500 | `load_string` | regorder | Recovered unsigned halfword range entries and canonical KWork.total. Eighteen word-width, string-pointer and single-table variants retain the third saved register for a hoisted range pointer and a frame 16 bytes smaller, 54 differing lines. Historical scheduling/order cluster; no probe externs retained (T-9740). |
+| GEKO/80142760 | `func_80144198` | regorder | Genuine 24-byte month-table aggregate and literal-array variants fail to reproduce the original frame 0x40/table +0x18 and unspilled argument in a2; scalar declarations move the table or enlarge the frame. Historical frame/spill cluster; assembly retained (T-9740). |
+
+T-9740 follow-up: KANGEI `func_80137544` (historical T-4100) is now resolved
+by the common sprite-array view and shared signed mask, with the original
+integer-definition register lifetime. Real KANGEI SHA1 and resolved diff pass.
+See [[matching-notes]] and [[tickets/T-9740-wave-9-list-4]].
+
+T-9740 follow-up: SHOUGATU `func_801326F8` (historical T-9570) is now
+resolved by canonical GameState fields and an indexed `b1 >= 1` loop, with
+explicit GameState/output-array pointers initialized before the loop. Real
+SHOUGATU SHA1/resolved diff pass; the scratch-only trailing nop was padding.
+See [[matching-notes]] and [[tickets/T-9740-wave-9-list-4]].
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| KANGEI/80135F10 | `func_80136970` | regorder | Call-order repair retains the random result until after the selection-table read. Twenty-four narrow/full-width base/value/result variants still disagree in value/constant/remainder allocation, best 52 differing lines. Historical constant allocation/sharing cluster (T-9160); assembly retained (T-9740). |
+| TAIIKU/80133C80 | `func_80138800` | regorder | Genuine phase and 0x44-byte sprite views repair both loop stores. Sixteen width/reuse variants and 36 loop-header variants reduce to 19 differing lines; a 300-second minimal-context permutation finds no zero. Original reloads the sprite base and uses first-loop slti versus IDO shared saved base/constant, with result-temp differences. Historical multiply/stride and pointer/base/CSE clusters; assembly retained (T-9740). |

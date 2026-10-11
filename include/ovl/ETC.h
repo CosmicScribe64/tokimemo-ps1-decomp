@@ -1046,3 +1046,9 @@ typedef struct EtcStateFlagsView {
     /* 0x694 */ GsRec69C records[34];
 } EtcStateFlagsView; /* size 0x71C */
 #endif /* ETC_STATE_FLAGS_VIEW_DEFINED */
+
+#ifndef OVL_ETC_EVENT_SEARCH_T9740
+#define OVL_ETC_EVENT_SEARCH_T9740
+/* Event-record search in GameState.unk_75E (T-9740). */
+s32 func_801464D4(s32 mode);
+#endif

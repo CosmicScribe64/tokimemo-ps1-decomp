@@ -57,7 +57,52 @@ void func_8004111C(void) {
     func_8009C674(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041168);
+void func_80041168(s32 arg0) {
+    s32 i;
+    s32 j;
+    s32 k;
+    RECT rect;
+
+    if (arg0 == 0xFF) {
+        rect.x = 0;
+        rect.y = 0;
+        rect.w = 0x40;
+        rect.h = 0x80;
+        func_8009C7F8(&rect, 0, 0, 0);
+        i = 1;
+        do {
+            func_80041168(i);
+            i++;
+        } while (i != 0x40);
+    } else {
+        j = 0;
+        if (arg0 == 0xFE) {
+            do {
+                func_80041168(0xF - j);
+                func_80041168(0x2F - j);
+                func_80041168(j + 0x15);
+                func_80041168(j + 0x35);
+                j++;
+            } while (j != 5);
+        } else if (arg0 == 0) {
+            k = 0;
+            do {
+                if (((k & 0xF) >= 5) && ((k & 0xF) < 0xF) && (k < 0x16)) {
+                    func_80041168(k);
+                    func_80041168(k + 0x20);
+                }
+                k++;
+            } while (k != 0x20);
+        } else {
+            rect.x = (arg0 & 0xF) << 6;
+            rect.y = ((arg0 & 0x10) << 4) + ((arg0 & 0x20) << 2);
+            rect.w = 0x40;
+            rect.h = 0x80;
+        }
+    }
+    func_8009C7F8(&rect, 0, 0, 0);
+    func_8009C674(0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800412E0);
 
@@ -116,7 +161,31 @@ void func_800415B4(s32 start, s32 end) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_8004164C);
+void func_8004164C(s32 arg0, s32 arg1) {
+    s32 i;
+    GameState *g;
+
+    g = &D_800E6280;
+    for (i = arg0; i < arg1; i++) {
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_00 = 0x80000000;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_04 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_06 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_08 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_0A = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_0C = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_0E = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_10 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_11 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_12 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_14 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_18 = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_1A = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_1C = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_1E = 0;
+        ((SpriteSlot24 *)&D_801220D0)[i].unk_20 = 0;
+        g->unk_10EC[i] = 0x80;
+    }
+}
 
 void func_80041840(void) {
     D_800E6280.unk_F74 = 1;

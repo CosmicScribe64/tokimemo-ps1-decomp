@@ -41,6 +41,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-9740-wave-9-list-4|T-9740 Wave 9: list 4]]
 - [ ] [[tickets/T-9600-wave-8-tool-fixes|T-9600 Wave-8 tool fixes]]
 - [ ] [[tickets/T-9610-aggregate-and-local-copy-types|T-9610 Aggregate and local-copy types]]
 - [ ] [[tickets/T-9530-wave-8-list-3|T-9530 Wave 8: list 3]]
