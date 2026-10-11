@@ -631,6 +631,15 @@ extern s32 D_80148BB8;
 extern s32 D_80148BBC;
 void func_8013CF2C(void);
 
+extern s32 D_80148358;
+extern s32 D_80148490;
+extern s32 D_801485C8;
+void func_8013ED84(void);
+typedef struct {
+    u32 b0:1;
+    u32 b1:1;
+    u32 rest:30;
+} GyoziBits32; /* flag word of a girl record (GyoziGirl.unk_10) */
 #endif /* OVL_GYOZI_H */
 extern s32 D_8012E688;
 extern s32 D_8012E698;

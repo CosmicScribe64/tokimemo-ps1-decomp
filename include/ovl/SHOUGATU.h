@@ -668,6 +668,7 @@ typedef struct {
 } Bits64B8;
 void func_8013E19C(void);
 
+void func_8013C2E4(void);
 #endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;
 extern s32 D_801464B0;

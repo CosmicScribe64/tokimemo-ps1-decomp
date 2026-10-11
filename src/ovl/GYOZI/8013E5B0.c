@@ -17,8 +17,6 @@ void func_8013E5B0(void) {
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013E5B0", func_8013E638);
 
-/* NON_MATCHING: T-8050, temp numbering: the original inverts with sltiu+xori in place */
-#ifdef NON_MATCHING
 void func_8013E724(void) {
     s16 i;
 
@@ -28,13 +26,10 @@ void func_8013E724(void) {
     D_80148108 = 0;
     D_8014810C = 0;
     for (i = 0; i < 0xB; i++) {
-        D_800D9388[i] = !((D_800F53A0.girl[i].unk_10[1] & 1) == 0);
+        D_800D9388[i] = (D_800F53A0.girl[i].unk_10[1] & 1) >= 1;
     }
     func_8004DE1C();
 }
-#else
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013E5B0", func_8013E724);
-#endif
 
 void func_8013E7D8(void) {
     D_800F62CF = (u8) D_8012E66C;

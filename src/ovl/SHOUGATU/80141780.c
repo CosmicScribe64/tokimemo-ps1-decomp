@@ -207,7 +207,20 @@ void func_80143280(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_801432C4);
+void func_801432C4(void) {
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8013C2E4();
+    D_80145F34 = D_80145C5C;
+    D_80145F38 = D_80145D98;
+    D_80145F3C = D_80145ED4;
+    func_8004284C();
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 1;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
+    func_80084D3C();
+    func_800AE0F0(D_800CA19C, "近所の公園");
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_801433A4);
 

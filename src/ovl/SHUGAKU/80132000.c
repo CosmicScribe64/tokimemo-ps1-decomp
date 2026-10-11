@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
 #include "common.h"
 #include "ovl/SHUGAKU.h"
+
+void func_80083440(s32 arg0);
 
 typedef struct {
     u8 s[0xCC3];
@@ -146,7 +149,17 @@ void func_80132C1C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80132C64);
+void func_80132C64(void) {
+    if (D_80122CDC != 0) {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 1;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
+        func_80084D3C();
+        D_800E6280.unk_110A += 0x1B;
+        return;
+    }
+    D_8013B084 += 1;
+    func_8004284C();
+}
 
 void func_80132D14(void) {
     u32 t;
@@ -217,7 +230,23 @@ void func_80132FC0(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80133038);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_801330E8);
+void func_801330E8(void) {
+    func_80083440(D_80122CDC + 1);
+    if (D_80122CDC == 0) {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 3;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 2;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A -= 0xF;
+    } else if (D_80122CDC == 1) {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 += 2;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 1;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A -= 0xA;
+    } else {
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 += 1;
+        D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 0xA;
+    }
+    func_80084D3C();
+    func_8004284C();
+}
 
 void func_80133298(void) {
     D_8013B084 = (D_80122CDC * 2) + 0xD;

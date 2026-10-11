@@ -33,7 +33,38 @@ void func_8013461C(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134520", func_80134658);
+void func_80134658(void) {
+    s16 i;
+
+    D_800F5AAE |= 8;
+    func_8004EDE0(1, 0);
+    func_80054864(1);
+    func_8004C670();
+    func_8005493C(0);
+    func_8004EDF4(1);
+    func_80053EFC();
+    func_8005ABC0();
+    func_800BCE10(&D_800D92A0, "正月");
+    D_800F6412 = 0;
+    D_800F6458 = 1;
+    func_8009068C();
+    D_800F53DA = 0x80;
+    D_801317EB = 0;
+    D_800C51C4 = 0;
+    func_80089200();
+    func_800744A0();
+    func_80074950();
+    func_8008FC10();
+    func_80134000();
+    func_8008F618(0);
+    D_80145EB4 = 0;
+    D_80145EB8 = 0;
+    D_80145EC8 = 0;
+    for (i = 0; i < 0xB; i++) {
+        D_800D9388[i] = ((GyoziBits32 *)D_800F53A0.girl[i].unk_10)->b1 >= 1;
+    }
+    func_8004DE1C();
+}
 
 void func_801347AC(void) {
     func_8008A0D4(0x4107);

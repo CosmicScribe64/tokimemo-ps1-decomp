@@ -17,7 +17,8 @@ extern s16 D_8013A42C;
 extern u8 D_8013A4C4;
 extern s32 D_8013A80C, D_8013A810, D_8013A814;
 extern s32 D_8013B5EC, D_8013B5F0, D_8013B5F4;
-extern u8 D_8013B5F8, D_8013B5FC;
+extern s16 D_8013B5F8;
+extern u8 D_8013B5FC;
 extern s32 D_8013B5D4, D_8013B5D8, D_8013B5DC, D_8013B5E0;
 
 /* DATE2 functions called across the overlay. */
@@ -190,4 +191,10 @@ void func_80136660(void);
 void func_8013856C(void);
 void func_8013850C(void);
 
+extern u8 D_8013B5C4;
+extern s16 D_8013B5C8;
+void func_80138E0C(void);
+void func_80138F8C(void);
+void func_801391A0(void);
+void func_801393B4(void);
 #endif /* OVL_DATE2_H */
