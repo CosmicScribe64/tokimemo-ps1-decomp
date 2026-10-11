@@ -138,13 +138,6 @@ void func_80147A6C(s32);
 void func_80147B14(s32);
 s32 func_80141CDC();
 void func_80132E20(s32, s32);
-typedef struct TaiikuBig {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ u8 unk4[0x1C];
-    /* 0x20 */ s32 unk20;
-    /* 0x24 */ u8 unk24[0x2C];
-} TaiikuBig; /* size 0x50 */
-extern TaiikuBig D_801227A0[];
 s32 func_80140A90();
 extern s8 D_8014A110;
 void func_80143D24(void);
