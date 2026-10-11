@@ -2287,3 +2287,249 @@ four packet/matrix refactors. Prototype branch check has zero new disagreements
 4870/6958 functions, 776660/2279368 bytes: **+2 functions / +356 bytes**.
 Inline standards/spec review resolved the DR_TPAGE size discrepancy and has
 no outstanding findings. T-9610 is Done; edits remain uncommitted.
+
+## Wave 9, list 5 (T-9750)
+
+Tracked in [[tickets/T-9750-wave-9-list-5]]. Scope: 123 queued functions in 36
+owned objects. Baseline initializes fresh assembly and objects. First-pass
+scratch captures drafts, builds and resolved diffs; closest misses receive
+source iteration and bounded permuter runs. Historical TAIIKU pointer-base and
+BUNKA_SD fade-loop rows are starting evidence, not new attempt results.
+
+First-pass type findings: TT pointer globals need the existing `TtSceneView`;
+ETC's D_801217D6..D_8012188A stores belong to `Rec24` elements; TACO actor
+pad0 indexing is m2c's byte-offset interpretation of `TcActor` elements.
+TACO `func_801404FC` gets bogus `subroutine_arg1/2` in the draft because
+m2c_args counts the callee `func_801407D4`'s unused a1/a2 home stores as used
+parameters. The original caller sets only a0 at that call. Retain its one
+argument and the existing unprototyped declaration; report the arity inference
+limitation to tooling rather than editing tools in this branch.
+
+Correction to the initial TACO arity diagnosis above: reading the complete
+call setup shows two unaligned words copied from the record's first eight
+bytes into a1/a2; the callee reads its narrow parameter homes. These are a
+by-value position aggregate, not unused arguments. The three-word ABI arity
+inference is correct; m2c loses the aggregate copy and prints placeholder
+`subroutine_arg1/2`. Repair using `TcPos` and do not report this as a new arity
+inference bug. This correction supersedes the preceding first-pass claim.
+
+Type-repair pass over the 70 compilation failures retained ETC
+`func_8013EEFC` (344 bytes), verified with a fresh resolved diff and ETC SHA1.
+Its counter stores are present in the target even when the value is unchanged;
+testing explicit cached locals before accepting redundant m2c assignments.
+ETC `func_8013F498` now compiles within 38 differing lines: two Rec24 halfword
+stores reuse comparison constant 7 where the original allocates a new register.
+Next probes use unsigned halfword access and local/declaration variants.
+All other type-pass failures were restored to their original INCLUDE_ASM.
+
+Deep-pass results: ETC `func_8013F498` (740 bytes) matches when its two Rec24
++0x0C stores use an unsigned halfword view. This retains the target's separately
+allocated constant 7 and restores subsequent register order. ETC
+`func_8013EEFC` also stays matching after deleting all redundant self-assignments.
+`MouseState` and ETC `func_8014BF2C` have new 300-second permuter attempts plus
+explicit declaration/return variants; both remain assembly with symptoms filed
+in [[data/t0018-cases]]. Their historical rows correctly describe the gaps.
+
+New tooling failure in T-9750: SHOUGATU `func_801341E4`'s bounded permuter
+spun in `tools/permute.py:200`, `strip_functions()`'s `re.findall` over the
+preprocessed source. The regex ran for more than eight minutes with no worker
+process; `--time 300` only bounds the later search phase. An interrupt of our
+own process captured the traceback. Repository tooling is unchanged; scratch
+orchestration now bounds the entire call at 360 seconds and interrupts it,
+allowing the tool's worker-cleanup finally block to run. Its best manual draft
+still differs in 17 resolved lines. Tooling traceback is in
+scratchpad/w9-5/deep-round1.jsonl.
+
+Round-one checkpoint: all 27 unit checksum checks passed after rejection
+restoration; a fresh assigned-file duplicate scan applied zero copies.
+`InitMouse`'s corrected pointer slots retain one extra LUI: the original shares
+the data-segment base across both stores, while this object's symbols cannot
+share it under the present data ownership/configuration. No config edits are
+authorized. SHOUGATU `func_801347E0` also reaches the documented permuter regex
+hang; manual variants remain 10 resolved lines away. TACO `func_80156244`
+reaches eight lines, all four commuted address-add operands; the second pass
+tests typed pointer and byte-offset expression order. BUNKA_SD
+`func_80134418`'s short scalar/pointer trials still differ in 48 lines; a fresh
+typed-record loop reconstruction is queued before calling this attempt deep.
+
+Round-two gain: RPG_BAT `func_8013FF28` (680 bytes) passes its resolved diff
+and unit SHA1 after declaring the dispatcher void before its C callers,
+using direct global increment in case 5, and permuting statement layout.
+Layout cleanup and FAKE review remain pending. The retained match count is
+three, 1,764 bytes. OLH `func_80132114`'s repaired four eight-halfword arrays
+still cache the string-table base/end and change saved-register and frame
+allocation; queued a distinct boundary symbol and unsigned colour chain.
+ETC `func_8013D32C` now has two genuine POLY_FT4 pointer slots, but allocation
+and a four-byte array-home gap remain; queued further width/base variants.
+
+Additional ABI evidence: TACO `func_8013E424` receives an eight-byte `TcPos`
+by value in a0/a1 and a kind in a2. The target loads x/y from sp+0x60/+0x62,
+z from +0x64; m2c's scalar draft incorrectly duplicates x into y. A typed
+retry is queued. ETC `func_80140BC4` returns 0/1/2 in the target, but its
+existing overlay header declares void. Correcting that declaration is outside
+this batch's append-only header scope; no invalid void return-value C is kept.
+
+Further reconstruction evidence: TAIIKU `func_80147210`'s spacing must add
+eight once, not twice as in the draft. The target compares camera + old
+spacing + 8, then increments spacing in the branch delay slot. Appended the
+three-controller declaration at D_8014A400, sharing `TaiikuController` and its
+word/high-halfword position union. ETC `func_8014B0D0` receives 16 bytes and
+16 halfwords from `func_80053418`; its girl flag test is `Rec38Flags.f.b1`.
+ETC `func_8013EB90` supplies four observed words to `func_8013B1F0`; the draft
+omits two caller arguments. Its two tables each span 90 words between
+0x8014F6C0, 0x8014F828, and 0x8014F990. Fresh trials are queued for these
+evidence-based repairs; none is yet claimed matching.
+
+Declaration correction: D_8014A400 already has `u8[]` declarations in its
+owned C object (two baseline copies). A typed extern added to the header
+conflicted with those and invalidated all five round-two `func_801430A0`
+trials. Corrected the added header declaration to the existing byte-array
+view; the movement retry casts it to `TaiikuController *`. The failed
+430A0 header-check results are not code-generation evidence; queued a fresh
+retry. `func_801419D0` had finished before the conflict and its best 15-line
+resolved diff plus bounded permuter remain valid evidence.
+
+Round-two checkpoint: restored all rejected bodies and the temporary RPG
+0x44-byte record declaration; all 27 unit SHA1 checks passed. The interrupted
+RPG_BAT `func_8015A744` search had manual variants at 37 differing lines and
+about 100 seconds of permuter search; it is not counted as a completed
+five-minute search. The third pass prioritizes fresh aggregate and loop
+repairs over repeating already explored shapes.
+
+TACO `func_80156244` (416 bytes) now matches with targeted pointer-add
+expression order, fresh resolved diff and unit SHA1. Five address expressions
+were tested independently; mask 6 preserves the two index-first increments
+required by the target. This leaves four verified matches totaling 2,180
+bytes; its source carries a FAKE explanation for the mixed spelling.
+
+The output-array retry for ETC `func_8014B0D0` fixes its 0x10-byte local
+offset error by declaring four existing scalar locals before the two buffers,
+following the local-frame rule in [[decompile-workflow]]. No dummy padding is
+needed. Its remaining four differing lines move the two index/pointer
+initializations ahead of the hoisted GameState and format-string setup;
+queued a bounded permuter and retained no partial C. The earlier BUNKASAI
+trial was restored before reprioritizing this closer repair; its partial
+59-line candidates are not counted as a complete deep search.
+
+The corrected ETC output-buffer candidate completed another 300-second search
+at four resolved scheduling lines and was restored. ETC `func_8013E524`
+also completed a fresh packet-address/declaration/statement-grouping pass and
+300-second search, remaining at 20 resolved lines. Byte, integer and SDK
+pointer views do not close its argument reload and store-order gap. A separate
+comparison of the existing allocator/SDK call views used by matching
+`func_8013E1DC` remains queued; no T-0018 row is filed until that comparison.
+
+BUNKASAI `func_801509A4`'s second trial places its eleven-word local choice
+table at the target sp+0x30 and its byte count at sp+0x63. Using `count++`
+instead of an explicit mask preserves the extra intermediate move seen in the
+target. The remaining 38 lines rotate the GameState pointer, count and index
+between a0/a1/v1 and v1/a0/v0. Consulted the register-shape inventory (no
+historical row) and allocation notes; bounded search pending.
+
+BUNKASAI's 38-line candidate completed its 300-second search without a match
+and was restored. OLH's distinct string-table boundary retry remains at 60
+lines. All fresh SHOUGATU 430A0 retries failed because m2c assigns the result
+of the existing void `func_80143228` definition, causing an implicit-int
+redeclaration. The target does not explicitly use v0 immediately after that
+call; queued ignored-call-result and void/implicit-return dispatcher trials.
+These failures are not allocation evidence.
+
+The EVENT selector-reuse script also left the original `i` loop references
+after removing its declaration; all ten resulting compile failures are
+excluded. Corrected every identifier reference and queued actual signed/word
+selector and colour-width trials. No erroneous trial body or declaration is
+retained. RPG_BAT `func_801495DC` now reaches 16 lines after repairing its
+clamp to a word; remaining evidence is an eight-byte clamp spill offset and
+collapsed redundant state stores. Search and a flag-view trial are pending.
+
+ETC `func_8013EB90` matches (332 bytes) with the real two 90-word tables,
+four supplied loader arguments, an unprototyped helper declaration and an
+`s32` dispatcher without a return statement (T-9000). This is plain C with no
+line grouping; fresh resolved diff and unit SHA1 passed. Five retained
+functions now total 2,512 bytes.
+
+TAIIKU's movement retry was blocked by its scratch script appending the
+already present byte-array declaration a second time. The duplicate was
+restored and the corrected retry reuses the existing declaration. ETC
+`func_8013F77C` reaches undeclared main BSS bytes at 0x800E7D83 onward,
+outside GameState. Its initializer exhibits eight-byte records starting at
+0x800E7D10; prepared an explicit record view of the existing canonical root
+without adding field globals or changing main_api.h. The view is marked FAKE
+while the canonical main BSS aggregate remains unresolved.
+
+Other completed third/fourth-pass trials: ETC packet widths remain at 54
+lines; RPG_BAT's 16-line clamp candidate completed a 300-second search;
+TACO's counted particle search remains at 69; BUNKA_SD's indexed/typed fade
+loops reach 23 lines plus a 300-second search; main menu reconstruction stays
+at 323; ETC's layout parser at 89; TAIIKU's modulo/controller variants at 65.
+All were restored. The BUNKA_SD allocation inventory confirms the historical
+constant-sharing/pointer-order cluster; a signed aggregate-member view retry
+is queued. Header/global checks currently pass with zero new branch
+disagreements (17 known baseline findings).
+
+Five-match checkpoint passed 27/27 SHA1 checks. A duplicate-scan shell quoting
+error produced an empty `--files` argument; the tool treats that as unscoped
+and applied one EVENT copy outside the assigned files. Restored that source,
+the EVENT header and the generator-added main globals exactly from saved
+baseline text; checked their diff is empty. The unused first-pass main global
+was also discarded. Reran with an explicit validated 36-stem CSV: zero
+copies applied. This extra copy is excluded from every retained-match count.
+Future scans use a prevalidated literal list, never a fallible substitution.
+
+The BUNKASAI word/no-return and earlier-GameState-initialization variants
+completed a second 300-second search without closing the 38-line rotation.
+Restored and appended its new case to [[data/t0018-cases]]. ETC
+`func_8014B0D0` now matches (228 bytes): four real scalars before the two
+arrays fix the buffer offsets; grouping index/pointer initialization with
+the `do` line preserves the target's hoisted-base scheduling. The grouping
+is marked FAKE, with a conventional counted-loop comparison reserved for
+review. Fresh resolved diff and ETC SHA1 passed. Six matches total 2,740 bytes.
+
+Phase-five retries restored SHOUGATU's 48-callback dispatcher (18 resolved
+lines), its 40-callback signed update (7 lines), RPG_BAT's repeated-result
+stores (12 lines), and ETC's SDK packet (20 lines). The two SHOUGATU
+permutation calls hit the known setup regex hang and were bounded as whole
+calls; they are not reported as completed searches. RPG_BAT and ETC completed
+300-second searches. New case rows record the verified scheduling/allocation
+gaps after consulting `register_shapes.py`; the 40-callback branch still has
+a small source-line scheduling retry reserved before final review.
+
+Final manual checks restored the 40-callback dispatcher at seven lines
+(after 16 additional grouped-line/volatile-flag variants), EVENT's colour
+loop at 32 (18 raw and 18 shared-Rec24 typed variants, plus a completed
+300-second search), and TAIIKU's controller walker at 69 after correcting
+header reuse and its typed base. New scheduling/allocation rows were added
+for SHOUGATU, BUNKA_SD and EVENT after inventory consultation. The ETC
+initializer now compiles through an eight-byte config-record view of the
+existing main BSS root, avoiding missing byte-global declarations. Merging
+its two initialization loops reaches four lines: only the first/last
+unrolled byte-store ordering differs. That new near miss receives a short
+loop-spelling retry before final review.
+
+The ETC initializer's loop-header store spelling now MATCHes (516 bytes)
+with ETC SHA1. Seven retained functions total 3,256 bytes. Its eight-byte
+record view over the existing main BSS root and loop-line scheduling are
+marked FAKE; canonical aggregate ownership is left for a later type ticket.
+Review cleanup verified a normal counted loop for `func_8014B0D0`, removing
+its FAKE grouping. RPG_BAT's unused local is removed; only case 6 still needs
+one-line scheduling. Cases 4/5 and indentation are conventional. ETC's
+unsigned halfword view and TACO's required mixed-pointer/byte-stride view
+are documented; all simplification variants were tested with fresh resolved
+diffs and unit SHA1. Removed every declaration/type left only by rejected
+experiments. Main API and all unowned sources are unchanged.
+
+Late inline review found `func_80053418` was still implicit, including in
+its existing main caller. Added only `s32 func_80053418();` through the
+`sync_protos.py` model/parser/API writer, preserving the old K&R call view;
+no per-file duplicate declaration or override. Audited all main-executable
+placeholder calls in the seven new bodies for canonical declarations.
+The callee assembly advances its halfword counter by two to 0x20 and byte
+pointer by one, confirming 16 output entries and the selector's 16-element
+buffers. The earlier full check passed 27/27; checks are repeated after the
+single generated prototype addition.
+
+Final validation after the generated helper declaration: all seven resolved
+diffs MATCH, all 27 binary SHA1s OK, headers/globals OK, branch check zero
+new disagreements (17 known), scoped duplicate scan zero copies. Progress:
+`grand total 4877/6958 779916/2279368 34.2%`. Nine new T-0018 rows.
+Inline Standards/Spec findings resolved; T-9750 Done, edits uncommitted.

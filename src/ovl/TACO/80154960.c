@@ -163,7 +163,44 @@ void func_80156178(void) {
     func_8015ACCC(6, 6, D_801604D4, D_801604D4, pos, 0xFF, 0xF0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80156244);
+s32 func_80156244(s32 arg0) {
+    /* FAKE: mixed pointer-add spelling and byte-stride view retain the target's addu operand order. T-9750. */
+    s32 state;
+    s16 value;
+
+    state = (D_8015EDB4 + arg0)->unk7C;
+    switch (state) {
+    case 0:
+        (D_8015EDB4 + arg0)->unk78 = -0x8000;
+        (D_8015EDB4 + arg0)->unk74 = 0;
+        (D_8015EDB4 + arg0)->unk76 = -0x1F4;
+        (D_8015EDB4 + arg0)->unk70 = 1;
+        value = ((TcActor *)((u8 *)D_8015EDB4 + arg0 * 0x88))->unk70;
+        (D_8015EDB4 + arg0)->unk6E = value;
+        (D_8015EDB4 + arg0)->unk6C = value;
+        (D_8015EDB4 + arg0)->unk84[0] = 0;
+        (arg0 + D_8015EDB4)->unk7C++;
+        break;
+    case 1:
+        value = (D_8015EDB4 + arg0)->unk7A * 0x14;
+        (D_8015EDB4 + arg0)->unk70 = value;
+        (D_8015EDB4 + arg0)->unk6E = value;
+        (D_8015EDB4 + arg0)->unk6C = value;
+        if ((D_8015EDB4 + arg0)->unk7A >= 0x1F5) {
+            (D_8015EDB4 + arg0)->unk7C++;
+        }
+        break;
+    case 2:
+        (D_8015EDB4 + arg0)->unk78 += 0x32;
+        if ((D_8015EDB4 + arg0)->unk78 >= -0x61A7) {
+            (D_8015EDB4 + arg0)->unk7C++;
+        }
+        break;
+    case 3:
+        (D_8015EDB4 + arg0)->unk84[0] = 0x20;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801563E4);
 

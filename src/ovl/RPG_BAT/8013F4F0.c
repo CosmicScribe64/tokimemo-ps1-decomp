@@ -147,7 +147,80 @@ void func_8013FD8C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013F4F0", func_8013FF28);
+void func_8013FF28(void) {
+    /* FAKE: case 6 on one line retains the global-store scheduling. T-9750. */
+    s32 temp_v0;
+
+    switch (D_8015EDDC) {
+    case 0:
+        func_8013E810(0x3B, 4, 1, 1);
+        func_8014EF6C();
+
+    default:
+        break;
+
+    case 1:
+        func_8014F0BC(7);
+        break;
+
+    case 2:
+        func_8013E810(0x3B, 3, 1, 1);
+        func_8013E97C(0x3A, 0x70, 0x48);
+        func_8013E810(0x3A, 5, 5, 1);
+        func_8014EF6C();
+        break;
+
+    case 3:
+        func_8014F138(0x3A);
+        break;
+
+    case 4:
+        func_8013E810(0x3A, 6, 1, 1);
+        func_8013F15C(0x505, 1, 0);
+        func_8014EF6C();
+        break;
+
+    case 5:
+        func_8013E97C(0x3A, D_8015EDE4 + 0x70, 0x48);
+        D_8015EDE4 += 8;
+        if ((D_8015EDE4 >= 0x91) && (!(D_8015ED98 & 0x100))) {
+            func_8013E7C0(0x30, 0xA, 1, 1);
+        }
+        if (D_8015EDE4 >= 0x129) {
+            func_8013E810(0x3A, 7, 1, 1);
+            func_8014EF6C();
+        }
+        break;
+
+    case 6: func_8013E97C(0x3A, 0x198 - D_8015EDE4, 0x48); temp_v0 = D_8015EDE4 + 8; D_8015EDE4 = temp_v0; if ((0x198 - temp_v0) < 0x70) { func_8013D030(); func_8014EF6C(); } break;
+
+    case 7:
+        func_8013E97C(0x39, 0x48, 0x60);
+        func_8013E810(0x39, 8, 1, 1);
+        func_8014EF6C();
+        break;
+
+    case 8:
+        func_8014F0BC(0xB);
+        break;
+
+    case 9:
+        func_8013E810(0x3B, 4, 1, 1);
+        func_8013E810(0x3A, 0xFF, 1, 0);
+        func_8013E7C0(0x39, 0xFF, 1, 0);
+        func_8014EF6C();
+        break;
+
+    case 10:
+        func_8014F0BC(7);
+        break;
+
+    case 11:
+        func_8013E810(0x3B, 2, 1, 1);
+        func_8014EF3C();
+        break;
+    }
+}
 
 void func_801401D0(s32 i) {
     u8 *p = D_8011ECD0 + i * 0x44;

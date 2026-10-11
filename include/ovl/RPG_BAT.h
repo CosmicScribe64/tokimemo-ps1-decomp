@@ -318,3 +318,9 @@ typedef struct RpgFlagRecord44 { /* size 0x44 */
     /* 0x04 */ u8 unk_04[0x40];
 } RpgFlagRecord44;
 
+
+#ifndef OVL_RPG_BAT_W9_FF28_H
+#define OVL_RPG_BAT_W9_FF28_H
+/* Dispatcher has no result read by its callers. T-9750. */
+void func_8013FF28(void);
+#endif /* OVL_RPG_BAT_W9_FF28_H */
