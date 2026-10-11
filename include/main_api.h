@@ -1484,7 +1484,9 @@ void func_800494BC();
 void dtd_on(s32 arg0);
 void func_8004955C();
 void _sprite_set_light_effect1(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+#ifndef MAIN_API_OVERRIDE_func_80049A40
 void func_80049A40(s16 a, s16 b, s16 c, s16 d, s32 e, s32 f, s32 g);
+#endif
 s32 func_80049B20();
 void func_8004A1A0();
 void func_8004A2C4();

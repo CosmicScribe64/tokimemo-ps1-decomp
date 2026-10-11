@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80049A40 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
 #include "common.h"
 #include "game.h"
+
+void func_80049A40();
 
 /* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
 void func_8005A0B0(void) {
@@ -419,7 +422,23 @@ void func_8005C7C0(void) {
     k_sub_disp_start(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005C7FC);
+void func_8005C7FC(void) {
+    s32 i;
+    s32 d;
+    u8 *p;
+
+    d = 5;
+    for (i = 0, p = (u8 *)&D_800E7D10; i < 0xE; i++) {
+        if (p[5] == 0) {
+            func_80049A40((i / d) * 0x20 - 0x7C, (i % d) * 0x10 - 0x40, 0x1E, 0xF, 2, 0x808080, 0x81);
+        }
+        if (p[5] == 0xFF) {
+            func_80049A40((i / d) * 0x20 - 0x7C, (i % d) * 0x10 - 0x40, 0x1E, 0xF, 2, 0x8080, 0x81);
+        }
+        p += 1;
+    }
+    dtd_on_tpage(0, 0, 2, 2, 0);
+}
 
 /* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
 void func_8005C968(void) {
@@ -464,7 +483,23 @@ void func_8005D174(void) {
     k_sub_disp_start(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D1B0);
+void func_8005D1B0(void) {
+    s32 i;
+    s32 d;
+    u8 *p;
+
+    d = 5;
+    for (i = 0, p = (u8 *)&D_800E7D10; i < 0xE; i++) {
+        if (p[5] == 0) {
+            func_80049A40((i / d) << 5, (i % d) * 0x10 - 0x40, 0x1E, 0xF, 2, 0x808080, 0x81);
+        }
+        if (p[5] == 0xFF) {
+            func_80049A40((i / d) << 5, (i % d) * 0x10 - 0x40, 0x1E, 0xF, 2, 0x8080, 0x81);
+        }
+        p += 1;
+    }
+    dtd_on_tpage(0, 0, 2, 2, 0);
+}
 
 void func_8005D31C(void) {
     switch (D_800E6280.unk_110D) {
