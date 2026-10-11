@@ -361,3 +361,6 @@ extern s32 D_801601E0[];
 extern u8 D_8016020A[];
 extern u8 D_80160222[];
 extern u8 D_80160240[];
+extern s16 *D_80160268[];
+extern s16 *D_80160280;
+void func_80150F44(s32 arg0);
