@@ -231,7 +231,54 @@ void func_800F7AA8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F7C94);
+typedef struct {
+    s32 w[17];
+} Words17; /* size 0x44 */
+
+typedef struct {
+    s32 w[17];
+} Words17; /* size 0x44 */
+
+typedef struct {
+    s32 w[17];
+} Words17; /* size 0x44 */
+
+void func_800F7C94(void) {
+    /* FAKE: one unused word above tmp gives the original's local offset (0x30); the real type of the buffer is unknown. T-9310 */
+    s32 pad;
+    Words17 tmp;
+
+    D_80120678 = D_80120530;
+    D_8012067C = D_80120548;
+    D_80120680 = D_80120560;
+    D_800B0A04[8].unk_02 += 3;
+    D_800B0A04[8].unk_06 += 2;
+    D_800B0A04[8].unk_0A -= 0x14;
+    func_8004C250();
+    D_800B1C70 = -1;
+    D_800B1CF0 = -1;
+    func_800F7380();
+    func_80012D64(D_801206F8, 0x11, 1, 2, 0);
+    func_80012D64(D_801206F8, 0x12, 1, 2, 4);
+    func_80012D64(D_801206F8, 0x13, 1, 2, 0);
+    func_8004C46C(D_801206FC, D_80120700, D_80120704, D_80120708, D_8012070C, D_80120710);
+    func_8004C6B0(D_801206EC, D_801206F0, D_801206E8, D_801206F4);
+    tmp = *(Words17 *)D_800EAFA0;
+    *(Words17 *)&D_800EAFA0[0xCC] = tmp;
+    *(Words17 *)&D_800EAFA0[0x88] = tmp;
+    D_800EB06E = 0x40;
+    D_800EB02A = 0x40;
+    D_800EB040 = 8;
+    D_800EB029 = 0xC;
+    D_800EB06B = 0x13;
+    D_800EB084 = 9;
+    D_800EB06D = 0xC;
+    D_800EB0AF = 0x12;
+    D_801207B0 = 0;
+    D_801207AC = 0;
+    D_801207B4 = 1;
+    func_80011DFC();
+}
 
 void func_800F7F44(void) {
     D_801207AC = 0;
