@@ -45,7 +45,34 @@ void func_801335A0(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132E40", func_801335F0);
+void func_801335F0(void) {
+    s16 var_s0;
+
+    D_800B3D60 = 0;
+    func_80044890(1, 0xC06F, 0xC065, 0xCC33, 0xCBE3, 0xCBD9);
+    if (func_80044E8C() == 1) {
+        func_80042808();
+    }
+    D_80139ABC = 0;
+    D_80139AC0 = 0;
+    D_80139AC4 = 0;
+    func_80133D28();
+    D_800E6280.unk_040 -= 1;
+    func_800649D4();
+    D_800E6280.unk_040 += 1;
+    func_8006509C();
+    for (var_s0 = 0; var_s0 < 15; var_s0++) {
+        func_80065048(var_s0, 0);
+    }
+    func_80065B0C(1);
+    func_800639D8();
+    func_800639D8();
+    /* FAKE: dead byte test keeps the packed-record address in v0 (T-9580). */
+    if (D_800E6280.unk_03A == 0) {}
+    ((KangeiStateView *)&D_800E6280)->modes[(u16)D_800E6280.unk_0F4.h >> 12].mode++;
+    D_800B593C = 0x80;
+    func_80042808();
+}
 
 void func_80133734(void) {
     D_800B3D60 = 0;

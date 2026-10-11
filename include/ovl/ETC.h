@@ -1037,3 +1037,12 @@ extern u8 D_8015010C[];
 extern s16 D_80150130;
 extern s16 D_80150134;
 extern s16 D_8015013C;
+#ifndef ETC_STATE_FLAGS_VIEW_DEFINED
+#define ETC_STATE_FLAGS_VIEW_DEFINED 1
+/* T-9580: the strided flag reads start at GameState +0x694, two slots
+ * before unk_69C. The complete view avoids a negative subarray index. */
+typedef struct EtcStateFlagsView {
+    /* 0x000 */ u8 pad_000[0x694];
+    /* 0x694 */ GsRec69C records[34];
+} EtcStateFlagsView; /* size 0x71C */
+#endif /* ETC_STATE_FLAGS_VIEW_DEFINED */

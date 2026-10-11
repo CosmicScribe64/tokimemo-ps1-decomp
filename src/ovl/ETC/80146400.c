@@ -41,7 +41,32 @@ void func_801465F8(void) {
 }
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146714);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801467C4);
+void func_801467C4(void) {
+    s32 var_s0;
+
+    func_8004E58C();
+    func_8006612C((s32) "期末テスト");
+    func_80041584();
+    func_80048E78();
+    func_80048390();
+    func_8006509C();
+    func_80064FA4(1);
+    func_8006CE84();
+    for (var_s0 = 0; var_s0 != 14; var_s0++) {
+        func_80065048(var_s0, 0);
+    }
+    func_800654D0(*(u8 *)&D_800E6280.unk_F6D);
+    func_8006BD6C(1);
+    func_800649D4();
+    func_800639D8();
+    func_800639D8();
+    if (D_800E6280.unk_041 == 0) {
+        func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
+    } else if (((EtcStateFlagsView *)&D_800E6280)->records[D_800E6280.unk_71C].unk_00 != 0x40) {
+        func_80044890(1, 0xBF98, 0xBF79, 0xCB48, 0xCAFD, 0xCAF7);
+    }
+    func_8004284C();
+}
 
 void func_801468FC(void) {
     s32 r2;

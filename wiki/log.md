@@ -1373,3 +1373,938 @@ Moved [[tickets/T-9540-wave-8-list-4]] to In Review; [[kanban]] and [[index]] ag
 ## [2026-10-11] ticket | Complete the reviewed deep pass
 
 [[tickets/T-9540-wave-8-list-4]] is Done after inline CODING_STANDARDS.md review with no unresolved findings; [[kanban]] and [[index]] agree. Ten functions/1628 bytes gained, every retained function freshly resolved MATCH, full 27/27 SHA1 OK, headers/globals stamps present, zero new branch disagreements (seventeen known), GameState check OK, exact-owned dupes zero copies. Corrected the new EVENT row's file path during review. [[matching-notes]] records final progress: 4744/6958 functions, 731240/2279368 bytes (32.1%). The deep pass ran from 09:07:54 to final proof at 12:27:26 UTC. Nine rows added to [[data/t0018-cases]], four subsequently resolved; all failed drafts/types restored. Changes remain uncommitted.
+## [2026-10-11] ticket | Wave 8 list 8 claimed
+
+Created [[tickets/T-9580-wave-8-list-8]] In Progress and synchronized [[kanban]] and [[index]]. Read the shared wave-8 brief, [[decompile-workflow]], [[register-allocation-wave7]], and coding standards; matching is restricted to the 36 owned C files.
+
+## [2026-10-11] build | List 8 func_80149F48 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_80149F48 (176 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80134F2C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80134F2C (280 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 baseline and typed EN_NICHI retry
+
+Initial Docker ninja passed 27/27 unit SHA1 checks and both guards. [[tickets/T-9580-wave-8-list-8]]: typed EN_NICHI `func_80134F2C` retry reproduced all instructions except the frame size (0x38 versus 0x30); reverted after bounded permutation. K&R permutation emitted `KeyError: arg1`.
+
+## [2026-10-11] build | List 8 func_8013923C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013923C (100 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80132A74 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80132A74 (104 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80135A48 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80135A48 (132 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80133AD0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133AD0 (108 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80146AC0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ETC/func_80146AC0 (128 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80140B20 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_80140B20 (132 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80134ADC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134ADC (224 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80134874 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134874 (176 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 _sys_default_tpage_set time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/_sys_default_tpage_set (300 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 load_tpage_buf_lock time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/load_tpage_buf_lock (168 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80136A2C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80136A2C (228 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801551D0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_801551D0 (92 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80149268 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_80149268 (168 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80134D0C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134D0C (276 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80136124 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: GYOZI/func_80136124 (132 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_801464D4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ETC/func_801464D4 (292 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_801453B4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RPG_BAT/func_801453B4 (316 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8013AF78 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013AF78 (296 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8015435C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TACO/func_8015435C (224 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80154230 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TACO/func_80154230 (236 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | DATE counter matched in list 8
+
+[[tickets/T-9580-wave-8-list-8]]: `func_801551D0` (92 bytes) passes `funcdiff --resolve` with a local `GameState *`, implicit-int-style fall-through, and explicit zero return on the early path. Main `load_tpage_buf_lock` was reverted after its bounded retry.
+
+## [2026-10-11] build | List 8 func_8013A610 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013A610 (256 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8013A710 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013A710 (256 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_801546FC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TACO/func_801546FC (292 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80138B90 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80138B90 (384 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_801354E0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_801354E0 (140 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 search_load_tpage_buf_lock time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/search_load_tpage_buf_lock (232 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80154820 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TACO/func_80154820 (320 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_801511B4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_801511B4 (332 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013DAC4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013DAC4 (268 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80134768 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134768 (268 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80047560 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80047560 (352 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80155004 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_80155004 (368 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801349B0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_801349B0 (300 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_801398EC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_801398EC (492 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80048DD0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80048DD0 (168 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_801330D0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_801330D0 (736 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80133C1C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133C1C (248 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80135480 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHUGAKU/func_80135480 (340 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80132A74 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80132A74 (104 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80133AD0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133AD0 (108 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] ingest | List 8 matching observations
+
+Appended the local-GameState counter idiom, EN_NICHI frame near miss, and K&R permuter failure to [[matching-notes]]. Attempt outcomes are recorded in [[tickets/T-9580-wave-8-list-8]].
+
+## [2026-10-11] build | List 8 func_80134ADC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134ADC (224 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80134874 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134874 (176 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 load_tpage_buf_lock time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/load_tpage_buf_lock (168 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80149268 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_80149268 (168 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80134D0C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134D0C (276 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80138B90 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80138B90 (384 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | First list 8 checkpoint
+
+Docker incremental ninja completed all 27 unit SHA1 checks, including the retained DATE `func_801551D0`; header/global guards pass. [[tickets/T-9580-wave-8-list-8]] has covered the first 40 list entries, with selected type/table retries still running.
+
+## [2026-10-11] build | List 8 func_801511B4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_801511B4 (332 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80155004 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_80155004 (368 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801349B0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_801349B0 (300 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80048DD0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80048DD0 (168 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80133C1C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133C1C (248 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80140D6C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_80140D6C (172 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80146400 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ETC/func_80146400 (212 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80132000 matched
+
+[[tickets/T-9580-wave-8-list-8]]: ENDING/func_80132000 (820 bytes), matched. funcdiff --resolve MATCH; unit ninja SHA1 check passes.
+
+## [2026-10-11] build | List 8 func_80042CB0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80042CB0 (864 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80134630 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134630 (312 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80042AC8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80042AC8 (268 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801337E0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_801337E0 (268 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80145550 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: BUNKAKEN/func_80145550 (756 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80134E20 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134E20 (808 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_8013F0DC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013F0DC (300 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013FB8C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013FB8C (304 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013275C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_8013275C (216 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_801374C0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_801374C0 (404 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80140AD8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHOUGATU/func_80140AD8 (256 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_801560E0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_801560E0 (712 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80134BBC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134BBC (336 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8013A2F8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHOUGATU/func_8013A2F8 (260 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80134178 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134178 (340 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_800422C8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_800422C8 (268 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 search_tpage time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/search_tpage (616 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 search_tpage8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/search_tpage8 (616 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80057710 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80057710 (484 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80133D14 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133D14 (284 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80140314 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHOUGATU/func_80140314 (508 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013D6C0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013D6C0 (308 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80046754 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80046754 (884 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80133A54 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: KANGEI/func_80133A54 (444 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013B4A0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013B4A0 (552 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013B3C0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: GEKO/func_8013B3C0 (336 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8013A9C8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013A9C8 (732 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013BE18 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013BE18 (348 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8013F454 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013F454 (348 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013D4CC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013D4CC (352 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013B1C4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013B1C4 (600 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013E430 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013E430 (364 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80135630 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHUGAKU/func_80135630 (380 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80133970 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133970 (240 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013CEC8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013CEC8 (396 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801425C0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_801425C0 (704 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80137654 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80137654 (548 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | DATE dispatcher time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: `func_801511B4` was within one address-register difference with the existing FnTbl40 type. Literal-byte and local-pointer retries did not match; restored its INCLUDE_ASM.
+
+## [2026-10-11] build | List 8 func_80135ACC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80135ACC (1160 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80134D74 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80134D74 (440 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_801342CC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_801342CC (420 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80135274 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80135274 (620 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80132834 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80132834 (472 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013BB28 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013BB28 (488 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801447E0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RPG_BAT/func_801447E0 (924 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80137878 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80137878 (512 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80150C78 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_80150C78 (548 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_801357AC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHUGAKU/func_801357AC (396 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013B448 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: MASTER/func_8013B448 (956 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80135600 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80135600 (976 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013B6C8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013B6C8 (608 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | ENDING scene table initializer matched
+
+[[tickets/T-9580-wave-8-list-8]]: `func_80132000` (820 bytes) passes resolved function comparison and ENDING unit SHA1. Added only overlay-local declarations in include/ovl/ENDING.h. Two retained matches total 912 bytes so far.
+
+## [2026-10-11] build | List 8 func_80134800 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80134800 (1052 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80140574 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_80140574 (280 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80132670 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: OMIMAI/func_80132670 (280 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80132EE8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80132EE8 (488 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80137A78 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80137A78 (424 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013B928 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013B928 (424 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80139740 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_80139740 (428 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013B994 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013B994 (380 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80132B04 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ENDING/func_80132B04 (660 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_801344F0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_801344F0 (660 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8004F6B0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_8004F6B0 (448 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80134470 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134470 (448 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80133FB0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133FB0 (456 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80142880 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_80142880 (316 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80140430 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_80140430 (324 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801360B0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHUGAKU/func_801360B0 (720 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013ACA4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013ACA4 (724 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013FE40 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013FE40 (344 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80135EA4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHUGAKU/func_80135EA4 (524 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013F984 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013F984 (388 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013AE3C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013AE3C (676 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_8013A3E0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013A3E0 (560 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801392A0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_801392A0 (1060 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013ED84 matched
+
+[[tickets/T-9580-wave-8-list-8]]: GYOZI/func_8013ED84 (3700 bytes), matched. funcdiff --resolve MATCH; unit ninja SHA1 check passes.
+
+## [2026-10-11] build | List 8 func_80134258 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80134258 (664 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80138808 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80138808 (904 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_801467C4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ETC/func_801467C4 (312 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013358C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_8013358C (596 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_801335F0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: KANGEI/func_801335F0 (324 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | Large GYOZI initializer matched
+
+[[tickets/T-9580-wave-8-list-8]]: `func_8013ED84` (3,700 bytes) passes resolved function comparison and GYOZI unit SHA1; declarations added only to include/ovl/GYOZI.h. Three retained functions total 4,612 bytes. DATE dispatcher assignment-chain retry reverted.
+
+## [2026-10-11] build | List 8 func_8015443C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TACO/func_8015443C (704 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8013DD94 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013DD94 (500 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_800F6E84 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EVENT/func_800F6E84 (376 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80148BC8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ETC/func_80148BC8 (720 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80133E30 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133E30 (384 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80150460 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_80150460 (340 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_8013C9F0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013C9F0 (340 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80135FBC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80135FBC (744 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013B77C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013B77C (536 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801339D4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_801339D4 (724 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80137C20 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80137C20 (1368 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80138E28 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80138E28 (1044 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013F758 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013F758 (556 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_801002C8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EVENT/func_801002C8 (384 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80148F7C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ETC/func_80148F7C (836 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80042134 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80042134 (404 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80144C84 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RPG_BAT/func_80144C84 (1276 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80133CA8 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80133CA8 (600 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80148714 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RPG_BAT/func_80148714 (1012 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013BB24 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013BB24 (756 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80139770 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80139770 (1064 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013D2AC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013D2AC (544 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013FB28 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHOUGATU/func_8013FB28 (1152 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80138300 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80138300 (1288 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_8013F494 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: SHOUGATU/func_8013F494 (1328 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013BF74 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013BF74 (1332 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_801484E0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RPG_BAT/func_801484E0 (372 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80133990 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RENSYU/func_80133990 (808 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8014231C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8014231C (580 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80132450 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80132450 (780 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_80133628 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RENSYU/func_80133628 (872 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80079070 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: main/func_80079070 (1204 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8013CCD0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TEL/func_8013CCD0 (876 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80148B08 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: RPG_BAT/func_80148B08 (1128 bytes), time-boxed. Missing draft declarations need manual recovery.
+
+## [2026-10-11] build | List 8 func_801496C4 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: DATE/func_801496C4 (1020 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_8014790C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: ETC/func_8014790C (1128 bytes), time-boxed. Draft requires unresolved types/aggregate mapping.
+
+## [2026-10-11] build | List 8 func_80134D74 matched
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI/func_80134D74 (440 bytes), matched. funcdiff --resolve MATCH; unit ninja SHA1 check passes.
+
+## [2026-10-11] build | List 8 func_8013D6C0 matched
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT/func_8013D6C0 (308 bytes), matched. funcdiff --resolve MATCH; unit ninja SHA1 check passes.
+
+## [2026-10-11] build | Final two list 8 source idioms matched
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT `func_8013D6C0` (308 bytes, implicit-int switch copy) and EN_NICHI `func_80134D74` (440 bytes, direct record clamp) pass resolved comparison and unit SHA1. Five retained functions total 5,360 bytes; idioms added to [[matching-notes]].
+
+## [2026-10-11] ingest | Six list 8 register cases recorded
+
+Appended six verified draft failures to [[data/t0018-cases]] after consulting [[register-allocation-wave7]] and the relevant source idioms. Type-only draft failures are excluded; [[tickets/T-9580-wave-8-list-8]] records all 158 attempts.
+
+## [2026-10-11] build | List 8 func_80134630 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134630 (312 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_80134178 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134178 (340 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 func_801342CC time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_801342CC (420 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80134470 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80134470 (448 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_80133FB0 time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_80133FB0 (456 bytes), time-boxed. Draft reverted; compile/type/frame failure or timeout.
+
+## [2026-10-11] build | List 8 func_8013AE3C time-boxed
+
+[[tickets/T-9580-wave-8-list-8]]: TT/func_8013AE3C (676 bytes), time-boxed. Draft reverted; instruction/register/control-flow difference.
+
+## [2026-10-11] build | List 8 bounded retries completed
+
+[[tickets/T-9580-wave-8-list-8]]: NULL-repaired TT drafts and six source-order variants were reverted after real differences remained. Type recovery returned no proposals for the two new initializer bases. Exact-path duplicate reuse applied zero copies. Final full build and five resolved function checks started; five matches total 5,360 bytes remain.
+
+## [2026-10-11] ticket | List 8 moved to In Review
+
+Moved [[tickets/T-9580-wave-8-list-8]] to In Review and synchronized [[kanban]] and [[index]]. Inline source/spec review has no findings; final checksum and individual function checks are running.
+
+## [2026-10-11] build | List 8 resolved matches and sequential build retry
+
+All five retained functions in [[tickets/T-9580-wave-8-list-8]] pass funcdiff --resolve. Concurrent ninja linking saw a truncated EN_NICHI object while funcdiff rebuilt it. The checks have finished; the full incremental build is now rerunning without concurrent object writers.
+
+## [2026-10-11] build | List 8 final verification passed
+
+[[tickets/T-9580-wave-8-list-8]]: sequential incremental ninja succeeded, with 27/27 current unit checksums and header/global guards present. Prototype branch, globals, and whitespace checks pass. Final progress is 4739/6958 functions and 734972/2279368 bytes (32.2%). Five matches add 5,360 bytes; 153 other entries are time-boxed and restored. Six rows added to wiki/data/t0018-cases.md. Final coverage and review results recorded in [[matching-notes]] and the ticket.
+
+## [2026-10-11] ticket | List 8 completed
+
+Inline review against CODING_STANDARDS.md and the shared brief has zero unresolved findings. Moved [[tickets/T-9580-wave-8-list-8]] to Done, checked all acceptance criteria, and synchronized [[kanban]] and [[index]]. All edits remain uncommitted for the orchestrator.
+
+## [2026-10-11] ticket | List 8 reopened for deep second pass
+
+User requested sustained iteration after the first pass was committed. Reopened [[tickets/T-9580-wave-8-list-8]] to In Progress, synchronized [[kanban]] and [[index]], and reread standards, [[decompile-workflow]], and [[register-allocation-wave7]]. Start 09:26 UTC; minimum three hours or list exhaustion. Rank actual resolved differences first, recover aggregate types, run extended near-miss searches, and retain only verified matches.
+
+## [2026-10-11] decision | List 8 second-pass ranking
+
+[[tickets/T-9580-wave-8-list-8]]: ranked saved resolved diffs from the initial pass and bounded retries. Smallest remaining gaps are TT func_80134178 (2 lines), DATE func_801511B4 (4), EN_NICHI func_80132A74 (20), and NAME_ENT func_80140D6C (24). TT control-flow, constant-local, and statement-layout experiments began. Large aggregate/local-copy drafts are queued after these near misses.
+
+## [2026-10-11] build | List 8 deep TT scheduling attempt
+
+[[tickets/T-9580-wave-8-list-8]]: func_80134178 received 43 manual/type variants and two 300-second searches. ANSI parameters avoid the K&R permuter bug but preserve the same two-line real diff; typed 0x68 actor fields also preserve it. No verified candidate; restored src/ovl/TT/80133970.c. Type-aware GameState migration has also recovered several previously rejected drafts for renewed ranking.
+
+## [2026-10-11] build | List 8 NAME_ENT buffer match
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013F984: recovered byte buffer and implicit-int dispatcher; s32-buf-0x108. Resolved MATCH and overlay SHA1 pass; any enlarged buffer marked FAKE.
+
+## [2026-10-11] ingest | List 8 second-pass type and buffer findings
+
+Recorded type-aware GameState recovery, NAME_ENT func_8013F984's verified 388-byte buffer/return-type match, and the exhausted TT scheduling experiment in [[matching-notes]]. The eight-byte NAME_ENT buffer adjustment is explicitly marked FAKE in source and ticket.
+
+## [2026-10-11] build | List 8 deep DATE table dispatch attempt
+
+[[tickets/T-9580-wave-8-list-8]]: func_801511B4 received about 50 manual variants and a five-minute permuter run. Real checks of both score-30 bodies retain the four-line D_800B593C address-register difference; source restored. DATE func_80150460's earlier diff is instead an unresolved M2C_MEMCPY_ALIGNED pseudo-call: neighboring matched copies use a 0x44-byte aggregate. Added a scoped record view for its real struct-copy retry.
+
+## [2026-10-11] build | List 8 NAME_ENT buffer match
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013DD94: recovered byte buffer and implicit-int dispatcher; s32-buf-0x108. Resolved MATCH and overlay SHA1 pass; any enlarged buffer marked FAKE.
+
+## [2026-10-11] build | List 8 NAME_ENT buffer match
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013F758: recovered byte buffer and implicit-int dispatcher; s32-buf-0x108. Resolved MATCH and overlay SHA1 pass; any enlarged buffer marked FAKE.
+
+## [2026-10-11] build | List 8 deep SHOUGATU attempt and NAME_ENT pointer recovery
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013A2F8 improved from 13 to 2 resolved diff lines using existing CharFlags and an element assignment argument; sustained layout and five-minute permuter attempts did not fix the final constant schedule. Source restored. Assembly proves D_800B32CC is a loaded pointer-to-pointer and D_800E7D36 a byte slot; generated their main declarations with sync_protos for NAME_ENT retries.
+
+## [2026-10-11] build | List 8 deep pass copy and allocator experiments
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT `func_8013DD94` (500 bytes) and `func_8013F758` (556 bytes) both pass resolved funcdiff and overlay SHA1 after recovering 0x108-byte local buffers; NAME_ENT deep-pass subtotal is three matches, 1,444 bytes. DATE `func_80150460` now uses a 17-word copy type, reducing the draft to six differing lines; a 300-second permuter finds no improvement and the function is restored. EN_NICHI `func_80132A74`: 37 valid K&R manual variants, compatible wide-parameter trial, and a 300-second permuter search leave 18 differing lines; generated candidates were checked against real funcdiff and the function restored. Recovered SHUGAKU copies and NAME_ENT local-array draft remain experiments pending verification. [[matching-notes]] records the successful buffer and pointer-table idioms.
+
+## [2026-10-11] build | List 8 main buffer-table search match
+
+[[tickets/T-9580-wave-8-list-8]]: main `search_load_tpage_buf_lock` (232 bytes) passes resolved funcdiff and main executable SHA1. Removing the redundant saved-return local recovers the 0x40 frame; `(u8)index & 0x1F` recovers the call-site move/mask sequence with the existing prototype. The shifted GameState cursor is marked FAKE. No ABI override is retained. NAME_ENT `func_8013AF78` is restored after local-array and raw/masked-value experiments. [[matching-notes]] retains the successful idiom.
+
+## [2026-10-11] build | List 8 signed record stores and source ordering
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI `func_801344F0` (660 bytes) passes resolved funcdiff and overlay SHA1. `EnObj` fields preserve signed halfword constants, direct angle-field updates preserve the wrap temporaries, and reversing the two independent halfword stores in cases 0/2 restores the target register order. The successful form needs no FAKE beyond existing file conventions. [[matching-notes]] records the source-order effect.
+
+## [2026-10-11] decision | List 8 aggregate views and shared declaration constraints
+
+[[tickets/T-9580-wave-8-list-8]]: the recovered KANGEI packed records need a whole-word union view in addition to their existing halfword/byte members; the overlay-scoped unions preserve the shared GameState type. A SHOUGATU copy retry discovered that `D_8012071C`, `D_80120760`, and `D_801207A4` share symbol addresses with EVENT declarations. Generated main-API additions must use the existing s32/s32/s16 views; copying uses the recovered 0x44-byte pointer view. Header failures during exploratory declaration changes are excluded from code-generation evidence. A leftover main call declaration was removed, and the clean typed main function and executable SHA1 were reverified.
+
+## [2026-10-11] build | List 8 name-slot scan closes the address reload gap
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT `func_80140D6C` (172 bytes) passes resolved funcdiff and overlay SHA1. The 300-second permuter's candidate checks at two differing lines in the real source; joining pointer initialization with `do` fixes the initial address scheduling. Its alternate end expression retains the fresh end-address load after the loop. The byte-cursor bias, end-address spelling and same-line layout are explicitly FAKE. [[matching-notes]] records the previously open guarded draft's resolution.
+
+## [2026-10-11] build | Wave 8 list 8 packed-mode match
+
+[[tickets/T-9580-wave-8-list-8]]: KANGEI `func_801335F0` adds 324 verified bytes. The real two-bit flag view fixes arithmetic, and inline field indexing plus a marked dead-byte test fixes v0/v1 allocation after a five-minute unsuccessful permuter. Resolved MATCH and KANGEI SHA1 pass. Seven second-pass functions, 2,832 bytes. See [[matching-notes]].
+
+## [2026-10-11] decision | Wave 8 list 8 remaining local-copy drafts
+
+[[tickets/T-9580-wave-8-list-8]]: corrected SHOUGATU's 68-byte copies to use the declared parent buffer rather than adding duplicate main globals owned by EVENT. Recovered missing overlay byte declarations from the original sb stores. The large initializer now compiles at 16 differing lines. NAME_ENT's option snapshot stores likewise supply a missing word and eight byte declarations; earlier undefined-symbol runs are excluded from matching evidence. See [[matching-notes]].
+
+## [2026-10-11] decision | Wave 8 list 8 completed type-repair timeboxes
+
+[[tickets/T-9580-wave-8-list-8]]: restored the unverified BUNKAKEN aligned-table draft, SHUGAKU signed-record/local-copy draft, and DATE color-loop draft after sustained manual experiments and bounded searches. Nearest real diffs remain 129, 20 and 12 lines respectively. Removed their unused appended types; retained verified matches elsewhere. No original sources or compiler passes changed.
+
+## [2026-10-11] decision | Wave 8 list 8 OMIMAI timebox
+
+[[tickets/T-9580-wave-8-list-8]]: OMIMAI's real permuter candidate reduces the near miss to four resolved lines. Thirty-five further store/type/layout experiments did not change its remaining address register. Restored failed C and the unused appended prototype. A temporary main return-type/header mismatch was corrected; affected failed builds are not matching evidence.
+
+## [2026-10-11] build | Wave 8 list 8 ETC initializer match
+
+[[tickets/T-9580-wave-8-list-8]]: ETC `func_801467C4` adds 312 bytes. The record byte view and simple 14-trip for-loop reduce the diff to two lines; a subsequent five-minute permuter confirms that the remaining issue needs a type correction. An unsigned byte view of `unk_F6D` passes the resolved diff and ETC SHA1. Eight second-pass matches, 3,144 bytes; array-bound/type review continues.
+
+## [2026-10-11] lint | Wave 8 list 8 ETC table type review
+
+[[tickets/T-9580-wave-8-list-8]]: changed the new ETC initializer to `unk_69C[unk_71C - 2].unk_00`, using the existing declared flag table instead of indexing across the end of `unk_66C`. The binary's table address is two records before the table's base. Resolved MATCH and ETC unit SHA1 still pass.
+
+## [2026-10-11] decision | Wave 8 list 8 SHOUGATU aggregate timebox
+
+[[tickets/T-9580-wave-8-list-8]]: recovered the large initializer's two 68-byte local copies and removed missing-symbol failures. Thirty-two additional declaration/counter/table-layout experiments and a bounded five-minute search still differ in stack addresses and store scheduling. Restored its C; shared overlay work continues.
+
+## [2026-10-11] build | Wave 8 list 8 SHOUGATU flag match
+
+[[tickets/T-9580-wave-8-list-8]]: SHOUGATU `func_80140AD8` adds 256 bytes. Replacing the abstract mask/byte-or draft with the real character bitfield test and assignment, and using the implicit-integer-return shape, passes the resolved diff and overlay SHA1. Nine second-pass matches, 3,400 bytes; no scheduling trick needed.
+
+## [2026-10-11] decision | Wave 8 list 8 main fade type experiments
+
+[[tickets/T-9580-wave-8-list-8]]: retrying the main fade draft with signed rsin narrowing, wide versus narrow byte temporaries and return-type variants. Main return-type experiments now update the generated declaration through `sync_protos` before building, and restore the prior generated declaration if no match is found. This avoids treating a header mismatch as codegen evidence.
+
+## [2026-10-11] decision | Wave 8 list 8 small-helper timeboxes
+
+[[tickets/T-9580-wave-8-list-8]]: restored TT's typed phase/counter helper after 36 experiments and a five-minute search (14 lines), GYOZI's repeated-product helper after 12 view/index experiments and no type-recovery proposal (29 lines), and TACO's typed command walker after 28 parameter/pointer/constant/layout experiments (25 lines). No unverified helper C or unused TT type retained. Other candidates continue.
+
+## [2026-10-11] decision | Wave 8 list 8 remaining SHOUGATU local copies
+
+[[tickets/T-9580-wave-8-list-8]]: recovered both local table types and retried normalized/narrow year indexing. Narrowing before multiplication gets past the frame pass but remains 202 resolved lines away; the other correct table forms expose negative-stack-offset errors in `frame_pass.py`. Restored failed C and all unused overlay types, keeping the verified flag match.
+
+## [2026-10-11] decision | Wave 8 list 8 fade timebox
+
+[[tickets/T-9580-wave-8-list-8]]: 16 valid main fade type/layout experiments (plus four prior void variants) still differ in promoted byte values and coordinate temporaries. Restored the C and exact prior prototype through the generator. Moving on to EN_NICHI's actor-word flags, whose first draft incorrectly used byte loads.
+
+## [2026-10-11] decision | Wave 8 list 8 actor flag declarations
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI's ten 0x30-byte actors use word flags; the first draft inferred byte accesses and lacked viewport halfword declarations. Added the two main viewport coordinates through the generator (target lh), and missing overlay word/end-address declarations. Invalid missing-symbol attempts are excluded; retrying with the existing `EnObj` record type.
+
+## [2026-10-11] lint | Wave 8 list 8 historical register rows resolved
+
+[[tickets/T-9580-wave-8-list-8]]: appended three resolution rows to [[data/t0018-cases]] for NAME_ENT's repeated-end-pointer loop, SHOUGATU's flag initializer, and the search half of the main texture-page-lock family. Historical rows remain intact; the regular lock helper remains open. Verified function/unit evidence is in the ticket.
+
+## [2026-10-11] decision | Wave 8 list 8 actor flag timebox
+
+[[tickets/T-9580-wave-8-list-8]]: actor-word flags compile after complete declaration recovery. Twenty valid end-pointer/status/counter-view/reused-pointer/increment variants reach 83 lines, still outside the near-match search range. Restored the failed function; testing the initializer's ten-byte flag aggregate and corrected word-pointer stepping next.
+
+## [2026-10-11] decision | T-9580 deep aggregate timeboxes and review cleanup
+
+[[tickets/T-9580-wave-8-list-8]] records the deeper NAME_ENT option-record, TT flag-dispatch and EN_NICHI initializer experiments. Restored failed functions and unused overlay types. Removed stale commentary and unused declarations from retained matches; resolved function and unit verification is running again. The TT two-actor initializer is the current candidate, with parameter-width and declaration-order experiments.
+
+## [2026-10-11] build | T-9580 retained deep matches survive cleanup
+
+All nine additional functions in [[tickets/T-9580-wave-8-list-8]] pass `funcdiff --resolve` after removing unused declarations and the stale NAME_ENT guard comment. The equivalent if/else form of SHOUGATU `func_80140AD8` also matches, so no valueless return remains. NAME_ENT, main, EN_NICHI, KANGEI, ETC and SHOUGATU unit SHA1 checks all pass. Generator-only cleanup removes five unused main globals from rejected drafts, retaining only the two declarations required by matched NAME_ENT code. Final full-build verification remains pending after the last TT experiment.
+
+## [2026-10-11] decision | T-9580 TT paired initializer timeboxed
+
+[[tickets/T-9580-wave-8-list-8]] records 94 valid source/type experiments on TT `func_80134630`; best 45 resolved differing lines. Restored TT C and header to their committed content after the timebox. EN_NICHI frame-only miss is the final active experiment; its near draft is undergoing a 300-second search.
+
+## [2026-10-11] build | T-9580 final declaration guards pass
+
+`check_headers.py include src` reports headers OK; `migrate_globals.py --check` reports globals OK; `sync_protos.py --check-branch` reports zero new disagreements and 17 known baseline disagreements. [[tickets/T-9580-wave-8-list-8]] retains only its required main-API additions and packed KANGEI view. No tool/config changes were needed. EN_NICHI's final ANSI search is still running, followed by restoration and whole-build verification.
+
+## [2026-10-11] decision | T-9580 deep pass closes after three hours
+
+[[tickets/T-9580-wave-8-list-8]] records the final EN_NICHI frame-only timebox and restoration. Corrected ETC's subarray-boundary view to the actual +0x694 table base; the resolved diff remains MATCH. All failed drafts are reverted; nine additional matches (3,400 bytes) remain. Deep pass began 09:26 UTC and active matching ended 12:30 UTC, exceeding three hours. Final exact/near duplicate scans and full 27-unit build follow.
+
+## [2026-10-11] lint | T-9580 inline review findings
+
+[[tickets/T-9580-wave-8-list-8]] records the resolved ETC bounds finding and pending removal of two unused EN_NICHI temporaries. Own-file exact duplicate scan applied zero copies. Scope, C89, declaration ownership and FAKE coverage checked; near-duplicate scan and final build are still running.
+
+## [2026-10-11] build | T-9580 duplicate scans complete
+
+Exact and near-duplicate scans with the ticket's exact 36-file list both applied zero copies. Full sequential `ninja -j4` is running for [[tickets/T-9580-wave-8-list-8]]. No function-matching process is writing its objects concurrently.
+
+## [2026-10-11] ticket | T-9580 In Review after deep pass
+
+[[tickets/T-9580-wave-8-list-8]] moved from In Progress to In Review; ticket, [[kanban]] and [[index]] synchronized. Full build passed all 27 SHA1 checks. The last inline-review cleanup is being verified before completion.
+
+## [2026-10-11] build | T-9580 final review cleanup verified
+
+Both unused EN_NICHI temporaries were removed with a resolved MATCH. Added a repeated-inclusion guard around ETC's new prefix view. The subsequent full sequential build passes all 27 unit SHA1 checks; progress is `grand total   4748/6958   738372/2279368  32.4%`. Inline review against CODING_STANDARDS.md and the shared brief has no unresolved code/spec findings. A scratch metadata assertion was too strict because the globals marker need not track an unrelated overlay header; direct final header/global checks are running to establish their results from source instead. [[tickets/T-9580-wave-8-list-8]] awaits those checks before Done.
+
+## [2026-10-11] build | T-9580 final source guards complete
+
+Direct `check_headers.py include src` and `migrate_globals.py --check` both pass after the last review changes. Guard markers exist, branch prototype check has zero new disagreements, and `git diff --check` passes. All 27 final unit checksums and the recorded progress line remain valid. [[tickets/T-9580-wave-8-list-8]] has no outstanding review findings.
+
+## [2026-10-11] ticket | T-9580 Done after deep pass
+
+[[tickets/T-9580-wave-8-list-8]] moved from In Review to Done; ticket, [[kanban]] and [[index]] synchronized. Inline review and final checks are complete; all changes remain uncommitted.

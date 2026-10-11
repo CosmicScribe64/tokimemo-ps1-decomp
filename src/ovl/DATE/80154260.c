@@ -315,7 +315,19 @@ void func_80155174(void) {
     func_8014C5C8();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80154260", func_801551D0);
+s32 func_801551D0(void) {
+    GameState *g;
+    u32 state;
+
+    g = &D_800E6280;
+    state = ++g->unk_1104.u;
+    if (state < 16) {
+        return 0;
+    }
+    func_80046318(0x3D, 0x801B0000, 0x872B);
+    func_80154470();
+    func_8004284C();
+}
 
 void func_8015522C(void) {
     if (D_80122CDC != 0) {

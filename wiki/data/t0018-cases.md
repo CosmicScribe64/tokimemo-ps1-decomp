@@ -1171,3 +1171,17 @@ Further deep-pass resolutions: normal_date_girl_in_init and SHOUGATU func_8013AE
 |---|---|---|---|
 | 8006CB30 | `func_80072998` | selector | 24 actual scalar/return/comparison variants and 300-second permutation leave fourteen resolved lines; best positive raw-score output also compares at fourteen. Selector/compare-chain cluster, bounded experiments only (T-9540). |
 | EVENT/800FBBF0 | `func_800FD00C` | regorder | Two sustained 24-variant actual trials and 300-second searches reached eight lines; rechecking a positive raw-score-10 output gives four real resolved differing lines, solely the u8 global load's lui base v1 versus v0. Narrow-global promotion/allocation cluster; declaration, load-order, aggregate and volatile trials did not close it (T-9540). |
+| DATE/80149310 | `func_80149F48` | regorder | Copy-chain draft: first `lh` goes to `$t6` instead of original `$v0`, and loads run ahead of the original interleaved stores; restored after resolved comparison (T-9580). |
+| EN_NICHI/80132000 | `func_80132A74` | regorder | K&R four-s16 distance helper: second difference and first absolute value swap `$t1`/`$v1`; products use `$t6/$t7` instead of the original `$v1/$t0` (T-9580). |
+| TT/80133970 | `func_80134ADC` | regorder | Typed buffer-update draft: original retains halfword loads in `$v1/$t5` and clamp constant in `$a2`; IDO promotes loads to `$v0` and uses `$v1` for the constant (T-9580). |
+| GYOZI/80135CA0 | `func_80136124` | regorder | Original repeats `multu a1,a0` with hoisted 0x38 for two girl-record accesses; ordinary aggregate fields combine the product into one sll/subu/sll base and hoist the second `lh` (T-9580). |
+| RPG_BAT/801447E0 | `func_801453B4` | regorder | Three word counters occupy original `$v1/$a1/$a2`; the draft uses `$a1/$a2/$a3` for the sum, constant stores, and decrements, with an extra copy in one branch (T-9580). |
+| DATE/80150010 | `func_801511B4` | regorder | FnTbl40 and leading scalar reproduce frame and instructions except `D_800B593C` address: original `lui v1; lbu v0`, IDO `lui v0; lbu v0`; 15-second permuter, literal view, local pointer, and assignment chain did not match (T-9580). |
+
+## T-9580 deep-pass resolutions (2026-10-11)
+
+| File | Function | Kind | Resolution |
+|---|---|---|---|
+| NAME_ENT/80139740 | `func_80140D6C` | resolved | T-8050/T-9170 end-pointer row closed: the real permuter candidate plus same-line pointer initialization and do-loop match; biased cursor/end expression/layout are marked FAKE. Resolved MATCH and NAME_ENT SHA1 (172 bytes). |
+| SHOUGATU/8013F190 | `func_80140AD8` | resolved | T-9020 hoisting row closed with the real b1 bitfield test and assignment plus implicit s32 return type; no scheduling trick. Resolved MATCH and SHOUGATU SHA1 (256 bytes). |
+| 80047550 | `search_load_tpage_buf_lock` | resolved | The search half of T-9110 is closed: remove the saved-return local, use the marked byte cursor, and pass `(u8)var_v1 & 0x1F` to the existing typed callee. Resolved MATCH and main SHA1 (232 bytes); `load_tpage_buf_lock` remains open. |
