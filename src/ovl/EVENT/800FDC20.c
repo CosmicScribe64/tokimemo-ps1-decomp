@@ -124,7 +124,37 @@ void func_800FE100(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FDC20", func_800FE138);
+void func_800FE138(void) {
+    D_800B1746 = 3;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_8004BC20(D_800B1746);
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_801203B4;
+    D_8012067C = D_801203CC;
+    D_80120680 = D_801203E4;
+    func_80078970(D_80094784, "校舎裏");
+    D_800B0A04[3].unk_06 += 2;
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_800FE270(void) {
     func_800FDC20();
