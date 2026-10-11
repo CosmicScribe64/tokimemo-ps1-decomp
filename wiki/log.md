@@ -7839,3 +7839,76 @@ Ten matches / 5,596 bytes; grand total 4880/6958, 782256/2279368 (34.3%). Comple
 ## [2026-10-11] lint | T-9710 final wiki and diff consistency
 
 Done ticket, single Done board card and index entry agree; acceptance items checked. Final git diff --check passes, with only allowed files and the new ticket changed. [[tickets/T-9710-wave-9-list-1]], [[kanban]], [[index]].
+
+## [2026-10-11] ticket | T-9940 wave 10 list 4 started
+
+Created [[tickets/T-9940-wave-10-list-4]] and claimed its board card. Read the
+shared brief and relevant [[decompile-workflow]], [[register-allocation-wave7]],
+[[uopt-register-allocation]] and [[matching-notes]] guidance. Assigned scope:
+134 functions, 47 C files. Work starts at 20:19 UTC; scratch is `scratchpad/w10-4/`.
+
+## [2026-10-11] query | T-9940 MouseState source shape
+
+The byte-pointer repair alone leaves 19 instruction edits. A shared result local
+and one return reduce this to four; moving the error-result assignment before
+its output stores yields identical scratch-resolved words. Real-file verification
+pending in [[tickets/T-9940-wave-10-list-4]]. Prior drafts were collected read-only
+into `scratchpad/w10-4/old/` for the deep pass.
+
+## [2026-10-11] build | T-9940 first two verified matches
+
+Main `MouseState` and OPTION `func_8013A550` pass real-file resolved diffs and
+unit SHA1s: two functions, 324 bytes. Baseline passed 27/27. Recorded the return
+and control-flow idioms in [[matching-notes]] and [[tickets/T-9940-wave-10-list-4]].
+
+## [2026-10-11] build | T-9940 typed TT actor match and render-buffer finding
+
+TT `func_8014BB30` adds 324 verified bytes (three functions/648 bytes total).
+Full incremental ninja passes. The existing actor type plus a documented tail
+view fixes the product operand/register order. TT `func_8014CC04` now matches
+scratch words with a typed render buffer and TILE packet; pending integration.
+Scoped duplicate tools found no gains. See [[tickets/T-9940-wave-10-list-4]].
+
+## [2026-10-11] build | T-9940 render-buffer match, first pass complete
+
+TT `func_8014CC04` passes real resolved diff and TT SHA1. Full incremental ninja
+passes after the fresh draft loop restores its misses. Four functions / 1,088
+bytes gained so far. Documented the typed actor/buffer idioms in [[matching-notes]];
+continuing deep source and permuter work under [[tickets/T-9940-wave-10-list-4]].
+
+## [2026-10-11] build | T-9940 fifth function diff match
+TACO `func_80141290` resolves exactly after typed stride and store-order
+repairs. Dead spill locals removed through declaration order. See
+[[tickets/T-9940-wave-10-list-4]] and [[matching-notes]].
+
+## [2026-10-11] build | T-9940 fifth match checksum
+Incremental ninja succeeds with TACO checksum OK and global/header checks.
+Five retained functions total 1,384 bytes. See [[tickets/T-9940-wave-10-list-4]].
+
+## [2026-10-11] build | T-9940 TT flag helper candidate
+Typed aggregate and two-step index construction yield exact scratch words for
+TT `func_80133AD0`. Added the documented unprototyped override and aggregate;
+real build verification follows. See [[tickets/T-9940-wave-10-list-4]] and
+[[matching-notes]].
+
+## [2026-10-11] build | T-9940 sixth resolved match
+TT `func_80133AD0` and three neighboring functions pass real resolved diffs.
+The generated override guard is two added lines. Full ninja validates the
+shared-header change next. See [[tickets/T-9940-wave-10-list-4]].
+
+## [2026-10-11] build | T-9940 six matches, all checksums pass
+Full incremental rebuild after the generated main_api guard succeeds for all
+27 binaries. Six retained functions total 1,492 bytes. Scoped duplicate pass
+restarted. See [[tickets/T-9940-wave-10-list-4]].
+
+## [2026-10-11] query | T-9940 deep-pass register and spill evidence
+Recorded repaired DATE color packing, OPTION/TACO four-byte spill-slot
+patterns, model-pointer construction, and the restored main switch candidate.
+All misses remain INCLUDE_ASM. Scoped duplicate tools retain no changes.
+See [[matching-notes]] and [[tickets/T-9940-wave-10-list-4]].
+
+## [2026-10-11] build | T-9940 local-table matches
+BUNKASAI `func_8015B828` passes real resolved diff; EVENT `func_80118DAC`
+has exact scratch words and is undergoing shared-declaration/build checks.
+Both use real aggregate layouts and meaningful locals, without FAKE padding.
+See [[tickets/T-9940-wave-10-list-4]] and [[matching-notes]].

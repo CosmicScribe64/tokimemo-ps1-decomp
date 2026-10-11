@@ -276,7 +276,28 @@ void func_8014BA54(s32 arg0) {
     } while (i != 5);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014BB30);
+void func_8014BB30(TtActor78 *arg0) {
+    s32 value;
+    u8 flag;
+
+    if ((s32)(func_800A0070(arg0->unk_24.w / 3072) << 9) < 0) {
+        value = -(func_800A0070(arg0->unk_24.w / 3072) << 9);
+    } else {
+        value = func_800A0070(arg0->unk_24.w / 3072) << 9;
+    }
+    arg0->unk_20.w = (value + 0x100000) * (arg0->unk_50 - 2);
+    if (((TtActorTail10 *)arg0->pad_5E)->unk_00 >= 0x19U) {
+        flag = ((TtActorTail10 *)arg0->pad_5E)->unk_02;
+        if (flag == 0) {
+            ((TtActorTail10 *)arg0->pad_5E)->unk_00 = 0;
+            ((TtActorTail10 *)arg0->pad_5E)->unk_02 = flag + 1;
+            func_80133D14(arg0->unk_14, arg0->unk_16, 0x20, 0xA0);
+        }
+    }
+    if (arg0->unk_51 != 0) {
+        ((TtActorTail10 *)arg0->pad_5E)->unk_00 += 1;
+    }
+}
 
 void func_8014BC74(s32 arg0) {
     u8 *p = D_80158A98;
@@ -693,7 +714,46 @@ void func_8014CC04(u8 *arg0) {
     ((TtOtTag *)(p + *(u16 *)(arg0 + 0x10) * 4 + 0x8008))->addr = (u32)v;
 }
 #else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CC04);
+void func_8014CC04(TtActor78 *arg0) {
+    TtDrawBuffer80B8 *p;
+    TILE *v;
+    u32 r;
+    u32 g;
+    u32 b;
+
+    p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
+    v = (TILE *)p->cursor;
+    p->cursor = (DR_MODE *)(v + 1);
+    ((TtOtTag *)v)->len = 3;
+    v->code = arg0->unk_3B;
+    if (arg0->unk_44 & 8) {
+        r = (arg0->unk_38 * D_80158A64[0x1D]) >> 7;
+        if ((s32)r >= 0x100) {
+            r = 0xFF;
+        }
+        g = (arg0->unk_39 * D_80158A64[0x1E]) >> 7;
+        if ((s32)g >= 0x100) {
+            g = 0xFF;
+        }
+        b = (arg0->unk_3A * D_80158A64[0x1F]) >> 7;
+        if ((s32)b >= 0x100) {
+            b = 0xFF;
+        }
+        v->r0 = r;
+        v->g0 = g;
+        v->b0 = b;
+    } else {
+        v->r0 = arg0->unk_38;
+        v->g0 = arg0->unk_39;
+        v->b0 = arg0->unk_3A;
+    }
+    v->x0 = arg0->unk_14;
+    v->y0 = arg0->unk_16;
+    v->w = arg0->unk_3C;
+    v->h = arg0->unk_3E;
+    ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[arg0->unk_10];
+    (&p->ordering[arg0->unk_10])->addr = (u32)v;
+}
 #endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CDBC);

@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-9940-wave-10-list-4|T-9940]] Wave 10: list 4 (In Progress).
 - [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch|T-9800]] uopt register allocation: working trace, eight rejected uniform candidates (Done; 27/27 clean build)
 - [[tickets/T-9810-permuter-farm-for-near-misses|T-9810]] Permuter farm for near misses (Done; 1,090 queued, four verified seed wins, 65 tests)
 - [[tickets/T-9760-wave-9-list-6|T-9760]] Wave 9: list 6 (Done; nine functions / 3,148 bytes)

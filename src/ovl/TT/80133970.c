@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80044750 /* unprototyped call preserves u16 argument conversion */
 #include "common.h"
 #include "ovl/TT.h"
+
+s32 func_80044750();
 
 void func_80133970(void) {
     s32 i;
@@ -42,7 +45,20 @@ void func_80133A60(void) {
     } while (i++ < 0x10000 && func_80044F94(1) == 0);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133AD0);
+void func_80133AD0(arg0)
+u16 arg0;
+{
+    TtState96 *data;
+    u16 index;
+    data = (TtState96 *)D_80158A60;
+    index = arg0 & 0x1F;
+    index |= (arg0 & 0x100) >> 3;
+    if (data->unk_56[index] == 0) {
+        func_80044750(arg0);
+        data->unk_56[index] = 1;
+    }
+}
+
 
 void func_80133B3C(void) {
     u8 *p = D_80158A60;

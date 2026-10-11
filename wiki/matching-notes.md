@@ -3378,3 +3378,66 @@ The minimal-local classifier search finished with a 22-line best result and no v
 TT actor +0x40 has a low-byte load in `func_8014C680` and halfword loads in `func_8014CDBC` / `func_8014CFEC`; final aggregate probe: typed halfword/byte union passes resolved diff and TT SHA1. T-9710.
 
 T-9710 final: ten matches add **5,596 actual splat bytes**, not the 5,608 work-list extents previously summed. RPG_BAT `func_80142F70` has a 2,228-byte function header versus the list's 2,240-byte extent; the extra 12 bytes explain the difference. Fresh resolved diffs, full default ninja, all 27 independently recomputed SHA1s, headers/globals and zero-new-disagreement prototype guard pass. Progress: `grand total   4880/6958   782256/2279368  34.3%`. Inline standards/spec review has zero unresolved findings; ticket/board/index are Done after 5.26 hours. Four new T-0018 symptom rows. TAIIKU data-island configuration and the incoming-a2 call-delay arity bug are handed to orchestration; no tool/config edits or commits. [[tickets/T-9710-wave-9-list-1]].
+
+## Wave 10, list 4 (T-9940)
+
+- `MouseState` (144 bytes): use an `s8 **` table-entry pointer and an `s32`
+  result initialized to zero. In the error arm assign `result = -1` before
+  clearing the four output bytes; place the successful copies in the `else`
+  arm and return the result once. This gives the original `$v0` entry address,
+  `$v1` result and `$a2` buffer, and schedules the final zero store in the
+  return delay slot. No dummy operations or forced registers are needed.
+- OPTION `func_8013A550` (180 bytes): both direction blocks are `if`/`else if`
+  chains. Assign the wrapped value to the argument, then return the argument
+  once. Early returns changed branch delay slots; a separate second decrement
+  `if` was also semantically wrong when both flag words held the direction.
+- Both real-file resolved diffs and their unit SHA1s pass. Historical T-0018
+  rows for these functions remain as history; these are source-shape fixes.
+- TT `func_8014BB30` (324 bytes): `TtActor78` fields instead of byte-offset
+  dereferences fix the product evaluation order (`value + 0x100000` before the
+  actor multiplier). `TtActorTail10` documents the two accessed fields within
+  the actor's previously unknown +0x5E region. Plain source; no FAKE needed.
+- TT `func_8014CC04` (440 bytes): the wave-7 byte-buffer draft was one `addu`
+  operand swap away. Index `TtDrawBuffer80B8.ordering` instead of adding byte
+  offsets for its ordering-table entries, and use TILE for the packet. Keep
+  the existing byte-array view of `D_80158A64` for the three color reads;
+  the alternate TtCore30 view changes register allocation. Real resolved diff
+  and the TT SHA1 pass, as does the full incremental build.
+- TACO `func_80141290`: m2c treated typed pointer increments as byte counts
+  (`TcActor + 0x440`, `Tc14 += 0x14`). Repair to +8 / +1, use
+  `base[1]` for the second position, and place that position write before
+  resets. Local order pointer/counter/counter/actor/base reproduces the spills
+  without keeping m2c's unused stack aliases.
+- TT `func_80133AD0`: splitting `index = arg0 & 0x1F` from
+  `index |= (arg0 & 0x100) >> 3` gives the original temporary ranges.
+  Both the index and K&R argument are u16. The call to `func_80044750`
+  must be unprototyped; an explicit s32 parameter changes the argument copy.
+  The 0x40 flags at offset 0x56 are represented by `TtState96`.
+- Deep-pass repairs: DATE `func_80150C78` falls from 32 to 16 instruction
+  edits by computing brightness * 19 once before packing three channels.
+  Remaining differences are the modulo input register, loop-shift live range,
+  and an eight-byte frame difference. Explicit signed/unsigned views and
+  loop-source variations did not close it.
+- OPTION `func_80137E38` reaches four edits: the same pointer spill/load is
+  at 0x28 instead of 0x2C; frame size and the other spill agree. Promoting the
+  signed-byte local to s32 and correcting word-index scaling from *8 to *2
+  fixes the real draft errors. 3-/4-local declaration orders, nested scopes,
+  meaningful extra locals and scratch padding probes do not close the slot.
+- TACO `func_8013A580`: removing duplicated m2c spill aliases repairs the
+  0x78 frame to the target's 0x68. All remaining edits are temporary spill
+  offsets four bytes below the target (fixed mode local and argument home
+  already agree). Declaration permutations and scratch padding/address-taking
+  variants do not fix the temporary region. Both stack cases stay assembly.
+- ETC `func_8014354C` and main `func_8006190C`: initialize the model
+  pointer before mapping and advance it across the call to retain the
+  original split constant-plus-increment construction. The ETC candidate
+  improves to 13 instruction edits, but still differs in scheduling and the
+  last shared-LUI stores. No source retained.
+- BUNKASAI `func_8015B828`: `s32 result; s32 index; Table40 table;`
+  plus direct GameState record-word access reproduces the frame, copy base,
+  selector and packed-field extraction. Store the final lookup into result
+  and return it. This closes the historical T-8040/T-9710 near miss.
+- EVENT `func_80118DAC`: the copy spans 0xE7 bytes, not just the 0xE4
+  loop extent; the last three bytes use lwl/swl. A byte table [11][21] in a
+  wrapper models it exactly. Two s16 counters, then a real s32 row-index
+  local, then the table give the target's 0x100 frame and sp+0x10 table.

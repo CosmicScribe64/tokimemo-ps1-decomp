@@ -89,3 +89,11 @@ typedef struct BunkModePair {
 } BunkModePair; /* size 0x08 */
 void func_8013B190(void);
 #endif
+
+#ifndef BUNKASAI_TABLE40_T9940
+#define BUNKASAI_TABLE40_T9940
+typedef struct BunkasaiTable40 {
+    /* 0x00 */ s32 unk_00[4][4];
+} BunkasaiTable40; /* size 0x40; copied by func_8015B828 */
+extern BunkasaiTable40 D_80160B50;
+#endif

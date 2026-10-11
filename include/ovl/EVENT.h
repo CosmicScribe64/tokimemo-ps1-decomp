@@ -1382,3 +1382,11 @@ typedef struct EventFlagRecord44 {
 } EventFlagRecord44; /* size 0x44 */
 s32 func_8010B8A4(void);
 #endif
+
+#ifndef EVENT_TABLE_E7_T9940
+#define EVENT_TABLE_E7_T9940
+typedef struct EventTableE7 {
+    /* 0x00 */ u8 unk_00[11][21];
+} EventTableE7; /* size 0xE7; inline copy includes a three-byte tail */
+extern EventTableE7 D_8012536C;
+#endif

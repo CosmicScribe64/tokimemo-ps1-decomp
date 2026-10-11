@@ -761,7 +761,47 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118A60);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118B4C);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118DAC);
+void func_80118DAC(s16 arg0, s16 *arg1, s16 *arg2) {
+    s16 i;
+    s16 j;
+    s32 row;
+    EventTableE7 table;
+
+    table = D_8012536C;
+    if (arg0 > 0) {
+        i = 0;
+positive_loop:
+        if (D_800B0962 >= (0x64 - (i * 0x19))) {
+            *arg1 = 5 - i;
+        } else {
+            i += 1;
+            if (i < 5) {
+                goto positive_loop;
+            }
+        }
+        if (D_800B0962 == 0) {
+            *arg1 = 0;
+        }
+        row = D_800B1746;
+        *arg2 = 5 - table.unk_00[row][D_801243B0];
+        return;
+    }
+    j = 0;
+negative_loop:
+    if (D_800B0962 >= (0x64 - (j * 0x19))) {
+        *arg1 = j + 3;
+    } else {
+        j += 1;
+        if (j < 5) {
+            goto negative_loop;
+        }
+    }
+    if (D_800B0962 == 0) {
+        *arg1 = 8;
+    }
+    row = D_800B1746;
+    *arg2 = table.unk_00[row][D_801243B0] + 3;
+}
 
 void func_80118F40(void) {
     func_8004A8EC((&D_8012438C)[D_800EECBC]);
