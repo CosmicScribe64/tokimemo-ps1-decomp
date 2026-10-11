@@ -24,6 +24,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-9340-wave-7-list-4|T-9340 Wave 7: list 4]]
+
 
 
 

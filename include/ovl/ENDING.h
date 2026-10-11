@@ -460,4 +460,6 @@ void func_80132F18();
 void func_80137730();
 void func_80137AA8();
 
+extern u8 D_8013CAA0;
+
 #endif /* OVL_ENDING_H */
