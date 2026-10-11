@@ -441,3 +441,21 @@ void func_8014C4AC(u8 *arg0);
 #define W9_TT_func_8014C580
 void func_8014C580(u8 *arg0);
 #endif
+
+#ifndef OVL_TT_T9940_ACTOR_TAIL
+#define OVL_TT_T9940_ACTOR_TAIL
+typedef struct TtActorTail10 {
+    /* 0x00 */ u16 unk_00;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 pad_03[13];
+} TtActorTail10; /* size 0x10; view of TtActor78 at +0x5E */
+#endif
+
+#ifndef TT_STATE96_DEFINED
+#define TT_STATE96_DEFINED
+/* Accessed prefix of D_80158A60, T-9940. */
+typedef struct TtState96 {
+    /* 0x00 */ u8 pad_00[0x56];
+    /* 0x56 */ u8 unk_56[0x40];
+} TtState96; /* size 0x96 */
+#endif

@@ -1,7 +1,25 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/nonmatchings/main/80059710", MouseState);
+s32 MouseState(s32 port, s8 *out) {
+    s8 **p;
+    s32 result;
+    p = &D_800E36C0[port];
+    result = 0;
+    if ((*p)[0]) {
+        result = -1;
+        out[0] = 0;
+        out[1] = 0;
+        out[2] = 0;
+        out[3] = 0;
+    } else {
+        out[0] = (*p)[4];
+        out[1] = (*p)[5];
+        out[2] = (*p)[3];
+        out[3] = (*p)[1];
+    }
+    return result;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80059710", InitMouse);
 

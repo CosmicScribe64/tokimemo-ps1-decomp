@@ -1,7 +1,31 @@
 #include "common.h"
 #include "ovl/OPTION.h"
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A550);
+s32 func_8013A550(s32 arg0, s32 arg1, s32 arg2) {
+    if (D_800E6280.unk_F88 & 0x80) {
+        arg0 += 1;
+        if (arg1 < arg0) {
+            arg0 = arg2;
+        }
+    } else if ((D_800E6280.unk_F80 & 0x80) && (D_800E6280.unk_F80 & 5)) {
+        arg0 += 1;
+        if (arg1 < arg0) {
+            arg0 = arg2;
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x10) {
+        arg0 -= 1;
+        if (arg0 < arg2) {
+            arg0 = arg1;
+        }
+    } else if ((D_800E6280.unk_F80 & 0x10) && (D_800E6280.unk_F80 & 5)) {
+        arg0 -= 1;
+        if (arg0 < arg2) {
+            arg0 = arg1;
+        }
+    }
+    return arg0;
+}
 
 void func_8013A604(void) {
     s32 i;

@@ -68,7 +68,52 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141050);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141170);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_80141290);
+s32 func_80141290(s32 arg0, s32 arg1) {
+    Tc14 *p;
+    s32 free_count;
+    s32 offset;
+    TcActor *act;
+    Tc14 *base;
+
+    if (arg0 == 0) {
+        act = D_8015EDB4;
+        base = D_8015E270;
+    } else {
+        base = D_8015E3B0;
+        act = D_8015EDB4 + 8;
+    }
+    free_count = 0;
+    if (arg1 & 0x20) {
+        offset = 0;
+        p = base;
+        do {
+            offset += 0x14;
+            if (!(p->unk13 & 0x80)) {
+                free_count += 1;
+            }
+            p += 1;
+        } while (offset != 0x140);
+        if (free_count != 0x10) {
+            return -1;
+        }
+        if (arg0 == 0) {
+            func_801335A0(1, 0x501);
+        }
+        base->unk13 = 0xB0;
+        base->unk0 = act->unk74;
+        base->unk2 = act->unk76 + 0x20;
+        base->unk4 = act->unk78;
+        base[1].unk0 = (s16) act->unk74;
+        base[1].unk2 = (s16) (act->unk76 + 0x20);
+        base[1].unk4 = (s16) act->unk78;
+        base->unk8 = 0;
+        base->unkA = 0;
+        base->unkC = 0;
+        base->unk12 = 0;
+        return 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801413B8);
 
