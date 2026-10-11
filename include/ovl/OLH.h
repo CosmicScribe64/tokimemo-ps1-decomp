@@ -29,7 +29,7 @@ void func_80133C4C(void);
 void func_80133D74(void);
 s32 func_80133EA4(void);
 s32 func_80133F90(void);
-void func_80134060(void);
+s32 func_80134060(void);
 s32 func_80134184(void);
 s32 func_80134254(void);
 s32 func_80134324(void);
@@ -89,3 +89,4 @@ extern s32 D_8013B754;
 #endif /* OVL_OLH_H */
 extern s32 D_8013A704;
 extern s32 D_8013A70C;
+extern s32 D_8013B748;
