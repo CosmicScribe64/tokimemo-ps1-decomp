@@ -4087,3 +4087,95 @@ Final-state Docker configure/ninja passes all 27 checksums; build/headers.ok and
 ## [2026-10-11] ticket | T-9610 In Review to Done
 
 Inline standards and spec review against HEAD 1e24c0394a695c64200126de3beff00e579f930a has no unresolved findings after correcting DR_TPAGE. Updated [[tickets/T-9610-aggregate-and-local-copy-types]], [[kanban]] and [[index]]. Existing Python tools and compiler passes remain untouched; two new regression test scripts accompany the layouts and measured rules. All edits are uncommitted for orchestrator integration. Rejected bodies remain assembly; [[matching-notes]] records their residual blockers.
+
+## [2026-10-11] ticket | T-9810 farm started
+
+Created [[tickets/T-9810-permuter-farm-for-near-misses]] and In Progress card in [[kanban]]. Read the required guidance and tools/permute.py; decided to verify only inside private scratch copies because its existing verifier temporarily rewrites source. Reuse tokimemo-decomp-arm64 and persistent CPU-only workers; leave all changes uncommitted.
+
+## [2026-10-11] build | T-9810 farm implementation and synthetic verification tests
+
+Added tools/permuter_farm.py, tools/permuter_farm.sh and tools/test_permuter_farm.py. Persistent detached CPU workers use private build copies under the specified scratch root, shared atomic/locked queue state, owner/slot locks, bounded search extensions and conservative FAKE annotations. [[decompile-workflow]] documents collection, background launch, resume, verification and artifacts. First Docker queue collection and synthetic test run are in progress; [[tickets/T-9810-permuter-farm-for-near-misses]] remains In Progress.
+
+## [2026-10-11] build | T-9810 initial queue and tests
+
+Docker collection found 1,076 candidates. All 13 synthetic farm tests passed (4.407 seconds); scoping, ranking, absent drafts, NON_MATCHING/T-0018 ingestion, stale-owner recovery, budget extension, SHA-1 rejection, jump-table handling, source restoration and FAKE export are covered. Four task-owned Docker workers started a short smoke run; isolated build preparation is ongoing. Added queue score-kind tracking and worker-ID/path guards while examining the implementation. See [[tickets/T-9810-permuter-farm-for-near-misses]] and [[decompile-workflow]].
+
+## [2026-10-11] decision | T-9810 resume safety and conservative FAKE handling
+
+The full permuter/farm regression run passed 53 tests; two additional farm checks passed for live-owner exclusion and exception-safe source restoration (15 farm tests, 8.726 seconds). Fixed repeated compatibility patch installation, guarded private worker IDs, recorded score kind/current best in the normalized queue, and bounded helper process groups. Exported wins conservatively retain a FAKE annotation even for unchanged seeds, because normalization could otherwise drop an earlier FAKE comment preceding a function. No new toolchain emulation rule was added. [[tickets/T-9810-permuter-farm-for-near-misses]] records the run gate; [[decompile-workflow]] documents the conservative review requirement.
+
+## [2026-10-11] build | T-9810 four-worker hour run launched
+
+Stopped only the four task-owned smoke containers during preparation to load reviewed fixes, preserving their incremental private build trees. The farm now invokes tools/permute.py's run() API: its --no-verify CLI deliberately returns failure for score-zero outputs, which must not bypass verification. Added a regression test proving a new zero reaches verification; all 16 farm tests passed (6.780 seconds). Started four persistent CPU-only Docker workers with 1,200-second candidate budgets and 3,600-second search windows. Queue remains 1,076 candidates. [[tickets/T-9810-permuter-farm-for-near-misses]] tracks results; [[decompile-workflow]] documents the launcher.
+
+## [2026-10-11] build | T-9810 inline review corrections and reporting
+
+Inline standards/spec review against the uncommitted HEAD changes found historical build-error rows using zero-initialized edits, and a live-claim replacement risk on recollection. Resolved both with tests; switched search invocation to tools/permute.py's run API so zero outputs reach verification. Added short status output and scratch timing report exports. Previous full regression passed 57 tests. Rebuilding the normalized queue while the four workers finish preparation. [[tickets/T-9810-permuter-farm-for-near-misses]], [[decompile-workflow]].
+
+## [2026-10-11] build | T-9810 final queue snapshot and hour workers
+
+Recollection completed: 1,076 candidates, with build-error counters now treated as unknown. Restarted only this task's four worker containers to load the final collector/claim safeguards and conservative FAKE handling; private splits and search directories persist. Previous workers completed two helper failures, no verified wins. The fresh four workers run the final implementation for one hour of candidate processing (1,200-second permuter budgets); no further recollection is planned during this snapshot. [[tickets/T-9810-permuter-farm-for-near-misses]] remains In Progress pending the real run and final review.
+
+## [2026-10-11] build | T-9810 final regression and inline review
+
+All 58 tests passed in Docker (40.473 seconds), including 18 farm tests. Inline review against CODING_STANDARDS.md and the task resolved all identified findings; uncommitted changes pass whitespace checks. Private preparation resumed incrementally with ninja reporting no work, and the four final CPU workers began claiming the corrected queue. Only this task's containers have been stopped/restarted. [[tickets/T-9810-permuter-farm-for-near-misses]] awaits the hour run and result review.
+
+## [2026-10-11] build | T-9810 shared wrapper regex stall resolved
+
+The live run exposed exponential backtracking in tools/permute.py while stripping definitions from preprocessed headers: faulthandler identified strip_functions and function_range. Changed the broad name scan to cheap signature prefixes and made K&R declaration starts disjoint from whitespace in def_regex, preserving multiline ANSI/K&R support. The same real draft now preprocesses/strips in 3.046 seconds (54,221 bytes), instead of spending minutes in regexes. Added synthetic long-declaration rejection and multiline helper tests. Stopped only this task's four workers and task-owned profiling containers; private builds/search state persist. [[tickets/T-9810-permuter-farm-for-near-misses]] includes this necessary wrapper fix; [[decompile-workflow]] will document the result.
+
+## [2026-10-11] build | T-9810 60 regressions passed, useful hour run started
+
+All 60 permuter/farm tests passed in Docker (38.592 seconds), including the two parser-stall regressions. Started four persistent CPU-limited workers using the corrected shared wrapper; setup now finishes in seconds and the worker roots remain incremental. [[tickets/T-9810-permuter-farm-for-near-misses]] awaits verified wins and timings. [[decompile-workflow]] documents the shared scanner fix.
+
+## [2026-10-11] decision | T-9810 measured diff listings override stale counters
+
+Observed wave JSONL rows with status diff, real instruction listings, and zero-initialized edits/lines counters. The collector now counts actual +/- instruction lines before consulting those fallback counters, recognizes explicit MATCH, rejects ERROR listings, and accepts stem/label scope metadata even when unit contains build output. Added regressions. Recollection updates queued drafts while active claims remain protected; the running four-worker hour window continues without restart. [[tickets/T-9810-permuter-farm-for-near-misses]], [[decompile-workflow]].
+
+## [2026-10-11] build | T-9810 queue scope and durable timing journals
+
+Corrected collection now finds 1,090 candidates (+14 from stem/label scoping). The 19 farm tests passed after diff-listing precedence and scope corrections. Timing reports now merge worker journals with state so changed fingerprints retain old attempt durations; added deduplication/archive tests and a strict private-source path guard. Four searches continue on CPU, with best observed GYOZI scores 305, 1,725 and 1,275; no verified wins yet. [[tickets/T-9810-permuter-farm-for-near-misses]] remains In Progress; usage and caveats are in [[decompile-workflow]].
+
+## [2026-10-11] build | T-9810 real verification control passed
+
+Docker verification of existing matched VALEN func_80132000 in worker 1's private root passed funcdiff --resolve and ninja build/ovl/VALEN.ok (unit sha1), in 43.763 seconds; byte-identical source restoration was asserted. This control is not counted as a farm win. Evidence: scratchpad/r9-farm/validation/control/result.json. All 21 current farm tests passed (11.795 seconds). GYOZI func_80137F48 improved to permuter score 135; four active searches are approaching their first 20-minute limits. [[tickets/T-9810-permuter-farm-for-near-misses]], [[decompile-workflow]].
+
+## [2026-10-11] build | T-9810 first verified farm win
+
+RPG_BAT func_80138170 passed funcdiff --resolve and the RPG_BAT unit sha1; exported C and verification JSON are in scratchpad/r9-farm/wins/RPG_BAT/. It is an unchanged score-zero seed (not a newly discovered random mutation), with an unsigned selector view requiring the retained FAKE annotation. Report currently contains 13 completed attempts, including earlier failed starts, with timings reconstructed from worker journals. First full-budget searches took about 1,212-1,219 seconds including setup/shutdown; no live src/ edits. [[tickets/T-9810-permuter-farm-for-near-misses]], [[decompile-workflow]].
+
+## [2026-10-11] lint | T-9810 first win reviewed, live source unchanged
+
+Inline review of the first exported win confirmed C89 and preserved verified layout. Replaced its generic annotation with the specific FAKE reason: an unsigned view of signed RPG_BAT D_8015EBAC reproduces inner-switch selector allocation. Verification JSON retains MATCH and unit SHA-1 evidence. git status shows only tooling/wiki changes, no src/ modifications and no staged files; git diff --check passes. The four CPU jobs continue; [[tickets/T-9810-permuter-farm-for-near-misses]] stays In Progress until the requested hour ends.
+
+## [2026-10-11] ingest | T-9810 verified scratch selector solution recorded
+
+Appended the verified RPG_BAT func_80138170 unsigned-selector solution to [[data/t0018-cases]] without editing historical rows. It remains a FAKE-labelled scratch win awaiting orchestrator application; no live source match is claimed. [[tickets/T-9810-permuter-farm-for-near-misses]] holds verification evidence and timing results.
+
+## [2026-10-11] build | T-9810 three verified seed wins and inline artifact review
+
+Verified RPG_BAT func_8014FDBC (114.300 seconds) and TACO func_801522B0 in addition to RPG_BAT func_80138170. All three are existing score-zero seeds checked with funcdiff --resolve and their full unit sha1; no new random-mutation win is claimed. Exported bodies retain verified layout. Inline review added precise FAKE notes for the TACO redundant byte/range/goto shape and the RPG_BAT pointer-to-s32 argument view. The latter is conservatively flagged until the original callee argument type is recovered. The running farm skipped BUNKA_SD after two stagnant attempts, demonstrating exhaustion/resume behavior. [[tickets/T-9810-permuter-farm-for-near-misses]] awaits the end-of-hour report.
+
+## [2026-10-11] build | T-9810 fourth verified seed, plain C review
+
+TT func_80133970 passed funcdiff --resolve and the TT unit sha1. Inline review found plain C89, with two independently used loop counters and no identified compiler-forcing construct; removed the default conservative FAKE marker, preserving its verified body. The other three wins retain reviewed FAKE/conservative type-view notes. All four are existing drafts recovered and verified by the farm, not newly found random mutations. [[tickets/T-9810-permuter-farm-for-near-misses]] will report all candidate timings after the hour window finishes.
+
+## [2026-10-11] build | T-9810 final collector review, multiline draft support
+
+Final inline review replaced the farm's single-line-only standalone definition enumeration with the wrapper's shared cheap signature scanner. This preserves multiline ANSI and K&R drafts, avoids duplicate scanner rules, and has a new synthetic collection regression. The ongoing four-worker hour run is unaffected: its normalized queue snapshot stays 1,090 and no active claims are restarted. Four verified seed wins remain; final combined regressions are running in Docker. [[tickets/T-9810-permuter-farm-for-near-misses]], [[decompile-workflow]].
+
+## [2026-10-11] ticket | T-9810 In Review after inline review
+
+Moved [[tickets/T-9810-permuter-farm-for-near-misses]] and its [[kanban]] card to In Review; index agrees. Final inline standards/spec review has no unresolved findings; all 64 combined regressions passed in Docker (29.681 seconds), and whitespace checks pass. Four verified seed exports have inline reviews and preserved bodies. Remaining acceptance item is completion/reporting of the requested one-hour four-job run. No live src/ edits or commits.
+
+## [2026-10-11] build | T-9810 completed hour run and final verification review
+
+Four persistent CPU workers completed 3,655.075 seconds (60.92 minutes), processing 25 attempts on 21 functions from a 1,090-candidate queue. Four existing zero-score drafts passed funcdiff --resolve and unit sha1: RPG_BAT func_80138170 (60.066 s), RPG_BAT func_8014FDBC (114.300 s), TACO func_801522B0 (48.324 s), TT func_80133970 (47.141 s). No random-mutation win was found. Every attempt's timing is in scratchpad/r9-farm/report.md/report.json; hour-only metrics are in hour-summary.json. Final review removed early exit after the first verified zero; all 65 combined tests passed (35.055 seconds). Winning bodies and reviewed FAKE notes are preserved. All four workers exited; stopped only the task-owned monitor. [[decompile-workflow]] and [[tickets/T-9810-permuter-farm-for-near-misses]] record results.
+
+## [2026-10-11] ticket | T-9810 Done after inline review and hour run
+
+Moved [[tickets/T-9810-permuter-farm-for-near-misses]] and its [[kanban]] card from In Review to Done after the completed real run and final standards/spec review, with no unresolved findings. Index agrees. Live src/ and raw sources are unchanged; no commits, stashes or branches were created. All tooling/wiki changes remain uncommitted; the orchestrator applies verified scratch wins.
+
+## [2026-10-11] lint | T-9810 final status and delivery consistency
+
+Confirmed [[tickets/T-9810-permuter-farm-for-near-misses]], [[kanban]] and [[index]] agree on Done, the per-attempt report exists, and git diff --check passes. The uncommitted file list contains only tooling and wiki changes; src/ is untouched. All acceptance items and inline review are complete.

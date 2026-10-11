@@ -70,7 +70,9 @@ SCORE_RE = re.compile(r"output-(\d+)-(\d+)$")
 def def_regex(func):
     """Matches the opening of a C definition of `func` (not a call, not INCLUDE_ASM): the ANSI form
     `T f(params) {` and the K&R form `T f(a, b)` + parameter declarations + `{` (T-5030)."""
-    return re.compile(r"^[A-Za-z_][^;{}()\n]*[ \t*]%s\([^;{}]*\)\s*(?:[^;{}]+;\s*)*\{" % re.escape(func), re.M)
+    # A K&R declaration starts with a type/name, not whitespace. Keeping those
+    # sets disjoint avoids exponential backtracking over header declarations.
+    return re.compile(r"^[A-Za-z_][^;{}()\n]*[ \t*]%s\([^;{}]*\)\s*(?:[A-Za-z_][^;{}\n]*;\s*)*\{" % re.escape(func), re.M)
 
 
 def find_source(root, func, unit=None):
@@ -195,9 +197,17 @@ def install_permuter_compat():
     ast_types.build_typemap = build_typemap
 
 
+def signature_names(text):
+    """Cheap signature prefixes, including multiline ANSI/K&R definitions."""
+    # Collect cheap signature prefixes first. Searching for a whole definition in
+    # one regex backtracks exponentially across long prototype lists (T-9810).
+    # function_range checks each name separately, including multiline ANSI/K&R.
+    return set(re.findall(r"^[A-Za-z_][^;{}()\n]*[ \t*](\w+)\(", text, re.M))
+
+
 def strip_functions(pre, func):
     """Strip other ANSI and K&R bodies, preserving the target text/line layout."""
-    names = set(re.findall(r"^[A-Za-z_][^;{}()\n]*[ \t*](\w+)\([^;{}]*\)\s*(?:[^;{}]+;\s*)*\{", pre, re.M))
+    names = signature_names(pre)
     edits = []
     for name in names:
         if name == func or name.startswith("PERM"):

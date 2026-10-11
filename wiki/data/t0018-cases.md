@@ -1305,3 +1305,11 @@ T-9550 deep-pass resolution: `main:func_80086640` now matches with a marked FAKE
 2026-10-11 T-9550 deep-pass resolution: `main:func_80067DD4` and `main:func_80067DFC` now MATCH with fresh resolved diffs and main unit SHA1. Signed-halfword promotion followed by a byte local and address alias preserves the final `andi v0,t7,0xff`; five-minute-bound permutation found the first shape, and removal of redundant nested self-assignment / XOR-zero still matches. Historical promo rows are retained above.
 
 2026-10-11 T-9550 deep-pass resolutions: GEKO `func_8013CC20` matches with an explicit byte store followed by the GameState member read; GEKO `func_80139C70` matches with a post-call byte local and chained Rec24 colour fields. BUNKAKEN `func_80152F4C` matches with a copied 4-by-4 aggregate, inlined field indices, signed result and marked frame-padding word. Main `func_8006C700` matches with member-indexed halfwords and inlined unsigned bit extraction. All have fresh resolved diffs and unit SHA1 passes. Historical rows remain as evidence; no new symptom rows were added in the deep pass.
+
+T-9810 farm re-test (2026-10-11): RPG_BAT `func_80138170` has a verified
+scratch solution using `*(u32 *)&D_8015EBAC` for the inner selector and its repeated
+uses. The shared overlay declaration remains `s32`; the unsigned view is annotated
+FAKE because it reproduces selector allocation. `funcdiff --resolve` and the whole
+RPG_BAT unit sha1 both pass. The live source tree is unchanged; application belongs
+to the orchestrator. Artifact: `scratchpad/r9-farm/wins/RPG_BAT/func_80138170.c`;
+evidence and timings: [[tickets/T-9810-permuter-farm-for-near-misses]].

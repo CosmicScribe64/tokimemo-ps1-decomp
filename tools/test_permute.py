@@ -156,6 +156,20 @@ class Args(unittest.TestCase):
 
 @unittest.skipUnless(os.path.isdir(permute.PERMUTER) and shutil.which("gcc"), "needs decomp-permuter and gcc (Docker)")
 class KnrBase(unittest.TestCase):
+    def test_long_declaration_sequence_without_body_is_rejected_quickly(self):
+        # A malformed or macro-expanded signature must not stall the farm.
+        text = 'int decoy(a)\n' + ''.join('int arg%d;\n' % i for i in range(40)) + ';\n'
+        text += 'int target(void) { return 7; }\n'
+        self.assertIsNone(permute.function_range(text, 'decoy'))
+        self.assertEqual(permute.strip_functions(text, 'target'), text)
+
+    def test_multiline_ansi_helpers_are_stripped(self):
+        text = 'int other(\nint a,\nint b)\n{ return a+b; }\nint target(void) { return 7; }\n'
+        stripped = permute.strip_functions(text, 'target')
+        self.assertNotIn('return a+b', stripped)
+        self.assertIn('int other(', stripped)
+        self.assertIn('return 7', stripped)
+
     def test_build_base_accepts_a_knr_target(self):
         with tempfile.TemporaryDirectory() as root:
             src = touch(root, "a.c", "int D;\nvoid other(void) {\n    D = 2;\n}\n\n"
