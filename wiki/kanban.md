@@ -28,6 +28,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-9920-wave-10-list-2|T-9920 Wave 10: list 2]]
 - [ ] [[tickets/T-9940-wave-10-list-4|T-9940 Wave 10: list 4]]
+- [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 
 

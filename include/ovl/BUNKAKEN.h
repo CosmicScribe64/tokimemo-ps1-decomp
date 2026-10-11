@@ -72,3 +72,34 @@ typedef struct BunkakenGrid4 { /* size 0x40 */
 extern BunkakenGrid4 D_801564E0;
 
 #endif
+
+#ifndef OVL_BUNKAKEN_T9960
+#define OVL_BUNKAKEN_T9960
+/* Byte at D_800E7D4F: continuation flags and three-bit mode (T-9960). */
+typedef struct BunkakenModeFlags {
+    /* 0x00 */ u8 b0 : 1;
+    /* 0x00 */ u8 b1 : 1;
+    /* 0x00 */ u8 mode : 3;
+    /* 0x00 */ u8 pad : 3;
+} BunkakenModeFlags; /* size 0x01 */
+
+void func_80140EF4(void);
+
+void func_8014E3DC(void);
+
+/* Local text-pointer tables copied by func_80152680 (T-9960). */
+typedef struct BunkakenTexts12 {
+    /* 0x00 */ u8 *text[12];
+} BunkakenTexts12; /* size 0x30 */
+typedef struct BunkakenTexts11 {
+    /* 0x00 */ u8 *text[11];
+} BunkakenTexts11; /* size 0x2C */
+typedef struct BunkakenTexts4 {
+    /* 0x00 */ u8 *text[4];
+} BunkakenTexts4; /* size 0x10 */
+extern BunkakenTexts12 D_80156470;
+extern BunkakenTexts11 D_801564A0;
+extern BunkakenTexts4 D_801564CC;
+extern u8 D_801564DC;
+s32 func_80152F4C(void);
+#endif

@@ -96,4 +96,16 @@ typedef struct BunkasaiTable40 {
     /* 0x00 */ s32 unk_00[4][4];
 } BunkasaiTable40; /* size 0x40; copied by func_8015B828 */
 extern BunkasaiTable40 D_80160B50;
+#ifndef OVL_BUNKASAI_T9960
+#define OVL_BUNKASAI_T9960
+/* Byte at D_800E7D4F: continuation flags and three-bit mode (T-9960). */
+typedef struct BunkasaiModeFlags {
+    /* 0x00 */ u8 b0 : 1;
+    /* 0x00 */ u8 b1 : 1;
+    /* 0x00 */ u8 mode : 3;
+    /* 0x00 */ u8 pad : 3;
+} BunkasaiModeFlags; /* size 0x01 */
+
+void func_8013B120(void);
+void func_801508C4(void);
 #endif
