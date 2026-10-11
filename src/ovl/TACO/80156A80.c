@@ -20,7 +20,21 @@ void func_80156F50(void) {
     func_8015ACCC(0xB, 0x10, D_801604D4, pos, D_801604E4, 6, 0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801570A4);
+void func_801570A4(s32 arg0) {
+    TcPos pos;
+
+    if ((arg0 + D_8015EDB4)->unk7A % 60 == 0) {
+        pos.x = (arg0 + D_8015EDB4)->unk74;
+        pos.y = (arg0 + D_8015EDB4)->unk76;
+        pos.z = (arg0 + D_8015EDB4)->unk78;
+        func_8013DB80(pos, 0x80, 0);
+    }
+    (arg0 + D_8015EDB4)->unk76 += func_800A0070((arg0 + D_8015EDB4)->unk7A << 6) * 0x14 >> 12;
+    (arg0 + D_8015EDB4)->unk78 += 0x96;
+    if ((arg0 + D_8015EDB4)->unk78 > 0x1000) {
+        func_8015C208(arg0);
+    }
+}
 
 void func_801571E8(void) {
     TcPos p0;
