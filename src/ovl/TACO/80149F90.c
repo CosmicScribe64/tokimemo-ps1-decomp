@@ -219,7 +219,41 @@ void func_8014B4B4(s32 arg0) {
     D_8015EDB4[17].unk3 += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014B5F0);
+void func_8014B5F0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 i;
+    u8 t;
+
+    t = *arg1;
+    if (t < 0xC || t >= 0x16) {
+        if ((u32)arg4 < *arg0) {
+            func_8014B8B4(arg2, arg3, t);
+            *arg1 += 1;
+            *arg0 = 0;
+            t = *arg1;
+        }
+    } else if (t >= 0xC && t < 0x16) {
+        if (*arg0 != 0) {
+            func_8014B8B4(arg2, arg3, t);
+            *arg1 += 1;
+            *arg0 = 0;
+            t = *arg1 ^ 0; /* FAKE: the ^ 0 burns the $t3 temporary the original skips (permuter); real source unknown. T-9320 */
+        }
+    }
+    if (t >= 0x32) {
+        *arg1 = 0;
+        *arg0 = 0;
+        if (arg2 == 9) {
+            D_8015EDB4[18].unk84[2] = 0;
+        } else {
+            D_8015EDB4[19].unk84[2] = 0;
+        }
+        for (i = arg2; i < arg2 + 3; i++) {
+            func_801472D4(i, 1, D_8015FEF0[i * 2 - 2], D_8015FEF0[i * 2 - 1], D_8015FFE0[i * 2 - 2], D_8015FFE0[i * 2 - 1]);
+        }
+    } else {
+        *arg0 += 1;
+    }
+}
 
 void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4) {
     s32 i;
