@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-9360-wave-7-list-6|T-9360 Wave 7: list 6]]
 
 
 
@@ -38,7 +37,8 @@ kanban-plugin: board
 
 
 ## Done
-- [x] [[tickets/T-9210-wave-6-codegen-shapes|T-9210 Wave-6 codegen shapes]]
+
+- [x] [[tickets/T-9360-wave-7-list-6|T-9360 Wave 7: list 6]]- [x] [[tickets/T-9210-wave-6-codegen-shapes|T-9210 Wave-6 codegen shapes]]
 - [x] [[tickets/T-9220-wave-6-tool-fixes|T-9220 Wave-6 tool fixes]]
 - [x] [[tickets/T-9200-gcc-built-sdk-objects-in-overlays|T-9200 gcc-built SDK objects inside overlays]]
 - [x] [[tickets/T-9150-wave-6-list-5|T-9150 Wave 6 list 5]]

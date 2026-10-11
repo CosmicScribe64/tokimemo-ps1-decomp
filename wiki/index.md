@@ -26,6 +26,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9110-wave-6-list-1|T-9110]] Wave 6, list 1: 29 functions matched (6,688 bytes), new idioms in [[matching-notes]], 31 rows in [[data/t0018-cases]] (Done)
 - [[tickets/T-9000-t0018-register-order-rule-or-build-step|T-9000]] T-0018 register order under K&R: 20 rows matched as source idioms, clusters, no new pass (Done)
 - [[tickets/T-9020-wave-5-codegen-shapes|T-9020]] Wave-5 codegen shapes: idioms for 8 shapes, 13 functions (Done)
+- [[tickets/T-9360-wave-7-list-6|T-9360]] Wave 7 list 6: 3 matched (TAIIKU `func_80146B8C` via data island, `icon_disp_switch` via local `GameState *g`, GEKO `func_8013A6D0`), 26 T-0018 rows; [[matching-notes]] "Wave 7, list 6" (Done)
 - [[tickets/T-9210-wave-6-codegen-shapes|T-9210]] Wave-6 codegen shapes: check_para_limit takes no argument, index as a member, indexed loops for the stack-argument slot, K&R definitions, element chains; [[matching-notes]] "Wave-6 codegen shapes" (Done)
 - [[tickets/T-8080-wave-5-list-8|T-8080]] Wave 5: list 8 (Done)
 - [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
