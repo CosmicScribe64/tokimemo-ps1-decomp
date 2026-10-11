@@ -258,7 +258,18 @@ void func_8011552C(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801155D4);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80115714);
+void func_80115714(void) {
+    func_80078970(D_800947C4, "ナイトパレード");
+    func_800433D0(0x204);
+    func_800469F4(0x42DB);
+    (&D_80124394)[0] = (&D_80124394)[1] = (&D_80124394)[2] = 1;
+    (&D_801243A4)[0] = (&D_801243A4)[1] = (&D_801243A4)[2] = 0;
+    if (D_800B1746 == 2) {
+        (&D_80124394)[0] = (&D_80124394)[1] = (&D_80124394)[2] = 3;
+        (&D_801243A4)[0] = (&D_801243A4)[1] = (&D_801243A4)[2] = 2;
+    }
+    func_80011DFC();
+}
 
 void func_801157D4(void) {
     func_800469F4(0x429B);
