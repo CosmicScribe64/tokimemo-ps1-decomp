@@ -16,7 +16,8 @@ The object's `.data` range comes from its `data` line in config/objects/<UNIT>.t
      range into the C file, in address order, after its `#include` lines. tools/data_pieces.py
      (run after every split) writes those pieces. A variable starts on a multiple of 4 (IDO
      aligns every data definition to 4), so a symbol at an unaligned address is a member of
-     the one before it and gets no line.
+     the one before it and gets no line. Nor does an aligned label that only a data word names
+     (a pointer into the middle of an array) and no code does: it is reported as interior.
 
 Afterwards replace a line by the C definition of that variable (same place, same size, with
 its initialiser): `s32 D_8015EE30[4] = { 0, 0, 0, 0 };`. The bytes then come from the C
@@ -54,8 +55,26 @@ def piece_dir(unit, addr):
     return "asm/ovl/%s/data/%s/%08X.data" % (unit, unit, addr)
 
 
-def insert_block(text, lines):
-    """C text with `lines` after the last top-of-file #include/#define line."""
+def split_starts(items, start, code_refs):
+    """([(addr, name)] variable starts, [(addr, name, owner)] interior labels) of the aligned items.
+    A variable starts at the range start or where code names the symbol (`%hi/%lo`). An aligned label
+    that only a data word names (a pointer table entry into the middle of an array: TACO
+    `D_8015F718` inside `D_8015F604`, T-9220) is listed as interior of the variable before it; the
+    object's C file then defines the whole array, and a line for it would duplicate its bytes."""
+    starts, interior = [], []
+    for a, n, _w in items:
+        if a % 4:
+            continue
+        if starts and a != start and n not in code_refs:
+            interior.append((a, n, starts[-1][1]))
+        else:
+            starts.append((a, n))
+    return starts, interior
+
+
+def insert_block(text, lines, interior=()):
+    """C text with `lines` after the last top-of-file #include/#define line. `interior`
+    ([(addr, name, owner)]) are named in the block comment, not given a line."""
     rows = text.splitlines(True)
     last = -1
     for i, r in enumerate(rows):
@@ -63,7 +82,9 @@ def insert_block(text, lines):
             last = i
         elif r.startswith(("INCLUDE_ASM", "INCLUDE_RODATA")) or re.match(r"^\w[^;]*\)\s*\{", r):
             break
-    block = [BLOCK_HEAD] + [l + "\n" for l in lines]   # no blank line: as split_objects.py renders it
+    notes = ["/* not a variable start (named only by a data pointer, inside %s): %s */\n" % (o, n)
+             for _a, n, o in interior]
+    block = [BLOCK_HEAD] + [l + "\n" for l in lines] + notes   # no blank line: as split_objects.py renders it
     return "".join(rows[:last + 1] + block + rows[last + 1:])
 
 
@@ -121,11 +142,14 @@ def plan(root, arg):
     pdir = piece_dir(unit, addr)
     if '"%s"' % pdir in ctext:
         raise IslandError("%s already has the data island" % cpath)
-    lines = ['INCLUDE_RODATA("%s", %s);' % (pdir, n) for a_, n, _w in items if a_ % 4 == 0]
+    funcs, _items = ob.load(units[unit], root)
+    code_refs = set().union(*(f.refs for f in funcs)) if funcs else set()
+    starts, interior = split_starts(items, r.start, code_refs)
+    lines = ['INCLUDE_RODATA("%s", %s);' % (pdir, n) for _a, n in starts]
     ypath = so.yaml_path(unit)
     ytext = so.read_text(os.path.join(root, ypath))
-    return [(cpath, insert_block(ctext, lines)),
-            (ypath, split_yaml(ytext, unit, r.start, r.end, island_name(unit, addr)))], r, len(lines)
+    return [(cpath, insert_block(ctext, lines, interior)),
+            (ypath, split_yaml(ytext, unit, r.start, r.end, island_name(unit, addr)))], r, len(lines), interior
 
 
 def main(argv=None):
@@ -136,9 +160,12 @@ def main(argv=None):
     a = ap.parse_args(argv)
     try:
         for arg in a.objects:
-            writes, r, n = plan(a.root, arg)
+            writes, r, n, interior = plan(a.root, arg)
             print("%s: .data %08X-%08X (%s/%s), %d INCLUDE_RODATA lines%s"
                   % (arg, r.start, r.end, r.start_ev, r.end_ev, n, " (dry run)" if a.dry_run else ""))
+            for _a, name, owner in interior:
+                print("  %s: no line, %s is not a variable start (no code names it, only a data pointer)"
+                      "; if it is its own variable add the INCLUDE_RODATA line for it" % (name, "inside " + owner))
             if not a.dry_run:
                 for p, t in writes:
                     with open(os.path.join(a.root, p), "w") as f:

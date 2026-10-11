@@ -33,9 +33,15 @@ Modes (run from the repo root, inside Docker like every tool):
                                      Everything in the globals and functions sections that is not a declaration
                                      of a symbol stays (T-7030): comments, #if blocks, type definitions. A
                                      comment moves with the declaration below it when the address order changes.
+                                     A symbol --write cannot move (its type is defined only in the declaring
+                                     header) is printed as SKIPPED with the fix; one inside an aggregate
+                                     (GameState) as WARNING.
   sync_protos.py --fix               --write, then edit the headers: delete declarations that main_api.h now
                                      carries (same type, or another type nobody uses), keep the others as
                                      explicit overrides with an automatic reason, add the main_api.h include
+  sync_protos.py --add-global NAME TYPE   declare a new main-exe global in main_api.h (T-9220): `--add-global
+                                     D_800B66E0 'u16[4]'`. --write/--fix only move declarations that a header
+                                     already holds; a name only a .c file declares needs this.
   sync_protos.py --snapshot FILE     save the type every .c file sees for every symbol it uses (JSON)
   sync_protos.py --compare FILE      list the symbols whose view changed since the snapshot; the proof that a
                                      header refactor changes what no matched function sees
@@ -443,18 +449,51 @@ def choose(model, name, group, defs):
     return best[1], best[2], "overlay views"
 
 
+def skip_reason(model, name, group):
+    """Why --write leaves `name` out of main_api.h, with the fix (T-9220: this used to be silent)."""
+    h, _t, raw = group[0]
+    types = sorted({i for i in re.findall(r"[A-Za-z_]\w*", raw) if i in model.local_types(h)} - model.api_types())
+    return ("declared in %s with %s, which only %s defines, so main_api.h cannot hold it. Fix: move the typedef "
+            "of %s into include/main_api.h (types section, before the globals; Rec24 and GameState live there) "
+            "and run --write again" % (h, ", ".join(types), h, ", ".join(types)))
+
+
+def aggregate_warnings(model):
+    """[(symbol, text)]: main-exe globals that lie inside an aggregate of config/migrate_globals.txt
+    (GameState D_800E6280, ...). Declaring one as its own extern gives a second symbol for a field."""
+    cfg = os.path.join(model.root, "config", "migrate_globals.txt")
+    if not os.path.exists(cfg):
+        return []
+    import migrate_globals as mg
+    try:
+        aggs, _keep = mg.load_config(model.root, cfg)
+    except SystemExit:
+        return []
+    out = []
+    for name in sorted(set(candidates(model)) | set(model.api)):
+        a = model.addr(name)
+        for g in aggs:
+            if a is not None and g.holds(a):
+                out.append((name, "%s lies inside %s %s (%s + 0x%X): use the field %s.<member> instead of a "
+                            "separate extern (tools/migrate_globals.py)" % (name, g.tname, g.base, g.base, a - g.addr, g.base)))
+    return out
+
+
 def plan(model):
-    """{symbol: (type, raw, why)} for every symbol main_api.h must hold."""
+    """{symbol: (type, raw, why)} for every symbol main_api.h must hold. Symbols left out are in
+    model.skipped {name: reason}."""
     defs = definitions(model) if model.sources else {}
     cands = candidates(model)
     out = {}
-    for name in set(cands) | set(model.api):
+    model.skipped = {}
+    for name in sorted(set(cands) | set(model.api)):
         group = cands.get(name, [])
         if name not in cands and name not in defs:
             t, r = model.api[name]
             out[name] = (t, r, "main_api.h")
             continue
         if group and all(model.needs_local_type(r, h) for h, _t, r in group):
+            model.skipped[name] = skip_reason(model, name, group)
             continue
         group = [g for g in group if not model.needs_local_type(g[2], g[0])]
         out[name] = choose(model, name, group, defs if name in defs else {})
@@ -1403,6 +1442,40 @@ def add_implicit_overrides(model, changes, log=print):
 
 # ---------------------------------------------------------------------------------------------
 
+def add_global(inc, src, name, typ, log=print):
+    """Add `extern TYPE NAME;` to main_api.h (T-9220): the supported way to declare a new main-exe
+    global, which --write/--fix cannot find when only a .c file declares it. TYPE is a base type
+    with optional pointer stars and array suffix (`u8`, `s16 *`, `s16[4]`, `u8[0x10]`). Returns
+    an error string, or None."""
+    model = Model(inc, src)
+    if not model.in_main_range(name) or is_func_name(name):
+        return "%s is not a main-exe global (address 0x%X-0x%X, D_XXXXXXXX or a name of config/symbol_addrs*.txt)" % (
+            name, MAIN_LO, MAIN_HI - 1)
+    if name in model.api:
+        return "%s is already declared in main_api.h as %s" % (name, model.api[name][0])
+    m = re.match(r"^(.*?)\s*((?:\[[^\]]*\])*)\s*$", typ.strip())
+    raw = re.sub(r"\s+", " ", "%s %s%s" % (m.group(1), name, m.group(2))).replace("* ", "*")
+    got = list(ch.declarations_text(raw + ";"))
+    if len(got) != 1 or got[0][0] != name:
+        return "cannot read '%s' as a declaration of %s" % (raw, name)
+    plan_ = plan(model)
+    plan_[name] = (got[0][1], raw, "--add-global")
+    write_api(model, plan_)
+    log("%s: added extern %s;" % (os.path.join(inc, API), raw))
+    return None
+
+
+def is_func_name(name):
+    return name.startswith("func_")
+
+
+def report_skipped(model, log=print):
+    for name, why in sorted(getattr(model, "skipped", {}).items()):
+        log("SKIPPED %s: %s" % (name, why))
+    for _name, text in aggregate_warnings(model):
+        log("WARNING " + text)
+
+
 def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=(), only=None):
     """--write, or --fix when `fix`: update main_api.h (and clean the other headers). Returns the risky
     view changes of a --fix run (a count, 0 otherwise). `before` is a snapshot() taken before the caller
@@ -1415,6 +1488,7 @@ def run_write(inc, src, fix=False, model=None, log=print, before=None, ignore=()
     plan_ = plan(model)
     changed, n, g = write_api(model, plan_)
     log("%s: %d symbols" % (os.path.join(inc, API), n))
+    report_skipped(model, log)
     if fix:
         model = Model(inc, src)
         plan_ = plan(model)
@@ -1460,6 +1534,8 @@ def main(argv=None):
     g.add_argument("--check", action="store_true", help="enforce the main_api.h rules")
     g.add_argument("--write", action="store_true", help="create or update include/main_api.h")
     g.add_argument("--fix", action="store_true", help="--write, then clean the other headers")
+    g.add_argument("--add-global", nargs=2, metavar=("NAME", "TYPE"),
+                   help="declare a new main-exe global in main_api.h, e.g. --add-global D_800B66E0 'u16[4]'")
     g.add_argument("--prune", action="store_true", help="drop the overrides the build does not need (runs ninja)")
     ap.add_argument("--only", metavar="HEADERS", help="with --fix: rewrite only these headers (comma separated, "
                     "relative to include/, e.g. game.h,ovl/TEL.h); default is every header")
@@ -1476,6 +1552,11 @@ def main(argv=None):
     if a.update_known:
         update_known(a.inc, a.src)
         return 0
+    if a.add_global:
+        err = add_global(a.inc, a.src, *a.add_global)
+        if err:
+            print("sync_protos.py: " + err)
+        return 1 if err else 0
     model = Model(a.inc, a.src)
     if a.check:
         problems = check_api(a.inc, a.src)

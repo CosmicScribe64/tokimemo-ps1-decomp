@@ -1,0 +1,5 @@
+# Objects that are not built by the default IDO 5.3 (T-9200). Read by configure.py.
+# <object> <ido|gcc> <args of tools/cc.py>; <object> = the splat `c` subsegment name.
+# An object listed with gcc holds PsyQ gcc output (fingerprint: tools/gcc_fingerprint.py, version
+# chosen by compiling: the epilogue and register habits of the object, wiki/toolchain.md).
+TAIIKU/801488F0 gcc 2.8.1-psx 2.79

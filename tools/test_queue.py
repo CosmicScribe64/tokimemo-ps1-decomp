@@ -311,6 +311,38 @@ class Project(unittest.TestCase):
             self.assertEqual([(f.file, f.name, f.facts.size) for f in remaining], [("80041000", "func_80041000", 8)])
             self.assertEqual([f.name for f in matched], ["func_80041010"])
 
+    def test_jump_table_in_an_orphan_chunk_is_flag_O(self):
+        with tempfile.TemporaryDirectory() as d:
+            r = Path(d)
+            (r / "src/main").mkdir(parents=True)
+            (r / "config/objects").mkdir(parents=True)
+            (r / "config/overlays.txt").write_text("# none\n")
+            (r / "config/SLPM_86.053.yaml").write_text(
+                "segments:\n  - name: main\n    type: code\n    start: 0x800\n    vram: 0x80041000\n"
+                "    subsegments:\n      - { start: 0x800, type: c, name: main/80041000 }\n")
+            (r / "config/objects/main.txt").write_text("orphan 8015F730 8015FF70 second_chunk_of_801511E0\n")
+            (r / "src/main/80041000.c").write_text(
+                'INCLUDE_ASM("asm/nonmatchings/main/80041000", func_a);\n'
+                'INCLUDE_ASM("asm/nonmatchings/main/80041000", func_b);\n')
+            nm = r / "asm/nonmatchings/main/80041000"
+            nm.mkdir(parents=True)
+            body = ["lui $at, %hi(jtbl_{0})", "lw $t6, %lo(jtbl_{0})($at)", "jr $ra", " nop"]
+            (nm / "func_a.s").write_text(asm("func_a", [x.format("8015F800") for x in body]))
+            (nm / "func_b.s").write_text(asm("func_b", [x.format("8015E044") for x in body]))
+            remaining, _m = wq.load(r)
+            a, b = remaining
+            self.assertEqual(a.facts.tables, (0x8015F800,))
+            self.assertIn("O", a.flags)
+            self.assertTrue(a.blocked)
+            self.assertEqual(wq.p_match(a), 0.0)
+            self.assertNotIn("O", b.flags)
+
+    def test_orphan_flag_survives_the_cache_round_trip_and_blocks_with_an_island(self):
+        f = wq.Func("F", "a", "x", wq.Facts(8, 0, False, True, False, False, False, False, tables=(0x80001000,)), True, "main", True)
+        g = wq.func_from_json(__import__("json").loads(__import__("json").dumps(wq.func_to_json(f))))
+        self.assertEqual(g, f)
+        self.assertTrue(g.blocked and not g.unknown)
+
 
 def sel(file, name, size, selector, island=False):
     return wq.Func(file, name, "x.s", wq.Facts(size, 0, False, False, False, False, False, False, selector), island)

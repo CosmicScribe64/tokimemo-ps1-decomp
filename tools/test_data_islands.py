@@ -98,6 +98,24 @@ class DataIslandTest(unittest.TestCase):
         self.assertLess(out.index("D_1"), out.index("INCLUDE_ASM"))
 
 
+class SplitStartsTest(unittest.TestCase):
+    def test_label_named_only_by_a_data_pointer_is_interior(self):
+        items = [(0x100, "D_A", frozenset()), (0x110, "D_B", frozenset()), (0x118, "D_C", frozenset()),
+                 (0x11A, "D_odd", frozenset()), (0x120, "D_P", frozenset({"D_C"}))]
+        starts, interior = data_island.split_starts(items, 0x100, {"D_B", "D_P"})
+        self.assertEqual(starts, [(0x100, "D_A"), (0x110, "D_B"), (0x120, "D_P")])
+        self.assertEqual(interior, [(0x118, "D_C", "D_B")])
+
+    def test_range_start_always_starts(self):
+        starts, interior = data_island.split_starts([(0x100, "D_A", frozenset())], 0x100, set())
+        self.assertEqual((starts, interior), ([(0x100, "D_A")], []))
+
+    def test_block_names_interior_without_a_line(self):
+        out = data_island.insert_block('#include "common.h"\n', ["L1"], [(0x118, "D_C", "D_B")])
+        self.assertIn("D_C", out)
+        self.assertNotIn("INCLUDE_RODATA", out)
+
+
 def func_s(name, addr, body):
     rows = ["nonmatching %s, 0x%X" % (name, 4 * len(body)), "", "glabel %s" % name]
     for k, ins in enumerate(body):

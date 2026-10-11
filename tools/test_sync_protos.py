@@ -199,6 +199,44 @@ class PlanTest(Repo):
         self.assertNotIn("D_800E7399", self.plan())
 
 
+class SkippedAndAddGlobalTest(Repo):
+    def test_symbol_with_a_header_local_type_is_reported_not_silent(self):
+        self.ovl("AAA", "typedef struct Rec {\n    s32 a;\n} Rec;\nextern Rec D_800E7399;\n")
+        m = sp.Model(str(self.inc), str(self.root / "src"))
+        sp.plan(m)
+        self.assertIn("D_800E7399", m.skipped)
+        self.assertIn("move the typedef of Rec into include/main_api.h", m.skipped["D_800E7399"])
+        lines = []
+        sp.report_skipped(m, lines.append)
+        self.assertTrue(lines[0].startswith("SKIPPED D_800E7399: "))
+
+    def test_symbol_inside_an_aggregate_is_a_warning(self):
+        self.write("main_api.h", API.replace("extern u8 D_800E7388;", "typedef struct GS {\n    s32 a[8];\n} GS; /* size 0x20 */\n"
+                                              "extern GS D_800E7380;\nextern u8 D_800E7388;"))
+        (self.root / "config" / "migrate_globals.txt").write_text("aggregate D_800E7380 GS include/main_api.h\n")
+        m = sp.Model(str(self.inc), str(self.root / "src"))
+        text = [t for n, t in sp.aggregate_warnings(m)]
+        self.assertEqual(len(text), 2)      # D_800E7384 and D_800E7388, not the base itself
+        self.assertTrue(any("D_800E7388 lies inside GS D_800E7380" in t for t in text))
+
+    def test_add_global_declares_in_address_order_and_survives_write(self):
+        inc, src = str(self.inc), str(self.root / "src")
+        self.assertIsNone(sp.add_global(inc, src, "D_800E7386", "s16[4]", log=lambda _m: None))
+        text = (self.inc / "main_api.h").read_text()
+        self.assertIn("extern s16 D_800E7386[4];", text)
+        self.assertLess(text.index("D_800E7384"), text.index("D_800E7386"))
+        self.assertLess(text.index("D_800E7386"), text.index("D_800E7388"))
+        m = sp.Model(inc, src)
+        changed, _n, _g = sp.write_api(m, sp.plan(m))
+        self.assertFalse(changed)
+
+    def test_add_global_refuses_known_or_non_main_names(self):
+        inc, src = str(self.inc), str(self.root / "src")
+        self.assertIn("already declared", sp.add_global(inc, src, "D_800E7388", "u8"))
+        self.assertIn("not a main-exe global", sp.add_global(inc, src, "D_80200000", "u8"))
+        self.assertIn("not a main-exe global", sp.add_global(inc, src, "func_80042808", "u8"))
+
+
 class WriteFixTest(Repo):
     def model(self):
         return sp.Model(str(self.inc), str(self.root / "src"))
