@@ -237,7 +237,17 @@ void func_801381A4(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801372B0", func_801381DC);
+/* the load of D_800F62CF goes through the base of D_800F5AAE: as1 then keeps the byte store before it (no store in the jal slot) */
+void func_801381DC(void) {
+    D_800F5AAE |= 8;
+    if ((u32)((u8)func_8005E0E0((&D_800F5AAE)[0x821]) & 0x7F) >= 2U) {
+        D_800F647A += 6;
+        return;
+    }
+    func_80090960(0xD, D_8012E698);
+    D_800F5AAE |= 4;
+    func_8004DE1C();
+}
 
 void func_80138264(void) {
     D_800D9248 = 1;
