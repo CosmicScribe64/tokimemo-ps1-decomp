@@ -129,6 +129,22 @@ s32 func_80074D28(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800737A0", func_80074DE0);
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", func_80074F24);
+u8 func_80074F24(void) {
+    if (D_800E6280.unk_110D == 0) {
+        func_80076FDC();
+        if ((D_800E6280.unk_0F4.b[1] & 0xF) == 3 && !(*(u16 *)&D_800E6280.unk_0F6.b[0] & 1) && (D_800E6280.unk_F68.w & 0xF) == 7) {
+            func_80046318(9, 0x801E0000, 0x7D8A);
+            D_800E6280.unk_110D = 1;
+        } else if (D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01 != 4) {
+            func_80046318(0x29, 0x801E0000, D_800B69E0[D_801230D0]);
+            D_800E6280.unk_110D = 1;
+        } else {
+            func_80046318(0x29, 0x801E0000, D_800B6810[D_801230D0]);
+            D_800E6280.unk_110D = 1;
+        }
+    } else if ((D_800E6280.unk_110D == 1) && (func_800460CC() & 1)) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800737A0", func_8007505C);
