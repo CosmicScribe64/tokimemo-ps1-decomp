@@ -742,3 +742,4 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 | TACO/80141DE0 | `func_801420DC` | other | same as `func_801421AC` (T-9170) |
 | NAME_ENT/80139740 | `func_80140D6C` | regorder | search loop `p[4] == 1` over 15 bytes: loop end pointer in `$a0` and the constant 1 in `$v1` in the original, `$v1`/`$a0` in IDO (T-9170) |
 | 8005A0B0 | `join_club_select` | regorder | `unk_0F4.b[1] = (x * 0x10) \| (b & 0xFF0F)`: the original loads the byte into `$t5` after the shift (`$t4`), IDO hoists the `lbu` into `$t2` (T-9170) |
+| TT/801478D0 | `func_801478D0` | regorder | animation step on a 3-level table (`*D_80151A50[p[5]]` as `TtRec4 *`, local `r`): C right up to the third block; IDO evaluates `p[6]` before `p[5]` in `*tbl[p[5]] + p[6]` and numbers the temporaries `$t6..` where the original has `$t4..` (T-9170) |
