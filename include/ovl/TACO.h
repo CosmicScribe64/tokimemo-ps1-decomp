@@ -355,6 +355,20 @@ void func_801490B4(void);
 
 void func_80149B7C(void);
 
+typedef struct TacoSprite20 {
+    /* 0x00 */ u32 tag;
+    /* 0x04 */ u8 r;
+    /* 0x05 */ u8 g;
+    /* 0x06 */ u8 b;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x;
+    /* 0x0A */ s16 y;
+    /* 0x0C */ u8 u;
+    /* 0x0D */ u8 v;
+    /* 0x0E */ u16 clut;
+    /* 0x10 */ s16 w;
+    /* 0x12 */ s16 h;
+} TacoSprite20; /* size 0x14 */
 #endif
 
 typedef struct TacoCam {

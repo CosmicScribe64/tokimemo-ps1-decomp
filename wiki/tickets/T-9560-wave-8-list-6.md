@@ -383,3 +383,237 @@ Shared brief and list: scratchpad/wave8-brief.md and scratchpad/wave8-list-6.txt
 - Inline review concluded: Standards 0 findings, Spec 0 findings, no unresolved findings. Final source scope is exactly three owned C files and appended TAIIKU declarations; wiki updates are confined to the permitted files. No commits, merges or pushes.
 
 - Final `ninja progress`: `grand total   4737/6958   730656/2279368  32.1%`. Gain: 3 functions and 1,044 bytes. All work is left uncommitted for the orchestrator. Top non-T-0018 blocker: untyped records/tables and missing main-global declarations; missing SDK SPRT type also blocks one GPU packet draft. Tooling discrepancy: the brief's positional `register_shapes.py <func>` filter is unsupported; inventory API used instead.
+
+## Second deep pass
+
+User reopened the ticket after committing the first pass as `3a7461b`. Start: 2026-10-11 11:10:13 UTC. Continue until at least 14:10:13 UTC or the list is exhausted. Rank rejected drafts by resolved differing instruction lines, defer large type repair initially, spend roughly 10-15 minutes of real source/assembly experiments per candidate, and use approximately five-minute permuter runs below 20 differing lines. Recover aggregate/local-copy types from neighbours and retry. Keep only resolved function matches with unit SHA1 verification; leave all second-pass changes uncommitted.
+
+- [x] At least three hours of deep iteration and aggregate recovery performed; remaining failures restored.
+- [x] Second-pass final guards, 27/27 SHA1 verification and inline review completed.
+
+- Focused `main:func_80073AD8` variants: MATCH (1 candidates).
+
+- Focused `RPG_BAT:func_80132FE0` variants: MATCH (1 candidates).
+
+- Focused `TACO:func_80140638` variants: DIFF (7 candidates).
+
+- Deep `TACO:func_80140638`: 9 source variants, 38.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_80140638`: 2 source variants, 28.6 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:join_club_select`: 16 source variants, 61.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:join_club_select`: 24 source variants, 127.2 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:join_club_select`: 10 source variants, 19.7 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:join_club_select`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `main:week_day_main0`: 0 source variants, 97.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:week_day_main0`: 9 source variants, 156.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:week_day_main0`: 0 source variants, 63.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E330`: 8 source variants, 31.1 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:week_day_main0`: 16 source variants, 66.6 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_80154430`: 16 source variants, 56.5 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_80154430`: 14 source variants, 37.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:week_day_main0`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `RPG_BAT:func_80154430`: 1 source variants, 60.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E330`: 12 source variants, 100.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_80154430`: 1 source variants, 69.3 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E330`: 8 source variants, 25.7 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_8014E780`: 6 source variants, 19.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E330`: 8 source variants, 20.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `BUNKA_SD:func_80138CAC`: 8 source variants, 15.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_8014E780`: 1 source variants, 73.2 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E330`: 7 source variants, 69.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `BUNKA_SD:func_80138CAC`: 12 source variants, 30.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E330`: 12 source variants, 26.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013F874`: 8 source variants, 74.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `BUNKA_SD:func_80138CAC`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `SHOUGATU:func_8013E330`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `SHOUGATU:func_8013E330`: 6 source variants, 44.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013F874`: 10 source variants, 197.6 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `BUNKA_SD:func_80138CAC`: 8 source variants, 81.5 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `GEKO:func_801403A0`: 4 source variants, 19.6 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:week_day_main0`: 1 source variants, 47.7 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TAIIKU:func_80132BD0`: 6 source variants, 20.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013E424`: 10 source variants, 39.6 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:func_8005DDB4`: 8 source variants, 85.3 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TAIIKU:func_80132BD0`: 16 source variants, 14.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8011C470`: 12 source variants, 24.6 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:func_8005DDB4`: 1 source variants, 0.6 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TAIIKU:func_80132BD0`: 8 source variants, 13.5 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:func_8005DDB4`: 8 source variants, 19.1 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013E424`: 16 source variants, 10.5 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E50C`: 6 source variants, 10.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013E424`: 8 source variants, 18.3 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8011C470`: 16 source variants, 22.1 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013E424`: 16 source variants, 17.7 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E50C`: 24 source variants, 31.2 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:func_8005DDB4`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `TACO:func_8013E424`: 6 source variants, 23.6 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013E424`: 6 source variants, 26.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8011C470`: 12 source variants, 108.1 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8010B614`: 8 source variants, 23.2 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `SHOUGATU:func_8013E50C`: 24 source variants, 21.7 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:func_8005DDB4`: 7 source variants, 71.2 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8010B614`: 24 source variants, 18.3 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8010B614`: 12 source variants, 12.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8011C470`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `TACO:func_8013E424`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `RPG_BAT:func_8014F540`: 16 source variants, 10.7 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_8014F540`: 16 source variants, 47.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `EVENT:func_8010B614`: 24 source variants, 58.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TAIIKU:func_801330FC`: 8 source variants, 8.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TAIIKU:func_801330FC`: 4 source variants, 8.6 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_8014F540`: 2 source variants, 8.9 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013DB80`: 8 source variants, 2.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013DB80`: 8 source variants, 15.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013DB80`: 8 source variants, 5.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `GYOZI:func_80137F48`: 32 source variants, 11.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013DB80`: 16 source variants, 8.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `GYOZI:func_80137F48`: 36 source variants, 8.4 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013DB80`: 36 source variants, 10.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `GYOZI:func_80137F48`: 48 source variants, 8.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `BUNKA_SD:func_80139100`: 5 source variants, 10.6 seconds, MATCH. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:pre_syogatu1`: 8 source variants, 7.5 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013DB80`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `main:pre_syogatu1`: 8 source variants, 6.5 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:pre_syogatu1`: 24 source variants, 10.1 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:pre_syogatu1`: 8 source variants, 13.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:pre_syogatu1`: 12 source variants, 16.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:func_8005F09C`: 18 source variants, 23.5 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `TACO:func_8013DB80`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `ETC:func_80140AE4`: 20 source variants, 4.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `ETC:func_80140AE4`: 16 source variants, 14.8 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `ETC:func_80140AE4`: 16 source variants, 8.0 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:pre_syogatu1`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `main:func_8005F09C`: 24 source variants, 13.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `main:func_8005F09C`: 12 source variants, 6.2 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_8015A744`: 12 source variants, 4.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_8015A744`: 18 source variants, 3.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+- Deep `RPG_BAT:func_8015A744`: 27 source variants, 4.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+### Second-pass inline review preparation
+
+Fixed point: first-pass commit `3a7461b59d2605bd9148b3cc46b7298bb96cdedd`; reviewed the uncommitted second-pass diff. Applied the local `.claude/skills/code-review/SKILL.md` Standards and Spec axes inline, as the shared brief explicitly requires no reviewer subagents. Standards sources: CODING_STANDARDS.md and AGENTS instructions. Spec: user deep-pass request and shared wave8-brief.md.
+
+Standards: retained bodies are C89, preserve symbols and address order, use GameState fields and fixed-width types, and include documented layouts for recovered aggregates. Main API changes come from sync_protos; overlay additions append declarations/types only. SDK RECT is reused. The 0x14-byte workspace view is documented as a game packet view in the permitted overlay header. Matching-dependent group expansion, source-line scheduling, no-op index mask, scalar-range view and frame padding have FAKE annotations citing T-9560. No config/tooling/raw/asm changes, no commits. `git diff --check` passes. Final function and 27-unit verification remains pending until the last scratch experiment restores its source.
+
+Spec: source-led iteration replaces the first-pass rejection-only approach. Ranked resolved differences first, repaired missing arguments/result paths and switch cases, recovered exact-copy/record types, and used five-minute permuter runs on near misses. Twelve additional verified matches (4,048 bytes) are retained so far. Remaining first-pass rejects have not all received deep type repair; this pass will stop only after the user's at-least-three-hour condition is met. Failed experiments are restored, with six new controlled T-0018 rows and appended updates to historical cases.
+
+- Deep `RPG_BAT:func_8015A744`: approximately five-minute, two-worker permuter after source-led experiments. Draft source and temporary declarations restored after the run. Detailed outputs in scratchpad/w8-6/.
+
+- Deep `RPG_BAT:func_8015A744`: 2 source variants, 1.9 seconds, DIFF. Each measurement uses funcdiff resolved instruction APIs on a freshly built object; a candidate is retained only after full funcdiff --resolve and unit SHA1. Rejected source/header edits restored.
+
+### Second-pass final result and review
+
+Completed the requested minimum: 2026-10-11 11:10:13–14:10:50 UTC (3 hours, 37 seconds), with 26 distinct functions receiving recorded source/assembly experiments. The list is not exhausted; the pass stops on the explicitly permitted three-hour condition. All failed source, API and aggregate experiments are restored to the pre-experiment versions.
+
+Second-pass gain: **12 functions, 4,048 bytes**. Whole batch including the committed first pass: **15 functions, 5,092 bytes**. Retained second-pass functions:
+
+| Unit | Function | Bytes |
+| --- | --- | ---: |
+| main | func_80073AD8 | 472 |
+| RPG_BAT | func_80132FE0 | 296 |
+| TACO | func_80140638 | 412 |
+| RPG_BAT | func_80154430 | 492 |
+| RPG_BAT | func_8014E780 | 372 |
+| TACO | func_8013F874 | 332 |
+| GEKO | func_801403A0 | 348 |
+| main | week_day_main0 | 320 |
+| main | func_8005DDB4 | 236 |
+| TAIIKU | func_801330FC | 212 |
+| RPG_BAT | func_8014F540 | 156 |
+| BUNKA_SD | func_80139100 | 400 |
+
+Final verification: twelve fresh full `funcdiff --resolve` matches, including the documented equivalent scratch PC16 references for two RPG_BAT functions; every match independently covered by the actual unit SHA1. Forced only the 27 checksum stamps and header/global guard stamps to rerun, then incremental `ninja -j2` without `-k`: **27 actual SHA1 OK results**, headers OK, globals OK. `sync_protos --check-branch`: zero new disagreements (17 known), branch check OK. `migrate_globals --check`: globals OK. Evidence: scratchpad/w8-6/deep-final-verify.log and build/w8-6/final-*.log, deep-final27-build.log, deep-final-progress.log. Owned-file scope and `git diff --check` pass; only the 17 authorized files differ from the committed first pass.
+
+Inline review concluded: **Standards: zero unresolved findings. Spec: zero unresolved findings within the user's three-hour stopping condition.** Rechecked the final restored diff, fixed-width layouts, C89, canonical extern placement, FAKE annotations and verification evidence. No nonmatching drafts remain in the default build. The early unspecified result paths deliberately preserve the matching original ABI.
+
+Six new second-pass T-0018 rows added (eleven historical/new rows for the full batch); the historical GEKO row is resolved. Top remaining non-T-0018 blocker: aggregate copy/frame and load/store scheduling after type recovery. Tool gaps: PC16 relocations are unresolved by native funcdiff; permuter type inference fails on some K&R parameters and local aggregate views; register_shapes has no positional function filter. No repository tools changed.
+
+Final `ninja progress`: `grand total   4749/6958   734704/2279368  32.2%`. Second-pass changes remain uncommitted for the orchestrator.

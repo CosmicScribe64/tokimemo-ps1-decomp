@@ -1107,3 +1107,503 @@ Final incremental Docker ninja exited zero with 27/27 binary SHA1 checks OK, hea
 ## [2026-10-11] ticket | T-9560 complete
 
 Moved [[tickets/T-9560-wave-8-list-6]] to Done after final verification and inline review; synchronized [[kanban]] and [[index]]. All 151 functions attempted, three plain-C matches (1,044 bytes), 148 restored assembly functions. Five T-0018 rows added. Final progress: 4737/6958 functions, 730656/2279368 bytes (32.1%). All 27 hashes and header/global/prototype guards pass; Standards 0 and Spec 0 findings. Results filed in [[matching-notes]]. No commit, merge or push.
+
+## [2026-10-11] ticket | T-9560 reopened for deep second pass
+
+User committed the first pass as 3a7461b and requested sustained source/assembly iteration rather than draft-only rejection. Reopened [[tickets/T-9560-wave-8-list-6]], synchronized [[kanban]] and [[index]]. Second pass starts 11:10:13 UTC and must continue through 14:10:13 UTC unless the list is exhausted. No commits; ownership and Docker constraints remain in force.
+
+## [2026-10-11] query | T-9560 second-pass ranked queue
+
+Ranked 148 rejected assigned functions using saved resolved instruction-line differences, retaining the best prior typed variant. Twenty-eight have compiled difference evidence; 43 contain aggregate/copy markers (broader than the user's 36 type-repair drafts). Closest candidates: main `func_80073AD8` (4 lines), RPG_BAT `func_80132FE0` (5), TACO `func_8013F874` (7; SDK type gap), TACO `func_80140638` (12). Start with main's four-line near miss. Evidence: scratchpad/w8-6/deep-queue.jsonl; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 focused main:func_80073AD8
+
+Tried 1 reconstructed C variants; result MATCH. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] ingest | T-9560 assembly-led reconstruction fixes
+
+Compared the two closest drafts with target assembly. Main `func_80073AD8` needs an explicit zero early result, and RPG_BAT `func_80132FE0` needs the third callback argument 0xAA. Findings filed in [[matching-notes]]; real function and unit verification recorded in [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 focused RPG_BAT:func_80132FE0
+
+Tried 1 reconstructed C variants; result MATCH. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 first two deep-pass matches
+
+Main `func_80073AD8` (472 bytes) and RPG_BAT `func_80132FE0` (296 bytes) pass resolved MATCH and unit SHA1. Retained plain C; second-pass gain 768 bytes. Findings filed in [[matching-notes]] and verification in [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 focused TACO:func_80140638
+
+Tried 7 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 typed TACO actor-loop reconstruction
+
+Compared `func_80140638` with target assembly and neighbouring TcActor users. Seven initial variants test pointer operand order, real fields, and rolled loop reconstruction; the typed unrolled form remains at 12 differing lines. Further experiments target indexed actor access, two counters, explicit byte-address arithmetic and statement layout. Existing funcdiff resolved APIs are reused between variants to avoid repeating the whole-repository header scan; final candidates still receive full CLI and unit SHA1 verification. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_80140638
+
+Tried 9 source variants in 38.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_80140638
+
+Tried 2 source variants in 28.6 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 actor-loop match
+
+TACO `func_80140638` (412 bytes) passes full funcdiff --resolve and overlay SHA1 after typed actor indexing and count-placement experiments. Source-loop reconstruction remains uncertain; explicit groups/scheduling will be marked FAKE and reviewed. Second-pass gain is three functions, 1,180 bytes. Evidence filed in [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:join_club_select
+
+Tried 16 source variants in 61.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:join_club_select
+
+Tried 24 source variants in 127.2 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:join_club_select
+
+Tried 10 source variants in 19.7 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 club selector reduced to five lines
+
+Source/assembly experiments reduce `join_club_select` from 15 lines to five with a typed nibble store. Fifty variants cover selector/scaled-value types, pointers, control flow, callback views and statement grouping. Starting a 300-second permuter on the best draft. TACO's marked actor-loop source reverified with unit SHA1. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] ingest | T-9560 deferred local-copy layouts
+
+Recovered copy sizes and element types from target assembly and neighbouring declarations. SHOUGATU `func_8013E330` uses 28 callbacks (0x70 bytes); TAIIKU initialization uses 23 bytes and three 46-byte halfword arrays. Preparation filed in [[matching-notes]] while the club selector's five-minute permuter runs. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter main:join_club_select
+
+Source-led near miss permuted with a 300-second limit and two workers (302.4 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] decision | T-9560 club selector deep timebox
+
+Fifty source variants and a 300-second permuter produced no retained club-selector match. Best resolved draft improved 15 differing lines to five; source and temporary type/callback views restored. Filed result in [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]]. Continuing with main week_day_main0 result-type and frame experiments.
+
+## [2026-10-11] build | T-9560 deep main:week_day_main0
+
+Tried 0 source variants in 97.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] decision | T-9560 provisional main result view
+
+sync_protos reports the intended week_day_main0 void-to-s32 definition change as RISKY and exits before the experiment harness compiles. Its source/header snapshot was restored. The user's deep-pass request explicitly authorizes type experiments; proceed with a scoped canonical result-view trial and retain it only after real function and whole-main SHA1 verification. No unrelated shared views will be accepted. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:week_day_main0
+
+Tried 9 source variants in 156.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:week_day_main0
+
+Tried 0 source variants in 63.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E330
+
+Tried 8 source variants in 31.1 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] decision | T-9560 serialize prototype experiments
+
+An overlapping SHOUGATU aggregate trial changed the inputs during a main return-type generation scan, so both runs are excluded from matching evidence and restored. Repeat sequentially; never overlap a prototype-generating trial with a declaration trial. The verified three second-pass matches remain intact. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:week_day_main0
+
+Tried 16 source variants in 66.6 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] query | T-9560 switch-table reconstruction
+
+Target RPG_BAT `func_8014E780` has an explicit selector-7/default shared entry absent from the first draft. Prepared case-7 and selector-width trials. Main weekday saved-local layout improved from 12 to eight differing lines; five-minute permutation underway. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_80154430
+
+Tried 16 source variants in 56.5 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_80154430
+
+Tried 14 source variants in 37.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter main:week_day_main0
+
+Source-led near miss permuted with a 300-second limit and two workers (341.6 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_80154430
+
+Tried 1 source variants in 60.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E330
+
+Tried 12 source variants in 100.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_80154430
+
+Tried 1 source variants in 69.3 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E330
+
+Tried 8 source variants in 25.7 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 RPG_BAT selector match and PC16 evidence
+
+`func_80154430` retained: 492 bytes, resolved funcdiff MATCH against a same-assembly scratch reference with local branch aliases, then RPG_BAT SHA1 OK. Native funcdiff omits PC16 relocation resolution; source tools untouched. Four second-pass matches total 1,672 bytes. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8014E780
+
+Tried 6 source variants in 19.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E330
+
+Tried 8 source variants in 20.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep BUNKA_SD:func_80138CAC
+
+Tried 8 source variants in 15.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8014E780
+
+Tried 1 source variants in 73.2 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E330
+
+Tried 7 source variants in 69.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep BUNKA_SD:func_80138CAC
+
+Tried 12 source variants in 30.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E330
+
+Tried 12 source variants in 26.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 seventh switch entry matched
+
+RPG_BAT `func_8014E780` retained after recovering its selector-7/default shared entry and local word declaration. Resolved comparison against same-assembly PC16 alias reference and unit SHA1 both pass. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] ingest | T-9560 sprite aggregate recovered
+
+Recovered the 0x14-byte TACO sprite primitive from allocation size and target member stores; prepared member-based reconstruction with branch-local palette stores. Two earlier type/control-flow near misses are in five-minute permutation runs. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013F874
+
+Tried 8 source variants in 74.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter BUNKA_SD:func_80138CAC
+
+Source-led near miss permuted with a 300-second limit and two workers (304.0 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter SHOUGATU:func_8013E330
+
+Source-led near miss permuted with a 300-second limit and two workers (306.5 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E330
+
+Tried 6 source variants in 44.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013F874
+
+Tried 10 source variants in 197.6 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep BUNKA_SD:func_80138CAC
+
+Tried 8 source variants in 81.5 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep GEKO:func_801403A0
+
+Tried 4 source variants in 19.6 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 typed sprite matched
+
+TACO `func_8013F874` verified by native resolved funcdiff MATCH and overlay SHA1. Retained the inferred 0x14-byte primitive layout; source-line scheduling dependency marked FAKE. Main weekday pointer trials now retry the selector lesson from RPG_BAT; no overlapping declaration-generation trials. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:week_day_main0
+
+Tried 1 source variants in 47.7 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 weekday and GEKO matches
+
+Main weekday and GEKO initialization retained after pointer-selector/declaration-order and narrow-status experiments. Both native resolved MATCH and unit SHA1 pass; main declaration generated by sync_protos. Eight additional functions, 3,044 bytes. Full incremental build checkpoint next. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] ingest | T-9560 deep allocator evidence
+
+Append three deep-attempt rows for main club selection, BUNKA_SD counter scheduling and SHOUGATU callback-table exit scheduling after the documented idioms and five-minute permutation runs. Record resolution of the historical GEKO row via a real narrow status local. See [[data/t0018-cases]], [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] ingest | T-9560 record and flag views prepared
+
+Prepared exact-size TAIIKU copied-array wrappers and a 0x44 record initialization view after checking neighbouring matched accesses. Prepared a local typed view of the existing main tail byte array for the parallel flag count, requiring no duplicate global declaration. Incremental checkpoint passed; scoped duplicate search and progress measurement underway. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TAIIKU:func_80132BD0
+
+Tried 6 source variants in 20.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013E424
+
+Tried 10 source variants in 39.6 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:func_8005DDB4
+
+Tried 8 source variants in 85.3 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TAIIKU:func_80132BD0
+
+Tried 16 source variants in 14.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep EVENT:func_8011C470
+
+Tried 12 source variants in 24.6 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 checkpoint 27/27
+
+Forced only the 27 unit checksum stamps and ran incremental ninja: all 27 SHA1 checks pass. Scoped dupes attempted one EVENT copy, rejected it and restored it; scoped near-duplicate report has no fillable member. A concurrent progress read saw that temporary copy, so its extra 100 bytes are excluded until the final stable progress read. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:func_8005DDB4
+
+Tried 1 source variants in 0.6 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TAIIKU:func_80132BD0
+
+Tried 8 source variants in 13.5 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] query | T-9560 by-value constructor and paired indices
+
+Read TACO constructor caller copies to establish the existing TcPos by-value parameter; retry member accesses and frame/local layouts. Main tail struct closes type repair and leaves only loop base-plus-offset spellings, so test independent array indices before permutation. TAIIKU tests conventional loop forms with explicitly captured early-load values. See [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:func_8005DDB4
+
+Tried 8 source variants in 19.1 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013E424
+
+Tried 16 source variants in 10.5 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E50C
+
+Tried 6 source variants in 10.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013E424
+
+Tried 8 source variants in 18.3 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep EVENT:func_8011C470
+
+Tried 16 source variants in 22.1 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013E424
+
+Tried 16 source variants in 17.7 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E50C
+
+Tried 24 source variants in 31.2 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter main:func_8005DDB4
+
+Source-led near miss permuted with a 300-second limit and two workers (302.1 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013E424
+
+Tried 6 source variants in 23.6 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013E424
+
+Tried 6 source variants in 26.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep EVENT:func_8011C470
+
+Tried 12 source variants in 108.1 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep EVENT:func_8010B614
+
+Tried 8 source variants in 23.2 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep SHOUGATU:func_8013E50C
+
+Tried 24 source variants in 21.7 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:func_8005DDB4
+
+Tried 7 source variants in 71.2 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep EVENT:func_8010B614
+
+Tried 24 source variants in 18.3 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep EVENT:func_8010B614
+
+Tried 12 source variants in 12.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter EVENT:func_8011C470
+
+Source-led near miss permuted with a 300-second limit and two workers (306.2 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter TACO:func_8013E424
+
+Source-led near miss permuted with a 300-second limit and two workers (306.7 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8014F540
+
+Tried 16 source variants in 10.7 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8014F540
+
+Tried 16 source variants in 47.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep EVENT:func_8010B614
+
+Tried 24 source variants in 58.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TAIIKU:func_801330FC
+
+Tried 8 source variants in 8.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 ninth second-pass match and restored deep trials
+
+Main func_8005DDB4, 236 bytes, passes native resolved MATCH and main SHA1 after the five-minute permuter and index-expression experiments. Its no-op index mask is marked FAKE and reverified. Nine deep-pass matches total 3,280 bytes. TAIIKU aggregate-copy and TACO/EVENT ABI/scheduling trials were sustained and restored; see [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TAIIKU:func_801330FC
+
+Tried 4 source variants in 8.6 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8014F540
+
+Tried 2 source variants in 8.9 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 TAIIKU RECT and partial-unroll match
+
+TAIIKU func_801330FC, 212 bytes, passes resolved MATCH and unit SHA1 with SDK RECT, eleven indexed stores and explicitly marked frame padding. Source annotation is being rechecked. Ten deep-pass matches total 3,492 bytes; see [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 RPG indexed clearing match
+
+RPG_BAT func_8014F540, 156 bytes, passes native resolved MATCH and unit SHA1 after replacing pointer walks by indexed loops with one reused counter. Typed C8-byte range and missing overlay words appended; legacy scalar view and line scheduling marked FAKE and annotation rechecked. Eleven deep-pass matches total 3,648 bytes; see [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013DB80
+
+Tried 8 source variants in 2.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013DB80
+
+Tried 8 source variants in 15.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013DB80
+
+Tried 8 source variants in 5.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep GYOZI:func_80137F48
+
+Tried 32 source variants in 11.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013DB80
+
+Tried 16 source variants in 8.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep GYOZI:func_80137F48
+
+Tried 36 source variants in 8.4 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep TACO:func_8013DB80
+
+Tried 36 source variants in 10.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep GYOZI:func_80137F48
+
+Tried 48 source variants in 8.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep BUNKA_SD:func_80139100
+
+Tried 5 source variants in 10.6 seconds; MATCH. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 BUNKA_SD timer reload match
+
+BUNKA_SD func_80139100, 400 bytes, passes native resolved MATCH and unit SHA1. Restored the post-call reload and separate case stores; implicit s32 result recovers the exact constant and exit shape. Twelve deep-pass matches total 4,048 bytes; see [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:pre_syogatu1
+
+Tried 8 source variants in 7.5 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter TACO:func_8013DB80
+
+Source-led near miss permuted with a 300-second limit and two workers (301.0 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:pre_syogatu1
+
+Tried 8 source variants in 6.5 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:pre_syogatu1
+
+Tried 24 source variants in 10.1 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:pre_syogatu1
+
+Tried 8 source variants in 13.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:pre_syogatu1
+
+Tried 12 source variants in 16.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:func_8005F09C
+
+Tried 18 source variants in 23.5 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter TACO:func_8013DB80
+
+Source-led near miss permuted with a 300-second limit and two workers (301.8 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep ETC:func_80140AE4
+
+Tried 20 source variants in 4.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep ETC:func_80140AE4
+
+Tried 16 source variants in 14.8 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep ETC:func_80140AE4
+
+Tried 16 source variants in 8.0 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter main:pre_syogatu1
+
+Source-led near miss permuted with a 300-second limit and two workers (303.0 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:func_8005F09C
+
+Tried 24 source variants in 13.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep main:func_8005F09C
+
+Tried 12 source variants in 6.2 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8015A744
+
+Tried 12 source variants in 4.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] query | T-9560 deep timebox classifications
+
+Classified main pre_syogatu1 as pointer/base/CSE, main func_8005F09C as constant allocation/sharing and ETC func_80140AE4 as selector/compare chain through the existing register_shapes API before appending three rows in [[data/t0018-cases]]. Updated own [[matching-notes]] section with aggregate repair outcomes and K&R permuter limitation. Final scoped duplicate checks retained zero; sync_protos branch and global guards pass. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8015A744
+
+Tried 18 source variants in 3.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8015A744
+
+Tried 27 source variants in 4.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] decision | T-9560 inline second-pass review
+
+Reviewed the uncommitted second-pass code against CODING_STANDARDS.md and the user/shared brief using the local code-review skill's Standards and Spec axes inline. Fixed point is committed first pass 3a7461b. Retained aggregate layouts, canonical declaration placement and matching-trick annotations checked; no unresolved code findings. Final verification is pending the last scratch permutation. Twenty-six distinct functions have recorded second-pass experiments; the user's three-hour condition, rather than list exhaustion, will bound this pass. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 five-minute permuter RPG_BAT:func_8015A744
+
+Source-led near miss permuted with a 300-second limit and two workers (300.9 seconds including setup/verification). Draft restored; candidate evidence in scratchpad/w8-6/. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 deep RPG_BAT:func_8015A744
+
+Tried 2 source variants in 1.9 seconds; DIFF. Resolved measurement through existing funcdiff APIs, final retained candidates verified by full CLI and unit SHA1. Evidence in scratchpad/w8-6/; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 final function verification
+
+All twelve retained second-pass functions pass fresh full funcdiff --resolve comparisons (4,048 bytes), using the documented equivalent scratch PC16 references for two RPG_BAT functions. Final RPG func_8015A744 candidate remains nonmatching after its five-minute permuter and fixed-width candidate retry; restored. Fresh all-27 unit checksum build is running, with header/global guards forced to rerun. Updated own [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] ticket | T-9560 second pass In Review
+
+Moved [[tickets/T-9560-wave-8-list-6]] and its kanban card to In Review; index agrees. The requested three-hour deep-pass minimum is met. Changes remain uncommitted.
+
+## [2026-10-11] ticket | T-9560 second pass Done
+
+Moved [[tickets/T-9560-wave-8-list-6]] and its kanban card to Done; index agrees. The requested three-hour deep-pass minimum is met. Changes remain uncommitted.
