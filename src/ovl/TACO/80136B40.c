@@ -88,6 +88,22 @@ void func_80136F4C(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80136B40", func_80136FBC);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80136B40", func_801371B4);
+void func_801371B4(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 i;
+    u8 *p;
+    s32 x;
+
+    i = 0;
+    if (*arg0 != 0) {
+        p = arg0;
+        x = arg4;
+        do {
+            func_80136E70(*p, arg2, x, arg5, arg1, arg3);
+            i++;
+            p++;
+            x++;
+        } while (i < 0x15 && *p != 0);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80136B40", func_80137264);

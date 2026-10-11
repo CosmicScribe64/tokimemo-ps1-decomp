@@ -59,7 +59,46 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149B20);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149BB0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149D64);
+void func_80149D64(void) {
+    u8 *p;
+    u8 *q;
+    u32 i;
+
+    p = D_80158A74;
+    p[0] = 1;
+    p[0xC] = 0;
+    *(s16 *)(p + 4) = 0;
+    p[0xD] = 0;
+    p[0xE] = 0;
+    p[0xF] = 0;
+    *(s16 *)(p + 6) = 0;
+    *(s16 *)(p + 8) = 0;
+    *(s16 *)(p + 0xA) = 0;
+    *(s16 *)(p + 0x10) = 2;
+    *(s32 *)(p + 0x20) = 0x480000;
+    *(s32 *)(p + 0x24) = 0x840000;
+    *(s16 *)(p + 0x14) = 0x48;
+    *(s16 *)(p + 0x16) = 0x9C;
+    *(s32 *)(p + 0x28) = 0;
+    *(s32 *)(p + 0x2C) = 0;
+    *(u8 **)(p + 0x38) = D_80151A50;
+    p[0x3C] = 0;
+    p[0x3D] = 0xB;
+    p[0x3E] = 4;
+    p[0x40] = 0x60;
+    p[0x48] = 0;
+    func_801478D0(p + 0x38);
+    *(s16 *)(p + 0x50) = 0;
+    *(s16 *)(p + 0x6A) = 0;
+    q = D_80158A7C;
+    i = 0;
+    do {
+        i++;
+        q += 0x60;
+        q[-0x60] = 0;
+        *(s32 *)(q - 0x28) = 0;
+    } while (i != 2);
+}
 
 void func_80149E44(void) {
     u8 *p = D_80158A74;
