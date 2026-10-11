@@ -48,7 +48,41 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80155C64);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80155E10);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80155F98);
+void func_80155F98(s32 arg0) {
+    TcPos pos;
+
+    switch ((arg0 + D_8015EDB4)->unk7E) {
+    case 0:
+        if (((arg0 + D_8015EDB4)->unk7A % 7) == 0) {
+            pos.x = (arg0 + D_8015EDB4)->unk74;
+            pos.y = (arg0 + D_8015EDB4)->unk76;
+            pos.z = (arg0 + D_8015EDB4)->unk78;
+            func_8013DB80(pos, 0x100, 0xC0);
+        }
+        if ((arg0 + D_8015EDB4)->unk7A == 0x3C) {
+            if (D_8015EDB4->unk74 < (arg0 + D_8015EDB4)->unk7C) {
+                (arg0 + D_8015EDB4)->unk7C = 1;
+            } else {
+                (arg0 + D_8015EDB4)->unk7C = -1;
+            }
+            D_8015EDB4[arg0].unk7A = 0;
+            (arg0 + D_8015EDB4)->unk7E += 1;
+        }
+        break;
+    case 1:
+        (arg0 + D_8015EDB4)->unk66 += (arg0 + D_8015EDB4)->unk7C * 0x32;
+        if ((arg0 + D_8015EDB4)->unk7A >= 0x29) {
+            (arg0 + D_8015EDB4)->unk7E += 1;
+        }
+        break;
+    case 2:
+        (arg0 + D_8015EDB4)->unk78 -= 0x320;
+        if ((arg0 + D_8015EDB4)->unk78 < -0x7530) {
+            func_8015C208(arg0);
+        }
+        break;
+    }
+}
 
 void func_80156178(void) {
     TcPos p0;

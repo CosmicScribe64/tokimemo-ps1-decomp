@@ -90,7 +90,50 @@ INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_8013A784);
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_8013ACF0);
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80139000", func_8013B20C);
+typedef struct {
+    u32 pad0 : 25;
+    u32 grade : 2;
+    u32 pad1 : 3;
+    u32 flag : 1;
+    u32 pad2 : 1;
+} MasterSlot; /* word of GameState.unk_66C[]: bit 30 is the flag */
+
+s32 func_8013B20C(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (D_80120657 < 4U) {
+            D_80120657 = 0;
+        } else {
+            D_80120657 -= 4;
+        }
+        if (D_8013C790 == 0xB) {
+            func_8007E934();
+        } else {
+            func_8007E99C();
+        }
+        break;
+    case 1:
+        func_80044750(0xBF);
+        func_800674B0();
+        func_8004284C();
+        break;
+    case 2:
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_71E |= 0x10;
+            func_8008585C();
+            if (D_8013C784 >= 3U) {
+                ((MasterSlot *)&D_800E6280.unk_66C[(u32)D_800E6280.unk_0F4.h >> 0xC])->flag = 1;
+            }
+            func_80057390(0);
+            func_80072B5C(1);
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80086424();
+}
 
 void func_8013B354(void) {
     func_80138F70();
