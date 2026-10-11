@@ -210,3 +210,8 @@ extern u8 D_8015E8F0[];
 extern s32 D_8015EDC0;
 extern s32 D_8015EDCC;
 extern u8 D_8015EA08[];
+extern u8 D_8015E74C[];
+extern u32 D_8015EDAC;
+void func_80136A9C(void);
+void func_80136BD8(void);
+void func_80136CCC(void);
