@@ -89,7 +89,36 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152C60);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152DB4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80153068);
+void func_80153068(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 pad[15]; /* FAKE: unused slots above idx, the original frame is 64 bytes larger (T-3330 idiom, real source unknown). T-9370 */
+    s32 idx;
+    s32 gap[1]; /* FAKE: unused slot between idx and r, same idiom. T-9370 */
+    s32 r;
+
+    if ((u32)arg4 < *arg0) {
+        func_801531E8(arg2, arg3, *arg1);
+        *arg1 += 1;
+        *arg0 = 0;
+        if (arg2 == 1) {
+            idx = 0x10;
+        } else if (arg2 == 2) {
+            idx = 0x11;
+        } else if (arg2 == 3) {
+            idx = 0x12;
+        }
+        if ((D_8015EDB4 + idx)->unk84[1] != 0 && !(*arg1 & 1)) {
+            r = func_800AE0D0();
+            func_80147C98(0, arg2, (s16)((r & 0x1FF) - 0x100), (s16)((func_800AE0D0() & 0x1FF) + 0xF4), 0x3E8, 0x190, 0x82);
+        }
+    }
+    if (*arg1 >= 0x14) {
+        *arg0 = *arg1 = 0;
+        func_801534E0(arg2);
+        func_801521EC(arg2, arg3);
+    } else {
+        *arg0 += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801531E8);
 
