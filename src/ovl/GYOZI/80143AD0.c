@@ -236,7 +236,20 @@ void func_80145578(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_801455BC);
+void func_801455BC(void) {
+    D_800D9250 = 0;
+    D_800D9254 = 0;
+    func_8008F618(D_800F62CF);
+    func_8013ED84();
+    D_80148628 = D_80148358;
+    D_8014862C = D_80148490;
+    D_80148630 = D_801485C8;
+    func_8004DE1C();
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_06 += 1;
+    D_800F53A0.girl[D_800F53A0.unk_F2F].unk_0A += 2;
+    func_8008FB00();
+    func_800BCE10(&D_800D92A0, "近所の公園");
+}
 
 void func_8014569C(void) {
     D_800F6600 = -1;

@@ -22,12 +22,6 @@ void func_80142E28(void) {
 }
 
 typedef struct {
-    u32 b0:1;
-    u32 b1:1;
-    u32 rest:30;
-} GyoziBits32;
-
-typedef struct {
     u8 b0:1;
     u8 b1:1;
     u8 rest:6;
