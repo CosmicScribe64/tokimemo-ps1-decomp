@@ -708,6 +708,7 @@ extern u8 D_800E7D49;
 extern u8 D_800E7D4A;
 extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
+extern u8 D_800E7D4F;
 extern s32 D_800E7D50;
 extern u8 D_800E7D68;
 #ifndef MAIN_API_OVERRIDE_D_800E8BEE

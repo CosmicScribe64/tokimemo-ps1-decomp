@@ -112,6 +112,7 @@ extern s32 D_8013D6D4;
 extern s32 D_8013D6D8;
 extern s32 D_8013D6C0;
 extern s32 D_8013AF3C;
+extern s32 D_8013C79C;
 #endif /* OVL_OLH_H */
 extern s32 D_8013A704;
 extern s32 D_8013A70C;
