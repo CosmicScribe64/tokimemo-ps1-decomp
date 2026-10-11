@@ -356,7 +356,51 @@ s32 func_80158930(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80158A0C);
+void func_80158A0C(void) {
+    switch (D_8015EDD8) {
+    case 0:
+        D_8015EC74 = func_8013E9A8(2);
+        func_8014EF3C();
+        return;
+    case 1:
+        switch (D_8015EDC0 * 6 / D_8015EDCC) {
+        case 0:
+            if (D_8015EC74 == 0) {
+                func_801587B4();
+                return;
+            }
+            func_80158930();
+            return;
+        case 1:
+            func_8015868C();
+            return;
+        case 2:
+            func_801585B0();
+            return;
+        case 3:
+            func_801584D4();
+            return;
+        case 4:
+            func_801583F8();
+            return;
+        case 5:
+            func_8015831C();
+            return;
+        case 6:
+            func_8015831C();
+            return;
+        default:
+            return;
+        }
+        break;
+    case 2:
+        func_8014F080(0x14);
+        return;
+    case 3:
+        func_8014EF8C();
+        break;
+    }
+}
 
 void func_80158B70(void) {
     switch (D_8015EDDC) {
