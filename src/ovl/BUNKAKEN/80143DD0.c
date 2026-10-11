@@ -36,7 +36,27 @@ void func_80144D38(void) {
     func_8006BC28(0);
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80144E9C);
+void func_80144E9C(void) {
+    s32 i;
+
+    func_8004F984(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    func_80050B54(0);
+    func_8006BD6C(0);
+    func_8006BA40();
+    i = 0;
+    if (D_800E6280.unk_F88 & 0x20) {
+        for (i = 0; i < 6; i++) {
+            if (D_800E6280.unk_F90[i * 2].unk_06 != 0) {
+                D_80122CDC = i;
+                D_8011ECD3 &= ~0x80;
+                func_8004E9F4(1);
+                D_80122D30 = 0;
+                func_8004284C();
+            }
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/BUNKAKEN/data/BUNKAKEN/80143DD0.rodata", D_80154920);
 
