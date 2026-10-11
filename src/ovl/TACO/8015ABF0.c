@@ -48,15 +48,15 @@ void func_8015B2AC(s32 arg0, s16 *arg1) {
 void func_8015B3B0(s32 arg0, s16 *arg1, s32 arg2) {
     /* The pointer precedes the payload to preserve its local layout. T-9520. */
     TcTransformObj50 *obj;
-    TcTransformWords matrix;
+    MATRIX matrix;
     TcPos *pos;
 
     arg1 += arg2 * 6;
-    matrix = *(TcTransformWords *)D_80125C60;
+    matrix = *(MATRIX *)D_80125C60;
     obj = (TcTransformObj50 *)&D_80127480[arg0];
-    matrix.unk_14 = arg1[0] + obj->transform.unk_14;
-    matrix.unk_18 = arg1[1] + obj->transform.unk_18;
-    matrix.unk_1C = arg1[2] + obj->transform.unk_1C;
+    matrix.t[0] = obj->transform.t[0] + arg1[0];
+    matrix.t[1] = obj->transform.t[1] + arg1[1];
+    matrix.t[2] = obj->transform.t[2] + arg1[2];
     pos = &D_80128880[arg0];
     pos->x += arg1[3];
     arg1 += 4;

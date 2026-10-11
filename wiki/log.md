@@ -4061,3 +4061,29 @@ Moved [[tickets/T-9600-wave-8-tool-fixes]] to In Review. First full Docker suite
 ## [2026-10-11] ticket | Complete T-9600 and lint its wiki links
 
 Moved [[tickets/T-9600-wave-8-tool-fixes]] from In Review to Done after final proof/review. Ticket, board and index agree. [[matching-notes]], [[toolchain]] and [[register-allocation-wave7]] document the rules and upstream m2c workaround; historical wave observations are retained and superseded by the T-9600 section. Scoped wiki lint: no missing links or contradictory current ticket status. git diff --check passes.
+## [2026-10-11] ticket | T-9610 aggregate and local-copy types
+Claimed [[tickets/T-9610-aggregate-and-local-copy-types]], created its board card and reviewed the shared tooling-round brief. Investigate wave-8 rejected aggregate drafts, shared SDK layouts and local frame rules; leave edits uncommitted for integration.
+
+## [2026-10-11] ingest | T-9610 recurring shapes and shared SDK layouts
+Recorded wave-8 copy/stride/packet families in [[data-types]]. Added fresh fixed-width packet and geometry declarations; moved EN_NICHI's game record into its overlay header and replaced three private SDK packet views. Baseline Docker progress is 4868/6958, 776304 matched bytes. Docker auto-detection stalled; selecting the existing linux/arm64 image explicitly works. Layout and byte verification next.
+
+## [2026-10-11] build | T-9610 packet ABI and local-frame probes
+IDO assertions pass for SDK aggregate sizes and offsets (`tools/test_psx_types.py`). EN_NICHI and TACO packet-type replacements preserve their unit checksums. Synthetic raw-vs-transformed IDO probes establish the local declaration/alignment examples now in [[decompile-workflow]]. Typed MATRIX and TAIIKU table candidates compile but still differ; no gains claimed yet.
+
+## [2026-10-11] build | T-9610 verified callback copies and MATRIX migration
+DATE func_80153CEC and GEKO func_80141760 pass resolved diff and overlay checksums (+2 functions, 356 bytes). TACO func_8015B3B0 now uses MATRIX with matching operand order. [[matching-notes]] records rejected candidates, including SHUGAKU's isolated MATCH that regresses a previously matched function; its body is restored. New ABI/frame tests pass in Docker. No existing Python tool or compiler pass was modified.
+
+## [2026-10-11] ticket | T-9610 moves to In Review
+Updated [[tickets/T-9610-aggregate-and-local-copy-types]] and [[kanban]]. Inline standards/spec review uses HEAD as the baseline and the shared brief as the acceptance gate. Begin clean 27-unit rebuild and final guards.
+
+## [2026-10-11] lint | T-9610 inline review corrections
+
+Reviewed the change against HEAD, CODING_STANDARDS.md and the shared brief. The first clean build passes all 27 checksums. Corrected DR_TPAGE to eight bytes after finding a discrepancy in the PsyQ 4.7 reference: independent symbol metadata records one command word. Updated the ABI assertion and [[data-types]] evidence, and removed an unused test import. Rejected candidates remain assembly; no compiler pass or per-function switch was added. Final-state clean proof follows.
+
+## [2026-10-11] build | T-9610 final clean proof
+
+Final-state Docker configure/ninja passes all 27 checksums; build/headers.ok and build/globals.ok exist. Six changed functions pass resolved funcdiff, including DATE func_80153CEC and GEKO func_80141760 (new matches, 356 bytes combined). ABI/local-frame/frame-pass tests pass (1/2/20); prototype branch guard reports zero new disagreements and 17 known. Progress is 4870/6958 functions and 776660/2279368 bytes. Proof logs: scratchpad/r8-types/clean-build-final.log and scratchpad/r8-types/final-checks.log. See [[matching-notes]] and [[decompile-workflow]].
+
+## [2026-10-11] ticket | T-9610 In Review to Done
+
+Inline standards and spec review against HEAD 1e24c0394a695c64200126de3beff00e579f930a has no unresolved findings after correcting DR_TPAGE. Updated [[tickets/T-9610-aggregate-and-local-copy-types]], [[kanban]] and [[index]]. Existing Python tools and compiler passes remain untouched; two new regression test scripts accompany the layouts and measured rules. All edits are uncommitted for orchestrator integration. Rejected bodies remain assembly; [[matching-notes]] records their residual blockers.

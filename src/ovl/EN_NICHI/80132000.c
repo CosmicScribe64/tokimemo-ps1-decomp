@@ -1,38 +1,6 @@
 #include "common.h"
 #include "ovl/EN_NICHI.h"
 
-typedef struct {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08;
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ u8 pad_10[6];
-    /* 0x16 */ s16 unk_16;
-    /* 0x18 */ u8 pad_18[2];
-    /* 0x1A */ s16 unk_1A;
-    /* 0x1C */ s32 unk_1C;
-    /* 0x20 */ u8 pad_20[4];
-    /* 0x24 */ s32 unk_24;
-    /* 0x28 */ s32 unk_28;
-    /* 0x2C */ s32 unk_2C;
-} EnObj; /* size 0x30: record of D_8013984C */
-
-typedef struct {
-    /* 0x00 */ u32 tag;
-    /* 0x04 */ u8 r0;
-    /* 0x05 */ u8 g0;
-    /* 0x06 */ u8 b0;
-    /* 0x07 */ u8 code;
-    /* 0x08 */ s16 x0;
-    /* 0x0A */ s16 y0;
-    /* 0x0C */ s16 x1;
-    /* 0x0E */ s16 y1;
-    /* 0x10 */ s16 x2;
-    /* 0x12 */ s16 y2;
-    /* 0x14 */ s16 x3;
-    /* 0x16 */ s16 y3;
-} EnPolyF4; /* size 0x18 */
-
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139200);
@@ -674,7 +642,7 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801362A4);
 
 void func_80136700(void) {
     s32 pad; /* FAKE: unused word above poly, puts poly at sp+0x30 as in the original (T-3330 slot rule) */
-    EnPolyF4 *poly;
+    POLY_F4 *poly;
 
     poly = func_800490F0(0x18, D_8011ECA0);
     func_8009F02C(poly);

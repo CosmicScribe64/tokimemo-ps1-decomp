@@ -75,3 +75,50 @@ Once an aggregate is declared, its fields must not be used through their splat n
 - `D_8011ECD0` (the 0x44-byte table): OPTION and ENDING functions match only when `D_8011ECF6`/`D_8011ECFA`/`D_801208FB` and `D_8011F4D0`..`D_8011F522` are read through it, more evidence that it is one object (record n field k = `D_8011ECD0[n * 0x44 + k]`). Still a `u8[]` view.
 - ENDING: `D_8013C35C` is `s16`, `D_8013C360` is `u32`.
 
+
+## Wave-8 aggregate recovery (T-9610)
+
+The repeated shapes in the rejected drafts are (1) complete word/halfword/byte
+array copies to stack locals, including final halfword or unaligned tails;
+(2) eight-byte positions passed by value in two argument words; (3) 0x44 scene
+records and 0x88 actor records; (4) GPU DMA packets; and (5) 0x20 matrices.
+Examples: TAIIKU `func_80135DF8` copies an 11-by-10 halfword table (0xDC),
+TACO `func_801472D4` fills a MATRIX and copies its eight words into a coordinate
+object at +4, and EN_NICHI `func_80134F2C` has a pointer spill but no local copy.
+Existing `tools/type_recovery.py` already combines stride/offset evidence from
+all functions by symbol/address space. No new general pass is justified yet.
+
+`include/psx_types.h` now supplies the eight POLY forms, SPRT, fixed sprites,
+TILE forms and draw-control packet layouts; `include/libgte.h` supplies SVECTOR,
+VECTOR and MATRIX. These are new fixed-width declarations, not imported SDK
+headers. ABI facts were checked against the PsyQ Run-Time Library Reference
+(4.7, structures introduced in 3.x), https://psx.arthus.net/sdk/Psy-Q/DOCS/LibRef47.pdf,
+and original packet/copy instructions. Packet tags occupy four bytes; MATRIX
+translations start at +0x14 and its size is 0x20. Existing private POLY_F4 and
+SPRT copies use these common types. `EnObj` moves from its
+C file to `include/ovl/EN_NICHI.h`.
+
+
+### Recurring families in the eight lists
+
+| Wave list | Representative evidence (includes already matched baseline work) |
+|---|---|
+| 1 | TACO matrix copy and 0x88 actor stride; ETC output buffers of 16 bytes/16 halfwords |
+| 2 | RPG_BAT 96-record prefix plus 64-record group, each record 0x44; NAME_ENT 35-byte text buffers |
+| 3 | TAIIKU 11x10 halfword copy; GYOZI 30 callbacks; 0x24 control-record stride |
+| 4 | EVENT 39-callback copy; TT ordering-table tag/packet fields; RECT workspace |
+| 5 | DATE2 30/51/39/81 halfword copies, including halfword tails; BUNKAKEN 4x4 word grid |
+| 6 | TAIIKU 23/46-byte copies; TACO two-word by-value positions and 0x14 SPRT |
+| 7 | 0x44 scene records and coordinate-table pairs; TT 0x54/0x58 records |
+| 8 | EN_NICHI 0x30 object and 0x18 POLY_F4; larger local-copy and string workspaces |
+
+New retained functions and rejected experiments are recorded in
+[[matching-notes]] under T-9610. [[decompile-workflow]] contains measured frame
+rules. The SDK reference dates DR_TPAGE to 3.5 and DR_STP to 4.1; their named
+layouts are provided without asserting that every overlay uses those versions.
+
+Reference erratum: the 4.7 PDF's DR_TPAGE listing gives two command words,
+but the actual packet is eight bytes (tag plus one command word), as recorded
+in the [DIABPSX.SYM type dump](https://gist.github.com/mewmew/f4c94068e1462e40142b6cab112d43d2).
+The shared declaration and ABI test use that eight-byte layout. DR_STP is
+twelve bytes, with two command words.

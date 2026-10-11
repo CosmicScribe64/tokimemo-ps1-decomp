@@ -1185,3 +1185,12 @@ typedef struct DateScene44 {
 extern s8 D_8015BF44;
 
 #endif /* OVL_DATE_H */
+
+#ifndef OVL_DATE_CALLBACK_T9610
+#define OVL_DATE_CALLBACK_T9610
+/* Complete local-copy dispatch table in func_80153CEC. */
+typedef struct DateCallbacks39 {
+    /* 0x00 */ void (*callback[39])();
+} DateCallbacks39; /* size 0x9C */
+extern DateCallbacks39 D_8015F2B4;
+#endif

@@ -2,6 +2,7 @@
 #define OVL_TACO_H
 
 #include "common.h"
+#include "psx_types.h"
 #include "game.h"
 
 void func_8013F468(void);
@@ -238,7 +239,7 @@ extern s16 *D_801600A0[];
 void func_8014C2E4(void);
 extern s32 D_8015FEF0[];
 extern u8 D_8015FFE0[];
-void func_801472D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+s32 func_801472D4(); /* Returns -1 for unaligned input buffers; T-9610. */
 void func_8014B2A4(s32 arg0);
 void func_8014B8B4(s32 arg0, s32 arg1, s32 arg2);
 void func_8014B790(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, u32 arg4);
@@ -424,41 +425,16 @@ void func_80153774(s32 arg0);
 
 #ifndef OVL_TACO_MATCHED_VIEWS_T9520
 #define OVL_TACO_MATCHED_VIEWS_T9520
-/* Word view of the opaque game transform payload; T-9520. */
-typedef struct TcTransformWords {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ s32 unk_04;
-    /* 0x08 */ s32 unk_08;
-    /* 0x0C */ s32 unk_0C;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ s32 unk_14;
-    /* 0x18 */ s32 unk_18;
-    /* 0x1C */ s32 unk_1C;
-} TcTransformWords; /* size 0x20 */
+/* Coordinate object: MATRIX payload at +4, total stride 0x50. T-9610. */
 typedef struct TcTransformObj50 {
     /* 0x00 */ s32 unk_00;
-    /* 0x04 */ TcTransformWords transform;
+    /* 0x04 */ MATRIX transform;
     /* 0x24 */ u8 pad24[0x2C];
 } TcTransformObj50; /* size 0x50, full word view of TcObj50 */
 void func_8013B2A0(void);
 void func_8013B398(void);
 void func_8013B3C4(void);
 #endif
-
-typedef struct TacoSprite20 {
-    /* 0x00 */ u32 tag;
-    /* 0x04 */ u8 r;
-    /* 0x05 */ u8 g;
-    /* 0x06 */ u8 b;
-    /* 0x07 */ u8 code;
-    /* 0x08 */ s16 x;
-    /* 0x0A */ s16 y;
-    /* 0x0C */ u8 u;
-    /* 0x0D */ u8 v;
-    /* 0x0E */ u16 clut;
-    /* 0x10 */ s16 w;
-    /* 0x12 */ s16 h;
-} TacoSprite20; /* size 0x14 */
 
 /* Position and velocity copies/loads use two existing eight-byte TcPos records. */
 typedef struct TacoParticle14 {

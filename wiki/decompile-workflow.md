@@ -177,3 +177,54 @@ Evidence and functions: [[matching-notes]], "Wave 7, list 1 (T-9310)". Read thes
 - **Loads that the original keeps behind stores to other symbols** (the stores and loads touch two scalars): write both through one array or struct (`(&D_8015EBAC)[41]`, `D_80120650[0x88]`), `FAKE`.
 - **Renamed callees:** m2c prints `func_XXXXXXXX`; if `config/obin_renames.txt` has a name, use the name (`get_h_yuukou`, `menu_check`), the header already carries its prototype.
 - **Not solved (do not spend hours):** a constant or pointer in `$a1`/`$a2`/`$v1` where IDO picks another register in small K&R functions (TT `func_80134874`, `func_80134768`, `func_80134ADC`), the `$v1` switch selector, `li a0,k` before `lui $at` when a store shares `$a0` with a call.
+
+## Local aggregates and frames (T-9610)
+
+Recover the copied extent before changing the frame. IDO's struct assignment
+may be a twelve-byte loop followed by zero, one or two words and a halfword or
+unaligned tail. The loop bound alone is not `sizeof`: TAIIKU `func_80135DF8`
+loops over 0xD8 bytes and then copies four more, giving `s16 value[11][10]`
+inside a 0xDC wrapper. A 0x20 MATRIX has nine halfwords at +0, alignment padding
+at +0x12, and three words at +0x14. `memcpy` is not a substitute for ordinary
+struct assignment when reproducing these inline copies. Eight-byte by-value
+positions consume two O32 argument words; four homed argument registers may
+represent two positions rather than four integer parameters.
+
+Measured with IDO 5.3, `-O2 -mips1 -G0 -non_shared -Wo,-nokpicopt -cckr`,
+synthetic copies passed to `consume(void *)` (one `s32` incoming argument):
+
+| Local declarations | Raw frame / aggregate offset | With frame pass |
+|---|---|---|
+| `Half3 a` (three signed halfwords) | 0x20 / 0x18 | 0x30 / 0x28 |
+| `s32 n; Half3 a` | 0x28 / 0x1C | 0x38 / 0x2C |
+| `Half3 a; s32 n` | 0x28 / 0x20 | 0x38 / 0x30 |
+| `Byte7 a` (seven bytes) | 0x20 / 0x18 | 0x30 / 0x28 |
+| `Word3 a` (three words) | 0x28 / 0x1C | 0x38 / 0x2C |
+| `Half3 a; Word3 b` | 0x30 / a=0x28, b=0x1C | 0x40 / a=0x38, b=0x2C |
+
+Here `n` can be either the consumed result, used in a later sum, or an unused
+scalar: the slots are the same. Locals are allocated in reverse declaration
+order; optimization does not necessarily reclaim their original homes.
+Their area and the overall eight-byte frame alignment are separate from the
+C aggregate's alignment (1 for byte wrappers, 2 for halfword wrappers, 4 for
+word/pointer packets and MATRIX). Adding four bytes can change the total frame
+by zero or eight. Inspect the actual object; do not infer a buffer size from
+the frame size alone. Real scalar/pointer locals should provide the homes;
+unused padding introduced solely to match must be labelled FAKE.
+
+The existing frame pass is unchanged: for frame size F>0 it inserts 16 bytes
+at H, where H is the end of the register saves when RA is saved, otherwise
+zero. Every SP-relative reference at or above H moves by 16; outgoing args
+and RA saves below H stay fixed. In the probes RA remains at +0x14. A leaf
+copy of `Word3`, indexed by the incoming argument, has raw frame/local
+0x10/+4 and transformed 0x20/+0x14; a scalar leaf without a frame stays
+frameless. K&R affects narrow promotions and parameter homes, not the C
+member offsets tested by `tools/test_psx_types.py`.
+
+EN_NICHI `func_80134F2C` is **not** evidence of a missing local aggregate:
+it has a 0x30 object record and a pointer spill. The wave-8 draft matches its
+spill at +0x28 but emits frame 0x38 instead of 0x30. A per-function subtraction
+or buffer inflation is not a justified compiler pass; retain assembly until
+source or broad compiler evidence resolves it.
+
+Reproduce the synthetic frame checks with `tools/docker.sh python3 tools/test_local_aggregate_frames.py`.

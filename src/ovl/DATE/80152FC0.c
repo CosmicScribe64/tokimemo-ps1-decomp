@@ -277,7 +277,18 @@ void func_80153C20(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80153CEC);
+void func_80153CEC(void) {
+    u8 index;
+    DateCallbacks39 table;
+
+    table = D_8015F2B4;
+    index = D_800E6280.unk_110A;
+    if ((index >= 27 || index < 8) && D_800B593C == 0x80) {
+        func_8006B900();
+    }
+    index = D_800E6280.unk_110A;
+    table.callback[index](0x80);
+}
 
 void func_80153D94(void) {
     u32 v;
