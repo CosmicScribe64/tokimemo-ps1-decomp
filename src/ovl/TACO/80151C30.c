@@ -240,4 +240,48 @@ void func_801536BC(u32 arg0) {
     D_8015EDB4[23].unk3 = D_8015EDB4[23].unk3 + 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80153774);
+void func_80153774(s32 arg0) {
+    if (arg0 < 0xA) {
+        func_80146F74(0, 8, 0, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0xA) && (arg0 < 0x14)) {
+        func_80146F74(0, 8, -1, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x14) && (arg0 < 0x1E)) {
+        func_80146F74(0, 8, -2, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x20) && (arg0 < 0x2A)) {
+        func_80146F74(0, -8, 0xF, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x2A) && (arg0 < 0x34)) {
+        func_80146F74(0, -8, 0xA, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x34) && (arg0 < 0x48)) {
+        func_80146F74(0, -8, 0, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x48) && (arg0 < 0x52)) {
+        func_80146F74(0, -8, -1, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x52) && (arg0 < 0x5C)) {
+        func_80146F74(0, -8, -2, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x5E) && (arg0 < 0x68)) {
+        func_80146F74(0, 8, 0xF, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x68) && (arg0 < 0x72)) {
+        func_80146F74(0, 8, 0xA, 0, 0, 0, 0, 0xC8, 0xC8);
+        return;
+    }
+    if ((arg0 >= 0x72) && (arg0 < 0x7C)) {
+        func_80146F74(0, 8, 0, 0, 0, 0, 0, 0xC8, 0xC8);
+    }
+}

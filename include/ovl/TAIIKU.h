@@ -228,3 +228,17 @@ typedef struct TkCnt {
     /* 0x4 */ u32 unk_04;
     /* 0x8 */ u32 unk_08;
 } TkCnt; /* size 0xC */
+
+extern s16 D_8014929A;
+void func_80133438(void);
+void func_801345A4(void);
+s32 func_801365C8();
+s32 func_801368B8();
+void func_801369F0(void);
+s32 func_80136DA4();
+void func_80136E80(void);
+s32 func_80137440();
+s32 func_80137C44();
+s32 func_80137EA8();
+void func_80134D94(void);
+void func_80138224();

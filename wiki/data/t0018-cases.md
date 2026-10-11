@@ -1121,3 +1121,21 @@ Historical rows above remain unchanged. Resolution records:
 - The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
 
 Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
+
+## T-9530 bounded retries (2026-10-11)
+
+Fresh Docker K&R probes after consulting [[register-allocation-wave7]]; finite experiments, not claims of impossibility. Failed drafts remain outside the source tree.
+
+| file | function | category | symptom |
+|---|---|---|---|
+| EVENT/800F9680 | `func_800FA194` | regorder | Rec24/s16-index loops: original counter/base/stride a0/a2/a3, mask v1; IDO v1/a1/a2, mask a0, plus brightness copy a3 (T-9530) |
+| EVENT/800F9680 | `func_800FA0D0` | regorder | Rec24/s16-index loops: original counter a0 and brightness a1; IDO counter v1 and brightness a0/a3, frame 0x30 versus 0x38 (T-9530) |
+| TT/80148DB0 | `func_8014A814` | regorder | Twelve-record loop matches except constants 3/10/15495/64/12: original a2/a3/t0/t1/t2, IDO a0/a1/a2/a3/t0 (T-9530) |
+| TT/80144D70 | `func_80145370` | regorder | Two record loops match except constants 64 and 112/128: original a2/a3, IDO a0/a1 (T-9530) |
+| SHUGAKU/80132000 | `func_801322F0` | regorder | Matching frame probe leaves two reversed equality-branch operands; reversing C comparisons instead changes selector v1 to v0 and store/jal scheduling; 60-second permuter no improvement (T-9530) |
+| TACO/80151C30 | `func_801522B0` | regorder | Raw range-chain draft differs in at versus t2 comparison value; simplified chain promotes the byte into a saved register; 60-second permuter base score 30, no improvement (T-9530) |
+| TACO/80139170 | `func_8013920C` | regorder | Max/copy branches keep the first word in v1 and second in a3 originally; IDO a3/t0 with the same loads, comparisons and stores (T-9530) |
+| TAIIKU/80133C80 | `func_80138800` | regorder | Two stride-0x44 loops: original reloads the base into s1 for the second loop; IDO preserves it in s2 and copies it, plus t3/t8 result allocation versus t1/t4; pointer reuse does not resolve it (T-9530) |
+| TAIIKU/80133C80 | `func_80136B18` | regorder | Fresh declared-pointer probe folds D_80149208+0x22 into halfword accesses and forwards clamp stores instead of the original hoisted v1 base and reloads (T-9530) |
+| ENDING/801396E0 | `func_8013B510` | regorder | Return-zero/saved-increment/wide-cast draft retains mask in a0 versus original t0 and narrowing scratch t0 versus t1; 60-second permuter best 45, no score zero (T-9530) |
+| ENDING/801396E0 | `func_80139EC4` | promo | Scratch unprototyped brightness-call view removes parameter conversions; remaining byte global/constant use v0 versus original a1 throughout, including the loop reload (T-9530) |

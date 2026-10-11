@@ -943,3 +943,39 @@ Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its kanban 
 ## [2026-10-11] build | T-9410 clean proof and review complete
 
 Clean Docker configure/ninja build after deleting asm and build: 27/27 SHA1 OK. build/headers.ok and build/globals.ok exist; tools/sync_protos.py --check-branch exits zero; tools/test_register_shapes.py passes all three synthetic tests; git diff --check passes. Progress: 4734/6958, 729612 bytes, +5 functions/+2768 bytes over baseline. Inline standards/spec review found no unresolved findings. Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its card to Done; full evidence in [[register-allocation-wave7]]. Uncommitted changes left for the orchestrator; no existing r7-fixes tooling files changed.
+
+## [2026-10-11] ticket | T-9530 In Progress
+Claimed wave-8 list 3: 136 functions in 36 owned C files. Read the shared brief, standards, [[decompile-workflow]], and [[register-allocation-wave7]]. Created [[tickets/T-9530-wave-8-list-3]] and its kanban card.
+
+## [2026-10-11] decision | T-9530 bounded source probes
+Fresh m2c drafts expose known register/pointer shapes and missing record views. Use explicit assembly paths with the required unit to avoid repeated global assembly scans. Probe candidate C with the project's compiler in temporary Docker files while the baseline builds; only adopt candidates after full build and resolved funcdiff verification. Details will be recorded in [[matching-notes]] and [[tickets/T-9530-wave-8-list-3]].
+
+## [2026-10-11] build | T-9530 baseline and duplicate scan
+Docker incremental baseline passed all 27 linked-unit SHA1 checks, headers, and globals. Scoped dupes scan in the owned files found no applicable copies. A source probe for TAIIKU `func_801345A4` matches; linked verification is pending. [[tickets/T-9530-wave-8-list-3]].
+
+## [2026-10-11] build | T-9530 first match and source idioms
+TAIIKU `func_801345A4` passes resolved funcdiff and the complete 27-unit build. Probes also match TAIIKU `func_80134D94` after reusing its loop counter, GYOZI `func_8013CB18` with the existing GirlFlag4 view, and TACO `func_80153774` with explicit range chains. These candidates await linked verification. All 136 list entries received a fresh m2c attempt; recoverable drafts received bounded compiler probes. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 six more candidates adopted
+Adopted the two TAIIKU/GYOZI probes, the TACO range chain, and three RPG_BAT switches in the owned C files. The RPG drafts omitted a third call argument even though the callee's matched definition takes three; restoring `500` produces exact source probes. Appended overlay declarations and queued the missing main function declaration for canonical generation. Full linked verification is next. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] build | T-9530 seven linked matches and final near misses
+All seven adopted functions pass resolved funcdiff; the full Docker build passes 27/27 SHA1 checks, headers, and globals. A final GYOZI byte-store-in-argument probe also matches and is being adopted. Three bounded 60-second permutation searches produced no score-zero result. Fresh register and recovery evidence stays in the scratchpad until summarized in [[tickets/T-9530-wave-8-list-3]] and [[matching-notes]].
+
+## [2026-10-11] build | T-9530 array access fixes the final flag-load order
+KANGEI `func_80138D40` matches as a signed-halfword loop with flags accessed through the declared byte array, avoiding the load hoist caused by separate scalar names. Adopted it and GYOZI `func_8013D764`, appended their overlay prototypes, and started configure plus the final incremental build. Nine candidates, 4,040 bytes. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] ingest | T-9530 bounded register retry evidence
+Appended ten fresh retry rows to [[data/t0018-cases]] after consulting the T-9410 clusters and original assembly. Limited claims to observed allocation, pointer, frame, and scheduling differences; malformed drafts and broader control-flow recovery remain separate time boxes. The ENDING permutation search produced tied score-45 candidates only. [[tickets/T-9530-wave-8-list-3]], [[matching-notes]].
+
+## [2026-10-11] lint | T-9530 inline review corrections
+Applied the local code-review skill's standards/spec axes inline, as the wave brief requires. Removed KANGEI's obsolete NON_MATCHING alternative now that the default C matches; marked GYOZI's redundant byte-lvalue cast FAKE and tracked its argument-sharing purpose. A final scratch unprototyped brightness-call experiment isolates ENDING's remaining v0/a1 global allocation, appended as the eleventh T-0018 retry. All 136 outcomes are recorded in [[tickets/T-9530-wave-8-list-3]]. Final revalidation follows these review corrections.
+
+## [2026-10-11] ticket | T-9530 In Review
+Moved [[tickets/T-9530-wave-8-list-3]] and its kanban card to In Review after all listed functions were matched or time-boxed. Nine linked matches / 4,040 bytes; eleven T-0018 rows. Declaration and aggregate guards pass. Review corrections are complete; final rebuild and checksum revalidation are pending before Done.
+
+## [2026-10-11] query | T-9530 final duplicate scans
+Owned-file duplicate scans applied zero copies before and after configure; scoped near-duplicate report found zero fillable functions. Their printed matched count remains the assembly-directory baseline (4734), while source progress reports 4743. This is recorded as a tooling limitation in [[tickets/T-9530-wave-8-list-3]]; no tool or unowned source was changed.
+
+## [2026-10-11] build | T-9530 final proof and Done
+Final incremental Docker ninja passes; independent current-binary SHA1 verification is 27/27 OK. All nine gained functions match resolved funcdiff, including review-touched GYOZI/KANGEI functions rechecked after corrections. Headers/globals stamps exist, branch prototype guard reports zero new disagreements, aggregate check and git diff --check pass, staging is empty. Inline standards/spec review against CODING_STANDARDS.md has no unresolved findings. Moved [[tickets/T-9530-wave-8-list-3]] and its kanban card to Done. Progress: 4743/6958, 733632/2279368 bytes (32.2%); +9 functions / 4040 bytes, eleven T-0018 retry rows. Changes remain uncommitted for the orchestrator.

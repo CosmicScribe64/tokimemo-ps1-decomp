@@ -158,7 +158,26 @@ void func_8013CAA4(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013C3B0", func_8013CB18);
+void func_8013CB18(void) {
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10[0])->f = 1;
+    D_801474A8 = 0xD;
+    D_801474AC = 0;
+    func_800BCE10(&D_800D92A0, "演劇部");
+    func_8013C3B0();
+    if (((u8) D_800F53A0.unk_01C[0x23] >= 6U) && ((u8) D_800F53A0.unk_01C[0x23] < 0xAU)) {
+        func_8004EE18(D_80147AE0, 0x11, 1, 2, 0);
+        func_8008FD1C(D_80147AE8, D_80147AEC, D_80147AF0, D_80147AF4, D_80147AF8, D_80147AFC);
+        func_8008FF60(D_80147AD4, D_80147AD8, D_80147AD0, D_80147ADC);
+    } else {
+        func_8004EE18(D_80147AE4, 0x11, 1, 2, 0);
+        func_8008FD1C(D_80147B00, D_80147B04, D_80147B08, D_80147B0C, D_80147B10, D_80147B14);
+        func_8008FF60(D_80147AD4, D_80147AD8, D_80147AD0, D_80147ADC);
+    }
+    D_8012B8F8 |= 0x80000000;
+    D_8012B8D6 = 0;
+    D_8012E69C = 1;
+    func_8004DE1C();
+}
 
 void func_8013CCDC(void) {
     func_8008A0D4(0x405B);
