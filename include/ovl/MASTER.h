@@ -89,4 +89,13 @@ extern u8 D_8013C790;
 extern s32 D_8013C2E0;
 extern u8 D_8013C784;
 
+/* T-9960: called by the preceding state machine in the same object. */
+void func_80138E58(void);
+
+/* T-9960: eleven word-sized text ids copied into func_801350A8's frame. */
+typedef struct MasterWords11 {
+    /* 0x00 */ s32 v[11];
+} MasterWords11; /* size 0x2C */
+extern MasterWords11 D_8013C64C;
+
 #endif /* OVL_MASTER_H */

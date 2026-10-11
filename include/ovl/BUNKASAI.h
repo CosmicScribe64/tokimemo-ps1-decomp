@@ -89,3 +89,17 @@ typedef struct BunkModePair {
 } BunkModePair; /* size 0x08 */
 void func_8013B190(void);
 #endif
+
+#ifndef OVL_BUNKASAI_T9960
+#define OVL_BUNKASAI_T9960
+/* Byte at D_800E7D4F: continuation flags and three-bit mode (T-9960). */
+typedef struct BunkasaiModeFlags {
+    /* 0x00 */ u8 b0 : 1;
+    /* 0x00 */ u8 b1 : 1;
+    /* 0x00 */ u8 mode : 3;
+    /* 0x00 */ u8 pad : 3;
+} BunkasaiModeFlags; /* size 0x01 */
+
+void func_8013B120(void);
+void func_801508C4(void);
+#endif

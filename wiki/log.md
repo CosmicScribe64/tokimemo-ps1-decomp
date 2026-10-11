@@ -7839,3 +7839,51 @@ Ten matches / 5,596 bytes; grand total 4880/6958, 782256/2279368 (34.3%). Comple
 ## [2026-10-11] lint | T-9710 final wiki and diff consistency
 
 Done ticket, single Done board card and index entry agree; acceptance items checked. Final git diff --check passes, with only allowed files and the new ticket changed. [[tickets/T-9710-wave-9-list-1]], [[kanban]], [[index]].
+
+## [2026-10-11] ticket | T-9960 wave 10 list 6 started
+
+Created [[tickets/T-9960-wave-10-list-6]] and its In Progress card. Read [[decompile-workflow]], [[register-allocation-wave7]], [[uopt-register-allocation]] and relevant [[matching-notes]]. Assigned 21 functions / 60,464 bytes across 17 owned overlay files; scratch isolated to scratchpad/w10-6. Baseline worktree clean; build/ and asm/ absent. Will leave edits uncommitted and review inline per shared brief.
+
+## [2026-10-11] build | T-9960 initial large-function drafts
+
+Baseline configure/build is generating all objects. BUNKAKEN `func_80149144` compiles after GameState normalization; resolved scratch diff contains 167 changed instruction lines. DATE `func_80144E20` requires recovery of 21 copied local aggregates. Details and scratch evidence in [[tickets/T-9960-wave-10-list-6]]. Early draft calls with absent assembly will be retried after splitting.
+
+## [2026-10-11] build | T-9960 first verified large match
+
+BUNKAKEN `func_80149144` now matches in its real source file: resolved funcdiff MATCH and overlay SHA1 OK (scratchpad/w10-6/bunk-real.log). The function contributes 3,996 text bytes. Source fixes and rejected variants recorded in [[tickets/T-9960-wave-10-list-6]].
+
+## [2026-10-11] build | T-9960 second match and baseline validation
+
+BUNKASAI `func_80147214` passes resolved funcdiff and overlay SHA1 (scratchpad/w10-6/sai-real.log), bringing this batch to two functions / 7,444 text bytes. The full baseline build passed 27/27 SHA1 checks and header/global guards. Added the shared source idiom to [[matching-notes]] and recorded evidence in [[tickets/T-9960-wave-10-list-6]].
+
+## [2026-10-11] build | T-9960 MASTER state-machine match
+
+MASTER `func_80138490` passes its resolved diff and unit SHA1 after comparison-order/selector repair and a missing existing-helper declaration. Batch total: three functions / 9,948 bytes. All 21 m2c drafts have now been compiled or diagnosed; aggregate and bit-field repairs continue. Evidence: [[tickets/T-9960-wave-10-list-6]], [[matching-notes]], scratchpad/w10-6/master-real2.log.
+
+## [2026-10-11] build | T-9960 typed local table match
+
+MASTER `func_801350A8` passes resolved funcdiff and overlay SHA1. Its recovered table extent and real scalar locals reproduce the observed frame without padding. Four functions / 12,028 bytes now matched; scoped duplicate application found no plans. Recorded the completed 300-second bit-field search and table evidence in [[tickets/T-9960-wave-10-list-6]] and [[matching-notes]].
+
+## [2026-10-11] build | T-9960 deep-pass type and store-order recovery
+
+Recorded callback-table layouts, sprite-record reconstruction, TAIIKU's aggregate copy, and BUNKA continuation-store ordering in [[tickets/T-9960-wave-10-list-6]] and [[matching-notes]]. The closest new draft is 22 changed lines; a fresh five-minute permuter run is in progress. Four real-file matches remain verified (12,028 bytes); experimental candidates stay in the isolated scratch directory.
+
+## [2026-10-11] build | T-9960 eight matches, 27-unit checkpoint
+
+Verified four more BUNKA routines using recovered bit-field operations, continuation-store ordering, and a local GameState pointer. Generated four missing shared declarations and appended four overlay-helper prototypes. [[tickets/T-9960-wave-10-list-6]] and [[matching-notes]] record the evidence. Eight matches now total 20,440 bytes; the full incremental Docker build passed 27/27 SHA1 checks.
+
+## [2026-10-11] build | T-9960 ninth match and aggregate checkpoint
+
+BUNKAKEN func_80152680 passes resolved funcdiff and overlay SHA1, bringing the batch to nine functions / 22,692 text bytes. Recovered text-table extents and removed an inferred self-store. Remaining RPG_BAT drafts reach 24 and 37 changed lines after restoring dropped call arguments and aggregate accesses. Recorded m2c argument-count and shared-HI/LO swap findings in [[matching-notes]] and [[tickets/T-9960-wave-10-list-6]]. No tool or configuration changes.
+
+## [2026-10-11] query | T-9960 third deep pass
+
+Recorded recovered EVENT loop/control-flow shapes, DATE callback-pointer improvements and RPG_BAT RECT scheduling in [[tickets/T-9960-wave-10-list-6]]. The EVENT compiler fingerprint scan finds no PsyQ gcc cases. A five-minute RPG_BAT permuter produces no better source. Nine verified matches remain; all later experiments are isolated scratch files.
+
+## [2026-10-11] build | T-9960 nine-match full check and eight-line lead
+
+All 27 unit checksums pass at the nine-match checkpoint. BUNKAKEN func_80143DD0 reaches an eight-line masked-switch difference after explicit narrow casts and bit-field comparison repair. MASTER's data-island dry run confirms the required configuration follow-up without changing files. Details in [[matching-notes]] and [[tickets/T-9960-wave-10-list-6]]. Supplemental work remains confined to the seventeen owned files.
+
+## [2026-10-11] lint | T-9960 appended type guards
+
+The supplemental scratch survey includes overlay headers twice and exposed missing repeat-include guards around this batch's appended BUNKAKEN/BUNKASAI types. Added guards around only the new declarations. Existing single-include builds had passed. The checkpoint printed 26 rebuilt unit checks; the remaining unit's check was already current. Final validation will explicitly recompute all 27 hashes.
