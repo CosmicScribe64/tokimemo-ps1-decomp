@@ -755,3 +755,6 @@ Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` 
 
 ## [2026-10-10] ticket | T-9130 wave 6 list 3 started
 Created [[tickets/T-9130-wave-6-list-3]] (In Progress), worktree w6-3.
+
+## [2026-10-10] build | T-9130 wave 6 list 3 matched
+37 functions (10,736 bytes) matched in worktree w6-3: GYOZI, DATE2, EVENT, OPTION, KANGEI, TACO, RPG_BAT, BUNKAKEN, TT, SHOUGATU, GEKO, SHUGAKU. 27 rows added to [[data/t0018-cases]], notes in [[matching-notes]] ("Wave 6, list 3"). Ticket [[tickets/T-9130-wave-6-list-3]] reviewed inline and moved to Done. DATE `func_8015A980` and TT `func_8014D260` are gcc SDK code and cannot be built with IDO.
