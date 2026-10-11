@@ -120,7 +120,34 @@ void func_80150DE0(void) {
     D_8015EC58.unk_0C = 0x60 - D_8015EC58.unk_14;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150F84);
+typedef struct {
+    u8 *s[41];
+} StrTbl41; /* size 0xA4 */
+extern StrTbl41 D_8015EEF0;
+
+void func_80150F84(void) {
+    s32 a;
+    s32 b;
+    s32 c;
+    StrTbl41 tbl;
+
+    tbl = D_8015EEF0;
+    a = func_8013E9A8(0x29);
+    b = func_8013E9A8(0x29);
+    if (b == a) {
+        b = (b + 1) % 41;
+    }
+    c = func_8013E9A8(0x29);
+    if (c == a) {
+        c = (c + 1) % 41;
+    }
+    if (c == b) {
+        c = (c + 1) % 41;
+    }
+    func_800AE0F0(D_8015E74C, tbl.s[a]);
+    func_800AE0F0(D_8015E774, tbl.s[b]);
+    func_800AE0F0(D_8015E79C, tbl.s[c]);
+}
 
 void func_80151108(void) {
     switch (D_8015EDB0.unk_00) {
