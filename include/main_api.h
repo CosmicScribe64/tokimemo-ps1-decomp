@@ -520,6 +520,7 @@ extern s32 D_800B3D6C;
 extern s32 D_800B3D70[4]; /* defined in src/main/800451D0.c (T-9010) */
 extern s32 D_800B3648[16];
 extern u8 D_800B3D80;
+extern u8 D_800B3D84[];
 extern s8 D_800B3DB0;
 extern u8 D_800B3DC0[];
 extern u8 D_800B3DC7[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
