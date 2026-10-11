@@ -3,7 +3,37 @@
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A550);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A604);
+void func_8013A604(void) {
+    s32 i;
+    s32 padx[1]; /* FAKE: one unused word above the arrays reproduces the original frame and array offsets; real source unknown. T-9310 */
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    D_800B3C6C = 1;
+    func_8006BC28(0);
+    for (i = 0; i < 16; i++) {
+        a[i] = 0x20;
+        b[i] = i * 0xC - 0x60;
+        c[i] = 0x10;
+        d[i] = 0xC;
+    }
+    func_8004F870(0, 0x10, a, b, c, d);
+    (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = (&D_800E6280.unk_036)[2] = 0x80;
+    func_8004ADAC(4);
+    func_800AE0F0(D_800E6280.unk_0D4, "おぷ");
+    func_800AE0F0(D_800E6280.unk_0DC, "ション");
+    func_800AE0F0(D_800E6280.unk_0E4, "起動");
+    func_8004E58C();
+    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー１", 0);
+    func_8004E788(-0x80, 0, 0xF, (s32)"月日関連", 0);
+    func_8004E788(0x20, -0x18, 0xF, (s32)D_800E6280.unk_0D4, 0);
+    func_8004E788(0x20, -0xC, 0xF, (s32)D_800E6280.unk_0DC, 0);
+    func_8004E788(0x20, 0, 0xF, (s32)D_800E6280.unk_0E4, 0);
+    func_8004E884(5);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A7EC);
 
