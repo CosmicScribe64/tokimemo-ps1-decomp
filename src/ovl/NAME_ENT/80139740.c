@@ -686,19 +686,15 @@ void func_80140D20(void) {
 
 /* NON_MATCHING: T-8050, the original loads the end symbol address twice (hoisted copy in the loop, fresh one after it) */
 #ifdef NON_MATCHING
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140D6C);
-#else
 void func_80140D6C(void) {
     u8 *p;
 
     if (D_800E6280.unk_F88 & 0x860) {
-        p = (u8 *)&D_800E7D10;
-        do {
+        for (p = (u8 *)&D_800E7D10; p != &D_800E7D1F; p++) {
             if (p[4] == 1) {
                 break;
             }
-            p++;
-        } while (p != &D_800E7D1F);
+        }
         if (p == &D_800E7D1F) {
             func_8004284C();
             return;
@@ -711,6 +707,8 @@ void func_80140D6C(void) {
         func_80042940(0x20);
     }
 }
+#else
+INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140D6C);
 #endif
 
 void func_80140E18(void) {
