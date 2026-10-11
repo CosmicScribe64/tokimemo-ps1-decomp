@@ -10,6 +10,7 @@ void func_80141780(void) {
     D_801464B0 = 0x801DA680;
     D_801464B4 = 0x801DA68C;
     D_801464B8 = 0x801DA72C;
+    /* address literals: the data belongs to another overlay; the original loads it with a separate base register */
     D_801464BC = *(s16 *)0x801DA754;
     D_801464C0 = 0x801B0000;
     D_801464C4 = 0x801DA000;
@@ -26,6 +27,7 @@ void func_80141850(void) {
     D_801464E4 = 0x801D2430;
     D_801464E8 = 0x801D2434;
     D_801464EC = 0x801D2498;
+    /* address literal, see func_80141780 */
     D_801464F0 = *(s16 *)0x801D24B4;
     D_801464F4 = 0x801B0000;
     D_801464C4 = 0x801D2000;

@@ -36,6 +36,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-9110-wave-6-list-1|T-9110 Wave 6: list 1]]
 - [x] [[tickets/T-9030-wave-5-tool-fixes|T-9030 Wave-5 tool fixes]]
 - [x] [[tickets/T-9010-per-object-data-shared-lui-at|T-9010 Per-object .data/.bss/.rodata ownership to unlock shared lui $at]]
 - [x] [[tickets/T-3052-per-object-data-bss-split|T-3052 Split .data and .bss per original object]]

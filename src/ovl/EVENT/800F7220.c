@@ -463,6 +463,7 @@ void func_800F94D0(void) {
 }
 
 void func_800F9508(void) {
+    /* the u8 cast reproduces the conversion of the callee's u8 result (andi) that shifts the temporary registers */
     if (((u8)func_8002328C(D_800B1746) & 0x7F) >= 2U) {
         D_80094714 += 3;
     }

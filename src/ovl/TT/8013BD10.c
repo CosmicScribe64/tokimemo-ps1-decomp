@@ -89,7 +89,7 @@ void func_8013BF68(u8 *arg0) {
     *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
 }
 
-/* One-word struct copies compile to lw/sw through $at, as the original does (T-9110) */
+/* FAKE: one-word struct copies compile to lw/sw through $at, as the original's copies do; real source unknown. T-9110 */
 typedef struct {
     s32 w;
 } TtVec1;

@@ -752,3 +752,12 @@ Idioms in [[decompile-workflow]] and [[matching-notes]] ("Wave-5 codegen shapes 
 
 ## [2026-10-10] ticket | T-9020 (In Progress -> In Review -> Done)
 Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9020-wave-5-codegen-shapes]]; no open findings. Branch r5-shapes, not merged.
+
+## [2026-10-10] ticket | T-9110 wave 6 list 1 (In Progress)
+Created [[tickets/T-9110-wave-6-list-1]], worktree w6-1.
+
+## [2026-10-10] build | T-9110 wave 6 list 1
+29 functions matched (6,688 bytes) in list 1 (leftovers of wave 5): main `src/main/80047550.c`, `src/main/80058D20.c`; overlays TT, ETC, EVENT, GEKO, OLH, RPG_BAT, SHOUGATU, TAIIKU. New idioms in [[matching-notes]] ("Wave 6, list 1 (T-9110)"): one-word struct copy for `lw at`, compiler temporaries as non-locals, switch fall-off returns, pointer parameter prologue, absolute literals for other-overlay data, array view for load order, same-line scheduling, matrix frames. `TaiikuBig` and `D_80122CA0` moved to `include/main_api.h`. 31 rows appended to [[data/t0018-cases]] (v0/v1 and a-register shifts, unfolded constant indexes, `li k; multu`, shared `lui $at` outside the data range).
+
+## [2026-10-10] ticket | T-9110 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9110-wave-6-list-1]]; clean rebuild and checks below. Branch w6-1, not merged.
