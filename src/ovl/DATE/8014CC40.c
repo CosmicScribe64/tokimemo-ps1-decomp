@@ -1,5 +1,74 @@
 #include "common.h"
 #include "ovl/DATE.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E220);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E224);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E228);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E22C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E230);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E234);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E238);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E23C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E240);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E244);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E248);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E24C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E250);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E254);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E258);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E25C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E260);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E264);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E268);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E26C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E270);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E274);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E278);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E27C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E280);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E284);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E288);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E28C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E290);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E294);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E298);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E29C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2A0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2A4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2A8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2AC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2B0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2B4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2B8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2BC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2C0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2C4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2C8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2CC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2D0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2D4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2D8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2DC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2E0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2E4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2E8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2EC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2F0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2F4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2F8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E2FC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E300);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E304);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E308);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E30C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E310);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E314);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E318);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E31C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E3C4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E460);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E510);
 
 typedef struct {
     void (*f[43])();
@@ -371,7 +440,20 @@ void func_8014E2E8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E38C);
+/* FAKE: the GameState pointer local moves the incremented counter to $v1 as in the original (T-9380, found with the permuter) */
+s32 func_8014E38C(void) {
+    GameState *g;
+    u32 n;
+
+    g = &D_800E6280;
+    n = ++g->unk_1104.u;
+    if (n < 0x10) {
+        return 0;
+    }
+    func_80046318(0x3D, 0x801B0000, 0x7E55);
+    func_8014CDA0();
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E3E8);
 

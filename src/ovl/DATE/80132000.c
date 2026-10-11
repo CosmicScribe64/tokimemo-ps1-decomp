@@ -1,5 +1,232 @@
+#define MAIN_API_OVERRIDE_D_80121808 /* byte store here (main_api.h: s32, EVENT) */
 #include "common.h"
 #include "ovl/DATE.h"
+
+extern u8 D_80121808;
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B520);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B524);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B528);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B52C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B530);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B534);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B538);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B53C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B540);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B544);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B548);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B54C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B550);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B554);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B558);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B55C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B560);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B564);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B568);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B56C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B570);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B574);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B578);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B57C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B580);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B584);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B588);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B58C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B590);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B594);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B598);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B59C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5A0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5A4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5A8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5AC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5B0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5B4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5B8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5BC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5C0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5C4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5C8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5CC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5D0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5D4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5D8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5DC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5E0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5E4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5E8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5EC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5F0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5F4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5F8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B5FC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B600);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B604);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B608);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B60C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B610);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B614);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B618);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B61C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B620);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B624);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B628);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B62C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B630);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B634);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B638);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B63C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B640);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B644);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B648);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B64C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B650);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B654);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B658);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B65C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B660);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B664);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B668);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B66C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B670);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B674);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B678);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B67C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B680);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B684);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B688);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B68C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B690);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B694);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B698);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B69C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B6A0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B6A4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B6FC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B75C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B774);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B78C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B7A0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B888);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B8DC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B930);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B984);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B9B0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015B9DC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BCB4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD34);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD38);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD3C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD40);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD90);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD94);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD98);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BD9C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDA0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDA4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDA8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDAC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDB0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDB4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDB8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDBC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDC0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDC4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDC8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDCC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDD0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDD4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDD8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDDC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDE0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDE4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDE8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDEC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDF0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDF4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDF8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BDFC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE00);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE04);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE08);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE0C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE10);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE14);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE18);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE1C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE20);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE24);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE28);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE2C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE30);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE34);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE38);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE3C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE40);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE44);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE48);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE4C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE50);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE54);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE58);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE5C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE60);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE64);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE68);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE6C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE70);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE74);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE78);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE7C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE80);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE84);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE88);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE8C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE90);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE94);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE98);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BE9C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEA0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEA4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEA8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEAC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEB0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEB4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEB8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEBC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEC0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEC4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEC8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BECC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BED0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BED4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BED8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEDC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEE0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEE4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEE8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEEC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEF0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEF4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEF8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BEFC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF00);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF04);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF08);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF0C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF10);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF14);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF18);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF1C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF20);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF24);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF28);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF2C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF30);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF34);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF38);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80132000.data", D_8015BF3C);
 
 /*
  * Matching notes (T-2010):
@@ -184,7 +411,25 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801366A4);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136870);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136A74);
+void func_80136A74(void) {
+    D_800E6280.unk_71E |= 0x10;
+    D_800CA160 = D_8015BDD0;
+    D_800CA164 = D_8015BE3C;
+    D_800CA168 = D_8015BEA8;
+    func_800AE0F0(D_800CA19C, "縁日");
+    func_800AE0F0(D_800CA1DC, "花火大会");
+    D_8015B658 = 5;
+    *D_800CA21C = 0;
+    D_800CA21E = (u8)(func_80051A68(D_800E6280.unk_F5F) & 0x7F);
+    *D_800CA234 = 0;
+    D_800CA236 = 0;
+    D_800CA2FC = 0;
+    D_80122D08 = 0x22;
+    D_80122E9C = 0;
+    func_8007ED84(0x42CF);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136B70);
 
@@ -209,11 +454,32 @@ void func_801378BC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137920);
+void func_80137920(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x4587);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137984);
+void func_80137984(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x45DC);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801379E8);
+void func_801379E8(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x45F0);
+    func_8004284C();
+}
 
 void func_80137A4C(void) {
     u8 i;
@@ -236,7 +502,14 @@ void func_80137A4C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137B14);
+void func_80137B14(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x454E);
+    func_8004284C();
+}
 
 void func_80137B78(void) {
     u8 i;
@@ -261,9 +534,23 @@ void func_80137B78(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137C2C);
+void func_80137C2C(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x4627);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137C90);
+void func_80137C90(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x461D);
+    func_8004284C();
+}
 
 void func_80137CF4(void) {
     bg_read_sub2(0x4335);
@@ -363,7 +650,14 @@ void func_80138440(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80138470);
+void func_80138470(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x4470);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801384D4);
 
@@ -394,7 +688,14 @@ void func_801386C8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013872C);
+void func_8013872C(void) {
+    func_8007ED84(0x45AC);
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8004284C();
+}
 
 void func_80138790(void) {
     bg_read_sub2(0x45A3);
@@ -415,9 +716,23 @@ void func_801387B8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013882C);
+void func_8013882C(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x4574);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80138890);
+void func_80138890(void) {
+    if (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 == 1) {
+        D_800E6280.unk_F5E--;
+    }
+    func_80085B3C(0, D_80122D08);
+    func_8007ED84(0x4562);
+    func_8004284C();
+}
 
 void func_801388F4(void) {
     func_80046318(0x86, 0x801B0000, 0xBC35);
@@ -449,7 +764,7 @@ s32 func_80139054(void) {
             return 0;
         }
     }
-    if ((D_800E6280.unk_F5F == 0xA) && (D_800CA148 == 6) && (D_80122CDC == 0)) {
+    if ((0xA == D_800E6280.unk_F5F) && (D_800CA148 == 6) && (D_80122CDC == 0)) {
         func_8004284C();
         func_8004284C();
         func_8004284C();
@@ -621,7 +936,32 @@ void func_8013A2E0(void) {
     func_80042878(0x82);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A344);
+/* FAKE: `two`/`three` hold the compare constants; they give the original's constant registers and bne operand order (found with the permuter, T-9380) */
+void func_8013A344(void) {
+    s32 two;
+    s32 three;
+
+    if (D_800E6280.unk_03E == 0x5F) {
+        func_80083440(1);
+    } else if (D_80122E9C == 0) {
+        func_80083440(1);
+    } else if (D_80122E9C == 1) {
+        func_80083440(2);
+    } else {
+        two = 2;
+        three = 3;
+        if (D_80122E9C == two) {
+            func_80083440(3);
+        } else if ((D_80122E9C == three) && (D_800E6280.unk_F5F != two)) {
+            func_80083440(0);
+        } else if (D_80122E9C == three) {
+            func_80083440(1);
+        } else {
+            func_80083440(3);
+        }
+    }
+    func_8004284C();
+}
 
 void func_8013A424(void) {
     if (D_800E6280.unk_03E == 0x5F) {
@@ -674,7 +1014,7 @@ void func_8013A464(void) {
     D_800CA22C[0] = 1;
     D_800CA22C[2] = 1;
     D_800CA22C[1] = 1;
-    D_800CA234[0] = 0;
+    *D_800CA234 = 0;
     D_800CA234[2] = 0;
     D_800CA234[1] = 0;
     D_80122CDC = 0;
@@ -1081,7 +1421,23 @@ void func_8013CBF4(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013CDF8);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013D174);
+void func_8013D174(void) {
+    s32 v;
+
+    v = D_800E6280.unk_1BC[D_800E6280.unk_75D].unk_10.w;
+    if (((v & 0xF) == D_800E6280.unk_03F) && (((u32)(v << 23) >> 27) == D_800E6280.unk_040)) {
+        func_80042878(0x50);
+        func_80042908(2);
+        return;
+    }
+    v = D_800E6280.unk_0F8;
+    if ((D_800E6280.unk_03F == (v & 0xF)) && (D_800E6280.unk_040 == ((u32)(v << 23) >> 27))) {
+        func_80042878(0x50);
+        func_80042908(3);
+        return;
+    }
+    func_8004284C();
+}
 
 void func_8013D23C(void) {
     u8 g;
@@ -1168,7 +1524,7 @@ void func_8013D9E8(void) {
 }
 
 void func_8013DA7C(void) {
-    if ((D_800E6280.unk_F5F == 2) || (D_800E6280.unk_F5F == 8) || (D_800E6280.unk_F5F == 5) || (D_800E6280.unk_F5F == 0xA)) {
+    if ((D_800E6280.unk_F5F == 2) || (D_800E6280.unk_F5F == 8) || (D_800E6280.unk_F5F == 5) || (0xA == D_800E6280.unk_F5F)) {
         D_800E6280.unk_110A += 5;
     }
     func_8004284C();
@@ -1339,7 +1695,7 @@ void func_8013E30C(void) {
 }
 
 void func_8013E360(void) {
-    if ((D_800E6280.unk_F5F == 0xA) && (D_80122CDC == 1) && (D_800CA2FC == 2)) {
+    if ((0xA == D_800E6280.unk_F5F) && (D_80122CDC == 1) && (D_800CA2FC == 2)) {
         normal_date_speak();
         return;
     }
@@ -1349,7 +1705,7 @@ void func_8013E360(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013E3C4);
 
 void func_8013E4E8(void) {
-    if ((D_800E6280.unk_F5F == 0xA) && (D_80122CDC == 2) && (D_800CA2FC == 4)) {
+    if ((0xA == D_800E6280.unk_F5F) && (D_80122CDC == 2) && (D_800CA2FC == 4)) {
         normal_date_speak();
         return;
     }
@@ -1357,7 +1713,7 @@ void func_8013E4E8(void) {
 }
 
 void func_8013E54C(void) {
-    if ((D_800E6280.unk_F5F == 0xA) && (D_80122CDC == 0) && (D_800CA2FC == 0)) {
+    if ((0xA == D_800E6280.unk_F5F) && (D_80122CDC == 0) && (D_800CA2FC == 0)) {
         normal_date_speak();
         return;
     }
@@ -1365,7 +1721,7 @@ void func_8013E54C(void) {
 }
 
 void func_8013E5B0(void) {
-    if ((D_800E6280.unk_F5F == 0xA) && (D_80122CDC == 1) && (D_800CA2FC == 1)) {
+    if ((0xA == D_800E6280.unk_F5F) && (D_80122CDC == 1) && (D_800CA2FC == 1)) {
         func_80085A60();
         return;
     }
@@ -1376,7 +1732,7 @@ void func_8013E614(void) {
     s32 cur;
     s32 prev;
 
-    if ((D_800E6280.unk_F5F == 0xA) && (D_80122CDC == 1) && ((u8) D_8015B68C == 2) && (D_800CA2FC == 1)) {
+    if ((0xA == D_800E6280.unk_F5F) && (D_80122CDC == 1) && ((u8) D_8015B68C == 2) && (D_800CA2FC == 1)) {
         prev = D_800E6280.unk_110A;
         func_80085A60();
         cur = D_800E6280.unk_110A;
@@ -1546,7 +1902,13 @@ void func_8013FA4C(void) {
     wait_sub_sub(0x3E8);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013FA6C);
+/* FAKE: the first chain is dead (uopt drops its stores as overwritten); it moves the shared `li v0,0x80` above the second `lui $at` as in the original. Found with the permuter, T-9380 */
+void func_8013FA6C(void) {
+    (&D_80121808)[0] = (&D_80121809)[0] = (&D_8012180A)[0] = (&D_801217E4)[0] = (&D_801217E5)[0] = (&D_801217E6)[0] = (&D_8011F513)[0] = 0x80;
+    D_80122CF4 = 1;
+    (&D_80121808)[0] = (&D_80121809)[0] = (&D_8012180A)[0] = (&D_801217E4)[0] = (&D_801217E5)[0] = (&D_801217E6)[0] = (&D_8011F513)[0] = 0x80;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013FAD0);
 

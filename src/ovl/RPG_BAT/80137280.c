@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_80121317 /* stores 0x80 as a positive constant (main_api.h: s8) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
+
+extern u8 D_80121317;
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80137280(void) {
@@ -425,9 +428,52 @@ INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80139E88);
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_8013A034);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_8013A2F4);
+void func_8013A464();
 
-void func_8013A464(s8 a0, s8 a1) {
+void func_8013A2F4(void) {
+    D_8015EE38 += 1;
+    switch (D_8015EE38 % 4) {
+    case 0:
+        if (D_8015EE38 < 0x78) {
+            func_8013A464(0x1E, 0xFF);
+        } else {
+            func_8013A464(0x1F, 0xFF);
+        }
+        break;
+    case 1:
+        if (D_8015EE38 < 0x78) {
+            func_8013A464(0x1E, 0x80);
+        } else {
+            func_8013A464(0x1F, 0x80);
+        }
+        break;
+    case 2:
+        if (D_8015EE38 < 0x3C) {
+            func_8013A464(0x1E, 0xFF);
+        } else {
+            func_8013A464(0x1F, 0xFF);
+        }
+        break;
+    case 3:
+        if (D_8015EE38 < 0x3C) {
+            func_8013A464(0x1E, 0x80);
+        } else {
+            func_8013A464(0x1F, 0x80);
+        }
+        break;
+    }
+    if (D_8015EE38 >= 0xB5) {
+        D_80121353 = 0x1F;
+        D_80121397 = 0x1F;
+        D_80121317 = 0x80;
+        func_8014F500();
+    }
+}
+
+void func_8013A464(a0, a1)
+    s8 a0;
+    s8 a1;
+{
     D_80121353 = a0;
     D_80121317 = a1;
 }

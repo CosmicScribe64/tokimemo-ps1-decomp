@@ -30,9 +30,88 @@ void func_8014AF70(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014AFB8);
+void func_8014AFB8(u8 *arg0, u16 arg1, s32 arg2) {
+    arg0[0] = 1;
+    arg0[0x51] = 0;
+    *(u16 *)(arg0 + 2) = arg1;
+    *(s16 *)(arg0 + 0x58) = 0xA;
+    *(s32 *)(arg0 + 0x38) = (&D_8014E34C)[arg2];
+    arg0[0x40] = 0x80;
+    switch (arg1) {
+    case 0x40:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC0;
+        return;
+    case 0x41:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC1;
+        return;
+    case 0x42:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC1;
+        return;
+    case 0x43:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC2;
+        return;
+    case 0x44:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC3;
+        return;
+    case 0x45:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC5;
+        return;
+    case 0x46:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC9;
+        return;
+    case 0x47:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC6;
+        return;
+    case 0x48:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC5;
+        return;
+    }
+}
 
+/* NON_MATCHING: T-9380, one instruction: the original passes the loop-invariant 0x40 (s5) as `andi a1,s5,0xffff`, IDO folds the constant to `li a1,64` (also with a local holding 0x40) */
+#ifdef NON_MATCHING
+void func_8014B088(u8 arg0) {
+    s32 i;
+    u8 *p;
+    s32 a2;
+
+    p = D_80158A98;
+    i = 0;
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            return;
+        }
+        if (arg0 != 0) {
+            a2 = 4;
+            *(s32 *)(p + 0x20) = 0x500000;
+        } else {
+            a2 = 3;
+            *(s32 *)(p + 0x20) = 0xFFB00000;
+        }
+        *(s32 *)(p + 0x24) = (-0x10 - i * 0x10) << 16;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0x20000;
+        p[0x63] = arg0;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        func_8014AFB8(p, 0x40, a2);
+        i += 1;
+        p += 0x78;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 6);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014B088);
+#endif
 
 void func_8014B198(u8 *arg0) {
     u8 *g;
@@ -426,10 +505,82 @@ void func_8014CBD0(void) {
     }
 }
 
+/* NON_MATCHING: T-9380, one instruction: the first ordering-table address is `addu t9,t8,v0` here, `addu t9,v0,t8` in the original (all else matches; TtOtTag is the 24-bit address field of a GPU tag) */
+#ifdef NON_MATCHING
+void func_8014CC04(u8 *arg0) {
+    u8 *p;
+    u8 *v;
+    u32 r;
+    u32 g;
+    u32 b;
+
+    p = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    v = *(u8 **)(p + 4);
+    *(u8 **)(p + 4) = v + 0x10;
+    v[3] = 3;
+    v[7] = arg0[0x3B];
+    if (*(u16 *)(arg0 + 0x44) & 8) {
+        r = (arg0[0x38] * D_80158A64[0x1D]) >> 7;
+        if ((s32)r >= 0x100) {
+            r = 0xFF;
+        }
+        g = (arg0[0x39] * D_80158A64[0x1E]) >> 7;
+        if ((s32)g >= 0x100) {
+            g = 0xFF;
+        }
+        b = (arg0[0x3A] * D_80158A64[0x1F]) >> 7;
+        if ((s32)b >= 0x100) {
+            b = 0xFF;
+        }
+        v[4] = r;
+        v[5] = g;
+        v[6] = b;
+    } else {
+        v[4] = arg0[0x38];
+        v[5] = arg0[0x39];
+        v[6] = arg0[0x3A];
+    }
+    *(s16 *)(v + 8) = *(s16 *)(arg0 + 0x14);
+    *(s16 *)(v + 0xA) = *(s16 *)(arg0 + 0x16);
+    *(s16 *)(v + 0xC) = *(s16 *)(arg0 + 0x3C);
+    *(s16 *)(v + 0xE) = *(s16 *)(arg0 + 0x3E);
+    ((TtOtTag *)v)->addr = *(u32 *)(p + *(u16 *)(arg0 + 0x10) * 4 + 0x8008);
+    ((TtOtTag *)(p + *(u16 *)(arg0 + 0x10) * 4 + 0x8008))->addr = (u32)v;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CC04);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CDBC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CFEC);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014D168);
+/* FAKE: `if (1)` after the second case and the bound in the local n give the original's constant registers (the bound 0x80 apart from case 0x80); found with the permuter, T-9380 */
+void func_8014D168(void) {
+    s32 i;
+    s32 n;
+    u8 *p;
+
+    p = D_80158AA4;
+    i = 0;
+    n = 0x80;
+    do {
+        if ((p[0] != 0) && (p[1] == 0)) {
+            switch (p[0x3B] & ~3) {
+            case 0x60:
+                func_8014CC04(p);
+                break;
+            case 0x64:
+                func_8014CDBC(p);
+                if (1) {
+                    break;
+                }
+            case 0x80:
+                func_8014CFEC(p);
+                break;
+            }
+        }
+        i += 1;
+        p += 0x64;
+    } while (i != n);
+}

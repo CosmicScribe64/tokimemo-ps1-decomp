@@ -1,5 +1,67 @@
 #include "common.h"
 #include "ovl/NAME_ENT.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D180);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D184);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D188);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D18C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D190);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D194);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D198);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D1A0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D1B0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D1B4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D1B8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D1BC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D1C0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D1D0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D204);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D248);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D298);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D2E4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D328);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D348);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D37C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D3B8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D3DC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D3F0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D3FC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D41C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D438);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D484);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D4CC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D50C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D520);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D548);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D574);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D5D4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D614);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D63C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D66C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D690);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D6C0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D6CC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D6D8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D6FC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D71C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D730);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D750);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D78C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D7D4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D7F0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D820);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D830);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D860);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D86C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D8B8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D8D8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D908);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D928);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D958);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014DA04);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014DA30);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014DB88);
 
 void func_80144AD0(void) {
     D_800E6280.unk_1100 += 1;
@@ -177,7 +239,29 @@ void func_80146B3C(void) {
     D_80120812 = -0x78;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80146BCC);
+/* FAKE: the empty test of D_801206E0 makes its load the first instruction, as in the original; found with the permuter, T-9380 */
+void func_80146BCC(void) {
+    if ((D_801206E0 && D_801206E0) && D_801206E0) {
+    }
+    D_801206D9 = 9;
+    D_801206DA = 0x40;
+    D_80120710 = 0x41000000;
+    D_801206DB = 0xA4;
+    D_801206E4 = 0x801842C4;
+    D_801206E8 = 0x801842F0;
+    D_8012070C = 0x801842BC;
+    D_801206E0 += 1;
+    if (D_801206E0 >= 5) {
+        D_801206F0 = 0xA;
+    } else if (D_801206E0 >= 5) {
+        D_801206F0 = 9;
+    } else {
+        D_801206F0 = 8;
+    }
+    D_801206DD = 0x80;
+    D_801206FE = -0xA0;
+    D_80120702 = -0x78;
+}
 
 void func_80146CB8(void) {
     D_8012071D = 9;
@@ -501,7 +585,35 @@ void func_8014A81C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_8014A848);
+void func_8014A848(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        D_8014D180 = 0x25;
+        func_80144B44();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80144C8C();
+        break;
+    case 2:
+        func_8005742C(0x4973, 1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (func_800460CC() & 1) {
+            func_80057418(1, func_8005751C(1));
+            if (D_800B594C == -1) {
+                func_800573AC();
+                func_8005742C(0x4973, 1);
+            } else {
+                func_80046318(0x41, 0x80180000, 0xAC50);
+                func_80042808();
+            }
+        }
+        break;
+    }
+    func_800578F4(1);
+}
 
 void func_8014A960(void) {
     if (D_800E6280.unk_110A == 0) {

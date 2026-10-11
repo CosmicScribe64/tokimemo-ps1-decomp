@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-10
+updated: 2026-10-11
 ---
 
 # Wiki Index
@@ -30,6 +30,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9340-wave-7-list-4|T-9340]] Wave 7: list 4, 9 functions matched (2,960 bytes), permuter-found FAKE idioms and the `% 240` temporary-shift pattern in [[matching-notes]] "Wave 7, list 4" (Done)
 - [[tickets/T-9210-wave-6-codegen-shapes|T-9210]] Wave-6 codegen shapes: check_para_limit takes no argument, index as a member, indexed loops for the stack-argument slot, K&R definitions, element chains; [[matching-notes]] "Wave-6 codegen shapes" (Done)
 - [[tickets/T-9320-wave-7-list-2|T-9320]] Wave 7 list 2: 39 functions (TACO range-chain template, two-counter table loops, repeated expressions instead of temps, permuter burn tricks); [[matching-notes]] "Wave 7, list 2" (Done)
+- [[tickets/T-9380-wave-7-list-8|T-9380]] Wave 7, list 8: 27 functions matched (about 5,800 bytes), permuter-found idioms, 4 data islands, 21 rows in [[data/t0018-cases]]; [[matching-notes]] "Wave 7, list 8" (Done)
 - [[tickets/T-8080-wave-5-list-8|T-8080]] Wave 5: list 8 (Done)
 - [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
 - [[tickets/T-8010-wave-5-list-1|T-8010]] Wave 5: list 1 (Done)

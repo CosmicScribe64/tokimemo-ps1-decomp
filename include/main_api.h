@@ -630,9 +630,11 @@ extern u8 D_800CA1DC[];
 /* Four s16[4] rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
  * with one chain assignment, which gives the original's shared register only for array elements. */
 extern s16 D_800CA21C[4];
+extern s16 D_800CA21E;
 extern s16 D_800CA224[4];
 extern s16 D_800CA22C[4];
 extern s16 D_800CA234[4];
+extern s16 D_800CA236;
 extern u8 D_800CA23C[];
 extern u8 D_800CA250[];
 extern u8 D_800CA25C[];
@@ -866,6 +868,7 @@ extern s16 D_8011ED3E;
 extern u8 *D_8011ED48;
 extern s32 D_8011ED4C;
 extern u8 D_8011ED57;
+extern u8 D_8011ED58[];
 extern u8 D_8011ED59;
 extern u8 D_8011ED5A;
 extern u8 D_8011ED5B;
@@ -905,9 +908,11 @@ extern s16 D_8011F4DE;
 extern s16 D_8011F4E0;
 extern s16 D_8011F4EE;
 extern s16 D_8011F4F2;
+extern s8 D_8011F50D;
 extern u8 D_8011F50E;
 extern u8 D_8011F50F;
 extern u8 D_8011F513;
+extern s16 D_8011F522;
 extern s16 D_8011F524;
 extern s16 D_8011F532;
 extern s16 D_8011F536;
@@ -953,7 +958,9 @@ extern u8 D_80120652;
 extern u8 D_80120653;
 extern u8 D_80120654;
 extern u8 D_80120655;
+#ifndef MAIN_API_OVERRIDE_D_80120656
 extern s8 D_80120656;
+#endif
 extern u8 D_80120657;
 #ifndef MAIN_API_OVERRIDE_D_80120658
 extern s16 D_80120658;
@@ -1178,11 +1185,14 @@ extern s32 D_8012127C;
 extern s8 D_801212CB;
 extern s8 D_80121311;
 extern u8 D_80121313;
+#ifndef MAIN_API_OVERRIDE_D_80121317
 extern s8 D_80121317;
+#endif
 extern s16 D_80121328;
 extern s8 D_80121353;
 extern u8 D_80121357;
 extern s16 D_8012136C;
+extern s8 D_80121397;
 extern s8 D_80121399;
 extern u8 D_8012139B;
 extern u8 D_8012139E;
@@ -1225,7 +1235,15 @@ extern s16 D_80121728;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
 extern Rec24 D_801217D0[]; /* at least 12 records */
+extern u8 D_801217E4;
+extern u8 D_801217E5;
+extern u8 D_801217E6;
 extern s16 D_801217F8;
+#ifndef MAIN_API_OVERRIDE_D_80121808
+extern s32 D_80121808;
+#endif
+extern u8 D_80121809;
+extern u8 D_8012180A;
 extern s32 D_80121818; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 extern s32 D_8012183C; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 extern s32 D_80121860; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
