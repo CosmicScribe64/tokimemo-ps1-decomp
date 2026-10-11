@@ -755,3 +755,9 @@ Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` 
 
 ## [2026-10-10] ticket | T-9120 wave 6 list 2 (In Progress)
 Started [[tickets/T-9120-wave-6-list-2]] on branch w6-2.
+
+## [2026-10-10] build | T-9120 wave 6 list 2
+39 functions matched (4267 -> 4306): RPG_BAT 23 (dialogue pages `func_80137280` family, state machines), OLH 6 help pages, DATE 2, NAME_ENT 2, GYOZI, main `func_8004482C` (T-9010 island of `src/main/80043510.c`), ETC, SHOUGATU, TACO, VALEN. Patterns (template pages, `(u8)` around a masked call result, `D |= a; D &= ~b;`, bit-field flag stores, one-line loop header, table-frame idioms) in [[matching-notes]], "Wave 6, list 2"; the failures are rows in [[data/t0018-cases]]. TACO `func_8015CF30` is hand-scheduled libgte assembly. Changed declarations: `include/main_api.h` (`func_8009ED74`), `include/ovl/{ETC,NAME_ENT,OLH,RPG_BAT,TACO}.h`; `config/SLPM_86.053.yaml` (island line by `tools/data_island.py`).
+
+## [2026-10-10] ticket | T-9120 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` OK, `migrate_globals.py --check` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9120-wave-6-list-2]]; no open findings. Branch w6-2, not merged.
