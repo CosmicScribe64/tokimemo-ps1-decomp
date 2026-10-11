@@ -507,3 +507,8 @@ extern s32 D_8013C338;
 extern s32 D_8013C340;
 extern s32 D_8013C348;
 #endif /* OVL_ENDING_H */
+
+#ifndef OVL_ENDING_TIMER_T9780
+#define OVL_ENDING_TIMER_T9780
+s32 func_8013B510(void);
+#endif

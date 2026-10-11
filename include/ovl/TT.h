@@ -181,3 +181,71 @@ typedef struct TtAnimState {
     /* 0x09 */ u8 unk_09;
 } TtAnimState; /* accessed prefix size 0x0A */
 #endif
+
+#ifndef OVL_TT_SLOT68_T9780
+#define OVL_TT_SLOT68_T9780
+/* Six 0x68-byte slots walked by func_801475C8. */
+typedef struct TtSlot68 {
+    /* 0x00 */ u8 active;
+    /* 0x01 */ u8 pad1[3];
+    /* 0x04 */ u16 kind;
+    /* 0x06 */ u8 pad6[0x62];
+} TtSlot68; /* size 0x68 */
+void func_801475C8(void);
+#endif
+
+#ifndef OVL_TT_RENDER_RECORDS_T9780
+#define OVL_TT_RENDER_RECORDS_T9780
+/* Game frame view; SDK rectangles retain their existing RECT type. */
+typedef struct TtFrame80B8 {
+    /* 0x0000 */ void *next;
+    /* 0x0004 */ u8 pad4[0x8044];
+    /* 0x8048 */ RECT draw_clip;
+    /* 0x8050 */ s16 draw_ofs[2];
+    /* 0x8054 */ u8 pad8054[0xA];
+    /* 0x805E */ u8 unk_805E;
+    /* 0x805F */ u8 unk_805F;
+    /* 0x8060 */ u8 unk_8060;
+    /* 0x8061 */ u8 pad8061[0x43];
+    /* 0x80A4 */ RECT disp_rect;
+    /* 0x80AC */ RECT disp_screen;
+    /* 0x80B4 */ u8 unk_80B4;
+    /* 0x80B5 */ u8 unk_80B5;
+    /* 0x80B6 */ u8 pad80B6[2];
+} TtFrame80B8; /* size 0x80B8 */
+void func_8013E6A0(void);
+#endif
+
+#ifndef OVL_TT_CORE_PREFIX_T9780
+#define OVL_TT_CORE_PREFIX_T9780
+/* Accessed prefix of the state at D_80158A64; the complete allocation is unknown. */
+typedef struct TtCore30 {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ u16 unk_02;
+    /* 0x04 */ u16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ u8 pad08;
+    /* 0x09 */ u8 unk_09;
+    /* 0x0A */ u8 unk_0A;
+    /* 0x0B */ u8 unk_0B;
+    /* 0x0C */ u8 pad0C[5];
+    /* 0x11 */ u8 unk_11;
+    /* 0x12 */ u8 pad12[0xA];
+    /* 0x1C */ u8 unk_1C;
+    /* 0x1D */ u8 unk_1D;
+    /* 0x1E */ u8 unk_1E;
+    /* 0x1F */ u8 unk_1F;
+    /* 0x20 */ u8 pad20[2];
+    /* 0x22 */ u8 unk_22;
+    /* 0x23 */ u8 pad23[3];
+    /* 0x26 */ u16 unk_26;
+    /* 0x28 */ u8 pad28[6];
+    /* 0x2E */ s16 unk_2E;
+} TtCore30; /* accessed prefix size 0x30 */
+
+typedef struct TtButtons06 {
+    /* 0x00 */ u8 pad0[4];
+    /* 0x04 */ u16 unk_04;
+} TtButtons06; /* accessed prefix size 0x06 */
+void func_80132CCC(void);
+#endif

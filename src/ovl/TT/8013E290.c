@@ -45,7 +45,43 @@ void func_8013E454(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E290", func_8013E498);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E290", func_8013E6A0);
+void func_8013E6A0(void) {
+    u8 *state;
+    TtFrame80B8 *p;
+    s32 x;
+    s32 offset;
+
+    p = (TtFrame80B8 *)D_80158AB4;
+    state = D_80158A60;
+    func_8009C5E0(0);
+    func_8009F57C((s32)&p[0].draw_clip, 0, 0, 320, 240);
+    func_8009F57C((s32)&p[1].draw_clip, 320, 0, 320, 240);
+    if (state[73] != 0) {
+        func_8009F638(&p[0].disp_rect, 352, 0, 256, 240);
+        func_8009F638(&p[1].disp_rect, 32, 0, 256, 240);
+    } else {
+        func_8009F638(&p[0].disp_rect, 320, 0, 320, 240);
+        func_8009F638(&p[1].disp_rect, 0, 0, 320, 240);
+    }
+    offset = 160;
+    x = 32;
+    do {
+        p->draw_ofs[0] = offset;
+        p->draw_clip.x = x;
+        p->draw_clip.y = 8;
+        p->draw_clip.w = 256;
+        p->draw_clip.h = 232;
+        p->unk_8060 = 0;
+        p->unk_805E = 0;
+        p->unk_805F = 1;
+        p->unk_80B4 = 0;
+        p->unk_80B5 = 0;
+        x += 320;
+        p->next = (u8 *)p + 8;
+        p++;
+        offset += 320;
+    } while (x != 0x2A0);
+}
 
 void func_8013E824(void) {
     func_8004111C();

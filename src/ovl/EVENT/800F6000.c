@@ -238,7 +238,64 @@ void func_800F6000(void) {
     D_80120674 = 0x8019B45C;
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F6000", func_800F6E84);
+void func_800F6E84(void) {
+    func_8004ACA8();
+    switch (D_800EECB4) {
+    case 0:
+        func_800F9CFC();
+        break;
+    case 1:
+        func_80101510();
+        break;
+    case 2:
+        func_800FBF40();
+        break;
+    case 3:
+        func_800FDF90();
+        break;
+    case 4:
+        func_80106F90();
+        break;
+    case 5:
+        func_801027E0();
+        break;
+    case 6:
+        func_80103FF0();
+        break;
+    case 7:
+        func_800FFF50();
+        break;
+    case 8:
+        func_800F7690();
+        break;
+    case 9:
+        func_80105460();
+        break;
+    case 10:
+        func_801083E0();
+        break;
+    case 11:
+        func_8010A330();
+        break;
+    case 12:
+        func_800FD360();
+        break;
+    case 13:
+        func_8010B410();
+        break;
+    default:
+        func_80015FE0();
+        break;
+    }
+    func_80046A7C();
+    func_8004BB54();
+    func_800372E0(2);
+    func_800358D0();
+    func_80036A8C();
+    func_80035774();
+    func_8004AEB0();
+    func_80017020();
+}
 
 void func_800F6FFC(void) {
     D_8009471C = &D_80094714;

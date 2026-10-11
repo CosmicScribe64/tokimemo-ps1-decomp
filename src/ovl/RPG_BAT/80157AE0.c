@@ -533,7 +533,118 @@ void func_80159620(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_801596E8);
+void func_801596E8(void) {
+    s32 temp_v0;
+
+    switch (D_8015EE30.unk_00) {
+    case 0:
+        D_8015ED98 = 0x1000;
+        func_8014F500();
+    default:
+        break;
+    case 1:
+        func_80157F48();
+        break;
+    case 2:
+        func_800AE0F0(D_8015E9E0, &D_800E6280.unk_0D4);
+        func_800AE100(D_8015E9E0, "「番長・・・。");
+        func_8014B738((s32) D_8015EB70, 1, 0x5A);
+        func_8014F500();
+        break;
+    case 3:
+        func_8014F6D4(0);
+        break;
+    case 4:
+        func_801580C4();
+        break;
+    case 5:
+        func_8004E58C();
+        D_8015EDBC = func_8013E934(0xB1, 0xB3, (s32) "番長") - 1;
+        D_8015EE14 = func_8013E934(0xB1, 0xC3, (s32) D_800B35F4[D_8015EB9C]) - 1;
+        D_8015EE40 = func_8013E934(0x13, 0xBB, (s32) "元・番長") - 1;
+        k_disp_start(D_8015EE40 + 1);
+        k_disp_switch(D_8015EDBC, 1);
+        k_disp_switch(D_8015EE14, 1);
+        k_disp_switch(D_8015EE40, 1);
+        k_sub_reset_point_set();
+        func_8013F15C(0x515, 1, 0);
+        func_8014F500();
+        break;
+    case 6:
+        func_80158240();
+        break;
+    case 7:
+        ((RpgHealthBlock *)D_8011ECD0)->record[155].unk_03 |= 1;
+        ((RpgHealthBlock *)D_8011ECD0)->record[155].unk_26 -= 0x10;
+        temp_v0 = D_8015EE38 + 1;
+        D_8015EE38 = temp_v0;
+        if (temp_v0 >= 0x21) {
+            func_8014F500();
+        }
+        break;
+    case 8:
+        func_8014F5DC(0x1E);
+        break;
+    case 9:
+        func_8013E7C0(0x30, 9, 1, 1);
+        switch (D_8015EB9C) {
+        case 0:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 1:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 2:
+            func_8013E7C0(0x1D, 2, 1, 1);
+            break;
+        case 3:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 4:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 5:
+            func_8013E7C0(0x1D, 2, 1, 1);
+            break;
+        case 6:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 7:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 8:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 9:
+            func_8013E7C0(0x1D, 7, 1, 1);
+            break;
+        case 10:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        case 13:
+            func_8013E7C0(0x1D, 4, 1, 1);
+            break;
+        }
+        func_8014F500();
+        break;
+    case 10:
+        func_800AE0F0(D_8015E9E0, "戦闘に勝った！！");
+        func_800AE0F0(D_8015EA08, "経験値　：３２７６７ＥＸＰ");
+        func_800AE0F0(D_8015EA30, "お金　　：６５５３５ゴールド");
+        func_80159B40();
+        func_8014B738((s32) D_8015EB70, D_8015ED14, 0x5A);
+        func_8004500C(1, 0x202);
+        func_8014F500();
+        break;
+    case 11:
+        func_8014F6D4(0);
+        break;
+    case 12:
+        D_8015EC14 = 0;
+        func_80042808();
+        break;
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/80157AE0.rodata", D_8015E13C);
 

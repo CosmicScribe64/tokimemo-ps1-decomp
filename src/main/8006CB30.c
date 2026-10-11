@@ -307,7 +307,28 @@ void func_80071280(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8007132C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800722C4);
+void func_800722C4(void) {
+    GameState *state;
+
+    state = &D_800E6280;
+    switch (D_800E6280.unk_03F) {
+    case 2:
+    case 4:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 11:
+        break;
+    case 3:
+    case 6:
+    case 9:
+    case 12:
+        ((CharFlags *)state->unk_F64)->b14 = ((CharFlags *)D_800E6280.unk_F64)->b13;
+        ((CharFlags *)state->unk_F64)->b13 = 0;
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072338);
 

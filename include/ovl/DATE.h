@@ -1194,3 +1194,9 @@ typedef struct DateCallbacks39 {
 } DateCallbacks39; /* size 0x9C */
 extern DateCallbacks39 D_8015F2B4;
 #endif
+
+#ifndef OVL_DATE_COUNTER_T9780
+#define OVL_DATE_COUNTER_T9780
+void func_80139AC8(void);
+s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+#endif

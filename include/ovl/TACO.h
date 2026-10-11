@@ -449,3 +449,29 @@ extern TacoParticle14 D_8015E9F0[];
 
 extern TacoParticle14 D_8015E8B0[];
 
+#ifndef OVL_TACO_INITIALIZATION_T9780
+#define OVL_TACO_INITIALIZATION_T9780
+void func_8013801C(void);
+void func_801571E8(void);
+void func_801572D8(void);
+void func_801573C8(void);
+void func_80157AE0(void);
+void func_8015800C(void);
+void func_80158AB0(void);
+#endif
+
+#ifndef OVL_TACO_DIRECTIONS_T9780
+#define OVL_TACO_DIRECTIONS_T9780
+typedef struct TcDirection {
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+} TcDirection; /* size 0x08 */
+typedef struct TcDirections28 {
+    /* 0x00 */ TcDirection pos[5];
+} TcDirections28; /* size 0x28 */
+typedef struct TcRotations14 {
+    /* 0x00 */ s32 rotation[5];
+} TcRotations14; /* size 0x14 */
+extern TcDirections28 D_80160480;
+extern TcRotations14 D_801604A8;
+#endif

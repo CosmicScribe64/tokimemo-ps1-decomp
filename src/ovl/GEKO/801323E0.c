@@ -91,7 +91,23 @@ s32 func_801325C0(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_801327AC);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132A4C);
+/* FAKE: s32 fall-through preserves narrowing through v0 (T-9780). */
+s32 func_80132A4C(s16 arg0) {
+    /* FAKE: place the 22-byte table at sp+0x14 (T-9780). */
+    s32 pad;
+    GekoThresholds table;
+
+    table = D_80144CE0;
+    if (D_80144C50 == 0) {
+        D_80144C50 = arg0;
+    } else if (D_80144C50 == 10) {
+        if ((D_800E6280.unk_10F8 & 7) >= (u32)table.threshold[D_800E6280.unk_F5F]) {
+            D_80144C50 = arg0;
+        }
+    } else if (D_800E6280.unk_10F8 & 1) {
+        D_80144C50 = arg0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_80132B24);
 

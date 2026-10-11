@@ -4315,3 +4315,122 @@ Moved [[tickets/T-9810-permuter-farm-for-near-misses]] and its [[kanban]] card f
 ## [2026-10-11] lint | T-9810 final status and delivery consistency
 
 Confirmed [[tickets/T-9810-permuter-farm-for-near-misses]], [[kanban]] and [[index]] agree on Done, the per-attempt report exists, and git diff --check passes. The uncommitted file list contains only tooling and wiki changes; src/ is untouched. All acceptance items and inline review are complete.
+## [2026-10-11] ticket | Start wave 9 list 8
+
+Created [[tickets/T-9780-wave-9-list-8]] and its In Progress card in [[kanban]]. Read [[decompile-workflow]] and [[register-allocation-wave7]]; matching 138 listed functions within 35 owned C files, Docker only, uncommitted changes.
+
+## [2026-10-11] build | Wave 9 list 8 baseline
+
+[[tickets/T-9780-wave-9-list-8]]: initial Docker configure/ninja passed all 27 SHA1 checks, headers and globals. List-order draft/build/diff pass started; scratchpad/w9-8/ holds attempts.
+
+## [2026-10-11] decision | Batch wave 9 list 8 declaration repairs
+
+[[tickets/T-9780-wave-9-list-8]]: build.ninja lists every header as an input of every object. Record missing declarations during quick draft/object-build/diff, and repair them in batches during the deep pass; full ninja checks gate retained candidates. Details in [[matching-notes]].
+
+## [2026-10-11] query | Wave 9 list 8 initial source probes
+
+[[tickets/T-9780-wave-9-list-8]]: exact/near duplicate reports give no fillable owned functions. Bounded source probes retain a GEKO copied-table candidate for integrated verification and send main return-zero scheduling to a five-minute permutation. Drafts and results: scratchpad/w9-8/.
+
+## [2026-10-11] build | Wave 9 list 8 match func_800F6E84
+
+[[tickets/T-9780-wave-9-list-8]]: src/ovl/EVENT/800F6000.c `func_800F6E84` (376 bytes), Docker ninja and funcdiff --resolve pass.
+
+## [2026-10-11] query | Wave 9 list 8 type repairs
+
+[[tickets/T-9780-wave-9-list-8]]: isolated typed probes distinguish parser/type failures from real codegen differences in the first 106 drafts. No generated assembly or compiler pipeline changes; provisional code stays in scratchpad/w9-8/.
+
+## [2026-10-11] build | Wave 9 list 8 GEKO threshold match
+
+[[tickets/T-9780-wave-9-list-8]]: src/ovl/GEKO/801323E0.c `func_80132A4C` (216 bytes) passes resolved funcdiff and full Docker ninja, all 27 SHA1 checks. Aggregate extent and marked source-shape choices recorded in [[matching-notes]].
+
+## [2026-10-11] decision | Wave 9 list 8 deep iteration batch
+
+[[tickets/T-9780-wave-9-list-8]]: five more real-file resolved matches after postincrement, call-argument and register/scheduling repairs. Full Docker build running. Appended overlay declarations and used tools/sync_protos.py for D_80122D34 after the header checker identified it as shared main storage. Findings and marked FAKE choices are in [[matching-notes]]. Timed permutation results remain in scratchpad/w9-8/; no tooling changes.
+
+## [2026-10-11] build | Wave 9 list 8 seven-match verification
+
+[[tickets/T-9780-wave-9-list-8]]: full Docker ninja after the deep iteration batch passes all 27 SHA1 checks, headers and globals. Seven retained functions total 2732 bytes. Raw/type-repaired/permuted diagnostics are confined to scratchpad/w9-8/.
+
+## [2026-10-11] query | Wave 9 list 8 byte-total correction
+
+The preceding [[tickets/T-9780-wave-9-list-8]] entry's byte total was an arithmetic error: 376 + 216 + 488 + 324 + 1232 + 124 + 372 = 3132 bytes. The ticket total is corrected.
+
+## [2026-10-11] build | Wave 9 list 8 frame aggregate matches
+
+[[tickets/T-9780-wave-9-list-8]]: DATE func_80149268 and TT func_8013E6A0 pass real-file resolved diffs and overlay checksums. Nine retained functions total 3688 bytes. Full Docker ninja passes all 27 SHA1 checks after their header additions. Frame record extents and declaration-order finding recorded in [[matching-notes]].
+
+## [2026-10-11] decision | Wave 9 list 8 RPG dialogue call repair
+
+[[tickets/T-9780-wave-9-list-8]]: three more RPG_BAT real-file resolved matches, 1640 bytes, by restoring target call arguments and using the existing aggregate counter member. Twelve retained matches total 5328 bytes. Full SHA1 build running; [[matching-notes]] records the call-site values.
+
+## [2026-10-11] build | Wave 9 list 8 twelve-match verification
+
+[[tickets/T-9780-wave-9-list-8]]: full Docker ninja passes all 27 SHA1 checks after the RPG declaration batch. Twelve retained functions total 5328 bytes. TACO func_8015776C's real direction/rotation aggregate copies and shift arithmetic now reduce its isolated probe to eight differing lines; frame and bounds-test iteration remains in scratch.
+
+## [2026-10-11] decision | Wave 9 list 8 TACO direction tables
+
+[[tickets/T-9780-wave-9-list-8]]: TACO func_8015776C (884 bytes) passes real-file resolved diff after genuine aggregate recovery and scalar-local cleanup. Thirteen retained matches total 6212 bytes. [[matching-notes]] records table extents and the frame finding. More missing-declaration/GameState probes remain isolated; no unmatched draft is retained.
+
+## [2026-10-11] decision | Wave 9 list 8 RPG rotation helper
+
+[[tickets/T-9780-wave-9-list-8]]: TACO's checksum passes. RPG_BAT func_80142544 (364 bytes) passes integrated resolved diff with direct aggregate-counter reads, existing RpgObjectBlock coordinate members, and marked return shape. Fourteen matches total 6576 bytes; [[matching-notes]] records the reconstruction. No new main declarations needed.
+
+## [2026-10-11] decision | Wave 9 list 8 calendar flag helper
+
+[[tickets/T-9780-wave-9-list-8]]: main func_800722C4 (116 bytes) matches after byte-bitfield recovery and shared GameState pointer access. Fifteen matches total 6692 bytes. [[matching-notes]] records why scalar masks removed a required store. Full after-fourteen ninja passes 27/27 checksums. Permutation setup for an ENDING probe consumed about thirty minutes before search; stopped only this worktree’s job and retained no candidate.
+
+## [2026-10-11] decision | Wave 9 list 8 calendar view placement
+
+[[tickets/T-9780-wave-9-list-8]]: main checksum passes with the calendar match. Moved the game-specific CalendarFlag view into include/main_api.h’s preserved types section and replaced bare unsigned int bitfields with u32. Isolated u32 view still matches; u8/u16 field declarations change expression order. This is a type definition, not a hand-added main symbol declaration.
+
+## [2026-10-11] decision | Wave 9 list 8 bounded register-gap audit
+
+[[tickets/T-9780-wave-9-list-8]]: recorded 29 deeply compared, unresolved functions in [[data/t0018-cases]], with register_shapes clusters consulted. [[matching-notes]] records the TACO copy-word temporary and m2c’s false address-base argument. No unresolved source is retained. Fifteen matching functions total 6692 bytes; latest full Docker ninja passes all 27 checksums, prototype branch check has zero new disagreements, and globals check passes.
+
+## [2026-10-11] decision | Wave 9 list 8 existing flag view reuse
+
+[[tickets/T-9780-wave-9-list-8]]: both calendar operations match using existing CharFlags word bits 13/14. Removed the provisional CalendarFlag typedef and explicit shifts/masks; [[matching-notes]] now describes the final source. Progress is 4885/6958 functions and 783344/2279368 bytes. Audit clarification: the 120 variants/300-second return-zero search apply to representative func_80042940; the three sibling rows reflect focused return-shape checks and the common scheduling gap.
+
+## [2026-10-11] decision | Wave 9 list 8 record loop and size audit
+
+[[tickets/T-9780-wave-9-list-8]]: ENDING func_8013B510 (212 bytes) passes integrated resolved diff using existing Entry8 and marked counter-copy/return shapes. [[matching-notes]] records the reconstruction and GEKO's missed consumed argument in a jal delay-slot home spill. Asm-header audit corrects DATE func_80149268 to 160 bytes; sixteen matches total 6896 bytes (previous fifteen-match count was 6684). Full calendar-cleanup build passes 27/27 SHA1 checks; scoped dupes has zero plans. OLH deep probe is twelve scheduling rows from matching; unresolved code stays ASM.
+
+## [2026-10-11] build | Wave 9 list 8 sixteenth-match validation
+
+[[tickets/T-9780-wave-9-list-8]]: full Docker ninja passes all 27 checksums after ENDING's record-loop match. Inline review corrected RPG rotation-helper spacing without changing its resolved MATCH. TT func_80132CCC's timer assignment expression and scalar-home cleanup leave an initial t6/t7 pair gap; timed search underway. Main input-status assignment/width probes remain broad mismatches. No unresolved C body retained.
+
+## [2026-10-11] decision | Wave 9 list 8 typed TT state machine
+
+[[tickets/T-9780-wave-9-list-8]]: TT func_80132CCC passes integrated resolved diff after accessed-prefix type recovery, direct selector reads and pointer declaration initializers. [[matching-notes]] records the marked selector home and stack-layout evidence. Its asm range is 572 bytes; seventeen functions total 7468 bytes. New TT rendering-view field names now follow unk_XX, with func_8013E6A0 reverified. Prototype check reports zero new disagreements (17 known); globals check passes. Full-unit validation follows the new header declarations.
+
+## [2026-10-11] decision | Wave 9 list 8 shared-record alias repair
+
+[[tickets/T-9780-wave-9-list-8]]: RPG_BAT func_801596E8 (1112 bytes) passes integrated resolved diff after flag/health fields share one object-record view. [[matching-notes]] records the alias repair; appended a resolution note to [[data/t0018-cases]] without changing its historical row. Eighteen matches total 8580 bytes. The seventeen-match full Docker ninja passes all 27 SHA1 checks; a fresh full build follows the new record declarations.
+
+## [2026-10-11] build | Wave 9 list 8 eighteenth-match validation
+
+[[tickets/T-9780-wave-9-list-8]]: full after-eighteen Docker ninja passes all 27 SHA1 checks. Added a thirtieth bounded row to [[data/t0018-cases]] for OLH's eight scheduling differences after deep source/frame probes; [[matching-notes]] records the result-copy versus buffer-home tradeoff. TACO numeric-display parameter/aggregate probes remain broad mismatches. All unresolved implementations remain ASM.
+
+## [2026-10-11] ticket | T-9780 enters inline review
+
+Moved [[tickets/T-9780-wave-9-list-8]] and its [[kanban]] card to In Review. Final review replaces provisional TT draw/display layouts with direct game-frame members using SDK RECT; src/ovl/TT/8013E290.c remains a resolved MATCH. Updated [[matching-notes]] and [[index]]. Scoped duplicate fill has zero plans. Docker prototype branch check reports zero new disagreements (17 known); globals check passes. Final incremental checksum build and ownership/size audit are running.
+
+## [2026-10-11] lint | T-9780 source ownership and size audit
+
+Docker srcscan audit confirms 18 C replacements, exactly 8580 function-range bytes, and every changed C file belongs to list 8. Corrected this batch's newly appended func_80042808 row in [[data/t0018-cases]] to distinguish focused sibling probes from the representative exhaustive family search. [[tickets/T-9780-wave-9-list-8]] records the audit; historical entries remain unchanged. git diff --check passes.
+
+## [2026-10-11] build | T-9780 final matching validation
+
+Final Docker incremental ninja completes 27/27 SHA1 checks; build/headers.ok and build/globals.ok exist, globals OK, and prototype branch check has zero new disagreements. src/ovl/TT/8013E290.c remains a fresh resolved MATCH after SDK-layout review cleanup. Grand progress: 4888/6958 functions, 785240/2279368 bytes, 34.4%. [[tickets/T-9780-wave-9-list-8]] records the completed inline standards checklist and resolved findings; [[matching-notes]] records 18 matches / 8580 bytes and 30 added register/scheduling rows. No staged files or commits; ticket remains In Review until the four-hour session requirement is met.
+
+## [2026-10-11] lint | T-9780 final review guards
+
+Explicit Docker check_headers.py reports headers OK after the TT SDK-layout cleanup. Final source ownership, size, default-build, prototype/global and ticket/kanban guards pass; git diff --check is clean. [[tickets/T-9780-wave-9-list-8]] remains In Review while meeting the four-hour requirement. [[data/t0018-cases]] contains 30 new batch rows; the last OLH row's scheduling classification is confirmed by register_shapes.
+
+## [2026-10-11] lint | T-9780 complete list coverage
+
+Docker comparison of the work list against saved quick-pass metadata confirms 138/138 entries, none missing. [[tickets/T-9780-wave-9-list-8]] records complete quick-pass coverage and the ranked bounded deep pass. Scratch drafts and failed probes remain outside tracked source; 18 verified replacements are retained.
+
+## [2026-10-11] ticket | T-9780 complete after four hours
+
+Moved [[tickets/T-9780-wave-9-list-8]] and its [[kanban]] card to Done after the 14:59:50–18:59:50 UTC session window. Inline standards review has no unresolved findings. Result: 18 matches / 8580 function-range bytes, 27/27 final checksums, headers/globals/prototype guards pass, 30 new register/scheduling rows. Updated [[index]]; all edits remain uncommitted for orchestration.

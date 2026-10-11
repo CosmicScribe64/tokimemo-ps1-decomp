@@ -76,4 +76,87 @@ void func_80132C24(void) {
     func_80132810();
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132130", func_80132CCC);
+void func_80132CCC(void) {
+    u8 *scene = D_80158A60;
+    /* FAKE (T-9780): retain the unused selector home between the saved pointers. */
+    u16 pad_selector;
+    u8 *control;
+    TtButtons06 *buttons;
+    u16 flags;
+    TtCore30 *state = (TtCore30 *)D_80158A64;
+
+    control = D_80158A6C;
+    buttons = (TtButtons06 *)(scene + 0x10);
+    switch (state->unk_02) {
+    case 0:
+        func_80044750(0x22);
+        func_80044750(0x2F);
+        func_80044750(4);
+        func_80044750(0x204);
+        func_8014CBD0();
+        func_80148210();
+        func_80143570();
+        func_8014A7E0();
+        func_80146BE0();
+        func_80148DB0();
+        func_80147CE0();
+        func_8014AF3C();
+        func_80132F4C();
+        func_80133B70();
+        func_8013BD4C();
+        func_801473BC();
+        func_801426F0();
+        state->unk_11 = 0;
+        state->unk_1C = 1;
+        state->unk_1D = 0;
+        state->unk_1E = 0;
+        state->unk_1F = 0;
+        func_80132130();
+        func_80132198(2, 6, 4);
+        func_8013230C(0xD, 0);
+        state->unk_2E = 0;
+        if (state->unk_22 != 0) {
+            state->unk_26 = 0x12CU;
+        } else {
+            state->unk_26 = 0xE10U;
+        }
+        state->unk_02 = 0x20;
+        break;
+    case 0x20:
+        func_80132B88((u8 *)buttons);
+        break;
+    case 0x40:
+        func_80132810((u8 *)buttons);
+        if ((state->unk_26 -= 1) == 0) {
+            state->unk_02 = 0x80;
+        }
+        if ((state->unk_22 == 0) && ((flags = buttons->unk_04, ((flags & 0x20) != 0)) || (flags & 0x800))) {
+            state->unk_1D = 0x80;
+            state->unk_1E = 0x80;
+            state->unk_1F = 0x80;
+            state->unk_02 = 0x80;
+        }
+        break;
+    case 0x80:
+        func_80044750(0xB1);
+        func_80132C24();
+        break;
+    }
+    if (state->unk_09 != 0) {
+        if (scene[83] == 0) {
+            if (control[15] != 0) {
+                state->unk_00 = 8;
+            } else {
+                state->unk_00 = 1;
+            }
+        } else {
+            state->unk_00 = 1;
+        }
+        state->unk_06 = 0;
+        state->unk_04 = 0;
+        state->unk_02 = 0;
+        state->unk_0B = 0;
+        state->unk_0A = 0;
+        state->unk_09 = 0U;
+    }
+}

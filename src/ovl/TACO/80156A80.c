@@ -1,7 +1,167 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80156A80);
+void func_80156A80(void) {
+    D_801604C0 += 1;
+    D_801604C8 += 1;
+    func_8015B59C();
+    if (D_801604C4 < 0xC) {
+        switch (D_801604CC) {
+        case 0:
+            if (D_801604C8 == 1) {
+                func_80158AB0();
+            }
+            if (func_8015CCC8(0xE) == 0) {
+                func_8015A928();
+            }
+            break;
+        case 1:
+            func_80157AE0();
+            func_8015A928();
+            break;
+        case 2:
+        case 3:
+            if (func_8015CCC8(0xA) == 0) {
+                func_80157AE0();
+                func_8015A928();
+            }
+            break;
+        case 4:
+        case 5:
+        case 6:
+            func_8015A928();
+            break;
+        case 7:
+        case 8:
+            func_8015A928();
+            break;
+        case 9:
+            func_8015A928();
+            D_801604CC = 0;
+            break;
+        }
+    }
+    switch (D_801604C4) {
+    case 0:
+    case 6:
+        if ((D_801604C0 >= 0x2B) && (func_8015CCC8(8) == 0)) {
+            func_8015A900();
+        }
+        switch (D_801604C0) {
+        case 2:
+            func_801571E8();
+            break;
+        case 10:
+            func_801571E8();
+            break;
+        case 18:
+            func_801571E8();
+            break;
+        case 26:
+            func_801571E8();
+            break;
+        case 34:
+            func_801571E8();
+            break;
+        case 42:
+            func_801571E8();
+            break;
+        }
+    default:
+        break;
+    case 1:
+    case 7:
+        if ((D_801604C0 >= 0x2B) && (func_8015CCC8(8) == 0)) {
+            func_8015A900();
+        }
+        switch (D_801604C0) {
+        case 2:
+            func_801572D8();
+            break;
+        case 10:
+            func_801572D8();
+            break;
+        case 18:
+            func_801572D8();
+            break;
+        case 26:
+            func_801572D8();
+            break;
+        case 34:
+            func_801572D8();
+            break;
+        case 42:
+            func_801572D8();
+            break;
+        }
+        break;
+    case 2:
+    case 8:
+        if ((D_801604C0 >= 0x15) && (func_8015CCC8(8) == 0)) {
+            func_8015A900();
+        }
+        if (D_801604C0 == 5) {
+            func_801573C8();
+        }
+        break;
+    case 3:
+    case 9:
+        if ((D_801604C0 >= 0x2B) && (func_8015CCC8(8) == 0)) {
+            func_8015A900();
+        }
+        switch (D_801604C0) {
+        case 2:
+            func_801571E8();
+            break;
+        case 10:
+            func_801572D8();
+            break;
+        case 18:
+            func_801571E8();
+            break;
+        case 26:
+            func_801572D8();
+            break;
+        case 34:
+            func_801571E8();
+            break;
+        case 42:
+            func_801572D8();
+            break;
+        }
+        break;
+    case 4:
+    case 5:
+    case 10:
+    case 11:
+        if ((D_801604C0 >= 0x42) && (func_8015CCC8(0xC) == 0)) {
+            func_8015A900();
+        }
+        switch (D_801604C0) {
+        case 0x5:
+            func_8015800C();
+            break;
+        case 0x23:
+            func_8015800C();
+            break;
+        case 0x41:
+            func_8015800C();
+            break;
+        }
+        break;
+    case 12:
+        if (func_8015CCC8(0xFF) == 0) {
+            func_8015A900();
+        }
+        break;
+    case 13:
+        if (func_8015CE64() == 0) {
+            func_8015ABF0();
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 void func_80156F50(void) {
     /* the family's position locals and spill (see func_80158AB0); the unused ones keep their stack
@@ -93,7 +253,46 @@ void func_801573C8(void) {
     func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0x10);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_8015776C);
+void func_8015776C(s32 arg0) {
+    TcDirections28 sp50;
+    TcRotations14 sp3C;
+    TcPos pos;
+
+    sp50 = D_80160480;
+    sp3C = D_801604A8;
+    switch ((arg0 + D_8015EDB4)->unk7C) {
+    case 0:
+        (arg0 + D_8015EDB4)->unk78 += 0x100;
+        if ((arg0 + D_8015EDB4)->unk78 >= -0x1D4B) {
+            (arg0 + D_8015EDB4)->unk7A = 0;
+            (arg0 + D_8015EDB4)->unk7C += 1;
+        }
+        break;
+    case 1:
+        (arg0 + D_8015EDB4)->unk74 += (s32) (sp50.pos[(arg0 + D_8015EDB4)->unk6A].x * (arg0 + D_8015EDB4)->unk7A) / 16;
+        (arg0 + D_8015EDB4)->unk76 += (s32) (sp50.pos[(arg0 + D_8015EDB4)->unk6A].y * (arg0 + D_8015EDB4)->unk7A) / 16;
+        (arg0 + D_8015EDB4)->unk78 += (s32) ((-(arg0 + D_8015EDB4)->unk7A << 8) + 0x1000) / 16;
+        (arg0 + D_8015EDB4)->unk64 += 0x40;
+        (arg0 + D_8015EDB4)->unk66 += sp3C.rotation[(arg0 + D_8015EDB4)->unk6A];
+        if (((s16) (arg0 + D_8015EDB4)->unk7A % 20) == 0) {
+            pos.x = (arg0 + D_8015EDB4)->unk74;
+            pos.y = (arg0 + D_8015EDB4)->unk76;
+            pos.z = (arg0 + D_8015EDB4)->unk78;
+            func_8013DB80(pos, 0x80, 0xC0);
+        }
+        if ((arg0 + D_8015EDB4)->unk64 >= 0x400) {
+            (arg0 + D_8015EDB4)->unk7C += 1;
+        }
+        break;
+    case 2:
+        (arg0 + D_8015EDB4)->unk74 += sp50.pos[(arg0 + D_8015EDB4)->unk6A].x;
+        (arg0 + D_8015EDB4)->unk76 += sp50.pos[(arg0 + D_8015EDB4)->unk6A].y;
+        if (((arg0 + D_8015EDB4)->unk76 < -0xFA0) || ((arg0 + D_8015EDB4)->unk74 < -0x1770) || ((arg0 + D_8015EDB4)->unk74 >= 0x1771)) {
+            func_8015C208(arg0);
+        }
+        break;
+    }
+}
 
 void func_80157AE0(void) {
     TcPos p0;
