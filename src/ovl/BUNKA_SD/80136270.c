@@ -10,7 +10,26 @@ s32 func_80136270(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80136270", func_801362EC);
+void func_801362EC(void) {
+    s32 i;
+
+    if (D_800E6280.unk_110A >= 3 && D_800E6280.unk_110A < 7) {
+        if (D_800E6280.unk_F80 & 0x20) {
+            func_801363BC();
+            for (i = 0; i < 3; i++) {
+                D_8011ECD0[i * 0x44 + 0x1986] = 0x82;
+            }
+        } else {
+            for (i = 0; i < 3; i++) {
+                D_8011ECD0[i * 0x44 + 0x1986] = 1;
+            }
+        }
+    }
+    if (D_800E6280.unk_110A >= 3 && D_800E6280.unk_110A < 6 && (D_800E6280.unk_F80 & 0x40)) {
+        func_80042940(5);
+    }
+    func_801363BC();
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80136270", func_801363BC);
 
