@@ -1,3 +1,5 @@
+#define MAIN_API_OVERRIDE_func_80083440 /* T-9570: old-style caller preserves the full argument register. */
+void func_80083440();
 #include "common.h"
 #include "ovl/SHOUGATU.h"
 
@@ -64,9 +66,49 @@ void func_80137D68(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137DE4);
+void func_80137DE4(void) {
+    func_80137AB4();
+    if ((D_80144E0C == 3) || (D_80144E0C == 11)) {
+        /* FAKE: dead selector test retains the target promotion. T-9570 */
+        if ((D_80144E0C && D_80144E0C) != 0) { }
+        func_80083440(3);
+    } else if ((D_80144E0C == 5) || (D_80144E0C == 13)) {
+        func_80083440(func_80051B48(8));
+    }
+    /* FAKE: zero increment promotes the selector into v1. T-9570 */
+    D_80144E0C += 0;
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137E54);
+void func_80137E54(void) {
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    func_8007C740();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    *(u8 *)&D_800E6280.unk_75D = *(u8 *)&D_800E6280.unk_F5F = 8;
+    func_800847B8(*(u8 *)&D_800E6280.unk_F5F);
+    if ((u8) D_80144E14 < 3U) {
+        func_800AE0F0(D_800CA188, "女生徒");
+    }
+    func_80136F90();
+    D_80144DFC = D_80144D90;
+    D_80144E00 = D_80144DB4;
+    D_80144E04 = D_80144DD8;
+    func_8004284C();
+}
+
 
 void func_80137F70(void) {
     D_80144E08 = D_80144E14 * 3;

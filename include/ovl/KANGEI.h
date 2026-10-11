@@ -251,5 +251,16 @@ void func_801341E8(void);
 void func_80138F54(void);
 void func_80134DB0(void);
 
+typedef struct KangeiWords11 {
+    /* 0x00 */ s32 unk_00[11];
+} KangeiWords11; /* size 0x2C */
+typedef struct KangeiWords2 {
+    /* 0x00 */ s32 unk_00[2];
+} KangeiWords2; /* size 0x08 */
+extern KangeiWords11 D_80139BA8;
+extern KangeiWords2 D_80139BD4;
+extern KangeiWords2 D_80139BDC;
+extern KangeiWords2 D_80139BE4;
+
 #endif /* OVL_KANGEI_H */
 extern u8 D_80139DF8;

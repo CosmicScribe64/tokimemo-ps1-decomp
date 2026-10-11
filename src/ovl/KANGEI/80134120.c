@@ -100,13 +100,104 @@ void func_80134374(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_8013454C);
+void func_8013454C(void) {
+    u8 girl;
+    KangeiWords11 all;
+    KangeiWords2 first;
+    KangeiWords2 second;
+    KangeiWords2 third;
+
+    all = D_80139BA8;
+    first = D_80139BD4;
+    second = D_80139BDC;
+    third = D_80139BE4;
+    girl = D_800E6280.unk_F5F;
+    switch (girl) {
+    case 0:
+        func_80062CD0(all.unk_00[D_800E6280.unk_0F4.h >> 12]);
+        break;
+    case 1:
+        func_80062CD0(first.unk_00[D_800E6280.unk_0F4.h >> 12]);
+        break;
+    case 2:
+        func_80062CD0(second.unk_00[(D_800E6280.unk_0F4.h >> 12) - 2]);
+        break;
+    case 3:
+        func_80062CD0(third.unk_00[(D_800E6280.unk_0F4.h >> 12) - 4]);
+        break;
+    case 4:
+        func_80062CD0(0x66EC);
+        break;
+    case 5:
+        func_80062CD0(0x5FE4);
+        break;
+    case 6:
+        func_80062CD0(0x625A);
+        break;
+    default:
+        func_80062CD0(0x6962);
+        break;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134724);
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801349D4);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134BC4);
+void func_80134BC4(void) {
+    u32 selection;
+
+    selection = (u16) D_800E6280.unk_0F4.h >> 0xC;
+    switch (selection) {
+    case 0:
+        func_800AE0F0(D_800CA19C, "図書室");
+        func_8007ED84(0x40BC);
+        break;
+    case 1:
+        func_800AE0F0(D_800CA19C, "演劇部");
+        func_8007ED84(0x40B2);
+        break;
+    case 2:
+        func_800AE0F0(D_800CA19C, "実験室");
+        func_8007ED84(0x40C6);
+        break;
+    case 3:
+        func_800AE0F0(D_800CA19C, "電脳部室");
+        func_8007ED84(0x40D0);
+        break;
+    case 4:
+        func_800AE0F0(D_800CA19C, "美術室");
+        func_8007ED84(0x40D9);
+        break;
+    case 5:
+        func_800AE0F0(D_800CA19C, "音楽室");
+        func_8007ED84(0x40E2);
+        break;
+    case 6:
+        func_800AE0F0(D_800CA19C, "グランド");
+        func_8007ED84(0x4296);
+        break;
+    case 7:
+        func_800AE0F0(D_800CA19C, "グランド");
+        func_8007ED84(0x4296);
+        break;
+    case 8:
+        func_800AE0F0(D_800CA19C, "グランド");
+        func_8007ED84(0x4296);
+        break;
+    case 9:
+        func_800AE0F0(D_800CA19C, "プール");
+        func_8007ED84(0x40A0);
+        break;
+    default:
+        func_800AE0F0(D_800CA19C, "体育館");
+        func_8007ED84(0x40A9);
+        break;
+    }
+    func_80085B3C(0xE, (s32) ((u16) D_800E6280.unk_0F4.h >> 0xC));
+    func_8004284C();
+}
 
 void func_80134DB0(void) {
     s32 pad; /* FAKE: unused slot above tblA, the original frame has 8 more bytes (T-3330 idiom, real source unknown). T-8010 */

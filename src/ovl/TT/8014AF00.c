@@ -68,13 +68,14 @@ void func_8014AFB8(u8 *arg0, u16 arg1, s32 arg2) {
     }
 }
 
-/* NON_MATCHING: T-9380, one instruction: the original passes the loop-invariant 0x40 (s5) as `andi a1,s5,0xffff`, IDO folds the constant to `li a1,64` (also with a local holding 0x40) */
-#ifdef NON_MATCHING
 void func_8014B088(u8 arg0) {
+    u32 size;
     s32 i;
     u8 *p;
     s32 a2;
 
+    size = 0x40;
+    /* Wide local preserves the u16 call conversion. T-9570 */
     p = D_80158A98;
     i = 0;
     do {
@@ -95,12 +96,12 @@ void func_8014B088(u8 arg0) {
         p[0x63] = arg0;
         *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
         *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
-        func_8014AFB8(p, 0x40, a2);
+        func_8014AFB8(p, size, a2);
         i += 1;
         p += 0x78;
         *(s16 *)(p - 0x1A) = 0;
         p[-0x18] = 0;
-        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x74) = size;
         *(s16 *)(p - 0x6E) = 0;
         *(s16 *)(p - 0x70) = 0;
         *(s16 *)(p - 0x72) = 0;
@@ -109,9 +110,6 @@ void func_8014B088(u8 arg0) {
         p[-0x6B] = 0;
     } while (i != 6);
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014B088);
-#endif
 
 void func_8014B198(u8 *arg0) {
     u8 *g;
@@ -366,7 +364,55 @@ void func_8014BE60(s32 arg0) {
     } while (i != 5);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014BF54);
+void func_8014BF54(void *arg0) {
+    s32 shifted;
+    s32 factor;
+    s32 value;
+    u16 state;
+    u16 counter;
+    u8 flag;
+
+    state = *(u16 *)((u8 *)arg0 + 0x6);
+    switch (state) {
+    case 0:
+        factor = *(u8 *)((u8 *)arg0 + 0x50) - 2;
+        value = *(s32 *)((u8 *)arg0 + 0x24);
+        shifted = value >> 0x10;
+        *(s32 *)((u8 *)arg0 + 0x20) = (s32) ((factor << 0x15) + (factor * shifted * shifted * 0x30));
+        if (value < 0x540000) {
+            *(s32 *)((u8 *)arg0 + 0x2c) = 0;
+            *(u16 *)((u8 *)arg0 + 0x6) = 1U;
+            *(u16 *)((u8 *)arg0 + 0x6e) = 0x400U;
+        }
+        *(u8 *)((u8 *)arg0 + 0x3c) = 1;
+        break;
+    case 1:
+        *(s32 *)((u8 *)arg0 + 0x24) = (s32) ((func_800A0140((s32) *(u16 *)((u8 *)arg0 + 0x6e)) << 9) + 0x500000);
+        counter = *(u16 *)((u8 *)arg0 + 0x6e);
+        if (counter >= 0xC81U) {
+            *(s32 *)((u8 *)arg0 + 0x2c) = 0x20000;
+            *(u16 *)((u8 *)arg0 + 0x6e) = 0U;
+            *(u16 *)((u8 *)arg0 + 0x6) = 2U;
+            counter = *(u16 *)((u8 *)arg0 + 0x6e);
+        }
+        *(u16 *)((u8 *)arg0 + 0x6e) = (u16) (counter + 0x30);
+        *(u8 *)((u8 *)arg0 + 0x3c) = 0;
+        break;
+    case 2:
+        if ((u16) *(u16 *)((u8 *)arg0 + 0x5e) >= 5U) {
+            flag = *(u8 *)((u8 *)arg0 + 0x60);
+            if (flag == 0) {
+                *(u16 *)((u8 *)arg0 + 0x5e) = 0U;
+                *(u8 *)((u8 *)arg0 + 0x60) = (u8) (flag + 1);
+                func_80133D14((s32) *(s16 *)((u8 *)arg0 + 0x14), (s32) *(s16 *)((u8 *)arg0 + 0x16), 0x20, 0xA0);
+            }
+        }
+        if (*(u8 *)((u8 *)arg0 + 0x51) != 0) {
+            *(u16 *)((u8 *)arg0 + 0x5e) = (u16) (*(u16 *)((u8 *)arg0 + 0x5e) + 1);
+        }
+        break;
+    }
+}
 
 void func_8014C0B0(u8 arg0) {
     u8 *p = D_80158A98;

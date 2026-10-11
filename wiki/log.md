@@ -943,3 +943,203 @@ Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its kanban 
 ## [2026-10-11] build | T-9410 clean proof and review complete
 
 Clean Docker configure/ninja build after deleting asm and build: 27/27 SHA1 OK. build/headers.ok and build/globals.ok exist; tools/sync_protos.py --check-branch exits zero; tools/test_register_shapes.py passes all three synthetic tests; git diff --check passes. Progress: 4734/6958, 729612 bytes, +5 functions/+2768 bytes over baseline. Inline standards/spec review found no unresolved findings. Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its card to Done; full evidence in [[register-allocation-wave7]]. Uncommitted changes left for the orchestrator; no existing r7-fixes tooling files changed.
+
+## [2026-10-11] ticket | T-9570 wave 8 list 7 started
+
+Created [[tickets/T-9570-wave-8-list-7]] in In Progress and synchronized [[kanban]]. Read [[decompile-workflow]], [[register-allocation-wave7]] and CODING_STANDARDS.md; work restricted to list-7 files under the shared wave-8 brief.
+
+## [2026-10-11] build | T-9570 first bounded attempts and duplicate scan
+
+The ownership-restricted duplicate pass applied zero copies. First list-7 drafts were built and rejected where they differed or required type repair; no match is claimed. Recorded the table-base, shared constant and m2c draft limitations in [[matching-notes]]. Scratch evidence is in scratchpad/w8-7/. The initial full build stopped on an experimental candidate; it will be rerun after candidates are settled.
+
+## [2026-10-11] query | T-9570 source-shape follow-ups
+
+Completed bounded first-pass attempts through list position 55. OPTION `func_8013A550` improves when the parameter is updated directly, but explicit return/goto variants and a 60-second permuter run do not match its epilogue; the best permuter score was 560, not a match. GYOZI `func_80142A8C` remains open after parameter, local-order and color-expression variants; all experimental C was restored. Draft type repairs now use the established D_8011ECD0 byte table for its undeclared field labels. Details in scratchpad/w8-7/ and [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 matched KANGEI:func_80134BC4
+
+src/ovl/KANGEI/80134120.c: 492-byte function replaced with C and verified by relocation-resolved funcdiff; tracked in [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] query | T-9570 work-list first pass complete
+
+All 129 entries have a bounded outcome: 128 records in scratchpad/w8-7/results-1.jsonl through results-7.jsonl, plus the separately investigated GYOZI func_80142A8C. KANGEI func_80134BC4 is the one first-pass C match (492 bytes); 36 entries require substantial manual type or copy repair and 91 compiled/failed drafts were reverted. TT func_8014BF54's first draft incorrectly kept its angle before a call; the original reloads it afterwards, so a corrected follow-up is being checked. See [[tickets/T-9570-wave-8-list-7]] and [[matching-notes]].
+
+## [2026-10-11] build | T-9570 matched TT:func_8014BF54
+
+src/ovl/TT/8014AF00.c: 348-byte C replacement verified by funcdiff; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 TT follow-up and register-shape inventory limit
+
+TT func_8014BF54 (348 bytes) matches after restoring the angle load after the call, correcting unsigned halfword reads, preserving the first two loads' source order and reading the cleared halfword back into the counter. A further BUNKASAI bit-field rewrite fixes the flag store but leaves selector allocation; TT func_8014BB30's sign-shift test fixes its branch shape but its multiplication operands remain under investigation. `register_shapes.py` cannot complete its historical inventory: missing asm/ovl/VALEN/nonmatchings/VALEN/80132760/func_80133670.s. No tools changed. `sync_protos.py --check-branch` and `migrate_globals.py --check` pass. See [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] query | T-9570 register-order evidence filed
+
+Appended four reverified rows to [[data/t0018-cases]] for the TAIIKU base rematerialization, GYOZI shared store/call value and SHOUGATU/BUNKASAI selectors. Read [[register-allocation-wave7]] first; the inventory command failed on an unrelated missing VALEN asm row, recorded in [[matching-notes]]. Rows describe observed differences, not proof that no C spelling can match. All four functions stay INCLUDE_ASM.
+
+## [2026-10-11] ticket | T-9570 ready for inline review
+
+Moved [[tickets/T-9570-wave-8-list-7]] and its [[kanban]] card to In Review. Full incremental Docker ninja completed successfully; kept functions are KANGEI func_80134BC4 and TT func_8014BF54 (840 bytes). Rejected candidates restored. Inline standards/spec review and final branch checks follow.
+
+## [2026-10-11] ticket | T-9570 wave 8 list 7 done
+
+Inline standards/spec review found no unresolved findings. Moved [[tickets/T-9570-wave-8-list-7]] and its [[kanban]] card to Done; updated [[index]]. Final gain: 2 functions, 840 bytes; four rows appended to [[data/t0018-cases]]. Full Docker ninja passed 27/27 SHA1 checks; header/global stamps exist, fresh branch/global checks pass, and both real function diffs pass after cleanup. Progress: 4736/6958 functions, 730452/2279368 bytes (32.0%). All 127 remaining list entries are time-boxed and stay assembly. No commits, merges, tool/config changes or raw-source edits.
+
+## [2026-10-11] lint | T-9570 closing consistency check
+
+Checked the new ticket, kanban card and index status, append-only log/row additions, changed C ownership and whitespace. Ticket/card agree on Done. Matching idioms and the register_shapes limitation are linked through [[matching-notes]]; scratch evidence remains outside the tracked tree.
+
+## [2026-10-11] query | T-9570 complete ordered attempt audit
+
+Re-read the assigned 167-line list: 129 functions, 35 file declarations, 3 comments. Matched all entries against prior batch and manual records, with no unattempted functions. Added the complete ordered evidence ledger to [[tickets/T-9570-wave-8-list-7]]; final retained C remains 2 functions, 840 bytes, uncommitted.
+
+## [2026-10-11] build | T-9570 continuation finish checks
+
+Incremental Docker ninja succeeds with no pending work; fresh branch-prototype and global checks pass, header/global stamps remain present. Progress remains 4736/6958 functions and 730452/2279368 bytes (32.0%). Ordered audit and finish evidence are recorded in [[tickets/T-9570-wave-8-list-7]] and [[matching-notes]]; ticket remains Done and changes uncommitted.
+
+## [2026-10-11] ticket | Reopen T-9570 for deep second pass
+
+Reopened [[tickets/T-9570-wave-8-list-7]] and moved its card to In Progress. The user requests sustained candidate iteration, five-minute near-miss permutation and aggregate-type recovery for at least three hours unless all candidates are exhausted. Prior first-pass outcomes were too shallow.
+
+## [2026-10-11] build | T-9570 deep-pass match RPG_BAT:func_8013C32C
+
+src/ovl/RPG_BAT/8013B5B0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match SHOUGATU:func_80137DE4
+
+src/ovl/SHOUGATU/80137BB0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 selector match and aggregate retry
+
+Recorded the newly verified SHOUGATU selector idiom in [[matching-notes]]. The 300-second search found a real-build match; cleanup trials establish that both marked FAKE operations are required. TAIIKU's D_8014A400 runner record is being reconstructed from its 0x1C stride and neighboring accesses, with the D_8014A608 three-word copy represented as a real aggregate.
+
+## [2026-10-11] query | T-9570 sustained source and permutation experiments
+
+Updated [[tickets/T-9570-wave-8-list-7]] with resolved-diff ranking, targeted control-flow/type/declaration/expression experiments and 300-second searches. TT reaches eight instruction-line differences; RPG_BAT's omitted call argument is repaired before searching. KANGEI's rectangle is represented by the SDK RECT. Unmatched candidates are restored. Aggregate recovery proceeds from TAIIKU's neighboring source and target assembly.
+
+## [2026-10-11] build | T-9570 deep-pass match TAIIKU:func_80146994
+
+src/ovl/TAIIKU/801452D0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match SHOUGATU:func_80137E54
+
+src/ovl/SHOUGATU/80137BB0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match GYOZI:func_8013AC38
+
+src/ovl/GYOZI/8013A920.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 byte-chain gains and serialized builds
+
+Recorded two additional verified scene-initializer matches in [[matching-notes]] and updated [[index]] to seven functions and 2,364 bytes. Several simultaneous local experiments corrupted the disposable Ninja dependency log, producing empty-output failures and a Ninja crash. Preserved that log in external scratch and switched the scratch experiment runner to a build lock; failed runs will be repeated and do not count as negative code-generation evidence.
+
+## [2026-10-11] decision | T-9570 reject conflicting shared declarations
+
+The generated trial declarations for D_80120872 and D_80120888 conflict with EVENT's existing table views at overlapping overlay addresses. Removed those trial declarations without changing EVENT or shared configuration. Their raw signed-width views remain experimental; no conflicting declaration is retained as a match. This is recorded under [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match KANGEI:func_8013454C
+
+src/ovl/KANGEI/80134120.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 recovered KANGEI local table layout
+
+The four typed copies in src/ovl/KANGEI/80134120.c match with one preceding scalar, bringing the retained total to eight functions and 2,836 bytes. Moved recovered overlay types and externs into include/ovl/KANGEI.h; indexed member and selector-local cleanup verification follows. See [[matching-notes]] and [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match KANGEI:func_8013454C
+
+src/ovl/KANGEI/80134120.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match TT:func_8014B088
+
+src/ovl/TT/8014AF00.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 remove KANGEI padding trick
+
+The real selector-before-table form and ordinary indexed members pass the function diff and KANGEI checksum. Recorded the clean retained form in [[matching-notes]]; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] query | T-9570 aggregate retry evidence
+
+Recorded the current aggregate, signed-width, control-flow and declaration-order searches in [[tickets/T-9570-wave-8-list-7]]. Closest open drafts now include SHOUGATU initialization scheduling (two differing lines), TT retained constant conversion (two lines) and BUNKA_SD typed table loop (18 lines). Near misses receive 300-second searches; rejected code is restored.
+
+## [2026-10-11] decision | T-9570 TT wide unsigned dimension local
+
+The wide local removes the allocator-call conversion mismatch in src/ovl/TT/8014AF00.c. Updated [[matching-notes]] and [[index]] to nine verified functions and 3,108 bytes; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 recovered records and deeper retry queue
+
+Nine functions and 3,108 bytes are retained with individual resolved diffs and unit SHA1 verification. RPG_BAT four-corner and reward/input-table copies, GYOZI six 0x44 records, DATE initializer globals and XA eight-byte records are now repaired for deeper comparisons. Invalid drafts with unmigrated aliases are corrected before counting negative results. SHOUGATU initializer reaches two differing lines, then completes a 300-second permutation search; a separate scene initializer has a resolved match pending a clean overlay SHA1. Experiments remain isolated by source file and serialized during builds; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match SHOUGATU:func_8013A688
+
+src/ovl/SHOUGATU/8013A500.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 clean SHOUGATU scene verification
+
+Recovered the provisional resolved scene match only after the rejected initializer was restored. Fresh SHOUGATU SHA1 passes; [[matching-notes]] and [[index]] now show ten functions and 3,404 bytes. Independent permutation searches now avoid shared Ninja state and their candidates are explicitly verified afterward; build experiments retain the scratch helper's file lock.
+
+## [2026-10-11] build | T-9570 aggregate time-box audit
+
+Restored RPG_BAT input-combination, weighted-reward and action drafts after sustained control-flow/type/declaration experiments; best resolved diffs remain 165, 113 and 42 lines respectively. TAIIKU's first camera family is restored after 36 variants (best 38); the next uses an actual 0x44 scene record and the timer family repairs m2c's incorrectly merged scalar stores with typed controller/action members. These are time-boxed negative results, not matches; [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match BUNKA_SD:func_80137620
+
+src/ovl/BUNKA_SD/801369D0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 coordinate-base load order match
+
+BUNKA_SD's repaired table function is now byte verified: the remaining twelve-line mismatch was fixed by loading the coordinate base in a separate statement before adding the index. Updated [[matching-notes]]; see [[tickets/T-9570-wave-8-list-7]]. The next closest recovered type is TAIIKU's scene record (four lines, one stack-slot and one scheduling difference).
+
+## [2026-10-11] build | T-9570 second-pass type and scheduling work
+
+The eleven retained functions total 3,840 bytes. Restored the large RPG_BAT render/dispatcher/table, KANGEI state, DATE2 counter and TT trail experiments after type/control-flow variants; negative results remain in the scratch ledger. Continued DATE's fourteen-line initializer with signed flag views and unsigned byte-store promotion, and repaired the main tokimeki table's four-byte record view and TACO's missing forward declaration before retrying. Remaining main matrix copies now include their translation words rather than m2c's disconnected scalar locals; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] ingest | T-9570 remaining aggregate reconstruction
+
+Read the TAIIKU initializer's target stores: m2c collapsed distinct byte/halfword/word members into repeated assignments to the first symbol. Reconstructed their widths and offsets in 0x1C controller/runner/action records, plus the 0x44 scene views and 8/16/20/36/48-byte local table copies used by five remaining aggregate drafts. All are experimental until resolved comparison and checksum verification; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match TAIIKU:func_801485C4
+
+src/ovl/TAIIKU/801452D0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 typed camera match
+
+TAIIKU func_801485C4 passed resolved funcdiff and unit SHA1 (180 bytes), increasing retained totals to twelve functions and 4,020 bytes. Declaration and pointer initialization order solved both remaining differences. Added the record definition to include/ovl/TAIIKU.h and recorded the idiom in [[matching-notes]]; [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 strict movie comparison and aggregate retries
+
+The movie loop's low absolute D_7FFFFF relocations are unresolved by funcdiff's normal address resolver. Built a scratch expected object directly from the immutable original executable bytes, preserving section contents and its original address, to compare with --resolve --expected; this now reports only the true sp+0x30 versus sp+0x34 spill difference. No tool or generated asm changes. Continued valid retries for the remaining main/TAIIKU/TACO/GYOZI aggregate families; failed forward declarations and byte-array scalar uses were repaired rather than recorded as codegen failures. See [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] decision | T-9570 scheduling time-box and cleanup
+
+Added a fifth append-only T-0018 case for SHOUGATU func_801326F8 after four source-iteration families and multiple five-minute permutation searches (two remaining lines). Its corrected flag and compare types are documented in the scratch ledger. Removed two unused m2c locals and their dead index multiplication from the verified BUNKA_SD table match, pending fresh resolved diff and SHA1. Six of the 36 aggregate first-pass rejects still await their queued valid comparisons; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 movie loop provisional match
+
+Reversing the timeout/VLC declaration order moves the spill to sp+0x34 and strNextVlc now matches the strict original-byte expected object with --resolve. The main SHA1 attempt failed while other main drafts were active, so the helper restored the provisional result. It will be recovered and counted only after a clean whole-main verification. [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 deep-pass match DATE:func_80144720
+
+src/ovl/DATE/80141EE0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 DATE initializer match
+
+The DATE initializer's signed flags, unsigned girl-store view and scene byte member pass resolved funcdiff and the unit SHA1. Moved its new scene type and overlay-local byte declaration to include/ovl/DATE.h. Thirteen retained functions total 4,456 bytes; [[matching-notes]], [[index]], [[tickets/T-9570-wave-8-list-7]]. BUNKA_SD's removal of unused m2c locals also passed fresh resolved diff and SHA1.
+
+## [2026-10-11] build | T-9570 deep-pass match main:strNextVlc
+
+src/main/800563F0.c: real funcdiff and unit SHA1 passed; see [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 clean main VLC match and declaration cleanup
+
+The recovered strNextVlc match passed strict resolved original-byte comparison and the clean main SHA1; fourteen functions total 4,628 bytes. Moved its prefix type to include/game.h and documented the declaration-order idiom in [[matching-notes]]. Restored experimental main_api.h additions and used sync_protos --add-global to retain only D_80122CE8, needed by the verified SHOUGATU scene. DATE's new type now documents all offsets. [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 final aggregate forward declarations
+
+All main and TACO aggregate repairs now have valid differing-instruction comparisons. TAIIKU's two remaining table/scene drafts needed forward declarations for later void helpers, and its timer needs a void declaration before the earlier caller; these are retried separately after the experimental C is restored. Only the timer's valid comparison is still pending. The ordinary build retains only fourteen verified matches and the single generated D_80122CE8 addition. [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] build | T-9570 complete deep-pass coverage and final verification
+
+All 36 aggregate/local-copy rejects have valid resolved comparisons after reconstruction; no such row is left at a missing-type compile error. The final timer family improved from 142 to 56 lines but remains INCLUDE_ASM. Restored all unsuccessful C and moved the retained TAIIKU scene type to its overlay header. Started the scoped duplicate scan, final all-unit Ninja, prototype branch guard and migration guard. Deep experiments ran from 09:07:34 until after 12:16 UTC; [[tickets/T-9570-wave-8-list-7]].
+
+## [2026-10-11] ticket | T-9570 deep second pass complete
+
+Inline CODING_STANDARDS review is complete with no unresolved findings. Fourteen retained functions (4,628 bytes; twelve/3,788 beyond the original pair) pass fresh resolved comparisons and all 27 unit SHA1 checks. The movie timeout uses a strict original-byte expected object to bypass the reported low-constant resolver bug. Headers/globals pass; prototype branch check has zero new and seventeen known disagreements; scoped dupes applied zero copies; final incremental Ninja and git diff --check pass. All 129 list functions have attempts, 62 have deep valid comparisons, and all 36 aggregate rejects received reconstructed types and valid retries during more than three hours of deep work. Five T-0018 rows added. Updated [[tickets/T-9570-wave-8-list-7]], [[kanban]] and [[index]] to Done. Progress: grand total 4748/6958, 734240/2279368 bytes, 32.2%. All changes left uncommitted.
