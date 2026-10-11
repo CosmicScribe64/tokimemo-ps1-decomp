@@ -539,7 +539,19 @@ void func_8007BE94(s16 arg0) {
     D_80125D10.unk_04 |= 0x01000000 << arg0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007BF04);
+void func_8007BF04(s16 arg0) {
+    if (arg0 == D_80125D4C) {
+        if (D_80125D10.unk_00 & 0x100) {
+            func_80090580(D_80125D38);
+            func_800907E0(D_80125D38);
+        }
+        D_80125D3A = -1;
+        D_80125D3C = -1;
+    } else if (arg0 == D_80125D50) {
+        func_8008FD68(0);
+    }
+    func_80090E60(arg0);
+}
 
 void func_8007BFA8(void) {
     D_80125D10.unk_2C = -1;
