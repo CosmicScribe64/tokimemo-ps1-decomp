@@ -1146,6 +1146,7 @@ extern s16 D_80120EFA;
 extern s16 D_80120F2A;
 extern s16 D_80120F3A;
 extern s16 D_80120F3E;
+extern s16 D_8012114C;
 extern u8 D_8012117A;
 extern u8 D_801211BE;
 extern u8 D_80121202;

@@ -251,3 +251,5 @@ void func_80136A9C(void);
 void func_80136BD8(void);
 void func_80136CCC(void);
 void func_8014EDFC();
+extern u32 D_8015EC34;
+void func_8013EA30();
