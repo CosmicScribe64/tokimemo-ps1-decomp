@@ -220,9 +220,75 @@ void func_8013C070(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013C090);
+void func_8013C090(void) {
+    /* Chain over two GameState bytes, written as element stores: IDO then keeps the one
+     * li v0,12 for both, as the original (T-9210). */
+    (&D_800E6280.unk_F5F)[0] = (&D_800E6280.unk_75D)[0] = 0xC;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8006612C("");
+    D_8011ED9F = 0;
+    D_8011EDE3 = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_80137990();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    D_800B593C = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145F14;
+    D_80146278 = D_80146050;
+    D_8014627C = D_8014618C;
+    func_800AE0F0(D_800CA19C, "廊下");
+    func_800AE0F0(D_800CA1DC, "廃工場前");
+    if (D_80122CD0 == 1) {
+        D_800E6280.unk_11C.unk_02 += 5;
+    }
+    func_80084D3C();
+    D_800CA368 = 0x4F;
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013B930", func_8013C200);
+void func_8013C200(void) {
+    /* Same chain as func_8013C090 (T-9210). */
+    (&D_800E6280.unk_F5F)[0] = (&D_800E6280.unk_75D)[0] = 0xC;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8006612C("");
+    D_8011ED9F = 0;
+    D_8011EDE3 = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_80137990();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    D_800B593C = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145F18;
+    D_80146278 = D_80146054;
+    D_8014627C = D_80146190;
+    func_800AE0F0(D_800CA19C, "廊下");
+    D_800CA368 = 0x50;
+    func_8004284C();
+}
 
 void func_8013C330(void) {
     func_8013B980();
