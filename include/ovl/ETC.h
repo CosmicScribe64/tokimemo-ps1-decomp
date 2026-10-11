@@ -1033,3 +1033,6 @@ extern u8 D_801508EC[];
 s32 func_80149468();
 extern u8 D_801500F0[];
 extern u8 D_8015010C[];
+extern s16 D_80150130;
+extern s16 D_80150134;
+extern s16 D_8015013C;

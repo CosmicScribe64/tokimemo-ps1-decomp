@@ -6,9 +6,39 @@ typedef struct {
 } FnTbl51; /* size 0xCC */
 extern FnTbl51 D_801468A4;
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_80141780);
+void func_80141780(void) {
+    D_801464B0 = 0x801DA680;
+    D_801464B4 = 0x801DA68C;
+    D_801464B8 = 0x801DA72C;
+    /* address literals: the data belongs to another overlay; the original loads it with a separate base register */
+    D_801464BC = *(s16 *)0x801DA754;
+    D_801464C0 = 0x801B0000;
+    D_801464C4 = 0x801DA000;
+    D_801464C8 = 0x801B2000;
+    D_801464CC = 0x801B6000;
+    D_801464D0 = 0x801BA000;
+    D_801464D4 = 0x801BE000;
+    D_801464D8 = 0x801C2000;
+    D_801464DC = 0x801C6000;
+    D_801464E0 = 0x801D6000;
+}
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_80141850);
+void func_80141850(void) {
+    D_801464E4 = 0x801D2430;
+    D_801464E8 = 0x801D2434;
+    D_801464EC = 0x801D2498;
+    /* address literal, see func_80141780 */
+    D_801464F0 = *(s16 *)0x801D24B4;
+    D_801464F4 = 0x801B0000;
+    D_801464C4 = 0x801D2000;
+    D_801464F8 = 0x801B2000;
+    D_801464FC = 0x801B6000;
+    D_80146500 = 0x801BA000;
+    D_80146504 = 0x801BE000;
+    D_80146508 = 0x801C2000;
+    D_8014650C = 0x801C6000;
+    D_801464E0 = 0x801CE000;
+}
 
 void func_80141920(void) {
     D_80146510 = (u8 *)0x801D22D0;

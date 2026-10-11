@@ -32,7 +32,24 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138DF8);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139330);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139550);
+void func_80139550(void) {
+    s32 i;
+
+    func_80044750(0x504);
+    i = 0;
+    while (D_801499D4[i] != 0xFF) {
+        i++;
+    }
+    D_801499D4[i] = 0;
+    for (i++; i < 4; i++) {
+        D_801499D4[i] = func_8013FE44();
+    }
+    func_8013DDB8();
+    func_8013D788();
+    D_80149954 = 0x1200;
+    D_8012082F = 0;
+    func_80042808();
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139610);
 
@@ -120,7 +137,46 @@ void func_8013B0AC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B104);
+void func_8013B104(void) {
+    switch (D_80149940) {
+    case 0:
+        func_8013B200();
+        break;
+    case 1:
+        func_8013B3B0();
+        break;
+    case 2:
+        func_8013B5C0();
+        break;
+    case 3:
+        func_8013B608();
+        break;
+    case 4:
+        func_8013B78C();
+        break;
+    case 5:
+        func_8013B94C();
+        break;
+    case 6:
+        func_8013BB3C();
+        break;
+    case 7:
+        func_8013BCEC();
+        break;
+    case 8:
+        func_8013BEF8();
+        break;
+    case 9:
+        func_8013C0E4();
+        break;
+    case 10:
+        func_8013C33C();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B200);
 
@@ -305,7 +361,58 @@ s8 func_8013FE44(void) {
     return 3;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013FEF0);
+typedef struct {
+    s16 vx;
+    s16 vy;
+    s16 vz;
+    s16 pad;
+} TaiikuSVec; /* SVECTOR layout */
+
+typedef struct {
+    s32 vx;
+    s32 vy;
+    s32 vz;
+    s32 pad;
+} TaiikuVec; /* VECTOR layout */
+
+typedef struct {
+    s16 m[3][3];
+    s16 pad;
+    s32 t[3];
+} TaiikuMat; /* MATRIX layout, size 0x20 */
+
+void func_8013FEF0(void) {
+    TaiikuMat m1;
+    TaiikuMat m2;
+    TaiikuSVec rot;
+    TaiikuVec scale;
+
+    m1 = *(TaiikuMat *)D_80125C60;
+    rot.vx = 0;
+    rot.vz = 0;
+    rot.vy = D_8014995A;
+    func_800A09D0(&rot, &m1);
+    m2 = *(TaiikuMat *)D_80125C60;
+    rot.vy = 0;
+    rot.vz = 0;
+    rot.vx = D_80149958;
+    func_800A09D0(&rot, &m2);
+    func_800A0C64(&m1, &m2);
+    scale.vx = D_80149954;
+    scale.vy = D_80149954;
+    scale.vz = D_80149954;
+    func_800A0F4C(&m2, &scale);
+    func_800A0C64(&m1, &m2);
+    m1.t[0] = D_80149984;
+    m1.t[1] = D_80149986;
+    m1.t[2] = 0x1B58;
+    *(TaiikuMat *)D_801227A4 = m1;
+    D_801227A0->unk0 = 0;
+    D_80149954 -= 0x80;
+    if ((D_80149986 >> 3) >= -0x3F) {
+        D_80149986 -= 8;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_801400D8);
 

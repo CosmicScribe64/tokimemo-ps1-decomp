@@ -773,3 +773,11 @@ Wave 6 list 8, worktree w6-8: [[tickets/T-9180-wave-6-list-8]].
 Clean rebuild 27/27 OK, `headers OK`, `globals OK`, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9180-wave-6-list-8]]; no open findings. Branch w6-8, not merged.
 ## [2026-10-10] ticket | T-9170 wave 6, list 7 (In Progress -> Done)
 31 functions matched (7344 bytes) from list 7: shared-base accesses, `s32` without return, remainder-first unrolling, string call sequences (OLH help pages, NAME_ENT album prompts, GEKO/EVENT/ETC setups). 24 T-0018 rows added to [[data/t0018-cases]]; patterns in [[matching-notes]] ("Wave 6, list 7"). Clean rebuild 27/27 OK, `ninja progress` grand 4298/6958 functions; inline review recorded in [[tickets/T-9170-wave-6-list-7]]. Branch w6-7, not merged.
+## [2026-10-10] ticket | T-9110 wave 6 list 1 (In Progress)
+Created [[tickets/T-9110-wave-6-list-1]], worktree w6-1.
+
+## [2026-10-10] build | T-9110 wave 6 list 1
+29 functions matched (6,688 bytes) in list 1 (leftovers of wave 5): main `src/main/80047550.c`, `src/main/80058D20.c`; overlays TT, ETC, EVENT, GEKO, OLH, RPG_BAT, SHOUGATU, TAIIKU. New idioms in [[matching-notes]] ("Wave 6, list 1 (T-9110)"): one-word struct copy for `lw at`, compiler temporaries as non-locals, switch fall-off returns, pointer parameter prologue, absolute literals for other-overlay data, array view for load order, same-line scheduling, matrix frames. `TaiikuBig` and `D_80122CA0` moved to `include/main_api.h`. 31 rows appended to [[data/t0018-cases]] (v0/v1 and a-register shifts, unfolded constant indexes, `li k; multu`, shared `lui $at` outside the data range).
+
+## [2026-10-10] ticket | T-9110 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md recorded in [[tickets/T-9110-wave-6-list-1]]; clean rebuild and checks below. Branch w6-1, not merged.

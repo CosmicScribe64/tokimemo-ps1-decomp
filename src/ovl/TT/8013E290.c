@@ -1,7 +1,20 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E290", func_8013E290);
+void func_8013E290(void) {
+    s32 *p;
+    s32 ev;
+
+    p = (s32 *)D_80158A68;
+    EnterCriticalSection();
+    ev = OpenEvent(0xF2000003, 2, 0x1000, func_8013EC1C);
+    *p = ev;
+    EnableEvent(ev);
+    SetRCnt(0xF2000003, 1, 0x1000);
+    StartRCnt(0xF2000003);
+    ExitCriticalSection();
+    func_800AE0B0("v_ev=%d\n", *p);
+}
 
 void func_8013E320(void) {
     func_800AE080(D_80158A64, 0x38);

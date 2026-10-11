@@ -33,7 +33,28 @@ void func_80133B80(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80133B80", func_80133C4C);
+void func_80133C4C(void) {
+    s32 i;
+    s32 r;
+    s32 pad[1]; /* FAKE: unused local above the arrays reproduces the original frame 0xC0; real source unknown. T-9110 */
+    s16 a[8];
+    s16 b[8];
+    s16 c[8];
+    s16 d[8];
+
+    func_8004EAAC();
+    func_8004E788(-0x50, -0x40, 0xF, (s32)"バイオリズム", 0);
+    for (i = 0; i < 8; i++) {
+        a[i] = -0x60;
+        b[i] = i * 0x10 - 0x32;
+        c[i] = 0xE8;
+        d[i] = 0x10;
+        r = func_8004E788(a[i], b[i], 0xF, (&D_8013B740)[i], 0);
+    }
+    func_8004F870(0, 8, a, b, c, d);
+    func_8004E884(r);
+    func_8004284C();
+}
 
 void func_80133D74(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
@@ -111,7 +132,26 @@ s32 func_80133F90(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80133B80", func_80134060);
+s32 func_80134060(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013B748, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　黒い線からの距離が大きいとコマンドが", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "成功しやすくなります。", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "　同じ距離ならば、黒い線の上側にある場", 0);
+        func_8004E788(-0x88, 0, 0xF, "合のほうが、コマンドが成功しやすくなり", 0);
+        func_8004E788(-0x88, 0x10, 0xF, "ます。", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
 
 s32 func_80134184(void) {
     switch (D_800E6280.unk_110D) {

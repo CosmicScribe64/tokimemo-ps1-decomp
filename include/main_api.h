@@ -1221,6 +1221,15 @@ extern s16 D_801220EC;
 extern s16 D_801220EE;
 extern s32 D_801220F0;
 extern s32 D_801220F4;
+/* 0x50-byte records at D_801227A0 (16 entries; D_80122CA0 is the end address the loops compare against) */
+typedef struct TaiikuBig {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ u8 unk4[0x1C];
+    /* 0x20 */ s32 unk20;
+    /* 0x24 */ u8 unk24[0x2C];
+} TaiikuBig; /* size 0x50 */
+extern TaiikuBig D_801227A0[];
+extern TaiikuBig D_80122CA0[];
 extern u32 D_80122640[];
 extern s32 D_80122740;
 extern s32 D_80122744;

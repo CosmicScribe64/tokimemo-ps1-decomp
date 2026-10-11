@@ -93,7 +93,31 @@ void func_800F7640(void) {
     D_801207A8 = 0x801D0000;
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F7690);
+void func_800F7690(void) {
+    switch (D_800EECB0) {
+    case 1:
+        func_800F7740();
+        break;
+    case 2:
+        func_800F84E0();
+        break;
+    case 3:
+        func_800F86C4();
+        break;
+    case 4:
+        func_800F8B50();
+        break;
+    case 5:
+        func_800F93FC();
+        break;
+    case 6:
+        func_800F9558();
+        break;
+    default:
+        func_80015FE0();
+        break;
+    }
+}
 
 void func_800F7740(void) {
     func_80078950("s%d ss%d\n", D_800B1AF5, D_800B1AF6);
@@ -130,7 +154,39 @@ void func_800F785C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F788C);
+void func_800F788C(void) {
+    D_800B1746 = 8;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_8004BC20(D_800B1746);
+    func_80078970(D_80094764, "先生");
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_80120528;
+    D_8012067C = D_80120540;
+    D_80120680 = D_80120558;
+    func_80078970(D_80094784, "廊下");
+    func_80078970(D_800947C4, "職員室");
+    D_800B0A04[8].unk_06 += 1;
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_800F79EC(void) {
     func_800F7220();
@@ -328,7 +384,15 @@ void func_800F87BC(void) {
     D_800EAFA0[0xD3] = D_800EAFA0[7];
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F8818);
+void func_800F8818(void) {
+    func_8004C984();
+    if (D_800EAFA0[7] == 0) {
+        D_800EAFA0[0x8B] &= 0xFF7F;
+        D_800EAFA0[0xCF] &= 0xFF7F;
+    }
+    D_800EAFA0[0x8F] = D_800EAFA0[7];
+    D_800EAFA0[0xD3] = D_800EAFA0[7];
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F8878);
 
@@ -398,6 +462,12 @@ void func_800F94D0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F9508);
+void func_800F9508(void) {
+    /* the u8 cast reproduces the conversion of the callee's u8 result (andi) that shifts the temporary registers */
+    if (((u8)func_8002328C(D_800B1746) & 0x7F) >= 2U) {
+        D_80094714 += 3;
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F9558);

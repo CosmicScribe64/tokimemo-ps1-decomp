@@ -47,7 +47,34 @@ void func_8013BDC8(u8 *arg0) {
     *(s16 *)(arg0 + 0x10) = 6;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013BE08);
+void func_8013BE08(u8 *arg0, u16 arg1) {
+    *(s16 *)(arg0 + 2) = arg1;
+    switch (arg1) {
+    case 40:
+        arg0[0x56] = 0;
+        arg0[0x57] = 0;
+        break;
+    case 41:
+        /* FAKE: both stores on one source line give the original's li/sb order (as1 schedules by line, T-7020) */
+        arg0[0x56] = 0x40; arg0[0x57] = 0x10;
+        break;
+    case 42:
+        arg0[0x56] = 0x40;
+        arg0[0x57] = 0;
+        break;
+    case 43:
+        arg0[0x57] = 0x20;
+        arg0[0x56] = 0;
+        break;
+    case 44:
+        arg0[0x57] = 0x10;
+        arg0[0x56] = 0;
+        break;
+    }
+    arg0[0x3C] = 0;
+    *(s16 *)(arg0 + 0x52) = 0xB;
+    *(s16 *)(arg0 + 0x54) = 0x3C81;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013BE9C);
 
@@ -62,7 +89,34 @@ void func_8013BF68(u8 *arg0) {
     *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013BF9C);
+/* FAKE: one-word struct copies compile to lw/sw through $at, as the original's copies do; real source unknown. T-9110 */
+typedef struct {
+    s32 w;
+} TtVec1;
+
+void func_8013BF9C(u8 *arg0) {
+    u8 *p;
+
+    p = func_8013BD10(D_80158A90, D_80158A90 + 0xD80);
+    *(TtVec1 *)(p + 0x20) = *(TtVec1 *)(arg0 + 0x20);
+    *(TtVec1 *)(p + 0x24) = *(TtVec1 *)(arg0 + 0x24);
+    *(TtVec1 *)(p + 0x28) = *(TtVec1 *)(arg0 + 0x28);
+    *(TtVec1 *)(p + 0x2C) = *(TtVec1 *)(arg0 + 0x2C);
+    *(s32 *)(p + 0x30) = 0;
+    *(s32 *)(p + 0x34) = 0;
+    p[0x59] = 0;
+    *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+    *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+    func_8013BDC8(p);
+    *(s16 *)(p + 0x50) = 1;
+    *(s16 *)(p + 4) = 0x20;
+    *(s16 *)(p + 0xA) = 0;
+    *(s16 *)(p + 8) = 0;
+    *(s16 *)(p + 6) = 0;
+    p[0xF] = 0;
+    p[0xE] = 0;
+    p[0xD] = 0;
+}
 
 typedef struct {
     /* 0x00 */ u8 flag;
