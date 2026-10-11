@@ -555,4 +555,32 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CDBC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CFEC);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014D168);
+/* FAKE: `if (1)` after the second case and the bound in the local n give the original's constant registers (the bound 0x80 apart from case 0x80); found with the permuter, T-9380 */
+void func_8014D168(void) {
+    s32 i;
+    s32 n;
+    u8 *p;
+
+    p = D_80158AA4;
+    i = 0;
+    n = 0x80;
+    do {
+        if ((p[0] != 0) && (p[1] == 0)) {
+            switch (p[0x3B] & ~3) {
+            case 0x60:
+                func_8014CC04(p);
+                break;
+            case 0x64:
+                func_8014CDBC(p);
+                if (1) {
+                    break;
+                }
+            case 0x80:
+                func_8014CFEC(p);
+                break;
+            }
+        }
+        i += 1;
+        p += 0x64;
+    } while (i != n);
+}
