@@ -209,3 +209,4 @@ extern u8 D_8015E828[];
 extern u8 D_8015E8F0[];
 extern s32 D_8015EDC0;
 extern s32 D_8015EDCC;
+extern u8 D_8015EA08[];
