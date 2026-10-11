@@ -140,7 +140,23 @@ void func_80158AB0(void) {
     func_8015ACCC(0xE, 0x15, D_801604D4, D_801604DC, pos, 0x10, 0xE0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80158B84);
+void func_80158B84(s32 arg0) {
+    (arg0 + D_8015EDB4)->unk74 = 0x1B58 - (arg0 + D_8015EDB4)->unk7A * 0x14;
+    D_8015EDB4[arg0].unk76 = -0x6A4;
+    D_8015EDB4[arg0].unk78 = -0x4E20;
+    if ((arg0 + D_8015EDB4)->unk74 < -0x1B58) {
+        func_8015C208(arg0);
+    }
+    if ((arg0 + D_8015EDB4)->unk74 == -0x320) {
+        func_80158CDC((arg0 + D_8015EDB4)->unk74, (arg0 + D_8015EDB4)->unk76, (arg0 + D_8015EDB4)->unk78);
+    }
+    if ((arg0 + D_8015EDB4)->unk74 == 0) {
+        func_80158DBC((arg0 + D_8015EDB4)->unk74, (arg0 + D_8015EDB4)->unk76, (arg0 + D_8015EDB4)->unk78);
+    }
+    if ((arg0 + D_8015EDB4)->unk74 == 0x320) {
+        func_80158CDC((arg0 + D_8015EDB4)->unk74, (arg0 + D_8015EDB4)->unk76, (arg0 + D_8015EDB4)->unk78);
+    }
+}
 
 void func_80158CDC(s16 arg0, s16 arg1, s16 arg2) {
     /* the family's position locals and spill (see func_80158AB0); the unused ones keep their stack
