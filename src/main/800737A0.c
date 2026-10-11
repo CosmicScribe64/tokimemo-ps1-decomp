@@ -70,7 +70,17 @@ void week_day_main(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", get_weekly_bg_sector);
+s32 get_weekly_bg_sector(void) {
+    u8 x;
+    u16 h;
+
+    x = D_800E6280.unk_71C;
+    if (D_800E6280.unk_69C[x].unk_01 != 4) {
+        return D_800B6760[D_800E6280.unk_69C[x].unk_01];
+    }
+    h = D_800E6280.unk_0F4.h;
+    return D_800B6780[h >> 0xC];
+}
 
 s32 func_80073A40(void) {
     s32 ret;
