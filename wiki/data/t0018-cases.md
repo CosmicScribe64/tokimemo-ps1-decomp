@@ -1121,3 +1121,24 @@ Historical rows above remain unchanged. Resolution records:
 - The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
 
 Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
+
+## Wave 8, list 2 (T-9520, 2026-10-11)
+
+Each case is a bounded experiment, not a claim that C cannot match. Clusters were checked with register_shapes.features/shape; the CLI does not accept the brief's positional function argument.
+
+| file | function | category | symptom |
+|---|---|---|---|
+| NAME_ENT/80132000 | `func_80134110` | regorder | Cluster other register/promotion: Bounds predicate: s16-return draft and s32/locals/no-return spellings keep x/return in different registers; original x in v1 and copied v0. Bounded manual probes, no match. T-9520. |
+| NAME_ENT/80132000 | `func_801341A8` | regorder | Cluster selector/compare chain: Cursor selector update: corrected m2c old-value snapshot, but old/new comparison and promoted data bases use different registers. Natural snapshot variant did not match. T-9520. |
+| 800451D0 | `func_8004636C` | regorder | Cluster pointer/base/CSE: Checksum loop pointer, index and sum allocation differ (original sum v0/index v1/bound a2; draft sum a2/index a3/bound v0). Corrected byte accesses, four narrow-K&R/u16-sum/indexed-loop variants failed. T-9520. |
+| GEKO/80140A00 | `func_80140FD0` | regorder | Cluster temporary numbering/order: CharFlags.f9 increment: proper record-11 bitfield variant differs in temporary numbering, reread/CSE and CA150 load signedness. Restored after natural field probe. T-9520. |
+| SHOUGATU/80134120 | `func_801347E0` | regorder | Cluster selector/compare chain: Girl selector loaded after call in a0 in original, t7 in C; direct GameState field and unsigned-byte address view give the same resolved three-instruction register mismatch. T-9520. |
+| NAME_ENT/80132000 | `func_80133D94` | regorder | Cluster selector/compare chain: Coordinate bounds routine keeps result in a0 and selector in v0; compiled draft selects v0/v1 with different early scheduling. Bounded draft restored. T-9520. |
+| TACO/80140DF0 | `func_80141050` | regorder | Cluster pointer/base/CSE: Typed Tc14 spawn loop: ANSI four-local draft frame 0x38 versus 0x40; K&R ret/i/actor/base/p draft gets 0x40 and actor a2 but spills arg1, keeps base a1 and result a0. Three local/return variants failed. T-9520. |
+| TACO/80140DF0 | `func_80141170` | regorder | Cluster frame/spill: Twin Tc14 spawn loop: real TcActor/Tc14 scales corrected; canonical local/frame probes remain different from original arg/register/slot layout. Restored after bounded family probes. T-9520. |
+| TT/80142D40 | `func_801437F0` | regorder | Cluster scheduling/order: Byte-buffer loop compiles but pointer/counter s0/s1 assignment and loop scheduling differ. Width-corrected bounded draft restored. T-9520. |
+| SHUGAKU/801344B0 | `func_80134658` | regorder | Cluster multiply/stride: GameState stride updates: original 0x38 constant in a1 and shared 8 in v1; draft takes v1 for stride and t1/t0 for 8, shifting temporary numbering. Corrected aggregate draft remains a resolved DIFF. T-9520. |
+| 800451D0 | `func_800463E8` | regorder | Cluster constant allocation/sharing: Rectangle calls: mask constant and argument loads move ahead of their original order; jal argument delay slot changes. 90-second permuter has no verified candidate; best score 163. T-9520. |
+| NAME_ENT/80132000 | `func_80132198` | regorder | Cluster other register/promotion: Only one lui at placement differs in resolved draft. 90-second permuter produced no improvement; retained assembly. T-9520. |
+| TT/80146BE0 | `func_80147074` | regorder | Cluster constant allocation/sharing: Constants 8/0x20 exchange s3/s4. A named u32 loop limit recovers original registers but hoists li s3,8 earlier; 14 bound/init/counter variants and corrected 90-second permuter remain unmatched. T-9520. |
+| KANGEI/801355F0 | `func_80135678` | regorder | Cluster selector/compare chain: Function-pointer table: one scalar before FnTbl32 matches frame 0xB0/table offset 0x2C but counter/return and girl selector registers differ; separate remainder local recovers division registers but frame grows to 0xB8/table +4. Two bounded type-correct variants restored. T-9520. |

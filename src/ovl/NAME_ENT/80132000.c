@@ -222,9 +222,49 @@ void func_80132FD4(void) {
     func_8004E788(0x48, 0x58, 0xA, D_8014CD48, 0);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801330E8);
+void func_801330E8(s32 arg0) {
+    func_8004E58C();
+    set_kanji_string(-0x98, -0x68, 0, arg0, 0);
+    set_kanji_string(-0x78, -0x30, 0xA, D_8014CD28, 0);
+    set_kanji_string(-0x78, -0x20, 0xA, D_8014CD34, 0);
+    set_kanji_string(-0x78, -0x10, 0xA, D_8014CD40, 0);
+    set_kanji_string(-0x78, 0, 0xA, D_8014CD4C, 0);
+    set_kanji_string(-0x78, 0x10, 0xA, D_8014CD58, 0);
+    set_kanji_string(-0x78, 0x20, 0xA, D_8014CD64, 0);
+    set_kanji_string(-0x18, -0x30, 0xA, D_8014CD2C, 0);
+    set_kanji_string(-0x18, -0x20, 0xA, D_8014CD38, 0);
+    set_kanji_string(-0x18, -0x10, 0xA, D_8014CD44, 0);
+    set_kanji_string(-0x18, 0, 0xA, D_8014CD50, 0);
+    set_kanji_string(-0x18, 0x10, 0xA, D_8014CD5C, 0);
+    set_kanji_string(-0x18, 0x20, 0xA, D_8014CD68, 0);
+    set_kanji_string(0x48, -0x30, 0xA, D_8014CD30, 0);
+    set_kanji_string(0x48, -0x20, 0xA, D_8014CD3C, 0);
+    set_kanji_string(0x48, -0x10, 0xA, D_8014CD48, 0);
+    set_kanji_string(0x48, 0, 0xA, D_8014CD54, 0);
+    set_kanji_string(0x48, 0x10, 0xA, D_8014CD60, 0);
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801332FC);
+void func_801332FC(s32 arg0) {
+    func_8004E58C();
+    set_kanji_string(-0x98, -0x68, 0xA, arg0, 0);
+    set_kanji_string(-0x78, -0x30, 0xA, D_8014CD6C, 0);
+    set_kanji_string(-0x78, -0x20, 0xA, D_8014CD78, 0);
+    set_kanji_string(-0x78, -0x10, 0xA, D_8014CD84, 0);
+    set_kanji_string(-0x78, 0, 0xA, D_8014CD90, 0);
+    set_kanji_string(-0x78, 0x10, 0xA, D_8014CD9C, 0);
+    set_kanji_string(-0x78, 0x20, 0xA, D_8014CDA8, 0);
+    set_kanji_string(-0x18, -0x30, 0xA, D_8014CD70, 0);
+    set_kanji_string(-0x18, -0x20, 0xA, D_8014CD7C, 0);
+    set_kanji_string(-0x18, -0x10, 0xA, D_8014CD88, 0);
+    set_kanji_string(-0x18, 0, 0xA, D_8014CD94, 0);
+    set_kanji_string(-0x18, 0x10, 0xA, D_8014CDA0, 0);
+    set_kanji_string(-0x18, 0x20, 0xA, D_8014CDAC, 0);
+    set_kanji_string(0x48, -0x30, 0xA, D_8014CD74, 0);
+    set_kanji_string(0x48, -0x20, 0xA, D_8014CD80, 0);
+    set_kanji_string(0x48, -0x10, 0xA, D_8014CD8C, 0);
+    set_kanji_string(0x48, 0, 0xA, D_8014CD98, 0);
+    set_kanji_string(0x48, 0x10, 0xA, D_8014CDA4, 0);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80133510);
 

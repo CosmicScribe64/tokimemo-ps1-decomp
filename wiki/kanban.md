@@ -38,6 +38,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-9520-wave-8-list-2|T-9520 Wave 8: list 2]]
 - [ ] [[tickets/T-9400-wave-7-tool-fixes|T-9400 Wave-7 tool fixes]]
 - [ ] [[tickets/T-9410-register-allocation-shapes-after-wave-7|T-9410 Register-allocation shapes after wave 7]]
 - [x] [[tickets/T-9350-wave-7-list-5|T-9350 Wave 7: list 5]]

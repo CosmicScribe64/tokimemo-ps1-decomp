@@ -1683,3 +1683,24 @@ Permute's false negative came from its final outside-declaration veto even when 
 ## Register-allocation shapes after wave 7 (T-9410)
 
 Inventory, exact cluster counts, experiment bounds and proof: [[register-allocation-wave7]]. tools/register_shapes.py joins the 1,088 historical rows to original asm and current source state: 718 distinct functions, initially 374 open. Five gains (2,768 bytes): main func_8005AE60, ENDING func_80138278/func_8013855C/func_80138FC8/func_801391E4. The main selector uses a plain u8 local after the call. ENDING uses a marked FAKE dead dividend test before `% 240`; func_8013855C also uses a marked FAKE s16 constant local for comparison operand order. Idioms in [[decompile-workflow]]. Two row anchors are now resolved; three gains were family members without separate rows. Final progress 4734/6958, clean 27/27 checksums and all guards pass. Constant ordering, DATE product CSE and fade/girl copies remain open; finite spelling searches do not prove them impossible from C. No compiler pass added.
+
+## Wave 8, list 2 (T-9520): 6 functions, 3,620 bytes
+
+Ticket [[tickets/T-9520-wave-8-list-2]] contains the complete 142-function audit (35 owned objects). Remaining functions were time-boxed and their assembly restored. Detailed drafts, compiler diagnostics and bounded variant/permuter output: scratchpad/w8-2/.
+
+Matches:
+- NAME_ENT `func_801330E8` and `func_801332FC`, 532 bytes each: direct 18-call text pages. The missing string-address words are overlay-local s32 declarations, matching their lw accesses.
+- RPG_BAT `func_801481C8`, 780 bytes: the direct state switch and existing declarations.
+- TACO `func_801361E8`, `func_80136438`, `func_80136688`, 592 bytes each: two-phase text/scale switches; unsigned byte selectors give the unsigned remainder arm. The three selector bytes are declared in the overlay header.
+
+The NAME_ENT/RPG_BAT matches passed resolved funcdiff and default ninja. Each TACO instruction stream was independently compared byte for byte against the original assembly comments (592/592 equal per function), and default ninja passes the entire TACO sha1, including string placement. No source tricks or new FAKE/NON_MATCHING blocks were retained. Final build/review results are recorded in the ticket.
+
+Bounded findings: four small main state setters need v0 cleared but return-zero forms put the final sb before jr rather than in its delay slot. NAME_ENT `func_801341A8` requires an old-value snapshot that m2c loses by comparing with the just-written global. TT `func_80147074` gets s3=8/s4=0x20 from a named u32 loop limit, but hoists li s3,8 earlier; 14 variants and a 90-second permuter on that exact draft failed. The earlier TT permuter used the existing NON_MATCHING guard: replace the whole guard when staging a new permuter base. TACO typed TcActor/Tc14 loops need real element scaling; a five-local K&R spawn draft recovers frame 0x40 but leaves base/result allocation and arg1 spill differences. KANGEI `func_80135678` with one scalar before FnTbl32 recovers frame 0xB0/table sp+0x2C, but counter/return and girl-selector registers differ; a second scalar grows frame to 0xB8. Four narrow-K&R/checksum variants and 90-second searches on main `func_800463E8` and NAME_ENT `func_80132198` also failed. Fourteen cases were classified with register_shapes.features/shape and appended to [[data/t0018-cases]]. No claim of impossibility is made.
+
+Other blockers: m2c unresolved local copy/table types, undeclared table/record fields, and implicit-int calls to later void definitions. DATE `func_8015A640` remains hand-written rotation assembly. All temporary declarations not used by retained C were removed. Scoped dupes applied 0; its assembly-directory inventory still reports the baseline 4,734 matching entries until regenerated.
+
+Tool discrepancies, no tooling edits:
+- funcdiff reports two false HI16 string-only REAL DIFFERENCE lines on each TACO match above. `_paired_low` selects the first following LO16 of the same symbol/addend; merged `.rodata` strings and branch-delay HI16 loads expose an ambiguity. Linked words and the full unit checksum are exact. Reproduce with `tools/docker.sh python3 tools/funcdiff.py --unit TACO --resolve func_801361E8` (and its two siblings).
+- The brief suggests `register_shapes.py <func>`, but argparse accepts only --root/--rows/--json. The positional form exits 2; use the module helpers or filter the JSON inventory.
+
+Final default build: 27/27 checksums, headers/globals OK; prototype guard 0 new disagreements (17 known), inline review no findings. `ninja progress`: `grand total   4740/6958   733232/2279368  32.2%`. Actual gain is 3,620 bytes; the work list has a 12-byte larger extent for RPG_BAT func_801481C8 than its 780-byte splat function header. [[tickets/T-9520-wave-8-list-2]] is Done, uncommitted edits left for the orchestrator.

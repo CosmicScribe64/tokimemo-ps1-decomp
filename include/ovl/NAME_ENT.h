@@ -138,6 +138,34 @@ extern s32 D_8014CD3C;
 extern s32 D_8014CD40;
 extern s32 D_8014CD48;
 extern u8 D_8014D028[];
+/* T-9520: globals used by the matched wave-8 functions. */
+extern s32 D_8014CD44;
+extern s32 D_8014CD4C;
+extern s32 D_8014CD50;
+extern s32 D_8014CD54;
+extern s32 D_8014CD58;
+extern s32 D_8014CD5C;
+extern s32 D_8014CD60;
+extern s32 D_8014CD64;
+extern s32 D_8014CD68;
+extern s32 D_8014CD6C;
+extern s32 D_8014CD70;
+extern s32 D_8014CD74;
+extern s32 D_8014CD78;
+extern s32 D_8014CD7C;
+extern s32 D_8014CD80;
+extern s32 D_8014CD84;
+extern s32 D_8014CD88;
+extern s32 D_8014CD8C;
+extern s32 D_8014CD90;
+extern s32 D_8014CD94;
+extern s32 D_8014CD98;
+extern s32 D_8014CD9C;
+extern s32 D_8014CDA0;
+extern s32 D_8014CDA4;
+extern s32 D_8014CDA8;
+extern s32 D_8014CDAC;
+
 #endif /* OVL_NAME_ENT_H */
 extern u8 D_8014CC70;
 void func_801377E8();

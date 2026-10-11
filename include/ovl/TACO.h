@@ -355,6 +355,11 @@ void func_801490B4(void);
 
 void func_80149B7C(void);
 
+/* T-9520: globals used by the matched wave-8 functions. */
+extern u8 D_8015EDDC;
+extern u8 D_8015EDE0;
+extern u8 D_8015EDE4;
+
 #endif
 
 typedef struct TacoCam {
