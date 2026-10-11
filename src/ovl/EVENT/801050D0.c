@@ -223,9 +223,46 @@ void func_80105AC8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_80105B00);
+void func_80105B00(void) {
+    s16 i;
+    Rec24 *records;
+    s32 before;
+    s32 after;
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_80105BC4);
+    before = D_800B1AF6;
+    func_8004C984();
+    records = (Rec24 *)D_800EC190;
+    for (i = 4; i < 19; i++) {
+        if (D_800F19AB < 112) {
+            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800F19AB;
+        }
+    }
+    after = D_800B1AF6;
+    if (before != after) {
+        for (i = 4; i < 19; i++) {
+            records[i].unk_00 |= 0x80000000;
+        }
+    }
+}
+
+void func_80105BC4(void) {
+    s16 i;
+    Rec24 *records;
+
+    if (D_800B1AF0 == 0) {
+        records = (Rec24 *)D_800EC190;
+        for (i = 4; i < 19; i++) {
+            records[i].unk_00 &= 0x7FFFFFFF;
+        }
+    }
+    func_8004C90C();
+    records = (Rec24 *)D_800EC190;
+    for (i = 4; i < 19; i++) {
+        if (D_800F19AB < 113) {
+            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800F19AB;
+        }
+    }
+}
 
 void func_80105C8C(void) {
     D_800B1746 = 9;

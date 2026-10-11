@@ -41,7 +41,20 @@ void func_801374F8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137574);
+s32 func_80137574(void)
+{
+  u8 *byte;
+  s16 promoted;
+  u8 value;
+  promoted = D_8011F4CA;
+  value = promoted;
+  byte = &value;
+  if (((*byte) & 1) == 0)
+  {
+    value |= 3;
+    D_8011F4CA = *byte;
+  }
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_8013759C);
 

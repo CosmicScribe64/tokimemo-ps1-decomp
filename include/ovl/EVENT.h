@@ -1364,4 +1364,7 @@ typedef struct EventCallbackTable47 {
 } EventCallbackTable47; /* size 0xBC */
 extern EventCallbackTable47 D_80120E24;
 void func_800FA850(void);
+void func_80105B00(void);
+void func_80105BC4(void);
+
 #endif /* OVL_EVENT_W8_3_TYPES_H */

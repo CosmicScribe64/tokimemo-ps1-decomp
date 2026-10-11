@@ -447,7 +447,7 @@ extern s32 D_8013C300;
 extern s32 D_8013C344;
 
 void func_80136D60(void);
-void func_80137574(void);
+s32 func_80137574(void);
 
 extern s16 D_8013CBE0;
 void func_8013BDD8(s16 arg0);
