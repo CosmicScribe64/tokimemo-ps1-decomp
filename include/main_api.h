@@ -446,6 +446,7 @@ extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
 extern s32 D_8007E850[];
 extern s8 D_8008093C;
+extern u8 D_80089C84;
 extern u16 D_80094714;
 extern u16 D_80094718;
 extern u8 *D_8009471C;

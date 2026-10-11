@@ -73,7 +73,38 @@ void func_80152110(s32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801521EC);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801522B0);
+void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
+    u8 var_v0;
+
+    var_v0 = *arg1;
+    if ((var_v0 < 0x1EU) || (var_v0 >= 0x23U)) {
+        if ((u8) *arg0 >= 3U) {
+            func_801523D0(arg2, arg3, (s32) var_v0);
+            *arg1 += 1;
+            *arg0 = 0;
+            var_v0 = *arg1;
+        }
+    } else if (var_v0 < 0x23U) {
+        if (var_v0 >= 0x1EU) {
+            if (*arg0 != 0) {
+                func_801523D0(arg2, arg3, (s32) var_v0);
+                *arg1 += 1;
+                *arg0 = 0;
+                var_v0 = *arg1;
+            }
+        }
+    }
+    if (var_v0 >= 0x2D) {
+        *arg1 = 0;
+        *arg0 = 0;
+        func_801534E0(arg2);
+        func_801521EC(arg2, arg3);
+        return;
+    }
+    /* FAKE: redundant byte mask reserves the original increment temporary;
+     * real source unknown. T-9760 */
+    *arg0 = (u8)((*arg0 & 0xFF) + 1);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801523D0);
 
@@ -85,7 +116,31 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152808);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152944);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152C60);
+void func_80152C60(s32 arg0) {
+    if ((u32) arg0 < D_8015EDB4[18].unk3) {
+        func_80152DB4(1, 0, D_8015EDB4[18].unk2);
+        func_80152DB4(2, 7, D_8015EDB4[18].unk2);
+        func_80152DB4(3, 0xE, D_8015EDB4[18].unk2);
+        D_8015EDB4[18].unk2 = D_8015EDB4[18].unk2 + 1;
+        D_8015EDB4[18].unk3 = 0U;
+    }
+    if (D_8015EDB4[18].unk2 == 0x50) {
+        D_8015EDB4[16].unk84[2] = 0;
+    }
+    if (D_8015EDB4[18].unk2 >= 0x6EU) {
+        D_8015EDB4[18].unk2 = 0U;
+        D_8015EDB4[18].unk3 = D_8015EDB4[18].unk2;
+        D_8015EDB4[17].unk84[2] = 0;
+        func_801534E0(1);
+        func_801534E0(2);
+        func_801534E0(3);
+        func_801521EC(1, 0);
+        func_801521EC(2, 7);
+        func_801521EC(3, 0xE);
+        return;
+    }
+    D_8015EDB4[18].unk3 = D_8015EDB4[18].unk3 + 1;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152DB4);
 

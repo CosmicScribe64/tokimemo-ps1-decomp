@@ -8,7 +8,24 @@ void func_80142D00(void) {
     D_80148900 = 0x801B0000;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80142D00", func_80142D40);
+void func_80142D40(void) {
+    u8 *code_address;
+    GzCallbacks6C table;
+    GzCallback current;
+
+    code_address = &D_80089C84;
+    table = D_80148904;
+    table.callbacks[D_800F647A](0x80);
+    current = table.callbacks[D_800F647A];
+    /* FAKE: empty flag read preserves selector register. T-9760. */
+    if (!D_800F647A) {
+    }
+    /* FAKE: xor-zero preserves the original equality operand order. T-9760. */
+    if ((((s32)current ^ 0) == (s32)D_80089B6C) || ((GzCallback)code_address == current)) {
+        /* FAKE: unsigned byte view retains lbu with the old header. T-9760. */
+        D_8012B8C7 = *((u8 *)&D_801317EB);
+    }
+}
 
 void func_80142DF0(void) {
     func_80051DD8(0xD, 0x801B0000, 0xAFE0);
