@@ -1468,3 +1468,106 @@ Reviewed the four source bodies, generated main global, append-only overlay forw
 
 ## [2026-10-11] ticket | T-9510 Done
 Moved [[tickets/T-9510-wave-8-list-1]] from In Review to Done after verification and inline review; synchronized [[kanban]] and [[index]]. Final 4 matches / 1,312 bytes, nine T-0018 rows, every remaining listed function time-boxed and restored. Blockers and tooling observations are recorded for the orchestrator. All edits remain uncommitted.
+
+## [2026-10-11] ticket | T-9510 deep second pass
+Reopened [[tickets/T-9510-wave-8-list-1]] after the user committed the first pass and requested sustained function-by-function experiments. Synchronized [[kanban]] and [[index]]. Re-read standards, local instructions, [[decompile-workflow]] and [[register-allocation-wave7]]. Start 10:00:31 UTC; minimum three-hour pass unless list exhausted. Rank closest drafts before aggregate recovery. New changes stay uncommitted.
+
+## [2026-10-11] decision | Deep-pass closest draft ranking
+Ranked 51 successfully compiled rejected drafts by signed differing lines in resolved funcdiff; error output is excluded. The closest are ETC func_8014BF2C (4), NAME_ENT func_801454CC (10), BUNKASAI func_80146030 (14), GEKO func_801325C0 (16), OPTION func_80139F8C and main func_8005478C (18). The 100 unrankable entries include build/type failures, deferred for manual repair. First-pass JSON and deep ranking are retained as local build outputs; see [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] decision | Deep ETC result liveness trial
+ETC func_8014BF2C received sustained target-assembly comparison, a full 300-second permuter, and 14 completed control/type/return/ordering probes. Initial two branch operands use A1 instead of V0. Void return fixes the body but removes the entry V0 copy; explicit returns worsen layout. No verified match after about 17 minutes. Stopped our own identified batch container at the time box and restored src/ovl/ETC/8014ABD0.c. Next is NAME_ENT loop scheduling. See [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match NAME_ENT func_801454CC
+The last random result is captured before pointer advancement; initializing pointer and counter together in the for statement gives the original prologue and delayed final byte store. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 1 functions / 280 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] decision | Bunka adjacent state words
+BUNKASAI func_80146030 matches after reading D_80122EB8 and writing its +4 neighbour through a two-word aggregate, plus the existing GameState CharFlags bit-field. No dead test needed. The four-register selector mismatch was a source-type issue in this instance. Moved the documented BunkSelectWords view from the trial C to an append-only block in include/ovl/BUNKASAI.h; verifying again before retention. See [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match BUNKASAI func_80146030
+A documented two-word aggregate view of D_80122EB8 and its +4 neighbour keeps the selector load before the stores and in V1; the existing GameState flag bit-field gives the original byte temporaries. The type is appended in the overlay header; no FAKE is needed. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 2 functions / 488 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match GEKO func_801325C0
+Replaced scaled arithmetic through scalar record members with GameState array indexing, and cleared the observed two-byte D_80144C40 slot with a halfword view. Both this function and func_801327AC use SH at that slot; the append-only header retains its existing byte declaration. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 3 functions / 980 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | OPTION callback deep timebox
+Over 50 compiled source experiments and a 300-second permuter reduced func_80139F8C from 18 differing lines to six (five with an unsuitable wide-mask candidate). Remaining argument copy/scheduling differs; restored source. Updated [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match BUNKASAI func_801354B0
+Reused BunkSelectWords for the adjacent selector/result words and the existing GameState flag bit-field. This preserves the selector load in V1 before both stores, matching all instructions without a FAKE. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 4 functions / 1144 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match TACO func_801446D8
+Recovered two aligned 32-byte transform workspaces and the 0x10 record stride. FAKE: two spare workspace words retain the observed frame size, and pointer initialization shares the do line to permit the original schedule. Resolved funcdiff and unit SHA1 were rerun after marking the trick. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 5 functions / 1392 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match main func_8005478C
+Rewrote the two retry loops to preserve their separate counters and increment positions. FAKE: unused padding reproduces the 0x78-byte frame and SP+0x4C filename buffer. Resolved funcdiff and unit SHA1 pass after the source annotation. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 6 functions / 1640 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | SHOUGATU local callback table repaired, still unmatched
+Recovered func_80136078's 50 callbacks and 0x80 argument. Tested ordinary pointer/index/return-type and declaration-order shapes; frame can be exact but register allocation still differs. Reverted source and provisional type. Updated [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match TT func_801478D0
+Recovered the four-byte animation frames and the state prefix from the two-level table reads. A named frame pointer and direct byte predecrement reproduce the original register lifetimes. Moved the types to the overlay header, removed the unused draft local, and reverified resolved funcdiff plus unit SHA1; no FAKE needed. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 7 functions / 1968 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match ETC func_801421AC
+A local byte pointer to the GameState step field and a void return type preserve the selector in V1, the RA delay-slot store, and the pad-word load before the final switch branch. Resolved funcdiff and ETC unit SHA1 pass without a FAKE. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 8 functions / 2452 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match ETC func_80142390
+Reused the local GameState byte pointer and void callback form from func_801421AC for the second save-dialog state machine. Both resolved funcdiff checks and the ETC unit SHA1 pass after whitespace cleanup; no FAKE needed. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 9 functions / 2936 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match TAIIKU func_8013C5C8
+Recovered the mixed whole-word/high-half coordinate view of D_8011ECD0 and signed coordinate-bound declarations. A 300-second permuter reached an eight-line miss; a second empty high-half condition reached exact output. FAKE: both empty conditions retain the shared V1 base and prevent constant address folding. Full resolved funcdiff and the TAIIKU unit SHA1 pass. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 10 functions / 3140 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass ten-match checkpoint
+Full ninja passed all 27 unit SHA1 checks plus headers/globals guards after restoring unsuccessful production drafts. Second-pass subtotal 10 functions / 3,140 bytes. Recorded in [[tickets/T-9510-wave-8-list-1]]. Further experiments use scratch compiles until this checkpoint finishes.
+
+## [2026-10-11] build | Duplicate clone requires a corrected GameState offset
+Owned-file-only dupes proposed SHOUGATU func_80136770; resolved funcdiff rejected the copied GameState+0x10EA byte view because the target uses +0x110A. No match counted. Correcting against asm; recorded tool limitation in [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match SHOUGATU func_80136770
+Owned-file duplicate of func_80137D70, repaired against target asm: it increments GameState.unk_110A, not the source function's .unk_10EA. A direct member access matches, so no byte-view hack is retained. FAKE: the copied T-2020 return-value byte cast reserves a temporary; that comment remains. Resolved funcdiff and SHOUGATU SHA1 pass after cleanup. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 11 functions / 3320 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Main checksum routine repaired and timeboxed
+func_80055A38 now has a typed, instruction-equivalent scratch draft but its six-variable allocation differs. Eighteen completed source forms and a real 300-second permuter found no exact candidate; best permuter output still has 40 differing lines. Production source restored. Recorded in [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | TACO matrix-copy draft meets a conflicting header
+Recovered func_801472D4's matrix and coordinate prefix types and narrow pointer strides. Target returns 0/-1, while the existing overlay header declares void(s32,...). The append-only header constraint prevents changing that committed declaration. Four completed compile attempts reject the declaration; restored source and recorded in [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match ETC func_801428EC
+A local pointer to the byte shade makes its load use V0, then reuses V0 for the packed RGB argument; the s32 body intentionally has no return. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 12 functions / 3456 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match NAME_ENT func_80145378
+The counter comparison must use the old value before post-increment; a local u8 state pointer also preserves V1 without the extra selector copy. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 13 functions / 3676 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match RPG_BAT func_801427E4
+Use the neighbouring matched three-word state type for its counter fields; ++/-- inside the temporary assignment preserves call scheduling and V0 for the later reload. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 14 functions / 4264 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match ETC func_80141468
+Use a post-increment comparison on the brightness byte, then pass its stored new value to set_dec_bri; s32 with no explicit value return preserves the selector copy. Removed the unused m2c temporary and reverified. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 15 functions / 4580 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] ingest | Wave 8 deep-pass record layout and bounded evidence
+Typed NAME_ENT func_801454CC with NameRecord44 (stride 0x44, record 96 at
++0x1980); resolved function diff and NAME_ENT SHA1 still pass. Added four
+deep-pass symptom rows and four historical resolutions to [[data/t0018-cases]]
+after consulting [[register-allocation-wave7]] and running its inventory.
+Updated [[matching-notes]] with corrected no-FAKE classifications, the score
+buffer experiments, the actor loop, the conflicting void prototype, and the
+duplicate-copy GameState-offset error. All failed production drafts have been
+restored. Scoped duplicate rescan applied zero candidates. Final 15-function
+diff sweep and 27-unit build are running for [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Second-pass full verification and byte-size correction
+All 15 new C functions pass full resolved funcdiff checks; sync_protos --check-branch and migrate_globals --check pass. Forced the 27 unit SHA1 checks and header/global checks through ninja; all pass. Current assembly metadata corrects two queue sizes by 12 bytes each, so the actual gain is 4,556 bytes (19 functions / 5,868 bytes across both passes). Grand progress 4753/6958, 735480/2279368 (32.3%). Recorded in [[tickets/T-9510-wave-8-list-1]] and [[matching-notes]]. Remaining BUNKA_SD experiments are isolated and have no production edits.
+
+## [2026-10-11] ticket | T-9510 deep second pass reviewed and closed
+Closed after over three hours and six minutes from 10:00:31 UTC. Inline review
+against CODING_STANDARDS.md and the user/shared brief passed; cleanup, record
+typing, incorrect no-FAKE notes and byte metadata findings resolved. Added 15
+verified functions / 4,556 bytes (19 functions / 5,868 bytes across both passes).
+All 15 resolved diffs, 27 unit SHA1 checks, prototype/global checks and diff
+whitespace checks pass. Final incremental ninja has no work. BUNKA_SD's final
+72 valid probes and 300-second search failed, with no production edits. Five
+new deep-pass symptom rows (14 total) in [[data/t0018-cases]]. Larger remaining
+type repairs stay deferred with assembly fallbacks; this is not an exhaustive
+deep traversal of every historical rejected draft. [[tickets/T-9510-wave-8-list-1]],
+[[kanban]] and [[index]] synchronized to Done. Verified edits are uncommitted.
+Grand total 4753/6958 functions, 735480/2279368 bytes (32.3%).

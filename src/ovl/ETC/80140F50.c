@@ -38,7 +38,35 @@ void func_801413FC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141468);
+s32 func_80141468(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        dec_bg_reset();
+        func_80046318(9U, 0x80162000, 0xA1A2);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        if (func_800460CC() & 1) {
+            D_800E6280.unk_110D += 1;
+            return;
+        }
+        return;
+    case 2:
+        func_800536AC(0x2C0, 0, 0x140, 0xF0);
+        MoveSquare(0x2C0, 0x20, 0x140, 0xD0, 0x2C0, 0);
+        func_8009C674(0);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 3:
+        if (D_800E6280.unk_03A++ < 0x80U) {
+            set_dec_bri(D_800E6280.unk_03A);
+            func_800578F4(2);
+            return;
+        }
+        func_8004284C();
+        break;
+    }
+}
 
 void func_801415A4(void) {
     switch (D_800E6280.unk_110D) {
@@ -112,13 +140,95 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141BE8);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141E10);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_801421AC);
+void func_801421AC(void) {
+    u8 *state = &D_800E6280.unk_110D;
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142390);
+    switch (*state) {
+    case 0:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "メモリーカードを認識できません。", 0);
+        set_kanji_string(-0x78, 0x4C, 0, (s32) "差し込み口１のメモリーカードの", 0);
+        set_kanji_string(-0x78, 0x5A, 0, (s32) "接続を確認してください。", 0);
+        k_sub_disp_start(3);
+        *state += 1;
+        break;
+    case 1:
+        if ((u32) D_800E6280.unk_1104.u >= 0x41U) {
+            *state += 1;
+        }
+        break;
+    case 2:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "データのセーブを行ないますか？", 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
+        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
+        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        k_sub_disp_start(5);
+        *state += 1;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80042940(4);
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            func_8004482C();
+            func_80042878(0xC4);
+        }
+        break;
+    }
+    func_800578F4(2);
+}
+
+void func_80142390(void) {
+    u8 *state = &D_800E6280.unk_110D;
+
+    switch (*state) {
+    case 0:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "メモリーカードに空きブロックがありません。", 0);
+        set_kanji_string(-0x78, 0x4C, 0, (s32) "他の空きブロックのあるメモリーカードを", 0);
+        set_kanji_string(-0x78, 0x5A, 0, (s32) "用意してください。", 0);
+        k_sub_disp_start(3);
+        *state += 1;
+        break;
+    case 1:
+        if ((u32) D_800E6280.unk_1104.u >= 0x41U) {
+            *state += 1;
+        }
+        break;
+    case 2:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "データのセーブを行ないますか？", 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
+        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
+        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        k_sub_disp_start(5);
+        *state += 1;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80042940(4);
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            func_8004482C();
+            func_80042878(0xC4);
+        }
+        break;
+    }
+    func_800578F4(2);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142574);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_801428EC);
+s32 func_801428EC(void) {
+    s32 color;
+    u8 *shade = &D_800E6280.unk_03A;
+    color = *shade;
+    color = color * 0x10101 + 0x141414;
+
+    func_80049A40(-0x8C, 0x2C, 0x128, 0x40, 4, color, 0x81);
+    dtd_on_tpage(0, 0, 4, 2, 0);
+}
 
 void func_80142974(void) {
     switch (D_800E6280.unk_1109) {

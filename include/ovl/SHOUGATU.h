@@ -674,6 +674,7 @@ typedef struct SjisStr3 {
     u8 s[3][9];
 } SjisStr3;
 extern SjisStr3 D_80143D88;
+void func_80136770(void);
 
 #endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;

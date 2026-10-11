@@ -1,7 +1,51 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801478D0", func_801478D0);
+void func_801478D0(TtAnimState *arg0) {
+    TtAnimFrame *frame;
+    TtAnimFrame ***temp_v0_2;
+    u8 temp_a1;
+    u8 temp_a2;
+    u8 temp_t1;
+    u8 temp_t9;
+    u8 temp_v0;
+
+    temp_v0 = arg0->unk_08;
+    if (temp_v0 & 0x80) {
+        arg0->unk_08 = (u8) (temp_v0 & 0xFF7F);
+        arg0->unk_06 = 0U;
+        frame = **((TtAnimFrame ***)D_80151A50 + arg0->unk_05);
+        arg0->unk_09 = frame->unk2;
+        return;
+    }
+    if (temp_v0 & 0x20) {
+        arg0->unk_08 = (u8) (temp_v0 & 0xFFDF);
+        frame = **((TtAnimFrame ***)D_80151A50 + arg0->unk_05) + arg0->unk_06;
+        arg0->unk_09 = frame->unk2;
+        return;
+    }
+    if (!(temp_v0 & 0x40) && (--arg0->unk_09 == 0)) {
+        temp_v0_2 = arg0->unk_05 + (TtAnimFrame ***)D_80151A50;
+        temp_a1 = arg0->unk_06;
+        frame = **temp_v0_2 + temp_a1;
+        temp_a2 = frame->unk3;
+        temp_t1 = temp_a1 + 1;
+        if (temp_a2 == 0) {
+            arg0->unk_06 = temp_t1;
+            frame = **temp_v0_2 + (temp_t1 & 0xFF);
+            arg0->unk_09 = frame->unk2;
+            return;
+        }
+        temp_t9 = temp_a1 - temp_a2;
+        if (temp_a2 == 0xFF) {
+            arg0->unk_08 = (u8) (arg0->unk_08 | 1);
+            return;
+        }
+        arg0->unk_06 = temp_t9;
+        frame = **temp_v0_2 + (temp_t9 & 0xFF);
+        arg0->unk_09 = frame->unk2;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801478D0", func_80147A18);
 

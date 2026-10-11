@@ -14,7 +14,7 @@ Work through wave8-list-1.txt in order, matching as many of its 156 functions (8
 
 ## Acceptance criteria
 
-- [x] Every listed function matched or time-boxed.
+- [x] Original first-pass traversal complete; second pass ran over three hours, with rejected drafts ranked by resolved edit lines.
 - [x] Function diffs and all 27 binary checks pass.
 - [x] Prototype/global guards and inline standards review pass.
 - [x] Results, blockers, and T-0018 rows recorded; no commits.
@@ -208,3 +208,61 @@ All 156 list entries are covered below. Matched bodies pass resolved function di
 | NAME_ENT/80144AD0 | `func_8014826C` | 1120 | Time-boxed: resolved mismatch |
 | ETC/80132880 | `func_80136448` | 1280 | Time-boxed: build rejection |
 | ETC/80140F50 | `func_80141154` | 680 | Time-boxed: resolved mismatch |
+
+## Second deep pass
+
+User requested a sustained second pass on 2026-10-11, starting at 10:00:31 UTC. First pass is committed (4a75a0f); new edits remain uncommitted. Rank rejected drafts by resolved differing lines, defer large type repairs initially, spend about 10-15 minutes per candidate and run a 300-second permuter for drafts under about 20 differing lines. Recover aggregate/local-copy types from same-overlay neighbouring code. Continue at least three hours or until the list is exhausted.
+
+- Deep attempt 1, ETC func_8014BF2C: about 17 minutes including 300-second permuter (best score 85, no exact candidate), 14 completed compiled probes of switch nesting, signed/narrow/register result locals, comparison/argument casts, assignment layout, void return and explicit observed-result returns. Initial C differs in two branch operands; void body matches except the entry V0 copy. Best 3 signed diff lines (one missing instruction plus shifted target); no checksum match. Stopped only our own bounded batch container, verified its w8-1 mount, then restored the entire source baseline. Remaining untested queued variants are not counted as negative evidence.
+
+- Deep-pass verified match: NAME_ENT func_801454CC (280 bytes). The last random result is captured before pointer advancement; initializing pointer and counter together in the for statement gives the original prologue and delayed final byte store. Resolved funcdiff and unit SHA1 pass. Second pass total 1 functions / 280 bytes.
+
+- Deep-pass verified match: BUNKASAI func_80146030 (208 bytes). A documented two-word aggregate view of D_80122EB8 and its +4 neighbour keeps the selector load before the stores and in V1; the existing GameState flag bit-field gives the original byte temporaries. The type is appended in the overlay header; no FAKE is needed. Resolved funcdiff and unit SHA1 pass. Second pass total 2 functions / 488 bytes.
+
+- Deep-pass verified match: GEKO func_801325C0 (492 bytes). Replaced scaled arithmetic through scalar record members with GameState array indexing, and cleared the observed two-byte D_80144C40 slot with a halfword view. Both this function and func_801327AC use SH at that slot; the append-only header retains its existing byte declaration. Resolved funcdiff and unit SHA1 pass. Second pass total 3 functions / 980 bytes.
+
+- OPTION func_80139F8C deep timebox: about 29 minutes, over 50 compiled variants of GameState/counter pointer views, return types, command widths and temporaries, plus a 300-second permuter. Reduced 18 differing lines to six with two pointer views; the best permuter candidate has five, but its wide mask only removes one redundant move and does not match. No exact candidate; restored baseline.
+
+- Deep-pass verified match: BUNKASAI func_801354B0 (164 bytes). Reused BunkSelectWords for the adjacent selector/result words and the existing GameState flag bit-field. This preserves the selector load in V1 before both stores, matching all instructions without a FAKE. Resolved funcdiff and unit SHA1 pass. Second pass total 4 functions / 1144 bytes.
+
+- Deep-pass verified match: TACO func_801446D8 (248 bytes). Recovered two aligned 32-byte transform workspaces and the 0x10 record stride. FAKE: two spare workspace words retain the observed frame size, and pointer initialization shares the do line to permit the original schedule. Resolved funcdiff and unit SHA1 were rerun after marking the trick. Resolved funcdiff and unit SHA1 pass. Second pass total 5 functions / 1392 bytes.
+
+- Deep-pass verified match: main func_8005478C (248 bytes). Rewrote the two retry loops to preserve their separate counters and increment positions. FAKE: unused padding reproduces the 0x78-byte frame and SP+0x4C filename buffer. Resolved funcdiff and unit SHA1 pass after the source annotation. Resolved funcdiff and unit SHA1 pass. Second pass total 6 functions / 1640 bytes.
+
+- SHOUGATU func_80136078 aggregate repair and deep timebox: recovered the 50-entry callback struct and the missing 0x80 callback argument from target asm. About 11 minutes, 21 ordinary compiled forms plus six complete declaration-order permutations. Local index before table reproduces the original 0x100 frame and SP+0x34 copy; best total is 32 differing lines with a GameState or byte selector pointer, but that introduces an eight-byte larger frame and still allocates the table/selector/slot to the wrong registers. Reverted source and this attempt's header addition. No unreached or failed-build variants counted.
+
+- Deep-pass verified match: TT func_801478D0 (328 bytes). Recovered the four-byte animation frames and the state prefix from the two-level table reads. A named frame pointer and direct byte predecrement reproduce the original register lifetimes. Moved the types to the overlay header, removed the unused draft local, and reverified resolved funcdiff plus unit SHA1; no FAKE needed. Resolved funcdiff and unit SHA1 pass. Second pass total 7 functions / 1968 bytes.
+
+- Deep-pass verified match: ETC func_801421AC (484 bytes). A local byte pointer to the GameState step field and a void return type preserve the selector in V1, the RA delay-slot store, and the pad-word load before the final switch branch. Resolved funcdiff and ETC unit SHA1 pass without a FAKE. Resolved funcdiff and unit SHA1 pass. Second pass total 8 functions / 2452 bytes.
+
+- Deep-pass verified match: ETC func_80142390 (484 bytes). Reused the local GameState byte pointer and void callback form from func_801421AC for the second save-dialog state machine. Both resolved funcdiff checks and the ETC unit SHA1 pass after whitespace cleanup; no FAKE needed. Resolved funcdiff and unit SHA1 pass. Second pass total 9 functions / 2936 bytes.
+
+- Deep-pass verified match: TAIIKU func_8013C5C8 (204 bytes). Recovered the mixed whole-word/high-half coordinate view of D_8011ECD0 and signed coordinate-bound declarations. A 300-second permuter reached an eight-line miss; a second empty high-half condition reached exact output. FAKE: both empty conditions retain the shared V1 base and prevent constant address folding. Full resolved funcdiff and the TAIIKU unit SHA1 pass. Resolved funcdiff and unit SHA1 pass. Second pass total 10 functions / 3140 bytes.
+
+- Ten-match checkpoint: restored the active unmatched main checksum and TACO initialization drafts, then full incremental ninja completed all 27 unit SHA1 checks with headers/globals OK. Retained second-pass subtotal 10 functions / 3,140 bytes.
+
+- Owned-file dupes applied one provisional SHOUGATU func_80136770 clone from func_80137D70. Required funcdiff caught a real data-reference error: the copied byte view accesses GameState+0x10EA but the target reads/writes +0x110A. It is not counted as a match. Testing the corrected actual struct member before retaining any clone. Tooling issue: dupes does not repair this interior byte-view offset when cloning.
+
+- Deep-pass verified match: SHOUGATU func_80136770 (180 bytes). Owned-file duplicate of func_80137D70, repaired against target asm: it increments GameState.unk_110A, not the source function's .unk_10EA. A direct member access matches, so no byte-view hack is retained. FAKE: the copied T-2020 return-value byte cast reserves a temporary; that comment remains. Resolved funcdiff and SHOUGATU SHA1 pass after cleanup. Resolved funcdiff and unit SHA1 pass. Second pass total 11 functions / 3320 bytes.
+
+- Main func_80055A38 aggregate repair/deep timebox: replaced the missing payload pointers with byte arrays rooted at D_80123120+0x204, reconstructed the 3,836-byte inner loop and two 0xF00-spaced records. Ordinary source gets the exact instruction/branch sequence but allocates six live variables differently (52 differing lines). Tested 18 completed forms of K&R entry, byte/halfword loop counters, goto control, declaration order, parameter reuse and manually expanded draft loops. A real 300-second permuter improved to 40 differing lines via unsuitable dummy code, with no exact candidate. Restored production baseline; scratch candidates remain for follow-up.
+
+- TACO func_801472D4 matrix-copy type recovery: reconstructed a 3x3 signed-halfword rotation plus three 32-bit translations, the 32-byte coordinate copy at record+4, correct s16 input-pointer strides, and the observed 0/-1 result. Tried four ordinary matrix/local-declaration/K&R forms. The committed overlay header declares the function void with six s32 arguments; all corrected int-return forms fail that declaration. The brief permits overlay-header appends only, so this conflicting existing prototype prevents the correct draft from being tested in the production build. Reverted the source.
+
+- Deep-pass verified match: ETC func_801428EC (136 bytes). A local pointer to the byte shade makes its load use V0, then reuses V0 for the packed RGB argument; the s32 body intentionally has no return. Resolved funcdiff and unit SHA1 pass. Second pass total 12 functions / 3456 bytes.
+
+- Deep-pass verified match: NAME_ENT func_80145378 (220 bytes). The counter comparison must use the old value before post-increment; a local u8 state pointer also preserves V1 without the extra selector copy. Resolved funcdiff and unit SHA1 pass. Second pass total 13 functions / 3676 bytes.
+
+- Deep-pass verified match: RPG_BAT func_801427E4 (588 bytes). Use the neighbouring matched three-word state type for its counter fields; ++/-- inside the temporary assignment preserves call scheduling and V0 for the later reload. Resolved funcdiff and unit SHA1 pass. Second pass total 14 functions / 4264 bytes.
+
+- Deep-pass verified match: ETC func_80141468 (316 bytes). Use a post-increment comparison on the brightness byte, then pass its stored new value to set_dec_bri; s32 with no explicit value return preserves the selector copy. Removed the unused m2c temporary and reverified. Resolved funcdiff and unit SHA1 pass. Second pass total 15 functions / 4580 bytes.
+
+- Second-pass accounting correction: TACO func_801446D8 is 236 bytes and ETC func_801428EC is 124 bytes in the current assembly headers, rather than the work-list estimates 248/136. The 15 retained functions add 4,556 bytes; cumulative first+second passes are 19 functions / 5,868 bytes. Grand progress is 4753/6958 functions, 735480/2279368 bytes (32.3%). All 15 retained C bodies pass the final resolved diff sweep and all 27 binaries pass SHA1.
+
+- Deep pass closed after more than three hours and six minutes, starting at 10:00:31 UTC. Worked closest drafts first, then callback tables, transform workspaces, score buffers, record copies and mixed-width coordinates. Historical first-pass timeboxes are not evidence that every remaining draft received a deep attempt: 39 ranked drafts remain, and large aggregate/type repairs are still deferred. Every unsuccessful production experiment is restored; new verified code remains uncommitted.
+
+- Final BUNKA_SD func_80133984 attempt: about 11 minutes, recovered a 0x44-byte record view and four pointer globals from LW accesses. Reusing one counter reduces 30 edits to 16. Completed 72 valid resolved probes across widths, source-line grouping, declaration layouts, pointer casts and a last-store temporary, plus a 300-second permuter. Checked its best outputs with the resolved comparator (22/16 edits); no match. Setup/type-error runs are not negative codegen evidence. Production source/header never changed. Added one scheduling row, bringing second-pass additions to five rows (14 across both passes).
+
+- Final inline review against CODING_STANDARDS.md and the shared/user brief: passed. Reviewed all 15 new bodies, fixed-width layouts/offsets, callback promotion, GameState views, return/control-flow choices, C89, header ownership/guards, and every FAKE. Resolved findings: unused ETC temporary and trailing whitespace removed; NAME_ENT offsets replaced with NameRecord44; three ordinary matches mislabeled by an automatic wiki sentence clarified; two queue byte estimates corrected. FAKEs remain documented for TACO workspace padding/scheduling, main retry-frame padding, TAIIKU empty conditions, and the inherited SHOUGATU byte return cast. No new SDK definitions, prototype override hacks, tool/config edits, raw assets or commits.
+
+- Final checks: all 15 new full resolved funcdiff checks MATCH; forced all 27 binary SHA1 checks OK; build/headers.ok and build/globals.ok pass; sync_protos --check-branch and migrate_globals --check pass; git diff --check clean. Final incremental ninja reports no work to do. Scoped duplicate rescan applied 0 candidates. Top other blocker: conflicting void declaration for TACO func_801472D4. Duplicate tooling's wrong interior GameState offset was caught, repaired and verified. Ticket, board and index synchronized to Done.

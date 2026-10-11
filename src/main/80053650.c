@@ -358,7 +358,38 @@ s32 func_80054704(s32 arg0) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005478C);
+s32 func_8005478C(s32 arg0) {
+    /* FAKE: unused padding reproduces the 0x78-byte frame and filename
+     * buffer at SP+0x4C; retry control flow matches naturally. T-9510. */
+    s32 retry;
+    s32 pad_before[2];
+    u8 name[32];
+    s32 pad_after[4];
+
+    retry = 0;
+    func_80054C4C();
+    func_80056070(name, arg0);
+    close(D_800B58E4);
+    D_800B58E4 = open(name, 0x8001);
+    if (D_800B58E4 == -1) {
+        do {
+            retry++;
+            if (retry >= 16) {
+                return -1;
+            }
+        } while ((D_800B58E4 = open(name, 0x8001)) == -1);
+        retry = 0;
+    }
+    if (read(D_800B58E4, D_80123120, 0x2000) == -1) {
+        do {
+            retry++;
+            if (retry >= 16) {
+                return -1;
+            }
+        } while (read(D_800B58E4, D_80123120, 0x2000) == -1);
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_80054884);
 

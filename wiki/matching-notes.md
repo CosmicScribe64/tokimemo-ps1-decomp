@@ -1703,3 +1703,76 @@ Nine T-0018 symptom rows appended after consulting the wave-7 clusters/inventory
 Inline review: replaced RPG_BAT dispatcher workspace byte offset 0x2179 with D_80120E49, declared once by sync_protos --add-global in main_api.h. Added a source comment on the original uninitialized retry-counter read and removed m2c switch noise. Final checksum/guard verification follows these cleanups.
 
 Final T-9510 result: 4 functions / 1,312 bytes; all 156 list entries attempted, 152 restored/time-boxed. Resolved diffs, all 27 binary checksums, headers/globals guards and prototype branch guard pass after review cleanups. Grand progress: 4738/6958, 730924/2279368 (32.1%). Scoped duplicate pass gained 0 functions; its one checksum-failing candidate was reverted. Inline standards review passed with no open findings. Nine T-0018 rows retained. Full per-function coverage and final evidence: [[tickets/T-9510-wave-8-list-1]]. Changes left uncommitted.
+
+T-9510 deep pass: NAME_ENT func_801454CC (280 bytes). The last random result is captured before pointer advancement; initializing pointer and counter together in the for statement gives the original prologue and delayed final byte store. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep pass: BUNKASAI func_80146030 (208 bytes). A documented two-word aggregate view of D_80122EB8 and its +4 neighbour keeps the selector load before the stores and in V1; the existing GameState flag bit-field gives the original byte temporaries. The type is appended in the overlay header; no FAKE is needed. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep pass: GEKO func_801325C0 (492 bytes). Replaced scaled arithmetic through scalar record members with GameState array indexing, and cleared the observed two-byte D_80144C40 slot with a halfword view. Both this function and func_801327AC use SH at that slot; the append-only header retains its existing byte declaration. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep pass: BUNKASAI func_801354B0 (164 bytes). Reused BunkSelectWords for the adjacent selector/result words and the existing GameState flag bit-field. This preserves the selector load in V1 before both stores, matching all instructions without a FAKE. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep pass: TACO func_801446D8 (248 bytes). Recovered two aligned 32-byte transform workspaces and the 0x10 record stride. FAKE: two spare workspace words retain the observed frame size, and pointer initialization shares the do line to permit the original schedule. Resolved funcdiff and unit SHA1 were rerun after marking the trick. Resolved funcdiff plus unit SHA1 pass; FAKE is marked in the source.
+
+T-9510 deep pass: main func_8005478C (248 bytes). Rewrote the two retry loops to preserve their separate counters and increment positions. FAKE: unused padding reproduces the 0x78-byte frame and SP+0x4C filename buffer. Resolved funcdiff and unit SHA1 pass after the source annotation. Resolved funcdiff plus unit SHA1 pass; FAKE is marked in the source.
+
+T-9510 deep pass: TT func_801478D0 (328 bytes). Recovered the four-byte animation frames and the state prefix from the two-level table reads. A named frame pointer and direct byte predecrement reproduce the original register lifetimes. Moved the types to the overlay header, removed the unused draft local, and reverified resolved funcdiff plus unit SHA1; no FAKE needed. Resolved funcdiff plus unit SHA1 pass; FAKE is marked in the source.
+
+T-9510 deep pass: ETC func_801421AC (484 bytes). A local byte pointer to the GameState step field and a void return type preserve the selector in V1, the RA delay-slot store, and the pad-word load before the final switch branch. Resolved funcdiff and ETC unit SHA1 pass without a FAKE. Resolved funcdiff plus unit SHA1 pass; FAKE is marked in the source.
+
+T-9510 deep pass: ETC func_80142390 (484 bytes). Reused the local GameState byte pointer and void callback form from func_801421AC for the second save-dialog state machine. Both resolved funcdiff checks and the ETC unit SHA1 pass after whitespace cleanup; no FAKE needed. Resolved funcdiff plus unit SHA1 pass; FAKE is marked in the source.
+
+T-9510 deep pass: TAIIKU func_8013C5C8 (204 bytes). Recovered the mixed whole-word/high-half coordinate view of D_8011ECD0 and signed coordinate-bound declarations. A 300-second permuter reached an eight-line miss; a second empty high-half condition reached exact output. FAKE: both empty conditions retain the shared V1 base and prevent constant address folding. Full resolved funcdiff and the TAIIKU unit SHA1 pass. Resolved funcdiff plus unit SHA1 pass; FAKE is marked in the source.
+
+T-9510 deep pass: SHOUGATU func_80136770 (180 bytes). Owned-file duplicate of func_80137D70, repaired against target asm: it increments GameState.unk_110A, not the source function's .unk_10EA. A direct member access matches, so no byte-view hack is retained. FAKE: the copied T-2020 return-value byte cast reserves a temporary; that comment remains. Resolved funcdiff and SHOUGATU SHA1 pass after cleanup. Resolved funcdiff plus unit SHA1 pass; FAKE is marked in the source.
+
+T-9510 deep pass: ETC func_801428EC (136 bytes). A local pointer to the byte shade makes its load use V0, then reuses V0 for the packed RGB argument; the s32 body intentionally has no return. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep pass: NAME_ENT func_80145378 (220 bytes). The counter comparison must use the old value before post-increment; a local u8 state pointer also preserves V1 without the extra selector copy. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep pass: RPG_BAT func_801427E4 (588 bytes). Use the neighbouring matched three-word state type for its counter fields; ++/-- inside the temporary assignment preserves call scheduling and V0 for the later reload. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep pass: ETC func_80141468 (316 bytes). Use a post-increment comparison on the brightness byte, then pass its stored new value to set_dec_bri; s32 with no explicit value return preserves the selector copy. Removed the unused m2c temporary and reverified. Resolved funcdiff plus unit SHA1 pass; no FAKE needed.
+
+T-9510 deep-pass review clarification: TT `func_801478D0` and ETC
+`func_801421AC` / `func_80142390` use ordinary source idioms and have no FAKE.
+The automatic sentence appended to those three earlier notes incorrectly
+treated the phrase "no FAKE" in the reason as a FAKE annotation.
+
+T-9510 record repair: NAME_ENT `func_801454CC` now uses the documented
+`NameRecord44` view of D_8011ECD0, with field widths/offsets and 0x44 stride
+derived from the original stores. Record 96 begins at +0x1980; after advancing
+the pointer, record 95 is the record whose final byte is stored. This preserves
+all instruction words and the NAME_ENT SHA1, replacing the draft's raw offset
+arithmetic. No FAKE is needed.
+
+T-9510 deep-pass timeboxes: ETC `func_8014B0D0` was repaired using the two
+outputs actually written by main `func_80053418` (16 bytes and 16 halfwords).
+Over 150 type, declaration, index/pointer, aggregate-buffer and parameter-home
+forms plus a 300-second permuter did not match. Its best indexed loop has
+identical instructions except three local-buffer addresses displaced by 16
+bytes; restore assembly rather than retain pointers outside local objects.
+TACO `func_80147B24` now has a scratch typed loop over actor records 16 onward,
+fields +0x7A/+0x85, with stride 0x88 and every second input weight. Thirty
+declaration/parameter/pointer forms still differ in induction allocation and
+scheduling, so its production assembly remains. TACO `func_801472D4` has a
+separate blocker: its recovered matrix-copy body returns -1 or 0, but the
+committed overlay header says void. The append-only header rule prevents a
+correct return-type repair within this batch; no override hack was retained.
+
+T-9510 tooling finding: the scoped duplicate copy for SHOUGATU
+`func_80136770` used the source's interior GameState offset (+0x9CC from
+unk_71E, or unk_10EA) instead of the target's (+0x9EC, or unk_110A). The real
+resolved diff caught this two-line address mismatch; direct unk_110A fixed it
+and the unit SHA1 passed. A final scoped duplicate scan found no more plans.
+
+T-9510 accounting correction: the current assembly headers count TACO func_801446D8 as 236 bytes and ETC func_801428EC as 124 bytes. The original queue estimates were 248/136. Thus the 15-function second pass adds 4,556 bytes and the cumulative two-pass total is 19 functions / 5,868 bytes. The final verified grand progress is 4753/6958 functions, 735480/2279368 bytes (32.3%).
+
+T-9510 final BUNKA_SD experiment: the 0x44-byte layout applies to func_80133984.
+Four missing globals are pointer words (LW, not direct array addresses). Reusing
+one scalar for the palette and record loops fixes allocation and signed compare.
+The remaining eight stores are scheduled before the pointer advance instead of
+after it with adjusted offsets. 72 valid resolved probes and a 300-second
+permuter do not match; the best outputs resolve to 22/16 edits. Type/setup
+failures are not evidence against an idiom. No production source/header changed.
+This is the fifth new deep-pass symptom row in [[data/t0018-cases]].

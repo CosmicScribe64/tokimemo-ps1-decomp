@@ -71,4 +71,11 @@ extern s32 D_801606D0;
 extern s32 D_801606D4;
 extern s32 D_801606D8;
 
+/* T-9510: adjacent words D_80122EB8/+4, read and written together in
+ * func_80146030. This view preserves the observed load-before-store order. */
+typedef struct BunkSelectWords {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} BunkSelectWords; /* size 0x08 */
+
 #endif
