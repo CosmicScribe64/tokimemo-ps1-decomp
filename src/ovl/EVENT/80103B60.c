@@ -389,7 +389,13 @@ void func_80104EF8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80104F30);
+void func_80104F30(void) {
+    /* the u8 cast reproduces the conversion of the callee's u8 result (andi) that shifts the temporary registers */
+    if (((u8)func_8002328C(D_800B1746) & 0x7F) >= 2U) {
+        D_80094714 += 3;
+    }
+    func_80011DFC();
+}
 
 typedef struct {
     void (*f[40])();

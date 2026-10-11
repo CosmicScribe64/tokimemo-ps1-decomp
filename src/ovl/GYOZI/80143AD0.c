@@ -1,9 +1,39 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143AD0);
+void func_80143AD0(void) {
+    D_80148B60 = 0x801DA680;
+    D_80148B64 = 0x801DA68C;
+    D_80148B68 = 0x801DA72C;
+    /* address literals: the data belongs to another overlay; the original loads it with a separate base register */
+    D_80148B6C = *(s16 *)0x801DA754;
+    D_80148B70 = 0x801B0000;
+    D_80148B74 = 0x801DA000;
+    D_80148B78 = 0x801B2000;
+    D_80148B7C = 0x801B6000;
+    D_80148B80 = 0x801BA000;
+    D_80148B84 = 0x801BE000;
+    D_80148B88 = 0x801C2000;
+    D_80148B8C = 0x801C6000;
+    D_80148B90 = 0x801D6000;
+}
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80143AD0", func_80143BA0);
+void func_80143BA0(void) {
+    D_80148B94 = 0x801D2430;
+    D_80148B98 = 0x801D2434;
+    D_80148B9C = 0x801D2498;
+    /* address literal, see func_80141780 */
+    D_80148BA0 = *(s16 *)0x801D24B4;
+    D_80148BA4 = 0x801B0000;
+    D_80148B74 = 0x801D2000;
+    D_80148BA8 = 0x801B2000;
+    D_80148BAC = 0x801B6000;
+    D_80148BB0 = 0x801BA000;
+    D_80148BB4 = 0x801BE000;
+    D_80148BB8 = 0x801C2000;
+    D_80148BBC = 0x801C6000;
+    D_80148B90 = 0x801CE000;
+}
 
 void func_80143C70(void) {
     D_80148BC0 = 0x801D22D0;

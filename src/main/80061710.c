@@ -42,7 +42,17 @@ void func_80061790(void) {
     func_8009B340(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80061710", func_800618B0);
+void func_800618B0(void) {
+    TaiikuBig *p;
+
+    /* FAKE: init and loop head on one source line give the original's addiu order (as1 schedules by line, T-7020) */
+    p = D_801227A0; do {
+        func_80099E30(0, p);
+        p->unk20 = 0xFA0;
+        p->unk0 = 0;
+        p++;
+    } while (p != D_80122CA0);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80061710", func_8006190C);
 

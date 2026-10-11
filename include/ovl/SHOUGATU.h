@@ -666,6 +666,7 @@ typedef struct {
     u8 f:1;
     u8 rest:5;
 } Bits64B8;
+void func_8013E19C(void);
 
 #endif /* OVL_SHOUGATU_H */
 extern u8 D_80143DDC;

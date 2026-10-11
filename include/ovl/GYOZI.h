@@ -604,6 +604,31 @@ typedef struct {
 
 extern u8 D_801486E4;
 extern s32 D_8012E678;
+extern s32 D_80148B60;
+extern s32 D_80148B64;
+extern s32 D_80148B68;
+extern s16 D_80148B6C;
+extern s32 D_80148B70;
+extern s32 D_80148B74;
+extern s32 D_80148B78;
+extern s32 D_80148B7C;
+extern s32 D_80148B80;
+extern s32 D_80148B84;
+extern s32 D_80148B88;
+extern s32 D_80148B8C;
+extern s32 D_80148B94;
+extern s32 D_80148B98;
+extern s32 D_80148B9C;
+extern s16 D_80148BA0;
+extern s32 D_80148BA4;
+extern s32 D_80148BA8;
+extern s32 D_80148BAC;
+extern s32 D_80148BB0;
+extern s32 D_80148BB4;
+extern s32 D_80148BB8;
+extern s32 D_80148BBC;
+void func_8013CF2C(void);
+
 #endif /* OVL_GYOZI_H */
 extern s32 D_8012E688;
 extern s32 D_8012E698;
