@@ -74,7 +74,19 @@ INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_801399CC);
 
 INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139AA4);
 
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/801397D0", func_80139E3C);
+/* FAKE: the implicit return keeps the selector in v0, and the repeated table
+ * expression preserves the original address-temporary order after CSE. T-9720. */
+s32 func_80139E3C(void) {
+    Rec38 *girl;
+    s16 delta;
+    u32 index;
+
+    index = (u32)(D_800E6280.unk_54C[0].w * 8) >> 0x1C;
+    girl = &D_800E6280.unk_1BC[index];
+    delta = D_801444A0[index];
+    girl->unk_06 -= D_801444A0[index];
+    girl->unk_0A += delta;
+}
 
 s32 func_80139E90(void) {
     /* FAKE: 4 spare bytes above the buffers reproduce the original frame (0x150); real locals unknown. T-9180 */

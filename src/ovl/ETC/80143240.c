@@ -325,7 +325,27 @@ void func_80145A6C(void) {
     func_80145A40();
     func_80145AF8();
 }
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80145AF8);
+/* FAKE: the extra pointer homes retain the frame, and the intensity assignment
+ * inside the call keeps its spill in the jal delay slot. The implicit return
+ * preserves the original return-zero early exit and final call value. T-9720. */
+s32 func_80145AF8(void)
+{
+    u8 *brightness;
+    u8 *brightness_alias;
+    s32 intensity;
+    s32 color;
+    brightness = &D_800E6280.unk_03A;
+    if ((D_800E6280.unk_1109 == 0) && (((u8) D_800E6280.unk_110A) < 2U))
+    {
+        return 0;
+    }
+    brightness_alias = &(*brightness);
+    func_80049A40(-0xA0, -0x57, 0x11B, 0x7D, 2, (((s32) ((intensity = *brightness_alias) * 3)) / 2) * 0x10101, 2);
+    func_8004955C(2);
+    color = (intensity / 3) * 0x40401;
+    func_80049A40(-0x85, 0x2E, 0x10A, 0x34, 2, color, 0x81);
+    func_800494BC(0, 0, 2, 0, 0);
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80145C00);
 

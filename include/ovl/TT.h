@@ -316,4 +316,24 @@ typedef struct TtDrawSelect0C {
 } TtDrawSelect0C; /* accessed prefix size 0x0C */
 void func_80148460(void);
 
+#ifndef OVL_TT_W9_2_COLLISION_H
+#define OVL_TT_W9_2_COLLISION_H
+/* func_80145508 reads signed x/y offsets and byte half extents. T-9720. */
+typedef struct TtCollision6 {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ u8 w;
+    /* 0x05 */ u8 h;
+} TtCollision6; /* size 0x06 */
+extern TtCollision6 D_80155B30[];
+extern TtCollision6 D_80155C64[];
+#endif
+
+/* Halfword masks indexed by the byte phase at work+0x21, T-9720. */
+extern u16 D_80155DD0[];
+
+#ifndef OVL_TT_T9720_COORDINATES
+#define OVL_TT_T9720_COORDINATES
+/* Signed halfword coordinates consumed by func_80138B90. */
+extern s16 D_80152C40[];
 #endif

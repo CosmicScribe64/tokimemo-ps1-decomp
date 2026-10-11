@@ -1,6 +1,15 @@
 #include "common.h"
 #include "ovl/TT.h"
 
+/* Fields used by TT's phase update. T-9720. */
+typedef struct TtPhase3AE {
+    /* 0x000 */ u8 pad000[0x52];
+    /* 0x052 */ u8 frame;
+    /* 0x053 */ u8 pad053[0x357];
+    /* 0x3AA */ u16 phase;
+    /* 0x3AC */ u16 step;
+} TtPhase3AE; /* size 0x3AE */
+
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801374C0);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137654);
@@ -107,7 +116,24 @@ void func_80138D94(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138E28);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_8013923C);
+void func_8013923C(void) {
+    TtPhase3AE *work;
+    u16 step;
+    u16 phase;
+
+    work = (TtPhase3AE *)D_80158A8C;
+    phase = work->phase += work->step;
+    if (phase >= 0x800U) {
+        phase = work->phase = 0;
+    }
+    step = work->step;
+    work->frame = (s8) ((phase >> 8) + 1);
+    if (step < 0x100U) {
+        work->step = (u16) (step + 1);
+        return;
+    }
+    work->step = 0x100U;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801392A0);
 

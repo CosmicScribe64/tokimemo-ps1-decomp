@@ -284,7 +284,34 @@ void func_8013F250(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013F350);
+/* FAKE: XOR zero retains the original repeated store; the final dead test keeps
+ * value in v0 on the implicit-return paths. T-9720. */
+s32 func_8013F350(s32 arg0, s32 arg1) {
+    s32 value;
+
+    value = D_8015ED8C[1];
+    if (value == 0) {
+        value = D_8015E744;
+        D_8015E744 = arg1;
+    }
+    if (D_8015EE44.unk_04 == 0) {
+        D_8015E744 = value;
+        value = 0;
+        D_8015ED8C[0] += 1;
+    }
+    D_8015ED8C[1] = value ^ 0;
+    if (arg0 != 0) {
+        D_8015ED8C[1] = value;
+        if ((D_8015EE44.unk_00 - 3) >= arg0) {
+            D_8015E744 = value;
+            D_8015ED8C[0] += 1;
+            value = 0;
+            D_8015ED8C[1] = 0;
+        }
+    }
+    if (value) {
+    }
+}
 
 void func_8013F3F0(s32 arg0, s32 arg1) {
     s32 i;

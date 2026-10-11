@@ -896,4 +896,17 @@ typedef struct GzCallbacks6C {
 } GzCallbacks6C; /* size 0x6C; copied callback table */
 extern GzCallbacks6C D_80148904;
 
+#ifndef OVL_GYOZI_W9_2_TYPES_H
+#define OVL_GYOZI_W9_2_TYPES_H
+/* Four-byte assignment into the girl record at +0x08. T-9720. */
+typedef struct GyoziWord4 {
+    /* 0x00 */ s32 unk_00;
+} GyoziWord4; /* size 0x04 */
+extern GyoziWord4 D_801474B4;
+#endif /* OVL_GYOZI_W9_2_TYPES_H */
+
+#ifndef OVL_GYOZI_SELECT_CALL_T9720
+#define OVL_GYOZI_SELECT_CALL_T9720
+/* Defined in 80134520.c; selection helper calls it before its definition. */
+void func_80134938(void);
 #endif

@@ -5391,3 +5391,279 @@ Worked from 14:59 through 19:00 UTC, meeting the user's explicit four-hour minim
 ## [2026-10-11] lint | T-9740 completed-state audit
 
 Final scoped lint passes with ticket/card/index in Done: seven headers and shared log/inventory/notes remain append-only, all nine changed C files are assigned, 16 new unresolved rows counted, and new wikilinks resolve. Whitespace check passes. type_recovery proposals for the EVENT control region were broad heuristics; the verified neighbouring Rec24 accesses justify the retained complete view. All requested work is uncommitted. See [[tickets/T-9740-wave-9-list-4]].
+## [2026-10-11] ticket | Begin wave 9 list 2
+
+Created [[tickets/T-9720-wave-9-list-2]] In Progress and synchronized [[kanban]] and [[index]]. Read the shared brief, [[decompile-workflow]], [[register-allocation-wave7]], relevant [[matching-notes]] and CODING_STANDARDS.md. Docker baseline configuration/build started. Work stays inside the 34 assigned C files with allowed declarations and append-only wiki records.
+
+## [2026-10-11] query | T-9720 aggregate preparation
+
+Read prior bounded DATE transform-layout experiments and the original strSetDefDecEnv assembly as the baseline split became available. Recorded its 0x30-byte output layout and planned shared MATRIX/RECT repairs in [[tickets/T-9720-wave-9-list-2]]. The baseline build continues; no C changes yet.
+
+## [2026-10-11] query | T-9720 menu tables
+
+Original normal_date_three_select_init assembly identifies four three-halfword tables rather than twelve unrelated locals. Recorded an array-based repair for the deep pass in [[tickets/T-9720-wave-9-list-2]]. Baseline Docker ninja has reached GYOZI with unit checksums still passing.
+
+## [2026-10-11] build | T-9720 baseline 27 of 27
+
+Docker configure and ninja -j 4 passed all 27 unit SHA1 checks, headers and globals. Started the ordered draft/build/resolved-diff pass for [[tickets/T-9720-wave-9-list-2]]. Drafts and diagnostics remain in its external scratch directory.
+
+## [2026-10-11] ingest | T-9720 GYOZI word-copy view
+
+Original func_8013A4E8 assembly establishes the four-byte copy from D_801474B4, selectors at work+0x68D with stride four, and a word flag at girl[8]+0x10. Appended a minimum GyoziWord4 declaration to include/ovl/GYOZI.h; experiments will retain it only if a verified function needs it. [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] query | T-9720 permuter worker import failure
+
+RPG_BAT func_8013F350 reached seven differing lines after return/aggregate/tail probes. Its first permutation launch failed before workers searched: multiprocessing imported tools/queue.py and could not import Empty/Full. Recorded the tool bug in [[tickets/T-9720-wave-9-list-2]] and reran using a scratch-only stdlib queue preload, keeping repository tools unchanged.
+
+## [2026-10-11] build | T-9720 match GYOZI func_8013A4E8
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/GYOZI/8013A140.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant bitfield-u8.
+
+## [2026-10-11] build | T-9720 match RPG_BAT func_8013F350
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/RPG_BAT/8013E4D0.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant permuter-score-50.
+
+## [2026-10-11] build | T-9720 GYOZI linked proof
+
+Fresh Docker SHA1 calculation of build/ovl/GYOZI.bin equals 43f92523116e7b6cd772d4397712a52eeda89703, the original target. Confirms the retained 268-byte func_8013A4E8 repair in [[tickets/T-9720-wave-9-list-2]] and [[matching-notes]].
+
+## [2026-10-11] build | T-9720 RPG_BAT linked proof
+
+RPG_BAT func_8013F350 passes fresh resolved MATCH and the overlay's ninja SHA1 target after annotating the matching-only operations. Gain now 2 functions / 428 bytes; [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. A nonzero permuter score is not itself a failed real comparison: resolve scalar/member aliases and verify the linked unit.
+
+## [2026-10-11] query | T-9720 first-pass inventory and ranking
+
+Completed the 132-function draft/build/diff inventory and saved per-function C, errors and comparisons in scratchpad/w9-2/firstpass.jsonl. Ranked 17 compiling differences for sustained source iteration; 115 type/declaration/mapping repairs remain candidates. Recorded the distinction in [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ingest | T-9720 small table and record repairs
+
+Assembly establishes the signed-halfword TEL table D_801444A0 and signed-word ETC fade selector D_8015018C. Appended minimum overlay declarations for typed deep attempts. TT phase-update offsets +0x3AA/+0x3AC and frame byte +0x52 support a local record view. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 match TT func_8013923C
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/TT/801374C0.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant compound-u16.
+
+## [2026-10-11] build | T-9720 TT phase proof and permuter setup bug
+
+TT func_8013923C's typed pointer and chained halfword updates pass resolved MATCH and build/ovl/TT.bin SHA1. Running gain: 3 functions / 528 bytes. A faulthandler trace identifies a separate permuter setup hang at tools/permute.py:200 re.findall; scratch-only bounded ANSI discovery will bypass it without tooling edits. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 match TEL func_80139E3C
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/TEL/801397D0.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant permuter-best.
+
+## [2026-10-11] build | T-9720 TEL candidate proof
+
+TEL func_80139E3C passes fresh resolved MATCH after the 300-second permuter's score-10 result. A local Rec38 pointer and repeated halfword-table expression produce the original strength-reduction order; implicit-return and repeated-expression allocation are tracked FAKE. Linked TEL checksum is pending. Running candidate gain: 4 functions / 612 bytes. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 TEL linked proof
+
+build/ovl/TEL.bin SHA1 OK; the commented/formatted function still passes fresh resolved MATCH. Confirmed T-9720 gain: 4 functions / 612 bytes. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] ingest | T-9720 TT collision table layout
+
+Read matched src/ovl/TT/80144D70.c's collision predicate and corresponding data labels. Two signed halfword offsets plus two byte half extents establish six-byte records; B36/C6A are element 1 of B30/C64. Appended minimum TtCollision6 arrays to include/ovl/TT.h for caller repairs. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 match SHOUGATU func_8013A2F8
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/SHOUGATU/8013A190.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant D_80122EBC3.
+
+## [2026-10-11] build | T-9720 SHOUGATU scheduling candidate
+
+SHOUGATU func_8013A2F8 passes fresh resolved MATCH. A byte bit-field fixes flag temporaries; a dead triple test of unrelated D_80122EBC fixes the argument/store scheduling without promoting the final source. IDO removes the dummy reads/tests; the source marks it FAKE. Unit proof follows formatting. Running candidate gain: 5 functions / 872 bytes. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 SHOUGATU linked proof
+
+Formatted/commented func_8013A2F8 passes fresh resolved MATCH and the SHOUGATU overlay checksum. Confirmed gain: 5 functions / 872 bytes. Full-tree proof follows restoration of current draft sweeps. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] decision | T-9720 ETC selector evidence
+
+Restored both ETC selector drafts to assembly after source/type/control-flow iteration and working bounded permutations. Appended two evidence rows to [[data/t0018-cases]]; incompatible return-type builds are explicitly excluded. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] lint | T-9720 owned-file duplicate scan and cleanup
+
+Scoped dupes --apply --check to GYOZI/8013A140, RPG_BAT/8013E4D0, TEL/801397D0 and SHOUGATU/8013A190: 0 plans, 3 skipped, 0 copies. TT func_8013923C's unused m2c temp was removed and locals renamed; fresh resolved MATCH is unchanged. Added explicit offset/size comments to GYOZI's byte bit-field. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 deeper layouts and selector ordering
+
+DATE's typed MATRIX/record candidate leaves four stack-slot lines after source/layout sweeps and a working 300-second permuter. BUNKAKEN's two-line candidate fails its unit checksum: identical diff words moved, so no tooling bug is inferred. All unresolved sources restored between attempts. Added main signed halfwords D_800EB042/D_800EB044 through tools/sync_protos.py for EVENT repair; target lh/sh establishes widths. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 match EVENT func_80108A24
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/EVENT/80107FC0.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant s32temp_v0 = D_800EB042 += 0x80;
+    D_800EB044 += 0x80;False.
+
+## [2026-10-11] ingest | T-9720 TT phase-mask table
+
+Target asm for TT func_8013EC64 indexes D_80155DD0 by a byte at work+0x21, doubles the index and loads an unsigned halfword. Appended the minimum u16 array declaration to include/ovl/TT.h; local views model the mode/count halfwords, timer/phase bytes and input mask at +0x14. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 EVENT phase update verified
+
+src/ovl/EVENT/80107FC0.c now replaces func_80108A24 with typed halfword C. Compound assignment fixes narrowing; an explicitly documented FAKE implicit s32 return restores v0. Unused trial type removed. Fresh resolved MATCH and EVENT unit SHA1 OK. Running gain 6 functions / 1,052 bytes. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ingest | T-9720 card payload bytes
+
+main func_80055A38 sums bytes from D_80123324 and compares against words at D_80123120+0x200 in two banks spaced 0xF00. The inner four-byte groups are IDO's loop unrolling, not four different members. Added D_80123324 as u8[] through sync_protos --add-global, preserving the existing separate buffer/header declaration. Typed loop trials will keep the actual payload widths. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 six-gain full checkpoint
+
+Full Docker ninja completed 639 actions, all 27 binary SHA1 checks, CHECK HEADERS and CHECK GLOBALS. All trial C was restored before it started. RPG_BAT formatting preserves resolved MATCH. Scoped tools/dupes.py plan over all 34 owned files reports zero plans, 13 skipped; apply pass follows while sources remain stable. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] query | T-9720 junban data ownership
+
+Target asm and config/objects/main.txt establish three separate order bytes under one shared lui $at in junban_init, within main/8007C030's owned data range. tools/data_island.py's dry run is permitted; applying it would also write config/SLPM_86.053.yaml, forbidden by the shared brief. Config and raw sources remain unchanged. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 scoped duplicate apply
+
+Scoped duplicate apply completed over all 34 owned files: zero plans and zero applied; 13 cases skipped. All source trials were restored while it ran. Data-island dry run for main/8007C030 reports 45 INCLUDE_RODATA pieces and requires a YAML edit, so remains unapplied. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ingest | T-9720 TEL girl penalties
+
+TEL func_8013BE38 loads byte tables D_801444B8 and D_801444C4 once per girl for eleven girls; target lbu and loop bound establish minimum u8[11] declarations. Appended both in a guarded block in include/ovl/TEL.h. Corrected m2c's GameState pointer increments to the measured 0x38-byte stride for typed trials. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 match main normal_date_girl_suddenin
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/main/8007C030.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant s32False.
+
+## [2026-10-11] build | T-9720 main sudden-in candidate
+
+Fresh resolved MATCH for normal_date_girl_suddenin in src/main/8007C030.c: unsigned byte chains and implicit s32 return fix the seven-line constant-copy difference. Linked main verification and final comment cleanup wait until other same-file probes restore. Candidate gain 7 functions / 1,164 bytes. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ingest | T-9720 text-scroll flag
+
+Matched get_k_work and the shared Entry8 establish the text-record layout for check_k_scroll. Its control flag D_800CA2BC is lbu/sb in the target. Adding u8 via tools/sync_protos.py removes the remaining declaration error; earlier missing-symbol trials are excluded as codegen evidence. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ingest | T-9720 ETC coordinate pairs
+
+ETC func_80143758 reads consecutive unsigned bytes from D_801503C8 at a two-byte stride. Appended the minimum u8 array declaration. Its draw-record accesses establish a 0x44-byte record within the block at D_8011ECD0+0x1980; typed trials model every used field and preserve the separate frame-pointer alias. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 seventh gain linked
+
+Main normal_date_girl_suddenin is documented and formatted; fresh resolved MATCH and main executable SHA1 OK. Both allocation tricks are marked FAKE. Verified running gain 7 functions / 1,164 bytes. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ingest | T-9720 TAIIKU initializer offsets
+
+Read target stores and loads for func_80140810: 28 address words and fourteen signed halfwords at four-byte intervals. The draft repeats five source labels where later target LO16 offsets are distinct. Appended missing overlay scalar declarations and corrected the fourteen source addresses; no asset values or raw data copied. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 match TAIIKU func_80140810
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/TAIIKU/80140810.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant literal source halfwords.
+
+## [2026-10-11] build | T-9720 TAIIKU initializer candidate
+
+Corrected 640-byte func_80140810 passes fresh resolved MATCH with the fourteen real asset source addresses. Initial named-symbol trial hit an unrelated temporary ETC header conflict and is excluded. Rechecking named symbols, formatting and the linked overlay. Candidate gain 8 functions / 1,804 bytes. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 TAIIKU initializer verified
+
+Compared named halfword sources against the literal-address form; only the latter matches. Added its runtime asset/base explanation, then verified fresh resolved MATCH and TAIIKU overlay SHA1. Verified running gain 8 functions / 1,804 bytes. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] query | T-9720 pointer layout and packet color trials
+
+DATE local pointer-pair layouts fail to improve the four-line stack-slot case. main check_k_scroll reaches a two-line branch operand near miss after scheduling, 300-second permutation and declaration-order repairs. ETC func_80143F24's three negative selectors are color fields of Rec24 entries 2–4; local-copy trials model the target single byte load. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 match main check_k_scroll
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/main/8007C030.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant (u32)temp_v1 == 0x30U.
+
+## [2026-10-11] build | T-9720 K-scroll match and RPG table views
+
+main check_k_scroll passes fresh resolved MATCH after Entry8 type, call scheduling, declaration order, chained assignment and unsigned equality repairs. FAKE allocation details documented; main linked/full checkpoint follows. Added minimum byte-array induction aliases D_8011EDE0/D_8011F110 using sync_protos, based on RPG_BAT func_8013E54C's 0x44 record writes. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] build | T-9720 nine-gain full checkpoint
+
+Formatted main check_k_scroll passes resolved MATCH. Full Docker ninja ends with 27/27 binary SHA1 OK; build/headers.ok and build/globals.ok are present. Verified gain 9 functions / 2,072 bytes. Appended twelve s32 RPG_BAT initializer values based on target lw widths for the next deep repair. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] query | T-9720 natural record loops and return-value probe
+
+Corrected RPG_BAT func_8013E54C's natural field base before judging codegen; nonmatching loops restored. main move-place return-value trial used sync_protos generation, then restored source/API after the 43-line miss. ETC func_80143968 typed repair reaches a real diff rather than selector errors. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ingest | T-9720 GYOZI selector and main draw-record widths
+
+Read GYOZI func_801347D4's word flag at work+0x1B8 and 0x38-byte cursor advance; repaired the draft's missing member/scaled pointer. Appended the genuine helper forward declaration. main func_800850D4 typed field trials model its observed word/halfword/byte stores at +0x1980. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] query | T-9720 typed deep-pass outcomes and album copy
+
+Recorded resolved misses for main draw/menu, GYOZI selection, TT trigonometry and DATE pointer arrays; restored each unsuccessful probe. Album copy uses an eight-byte byte-aligned record, matching the original unaligned word-copy shape. TT's second working 300-second search does not improve the 50-line candidate. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] query | T-9720 BUNKAKEN selector refinement
+
+Unsigned address-view/implicit-return repair solves the earlier selector-register symptom; only identical lw scheduling remains, with a failed linked-unit checksum. A fresh generated canonical-relocation target links to exactly the ordinary target's bytes; a working 300-second search does not improve the candidate. After register_shapes, appended one refinement row to [[data/t0018-cases]]. Batch now adds three rows. [[matching-notes]], [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] query | T-9720 late aggregate and career repairs
+
+Typed history windows reach 91 differing lines and are restored. Album record-copy search reaches 27 after 300 seconds; additional loop-end layouts miss. Career helper calls in the m2c draft have phantom arguments despite an existing void-argument definition; corrected draft/search reaches 16 lines and source iteration continues. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] decision | T-9720 inline review cleanup
+
+Explicitly marked the literal asset-load allocation idiom FAKE in src/ovl/TAIIKU/80140810.c. Removed unused failed-trial RPG induction aliases from include/main_api.h with the sync_protos declaration-rewrite helper; no handwritten main declarations added. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] ingest | T-9720 EN_NICHI table and dispatch repair
+
+Read func_80137FEC target next to its m2c draft. Two local table extents are 0x18/0x84, and the callback index decrement belongs after the call. Appended minimum declarations to include/ovl/EN_NICHI.h; typed work-window/declaration-order trials use only the owned C file. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 match EN_NICHI func_80137FEC
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/EN_NICHI/80136B10.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant init0.
+
+## [2026-10-11] build | T-9720 EN_NICHI typed callback dispatcher
+
+src/ovl/EN_NICHI/80136B10.c func_80137FEC is a fresh resolved MATCH, retained after formatting/renaming. The flag initializes before record calculation, giving the target a1/a2 allocation. Local reuse/comma scheduling is explicitly FAKE; linked overlay verification is pending. Candidate total 10 functions / 2548 bytes. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] query | T-9720 late restored candidates
+
+Career final LUI ordering remains two real differing lines after two working 300-second searches and additional byte views. Album remains 27 after pointer-initialization trials. Both C snapshots restored. ETC draw's erroneous void draft must instead use the already-declared s32 return and return-zero early exit; corrected version reaches eight lines. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 tenth gain linked proof
+
+Formatted func_80137FEC remains a resolved MATCH and build/ovl/EN_NICHI.bin SHA1 is OK. Confirmed total 10 functions / 2548 bytes. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] ingest | T-9720 TT animation initializer layout
+
+Recovered 0x14-byte animation records and the work's signed-halfword x/y/step arrays for func_80138B90. Appended the source-coordinate table's minimum signed-halfword declaration to include/ovl/TT.h. Natural four-record/pointer trials remain in the owned file and preserve its previous phase gain. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] query | T-9720 TT initializer deep attempt restored
+
+func_80138B90 compiles with recovered layouts and true halfword source array. Natural/paired/cached-pointer variants reach 142/131/126 lines respectively; all restore src/ovl/TT/801374C0.c to its previous retained phase-update gain. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 match ETC func_80145AF8
+
+Fresh resolved function comparison passed; unit SHA1 verification pending batch cleanup for src/ovl/ETC/80143240.c. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]]. Variant 20.
+
+## [2026-10-11] build | T-9720 ETC draw candidate and guard results
+
+src/ovl/ETC/80143240.c func_80145AF8 is a fresh resolved MATCH after a working 300-second search and call-embedded intensity assignment. Formatting, local renaming and fixed-width color preserve it; allocation choices are marked FAKE. Candidate total 11 functions / 2812 bytes, final linked proof pending. Prototype guard reports zero new disagreements and GameState check reports globals OK. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] query | T-9720 final scoped reuse and source audit
+
+The all-34-owned-path duplicate apply/check pass reports zero plans/zero applied and 13 skipped. No additional copies or unresolved drafts are retained. Final GameState guard reports globals OK; the retained eleven-function inventory is recorded in [[tickets/T-9720-wave-9-list-2]], with full-tree/prototype proof running. [[matching-notes]].
+
+## [2026-10-11] build | T-9720 eleven-gain full checkpoint
+
+Docker ninja -j4 completes 522 actions with 27/27 SHA1 OK, including the final ETC gain. Prototype branch check is OK with zero new disagreements; GameState check is globals OK. Header/global stamps intact. ninja progress: grand total 4881/6958 functions, 779472/2279368 bytes, 34.2%. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] query | T-9720 final selection type repair
+
+select_girl_main's byte selector is F90[2*i+1].unk_06, and D_800CA330 is a signed-halfword selection table. Trying the minimum view in the owned main file with a generated API snapshot; both restore on a miss before final validation. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] query | T-9720 final selection restored and inline review
+
+Typed select_girl_main misses by 40 lines and restores both source and temporary generated API declaration. Eleven verified gains remain unchanged. Inline standards review covers every retained C replacement and declaration; final restored-tree build/header/prototype guards are running. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] ticket | T-9720 enters In Review
+
+Moved the ticket/card/index entry together to In Review. Explicit final headers/globals/prototype checks pass with zero new prototype disagreements; final restored-tree binary rebuild is completing. Inline standards review, no subagents. [[tickets/T-9720-wave-9-list-2]], [[kanban]], [[matching-notes]].
+
+## [2026-10-11] build | T-9720 final restored tree and inline review pass
+
+Final Docker ninja -j4 completes 523 actions and all 27 binary SHA1 checks. Explicit headers/globals/prototype checks pass; ownership/replacement audit confirms ten owned C files, eleven retained functions and 2812 work-list bytes. git diff --check is clean. Inline CODING_STANDARDS/brief review passes after all findings and trial restoration are resolved. [[tickets/T-9720-wave-9-list-2]], [[matching-notes]].
+
+## [2026-10-11] lint | T-9720 own ticket and final inventory
+
+Own-ticket lint passes: one kanban card, In Review status agrees with ticket/index, and the ticket is indexed. Reconfirmed eleven retained replacements / 2812 bytes in ten owned C files; final progress remains 4881/6958 functions and 779472/2279368 bytes (34.2%). Full restored-tree log contains 27 SHA1 OK results; only intended source/declaration/wiki edits are uncommitted. [[tickets/T-9720-wave-9-list-2]], [[kanban]], [[matching-notes]].
+
+## [2026-10-11] query | T-9720 closest restored follow-ups
+
+Recorded precise remaining evidence for career (2 lines), DATE layout (4), album copy (27), and real-RECT decoder environment (21) in [[matching-notes]]. Career's final LUI ordering is the closest non-T-0018 blocker; all unresolved C stays scratch-only and assembly is retained. [[tickets/T-9720-wave-9-list-2]].
+
+## [2026-10-11] ticket | T-9720 Done after four-hour batch and review
+
+Completed approximately 15:00–19:01 UTC, meeting the user minimum. Eleven functions / 2812 bytes retained, three T-0018 rows added. Final restored-tree 27/27 SHA1, header/global/prototype checks and inline standards review all pass. Moved ticket/card/index to Done together. Final progress: grand total 4881/6958 779472/2279368 34.2%. Uncommitted source/declaration/wiki edits remain for the orchestrator; no commits or merges. [[tickets/T-9720-wave-9-list-2]], [[kanban]], [[matching-notes]].

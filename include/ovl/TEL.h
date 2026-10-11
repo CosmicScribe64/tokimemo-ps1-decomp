@@ -48,3 +48,16 @@ void func_801396EC(void);
 #endif /* OVL_TEL_H */
 void func_80132138(void);
 void func_80134DA0(void);
+
+#ifndef OVL_TEL_W9_2_TABLES_H
+#define OVL_TEL_W9_2_TABLES_H
+/* Signed halfword changes indexed by the status nibble. T-9720. */
+extern s16 D_801444A0[];
+#endif
+
+#ifndef OVL_TEL_W9_2_BYTE_TABLES_H
+#define OVL_TEL_W9_2_BYTE_TABLES_H
+/* Per-girl byte penalties read by func_8013BE38, eleven entries, T-9720. */
+extern u8 D_801444B8[11];
+extern u8 D_801444C4[11];
+#endif

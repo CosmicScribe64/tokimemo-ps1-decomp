@@ -1,6 +1,13 @@
 #include "common.h"
 #include "ovl/GYOZI.h"
 
+/* Bit 1 of the girl's flag byte. T-9720. */
+typedef struct GyoziFlag2 {
+    /* 0x00 */ u8 pad : 1;
+    /* 0x00 */ u8 set : 1;
+    /* 0x00 */ u8 rest : 6;
+} GyoziFlag2; /* size 0x01 */
+
 void func_8013A140(void) {
     D_80147430 = 0x801976E8;
     D_80147434 = 0x80198B88;
@@ -106,7 +113,23 @@ void func_8013A2F4(void) {
     func_800530E0();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A140", func_8013A4E8);
+void func_8013A4E8(void) {
+    u8 girl;
+    GyoziWork *work;
+
+    work = &D_800F53A0;
+    /* The table index is at +0x70C; selectors sit at +0x68D with a four-byte stride. T-9720. */
+    *(GyoziWord4 *)&work->girl[work->unk_410[0x27D + work->unk_410[0x2FC] * 4]].unk_08[0] = D_801474B4;
+    girl = work->unk_410[0x27D + work->unk_410[0x2FC] * 4];
+    if (girl != 8) {
+        ((GyoziFlag2 *)&work->girl[girl].unk_10[0])->set = 1;
+    } else if (((u32)(*(s32 *)&work->girl[8].unk_10[0] << 20) >> 29) == 3) {
+        ((GyoziFlag2 *)&work->girl[girl].unk_10[0])->set = 1;
+    }
+    func_80090960(8, work->unk_F2F * 10 + D_801474B8);
+    func_80050D60(0, 0);
+    func_80081D30(1);
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013A140", func_8013A5F4);
 

@@ -347,3 +347,55 @@ extern s32 D_8014A1D0;
 #define OVL_TAIIKU_RANDOM_T9610
 extern TaiRandomTable D_8014964C;
 #endif
+
+#ifndef OVL_TAIIKU_W9_2_INIT_FIELDS_H
+#define OVL_TAIIKU_W9_2_INIT_FIELDS_H
+/* Workspace address words and asset halfwords used by func_80140810. T-9720. */
+extern s32 D_80149FB4;
+extern s32 D_80149FB8;
+extern s32 D_80149FBC;
+extern s32 D_80149FC4;
+extern s32 D_80149FC8;
+extern s32 D_80149FCC;
+extern s32 D_80149FD4;
+extern s32 D_80149FD8;
+extern s32 D_80149FDC;
+extern s32 D_80149FE0;
+extern s32 D_80149FE4;
+extern s32 D_80149FEC;
+extern s32 D_80149FF0;
+extern s32 D_80149FF4;
+extern s32 D_80149FFC;
+extern s32 D_8014A000;
+extern s32 D_8014A004;
+extern s32 D_8014A00C;
+extern s32 D_8014A010;
+extern s32 D_8014A014;
+extern s32 D_8014A018;
+extern s32 D_8014A01C;
+extern s16 D_8014A024;
+extern s16 D_8014A028;
+extern s16 D_8014A02C;
+extern s16 D_8014A034;
+extern s16 D_8014A038;
+extern s16 D_8014A03C;
+extern s16 D_8014A044;
+extern s16 D_8014A048;
+extern s16 D_8014A04C;
+extern s16 D_8014A050;
+extern s16 D_8014A054;
+extern s16 D_8018EC40;
+extern s16 D_8018EC44;
+extern s16 D_8018EC48;
+extern s16 D_8018EC4C;
+extern s16 D_8018EC50;
+extern s16 D_8018EC54;
+extern s16 D_8018EC58;
+extern s16 D_8018EC5C;
+extern s16 D_8018EC60;
+extern s16 D_8018EC64;
+extern s16 D_8018EC68;
+extern s16 D_8018EC6C;
+extern s16 D_8018EC70;
+extern s16 D_8018EC74;
+#endif

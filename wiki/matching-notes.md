@@ -2630,3 +2630,109 @@ no probe declaration retained. Both functions stay assembly.
 T-9740 completed after the explicit four-hour work requirement (14:59 to
 at least 19:00 UTC). Inline review findings resolved; all required checks
 pass. Final gain 12 / 4,540 bytes and 16 new unresolved T-0018 rows. No commits.
+## Wave 9, list 2 (T-9720)
+
+Ticket [[tickets/T-9720-wave-9-list-2]]. Assigned 132 functions / 93,872 bytes in 34 files. Starting with m2c/build/diff, followed by ranked source/type iteration and permuter runs. Detailed scratch evidence lives in scratchpad/w9-2/ outside the repository.
+
+T-9720 first retained candidate: GYOZI func_8013A4E8 (268 bytes) uses the existing GyoziWork members for both selector reads: the byte at work+0x70C is the four-byte table index, whose selected byte is at work+0x68D. A GyoziWord4 assignment reproduces lw/sw $at for the four-byte source at D_801474B4. Setting bit 1 through a u8 bit-field restores the temporary order throughout both branches. Plain |= 2 remained 42 differing lines after the aggregate repair; bit-field form passes fresh resolved MATCH.
+
+RPG_BAT func_8013F350 (160 bytes) uses D_8015ED8C[1] and D_8015EE44.unk_04 for m2c's missing scalar aliases. The implicit-return shape reaches seven differing lines with a final dead value test. A working 300-second permuter run finds `D_8015ED8C[1] = value ^ 0`, which preserves the original repeated store; its score is 50 because of the array/scalar relocation alias, but the real resolved function diff and RPG_BAT SHA1 both pass. The XOR, dead test and implicit-return allocation are explicitly FAKE, T-9720.
+
+TT func_8013923C (100 bytes) gains a local minimum record view for frame byte +0x52 and unsigned phase/step halfwords +0x3AA/+0x3AC. Keeping one record pointer avoids reloads; chained `phase = work->phase += work->step` and reset through the stored halfword reproduce both narrowing and temporary order. Fresh resolved MATCH and TT overlay SHA1 OK. No FAKE padding or operations required. Running T-9720 gain: 3 functions / 528 bytes.
+
+TEL func_80139E3C (84 bytes) uses the nibble from GameState.unk_54C[0].w to index the signed-halfword D_801444A0 table and a Rec38 girl record. An s32 implicit-return form keeps the selector in v0. The permuter's score-10 candidate repeats the table expression for the subtraction while retaining a local for addition; resolved MATCH proves that IDO CSEs the load with the original temporary order. Both allocation details are tracked FAKE, T-9720.
+
+TT collision tables D_80155B30 and D_80155C64 contain six-byte records: signed x/y at +0/+2 and byte width/height half extents at +4/+5, established by the already-matched func_80145508. The labels D_80155B36 and D_80155C6A are element 1. T-9720 appends the minimum TtCollision6 array views for caller repairs; table extent beyond the accessed pairs is not asserted.
+
+SHOUGATU func_8013A2F8 (260 bytes) reaches two scheduling-line differences with a byte bit-field and `func_800847B8(*(u8 *)&GameState.unk_F5F = 5)`. The permuter's dead triple test of D_80144DEC fixes that ordering but promotes its final copy into v0 (six lines). Changing the triple test to unrelated D_80122EBC preserves the original `li a0; lui at; jal; sb` and all final copy temporaries: resolved MATCH. All dummy reads/tests disappear from the built instructions. Explicit FAKE, T-9720; unit proof follows formatting.
+
+SHOUGATU's formatted function still passes resolved MATCH, and build/ovl/SHOUGATU.bin SHA1 is OK. Confirmed T-9720 gain: 5 functions / 872 bytes.
+
+ETC func_80144540 requires a word store at GameState +0x1098, not m2c's byte assignment. Fourteen selector/control/dead-test forms and 300-second permutation still omit the target v0/v1 delay-slot copy. ETC func_801451D4 leaves four case-2/case-3 operand lines after 19 forms and another 300-second permutation. Both existing void overlay declarations are retained under append-only ownership; incompatible s32 builds do not establish a codegen gap. register_shapes confirms the latter's selector/compare-chain cluster. Two T-0018 evidence rows appended, T-9720.
+
+Further T-9720 deep attempts: DATE func_8014AD9C now uses the real MATRIX inside a 0x20-byte union and a typed 0x50-byte destination record. Its best resolved draft has four differing lines, solely the saved destination pointer at sp+0x28 versus target sp+0x30. More than 300 source/layout variants and a 300-second search leave this frame-layout blocker; no oversized or zero-length scratch arrays are retained. BUNKAKEN func_80140F60 reaches two differing lines: the same selector load is scheduled in a different position. Its linked overlay checksum fails, so this is a real instruction-order difference, not a funcdiff relocation bug.
+
+EVENT func_80108A24 reads/writes signed halfwords D_800EB042 and D_800EB044. Added both via sync_protos --add-global to the generated main API, using the target lh/sh evidence. MDEC func_800536AC's repaired draft requires all four RECT members and the missing second argument to func_80086870; scalar-only local layouts that let IDO drop members are rejected even when their diff score is smaller.
+
+TT func_8013EC64 accesses mode/count u16 fields +0/+2, timer/phase bytes +0x20/+0x21, and a u16 input mask +0x14. D_80155DD0 is an unsigned-halfword mask table indexed by phase; its full extent is unknown. Appended the minimum table declaration for typed trials.
+
+EVENT func_80108A24 (180 bytes) matches with `phase = D_800EB042 += 0x80`, followed by the second halfword increment. An implicit s32 return retains the narrowed value in v0; the equivalent void form uses t0 and leaves six instruction-line differences. The implicit return is FAKE, T-9720, and ignored by callers. Formatted fresh resolved MATCH and EVENT overlay SHA1 OK. Running gain: 6 functions / 1,052 bytes.
+
+main func_80055A38's payload starts at D_80123324, with byte sums compared against the word at header+0x200; two banks advance 0xF00. Its four consecutive loads are an unrolled single-byte loop starting at counter 4 and ending at 0xF00. Added the payload byte-array declaration through sync_protos for natural loop experiments.
+
+Six-gain checkpoint passes all 27 binary checksums and header/global validation. The owned-file duplicate plan finds no applicable copies (13 skipped). Two compiler/permuter defects remain worked around in scratch only: queue module shadowing in workers and catastrophic strip_functions regex discovery; neither repository tool was edited.
+
+junban_init's raw draft overwrites D_800CA2A5 three times per branch, but the target writes three separate bytes D_800CA2A5/D_800CA2A6/D_800CA2A4 under one shared lui $at. The object owns data 0x800C9F60–0x800CA380, so the T-9010 data-island approach is relevant. A dry-run plan is being recorded; actually adding the island changes config/SLPM_86.053.yaml, outside wave-9 ownership. No such config changes are made.
+
+TEL func_8013BE38's two penalty arrays are at D_801444B8 and D_801444C4, each accessed as eleven unsigned bytes. The GameState-based induction pointer advances 0x38 bytes, not 0x38 GameState objects as in the draft. Header declarations appended; typed loops and word bit-field views are under comparison.
+
+main normal_date_girl_suddenin (112 bytes): the typed record-chain trial and separate scalar-address u8 chain both reach seven lines in void form. The latter matches with implicit s32 return, including the target redundant v1-to-v0 copy and all source byte stores; the D_80121808 word alias is explicitly viewed as u8. FAKE return/array-element allocation details will be documented after the remaining trials restore the file. Main unit proof pending; candidate gain 7 functions / 1,164 bytes.
+
+main check_k_scroll's returned text records are the existing Entry8 (get_k_work uses an eight-byte stride); y is signed halfword +2 and visibility is byte +7. The first repaired drafts still fail because D_800CA2BC was absent. Adding this byte flag through the generated API follows the target lbu/sb evidence; missing-declaration errors are not counted as deep codegen failures.
+
+ETC func_80143758 reads two-byte unsigned coordinate pairs from D_801503C8 and initializes seven 0x44-byte draw records from D_8011ECD0+0x1980. The frame alias starts at D_80120650; its endpoint is seven records later. Appended the table declaration for typed record trials; no guessed full table extent is declared.
+
+The cleaned-up sudden-in function passes fresh resolved MATCH and the main executable SHA1. Verified gain is 7 functions / 1,164 bytes. The independent alias chains are needed for the target base sharing and the implicit return preserves its v1-to-v0 copy; both are explicitly documented FAKE, T-9720.
+
+TAIIKU func_80140810's first 28 stores are opaque 32-bit asset addresses. Its final fourteen stores are signed halfwords at four-byte-spaced workspace addresses, loaded from fourteen distinct asset addresses D_8018EC40 through D_8018EC74. The raw m2c output incorrectly repeats D_8018EC40–D_8018EC50 for later loads (e.g. destination D_8014A034 should read D_8018EC54). Appended only missing scalar declarations at widths established by sw/lh/sh; corrected source aliases before matching trials. This is another draft-generation limitation around reused HI16 bases, not a codegen-gap verdict.
+
+TAIIKU func_80140810's named-source trial changes code, while signed loads through the actual runtime asset addresses reproduce the target's independent bases. The literal form is documented with T-3300/T-9720, passes final resolved MATCH and TAIIKU overlay SHA1. Verified gain: 8 functions / 1,804 bytes.
+
+Additional local-layout trials do not improve DATE func_8014AD9C: grouping the destination and rotation pointers into an eight-byte local record shifts the MATRIX and increases the resolved diff to 18 lines. main check_k_scroll improves from 30 to 16 lines when the next index is calculated after the first get_k_work call; a 300-second search gives eight lines, and declaring the index before the saved Entry8 pointer gives two lines, solely bne operand order (s1,v1 vs v1,s1). All unsuccessful probes restore the assembly implementation.
+
+ETC func_80143F24's negative-offset m2c selectors represent three color bytes of Rec24 entries 2–4. The induction pointer advances before stores and stops at entry 5. A local color is needed to model the target's single GameState byte load; rereading the global through potentially aliasing packet stores produces extra loads. Typed field and scalar-alias endpoint variants are under comparison.
+
+main check_k_scroll (268 bytes) matches after the typed Entry8 repair: calculate the next index after the first get_k_work call, chain the local next-index assignment, and declare the next index before the saved pointer. Comparing `(u32) temp_v1 == 0x30U` retains the original `bne s1,v1`; the signed equality chooses the reversed operands. The chain and unsigned equality are marked FAKE, T-9720. Source formatting and linked/full checkpoint are being checked. Candidate gain: 9 functions / 2,072 bytes.
+
+RPG_BAT func_8013E54C's input/destination aliases D_8011EDE0 and D_8011F110 delimit a byte-stride induction window, 0x330 bytes apart. Added minimum byte-array views through sync_protos for record initialization experiments. The record body updates word fields +0x0C/+0x10/+0x38 and bytes +0x01/+0x43 at a 0x44 stride.
+
+Nine-gain checkpoint: formatted main check_k_scroll is a fresh resolved MATCH, and full Docker ninja passes 27/27 binary SHA1 checks with header/global validation intact. Verified T-9720 gain: 9 functions / 2,072 bytes. RPG_BAT's twelve missing initializer values are declared s32 based on lw access; no guessed array extent is added.
+
+RPG_BAT func_8013E54C's manually expanded four-record draft is unrolled again by IDO and exceeds the target's size. The natural source window uses field base +0x1980 with a post-increment of 0x44 over twelve records; the target's +0x1870 displacement already accounts for its unrolled pointer increment of 0x110. Trials using the latter as the original field base have a different record footprint and are not matching evidence. The corrected typed loops still differ substantially and are restored.
+
+main normal_date_move_place_main's target sets v0 to zero on its completed transition path. A return-valued typed draft, with its prototype regenerated using sync_protos, reaches 43 lines; it does not match. The source and API snapshot are restored together. The API experiment does not leave an unsupported declaration change.
+
+GYOZI func_801347D4's missing +0x1B8 selector is the word at girl[0].unk_10, not a new work member. Its induction cursor advances 0x38 bytes; m2c incorrectly scales that by sizeof(GyoziWork). The target tests bit 1 by `sll 30; bgez`. Added the already-defined helper func_80134938's void forward declaration to the overlay header for the caller that precedes it.
+
+Further typed deep attempts are restored: main func_800850D4 reaches 69 lines; make_three_select's actual character-array buffer trial reaches 98; GYOZI func_801347D4's signed word bit-field and byte cursor reach 66. TT func_801356C8 improves from 75 to 50 after making the divisor local and rewriting the angle negation; a working 300-second search finds no better candidate. DATE's destination pointer arrays change scheduling/copies and worsen its diff to at least 146, so the scalar four-line case remains the nearest non-register-order blocker.
+
+ETC func_80141ABC copies the eight-byte GsRec75E record into a save-side album cleared at root+0x58 for 0x800 bytes. A byte-only destination record models the target lwl/lwr/swl/swr, eliminating m2c's illegal `unaligned s32` syntax. Correcting its work-cursor advance to eight bytes and using a word counter reaches 35 lines; stack/register allocation remains under iteration.
+
+BUNKAKEN func_80140F60 refines the three historical T-0018 selector rows: implicit s32 plus an unsigned address-view selector fixes the v1 choice and inner-switch LUI hoist. The two-line real miss is the identical selector lw in a different position, and the linked checksum fails. A further 300-second search with a fresh generated target expressing GameState aliases canonically also finds no better output. Linking ordinary and canonical target objects gives identical 304 bytes (SHA1 4c5cc1dabaa1700c37b89c66ba9d4e0dea829c7f). Raw repaired-base permuter score is 90, canonical score 60; older output directories explain the misleading 925 progress display. Appended one refinement row after register_shapes, bringing this batch's T-0018 additions to three. No repository tool/asm was edited.
+
+ETC func_8014A360's first m2c call incorrectly passes the career flag byte to func_8014A2C4, whose matched definition and target call site both take no argument. Removing those phantom arguments reduces the diff from 84 to 22 lines. A working 300-second search reaches 16; control-flow and local-result iteration continues. This is a draft argument-inference limitation, rather than evidence of a compiler gap.
+
+Review cleanup marks TAIIKU's literal source loads FAKE because named source declarations change base hoisting. Removed the unused RPG induction aliases D_8011EDE0/D_8011F110 through sync_protos' declaration-rewrite helper after restoring the unsuccessful caller; the known D_8011ECD0 work table remains its source view.
+
+EN_NICHI func_80137FEC has two stack copies: twelve signed halfwords at sp+0xD4 and 33 callbacks at sp+0x50. Added minimum overlay table declarations. Its work-table window uses signed-halfword coordinates +0x1A2E/+0x1A32, a signed-halfword selector +0x1BFC and word flags +0x1C1C. The raw draft moves the descending callback index decrement before the call; target passes 11 first and decrements afterward. Typed dispatch and declaration-order trials are under comparison.
+
+EN_NICHI func_80137FEC (476 bytes) passes a fresh resolved MATCH after recovering both copied tables, reusing the work pointer/value across disjoint lifetimes and declaring the descending index/value/outside flag before the local tables. Setting outside=0 before calculating the work-record pointer places outside in a1 and the record in a2, fixing the final 12-line register swap. The callback comma expression executes its decrement after the call; local reuse/comma scheduling is conservatively marked FAKE. Formatting and renamed value remain MATCH; linked overlay verification follows.
+
+The additional career byte-view trials leave the same two-line LUI ordering difference after a second working 300-second search. Album explicit pointer-initialization orders do not improve its 27-line candidate. Both sources are restored to INCLUDE_ASM. ETC func_80145AF8's draft has the wrong return type: the existing local declaration is s32 and target early exit sets v0=0. Correcting that draft makes it compile; the word-local version reaches eight frame/spill-scheduling lines and is under iteration.
+
+EN_NICHI linked proof: build/ovl/EN_NICHI.bin SHA1 OK after formatted resolved MATCH. Confirmed gain is ten functions / 2548 bytes.
+
+TT func_80138B90's animation records are 0x14 bytes: asset pointer +0, byte controls +4/+5/+6/+8/+9/+0xB/+0x10. Coordinate and step arrays use signed halfwords at work+0x248/+0x278/+0x2A8; activation bytes start +0x310. A natural four-record loop is being compared against the raw draft's already-unrolled pair; its coordinate source is one signed-halfword table D_80152C40, not a separate D_80152C46 alias.
+
+TT func_80138B90 typed natural loops reach 142 lines; paired iteration with byte strides reaches 131, and caching the global work pointer reaches 126. The minimum layout now compiles, but constant/register scheduling remains substantially different. All initializer probes are restored; only the verified phase updater remains changed in that file.
+
+ETC func_80145AF8 (264 bytes) is a fresh resolved MATCH. The working 300-second search gives a four-line spill-order candidate with the correct frame. Assigning intensity inside the first call's color expression puts its saved v0 store into the jal delay slot. Renamed locals and fixed-width s32 color preserve MATCH. Extra pointer homes, call-embedded assignment and implicit return are marked FAKE; the target early exit returns zero. Candidate batch total 11 functions / 2812 bytes, pending final linked/full proof.
+
+Eleven-gain linked/full checkpoint: Docker ninja -j4 completes 522 actions and all 27 binary SHA1 checks. Header/global stamps are intact; final prototype branch guard reports 0 new disagreements (17 known baseline). GameState check is globals OK. ninja progress reports grand total 4881/6958 functions, 779472/2279368 bytes, 34.2%. A final typed select_girl_main attempt is isolated and will restore both its source and generated API if unmatched.
+
+The final select_girl_main type repair reaches 40 lines with the biased GameState view; paired-record indexing does not match. Both source and its temporary D_800CA330 API declaration are restored. Eleven retained gains remain unchanged. The nearest other unresolved candidate is ETC func_8014A360's two-line final LUI ordering; DATE func_8014AD9C still has four stack-slot lines.
+
+Final restored-tree proof: Docker ninja -j4 completes 523 actions with 27/27 SHA1 OK. Explicit header/global/prototype checks pass (zero new disagreements), ownership/replacement audit confirms ten owned C files and eleven replacements totaling 2812 bytes, and git diff --check is clean. Inline CODING_STANDARDS/brief review passes with all findings resolved; no tooling/config/raw edits or commits. Candidate trials and their temporary API changes are all restored.
+
+Closest restored follow-ups from this batch:
+
+| Function | Closest resolved diff | Remaining evidence |
+|---|---:|---|
+| ETC func_8014A360 | 2 lines | Initial flag/result reuse and post-call branch assignments fix the registers/frame. Final AT LUI is scheduled before the string's a0 LUI; target has a0 first. Two working five-minute searches plus byte views miss. |
+| DATE func_8014AD9C | 4 lines | Real MATRIX and position views are preserved. Saved destination pointer occupies sp+0x28 instead of +0x30; array/grouped-pointer trials alter other scheduling. |
+| ETC func_80141ABC | 27 lines | Correct eight-byte unaligned album copies and word counter. Saved-register ordering, copy temporary and stack-argument scheduling remain; five-minute search and pointer-order sweep miss. |
+| main strSetDefDecEnv | 21 lines | Correct 0x30 output view and genuine RECT locals. Frame/temporary layout still differs; scalar-address candidates that omit required stores are not evidence. |
+
+All follow-up C is scratch-only; these functions remain INCLUDE_ASM. The closest non-T-0018 blocker in the final report is the career routine's two-line final-LUI ordering, superseding the earlier DATE four-line case.
+
+T-9720 is Done after approximately four hours (15:00–19:01 UTC), eleven verified functions / 2812 bytes, three new T-0018 rows, all 27 checksums and final guards passing, and inline review without open findings. Final progress: grand total 4881/6958 779472/2279368 34.2%. Changes remain uncommitted in w9-2 for orchestration.
