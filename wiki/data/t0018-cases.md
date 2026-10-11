@@ -1509,3 +1509,10 @@ and linked GEKO SHA1 pass. No FAKE. Historical symptom rows remain.
 | BUNKASAI/8015AF90 | `func_8015B828` | regorder | Historical frame/spill cluster: recovered local 4-by-4 word aggregate and index-before-table declaration order fix the 0x58 frame. Remaining 28 resolved differing lines include GameState index/base load scheduling and temporary rotations (target field load in t8). Typed member/unsigned-halfword repair and five-minute permuter yield no verified match; restored assembly. T-9710, bounded evidence only. |
 | GEKO | `func_80138E10` | regorder | T-9930 retry confirms the existing scheduling symptom: direct GameState record expressions and byte preincrement reduce 35 edits to two, solely the `lui at` for the girl-index store occurring before rather than after the next `lui a1`. Tested scalar widths, pointer/member forms, comparison order, store views and source-line grouping, then a 300-second permuter; no verified match. Assembly retained; private scratch w10-3/GEKO-func_80138E10.record and func_80138E10-perm2. |
 | TAIIKU | `func_8014430C` | regorder | T-9930 bounded retry of the maximum-clamp/scheduling cluster: repaired missing word accumulator declaration, tried reversed comparisons, explicit bound local, conditional expression, void/s32 returns and store-line grouping. Best 20 resolved differing lines retain maximum in v0 rather than target v1 and move the final speed store across division setup. Fresh 300-second permuter finds no verified match; assembly retained. Private scratch w10-3/TAIIKU-func_8014430C.clamp and func_8014430C-perm2. |
+
+T-9920 resolution: EVENT `func_8010A6E4` now matches (+172 bytes). A native
+9/3/20-bit word view supplies full-word reads, while the root buffer bit-field
+view supplies byte writes. Distinct typed read/write views preserve the reload
+through the word address after the byte store; the view choice is marked FAKE
+pending full SDK aggregate recovery. Current-source resolved diff and linked
+EVENT SHA1 pass. Historical rows remain unchanged.

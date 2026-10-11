@@ -20,6 +20,7 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-9930-wave-10-list-3|T-9930]] Wave 10: list 3 (In Progress).
 - [[tickets/T-9910-wave-10-list-1|T-9910]] Wave 10: list 1 (In Progress).
+- [[tickets/T-9920-wave-10-list-2|T-9920]] Wave 10: list 2 (In Progress).
 - [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch|T-9800]] uopt register allocation: working trace, eight rejected uniform candidates (Done; 27/27 clean build)
 - [[tickets/T-9810-permuter-farm-for-near-misses|T-9810]] Permuter farm for near misses (Done; 1,090 queued, four verified seed wins, 65 tests)
 - [[tickets/T-9760-wave-9-list-6|T-9760]] Wave 9: list 6 (Done; nine functions / 3,148 bytes)
