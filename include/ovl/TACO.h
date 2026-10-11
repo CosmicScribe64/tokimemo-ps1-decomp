@@ -353,3 +353,5 @@ extern s32 D_801601D0;
 extern s32 D_801601D4;
 extern u8 D_8016023C;
 extern u8 D_8016023D;
+extern s32 D_8015FEF8[];
+extern u8 D_8015FFE2[];
