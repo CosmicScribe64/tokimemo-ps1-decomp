@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-10
+updated: 2026-10-11
 ticket: T-3100
 sources: ["disc/files/CDROM/EXEDIR/O.BIN", "disc/files/SLPM_86.053", "disc/files/CDROM/EXEDIR/*.EXN", "disc/track1.bin", "tools/obin_syms.py", "wiki/raw/original-compiler-sources.md"]
 ---
@@ -94,7 +94,7 @@ Not repeated: everything listed in [[matching-notes]] (frame section, T-0017 and
   - `-Wo,-regr,8` turns the `olh_main` selector into `$v1`, as in the original.
   - But it does not promote anything new, and a full rebuild with it regresses 194 of the 1647 matched functions. The comparison was per function, on the objects, with immediates masked.
   - So it is not the original's setting. `-rege` (callee-saved pool) changed nothing in these tests.
-  - `-Wo,-zdbug:6`, uopt's register-allocation trace, aborts in the recomp (`wrapper_ecvt`), so uopt's priorities cannot be printed.
+  - The original `-Wo,-zdbug:6` experiment aborted in the recomp's unimplemented `wrapper_ecvt`. T-9800 repairs that guest wrapper in a private Docker build and prints the priorities: see [[uopt-register-allocation]] for the formula, tie-breaks, traces and uniform allocator experiments.
 - **The T-0018 premise needs correcting.** IDO 5.3 does promote a global scalar in straight-line code. It only needs more references than the original. The table shows straight-line C with an `extern u8 D`. The outcome is the same for an extern, a file-defined and a `static` D.
 
 | C shape (no loop) | IDO 5.3 |
@@ -186,4 +186,3 @@ So the original combines a 3.18 (5.x-generation) code generator with the older f
 
 ## Update: K&R promotion (T-7000)
 The original front end used K&R ("unsigned preserving") promotion: a value loaded with `lbu`/`lhu` is compared, shifted and divided unsigned (`sltiu` 1459 against `slti` 3, `srl` 556 against `sra` 0, `divu` 101 against `div` 4), which IDO gives only in K&R mode (`cc -cckr`). IDO 5.x defaults to `-xansi`; whether the original's suite defaulted to K&R or the build used `-cckr` is unknown (UNVERIFIED either way). The original still widened narrow global loads with a conversion record, which IDO's K&R front end leaves out. The build now uses `-cckr` and `tools/cvt_pass.py` restores the widening ([[toolchain]], [[matching-notes]] "K&R promotion rules (T-7000)").
-

@@ -101,3 +101,29 @@ Coverage scan (all `asm/**/{non,}matchings` function files): 392 functions have 
 
 
 T-9600 frame-pass clarification: a negative displacement on a tracked sp+variable-index register can cancel a positive index bias (SHOUGATU year/table addressing). It moves up by 16 with the local, just like positive local offsets. Direct negative sp offsets, including through plain copies of sp, remain unsupported. Synthetic binasm and real IDO table[12*(year-95)] tests cover the rule; details in [[matching-notes]], "Tooling fixes, wave 8".
+
+## uopt allocator diagnostics (T-9800)
+
+The `-Wo,-zdbug:6` crash is an unimplemented guest `ecvt` wrapper in the pinned
+static recomp. tools/ido-ecvt.patch repairs it for an external Docker build;
+tools/uopt_patch.py adds diagnostic logging or isolated uniform allocator
+experiments. No Dockerfile or default compiler behavior is changed.
+[[uopt-register-allocation]] gives the priority formula, register ordering,
+trace evidence and full experiment scores. `-regr` also disables precolouring
+and special-cases 9, explaining its non-monotonic register pools.
+
+Evaluation uses the existing cc.py pipeline, including cvt/frame/trailing-pad
+passes. tools/uopt_eval.py compares all 4870 matched functions and a fixed case
+corpus; tools/uopt_link_eval.py additionally checks literal linked bytes,
+addresses and whole-unit hashes. The 3.18 stamp identifies the compiler family
+and release; the private IDO 5.2 evaluation already showed that stock SGI 5.2
+does not explain these allocation differences. A new pass still needs every
+CODING_STANDARDS 7a criterion and zero regressions; isolated case hits alone
+are insufficient.
+
+T-9800 result: all eight uniform allocation candidates fail preservation.
+The best keeps 4209/4870 literal linked function spans and 9/27 unit hashes,
+while gaining one isolated case; a2/a3 preference gains two cases but keeps
+3653/4870 and 5/27 units. No candidate is adopted. Stock control reproduces
+4870/4870 functions and 27/27 units; full scores and coverage are on the research
+page and wiki/data/t9800-allocator-scores.json.

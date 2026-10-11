@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch|T-9800]] uopt register allocation: working trace, eight rejected uniform candidates (Done; 27/27 clean build)
 - [[tickets/T-9600-wave-8-tool-fixes|T-9600]] Wave-8 tool fixes (Done; seven reports covered, 587 tests, no function gains)
 - [[tickets/T-9530-wave-8-list-3|T-9530]] Wave 8: list 3 (Done; deep pass +13 functions / 3,344 bytes, batch total 22 / 7,384)
 - [[tickets/T-9570-wave-8-list-7|T-9570]] Wave 8: list 7, 14 functions matched (4,628 bytes), 5 T-0018 rows (Done; deep second pass)
@@ -124,6 +125,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-5010-t0018-register-order-second-attempt|T-5010]] T-0018 register order, second attempt: entry and compare rules, unit-private data, cvt pass in the build, 44 functions (Done)
 
 ## Entities / concepts / sources
+- [[uopt-register-allocation]] - T-9800 allocator trace, formula and uniform patch experiments
 - [[register-allocation-wave7]] - T-9410 row/assembly clusters, bounded C experiments and verified idioms
 - [[disc-layout]] - disc images, extraction, file list
 - [[source-files]] - the `src/main/<address>.c` files and the original objects of main and overlays (T-0500): boundary evidence and confidence, alignment handling, what is not split

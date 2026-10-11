@@ -4087,3 +4087,140 @@ Final-state Docker configure/ninja passes all 27 checksums; build/headers.ok and
 ## [2026-10-11] ticket | T-9610 In Review to Done
 
 Inline standards and spec review against HEAD 1e24c0394a695c64200126de3beff00e579f930a has no unresolved findings after correcting DR_TPAGE. Updated [[tickets/T-9610-aggregate-and-local-copy-types]], [[kanban]] and [[index]]. Existing Python tools and compiler passes remain untouched; two new regression test scripts accompany the layouts and measured rules. All edits are uncommitted for orchestrator integration. Rejected bodies remain assembly; [[matching-notes]] records their residual blockers.
+
+## [2026-10-11] ticket | T-9800 allocator trace and uniform hypotheses
+Created [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch]] in
+In Progress. Read [[original-compiler]], [[ido-52-evaluation]], [[toolchain]],
+[[register-allocation-wave7]], [[data/t0018-cases]], and T-9000 in
+[[matching-notes]]. Added an optional TOKIMEMO_SCRATCH mount to tools/docker.sh
+for the required external experiment directory; normal invocations unchanged.
+
+## [2026-10-11] build | T-9800 baseline and trace crash reproduction
+Fresh Docker configure/ninja passes 27/27 checks. A minimal synthetic input
+reproduces wrapper_ecvt's assertion; it is a stub in the pinned recomp.
+Added tools/ido-ecvt.patch and tools/uopt_eval.py for isolated evaluation.
+[[uopt-register-allocation]] records provenance and the experiment boundary.
+
+## [2026-10-11] ingest | T-9800 working trace and allocator decision points
+The ecvt patch produces a successful -zdbug:6 trace on the minimal fixture.
+The evaluation control is 4870/4870, including the one GCC function using its
+configured compiler. Current row inventory is 1189 historical rows / 737
+functions / 331 open. Read the reference priority and colouring routines and
+cross-checked generated code: -regr also disables precolouring and special-cases
+9; the reference's default-register mask reconstruction is not exact here.
+Seven uniform allocator variants are being scored; details go to
+[[uopt-register-allocation]].
+
+## [2026-10-11] query | T-9800 trace formula and source-level controls
+[[uopt-register-allocation]] now documents the exact priority denominator,
+strict profit gates, constrained/unconstrained order, register costs and -regr
+mask branches. Seventeen trace subjects compile, including eight unchanged
+matched controls. The trace distinguishes zero-profit globals from profitable
+expression/local ranges in the narrow flag-store controls, and exposes a
+cost-equality split in TT's pointer case. tools/test_uopt_tools.py passes six
+synthetic tests, including the repaired guest ecvt ABI and unchanged codegen
+with tracing. The first full candidate (zero_threshold) preserves 954/4870;
+317 functions are in objects rejected by asm-processor after placeholder
+sizes change, counted as failures. No allocator patch is adopted.
+
+## [2026-10-11] build | T-9800 first rejected allocator weights and expanded corpus
+Full matched-function sweeps preserve 2023/4870 for free_entry_load and
+953/4870 for half_move_cost; each has 317 functions in objects rejected by
+asm-processor, counted as failures. [[uopt-register-allocation]] records the
+interim scores. Restoring recorded wave declarations expands the compiling
+best-draft corpus to 186 functions / 360 historical rows. Its two stock-uopt
+matches are not allocator gains. Fresh m2c generation completed for all 331
+open functions; compilation and the remaining allocator sweeps continue.
+
+## [2026-10-11] lint | T-9800 isolated-case padding correction
+Trace inspection exposed object-end alignment zeros counted as instructions in
+standalone drafts. tools/uopt_eval.py now bounds cases by ELF function sizes,
+keeps original trailing words and every in-function zero, and distinguishes
+INCLUDE_ASM's size (already includes trailing words) from C's size. Seven
+synthetic tests pass, including a delay-slot/alignment fixture. Existing case
+objects are being rescored; full matched-object comparisons are unchanged.
+The late-priority-tie sweep preserves 4566/4870 with no compile errors.
+Recovered r7-regs DATE product and TACO constant drafts compile for direct
+coverage. Details: [[uopt-register-allocation]].
+
+## [2026-10-11] build | T-9800 frozen case corpus
+Corrected rescoring has zero comparison errors. The frozen experiment corpus
+contains 214 best compiling wave drafts plus 121 fresh m2c drafts: 335 variants
+covering 227 open functions / 432 historical rows, across every open shape
+cluster. All 331 fresh m2c drafts were attempted; 210 fail type/syntax checks.
+Eight source drafts already have identical resolved instructions with stock
+uopt and remain separate from allocator gains; no game C is changed. The
+remaining 104 functions lack a compiling recovered draft and are not evidence
+against an allocator hypothesis. Candidate runs use the same frozen sources
+and record source/compiler hashes. See [[uopt-register-allocation]].
+
+## [2026-10-11] query | T-9800 cluster traces and strict case boundaries
+[[uopt-register-allocation]] records 33 trace compilations and source-level
+implications for every cluster, including equal-priority TACO constants, DATE
+product CSE, call-result splitting, and missing return-value operations.
+The frozen corpus coverage and eight stock-uopt instruction hits are explicit;
+none is claimed as a landed match. Eight synthetic tests pass, including
+original-versus-C trailing-size conventions. Reverse unconstrained traversal
+preserves 4703/4870 matched functions with no compile errors.
+
+## [2026-10-11] build | T-9800 literal linked-byte gate
+Added tools/uopt_link_eval.py to relink candidate objects through copied normal
+linker scripts and compare literal function bytes, sizes and addresses plus
+whole-unit SHA1s. Units containing compile failures are unavailable, never
+filled with stock objects. The control relink reproduces 27/27 unit hashes.
+Fixed GNU nm's sign-extended ELF32 address handling and ensured section dumps
+leave inputs untouched; nine synthetic tests pass. The prefer-v1 pre-link
+sweep preserves 3371/4870. See [[uopt-register-allocation]].
+
+## [2026-10-11] build | T-9800 exact linked baseline and final candidate controls
+The corrected linked-byte control passes 4870/4870 functions and 27/27 whole
+unit hashes. All seven full pre-link sweeps are complete; prefer_a2a3 preserves
+4570/4870, so every tested allocator candidate fails the zero-regression gate.
+Linked candidate counts and remaining frozen-case scores are still running.
+The three weight/threshold candidates gain zero new case matches. Isolated
+uopt invocations now run from their job scratch directory, containing IDO's
+blank-named default listing without adding compiler flags. Nine tests pass.
+See [[uopt-register-allocation]].
+
+## [2026-10-11] decision | T-9800 refine a measured constant-tie gain
+Late-priority-tie gains TT func_801475C8 (three historical rows), verified as
+124 literal linked bytes at the original address, but preserves only 3146/4870
+controls after linking. Its constants 0x40 and 6 have equal priority 5 and cost
+4. Added the uniform late_constant_tie hypothesis, restricted to pairs of
+integer-constant ichains (compiler type 2), with no game-specific predicate.
+It is being tested against all controls and the same frozen case corpus.
+[[uopt-register-allocation]] records the evidence and pending refinement.
+
+## [2026-10-11] ticket | T-9800 In Progress to In Review
+All eight candidates fail the full preservation gate. The best linked count
+is late_constant_tie at 4209/4870, with one isolated gain (three rows);
+prefer_a2a3 preserves 3653/4870 and gains two functions (five rows). All three
+distinct case gains have literal link proof at original addresses. Archived
+counts/hashes in wiki/data/t9800-allocator-scores.json and updated
+[[uopt-register-allocation]], [[toolchain]], [[matching-notes]] and the obsolete
+trace-crash statement in [[original-compiler]]. Forty trace compilations cover
+38 distinct functions. Updated [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch]],
+[[kanban]] and [[index]]. Final clean build and inline review are in progress.
+
+## [2026-10-11] lint | T-9800 inline standards and spec review
+Reviewed the uncommitted diff against HEAD b1e5c6df17f1bc24e3dd32b7f0acd09ce50ed524,
+CODING_STANDARDS.md and the user's brief. Resolved padding-boundary, ELF32
+sign-extension, input-preserving extraction, scratch containment and provenance
+findings. No unresolved standards/spec findings; no game C, default allocator,
+Dockerfile, copyrighted binaries or reconstruction sources are introduced.
+[[uopt-register-allocation]] and [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch]]
+record the limits and evidence. Targeted wiki link/status and score/hash lint pass.
+
+## [2026-10-11] build | T-9800 final clean verification
+Docker configure, ninja clean and rebuild pass 27/27 SHA1 checks, including
+header/global guards. Nine synthetic tests pass; prototype guard reports zero
+new and 17 known disagreements. Shell syntax and diff whitespace checks pass.
+Logs: scratchpad/r9-uopt/final-clean-build.log and final-checks.log. No uniform
+allocator candidate is adopted; production remains IDO 5.3 with existing passes.
+
+## [2026-10-11] ticket | T-9800 In Review to Done
+Moved [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch]] to Done
+after inline review and final verification; synchronized [[kanban]] and [[index]].
+Working trace, formula, eight scored hypotheses, 40 trace compilations and
+all-cluster findings are in [[uopt-register-allocation]]. All changes remain
+uncommitted. No commits, stashes or branches were created.

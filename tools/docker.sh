@@ -33,5 +33,10 @@ if [ "$HAVE" != "$WANT/$TOKIMEMO_PLATFORM" ]; then
   docker build --platform "$TOKIMEMO_PLATFORM" --label "dockerfile.sha256=$WANT" -t "$IMG" "$ROOT/tools" >&2
 fi
 TTY=(); [ -t 0 ] && TTY=(-it)
+SCRATCH=()
+# Optional shared experiment directory, outside the checkout (T-9800).
+if [ -n "${TOKIMEMO_SCRATCH:-}" ]; then
+  SCRATCH=(-v "$TOKIMEMO_SCRATCH:/scratch")
+fi
 exec docker run --rm --platform "$TOKIMEMO_PLATFORM" ${TTY[@]+"${TTY[@]}"} \
-  -u "$(id -u):$(id -g)" -e HOME=/tmp -v "$ROOT":/work -w /work "$IMG" "${@:-bash}"
+  -u "$(id -u):$(id -g)" -e HOME=/tmp -v "$ROOT":/work ${SCRATCH[@]+"${SCRATCH[@]}"} -w /work "$IMG" "${@:-bash}"

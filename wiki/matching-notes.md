@@ -2287,3 +2287,31 @@ four packet/matrix refactors. Prototype branch check has zero new disagreements
 4870/6958 functions, 776660/2279368 bytes: **+2 functions / +356 bytes**.
 Inline standards/spec review resolved the DR_TPAGE size discrepancy and has
 no outstanding findings. T-9610 is Done; edits remain uncommitted.
+
+## uopt allocation traces and uniform experiments (T-9800)
+
+See [[uopt-register-allocation]] and
+[[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch]]. The repaired
+recomp prints the Chow-Hennessy allocator trace. Its zero-profit global ranges
+must be distinguished from profitable expression/local ranges: a final `andi`
+or a v0 selector does not establish that the global itself was promoted.
+Unconstrained leaf ranges use bit-position order, not priority order; constrained
+ranges break equal priority in favor of the earlier bit position. The measured
+formula, cost gates, register order and `-regr` branches are on the research page.
+
+The experiments keep the ordinary cc.py pipeline and game sources unchanged.
+Their corpus includes current best compiling wave drafts and fresh m2c output;
+stock-uopt draft hits are separate from allocator gains. Whole linked units are
+checked in addition to resolved function instructions. Per-cluster trace notes
+explain where source lifetime, shared expressions, return behavior, CSE or
+aggregate layout remain the more specific question. No allocator emulation
+pass has been added to the default build.
+
+Final T-9800 verdict: none of eight uniform candidates preserves all 4870
+matches. Later constant-only priority ties gain TT func_801475C8 (124 bytes,
+three historical rows) but preserve only 4209/4870 literal linked spans.
+Preferring a2/a3 gains TT func_80134ADC and func_80145370 (584 bytes, five rows)
+but preserves only 3653/4870. The three distinct isolated gains have literal
+link proof at original addresses; they are not integrated. Matched
+tpage_buf_clear demonstrates the opposite constant-tie order, so the TT gain
+cannot justify a blanket rule. No game C or default compiler behavior changes.

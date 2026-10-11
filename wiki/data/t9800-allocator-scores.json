@@ -1,0 +1,524 @@
+{
+  "ticket": "T-9800",
+  "date": "2026-10-11",
+  "baseline_revision": "b1e5c6df17f1bc24e3dd32b7f0acd09ce50ed524",
+  "docker_image": "sha256:4eb5a43f07957beae672ee446446ddda1478e2e25b80a8c50a2b9833a0186fd1",
+  "recomp_revision": "9c242adc890beef098020149d9554f48208f699d",
+  "generated_uopt_sha256": "b0058f1559441c1a194d649271eb43b8637ec255682cfdd629031340b915b13f",
+  "frozen_manifest_sha256": "a28efdc604052c6ebd2c3a866cd03bc8f68f3d3ba38293927cd4ab7fe950d43c",
+  "control": {
+    "total": 4870,
+    "identical": 4870,
+    "unavailable": 0,
+    "units_identical": 27,
+    "units_total": 27
+  },
+  "trace_compilations": 40,
+  "trace_functions": 38,
+  "trace_compile_errors": 0,
+  "open_functions": 331,
+  "wave_best_functions": 214,
+  "m2c_attempted": 331,
+  "m2c_compiling": 121,
+  "case_variants": 335,
+  "covered_functions": 227,
+  "covered_historical_rows": 432,
+  "uncovered_functions": 104,
+  "stock_case_functions": 8,
+  "stock_case_rows": 19,
+  "comparison_note": "Pre-link counts resolve relocations. Linked counts require literal bytes, original addresses, sizes and padding. Units with compile failures are unavailable and contribute no matches. Case gains exclude stock hits; all new hits were separately linked at their original address. No variant is adopted.",
+  "tools_sha256": {
+    "tools/uopt_eval.py": "a3f6174598549945d915e47ebf81a1202e179d3dab613822b14b345fd918f2fa",
+    "tools/uopt_link_eval.py": "521acbbb5a2dafb3435fd90c1b52d62b2e2453300a6b309005745c969911d7b0",
+    "tools/uopt_patch.py": "aef23418b2f3b804158b9f3ef19dbeac10a439aa094bcb5cebc78665e4f815e0",
+    "tools/ido-ecvt.patch": "c2cf429b2442b804b233118c4daf1532db4c41128604d2ea5865df26dae06ad1",
+    "tools/test_uopt_tools.py": "6cb0f91eaa3582c1c522bb9129ee84dc5e89db3b17ad3a26f4e4e87ee5dfe9d1"
+  },
+  "candidates": [
+    {
+      "candidate": "zero_threshold",
+      "uopt_sha256": "809c33b78223bc9898fc81c94490f903e86ec5a6f7205a8ff695584e390913f7",
+      "regression": {
+        "total": 4870,
+        "identical": 954,
+        "compile_errors": 317,
+        "comparison_errors": 0,
+        "changed": 3599
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 11,
+        "unavailable": 2205,
+        "units_identical": 0,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 2,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 2,
+        "new_functions": 0,
+        "new_rows": 0,
+        "stock_lost": 6,
+        "gains": [],
+        "lost": [
+          {
+            "unit": "GEKO",
+            "function": "func_80132A4C"
+          },
+          {
+            "unit": "RPG_BAT",
+            "function": "func_8013F350"
+          },
+          {
+            "unit": "TEL",
+            "function": "func_80139E3C"
+          },
+          {
+            "unit": "TT",
+            "function": "func_8013923C"
+          },
+          {
+            "unit": "main",
+            "function": "func_80048DD0"
+          },
+          {
+            "unit": "main",
+            "function": "func_80074DE0"
+          }
+        ],
+        "by_corpus": {
+          "wave": 2,
+          "m2c": 0
+        },
+        "improved": 22
+      }
+    },
+    {
+      "candidate": "free_entry_load",
+      "uopt_sha256": "3c4514d59ae6ae7514c777ea7a5712a4b75a81df7ab9b91ce800acf36cce212e",
+      "regression": {
+        "total": 4870,
+        "identical": 2023,
+        "compile_errors": 317,
+        "comparison_errors": 0,
+        "changed": 2530
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 76,
+        "unavailable": 2205,
+        "units_identical": 0,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 4,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 4,
+        "new_functions": 0,
+        "new_rows": 0,
+        "stock_lost": 4,
+        "gains": [],
+        "lost": [
+          {
+            "unit": "GEKO",
+            "function": "func_80132A4C"
+          },
+          {
+            "unit": "RPG_BAT",
+            "function": "func_8013F350"
+          },
+          {
+            "unit": "TEL",
+            "function": "func_80139E3C"
+          },
+          {
+            "unit": "main",
+            "function": "func_80048DD0"
+          }
+        ],
+        "by_corpus": {
+          "wave": 4,
+          "m2c": 0
+        },
+        "improved": 15
+      }
+    },
+    {
+      "candidate": "half_move_cost",
+      "uopt_sha256": "86c26176054e81aea97ad4fcdbacc3c3ec0110ec0c6b7d9384dc9b49a6c26f01",
+      "regression": {
+        "total": 4870,
+        "identical": 953,
+        "compile_errors": 317,
+        "comparison_errors": 0,
+        "changed": 3600
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 11,
+        "unavailable": 2205,
+        "units_identical": 0,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 2,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 2,
+        "new_functions": 0,
+        "new_rows": 0,
+        "stock_lost": 6,
+        "gains": [],
+        "lost": [
+          {
+            "unit": "GEKO",
+            "function": "func_80132A4C"
+          },
+          {
+            "unit": "RPG_BAT",
+            "function": "func_8013F350"
+          },
+          {
+            "unit": "TEL",
+            "function": "func_80139E3C"
+          },
+          {
+            "unit": "TT",
+            "function": "func_8013923C"
+          },
+          {
+            "unit": "main",
+            "function": "func_80048DD0"
+          },
+          {
+            "unit": "main",
+            "function": "func_80074DE0"
+          }
+        ],
+        "by_corpus": {
+          "wave": 2,
+          "m2c": 0
+        },
+        "improved": 20
+      }
+    },
+    {
+      "candidate": "late_priority_tie",
+      "uopt_sha256": "f0b194fd083d202d4137f1376236494c67b4b47edc2b5a671329e46b3c624d7e",
+      "regression": {
+        "total": 4870,
+        "identical": 4566,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "changed": 304
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 3146,
+        "unavailable": 0,
+        "units_identical": 4,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 7,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 7,
+        "new_functions": 1,
+        "new_rows": 3,
+        "stock_lost": 2,
+        "gains": [
+          {
+            "unit": "TT",
+            "function": "func_801475C8",
+            "shape": "constant allocation/sharing",
+            "rows": 3
+          }
+        ],
+        "lost": [
+          {
+            "unit": "DATE",
+            "function": "func_80149268"
+          },
+          {
+            "unit": "main",
+            "function": "func_80079B34"
+          }
+        ],
+        "by_corpus": {
+          "wave": 7,
+          "m2c": 0
+        },
+        "improved": 17
+      }
+    },
+    {
+      "candidate": "reverse_unconstrained",
+      "uopt_sha256": "2ac55154ad2a4eac449cb373718f8a0124c4c86ddeff708fdcdf1d5d5176ca65",
+      "regression": {
+        "total": 4870,
+        "identical": 4703,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "changed": 167
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 3623,
+        "unavailable": 0,
+        "units_identical": 13,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 5,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 5,
+        "new_functions": 0,
+        "new_rows": 0,
+        "stock_lost": 3,
+        "gains": [],
+        "lost": [
+          {
+            "unit": "GEKO",
+            "function": "func_80132A4C"
+          },
+          {
+            "unit": "TEL",
+            "function": "func_80139E3C"
+          },
+          {
+            "unit": "TT",
+            "function": "func_8013923C"
+          }
+        ],
+        "by_corpus": {
+          "wave": 5,
+          "m2c": 0
+        },
+        "improved": 11
+      }
+    },
+    {
+      "candidate": "prefer_v1",
+      "uopt_sha256": "a439ef4a0004685e4a1a513f5b304f22cfe9afbde7dbc289b43ac81b21b72eaf",
+      "regression": {
+        "total": 4870,
+        "identical": 3371,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "changed": 1499
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 2229,
+        "unavailable": 0,
+        "units_identical": 0,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 1,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 1,
+        "new_functions": 0,
+        "new_rows": 0,
+        "stock_lost": 7,
+        "gains": [],
+        "lost": [
+          {
+            "unit": "DATE",
+            "function": "func_80149268"
+          },
+          {
+            "unit": "GEKO",
+            "function": "func_80132A4C"
+          },
+          {
+            "unit": "RPG_BAT",
+            "function": "func_8013F350"
+          },
+          {
+            "unit": "TEL",
+            "function": "func_80139E3C"
+          },
+          {
+            "unit": "TT",
+            "function": "func_8013923C"
+          },
+          {
+            "unit": "main",
+            "function": "func_80048DD0"
+          },
+          {
+            "unit": "main",
+            "function": "func_80074DE0"
+          }
+        ],
+        "by_corpus": {
+          "wave": 1,
+          "m2c": 0
+        },
+        "improved": 44
+      }
+    },
+    {
+      "candidate": "prefer_a2a3",
+      "uopt_sha256": "a81085c547ab477d733873373f8f357dc71610fb70b12d245c9aac109490a535",
+      "regression": {
+        "total": 4870,
+        "identical": 4570,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "changed": 300
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 3653,
+        "unavailable": 0,
+        "units_identical": 5,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 6,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 6,
+        "new_functions": 2,
+        "new_rows": 5,
+        "stock_lost": 4,
+        "gains": [
+          {
+            "unit": "TT",
+            "function": "func_80134ADC",
+            "shape": "selector/compare chain",
+            "rows": 3
+          },
+          {
+            "unit": "TT",
+            "function": "func_80145370",
+            "shape": "constant allocation/sharing",
+            "rows": 2
+          }
+        ],
+        "lost": [
+          {
+            "unit": "DATE",
+            "function": "func_80149268"
+          },
+          {
+            "unit": "TEL",
+            "function": "func_80139E3C"
+          },
+          {
+            "unit": "TT",
+            "function": "func_8013923C"
+          },
+          {
+            "unit": "main",
+            "function": "func_80048DD0"
+          }
+        ],
+        "by_corpus": {
+          "wave": 6,
+          "m2c": 0
+        },
+        "improved": 16
+      }
+    },
+    {
+      "candidate": "late_constant_tie",
+      "uopt_sha256": "9cfa58e0f0e7490875910a9fb5d3d5fdc8150569428a487fdef84a01d66fd687",
+      "regression": {
+        "total": 4870,
+        "identical": 4793,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "changed": 77
+      },
+      "linked": {
+        "total": 4870,
+        "identical": 4209,
+        "unavailable": 0,
+        "units_identical": 9,
+        "units_total": 27
+      },
+      "cases": {
+        "total": 335,
+        "identical": 8,
+        "compile_errors": 0,
+        "comparison_errors": 0,
+        "unique_hits": 8,
+        "new_functions": 1,
+        "new_rows": 3,
+        "stock_lost": 1,
+        "gains": [
+          {
+            "unit": "TT",
+            "function": "func_801475C8",
+            "shape": "constant allocation/sharing",
+            "rows": 3
+          }
+        ],
+        "lost": [
+          {
+            "unit": "main",
+            "function": "func_80079B34"
+          }
+        ],
+        "by_corpus": {
+          "wave": 8,
+          "m2c": 0
+        },
+        "improved": 4
+      }
+    }
+  ],
+  "verified_case_hits": [
+    {
+      "candidate": "late_priority_tie",
+      "unit": "TT",
+      "function": "func_801475C8",
+      "corpus": "wave",
+      "bytes": 124,
+      "match": true,
+      "relocations_bound_to_original_addresses": true
+    },
+    {
+      "candidate": "prefer_a2a3",
+      "unit": "TT",
+      "function": "func_80134ADC",
+      "corpus": "wave",
+      "bytes": 224,
+      "match": true,
+      "relocations_bound_to_original_addresses": true
+    },
+    {
+      "candidate": "prefer_a2a3",
+      "unit": "TT",
+      "function": "func_80145370",
+      "corpus": "wave",
+      "bytes": 360,
+      "match": true,
+      "relocations_bound_to_original_addresses": true
+    },
+    {
+      "candidate": "late_constant_tie",
+      "unit": "TT",
+      "function": "func_801475C8",
+      "corpus": "wave",
+      "bytes": 124,
+      "match": true,
+      "relocations_bound_to_original_addresses": true
+    }
+  ]
+}

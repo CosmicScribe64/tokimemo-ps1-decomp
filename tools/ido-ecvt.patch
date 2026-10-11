@@ -1,0 +1,29 @@
+--- a/libc_impl.c
++++ b/libc_impl.c
+@@ -1132,7 +1132,25 @@
+ }
+ 
+ uint32_t wrapper_ecvt(uint8_t* mem, double number, int ndigits, uint32_t decpt_addr, uint32_t sign_addr) {
+-    assert(0);
++    /* T-9800: allocator diagnostics need ecvt's string in guest memory. */
++    static uint32_t result_addr;
++    static size_t capacity;
++    int decpt, sign;
++    char *digits = ecvt(number, ndigits, &decpt, &sign);
++    size_t length = strlen(digits) + 1;
++    if (length > capacity) {
++        uint32_t next = wrapper_realloc(mem, result_addr, length);
++        if (!next) {
++            fprintf(stderr, "ecvt: guest allocation failed\n");
++            abort();
++        }
++        result_addr = next;
++        capacity = length;
++    }
++    MEM_S32(decpt_addr) = decpt;
++    MEM_S32(sign_addr) = sign;
++    for (size_t i = 0; i < length; i++) MEM_U8(result_addr + i) = digits[i];
++    return result_addr;
+ }
+ 
+ uint32_t wrapper_fcvt(uint8_t* mem, double number, int ndigits, uint32_t decpt_addr, uint32_t sign_addr) {
