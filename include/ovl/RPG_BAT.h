@@ -257,6 +257,12 @@ void func_80155A70();
 void func_8015675C();
 void func_801568A4();
 void func_80159E28();
+extern s32 D_8015EC1C;
+extern s32 D_8015EE28;
+extern s32 D_8015EE20;
+typedef struct RpgClearWords50 {
+    /* 0x00 */ s32 values[50];
+} RpgClearWords50; /* size 0xC8 */
 #endif
 extern u8 D_8015E9E0[];
 extern u8 D_8015EB70[];

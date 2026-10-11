@@ -1889,7 +1889,7 @@ u8 func_80073AD8(void);
 u8 func_800741B8(void);
 u8 func_8007437C(void);
 void func_800744A0();
-void week_day_main0(void);
+s32 week_day_main0(void);
 void week_day_exit0(void);
 void func_800748B8();
 void func_80074950();

@@ -602,7 +602,36 @@ INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D9B4);
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005DC4C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005DDB4);
+/* FAKE: the no-op index mask preserves the GameState loop base.
+ * T-9560; original indexing expression unknown. */
+s32 func_8005DDB4(void) {
+    typedef struct TailFlags {
+        /* 0x00 */ u8 pad00[0x13];
+        /* 0x13 */ u8 first;
+        /* 0x14 */ u8 flags[12];
+    } TailFlags; /* size 0x20; observed byte view */
+    TailFlags *tail;
+    s32 count;
+    s32 index;
+
+    count = 0;
+    if (((TailFlags *)D_800E7D11)->first != 0) {
+        count = 1;
+    }
+    if (D_800E6280.unk_53C[0] != 0) {
+        count++;
+    }
+    tail = (TailFlags *)D_800E7D11;
+    for (index = 0; index < 12; index++) {
+        if (tail->flags[index] != 0) {
+            count++;
+        }
+        if (D_800E6280.unk_53C[(index + 1) & 0xFFFFFFFF] != 0) {
+            count++;
+        }
+    }
+    return count;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005DEA0);
 

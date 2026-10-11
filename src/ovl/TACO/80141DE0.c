@@ -34,6 +34,39 @@ s16 func_801421AC() {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80141DE0", func_80142220);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80141DE0", func_801423B0);
+s32 func_801423B0(void) {
+    Tc14 *var_s0;
+    s32 var_s1;
+    u8 temp_v0;
+
+    var_s0 = D_8015E770;
+    var_s1 = 0;
+loop_1:
+    temp_v0 = var_s0->unk12;
+    if (temp_v0 >= 0xFFU) {
+        var_s0->unk13 = 0;
+        return 0;
+    }
+    if (temp_v0 >= 0x80U) {
+        var_s0->unkC = -0x400;
+    }
+    if (var_s0->unk4 < -0x7D00) {
+        var_s0->unk13 = 0;
+    }
+    if (var_s0->unk13 & 0x80) {
+        var_s0->unk12++;
+        var_s0->unk0 += var_s0->unk8;
+        var_s0->unk2 += var_s0->unkA;
+        var_s0->unk4 += var_s0->unkC;
+        /* A saved byte or extra mask changes IDO's reload here (T-9560). */
+        func_801424A8(var_s1, var_s0->unk12);
+    }
+    var_s1 += 1;
+    var_s0 += 1;
+    if (var_s1 == 0x10) {
+        return 1;
+    }
+    goto loop_1;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80141DE0", func_801424A8);

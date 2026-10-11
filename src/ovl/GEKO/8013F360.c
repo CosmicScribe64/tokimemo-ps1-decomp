@@ -332,7 +332,43 @@ void func_801402F8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_801403A0);
+void func_801403A0(void) {
+    u8 state;
+
+    D_800E6280.unk_F5F = 0xA;
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    back_clear_switch(1);
+    tpage_buf_clear();
+    func_8004E58C();
+    func_800AE0F0(D_800CA19C, "廊下");
+    D_8011ED9F = 0;
+    D_8011EDE3 = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    addr_init_bustup();
+    func_80137990();
+    hizuke_init();
+    message_window_init();
+    func_80084E4C();
+    D_800B593C = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145FD0;
+    D_80146278 = D_8014610C;
+    D_8014627C = D_80146248;
+    state = func_80051A68(0xA) & 0x7F;
+    if ((u32)state < 2U) {
+        D_800E6280.unk_1BC[10].unk_02 += 1;
+    }
+    D_800E6280.unk_1BC[10].unk_06 += 2;
+    check_para_limit();
+    D_800CA368 = 0x44;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_801404FC);
 

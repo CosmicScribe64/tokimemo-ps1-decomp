@@ -54,7 +54,53 @@ INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE84);
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE88);
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE8C);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014E780);
+void func_8014E780(void) {
+    func_800AE120(D_800E6280.unk_10F4);
+    func_80048EB8(0);
+    func_8006BC28(0);
+    func_8004E58C();
+    tpage_buf_clear();
+    D_800E6280.unk_036 = 0;
+    (*(s8 *)&D_800E6280.unk_038) = 0;
+    (*(s8 *)&D_800E6280.unk_037) = 0;
+    back_clear_switch(1);
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    hizuke_disp_switch(0);
+    func_80065F34(0);
+    message_disp_switch(0);
+    func_80044750(0x7F);
+    func_8014E994();
+    D_8015EC18 = (s32) D_800E6280.unk_F5F;
+    D_8015EB9C = (s32) D_800E6280.unk_F5F;
+    switch (D_80122CE0) {
+    case 1:
+        D_8015EB98 = 0x10000;
+        break;
+    case 2:
+        D_8015EB98 = 0x20000;
+        break;
+    case 3:
+        D_8015EB98 = 0x40000;
+        break;
+    case 4:
+        D_8015EB98 = 0x100000;
+        break;
+    case 5:
+        D_8015EC1C = 1;
+        D_8015EB98 = 0x100000;
+        break;
+    case 6:
+        D_8015EB98 = 0x08000000;
+        break;
+    case 7:
+    default:
+        D_8015EB98 = 0x80000000;
+        break;
+    }
+    func_80042808();
+}
 
 void func_8014E8F4(void) {
     func_80048390();
@@ -311,7 +357,27 @@ void func_8014F524(void) {
     D_8015EE30.unk_0C = 0;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014F540);
+/* FAKE: EC74 retains its legacy scalar declaration; the observed 50-word
+ * range uses an aggregate view. The last loop body shares its for line to
+ * preserve store scheduling. T-9560; original source layout unknown. */
+void func_8014F540(void) {
+    s32 index;
+
+    D_8015EE28 = 0;
+    D_8015EE1C = 0;
+    D_8015EE20 = 0;
+    D_8015EE30.unk_00 = 0;
+    D_8015EE30.unk_08 = 0;
+    D_8015EE30.unk_04 = 0;
+    D_8015EE30.unk_0C = 0;
+    for (index = 0; index < 50; index++) {
+        ((RpgClearWords50 *)&D_8015EC74)->values[index] = 0;
+    }
+    for (index = 0; index < 10; index++) {
+        D_8015ED3C[index] = 0;
+    }
+    for (index = 0; index < 12; index++) ((s32 *)D_8015ED64)[index] = 0;
+}
 
 void func_8014F5DC(s32 arg0) {
     s32 temp_v0;

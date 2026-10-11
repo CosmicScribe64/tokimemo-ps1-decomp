@@ -48,6 +48,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9580-wave-8-list-8|T-9580 Wave 8: list 8]]
 - [ ] [[tickets/T-9520-wave-8-list-2|T-9520 Wave 8: list 2]]
 - [ ] [[tickets/T-9510-wave-8-list-1|T-9510 Wave 8: list 1]]
+- [ ] [[tickets/T-9560-wave-8-list-6|T-9560 Wave 8: list 6]]
 - [ ] [[tickets/T-9400-wave-7-tool-fixes|T-9400 Wave-7 tool fixes]]
 - [ ] [[tickets/T-9410-register-allocation-shapes-after-wave-7|T-9410 Register-allocation shapes after wave 7]]
 - [x] [[tickets/T-9350-wave-7-list-5|T-9350 Wave 7: list 5]]

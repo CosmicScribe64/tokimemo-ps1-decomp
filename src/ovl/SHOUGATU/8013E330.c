@@ -40,6 +40,61 @@ INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013E6E4);
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013EA98);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013EE30);
+void func_8013EE30(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 1:
+        D_80145F20 = D_80145AE4;
+        D_80145F24 = D_80145B18;
+        D_80145F28 = D_80145B4C;
+        return;
+    case 2:
+        D_80145F20 = D_80145AD8;
+        D_80145F24 = D_80145B0C;
+        D_80145F28 = D_80145B40;
+        return;
+    case 3:
+        D_80145F20 = D_80145ADC;
+        D_80145F24 = D_80145B10;
+        D_80145F28 = D_80145B44;
+        return;
+    case 4:
+        D_80145F20 = D_80145AF4;
+        D_80145F24 = D_80145B28;
+        D_80145F28 = D_80145B5C;
+        return;
+    case 5:
+        D_80145F20 = D_80145AE8;
+        D_80145F24 = D_80145B1C;
+        D_80145F28 = D_80145B50;
+        return;
+    case 6:
+        D_80145F20 = D_80145AEC;
+        D_80145F24 = D_80145B20;
+        D_80145F28 = D_80145B54;
+        return;
+    case 7:
+        D_80145F20 = D_80145AE0;
+        D_80145F24 = D_80145B14;
+        D_80145F28 = D_80145B48;
+        return;
+    case 8:
+        D_80145F20 = D_80145AD0;
+        D_80145F24 = D_80145B04;
+        D_80145F28 = D_80145B38;
+        return;
+    case 9:
+        D_80145F20 = D_80145AF0;
+        D_80145F24 = D_80145B24;
+        D_80145F28 = D_80145B58;
+        return;
+    case 10:
+        D_80145F20 = D_80145B00;
+        D_80145F24 = D_80145B34;
+        D_80145F28 = D_80145B68;
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013E330", func_8013F070);
