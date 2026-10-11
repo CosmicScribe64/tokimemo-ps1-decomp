@@ -39,7 +39,7 @@ void func_8004AE28(s32 a0, s32 a1, s32 a2) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004AE54);
 
-void func_8004B19C(u32 arg0, s32 arg1, s32 arg2) {
+void func_8004B19C(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
     s32 n;
     u32 x;
