@@ -236,7 +236,29 @@ s32 func_801446A0(void) {
     return 4;
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144768);
+typedef struct {
+    s16 v[3];
+} Tri3S; /* size 0x6 */
+extern Tri3S D_8014A320;
+
+void func_80144768(void) {
+    s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    Tri3S tbl;
+
+    tbl = D_8014A320;
+    for (i = 0; i < 3; i++) {
+        if (*(u16 *)&D_8014A13C[i * 0x24 + 0x3C] >= 0x33U) {
+            if (i + 0x36 == *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC]) {
+                *(s16 *)&D_8011ECD0[i * 0x44 + 0x19DC] = tbl.v[i];
+            }
+        }
+    }
+    func_80144834();
+    func_801448D4();
+    func_801449A0();
+    func_80144B40();
+    func_80144C70();
+}
 
 typedef struct {
     s32 v[3];
