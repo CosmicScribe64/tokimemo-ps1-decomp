@@ -2005,6 +2005,7 @@ void func_8009CCF4();
 void func_8009D10C();
 void func_8009D294(s32 a, s32 b, s32 c, s32 d, s32 e);
 s32 func_8009ECB0(s32 a, s32 b, s32 c, s32 d);
+s32 func_8009ED74();
 void AddPrim(void *ot, s32 prim);
 void func_8009EED0();
 void SetSemiTrans();

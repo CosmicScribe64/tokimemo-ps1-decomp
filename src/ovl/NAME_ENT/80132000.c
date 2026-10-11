@@ -386,7 +386,26 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801377E8);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137AA0);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137B84);
+void func_80137B84(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *p;
+    u8 *q;
+
+    p = func_800490F0(0x14, D_8011ECA0);
+    func_8009F0A4(p);
+    func_8009EF84(p, 0);
+    p[4] = D_800E6280.unk_03A;
+    p[5] = D_800E6280.unk_03A;
+    p[6] = D_800E6280.unk_03A;
+    *(s16 *)(p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg1;
+    *(s16 *)(p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg2;
+    q = D_8014D028 + arg0 * 2;
+    p[0xC] = q[0];
+    p[0xD] = q[1];
+    *(s16 *)(p + 0x12) = 0x10;
+    *(s16 *)(p + 0x10) = 0x10;
+    *(s16 *)(p + 0xE) = func_8009ED74(0x10, 0x1F0);
+    func_8009EED0((D_8011ECA0 << 10) + 8 + D_800E8CA0, p);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137CA0);
 
