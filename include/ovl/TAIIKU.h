@@ -222,3 +222,9 @@ extern s16 D_8014995A;
 extern u8 D_801499D4[];
 void func_8013B5C0(void);
 extern u8 D_8014A118;
+
+typedef struct TkCnt {
+    /* 0x0 */ u8 unk_00;
+    /* 0x4 */ u32 unk_04;
+    /* 0x8 */ u32 unk_08;
+} TkCnt; /* size 0xC */

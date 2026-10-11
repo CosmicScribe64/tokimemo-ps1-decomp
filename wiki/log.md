@@ -842,3 +842,11 @@ Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-bra
 
 ## [2026-10-10] ticket | T-9350 (In Progress -> In Review -> Done)
 Inline review in [[tickets/T-9350-wave-7-list-5]], no open findings. Clean rebuild of all 27 units not finished (Docker host overloaded); every touched unit rebuilt from clean and OK.
+## [2026-10-10] ticket | T-9360 In Progress
+Wave 7 list 6 started, see [[tickets/T-9360-wave-7-list-6]].
+
+## [2026-10-10] build | T-9360 wave 7 list 6 (partial)
+3 functions matched (TAIIKU `func_80146B8C`, main `icon_disp_switch`, GEKO `func_8013A6D0`, 648 bytes); 26 rows added to [[data/t0018-cases]]; patterns in [[matching-notes]] "Wave 7, list 6 (T-9360)". Clean rebuild 27/27 OK, headers and globals OK, `--check-branch` OK, progress 4561/6958.
+
+## [2026-10-10] ticket | T-9360 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md in [[tickets/T-9360-wave-7-list-6]], no open findings.
