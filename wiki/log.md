@@ -833,3 +833,12 @@ Idioms in [[decompile-workflow]] and [[matching-notes]] "Wave-6 codegen shapes (
 
 ## [2026-10-10] ticket | T-9210 (In Progress -> In Review -> Done)
 Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-branch` OK, progress 4539/6958. Inline review in [[tickets/T-9210-wave-6-codegen-shapes]], no open findings. Sweep branches had no confirmed matches; nothing cherry-picked.
+
+## [2026-10-10] ticket | T-9310 started
+[[tickets/T-9310-wave-7-list-1]] In Progress (wave 7 agent 1).
+
+## [2026-10-10] build | T-9310 wave 7 list 1 (30 functions)
+30 functions matched (10,492 bytes, 4558 -> 4588 of 6958) in branch w7-1: main 4, EVENT 5, DATE 2, DATE2 1, GEKO 2, OLH 2, OPTION 6, RPG_BAT 2, SHUGAKU 1, TACO 2, TAIIKU 2, TT 1. Idioms in [[matching-notes]] ("Wave 7, list 1") and [[decompile-workflow]] ("Wave-7 codegen shapes"); 24 rows in [[data/t0018-cases]]. Sources changed: `src/main/800451D0.c`, `src/main/8004F870.c`, `src/main/800737A0.c` and overlay files under `src/ovl/`; headers `include/main_api.h` and `include/ovl/*.h`.
+
+## [2026-10-10] ticket | T-9310 (In Progress -> In Review -> Done)
+Clean rebuild (`rm -rf asm build`, configure, ninja) all sha1 OK, headers OK, globals OK; `sync_protos.py --check-branch` OK; `migrate_globals.py --check` OK. Inline review in [[tickets/T-9310-wave-7-list-1]], no open findings. Not merged or pushed.
