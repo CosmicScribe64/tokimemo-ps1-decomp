@@ -3,7 +3,25 @@
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014DF60);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014E1A4);
+void func_8014E1A4(void) {
+    func_800AE0F0(D_8015E904, "鏡「また私のとりこが一人。");
+    func_8014B738(D_8015E9CC, 1, 0x8C);
+    func_8013F1C4(0x0300001D, 0x04000025, 0);
+    switch (D_8015EBAC) {
+    case 0:
+        D_8015EBCC = 1;
+        break;
+    case 1:
+        D_8015EBD0 = 1;
+        break;
+    case 2:
+        D_8015EBD4 = 1;
+        break;
+    }
+    D_8011ECD0[D_8015EBAC * 0x44 + 0x292F] |= 1;
+    func_8013E7C0(0x1D, 6, 1, 1);
+    func_8014F230();
+}
 
 void func_8014E28C(void) {
     func_800AE0F0(D_8015E904, "鏡「でなおしてらっしゃい！");

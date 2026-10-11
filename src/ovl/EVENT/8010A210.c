@@ -128,7 +128,36 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A6E4);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A790);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A7E0);
+void func_8010A7E0(void) {
+    D_800B1746 = 0xB;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884(D_8011FAFC);
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_80078970(D_80094748, D_800B0929);
+    func_80078970(D_80094764, "謎の女");
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_80120624;
+    D_8012067C = D_80120644;
+    D_80120680 = *(s32 *)&D_80120664;
+    func_80078970(D_80094784, "廊下");
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A91C);
 
@@ -139,7 +168,35 @@ void func_8010AAAC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010AAF8);
+void func_8010AAF8(void) {
+    D_800B1746 = 0xB;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_800201FC(1);
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_80078970(D_80094748, D_800B0929);
+    func_80078970(D_80094764, "館林");
+    func_80078970(D_8009476C, "館林さん");
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_80120630;
+    D_8012067C = D_80120650;
+    D_80120680 = D_80120670;
+    func_80078970(D_80094784, "きらめき中央公園");
+    func_80078970(D_800947C4, "並木道");
+    func_80011DFC();
+}
 
 void func_8010AC40(void) {
     func_8010A280();

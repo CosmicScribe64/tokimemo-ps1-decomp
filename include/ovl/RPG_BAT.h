@@ -202,6 +202,9 @@ void func_8014F350();
 void func_8013F250();
 void func_8013F220();
 
+extern s32 D_8015EBCC;
+extern s32 D_8015EBD0;
+extern s32 D_8015EBD4;
 #endif
 extern u8 D_8015E9E0[];
 extern u8 D_8015EB70[];
