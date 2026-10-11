@@ -359,18 +359,6 @@ void func_80149B7C(void);
 extern u8 D_8015EDDC;
 extern u8 D_8015EDE0;
 extern u8 D_8015EDE4;
-/* Position and velocity copies/loads use two existing eight-byte TcPos records. */
-typedef struct TacoParticle14 {
-    /* 0x00 */ TcPos unk_00;
-    /* 0x08 */ TcPos unk_08;
-    /* 0x10 */ u8 unk_10;
-    /* 0x11 */ u8 unk_11;
-    /* 0x12 */ u8 unk_12;
-    /* 0x13 */ u8 unk_13;
-} TacoParticle14; /* size 0x14 */
-extern TacoParticle14 D_8015E9F0[];
-
-extern TacoParticle14 D_8015E8B0[];
 
 #endif
 
@@ -471,3 +459,17 @@ typedef struct TacoSprite20 {
     /* 0x10 */ s16 w;
     /* 0x12 */ s16 h;
 } TacoSprite20; /* size 0x14 */
+
+/* Position and velocity copies/loads use two existing eight-byte TcPos records. */
+typedef struct TacoParticle14 {
+    /* 0x00 */ TcPos unk_00;
+    /* 0x08 */ TcPos unk_08;
+    /* 0x10 */ u8 unk_10;
+    /* 0x11 */ u8 unk_11;
+    /* 0x12 */ u8 unk_12;
+    /* 0x13 */ u8 unk_13;
+} TacoParticle14; /* size 0x14 */
+extern TacoParticle14 D_8015E9F0[];
+
+extern TacoParticle14 D_8015E8B0[];
+

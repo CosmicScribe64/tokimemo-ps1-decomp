@@ -257,13 +257,6 @@ void func_80155A70();
 void func_8015675C();
 void func_801568A4();
 void func_80159E28();
-/* Three flag bytes at a 0x44-byte stride are accessed through the shared record table. */
-typedef struct RpgFlagRecord44 { /* size 0x44 */
-    /* 0x00 */ u8 unk_00[3];
-    /* 0x03 */ u8 unk_03;
-    /* 0x04 */ u8 unk_04[0x40];
-} RpgFlagRecord44;
-
 #endif
 extern u8 D_8015E9E0[];
 extern u8 D_8015EB70[];
@@ -317,3 +310,11 @@ extern s32 D_8015EE20;
 typedef struct RpgClearWords50 {
     /* 0x00 */ s32 values[50];
 } RpgClearWords50; /* size 0xC8 */
+
+/* Three flag bytes at a 0x44-byte stride are accessed through the shared record table. */
+typedef struct RpgFlagRecord44 { /* size 0x44 */
+    /* 0x00 */ u8 unk_00[3];
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04[0x40];
+} RpgFlagRecord44;
+
