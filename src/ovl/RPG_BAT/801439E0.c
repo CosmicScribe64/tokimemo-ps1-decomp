@@ -1,7 +1,71 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801439E0", func_801439E0);
+void func_801439E0(void) {
+    if ((func_801446F8() < D_8015EDF4) && !(D_8015ED98 & 0xFF) && !(D_8015EDC4 & 0xFF) && !(D_8015EE1C & 0xFF) &&
+        !(D_8015EDF0 & 0xFF)) {
+        func_8013D030();
+        D_8015EDF4 = 0;
+        D_8015EDF0 = func_80147930();
+        if (!(D_8015EDF0 & 0xFF)) {
+            D_8015EDF4 = func_8013EA00(0x64, 0x32);
+        }
+    }
+    if (D_8015EDF0 == 0x10001000) {
+        func_8014F88C();
+    }
+    if (D_8015EDF0 == 0x10001001) {
+        if ((s32)D_8015EE04 < 0xF) {
+            func_8013D030();
+        }
+        func_8014FDBC();
+    }
+    if (!(D_8015EE1C & 0xFF) && ((D_8015EDF0 & 0xFF) || (D_8015EDF0 & 0x80000000))) {
+        switch (D_8015EB9C) {
+        case 0:
+            func_801420EC();
+        default:
+            break;
+        case 1:
+            func_80155A70();
+            break;
+        case 2:
+            if (D_8015EB98 != 0x80000000) {
+                func_801481C8();
+            }
+            break;
+        case 3:
+            func_80151C10();
+            break;
+        case 4:
+            func_80136E2C();
+            break;
+        case 5:
+            func_80159E28();
+            break;
+        case 6:
+            func_801568A4();
+            break;
+        case 7:
+            func_8014DF60();
+            break;
+        case 8:
+            func_8015675C();
+            break;
+        case 9:
+            func_80135AE0();
+            break;
+        case 10:
+            func_80136374();
+            break;
+        case 13:
+            func_801340F0();
+            break;
+        case 14:
+            break;
+        }
+    }
+}
 
 void func_80143C28(s32 arg0, s32 arg1) {
     s32 temp_v0;
