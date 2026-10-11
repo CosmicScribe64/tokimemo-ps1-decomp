@@ -97,6 +97,7 @@ void func_801493D4(void) {
         }
     }
     if (func_80147B24(0xC, D_8015FCC0) >= 0x55) {
+        /* FAKE: the first byte is tested twice, as in the original asm (T-9330) */
         if (*((u8 *) D_8015EDB4 + 0x905) == 0 && *((u8 *) D_8015EDB4 + 0x98D) == 0 && *((u8 *) D_8015EDB4 + 0x905) == 0) {
             func_80154230(0x80196000, 9);
             D_8015EDCC += 1;

@@ -345,7 +345,7 @@ s32 arg1;
     s16 x;
     s16 y;
 
-    j = arg0 * 2;
+    j = arg0 * 2; /* FAKE: the doubled index as its own variable keeps the original's sll-first multiply (T-9330) */
     rec = D_8011ECD0 + j * 0x44;
     rec[0x1983] = 4;
     rec[0x19C7] = 5;
@@ -442,7 +442,7 @@ void func_80134784(s32 *arg0, s32 *arg1) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134800);
 
-/* p stays an expression: a local pointer would be spilled to a different stack slot (T-3330) */
+/* FAKE: the record pointer stays an expression; as a local it is spilled to another stack slot than the original's (T-3330, T-9330) */
 #define EN_OBJ(i) ((EnObj *) (D_8013984C + (i) * 0x30))
 void func_80134C1C(arg0)
 s32 arg0;
@@ -592,7 +592,7 @@ void func_80136700(void) {
     D_80139B20 += 2;
     D_80121603 = D_80139B20;
     if (D_80139B20 >= 0x80) {
-        *(u8 *) &D_80121603 = 0x80;
+        *(u8 *) &D_80121603 = 0x80; /* FAKE: unsigned view keeps the constant 0x80 (an s8 store would load -128), T-9330 */
     }
     if (D_80139B20 == 0xA0) {
         D_80121634 = 0x01000000;

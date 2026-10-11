@@ -636,7 +636,7 @@ void check_para_limit(void) {
 
     for (i = 0; i < 11; i++) {
         if (D_800E6280.unk_1BC[i].unk_02 < 0) {
-            *(s32 *) &D_800E6280.unk_1BC[i].unk_00 = 0;
+            *(s32 *) &D_800E6280.unk_1BC[i].unk_00 = 0; /* word store over the s16 pair */
         }
         if (D_800E6280.unk_1BC[i].unk_02 >= 0x80) {
             D_800E6280.unk_1BC[i].unk_02 = 0x80;

@@ -836,3 +836,9 @@ Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-bra
 
 ## [2026-10-10] ticket | T-9330 wave 7 list 3 (In Progress)
 [[tickets/T-9330-wave-7-list-3]] opened for work list 3.
+
+## [2026-10-10] build | T-9330 wave 7 list 3
+17 functions matched (6,244 bytes) in branch w7-3: main `check_para_limit`, DATE 2, EVENT 2, ETC 1, EN_NICHI 3, RPG_BAT 2, TACO 5, VALEN 1. 23 rows added to [[data/t0018-cases]]; patterns in [[matching-notes]] (Wave 7, list 3). Files touched: `src/main/8007C030.c`, `src/ovl/*`, `include/ovl/*.h`, `config/symbol_addrs.txt`.
+
+## [2026-10-10] ticket | T-9330 (In Progress -> In Review -> Done)
+Inline review in [[tickets/T-9330-wave-7-list-3]], no open findings; clean rebuild 27/27 OK.
