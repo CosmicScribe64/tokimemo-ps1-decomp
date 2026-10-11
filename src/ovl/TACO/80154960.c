@@ -3,7 +3,32 @@
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80154960);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80154F74);
+void func_80154F74(void) {
+    /* the family's position locals (see func_80156F50): p0 is unused and keeps its stack slot. T-9180 */
+    TcPos p0;
+    TcPos pos;
+    TcPos vel;
+    s32 id;
+    s32 r;
+
+    func_800AE120(D_801604C0 + 0x1E240);
+    r = func_800AE0D0();
+    pos.x = (func_800AE0D0() % 5000 + D_8015EDB4->unk74 + r % 3000) - 0xFA0;
+    r = func_800AE0D0();
+    pos.y = (func_800AE0D0() % 2500 + D_8015EDB4->unk76 + r % 1500) - 0x7D0;
+    pos.z = -0x8000;
+    vel.x = func_800AE0D0() % 4096;
+    vel.y = func_800AE0D0() % 4096;
+    vel.z = func_800AE0D0() % 4096;
+    vel.unk6 = func_800AE0D0() % 7;
+    vel.x = func_800AE0D0() % 3;
+    if (func_800AE0D0() % 3 == 0) {
+        id = func_8015ACCC(0, 1, vel, pos, vel, vel.x * 4 + 4, 0x10);
+    } else {
+        id = func_8015ACCC(0, 1, vel, pos, vel, vel.x * 4 + 4, 0);
+    }
+    D_8015EDB4[id].unk84[0] = vel.x + 3;
+}
 
 void func_80155230(s32 arg0) {
     s16 t;
@@ -42,7 +67,37 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801553AC);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_801557E8);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_8015595C);
+void func_8015595C(void) {
+    /* the family's position locals (see func_80156F50): p1 is unused and keeps its stack slot. T-9180 */
+    TcPos pos;
+    TcPos p1;
+    TcPos vel;
+    s32 id;
+    s32 r;
+
+    func_800AE120(D_801604C0);
+    r = func_800AE0D0();
+    pos.x = (func_800AE0D0() % 250 + D_8015EDB4->unk74 + r % 150) - 0xC8;
+    r = func_800AE0D0();
+    pos.y = (func_800AE0D0() % 135 + D_8015EDB4->unk76 + r % 75) - 0x64;
+    pos.z = -0x1D4C;
+    vel.y = 0x800;
+    vel.z = 0;
+    vel.x = 0;
+    if (D_801604CC % 3 == 0) {
+        id = func_8015ACCC(5, 3, pos, D_801604D4, vel, 4, 0x80);
+    } else {
+        id = func_8015ACCC(5, 3, pos, D_801604D4, vel, 4, 0x10);
+    }
+    if (id != -1) {
+        D_8015EDB4[id].unk84[0] = 0;
+    }
+    id = func_8015ACCC(5, 4, pos, D_801604D4, vel, 2, 0);
+    if (id != -1) {
+        D_8015EDB4[id].unk84[0] = 0;
+    }
+    D_801604CC += 1;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80155C64);
 

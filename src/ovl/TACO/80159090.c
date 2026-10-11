@@ -53,9 +53,67 @@ void func_80159F60(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80159090", func_8015A164);
+void func_8015A164(s32 arg0) {
+    /* the family's position locals (see func_80156F50): p0 is unused and keeps its stack slot. T-9180 */
+    TcPos p0;
+    TcPos pos;
+    TcPos vel;
+    s32 i;
+    s32 j;
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80159090", func_8015A378);
+    func_800AE120(D_801604C0);
+    pos.z = 0x4E20;
+    func_8015ACCC(0xD, 0x23, D_801604D4, pos, D_801604E4, 0x28, 0xD0);
+    i = 0;
+    if (arg0 > 0) {
+        j = 0;
+        do {
+            vel.y = 0x800;
+            vel.x = 0;
+            vel.z = 0;
+            vel.unk6 = j / arg0;
+            func_8015ACCC(0xD, 0x22, D_801604D4, pos, vel, 0x14, (func_800AE0D0() % 9) * 0x10);
+            i += 1;
+            j += 0x1000;
+        } while (i != arg0);
+    }
+}
+
+void func_8015A378(s32 arg0) {
+    switch ((arg0 + D_8015EDB4)->unk7C) {
+    case 0:
+        D_8015EDB4[arg0].unk74 = (func_800A0070((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
+        D_8015EDB4[arg0].unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC) - 0x2BC;
+        D_8015EDB4[arg0].unk78 = -0x4E20;
+        D_8015EDB4[arg0].unk6E = 1;
+        (arg0 + D_8015EDB4)->unk7C += 1;
+        break;
+    case 1:
+        (arg0 + D_8015EDB4)->unk6E = (arg0 + D_8015EDB4)->unk7A << 9;
+        (arg0 + D_8015EDB4)->unk84[0] = ((arg0 + D_8015EDB4)->unk7A * 0x16) / 32;
+        if ((arg0 + D_8015EDB4)->unk6E >= (arg0 + D_8015EDB4)->unk6C) {
+            (arg0 + D_8015EDB4)->unk7C += 1;
+            D_8015EDB4[arg0].unk7A = 0;
+        }
+        break;
+    case 2:
+        D_8015EDB4[arg0].unk74 = (func_800A0070((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC;
+        D_8015EDB4[arg0].unk76 = ((func_800A0140((arg0 + D_8015EDB4)->unk6A) * 0x3E8) >> 0xC) - 0x2BC;
+        (arg0 + D_8015EDB4)->unk6A += 0x20;
+        if ((arg0 + D_8015EDB4)->unk7A >= 0x259) {
+            (arg0 + D_8015EDB4)->unk7C += 1;
+            D_8015EDB4[arg0].unk7A = 0;
+        }
+        break;
+    case 3:
+        (arg0 + D_8015EDB4)->unk6E = (0x10 - (arg0 + D_8015EDB4)->unk7A) << 9;
+        (arg0 + D_8015EDB4)->unk84[0] = ((0x10 - (arg0 + D_8015EDB4)->unk7A) << 5) / 32;
+        if ((arg0 + D_8015EDB4)->unk6E <= 0) {
+            func_8015C208(arg0);
+        }
+        break;
+    }
+}
 
 void func_8015A680(s32 arg0) {
     TcPos pos;
