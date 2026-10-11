@@ -1,0 +1,1 @@
+func_80084C98 = 0x80084C98; // Existing sprite_brightness address, promoted-index call view for T-9540.

@@ -70,7 +70,19 @@ void func_80138D64(void) {
     normal_date_girl_in();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138DD8);
+void func_80138DD8(void) {
+    u8 value;
+
+    func_801386C4();
+    if (D_800E6280.unk_F5F == 1 && D_800CA2E0 == 3) {
+        value = D_800CA2CC;
+        if (value == 1) {
+            D_80122CF4 = 0;
+            return;
+        }
+    }
+    D_80122CF4 = 1;
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138E40);
 

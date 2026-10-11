@@ -1,5 +1,11 @@
+#define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
+#define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #include "common.h"
 #include "game.h"
+/* FAKE: typed view of the existing same-address alias keeps the byte argument load in a1 and the index conversion inside the matched callee. T-9540 */
+void func_80084C98(s32 idx, u8 val);
+/* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
+extern s32 D_80122CD0[];
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_GetCDLevel);
 
@@ -201,7 +207,25 @@ void normal_date_girl_in(void) {
     func_80057D28(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_init);
+/* FAKE: aliasing a local zero retains the original v0 initialization; s32 without return and the byte-address view preserve its allocation. No meaningful return established. T-9540. */
+s32 normal_date_girl_in_init(void)
+{
+  s32 *new_var2;
+  s32 new_var;
+  D_8011F513 = 0;
+  D_801217E5 = 0;
+  D_801217E4 = 0;
+  D_80121809 = 0;
+  new_var = 0;
+  new_var2 = &new_var;
+  *((u8 *) (&D_80121808)) = new_var;
+  D_800B5940 = *new_var2;
+  D_80122CF8 = *new_var2;
+  D_80122CF4 = 1;
+  D_800E6280.unk_1104.w += 1;
+  D_801217E6 = *new_var2;
+  D_8012180A = *new_var2;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_main);
 
@@ -679,9 +703,45 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_800850D4);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085234);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085368);
+void func_80085368(void) {
+    s16 var_s0;
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_800853FC);
+    normal_date_bg_fadein();
+    if (D_800B593C == 4) {
+        func_80085234(1);
+    }
+    D_80122D04 = 1;
+    func_80065F34(0);
+    D_80120657 = D_800B593C;
+    var_s0 = 0x3A;
+    D_8012069B = D_800B593C;
+    do {
+        func_80084C98(var_s0, D_800B593C);
+        var_s0 += 1;
+    } while (var_s0 < 0x40);
+}
+
+void func_800853FC(void) {
+    s16 var_s0;
+    u8 temp_s0;
+    u8 state;
+
+    temp_s0 = D_800E6280.unk_110A;
+    normal_date_bg_fadeout();
+    state = D_800E6280.unk_110A;
+    if (state != temp_s0) {
+        func_80085234(0);
+        D_80122D04 = 0;
+        func_80065F34(1);
+    }
+    D_80120657 = D_800B593C;
+    var_s0 = 0x3A;
+    D_8012069B = D_800B593C;
+    do {
+        func_80084C98(var_s0, D_800B593C);
+        var_s0 += 1;
+    } while (var_s0 < 0x40);
+}
 
 void event_face0(void) {
     D_80120666 = 2;
@@ -743,7 +803,20 @@ void ev_me_on_continue(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", _sprite_set_box_shade_tarao);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8008585C);
+void func_8008585C(void) {
+    s16 i;
+    for (i = 5; i < 31;) {
+        D_80122CD0[i] = 0;
+        i++;
+    }
+    D_800CA2AC = 0;
+    func_8006BC28(0);
+    D_8011ECD3 &= 0xFF7F;
+    k_reset(0);
+    func_8006612C((s32) "　");
+    func_80065F34(0);
+    func_8006764C(0);
+}
 
 void don_init2(void) {
     func_80047550();

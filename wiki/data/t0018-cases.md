@@ -1121,3 +1121,27 @@ Historical rows above remain unchanged. Resolution records:
 - The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
 
 Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
+
+## Wave-8 list-4 bounded rechecks (T-9540)
+
+| file | function | category | symptom |
+|---|---|---|---|
+| SHOUGATU/8013A950 | `func_8013AE0C` | regorder | Original keeps the shifted nibble in `$v0` and the other halfword in `$t6`; repaired field accesses still put the nibble in `$t6` and the halfword in `$t7`. s32 without return and s32/u8/u16 nibble locals also fail; temporary-numbering/order cluster (T-9540). |
+| SHUGAKU/80138A60 | `func_80138DD8` | regorder | Third equality branch uses `bne t8,v0` in the original and `bne v0,t8` in repaired C. s32 without return, four typed constant locals and a 40-second permuter run do not match; constant allocation/sharing cluster (T-9540). |
+| OPTION/80132000 | `func_8013357C` | regorder | Original retains dead `li v0,0x60` before the 64-record pointer loop; pointer-loop C omits it and swaps the two base initializations. s32 without return and indexed loops with s32/u16/s16 counters fail; constant allocation/sharing cluster (T-9540). |
+
+Deep-pass resolution: the SHUGAKU func_80138DD8 and OPTION func_8013357C rows above are now resolved by verified C in T-9540. Historical symptom rows are retained.
+
+| file | function | category | symptom |
+|---|---|---|---|
+| 8007C030 | `normal_date_girl_in_init` | regorder | Sustained typed/return/control-flow retries and five-minute permutation reach one missing `li v0,0`; original void view restored. Constant allocation/sharing cluster; finite spelling search, not an impossibility claim (T-9540). |
+| TT/80147380 | `func_801475C8` | regorder | 56 compiling scalar/pointer initialization and loop variants plus 300-second permutation still exchange the registers holding 6 and 0x40; best eight resolved differing lines. Constant allocation/sharing cluster (T-9540). |
+| ETC/80143240 | `func_801451D4` | regorder | 22 compiling void selector variants plus 300-second permutation leave four resolved lines in case-2/case-3 v0/v1 selection. Incompatible s32 definitions are excluded as codegen evidence. Selector/compare-chain cluster (T-9540). |
+| 8006CB30 | `geko_judge` | regorder | Recovered u8[20]/s16[16] work buffers, tested 54 actual declaration/counter variants and a 300-second permutation; best six resolved lines move the GameState base addiu and the counter increment relative to a branch. Scheduling/order cluster; subsequent isolated branch spellings do not close it (T-9540). |
+
+Further deep-pass resolutions: normal_date_girl_in_init and SHOUGATU func_8013AE0C now pass resolved funcdiff and their unit SHA1 checks. The former uses a marked FAKE alias of a local zero and s32/no-return definition; the latter uses a marked FAKE dead byte test and reversed compared operands. Their historical rows remain above.
+
+| file | function | category | symptom |
+|---|---|---|---|
+| 8006CB30 | `func_80072998` | selector | 24 actual scalar/return/comparison variants and 300-second permutation leave fourteen resolved lines; best positive raw-score output also compares at fourteen. Selector/compare-chain cluster, bounded experiments only (T-9540). |
+| EVENT/800FBBF0 | `func_800FD00C` | regorder | Two sustained 24-variant actual trials and 300-second searches reached eight lines; rechecking a positive raw-score-10 output gives four real resolved differing lines, solely the u8 global load's lui base v1 versus v0. Narrow-global promotion/allocation cluster; declaration, load-order, aggregate and volatile trials did not close it (T-9540). |

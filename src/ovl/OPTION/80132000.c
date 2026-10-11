@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_D_800E7D10 /* recovered aggregate flag view, canonical word view retained elsewhere, T-9540 */
 #include "common.h"
 #include "ovl/OPTION.h"
+/* FAKE: scoped minimum aggregate view of the word and adjacent flags, based on observed +0x14 indexing. T-9540 */
+extern FlagsWork24 D_800E7D10;
 
 /* View of the 0x44-byte sprite records of the D_8011ECD0 table that the option menus number
  * (D_80120650 is record 96; the menus write the s16 at +0x18 of records 107-113). T-9020 */
@@ -115,7 +118,18 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133010);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80133330);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013357C);
+/* FAKE: s32 without an explicit return retains the original dead v0 loop initialization; no meaningful return is established. T-9540 */
+s32 func_8013357C(void) {
+    s32 i;
+    OptDraw44 *p;
+
+    for (i = 0x60; i < 0xA0; i++) {
+        p = (OptDraw44 *)D_8011ECD0 + i;
+        if (p->unk_00.b[3] & 0x80) {
+            func_8004AE54(p->unk_18, p->unk_26, p->unk_2A, 0xF);
+        }
+    }
+}
 
 void func_801335E8(void) {
     D_800E6280.unk_1100 += 1;
@@ -632,7 +646,18 @@ void func_80136BC8(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136C30);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80136F3C);
+s32 func_80136F3C(void) {
+    s32 i;
+    s32 count;
+
+    count = 0;
+    for (i = 0; i < 14; i++) {
+        if (D_800E7D10.flags[i] != 0 || D_800E6280.unk_53C[i] != 0) {
+            count++;
+        }
+    }
+    return count;
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137040);
 

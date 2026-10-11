@@ -71,6 +71,17 @@ typedef union GsHalf {
     /* 0x00 */ u8 b[2];
 } GsHalf; /* size 0x02 */
 
+#ifndef T9540_FLAGS_WORK24
+#define T9540_FLAGS_WORK24
+/* Minimum view covering the word at 0x800E7D10 and fourteen flags at +0x14; T-9540. */
+typedef struct FlagsWork24 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 pad04[0x10];
+    /* 0x14 */ u8 flags[14];
+    /* 0x22 */ u8 pad22[2];
+} FlagsWork24; /* size 0x24 */
+#endif
+
 /* Flag word at +0x0C of a Rec38 record (GameState +0x1C8 + 0x38 * i). The original tests single bits
  * with sll; bltz/bgez (bits 1, 2, 3, 6, 12-14 seen) and reads bits 9-11 as one value (sll 20; srl 29);
  * a bit-field store loads the byte into another register than its lui. T-9020 (was a view per file). */
@@ -693,7 +704,9 @@ extern u16 D_800E36EA;
 extern s32 D_800E36F0;
 extern s32 D_800E36F4;
 extern GameState D_800E6280;
+#ifndef MAIN_API_OVERRIDE_D_800E7D10
 extern s32 D_800E7D10;
+#endif
 extern u8 D_800E7D11[];
 extern u8 D_800E7D13[];
 extern u8 D_800E7D14[];
@@ -1971,7 +1984,7 @@ s32 func_8007E390(void);
 #ifndef MAIN_API_OVERRIDE_normal_date_girl_in
 void normal_date_girl_in();
 #endif
-void normal_date_girl_in_init();
+s32 normal_date_girl_in_init(void);
 void normal_date_girl_in_main();
 void normal_date_girl_out(void);
 void normal_date_girl_out_init(void);
@@ -2017,7 +2030,9 @@ void func_800847B8(u8 arg0);
 #endif
 void select_girl_init(s32 arg0);
 void select_girl_main(s32 arg0);
+#ifndef MAIN_API_OVERRIDE_func_80084C98
 void func_80084C98();
+#endif
 void sprite_brightness(s16 idx, u8 val);
 void check_para_limit(void);
 void func_80084D3C();

@@ -131,7 +131,21 @@ void func_8013ADCC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013A950", func_8013AE0C);
+void func_8013AE0C(void) {
+    u8 raw;
+    s32 nibble;
+    raw = D_800E6280.unk_1BC[4].unk_0C.b[2];
+    if (raw) {} /* FAKE: dead raw-value test shapes allocation, T-9540 */
+    nibble = raw >> 4;
+    if (nibble == (D_800E6280.unk_0F4.h >> 12)) {
+        if (nibble == 7) {
+            D_80144E08 = 10;
+        } else {
+            D_80144E08 = 8;
+        }
+    }
+    func_8004284C();
+}
 
 void func_8013AE6C(void) {
     if (((u32) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) != ((u32) D_800E6280.unk_0F4.h >> 0xC)) {
