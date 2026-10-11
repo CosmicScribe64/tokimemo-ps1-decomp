@@ -14,6 +14,9 @@
 #define MAIN_API_OVERRIDE_D_80120720 /* EVENT overlay data at this address, s16 (main_api.h: s8) */
 #define MAIN_API_OVERRIDE_D_801206DC /* EVENT overlay data at this address, s32 (main_api.h: s8) */
 #define MAIN_API_OVERRIDE_D_801206D8 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
+#define MAIN_API_OVERRIDE_D_8012121C /* EVENT overlay data at this address, s32 (main_api.h: s16) */
+#define MAIN_API_OVERRIDE_D_801207B0 /* EVENT overlay data at this address, s16 (main_api.h: s32) */
+#define MAIN_API_OVERRIDE_D_801207B4 /* EVENT overlay data at this address, s16 (main_api.h: s32) */
 #define MAIN_API_OVERRIDE_D_801206EC /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120724 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120730 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
@@ -1265,6 +1268,8 @@ void func_800FD43C();
 void func_800FD49C();
 
 extern s16 D_801207AC;
+extern s16 D_801207B0;
+extern s16 D_801207B4;
 void func_801015B0(void);
 void func_80101F24(void);
 void func_80102118(void);

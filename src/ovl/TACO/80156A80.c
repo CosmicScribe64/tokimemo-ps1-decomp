@@ -20,7 +20,21 @@ void func_80156F50(void) {
     func_8015ACCC(0xB, 0x10, D_801604D4, pos, D_801604E4, 6, 0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801570A4);
+void func_801570A4(s32 arg0) {
+    TcPos pos;
+
+    if ((arg0 + D_8015EDB4)->unk7A % 60 == 0) {
+        pos.x = (arg0 + D_8015EDB4)->unk74;
+        pos.y = (arg0 + D_8015EDB4)->unk76;
+        pos.z = (arg0 + D_8015EDB4)->unk78;
+        func_8013DB80(pos, 0x80, 0);
+    }
+    (arg0 + D_8015EDB4)->unk76 += func_800A0070((arg0 + D_8015EDB4)->unk7A << 6) * 0x14 >> 12;
+    (arg0 + D_8015EDB4)->unk78 += 0x96;
+    if ((arg0 + D_8015EDB4)->unk78 > 0x1000) {
+        func_8015C208(arg0);
+    }
+}
 
 void func_801571E8(void) {
     TcPos p0;
@@ -52,11 +66,56 @@ void func_801572D8(void) {
     func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801573C8);
+void func_801573C8(void) {
+    TcPos p0;
+    TcPos a;
+    TcPos b;
+
+    func_800AE120(D_801604C0);
+    /* FAKE: the three stores on one source line make as1 order them z, y, x as the original does. T-9160 */
+    a.x = 0x1F4; a.y = 0x12C; a.z = -0x8000;
+    b.y = 0x800;
+    b.x = 0;
+    b.z = 0;
+    b.unk6 = 0;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0x10);
+    a.x = 0xFA; a.y = 0x12C; a.z = -0x7830;
+    b.unk6 = 1;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 6, 0);
+    a.x = 0; a.y = 0x12C; a.z = -0x7060;
+    b.unk6 = 2;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 2, 0x50);
+    a.x = -0xFA; a.y = 0x12C; a.z = -0x7830;
+    b.unk6 = 3;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 6, 0);
+    a.x = -0x1F4; a.y = 0x12C; a.z = -0x8000;
+    b.unk6 = 4;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0x10);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_8015776C);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80157AE0);
+void func_80157AE0(void) {
+    TcPos p0;
+    TcPos pos;
+    TcPos b;
+    s32 t;
+    s32 r;
+
+    func_800AE120(D_801604C0);
+    b.y = 0x800;
+    b.x = 0;
+    b.z = 0;
+    b.unk6 = 0;
+    r = func_800AE0D0();
+    pos.x = (func_800AE0D0() % 5000 + D_8015EDB4->unk74 + r % 3000) - 0xFA0;
+    pos.y = (func_800AE0D0() % 2) * 0x1F40 - 0xBB8;
+    pos.z = -0x2742;
+    t = func_8015ACCC(9, 0x13, D_801604D4, pos, b, 0x40, 0);
+    pos.z = -0x2710;
+    b.unk6 = t;
+    func_8015ACCC(0xA, 0x14, D_801604D4, pos, b, 0x40, 0x80);
+}
 
 void func_80157CD4(s32 arg0) {
     switch ((arg0 + D_8015EDB4)->unk7C) {
@@ -110,7 +169,43 @@ void func_80157EA8(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_8015800C);
+void func_8015800C(void) {
+    TcPos p0;
+    TcPos p1;
+    TcPos b;
+
+    func_800AE120(D_801604C0);
+    b.y = 0x800;
+    b.x = 0;
+    b.z = 0;
+    if (D_801604D0 == 0) {
+        if ((D_8015EDB4->unk74 < 0 && D_8015EDB4->unk76 < -0x2BC) || (D_8015EDB4->unk74 > 0 && D_8015EDB4->unk76 >= -0x2BB)) {
+            b.unk6 = 0x11;
+            D_801604D0 = 1;
+            func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+            b.unk6 = 0;
+            func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+            return;
+        }
+        b.unk6 = 1;
+        D_801604D0 = 2;
+        func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+        b.unk6 = 0x10;
+        func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+        return;
+    }
+    if (D_801604D0 == 1) {
+        b.unk6 = 0x11;
+        func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+        b.unk6 = 0;
+        func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+        return;
+    }
+    b.unk6 = 1;
+    func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+    b.unk6 = 0x10;
+    func_8015ACCC(0xC, 0x11, D_801604D4, D_801604DC, b, 2, 0x10);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801585D0);
 
@@ -190,4 +285,23 @@ void func_80158DBC(s16 arg0, s16 arg1, s16 arg2) {
     func_8015ACCC(0x10, 0x16, D_801604D4, pos, D_801604E4, 8, 0x70);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_80158F48);
+void func_80158F48(s32 arg0) {
+    TcPos pos;
+
+    if ((arg0 + D_8015EDB4)->unk7A % 20 == 0) {
+        pos.x = (arg0 + D_8015EDB4)->unk74;
+        pos.y = (arg0 + D_8015EDB4)->unk76;
+        pos.z = (arg0 + D_8015EDB4)->unk78;
+        func_8013DB80(pos, 0x80, 0x80);
+    }
+    (arg0 + D_8015EDB4)->unk76 += 0x20;
+    if ((arg0 + D_8015EDB4)->unk76 > 0x400) {
+        (arg0 + D_8015EDB4)->unk2 = 0xFE;
+    }
+    if ((arg0 + D_8015EDB4)->unk7C == 0) {
+        /* FAKE: call and increment on one source line make as1 place the reload of the spilled index as the original does. T-9310 */
+        func_8015C0A0(0, arg0); (arg0 + D_8015EDB4)->unk7C += 1;
+    } else {
+        func_8015C0A0(1, arg0);
+    }
+}

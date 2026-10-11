@@ -33,7 +33,38 @@ void func_80134F40(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80134F40", func_8013500C);
+void func_8013500C(void) {
+    s32 i;
+    s32 r;
+    s32 padx[2]; /* FAKE: two unused words above the arrays reproduce the original frame 0xC0; real source unknown. T-9310 */
+    s16 a[8];
+    s16 b[8];
+    s16 c[8];
+    s16 d[8];
+
+    func_8004EAAC();
+    func_8004E788(-0x50, -0x40, 0xF, (s32)"サブゲーム", 0);
+    for (i = 0; i < 8; i++) {
+        a[i] = -0x60;
+        b[i] = i * 0x10 - 0x32;
+        c[i] = 0xE8;
+        d[i] = 0x10;
+        if (i < 4) {
+            func_8004E788(a[i], b[i], 0xF, (&D_8013C780)[i], 0);
+        }
+    }
+    r = func_8004E788(a[7], b[7], 0xF, D_8013C79C, 0);
+    c[4] = c[5] = c[6] = 0;
+    if (!(D_800E7D4F & 1)) {
+        c[0] = 0;
+    }
+    if (!(D_800E7D50 & 1)) {
+        c[1] = 0;
+    }
+    func_8004F870(0, 8, a, b, c, d);
+    func_8004E884(r);
+    func_8004284C();
+}
 
 void func_80135190(void) {
     func_8004F984(0, D_8011ECF6, D_8011ECFA);

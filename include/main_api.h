@@ -488,8 +488,10 @@ extern u8 D_800B1AF6;
 extern u8 D_800B1AF9;
 extern s32 D_800B1C1C;
 extern s32 D_800B1C70;
+extern s32 D_800B1CF0;
 extern u8 D_800B3220;
 extern u8 *D_800B3288[];
+extern s32 D_800B3538[];
 extern u8 *D_800B35F4[];
 extern u8 *D_800B3624;
 extern u8 *D_800B3630;
@@ -570,6 +572,10 @@ extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
+extern s32 D_800B6760[];
+extern s32 D_800B6780[];
+extern s32 D_800B6810[];
+extern s32 D_800B69E0[];
 extern u8 D_800B6D30;
 extern u8 D_800B6D34;
 extern u8 D_800B6D38;
@@ -706,6 +712,7 @@ extern u8 D_800E7D49;
 extern u8 D_800E7D4A;
 extern u8 D_800E7D4B;
 extern s32 D_800E7D4C;
+extern u8 D_800E7D4F;
 extern s32 D_800E7D50;
 extern u8 D_800E7D68;
 #ifndef MAIN_API_OVERRIDE_D_800E8BEE
@@ -1070,8 +1077,12 @@ extern u8 D_801207A5;
 extern u8 D_801207A6;
 extern u8 D_801207A7;
 extern u8 D_801207A9;
+#ifndef MAIN_API_OVERRIDE_D_801207B0
 extern s32 D_801207B0;
+#endif
+#ifndef MAIN_API_OVERRIDE_D_801207B4
 extern s32 D_801207B4;
+#endif
 extern s16 D_801207BA;
 extern s16 D_801207CA;
 extern s16 D_801207CE;
@@ -1154,6 +1165,10 @@ extern s16 D_8012114C;
 extern u8 D_8012117A;
 extern u8 D_801211BE;
 extern u8 D_80121202;
+extern s16 D_8012121A;
+#ifndef MAIN_API_OVERRIDE_D_8012121C
+extern s16 D_8012121C;
+#endif
 extern s32 D_80121238;
 extern u8 D_80121246;
 extern s32 D_8012127C;
@@ -1246,6 +1261,11 @@ extern s16 D_801220EC;
 extern s16 D_801220EE;
 extern s32 D_801220F0;
 extern s32 D_801220F4;
+extern s16 D_80122790;
+extern s32 D_80122794;
+extern s8 D_80122798;
+extern s8 D_80122799;
+extern s8 D_8012279A;
 /* 0x50-byte records at D_801227A0 (16 entries; D_80122CA0 is the end address the loops compare against) */
 typedef struct TaiikuBig {
     /* 0x00 */ s32 unk0;
@@ -1306,6 +1326,7 @@ extern s32 D_80122D38;
 extern s32 D_80122D40;
 extern s32 D_80122D44;
 extern s32 D_80122D4C;
+extern u8 D_80122DD0[];
 extern u32 D_80122E9C;
 extern s32 D_80122EA0;
 extern s32 D_80122EA4;
@@ -1576,8 +1597,9 @@ void func_8004EDF4();
 void func_8004EE18();
 void func_8004F860();
 void func_8004F870();
-void func_8004F984();
-void menu_check();
+s8 menu_check();
+s8 menu_check_1();
+s8 menu_check_2();
 void func_8004FC10();
 void func_800504CC();
 s32 func_80050AB8();

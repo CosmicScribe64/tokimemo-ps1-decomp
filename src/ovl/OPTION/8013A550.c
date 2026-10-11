@@ -3,7 +3,37 @@
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A550);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A604);
+void func_8013A604(void) {
+    s32 i;
+    s32 padx[1]; /* FAKE: one unused word above the arrays reproduces the original frame and array offsets; real source unknown. T-9310 */
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    D_800B3C6C = 1;
+    func_8006BC28(0);
+    for (i = 0; i < 16; i++) {
+        a[i] = 0x20;
+        b[i] = i * 0xC - 0x60;
+        c[i] = 0x10;
+        d[i] = 0xC;
+    }
+    func_8004F870(0, 0x10, a, b, c, d);
+    (&D_800E6280.unk_036)[0] = (&D_800E6280.unk_036)[1] = (&D_800E6280.unk_036)[2] = 0x80;
+    func_8004ADAC(4);
+    func_800AE0F0(D_800E6280.unk_0D4, "おぷ");
+    func_800AE0F0(D_800E6280.unk_0DC, "ション");
+    func_800AE0F0(D_800E6280.unk_0E4, "起動");
+    func_8004E58C();
+    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー１", 0);
+    func_8004E788(-0x80, 0, 0xF, (s32)"月日関連", 0);
+    func_8004E788(0x20, -0x18, 0xF, (s32)D_800E6280.unk_0D4, 0);
+    func_8004E788(0x20, -0xC, 0xF, (s32)D_800E6280.unk_0DC, 0);
+    func_8004E788(0x20, 0, 0xF, (s32)D_800E6280.unk_0E4, 0);
+    func_8004E884(5);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A7EC);
 
@@ -81,7 +111,31 @@ INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CD74);
 
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CD7C);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013AD94);
+void func_8013AD94(void) {
+    s32 i;
+    s32 pad[1]; /* FAKE: one unused word above the arrays reproduces the original array offsets; real source unknown. T-9310 */
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    func_8006BC28(0);
+    for (i = 0; i < 16; i++) {
+        a[i] = 0x20;
+        b[i] = i * 0xC - 0x60;
+        c[i] = 0x10;
+        d[i] = 0xC;
+    }
+    func_8004F870(0, 0x10, a, b, c, d);
+    func_8004E58C();
+    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー２", 0);
+    func_8004E788(-0x80, 0, 0xF, (s32)"プレイヤーデータ", 0);
+    func_8004E788(0x60, -0x18, 0xF, (s32)D_800E6280.unk_0D4, 0);
+    func_8004E788(0x60, -0xC, 0xF, (s32)D_800E6280.unk_0DC, 0);
+    func_8004E788(0x60, 0, 0xF, (s32)D_800E6280.unk_0E4, 0);
+    func_8004E884(5);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013AF10);
 
@@ -128,7 +182,29 @@ INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CE30);
 
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CE38);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013B410);
+void func_8013B410(void) {
+    s32 i;
+    s32 pad[1]; /* FAKE: one unused word above the arrays reproduces the original array offsets; real source unknown. T-9310 */
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    func_8006BC28(0);
+    for (i = 0; i < 16; i++) {
+        a[i] = 0x20;
+        b[i] = i * 0xC - 0x60;
+        c[i] = 0x10;
+        d[i] = 0xC;
+    }
+    func_8004F870(0, 0x10, a, b, c, d);
+    func_8004E58C();
+    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー３", 0);
+    func_8004E788(-0x80, 0, 0xF, (s32)"女の子データ", 0);
+    func_8004E788(0x40, -0x18, 0xF, (&D_800B3538)[D_8013E740 & 0xF], 0);
+    func_8004E884(3);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013B568);
 
@@ -175,7 +251,29 @@ INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CED4);
 
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CEDC);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013BECC);
+void func_8013BECC(void) {
+    s32 i;
+    s32 pad[1]; /* FAKE: one unused word above the arrays reproduces the original array offsets; real source unknown. T-9310 */
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
+
+    func_8006BC28(0);
+    for (i = 0; i < 16; i++) {
+        a[i] = 0x20;
+        b[i] = i * 0xC - 0x60;
+        c[i] = 0x10;
+        d[i] = 0xC;
+    }
+    func_8004F870(0, 0x10, a, b, c, d);
+    func_8004E58C();
+    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニュー４", 0);
+    func_8004E788(-0x80, 0, 0xF, (s32)"その他データ", 0);
+    func_8004E884(2);
+    func_8004284C();
+    D_800E6280.unk_71C = 0;
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013BFF8);
 
@@ -222,9 +320,99 @@ INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CF78);
 
 INCLUDE_RODATA("asm/ovl/OPTION/data/OPTION/8013A550.rodata", D_8013CF80);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013C404);
+void func_8013C404(void) {
+    s32 i;
+    s32 pad[1]; /* FAKE: one unused word above the arrays reproduces the original array offsets; real source unknown. T-9310 */
+    s16 a[16];
+    s16 b[16];
+    s16 c[16];
+    s16 d[16];
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013C52C);
+    func_8006BC28(0);
+    for (i = 0; i < 16; i++) {
+        a[i] = 0x20;
+        b[i] = i * 0xC - 0x60;
+        c[i] = 0x10;
+        d[i] = 0xC;
+    }
+    func_8004F870(0, 0x10, a, b, c, d);
+    func_8004E58C();
+    func_8004E788(-0x80, -0x18, 0xF, (s32)"設定メニューＦ", 0);
+    func_8004E788(-0x80, 0, 0xF, (s32)"目標ステップ", 0);
+    func_8004E884(5);
+    func_8004284C();
+}
+
+void func_8013C52C(void) {
+    s32 i;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    func_80050B54(0);
+    for (i = 0; i < 16; i++) {
+        func_8004B338(D_8013E844[i], -0x20, i * 0xC - 0x60);
+    }
+    func_800AE080(D_80122DD0, 0x100);
+    if (D_800E6280.unk_F88 & 0x90) {
+        switch (D_800E6280.unk_1093) {
+        case 0:
+            D_800B3C6C = 0;
+            func_80042878(0x34);
+        default:
+            break;
+        case 1:
+            func_80042878(0x50);
+            break;
+        case 2:
+            func_8004E58C();
+            func_80048DD0(0);
+            func_80042878(0x5D);
+            break;
+        case 3:
+            func_80042878(0x57);
+            break;
+        case 4:
+            func_80042878(0x56);
+            break;
+        case 5:
+            func_80042878(0x5A);
+            break;
+        case 6:
+            func_80042878(0x72);
+            break;
+        case 7:
+            func_80042878(0x71);
+            if (D_800E6280.unk_0F4.h >> 0xC < 6) {
+                func_80042878(0x70);
+            }
+            break;
+        case 8:
+            func_80042878(0x51);
+            break;
+        case 9:
+            func_80042878(0x53);
+            break;
+        case 10:
+            func_80042878(0x55);
+            break;
+        case 11:
+            func_80042878(0x54);
+            break;
+        case 12:
+            func_80042878(0x58);
+            break;
+        case 13:
+            func_80042878(0x52);
+            break;
+        case 14:
+            func_80042878(0x5E);
+            break;
+        case 15:
+            func_80042878(0x59);
+            break;
+        }
+    }
+}
 
 s32 func_8013C72C(void) {
     switch (D_800E6280.unk_110A) {
