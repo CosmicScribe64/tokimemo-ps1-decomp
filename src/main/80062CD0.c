@@ -163,7 +163,36 @@ void message_window_show(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80062CD0", icon_disp_switch);
+void icon_disp_switch(s32 arg0) {
+    u32 i;
+    u8 *p;
+    GameState *g;
+
+    g = &D_800E6280; /* keeps the base address in a register before the branch (T-9360) */
+    if (arg0 != 0) {
+        i = 0;
+        if ((u8)D_800E6280.unk_F6D != 0) {
+            p = D_8011ECD0;
+            do {
+                p[0x1543] |= 0x80;
+                p[0x1103] |= 0x80;
+                i++;
+                p += 0x44;
+            } while (i < (u8)g->unk_F6D);
+        }
+    } else {
+        i = 0;
+        if ((u8)D_800E6280.unk_F6D != 0) {
+            p = D_8011ECD0;
+            do {
+                p[0x1543] &= 0x7F;
+                p[0x1103] &= 0x7F;
+                i++;
+                p += 0x44;
+            } while (i < (u8)g->unk_F6D);
+        }
+    }
+}
 
 void icon_can_use_set(s32 idx, s32 on) {
     if (on) {
