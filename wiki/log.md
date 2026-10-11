@@ -943,3 +943,167 @@ Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its kanban 
 ## [2026-10-11] build | T-9410 clean proof and review complete
 
 Clean Docker configure/ninja build after deleting asm and build: 27/27 SHA1 OK. build/headers.ok and build/globals.ok exist; tools/sync_protos.py --check-branch exits zero; tools/test_register_shapes.py passes all three synthetic tests; git diff --check passes. Progress: 4734/6958, 729612 bytes, +5 functions/+2768 bytes over baseline. Inline standards/spec review found no unresolved findings. Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its card to Done; full evidence in [[register-allocation-wave7]]. Uncommitted changes left for the orchestrator; no existing r7-fixes tooling files changed.
+
+## [2026-10-11] ticket | T-9560 Wave 8 list 6 started
+
+Created [[tickets/T-9560-wave-8-list-6]] In Progress and its kanban card. Read the shared brief, coding standards, [[decompile-workflow]], [[register-allocation-wave7]] and matching history. Assigned 151 functions in 35 owned files. DATE func_8015A7E0 is a documented handwritten rotation helper and remains assembly; unresolved experiments will be restored to INCLUDE_ASM.
+
+## [2026-10-11] build | T-9560 baseline verified
+
+Fresh Docker configure/ninja build passes all 27 unit SHA1 checks and headers/globals checks before source changes. Generated m2c drafts in list order with unit-qualified names. Initial draft cleanup reconstructs byte displacements and typed record strides; baseline matching attempts now begin. Evidence: scratchpad/w8-6/baseline-build.log and scratchpad/w8-6/drafts.jsonl.
+
+## [2026-10-11] query | T-9560 register inventory CLI
+
+The brief's `tools/register_shapes.py <func>` syntax is not accepted by the current tool (argparse exits 2). Used its existing inventory API to classify the recorded rows without changing tooling. Before any new T-0018 rows, consult [[register-allocation-wave7]] and the resulting scratchpad/w8-6/shapes.json inventory.
+
+## [2026-10-11] build | T-9560 baseline attempts 1-20
+
+Processed assigned functions in list order through Docker m2c, aggregate migration, ninja and resolved funcdiff where the draft compiled. Results are recorded in [[tickets/T-9560-wave-8-list-6]]; rejected drafts were restored to INCLUDE_ASM. Scratch evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 scoped duplicate attempt rejected
+
+Ran tools/dupes.py --apply --check with the exact 35 owned file paths. One EVENT copy candidate (func_8011B5A8) failed the unit verification and was reverted by the tool; zero functions retained. All 151 unit-qualified m2c drafts are now captured. Restoring the baseline build after the rejected copy's temporary header edits; subsequent bounded attempts build the actual object, run resolved funcdiff, and require the unit SHA1 before retaining a candidate.
+
+## [2026-10-11] build | T-9560 baseline restored after dupes
+
+Docker ninja -j4 passes the baseline again after the rejected duplicate candidate: all 27 unit SHA1 checks OK. No duplicate source or header changes retained. Focused variants now test a local GYOZI selector, corrected EVENT halfword updates, and reconstructed RPG_BAT reset loops before proceeding beyond the first 20 assigned functions.
+
+## [2026-10-11] build | T-9560 focused GYOZI:func_80137F48
+
+Tried 9 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 focused EVENT:func_80108A24
+
+Tried 3 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 focused RPG_BAT:func_8014F540
+
+Tried 3 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 short permuter EVENT:func_80108A24
+
+Ran a 45-second single-worker permuter pass for the near miss. Restored the draft to INCLUDE_ASM pending candidate review. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 baseline attempts 21-40
+
+Processed assigned functions in list order through Docker m2c, aggregate migration, ninja and resolved funcdiff where the draft compiled. Results are recorded in [[tickets/T-9560-wave-8-list-6]]; rejected drafts were restored to INCLUDE_ASM. Scratch evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 focused TAIIKU:func_8013384C
+
+Tried 4 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 baseline attempts 41-60
+
+Processed assigned functions in list order through Docker m2c, aggregate migration, ninja and resolved funcdiff where the draft compiled. Results are recorded in [[tickets/T-9560-wave-8-list-6]]; rejected drafts were restored to INCLUDE_ASM. Scratch evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 focused TAIIKU:func_8013384C
+
+Tried 1 reconstructed C variants; result MATCH. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] decision | T-9560 TAIIKU promoted column local
+
+Kept `func_8013384C` after resolved function MATCH and TAIIKU SHA1 verification. Both scalar locals precede the two table buffers, preserving the original home-slot layout. Plain C; no dummy padding. Idiom recorded in [[matching-notes]], evidence in [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] ingest | T-9560 controlled GYOZI register evidence
+
+Appended one GYOZI register-order row to [[data/t0018-cases]] after nine compiled variants and resolved real differences. Consulted [[register-allocation-wave7]] and the register-shapes inventory; no source retained. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 focused TEL:func_80139E3C
+
+Tried 4 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 SHOUGATU switch verified
+
+Kept `src/ovl/SHOUGATU/8013E330.c` switch function `func_8013EE30` after resolved MATCH and unit SHA1 success. Two retained functions now total 796 bytes; details in [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 short permuter TEL:func_80139E3C
+
+Ran a 45-second single-worker permuter pass for the near miss. Restored the draft to INCLUDE_ASM pending candidate review. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] ingest | T-9560 TEL selector partly resolved
+
+Four typed TEL variants show that implicit s32 without return recovers the original selector register. Pointer temporary order remains different under both aggregate forms; a 45-second permuter pass finds no improvement. Added one controlled row to [[data/t0018-cases]] and restored the temporary table declaration and C. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 baseline attempts 61-90
+
+Processed assigned functions in list order through Docker m2c, aggregate migration, ninja and resolved funcdiff where the draft compiled. Results are recorded in [[tickets/T-9560-wave-8-list-6]]; rejected drafts were restored to INCLUDE_ASM. Scratch evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 bounded near-miss permutations
+
+Ran selected compiled near misses through 25-second single-worker permuter passes. Outputs are candidates pending review; source/header drafts restored. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 baseline attempts 91-151
+
+Processed assigned functions in list order through Docker m2c, aggregate migration, ninja and resolved funcdiff where the draft compiled. Results are recorded in [[tickets/T-9560-wave-8-list-6]]; rejected drafts were restored to INCLUDE_ASM. Scratch evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 focused RPG_BAT:func_8014F540
+
+Tried 4 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] query | T-9560 GPU packet type boundary
+
+Checked the TACO sprite-builder near miss against the project SDK header. The 0x14-byte packet layout requires a missing SPRT type; this batch cannot extend that SDK header. Recorded the limitation in [[matching-notes]] rather than treating the raw byte-view draft as a controlled T-0018 case.
+
+## [2026-10-11] build | T-9560 focused EVENT:func_8010B614
+
+Tried 3 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 focused TACO:func_801423B0
+
+Tried 2 reconstructed C variants; result MATCH. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 TACO record update matched
+
+Kept `func_801423B0` after the direct byte-field increment and unmasked argument matched the resolved function and TACO SHA1. Three functions now total 1,044 bytes. Idiom in [[matching-notes]], verification in [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 focused EVENT:func_8011C470
+
+Tried 4 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] lint | T-9560 retained source conventions
+
+Named the new TAIIKU table field `unk_00` with its documented offset, and added explanations for the promoted-local layout and TACO byte reload. No matching trick or new FAKE was introduced. These source/header edits will be reverified in the final build; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 focused RPG_BAT:func_8014F540
+
+Tried 2 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 focused EVENT:func_8011C470
+
+Tried 2 reconstructed C variants; result DIFF. Verified with Docker ninja and resolved funcdiff. Rejected variants and their temporary declarations restored. Evidence: scratchpad/w8-6/.
+
+## [2026-10-11] build | T-9560 typed EVENT callback view
+
+Tested the known Rec34 table with its opaque 0x1A4-byte prefix and a shared low-bit flag view. Compared canonical and unprototyped callback declarations through sync_protos, real object diff and unit SHA1 where applicable. Result DIFF; see [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 bounded near-miss permutations
+
+Ran selected compiled near misses through 25-second single-worker permuter passes. Outputs are candidates pending review; source/header drafts restored. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] query | T-9560 final register-gap evidence
+
+Recorded three additional controlled cases in [[data/t0018-cases]], bringing this batch to five rows. Short permuter runs produced no score-zero candidate; all rejected sources and declarations remain restored. Results and caveat filed in [[matching-notes]] and [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] ticket | T-9560 ready for inline review
+
+Moved [[tickets/T-9560-wave-8-list-6]] to In Review and synchronized [[kanban]] and [[index]]. Audit confirms 151 assigned functions: three retained plain-C matches totaling 1,044 bytes and 148 restored assembly functions. Five rows added to [[data/t0018-cases]]. Final scoped duplicate pass and guards are running.
+
+## [2026-10-11] build | T-9560 scoped duplicates and closing build
+
+Exact owned-file labels passed to dupes.py --apply --check. Its sole candidate, EVENT `func_8011B5A8` from `func_8013FA6C`, failed unit verification and was automatically restored together with all temporary headers; no copies retained. Prototype branch and global checks passed. Invalidated only 27 SHA1 stamps and header/global guard stamps for the final incremental ninja; objects retained. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] lint | T-9560 inline source review
+
+Reviewed the uncommitted diff against CODING_STANDARDS.md and the shared brief/list using the local code-review skill inline as required by the brief. Standards: zero source findings. Spec: zero source findings. Checklist and evidence recorded in [[tickets/T-9560-wave-8-list-6]]; final build validation still pending.
+
+## [2026-10-11] query | T-9560 documented tooling discrepancy
+
+Filed the shared brief's unsupported register_shapes.py positional function filter in [[matching-notes]]. Used the existing inventory API for historical cluster classification; no tooling changes made. See [[tickets/T-9560-wave-8-list-6]].
+
+## [2026-10-11] build | T-9560 final verification passed
+
+Final incremental Docker ninja exited zero with 27/27 binary SHA1 checks OK, headers OK and globals OK. Post-duplicate prototype branch check passed with zero new disagreements (17 known). Three retained functions and the revised TAIIKU field name/comments are reverified. Inline Standards and Spec reviews have zero unresolved findings; results recorded in [[tickets/T-9560-wave-8-list-6]]. Final progress report pending.
+
+## [2026-10-11] ticket | T-9560 complete
+
+Moved [[tickets/T-9560-wave-8-list-6]] to Done after final verification and inline review; synchronized [[kanban]] and [[index]]. All 151 functions attempted, three plain-C matches (1,044 bytes), 148 restored assembly functions. Five T-0018 rows added. Final progress: 4737/6958 functions, 730656/2279368 bytes (32.1%). All 27 hashes and header/global/prototype guards pass; Standards 0 and Spec 0 findings. Results filed in [[matching-notes]]. No commit, merge or push.

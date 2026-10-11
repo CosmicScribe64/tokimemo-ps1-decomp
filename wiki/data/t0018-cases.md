@@ -1121,3 +1121,13 @@ Historical rows above remain unchanged. Resolution records:
 - The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
 
 Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
+
+## Wave 8, list 6 (T-9560, 2026-10-11)
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| GYOZI/801372B0 | `func_80137F48` | regorder | Six word copies then byte-index arithmetic: nine candidates varying the index type (`u8`, `u32`, `s32`) and its position among the copies all give real resolved DIFF. Original reuses `$t5/$t6/$t7` for late copies; IDO advances through `$t9/$t0/$t1`, and the arithmetic result does not stay in `$v0`. Historical shape checked through register_shapes inventory; reverted (T-9560). |
+| TEL/801397D0 | `func_80139E3C` | regorder | Four typed `Rec38`/GameState-pointer and `void`/implicit-`s32` variants: the implicit result type recovers the original shifted index in `$v0`; remaining real DIFF is the address/stride/table-offset temporaries (`$t9/$t8/$t0` original, `$t0/$t9/$t8` IDO) and their ordering. Natural Rec38 indexing gives the same diff as the byte-offset view. A 45-second permuter run finds no improvement; historical selector cluster checked, restored (T-9560). |
+| EVENT/8010B360 | `func_8010B614` | regorder | Constant-allocation/sharing cluster: three assignment variants and a typed prefix/Rec34/CharFlags view with canonical versus unprototyped callback declarations all give real DIFF. Original shares `li a0,4` with the byte store; IDO retains another temporary or a pointer assignment, then shifts the record-mask temporaries. The 25-second permuter stays at score 290; restored (T-9560). |
+| EVENT/8010FE10 | `func_8011C470` | promo | Constant-allocation/sharing cluster with a byte snapshot across a call: four local-type variants plus full-width and implicit-result variants give real DIFF. Original loads the snapshot into `$v0` and spills at `sp+0x28`; IDO uses `$a1` and `sp+0x2C`, with additional mask/compare differences. A 25-second permuter improves 283 to 275 without matching; restored (T-9560). |
+| GEKO/8013F360 | `func_801403A0` | regorder | Masked byte comparison and Rec38 updates: plain typed draft, GameState-pointer and implicit-result variants give real DIFF. Original uses `$t1` for `(v & 0x7F) < 2`, IDO `$t0`; subsequent halfword-update temporaries and the 0x44 constant remain one register apart. A 25-second permuter finds no improvement from 180; restored (T-9560). |

@@ -44,7 +44,27 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80133494);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_80133644);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_8013384C);
+void func_8013384C(arg0, arg1)
+s32 arg0;
+u8 arg1;
+{
+    /* Promoted parameter locals precede the table copies (T-9560). */
+    s32 index;
+    s32 column;
+    TaiikuWords48 a;
+    TaiikuWords48 b;
+
+    a = D_80149030;
+    b = D_801490F0;
+    if (arg0 == 11) {
+        index = 0;
+    } else {
+        index = arg0;
+    }
+    column = arg1;
+    func_80046290(a.unk_00[arg0][column], b.unk_00[arg0][column], index);
+    func_80044750(0x300);
+}
 
 void func_80133928(s32 arg0) {
     u8 *p;
