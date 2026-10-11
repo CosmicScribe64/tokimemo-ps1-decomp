@@ -836,3 +836,9 @@ Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-bra
 
 ## [2026-10-10] ticket | T-9340 wave 7 list 4 (In Progress)
 Created [[tickets/T-9340-wave-7-list-4]]; work list of 142 functions in 36 files.
+
+## [2026-10-10] build | T-9340 wave 7 list 4
+9 functions matched (2960 bytes) in branch w7-4: main `func_8006B5BC`, OPTION `func_80137864`, SHOUGATU `func_80134400`, ENDING `func_80137340`/`func_801380B0`/`func_80139498`, GYOZI `func_8013D294`, TT `func_80144094`/`func_80145E60`. About 30 rows added to [[data/t0018-cases]]; notes in [[matching-notes]] "Wave 7, list 4 (T-9340)".
+
+## [2026-10-10] ticket | T-9340 (In Progress -> Done)
+Clean rebuild 27/27 OK, headers OK, globals OK, `sync_protos --check-branch` OK, progress 4567/6958. Inline review in [[tickets/T-9340-wave-7-list-4]], no open findings.
