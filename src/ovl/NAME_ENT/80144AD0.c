@@ -239,7 +239,29 @@ void func_80146B3C(void) {
     D_80120812 = -0x78;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80146BCC);
+/* FAKE: the empty test of D_801206E0 makes its load the first instruction, as in the original; found with the permuter, T-9380 */
+void func_80146BCC(void) {
+    if ((D_801206E0 && D_801206E0) && D_801206E0) {
+    }
+    D_801206D9 = 9;
+    D_801206DA = 0x40;
+    D_80120710 = 0x41000000;
+    D_801206DB = 0xA4;
+    D_801206E4 = 0x801842C4;
+    D_801206E8 = 0x801842F0;
+    D_8012070C = 0x801842BC;
+    D_801206E0 += 1;
+    if (D_801206E0 >= 5) {
+        D_801206F0 = 0xA;
+    } else if (D_801206E0 >= 5) {
+        D_801206F0 = 9;
+    } else {
+        D_801206F0 = 8;
+    }
+    D_801206DD = 0x80;
+    D_801206FE = -0xA0;
+    D_80120702 = -0x78;
+}
 
 void func_80146CB8(void) {
     D_8012071D = 9;
