@@ -1351,3 +1351,4 @@ void func_800F86C4(void);
 void func_800F8B50(void);
 void func_800F93FC(void);
 void func_800F9558(void);
+extern s8 D_801218DC[];
