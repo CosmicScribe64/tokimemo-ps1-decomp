@@ -38,7 +38,26 @@ INCLUDE_ASM("asm/nonmatchings/main/80047550", _sys_default_tpage_set);
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", load_tpage_buf_lock);
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", search_load_tpage_buf_lock);
+s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1) {
+    GameState *var_v0;
+    s32 var_v1;
+
+    /* FAKE: shifted cursor keeps the target's base + 0x1228 addressing, T-9580. */
+    var_v0 = (GameState *)((u8 *)&D_800E6280 + 0x14);
+    for (var_v1 = 5; var_v1 < 0x40; var_v1++) {
+        if (var_v0->unk_1228[0] == -1) {
+            var_v0->unk_1228[0] = arg0;
+            if (var_v1 < 0x20) {
+                load_csr_tp(arg0, (u8)var_v1 & 0x1F, (s32)arg1, 0, 0, 0x80, 0x80);
+                return var_v1;
+            }
+            load_csr_tp(arg0, (u8)var_v1 & 0x1F, (s32)arg1, 0, 0x80, 0x80, 0x80);
+            return var_v1;
+        }
+        var_v0 = (GameState *)((u8 *)var_v0 + 4);
+    }
+    return -1;
+}
 
 s32 search_tpage_multi(s32 arg0, u8 arg1) {
     s32 j;

@@ -1127,3 +1127,11 @@ Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[de
 | GYOZI/80135CA0 | `func_80136124` | regorder | Original repeats `multu a1,a0` with hoisted 0x38 for two girl-record accesses; ordinary aggregate fields combine the product into one sll/subu/sll base and hoist the second `lh` (T-9580). |
 | RPG_BAT/801447E0 | `func_801453B4` | regorder | Three word counters occupy original `$v1/$a1/$a2`; the draft uses `$a1/$a2/$a3` for the sum, constant stores, and decrements, with an extra copy in one branch (T-9580). |
 | DATE/80150010 | `func_801511B4` | regorder | FnTbl40 and leading scalar reproduce frame and instructions except `D_800B593C` address: original `lui v1; lbu v0`, IDO `lui v0; lbu v0`; 15-second permuter, literal view, local pointer, and assignment chain did not match (T-9580). |
+
+## T-9580 deep-pass resolutions (2026-10-11)
+
+| File | Function | Kind | Resolution |
+|---|---|---|---|
+| NAME_ENT/80139740 | `func_80140D6C` | resolved | T-8050/T-9170 end-pointer row closed: the real permuter candidate plus same-line pointer initialization and do-loop match; biased cursor/end expression/layout are marked FAKE. Resolved MATCH and NAME_ENT SHA1 (172 bytes). |
+| SHOUGATU/8013F190 | `func_80140AD8` | resolved | T-9020 hoisting row closed with the real b1 bitfield test and assignment plus implicit s32 return type; no scheduling trick. Resolved MATCH and SHOUGATU SHA1 (256 bytes). |
+| 80047550 | `search_load_tpage_buf_lock` | resolved | The search half of T-9110 is closed: remove the saved-return local, use the marked byte cursor, and pass `(u8)var_v1 & 0x1F` to the existing typed callee. Resolved MATCH and main SHA1 (232 bytes); `load_tpage_buf_lock` remains open. |

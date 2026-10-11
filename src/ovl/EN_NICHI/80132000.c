@@ -417,7 +417,59 @@ void func_801340CC(void) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134258);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801344F0);
+void func_801344F0(s32 arg0, s32 arg1) {
+    s32 temp_hi;
+    s32 temp_hi_2;
+    s32 temp_v1;
+    EnObj *var_s0;
+
+    if (arg1 == 1) {
+        temp_v1 = func_800AE0D0() % 4;
+        switch (temp_v1) {
+        default:
+            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            break;
+        case 0:
+            temp_hi = func_800AE0D0() % 320 - 0xA0;
+            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0->unk_16 = temp_hi;
+            var_s0->unk_1A = -0x96;
+            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x200);
+            break;
+        case 1:
+            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0->unk_16 = 0xBE;
+            var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0x600);
+            break;
+        case 2:
+            temp_hi_2 = func_800AE0D0() % 320 - 0xA0;
+            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0->unk_16 = temp_hi_2;
+            var_s0->unk_1A = 0x96;
+            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xA00);
+            break;
+        case 3:
+            var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+            var_s0->unk_16 = -0xBE;
+            var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+            var_s0->unk_1C = (s32) ((func_800AE0D0() % 1024) + 0xE00);
+            break;
+        }
+    } else {
+        var_s0 = (EnObj *)(D_8013984C + arg0 * 0x30);
+        var_s0->unk_16 = (s16) ((func_800AE0D0() % 320) - 0xA0);
+        var_s0->unk_1A = (s16) ((func_800AE0D0() % 240) - 0x78);
+        var_s0->unk_1C = (s32) (func_800AE0D0() % 4096);
+    }
+    var_s0->unk_24 = 1;
+    if (var_s0->unk_1C >= 0x1000) {
+        var_s0->unk_1C -= 0x1000;
+    }
+    if (var_s0->unk_1C < 0) {
+        var_s0->unk_1C += 0x1000;
+    }
+}
 
 void func_80134784(s32 *arg0, s32 *arg1) {
     s32 i;

@@ -431,7 +431,51 @@ void func_8013DD48(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013DD94);
+s32 func_8013DD94(void) {
+    u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+    u8 temp_v0;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_800AE0F0(sp38, D_800B32CC[D_800E6280.unk_1118 - 1]);
+        func_800AE100(sp38, "番アルバムを作成しています。");
+        func_8004E788(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        func_8004E884(2);
+        temp_v0 = D_800E7D14[D_800E6280.unk_1118];
+        if (temp_v0 == 0xFF) {
+            D_800E6280.unk_110D += 1;
+        } else if (temp_v0 == 1) {
+            D_800E6280.unk_110D += 1;
+        } else if (func_80054694((s32) D_800E6280.unk_1118) == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_80042908(4);
+        }
+        break;
+    case 1:
+        func_80053CE0();
+        func_80041878();
+        func_80042058();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 2:
+        if (func_80054590() == 0x14) {
+            D_800E6280.unk_110D += 1;
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    case 3:
+        func_80053D10();
+        func_8013B77C();
+        func_80042878(0x14);
+        break;
+    }
+}
+
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013DF88);
 
@@ -585,9 +629,88 @@ void func_8013F71C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F758);
+s32 func_8013F758(void) {
+    u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F984);
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_800AE0F0(sp38, D_800B3288[D_800E6280.unk_1118]);
+        func_800AE100(sp38, "番アルバムに");
+        func_8004E788(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        func_8004E788(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
+        func_8004E884(2);
+        func_80053CE0();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_80054590() == 0x14) {
+            D_800E7D14[D_800E6280.unk_1118] = 1;
+            D_800E6280.unk_110D += 1;
+            func_80053D10();
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_800AE0B0("NO MEM CARD \n");
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    case 2:
+        func_80053D10();
+        D_800E7D36 = D_800E6280.unk_1118;
+        D_800E6280.unk_1118 = 0;
+        func_80053CE0();
+        func_80054E6C();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            func_80042940(0);
+            D_800E6280.unk_110D = 2;
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    }
+}
+
+
+s32 func_8013F984(void) {
+    u8 sp38[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_800AE0F0(sp38, D_800B3288[D_800E6280.unk_1118]);
+        func_800AE100(sp38, "番アルバムに");
+        func_8004E788(-0x40, 0x20, 0xF, (s32) sp38, 0);
+        func_8004E788(-0x40, 0x30, 0xF, (s32) "コピーします。", 0);
+        func_8004E884(2);
+        func_80053CE0();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_80054590() == 0x14) {
+            D_800E7D14[D_800E6280.unk_1118] = 1;
+            D_800E6280.unk_110D += 1;
+            func_80053D10();
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_800AE0B0("NO MEM CARD \n");
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    case 2:
+        func_80042940(0);
+        D_800E6280.unk_110D = 2;
+        break;
+    }
+}
+
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014BDE8);
 
@@ -712,32 +835,37 @@ void func_80140D20(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-8050, the original loads the end symbol address twice (hoisted copy in the loop, fresh one after it) */
-#ifdef NON_MATCHING
-void func_80140D6C(void) {
-    u8 *p;
-
-    if (D_800E6280.unk_F88 & 0x860) {
-        for (p = (u8 *)&D_800E7D10; p != &D_800E7D1F; p++) {
-            if (p[4] == 1) {
-                break;
-            }
-        }
-        if (p == &D_800E7D1F) {
-            func_8004284C();
-            return;
-        }
-        func_80042908(2);
-        if (D_800E8BEE != 0) {
-            func_80042940(1);
-            return;
-        }
-        func_80042940(0x20);
+/* FAKE: biased byte cursor, alternate end expression and statement layout preserve addressing and scheduling, T-9580. */
+void func_80140D6C(void)
+{
+  u8 *p;
+  u8 *new_var;
+  if (D_800E6280.unk_F88 & 0x860)
+  {
+    p = (u8 *) (&D_800E7D10); do
+    {
+      if (p[4] == 1)
+      {
+        break;
+      }
+      p++;
     }
+    while (p != (&D_800E7D1F));
+    new_var = ((u8 *) (&D_800E7D10)) - -15;
+    if (p == new_var)
+    {
+      func_8004284C();
+      return;
+    }
+    func_80042908(2);
+    if (D_800E8BEE != 0)
+    {
+      func_80042940(1);
+      return;
+    }
+    func_80042940(0x20);
+  }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140D6C);
-#endif
 
 void func_80140E18(void) {
     func_8004E58C();

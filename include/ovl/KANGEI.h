@@ -251,5 +251,20 @@ void func_801341E8(void);
 void func_80138F54(void);
 void func_80134DB0(void);
 
+extern s8 D_80139ABC;
+
+/* T-9580: bits 25..26 of the packed +0x66C record word. */
+typedef struct KangeiModeFlags {
+    u32 low : 25;
+    u32 mode : 2;
+    u32 high : 5;
+} KangeiModeFlags; /* size 0x04 */
+
+/* T-9580: overlay view keeps the packed records at their GameState offset. */
+typedef struct KangeiStateView {
+    /* 0x000 */ u8 pad_000[0x66C];
+    /* 0x66C */ KangeiModeFlags modes[12];
+} KangeiStateView; /* size 0x69C */
+
 #endif /* OVL_KANGEI_H */
 extern u8 D_80139DF8;

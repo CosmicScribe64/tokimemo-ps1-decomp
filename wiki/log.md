@@ -1719,3 +1719,163 @@ All five retained functions in [[tickets/T-9580-wave-8-list-8]] pass funcdiff --
 ## [2026-10-11] ticket | List 8 completed
 
 Inline review against CODING_STANDARDS.md and the shared brief has zero unresolved findings. Moved [[tickets/T-9580-wave-8-list-8]] to Done, checked all acceptance criteria, and synchronized [[kanban]] and [[index]]. All edits remain uncommitted for the orchestrator.
+
+## [2026-10-11] ticket | List 8 reopened for deep second pass
+
+User requested sustained iteration after the first pass was committed. Reopened [[tickets/T-9580-wave-8-list-8]] to In Progress, synchronized [[kanban]] and [[index]], and reread standards, [[decompile-workflow]], and [[register-allocation-wave7]]. Start 09:26 UTC; minimum three hours or list exhaustion. Rank actual resolved differences first, recover aggregate types, run extended near-miss searches, and retain only verified matches.
+
+## [2026-10-11] decision | List 8 second-pass ranking
+
+[[tickets/T-9580-wave-8-list-8]]: ranked saved resolved diffs from the initial pass and bounded retries. Smallest remaining gaps are TT func_80134178 (2 lines), DATE func_801511B4 (4), EN_NICHI func_80132A74 (20), and NAME_ENT func_80140D6C (24). TT control-flow, constant-local, and statement-layout experiments began. Large aggregate/local-copy drafts are queued after these near misses.
+
+## [2026-10-11] build | List 8 deep TT scheduling attempt
+
+[[tickets/T-9580-wave-8-list-8]]: func_80134178 received 43 manual/type variants and two 300-second searches. ANSI parameters avoid the K&R permuter bug but preserve the same two-line real diff; typed 0x68 actor fields also preserve it. No verified candidate; restored src/ovl/TT/80133970.c. Type-aware GameState migration has also recovered several previously rejected drafts for renewed ranking.
+
+## [2026-10-11] build | List 8 NAME_ENT buffer match
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013F984: recovered byte buffer and implicit-int dispatcher; s32-buf-0x108. Resolved MATCH and overlay SHA1 pass; any enlarged buffer marked FAKE.
+
+## [2026-10-11] ingest | List 8 second-pass type and buffer findings
+
+Recorded type-aware GameState recovery, NAME_ENT func_8013F984's verified 388-byte buffer/return-type match, and the exhausted TT scheduling experiment in [[matching-notes]]. The eight-byte NAME_ENT buffer adjustment is explicitly marked FAKE in source and ticket.
+
+## [2026-10-11] build | List 8 deep DATE table dispatch attempt
+
+[[tickets/T-9580-wave-8-list-8]]: func_801511B4 received about 50 manual variants and a five-minute permuter run. Real checks of both score-30 bodies retain the four-line D_800B593C address-register difference; source restored. DATE func_80150460's earlier diff is instead an unresolved M2C_MEMCPY_ALIGNED pseudo-call: neighboring matched copies use a 0x44-byte aggregate. Added a scoped record view for its real struct-copy retry.
+
+## [2026-10-11] build | List 8 NAME_ENT buffer match
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013DD94: recovered byte buffer and implicit-int dispatcher; s32-buf-0x108. Resolved MATCH and overlay SHA1 pass; any enlarged buffer marked FAKE.
+
+## [2026-10-11] build | List 8 NAME_ENT buffer match
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013F758: recovered byte buffer and implicit-int dispatcher; s32-buf-0x108. Resolved MATCH and overlay SHA1 pass; any enlarged buffer marked FAKE.
+
+## [2026-10-11] build | List 8 deep SHOUGATU attempt and NAME_ENT pointer recovery
+
+[[tickets/T-9580-wave-8-list-8]]: func_8013A2F8 improved from 13 to 2 resolved diff lines using existing CharFlags and an element assignment argument; sustained layout and five-minute permuter attempts did not fix the final constant schedule. Source restored. Assembly proves D_800B32CC is a loaded pointer-to-pointer and D_800E7D36 a byte slot; generated their main declarations with sync_protos for NAME_ENT retries.
+
+## [2026-10-11] build | List 8 deep pass copy and allocator experiments
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT `func_8013DD94` (500 bytes) and `func_8013F758` (556 bytes) both pass resolved funcdiff and overlay SHA1 after recovering 0x108-byte local buffers; NAME_ENT deep-pass subtotal is three matches, 1,444 bytes. DATE `func_80150460` now uses a 17-word copy type, reducing the draft to six differing lines; a 300-second permuter finds no improvement and the function is restored. EN_NICHI `func_80132A74`: 37 valid K&R manual variants, compatible wide-parameter trial, and a 300-second permuter search leave 18 differing lines; generated candidates were checked against real funcdiff and the function restored. Recovered SHUGAKU copies and NAME_ENT local-array draft remain experiments pending verification. [[matching-notes]] records the successful buffer and pointer-table idioms.
+
+## [2026-10-11] build | List 8 main buffer-table search match
+
+[[tickets/T-9580-wave-8-list-8]]: main `search_load_tpage_buf_lock` (232 bytes) passes resolved funcdiff and main executable SHA1. Removing the redundant saved-return local recovers the 0x40 frame; `(u8)index & 0x1F` recovers the call-site move/mask sequence with the existing prototype. The shifted GameState cursor is marked FAKE. No ABI override is retained. NAME_ENT `func_8013AF78` is restored after local-array and raw/masked-value experiments. [[matching-notes]] retains the successful idiom.
+
+## [2026-10-11] build | List 8 signed record stores and source ordering
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI `func_801344F0` (660 bytes) passes resolved funcdiff and overlay SHA1. `EnObj` fields preserve signed halfword constants, direct angle-field updates preserve the wrap temporaries, and reversing the two independent halfword stores in cases 0/2 restores the target register order. The successful form needs no FAKE beyond existing file conventions. [[matching-notes]] records the source-order effect.
+
+## [2026-10-11] decision | List 8 aggregate views and shared declaration constraints
+
+[[tickets/T-9580-wave-8-list-8]]: the recovered KANGEI packed records need a whole-word union view in addition to their existing halfword/byte members; the overlay-scoped unions preserve the shared GameState type. A SHOUGATU copy retry discovered that `D_8012071C`, `D_80120760`, and `D_801207A4` share symbol addresses with EVENT declarations. Generated main-API additions must use the existing s32/s32/s16 views; copying uses the recovered 0x44-byte pointer view. Header failures during exploratory declaration changes are excluded from code-generation evidence. A leftover main call declaration was removed, and the clean typed main function and executable SHA1 were reverified.
+
+## [2026-10-11] build | List 8 name-slot scan closes the address reload gap
+
+[[tickets/T-9580-wave-8-list-8]]: NAME_ENT `func_80140D6C` (172 bytes) passes resolved funcdiff and overlay SHA1. The 300-second permuter's candidate checks at two differing lines in the real source; joining pointer initialization with `do` fixes the initial address scheduling. Its alternate end expression retains the fresh end-address load after the loop. The byte-cursor bias, end-address spelling and same-line layout are explicitly FAKE. [[matching-notes]] records the previously open guarded draft's resolution.
+
+## [2026-10-11] build | Wave 8 list 8 packed-mode match
+
+[[tickets/T-9580-wave-8-list-8]]: KANGEI `func_801335F0` adds 324 verified bytes. The real two-bit flag view fixes arithmetic, and inline field indexing plus a marked dead-byte test fixes v0/v1 allocation after a five-minute unsuccessful permuter. Resolved MATCH and KANGEI SHA1 pass. Seven second-pass functions, 2,832 bytes. See [[matching-notes]].
+
+## [2026-10-11] decision | Wave 8 list 8 remaining local-copy drafts
+
+[[tickets/T-9580-wave-8-list-8]]: corrected SHOUGATU's 68-byte copies to use the declared parent buffer rather than adding duplicate main globals owned by EVENT. Recovered missing overlay byte declarations from the original sb stores. The large initializer now compiles at 16 differing lines. NAME_ENT's option snapshot stores likewise supply a missing word and eight byte declarations; earlier undefined-symbol runs are excluded from matching evidence. See [[matching-notes]].
+
+## [2026-10-11] decision | Wave 8 list 8 completed type-repair timeboxes
+
+[[tickets/T-9580-wave-8-list-8]]: restored the unverified BUNKAKEN aligned-table draft, SHUGAKU signed-record/local-copy draft, and DATE color-loop draft after sustained manual experiments and bounded searches. Nearest real diffs remain 129, 20 and 12 lines respectively. Removed their unused appended types; retained verified matches elsewhere. No original sources or compiler passes changed.
+
+## [2026-10-11] decision | Wave 8 list 8 OMIMAI timebox
+
+[[tickets/T-9580-wave-8-list-8]]: OMIMAI's real permuter candidate reduces the near miss to four resolved lines. Thirty-five further store/type/layout experiments did not change its remaining address register. Restored failed C and the unused appended prototype. A temporary main return-type/header mismatch was corrected; affected failed builds are not matching evidence.
+
+## [2026-10-11] build | Wave 8 list 8 ETC initializer match
+
+[[tickets/T-9580-wave-8-list-8]]: ETC `func_801467C4` adds 312 bytes. The record byte view and simple 14-trip for-loop reduce the diff to two lines; a subsequent five-minute permuter confirms that the remaining issue needs a type correction. An unsigned byte view of `unk_F6D` passes the resolved diff and ETC SHA1. Eight second-pass matches, 3,144 bytes; array-bound/type review continues.
+
+## [2026-10-11] lint | Wave 8 list 8 ETC table type review
+
+[[tickets/T-9580-wave-8-list-8]]: changed the new ETC initializer to `unk_69C[unk_71C - 2].unk_00`, using the existing declared flag table instead of indexing across the end of `unk_66C`. The binary's table address is two records before the table's base. Resolved MATCH and ETC unit SHA1 still pass.
+
+## [2026-10-11] decision | Wave 8 list 8 SHOUGATU aggregate timebox
+
+[[tickets/T-9580-wave-8-list-8]]: recovered the large initializer's two 68-byte local copies and removed missing-symbol failures. Thirty-two additional declaration/counter/table-layout experiments and a bounded five-minute search still differ in stack addresses and store scheduling. Restored its C; shared overlay work continues.
+
+## [2026-10-11] build | Wave 8 list 8 SHOUGATU flag match
+
+[[tickets/T-9580-wave-8-list-8]]: SHOUGATU `func_80140AD8` adds 256 bytes. Replacing the abstract mask/byte-or draft with the real character bitfield test and assignment, and using the implicit-integer-return shape, passes the resolved diff and overlay SHA1. Nine second-pass matches, 3,400 bytes; no scheduling trick needed.
+
+## [2026-10-11] decision | Wave 8 list 8 main fade type experiments
+
+[[tickets/T-9580-wave-8-list-8]]: retrying the main fade draft with signed rsin narrowing, wide versus narrow byte temporaries and return-type variants. Main return-type experiments now update the generated declaration through `sync_protos` before building, and restore the prior generated declaration if no match is found. This avoids treating a header mismatch as codegen evidence.
+
+## [2026-10-11] decision | Wave 8 list 8 small-helper timeboxes
+
+[[tickets/T-9580-wave-8-list-8]]: restored TT's typed phase/counter helper after 36 experiments and a five-minute search (14 lines), GYOZI's repeated-product helper after 12 view/index experiments and no type-recovery proposal (29 lines), and TACO's typed command walker after 28 parameter/pointer/constant/layout experiments (25 lines). No unverified helper C or unused TT type retained. Other candidates continue.
+
+## [2026-10-11] decision | Wave 8 list 8 remaining SHOUGATU local copies
+
+[[tickets/T-9580-wave-8-list-8]]: recovered both local table types and retried normalized/narrow year indexing. Narrowing before multiplication gets past the frame pass but remains 202 resolved lines away; the other correct table forms expose negative-stack-offset errors in `frame_pass.py`. Restored failed C and all unused overlay types, keeping the verified flag match.
+
+## [2026-10-11] decision | Wave 8 list 8 fade timebox
+
+[[tickets/T-9580-wave-8-list-8]]: 16 valid main fade type/layout experiments (plus four prior void variants) still differ in promoted byte values and coordinate temporaries. Restored the C and exact prior prototype through the generator. Moving on to EN_NICHI's actor-word flags, whose first draft incorrectly used byte loads.
+
+## [2026-10-11] decision | Wave 8 list 8 actor flag declarations
+
+[[tickets/T-9580-wave-8-list-8]]: EN_NICHI's ten 0x30-byte actors use word flags; the first draft inferred byte accesses and lacked viewport halfword declarations. Added the two main viewport coordinates through the generator (target lh), and missing overlay word/end-address declarations. Invalid missing-symbol attempts are excluded; retrying with the existing `EnObj` record type.
+
+## [2026-10-11] lint | Wave 8 list 8 historical register rows resolved
+
+[[tickets/T-9580-wave-8-list-8]]: appended three resolution rows to [[data/t0018-cases]] for NAME_ENT's repeated-end-pointer loop, SHOUGATU's flag initializer, and the search half of the main texture-page-lock family. Historical rows remain intact; the regular lock helper remains open. Verified function/unit evidence is in the ticket.
+
+## [2026-10-11] decision | Wave 8 list 8 actor flag timebox
+
+[[tickets/T-9580-wave-8-list-8]]: actor-word flags compile after complete declaration recovery. Twenty valid end-pointer/status/counter-view/reused-pointer/increment variants reach 83 lines, still outside the near-match search range. Restored the failed function; testing the initializer's ten-byte flag aggregate and corrected word-pointer stepping next.
+
+## [2026-10-11] decision | T-9580 deep aggregate timeboxes and review cleanup
+
+[[tickets/T-9580-wave-8-list-8]] records the deeper NAME_ENT option-record, TT flag-dispatch and EN_NICHI initializer experiments. Restored failed functions and unused overlay types. Removed stale commentary and unused declarations from retained matches; resolved function and unit verification is running again. The TT two-actor initializer is the current candidate, with parameter-width and declaration-order experiments.
+
+## [2026-10-11] build | T-9580 retained deep matches survive cleanup
+
+All nine additional functions in [[tickets/T-9580-wave-8-list-8]] pass `funcdiff --resolve` after removing unused declarations and the stale NAME_ENT guard comment. The equivalent if/else form of SHOUGATU `func_80140AD8` also matches, so no valueless return remains. NAME_ENT, main, EN_NICHI, KANGEI, ETC and SHOUGATU unit SHA1 checks all pass. Generator-only cleanup removes five unused main globals from rejected drafts, retaining only the two declarations required by matched NAME_ENT code. Final full-build verification remains pending after the last TT experiment.
+
+## [2026-10-11] decision | T-9580 TT paired initializer timeboxed
+
+[[tickets/T-9580-wave-8-list-8]] records 94 valid source/type experiments on TT `func_80134630`; best 45 resolved differing lines. Restored TT C and header to their committed content after the timebox. EN_NICHI frame-only miss is the final active experiment; its near draft is undergoing a 300-second search.
+
+## [2026-10-11] build | T-9580 final declaration guards pass
+
+`check_headers.py include src` reports headers OK; `migrate_globals.py --check` reports globals OK; `sync_protos.py --check-branch` reports zero new disagreements and 17 known baseline disagreements. [[tickets/T-9580-wave-8-list-8]] retains only its required main-API additions and packed KANGEI view. No tool/config changes were needed. EN_NICHI's final ANSI search is still running, followed by restoration and whole-build verification.
+
+## [2026-10-11] decision | T-9580 deep pass closes after three hours
+
+[[tickets/T-9580-wave-8-list-8]] records the final EN_NICHI frame-only timebox and restoration. Corrected ETC's subarray-boundary view to the actual +0x694 table base; the resolved diff remains MATCH. All failed drafts are reverted; nine additional matches (3,400 bytes) remain. Deep pass began 09:26 UTC and active matching ended 12:30 UTC, exceeding three hours. Final exact/near duplicate scans and full 27-unit build follow.
+
+## [2026-10-11] lint | T-9580 inline review findings
+
+[[tickets/T-9580-wave-8-list-8]] records the resolved ETC bounds finding and pending removal of two unused EN_NICHI temporaries. Own-file exact duplicate scan applied zero copies. Scope, C89, declaration ownership and FAKE coverage checked; near-duplicate scan and final build are still running.
+
+## [2026-10-11] build | T-9580 duplicate scans complete
+
+Exact and near-duplicate scans with the ticket's exact 36-file list both applied zero copies. Full sequential `ninja -j4` is running for [[tickets/T-9580-wave-8-list-8]]. No function-matching process is writing its objects concurrently.
+
+## [2026-10-11] ticket | T-9580 In Review after deep pass
+
+[[tickets/T-9580-wave-8-list-8]] moved from In Progress to In Review; ticket, [[kanban]] and [[index]] synchronized. Full build passed all 27 SHA1 checks. The last inline-review cleanup is being verified before completion.
+
+## [2026-10-11] build | T-9580 final review cleanup verified
+
+Both unused EN_NICHI temporaries were removed with a resolved MATCH. Added a repeated-inclusion guard around ETC's new prefix view. The subsequent full sequential build passes all 27 unit SHA1 checks; progress is `grand total   4748/6958   738372/2279368  32.4%`. Inline review against CODING_STANDARDS.md and the shared brief has no unresolved code/spec findings. A scratch metadata assertion was too strict because the globals marker need not track an unrelated overlay header; direct final header/global checks are running to establish their results from source instead. [[tickets/T-9580-wave-8-list-8]] awaits those checks before Done.
+
+## [2026-10-11] build | T-9580 final source guards complete
+
+Direct `check_headers.py include src` and `migrate_globals.py --check` both pass after the last review changes. Guard markers exist, branch prototype check has zero new disagreements, and `git diff --check` passes. All 27 final unit checksums and the recorded progress line remain valid. [[tickets/T-9580-wave-8-list-8]] has no outstanding review findings.
+
+## [2026-10-11] ticket | T-9580 Done after deep pass
+
+[[tickets/T-9580-wave-8-list-8]] moved from In Review to Done; ticket, [[kanban]] and [[index]] synchronized. Inline review and final checks are complete; all changes remain uncommitted.
