@@ -312,7 +312,37 @@ void func_800FAC00(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FAD28);
+void func_800FAD28(void) {
+    func_8011F530(D_800B1AE4);
+    D_800B1746 = 0;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    func_8004CDDC();
+    func_80078970(D_80094784, "詩織の部屋");
+    func_80078970(D_800947C4, "自宅前");
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    func_8004BC20(D_800B1746);
+    func_800F6000();
+    D_80120678 = D_801202EC;
+    D_8012067C = D_8012030C;
+    D_80120680 = D_8012032C;
+    D_800B1C70 = -1;
+    D_800B1CF0 = -1;
+    func_80011DFC();
+}
 
 typedef struct {
     s32 w[0x11];

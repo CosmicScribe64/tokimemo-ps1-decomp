@@ -486,6 +486,7 @@ extern u8 D_800B1AF6;
 extern u8 D_800B1AF9;
 extern s32 D_800B1C1C;
 extern s32 D_800B1C70;
+extern s32 D_800B1CF0;
 extern u8 D_800B3220;
 extern u8 *D_800B3288[];
 extern u8 *D_800B35F4[];
