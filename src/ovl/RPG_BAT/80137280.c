@@ -383,7 +383,55 @@ void func_80138120(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80138170);
+/* FAKE: unsigned lvalue view reproduces the original actor-index promotion;
+ * the shared overlay header retains older matched signed users. T-9760 */
+void func_80138170(void) {
+    switch (D_8015EDD8) {
+    case 0:
+        switch ((*(u32 *)&D_8015EBAC)) {
+        case 0:
+            func_800AE0F0(D_8015E828, "不良Ａの攻撃");
+            break;
+        case 1:
+            func_800AE0F0(D_8015E828, "不良Ｂの攻撃");
+            break;
+        case 2:
+            func_800AE0F0(D_8015E828, "不良Ｃの攻撃");
+            break;
+        }
+        func_800AE0F0(D_8015E850, "不良パンチ");
+        func_8014B738(D_8015E8F0, 2, 0x3C);
+        func_8013E810((*(u32 *)&D_8015EBAC) + 0x3B, 1, 5, 1);
+        func_8013F15C(0x505, 1, 0);
+        func_8014EF3C();
+        return;
+    case 1:
+        func_8014F0F8((*(u32 *)&D_8015EBAC) + 0x3B);
+        return;
+    case 2:
+        func_8013E810((*(u32 *)&D_8015EBAC) + 0x3B, 0, 1, 1);
+        func_8014EF3C();
+        return;
+    case 3:
+        func_8014F178(2);
+        return;
+    case 4:
+        func_8014C360(0, 0x104, 0x66);
+        func_8014EF3C();
+        return;
+    case 5:
+        func_8014F178(0);
+        return;
+    case 6:
+        func_8014F080(0x14);
+        return;
+    case 7:
+        func_8014EF8C();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280", func_80138324);
 

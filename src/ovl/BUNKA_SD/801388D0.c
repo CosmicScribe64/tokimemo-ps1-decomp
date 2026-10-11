@@ -82,7 +82,20 @@ void func_80138C34(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80138CAC);
+void func_80138CAC(void) {
+    GameState *g;
+
+    func_80139100();
+    func_80139290();
+    g = &D_800E6280;
+    g->unk_1104.u += 1;
+    if ((g->unk_1104.u + 0x90000000U) == 0xFA && g->unk_03E != 0x60) {
+        func_8004284C();
+    }
+    if ((g->unk_1104.u + 0x90000000U) == 0xD0 && g->unk_03E == 0x60) {
+        func_8004284C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80138D48);
 

@@ -181,3 +181,70 @@ typedef struct TtAnimState {
     /* 0x09 */ u8 unk_09;
 } TtAnimState; /* accessed prefix size 0x0A */
 #endif
+
+#ifndef OVL_TT_ACTOR_T9760
+#define OVL_TT_ACTOR_T9760
+typedef struct TtActor68 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u16 unk_02;
+    /* 0x04 */ u16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ u16 unk_10;
+    /* 0x12 */ u8 pad_12[2];
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ u8 pad_18[8];
+    /* 0x20 */ s32 unk_20;
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ u8 pad_30[8];
+    /* 0x38 */ void *unk_38;
+    /* 0x3C */ u8 unk_3C;
+    /* 0x3D */ u8 unk_3D;
+    /* 0x3E */ u8 unk_3E;
+    /* 0x3F */ u8 unk_3F;
+    /* 0x40 */ u8 unk_40;
+    /* 0x41 */ u8 unk_41;
+    /* 0x42 */ u8 unk_42;
+    /* 0x43 */ u8 unk_43;
+    /* 0x44 */ u8 pad_44[8];
+    /* 0x4C */ u8 *unk_4C;
+    /* 0x50 */ u8 pad_50[8];
+    /* 0x58 */ u16 unk_58;
+    /* 0x5A */ u8 pad_5A[6];
+    /* 0x60 */ u16 unk_60;
+    /* 0x62 */ u16 unk_62;
+    /* 0x64 */ u8 pad_64[4];
+} TtActor68; /* size 0x68; object pool step in TT/80133970. T-9760 */
+#endif
+
+#ifndef OVL_TT_T9760_FUNC_80148460
+#define OVL_TT_T9760_FUNC_80148460
+#include "psx_types.h"
+typedef struct TtPoolDraw14 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 pad_01[5];
+    /* 0x06 */ u16 flags;
+    /* 0x08 */ u8 pad_08[12];
+} TtPoolDraw14; /* size 0x14; draw pool stride */
+typedef struct TtDrawBuffer80B8 {
+    /* 0x0000 */ u32 unk_0000;
+    /* 0x0004 */ DR_MODE *cursor;
+    /* 0x0008 */ u8 pad_0008[0x8000];
+    /* 0x8008 */ TtOtTag ordering[44];
+} TtDrawBuffer80B8; /* size 0x80B8; render buffer stride */
+typedef struct TtDrawSelect0C {
+    /* 0x00 */ u8 pad_00[8];
+    /* 0x08 */ s32 index;
+} TtDrawSelect0C; /* accessed prefix size 0x0C */
+void func_80148460(void);
+
+#endif

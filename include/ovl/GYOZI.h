@@ -887,3 +887,13 @@ typedef struct GyoziCallbackTable30 {
 } GyoziCallbackTable30; /* size 0x78 */
 extern GyoziCallbackTable30 D_801461A4;
 #endif /* OVL_GYOZI_W8_3_TYPES_H */
+
+#ifndef OVL_GYOZI_T9760_FUNC_80142D40
+#define OVL_GYOZI_T9760_FUNC_80142D40
+typedef s32 (*GzCallback)();
+typedef struct GzCallbacks6C {
+    /* 0x00 */ GzCallback callbacks[27];
+} GzCallbacks6C; /* size 0x6C; copied callback table */
+extern GzCallbacks6C D_80148904;
+
+#endif

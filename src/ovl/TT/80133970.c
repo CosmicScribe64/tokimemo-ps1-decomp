@@ -1,7 +1,33 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133970);
+void func_80133970(void) {
+    s32 i;
+    s32 j;
+
+    func_80044750(0x7F);
+    func_800451E0(0x80162000);
+    func_80044750(0x11);
+    func_80044750(0x22);
+    func_80044750(0x21);
+    func_80044750(0x2F);
+    i = 0;
+    do {
+        func_80079B34();
+        func_800AD950(0);
+    } while (i++ < 0x10000 && func_80044F94(0) == 0);
+    func_80044750(0x7F);
+    func_800451E0(0x8019A000);
+    func_80044750(0x12);
+    func_80044750(0x23);
+    func_80044750(0x24);
+    func_80044750(0x2E);
+    j = 0;
+    do {
+        func_80079B34();
+        func_800AD950(0);
+    } while (j++ < 0x10000 && func_80044F94(1) == 0);
+}
 
 void func_80133A60(void) {
     s32 i;
@@ -99,7 +125,47 @@ void func_80134924(u8 *arg0) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_801349B0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134ADC);
+void func_80134ADC(TtActor68 *p) {
+    TtSceneView *scene;
+    u16 state;
+
+    scene = (TtSceneView *)D_80158A8C;
+    if (p->unk_58 == 15) {
+        p->unk_62 = 0;
+        p->unk_04 = 0x40;
+        p->unk_0A = 0;
+        p->unk_08 = 0;
+        p->unk_06 = 0;
+        p->unk_0F = 0;
+        p->unk_0E = 0;
+        p->unk_0D = 0;
+    }
+    state = p->unk_04;
+    switch (state) {
+    case 0x20:
+        /* FAKE: empty comparison reserves a2 for the shared 0x20 constant
+         * while state stays in v1; real source unknown. T-9760 */
+        if ((!p->unk_04) && (!p->unk_04)) {}
+        p->unk_20 += (scene->unk_14 - p->unk_60) << 16;
+        p->unk_60 = scene->unk_14;
+        break;
+    case 0x40:
+        p->unk_62 += 4;
+        if (p->unk_62 >= 0x20) {
+            p->unk_62 = 0x20;
+            p->unk_2C = 0x40000;
+            p->unk_04 = 0x50;
+            p->unk_0A = 0;
+            p->unk_08 = 0;
+            p->unk_06 = 0;
+            p->unk_0F = 0;
+            p->unk_0E = 0;
+            p->unk_0D = 0;
+        }
+        break;
+    }
+    p->unk_58++;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134BBC);
 

@@ -15,7 +15,30 @@ void func_80148210(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148244);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148460);
+void func_80148460(void) {
+    /* FAKE: unused homes retain the observed 0x50-byte frame. T-9760. */
+    s32 frame_pad[2];
+    TtDrawBuffer80B8 *buffer;
+    DR_MODE *packet;
+    TtPoolDraw14 *p;
+    s32 i;
+
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    p = (TtPoolDraw14 *)D_80158AA8;
+    i = 0;
+    do {
+        if ((p->unk_00 != 0) && !(p->flags & 1)) {
+            func_80148244((s32)p);
+        }
+        i++;
+        p++;
+    } while (i != 0x80);
+    packet = buffer->cursor;
+    buffer->cursor++;
+    func_8009D294((s32)packet, 0, 0, 0xA, 0);
+    ((TtOtTag *)packet)->addr = buffer->ordering[0].addr;
+    buffer->ordering[0].addr = (u32)packet;
+}
 
 void func_80148584(u16 arg0, s32 arg1) {
     u32 t = arg0;
