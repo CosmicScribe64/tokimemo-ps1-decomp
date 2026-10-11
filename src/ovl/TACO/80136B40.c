@@ -86,7 +86,21 @@ void func_80136F4C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80136B40", func_80136FBC);
+void func_80136FBC(s32 arg0, s32 arg1) {
+    func_801371B4("PLAYERS RANKING", arg0, 0, arg1, 2, 1);
+    func_801371B4("1ST", arg0, 1, arg1, 1, 4);
+    func_801371B4("2ND", arg0, 4, arg1, 1, 5);
+    func_801371B4("3RD", arg0, 3, arg1, 1, 6);
+    func_801371B4(D_8015EE04, arg0, 1, arg1, 0xF, 4);
+    func_801371B4(D_8015EE08, arg0, 4, arg1, 0xF, 5);
+    func_801371B4(D_8015EE0C, arg0, 3, arg1, 0xF, 6);
+    func_80137264(D_8015F404, D_8015EDF8);
+    func_80137264(D_8015F410, D_8015EDFC);
+    func_80137264(D_8015F41C, D_8015EE00);
+    func_801371B4(D_8015F404, arg0, 2, arg1, 6, 4);
+    func_801371B4(D_8015F410, arg0, 5, arg1, 6, 5);
+    func_801371B4(D_8015F41C, arg0, 6, arg1, 6, 6);
+}
 
 void func_801371B4(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     s32 i;
