@@ -98,7 +98,7 @@ void func_8013760C();
 void func_8013788C();
 void func_8014F210(void);
 void func_8015185C(void);
-void func_801335A0(s32 arg0, s32 arg1);
+s32 func_801335A0();
 /* func_8014927C: a 12-byte id table and three tables passed by address */
 extern u8 D_8015FCA8[];
 extern u8 D_8015FCB4[];
@@ -341,3 +341,4 @@ void func_80139118(void);
 void func_80158CDC(s16 arg0, s16 arg1, s16 arg2);
 void func_80158DBC(s16 arg0, s16 arg1, s16 arg2);
 extern s8 D_8015EDE8;
+extern u8 D_8015E22C[];
