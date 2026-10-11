@@ -70,5 +70,6 @@ extern s32 D_80139224;
 extern s32 D_801392A4;
 extern s32 D_801392A8;
 
+extern u16 D_80139C58;
 #endif /* OVL_EN_NICHI_H */
 extern s32 D_80139B24;
