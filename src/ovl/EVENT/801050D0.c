@@ -137,7 +137,40 @@ void func_801055D0(void) {
     func_80105DF8();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801050D0", func_8010564C);
+void func_8010564C(void) {
+    s16 i;
+    Rec24 *p;
+
+    D_800B1C1C = 1;
+    func_800137AC(0x140, 0, 0x40, 0x80, D_80120C20);
+    func_801050D0();
+    func_80012D64(D_80120C04, 0x12, 1, 3, 0);
+    for (i = 4; i < 0xE; i++) {
+        p = (Rec24 *)(D_800EC190 + i * 0x24);
+        p->unk_00 = 0xC1000000;
+        p->unk_04 = func_800789A0() % 84 - 0x9F;
+        p->unk_06 = func_800789A0() % 130 - 0x5F;
+        p->unk_08 = 8;
+        p->unk_0A = 0x18;
+        p->unk_0C = 5;
+        p->unk_0E = 0;
+        p->unk_0F = 0;
+        p->unk_10 = 0;
+        p->unk_12 = 0x1F2;
+        p->unk_14 = 0;
+        p->unk_15 = 0;
+        p->unk_16 = 0;
+        p->unk_18 = 0;
+        p->unk_1A = 0;
+        p->unk_1C = 0x1000;
+        p->unk_1E = 0x1000;
+        p->unk_20 = 0;
+        D_800B188D[i] = 0x8C;
+        ((s16 *)&D_80120CE8)[i] = 0;
+        D_80120D08[i] = 0;
+    }
+    func_80011DFC();
+}
 
 void func_80105830(void) {
     func_80015D28(0x45, 0x801B0000, 0x86E8);
