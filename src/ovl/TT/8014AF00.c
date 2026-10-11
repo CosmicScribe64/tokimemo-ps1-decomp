@@ -68,7 +68,50 @@ void func_8014AFB8(u8 *arg0, u16 arg1, s32 arg2) {
     }
 }
 
+/* NON_MATCHING: T-9380, one instruction: the original passes the loop-invariant 0x40 (s5) as `andi a1,s5,0xffff`, IDO folds the constant to `li a1,64` (also with a local holding 0x40) */
+#ifdef NON_MATCHING
+void func_8014B088(u8 arg0) {
+    s32 i;
+    u8 *p;
+    s32 a2;
+
+    p = D_80158A98;
+    i = 0;
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            return;
+        }
+        if (arg0 != 0) {
+            a2 = 4;
+            *(s32 *)(p + 0x20) = 0x500000;
+        } else {
+            a2 = 3;
+            *(s32 *)(p + 0x20) = 0xFFB00000;
+        }
+        *(s32 *)(p + 0x24) = (-0x10 - i * 0x10) << 16;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0x20000;
+        p[0x63] = arg0;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        func_8014AFB8(p, 0x40, a2);
+        i += 1;
+        p += 0x78;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+    } while (i != 6);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014B088);
+#endif
 
 void func_8014B198(u8 *arg0) {
     u8 *g;
