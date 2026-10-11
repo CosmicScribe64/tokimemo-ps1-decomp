@@ -2,6 +2,22 @@
 #include "ovl/EN_NICHI.h"
 
 typedef struct {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ u8 pad_10[6];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ u8 pad_18[2];
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ u8 pad_20[4];
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+} EnObj; /* size 0x30: record of D_8013984C */
+
+typedef struct {
     /* 0x00 */ u32 tag;
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
@@ -426,7 +442,39 @@ void func_80134784(s32 *arg0, s32 *arg1) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134800);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134C1C);
+/* p stays an expression: a local pointer would be spilled to a different stack slot (T-3330) */
+#define EN_OBJ(i) ((EnObj *) (D_8013984C + (i) * 0x30))
+void func_80134C1C(arg0)
+s32 arg0;
+{
+    s32 d;
+
+    if (((EN_OBJ(arg0)->unk_2C & 0x40) || (EN_OBJ(arg0)->unk_2C & 0x80)) && EN_OBJ(arg0)->unk_24 <= 0) {
+        EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+        EN_OBJ(arg0)->unk_24 = func_800AE0D0() % 15 + 0x1E;
+        if (!(func_800AE0D0() & 1)) {
+            EN_OBJ(arg0)->unk_2C = 0;
+        } else {
+            EN_OBJ(arg0)->unk_2C = 1;
+        }
+    }
+    d = func_80132A74(EN_OBJ(arg0)->unk_16, EN_OBJ(arg0)->unk_1A, D_8011ECF6, D_8011ECFA);
+    switch (func_80135274(arg0)) {
+    case 0:
+        func_80134D74(arg0, d);
+        break;
+    case 1:
+        func_80134F2C(arg0, d);
+        break;
+    case 2:
+        func_80135044(arg0, d);
+        break;
+    case 3:
+        func_8013515C(arg0, d);
+        break;
+    }
+    func_80134800(arg0);
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134D74);
 
