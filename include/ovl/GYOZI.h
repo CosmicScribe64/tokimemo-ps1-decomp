@@ -216,7 +216,8 @@ typedef struct GyoziWork {
     /* 0x01C */ u8 unk_01C[0x18C];
     /* 0x1A8 */ GyoziGirl girl[11];
 } GyoziWork;
-extern GyoziWork D_800F53A0;void func_8013D5B0();
+extern GyoziWork D_800F53A0;
+void func_8013D5B0();
 void func_8013D62C();
 void func_8013D6B4();
 void func_8013B980();
