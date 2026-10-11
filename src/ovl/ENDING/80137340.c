@@ -1,7 +1,29 @@
 #include "common.h"
 #include "ovl/ENDING.h"
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80137340", func_80137340);
+s32 func_80137340(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl6 tbl;
+
+    tbl = D_8013CAA4;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_800E6280.unk_110A >= 3 || D_800E6280.unk_1109 >= 6) {
+        return 0;
+    }
+    func_80132F18();
+    func_8004EC24();
+    if (tbl.f[D_800E6280.unk_110A] == func_80132D98) {
+        func_80137730();
+    }
+    _sprite_set_box_shade_tarao(-0xA0, -0x78, 0x140, 0xF0, 0xE, 0xC0C0FF, 0x4080FF);
+    dtd_on(0xE);
+    func_80136D60();
+    func_80137AA8();
+    if (D_800E6280.unk_10F8 % 240 == 0 && D_80122D0C == 0) {
+        func_80137574();
+    }
+}
 
 void func_801374BC(void) {
     if (D_800E6280.unk_1124 != 0) {

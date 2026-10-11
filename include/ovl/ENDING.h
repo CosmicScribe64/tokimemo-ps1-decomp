@@ -451,4 +451,13 @@ void func_80137574(void);
 
 extern s16 D_8013CBE0;
 void func_8013BDD8(s16 arg0);
+typedef struct {
+    void (*f[6])();
+} FnTbl6; /* size 0x18 */
+extern FnTbl6 D_8013CAA4;
+void func_80132D98();
+void func_80132F18();
+void func_80137730();
+void func_80137AA8();
+
 #endif /* OVL_ENDING_H */
