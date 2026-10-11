@@ -408,7 +408,25 @@ void func_800F8818(void) {
     D_800EAFA0[0xD3] = D_800EAFA0[7];
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F8878);
+s32 func_800F8878(void) {
+    if (D_800B1AE4 % 10 == 0) {
+        if (D_800B1AF6 >= 0xD) {
+            D_801207AC += 1;
+            if (D_801207AC >= 4) {
+                D_801207AC = 0;
+            }
+            D_801207B0 += D_801207B4;
+            if (D_801207B0 == 0) {
+                D_801207B4 = 1;
+            }
+            if (D_801207B0 == 3) {
+                D_801207B4 = -1;
+            }
+            func_80012D64(D_801206F8, 0x13, 1, 2, D_801207AC);
+            func_80012D64(D_801206F8, 0x12, 1, 2, D_801207B0 + 4);
+        }
+    }
+}
 
 void func_800F8970(void) {
     func_800F9730(-0x96, -0x78, -0x9B, -0x78, -0x50, 0x28, -0x69, 0x28, 0xFFFF00, 0xFFFF00, 9, 1);

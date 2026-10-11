@@ -1070,8 +1070,12 @@ extern u8 D_801207A5;
 extern u8 D_801207A6;
 extern u8 D_801207A7;
 extern u8 D_801207A9;
+#ifndef MAIN_API_OVERRIDE_D_801207B0
 extern s32 D_801207B0;
+#endif
+#ifndef MAIN_API_OVERRIDE_D_801207B4
 extern s32 D_801207B4;
+#endif
 extern s16 D_801207BA;
 extern s16 D_801207CA;
 extern s16 D_801207CE;
