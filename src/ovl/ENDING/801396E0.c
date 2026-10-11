@@ -110,7 +110,19 @@ void func_80139DA8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139E08);
+s32 func_80139E08(void) {
+    if ((((u32 *)D_80125C04)[0] & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+        func_800AE0B0("DEC_BS header Error \n");
+        func_800AE0B0("%x %x\n", ((u32 *)D_80125C04)[0], ((u32 *)D_80125C04)[1]);
+        D_800B5920[2] = 0;
+        D_800B5920[3] = 0;
+        func_8004284C();
+        D_800E6280.unk_110A -= 3;
+        return 0;
+    }
+    func_800536AC(0x140, 0x100, 0x140, 0xF0);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139EC4);
 

@@ -202,5 +202,7 @@ segments:
       - [0x73580, data, data_800B3D80]
       - [0x735C0, .data, main/8004E500]
       - [0x738F0, data, data_800B40F0]
+      - [0x75120, .data, main/80057390]
+      - [0x75150, data, data_800B5950]
       - { start: 0xA3000, type: bss, name: bss, vram: 0x800E3800 }
   - [0xA3000]

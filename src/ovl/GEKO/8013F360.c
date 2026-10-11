@@ -264,11 +264,65 @@ void func_8013FD3C(void) {
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013FD88);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013FF64);
+void func_8013FF64(void) {
+    s16 i;
+
+    D_800B5BD4 = 0xA;
+    func_80065F34(0);
+    func_80085234(1);
+    D_80122D04 = 1;
+    D_80120657 = 0x80;
+    D_8012069B = 0x80;
+    for (i = 0x3A; i < 0x40; i++) {
+        func_80084C98(i, 0x80);
+    }
+    D_801470A8 = 0;
+    for (i = 0; i < 0xA; i++) {
+        D_8011ECD0[i * 0x44 + 0x1A4F] |= 0x80;
+    }
+    D_801470AC = 1;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_80140040);
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8014016C);
+void func_8014016C(void) {
+    D_800E6280.unk_F5F = 0xA;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8006612C("");
+    D_8011ED9F = 0;
+    D_8011EDE3 = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_80137990();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    D_800B593C = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145FCC;
+    D_80146278 = D_80146108;
+    D_8014627C = D_80146244;
+    func_800AE0F0(D_800CA19C, "廊下");
+    if (D_80122CD0 == 1) {
+        D_800E6280.unk_1BC[0xA].unk_02 += 1;
+        D_800E6280.unk_1BC[0xA].unk_06 += 2;
+        D_800E6280.unk_0FC.unk_02 -= 5;
+        D_800E6280.unk_118.unk_02 += 5;
+        func_80084D3C();
+    }
+    D_800CA368 = 0x43;
+    func_8004284C();
+}
 
 void func_801402F8(void) {
     func_8013F360();

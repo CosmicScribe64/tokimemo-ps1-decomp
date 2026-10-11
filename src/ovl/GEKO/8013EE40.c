@@ -62,7 +62,45 @@ void func_8013F02C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013EE40", func_8013F0BC);
+void func_8013F0BC(void) {
+    D_800E6280.unk_F5F = 4;
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8006612C("");
+    D_8011ED9F = 0;
+    D_8011EDE3 = 0;
+    D_800CA150 = 0;
+    D_800CA154 = 0;
+    func_8007C740();
+    func_80137990();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    D_800B593C = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_8008585C();
+    func_80137990();
+    D_80146274 = D_80145FB4;
+    D_80146278 = D_801460F0;
+    D_8014627C = D_8014622C;
+    func_800AE0F0(D_800CA19C, "廊下");
+    if (D_800E6280.unk_56C[27] >= 3U) {
+        D_800E6280.unk_56C[27] = 2;
+    }
+    if (D_800E6280.unk_56C[28] == 0 && D_800E6280.unk_56C[27] == 1) {
+        D_800E6280.unk_1BC[4].unk_02 += 1;
+    }
+    D_800E6280.unk_1BC[4].unk_06 += 1;
+    D_800E6280.unk_0FC.unk_02 += 0xA;
+    func_80084D3C();
+    D_800CA368 = 0x1B;
+    func_8004284C();
+}
 
 void func_8013F25C(void) {
     func_8013EE40();

@@ -91,7 +91,23 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013E6AC);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013E89C);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013EAC0);
+s32 func_8013EAC0(void) {
+    if (D_80150054 == 0 && D_80150058 == 0 && D_8015005C == 0) {
+        while (1) {
+            if (D_80150064 < 0xFF) {
+                D_80150064 += 1;
+            }
+            func_8013E6AC();
+            if (D_80150054 != 0 && D_80150058 != 0 && D_8015005C != 0) {
+                return 1;
+            }
+            if (D_80150064 == 0xFF) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013EB90);
 

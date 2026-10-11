@@ -48,6 +48,7 @@ extern s32 D_80146230;
 extern s32 D_80146234;
 extern s32 D_80146238;
 extern s32 D_80146240;
+extern s16 D_8014623C;
 extern s32 D_80144D90;
 extern s32 D_80144D94;
 extern s32 D_80144D98;
