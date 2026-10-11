@@ -48,4 +48,17 @@ void func_801491E4(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_80149268);
+/* FAKE: s32 fall-through keeps the record base in v0 (T-9780). */
+s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    Rec24 *record;
+    s16 i;
+
+    func_80084E90(arg0, arg1, arg2, arg3, arg4, arg5);
+    /* FAKE: shared setup/loop line preserves instruction scheduling (T-9780). */
+    i = 0; do {
+        record = &D_801217D0[i];
+        record[4] = record[58];
+        D_800E6280.unk_10A5[i + 4] = D_800E6280.unk_10A5[i + 58];
+        i++;
+    } while (i < 6);
+}

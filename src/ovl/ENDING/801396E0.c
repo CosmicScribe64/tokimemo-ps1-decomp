@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/ENDING.h"
+#include "game.h"
 
 void func_801396E0(void) {
     D_8013CAC0 = 0x80180308;
@@ -145,7 +146,36 @@ INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013A004);
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013A2E8);
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013B510);
+/* FAKE (T-9780): the s32 fall-through preserves the original timer result register. */
+s32 func_8013B510(void) {
+    s16 timer;
+    s16 y;
+    u32 max;
+    u32 count;
+    Entry8 *entry;
+
+    if (D_800E6280.unk_10F8 & 3) {
+        return 0;
+    }
+    max = func_8004ECF0() & 0xFF;
+    count = 0;
+    do {
+        entry = (Entry8 *)func_8004E970(count);
+        entry->unk_02--;
+        y = entry->unk_02;
+        count++;
+        if (y >= 81 || y < -80) {
+            entry->unk_07 = 0;
+        } else {
+            entry->unk_07 = 1;
+        }
+        /* FAKE (T-9780): normalize in the condition to retain the delay-slot copy. */
+    } while (max >= (count = count & 0xFF));
+    timer = --D_800CA2C0;
+    if (timer < -64) {
+        func_8004284C();
+    }
+}
 
 s32 func_8013B5E4(void) {
     if ((u32)D_800E6280.unk_1104.w++ < 0x80U) {

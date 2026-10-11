@@ -318,3 +318,28 @@ typedef struct RpgFlagRecord44 { /* size 0x44 */
     /* 0x04 */ u8 unk_04[0x40];
 } RpgFlagRecord44;
 
+void func_80148654(void);
+
+/* T-9780: second dialogue text buffer. */
+extern u8 D_8015E92C[];
+s32 func_80142544(void);
+void func_801426B0(void);
+void func_80142CB8(void);
+
+#ifndef OVL_RPG_HEALTH_RECORDS_T9780
+#define OVL_RPG_HEALTH_RECORDS_T9780
+/* Additional flag/health view of the 0x44-byte main object records. */
+typedef struct RpgHealth44 {
+    /* 0x00 */ u8 pad0[3];
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 pad4[0x22];
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ u8 pad28[0x1C];
+} RpgHealth44; /* size 0x44 */
+typedef struct RpgHealthBlock {
+    /* 0x0000 */ RpgHealth44 record[160];
+} RpgHealthBlock; /* size 0x2A80; same extent as RpgObjectBlock */
+extern s32 D_8015EDBC;
+extern s32 D_8015EE14;
+extern s32 D_8015ED14;
+#endif

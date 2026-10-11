@@ -107,6 +107,26 @@ void func_8014750C(u8 *arg0) {
     *(s16 *)(arg0 + 0x52) += *(s8 *)(arg0 + 0x54) * 0x30;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_801475C8);
+void func_801475C8(void) {
+    TtSlot68 *p;
+    u32 observed;
+    u32 i;
+    s32 count;
+    u16 kind;
+
+    i = 0;
+    p = (TtSlot68 *)D_80158A94;
+    count = 6;
+    kind = 0x40;
+    do {
+        if (p->active != 0 && p->kind == kind) {
+            func_8014750C((u8 *)p);
+            /* FAKE: empty branch preserves the saved constant allocation (T-9780). */
+            goto matched_call; matched_call: ;
+        }
+        i++;
+        p++;
+    } while (count != (observed = i)); /* FAKE: copy keeps the counter's compare order (T-9780). */
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_80147644);

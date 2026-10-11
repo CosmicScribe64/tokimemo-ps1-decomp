@@ -722,3 +722,13 @@ typedef struct GekoCallbacks64 {
 extern GekoCallbacks64 D_80147424;
 void func_80141760(void);
 #endif
+
+#ifndef OVL_GEKO_THRESHOLDS_T9780
+#define OVL_GEKO_THRESHOLDS_T9780
+/* Threshold table copied by func_80132A4C. */
+typedef struct GekoThresholds {
+    /* 0x00 */ s16 threshold[11];
+} GekoThresholds; /* size 0x16 */
+extern GekoThresholds D_80144CE0;
+s32 func_80132A4C(s16 arg0);
+#endif

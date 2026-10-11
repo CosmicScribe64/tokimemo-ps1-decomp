@@ -1359,6 +1359,7 @@ extern s32 D_80122D10;
 extern s32 D_80122D20;
 extern s32 D_80122D2C;
 extern s32 D_80122D30;
+extern s32 D_80122D34;
 extern s32 D_80122D38;
 extern s32 D_80122D40;
 extern s32 D_80122D44;

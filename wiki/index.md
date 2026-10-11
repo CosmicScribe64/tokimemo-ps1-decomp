@@ -165,3 +165,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-9520-wave-8-list-2|T-9520]] Wave 8: list 2 (Done; second pass adds 11 functions / 3,548 bytes; batch 17 / 7,168).
 - [[tickets/T-9610-aggregate-and-local-copy-types|T-9610]] Aggregate and local-copy types (Done).
+
+- [[tickets/T-9780-wave-9-list-8|T-9780]] Wave 9: list 8 (Done; 18 matches / 8580 bytes, four-hour session).
