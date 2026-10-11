@@ -9,7 +9,7 @@ void func_8014E1A4(void) {
     func_8013F1C4(0x0300001D, 0x04000025, 0);
     switch (D_8015EBAC) {
     case 0:
-        D_8015EBCC = 1;
+        D_8015EBCC[0] = 1;
         break;
     case 1:
         D_8015EBD0 = 1;

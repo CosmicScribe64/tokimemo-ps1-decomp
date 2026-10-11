@@ -223,7 +223,6 @@ extern s32 D_8015EDC0;
 extern s32 D_8015EDCC;
 extern u32 D_8015EE04;
 void func_8015A11C(void);
-extern s32 D_8015EBCC;
 extern s32 D_8015EBD0;
 extern s32 D_8015EBD4;
 extern u32 D_8015EBA0;
