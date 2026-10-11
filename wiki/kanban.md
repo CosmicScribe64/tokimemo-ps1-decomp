@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-9360-wave-7-list-6|T-9360 Wave 7: list 6]]
 
 
 

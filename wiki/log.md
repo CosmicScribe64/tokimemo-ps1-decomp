@@ -833,3 +833,6 @@ Idioms in [[decompile-workflow]] and [[matching-notes]] "Wave-6 codegen shapes (
 
 ## [2026-10-10] ticket | T-9210 (In Progress -> In Review -> Done)
 Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-branch` OK, progress 4539/6958. Inline review in [[tickets/T-9210-wave-6-codegen-shapes]], no open findings. Sweep branches had no confirmed matches; nothing cherry-picked.
+
+## [2026-10-10] ticket | T-9360 In Progress
+Wave 7 list 6 started, see [[tickets/T-9360-wave-7-list-6]].
