@@ -20,7 +20,38 @@ void func_80151C30(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80151D1C);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80151F94);
+void func_80151F94(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 pad[15]; /* FAKE: unused slots above idx, the original frame is 56 bytes larger (T-3330 idiom, real source unknown). T-9370 */
+    s32 idx;
+
+    if ((u32)arg4 < *arg0) {
+        func_80152110(arg2, arg3, *arg1);
+        *arg1 += 1;
+        *arg0 = 0;
+    }
+    if (*arg1 >= 0x1E && *arg1 < 0x21) {
+        if (arg2 == 1) {
+            idx = 0x10;
+        } else if (arg2 == 2) {
+            idx = 0x11;
+        } else if (arg2 == 3) {
+            idx = 0x12;
+        }
+        if ((D_8015EDB4 + idx)->unk84[1] != 0) {
+            func_80147C98(0, arg2, 0, 0x64, 0x3E8, 0xC8, 0x83);
+            if (*arg0 == 0 && *arg1 == 0x1E) {
+                func_801335A0(0, 0x501);
+            }
+        }
+    }
+    if (*arg1 >= 0x28) {
+        *arg0 = *arg1 = 0;
+        func_801534E0(arg2);
+        func_801521EC(arg2, arg3);
+    } else {
+        *arg0 += 1;
+    }
+}
 
 /* The table is indexed (D_801603F0[arg1]), not walked with a local pointer: uopt then knows the
  * loads do not alias the stack, and as1 leaves the stack-argument store for the jal delay slot
