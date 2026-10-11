@@ -916,3 +916,30 @@ Checked the touched ticket/board/index links and status: one T-9400 card, correc
 
 ## [2026-10-11] ticket | T-9400 In Review -> Done
 Inline CODING_STANDARDS review resolved all findings; 46 funcdiff tests passed on final code, final ninja recheck passed all 27 checksums and branch check OK. [[tickets/T-9400-wave-7-tool-fixes]] complete. Uncommitted tooling/tests/wiki edits left for orchestrator; no source/header/config-object changes or function gains.
+## [2026-10-11] ticket | T-9410 register-allocation investigation
+
+Created [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and moved its card to In Progress. Read the tooling7 shared brief and existing [[decompile-workflow]] evidence; generating original assembly before clustering [[data/t0018-cases]].
+
+## [2026-10-11] query | T-9410 original-assembly inventory and baseline
+
+New tools/register_shapes.py classifies historical rows plus original-assembly features, without claiming compiler causes. Inventory: 1,088 rows, 718 distinct functions, 344 already C and 374 open. Largest open buckets: constant allocation/sharing 82, selector/compare chain 60, pointer/base/CSE 51. Family annotations use their first named function; duplicate rows remain auditable by line. Baseline Docker configure/build passed all 27 checksums. See [[tickets/T-9410-register-allocation-shapes-after-wave-7]].
+
+## [2026-10-11] build | T-9410 ENDING remainder match
+
+ENDING func_80138278 now passes tools/funcdiff.py --resolve and the overlay SHA1. A dead `if (D_800E6280.unk_10F8) {}` before the unsigned remainder moves the dividend to v1 and removes the extra temporary; marked FAKE, T-9410. The 144-variant scratch sweep found the same result with u32/s32/register u32 remainder locals and one or two redundant tests. Return-type changes conflicting with the existing header were compile errors, not evidence. The TT draft sweep tried 180 variants without a match. Details will be consolidated in [[decompile-workflow]] and [[tickets/T-9410-register-allocation-shapes-after-wave-7]].
+
+## [2026-10-11] build | T-9410 selector and second ENDING match
+
+Main func_8005AE60 matches with a plain u8 local selector loaded after func_8005AD70; resolved function diff and main SHA1 pass. ENDING func_80138FC8 also passes its resolved diff and overlay SHA1 with the dead dividend test. Added [[register-allocation-wave7]] with the baseline cluster counts and bounded experiments, and documented both idioms in [[decompile-workflow]]. Fade/girl: 576 variants, no match. DATE draft needed its six destination accesses adapted to the existing s16 arrays before codegen experiments were valid; 46 compiling variants still do not match.
+
+## [2026-10-11] build | T-9410 ENDING family and narrow compare constant
+
+The dead dividend test also matches ENDING func_801391E4 after restoring the ordinary scene if/else chain. func_8013855C additionally needs an s16 local holding 1 for two comparisons; s32/u32 locals and direct literal operand swapping did not fix the branch operands. Both source tricks are marked FAKE. Five gains total including the main selector; two historical rows marked resolved by an appended ledger in [[data/t0018-cases]], preserving the original rows. Added synthetic unit/duplicate/guarded-draft/missing-asm tests for tools/register_shapes.py.
+
+## [2026-10-11] ticket | T-9410 In Review
+
+Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its kanban card to In Review. All five gained functions pass resolved diffs and affected-unit SHA1 checks. The clean build and final guards are running. Updated [[register-allocation-wave7]] with valid experiment counts, the two resolved row anchors, all five gains, and the final GameState overlap counts. No cluster is claimed impossible from C.
+
+## [2026-10-11] build | T-9410 clean proof and review complete
+
+Clean Docker configure/ninja build after deleting asm and build: 27/27 SHA1 OK. build/headers.ok and build/globals.ok exist; tools/sync_protos.py --check-branch exits zero; tools/test_register_shapes.py passes all three synthetic tests; git diff --check passes. Progress: 4734/6958, 729612 bytes, +5 functions/+2768 bytes over baseline. Inline standards/spec review found no unresolved findings. Moved [[tickets/T-9410-register-allocation-shapes-after-wave-7]] and its card to Done; full evidence in [[register-allocation-wave7]]. Uncommitted changes left for the orchestrator; no existing r7-fixes tooling files changed.

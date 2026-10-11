@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-9400-wave-7-tool-fixes|T-9400]] Wave-7 tool fixes (Done)
+- [[tickets/T-9410-register-allocation-shapes-after-wave-7|T-9410]] Register-allocation shapes after wave 7 (Done; +5 functions)
 See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9200-gcc-built-sdk-objects-in-overlays|T-9200]] gcc-built SDK objects inside overlays: fingerprint, per-object toolchain, gcc 2.7.2/2.8.1 on arm64 (Done)
 - [[tickets/T-9140-wave-6-list-4|T-9140]] Wave 6: list 4, 28 functions matched (OLH help pages, text/state templates, data scalars); idioms in [[matching-notes]] "Wave 6, list 4" (Done)
@@ -115,6 +116,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-5010-t0018-register-order-second-attempt|T-5010]] T-0018 register order, second attempt: entry and compare rules, unit-private data, cvt pass in the build, 44 functions (Done)
 
 ## Entities / concepts / sources
+- [[register-allocation-wave7]] - T-9410 row/assembly clusters, bounded C experiments and verified idioms
 - [[disc-layout]] - disc images, extraction, file list
 - [[source-files]] - the `src/main/<address>.c` files and the original objects of main and overlays (T-0500): boundary evidence and confidence, alignment handling, what is not split
 - [[source-files]] - the 28 `src/main/<address>.c` files: boundary evidence, alignment handling, what is not split

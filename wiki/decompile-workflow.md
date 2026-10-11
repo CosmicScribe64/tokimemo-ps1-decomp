@@ -39,6 +39,31 @@ The build compiles in K&R mode (`-cckr`, [[toolchain]]): an unsigned char or sho
 - A callee's return type changes the registers around the call: declare a function that returns a value as such (`s32 func_8009AD70();`, TACO `func_8014A8E0`), as K&R code called undeclared functions as `int`.
 
 ## Before recording a T-0018 row (T-9000)
+
+T-9410 additions (experiment details in [[register-allocation-wave7]]):
+- For a GameState selector read after a call, try a `u8 state` local assigned
+  immediately after the call, then compare the local while retaining stores to
+  the global. This matches `func_8005AE60` with the selector in `$v1`. A `u32`
+  local also matched in the experiment; a signed local did not. This is a plain
+  C idiom, and does not imply that all selectors need a local. The same test
+  also matched with `GameState *g; g = &D_800E6280;` and `g->unk_111B`
+  accesses, assigning the pointer either before or after the call. The scalar
+  address view `*(u8 *)&D_800E6280.unk_111B` matched too (the test retained the
+  unused pointer declaration/assignment, so remove it and reverify before reuse).
+- For ENDING's unsigned `% 240` chunk with the dividend in `$v1` and one fewer
+  temporary than the draft, `if (D_800E6280.unk_10F8) {}` immediately before
+  `r = D_800E6280.unk_10F8 % 240;` matches `func_80138278`, `func_80138FC8`,
+  `func_801391E4` and `func_8013855C` once their scene chains are written as
+  ordinary if/else branches instead of m2c's comparison temporaries and gotos.
+  This is a **FAKE** dead test, not a plausible recovered operation: mark it
+  with T-9410. One or two repeated tests worked; adding more was not equivalent
+  for allocation. Do not generalize it into a compiler pass.
+- If a shared compare constant has the right register but two `bne` operands
+  are reversed, try a narrow constant local. ENDING `func_8013855C` needs
+  `s16 one; one = 1;` followed by `one == D_8011F4E0 && one == D_8011F4D0`.
+  `s32`/`u32` locals and swapping the literal operands did not work. Mark this
+  allocation-only local **FAKE**, T-9410; preserve statement line boundaries
+  and verify the whole object.
 Three source idioms explained 20 of the old rows of [[data/t0018-cases]]; try them first:
 - **`s32` without a return value.** K&R code falls off the end of `int` functions. Signs in the asm: `xori v0,v1,k; sltiu v0,v0,1; ...; beqz v0` for `if (D++ == k)` (a `void` function gives `xori; bnez`), and the switch-temporary copy `or v0,v1,zero` in a delay slot. Write `s32 f(void) { ... }` with no `return`, and declare it `s32` in the header. The comparison is on the old value: `if (D++ == k)`, not m2c's `D += 1; if (D == k)`.
 - **Bit-field store for a flag set.** `x |= 4` on a flag byte gives one temporary too many (`lbu t9` where the original has `t0`, every later temporary shifted); `((Bits *)&x)->f = 1` with `typedef struct { u8 pad:2; u8 f:1; u8 rest:5; } Bits;` gives the original (GYOZI `GirlFlag4`, SHOUGATU `Bits64B8`).
