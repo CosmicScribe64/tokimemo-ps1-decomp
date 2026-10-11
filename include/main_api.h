@@ -1842,6 +1842,7 @@ void telephone_class_init(void);
 void holiday_club_join_exit(void);
 void func_80078950();
 void func_80078970();
+s32 func_800789A0();
 void func_800789E0(void);
 void func_80078A94();
 void func_80078C48();

@@ -301,7 +301,34 @@ void func_80108D00(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80107FC0", func_80108DD4);
+void func_80108DD4(void) {
+    s16 i;
+    s32 any;
+
+    for (i = 0; i < 0xA; i++) {
+        if ((u32) D_8012398C >= (u32) (i * 0x1E)) {
+            *(s16 *) &D_800E9620[i * 0x44 + 0x1A7A] = -1;
+            *(s16 *) &D_800E9620[i * 0x44 + 0x1A7E] = 1;
+        }
+        *(s32 *) &D_800E9620[i * 0x44 + 0x1A70] += *(s32 *) &D_800E9620[i * 0x44 + 0x1A78];
+        *(s32 *) &D_800E9620[i * 0x44 + 0x1A74] += *(s32 *) &D_800E9620[i * 0x44 + 0x1A7C];
+        if (*(s16 *) &D_800E9620[i * 0x44 + 0x1A76] > 0xA0) {
+            D_800E9620[i * 0x44 + 0x1A4F] &= ~0x80;
+        }
+    }
+    any = 0;
+    i = 0;
+    do {
+        if (D_800E9620[i * 0x44 + 0x1A4F] & 0x80) {
+            any = 1;
+        }
+        i++;
+    } while (i < 0xA);
+    if (any == 0 && D_800B1AE4 % 60 == func_800789A0() % 60) {
+        func_800433D0((func_800789A0() % 7 + 0x501) & 0xFFFF);
+    }
+    D_8012398C += 1;
+}
 
 void func_80108F50(void) {
     D_800B1746 = 0xA;
