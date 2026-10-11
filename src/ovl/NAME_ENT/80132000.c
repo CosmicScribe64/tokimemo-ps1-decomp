@@ -247,7 +247,22 @@ void func_80133E54(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80133FC4);
+void func_80133FC4(void) {
+    s32 i;
+
+    for (i = 0; i < 5; i++) {
+        if (i == D_8014CCC8) {
+            D_8011ECD0[i * 0x44 + 0x1E4B] |= 0x80;
+        } else {
+            D_8011ECD0[i * 0x44 + 0x1E4B] &= 0x7F;
+        }
+    }
+    if (D_8014CCCC >= 0) {
+        D_80120C96 = (D_8014CCCC << 5) - 0x28;
+        return;
+    }
+    D_80120C96 = -0xB4;
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134110);
 
