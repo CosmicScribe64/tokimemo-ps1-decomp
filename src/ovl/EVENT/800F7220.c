@@ -539,7 +539,66 @@ void func_800F8BF4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F8C2C);
+typedef struct {
+    s32 a;
+    s32 b;
+} EvEnt;
+typedef struct {
+    EvEnt e[4];
+} EvTbl; /* size 0x20 */
+extern EvTbl D_80120A74;
+
+typedef struct {
+    s32 a;
+    s32 b;
+} EvEnt;
+typedef struct {
+    EvEnt e[4];
+} EvTbl; /* size 0x20 */
+extern EvTbl D_80120A74;
+
+void func_800F8C2C(void) {
+    s32 pad[1]; /* FAKE: one unused word above tbl gives the original local offset (0x54); real source unknown. T-9310 */
+    EvTbl tbl;
+
+    tbl = D_80120A74;
+    if (D_800B1AE4 % 120 == 0) {
+        D_801207AC += 1;
+    }
+    if (D_801207AC >= 3) {
+        D_801207AC = 0;
+    }
+    if (D_800B1AE4 % 100 == 0) {
+        D_801207B0 += 1;
+    }
+    if (D_801207B0 >= 4) {
+        D_801207B0 = 0;
+    }
+    if (D_800B1AE4 % 36 < 0xC) {
+        func_800F9730(0xA0, -0xA0, 0xB4, -0xA0, 0x6E, 0x28, 0x82, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+        func_800F9730(0xA5, -0xA0, 0xC3, -0xA0, 0x64, 0x28, 0x46, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+        func_800F9730(0xAA, -0xA0, 0xB4, -0xA0, 0x41, 0x28, 0x32, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+        func_800F9730(0xA0, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x7D, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+    } else if (D_800B1AE4 % 36 < 0x18) {
+        func_800F9730(0x9B, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x82, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+        func_800F9730(0x9B, -0xA0, 0xC3, -0x96, 0x5A, 0x28, 0x3C, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+        func_800F9730(0xA5, -0xA0, 0xAF, -0xA0, 0x3C, 0x28, 0x2D, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+        func_800F9730(0x96, -0xA0, 0xA0, -0xA0, 0x64, 0x28, 0x73, 0x28, tbl.e[D_801207B0].a, tbl.e[D_801207B0].b, 9, 1);
+    }
+    func_8001A0CC(0, 0, 9, 3, 0);
+    if (D_800B1AE4 % 30 < 0xA) {
+        func_800F9730(0x1E, -0xA0, 0x64, -0xA0, -0x140, 0x28, -0xFA, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+        func_800F9730(0xA, -0xA0, 0x19, -0xA0, -0xDC, 0x28, -0xBE, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+        func_800F9730(0, -0xA0, 0x14, -0xA0, -0xB4, 0x28, -0x82, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+        func_800F9730(0x19, -0xA0, 0x28, -0xA0, -0x12C, 0x28, -0x118, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+    } else if (D_800B1AE4 % 30 < 0x14) {
+        func_800F9730(0x14, -0xA0, 0x5A, -0xA0, -0x154, 0x28, -0x10E, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+        func_800F9730(0xA, -0xA0, 0x1E, -0xA0, -0xF0, 0x28, -0xD2, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+        func_800F9730(0, -0xA0, 0xF, -0xA0, -0xC8, 0x28, -0x96, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+        func_800F9730(0xF, -0xA0, 0x19, -0xA0, -0x136, 0x28, -0x122, 0x28, tbl.e[D_801207AC].a, tbl.e[D_801207AC].b, 0xD, 1);
+    }
+    func_8001A0CC(0, 0, 0xD, 3, 0);
+}
 
 typedef struct {
     void (*f[42])();
