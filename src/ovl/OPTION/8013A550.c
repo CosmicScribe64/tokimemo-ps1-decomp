@@ -343,7 +343,76 @@ void func_8013C404(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013C52C);
+void func_8013C52C(void) {
+    s32 i;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    func_80050B54(0);
+    for (i = 0; i < 16; i++) {
+        func_8004B338(D_8013E844[i], -0x20, i * 0xC - 0x60);
+    }
+    func_800AE080(D_80122DD0, 0x100);
+    if (D_800E6280.unk_F88 & 0x90) {
+        switch (D_800E6280.unk_1093) {
+        case 0:
+            D_800B3C6C = 0;
+            func_80042878(0x34);
+        default:
+            break;
+        case 1:
+            func_80042878(0x50);
+            break;
+        case 2:
+            func_8004E58C();
+            func_80048DD0(0);
+            func_80042878(0x5D);
+            break;
+        case 3:
+            func_80042878(0x57);
+            break;
+        case 4:
+            func_80042878(0x56);
+            break;
+        case 5:
+            func_80042878(0x5A);
+            break;
+        case 6:
+            func_80042878(0x72);
+            break;
+        case 7:
+            func_80042878(0x71);
+            if (D_800E6280.unk_0F4.h >> 0xC < 6) {
+                func_80042878(0x70);
+            }
+            break;
+        case 8:
+            func_80042878(0x51);
+            break;
+        case 9:
+            func_80042878(0x53);
+            break;
+        case 10:
+            func_80042878(0x55);
+            break;
+        case 11:
+            func_80042878(0x54);
+            break;
+        case 12:
+            func_80042878(0x58);
+            break;
+        case 13:
+            func_80042878(0x52);
+            break;
+        case 14:
+            func_80042878(0x5E);
+            break;
+        case 15:
+            func_80042878(0x59);
+            break;
+        }
+    }
+}
 
 s32 func_8013C72C(void) {
     switch (D_800E6280.unk_110A) {
