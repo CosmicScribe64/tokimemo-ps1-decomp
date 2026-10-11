@@ -281,7 +281,33 @@ void func_80144834(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801448D4);
+extern Tri3 D_8014A334;
+
+void func_801448D4(void) {
+    s32 i; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    Tri3 tbl;
+    u8 *q;
+    u8 *r;
+    s32 v;
+
+    tbl = D_8014A334;
+    for (i = 0, q = D_8011ECD0; i < 3; i++, q += 0x44) {
+        if (i + 0x36 != *(s16 *)(q + 0x19DC)) {
+            r = D_8014A13C + i * 0x24;
+            if (*(u32 *)(r + 0x34) >= 0xBU) {
+                v = *(s32 *)(r + 0x30) += *(s32 *)(r + 0x2C);
+                if (v < 0) {
+                    *(s32 *)(r + 0x30) = 0;
+                    v = 0;
+                }
+                if (tbl.v[i] < v) {
+                    *(s32 *)(r + 0x30) = tbl.v[i];
+                }
+                *(s32 *)(r + 0x34) = 0;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801449A0);
 
