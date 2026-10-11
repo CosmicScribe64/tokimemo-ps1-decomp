@@ -3378,3 +3378,99 @@ The minimal-local classifier search finished with a 22-line best result and no v
 TT actor +0x40 has a low-byte load in `func_8014C680` and halfword loads in `func_8014CDBC` / `func_8014CFEC`; final aggregate probe: typed halfword/byte union passes resolved diff and TT SHA1. T-9710.
 
 T-9710 final: ten matches add **5,596 actual splat bytes**, not the 5,608 work-list extents previously summed. RPG_BAT `func_80142F70` has a 2,228-byte function header versus the list's 2,240-byte extent; the extra 12 bytes explain the difference. Fresh resolved diffs, full default ninja, all 27 independently recomputed SHA1s, headers/globals and zero-new-disagreement prototype guard pass. Progress: `grand total   4880/6958   782256/2279368  34.3%`. Inline standards/spec review has zero unresolved findings; ticket/board/index are Done after 5.26 hours. Four new T-0018 symptom rows. TAIIKU data-island configuration and the incoming-a2 call-delay arity bug are handed to orchestration; no tool/config edits or commits. [[tickets/T-9710-wave-9-list-1]].
+
+## Wave 10, list 2 (T-9920)
+
+Assigned-file matching pass in w10-2. Drafts, build logs, resolved diffs and
+attempt records live in the session scratchpad/w10-2/ directory. Baseline
+and final totals are recorded in [[tickets/T-9920-wave-10-list-2]]. Read the
+T-9800 live-range evidence before treating allocation symptoms as compiler gaps.
+
+T-9920 early deep probes (2026-10-11): mixed integer/pointer locals did not fix
+`initModelingData_init` (256 forms, 13 core instruction edits). DATE
+`func_80136F2C` keeps two table bases in the opposite registers: 192 narrow-counter
+forms, 24 chain/line-layout forms and 36 explicit-pointer forms retain eight core
+edits. TAIIKU `func_80147A6C` can reuse the existing local `TkPl` (0x1C) type;
+160 pointer-comparison, signedness and control-flow forms leave CSE/register
+changes. TT `func_8013D2E0` has the existing `TtDrawBuffer80B8`, `TtDrawSelect0C`
+and `TtOtTag` types, plus SDK `TILE`; 144 typed forms compile but retain large
+allocation/order differences. Core probe counts exclude only object-end zero
+padding and are diagnostics; only real funcdiff and linked SHA1 prove a match.
+
+T-9920 declaration repair: the work-buffer selector's packet-pool bases
+`D_800E94A0` and `D_800FD4A0` had no shared declarations. Added `u8[]` views with
+`sync_protos.py --add-global`; the generated diff contains only those two externs.
+The function uses bank strides 0xA000 and 0x10C00, and passes the selected base
+as an address to the SDK calls. Earlier local-buffer variants failed to compile
+without those declarations; those failures are not register-allocation evidence.
+
+Model-loop refinement: updating `arg0` by four before the mapping call reproduces
+the original saved argument. Initializing object/coordinate pointers and advancing
+the mapping pointer on one source line reduces the project-context core difference
+to five edits; this line-grouping seed is a FAKE scheduling experiment. It remains
+scratch C until real function and unit verification pass.
+
+- T-9920: Complete build with the two packet-pool extern declarations passes all
+  27 SHA1 checks. Sixty empty-test placements in the model seed do not improve
+  its five core edits. DATE's eight-edit seed produced no improvement in a
+  600-second bounded permuter run. The formerly uncompilable buffer probes are
+  being re-measured with the now-declared pools.
+
+- T-9920 buffer-switch probes now compile with the pool declarations. Ninety-six
+  split-lifetime, signedness, pointer-type and line-layout variants stay at eight
+  core edits (a1 versus target a3 in the best split-range form). This is valid
+  codegen evidence, unlike the earlier undeclared-global failures. ETC's
+  `func_8014BF2C` raw seed differs by three edits at a selector-copy branch;
+  testing the documented s32-fallthrough and local-selector idioms next.
+
+- T-9920 EVENT `func_8010A6E4`: 36 SDK-buffer/bit-field/type/dead-use variants
+  reach four core edits with `unsigned int lo:9, count:3, hi:20` at offset 0x3EC.
+  The native bit-field supplies the original byte store and full-word read.
+  Only the reload after `count = 4` differs: target LUI/LW through D_800B0C4C,
+  built NOP/LW through the already loaded buffer base. Testing independent read
+  and write views; no match retained yet.
+- T-9920 DATE small drafts: 98 width/selector/control/layout variants stay at
+  ten edits for `func_8013E3C4` and sixteen for the corrected post-increment
+  `func_8013E6A4`. Thirty-two deliberately enlarged aggregate probes fix the
+  first function's spill slot (six edits) and get the latter to twelve. Such
+  enlarged-local spelling would require a precise FAKE comment if retained.
+- T-9920 Work80125D10 repair: nine owned main drafts re-use its existing fields;
+  six other candidates now compile, but none match. The B2B4 u16 argument
+  form is ten edits from target (selector V1 versus V0); 80 combined work-area
+  and ETC reset-pointer probes produce no zero.
+
+- T-9920: All 148 raw drafts had a build/resolved-diff attempt. No real match
+  survived verification. Added the original EVENT full-word flag symbol
+  `D_800B0C4C` as u32 through the generated API writer, after the last draft was
+  restored; full build then gates the historical and independent-view searches.
+
+- T-9920: Full build with all three generated declarations passes all 27 SHA1
+  checks. Historical drafts are remeasured after GameState migration and current
+  symbol renaming. The model-loop 900-second search has no zero (weighted 193);
+  emitted output is 15 core edits in the actual context, so it does not supersede
+  the five-edit manual seed. Ninety-six single-model (`func_80058F9C`) pointer,
+  K&R, declaration, call-count, clamp and line-layout probes reach 35 edits.
+
+- T-9920 **verified match**: EVENT `func_8010A6E4` (+172 bytes). Native root
+  bit-fields (`lo:9`, `count:3`, `hi:20` at +0x3EC) supply the original full-word
+  reads and byte writes. Reading through a distinct word-sized SeqFlags view
+  based on the same buffer preserves the absolute reload after `count = 4`;
+  declaring a separate global word instead incorrectly promotes its old value.
+  The retained plain-C views are marked FAKE pending SDK aggregate recovery.
+  Fresh real-source funcdiff is MATCH and the linked EVENT SHA1 is OK. The
+  additional 32 volatile probes have no zero and do not replace this candidate.
+
+- T-9920 additional type/control probes: the 108 FIFO width/index/aggregate/
+  declaration/layout variants reach 46 edits; the original V0 count and A0
+  index still become V1/V0. Seventy-two display-size constant/call-argument/
+  source-line variants reach 36 edits; A0/A1 dimension sharing across branches
+  remains absent. Earlier EVENT callback-table evidence (T-9520, read-only
+  copied seed) supplies the 44-pointer table and 96-prefix/10-group record view;
+  current typed probes remeasure its remaining loop-head scheduling gap.
+
+- T-9920 OPTION: `*(u32 *)&D_800E6280.unk_F88` recovers the target initial V1
+  flag load, dropping the seed to twelve core edits. This is a view of the
+  canonical GameState member, not an obsolete scalar alias. Remaining byte
+  counter and argument-mask registers need iteration. EVENT callback-table
+  remeasurement tries 144 counter/order/loop/head-layout/compare forms and
+  stays at eleven edits; its 0xE0 frame/table +0x28 and 0x44 stride are correct.

@@ -7839,3 +7839,148 @@ Ten matches / 5,596 bytes; grand total 4880/6958, 782256/2279368 (34.3%). Comple
 ## [2026-10-11] lint | T-9710 final wiki and diff consistency
 
 Done ticket, single Done board card and index entry agree; acceptance items checked. Final git diff --check passes, with only allowed files and the new ticket changed. [[tickets/T-9710-wave-9-list-1]], [[kanban]], [[index]].
+
+## [2026-10-11] ticket | Claim wave 10 list 2
+
+Created [[tickets/T-9920-wave-10-list-2]] and its In Progress card in
+[[kanban]]. Read [[decompile-workflow]], [[register-allocation-wave7]],
+[[uopt-register-allocation]], CODING_STANDARDS.md and the shared wave10-brief.md.
+Assigned sources and experiments are isolated to w10-2; four-hour target starts
+at 20:19 UTC. No commits or tooling changes are authorized by the brief.
+
+## [2026-10-11] build | Configure wave 10 list 2 baseline
+
+Started Docker configure/ninja in the isolated w10-2 worktree and parallel
+read-only m2c draft generation for the assigned list. Initial draft failures
+before assembly existed are retried after the baseline. [[matching-notes]]
+now has the T-9920 section. Experiment files stay in scratchpad/w10-2/.
+
+## [2026-10-11] build | Wave 10 list 2 baseline passes
+
+The fresh w10-2 configure/ninja build passes 27/27 SHA1 checks. Draft generation
+continues; earlier normalized near-miss inputs were copied read-only into the
+owned scratch directory for ranked follow-up. [[tickets/T-9920-wave-10-list-2]]
+records the baseline; no changes to the shared farm.
+
+## [2026-10-11] query | T-9920 duplicate and near-duplicate scope check
+
+Docker dupes.py and neardupes.py were restricted to list 2's exact original-object
+paths. Neither found an applicable new C copy (0 functions, 0 bytes). All assigned
+m2c drafts have been collected; empty early drafts are retried during the build/diff
+pass. Mixed pointer/integer lifetime variants for the model loop and narrow-counter
+variants for DATE's three-entry conversion loop are running in isolated scratch
+objects. See [[tickets/T-9920-wave-10-list-2]] and [[matching-notes]].
+
+## [2026-10-11] decision | T-9920 focus first-pass builds and source probes
+
+The per-draft pass builds the defining object plus header/global guards, then
+runs resolved funcdiff. Retained candidates require the complete ninja build.
+The earlier full-build loop was interrupted in its own container and restored
+its active draft; no source gain was lost. Focused searches tried 256 model-loop
+and 192 DATE narrow-counter variants without a match. The remaining DATE diff
+swaps its two table-base registers; chained assignment is the next plain-C test.
+TAIIKU probes reuse the existing 0x1C TkPl type. [[tickets/T-9920-wave-10-list-2]]
+and [[matching-notes]] hold the matching context.
+
+## [2026-10-11] decision | T-9920 first-pass harness freshness
+
+The long-lived scratch harness must clear funcdiff's per-process freshness/header
+caches between source mutations. A failed raw draft had a cached MATCH diagnostic
+but was rejected because its ninja compile failed; no C was retained. Build logs
+remain authoritative, and historical drafts are compared independently. Correcting
+the scratch harness; repository tools remain unchanged. [[tickets/T-9920-wave-10-list-2]].
+
+## [2026-10-11] query | T-9920 early deep probe evidence
+
+Recorded the model, DATE, TAIIKU and TT source-spelling/type searches in
+[[matching-notes]]. No match retained from these searches. A 600-second bounded
+permuter search is now running on DATE's eight-core-edit seed; [[tickets/T-9920-wave-10-list-2]]
+continues the complete first pass and historical-draft measurement.
+
+## [2026-10-11] decision | T-9920 declare the two opaque packet pools
+
+Added only `extern u8 D_800E94A0[]` and `extern u8 D_800FD4A0[]` through
+sync_protos.py --add-global. Source mutation was paused and its active raw draft
+restored before generation. The header diff is two additions, with no other view
+changes. Running the complete Docker build before resuming the remaining drafts.
+The model-loop project-context seed now has five core edits; [[matching-notes]]
+records the source shape and the invalid earlier buffer experiments.
+
+## [2026-10-11] build | T-9920 packet-pool declarations verified
+
+The complete incremental Docker build after the two packet-pool extern additions
+passed all 27 SHA1 checks. Continued the raw draft pass and re-ran the previously
+uncompilable buffer-switch probes. The model empty-test probes stayed at five
+core edits, and DATE's 600-second permuter search found no improvement. See
+[[matching-notes]] and [[tickets/T-9920-wave-10-list-2]].
+
+## [2026-10-11] query | T-9920 measured buffer register gap
+
+Recompiled all 96 buffer-switch variants with the declared packet pools. Best
+remains eight core edits, using a1 where the target uses a3. The earlier compile
+failures are excluded from allocation evidence. Started ETC's three-edit
+selector-copy probe and a 900-second model-loop permuter run from the five-edit
+seed. Results and limitations are in [[matching-notes]].
+
+## [2026-10-11] query | T-9920 native EVENT flag view
+
+The 36 EVENT flag probes reach four core edits with a native unsigned bit-field
+at buffer+0x3EC. Only the reload after the byte store differs: IDO reuses the
+buffer base, while the original loads through the word symbol. Testing separate
+read and write views next. DATE's enlarged-local probes repair the spill slot
+but retain compare and scheduling gaps. Existing Work80125D10 fields repair
+several drafts without new types; closest such switch stays at ten edits.
+[[matching-notes]] and [[tickets/T-9920-wave-10-list-2]] record the results.
+
+## [2026-10-11] decision | T-9920 SDK flag-word declaration
+
+The 148-function raw draft pass is complete, with no verified retention. Added
+`extern u32 D_800B0C4C` through sync_protos.py --add-global after restoring the
+last draft. This is the full-word flag load present in EVENT's original assembly;
+the SDK buffer view remains D_800B0860. The diff adds only that declaration.
+The complete build gates the historical pass and separate-view probes. See
+[[matching-notes]] and [[tickets/T-9920-wave-10-list-2]].
+
+## [2026-10-11] build | T-9920 full flag-word build passed
+
+All 27 binary SHA1 checks pass with the third generated declaration. Historical
+drafts now pass through GameState migration before measurement; obsolete scalar
+aliases are not accepted as source. Started separate flag-word/buffer probes and
+FIFO type/control repairs. The 900-second model search produced no zero; its
+best emitted source is 15 core edits after real-context remeasurement, worse
+than the five-edit manual seed, so that seed remains preferred. The single-model
+helper's 96 pointer/K&R/call/layout probes reach 35 edits. [[matching-notes]].
+
+## [2026-10-11] build | T-9920 match EVENT flag update
+
+EVENT func_8010A6E4 now passes real resolved funcdiff and its linked binary's
+SHA1, with the preceding full build checking all 27 units. +172 bytes. Separate
+native unsigned-bitfield read and write views preserve the full-word reload
+after the byte store; no volatile is used in the retained function. The exact
+view choice is marked FAKE with T-9920. Historical source mutation was paused
+and restored before applying this match, then resumed with completed rows
+skipped. [[matching-notes]] and [[tickets/T-9920-wave-10-list-2]].
+
+## [2026-10-11] query | T-9920 callback and FIFO iteration
+
+The repaired FIFO and display-size searches produce no zero (best 46 and 36
+core edits). Read T-9520's prior callback-table seed and copied its immutable
+JSON into owned scratch. Testing native 0x44-byte rows and a 44-pointer local
+table in the current EVENT context; no shared scratch file was changed.
+The scoped queue read remains within the 47 owned files. [[matching-notes]].
+
+## [2026-10-11] ticket | T-9920 resolve the EVENT flag case
+
+Appended the verified EVENT flag-update resolution to [[data/t0018-cases]];
+no historical symptom row was removed or edited. Register-shape diagnostics
+for the remaining close cases are being collected before any new blocker row.
+[[tickets/T-9920-wave-10-list-2]] remains In Progress during the deep pass.
+
+## [2026-10-11] query | T-9920 unsigned flag-word improvement
+
+The unsigned pointer view of the existing GameState F88 member recovers OPTION's
+initial V1 load, improving func_80139F8C from eighteen to twelve core edits.
+Byte-counter and narrow-call variants continue from that seed. The 144 EVENT
+callback-table type/control/layout probes stay at eleven edits with the correct
+frame and stride. Scoped duplicate propagation after the EVENT match applied
+zero functions; near-duplicate verification is still running. [[matching-notes]].

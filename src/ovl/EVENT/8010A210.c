@@ -124,7 +124,34 @@ void func_8010A658(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A6E4);
+/* FAKE: separate flag-word reads and buffer bit-field writes preserve the
+ * original word reload after the byte store. The full SDK aggregate is still
+ * unknown. T-9920. */
+void func_8010A6E4(void) {
+    struct SeqFlags {
+        unsigned int lo : 9;
+        unsigned int count : 3;
+        unsigned int hi : 20;
+    };
+    struct SeqBits {
+        u8 pad[0x3EC];
+        unsigned int lo : 9;
+        unsigned int count : 3;
+        unsigned int hi : 20;
+    };
+    struct SeqBits *seq;
+    s32 value;
+
+    seq = (struct SeqBits *)D_800B0860;
+    value = ((struct SeqFlags *)(D_800B0860 + 0x3EC))->count;
+    if (value >= 5U) {
+        seq->count = 4;
+        value = ((struct SeqFlags *)(D_800B0860 + 0x3EC))->count;
+    }
+    D_80094714 += value * 2;
+    seq->count++;
+    func_80011DFC();
+}
 
 void func_8010A790(void) {
     u8 value;

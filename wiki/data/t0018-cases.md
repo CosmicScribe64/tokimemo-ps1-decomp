@@ -1507,3 +1507,10 @@ and linked GEKO SHA1 pass. No FAKE. Historical symptom rows remain.
 | 800451D0 | `func_8004636C` | sched | Cluster scheduling/order: narrow K&R u8 parameter, unsigned index and explicit u32 checksum-tail byte locals reach eight resolved differing lines. Tail registers now agree; residual is the first add's operand order and mask/phi-copy scheduling across the counter, pointer increments and loop delay slot. Signed/unsigned/halfword sums, split byte additions, line grouping and bounded permuters do not verify a match. Restored assembly; finite-search evidence only, T-9710. |
 | 80075320 | `func_80076B48` | regorder | Cluster selector/compare chain: GameState selector switches before/after calls leave 22 resolved differing lines, including the missing v1-to-v0 copy and later comparisons on v1. Fresh five-minute permuter with a consistently staged void API view finds no verified match; restored assembly. The s32 trial was blocked by declaration-view checks and is not negative codegen evidence. T-9710. |
 | BUNKASAI/8015AF90 | `func_8015B828` | regorder | Historical frame/spill cluster: recovered local 4-by-4 word aggregate and index-before-table declaration order fix the 0x58 frame. Remaining 28 resolved differing lines include GameState index/base load scheduling and temporary rotations (target field load in t8). Typed member/unsigned-halfword repair and five-minute permuter yield no verified match; restored assembly. T-9710, bounded evidence only. |
+
+T-9920 resolution: EVENT `func_8010A6E4` now matches (+172 bytes). A native
+9/3/20-bit word view supplies full-word reads, while the root buffer bit-field
+view supplies byte writes. Distinct typed read/write views preserve the reload
+through the word address after the byte store; the view choice is marked FAKE
+pending full SDK aggregate recovery. Current-source resolved diff and linked
+EVENT SHA1 pass. Historical rows remain unchanged.
