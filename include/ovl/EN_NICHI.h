@@ -2,7 +2,25 @@
 #define OVL_EN_NICHI_H
 
 #include "common.h"
+#include "psx_types.h"
 #include "main_api.h"
+
+typedef struct EnObj {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ u8 unk_14[2];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ u8 unk_18[2];
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ u8 unk_20[4];
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+} EnObj; /* size 0x30: record of D_8013984C */
 
 typedef struct Rec30 {
     /* 0x00 */ s32 val;

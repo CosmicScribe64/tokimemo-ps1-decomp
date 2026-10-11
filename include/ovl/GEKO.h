@@ -712,3 +712,13 @@ void func_80136B2C(void);
 
 void func_80137990(void);
 #endif
+
+#ifndef OVL_GEKO_CALLBACK_T9610
+#define OVL_GEKO_CALLBACK_T9610
+/* Complete local-copy dispatch table in func_80141760. */
+typedef struct GekoCallbacks64 {
+    /* 0x00 */ void (*callback[64])();
+} GekoCallbacks64; /* size 0x100 */
+extern GekoCallbacks64 D_80147424;
+void func_80141760(void);
+#endif

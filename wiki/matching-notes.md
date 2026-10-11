@@ -2212,3 +2212,64 @@ Deep `BUNKA_SD:func_80134850`: approximately twelve minutes repairing the two 0x
 Second-pass review cleanup: removed both unused main-position locals and moved its cast before the left shift; fresh resolved diff and main SHA1 still pass. Removing BUNKAKEN's unused word moves the table four bytes, so retained it as an explicitly documented `pad` and renamed the returned local `result`; fresh resolved diff and BUNKAKEN SHA1 pass. DATE2 comments now identify both frame/conversion tricks and unresolved scalar string-pointer views. Sixteen unique additional matches total 4,208 bytes; twenty matches total 5,748 bytes including df5bc9f. The three-hour requirement is met; unattempted deep candidates remain in scratch for later work.
 
 Final second-pass review/checks: all twenty retained functions pass fresh resolved diffs. New TACO fields now follow `unk_XX`; both functions pass again after that edit. Full Docker build and explicit 27 SHA1 checks pass, including header/global guards; branch prototypes have zero new disagreements (17 known), global migration passes, and scoped dupes applies zero copies. Inline standards/spec review against df5bc9f has no outstanding findings. T-9550 is Done; second-pass edits remain uncommitted. Final grand total: 4754/6958 functions, 735360/2279368 bytes (32.3%). No new T-0018 symptom rows; remaining non-register blockers include missing SDK and larger local-copy/packet aggregate types.
+
+## Aggregate and local-copy types, round 8 (T-9610)
+
+Shared packet layouts are in `include/psx_types.h` (RECT remains in libgpu.h;
+geometry types in libgte.h). Private EnPolyF4, TcPolyF4 and TacoSprite20 are
+replaced by POLY_F4/SPRT. EnObj is now in the overlay header, with the +0x10
+word documented from cross-function evidence. MATRIX replaces the opaque
+eight-word transform in TACO `func_8015B3B0`: write each translation as
+`obj->transform.t[i] + arg1[i]`, in that operand order. Reversing those operands
+changes load/temporary order; the natural matrix form passes resolved diff.
+
+Two local callback copies now pass resolved diff and overlay SHA1:
+- DATE `func_80153CEC`, 168 bytes: 39 pointers (0x9C), unsigned byte selector
+  declared before the aggregate, loaded before the conditions and reloaded
+  after the possible callback. The same local represents both reads.
+- GEKO `func_80141760`, 188 bytes: 64 pointers (0x100), unsigned selector read
+  before and after the dispatch. Declare the function in the overlay header
+  because a preceding C caller otherwise implicitly declares an integer
+  return and rejects the void definition. No FAKE needed in either function.
+
+Rejected candidates and what remains (scratchpad/r8-types):
+- SHUGAKU `func_80138B20`: recovered 71 callbacks (0x11C), resolved MATCH with
+  three padding words, but the whole-unit checksum fails at **one word in the
+  already matched func_80138DD8** (BNE operand reversal at 0x80138E14). Removing
+  only the new C body restores that function's MATCH; changing shared-header
+  visibility does not. Local widths/names/comparisons, padding forms and a
+  120-second permutation did not repair both. Restore INCLUDE_ASM; keep the
+  proven table declaration. Never count this isolated funcdiff as a gain.
+- TACO `func_801472D4`: MATRIX plus the coordinate-object prefix fixes the
+  invalid draft; return -1 on unaligned pointers proves the old void prototype
+  wrong. Corrected to an old-style s32 declaration (narrow stack arguments).
+  Natural loops and local-order trials plus 120 seconds of permutation match
+  the frame/offsets but leave the eight-word copy's scratch temporary t7 vs t8
+  and the final destination reload t8 vs t9. Restore assembly.
+- TAIIKU `func_80135DF8`: retain `TaiRandomTable D_8014964C` (11x10 s16, 0xDC).
+  Flat 0x44 records improve the typed draft to 34 instruction-line edits;
+  nested 10x3 groups change strength reduction and registers. Restore assembly.
+- DATE `func_801518B8`: a DateScene44 assignment compiles, with one temporary
+  number difference propagating from the copy loop into the following stores.
+  Restore assembly and do not add an overlapping D_80120694 declaration.
+- GYOZI `func_80142D40`: 27 callbacks are clear, but selector reload/pointer
+  comparison allocation remains different. Trial type/prototype/source restored.
+- EN_NICHI `func_80134F2C`: replacing the old dummy local with a real reused
+  random-result local reproduces every instruction except frame 0x38 vs 0x30.
+  Thus the spill at +0x28 needs no FAKE, but the remaining frame discrepancy
+  persists. No local aggregate exists here and no frame-pass exception is added.
+
+Frame measurements and reproduction tests: [[decompile-workflow]],
+`tools/test_local_aggregate_frames.py`. SDK layout assertions:
+`tools/test_psx_types.py`. Existing type_recovery.py combines all users already:
+D_8013984C gives stride 0x30 across 19 functions; D_80127080 is covered by
+competing stride 0x10 and 0x40 proposals across 24/23 users. Proposals are
+hypotheses, not permission to merge differing record/subgroup views blindly.
+
+Final proof: clean Docker configure/ninja passes all 27 checksums, with both
+header/global stamps present. Fresh resolved diffs pass both gains and all
+four packet/matrix refactors. Prototype branch check has zero new disagreements
+(17 known). ABI/frame tests pass (1 + 2 + 20 tests). Final progress is
+4870/6958 functions, 776660/2279368 bytes: **+2 functions / +356 bytes**.
+Inline standards/spec review resolved the DR_TPAGE size discrepancy and has
+no outstanding findings. T-9610 is Done; edits remain uncommitted.

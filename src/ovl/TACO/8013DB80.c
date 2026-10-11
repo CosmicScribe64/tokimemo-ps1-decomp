@@ -47,19 +47,19 @@ void func_8013F7D8(void) {
  * T-9560; original statement layout unknown. */
 void func_8013F874(s32 arg0, s32 arg1, s32 arg2) {
     s32 palette;
-    TacoSprite20 *sprite;
+    SPRT *sprite;
 
-    sprite = (TacoSprite20 *)GetWorkBase(0x14, D_8011ECA0);
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
     func_8009F0A4(sprite);
     sprite->w = 16;
     sprite->h = 16;
     SetSemiTrans(sprite, 1);
-    sprite->r = 0x80;
-    sprite->g = 0x80;
-    sprite->b = 0x80;
-    sprite->x = D_800E6280.unk_014[D_8011ECA0] + arg0;
-    sprite->y = D_800E6280.unk_018[D_8011ECA0] + arg1;
-    sprite->u = 0xC0; sprite->v = arg2 * 16 - 0x30;
+    sprite->r0 = 0x80;
+    sprite->g0 = 0x80;
+    sprite->b0 = 0x80;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + arg0;
+    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    sprite->u0 = 0xC0; sprite->v0 = arg2 * 16 - 0x30;
     palette = ((D_800E6280.unk_10F8 >> 1) % 14) * 16;
     if (arg2 == 3) {
         sprite->clut = func_8009ED74(palette, 0x1EA);

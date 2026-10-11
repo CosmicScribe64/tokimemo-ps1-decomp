@@ -486,3 +486,12 @@ extern ShugakuFn68 D_8013CB08;
 extern u8 D_8013CB04;
 void func_8013864C();
 #endif
+
+#ifndef OVL_SHUGAKU_CALLBACK_T9610
+#define OVL_SHUGAKU_CALLBACK_T9610
+/* Complete stack copy in func_80138B20. */
+typedef struct ShugakuCallbacks71 {
+    /* 0x00 */ void (*callback[71])();
+} ShugakuCallbacks71; /* size 0x11C */
+extern ShugakuCallbacks71 D_8013C984;
+#endif

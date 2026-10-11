@@ -302,7 +302,20 @@ void func_801416E0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80140A00", func_80141760);
+void func_80141760(void) {
+    u8 index;
+    GekoCallbacks64 table;
+
+    table = D_80147424;
+    index = D_800E6280.unk_110A;
+    table.callback[index](0x20);
+    index = D_800E6280.unk_110A;
+    if (index >= 36 && index < 43) {
+        func_8006B900();
+    } else if (index == 49) {
+        func_80139128();
+    }
+}
 
 void func_8014181C(void) {
     if (D_800E6280.unk_110D == 0) {

@@ -342,3 +342,8 @@ extern TaiikuWords48 D_801490F0;
 
 extern s32 D_8014A1D0;
 
+
+#ifndef OVL_TAIIKU_RANDOM_T9610
+#define OVL_TAIIKU_RANDOM_T9610
+extern TaiRandomTable D_8014964C;
+#endif

@@ -15,24 +15,8 @@ void func_80153AA0(s32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80153AA0", func_80153B38);
 
-typedef struct {
-    /* 0x00 */ u32 tag;
-    /* 0x04 */ u8 r0;
-    /* 0x05 */ u8 g0;
-    /* 0x06 */ u8 b0;
-    /* 0x07 */ u8 code;
-    /* 0x08 */ s16 x0;
-    /* 0x0A */ s16 y0;
-    /* 0x0C */ s16 x1;
-    /* 0x0E */ s16 y1;
-    /* 0x10 */ s16 x2;
-    /* 0x12 */ s16 y2;
-    /* 0x14 */ s16 x3;
-    /* 0x16 */ s16 y3;
-} TcPolyF4; /* size 0x18 */
-
 void func_80153E78(s32 arg0, u8 arg1, u8 arg2, u8 arg3) {
-    TcPolyF4 *poly;
+    POLY_F4 *poly;
     s32 sprite;
 
     poly = GetWorkBase(0x18, D_8011ECA0);

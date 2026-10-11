@@ -41,6 +41,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-9610-aggregate-and-local-copy-types|T-9610 Aggregate and local-copy types]]
 - [ ] [[tickets/T-9530-wave-8-list-3|T-9530 Wave 8: list 3]]
 
 - [ ] [[tickets/T-9570-wave-8-list-7|T-9570 Wave 8: list 7]]
