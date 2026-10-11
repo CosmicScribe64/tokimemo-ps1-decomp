@@ -5667,3 +5667,190 @@ Recorded precise remaining evidence for career (2 lines), DATE layout (4), album
 ## [2026-10-11] ticket | T-9720 Done after four-hour batch and review
 
 Completed approximately 15:00–19:01 UTC, meeting the user minimum. Eleven functions / 2812 bytes retained, three T-0018 rows added. Final restored-tree 27/27 SHA1, header/global/prototype checks and inline standards review all pass. Moved ticket/card/index to Done together. Final progress: grand total 4881/6958 779472/2279368 34.2%. Uncommitted source/declaration/wiki edits remain for the orchestrator; no commits or merges. [[tickets/T-9720-wave-9-list-2]], [[kanban]], [[matching-notes]].
+## [2026-10-11] ticket | Start wave 9 list 3
+
+Created [[tickets/T-9730-wave-9-list-3]] In Progress and added its card to [[kanban]] and link to [[index]]. Read the shared wave-9 brief and matching workflow; scope is 146 functions in 35 owned files, with scratch under scratchpad/w9-3/. Baseline Docker configure/build started. No commits permitted for this batch.
+
+## [2026-10-11] query | Wave 9 list 3 first-pass setup
+
+[[tickets/T-9730-wave-9-list-3]]: Docker draft generation started for the owned queue while the baseline builds. Historical [[matching-notes]] and [[register-allocation-wave7]] identify audio reset scheduling and tpage argument copies as deep-pass candidates. Trial edits will preserve the original source text and restore any unverified body.
+
+## [2026-10-11] build | Wave 9 list 3 baseline passes
+
+Baseline tools/docker.sh configure.py + ninja completed successfully; 27 binaries retain their reference checksums and build/headers.ok / build/globals.ok exist. [[tickets/T-9730-wave-9-list-3]] now proceeds to reversible first-pass C trials. Splat emits the existing advisory for func_80084C98 without preventing the successful build.
+
+## [2026-10-11] build | Scoped duplicate reuse has no gains
+
+For [[tickets/T-9730-wave-9-list-3]], tools/dupes.py --apply --check --files and tools/neardupes.py with the same exact owned-file filter each applied zero functions. Baseline progress: 4,870/6,958 functions, 776,660/2,279,368 bytes (34.1%). Drafts now proceed to individual object builds and resolved diffs.
+
+## [2026-10-11] build | Wave 9 list 3 first 20 draft trials
+
+[[tickets/T-9730-wave-9-list-3]]: first 20 owned functions received m2c drafts and object-build attempts. No match retained; failed bodies/declarations restored. [[matching-notes]] has the wave section, and detailed drafts / diagnostics are in scratchpad/w9-3/firstpass-2.jsonl. Several m2c raw field expressions need recovered table or packet types before a meaningful diff.
+
+## [2026-10-11] query | Wave 9 list 3 drafts complete
+
+[[tickets/T-9730-wave-9-list-3]]: all 146 assigned functions now have m2c output saved in scratchpad/w9-3/drafts.jsonl. The serial build/diff pass continues in five-function batches, preserving failed code and diagnostics externally and restoring rejected source edits. Main table accesses use the existing D_8011ECD0 byte storage view when m2c leaves unknown scalar labels.
+
+## [2026-10-11] build | Wave 9 list 3 match func_8013FE40
+
+[[tickets/T-9730-wave-9-list-3]]: src/ovl/NAME_ENT/80139740.c, 344 bytes, resolved funcdiff and unit SHA1 verified in Docker.
+
+## [2026-10-11] build | Wave 9 list 3 quick pass complete
+
+[[tickets/T-9730-wave-9-list-3]]: all 146 functions drafted and tried in Docker; 1 match, 39 resolved real diffs, 106 type/declaration failures. Restored failed trials, then full ninja passed all 27 SHA1 targets and header/global guards. Closest diffs lead the deep pass; aggregate repair follows. [[matching-notes]] records the retained gain.
+
+## [2026-10-11] decision | Wave 9 single-worker permuter workaround
+
+[[tickets/T-9730-wave-9-list-3]]: the first deep permuter run hit an ImportError because tools/queue.py shadows Python's standard queue module when multiprocessing starts. Use one worker in scratch trial orchestration; do not change shared tooling. Details appended to [[matching-notes]].
+
+## [2026-10-11] decision | Wave 9 bounded permuter setup workaround
+
+[[tickets/T-9730-wave-9-list-3]]: NAME_ENT setup remained CPU-bound in the broad function-stripping regex for over five minutes, before the run timer started. Interrupted only the trial's own Docker container and restored its source/header snapshots. A scratch-only wrapper supplies a bounded ANSI/K&R definition regex and preloads standard queue in worker processes; shared tools and compiler settings remain unchanged. Re-run candidates through the normal resolved diff and unit SHA1 before retention.
+
+## [2026-10-11] build | Wave 9 first deep searches restored
+
+[[tickets/T-9730-wave-9-list-3]]: func_8007B2B4 manual variants plus bounded 300-second two-worker search remain nonmatching; func_80049FF0 type repair restores the original frame but colour/scheduling differs, bounded search nonzero. Both restored to INCLUDE_ASM. Wrapper workarounds succeeded; aggregate/array repairs continue in owned files.
+
+## [2026-10-11] build | Wave 9 NAME_ENT table type trials
+
+[[tickets/T-9730-wave-9-list-3]]: two-word array views make func_80140574/func_80140430 compile. s32 fall-through gives the original selector/copy; resolved diffs now isolate temporary numbering. Restored both. Fixed scratch orchestration to retain trial declarations during permutation, and to install shared trial types once per job; no project tooling changes. Next deep batch targets real arrays and record loops.
+
+## [2026-10-11] build | Wave 9 list 3 match func_80048DD0
+
+[[tickets/T-9730-wave-9-list-3]]: src/main/80047550.c, s32 counter, i < count && i < 160; resolved funcdiff and unit SHA1 verified in Docker.
+
+## [2026-10-11] decision | Wave 9 list 3 ranked deep-pass follow-up
+
+[[tickets/T-9730-wave-9-list-3]] and [[matching-notes]] record bounded clear-loop match and completed counter, pointer, menu-layout, buffer-swap, and selector experiments. Keep only unit-verified C; the next attempts focus on early loop increments, byte offsets, and local aggregate lifetimes. Scratch remains under scratchpad/w9-3/.
+
+## [2026-10-11] ingest | Wave 9 list 3 aggregate and SDK argument evidence
+
+[[tickets/T-9730-wave-9-list-3]]: read target asm and neighbouring TACO pointer-table callers, palette bit-field access widths, and asm/libsnd.s signed-halfword argument use. Findings and trial priorities appended to [[matching-notes]]. No failed draft retained.
+
+## [2026-10-11] decision | Wave 9 list 3 declaration failures revisited
+
+[[tickets/T-9730-wave-9-list-3]]: initial header-only failures are now queued for real comparisons: load_tpage_buf_lock uses the GameState texture-page array; func_80079B34 needs void forward declarations and an argument-count correction; NAME_ENT func_80142880 needs its matched helper's declaration. The NAME_ENT search-card loop additionally needs its flag-pointer and count-spill representation repaired. Evidence and failed/retained outcomes remain in scratchpad/w9-3/.
+
+## [2026-10-11] build | Wave 9 list 3 match func_801322EC
+
+[[tickets/T-9730-wave-9-list-3]]: src/ovl/BUNKA_SD/80132000.c, void 10 record flags, counter 0, positive outer mask; resolved funcdiff and unit SHA1 verified in Docker.
+
+## [2026-10-11] build | Wave 9 list 3 BUNKA_SD record loop
+
+[[tickets/T-9730-wave-9-list-3]]: src/ovl/BUNKA_SD/80132000.c func_801322EC matches (316 bytes), using the existing 0x44-stride record byte array and direct GameState reads. Docker resolved funcdiff and BUNKA_SD checksum pass. [[matching-notes]] records the unrolled-loop interpretation.
+
+## [2026-10-11] decision | Wave 9 list 3 K&R discovery correction
+
+[[tickets/T-9730-wave-9-list-3]]: load_tpage_buf_lock's zero-line K&R result was a funcdiff discovery ERROR for the declaration/brace layout. Corrected scratch layout and error scoring; [[matching-notes]] records the limit. All retained matches still require return-code success and the unit SHA1.
+
+## [2026-10-11] ingest | Wave 9 list 3 word argument and byte-mask evidence
+
+[[tickets/T-9730-wave-9-list-3]]: func_800676AC target uses the full incoming word; fixed draft byte-array dereference and inferred opaque address-only data. Docker type_recovery finds no proposal for D_800C5FD4. Valid K&R load_tpage_buf_lock still has a real 37-line diff; matched neighbour narrows its texture-page index before masking. Appended evidence and follow-up to [[matching-notes]].
+
+## [2026-10-11] query | Wave 9 list 3 declaration and selector follow-up
+
+[[tickets/T-9730-wave-9-list-3]] and [[matching-notes]] record the missing BUNKA script pointer declarations and the SHUGAKU byte-parameter view that reduces the current real diff to five lines. Failed variants remain scratch-only; no match is claimed for either pending retry.
+
+## [2026-10-11] query | Wave 9 list 3 scoped queue and inline review
+
+The Docker queue restricted to the 35 files assigned to [[tickets/T-9730-wave-9-list-3]] still ranks the existing owned list first. No out-of-scope work was taken. Preliminary inline standards review of the three retained bodies found C89 code using existing game aggregates and record arrays, no new SDK declarations, and no FAKE tricks. Final checks and review remain pending while additional typed trials run.
+
+## [2026-10-11] query | Wave 9 list 3 record-zero type repair
+
+[[matching-notes]] records the queued repair for main `func_8006BC28`: known record table, address-valued script fields, and adjacent saved signed-halfword dimensions. This is a type/frame attempt, not yet a match or T-0018 classification.
+
+## [2026-10-11] ingest | Wave 9 list 3 first persistent allocation cases
+
+Appended three evidence rows to [[data/t0018-cases]] for [[tickets/T-9730-wave-9-list-3]] after manual iterations, type repair, shape inspection and bounded permutation. Each remains INCLUDE_ASM. Historical rows are unchanged.
+
+## [2026-10-11] ingest | Wave 9 list 3 palette field widths
+
+Read the full main `col2sepia` target. [[matching-notes]] records word-wide green/blue extraction for both pixels, narrow second-red extraction, and containing-byte/halfword writes. Typed field variants queued under [[tickets/T-9730-wave-9-list-3]].
+
+## [2026-10-11] build | Wave 9 list 3 TACO table walk restored
+
+[[tickets/T-9730-wave-9-list-3]]: typed command pointers and scalar home-slot repair make the loop/frame exact but retain a temporary-numbering gap. 37 manual refinements, 300 seconds of search, then eight initialization-order variants remain nonmatching. [[matching-notes]] records the evidence; source/header trials restored.
+
+## [2026-10-11] ingest | Wave 9 list 3 table and selector allocation cases
+
+Appended three further rows to [[data/t0018-cases]] for restored TACO, SHUGAKU and NAME_ENT trials under [[tickets/T-9730-wave-9-list-3]]. Header-incompatible return variants are excluded from codegen evidence. Shape and manual/search results are recorded without retaining failed declarations.
+
+## [2026-10-11] build | Wave 9 list 3 RPG verified candidate
+
+[[tickets/T-9730-wave-9-list-3]]: eight RPG return/decrement variants improve to 26 real diff lines. Bounded permutation finds a dead-test score-zero candidate and verifies its resolved function diff and RPG_BAT checksum. [[matching-notes]] records the promotion trick; marked source installation still pending.
+
+## [2026-10-11] query | Wave 9 list 3 selector classification clarification
+
+Re-read main `func_8007B2B4`: the dispatch selector derives from its parameter, while the initial flag is global. Appended clarification to [[data/t0018-cases]] rather than rewriting prior rows. Queued a short dead-test allocation probe informed by the verified RPG candidate under [[tickets/T-9730-wave-9-list-3]].
+
+## [2026-10-11] build | Wave 9 list 3 match func_8013B2F0
+
+[[tickets/T-9730-wave-9-list-3]]: src/ovl/RPG_BAT/8013AD50.c, s32 decrement; FAKE dead counter test preserves v1 promotion; resolved funcdiff and unit SHA1 verified in Docker.
+
+## [2026-10-11] build | Wave 9 list 3 RPG body retained
+
+[[tickets/T-9730-wave-9-list-3]]: cleaned and marked src/ovl/RPG_BAT/8013AD50.c func_8013B2F0 independently passes resolved funcdiff and RPG_BAT SHA1. Retained total is four functions / 1,408 bytes. Inline whitespace review identifies trailing spaces for final cleanup and re-verification.
+
+## [2026-10-11] build | Wave 9 list 3 match func_80132148
+
+[[tickets/T-9730-wave-9-list-3]]: src/ovl/BUNKA_SD/80132000.c, void background script addresses, explicit fifth case True; resolved funcdiff and unit SHA1 verified in Docker.
+
+## [2026-10-11] build | Wave 9 list 3 BUNKA dispatcher verified
+
+[[tickets/T-9730-wave-9-list-3]]: plain src/ovl/BUNKA_SD/80132000.c func_80132148 and appended overlay declarations pass resolved funcdiff and BUNKA_SD SHA1, including all five jump-table entries. Retained total is five functions / 1,828 bytes. [[matching-notes]] also records the next NAME_ENT table improvement and missing brightness declaration.
+
+## [2026-10-11] ingest | Wave 9 list 3 RGB proposals and full checkpoint
+
+[[tickets/T-9730-wave-9-list-3]]: type_recovery's overlapping proposals for the RGB work area are recorded in [[matching-notes]], with a minimum three-byte triplet retry. Five retained functions / 1,828 bytes pass the full incremental build, all 27 SHA1 checks and header/global guards. First NAME_ENT table bounded search remains nonmatching and restored.
+
+## [2026-10-11] ingest | Wave 9 list 3 texture-page and table gaps
+
+Appended three restored typed/search cases to [[data/t0018-cases]] under [[tickets/T-9730-wave-9-list-3]]. Texture-page caller retains argument/temporary ordering differences after real K&R layout repair. Both NAME_ENT table searches used all required declarations and stayed nonzero at their 13-line best. The preceding full checkpoint was explicitly counted: 27 checksum OK lines, headers OK, globals OK.
+
+## [2026-10-11] query | Wave 9 list 3 final declaration repair
+
+[[tickets/T-9730-wave-9-list-3]]: record-zero retries expose missing u8 D_800B6708; generated-header repair queued. [[matching-notes]] distinguishes this from the compiled but nonmatching texture-page initialization loop. No failed C is retained.
+
+## [2026-10-11] query | T-9730 final type and control-flow refinements
+
+[[matching-notes]] records the 0x44-record view's 11-line argument-allocation gap after a five-minute search, and the explicit palette sum's 144-line gap. Failed bodies/types restored. Queued a natural record else branch, corrected audio forward declaration, and remaining RGB/record-zero retries; no new matches claimed. [[tickets/T-9730-wave-9-list-3]] remains In Progress.
+
+## [2026-10-11] ingest | T-9730 paired palette temporary order
+
+Appended the typed palette's remaining temporary-numbering symptom to [[data/t0018-cases]] after 48 explicit refinements. [[matching-notes]] records the original access-width evidence and failed sum-local repair. No palette C or type is retained. [[tickets/T-9730-wave-9-list-3]] now has ten newly appended allocation rows; final retries remain active.
+
+## [2026-10-11] query | T-9730 record-zero event load order
+
+[[matching-notes]] records the now-compiling six record-zero refinements (44-line best) and the original's pre-branch event-byte load. Queued explicit event-local views after comparing target asm with C; do not classify an unrepaired draft as T-0018. [[tickets/T-9730-wave-9-list-3]] still retains five matches.
+
+## [2026-10-11] lint | T-9730 status consistency
+
+Scoped Docker lint confirms [[tickets/T-9730-wave-9-list-3]], [[kanban]] and [[index]] all say In Progress, with exactly one board card. Existing historical query entries are followed by their resolution/verification records in [[matching-notes]]. No wiki pages or raw sources were modified by the check.
+
+## [2026-10-11] ingest | T-9730 final record and audio gaps
+
+[[matching-notes]] records the completed natural record else and corrected audio-inline retries. Added their two restored allocation cases to [[data/t0018-cases]], for twelve T-9730 rows. [[tickets/T-9730-wave-9-list-3]] has five retained gains; the event-local and brightness-view checks are the last source trials.
+
+## [2026-10-11] decision | T-9730 natural record-zero switch retry
+
+[[matching-notes]] records separate target clamp paths. Expanded the final event-local retry with natural duplicated if/switch bodies rather than classifying m2c's shared-goto layout as an allocation gap. Source remains isolated in the owned main object; [[tickets/T-9730-wave-9-list-3]] remains In Progress.
+
+## [2026-10-11] ticket | T-9730 matching pass in review
+
+[[tickets/T-9730-wave-9-list-3]] moved to In Review with [[kanban]] and [[index]] updated. At 19:37 UTC, about 4 hours 37 minutes completed: five retained functions / 1,828 bytes, twelve allocation rows. Final RGB/event-local retries remain nonmatching and restored; final cleanup and verification follow.
+
+## [2026-10-11] build | T-9730 fresh source proofs and generated inventory
+
+Whitespace cleanup and expanded RPG FAKE comment retain all five resolved MATCH results. Scoped duplicate/near-duplicate checks apply zero candidates. Their assembly classification still showed the baseline, so refreshed generated main/BUNKA_SD/NAME_ENT/RPG_BAT splits and rodata/data pieces in Docker (all exit zero) and queued repeated owned-file scans plus final verification. [[tickets/T-9730-wave-9-list-3]] is In Review; no tool/config/raw-source edits.
+
+## [2026-10-11] build | T-9730 final verification and inline review
+
+[[tickets/T-9730-wave-9-list-3]] records five gains / 1,828 bytes, all fresh resolved MATCH proofs and 27 original binary checksums, zero new prototype disagreements (17 known), GameState/header guards and scoped duplicate scans. Whitespace and FAKE-comment findings resolved and reverified. [[matching-notes]] and twelve rows in [[data/t0018-cases]] record the remaining evidence. No outstanding standards findings.
+
+## [2026-10-11] ticket | T-9730 Done
+
+[[tickets/T-9730-wave-9-list-3]] moved from In Review to Done after inline review and verification; [[kanban]] and [[index]] agree. More than four hours completed (approximately 15:00–19:43 UTC). Final grand total 4875/6958 functions, 778488/2279368 bytes (34.2%). Edits remain uncommitted; shared tools and raw sources unchanged.
+
+## [2026-10-11] lint | T-9730 final closure audit
+
+Scoped audit confirms [[tickets/T-9730-wave-9-list-3]] Done, exactly one card in [[kanban]] Done, the matching [[index]] entry and twelve appended T-9730 allocation rows. Acceptance criteria and inline-review findings are resolved.

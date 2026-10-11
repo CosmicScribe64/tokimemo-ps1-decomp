@@ -759,7 +759,38 @@ void func_8013FDC8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013FE40);
+void func_8013FE40(void) {
+    switch (D_800E6280.unk_110D) {                           /* irregular */
+    case 0:
+        if (func_80054704((s32) D_800E6280.unk_1118) == 1) {
+            func_800AE0B0("DELETE OK");
+            D_800E7D14[D_800E6280.unk_1118] = 0;
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    case 1:
+        func_80053CE0();
+        D_800E7D36 = D_800E6280.unk_1118;
+        D_800E6280.unk_1118 = 0;
+        D_800E6280.unk_110D += 1;
+        break;
+    case 2:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    }
+}
 
 void func_8013FF98(void) {
     if (D_800E6280.unk_110D == 0) {

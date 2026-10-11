@@ -117,7 +117,20 @@ void func_80048DAC(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80048DD0);
+void func_80048DD0(s32 count) {
+    s32 i;
+
+    printf("%d CLASS_CLEAR \n", count);
+    if (count != 0) {
+        for (i = 0; i < count && i < 160; i++) {
+            D_8011ECD0[i * 0x44 + 3] = 0;
+        }
+    } else {
+        for (i = 0; i < 160; i++) {
+            D_8011ECD0[i * 0x44 + 3] = 0;
+        }
+    }
+}
 
 void func_80048E78(void) {
     s32 i;

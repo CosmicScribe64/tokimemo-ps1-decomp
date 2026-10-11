@@ -78,4 +78,17 @@ void func_80135A2C(void);
 void func_801352F4(void);
 void func_801351DC(void);
 
+/* T-9730: address-only script data selected by the background dispatcher. */
+extern u8 D_8013B670[];
+extern u8 D_8013B6B4[];
+extern u8 D_8013B6E4[];
+extern u8 D_8013B71C[];
+extern u8 D_8013B74C[];
+extern u8 D_8013B794[];
+extern u8 D_8013B7B0[];
+extern u8 D_8013B7C8[];
+extern u8 D_8013B7DC[];
+extern u8 *D_8013B7F0;
+extern u8 *D_8013B7F4;
+
 #endif /* OVL_BUNKA_SD_H */
