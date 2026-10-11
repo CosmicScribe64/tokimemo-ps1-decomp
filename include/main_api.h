@@ -467,6 +467,7 @@ extern s16 D_800B095E;
 extern s16 D_800B0966;
 extern s16 D_800B096E;
 extern Rec34 D_800B0A04[]; /* 12 records */
+extern s16 D_800B0B0E[];
 extern u8 D_800B0B64[];
 extern u8 D_800B0B6C[];
 extern u8 D_800B0BCF;
@@ -1297,6 +1298,7 @@ extern s32 D_80122D44;
 extern s32 D_80122D4C;
 extern u32 D_80122E9C;
 extern s32 D_80122EA0;
+extern s32 D_80122EA4;
 extern s32 D_80122EAC;
 #ifndef MAIN_API_OVERRIDE_D_80122EB8
 extern s32 D_80122EB8;
