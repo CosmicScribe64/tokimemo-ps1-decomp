@@ -502,4 +502,31 @@ void func_800F9508(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F7220", func_800F9558);
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+extern FnTbl42 D_80120B3C;
+
+typedef struct {
+    void (*f[42])();
+} FnTbl42; /* size 0xA8 */
+extern FnTbl42 D_80120B3C;
+
+void func_800F9558(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl42 tbl;
+
+    tbl = D_80120B3C;
+    func_80078950("%d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if ((D_800EECE0 != 0) && (D_800B1AE4 % 180 == 0)) {
+        func_800433D0(0x501);
+    }
+    if ((D_800EECE0 != 0) && (D_800B1AE4 % 210 == 10)) {
+        func_800433D0(0x502);
+    }
+    if ((D_800EECE0 != 0) && (D_800B1AE4 % 450 == 20)) {
+        func_800433D0(0x500);
+    }
+}
