@@ -95,4 +95,3 @@ extern s32 D_8013C78C;
 extern s32 D_8013C790;
 extern s32 D_8013C794;
 extern s32 D_8013C798;
-

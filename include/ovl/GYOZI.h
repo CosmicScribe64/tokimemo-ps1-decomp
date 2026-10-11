@@ -604,4 +604,3 @@ typedef struct {
 #endif /* OVL_GYOZI_H */
 extern s32 D_8012E688;
 extern s32 D_8012E698;
-
