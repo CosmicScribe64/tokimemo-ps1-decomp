@@ -3,7 +3,36 @@
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_set);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check);
+s8 menu_check(arg0, arg1, arg2)
+    s32 arg0;
+    s16 arg1;
+    s16 arg2;
+{
+    u8 x;
+
+    if (arg0 >= 2) {
+        return -1;
+    }
+    x = D_800E6280.unk_1092;
+    if ((x & 3) == 0) {
+        return menu_check_1(arg0, arg1, arg2);
+    }
+    if ((x & 3) == 1) {
+        menu_check_2(arg0, arg1, arg2);
+        return (&D_800E6280.unk_1093)[arg0];
+    }
+    if ((x & 3) == 3) {
+        menu_check_2(arg0, arg1, arg2);
+        return (&D_800E6280.unk_1093)[arg0];
+    }
+    if (D_800E6280.unk_F88 & 4) {
+        return menu_check_1(arg0, arg1, arg2);
+    }
+    if (D_800E6280.unk_F80 & 4) {
+        return menu_check_2(arg0, arg1, arg2);
+    }
+    return menu_check_1(arg0, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_1);
 
