@@ -27,6 +27,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9000-t0018-register-order-rule-or-build-step|T-9000]] T-0018 register order under K&R: 20 rows matched as source idioms, clusters, no new pass (Done)
 - [[tickets/T-9020-wave-5-codegen-shapes|T-9020]] Wave-5 codegen shapes: idioms for 8 shapes, 13 functions (Done)
 - [[tickets/T-9210-wave-6-codegen-shapes|T-9210]] Wave-6 codegen shapes: check_para_limit takes no argument, index as a member, indexed loops for the stack-argument slot, K&R definitions, element chains; [[matching-notes]] "Wave-6 codegen shapes" (Done)
+- [[tickets/T-9320-wave-7-list-2|T-9320]] Wave 7 list 2: 39 functions (TACO range-chain template, two-counter table loops, repeated expressions instead of temps, permuter burn tricks); [[matching-notes]] "Wave 7, list 2" (Done)
 - [[tickets/T-8080-wave-5-list-8|T-8080]] Wave 5: list 8 (Done)
 - [[tickets/T-7010-game-state-view-audit|T-7010]] Game-state struct audit: base vs separate symbols (Done)
 - [[tickets/T-8010-wave-5-list-1|T-8010]] Wave 5: list 1 (Done)

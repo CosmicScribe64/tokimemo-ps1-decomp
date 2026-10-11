@@ -836,3 +836,9 @@ Merged origin/main; clean rebuild 27/27 OK, headers OK, globals OK, `--check-bra
 
 ## [2026-10-10] ticket | T-9320 wave 7 list 2 (In Progress)
 Ticket [[tickets/T-9320-wave-7-list-2]] created; worktree w7-2 built 27/27.
+
+## [2026-10-10] build | T-9320 wave 7 list 2
+39 functions matched in branch w7-2 (18116 bytes; EVENT 5, TACO 19, TT 2, TEL 2, SHOUGATU 2, KANGEI 2, GEKO 1, RPG_BAT 1, OLH 1, main 4). New patterns in [[matching-notes]] "Wave 7, list 2" (TACO range-chain template, two-counter table loops, repeated expression against temp variable, permuter burn tricks). 29 rows added to [[data/t0018-cases]]. Clean rebuild 27/27 OK, progress 4597/6958.
+
+## [2026-10-10] ticket | T-9320 (In Progress -> In Review -> Done)
+Inline review in [[tickets/T-9320-wave-7-list-2]], no open findings; `sync_protos.py --check-branch` OK, `migrate_globals.py --check` OK. Not merged.

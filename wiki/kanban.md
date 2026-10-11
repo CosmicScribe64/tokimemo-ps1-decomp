@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-9320-wave-7-list-2|T-9320 Wave 7 list 2]]
 
 
 
@@ -38,6 +37,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-9320-wave-7-list-2|T-9320 Wave 7 list 2]]
 - [x] [[tickets/T-9210-wave-6-codegen-shapes|T-9210 Wave-6 codegen shapes]]
 - [x] [[tickets/T-9220-wave-6-tool-fixes|T-9220 Wave-6 tool fixes]]
 - [x] [[tickets/T-9200-gcc-built-sdk-objects-in-overlays|T-9200 gcc-built SDK objects inside overlays]]
