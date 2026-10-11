@@ -1,7 +1,28 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013E4D0);
+void func_8013E4D0(void) {
+    s32 i;
+    RpgObjectBlock *p;
+
+    p = (RpgObjectBlock *) D_8011ECD0;
+    for (i = 40; i < 64; i++) {
+        p->group[i].unk_01 = 5;
+        p->group[i].unk_38 = 0x41000000;
+        p->group[i].unk_02 = 0x1;
+        p->group[i].unk_06 = 0x1;
+        p->group[i].unk_1A = 0x1000;
+        p->group[i].unk_1C = 0x1000;
+    }
+    for (i = 29; i < 31; i++) {
+        p->group[i].unk_01 = 5;
+        p->group[i].unk_38 = 0x41000000;
+        p->group[i].unk_02 = 0x1;
+        p->group[i].unk_06 = 0x1;
+        p->group[i].unk_1A = 0x1000;
+        p->group[i].unk_1C = 0x1000;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013E54C);
 
@@ -265,4 +286,19 @@ void func_8013F250(s32 arg0) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013F350);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013E4D0", func_8013F3F0);
+void func_8013F3F0(s32 arg0, s32 arg1) {
+    s32 i;
+    RpgObjectBlock *p;
+
+    p = (RpgObjectBlock *) D_8011ECD0;
+    for (i = 40; i < 64; i++) {
+        p->group[i].unk_26 += arg0;
+        p->group[i].unk_2A += arg1;
+    }
+    ((RpgObjectBlock *) D_8011ECD0)->group[29].unk_26 += arg0;
+    ((RpgObjectBlock *) D_8011ECD0)->group[30].unk_26 += arg0;
+    ((RpgObjectBlock *) D_8011ECD0)->group[31].unk_26 += arg0;
+    ((RpgObjectBlock *) D_8011ECD0)->group[29].unk_2A += arg1;
+    ((RpgObjectBlock *) D_8011ECD0)->group[30].unk_2A += arg1;
+    ((RpgObjectBlock *) D_8011ECD0)->group[31].unk_2A += arg1;
+}

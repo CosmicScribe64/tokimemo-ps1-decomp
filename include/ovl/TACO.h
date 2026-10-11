@@ -420,3 +420,26 @@ void func_8014FDC0(void);
 void func_801508D0(void);
 void func_80150DE8(void);
 void func_8014D530(s32 arg0, s32 arg1);
+
+#ifndef OVL_TACO_MATCHED_VIEWS_T9520
+#define OVL_TACO_MATCHED_VIEWS_T9520
+/* Word view of the opaque game transform payload; T-9520. */
+typedef struct TcTransformWords {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s32 unk_1C;
+} TcTransformWords; /* size 0x20 */
+typedef struct TcTransformObj50 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ TcTransformWords transform;
+    /* 0x24 */ u8 pad24[0x2C];
+} TcTransformObj50; /* size 0x50, full word view of TcObj50 */
+void func_8013B2A0(void);
+void func_8013B398(void);
+void func_8013B3C4(void);
+#endif

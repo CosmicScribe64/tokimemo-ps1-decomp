@@ -4,6 +4,7 @@ type: log
 
 # Log
 
+
 Append-only. Entry format: `## [YYYY-MM-DD] <op> | <title>` where op is ingest, query, lint, ticket, build, decision, or setup. Use [[wikilinks]] for wiki files and plain paths (e.g. `src/main.c`) for everything else. Recent: `grep "^## \[" wiki/log.md | tail -5`.
 
 ## [2026-10-09] ticket | T-0007 Ready -> In Progress -> In Review
@@ -1023,3 +1024,111 @@ Reviewed the working diff against CODING_STANDARDS.md and the shared brief, no u
 ## [2026-10-11] query | Wave-8 measured progress and byte-count correction
 
 `ninja progress`: grand total 4740/6958 functions, 733232/2279368 bytes, 32.2%. Actual gain over 4734/729612 is 6 functions / 3620 bytes. Earlier 3632-byte reports used the work-list extent for RPG_BAT func_801481C8 (792), while splat records 0x30C (780); the ticket and own notes now use measured function bytes. [[tickets/T-9520-wave-8-list-2]], [[matching-notes]].
+
+## [2026-10-11] ticket | Reopen T-9520 for sustained matching experiments
+
+[[tickets/T-9520-wave-8-list-2]] is In Progress again; kanban and index agree. Second pass began 10:01:36 UTC and must continue to at least 13:01:36 UTC unless the list is exhausted. Ranked 26 compiling rejected drafts by resolved differing lines; nearest NAME_ENT func_80132198 has two, KANGEI func_80135C78 five, SHOUGATU func_801347E0 six. Missing aggregate and declaration failures are deferred for type recovery, rather than classified as codegen gaps. Saved ranking: scratchpad/w8-2/deep-ranking.txt.
+
+## [2026-10-11] build | Second-pass match RPG_BAT func_801496F0
+
+src/ovl/RPG_BAT/801496F0.c: resolved funcdiff and unit SHA1 passed; third-argument-and-existing-aggregate-fields. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] decision | Recover overlapping transform-copy locals
+
+TACO func_8015B3B0 copies a 0x20-byte payload at sp+0x34; m2c's separate sp48/sp4C/sp50 locals actually alias its final three words. A typed aggregate merges those aliases and models the 0x50-byte object view without changing the existing TcObj50 declaration. Neighboring matched func_8015B2AC confirms object transform at +4 and position words at +0x18/+0x1C/+0x20. Trial types appended to include/ovl/TACO.h; retain only if a verified C user survives. [[tickets/T-9520-wave-8-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | Second-pass match KANGEI func_80135C78
+
+src/ovl/KANGEI/801355F0.c: resolved funcdiff and unit SHA1 passed; s32-no-return-baseline. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | Second-pass permuter match TT func_80147074
+
+src/ovl/TT/80146BE0.c: resolved diff and unit SHA1 passed; source review pending. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] query | NAME_ENT closest draft survives sustained spelling search
+
+NAME_ENT func_80132198 restored after 56 manual probes and a 300-second permuter. Contextual comparison identifies li v0,1 versus preceding lui at at the initial state store; the later increment is already identical. Best remains two differing lines; best permuter output (score 175) was verified against the real build and worsened the stores. Failed C restored. [[tickets/T-9520-wave-8-list-2]], [[matching-notes]], [[data/t0018-cases]].
+
+## [2026-10-11] build | Second-pass permuter match TACO func_8015B3B0
+
+src/ovl/TACO/8015ABF0.c: resolved diff and unit SHA1 passed; source review pending. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | Second-pass match TT func_80147074
+
+src/ovl/TT/80146BE0.c: resolved funcdiff and unit SHA1 passed; typed-record-mask. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] decision | Correct cached probe verification
+
+The scratch optimization that imported funcdiff.main reused its per-process _checked build cache: only the first variant in those optimized runs rebuilt. Those repeated negative variant counts are withdrawn and will be rerun with build/header caches cleared each iteration. Retained matches remain valid: the helper independently ran a fresh funcdiff subprocess and unit SHA1 before retaining them; permuter candidates likewise have fresh real-build verification. NAME_ENT's 56 subprocess probes were unaffected. No tools/ file edited. [[tickets/T-9520-wave-8-list-2]], [[matching-notes]].
+
+## [2026-10-11] build | Second-pass match RPG_BAT func_80135E80
+
+src/ovl/RPG_BAT/80135AE0.c: resolved funcdiff and unit SHA1 passed; member-timer-no-locals-clean. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] ingest | Recover local buffer and transform layouts
+
+Read original NAME_ENT func_80133510 and TACO func_8015B1B8 assembly alongside their rejected drafts. Recovered six 35-byte text buffers and the text-record length/pointer offsets; recovered the halfword basis/word translation payload. Temporary overlay views are appended for genuine compiler retries, and will be removed unless verified C uses them. DATE's four-line pointer spill mismatch survives 48 further local-home variants. The cached KANGEI negative count is withdrawn in [[matching-notes]]. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | Second-pass match RPG_BAT func_80135B4C
+
+src/ovl/RPG_BAT/80135AE0.c: resolved funcdiff and unit SHA1 passed; member-timer-increment. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | Second-pass match RPG_BAT func_8013F3F0
+
+src/ovl/RPG_BAT/8013E4D0.c: resolved funcdiff and unit SHA1 passed; record-subgroup-s32-knr0. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] decision | Nested record group fixes RPG loop bias
+
+RPG_BAT func_8013F3F0 passes resolved diff and the unit SHA1 after replacing a flat record view with a 96-record prefix and 64-record group. Twenty-four counter/pointer/type variants and sixteen pointer-end variants had exposed the pointer-bias distinction; the first nested-group form matches in plain C. Applying the confirmed view to the initializer and its neighboring record users. [[matching-notes]], [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] query | Extend confirmed RPG group and TT local recovery
+
+RPG_BAT func_8013E7C0/func_8013E810/func_8013E97C already access the +0x1980 record group, independently confirming the nested type retained for func_8013F3F0. The initializer's first generated group probe used wrong constants and is discarded as evidence; corrected probes use byte 5, word 0x41000000 and halfword 0x1000 from the original. TT func_8013FF14 is within eight differing lines using a named s32 one and angle temporary; the remaining frame and pointer-home differences are under investigation. [[matching-notes]], [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | Second-pass match RPG_BAT func_8013E4D0
+
+src/ovl/RPG_BAT/8013E4D0.c: resolved funcdiff and unit SHA1 passed; group-init-s32-decl0-split0-correct-values. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | T-9520 aggregate alias and corrected case experiments
+
+EVENT `func_801035BC`: a 96-record prefix view keeps its selector load inside
+the loop and reduces the draft to 19 resolved differing lines. RPG_BAT
+`func_8013E54C`: corrected case 5 to vector element 5 / girl 28 before further
+counter and pointer experiments. TT `func_8013FF14`: a 300-second permuter run
+is testing the four-line frame-size candidate. [[matching-notes]],
+[[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | Second-pass match TT func_8013FF14
+
+src/ovl/TT/8013F040.c: resolved funcdiff and unit SHA1 passed; constant-period-order0-u32. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | Second-pass match TACO func_8013B170
+
+src/ovl/TACO/8013B170.c: resolved funcdiff and unit SHA1 passed; taco-selector-u8-void-reload0-if0. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] build | T-9520 ten-gain full build and inline review
+
+Second pass has ten verified functions / 3,416 bytes. Default incremental
+`tools/docker.sh ninja` passed the main executable and every overlay; TACO was
+already current after its fresh unit check. Header/global checks passed.
+TACO `func_8013B170` must reread the scene selector after callbacks. Inline
+review marks KANGEI's no-value s32 return and TT's constant/layout locals FAKE;
+their intended original source is unknown. Unused trial declarations will be
+removed before final verification. [[matching-notes]],
+[[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] lint | T-9520 second-pass cleanup and bounded-case audit
+
+[[tickets/T-9520-wave-8-list-2]]: removed all trial-only overlay declarations, appended retained views to baseline headers, and normalized new unknown-field names. [[matching-notes]] records ten verified gains (3,416 bytes) and partial aggregate-recovery coverage; [[data/t0018-cases]] gains eleven classified bounded rows, bringing this pass to twelve. Cached/type-invalid negative outputs are excluded; every unsuccessful experiment retains original source. Final fresh verification and inline review are pending.
+
+## [2026-10-11] ticket | T-9520 second-pass In Review
+
+[[tickets/T-9520-wave-8-list-2]] and the kanban/index move to In Review. Fresh ten-function resolved diffs and all 27 unit SHA1 checks pass after cleanup; [[matching-notes]] and [[data/t0018-cases]] record gains and bounded failures. Inline standards/spec review finds no unresolved source issue and explicitly records incomplete large-type coverage under the three-hour budget. Final SHOUGATU search and elapsed-time floor remain pending.
+
+## [2026-10-11] build | Second-pass permuter match SHOUGATU func_80134730
+
+src/ovl/SHOUGATU/80134120.c: resolved diff and unit SHA1 passed; source review pending. [[tickets/T-9520-wave-8-list-2]].
+
+## [2026-10-11] ticket | T-9520 second-pass Done after three hours
+
+[[tickets/T-9520-wave-8-list-2]], kanban and index move from In Review to Done after inline standards/spec review and final matched-tree validation. Eleven added functions / 3,548 bytes; batch total 17 / 7,168. All 27 unit SHA1 checks, default ninja and guards pass; [[matching-notes]] records final progress 4751/6958 and 736780/2279368 (32.3%). Twelve second-pass rows are in [[data/t0018-cases]]; the last SHOUGATU row is resolved by a marked FAKE. The larger unrecovered aggregate group is explicitly deferred under the three-hour budget. All changes remain uncommitted.

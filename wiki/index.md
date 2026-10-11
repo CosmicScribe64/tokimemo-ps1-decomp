@@ -155,4 +155,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - `tools/queue.py` (T-1320, T-3340): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags; calibration in [[matching-notes]]
 - `tools/queue.py` (T-1320, T-3340, T-5010): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags (entry rule in `tools/entry_rule.py`, tests `tools/test_entry_rule.py`); calibration in [[matching-notes]]
 
-- [[tickets/T-9520-wave-8-list-2|T-9520]] Wave 8: list 2 (Done).
+- [[tickets/T-9520-wave-8-list-2|T-9520]] Wave 8: list 2 (Done; second pass adds 11 functions / 3,548 bytes; batch 17 / 7,168).

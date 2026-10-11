@@ -1,5 +1,7 @@
+#define MAIN_API_OVERRIDE_func_800847B8 /* Word argument at this call; T-9520. */
 #include "common.h"
 #include "ovl/SHOUGATU.h"
+void func_800847B8();
 
 typedef struct {
     void (*f[25])();
@@ -140,7 +142,23 @@ void func_801346E8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_80134730);
+/* FAKE: empty do loops and size ^ 0 preserve the two original multiplications
+ * and temporary allocation; keep statement-per-line layout. Source unknown.
+ * The word-argument prototype override above is required here. T-9520. */
+void func_80134730(void)
+{
+    u32 size;
+    s32 index;
+    func_800847B8(D_80122CDC);
+    size = 0x38;
+    index = D_80122CDC;
+    do { } while (0);
+    ((GameState *) (((u32) (&D_800E6280)) + (index * size)))->unk_1BC[0].unk_02 += 5;
+    ((GameState *) (((u32) (&D_800E6280)) + (index * (size ^ 0))))->unk_1BC[0].unk_06 += 1;
+    do { func_80084D3C(size, index); } while (0);
+    D_800E6280.unk_F5F = 0xE;
+    func_8004284C();
+}
 
 void func_801347B4(void) {
     D_80122CEC = D_80122CDC;
