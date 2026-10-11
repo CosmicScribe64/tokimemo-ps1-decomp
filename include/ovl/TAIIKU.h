@@ -310,4 +310,23 @@ typedef struct TaiikuScene44 {
     /* 0x28 */ u8 pad_28[0x1C];
 } TaiikuScene44; /* size 0x44; camera record 104 and related records. T-9570 */
 
+/* T-9510: coordinate bounds loaded with LH in func_8013C5C8. */
+extern s16 D_801499A4;
+extern s16 D_801499A6;
+
+#ifndef OVL_TAIIKU_T9510_COORD_TYPES
+#define OVL_TAIIKU_T9510_COORD_TYPES
+/* T-9510: the two coordinate words are read both whole and by high half. */
+typedef union TkCoord32 {
+    /* 0x00 */ s32 word;
+    struct {
+        /* 0x00 */ s16 lo;
+        /* 0x02 */ s16 hi;
+    } halves;
+} TkCoord32; /* size 0x04 */
+
+typedef struct TkCoordsView {
+    /* 0x0000 */ u8 pad0[0x19E8];
+    /* 0x19E8 */ TkCoord32 pos[2];
+} TkCoordsView; /* accessed prefix size 0x19F0 */
 #endif

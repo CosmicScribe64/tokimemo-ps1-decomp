@@ -1221,3 +1221,39 @@ Each case is a bounded experiment, not a claim that C cannot match. Clusters wer
 Second-pass resolution: TT func_80147074 now matches with a typed record and a marked constant-mask FAKE; its historical row is retained above. Cached/type-invalid negative outputs are excluded from second-pass evidence.
 
 Second-pass resolution: SHOUGATU func_80134730 now matches (132 bytes). A 300-second permuter gives a score-10 candidate that passes real resolved diff and unit SHA1; marked empty-do / zero-XOR FAKE preserves both MULTU operations and register allocation. Its historical bounded row above remains unchanged.
+## Wave 8 list 1 (T-9510)
+
+Symptoms observed after bounded trials; labels do not prove a compiler cause.
+
+| Overlay | Function | Shape | Evidence |
+| --- | --- | --- | --- |
+| OPTION | `func_80139F8C` | regorder | GameState mask selector loaded into $v1, IDO $v0; tail byte in $t1 then copied to $a0, IDO promotes it to $v0. Void/s32 bounded attempts failed (T-9510). |
+| OPTION | `func_80139878` | regorder | Fade byte is loaded into $v1 and narrowed sum kept in $v0; IDO reverses the allocation / adds a separate temporary (T-9510). |
+| ETC | `func_801428EC` | regorder | Original loads the fade byte in $v0 for the 0x10101 shift/add argument; IDO uses $t7 and later temporaries (T-9510). |
+| ETC | `func_80142AE8` | promo | Two Rec24 fade loops: original frees $v0 for the second end pointer; IDO retains a separate address/value allocation and changes pointer CSE. Four corrected loop variants failed (T-9510). |
+| NAME_ENT | `func_80145EA4` | regorder | Palette word loop pointer in $v1 and masks in $a0/$a1/$a2; IDO first pointer in $a0 and loop pointer in $v0, with different constant allocation (T-9510). |
+| SHOUGATU | `func_80136340` | regorder | Masked selector copy/temporary order differs; original reloads B20 and keeps constant 9 in $v0, IDO promotes B20 and uses $a0 (T-9510). |
+| BUNKASAI | `func_801354B0` | regorder | Selector in $v1 before stores; IDO $v0 later. Flag-byte address/value use separate temporaries in original, one register in IDO; bit-field/return and short permuter attempts fail (T-9510). |
+| BUNKASAI | `func_80146030` | regorder | Nested selector in $v1 before stores, IDO $v0 afterward; corrected GameState fields and bounded permuter still differ (T-9510). |
+| NAME_ENT | `func_80145378` | regorder | Correct post-increment gives the counter/xori shape; original keeps selector in $v1, IDO inserts move v0,v1 then compares $v0. Also ra-store scheduling differs; two exit forms and 12s permuter fail (T-9510). |
+
+### T-9510 deep-pass evidence and resolutions
+
+Historical rows remain unchanged. Deep-pass resolved diffs and unit SHA1 checks
+now pass for BUNKASAI `func_801354B0` and `func_80146030` (adjacent-word view plus
+flag bit-field), ETC `func_801428EC` (local byte pointer), and NAME_ENT
+`func_80145378` (local byte pointer plus the correct post-increment comparison).
+OPTION `func_80139878` is reduced to four instruction-edit lines: the constant
+0x80 store uses V1 in the original and T9 in the best signed-word temporary
+draft. More than 80 source forms and a 300-second permuter did not match.
+
+The following are bounded experiment symptoms, not diagnoses of compiler bugs.
+The wave-7 cluster inventory was consulted before appending them.
+
+| Overlay | Function | Shape | Evidence |
+| --- | --- | --- | --- |
+| ETC/8014ABD0 | `func_8014BF2C` | regorder | Best s32 draft still has four branch operand edits, V0 versus A1 after dec_bg_cd_read; changing to void removes the wanted selector copy. About 17 minutes, 14 ordinary probes, and a 300-second permuter failed; restored (T-9510 deep pass). |
+| SHOUGATU/80135B90 | `func_80136078` | regorder | Repaired the local 0x50-byte callback table and callback argument 80. Correct-frame forms still put table/index/slot in A1/T2/A0 instead of A2/A1/V0; a 32-line variant also has a larger frame. Declaration permutations, table/callback types, exit forms and unused formal parameters failed; restored (T-9510 deep pass). |
+| 80053650 | `func_80055A38` | regorder | Repaired the two 0xF00-stride checksum banks and buffer offsets. Natural loops reproduce the operations but permute base, pointer, bank and counter registers; 18 spelling/type forms and a 300-second permuter remain 40–52 edit lines away. Restored (T-9510 deep pass). |
+| TACO/80146D60 | `func_80146D60` | regorder | Repaired 0x50-byte nodes and the 36-element vector loop, including z then x=y=z ordering. Best forms exchange the argument and end pointer in S1/S3. Over 140 resolved probes, declaration/order variants and a 300-second permuter leave 12 edit lines; restored (T-9510 deep pass). |
+| BUNKA_SD/80133540 | `func_80133984` | schedule | Recovered 0x44-byte records and four pointer globals; reusing the palette/record counter fixes the first loop. Eight stores remain scheduled before the pointer advance with +0x1980-based offsets, instead of after with adjusted offsets. 72 valid resolved probes and a 300-second permuter leave 16 edit lines; no production draft retained (T-9510 deep pass). |

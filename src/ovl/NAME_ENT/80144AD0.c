@@ -85,7 +85,31 @@ void func_80144F98(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80144FDC);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145378);
+void func_80145378(void) {
+    u8 *state = &D_800E6280.unk_110D;
+    switch (*state) {
+    case 0:
+        back_clear_switch(0);
+        D_800E6280.unk_03A = 0x80;
+        D_8014D180 = 0;
+        func_80144B44();
+        *state += 1;
+        return;
+    case 1:
+        func_80144C8C();
+        return;
+    case 2:
+        *state += 1;
+        D_800E6280.unk_1104.u = 0;
+        /* fallthrough */
+    case 3:
+        if (D_800E6280.unk_1104.u++ >= 0x3DU) {
+            D_80120653 |= 0x80;
+            func_80042808();
+        }
+        return;
+    }
+}
 
 void func_80145454(void) {
     switch (D_800E6280.unk_110A) {
@@ -103,35 +127,30 @@ void func_80145454(void) {
     func_800578F4(1);
 }
 
-/* NON_MATCHING: T-8050, the original moves the last record-byte store into the bne delay slot (offset adjusted), IDO keeps it before the branch */
-#ifdef NON_MATCHING
 void func_801454CC(void) {
-    s32 i;
-    u8 *p;
+    s32 var_s1;
+    NameRecord44 *var_s0;
+    s32 last;
 
-    p = D_8011ECD0;
-    i = 0;
-    for (; i < 8; i++) {
-        func_80048F64(i + 0x60);
-        p[0x1981] = 0xA;
-        p[0x1982] = 1;
-        *(s32 *)(p + 0x19B8) = 0x41000000;
-        p[0x1983] = 0xA4;
-        *(s32 *)(p + 0x198C) = 0x80184228;
-        *(s32 *)(p + 0x1990) = 0x80184258;
-        *(s32 *)(p + 0x19B4) = 0x80184224;
-        *(s16 *)(p + 0x1996) = 0;
-        *(s16 *)(p + 0x1998) = func_800AE0D0() & 7;
-        p[0x1985] = 0x80;
-        *(s16 *)(p + 0x19A6) = func_800AE0D0() % 440 - 0xA0;
-        *(s16 *)(p + 0x19AA) = -0x78 - func_800AE0D0() % 120;
-        p[0x1987] = func_800AE0D0();
-        p += 0x44;
+    for (var_s0 = (NameRecord44 *)D_8011ECD0, var_s1 = 0; var_s1 != 8; var_s1++) {
+        func_80048F64(var_s1 + 0x60);
+        var_s0[96].unk_01 = 0xA;
+        var_s0[96].unk_02 = 1;
+        var_s0[96].unk_38 = 0x41000000;
+        var_s0[96].unk_03 = 0xA4;
+        var_s0[96].unk_0C = 0x80184228;
+        var_s0[96].unk_10 = 0x80184258;
+        var_s0[96].unk_34 = 0x80184224;
+        var_s0[96].unk_16 = 0;
+        var_s0[96].unk_18 = (s16) (func_800AE0D0() & 7);
+        var_s0[96].unk_05 = 0x80;
+        var_s0[96].unk_26 = (s16) ((func_800AE0D0() % 440) - 0xA0);
+        var_s0[96].unk_2A = (s16) (-0x78 - (func_800AE0D0() % 120));
+        last = func_800AE0D0();
+        var_s0++;
+        var_s0[95].unk_07 = last;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801454CC);
-#endif
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801455E4);
 
@@ -455,7 +474,52 @@ void func_80148EDC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80148F08);
+void func_80148F08(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80046318(0x31U, 0x801A4000, 0xAB49);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_80046318(9U, 0x801F0000, 0xAC91);
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        if (func_800460CC() & 1) {
+            dec_bg_cd_read(0xAD0B, 1);
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 3:
+        if ((func_800460CC() & 1) && !(D_80120652 & 1)) {
+            dec_bg_show_set(1, func_8005751C(1));
+            if (D_800B594C == -1) {
+                dec_bg_reset();
+                dec_bg_cd_read(0xAD0B, 1);
+            } else {
+                func_80048E78();
+                func_80145FB0(0x801A4000, 0xF);
+                func_800AE0A0((void *)0x80180000, 0x801F0000, 0x4800);
+                D_80120695 = 9;
+                D_80120696 = 0x40;
+                D_801206CC = 0x41000000;
+                D_80120697 = 0xA4;
+                D_801206A0 = 0x801800F4;
+                D_801206A4 = 0x80180114;
+                D_801206C8 = 0x801800F0;
+                D_801206AC = 4;
+                D_80120699 = 0x80;
+                D_801206BA = -0xA0;
+                D_801206BE = -0x78;
+                func_80042808();
+            }
+        }
+        break;
+    }
+    func_800578F4(1);
+}
 
 void func_80149118(void) {
     if (D_800E6280.unk_110A == 0) {

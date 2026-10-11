@@ -2496,3 +2496,630 @@ src/ovl/SHOUGATU/80134120.c: resolved diff and unit SHA1 passed; source review p
 ## [2026-10-11] ticket | T-9520 second-pass Done after three hours
 
 [[tickets/T-9520-wave-8-list-2]], kanban and index move from In Review to Done after inline standards/spec review and final matched-tree validation. Eleven added functions / 3,548 bytes; batch total 17 / 7,168. All 27 unit SHA1 checks, default ninja and guards pass; [[matching-notes]] records final progress 4751/6958 and 736780/2279368 (32.3%). Twelve second-pass rows are in [[data/t0018-cases]]; the last SHOUGATU row is resolved by a marked FAKE. The larger unrecovered aggregate group is explicitly deferred under the three-hour budget. All changes remain uncommitted.
+## [2026-10-11] ticket | Wave 8 list 1 started
+
+Created [[tickets/T-9510-wave-8-list-1]] In Progress and its [[kanban]] card. Read [[decompile-workflow]] and [[register-allocation-wave7]]. Configuring this new worktree before drafts.
+
+## [2026-10-11] build | Wave 8 list 1 baseline verified
+
+Initial Docker configure and ninja completed all 27 binary SHA1 checks, with headers and global guards passing. Draft generation proceeds from explicit assembly paths for [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Wave 8 list 1 func_80105DF8
+
+[[tickets/T-9510-wave-8-list-1]]: EVENT func_80105DF8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147444
+
+[[tickets/T-9510-wave-8-list-1]]: TACO func_80147444 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80139F8C
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80139F8C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013C5C8
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013C5C8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80132A4C
+
+[[tickets/T-9510-wave-8-list-1]]: GEKO func_80132A4C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013AE14
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013AE14 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801428EC
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_801428EC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80139878
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80139878 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80145EA4
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80145EA4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013A63C
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013A63C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013ACBC
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013ACBC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80139E3C
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80139E3C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142AF0
+
+[[tickets/T-9510-wave-8-list-1]]: TT func_80142AF0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80105DF8
+
+[[tickets/T-9510-wave-8-list-1]]: EVENT func_80105DF8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147444
+
+[[tickets/T-9510-wave-8-list-1]]: TACO func_80147444 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80139F8C
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80139F8C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013C5C8
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013C5C8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013AE14
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013AE14 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142AE8
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_80142AE8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801428EC
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_801428EC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80139878
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80139878 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80145EA4
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80145EA4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80133D54
+
+[[tickets/T-9510-wave-8-list-1]]: BUNKA_SD func_80133D54 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147FD0
+
+[[tickets/T-9510-wave-8-list-1]]: TT func_80147FD0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013A63C
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013A63C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80139E3C
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80139E3C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142AF0
+
+[[tickets/T-9510-wave-8-list-1]]: TT func_80142AF0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80136340
+
+[[tickets/T-9510-wave-8-list-1]]: SHOUGATU func_80136340 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013CF88
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013CF88 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8015D270
+
+[[tickets/T-9510-wave-8-list-1]]: TACO func_8015D270 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013C780
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013C780 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80054704
+
+[[tickets/T-9510-wave-8-list-1]]: main func_80054704 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147444 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 8 source variants did not match; restored source and header.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147444 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 4 source variants matched a resolved function diff and unit SHA1.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142AE8 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 4 source variants did not match; restored source and header.
+
+## [2026-10-11] build | Wave 8 list 1 func_80140810
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_80140810 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8004B590
+
+[[tickets/T-9510-wave-8-list-1]]: main func_8004B590 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142570
+
+[[tickets/T-9510-wave-8-list-1]]: TT func_80142570 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147D08
+
+[[tickets/T-9510-wave-8-list-1]]: TT func_80147D08 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147A80
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80147A80 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80149144
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80149144 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80133024
+
+[[tickets/T-9510-wave-8-list-1]]: GEKO func_80133024 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013D788
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013D788 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801469D0
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_801469D0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801400D8
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_801400D8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801455E4
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_801455E4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8014BF2C
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_8014BF2C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147A18
+
+[[tickets/T-9510-wave-8-list-1]]: TT func_80147A18 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80149B08
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80149B08 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013A314
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013A314 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80054704 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 4 source variants did not match; restored source and header.
+
+## [2026-10-11] build | Wave 8 list 1 func_801328D0
+
+[[tickets/T-9510-wave-8-list-1]]: DATE2 func_801328D0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013D92C
+
+[[tickets/T-9510-wave-8-list-1]]: SHOUGATU func_8013D92C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801454CC
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_801454CC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 make_color_bar
+
+[[tickets/T-9510-wave-8-list-1]]: main make_color_bar draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80141468
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_80141468 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013644C
+
+[[tickets/T-9510-wave-8-list-1]]: SHOUGATU func_8013644C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801473AC
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_801473AC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801486F8
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_801486F8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013ABAC
+
+[[tickets/T-9510-wave-8-list-1]]: SHUGAKU func_8013ABAC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013655C
+
+[[tickets/T-9510-wave-8-list-1]]: TEL func_8013655C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142544
+
+[[tickets/T-9510-wave-8-list-1]]: RPG_BAT func_80142544 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142DF4
+
+[[tickets/T-9510-wave-8-list-1]]: RPG_BAT func_80142DF4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013B608
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013B608 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] decision | Wave 8 TAIIKU data island scope
+
+[[matching-notes]], [[tickets/T-9510-wave-8-list-1]]: Docker dry run confirms the owned data range and 60 pieces. Applying it writes config/overlays/TAIIKU.yaml, outside the brief permitted edits. Kept the configuration unchanged and recorded the follow-up route.
+
+## [2026-10-11] build | Wave 8 list 1 func_8005478C
+
+[[tickets/T-9510-wave-8-list-1]]: main func_8005478C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80141ABC
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_80141ABC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013B200
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013B200 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013B78C
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013B78C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80133598
+
+[[tickets/T-9510-wave-8-list-1]]: GEKO func_80133598 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 make_color_bar16
+
+[[tickets/T-9510-wave-8-list-1]]: main make_color_bar16 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_800536AC
+
+[[tickets/T-9510-wave-8-list-1]]: main func_800536AC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013801C
+
+[[tickets/T-9510-wave-8-list-1]]: TACO func_8013801C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013B94C
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013B94C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80148F08
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80148F08 matched with resolved function diff and binary SHA1.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013B3B0
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013B3B0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80054704 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 1 source variants did not match; restored source and header.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013C5C8 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 2 source variants did not match; restored source and header.
+
+## [2026-10-11] build | Wave 8 list 1 func_80054704 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 6 source variants did not match; restored source and header.
+
+## [2026-10-11] build | Wave 8 list 1 func_80054704 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 1 source variants matched a resolved function diff and unit SHA1.
+
+## [2026-10-11] build | Wave 8 list 1 func_80133308
+
+[[tickets/T-9510-wave-8-list-1]]: GEKO func_80133308 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013B2F0
+
+[[tickets/T-9510-wave-8-list-1]]: RPG_BAT func_8013B2F0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013C0E4
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013C0E4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80134808
+
+[[tickets/T-9510-wave-8-list-1]]: GEKO func_80134808 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80137BB4
+
+[[tickets/T-9510-wave-8-list-1]]: ENDING func_80137BB4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_800552DC
+
+[[tickets/T-9510-wave-8-list-1]]: main func_800552DC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80138DF8
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80138DF8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8014E300
+
+[[tickets/T-9510-wave-8-list-1]]: RPG_BAT func_8014E300 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013C978
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013C978 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80138C20
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80138C20 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80138FC0
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80138FC0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80144B44
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80144B44 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801387B0
+
+[[tickets/T-9510-wave-8-list-1]]: ENDING func_801387B0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80132D04
+
+[[tickets/T-9510-wave-8-list-1]]: GEKO func_80132D04 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80147E80
+
+[[tickets/T-9510-wave-8-list-1]]: TACO func_80147E80 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80132C3C
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_80132C3C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013639C
+
+[[tickets/T-9510-wave-8-list-1]]: TEL func_8013639C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801421AC
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_801421AC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80142390
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_80142390 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801325C0
+
+[[tickets/T-9510-wave-8-list-1]]: GEKO func_801325C0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80054FC0
+
+[[tickets/T-9510-wave-8-list-1]]: main func_80054FC0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80133984
+
+[[tickets/T-9510-wave-8-list-1]]: BUNKA_SD func_80133984 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801427A8
+
+[[tickets/T-9510-wave-8-list-1]]: TT func_801427A8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013867C
+
+[[tickets/T-9510-wave-8-list-1]]: BUNKA_SD func_8013867C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80137FEC
+
+[[tickets/T-9510-wave-8-list-1]]: BUNKA_SD func_80137FEC draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013F3A4
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013F3A4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80133FA4
+
+[[tickets/T-9510-wave-8-list-1]]: BUNKA_SD func_80133FA4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8014DF60
+
+[[tickets/T-9510-wave-8-list-1]]: RPG_BAT func_8014DF60 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801427E4
+
+[[tickets/T-9510-wave-8-list-1]]: RPG_BAT func_801427E4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80149840
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80149840 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80146624
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80146624 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013DDB8
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013DDB8 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80145AC4
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80145AC4 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8014826C
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_8014826C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80136448
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_80136448 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80141154
+
+[[tickets/T-9510-wave-8-list-1]]: ETC func_80141154 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80139E3C
+
+[[tickets/T-9510-wave-8-list-1]]: OPTION func_80139E3C draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_801354B0
+
+[[tickets/T-9510-wave-8-list-1]]: BUNKASAI func_801354B0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80145378
+
+[[tickets/T-9510-wave-8-list-1]]: NAME_ENT func_80145378 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_80146030
+
+[[tickets/T-9510-wave-8-list-1]]: BUNKASAI func_80146030 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8013B3B0
+
+[[tickets/T-9510-wave-8-list-1]]: TAIIKU func_8013B3B0 draft did not pass; restored INCLUDE_ASM and temporary header additions.
+
+## [2026-10-11] build | Wave 8 list 1 func_8014DF60
+
+[[tickets/T-9510-wave-8-list-1]]: RPG_BAT func_8014DF60 matched with resolved function diff and binary SHA1.
+
+## [2026-10-11] build | Wave 8 list 1 func_80145378 bounded variants
+
+[[tickets/T-9510-wave-8-list-1]]: 2 source variants did not match; restored source and header.
+
+## [2026-10-11] ticket | Wave 8 list 1 in review
+
+[[tickets/T-9510-wave-8-list-1]], [[kanban]]: all 156 listed functions attempted, failed edits restored. Four functions / 1,312 bytes verified individually. Started inline standards/spec review; final duplicate and full-build checks remain.
+
+## [2026-10-11] query | Wave 8 register-shape blockers
+
+[[data/t0018-cases]], [[register-allocation-wave7]], [[matching-notes]], [[tickets/T-9510-wave-8-list-1]]: appended nine concrete symptom rows. Used register_shapes inventory API; preserved historical rows. All blocked functions remain INCLUDE_ASM. Scoped duplicate pass rejected SHOUGATU func_80136770 on unit SHA1 and restored it; no duplicate gains.
+
+## [2026-10-11] decision | Wave 8 inline review cleanup
+
+[[matching-notes]], [[tickets/T-9510-wave-8-list-1]]: resolved the raw-offset finding with generated main-api symbol D_80120E49, documented the preserved counter read, and removed a draft-only comment. No tooling/config/unowned source edits.
+
+## [2026-10-11] lint | Wave 8 list coverage audit
+
+[[tickets/T-9510-wave-8-list-1]]: checked all 156 entries and 84,972 listed bytes against actual definitions/INCLUDE_ASM. Retained 4 functions / 1312 bytes; all other entries are time-boxed. Every retained definition stays in its owned file. No discarded draft remains.
+
+## [2026-10-11] build | Wave 8 list 1 final verification
+All four retained functions pass resolved funcdiff, all 27 binary SHA1 checks pass, and build/headers.ok plus build/globals.ok are present. sync_protos --check-branch and migrate_globals --check pass. A transient ninja deps-log error during the first main diff was resolved by rerunning it successfully. Scoped duplicate pass gained nothing (one failed candidate reverted); git diff --check is clean. Grand progress: 4738/6958, 730924/2279368, 32.1%. See [[tickets/T-9510-wave-8-list-1]] and [[matching-notes]].
+
+## [2026-10-11] lint | Wave 8 list 1 inline standards review
+Reviewed the four source bodies, generated main global, append-only overlay forwards, full 156-entry audit and allowed file scope against CODING_STANDARDS.md and the shared brief. Resolved raw workspace-offset access using D_80120E49, documented original uninitialized stack read, and removed draft noise. FAKE frame padding and volatile counter are marked with ticket/reason. No unresolved findings, tooling/config edits, raw source edits or commits. Added a table heading around the nine new symptom rows in [[data/t0018-cases]]. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] ticket | T-9510 Done
+Moved [[tickets/T-9510-wave-8-list-1]] from In Review to Done after verification and inline review; synchronized [[kanban]] and [[index]]. Final 4 matches / 1,312 bytes, nine T-0018 rows, every remaining listed function time-boxed and restored. Blockers and tooling observations are recorded for the orchestrator. All edits remain uncommitted.
+
+## [2026-10-11] ticket | T-9510 deep second pass
+Reopened [[tickets/T-9510-wave-8-list-1]] after the user committed the first pass and requested sustained function-by-function experiments. Synchronized [[kanban]] and [[index]]. Re-read standards, local instructions, [[decompile-workflow]] and [[register-allocation-wave7]]. Start 10:00:31 UTC; minimum three-hour pass unless list exhausted. Rank closest drafts before aggregate recovery. New changes stay uncommitted.
+
+## [2026-10-11] decision | Deep-pass closest draft ranking
+Ranked 51 successfully compiled rejected drafts by signed differing lines in resolved funcdiff; error output is excluded. The closest are ETC func_8014BF2C (4), NAME_ENT func_801454CC (10), BUNKASAI func_80146030 (14), GEKO func_801325C0 (16), OPTION func_80139F8C and main func_8005478C (18). The 100 unrankable entries include build/type failures, deferred for manual repair. First-pass JSON and deep ranking are retained as local build outputs; see [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] decision | Deep ETC result liveness trial
+ETC func_8014BF2C received sustained target-assembly comparison, a full 300-second permuter, and 14 completed control/type/return/ordering probes. Initial two branch operands use A1 instead of V0. Void return fixes the body but removes the entry V0 copy; explicit returns worsen layout. No verified match after about 17 minutes. Stopped our own identified batch container at the time box and restored src/ovl/ETC/8014ABD0.c. Next is NAME_ENT loop scheduling. See [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match NAME_ENT func_801454CC
+The last random result is captured before pointer advancement; initializing pointer and counter together in the for statement gives the original prologue and delayed final byte store. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 1 functions / 280 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] decision | Bunka adjacent state words
+BUNKASAI func_80146030 matches after reading D_80122EB8 and writing its +4 neighbour through a two-word aggregate, plus the existing GameState CharFlags bit-field. No dead test needed. The four-register selector mismatch was a source-type issue in this instance. Moved the documented BunkSelectWords view from the trial C to an append-only block in include/ovl/BUNKASAI.h; verifying again before retention. See [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match BUNKASAI func_80146030
+A documented two-word aggregate view of D_80122EB8 and its +4 neighbour keeps the selector load before the stores and in V1; the existing GameState flag bit-field gives the original byte temporaries. The type is appended in the overlay header; no FAKE is needed. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 2 functions / 488 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match GEKO func_801325C0
+Replaced scaled arithmetic through scalar record members with GameState array indexing, and cleared the observed two-byte D_80144C40 slot with a halfword view. Both this function and func_801327AC use SH at that slot; the append-only header retains its existing byte declaration. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 3 functions / 980 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | OPTION callback deep timebox
+Over 50 compiled source experiments and a 300-second permuter reduced func_80139F8C from 18 differing lines to six (five with an unsuitable wide-mask candidate). Remaining argument copy/scheduling differs; restored source. Updated [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match BUNKASAI func_801354B0
+Reused BunkSelectWords for the adjacent selector/result words and the existing GameState flag bit-field. This preserves the selector load in V1 before both stores, matching all instructions without a FAKE. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 4 functions / 1144 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match TACO func_801446D8
+Recovered two aligned 32-byte transform workspaces and the 0x10 record stride. FAKE: two spare workspace words retain the observed frame size, and pointer initialization shares the do line to permit the original schedule. Resolved funcdiff and unit SHA1 were rerun after marking the trick. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 5 functions / 1392 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match main func_8005478C
+Rewrote the two retry loops to preserve their separate counters and increment positions. FAKE: unused padding reproduces the 0x78-byte frame and SP+0x4C filename buffer. Resolved funcdiff and unit SHA1 pass after the source annotation. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 6 functions / 1640 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | SHOUGATU local callback table repaired, still unmatched
+Recovered func_80136078's 50 callbacks and 0x80 argument. Tested ordinary pointer/index/return-type and declaration-order shapes; frame can be exact but register allocation still differs. Reverted source and provisional type. Updated [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match TT func_801478D0
+Recovered the four-byte animation frames and the state prefix from the two-level table reads. A named frame pointer and direct byte predecrement reproduce the original register lifetimes. Moved the types to the overlay header, removed the unused draft local, and reverified resolved funcdiff plus unit SHA1; no FAKE needed. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 7 functions / 1968 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match ETC func_801421AC
+A local byte pointer to the GameState step field and a void return type preserve the selector in V1, the RA delay-slot store, and the pad-word load before the final switch branch. Resolved funcdiff and ETC unit SHA1 pass without a FAKE. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 8 functions / 2452 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match ETC func_80142390
+Reused the local GameState byte pointer and void callback form from func_801421AC for the second save-dialog state machine. Both resolved funcdiff checks and the ETC unit SHA1 pass after whitespace cleanup; no FAKE needed. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 9 functions / 2936 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match TAIIKU func_8013C5C8
+Recovered the mixed whole-word/high-half coordinate view of D_8011ECD0 and signed coordinate-bound declarations. A 300-second permuter reached an eight-line miss; a second empty high-half condition reached exact output. FAKE: both empty conditions retain the shared V1 base and prevent constant address folding. Full resolved funcdiff and the TAIIKU unit SHA1 pass. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 10 functions / 3140 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass ten-match checkpoint
+Full ninja passed all 27 unit SHA1 checks plus headers/globals guards after restoring unsuccessful production drafts. Second-pass subtotal 10 functions / 3,140 bytes. Recorded in [[tickets/T-9510-wave-8-list-1]]. Further experiments use scratch compiles until this checkpoint finishes.
+
+## [2026-10-11] build | Duplicate clone requires a corrected GameState offset
+Owned-file-only dupes proposed SHOUGATU func_80136770; resolved funcdiff rejected the copied GameState+0x10EA byte view because the target uses +0x110A. No match counted. Correcting against asm; recorded tool limitation in [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match SHOUGATU func_80136770
+Owned-file duplicate of func_80137D70, repaired against target asm: it increments GameState.unk_110A, not the source function's .unk_10EA. A direct member access matches, so no byte-view hack is retained. FAKE: the copied T-2020 return-value byte cast reserves a temporary; that comment remains. Resolved funcdiff and SHOUGATU SHA1 pass after cleanup. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 11 functions / 3320 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Main checksum routine repaired and timeboxed
+func_80055A38 now has a typed, instruction-equivalent scratch draft but its six-variable allocation differs. Eighteen completed source forms and a real 300-second permuter found no exact candidate; best permuter output still has 40 differing lines. Production source restored. Recorded in [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | TACO matrix-copy draft meets a conflicting header
+Recovered func_801472D4's matrix and coordinate prefix types and narrow pointer strides. Target returns 0/-1, while the existing overlay header declares void(s32,...). The append-only header constraint prevents changing that committed declaration. Four completed compile attempts reject the declaration; restored source and recorded in [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Deep-pass match ETC func_801428EC
+A local pointer to the byte shade makes its load use V0, then reuses V0 for the packed RGB argument; the s32 body intentionally has no return. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 12 functions / 3456 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match NAME_ENT func_80145378
+The counter comparison must use the old value before post-increment; a local u8 state pointer also preserves V1 without the extra selector copy. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 13 functions / 3676 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match RPG_BAT func_801427E4
+Use the neighbouring matched three-word state type for its counter fields; ++/-- inside the temporary assignment preserves call scheduling and V0 for the later reload. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 14 functions / 4264 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] build | Deep-pass match ETC func_80141468
+Use a post-increment comparison on the brightness byte, then pass its stored new value to set_dec_bri; s32 with no explicit value return preserves the selector copy. Removed the unused m2c temporary and reverified. Resolved funcdiff and unit SHA1 pass. Second pass subtotal 15 functions / 4580 bytes. Updated [[matching-notes]] and [[tickets/T-9510-wave-8-list-1]]. Saved the retained body as the baseline for later probes in the same owned file.
+
+## [2026-10-11] ingest | Wave 8 deep-pass record layout and bounded evidence
+Typed NAME_ENT func_801454CC with NameRecord44 (stride 0x44, record 96 at
++0x1980); resolved function diff and NAME_ENT SHA1 still pass. Added four
+deep-pass symptom rows and four historical resolutions to [[data/t0018-cases]]
+after consulting [[register-allocation-wave7]] and running its inventory.
+Updated [[matching-notes]] with corrected no-FAKE classifications, the score
+buffer experiments, the actor loop, the conflicting void prototype, and the
+duplicate-copy GameState-offset error. All failed production drafts have been
+restored. Scoped duplicate rescan applied zero candidates. Final 15-function
+diff sweep and 27-unit build are running for [[tickets/T-9510-wave-8-list-1]].
+
+## [2026-10-11] build | Second-pass full verification and byte-size correction
+All 15 new C functions pass full resolved funcdiff checks; sync_protos --check-branch and migrate_globals --check pass. Forced the 27 unit SHA1 checks and header/global checks through ninja; all pass. Current assembly metadata corrects two queue sizes by 12 bytes each, so the actual gain is 4,556 bytes (19 functions / 5,868 bytes across both passes). Grand progress 4753/6958, 735480/2279368 (32.3%). Recorded in [[tickets/T-9510-wave-8-list-1]] and [[matching-notes]]. Remaining BUNKA_SD experiments are isolated and have no production edits.
+
+## [2026-10-11] ticket | T-9510 deep second pass reviewed and closed
+Closed after over three hours and six minutes from 10:00:31 UTC. Inline review
+against CODING_STANDARDS.md and the user/shared brief passed; cleanup, record
+typing, incorrect no-FAKE notes and byte metadata findings resolved. Added 15
+verified functions / 4,556 bytes (19 functions / 5,868 bytes across both passes).
+All 15 resolved diffs, 27 unit SHA1 checks, prototype/global checks and diff
+whitespace checks pass. Final incremental ninja has no work. BUNKA_SD's final
+72 valid probes and 300-second search failed, with no production edits. Five
+new deep-pass symptom rows (14 total) in [[data/t0018-cases]]. Larger remaining
+type repairs stay deferred with assembly fallbacks; this is not an exhaustive
+deep traversal of every historical rejected draft. [[tickets/T-9510-wave-8-list-1]],
+[[kanban]] and [[index]] synchronized to Done. Verified edits are uncommitted.
+Grand total 4753/6958 functions, 735480/2279368 bytes (32.3%).

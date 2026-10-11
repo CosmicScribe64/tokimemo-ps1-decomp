@@ -22,6 +22,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-9570-wave-8-list-7|T-9570]] Wave 8: list 7, 14 functions matched (4,628 bytes), 5 T-0018 rows (Done; deep second pass)
 - [[tickets/T-9540-wave-8-list-4|T-9540]] Wave 8: list 4 (Done; deep pass +10 functions, 1628 bytes)
 - [[tickets/T-9580-wave-8-list-8|T-9580]] Wave 8: list 8 (Done; deep second pass: +9 functions, 3,400 bytes)
+- [[tickets/T-9510-wave-8-list-1|T-9510]] Wave 8: list 1 (Done; second pass +15 functions / 4,556 bytes, 19 functions across both passes)
 - [[tickets/T-9400-wave-7-tool-fixes|T-9400]] Wave-7 tool fixes (Done)
 - [[tickets/T-9410-register-allocation-shapes-after-wave-7|T-9410]] Register-allocation shapes after wave 7 (Done; +5 functions)
 See [[kanban]]. Template: [[tickets/_template]].

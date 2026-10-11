@@ -1,7 +1,79 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014DF60);
+void func_8014DF60(void) {
+    switch (D_8015EE04) {
+    case 0:
+        func_8014E64C();
+        func_8014F230();
+        return;
+    case 1:
+        func_80143C28(1, 0);
+        return;
+    case 2:
+        D_80120E49 = 4;
+        func_8013E7C0(0x1D, 5, 5, 1);
+        func_8014F230();
+        return;
+    case 3:
+        if (D_80120E1C == 5) {
+            func_8013F15C(0x50E, 0, 4);
+        }
+        func_8014F3C8(0x1D);
+        return;
+    case 4:
+        func_8013E97C(0x1E, 0xE0, 0x80);
+        func_8013E810(0x1E, 7, 5, 1);
+        func_8014F230();
+        return;
+    case 5:
+        func_8014F3C8(0x1E);
+        return;
+    case 6:
+        func_8013E810(0x1E, 8, 1, 1);
+        func_8014F230();
+        return;
+    case 7:
+        func_8014E300();
+        return;
+    case 8:
+        func_8013E810(0x1E, 9, 5, 1);
+        func_8013F15C(0x510, 1, 2);
+        func_8014F230();
+        return;
+    case 9:
+        func_8014F3C8(0x1E);
+        return;
+    case 10:
+        func_8013E810(0x1E, 0xFF, 1, 0);
+        if (D_8015EDF0 == 1) {
+            func_8014E1A4();
+            return;
+        }
+        func_8014E28C();
+        return;
+    case 11:
+        if (func_800460EC() == 2) {
+            func_8013E7C0(0x1D, 0, 1, 1);
+        }
+        func_8014F448(1);
+        return;
+    case 12:
+        func_8014F350(0x14);
+        return;
+    case 13:
+        func_80143CE8(3, 0);
+        return;
+    case 14:
+        func_8014F350(0x14);
+        return;
+    case 15:
+        func_8014F278();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 void func_8014E1A4(void) {
     func_800AE0F0(D_8015E904, "鏡「また私のとりこが一人。");

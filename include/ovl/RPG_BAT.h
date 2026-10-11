@@ -257,6 +257,9 @@ void func_80155A70();
 void func_8015675C();
 void func_801568A4();
 void func_80159E28();
+void func_8014E1A4();
+void func_8014E28C();
+
 #endif
 extern u8 D_8015E9E0[];
 extern u8 D_8015EB70[];

@@ -70,4 +70,23 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80143E80", func_80144430);
 void func_801446D0(void) {
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80143E80", func_801446D8);
+void func_801446D8(void) {
+    /* FAKE: two spare workspace words retain the observed frame size;
+     * keeping the pointer init on the do line permits the original schedule.
+     * T-9510: the transform helpers themselves use 32-byte workspaces. */
+    u32 sp70[10];
+    u32 sp50[8];
+    Tc10 *var_s0;
+
+    if (D_800E6280.unk_1113 != 0) {
+        func_80099540(&D_80122740);
+        var_s0 = D_80127080; do {
+            func_80099B10(var_s0->unk4[0], &sp50, &sp70);
+            func_80099F04(&sp50);
+            func_8009A200(var_s0->unk4[0], &sp70);
+            func_80099ED8(&sp70);
+            func_8009A4D0((s32) var_s0, (s32) ((u8 *)&D_800E8C70 + (D_8011ECA0 * 0x14)), 6, 0x1F800000);
+            var_s0++;
+        } while (var_s0 != (Tc10 *)D_80127480);
+    }
+}

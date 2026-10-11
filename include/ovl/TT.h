@@ -159,4 +159,22 @@ typedef struct TtPoint14 {
     /* 0x0C */ s32 x;
     /* 0x10 */ s32 y;
 } TtPoint14; /* size 0x14; func_801320F0 reads these coordinates */
+#ifndef OVL_TT_T9510_ANIM_TYPES
+#define OVL_TT_T9510_ANIM_TYPES
+/* T-9510: D_80151A50 is a table of pointers to frame-array pointers. */
+typedef struct TtAnimFrame {
+    /* 0x00 */ u16 unk0;
+    /* 0x02 */ u8 unk2;
+    /* 0x03 */ u8 unk3;
+} TtAnimFrame; /* size 0x04 */
+
+/* The animation fields used by func_801478D0; remaining extent unknown. */
+typedef struct TtAnimState {
+    /* 0x00 */ u8 pad0[5];
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 unk_08;
+    /* 0x09 */ u8 unk_09;
+} TtAnimState; /* accessed prefix size 0x0A */
 #endif

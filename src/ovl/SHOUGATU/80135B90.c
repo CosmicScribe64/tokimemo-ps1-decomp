@@ -160,7 +160,23 @@ void func_8013673C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136770);
+void func_80136770(void) {
+    s32 r;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    r = (u8)func_80051A68(D_800E6280.unk_F5F);
+    if (D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF) && D_800E6280.unk_040 == ((u32)(D_800E6280.unk_0F8 << 0x17) >> 0x1B)) {
+        if ((u32)(r & 0x7F) < 2U) {
+            D_800E6280.unk_71E |= 4;
+            D_800E6280.unk_110A += 5;
+        } else {
+            D_800E6280.unk_71E |= 8;
+            func_8004284C();
+        }
+    } else {
+        func_8004284C();
+    }
+}
 
 void func_80136824(void) {
     D_800CA148 = 0x1D;

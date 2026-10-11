@@ -45,7 +45,49 @@ void func_80132598(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_801325C0);
+s32 func_801325C0(void) {
+    D_800E6280.unk_F5F = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    back_clear_switch(1);
+    tpage_buf_clear();
+    func_8004E58C();
+    func_800AE0F0(D_800CA19C, "校門前");
+    func_800AE0F0(D_800CA1DC, "近所の公園");
+    k_reset(1);
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    addr_init_bustup();
+    hizuke_init();
+    message_window_init();
+    func_80084E4C();
+    D_80144C54 = 0;
+    D_80144C3C = 0;
+    /* T-9510: this initializer and func_801327AC store a full halfword. */
+    *(s16 *)&D_80144C40 = 0;
+    func_800847B8(D_800E6280.unk_F5F);
+    func_80132000();
+    D_80144C30 = D_80144BC8;
+    D_80144C34 = D_80144BF8;
+    D_80144C38 = D_80144C28;
+    func_80133024();
+    if ((D_80144C50 == 0) && (D_800E6280.unk_F5F == 7) && !(func_800AE0D0() & 3)) {
+        D_80144C50 = 0x64;
+    }
+    if (D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A >= 0x4C) {
+        D_80144C58 = 1;
+    } else {
+        D_80144C58 = 0;
+    }
+    func_8004284C();
+    func_80045318(9, 0, 0);
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801323E0", func_801327AC);
 

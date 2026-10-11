@@ -210,7 +210,38 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C33C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C4E4);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C5C8);
+void func_8013C5C8(s32 arg0)
+{
+  /* FAKE: empty conditions retain the shared record base in V1 instead
+   * of folding the word accesses to separate addresses. T-9510. */
+  TkCoordsView *records = (TkCoordsView *) D_8011ECD0;
+  if ((D_801499A4 + 2) < D_801206BA)
+  {
+    records->pos[0].word -= arg0;
+  }
+  else
+  {
+    if ((records->pos[0].halves.hi + 2) < D_801499A4)
+    {
+      records->pos[0].word += arg0;
+    }
+    if (!records->pos[0].halves.hi)
+    {
+    }
+    if (!records->pos[1].halves.hi)
+    {
+    }
+  }
+  if ((D_801499A6 + 2) < D_801206BE)
+  {
+    records->pos[1].word -= arg0;
+    return;
+  }
+  if ((records->pos[1].halves.hi + 2) < D_801499A6)
+  {
+    records->pos[1].word += arg0;
+  }
+}
 
 void func_8013C694(void) {
     if (D_801206BE < (D_80149986 >> 3) + 0x10) {
