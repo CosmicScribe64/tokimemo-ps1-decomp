@@ -1305,3 +1305,66 @@ T-9550 deep-pass resolution: `main:func_80086640` now matches with a marked FAKE
 2026-10-11 T-9550 deep-pass resolution: `main:func_80067DD4` and `main:func_80067DFC` now MATCH with fresh resolved diffs and main unit SHA1. Signed-halfword promotion followed by a byte local and address alias preserves the final `andi v0,t7,0xff`; five-minute-bound permutation found the first shape, and removal of redundant nested self-assignment / XOR-zero still matches. Historical promo rows are retained above.
 
 2026-10-11 T-9550 deep-pass resolutions: GEKO `func_8013CC20` matches with an explicit byte store followed by the GameState member read; GEKO `func_80139C70` matches with a post-call byte local and chained Rec24 colour fields. BUNKAKEN `func_80152F4C` matches with a copied 4-by-4 aggregate, inlined field indices, signed result and marked frame-padding word. Main `func_8006C700` matches with member-indexed halfwords and inlined unsigned bit extraction. All have fresh resolved diffs and unit SHA1 passes. Historical rows remain as evidence; no new symptom rows were added in the deep pass.
+
+## Wave 9, list 7 (T-9770, 2026-10-11)
+
+Historical rows are retained. The following record fresh bounded searches;
+they do not assert compiler impossibility.
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| OPTION/801389A0 | `func_80139F8C` | regorder | Selector/compare-chain cluster: raw valid draft has 18 resolved edit lines, with the first flag word in V0 instead of V1 and the final byte in V0 instead of T1/A0. Twenty-four signed/unsigned selector/value, void/s32 and if/switch variants do not improve it. An actual 300-second permuter search reaches weighted score 140, no zero; scratch wrapper only fixes setup discovery/import bugs. Restored INCLUDE_ASM (T-9770). |
+| 80058D20 | `initModelingData_init` | regorder | Other register/promotion cluster: repaired direct three-argument call with a temporary generated API override; 36 pointer/type/declaration/layout variants reach 13 resolved edit lines. Original adds 4 into S3 and then copies S3 into S2 before adding 8; IDO computes through A0/S4 and combines the data offset. Actual 300-second permuter reaches weighted score 196, no zero. Restored source and override (T-9770). |
+
+T-9770 resolution: GEKO `func_8013B3C0` now matches (+336 bytes), using the
+T-9550 sibling's scalar byte store followed by canonical GameState member read.
+The shared argument constant is scheduled before the store address as in the
+original. Fresh resolved diff and all 27 linked-unit SHA1 checks pass. Both the
+byte-store idiom and SDK RECT's unused stack-home scalar are marked FAKE.
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| OPTION/801389A0 | `func_80139878` | regorder | Corrected signed value/result draft is four resolved edit lines away: the final 0x80 constant is T9 instead of V1. An 850-second search covers 64 local-width, return-width, clamp and chained-store variants; actual 300-second permutation remains at weighted score 45 with no better output. Restored INCLUDE_ASM (T-9770). |
+
+T-9770 resolution: EVENT `func_8010A790` now matches (+80 bytes). Symbol byte
+alias preserves the original V0 address/value; a marked FAKE empty three-term
+condition fixes the final LUI placement. Duplicate permutation store removed.
+Sixty bounded variants, forty-second zero search, twenty-one pruning checks,
+fresh resolved diff and EVENT linked SHA1 pass. Historical rows are retained.
+
+T-9770 resolution: main `func_8005B040` now matches (+180 bytes). A u32 pointer
+with two words per row recovers the skipped T9/index chain; the ordinary
+unsigned GameState member cast matches too. Twenty-nine variants / 354 seconds,
+fresh resolved diff and main linked SHA1 pass. No FAKE residue. Historical
+rows remain; the unassigned sibling waits for the assignment timebox.
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| NAME_ENT/80132000 | `func_80134110` | regorder | Bounds helper: 24 explicit-result width/control variants (188 seconds) plus 46 result-reuse/typed-failure-constant/alias/order probes (401 seconds) retain 26 resolved edit lines. Original copies X from V1 into V0 in the first branch slot and loads Y directly in V0; IDO's return phi uses A0/A1 and final moves. Correct X-or-Y result semantics preserved in the trials. Best is above the permutation threshold; restored INCLUDE_ASM (T-9770). |
+
+T-9770 bounds final tally: the completed JSON log has **48** result-reuse
+  variants and a **409-second** footer, superseding the provisional 46/401 tally
+  above. Total 72 variants / 597 seconds; best and restoration are unchanged.
+
+T-9770 resolution: NAME_ENT `func_801341A8` now matches (+160 bytes).
+Corrected old-value snapshot, void return and canonical global reread recover
+the V0/V1 roles. Six return-form probes / 91 seconds; cleaned fresh resolved
+diff and linked NAME_ENT SHA1 pass. Callers ignore the return; no FAKE needed.
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| TT/8013C6D0 | `func_8013D2E0` | regorder | Scheduling/order cluster: 192 SDK TILE/tag/0x80B8 render-buffer variants over 776 seconds cover six declaration orders, stride forms, void/s32 returns, code/length order, mask and line layout. Best 58 resolved edits: stage/packet/color roles V0/V1/A0 rather than V1/A1/V0, with differing store scheduling. Correct stride and bit-field insertion established; no draft below permutation threshold. Restored C and overlay header (T-9770). |
+| OPTION/801389A0 | `func_80139E3C` | regorder | Narrow-value/pointer cluster: 36 corrected eight-byte-row probes plus 36 call-argument-store/value-width/index probes (about 364 seconds) reach 61 edits. Original keeps the narrow value in A3 until a second store after argument loads; IDO keeps V0 and removes or moves the redundant store. Typed row, return, declaration, masked increment and call-store variants tested; no draft below permutation threshold. Restored source (T-9770). |
+| EVENT/8010A210 | `func_8010A6E4` | hoist | Existing root-offset/reload cluster: repaired Rec34/CharFlags and typed 0x414-byte root image expose flag word at root+0x3EC. 48 return/value/base/read/update probes over 288 seconds reach 47 edits. IDO folds root+0x3ED into the symbol and removes a canonical word reload after the bit-field store. Actual 300-second permuter plateaus at weighted score 505, no zero. Restored C/header (T-9770). |
+| TAIIKU/80142240 | `func_8014430C` | regorder | Maximum-clamp and store-scheduling cluster: 144 return/clamp/store/layout/word-halfword probes over 538 seconds reach 18 edits. GsWord accumulator and signed high half reproduce both Scroll calls/divisions; original maximum is V1 while IDO uses V0, and final counter store moves before argument division. Actual 300-second permuter improves weighted 330 to 305, no zero. Restored C/header (T-9770). |
+
+T-9770 resolution: GEKO `func_80140FD0` now matches (+172 bytes). GameState
+pointer preserves the store base; canonical field reload recovers the distinct
+word load, and `(u16)` counter read selects LHU over the shared API's signed
+view. 72 variants / 96 seconds, actual 300-second permutation (weighted 230,
+no zero), then first direct-fix probe matches. Fresh void-form resolved diff
+and linked GEKO SHA1 pass. No FAKE. Historical symptom rows remain.
+
+| File | Function | Category | Evidence |
+| --- | --- | --- | --- |
+| GEKO/8013AF80 | `func_8013B10C` | regorder | Scheduling/order cluster: 42 callback words copied in fourteen twelve-byte trips; proper struct copy and frame match. 68 direct probes (40 valid, 28 void trials clash with existing s32 forward declaration) fix signed byte loads with unsigned views/stores and reduce ten edits to two. One SB moves around the GameState LBU. Two actual 300-second permutations, final base weighted 80 with no improvement/zero. Restored C/header after the own-file timebox (T-9770). |

@@ -260,9 +260,37 @@ s32 func_8005AFC8(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B040);
+s32 func_8005B040(void) {
+    u32 *p;
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B0F4);
+    if ((D_8011ECF6 < 8) && (D_8011ECF6 >= -0x27) && (D_8011ECFA < 0x24) && (D_8011ECFA >= 0x19)) {
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80044750(0xD1);
+            func_80044774(0);
+            p = D_800B5970 + ((u16)D_800E6280.unk_042 & 7) * 2;
+            func_80046290(p[0], p[1], 0xE);
+            func_80044750(0x300);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+s32 func_8005B0F4(void) {
+    u32 *p;
+
+    if ((D_8011ECF6 < 8) && (D_8011ECF6 >= -0x27) && (D_8011ECFA < 0x24) && (D_8011ECFA >= 0x19)) {
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80044750(0xD1);
+            func_80044774(0);
+            p = D_800B59B0 + ((u16)D_800E6280.unk_042 & 7) * 2;
+            func_80046290(p[0], p[1], 0xE);
+            func_80044750(0x300);
+            return 1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B1A8);
 

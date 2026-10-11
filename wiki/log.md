@@ -4087,3 +4087,369 @@ Final-state Docker configure/ninja passes all 27 checksums; build/headers.ok and
 ## [2026-10-11] ticket | T-9610 In Review to Done
 
 Inline standards and spec review against HEAD 1e24c0394a695c64200126de3beff00e579f930a has no unresolved findings after correcting DR_TPAGE. Updated [[tickets/T-9610-aggregate-and-local-copy-types]], [[kanban]] and [[index]]. Existing Python tools and compiler passes remain untouched; two new regression test scripts accompany the layouts and measured rules. All edits are uncommitted for orchestrator integration. Rejected bodies remain assembly; [[matching-notes]] records their residual blockers.
+
+## [2026-10-11] ticket | Claim wave 9 list 7
+
+Created [[tickets/T-9770-wave-9-list-7]] In Progress and synchronized [[kanban]].
+Read [[index]], [[decompile-workflow]], [[register-allocation-wave7]], matching
+notes, CODING_STANDARDS.md and the shared wave9-brief.md. Assignment: 173 functions
+in 35 files, four-hour minimum; Docker-only builds, no commits or subagents.
+
+## [2026-10-11] decision | T-9770 cap build concurrency
+
+[[tickets/T-9770-wave-9-list-7]] baseline resumed with Docker ninja -j 4 after
+stopping only its own initial container. Other wave agents share the Docker host.
+Draft generation is read-only while the baseline completes.
+
+## [2026-10-11] ingest | T-9770 historical near-miss evidence
+
+Appended the T-9770 section of [[matching-notes]]. Read historical rows for the
+first list entries in [[data/t0018-cases]] and inspected original word-copy,
+range-test, flag-field and packet-link assembly. Most top-ranked tiny functions
+have earlier bounded register-order searches; new packet types will be tried
+for rendering drafts as part of the deep pass.
+
+## [2026-10-11] build | T-9770 first-pass and deep-pass checkpoints
+
+[[tickets/T-9770-wave-9-list-7]] first 15 draft/build/diff results saved to its
+scratch directory; no verified match. [[matching-notes]] own section records
+scope and workflow. OPTION's 18-line near miss received 24 type/control-flow
+variants and a bounded permuter. Model-loader pointer-cast trial was rejected
+because it emits an indirect call; generated a measured 3-argument override for
+further probes. Full builds moved to source-stable checkpoints after a trial
+source caused a concurrent full-build failure.
+
+## [2026-10-11] decision | T-9770 permuter setup workaround
+
+[[matching-notes]] records a >5-minute CPU-bound permute.py setup stall on
+OPTION func_80139F8C before its 300-second worker timer starts. Stopped only the
+T-9770 container. Scratch runtime wrapper uses bounded definition discovery;
+no project tool files changed. First wrapper run also exposed worker import
+shadowing: multiprocessing imports tools/queue.py instead of stdlib queue.
+Neither failed launch counts as a permuter search.
+
+## [2026-10-11] build | T-9770 bounded deep attempts complete
+
+[[tickets/T-9770-wave-9-list-7]]: actual 300-second permuters for the OPTION
+selector and main model loader found no score zero (best scores 140 and 196).
+Restored both trial bodies and the generated override. All 173 drafts generated;
+quick build/diff sweep has no gain and mostly needs aggregate/declaration repair.
+Type-repair sweep prepared; existing structs are preferred to byte-offset views.
+
+## [2026-10-11] build | T-9770 stable checkpoint passes 27 units
+
+[[tickets/T-9770-wave-9-list-7]]: Docker ninja -j 4 passes all 27 linked-unit
+SHA1 checks, headers OK and globals OK after restoring quick/deep drafts.
+Starting the type/declaration repair sweep with verified assembly fallback.
+
+## [2026-10-11] build | T-9770 complete first-pass coverage and repaired ranking
+
+All 173 assigned m2c drafts received a Docker build/resolved-diff attempt; no
+verified gain yet. [[tickets/T-9770-wave-9-list-7]] continues with byte-width,
+aggregate and declaration repair. Read the historical register-shape inventory
+and prepared six bounded source-variant searches in external scratch. The
+NAME_ENT selection draft needs a genuine old-value snapshot; TT uses SDK TILE
+and the existing tag bit-field. Evidence appended to [[matching-notes]].
+
+## [2026-10-11] query | T-9770 record two sustained register-order searches
+
+Appended two rows to [[data/t0018-cases]] for OPTION func_80139F8C and main
+initModelingData_init after consulting [[register-allocation-wave7]] and the
+register-shape inventory. Each includes manual variant counts and an actual
+300-second permuter search. Rejected source and header trials are restored;
+[[tickets/T-9770-wave-9-list-7]] remains In Progress.
+
+## [2026-10-11] build | T-9770 match GEKO initializer
+
+GEKO func_8013B3C0 matches in Docker funcdiff --resolve, +336 bytes. Applied
+the T-9550 sibling's scalar-byte-store followed by member-read idiom; SDK RECT
+stack padding and the scheduling trick are marked FAKE. [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]] record the evidence. Starting a full linked
+checkpoint with no temporary source/header trials active.
+
+## [2026-10-11] build | T-9770 first gain linked checkpoint
+
+Docker ninja -j 4 passes 27/27 unit SHA1 checks with headers OK and globals OK
+after retaining GEKO func_8013B3C0. The repaired sweep covered 68 drafts total,
+then all rejected C/header trials were restored. [[data/t0018-cases]] records
+the GEKO resolution; [[tickets/T-9770-wave-9-list-7]] continues with the closest
+remaining valid drafts. Scoped near-duplicate report completed.
+
+## [2026-10-11] build | T-9770 bounded OPTION fade iteration
+
+An 850-second source-variant search on OPTION func_80139878 retains the known
+four-edit near miss: final 0x80 constant uses T9 instead of V1. All rejected
+production edits are restored. [[tickets/T-9770-wave-9-list-7]] records the
+search; a 300-second permuter follows the best signed temporary draft.
+
+## [2026-10-11] build | T-9770 fade permutation and EVENT retry
+
+OPTION func_80139878 actual 300-second permutation stays at weighted score 45.
+Restored production source; [[data/t0018-cases]] gains one fresh bounded-search
+row. [[matching-notes]] and [[tickets/T-9770-wave-9-list-7]] record the result.
+Starting EVENT func_8010A790 scalar-view and promotion variants in Docker.
+
+## [2026-10-11] decision | T-9770 repair OPTION row stride
+
+Read OPTION func_80139E3C against its target assembly. Its draft uses a word
+pointer with an eight-element advance for an eight-byte record; prepared
+scratch-only byte, word-pair and pointer-to-row variants with the corrected
+stride and null comparison. EVENT's byte alias currently reaches two resolved
+edit lines. [[tickets/T-9770-wave-9-list-7]] continues its ranked deep pass.
+
+## [2026-10-11] build | T-9770 EVENT scalar search complete
+
+EVENT func_8010A790 completed all 60 variants in 528 seconds, best two resolved
+edit lines. Source and generated global restored; starting actual 300-second
+permutation with the scratch setup/import workaround. [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]] record the bounded result and next repairs.
+
+## [2026-10-11] build | T-9770 EVENT candidate verified
+
+EVENT func_8010A790 permutation reaches score zero after 40 search seconds.
+Its real object diff and EVENT unit SHA1 pass. The candidate includes an empty
+condition and duplicate store; a scratch pruning search now removes each
+independently, with fresh resolved verification. [[tickets/T-9770-wave-9-list-7]]
+will record only the final retained shape as a gain.
+
+## [2026-10-11] build | T-9770 prune EVENT duplicate store
+
+Sixteen fresh resolved checks remove EVENT func_8010A790's duplicate store
+without losing its match. Both the byte alias and empty condition remain
+required among these variants; now checking simpler conditions, with explicit
+FAKE comments. [[tickets/T-9770-wave-9-list-7]] records the 226-second pruning
+pass. No unverified final C is retained yet.
+
+## [2026-10-11] build | T-9770 retain EVENT byte update
+
+EVENT func_8010A790's final pruned source passes fresh resolved function diff
+and EVENT linked SHA1. Gain +80 bytes, batch total 2 functions / 416 bytes.
+Canonical byte declaration generated through sync_protos; both necessary
+tricks are marked FAKE. [[matching-notes]], [[data/t0018-cases]] and
+[[tickets/T-9770-wave-9-list-7]] record the resolution. Starting main lookup.
+
+## [2026-10-11] build | T-9770 recover main word-pair lookup
+
+Main func_8005B040 draft matches after 29 source variants / 354 seconds. The
+two-word pointer form supplies the original index-chain register sequence;
+checking the canonical unsigned cast before retaining the source and running
+main SHA1. [[tickets/T-9770-wave-9-list-7]] records the bounded search.
+
+## [2026-10-11] build | T-9770 retain canonical lookup source
+
+The ordinary unsigned cast also matches main func_8005B040 with its two-word
+pointer. Retained this plain C shape and freshly verified resolved MATCH;
+main SHA1 is running. [[tickets/T-9770-wave-9-list-7]] records the scope check:
+func_8005B0F4 belongs to an owned file but is outside the supplied 173 entries,
+so its direct retry waits for the assignment timebox.
+
+## [2026-10-11] build | T-9770 main lookup linked
+
+Main func_8005B040 fresh resolved MATCH and main linked SHA1 pass. Gain +180
+bytes, batch total 3 functions / 596 bytes. Canonical unsigned member cast and
+proper word-pair indexing need no FAKE marker. [[matching-notes]],
+[[data/t0018-cases]] and [[tickets/T-9770-wave-9-list-7]] record the resolution.
+
+## [2026-10-11] decision | T-9770 preserve NAME bounds result
+
+Read NAME_ENT func_80134110 against its target: V0 receives X in the first
+branch slot and Y after the second load. Starting explicit-result width and
+control-flow variants in Docker. [[tickets/T-9770-wave-9-list-7]] records the
+interpretation; source trials remain scratch and are restored individually.
+
+## [2026-10-11] decision | T-9770 reuse NAME bounds result
+
+The first NAME_ENT bounds probes allocate a separate result in A0 and Y in A1,
+unlike the original's Y in V0. Prepared scratch-only two-local result-reuse
+variants and typed failure constants, with fresh resolved checks as the judge.
+[[tickets/T-9770-wave-9-list-7]] records the next bounded repair.
+
+## [2026-10-11] build | T-9770 bounds timebox and assigned duplicates
+
+NAME_ENT func_80134110 remains 26 resolved edits after 24 plus 46 variants,
+188 plus 401 seconds. Restored source and added one fresh [[data/t0018-cases]]
+row. [[matching-notes]] and [[tickets/T-9770-wave-9-list-7]] record it. Starting
+dupes --apply --check with the 35 owned-file guard and 173 assigned-target
+prefilter; all matched donors are kept and project tools remain unchanged.
+
+## [2026-10-11] query | T-9770 bounds final accounting
+
+Completed JSON footer and line count give 48 second-stage variants / 409
+seconds, correcting the provisional 46/401 tally. Total 72 / 597 seconds;
+26-edit result and restoration unchanged. [[data/t0018-cases]],
+[[matching-notes]] and [[tickets/T-9770-wave-9-list-7]] have the final tally.
+
+## [2026-10-11] build | T-9770 duplicate scan and stale donor flags
+
+Assigned-only scoped dupes --apply --check completes with no copies and five
+stale self-group skips. Read tools/dupes.py and tools/progress.py: the copier
+uses asm-directory matched flags, admitting stale trial donors and missing
+the three newly verified C donors after ninja; official progress uses active
+C definitions and deduplicated size keys. [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]] record the tooling finding; tools are untouched.
+
+## [2026-10-11] decision | T-9770 prioritize NAME return views
+
+Fifteen corrected-snapshot NAME_ENT func_801341A8 variants with explicit old
+return are 18 resolved edits away, swapping V0/V1. Verified the own Docker
+mount and command, sent SIGINT, and confirmed finally restored source/header.
+Reordered scratch variants to test void and s32-no-return immediately.
+[[tickets/T-9770-wave-9-list-7]] records the adaptive search; no other container
+was stopped and project tools remain unchanged.
+
+## [2026-10-11] build | T-9770 recover NAME selection snapshot
+
+Corrected old-selection snapshot matches in the void/global-reread form after
+six interleaved probes / 91 seconds. Removed the unused search scalar and
+appended guarded overlay word declarations. Fresh resolved verification now
+checks the cleaned source. [[tickets/T-9770-wave-9-list-7]] records the shape.
+
+## [2026-10-11] build | T-9770 verify NAME selection snapshot
+
+Cleaned `func_801341A8` passes fresh resolved diff and linked NAME_ENT SHA1.
+Caller return values are unused; ordinary C needs no FAKE. Four retained
+functions / 756 bytes. Updated [[matching-notes]], [[data/t0018-cases]] and
+[[tickets/T-9770-wave-9-list-7]]. Start assigned OPTION eight-byte-row deep pass.
+
+## [2026-10-11] decision | T-9770 prioritize typed TT packets
+
+Read original TT packet builder and confirmed 0x80B8 render-buffer stride,
+packet pointer at 0x04 and ordering tag at 0x8044. Scratch search uses SDK TILE
+and existing tag bit-fields, interleaving return forms. OPTION table helper
+continues testing corrected eight-byte rows; [[tickets/T-9770-wave-9-list-7]]
+records both attempts. Project tools remain unchanged.
+
+## [2026-10-11] build | T-9770 OPTION table first-stage result
+
+Thirty-six corrected row-view probes / 233 seconds retain 67 resolved edits.
+Original keeps the narrow value in A3 until a second global store after argument
+loads; IDO removes that store. Restored C. Updated [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]]; typed TT packet probes now run.
+
+## [2026-10-11] decision | T-9770 recover EVENT record image
+
+Original EVENT `func_8010A6E4` word and byte accesses are record 11's flags:
+table at 0x800B0A04 lies +0x1A4 into root 0x800B0860. Prepared typed root
+aggregate using existing Rec34 fields, retaining both original bases. Owned
+queue scan completed, still led by assigned functions. Updated
+[[tickets/T-9770-wave-9-list-7]]; no project tooling changed.
+
+## [2026-10-11] build | T-9770 timebox typed TT packet search
+
+192 typed packet probes / 776 seconds retain 58 resolved edits. SDK layout
+recovers stride and bit-field insertion but pointer roles and scheduling remain.
+Restored C/header; appended fifth symptom row in [[data/t0018-cases]], updated
+[[matching-notes]] and [[tickets/T-9770-wave-9-list-7]]. EVENT type repair starts.
+
+## [2026-10-11] build | T-9770 OPTION call-store and EVENT repair results
+
+OPTION call-store probes improve 67 to 61 edits (36 / 131 seconds); restored
+source. EVENT aggregate probes compile and reach 47 edits (48 / 288 seconds);
+restored source/header, then start an actual 300-second permuter. Updated
+[[matching-notes]] and [[tickets/T-9770-wave-9-list-7]].
+
+## [2026-10-11] build | T-9770 finish EVENT permutation and start TAIIKU
+
+Actual 300-second EVENT flag permutation plateaus at weighted score 505, no
+zero; restored C/header. Added OPTION table and EVENT flag evidence to
+[[data/t0018-cases]] (seven new rows total), updated [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]]. TAIIKU clamp probes use GsWord for the
+accumulator and its signed high half, with canonical-symbol comparison.
+
+## [2026-10-11] build | T-9770 TAIIKU reaches permutation threshold
+
+Corrected accumulator/high-half union probes reach 18 resolved edits. Calls
+and signed divisions agree; maximum-clamp register and final counter-store
+schedule remain. [[tickets/T-9770-wave-9-list-7]] records the result and planned
+actual five-minute permuter after the bounded shape search.
+
+## [2026-10-11] build | T-9770 complete TAIIKU shape search
+
+144 clamp/return/store/layout/word-halfword probes / 538 seconds retain 18
+resolved edits. Restored C/header, then actual 300-second permutation starts
+on the proper GsWord accumulator/high-half view. Updated [[matching-notes]]
+and [[tickets/T-9770-wave-9-list-7]].
+
+
+## [2026-10-11] build | T-9770 finish TAIIKU permutation
+
+Actual 300-second search improves weighted 330 to 305, no zero. Restored
+source/header; eighth new row in [[data/t0018-cases]], with [[matching-notes]]
+and [[tickets/T-9770-wave-9-list-7]] updated. Preliminary inline review checks
+retained C89/SDK/type scope/FAKE labels; incidental EOF normalization removed.
+Assigned GEKO flag helper now tests union-word versus bit-field reads.
+
+## [2026-10-11] build | T-9770 GEKO flags reach six edits
+
+72 canonical word/bit-field/base/return/update probes / 96 seconds improve
+23 to six resolved edits. Source restored, then actual 300-second permutation
+starts. Four-hour minimum passed at 18:59:42 UTC. [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]] record the search and remaining own-file twin
+plus final checks.
+
+## [2026-10-11] build | T-9770 verify GEKO flag helper
+
+Actual 300-second permutation plateaus at weighted 230. First direct-fix
+probe matches with unsigned counter read and canonical GameState reload;
+void form passes fresh resolved diff and linked GEKO SHA1. Five gains / 928
+bytes, no new FAKE. Updated [[matching-notes]], [[data/t0018-cases]] and
+[[tickets/T-9770-wave-9-list-7]]. Main own-file twin now runs after timebox.
+
+## [2026-10-11] build | T-9770 verify main own-file twin
+
+`func_8005B0F4` uses the verified helper body with its distinct table address.
+Generated u32[16] declaration; fresh resolved diff and linked main SHA1 pass.
+Six gains / 1,108 bytes. Updated [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]]. Final own-file GEKO callback aggregate tests
+the observed 42-word copy and scalar/table declaration order before all checks.
+
+## [2026-10-11] build | T-9770 callback aggregate reaches ten edits
+
+48 aggregate/return/control/declaration probes / 67 seconds recover callback
+copy and frame, leaving ten resolved edits in byte signedness and scheduling.
+Actual 300-second permutation runs; unsigned-view probes prepared next.
+Updated [[matching-notes]] and [[tickets/T-9770-wave-9-list-7]].
+
+## [2026-10-11] build | T-9770 callback width repair reaches two edits
+
+Unsigned read/store probes and bounded scheduling variants reduce ten edits
+to four to two; void trials fail the existing s32 forward declaration. Restored
+C/header after each stage. Final actual 300-second permutation now runs on the
+corrected source; final checks follow its endpoint. Updated [[matching-notes]]
+and [[tickets/T-9770-wave-9-list-7]].
+
+## [2026-10-11] ticket | T-9770 In Review after final matching timebox
+
+Callback's final actual 300-second search stays at weighted 80, no zero.
+Restored C/header; added ninth symptom row to [[data/t0018-cases]], updated
+[[matching-notes]]. Six verified gains / 1,108 bytes. Moved
+[[tickets/T-9770-wave-9-list-7]] and its [[kanban]] card to In Review, updated
+[[index]]. Code frozen for linked checks, guards and inline review.
+
+## [2026-10-11] build | T-9770 final six-gain verification
+
+523-job incremental Docker ninja passes all 27 linked SHA1 checks, headers and
+globals guards. Only checksum stamps cleared; objects/asm retained. Fresh
+resolved checks pass 6/6. Branch prototype guard has zero new disagreements
+(17 known); globals and git diff checks pass. Official progress:
+`grand total 4876/6958 777768/2279368 34.1%`. Updated [[matching-notes]] and
+[[tickets/T-9770-wave-9-list-7]].
+
+## [2026-10-11] ticket | T-9770 Done after inline review
+
+Inline standards/spec review against HEAD passes CODING_STANDARDS.md,
+CONTRIBUTING.md and the wave brief. All FAKE reasons tracked; incidental EOF
+normalization restored and newly added status entry placed at append position
+without changing its text or historical entries. Six gains / 1,108 bytes;
+nine new symptom rows; over 4h52m recorded. Moved
+[[tickets/T-9770-wave-9-list-7]] and [[kanban]] card to Done, updated [[index]].
+No commits; changes remain uncommitted for the orchestrator.
+
+## [2026-10-11] lint | T-9770 ownership and wiki consistency
+
+13-file ownership audit passes, no unexpected path or staged files. Own
+ticket/card/index statuses agree, ticket link exists and historical log
+content is preserved. No project tools/config/raw sources changed. Remaining
+non-register blocker is aggregate/type recovery. Tool reports in
+[[tickets/T-9770-wave-9-list-7]] cover regex stall, queue shadowing and stale
+dupes matched flags; only scratch workarounds were used.

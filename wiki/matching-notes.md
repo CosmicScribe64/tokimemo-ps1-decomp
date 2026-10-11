@@ -2287,3 +2287,169 @@ four packet/matrix refactors. Prototype branch check has zero new disagreements
 4870/6958 functions, 776660/2279368 bytes: **+2 functions / +356 bytes**.
 Inline standards/spec review resolved the DR_TPAGE size discrepancy and has
 no outstanding findings. T-9610 is Done; edits remain uncommitted.
+
+## Wave 9, list 7 (T-9770)
+
+- OPTION func_80139878 deep pass: 64 variants over 850 seconds followed by an
+  actual 300-second permutation leave four resolved edits (the final 0x80
+  constant in T9 instead of V1). Source restored; fresh row in T-0018 evidence.
+
+Session starts 2026-10-11 14:59:42 UTC. Assigned 173 functions in 35 files.
+Read the shared brief, full workflow, local-aggregate frame rules and
+[[register-allocation-wave7]] before experiments. Quick m2c pass followed by
+ranked deep attempts; rejected production drafts are restored. Initial pointer
+repair targets include word-array accesses misprinted as unknown struct members,
+and 3-argument calls to func_8009B430 despite its canonical 4-argument prototype.
+Existing historical rows are evidence of previous bounded searches, not proof
+that a function cannot match. Per-function evidence and results follow below.
+
+- Tooling observation: stock `permute.py` for OPTION func_80139F8C stayed in
+  setup for over five minutes at ~98% CPU, with empty `base.c` and no worker.
+  `strip_functions` uses an unbounded K&R discovery regex over a long prototype
+  context; the `--time` limit starts only afterward. Stopped only that own
+  container. A scratch-only runtime wrapper substitutes line-bounded ANSI/K&R
+  discovery, leaving project tools, compiler pipeline and real verification
+  unchanged. Report this setup/timer issue to the orchestrator.
+
+- Initial deep trials: OPTION func_80139F8C (24 plain type/control variants and
+  actual 300-second permuter, best 140) and initModelingData_init (36 direct-call
+  pointer/declaration/layout variants, best 13 resolved edit lines; actual
+  300-second permuter best 196) remain unresolved. No score-zero candidate.
+  Restored both C bodies and the temporary 3-argument override. The worker
+  workaround preloads stdlib queue before tools/ is on sys.path; project tools
+  are untouched. These are bounded search results, not compiler impossibility claims.
+
+- The first draft/build/diff pass covered all 173 assignments with no matches.
+  The second pass repairs byte offsets, load/store widths and missing declarations,
+  restoring each rejected source/header trial. `func_801341A8` needs an old-value
+  snapshot: m2c compares the newly stored selection with itself and deletes the
+  reset. Planned deeper trials use the corrected snapshot. TT packet trials use
+  SDK `TILE` and existing `TtOtTag`, with a 0x80B8 render-stage view inferred from
+  the indexed buffer and packet/OT offsets. EVENT `func_80118868` is down to
+  constant-sharing differences (29 instruction edits); test chain assignments and
+  signed-width temporaries before classifying it as register-order evidence.
+
+- GEKO `func_8013B3C0` now MATCH (+336 bytes). The T-9550 sibling
+  `func_8013CC20` resolves the historical one-swap case: write
+  `*(u8 *)&D_800E6280.unk_F5F = 2;` on its own line, then call
+  `func_800847B8(D_800E6280.unk_F5F)`. The cast store plus member read preserves
+  the original shared argument constant and scheduling; both this idiom and
+  the unused scalar before SDK RECT are marked FAKE with T-9770. No new extern
+  declarations needed for this gain. Fresh resolved diff passes; linked checks
+  are the next verification step. Historical T-0018 rows remain unchanged.
+
+- EVENT func_8010A790: sixty variants in 528 seconds reduce four resolved edit
+  lines to two with a symbol byte alias. Only the final address-load scheduling
+  remains; the five-minute permuter follows this draft. Prepared OPTION's
+  corrected eight-byte-row helper and EVENT's byte-result promotion variants.
+
+- EVENT func_8010A790 MATCH (+80 bytes): permutation reaches zero after forty
+  search seconds and real verification passes. Sixteen pruning checks remove
+  the duplicate store; five condition probes retain the three-term empty test.
+  Byte alias and empty test are marked FAKE and use the canonical generated
+  u8 global. Final fresh resolved diff and EVENT linked SHA1 both pass.
+
+- Main func_8005B040 MATCH (+180 bytes): twenty-nine variants / 354 seconds.
+  A u32 pointer indexing two words per row creates the correct temporary
+  sequence where byte pointer arithmetic did not. Canonical `(u16)` cast also
+  matches, so the retained source has no FAKE residue. Generated u32[16] table
+  declaration is now used. Fresh resolved diff and main linked SHA1 pass.
+
+- NAME_ENT func_80134110: explicit X-or-Y result semantics, 24 width/control
+  probes plus 46 returned-variable reuse/negative-constant/alias/order probes
+  over about ten minutes. Best 26 edits, return-phi A0/A1 rather than original
+  V0. No valid draft below the permutation threshold. Restored INCLUDE_ASM.
+
+- Bounds final JSON tally: 48 second-stage probes / 409 seconds; 72 probes /
+  597 seconds across both stages. This supersedes the provisional 46 count.
+
+- Scoped dupes --apply --check: zero copies. Its asm-directory matched flags
+  are stale after reversible trials: five duplicate matching/nonmatching
+  self-groups report "source is not in C", while the three new verified C
+  functions still have only nonmatchings asm files. tools/dupes.py load_funcs
+  lines 157-180 derives matched solely from the path. No project-tool change;
+  report this donor-state limitation. tools/progress.py checks actual C bodies
+  and deduplicates size keys, so use official ninja progress for the final count.
+
+- NAME_ENT func_801341A8 MATCH (+160 bytes): corrected the old-selection
+  snapshot lost by the initial draft. Six interleaved return-form probes / 91
+  seconds find void plus a canonical global reread after the store. Callers
+  ignore the return. Removed the unused scalar; cleaned fresh resolved diff
+  and linked NAME_ENT SHA1 pass. Ordinary C, no FAKE; total four / 756 bytes.
+
+- OPTION func_80139E3C: first 36 row-view/return/declaration/update probes /
+  233 seconds reach 67 edits. Corrected stride alone leaves the narrow value
+  in V0 instead of A3 and removes the second global store. Source restored;
+  next experiment will place that store in the call's third argument.
+
+- TT func_8013D2E0: 192 SDK TILE/tag/render-buffer probes / 776 seconds;
+  best 58 resolved edits. Six declaration orders, typed/byte stride, void/s32,
+  code/length order, explicit masks and line layout retain pointer roles
+  V0/V1/A0 versus original V1/A1/V0. Above permutation threshold. Restored
+  INCLUDE_ASM and overlay header; recorded a scheduling/order T-0018 row.
+
+- OPTION row helper second stage: 36 call-argument-store/value-width/index
+  probes / 131 seconds improve 67 to 61 edits without recovering A3 or the
+  original redundant-store placement. Both sources restored; 72 probes /
+  364 seconds total. EVENT's repaired aggregate draft reaches 47 edits after
+  48 probes / 288 seconds; a further actual 300-second permutation runs.
+
+- EVENT flag repair's actual 300-second permutation remains weighted 505,
+  no zero. Restored C/header; seventh new symptom row (sixth is OPTION's row
+  helper). TAIIKU clamp search now uses GsWord for the 0x8014A1CC accumulator
+  and its signed high half, comparing the canonical halfword-symbol view too.
+
+- TAIIKU func_8014430C: 144 clamp/return/store/layout/word-halfword probes /
+  538 seconds retain 18 edits. Correct GsWord accumulator/high-half view
+  works as well as separate halfword symbol. Source/header restored, then
+  actual 300-second permutation starts on the proper union view.
+
+- TAIIKU actual 300-second permutation improves weighted 330 to 305,
+  no zero; restored C/header and added the eighth symptom row. Inline review
+  of retained gains checks C89, SDK types, declaration scope and FAKE labels;
+  removed incidental main-file EOF normalization. GEKO's assigned flag helper
+  now tests canonical union-word reads versus named bit-field reads.
+
+- GEKO func_80140FD0: 72 word/bit-field/base/return/update probes / 96
+  seconds reach six resolved edit lines, improving the repaired draft's 23.
+  Source restored; actual 300-second permutation now runs. Four-hour minimum
+  passed at 18:59:42 UTC; final own-file twin and validation follow this search.
+
+- GEKO func_80140FD0 MATCH (+172 bytes): actual 300-second permutation
+  plateaus at weighted 230; direct inspection identifies unsigned counter read
+  and canonical post-store reload. First two-fix probe matches in 11 seconds;
+  void form also passes fresh resolved diff and linked GEKO SHA1. Ordinary
+  fields and unsigned cast, no FAKE. Five verified gains / 928 bytes.
+
+- Main func_8005B0F4 MATCH (+180 bytes): own-file twin of the verified lookup
+  helper with D_800B59B0 instead of D_800B5970. Generated u32[16] declaration,
+  fresh resolved diff and linked main SHA1 pass. After assignment timebox and
+  owned queue scan; six gains / 1,108 bytes. Final own-file callback aggregate
+  tests the observed 42-word copy and local declaration order before all checks.
+
+- GEKO func_8013B10C aggregate probes: 48 variants / 67 seconds reach ten
+  edits. 42 callback words, fourteen copy trips and stack frame match; remaining
+  differences are signed byte reads and one store/load scheduling pair. Actual
+  300-second permutation runs; prepared canonical unsigned-read probes next.
+
+- Callback width/store follow-up: eight unsigned-view probes (void forms fail
+  the existing s32 forward declaration), eight byte-store probes, four layout/
+  scheduling probes. Ten edits -> four -> two; typed unsigned stores remove
+  the last LB. The remaining difference moves one store around the GameState
+  byte load. Restored C/header after each stage; final actual 300-second
+  permutation runs on the corrected two-edit source, with a fixed endpoint.
+
+- Final callback permutation completes 300 seconds at base weighted 80,
+  no better output. Restored C/header. Total 68 direct probes (40 valid; 28
+  void trials clash with the established s32 forward declaration), two actual
+  300-second searches. Two store/load-order edits remain; ninth symptom row.
+  Final retained count six / 1,108 bytes; code frozen for all-unit checks.
+
+- Final verification/review: all 27 linked SHA1 checks pass (523-job incremental
+  build, only checksum stamps cleared); headers/globals and branch prototype
+  guards pass, zero new prototype disagreements. Fresh resolved checks 6/6.
+  Official `grand total 4876/6958 777768/2279368 34.1%`. Inline standards/spec
+  review passes; two FAKE-containing functions documented, all trial residue
+  restored. 13-file scope audit and git diff --check pass. T-9770 Done after
+  over 4h52m; uncommitted. Nine symptom rows; remaining non-register blocker
+  is aggregate/type recovery. Tool bugs remain scratch-only workarounds.
