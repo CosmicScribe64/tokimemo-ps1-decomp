@@ -66,7 +66,32 @@ void func_801572D8(void) {
     func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_801573C8);
+void func_801573C8(void) {
+    TcPos p0;
+    TcPos a;
+    TcPos b;
+
+    func_800AE120(D_801604C0);
+    /* FAKE: the three stores on one source line make as1 order them z, y, x as the original does. T-9160 */
+    a.x = 0x1F4; a.y = 0x12C; a.z = -0x8000;
+    b.y = 0x800;
+    b.x = 0;
+    b.z = 0;
+    b.unk6 = 0;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0x10);
+    a.x = 0xFA; a.y = 0x12C; a.z = -0x7830;
+    b.unk6 = 1;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 6, 0);
+    a.x = 0; a.y = 0x12C; a.z = -0x7060;
+    b.unk6 = 2;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 2, 0x50);
+    a.x = -0xFA; a.y = 0x12C; a.z = -0x7830;
+    b.unk6 = 3;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 6, 0);
+    a.x = -0x1F4; a.y = 0x12C; a.z = -0x8000;
+    b.unk6 = 4;
+    func_8015ACCC(8, 0x12, D_801604D4, a, b, 4, 0x10);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80156A80", func_8015776C);
 
