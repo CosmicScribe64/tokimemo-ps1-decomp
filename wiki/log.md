@@ -858,3 +858,11 @@ Created [[tickets/T-9340-wave-7-list-4]]; work list of 142 functions in 36 files
 
 ## [2026-10-10] ticket | T-9340 (In Progress -> Done)
 Clean rebuild 27/27 OK, headers OK, globals OK, `sync_protos --check-branch` OK, progress 4567/6958. Inline review in [[tickets/T-9340-wave-7-list-4]], no open findings.
+## [2026-10-10] ticket | T-9370 wave 7 list 7 started
+Ticket [[tickets/T-9370-wave-7-list-7]] In Progress.
+
+## [2026-10-10] build | T-9370 wave 7 list 7: 19 functions matched
+SHUGAKU 1, TACO 5, GYOZI 1, TT 3, EVENT 2, RPG_BAT 5, KANGEI 2 (6,780 bytes); notes in [[matching-notes]] "Wave 7, list 7 (T-9370)": unroll left-over stores, locals for hoisted globals, statement order = register numbering, unsigned counter for a separate constant, unused-array frame padding, permuter finds (`*a = *b = 0`, `(P + idx)->f`, `^ 0`). Four fakematches marked `FAKE` (TACO `func_80148308`, `func_80151F94`, `func_80153068`, RPG_BAT `func_80157CCC`). 24 rows appended to [[data/t0018-cases]]; one tooling gap: TACO `func_8013F250` matches in C but its strings are the orphan rodata chunk `8015DA90`. Clean rebuild 27/27 OK, headers OK, globals OK, `--check-branch` OK.
+
+## [2026-10-10] ticket | T-9370 (In Progress -> In Review -> Done)
+Inline review against CODING_STANDARDS.md in [[tickets/T-9370-wave-7-list-7]], no open findings. Not merged or pushed.

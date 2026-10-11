@@ -161,7 +161,40 @@ void func_80102A24(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/801024B0", func_80102AB0);
+void func_80102AB0(void) {
+    D_800B1746 = 5;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_8004BC20(D_800B1746);
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_80120444;
+    D_8012067C = D_80120460;
+    D_80120680 = D_8012047C;
+    func_80078970(D_80094784, "廊下");
+    if (D_800EECB0 == 1) {
+        D_800B0B0E[0] += 1;
+        D_800B0B0E[9] -= 1;
+        func_8004C250();
+    }
+    func_80011DFC();
+}
 
 void func_80102C0C(void) {
     func_801024B0();

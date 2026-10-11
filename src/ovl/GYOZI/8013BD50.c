@@ -11,7 +11,29 @@ void func_8013BD78(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013BD50", func_8013BDA0);
+void func_8013BDA0(void) {
+    s32 a;
+    s32 b;
+
+    ((GirlFlag4 *)&D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10[0])->f = 1;
+    if ((D_800F5488 >> 0x1C) == 4) {
+        a = 1;
+    } else {
+        a = 0;
+    }
+    if ((D_800F5602 >> 4) == 4) {
+        b = 1;
+    } else {
+        b = 0;
+    }
+    if (a == 0 && b != 0) {
+        D_801474A8 += 2;
+    } else if (a == 0 && b == 0) {
+        D_801474A8 += 4;
+        D_800F53A0.girl[D_800F53A0.unk_F2F].unk_10[0] &= 0xFFFB;
+    }
+    func_8004DE1C();
+}
 
 void func_8013BEA0(void) {
     D_801479B0 = (u8 *)0x801E8088;
