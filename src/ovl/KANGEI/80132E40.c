@@ -88,7 +88,38 @@ void func_801338B4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80132E40", func_801338EC);
+s32 func_801338EC(void) {
+    s32 pad; /* FAKE: unused local puts rect at the original offset; real source unknown. T-9320 */
+    RECT rect;
+
+    if (*(u8 *)&D_800E6280.unk_110D == 0) {
+        func_800674B0();
+        *(u8 *)&D_800E6280.unk_110D += 1;
+    }
+    if (*(u8 *)&D_800E6280.unk_110D == 1) {
+        if (D_800E6280.unk_1104.u++ >= 0x400U) {
+            func_800452C4();
+            func_8004482C();
+            *(u8 *)&D_800E6280.unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            *(u8 *)&D_800E6280.unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    func_800573AC();
+    rect.x = 0x140;
+    rect.y = 0x100;
+    rect.w = 0x140;
+    rect.h = 0xF8;
+    func_8009C7F8(&rect, 8, 0, 0);
+    rect.x = 0x2C0;
+    rect.y = 0;
+    func_8009C7F8(&rect, 8, 0, 0);
+    func_80072338();
+    return func_80072B5C(1);
+}
 
 void func_80133A14(void) {
     D_800E6280.unk_1104.w += 1;
