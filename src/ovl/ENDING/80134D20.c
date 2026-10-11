@@ -432,4 +432,48 @@ void func_80137128(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80134D20", func_80137160);
+/* FAKE: p = &unk_F5F before the D_8011F522 store puts the lui for the selector first, as in the original; found with the permuter, T-9380 */
+s32 func_80137160(s32 arg0, s32 arg1, s32 arg2, s16 arg3) {
+    s16 i;
+    u8 *p;
+
+    if (arg1 == 0) {
+        func_80048F64(0x1E);
+        func_80048F64(0x1F);
+        return 0;
+    }
+    for (i = 0; i < 2; i++) {
+        func_80048F64(i + 0x1E);
+        p = D_8011ECD0 + i * 0x44;
+        p[0x7F9] = 0xA;
+        p[0x7FA] = 0;
+        *(s32 *)(p + 0x830) = 0x41000000;
+        p[0x7FB] = 0x84;
+        *(s32 *)(p + 0x804) = arg1;
+        *(s32 *)(p + 0x808) = arg2;
+        *(s32 *)(p + 0x82C) = arg0;
+        *(s16 *)(p + 0x80C) = arg3;
+        *(s16 *)(p + 0x80E) = 0;
+        *(s16 *)(p + 0x810) = 0;
+        p[0x7FE] = 2;
+        p[0x83B] = 0x13;
+        *(s16 *)(p + 0x81E) = -0xA0;
+        *(s16 *)(p + 0x822) = -0x188;
+        p[0x7FF] = 0x80;
+        p[0x7FD] = 0;
+        p[0x7FC] = 0;
+    }
+    D_80122D0C = 0;
+    D_8011F50D = 9;
+    p = &D_800E6280.unk_F5F;
+    D_8011F522 = 7;
+    if ((*p == 1) || (*p == 3) || (*p == 0xC)) {
+        D_8011F522 = 4;
+    } else if ((*p == 2) || (*p == 8) || (*p == 0xB)) {
+        D_8011F522 = 5;
+    } else if ((*p == 4) || (*p == 0xA)) {
+        D_8011F522 = 6;
+    } else if (*p == 9) {
+        D_8011F522 = 8;
+    }
+}
