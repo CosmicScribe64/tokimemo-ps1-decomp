@@ -33,6 +33,9 @@ import re
 import sys
 
 
+KR_PARAMS_RE = re.compile(r"(\)[ \t]*\n)(?:[ \t]*[A-Za-z_][^;{}()\n]*;[ \t]*\n)+(?=[ \t]*\{)")
+
+
 def strip(text):
     text = re.sub(r"/\*.*?\*/", " ", text, flags=re.S)
     text = re.sub(r"^[ \t]*#.*$", " ", text, flags=re.M)
@@ -92,6 +95,9 @@ def declarations_text(text, defs=False):
     `raw` is the statement with comments removed and white space collapsed (no `extern`, no `;`);
     tools/sync_protos.py uses it to write declarations."""
     text = strip(text)
+    # K&R (old-style) definitions: the parameter declarations between `)` and `{` are not
+    # top-level declarations (T-9210)
+    text = KR_PARAMS_RE.sub(r"\1", text)
     # drop brace bodies (typedef struct/enum/union bodies, inline code)
     out, depth = "", 0
     for ch in text:

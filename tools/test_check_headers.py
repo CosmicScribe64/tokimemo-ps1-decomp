@@ -92,6 +92,12 @@ class CheckHeadersTest(unittest.TestCase):
         self.assertEqual(len(out), 1)
         self.assertIn("conflict f", out[0])
 
+    def test_kr_parameter_declarations_are_not_globals(self):
+        self.write("game.h", "void f();\nvoid g();\n")
+        (self.inc / "a.c").write_text('#include "game.h"\nvoid f(a, b)\n    s16 a;\n    u8 *b;\n{\n}\n'
+                                      'void g(a, b)\n    s16 a;\n    u32 b;\n{\n}\n')
+        self.assertEqual(check_headers.check(str(self.inc), str(self.inc)), [])
+
     def test_repo_headers_are_clean(self):
         repo = Path(__file__).resolve().parent.parent / "include"
         if repo.is_dir():
