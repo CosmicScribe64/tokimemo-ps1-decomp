@@ -74,4 +74,20 @@ INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133670);
 
 INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_80133728);
 
-INCLUDE_ASM("asm/ovl/VALEN/nonmatchings/VALEN/80132760", func_8013387C);
+void func_8013387C(void) {
+    s16 n;
+    s16 i;
+    s16 j;
+    s16 k;
+    s16 t;
+
+    func_800AE120(D_800E6280.unk_10F8);
+    n = func_800AE0D0() % 256 + 10;
+    for (i = 0; i < n; i++) {
+        j = func_800AE0D0() % D_8013453C;
+        k = func_800AE0D0() % D_8013453C;
+        t = D_80134524[j];
+        D_80134524[j] = D_80134524[k];
+        D_80134524[k] = t;
+    }
+}
