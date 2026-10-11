@@ -8,7 +8,28 @@ void func_80140740(void) {
     D_801486E0 = 0x801A0000;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140740", func_80140780);
+typedef struct {
+    void (*f[23])();
+} FnTbl23; /* size 0x5C */
+extern FnTbl23 D_801486E8;
+
+s32 func_80140780(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl23 tbl;
+
+    tbl = D_801486E8;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+    D_8012B8C0[0].unk_07 = *(u8 *)&D_801317EB;
+    if (D_8012B8C0[0].unk_18 == 0) {
+        if (D_8012B8C0[0].unk_08 == 0) {
+            D_8012B8C0[0].unk_16 += 1;
+            if (D_8012B8C0[0].unk_16 >= 3) {
+                D_8012B8C0[0].unk_16 = 0;
+            }
+        }
+    }
+}
 
 void func_8014086C(void) {
     func_80086AB0(0x204);
@@ -76,4 +97,36 @@ void func_80140AC4(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140740", func_80140AFC);
+/* Bit 1 of a flag word, tested as a bit-field read (sll 30; bgez) */
+typedef struct {
+    u32 pad : 1;
+    u32 f : 1;
+    u32 rest : 30;
+} Bit1Flag;
+
+void func_80140AFC(void) {
+    s32 r;
+    u8 a;
+    u8 pad; /* FAKE: unused byte between a and b, real source unknown (frame layout) */
+    u8 b;
+
+    a = func_8005E0E0(7);
+    r = func_8005E1C0(7);
+    b = 0xFF;
+    if (((Bit1Flag *)&D_800F56E0)->f && D_800F592F == 0 && a == 0x80 && r == 0) {
+        b = 7;
+    }
+    a = func_8005E0E0(0);
+    r = func_8005E1C0(0);
+    if (D_800F5902 == 0 && a == 0x80 && r == 0 && (b == 0xFF || (b == 7 && D_800F5556 < D_800F56DE))) {
+        b = 0;
+    }
+    a = func_8005E0E0(9);
+    r = func_8005E1C0(9);
+    if (((Bit1Flag *)&D_800F5750)->f && D_800F593D == 0 && a == 0x80 && r == 0 &&
+        (b == 0xFF || (b == 7 && D_800F574E < D_800F56DE) || (b == 0 && D_800F574E < D_800F5556))) {
+        b = 9;
+    }
+    D_801486E4 = b;
+    func_8004DE1C();
+}

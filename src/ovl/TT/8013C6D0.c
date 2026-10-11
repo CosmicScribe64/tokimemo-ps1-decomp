@@ -94,7 +94,44 @@ u16 func_8013C818(u8 arg0, s8 *arg1) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C8DC);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CA0C);
+void func_8013CA0C(void) {
+    u8 *p;
+    s32 pad[3]; /* FAKE: unused locals between p and r, real source unknown (frame layout) */
+    u8 *r;
+    u8 *q;
+    u8 *a;
+    u8 *b;
+
+    p = D_80158A60;
+    a = D_80158A64;
+    b = D_80158A6C;
+    q = p + 0x10;
+    if (*(u16 *)(p + 0x14) & 0x1000) {
+        b[0xA] -= 1;
+        if ((s8)b[0xA] < 0) {
+            b[0xA] = 2;
+        }
+    } else if (*(u16 *)(q + 4) & 0x4000) {
+        b[0xA] += 1;
+        if (b[0xA] >= 3U) {
+            b[0xA] = 0;
+        }
+    }
+    if ((*(u16 *)(q + 4) & 0x820) && b[0xA] == 2) {
+        *(u16 *)(a + 4) = 0;
+        *(u16 *)(a + 2) = 0;
+    }
+    if (b[0xA] == 0 || b[0xA] == 1) {
+        if (*(u16 *)(q + 4) & 0xFF) {
+            func_8013C764(*(u16 *)(q + 4), b[0xA]);
+        }
+    }
+    r = D_80158AA8 + 0x140;
+    *(s16 *)(r + 0xE) = func_8013C818(p[0x44], D_80158AA8 + 0x142);
+    r += 0x14;
+    *(s16 *)(r + 0xE) = func_8013C818(p[0x45], r + 2);
+    func_8013C740();
+}
 
 void func_8013CB58(void) {
     u8 *p = D_80158A64;

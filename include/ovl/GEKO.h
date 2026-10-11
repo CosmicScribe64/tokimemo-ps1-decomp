@@ -710,4 +710,5 @@ void func_80140BA0();
 
 void func_80136B2C(void);
 
+void func_80137990(void);
 #endif

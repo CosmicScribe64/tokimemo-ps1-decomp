@@ -758,3 +758,8 @@ Wave 6 list 5 started; see [[tickets/T-9150-wave-6-list-5]].
 
 ## [2026-10-10] ticket | T-9150 (In Progress -> Done)
 Wave 6 list 5: 24 functions, 4,764 bytes matched, 14 T-0018 rows, idioms in [[matching-notes]]; review recorded in [[tickets/T-9150-wave-6-list-5]].
+## [2026-10-10] ticket | T-9130 wave 6 list 3 started
+Created [[tickets/T-9130-wave-6-list-3]] (In Progress), worktree w6-3.
+
+## [2026-10-10] build | T-9130 wave 6 list 3 matched
+37 functions (10,736 bytes) matched in worktree w6-3: GYOZI, DATE2, EVENT, OPTION, KANGEI, TACO, RPG_BAT, BUNKAKEN, TT, SHOUGATU, GEKO, SHUGAKU. 27 rows added to [[data/t0018-cases]], notes in [[matching-notes]] ("Wave 6, list 3"). Ticket [[tickets/T-9130-wave-6-list-3]] reviewed inline and moved to Done. DATE `func_8015A980` and TT `func_8014D260` are gcc SDK code and cannot be built with IDO.

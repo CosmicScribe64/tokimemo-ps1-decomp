@@ -102,7 +102,31 @@ void func_8013812C(void) {
     func_80042940(0);
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138158);
+typedef struct {
+    void (*f[67])();
+} FnTbl67; /* size 0x10C */
+extern FnTbl67 D_8013A2B4;
+
+typedef struct {
+    void (*f[68])();
+} FnTbl68; /* size 0x110 */
+extern FnTbl68 D_8013A3C0;
+
+void func_80138158(void) {
+    s32 idx; /* declared before the tables: its stack slot sits above them (T-3330) */
+    FnTbl67 a;
+    FnTbl68 b;
+
+    a = D_8013A2B4;
+    b = D_8013A3C0;
+    if (((u32)D_800E6280.unk_0F4.h >> 0xC) == ((u32)D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4)) {
+        idx = D_800E6280.unk_110A;
+        a.f[idx](0x80);
+        return;
+    }
+    idx = D_800E6280.unk_110A;
+    b.f[idx](0x80);
+}
 
 void func_80138264(void) {
     D_8013A2A8 = 1;
@@ -374,7 +398,28 @@ void func_80138E3C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138E64);
+void func_80138E64(void) {
+    s32 pad; /* FAKE: unused local above s, puts s at sp+0x2B as in the original; real source unknown (T-3330 layout) */
+    u8 s;
+
+    s = func_80051A68(0) & 0x7F;
+    if (((u32)D_800E6280.unk_0F4.h >> 0xC) == ((u32)D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4)) {
+        func_8007ED84(0x42A9);
+        if (s < 2U && D_80122CDC < 2) {
+            func_80085B3C(0xA, 0x30);
+        } else {
+            func_80085B3C(0xA, 0x2D);
+        }
+    } else {
+        func_8007ED84(0x428D);
+        if (s < 2U && D_80122CDC < 2) {
+            func_80085B3C(0xA, 0x31);
+        } else {
+            func_80085B3C(0xA, 0x3E);
+        }
+    }
+    func_8004284C();
+}
 
 void func_80138F54(void) {
     D_80139AD0 = (KObj *)D_8013A210;

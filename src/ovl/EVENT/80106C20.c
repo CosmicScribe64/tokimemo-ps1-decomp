@@ -134,7 +134,41 @@ void func_80107150(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_801071D8);
+void func_801071D8(void) {
+    D_800B1746 = 4;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_8004BC20(D_800B1746);
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_801203FC;
+    D_8012067C = D_80120414;
+    D_80120680 = D_8012042C;
+    func_80078970(D_80094784, "廊下");
+    if (D_800B0E43 == 0 && D_800B0E42 == 0) {
+        D_800B0A04[4].unk_02 += 1;
+    }
+    D_800B0A04[4].unk_06 += 1;
+    *(s16 *)((u8 *)D_800B0A04 - 0xB6) += 0xA; /* FAKE: this is D_800B094E; addressing it from the table keeps IDO from hoisting its load */
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_80107354(void) {
     func_80106C20();
@@ -259,7 +293,28 @@ void func_80107A00(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80107A28);
+typedef struct {
+    void (*f[37])();
+} FnTbl37; /* size 0x94 */
+extern FnTbl37 D_80123598;
+
+void func_80107A28(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl37 tbl;
+
+    tbl = D_80123598;
+    func_80078950("%d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx]();
+    if (D_800B1764 & 0x100) {
+        func_80012D64(D_8012346C, 0x11, 1, 0, 0);
+        func_80078950("S\n");
+    }
+    if (D_800B1764 & 0x800) {
+        func_80012D64(D_8012346C, 0x11, 1, 2, 0);
+        func_80078950("T\n");
+    }
+}
 
 void func_80107B24(void) {
     func_80015D28(0x3D, 0x801B0000, 0x88AB);
@@ -275,7 +330,28 @@ void func_80107B5C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80107BB0);
+typedef struct {
+    void (*f[55])();
+} FnTbl55; /* size 0xDC */
+extern FnTbl55 D_8012362C;
+
+void func_80107BB0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl55 tbl;
+
+    tbl = D_8012362C;
+    func_80078950("%d %d\n", D_800B1AF6, D_800EECD0);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800B1764 & 0x100) {
+        func_80012D64(D_80123498, 0x11, 1, 0, 0);
+        func_80078950("S\n");
+    }
+    if (D_800B1764 & 0x800) {
+        func_80012D64(D_80123498, 0x11, 1, 2, 0);
+        func_80078950("T\n");
+    }
+}
 
 void func_80107CB4(void) {
     func_80015D28(0x45, 0x801B0000, 0x88E8);
@@ -283,7 +359,28 @@ void func_80107CB4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80107CEC);
+typedef struct {
+    void (*f[40])();
+} FnTbl40; /* size 0xA0 */
+extern FnTbl40 D_80123708;
+
+void func_80107CEC(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
+
+    tbl = D_80123708;
+    func_80078950("%d\n", D_800B1AF6);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800B1764 & 0x100) {
+        func_80012D64(D_801234C4, 0x11, 1, 0, 0);
+        func_80078950("S\n");
+    }
+    if (D_800B1764 & 0x800) {
+        func_80012D64(D_801234C4, 0x11, 1, 2, 0);
+        func_80078950("T\n");
+    }
+}
 
 void func_80107DE8(void) {
     func_80015D28(0x3D, 0x801B0000, 0x892D);
@@ -291,7 +388,28 @@ void func_80107DE8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80106C20", func_80107E20);
+typedef struct {
+    void (*f[51])();
+} FnTbl51; /* size 0xCC */
+extern FnTbl51 D_801237A8;
+
+void func_80107E20(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl51 tbl;
+
+    tbl = D_801237A8;
+    func_80078950("%d %d %d\n", D_800B1AF6, D_80094714, D_80094718);
+    idx = D_800B1AF6;
+    tbl.f[idx](0x80);
+    if (D_800B1764 & 0x100) {
+        func_80012D64(D_801234F0, 0x11, 1, 0, 0);
+        func_80078950("S\n");
+    }
+    if (D_800B1764 & 0x800) {
+        func_80012D64(D_801234F0, 0x11, 1, 2, 0);
+        func_80078950("T\n");
+    }
+}
 
 void func_80107F24(void) {
     func_80015D28(0x3D, 0x801B0000, 0x896A);

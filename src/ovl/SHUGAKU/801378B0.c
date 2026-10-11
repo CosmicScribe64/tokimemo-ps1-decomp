@@ -27,7 +27,31 @@ void func_80137978(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_8013799C);
+void func_8013799C(void) {
+    s32 pad; /* FAKE: unused local above buf, puts buf at sp+0x30 as in the original; real source unknown. T-4010 */
+    u8 buf[3] = "　";
+
+    if (D_800E6280.unk_0F4.b[1] & 0xF) {
+        if (D_800E6280.unk_110D == 0) {
+            D_800CA2DC = 2;
+            (**(u8 ***)(D_800CA2D0 + 8))[0] = buf[0];
+            (**(u8 ***)(D_800CA2D0 + 8))[1] = buf[1];
+            (**(u8 ***)(D_800CA2D0 + 8))[2] = buf[2];
+        }
+        func_801386C4();
+        if (D_800E6280.unk_110D == 0) {
+            if (D_800CA2DC == 2) {
+                func_8004E788(-0x48, 0x30, 0, "くぅー、", 0);
+                func_8004E788(-0x48, 0x40, 0, "体の調子が、最悪だぜ。", 0);
+                func_8004E788(-0x48, 0x50, 0, "でも、修学旅行だから", 0);
+                func_8004E788(-0x48, 0x60, 0, "集合場所に行かなきゃ。", 0);
+                D_800E6280.unk_110D = 1;
+            }
+        }
+    } else {
+        func_8004284C();
+    }
+}
 
 void func_80137AF8(void) {
     func_801386C4();
@@ -116,7 +140,38 @@ void func_8013801C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138044);
+void func_80138044(void) {
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    func_8008585C();
+    func_800AE0F0(D_800CA19C, "修学旅行");
+    func_8004E9F4(1);
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    switch (D_800CA2CC) {
+    case 0:
+        func_8007ED84(0x421C);
+        break;
+    case 1:
+        func_8007ED84(0x420A);
+        break;
+    default:
+        func_8007ED84(0x4213);
+        break;
+    }
+    func_8004284C();
+}
 
 void func_80138154(void) {
     u8 sel = D_800CA2CC; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */

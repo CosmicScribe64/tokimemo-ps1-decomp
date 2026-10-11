@@ -78,7 +78,19 @@ void func_80132A8C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132AB8);
+void func_80132AB8(void) {
+    if (D_800E6280.unk_03A >= 2U) {
+        D_800E6280.unk_03A -= 2;
+    }
+    if (D_800E6280.unk_03A < 0x41U) {
+        func_8004E58C();
+    }
+    if (D_800E6280.unk_03A < 2U) {
+        D_800E6280.unk_03A = 0;
+        func_80048EB8(0);
+        func_80042878(0x12);
+    }
+}
 
 void func_80132B30(void) {
     switch (D_800E6280.unk_110A) {
@@ -715,6 +727,16 @@ void func_801387A8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801387E4);
+s32 func_801387E4(void) {
+    if (D_800E6280.unk_03A >= 3U) {
+        D_800E6280.unk_03A -= 2;
+    } else {
+        func_80048E78();
+        func_80041584();
+        func_80042878(0x63);
+        func_80042908(7);
+        func_80042940(0xF);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013884C);

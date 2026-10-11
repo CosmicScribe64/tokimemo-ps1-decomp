@@ -113,7 +113,17 @@ void func_8013780C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_801378A4);
+void func_801378A4(void) {
+    s32 pad; /* FAKE: unused local above buf, puts buf at sp+0x28 as in the original; real source unknown. T-4010 */
+    u8 buf[3] = "こ";
+
+    D_800CA148 = D_80122CDC * 2 + 0xD;
+    if (D_80122CDC == 0) {
+        (**(u8 ***)(D_800CA160 + D_800CA148 * 4 + 4))[0] = buf[0];
+        (**(u8 ***)(D_800CA160 + D_800CA148 * 4 + 4))[1] = buf[1];
+    }
+    func_8004284C();
+}
 
 void func_80137948(void) {
     u32 t;
@@ -136,7 +146,18 @@ void func_801379CC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137360", func_80137A2C);
+typedef struct {
+    u8 s[0xCC3];
+} DateTxt; /* size 0xCC3 */
+extern DateTxt D_8013A878;
+
+void func_80137A2C(void) {
+    s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
+    DateTxt tbl;
+
+    tbl = D_8013A878;
+    func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_800E6280.unk_03E * 0x63 + D_80122CDC * 0x21 - 0x24BD]);
+}
 
 void func_80137AF0(void) {
     D_8013A80C = D_800CA160;

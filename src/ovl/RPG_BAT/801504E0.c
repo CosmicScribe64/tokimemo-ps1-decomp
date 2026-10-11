@@ -1,7 +1,27 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801504E0);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801504E0(void) {
+    switch (D_8015ED8C[0]) {
+    case 0:
+        func_800AE0F0(D_8015E74C, "紐緒「馬鹿な事言ってるんじゃないわ");
+        func_8014B738(&D_8015E814, 1, 0x96);
+        D_8015ED8C[0] += 1;
+        return;
+    case 1:
+        func_8013F1C4(0x27, 0x0600002D, 0);
+        D_8015ED8C[0] += 1;
+        return;
+    case 2:
+        func_8013F250(0);
+        return;
+    case 3:
+        func_8013F220();
+        func_8014EBA8();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801505B8);
 
@@ -100,7 +120,34 @@ void func_80150DE0(void) {
     D_8015EC58.unk_0C = 0x60 - D_8015EC58.unk_14;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80150F84);
+typedef struct {
+    u8 *s[41];
+} StrTbl41; /* size 0xA4 */
+extern StrTbl41 D_8015EEF0;
+
+void func_80150F84(void) {
+    s32 a;
+    s32 b;
+    s32 c;
+    StrTbl41 tbl;
+
+    tbl = D_8015EEF0;
+    a = func_8013E9A8(0x29);
+    b = func_8013E9A8(0x29);
+    if (b == a) {
+        b = (b + 1) % 41;
+    }
+    c = func_8013E9A8(0x29);
+    if (c == a) {
+        c = (c + 1) % 41;
+    }
+    if (c == b) {
+        c = (c + 1) % 41;
+    }
+    func_800AE0F0(D_8015E74C, tbl.s[a]);
+    func_800AE0F0(D_8015E774, tbl.s[b]);
+    func_800AE0F0(D_8015E79C, tbl.s[c]);
+}
 
 void func_80151108(void) {
     switch (D_8015EDB0.unk_00) {
@@ -189,7 +236,52 @@ void func_80151380(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801513C8);
+/* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
+s32 func_801513C8(void) {
+    func_80043914(D_8015EEE4, 0x1B, 1, 3, 7);
+    switch (D_8015EDC4 & 0xFFFF0000) {
+    case 0x100000:
+        func_8013E97C(0x35, 0x78, 0x68);
+        func_8013E97C(0x36, 0x40, 0x58);
+        func_8013E97C(0x37, 0x38, 0x88);
+        func_8013E810(0x35, 9, 1, 1);
+        func_8013E810(0x36, 9, 1, 1);
+        func_8013E810(0x37, 9, 1, 1);
+        D_8012149C = 0x51000000;
+        D_801214E0 = 0x51000000;
+        D_80121524 = 0x51000000;
+        D_8012146B = 0;
+        D_801214AF = 0;
+        D_801214F3 = 0;
+        D_801214A7 = 0x1B;
+        D_801214EB = 0x1B;
+        D_8012152F = 0x1B;
+        if (D_8015EBCC[0] == 1) {
+            D_80121467 |= 1;
+        }
+        if (D_8015EBCC[1] == 1) {
+            D_801214AB |= 1;
+        }
+        if (D_8015EBCC[2] == 1) {
+            D_801214EF |= 1;
+        }
+        break;
+    case 0x200000:
+        func_8013E97C(0x35, 0, 0);
+        func_8013E7C0(0x35, 0xA, 1, 1);
+        D_8012149C = 0x51000000;
+        D_8012146B = 0;
+        D_801214A7 = 0x1B;
+        break;
+    case 0x400000:
+        func_8013E97C(0x35, 0, 0);
+        func_8013E7C0(0x35, 0xB, 1, 1);
+        D_8012149C = 0x51000000;
+        D_8012146B = 0;
+        D_801214A7 = 0x1B;
+        break;
+    }
+}
 
 s32 func_801515F0(void) {
     switch (D_8015EDC4 & 0xFFFF0000) {
@@ -243,7 +335,28 @@ void func_801516E4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_80151984);
+void func_80151984(void) {
+    if (D_8015EDB8 == 0) {
+        func_8013E7C0(0x34, 2, 1, 1);
+        func_8013E7C0(0x33, 8, 1, 0);
+    }
+    func_8013E97C(0x1D, (D_8015EC58.unk_00 - D_8015EC58.unk_08) * D_8015EDB8 / 100 + D_8015EC58.unk_08,
+                  (D_8015EC58.unk_04 - D_8015EC58.unk_0C) * D_8015EDB8 / 100 + D_8015EC58.unk_0C);
+    func_8013E97C(0x32, (D_8015EC58.unk_00 - D_8015EC58.unk_08) * D_8015EDB8 / 100 + D_8015EC58.unk_08 + D_8015EC58.unk_10,
+                  (D_8015EC58.unk_04 - D_8015EC58.unk_0C) * D_8015EDB8 / 100 + D_8015EC58.unk_0C + D_8015EC58.unk_14);
+    D_8015EDB8 += 4;
+    if (D_8015EDB8 >= 0x65) {
+        func_8013E97C(0x1D, 0, 0);
+        if (D_8015EB9C == 1 && D_8015EDF0 == 0x1000) {
+            func_8013E7C0(0x1D, 7, 1, 1);
+        } else {
+            func_8013E7C0(0x1D, 0, 1, 1);
+        }
+        func_8013E810(0x32, 0xFF, 1, 0);
+        D_80121399 = 5;
+        func_8014EBA8();
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/801504E0.rodata", D_8015D1B8);
 
