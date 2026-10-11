@@ -755,3 +755,9 @@ Clean rebuild 27/27 OK, headers and globals OK, `sync_protos.py --check-branch` 
 
 ## [2026-10-10] ticket | T-9160 (Backlog -> In Progress)
 Wave 6 list 6 started: [[tickets/T-9160-wave-6-list-6]].
+
+## [2026-10-10] build | T-9160 wave-6 list 6
+20 functions matched (4267 -> 4287): SHOUGATU 3, SHUGAKU 1, TACO 6, TAIIKU 4, main 2, EVENT 1, GEKO 1, OPTION 1, EN_NICHI 1. Three data islands cut (TAIIKU/80142240, OPTION/801389A0, EN_NICHI/80132000); owned variables defined in `src/ovl/TAIIKU/80142240.c`, `src/ovl/OPTION/801389A0.c`, `src/ovl/EN_NICHI/80132000.c`. 35 rows added to [[data/t0018-cases]]; patterns in [[matching-notes]] ("Wave 6, list 6 (T-9160)"): owned data with direct use fixes `$v0`/`$v1`, one-statement `switch` for the out-of-line block, `D_8014A13C[0x90]` as one object for the shared `lui $at`.
+
+## [2026-10-10] ticket | T-9160 (In Progress -> In Review -> Done)
+Clean rebuild 27/27 OK, `headers OK`, `globals OK`, `sync_protos.py --check-branch` OK. Inline review against CODING_STANDARDS.md in [[tickets/T-9160-wave-6-list-6]]; no open findings. Branch w6-6, not merged.
