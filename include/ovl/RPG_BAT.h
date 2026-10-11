@@ -256,3 +256,4 @@ void func_8013EA30();
 void func_8014F3C8();
 void func_80136070();
 void func_801361AC();
+extern u32 D_8015ED38;

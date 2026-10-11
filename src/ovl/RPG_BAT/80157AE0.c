@@ -50,7 +50,38 @@ s32 func_80157BA4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0", func_80157CCC);
+s32 func_80157CCC(void) {
+    switch (*D_8015ED8C) {
+    case 0:
+        D_8015ED38 = func_8013E9A8(6) ^ 0; /* FAKE: the original copies the call result into the switch temporary ($v1), source unknown. T-9370 */
+        switch (D_8015ED38) {
+        case 0:
+            func_8013F1C4(0x180000B1, 0x0C0000B7, 0);
+            break;
+        case 1:
+            func_8013F1C4(0x1200009B, 0x050000A4, 0);
+            break;
+        case 2:
+            func_8013F1C4(0x1D0000AF, 0x200000B7, 0);
+            break;
+        case 3:
+            func_8013F1C4(0x0300006B, 0x0B00006E, 0);
+            break;
+        case 4:
+            func_8013F1C4(0x08000028, 0x06000030, 0);
+            break;
+        case 5:
+            func_8013F1C4(0x150000AC, 0x0B0000B7, 0);
+            break;
+        }
+        *D_8015ED8C += 1;
+        break;
+    case 1:
+        func_8013F220();
+        func_8014EF3C();
+        break;
+    }
+}
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_80157E20(void) {
