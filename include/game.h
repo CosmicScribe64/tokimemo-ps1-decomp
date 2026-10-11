@@ -80,6 +80,9 @@ typedef struct StrDecEnv30 {
     /* 0x24 */ RECT rect2;
     /* 0x2C */ s32 flag;
 } StrDecEnv30; /* size 0x30; decoder environment, T-9930. */
+#endif
+
+
 #ifndef GAME_GS_BYTE_NIBBLES_T9910
 #define GAME_GS_BYTE_NIBBLES_T9910
 /* T-9910: byte view for the packed nibbles at GameState offset 0x0F5. */
