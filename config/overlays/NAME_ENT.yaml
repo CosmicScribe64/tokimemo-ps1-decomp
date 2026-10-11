@@ -66,4 +66,5 @@ segments:
       - [0x1A4F0, .rodata, NAME_ENT/80142A80]
       - [0x1A910, .rodata, NAME_ENT/80144AD0]
       - [0x1AC30, data, NAME_ENT_data]
+      - [0x1B180, .data, NAME_ENT/80144AD0]
   - [0x30000]

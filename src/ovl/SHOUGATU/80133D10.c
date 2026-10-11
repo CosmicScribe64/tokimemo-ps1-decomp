@@ -15,7 +15,26 @@ void func_80133D10(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80133D10", func_80133D98);
+/* FAKE: the (u16) cast on the first store and `var_v0 = var_v0;` keep the redundant second store and the original's temporary numbering (t1); found with the permuter, T-9380 */
+void func_80133D98(void) {
+    s16 var_v0;
+
+    func_800AE0F0(D_800CA19C, "初詣");
+    var_v0 = (D_80143B20 != 0) ? 0 : 0xF;
+    if (D_80143B18 == 0) {
+        var_v0 += 2;
+    }
+    D_80143B00 = (u16)var_v0;
+    if (D_80143B18 == 0) {
+        var_v0 = var_v0;
+        D_80143B00 = var_v0;
+        if (D_800E6280.unk_F5F == 5) {
+            var_v0 = 2 + var_v0;
+            D_80143B00 = var_v0;
+        }
+    }
+    func_8004284C();
+}
 
 void func_80133E30(void) {
     if (D_80143B20 != 0) {

@@ -848,7 +848,32 @@ void func_8013A2E0(void) {
     func_80042878(0x82);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013A344);
+/* FAKE: `two`/`three` hold the compare constants; they give the original's constant registers and bne operand order (found with the permuter, T-9380) */
+void func_8013A344(void) {
+    s32 two;
+    s32 three;
+
+    if (D_800E6280.unk_03E == 0x5F) {
+        func_80083440(1);
+    } else if (D_80122E9C == 0) {
+        func_80083440(1);
+    } else if (D_80122E9C == 1) {
+        func_80083440(2);
+    } else {
+        two = 2;
+        three = 3;
+        if (D_80122E9C == two) {
+            func_80083440(3);
+        } else if ((D_80122E9C == three) && (D_800E6280.unk_F5F != two)) {
+            func_80083440(0);
+        } else if (D_80122E9C == three) {
+            func_80083440(1);
+        } else {
+            func_80083440(3);
+        }
+    }
+    func_8004284C();
+}
 
 void func_8013A424(void) {
     if (D_800E6280.unk_03E == 0x5F) {
