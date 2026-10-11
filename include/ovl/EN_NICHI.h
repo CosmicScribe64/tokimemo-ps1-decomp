@@ -70,5 +70,14 @@ extern s32 D_80139224;
 extern s32 D_801392A4;
 extern s32 D_801392A8;
 
+extern s32 D_80139B20;
+
+s32 func_80132A74();
+void func_80134D74();
+void func_80134F2C();
+void func_80135044();
+void func_8013515C();
+s32 func_80135274();
+
 #endif /* OVL_EN_NICHI_H */
 extern s32 D_80139B24;

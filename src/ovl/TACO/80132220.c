@@ -75,6 +75,17 @@ void func_80133410(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_801334BC);
+void func_801334BC(void) {
+    s32 i;
+
+    D_80160460 = 0;
+    D_80160464 = 0; for (i = 0; i < 16; i++) { /* FAKE: store and loop head on one source line, as1 then schedules the store after the pointer setup */
+        D_8015E270[i].unk13 = 0;
+        D_8015E3B0[i].unk13 = 0;
+        D_8015E4F0[i].unk13 = 0;
+        D_8015E630[i].unk13 = 0;
+        D_8015E770[i].unk13 = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132220", func_8013356C);

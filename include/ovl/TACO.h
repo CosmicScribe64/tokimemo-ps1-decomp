@@ -328,6 +328,33 @@ extern s8 D_8015EDB8;
 void func_8013873C(void);
 void func_801387C0(void);
 void func_80138840(void);
+extern Tc14 D_8015E4F0[];
+extern Tc14 D_8015E630[];
+extern Tc14 D_8015E770[];
+
+void func_801493D4(void);
+void func_80149D1C(void);
+void func_80151C30();
+
+void func_801478F8();
+void func_801521EC();
+void func_80147400();
+extern s32 D_8015FC94;
+extern s32 D_8015FC98[];
+typedef struct TcPair8 {
+    s32 a;
+    s32 b;
+} TcPair8;
+extern TcPair8 D_8015FAE0[];
+typedef struct TcPair2 {
+    u8 a;
+    u8 b;
+} TcPair2;
+extern TcPair2 D_8015FBF8[];
+void func_801490B4(void);
+
+void func_80149B7C(void);
+
 #endif
 
 typedef struct TacoCam {

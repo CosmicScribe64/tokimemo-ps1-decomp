@@ -1,5 +1,38 @@
 #include "common.h"
 #include "ovl/EN_NICHI.h"
+
+typedef struct {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ u8 pad_10[6];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ u8 pad_18[2];
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ u8 pad_20[4];
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+} EnObj; /* size 0x30: record of D_8013984C */
+
+typedef struct {
+    /* 0x00 */ u32 tag;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ s16 x1;
+    /* 0x0E */ s16 y1;
+    /* 0x10 */ s16 x2;
+    /* 0x12 */ s16 y2;
+    /* 0x14 */ s16 x3;
+    /* 0x16 */ s16 y3;
+} EnPolyF4; /* size 0x18 */
+
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139200);
@@ -302,7 +335,45 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801339D4);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80133CA8);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80133F00);
+void func_80133F00(arg0, arg1)
+s32 arg0;
+s32 arg1;
+{
+    u8 *rec;
+    s32 j;
+    u8 *e;
+    s16 x;
+    s16 y;
+
+    j = arg0 * 2; /* FAKE: the doubled index as its own variable keeps the original's sll-first multiply (T-9330) */
+    rec = D_8011ECD0 + j * 0x44;
+    rec[0x1983] = 4;
+    rec[0x19C7] = 5;
+    if (arg1 == 1) {
+        e = D_8013984C + arg0 * 0x30;
+        if (*(s32 *) e == 4) {
+            if (!(*(s32 *) (e + 0xC) & 1)) {
+                x = *(s16 *) (e + 0x16);
+                y = *(s16 *) (e + 0x1A);
+                rec[0x1983] |= 0x80;
+                rec[0x19C7] |= 0x80;
+                *(s16 *) (rec + 0x19A6) = x - 0x10;
+                *(s16 *) (rec + 0x19AA) = y - 7;
+                *(s16 *) (rec + 0x19EA) = x + 0x10;
+                *(s16 *) (rec + 0x19EE) = y + 7;
+            }
+        } else if (!(*(s32 *) (e + 0xC) & 1)) {
+            x = *(s16 *) (e + 0x16);
+            y = *(s16 *) (e + 0x1A);
+            rec[0x1983] |= 0x80;
+            rec[0x19C7] |= 0x80;
+            *(s16 *) (rec + 0x19A6) = x - 0x10;
+            *(s16 *) (rec + 0x19AA) = y - 7;
+            *(s16 *) (rec + 0x19EA) = x + 0x10;
+            *(s16 *) (rec + 0x19EE) = y + 7;
+        }
+    }
+}
 
 s32 func_80134008(s32 arg0) {
     s32 v;
@@ -371,7 +442,39 @@ void func_80134784(s32 *arg0, s32 *arg1) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134800);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134C1C);
+/* FAKE: the record pointer stays an expression; as a local it is spilled to another stack slot than the original's (T-3330, T-9330) */
+#define EN_OBJ(i) ((EnObj *) (D_8013984C + (i) * 0x30))
+void func_80134C1C(arg0)
+s32 arg0;
+{
+    s32 d;
+
+    if (((EN_OBJ(arg0)->unk_2C & 0x40) || (EN_OBJ(arg0)->unk_2C & 0x80)) && EN_OBJ(arg0)->unk_24 <= 0) {
+        EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+        EN_OBJ(arg0)->unk_24 = func_800AE0D0() % 15 + 0x1E;
+        if (!(func_800AE0D0() & 1)) {
+            EN_OBJ(arg0)->unk_2C = 0;
+        } else {
+            EN_OBJ(arg0)->unk_2C = 1;
+        }
+    }
+    d = func_80132A74(EN_OBJ(arg0)->unk_16, EN_OBJ(arg0)->unk_1A, D_8011ECF6, D_8011ECFA);
+    switch (func_80135274(arg0)) {
+    case 0:
+        func_80134D74(arg0, d);
+        break;
+    case 1:
+        func_80134F2C(arg0, d);
+        break;
+    case 2:
+        func_80135044(arg0, d);
+        break;
+    case 3:
+        func_8013515C(arg0, d);
+        break;
+    }
+    func_80134800(arg0);
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134D74);
 
@@ -463,7 +566,40 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135FBC);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801362A4);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80136700);
+void func_80136700(void) {
+    s32 pad; /* FAKE: unused word above poly, puts poly at sp+0x30 as in the original (T-3330 slot rule) */
+    EnPolyF4 *poly;
+
+    poly = func_800490F0(0x18, D_8011ECA0);
+    func_8009F02C(poly);
+    func_8009EF84(poly, 1);
+    poly->r0 = D_80139B20;
+    poly->g0 = D_80139B20;
+    poly->b0 = D_80139B20;
+    poly->x0 = D_800E6280.unk_014[D_8011ECA0] - 0x58;
+    poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x40;
+    poly->x1 = D_800E6280.unk_014[D_8011ECA0] + 0x58;
+    poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x40;
+    poly->x2 = D_800E6280.unk_014[D_8011ECA0] - 0x58;
+    poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
+    poly->x3 = D_800E6280.unk_014[D_8011ECA0] + 0x58;
+    poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x30;
+    func_8009EED0(D_8011ECA0 * 0x400 + 8 + D_800E8CA0, poly);
+    func_800494BC(0, 0, 2, 2, 0);
+    if (D_80139B20 == 0) {
+        D_801215FF = 0x80;
+    }
+    D_80139B20 += 2;
+    D_80121603 = D_80139B20;
+    if (D_80139B20 >= 0x80) {
+        *(u8 *) &D_80121603 = 0x80; /* FAKE: unsigned view keeps the constant 0x80 (an s8 store would load -128), T-9330 */
+    }
+    if (D_80139B20 == 0xA0) {
+        D_80121634 = 0x01000000;
+        D_8012163F = 0x11;
+        func_8004284C();
+    }
+}
 
 void func_80136904(s32 arg0, s32 arg1) {
     D_80121313 = 0x84;

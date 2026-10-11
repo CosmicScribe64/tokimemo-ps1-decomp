@@ -96,4 +96,6 @@ segments:
       - [0x29500, .rodata, DATE/801594B0]
       - [0x29510, .rodata, DATE/8015A190]
       - [0x29520, data, DATE_data]
+      - [0x2BDD0, .data, DATE/8014A1B0]
+      - [0x2BE40, data, DATE_data_8015DE40]
   - [0x30000]

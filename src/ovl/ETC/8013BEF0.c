@@ -1,6 +1,22 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
+typedef struct {
+    /* 0x00 */ u32 tag;
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ s16 x1;
+    /* 0x0E */ s16 y1;
+    /* 0x10 */ s16 x2;
+    /* 0x12 */ s16 y2;
+    /* 0x14 */ s16 x3;
+    /* 0x16 */ s16 y3;
+} EtcPolyF4; /* size 0x18 */
+
 void func_8013BEF0(void) {
     D_80150030 = (u8 *)0x8019DCFC;
     D_80150034 = (u8 *)0x8019DD00;
@@ -62,7 +78,36 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013DEA0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013E094);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013E1DC);
+void func_8013E1DC(arg0)
+s32 arg0;
+{
+    EtcPolyF4 *poly;
+    s32 sprite;
+
+    poly = func_800490F0(0x18, D_8011ECA0);
+    func_8009F02C(poly);
+    func_8009EF84(poly, 1);
+    func_8009EFB0(poly, 0);
+    if (arg0 >= 0x100) {
+        arg0 = 0xFF;
+    }
+    poly->x0 = 0;
+    poly->y0 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+    poly->x1 = 0x140;
+    poly->y1 = D_800E6280.unk_018[D_8011ECA0] - 0x78;
+    poly->x2 = 0;
+    poly->y2 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+    poly->x3 = 0x140;
+    poly->y3 = D_800E6280.unk_018[D_8011ECA0] + 0x78;
+    poly->b0 = arg0;
+    poly->g0 = arg0;
+    poly->r0 = arg0;
+    func_8009EED0(D_8011ECA0 * 0x400 + D_800E8CA0, poly);
+    sprite = func_800490F0(0xC, D_8011ECA0);
+    func_8009D294(sprite, 0, 0, func_8009ECB0(1, 2, 0, 0), 0);
+    func_8009EED0(D_8011ECA0 * 0x400 + D_800E8CA0, sprite);
+    func_80049450(0);
+}
 
 void func_8013E364(void) {
     if (D_8015005C < 0xA && D_80150058 < 0xA) {

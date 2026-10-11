@@ -1168,4 +1168,11 @@ typedef struct Tbl21 {
 } Tbl21; /* size 0x2A */
 extern Tbl21 D_8015B9B0;
 
+extern s16 D_8015DDD0[];
+extern s32 D_8015DE34;
+extern s32 D_8015DE38;
+extern s32 D_8015DE3C;
+void func_8014AD9C();
+void func_8014B1C4(void);
+
 #endif /* OVL_DATE_H */
