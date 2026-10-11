@@ -128,5 +128,5 @@ Idioms for shapes that looked like compiler gaps in wave 5. Evidence and the fun
 - **Store and call argument sharing `$a0`** (`li a0,7; lui at; jal; sb a0`): `f(*(u8 *)&D_800E6280.unk_F5F = 7)` gives the register; the `li`/`lui` order still differs (as1), so these stay asm for now.
 - **Flag bits of a Rec38 record** are `D_800E6280.unk_1BC[i].unk_0C.f.bN` (`CharFlags`, bits 0-8, `f9` = bits 9-11, bits 12-14). Do not add file-local bit-field views. `x.f.b14 >= 1` gives `sltiu; xori`.
 - **TACO position locals**: callers of `func_8015ACCC` declare `TcPos p0, p1, p2; s32 r;` (frame 0x60) or `TcPos p1, p2; s32 r;` (0x58) and use some of them; no pad is needed beyond those.
-- **Gcc-built SDK code inside an overlay** (TACO `func_8015D270`, DATE `func_8015A640`, `func_8015A7E0`) stays asm until the native image has the old gcc compilers.
+- **Gcc-built SDK code inside an overlay** (T-9200): list and verdicts in [[gcc-objects]]. The six `RotMatrix`-style helpers (TACO `func_8015CF30`/`D0D0`/`D270`, DATE `func_8015A640`/`A7E0`/`A980`) are hand-written assembly and stay asm; TT `func_8014D260` waits for an ASPSX divide model. A gcc object goes in `config/toolchains.txt` (`TAIIKU/801488F0 gcc 2.8.1-psx 2.79`) once its C matches; the flagging tool is `tools/gcc_fingerprint.py`. TACO `func_801420DC`/`func_801421AC` were never gcc (IDO C).
 

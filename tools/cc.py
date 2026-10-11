@@ -50,6 +50,11 @@ INCLUDE_ASM_RE = re.compile(r'^INCLUDE_(?:ASM|RODATA)\("([^"]*)",\s*(\w+)\)', re
 
 GCC_CFLAGS = ["-O2", "-G0", "-mcpu=3000", "-quiet"]
 MASPSX = "/opt/maspsx/maspsx.py"
+# --expand-div: ASPSX expands the three-operand `div`/`divu` macro that gcc prints into the
+# divide plus the divide-by-zero and overflow checks (`bnez rt,1f; nop; break 7; li at,-1;
+# bne rt,at,2f; lui at,0x8000; bne rs,at,2f; nop; break 6`); the original SDK division code has
+# them (TT func_8014D260), plain GNU as does not (T-9200).
+MASPSX_FLAGS = ["--expand-div"]
 
 # -Wo,-nokpicopt: uopt must not keep the address of a directly accessed global
 # in a register; the original reloads %hi/%lo per access (func_80042400). It
@@ -89,7 +94,7 @@ def compile_gcc(src, out, gcc_ver, aspsx_ver):
     gcc = "/opt/gcc/" + gcc_ver
     data = run_stage([gcc + "/cpp", "-Iinclude", "-undef", "-lang-c", src], None)
     data = run_stage([gcc + "/cc1"] + GCC_CFLAGS, data)
-    data = run_stage(["python3", MASPSX, "--aspsx-version=" + aspsx_ver], data)
+    data = run_stage(["python3", MASPSX, "--aspsx-version=" + aspsx_ver] + MASPSX_FLAGS, data)
     run_stage(AS + ["-o", out], data)
 
 

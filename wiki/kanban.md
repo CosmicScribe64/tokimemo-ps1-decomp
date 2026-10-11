@@ -37,6 +37,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-9200-gcc-built-sdk-objects-in-overlays|T-9200 gcc-built SDK objects inside overlays]]
 - [x] [[tickets/T-9150-wave-6-list-5|T-9150 Wave 6 list 5]]
 
 - [x] [[tickets/T-9130-wave-6-list-3|T-9130 Wave 6: list 3]]

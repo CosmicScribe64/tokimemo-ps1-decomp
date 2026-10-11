@@ -5,8 +5,9 @@
 #
 # Platform (T-3310): the image is built natively for the Docker host (linux/arm64 on Apple
 # Silicon, linux/amd64 elsewhere). Override with TOKIMEMO_PLATFORM=linux/amd64 (or
-# linux/arm64). The amd64 image is the only one with the old-gcc PsyQ compilers and
-# mkpsxiso; on Apple Silicon it runs emulated and is several times slower.
+# linux/arm64). The amd64 image is the only one with mkpsxiso and the old-gcc versions other
+# than 2.7.2-psx and 2.8.1-psx (the arm64 image builds those two, T-9200); on Apple Silicon
+# it runs emulated and is several times slower.
 # Image name: `tokimemo-decomp` for amd64, `tokimemo-decomp-arm64` for arm64, so both
 # can coexist; IMG overrides it.
 set -euo pipefail

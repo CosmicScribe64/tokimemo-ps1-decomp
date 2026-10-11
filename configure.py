@@ -13,6 +13,7 @@ config/overlays/<NAME>.yaml -> IDO C + asm -> ld -> objcopy -> sha1 check
 """
 import glob
 import json
+import os
 import sys
 
 import ninja_syntax
@@ -30,10 +31,48 @@ HEADER_FILES = sorted(glob.glob("include/**/*.h", recursive=True))
 
 # splat output layout (config/SLPM_86.053.yaml): C sources and asm objects.
 # Every `c` subsegment of the `main` segment is a C file src/<name>.c (T-0012: one per original
-# object, named by start address) and is picked up automatically. All are IDO-compiled (T-0013,
-# wiki/toolchain.md); SDK C, once split, would need a per-file toolchain here (e.g.
-# ["gcc", "2.7.2-psx", "2.79"]).
+# object, named by start address) and is picked up automatically. They are IDO-compiled (T-0013,
+# wiki/toolchain.md) unless config/toolchains.txt names another toolchain for the object, e.g.
+# `TACO/8015D270 gcc 2.7.2-psx 2.79` for the PsyQ-gcc-built SDK code inside an overlay (T-9200).
 C_TOOLCHAIN = ["ido", "5.3"]
+TOOLCHAINS_FILE = "config/toolchains.txt"
+
+
+def read_toolchains(known, path=TOOLCHAINS_FILE):
+    """{object: toolchain words} from config/toolchains.txt (T-9200).
+
+    One line per object that is not built by the default IDO: `<object> <ido|gcc> <args...>`, where
+    <object> is the splat subsegment name of its `c` subsegment (`main/80041000`,
+    `TACO/8015D270`; srcscan CFile.name) and the args are those of tools/cc.py. `known` is the set
+    of valid names; an unknown object or toolchain stops the configure step."""
+    out = {}
+    if not os.path.exists(path):
+        return out
+    for lineno, line in enumerate(open(path), 1):
+        line = line.split("#", 1)[0].split()
+        if not line:
+            continue
+        where = "%s:%d" % (path, lineno)
+        name, tc = line[0], line[1:]
+        if name not in known:
+            sys.exit("configure.py: %s: %s is not a `c` subsegment of any unit" % (where, name))
+        if (tc[:1] == ["ido"] and len(tc) == 2) or (tc[:1] == ["gcc"] and len(tc) == 3):
+            pass
+        else:
+            sys.exit("configure.py: %s: toolchain must be `ido <ver>` or `gcc <ver> <aspsx>`, got %r"
+                     % (where, " ".join(tc)))
+        if name in out:
+            sys.exit("configure.py: %s: %s listed twice" % (where, name))
+        out[name] = tc
+    return out
+
+
+def all_c_names():
+    """Names of every `c` subsegment of the main exe and the overlays."""
+    names = {n for typ, n in main_subsegments() if typ == "c"}
+    for ovl in srcscan.overlay_names():
+        names.update(cf.name for cf in srcscan.unit_c_files(ovl))
+    return names
 
 
 def main_subsegments():
@@ -52,9 +91,10 @@ def main_subsegments():
     return out
 
 
-def c_files():
+def c_files(toolchains=None):
     """{src/<name>.c: toolchain} for the `c` subsegments of the main segment."""
-    return {"src/%s.c" % name: C_TOOLCHAIN
+    toolchains = toolchains or {}
+    return {"src/%s.c" % name: toolchains.get(name, C_TOOLCHAIN)
             for typ, name in main_subsegments() if typ == "c"}
 
 
@@ -69,7 +109,8 @@ def asm_files():
     return out
 
 
-C_FILES = c_files()
+OBJECT_TOOLCHAINS = read_toolchains(all_c_names())
+C_FILES = c_files(OBJECT_TOOLCHAINS)
 ASM_FILES = asm_files()
 OVL_C_TOOLCHAIN = ["ido", "5.3"]
 
@@ -149,7 +190,7 @@ def overlay_targets(n, overlays):
         c_os = []
         for cf in srcscan.unit_c_files(name):
             n.build(cf.obj, "cc", str(cf.src),
-                    variables={"toolchain": " ".join(OVL_C_TOOLCHAIN)},
+                    variables={"toolchain": " ".join(OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN))},
                     implicit=[stamp, HEADERS_OK, "include/common.h", "include/include_asm.h",
                               "include/asmproc_prelude.inc",
                               "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
@@ -177,7 +218,8 @@ def main():
     # the asm objects to build depend on the subsegments of the yaml files (T-1340)
     images, image_dirs = prepare_disc.find_candidates()
     n.build("build.ninja", "configure", "configure.py",
-            implicit=["config/%s.yaml" % EXE, "config/overlays.txt"] + image_dirs
+            implicit=["config/%s.yaml" % EXE, "config/overlays.txt"]
+            + ([TOOLCHAINS_FILE] if os.path.exists(TOOLCHAINS_FILE) else []) + image_dirs
             + ["config/overlays/%s.yaml" % o[0] for o in read_overlays()])
     # game image -> disc/files (T-3300); reruns only when an image or the tools change, and a new
     # file in game/ changes a directory time, which regenerates build.ninja and so re-finds the images
