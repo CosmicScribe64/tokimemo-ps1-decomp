@@ -114,7 +114,57 @@ void func_80057640(s32 arg0) {
     func_8009C674(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80057390", func_80057710);
+s32 func_80057710(void) {
+    s16 width;
+    s16 x;
+    s16 band;
+    s32 doubled;
+    s32 offset;
+    s32 edge;
+    s32 point;
+
+    D_800B593C -= 8;
+    if (D_800B593C >= 0x81U) {
+        D_800B593C = 0;
+    }
+    D_800B5944++;
+    doubled = D_800B5944 * 2;
+    width = doubled;
+    if ((s16)doubled > 0x20) {
+        width = 0x20;
+    }
+    band = 0;
+    do {
+        offset = band << 5;
+        x = 0;
+        if (offset < 0xA0) {
+            edge = offset + 0x1F;
+            while (x < width) {
+                point = edge - x;
+                func_80049FF0((s16)(point - 0xA0), -0x78,
+                             -0xA0, (s16)(point - 0x78), 0, 0, 0xD);
+                x++;
+            }
+        } else if (offset < 0x140) {
+            edge = offset + 0x1F;
+            while (x < width) {
+                point = edge - x;
+                func_80049FF0((s16)(point - 0xA0), -0x78,
+                             (s16)(point - 0x140), 0x28, 0, 0, 0xD);
+                x++;
+            }
+        } else {
+            edge = offset + 0x1F;
+            while (x < width) {
+                point = edge - x;
+                func_80049FF0(0xA0, (s16)(point - 0x1B8),
+                             (s16)(point - 0x140), 0x28, 0, 0, 0xD);
+                x++;
+            }
+        }
+        band++;
+    } while (band < 0xF);
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80057390", func_800578F4);
 

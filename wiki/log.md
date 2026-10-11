@@ -7839,3 +7839,147 @@ Ten matches / 5,596 bytes; grand total 4880/6958, 782256/2279368 (34.3%). Comple
 ## [2026-10-11] lint | T-9710 final wiki and diff consistency
 
 Done ticket, single Done board card and index entry agree; acceptance items checked. Final git diff --check passes, with only allowed files and the new ticket changed. [[tickets/T-9710-wave-9-list-1]], [[kanban]], [[index]].
+
+## [2026-10-11] ticket | Start wave 10 list 1
+
+Created [[tickets/T-9910-wave-10-list-1]] In Progress and added its [[kanban]] card. Read [[decompile-workflow]], [[register-allocation-wave7]], [[uopt-register-allocation]] and relevant [[matching-notes]]. Assigned 132 functions in 47 files; evidence stays in scratchpad/w10-1/. Initial configure and baseline build required before drafting.
+
+## [2026-10-11] ingest | T-9910 recover earlier assigned drafts
+
+Collected 202 earlier candidates for 54 list-1 functions from the private T-9800 manifest into scratchpad/w10-1/historical/. [[tickets/T-9910-wave-10-list-1]] records provenance; [[uopt-register-allocation]] recommends expression/lifetime probes and separates the zero-return helpers from allocator-order symptoms.
+
+## [2026-10-11] query | T-9910 zero-return and union-view probes
+
+Scratch probes of main func_80042808/func_8004284C/func_80042908/func_80042940 distinguish the missing return operation from the remaining scheduling miss. Recorded evidence in [[tickets/T-9910-wave-10-list-1]]. No source definitions retained; inferred declaration widths are needed when [[game-state]] union fields make migration ambiguous.
+
+## [2026-10-11] build | T-9910 fresh baseline passes
+
+Docker configure and initial ninja generated assembly and objects for this worktree, with all 27 checksums passing and headers OK. Baseline evidence recorded in [[tickets/T-9910-wave-10-list-1]], scratchpad/w10-1/baseline-build.txt and baseline-progress.txt.
+
+## [2026-10-11] query | T-9910 scoped reuse and first pass
+
+Scoped tools/dupes.py and tools/neardupes.py to the 47 owned files; both applied zero functions. [[tickets/T-9910-wave-10-list-1]] records the 4948-function baseline. Started the ordered real draft/build/diff pass and scratch-only zero-return searches.
+
+## [2026-10-11] query | T-9910 first pass through item 10
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] decision | T-9910 distinguish scoring aliases from real diffs
+
+Added the list-1 section to [[matching-notes]]. The scratch zero-return search's score includes GameState relocation naming/addends despite a small resolved instruction diff; normalized only scratch target aliases to the same addresses. [[tickets/T-9910-wave-10-list-1]] retains original-build verification as the acceptance gate. No tools or generated asm edited.
+
+## [2026-10-11] query | T-9910 first pass through item 20
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 local-pointer selector candidate
+
+Evaluated 202 earlier candidates (98 compiling) and 35 return/selector spellings for main func_80074DE0. A local GameState pointer matches the scratch instruction span with the existing u8 return type; queued it for real source verification. Details in [[matching-notes]] and [[tickets/T-9910-wave-10-list-1]]. No match claimed yet.
+
+## [2026-10-11] query | T-9910 first pass through item 30
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 first pass through item 40
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 first pass through item 50
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 first pass through item 60
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 packet repair and near-miss searches
+
+Recorded shared SDK packet/geometry include repairs and byte-array field-width probes in [[tickets/T-9910-wave-10-list-1]]. NAME_ENT func_80132198's bounded scratch search improved weighted score 85 to 25 without a verified win. Main zero-return line-layout variants remain scratch candidates; real original builds are the gate.
+
+## [2026-10-11] query | T-9910 first pass through item 70
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 simplify NAME_ENT scheduling candidate
+
+Resolved scratch comparison found zero instruction differences for NAME_ENT func_80132198. Six simplifications removed masks and reduced a dummy goto to one empty statement; deleting it restores two differences. Queued the simplest FAKE-marked body for real verification. Recorded in [[matching-notes]] and [[tickets/T-9910-wave-10-list-1]].
+
+## [2026-10-11] query | T-9910 first pass through item 80
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 first pass through item 90
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 first pass through item 100
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] build | T-9910 match func_80074DE0
+
+main func_80074DE0 (324 bytes) passed real funcdiff and full ninja in [[tickets/T-9910-wave-10-list-1]]. Draft evidence: scratchpad/w10-1/firstpass/.
+
+## [2026-10-11] query | T-9910 first pass through item 110
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] build | T-9910 match func_80132198
+
+NAME_ENT func_80132198 (392 bytes) passed real funcdiff and full ninja in [[tickets/T-9910-wave-10-list-1]]. Draft evidence: scratchpad/w10-1/firstpass/.
+
+## [2026-10-11] build | T-9910 two verified selector matches
+
+Recorded main func_80074DE0 (324 bytes) and NAME_ENT func_80132198 (392 bytes) in [[matching-notes]]. Each passes real funcdiff and the full build. The second retains a documented empty-statement scheduling FAKE. [[tickets/T-9910-wave-10-list-1]] remains In Progress; ranked deep work continues.
+
+## [2026-10-11] query | T-9910 first pass through item 120
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 ranked C-level deep probes
+
+Recorded the current near misses and new source hypotheses in [[matching-notes]] and [[tickets/T-9910-wave-10-list-1]]. Scratch probes cover return expressions, coordinate-tail assignment order, byte bit-fields, loop forms, selector live ranges and checksum tail locals. Rejected candidates remain outside src; no new match is claimed from a scratch score.
+
+## [2026-10-11] query | T-9910 first pass through item 130
+
+Recorded drafts, build errors and real differences for the ordered list in [[tickets/T-9910-wave-10-list-1]]. Rejected source edits restored by writing the prior contents.
+
+## [2026-10-11] query | T-9910 deep search join_club_select
+
+main candidate measured at 1 resolved instruction rows after the bounded search. Evidence filed in [[tickets/T-9910-wave-10-list-1]]. No match claimed until real verification.
+
+## [2026-10-11] query | T-9910 first pass complete and deep candidates
+
+All 132 list-1 functions have first-pass evidence. Recorded new typed/return-view candidate matches in [[matching-notes]] and [[tickets/T-9910-wave-10-list-1]]. Started a serial real verification queue and a separate scratch-only bounded search queue. No generated assembly, tool source, or config YAML was changed.
+
+## [2026-10-11] build | T-9910 main wipe match
+
+main func_80057710 (484 bytes) passes real funcdiff and the full build after its s32 fallthrough definition and generated API synchronization. Recorded in [[matching-notes]] and [[tickets/T-9910-wave-10-list-1]].
+
+## [2026-10-11] query | T-9910 deep search func_80139F3C
+
+ENDING candidate measured at 18 resolved instruction rows after the bounded search. Evidence filed in [[tickets/T-9910-wave-10-list-1]]. No match claimed until real verification.
+
+## [2026-10-11] build | T-9910 match func_80076B48
+
+main func_80076B48 (308 bytes) passed real funcdiff and full ninja. Recorded in [[tickets/T-9910-wave-10-list-1]].
+
+## [2026-10-11] query | T-9910 deep search func_80135004
+
+KANGEI candidate measured at 27 resolved instruction rows after the bounded search. Evidence filed in [[tickets/T-9910-wave-10-list-1]]. No match claimed until real verification.
+
+## [2026-10-11] query | T-9910 deep search func_8013E638
+
+GYOZI candidate measured at 29 resolved instruction rows after the bounded search. Evidence filed in [[tickets/T-9910-wave-10-list-1]]. No match claimed until real verification.
+
+## [2026-10-11] build | T-9910 match join_club_select
+
+main join_club_select (252 bytes) passed real funcdiff and full ninja. Recorded in [[tickets/T-9910-wave-10-list-1]].
+
+## [2026-10-11] build | T-9910 match func_80142AE8
+
+ETC func_80142AE8 (152 bytes) passed real funcdiff and full ninja. Recorded in [[tickets/T-9910-wave-10-list-1]].
+
+## [2026-10-11] query | T-9910 deep search func_8010B614
+
+EVENT candidate measured at 17 resolved instruction rows after the bounded search. Evidence filed in [[tickets/T-9910-wave-10-list-1]]. No match claimed until real verification.

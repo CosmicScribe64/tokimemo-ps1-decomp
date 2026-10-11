@@ -227,7 +227,51 @@ s32 func_80074D28(void) {
     return ret;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", func_80074DE0);
+u8 func_80074DE0(void) {
+    s32 temp_v0;
+    GameState *g;
+
+    g = &D_800E6280;
+
+    switch (g->unk_110D) {                           /* irregular */
+    case 0:
+        func_80048E78();
+        set_dec_bri(0x80U);
+        back_clear_switch(1);
+        tpage_buf_clear();
+        hizuke_init();
+        func_8006509C();
+        icon_disp_switch(1);
+        func_8006CE84();
+        parameter_show_init();
+        parameter_disp_switch(1);
+        message_window_init();
+        D_801217D0->unk_00 = 0x80000000;
+        func_8004E58C();
+        func_80065F34(0);
+        k_disp_start(0);
+        temp_v0 = func_80074D28();
+        if (temp_v0 != -1) {
+            if ((temp_v0 == 0) || (temp_v0 == 1)) {
+                g->unk_110D = 2;
+                dec_bg_show_set(0, temp_v0);
+            }
+        } else {
+            g->unk_110D = 1;
+        }
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            dec_bg_show_set(0, func_8005751C(0));
+            g->unk_110D = 2;
+        }
+        break;
+    default:
+    case 2:
+        func_8004284C();
+        break;
+    }
+}
 
 u8 func_80074F24(void) {
     if (D_800E6280.unk_110D == 0) {

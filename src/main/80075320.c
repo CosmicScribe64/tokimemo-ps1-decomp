@@ -74,7 +74,42 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076630);
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800767A4);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076B48);
+s32 func_80076B48(void) {
+    GameState *g;
+    g = &D_800E6280;
+    switch (g->unk_110D) {                           /* switch 1; irregular */
+    case 0:                                         /* switch 1 */
+        xa_wait();
+        break;
+    case 1:                                         /* switch 1 */
+        k_sub_reset();
+        func_800767A4();
+        g->unk_110D += 1;
+        k_sub_disp_start(3);
+        break;
+    case 2:                                         /* switch 1 */
+        menu_check(1, (s32) D_8011ECF6, (s32) D_8011ECFA);
+        func_8004FC10(1);
+        menu_bar_show(1);
+        if (g->unk_F88 & 0x20) {
+            switch (g->unk_1094) {                   /* switch 2; irregular */
+            case 0:                                 /* switch 2 */
+            case 1:                                 /* switch 2 */
+                /* FAKE: index the two adjacent scalar choice bytes as a table. T-9910. */
+                g->unk_724 = *(&g->unk_725 + g->unk_1094);
+                func_8004284C();
+                break;
+            case 2:                                 /* switch 2 */
+                if (g->unk_724 == 2) {
+                    g->unk_724 = g->unk_727;
+                    func_8004284C();
+                }
+                break;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076C7C);
 

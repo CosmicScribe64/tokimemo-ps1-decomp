@@ -66,3 +66,12 @@ typedef struct SpriteSlot24 {
     /* 0x20 */ u32 unk_20;
 } SpriteSlot24; /* size 0x24 */
 #endif
+
+#ifndef GAME_GS_BYTE_NIBBLES_T9910
+#define GAME_GS_BYTE_NIBBLES_T9910
+/* T-9910: byte view for the packed nibbles at GameState offset 0x0F5. */
+typedef struct GsByteNibbles {
+    /* 0x00, bits 0-3 */ u8 low : 4;
+    /* 0x00, bits 4-7 */ u8 high : 4;
+} GsByteNibbles; /* size 0x01 */
+#endif
