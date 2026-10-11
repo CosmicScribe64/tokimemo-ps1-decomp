@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-10
+updated: 2026-10-11
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -1112,3 +1112,12 @@ Update (T-9000): re-tested under K&R with the wave agents' drafts ([[matching-no
 | NAME_ENT/80144AD0 | `func_80145378` | selector | `switch (GameState.unk_110D)` with cases 0, 1, 2 (falls into 3): `s32` function, `if ((u32)unk_1104.w++ >= 0x3D)` gives the original's `xori` shape, but IDO copies the selector `move v0,v1` after the first compare where the original keeps `beq v1,at` (permuter 200 s: nothing closer) |
 | EVENT/8010A210 | `func_8010A6E4` | hoist | two bit-field accesses (`CharFlags f9` of D_800B0C4C, a 3-bit field at bit 1 of the byte at D_800B0860+0x3ED, a `u8` bit-field struct): original computes `addiu v1,v1,lo(D_800B0860)` once and uses `0x3ED(v1)` for load and store, IDO folds the offset into the `lui`/`lbu` pair (struct view, pointer local and `&D_800B0860[0x3ED]` all fold) |
 | TT/8014AF00 | `func_8014BB30` | regorder | `if ((f(*(s32*)(p+0x24) / 0xC00) << 9) < 0) v = -(f(..) << 9); else v = f(..) << 9; *(s32*)(p+0x20) = (v + 0x100000) * (p[0x50] - 2);` plus the 0x19 tail of `func_8014B198`: the first half matches with `w = v + 0x100000` and `m = p[0x50] - 2` as locals, but then `m` sits in `$v0` where the original has the byte load in a temporary; one temporary id off in the tail (`t5` against `t4`) |
+
+## T-9410 resolutions (2026-10-11)
+
+Historical rows above remain unchanged. Resolution records:
+- **Resolved: 8005A0B0 / `func_8005AE60`**, the batch-D `promo` row: a `u8 state` local loaded after the call reproduces the selector in `$v1`; plain C.
+- **Resolved: ENDING/80137340 / `func_80138278`**, the w7-4 remainder row: a marked FAKE dead test before `% 240` gives `$v1` and the original temporary numbering.
+- The same remainder family also gains `func_80138FC8`, `func_801391E4` and `func_8013855C`, discussed in the wave-7 notes rather than separate rows here. The last also needs a marked FAKE `s16 one` compare constant.
+
+Evidence and unresolved experiments: [[register-allocation-wave7]]. Idioms: [[decompile-workflow]].
