@@ -30,7 +30,43 @@ void func_8014AF70(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014AFB8);
+void func_8014AFB8(u8 *arg0, u16 arg1, s32 arg2) {
+    arg0[0] = 1;
+    arg0[0x51] = 0;
+    *(u16 *)(arg0 + 2) = arg1;
+    *(s16 *)(arg0 + 0x58) = 0xA;
+    *(s32 *)(arg0 + 0x38) = (&D_8014E34C)[arg2];
+    arg0[0x40] = 0x80;
+    switch (arg1) {
+    case 0x40:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC0;
+        return;
+    case 0x41:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC1;
+        return;
+    case 0x42:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC1;
+        return;
+    case 0x43:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC2;
+        return;
+    case 0x44:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC3;
+        return;
+    case 0x45:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC5;
+        return;
+    case 0x46:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC9;
+        return;
+    case 0x47:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC6;
+        return;
+    case 0x48:
+        *(s16 *)(arg0 + 0x5A) = 0x3CC5;
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014B088);
 
