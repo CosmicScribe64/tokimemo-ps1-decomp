@@ -342,6 +342,8 @@ typedef struct RpgHealthBlock {
 extern s32 D_8015EDBC;
 extern s32 D_8015EE14;
 extern s32 D_8015ED14;
+#endif
+
 #ifndef OVL_RPG_BAT_TRANSITION_T9740
 #define OVL_RPG_BAT_TRANSITION_T9740
 
