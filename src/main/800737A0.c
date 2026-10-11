@@ -1,6 +1,9 @@
 #include "common.h"
 #include "game.h"
 
+void week_day_main(void);
+void week_day_exit(void);
+
 void func_800737A0(void) {
     func_80072B5C(0);
     parameter_show();
@@ -12,7 +15,34 @@ void func_800737A0(void) {
     func_800578F4(get_last_gamen_mode());
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800737A0", week_day);
+void week_day(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        week_day_init();
+        break;
+    case 1:
+        week_day_main();
+        break;
+    case 2:
+        week_day_exit();
+        break;
+    case 10:
+        vacation_day_init();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    parameter_show();
+    message_window_show();
+    hizuke_show();
+    func_80065B0C(1);
+    func_800578F4(0);
+    func_80066C08(1);
+    if (D_8011F3FF[0] & 0x80) {
+        func_80067870();
+    }
+}
 
 void week_day_exit(void) {
     D_800E6280.unk_1104.w += 1;
