@@ -6,6 +6,25 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+T-9520 second-pass continuation: EVENT `func_801035BC` now has a recovered
+0x44-byte record block with 96 prefix records. Its girl selector at offset
+0x1987 and the destination fields at 0x1A0F belong to that same block. Reading
+the selector through this aggregate preserves the original per-iteration load;
+the standalone scalar declaration had incorrectly enabled hoisting. The first
+typed form has 19 resolved differing lines, down from the earlier 58-line draft.
+Table placement and loop-counter lifetimes are being investigated. RPG_BAT
+`func_8013E54C` case 5 must use vector element 5 and girl 28; the earlier element
+2/girl 17 draft was incorrect and its counts are superseded. TT
+`func_8013FF14` is within four frame-size lines and receives a 300-second
+permuter run. These remain experiments until resolved diff and unit SHA1 pass.
+
+TT `func_8013FF14` subsequently matched with the smaller 0x14-byte point view,
+a `u32 period` local used for both 384 comparisons, and reordered scalar
+declarations. A separate product temporary changed live registers and failed;
+the named period keeps the product expression intact while reproducing the
+112-byte frame and pointer spill at SP+0x68. Resolved diff and TT unit SHA1
+passed. The one/period locals are marked FAKE for their allocation/layout role.
+
 Workflow: [[decompile-workflow]].
 
 ## Compiler verdict (T-0013): MIPS ucode compiler, IDO-family; IDO 5.3 is the closest available
@@ -1911,3 +1930,41 @@ T-9580 second pass: SHOUGATU `func_80140AD8` matches with `unk_1BC[9].unk_0C.f.b
 T-9580 final review: ETC `func_801467C4` now uses `EtcStateFlagsView.records[index]` from GameState offset 0x694, a 34-slot prefix view that includes the two preceding slots plus `unk_69C`. This supersedes `unk_69C[index - 2]`, which reproduced the address but allowed a negative subarray index. The corrected view still gives a resolved MATCH. EN_NICHI `func_80134F2C` remains frame-only (0x38 versus 0x30) after 32 further variants and two five-minute searches, including an ANSI search without argument KeyErrors; restored.
 
 T-9580 deep pass ended after 3 hours 4 minutes of active matching: nine additional functions/3,400 bytes, for 14 functions/8,760 bytes across both passes. Both exact and near duplicate scans on the 36 owned files applied zero copies. Final inline review removed the two unused EN_NICHI temporaries without changing its resolved match; ETC's complete +0x694 prefix view and inclusion guard pass its unit SHA1. The final build after cleanup passes all 27 units. Grand progress: 4,748/6,958 functions, 738,372/2,279,368 bytes (32.4%). All failed experiments restored; changes uncommitted.
+## Wave 8, list 2 (T-9520): 6 functions, 3,620 bytes
+
+Ticket [[tickets/T-9520-wave-8-list-2]] contains the complete 142-function audit (35 owned objects). Remaining functions were time-boxed and their assembly restored. Detailed drafts, compiler diagnostics and bounded variant/permuter output: scratchpad/w8-2/.
+
+Matches:
+- NAME_ENT `func_801330E8` and `func_801332FC`, 532 bytes each: direct 18-call text pages. The missing string-address words are overlay-local s32 declarations, matching their lw accesses.
+- RPG_BAT `func_801481C8`, 780 bytes: the direct state switch and existing declarations.
+- TACO `func_801361E8`, `func_80136438`, `func_80136688`, 592 bytes each: two-phase text/scale switches; unsigned byte selectors give the unsigned remainder arm. The three selector bytes are declared in the overlay header.
+
+The NAME_ENT/RPG_BAT matches passed resolved funcdiff and default ninja. Each TACO instruction stream was independently compared byte for byte against the original assembly comments (592/592 equal per function), and default ninja passes the entire TACO sha1, including string placement. No source tricks or new FAKE/NON_MATCHING blocks were retained. Final build/review results are recorded in the ticket.
+
+Bounded findings: four small main state setters need v0 cleared but return-zero forms put the final sb before jr rather than in its delay slot. NAME_ENT `func_801341A8` requires an old-value snapshot that m2c loses by comparing with the just-written global. TT `func_80147074` gets s3=8/s4=0x20 from a named u32 loop limit, but hoists li s3,8 earlier; 14 variants and a 90-second permuter on that exact draft failed. The earlier TT permuter used the existing NON_MATCHING guard: replace the whole guard when staging a new permuter base. TACO typed TcActor/Tc14 loops need real element scaling; a five-local K&R spawn draft recovers frame 0x40 but leaves base/result allocation and arg1 spill differences. KANGEI `func_80135678` with one scalar before FnTbl32 recovers frame 0xB0/table sp+0x2C, but counter/return and girl-selector registers differ; a second scalar grows frame to 0xB8. Four narrow-K&R/checksum variants and 90-second searches on main `func_800463E8` and NAME_ENT `func_80132198` also failed. Fourteen cases were classified with register_shapes.features/shape and appended to [[data/t0018-cases]]. No claim of impossibility is made.
+
+Other blockers: m2c unresolved local copy/table types, undeclared table/record fields, and implicit-int calls to later void definitions. DATE `func_8015A640` remains hand-written rotation assembly. All temporary declarations not used by retained C were removed. Scoped dupes applied 0; its assembly-directory inventory still reports the baseline 4,734 matching entries until regenerated.
+
+Tool discrepancies, no tooling edits:
+- funcdiff reports two false HI16 string-only REAL DIFFERENCE lines on each TACO match above. `_paired_low` selects the first following LO16 of the same symbol/addend; merged `.rodata` strings and branch-delay HI16 loads expose an ambiguity. Linked words and the full unit checksum are exact. Reproduce with `tools/docker.sh python3 tools/funcdiff.py --unit TACO --resolve func_801361E8` (and its two siblings).
+- The brief suggests `register_shapes.py <func>`, but argparse accepts only --root/--rows/--json. The positional form exits 2; use the module helpers or filter the JSON inventory.
+
+Final default build: 27/27 checksums, headers/globals OK; prototype guard 0 new disagreements (17 known), inline review no findings. `ninja progress`: `grand total   4740/6958   733232/2279368  32.2%`. Actual gain is 3,620 bytes; the work list has a 12-byte larger extent for RPG_BAT func_801481C8 than its 780-byte splat function header. [[tickets/T-9520-wave-8-list-2]] is Done, uncommitted edits left for the orchestrator.
+
+Second pass (T-9520 reopened 2026-10-11): first-pass one-shot rejection is not evidence of a compiler limit. Ranking saved resolved diffs puts NAME_ENT func_80132198 first (two differing lines), followed by KANGEI func_80135C78 (five) and SHOUGATU func_801347E0 (six). KANGEI matches as s32 with no explicit return, recovering the extra early ra restore; all 27 control/type variants of the void draft failed. RPG_BAT func_801496F0 matches after restoring the omitted third argument 500 to func_8014B738 and accessing the existing RpgBatWords3 fields at D_8015EDB0+4 and D_8015EE44+8. Both pass resolved diff and their unit SHA1. Detailed second-pass experiments remain in scratchpad/w8-2/deep-*.
+
+Further second-pass matches: TT func_80147074 (220 bytes) uses a TtState58 record and a masked constant bound; the unnecessary mask is marked FAKE because it fixes saved-constant scheduling. The 300-second search produced a score-0 candidate verified in the real build; the typed rewrite also passes diff and unit SHA1. TACO func_8015B3B0 (492 bytes) uses an opaque eight-word transform payload, merging overlapping m2c locals. Reusing arg1 as the cursor reduces 178 differing lines to 14 local-address differences; placing the object pointer before the payload fixes the final four-byte local-buffer offset. It passes diff and unit SHA1 in plain C. Unused halfword-prefix trial types were removed.
+
+Second-pass audit correction: the earlier count of 27 failed KANGEI void variants came from the scratch runner's stale per-process build cache and is withdrawn. The positive s32 match has independent fresh-diff and unit-checksum proof. Subsequent probes clear both funcdiff build/header caches. Real reruns cover 16 DATE view/cursor variants, nine declaration layouts, 48 additional local-home variants, ten RPG loop forms, and 37 SHOUGATU type/mask forms. DATE func_8014AD9C reaches four differing lines (the object pointer's spill is sp+0x28 instead of sp+0x30); adding a meaningful index or position alias grows the frame by eight bytes. The unsuccessful C is restored.
+
+NAME_ENT func_80133510's six unknown locals are 35-byte text buffers, rounded to 36-byte stack strides. The zeroing loop clears three peeled bytes followed by eight four-byte iterations. The text records load u16 length at +0x4C and a text pointer at +0x98. Typed arrays and a named record view compile; layout and libc-alias experiments continue. TACO func_8015B1B8 similarly constructs a 0x20-byte local transform from nine halfwords and three word translations, then copies it into a 0x50-byte object.
+
+RPG_BAT func_8013F3F0 matches (244 bytes) with RpgObjectBlock: 96 prefix records followed by a 64-record group, all stride 0x44. The loop indexes group[40..63], while the three trailing updates address group[29..31]. A flat 160-record view is semantically equivalent but biases the induction pointer to record 136 and changes 36 linked instruction words. The nested aggregate preserves the original pointer starting at record 40, with +0x1980 field displacements. Fresh resolved diff and RPG_BAT SHA1 pass. This is a type/layout issue, not an exhausted register-allocation shape.
+
+Second-pass retained gains (10 functions / 3,416 bytes; batch total 16 / 7,036): RPG_BAT func_801496F0 (452), func_80135B4C (580), func_80135E80 (484), func_8013E4D0 (124), func_8013F3F0 (244); KANGEI func_80135C78 (104); TT func_80147074 (220), func_8013FF14 (412); TACO func_8015B3B0 (492), func_8013B170 (304). Existing RPG state aggregates and omitted third arguments fix the timer switches. The nested 96/64-record object table fixes the group loops. TT's 0x14-byte point, declaration order and u32 period=384 fix frame and constant sharing; the artificial allocation is marked FAKE. KANGEI's no-value s32 return is also marked FAKE. TACO must reread GameState.unk_110A after callbacks; reusing m2c's pre-call selector changes behavior.
+
+Aggregate recovery was retried on the near candidates and then deferred copy-heavy functions. DATE func_8014AF88 uses a packet local and two object ranges with endpoint 11 (best 54 differing lines); NAME_ENT func_80133510/func_801338DC use six/five 35-byte text buffers and pointer tables but still have frame/argument differences; RPG_BAT func_80153784 uses SDK RECT and 16-byte word records, with corrected real variants still at 187 differing lines. TT func_80140624 compiles after type repair but has 267 differing lines. These remain assembly. Aggregate recovery is incomplete: larger local/alias drafts in ETC, TT, TACO and NAME_ENT remain deferred under the three-hour pass budget, not proven compiler blockers. Type-invalid outputs are not counted as experiments ruling out a source shape.
+
+Cleanup retains only used opaque views and forward prototypes, appended to baseline overlay headers. New unknown fields follow unk_XX with offsets/sizes; main_api.h is unchanged. Detailed resolved comparisons and 300-second permutation logs remain in scratchpad/w8-2/deep-*. This pass adds twelve bounded T-0018 rows (one earlier NAME_ENT row plus eleven final rows); the first-pass fourteen rows remain historical.
+
+Second-pass final verification: SHOUGATU func_80134730 adds 132 bytes. The score-10 permuter candidate passes fresh resolved diff and SHA1 after FAKE comments and indentation; empty do loops and size XOR zero preserve the two MULTU operations and register allocation. Its word-argument call uses the existing main_api override guard and old-style prototype. Default ninja, 27 fresh unit checksums and prototype/global guards pass. Inline source/spec review is complete; the three-hour stopping floor is satisfied. Final progress: grand total   4751/6958   736780/2279368  32.3%. Eleven additions / 3,548 bytes, batch total 17 / 7,168. Uncommitted edits remain for the orchestrator; larger aggregate recovery remains partial as recorded in [[tickets/T-9520-wave-8-list-2]].

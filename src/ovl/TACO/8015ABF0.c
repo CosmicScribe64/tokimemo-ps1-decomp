@@ -45,7 +45,30 @@ void func_8015B2AC(s32 arg0, s16 *arg1) {
     *(s32 *)o = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B3B0);
+void func_8015B3B0(s32 arg0, s16 *arg1, s32 arg2) {
+    /* The pointer precedes the payload to preserve its local layout. T-9520. */
+    TcTransformObj50 *obj;
+    TcTransformWords matrix;
+    TcPos *pos;
+
+    arg1 += arg2 * 6;
+    matrix = *(TcTransformWords *)D_80125C60;
+    obj = (TcTransformObj50 *)&D_80127480[arg0];
+    matrix.unk_14 = arg1[0] + obj->transform.unk_14;
+    matrix.unk_18 = arg1[1] + obj->transform.unk_18;
+    matrix.unk_1C = arg1[2] + obj->transform.unk_1C;
+    pos = &D_80128880[arg0];
+    pos->x += arg1[3];
+    arg1 += 4;
+    func_8015D0D0((pos->x << 12) / 360, &matrix);
+    pos->z += *arg1;
+    arg1++;
+    func_8015CF30((pos->z << 12) / 360, &matrix);
+    pos->y += *arg1;
+    func_8015D270((pos->y << 12) / 360, &matrix);
+    obj->transform = matrix;
+    obj->unk_00 = 0;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B59C);
 

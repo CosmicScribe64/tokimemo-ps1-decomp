@@ -158,3 +158,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - T-7030 tooling wave-4 fixes: `sync_protos.py` keeps comments, `dupes.py`/`neardupes.py` copy game-state fields, overrides, file-local types, address literals and prototypes (163 + 25 functions applied), `funcdiff.py` builds `expected/` itself, `permute.py` time limit and build verification, `m2c.py` callee argument counts and post-increment order; tests `tools/test_dupes.py`, `test_neardupes.py`, `test_funcdiff.py`, `test_permute.py`, `test_sync_protos.py`, `test_m2c_args.py`; details in [[matching-notes]] ("Tooling fixes, wave 4 (T-7030)") and [[decompile-workflow]]
 - `tools/queue.py` (T-1320, T-3340): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags; calibration in [[matching-notes]]
 - `tools/queue.py` (T-1320, T-3340, T-5010): `--by bytes`, `--plan N --agents K`, retuned R/V/U/T flags (entry rule in `tools/entry_rule.py`, tests `tools/test_entry_rule.py`); calibration in [[matching-notes]]
+
+- [[tickets/T-9520-wave-8-list-2|T-9520]] Wave 8: list 2 (Done; second pass adds 11 functions / 3,548 bytes; batch 17 / 7,168).

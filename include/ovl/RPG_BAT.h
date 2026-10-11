@@ -275,3 +275,28 @@ void func_8014F3C8();
 void func_80136070();
 void func_801361AC();
 extern u32 D_8015ED38;
+
+#ifndef OVL_RPG_OBJECT_BLOCK_T9520
+#define OVL_RPG_OBJECT_BLOCK_T9520
+typedef struct RpgObjectRecord44 {
+    /* 0x00 */ u8 pad0;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 pad3[3];
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 pad7[0x13];
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ u8 pad1E[8];
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ u8 pad28[2];
+    /* 0x2A */ s16 unk_2A;
+    /* 0x2C */ u8 pad2C[0xC];
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 pad3C[8];
+} RpgObjectRecord44; /* size 0x44; confirmed main object-table view, T-9520 */
+typedef struct RpgObjectBlock {
+    /* 0x0000 */ RpgObjectRecord44 prefix[96];
+    /* 0x1980 */ RpgObjectRecord44 group[64];
+} RpgObjectBlock; /* size 0x2A80 */
+#endif

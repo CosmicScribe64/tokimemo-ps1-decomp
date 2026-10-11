@@ -1,7 +1,34 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B170", func_8013B170);
+void func_8013B170(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8013B2A0();
+        break;
+    case 1:
+        func_8013B398();
+        break;
+    case 2:
+        func_8013B3C4();
+        break;
+    }
+    if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.unk_10F8 & 0x10) {
+            if ((u8) D_8015EDCC >= 3U) {
+                func_801432F0((s32) "MISSION COMPLETE", -0x40, 0, 2);
+            } else if (D_8015EDEC == 0) {
+                func_801432F0((s32) "TIME OVER", -0x40, 0, 1);
+            } else {
+                func_801432F0((s32) "GAME OVER", -0x40, 0, 1);
+            }
+        }
+        func_8013B460(0x64);
+    } else {
+        func_8013F250();
+    }
+    func_80143B58();
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013B170", func_8013B2A0);
 

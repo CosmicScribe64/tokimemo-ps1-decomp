@@ -126,7 +126,57 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F9E0);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013FBD0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013FF14);
+/* FAKE: the one/period locals and declaration order reproduce the original
+ * constant allocation and stack layout; original source unknown. T-9520. */
+void func_8013FF14(void) {
+    u16 mode;
+    u8 *other;
+    s32 one;
+    s32 angle;
+    u32 period;
+    TtSceneView *p;
+    TtPoint14 point;
+
+    one = 1;
+    period = 384;
+    mode = ((TtSceneView *) D_80158A8C)->unk_08;
+    other = D_80158A74;
+    p = (TtSceneView *) D_80158A8C;
+    switch (mode) {
+    case 0:
+        p->unk_366 = 0;
+        p->unk_08 = 0x40;
+        break;
+    case 0x40:
+        if ((u16) p->unk_366 % period == 192U) {
+            func_80134470(p->unk_14, p->unk_16 + 8, 0x80, 0x30, 0xAA);
+        }
+        if ((p->unk_366 & 7) == 7) {
+            point.x = p->unk_14 << 16;
+            point.y = (p->unk_16 + 8) << 16;
+            angle = func_801320F0((s32) &point, (s32) (other + 0x14));
+            func_80133E30(p->unk_14, p->unk_16 + 8, 0x18, p->unk_3A6 * p->unk_3A4 + angle, 0xA0);
+            p->unk_3A4 += 0x40;
+            if ((u16) p->unk_3A4 >= 0x301U) {
+                p->unk_3A4 = 0;
+            }
+            if ((u16) p->unk_3A6 == one) {
+                p->unk_3A6 = -one;
+            } else {
+                p->unk_3A6 = one;
+            }
+        }
+        if ((u16) p->unk_366 >= period) {
+            p->unk_08 = 0xA0;
+        }
+        break;
+    case 0xA0:
+        p->unk_06 = one;
+        p->unk_08 = 0;
+        break;
+    }
+    p->unk_366++;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_801400B0);
 

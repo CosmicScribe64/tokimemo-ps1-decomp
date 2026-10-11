@@ -106,6 +106,12 @@ void func_801478D0();
 typedef struct TtRecord54 {
     /* 0x00 */ u8 unk_00;
     /* 0x01 */ u8 pad_01[3];
+#ifndef OVL_TT_MATCHED_VIEWS_T9520
+#define OVL_TT_MATCHED_VIEWS_T9520
+typedef struct TtState58 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u16 unk_02;
     /* 0x04 */ u16 unk_04;
     /* 0x06 */ s16 unk_06;
     /* 0x08 */ s16 unk_08;
@@ -124,3 +130,28 @@ typedef struct TtRecord54 {
     /* 0x46 */ u8 pad_46[0xE];
 } TtRecord54; /* size 0x54 */
 #endif /* OVL_TT_W8_3_TYPES_H */
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 unk_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ u8 pad10[0x48];
+} TtState58; /* size 0x58; D_80158A84 walks eight records, T-9520 */
+typedef struct TtSceneView {
+    /* 0x000 */ u8 pad0[6];
+    /* 0x006 */ u16 unk_06;
+    /* 0x008 */ u16 unk_08;
+    /* 0x00A */ u8 padA[0xA];
+    /* 0x014 */ s16 unk_14;
+    /* 0x016 */ s16 unk_16;
+    /* 0x018 */ u8 pad18[0x34E];
+    /* 0x366 */ u16 unk_366;
+    /* 0x368 */ u8 pad368[0x3C];
+    /* 0x3A4 */ u16 unk_3A4;
+    /* 0x3A6 */ s16 unk_3A6;
+} TtSceneView; /* minimum accessed extent 0x3A8; T-9520 */
+typedef struct TtPoint14 {
+    /* 0x00 */ u8 pad0[0xC];
+    /* 0x0C */ s32 x;
+    /* 0x10 */ s32 y;
+} TtPoint14; /* size 0x14; func_801320F0 reads these coordinates */
+#endif

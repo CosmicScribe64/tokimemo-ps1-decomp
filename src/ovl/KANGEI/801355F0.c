@@ -66,7 +66,17 @@ void func_80135C18(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/801355F0", func_80135C78);
+/* FAKE: a no-value s32 return preserves the original early RA reload.
+ * The intended return type is unknown. T-9520. */
+s32 func_80135C78(void) {
+    normal_date_girl_out();
+    if ((D_800E6280.unk_F5F == 0xA) || (D_800E6280.unk_F5F == 3)) {
+        D_80120657 = D_8011F513;
+        if ((u8) D_8011F513 < 8U) {
+            D_80120653 &= 0x7F;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/801355F0", func_80135CE0);
 
