@@ -342,3 +342,8 @@ void func_80158CDC(s16 arg0, s16 arg1, s16 arg2);
 void func_80158DBC(s16 arg0, s16 arg1, s16 arg2);
 extern s8 D_8015EDE8;
 extern u8 D_8015E22C[];
+void func_8014A070(void);
+void func_8014A1D4(void);
+void func_8014A234(void);
+void func_8014A390(void);
+void func_8014A42C(void);
