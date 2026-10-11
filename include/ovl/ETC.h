@@ -1051,6 +1051,9 @@ typedef struct EtcStateFlagsView {
 #define OVL_ETC_EVENT_SEARCH_T9740
 /* Event-record search in GameState.unk_75E (T-9740). */
 s32 func_801464D4(s32 mode);
+#endif
+
+
 #ifndef OVL_ETC_W9_2_GLOBALS_H
 #define OVL_ETC_W9_2_GLOBALS_H
 /* Positive and negative values select the record fade direction. T-9720. */

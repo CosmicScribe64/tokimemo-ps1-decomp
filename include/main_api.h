@@ -656,7 +656,6 @@ extern u8 D_800CA2A6;
 extern u8 D_800CA2A8;
 extern s16 D_800CA2AC;
 extern u8 D_800CA2B0[];
-extern u8 D_800CA2BC;
 extern s16 D_800CA2C0;
 extern u8 D_800CA2C4;
 extern u8 D_800CA2CC;
@@ -772,8 +771,6 @@ extern s32 D_800EB038;
 extern s16 D_800EB03C;
 extern s16 D_800EB03E;
 extern s16 D_800EB040;
-extern s16 D_800EB042;
-extern s16 D_800EB044;
 extern s16 D_800EB04E;
 extern s16 D_800EB052;
 extern s32 D_800EB05C;
@@ -1387,7 +1384,6 @@ extern s32 D_801230E4;
 extern s32 D_801230F4;
 extern u32 D_80123110;
 extern u8 D_80123120[];
-extern u8 D_80123324[];
 extern s32 D_80125120;
 extern s32 D_80125124;
 extern u8 D_80125128;
@@ -2238,3 +2234,8 @@ s32 func_80067DFC(void);
 #endif /* MAIN_API_H */
 
 extern u8 D_80089C84;
+
+extern u8 D_800CA2BC;
+extern s16 D_800EB042;
+extern s16 D_800EB044;
+extern u8 D_80123324[];

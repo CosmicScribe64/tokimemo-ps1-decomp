@@ -367,6 +367,8 @@ typedef struct RpgTransition0C {
 
 void func_80150120(void);
 
+#endif
+
 
 #ifndef OVL_RPG_ASSET_WORDS_T9720
 #define OVL_RPG_ASSET_WORDS_T9720

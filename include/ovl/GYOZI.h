@@ -896,6 +896,9 @@ typedef struct GzCallbacks6C {
 } GzCallbacks6C; /* size 0x6C; copied callback table */
 extern GzCallbacks6C D_80148904;
 
+#endif
+
+
 #ifndef OVL_GYOZI_W9_2_TYPES_H
 #define OVL_GYOZI_W9_2_TYPES_H
 /* Four-byte assignment into the girl record at +0x08. T-9720. */

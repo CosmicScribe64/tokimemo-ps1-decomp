@@ -316,6 +316,9 @@ typedef struct TtDrawSelect0C {
 } TtDrawSelect0C; /* accessed prefix size 0x0C */
 void func_80148460(void);
 
+#endif
+
+
 #ifndef OVL_TT_W9_2_COLLISION_H
 #define OVL_TT_W9_2_COLLISION_H
 /* func_80145508 reads signed x/y offsets and byte half extents. T-9720. */
