@@ -49,7 +49,7 @@ void func_801345CC(void) {
         b[i] = i * 0x10 - 0x32;
         c[i] = 0xE8;
         d[i] = 0x10;
-        r = func_8004E788(a[i], b[i], 0xF, (&D_8013BF60)[i], 0);
+        r = func_8004E788(a[i], b[i], 0xF, (&D_8013BF60)[i], 0); /* FAKE: string pointer table reached through its first symbol, as in func_80133C4C. T-9320 */
     }
     func_8004F870(0, 8, a, b, c, d);
     func_8004E884(r);
