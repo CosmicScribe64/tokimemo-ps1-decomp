@@ -917,4 +917,5 @@ void func_80134938(void);
 #ifndef OVL_GYOZI_T10010_SCENE_PROTOTYPE
 #define OVL_GYOZI_T10010_SCENE_PROTOTYPE
 void func_80135730(void);
+extern u8 D_8014617C[];
 #endif
