@@ -40,6 +40,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | stack argument stored in the `jal` delay slot | Index the array (`p[i]`, `i++`) instead of walking a pointer. |
 | narrow parameter kept in its home stack slot | Use an old-style K&R definition, and declare the promoted locals before any buffer. |
 | unsigned `% 240`-style chunk with one temporary too many (ENDING) | A dead test `if (x) {}` right before `r = x % 240;`. It's FAKE: mark it T-9410. |
+| loads in a different order or place than the original, with several `D_` names close together | They are probably one array or struct. Write the accesses through one base (`D_X[i]`, `(&D_X)[k]`). That fixed load order in SHOUGATU `func_8013507C` and EVENT `func_80104D48` (T-10610). |
 | constant or pointer in a1/a2/v1 in a small K&R function (TT, GEKO, TACO) | Known unsolved. Spend 10 minutes at most, then guard it and log the row. |
 
 ## Do not
