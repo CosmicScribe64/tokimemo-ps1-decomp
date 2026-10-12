@@ -59,6 +59,8 @@ TOKIMEMO_SCRATCH=<shared scratch> tools/docker.sh python3 tools/regdiff.py [UNIT
 
 ## Before recording a T-0018 row (T-9000)
 
+Quick reference: [[register-cheatsheet]] (symptom -> C change, one page).
+
 First run `tools/regdiff.py` (T-10400, section above): it names the range and the rule behind a register difference.
 
 T-9410 additions (experiment details in [[register-allocation-wave7]]):

@@ -147,6 +147,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-5010-t0018-register-order-second-attempt|T-5010]] T-0018 register order, second attempt: entry and compare rules, unit-private data, cvt pass in the build, 44 functions (Done)
 
 ## Entities / concepts / sources
+- [[register-cheatsheet]]: one-page register-miss guide, symptom to C change (regdiff loop)
 - [[uopt-register-allocation]] - T-9800 allocator trace, formula and uniform patch experiments
 - [[register-allocation-wave7]] - T-9410 row/assembly clusters, bounded C experiments and verified idioms
 - [[disc-layout]] - disc images, extraction, file list

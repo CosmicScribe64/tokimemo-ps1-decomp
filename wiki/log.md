@@ -9824,3 +9824,6 @@ Ticket [[tickets/T-10520-wave-13-list-2]] In Progress (59 functions, 30 files).
 [[tickets/T-10520-wave-13-list-2]] Done after the inline review against `CODING_STANDARDS.md` (no findings). Build: 27/27 unit sha1 OK, `build/headers.ok`, `build/globals.ok`; `sync_protos.py --check-branch` and `migrate_globals.py --check` clean. Board: [[kanban]].
 ## [2026-10-12] ticket | T-10510 wave 13 list 1 done
 [[tickets/T-10510-wave-13-list-1]] Done: 11 matches (2,380 bytes) and 15 guarded near misses; patterns in [[matching-notes]], 24 rows in [[data/t0018-cases]]. Inline review recorded in the ticket; 27 unit checks, headers and globals pass.
+
+## [2026-10-12] ingest | Register cheat sheet
+Added [[register-cheatsheet]], a one-page symptom-to-C guide distilled from [[uopt-register-allocation]], [[register-allocation-wave7]] and [[decompile-workflow]]; linked from the T-0018 section of [[decompile-workflow]] and the wave briefs.
