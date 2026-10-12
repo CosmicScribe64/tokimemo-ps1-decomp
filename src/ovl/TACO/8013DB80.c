@@ -3,14 +3,13 @@
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013DB80);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, IDO shares the D_8015EB30 address between the two loops, the original rebuilds it (8 differing lines) */
 void func_8013DDE4(void) {
     Tc14 *p;
     s32 i;
 
-    p = D_8015EB30;
-    do {
+    /* FAKE: init and `do` share a source line (as1 schedules by line); the second base is spelled from the
+     * end label so that IDO does not share the first loop's address. Same bytes as the original. T-10320 */
+    p = D_8015EB30; do {
         p->unk12 = p->unk12 + 1;
         if (p->unk12 == 0xFF) {
             p->unk13 = 0;
@@ -25,7 +24,7 @@ void func_8013DDE4(void) {
         }
         p++;
     } while (p < &D_8015EC70);
-    p = D_8015EB30;
+    p = (Tc14 *)((u8 *)&D_8015EC70 - 0x140);
     i = 0;
     do {
         if (p->unk13 & 0x80) {
@@ -35,9 +34,6 @@ void func_8013DDE4(void) {
         p++;
     } while (i != 0x10);
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013DDE4);
-#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013DB80", func_8013DEE4);
 
