@@ -201,9 +201,74 @@ void func_8013D060(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D150);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D2E0);
+/* NON_MATCHING: T-10510, registers only (v in a1: a0 left unused by the original) */
+#ifdef NON_MATCHING
+void func_8013D2E0(void) {
+    u8 *c;
+    TtDrawBuffer80B8 *p;
+    TILE *v;
 
+    c = D_80158A64;
+    p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
+    v = (TILE *)p->cursor;
+    p->cursor = (DR_MODE *)(v + 1);
+    ((TtOtTag *)v)->len = 3;
+    v->code = 0x61;
+    v->r0 = c[0x13];
+    v->g0 = c[0x14];
+    v->b0 = c[0x15];
+    v->x0 = -0x80;
+    v->y0 = 8;
+    v->w = 0x100;
+    v->h = 0xE8;
+    ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[15];
+    (&p->ordering[15])->addr = (u32)v;
+}
+#else
+INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D2E0);
+#endif
+
+/* NON_MATCHING: T-10510, registers: r/g in a2/a1, sb order of len/code (24 lines) */
+#ifdef NON_MATCHING
+void func_8013D3C0(void) {
+    u8 *c;
+    TtDrawBuffer80B8 *p;
+    TILE *v;
+    u32 r;
+    u32 g;
+    u32 b;
+
+    c = D_80158A64;
+    p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
+    v = (TILE *)p->cursor;
+    p->cursor = (DR_MODE *)(v + 1);
+    ((TtOtTag *)v)->len = 3;
+    v->code = 0x61;
+    r = (c[0x13] * c[0x1D]) >> 7;
+    if ((s32)r >= 0x100) {
+        r = 0xFF;
+    }
+    g = (c[0x14] * c[0x1E]) >> 7;
+    if ((s32)g >= 0x100) {
+        g = 0xFF;
+    }
+    b = (c[0x15] * c[0x1F]) >> 7;
+    if ((s32)b >= 0x100) {
+        b = 0xFF;
+    }
+    v->r0 = r;
+    v->g0 = g;
+    v->b0 = b;
+    v->x0 = -0x80;
+    v->y0 = 8;
+    v->w = 0x100;
+    v->h = 0xE8;
+    ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[15];
+    (&p->ordering[15])->addr = (u32)v;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D3C0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D508);
 

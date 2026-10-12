@@ -1931,7 +1931,25 @@ void func_8013E614(void) {
     }
 }
 
+/* NON_MATCHING: T-10510, post-increment compare, a0/v1 vs v1/v0 */
+#ifdef NON_MATCHING
+void func_8013E6A4(void) {
+    s32 d;
+    u8 x;
+
+    x = func_80051B48(D_800E6280.unk_F5F);
+    func_80085A60();
+    d = D_800E6280.unk_1104.w;
+    D_800E6280.unk_1104.w = d + 1;
+    if (d == 1) {
+        if (D_800CA14C == 2) {
+            func_80083440(x);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013E6A4);
+#endif
 
 void func_8013E710(void) {
     if (D_80122CDC == 0) {

@@ -101,7 +101,44 @@ s32 func_80133BE0(u8 *arg0, u8 *arg1) {
     func_8014D260(dy >> 16, dx >> 16);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133C1C);
+void func_80133C1C(o, kind, idx)
+    TtActor68 *o;
+    u16 kind;
+    s32 idx;
+{
+    o->unk_00 = 1;
+    o->unk_02 = kind;
+    o->unk_10 = 1;
+    o->unk_38 = (void *)(&D_8014E34C)[idx];
+    o->unk_40 = 0x80;
+    switch (idx) {
+    case 18:
+    case 19:
+        *(s16 *)((u8 *)o + 0x52) = 0xA;
+        *(s16 *)((u8 *)o + 0x54) = 0x3C8B;
+        o->unk_4C = (u8 *)&D_80155B30[3];
+        return;
+    case 20:
+        *(s16 *)((u8 *)o + 0x52) = 0xA;
+        *(s16 *)((u8 *)o + 0x54) = 0x3C8C;
+        o->unk_4C = (u8 *)&D_80155B30[3];
+        return;
+    case 21:
+        *(s16 *)((u8 *)o + 0x52) = 0x12;
+        *(s16 *)((u8 *)o + 0x54) = 0x3CD3;
+        o->unk_4C = (u8 *)&D_80155B30[3];
+        return;
+    case 22:
+        *(s16 *)((u8 *)o + 0x52) = 0x12;
+        *(s16 *)((u8 *)o + 0x54) = 0x3CD4;
+        o->unk_4C = (u8 *)&D_80155B30[2];
+        return;
+    case 23:
+        *(s16 *)((u8 *)o + 0x52) = 0x12;
+        *(s16 *)((u8 *)o + 0x54) = 0x3CD5;
+        o->unk_4C = (u8 *)&D_80155B30[2];
+    }
+}
 
 void func_80133D14(s16 x, s16 y, s32 speed, u16 kind) {
     TtActor68 *object;

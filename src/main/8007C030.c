@@ -334,7 +334,7 @@ void normal_date_girl_out_init(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
 
-/* NON_MATCHING: T-10310, near miss */
+/* NON_MATCHING: T-10510, 8 lines (wave 12): load order of D_8011F4CB and 0x80000000 constant in a2 (original) vs a1 */
 #ifdef NON_MATCHING
 s32 normal_date_girl_suddenout(void) {
     D_8011F50F &= 0xFF7F;
@@ -566,7 +566,29 @@ void normal_date_three_select(void) {
     }
 }
 
+/* NON_MATCHING: T-10510, 4 register lines: 0x10 constant in v0 (original) vs t3 */
+#ifdef NON_MATCHING
+void normal_date_three_select_init(void) {
+    s32 pad;
+    s16 x[3];
+    s16 y[3];
+    s16 w[3];
+    s16 h[3];
+
+    x[0] = x[1] = x[2] = -0x80;
+    y[0] = 0x30;
+    y[1] = 0x40;
+    y[2] = 0x50;
+    w[0] = w[1] = w[2] = 0xFC;
+    h[0] = h[1] = h[2] = 0x10;
+    menu_set(1, 3, x, y, w, h);
+    D_800E6280.unk_1094 = 0;
+    D_80122D30 = 1;
+    D_800E6280.unk_1104.w++;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_init);
+#endif
 
 s32 normal_date_three_select_main(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);

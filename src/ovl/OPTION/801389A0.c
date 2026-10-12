@@ -119,7 +119,29 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139198);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801394F4);
 
+/* NON_MATCHING: T-10510, 16 lines: masked value is an allocated register in the original */
+#ifdef NON_MATCHING
+void func_80139878(void) {
+    s32 t;
+
+    t = (D_800E6280.unk_03A + 4) & 0xFF;
+    D_801220E2 = t;
+    D_801220E1 = t;
+    D_801220E0 = t;
+    D_801220E8 = 0xA0;
+    D_801220EA = 0x78;
+    D_801220D4 = 0;
+    D_801220D6 = 0;
+    D_800E6280.unk_03A = t;
+    if ((u32) t >= 0x80) {
+        D_800E6280.unk_03A = 0x80;
+        func_8004E884(7);
+        func_8004284C();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139878);
+#endif
 
 void func_8013990C(void) {
     D_801220EC = rsin(D_800E6280.unk_1104.w << 5);
@@ -146,7 +168,40 @@ void func_801399C0(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139A30);
 
+/* NON_MATCHING: T-10510, u16 local loaded via a copy, 49 vs 48 insns, registers shifted */
+#ifdef NON_MATCHING
+void func_80139E3C(arg0)
+    s32 arg0;
+{
+    u16 v;
+    s32 *t;
+    s32 *p;
+
+    if (arg0 > 0) {
+        D_8013D3B8 = arg0;
+    }
+    v = D_8013D3B8;
+    if (arg0 < 0) {
+        v++;
+    }
+    if (D_800E6280.unk_F80 & 4) {
+        v++;
+    }
+    if ((D_800E6280.unk_F80 & 1) && (v != 0)) {
+        v--;
+    }
+    t = D_8013D360[D_800E6280.unk_F5F & 0xF];
+    D_8013D3B8 = v;
+    if (t != 0) {
+        p = t + v * 2;
+        D_8013D3B8 = v;
+        func_80046290(p[0], p[1], D_800E6280.unk_F5F);
+    }
+    func_80044750(0x300);
+}
+#else
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139E3C);
+#endif
 
 void func_80139F04(void) {
     if (D_800E6280.unk_F80 & 1) {

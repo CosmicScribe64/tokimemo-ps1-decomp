@@ -248,7 +248,22 @@ void func_80132FC0(void) {
     func_80082764(0xFF, 1, 0);
 }
 
+/* NON_MATCHING: T-10510, v0 vs t6 allocation, 29 register lines */
+#ifdef NON_MATCHING
+void func_80133038(void) {
+    D_8013B08C = D_8013B084;
+    D_8013B078 = D_8013B06C;
+    D_8013B07C = D_8013B070;
+    D_8013B080 = D_8013B074;
+    D_8013B06C = D_8013AFFC;
+    D_8013B070 = D_8013B030;
+    D_8013B074 = D_8013B064;
+    D_8013B084 = (D_800E6280.unk_F5F * 3) + D_8013B090;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80133038);
+#endif
 
 void func_801330E8(void) {
     func_80083440(D_80122CDC + 1);
