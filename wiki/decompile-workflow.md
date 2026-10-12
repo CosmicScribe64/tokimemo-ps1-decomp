@@ -227,6 +227,15 @@ spill at +0x28 but emits frame 0x38 instead of 0x30. A per-function subtraction
 or buffer inflation is not a justified compiler pass; retain assembly until
 source or broad compiler evidence resolves it.
 
+T-10210 finding (frame_pass.py unchanged): the pass adds a uniform 16 bytes
+to the raw IDO frame. EN_NICHI `func_80134F2C` emits 0x40, so IDO's raw frame
+is 0x30, while the original's 0x30 implies a raw 0x20 (the later 0x38 reading
+was a draft without the pointer spill). The extra 0x10 comes from IDO's own
+local allocation, not from the pass. TACO `func_8013A580` differs only by the
+four temporaries sitting one word lower than the original, again an IDO slot
+assignment. Neither case fits a uniform pass rule; a change would alter
+matched functions, so none was made.
+
 Reproduce the synthetic frame checks with `tools/docker.sh python3 tools/test_local_aggregate_frames.py`.
 
 ## Resumable CPU permuter farm (T-9810)

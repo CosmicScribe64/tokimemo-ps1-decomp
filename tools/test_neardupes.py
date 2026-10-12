@@ -69,6 +69,15 @@ TGT_ASM = func_asm('ftgt', 'func_80140000', 9, 0x2C, 0x8011, 0x40)
 
 
 class FingerprintTests(unittest.TestCase):
+    def test_near_plan_uses_new_c_in_nonmatchings_folder(self):
+        r = make_repo(SRC_ASM, TGT_ASM)
+        self.addCleanup(r.close)
+        r.write('asm/ovl/AAA/nonmatchings/AAA/fsrc.s', SRC_ASM)
+        os.remove(os.path.join(r.root, 'asm/ovl/AAA/matchings/AAA/fsrc.s'))
+        funcs, (plans, skipped, stats, nosrc) = plan(r)
+        self.assertTrue(next(f.matched for f in funcs if f.name == 'fsrc'))
+        self.assertEqual(len(plans), 1, skipped)
+
     def test_immediates_do_not_change_near_key(self):
         a = dupes.parse_asm(SRC_ASM, 'alu')[0]
         b = dupes.parse_asm(TGT_ASM, 'alu')[0]
@@ -218,6 +227,8 @@ class PlanTests(unittest.TestCase):
         try:
             r.write('asm/ovl/AAA/nonmatchings/AAA/fsrc.s', r.read('asm/ovl/AAA/matchings/AAA/fsrc.s'))
             os.remove(os.path.join(r.root, 'asm/ovl/AAA/matchings/AAA/fsrc.s'))
+            r.write('src/ovl/AAA.c', '#include "common.h"\n#include "ovl/AAA.h"\n\n'
+                    'INCLUDE_ASM("asm/ovl/AAA/nonmatchings/AAA", fsrc);\n')
             funcs, (plans, skipped, stats, nosrc) = plan(r)
             self.assertEqual((len(plans), stats['no_src'], stats['nosrc_members']), (0, 1, 2))
             self.assertEqual(stats['nosrc_bytes'], 2 * 0x28)

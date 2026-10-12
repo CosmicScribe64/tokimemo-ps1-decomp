@@ -9753,3 +9753,9 @@ final 29 active matches / 28,220 bytes, 21 exact-instruction guards, four
 near misses, two [[data/t0018-cases]] rows and the rejected last DATE output.
 All 27 binary checksums and declaration checks pass; progress is 5011/6958
 functions and 865160/2279368 bytes (38.0%). Changes remain uncommitted.
+
+## [2026-10-11] ticket | Claim wave-11 tool fixes
+Created [[tickets/T-10210-wave-11-tool-fixes]] and aligned [[kanban]]/[[index]]. Read shared tooling12 brief, standards and wave-11 evidence in [[matching-notes]] and [[decompile-workflow]]. Wrapper regressions and local-frame investigation are assigned; configure.py, tools/split_objects.py and config/ are excluded.
+
+## [2026-10-11] ticket | Wave-11 tool fixes done
+[[tickets/T-10210-wave-11-tool-fixes]] moved to Done. `tools/dupes.py` classifies from C source, `tools/permute.py` validates bases, `tools/m2c.py` fixes shared-%hi stores and negative members; frame finding (no pass change) in [[decompile-workflow]]. Board: [[kanban]].
