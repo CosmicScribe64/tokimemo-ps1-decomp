@@ -503,9 +503,13 @@ extern s32 D_800B1CF0;
 extern u8 D_800B3220;
 extern u8 *D_800B3288[];
 extern u8 **D_800B32CC;
+extern u8 *D_800B342C[];
 extern s32 D_800B3538[];
 extern u8 *D_800B35F4[];
+extern u8 *D_800B3610;
+extern u8 *D_800B361C;
 extern u8 *D_800B3624;
+extern u8 *D_800B3628;
 extern u8 *D_800B3630;
 #ifndef MAIN_API_OVERRIDE_D_800B3688
 extern s32 D_800B3688[];
@@ -811,6 +815,7 @@ extern s32 D_800EECE0;
 extern s32 D_800EECE4;
 extern s32 D_800EECE8;
 extern s32 D_800EECEC;
+extern s32 D_800EED08;
 extern u8 D_800F19AB;
 extern u8 D_800F53DA;
 extern u8 D_800F53DE;
@@ -1380,6 +1385,8 @@ extern s32 D_80122EC8;
 #endif
 extern s32 D_80122ECC;
 extern s32 D_801230D0;
+extern s32 D_801230D4;
+extern s32 D_801230D8;
 extern s32 D_801230E4;
 extern s32 D_801230F4;
 extern u32 D_80123110;
@@ -1477,6 +1484,12 @@ extern u32 D_800B59B0[16];
 extern u32 D_800B0C4C;
 extern u8 D_800E94A0[];
 extern u8 D_800FD4A0[];
+extern s16 D_800B0962;
+extern u8 D_800E7D4E;
+extern s32 D_80122E98;
+extern s32 D_80122EA8;
+extern s32 D_80122EB0;
+extern s32 D_80122EB4;
 
 /* ---- functions ---- */
 void func_80010678();
@@ -2250,12 +2263,5 @@ s32 func_80067DFC(void);
 s32 func_80053418();
 s32 func_800463E8(void);
 s32 func_80049FF0();
-
-extern s16 D_800B0962;
-extern u8 D_800E7D4E;
-extern s32 D_80122E98;
-extern s32 D_80122EA8;
-extern s32 D_80122EB0;
-extern s32 D_80122EB4;
 
 #endif /* MAIN_API_H */

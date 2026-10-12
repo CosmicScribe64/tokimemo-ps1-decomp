@@ -1200,3 +1200,23 @@ extern DateCallbacks39 D_8015F2B4;
 void func_80139AC8(void);
 s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 #endif
+
+
+#ifndef OVL_DATE_T10040
+#define OVL_DATE_T10040
+/* Forward declarations for the original object, T-10040. */
+void func_801461B0(void);
+u16 func_801462B0(void);
+void func_8014718C(void);
+void func_80147958(void);
+s32 func_80148924(s16 a0);
+s32 func_801489D0(void);
+void func_801491E4(s32 arg0);
+
+extern s16 D_8015CFA4[3];
+extern s16 D_8015CFAC[3];
+extern s16 D_8015CFB4[3];
+extern s16 D_8015CFBC[3];
+extern u16 D_8015CF9C;
+extern s16 D_8015CFC4;
+#endif

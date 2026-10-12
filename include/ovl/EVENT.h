@@ -1390,3 +1390,30 @@ typedef struct EventTableE7 {
 } EventTableE7; /* size 0xE7; inline copy includes a three-byte tail */
 extern EventTableE7 D_8012536C;
 #endif
+
+
+#ifndef OVL_EVENT_T10040
+#define OVL_EVENT_T10040
+/* Forward declarations for the original object, T-10040. */
+void func_8011C650(void);
+u16 func_8011C750(void);
+void func_8011D5C4(void);
+void func_8011DDB8(void);
+void func_8011EDFC(void);
+
+/* T-10040: dialogue data and object-local forward declarations. */
+s32 func_8011ED50(s16 arg0);
+
+/* Stage/fade view at D_800B1AF0; store/load ordering in 8011EDFC. */
+typedef struct EventTransitionState {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 pad04[2];
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 pad07;
+} EventTransitionState; /* size 0x08; T-10040 */
+extern s16 D_801258E4[3];
+extern s16 D_801258EC[3];
+extern s16 D_801258F4[3];
+extern s16 D_801258FC[3];
+extern u16 D_801258DC;
+#endif

@@ -1516,3 +1516,10 @@ view supplies byte writes. Distinct typed read/write views preserve the reload
 through the word address after the byte store; the view choice is marked FAKE
 pending full SDK aggregate recovery. Current-source resolved diff and linked
 EVENT SHA1 pass. Historical rows remain unchanged.
+
+### Wave 11, list 4 (T-10040)
+
+| File | Function | Category | Symptom |
+|---|---|---|---|
+| TEL/80132000 | `func_80132FC4` | regorder | Selector/compare chain: reconstructed count/select loops and native unlock flags leave the compiler copying the byte selector from a0 to v0 for dispatch, plus the selected-index zero initialization moving earlier. Other instructions match; padded buffer home is separately marked FAKE. Typed selector/counter variants, local state views and bounded permuters have not verified a match. Guarded draft retained, T-10040; finite-search evidence only. |
+| BUNKASAI/801511E0 | `func_80151364` | sched | Pointer/base/CSE and scheduling: byte-year captures plus a marked state-pointer reassignment reduce the real resolved diff to two lines, one `lui v1` moving before the year-address `lui v0`. Widths, separate/scoped base views, explicit defaults, declaration order, return type and statement variants do not close it; a fresh 600-second permuter finds no improvement. Guarded draft retained, T-10040; finite-search evidence only. |
