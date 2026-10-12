@@ -216,3 +216,10 @@ typedef struct NameRecord44 {
 extern s32 D_8014CCAC; /* Word reset in func_801341A8. T-9770 */
 extern s32 D_8014CCB4; /* Word selection and old-value snapshot. T-9770 */
 #endif
+
+#ifndef OVL_NAME_ENT_T10010_INPUT_GLOBALS
+#define OVL_NAME_ENT_T10010_INPUT_GLOBALS
+extern u8 D_8014CD04[]; /* Name-entry character buffer. T-10010. */
+extern s32 D_8014CC40; /* Word arguments to func_80046290. */
+extern s32 D_8014CC44;
+#endif

@@ -40,7 +40,35 @@ INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_2);
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FC10);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80050324);
+/* Accessed menu-selection view at GameState +0x1090. */
+typedef struct MenuSelection5 {
+    /* 0x00 */ u8 count[2];
+    /* 0x02 */ u8 pad_02;
+    /* 0x03 */ s8 current[2];
+} MenuSelection5; /* size 0x05 */
+
+s32 func_80050324(s32 menu, s32 reverse) {
+    GameState *g;
+    s32 i;
+    /* The menu entries are interleaved: one record for each of two menus. */
+    g = &D_800E6280;
+    if (reverse != 0) {
+        for (i = ((MenuSelection5 *)&g->unk_1090)->count[menu] - 1; i >= 0; i--) {
+            if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_04 && ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_05) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+                return i;
+            }
+        }
+    } else {
+        for (i = 0; (u32)i < ((MenuSelection5 *)&g->unk_1090)->count[menu]; i++) {
+            if (((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_04 && ((GsRecF90 (*)[2])g->unk_F90)[i][menu].unk_05) {
+                ((MenuSelection5 *)&g->unk_1090)->current[menu] = i;
+                return i;
+            }
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
 
@@ -288,7 +316,28 @@ s32 func_80052E60(u8 *arg0, s16 *arg1) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80052F68);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_80053418);
+s32 func_80053418(u8 *arg0, s16 *arg1) {
+    s32 i;
+    u8 love[16];
+    u8 friendship[16];
+    s32 j;
+    get_h_yuukou_table(friendship);
+    get_h_tokimeki_table(love);
+    for (i = 0, j = 0; j != 32; j += 2, i++) {
+        arg1[i] = 0;
+        friendship[i] /= 5U;
+        if (friendship[i] >= 20U) {
+            friendship[i] = 19;
+        }
+        love[i] /= 5U;
+        if (love[i] >= 20U) {
+            love[i] = 19;
+        }
+        arg0[i] = D_800B41B0[love[i]][friendship[i]];
+    }
+    func_80052E60(arg0, arg1);
+    return func_80052F68(arg0, arg1);
+}
 
 s32 func_8005352C(void) {
     u16 x;

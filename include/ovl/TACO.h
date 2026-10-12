@@ -475,3 +475,15 @@ typedef struct TcRotations14 {
 extern TcDirections28 D_80160480;
 extern TcRotations14 D_801604A8;
 #endif
+
+#ifndef OVL_TACO_T10010_SELECTION
+#define OVL_TACO_T10010_SELECTION
+void func_8013546C(void);
+#endif
+
+#ifndef OVL_TACO_T10010_SCORE_TABLE
+#define OVL_TACO_T10010_SCORE_TABLE
+extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
+#endif
+
+extern u8 D_80161ECD;

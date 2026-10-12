@@ -69,7 +69,22 @@ void func_801325A0(Arrs4x8 *p) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80132624);
+void func_80132624(OptionGrid80 *grid) {
+    s32 i;
+    for (i = 0; i < 16; i++) {
+        if (i < 8) {
+            grid->x[i] = -0x20;
+            grid->y[i] = i * 20 - 0x46;
+            grid->w[i] = 0x50;
+            grid->h[i] = 0x14;
+        } else {
+            grid->x[i] = 0x30;
+            grid->y[i] = i * 20 - 0xE6;
+            grid->w[i] = 0x50;
+            grid->h[i] = 0x14;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801326BC);
 

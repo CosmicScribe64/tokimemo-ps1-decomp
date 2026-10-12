@@ -459,3 +459,48 @@ typedef struct TtState96 {
     /* 0x56 */ u8 unk_56[0x40];
 } TtState96; /* size 0x96 */
 #endif
+
+#ifndef OVL_TT_GRID_T10010
+#define OVL_TT_GRID_T10010
+/* Grid records stepped by func_80132810. */
+typedef struct TtGrid10 {
+    /* 0x00 */ u8 pad00[4];
+    /* 0x04 */ s16 x;
+    /* 0x06 */ s16 y;
+    /* 0x08 */ u8 pad08[8];
+} TtGrid10; /* size 0x10 */
+typedef struct TtGrid64 {
+    /* 0x00 */ u8 pad00[0x14];
+    /* 0x14 */ s16 x;
+    /* 0x16 */ s16 y;
+    /* 0x18 */ u8 pad18[0x4C];
+} TtGrid64; /* size 0x64 */
+/* The grid scroll value is unsigned here (lhu, including its increment). */
+typedef struct TtGridCore {
+    /* 0x00 */ u8 pad00[0x2E];
+    /* 0x2E */ u16 offset;
+} TtGridCore; /* accessed prefix size 0x30 */
+#endif
+
+#ifndef OVL_TT_SCENE_DRAW_T10010
+#define OVL_TT_SCENE_DRAW_T10010
+/* Scene coordinates and draw selectors used by the paired drawing helpers. */
+typedef struct TtSceneDraw {
+    /* 0x000 */ u8 pad00[0x14];
+    /* 0x014 */ s16 x;
+    /* 0x016 */ s16 y;
+    /* 0x018 */ u8 pad18[0x24];
+    /* 0x03C */ u8 unk_3C;
+    /* 0x03D */ u8 pad3D;
+    /* 0x03E */ u8 unk_3E;
+    /* 0x03F */ u8 pad3F[0x25];
+    /* 0x064 */ u8 unk_64;
+    /* 0x065 */ u8 pad65;
+    /* 0x066 */ u8 unk_66;
+    /* 0x067 */ u8 pad67[0x1E1];
+    /* 0x248 */ s16 xs[24];
+    /* 0x278 */ s16 ys[24];
+    /* 0x2A8 */ u8 pad2A8[0xFC];
+    /* 0x3A4 */ u16 unk_3A4[4];
+} TtSceneDraw; /* accessed prefix size 0x3AC */
+#endif

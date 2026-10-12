@@ -403,3 +403,9 @@ void func_80143AC8(void);
 void func_80143C04(void);
 void func_80144768(void);
 #endif
+
+#ifndef OVL_TAIIKU_T10010_SCROLL_POSITION
+#define OVL_TAIIKU_T10010_SCROLL_POSITION
+void func_8014430C(void);
+extern TaiikuPosition D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
+#endif

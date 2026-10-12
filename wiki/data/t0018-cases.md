@@ -1516,3 +1516,4 @@ view supplies byte writes. Distinct typed read/write views preserve the reload
 through the word address after the byte store; the view choice is marked FAKE
 pending full SDK aggregate recovery. Current-source resolved diff and linked
 EVENT SHA1 pass. Historical rows remain unchanged.
+| SHOUGATU/80135B90 | `func_80136078` | regorder | T-10010: 50-entry table with u16 index passed as callback arg1 fixes frame 0x100/table +0x34 and table/index/slot registers; only two function-pointer comparisons have operands reversed (4 resolved scratch rows). Table types, expression forms and 300-second permuter did not match; draft scratchpad/w11-1/SHOUGATU-func_80136078/table-probes/best.c. |

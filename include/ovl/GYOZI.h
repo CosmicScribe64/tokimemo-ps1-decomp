@@ -913,3 +913,8 @@ extern GyoziWord4 D_801474B4;
 /* Defined in 80134520.c; selection helper calls it before its definition. */
 void func_80134938(void);
 #endif
+
+#ifndef OVL_GYOZI_T10010_SCENE_PROTOTYPE
+#define OVL_GYOZI_T10010_SCENE_PROTOTYPE
+void func_80135730(void);
+#endif

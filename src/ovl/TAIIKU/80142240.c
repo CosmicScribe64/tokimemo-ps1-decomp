@@ -274,7 +274,28 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143DD0);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80143F50);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_8014430C);
+void func_8014430C(void) {
+
+    if ((u8) D_8014A118 >= 0xBU) {
+        /* FAKE: word view of the existing byte-record array; its full
+         * structure is not recovered yet. T-10010. */
+        D_8014A1D0 += (*(s32 *)&D_8014A13C[8]);
+        D_8014A118 = 0;
+    }
+    if (D_8014A12C < D_8014A1D0) {
+        D_8014A1D0 = D_8014A12C;
+    }
+    if (D_8014A1D0 < 0) {
+        D_8014A1D0 = 0;
+    }
+    if ((D_80120778 == 0x2D) || (D_80120778 == 0x39)) {
+        D_8014A1D0 = 0;
+    }
+    D_8014A1CC.w += D_8014A1D0;
+    Scroll((s32) ((s16) D_8014A1CC.h[1] / 4) % 640, 0xF, 0, 0x70, 0x280);
+    Scroll((s32) ((s16) D_8014A1CC.h[1] / 2) % 128, 0xF, 0x70, 0x80, 0x80);
+    func_8004B19C(D_8014A1D0, 0, -0x3C);
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_80144464);
 
@@ -377,13 +398,13 @@ void func_801448D4(void) {
 
 extern Tri3 D_8014A340;
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-9210, 17 diff lines: the original reloads y after the D_8014A120[n] store
- * (D_8014A120..D_8014A1CB is probably one object) and walks the string with a fresh pointer. */
+/* FAKE: retain the established byte-buffer views until the record layouts
+ * are recovered. The factored flag-store stride preserves the height reload.
+ * T-10010. */
 void func_801449A0(void) {
     s32 i;
     s32 d;
-    u8 *q;
+    u8 *q; /* FAKE: unused word keeps tbl at stack +0x48. T-10010. */
     Tri3 tbl;
     s32 y;
     s32 n;
@@ -403,13 +424,11 @@ void func_801449A0(void) {
             *(s16 *)&D_8011ECD0[0x1B30] = 0x32;
             *(s16 *)&D_8011ECD0[0x1B3E] = *(s16 *)&D_8011ECD0[0x1AFA] + 0x20;
             n = 0;
-            q = D_8014A120;
-            while (*q != 0) {
+            while (D_8014A120[n] != 0) {
                 n++;
-                q++;
             }
             D_8014A120[n] = i + 2;
-            D_8014A13C[i * 0x24 + 0x25] = 1;
+            D_8014A13C[(i * 3) * 12 + 0x25] = 1;
             y = *(s16 *)&D_8014A13C[i * 0x24 + 0x3A] - d;
         }
         if (y >= 0x1E1 || y < -0xA0) {
@@ -419,9 +438,6 @@ void func_801449A0(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240", func_801449A0);
-#endif
 
 extern Tri3 D_8014A34C;
 

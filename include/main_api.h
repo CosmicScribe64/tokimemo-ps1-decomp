@@ -520,6 +520,8 @@ extern s32 D_800B3708[];
 #endif
 extern s32 D_800B372C;
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
+extern s32 D_800B37D4[];
+extern s32 D_800B3B9C[];
 extern u8 D_800B3C6C;
 extern u8 D_800B3C70[];
 extern u8 D_800B3C88[];
@@ -554,6 +556,7 @@ typedef struct KWork {
 } KWork; /* size 0xC */
 extern KWork D_800B3F60;
 extern u8 D_800B41A0[];
+extern u8 D_800B41B0[20][20];
 extern u8 D_800B4341[]; /* table read by func_80052E60 */
 extern s32 D_800B58E4;
 extern s32 D_800B58F8;
@@ -571,6 +574,8 @@ extern s32 D_800B5948;
 extern s32 D_800B594C;
 extern s32 D_800B5950[];
 extern s32 D_800B5960[];
+extern s16 D_800B59F0;
+extern s16 D_800B59F4;
 extern u8 D_800B5A60;
 extern u8 D_800B5A64;
 extern u8 D_800B5BC8;
@@ -915,6 +920,9 @@ extern s32 D_8011F104;
 extern u8 D_8011F10F;
 extern u8 D_8011F113;
 extern u8 D_8011F3FF[];
+extern u8 D_8011F414;
+extern s16 D_8011F422;
+extern s16 D_8011F426;
 extern u8 D_8011F4CA;
 extern u8 D_8011F4CB;
 extern u8 D_8011F4CF;
@@ -1352,6 +1360,7 @@ extern s32 D_80122CF0;
 extern s32 D_80122CF4;
 extern s32 D_80122CF8;
 extern s32 D_80122CFC;
+extern s32 D_80122D00;
 extern s32 D_80122D04;
 extern s32 D_80122D08;
 extern s32 D_80122D0C;
@@ -1477,6 +1486,12 @@ extern u32 D_800B59B0[16];
 extern u32 D_800B0C4C;
 extern u8 D_800E94A0[];
 extern u8 D_800FD4A0[];
+extern s16 D_800B0962;
+extern u8 D_800E7D4E;
+extern s32 D_80122E98;
+extern s32 D_80122EA8;
+extern s32 D_80122EB0;
+extern s32 D_80122EB4;
 
 /* ---- functions ---- */
 void func_80010678();
@@ -1771,7 +1786,7 @@ s32 func_8005AFC8(void);
 s32 func_8005B040();
 void func_8005B06C();
 s32 func_8005B0F4();
-void func_8005B1A8();
+s32 func_8005B1A8(void);
 void func_8005B264();
 s8 func_8005B28C();
 s32 func_8005B2BC();
@@ -2250,12 +2265,5 @@ s32 func_80067DFC(void);
 s32 func_80053418();
 s32 func_800463E8(void);
 s32 func_80049FF0();
-
-extern s16 D_800B0962;
-extern u8 D_800E7D4E;
-extern s32 D_80122E98;
-extern s32 D_80122EA8;
-extern s32 D_80122EB0;
-extern s32 D_80122EB4;
 
 #endif /* MAIN_API_H */

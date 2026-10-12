@@ -3,7 +3,57 @@
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80144010", func_80144010);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80144010", func_80144480);
+/* FAKE: integer fall-through preserves the selector/result registers. T-10010. */
+s32 func_80144480(void) {
+    switch (D_8015EDC4 & 0xFFFF0000) {
+    case 0x10000:
+        D_8015EBAC = 0x10;
+        break;
+    case 0x20000:
+        D_8015EBAC = 0x11;
+        break;
+    case 0x40000:
+        D_8015EBAC = 0x12;
+        break;
+    case 0x100000:
+        if (D_8015ED98 & 1) {
+            switch (func_8013E9A8(15)) {
+            case 0:
+                D_8015EBAC = 1;
+                break;
+            case 1:
+                D_8015EBAC = 2;
+                break;
+            default:
+                D_8015EBAC = 0;
+                break;
+            }
+        } else {
+            switch (func_8013E9A8(4)) {
+            case 0:
+                D_8015EBAC = 1;
+                break;
+            case 1:
+                D_8015EBAC = 2;
+                break;
+            default:
+                D_8015EBAC = 0;
+                break;
+            }
+        }
+        break;
+    case 0x200000:
+    case 0x400000:
+        D_8015EBAC = 3;
+        break;
+    case 0x8000000:
+        D_8015EBAC = 4;
+        break;
+    case 0x80000000:
+        D_8015EBAC = 5;
+        break;
+    }
+}
 
 s32 func_801445E8(s32 arg0) {
     if (arg0 == 0) {

@@ -23,7 +23,27 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132130", func_80132198);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132130", func_8013230C);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132130", func_80132810);
+void func_80132810(void) {
+    s32 i;
+    TtGridCore *state;
+    TtGrid10 *grid;
+    TtGrid64 *tiles;
+    state = (TtGridCore *)D_80158A64;
+    i = 0;
+    tiles = (TtGrid64 *)(D_80158AA4 + 0x1900);
+    grid = (TtGrid10 *)D_80158AB0;
+    for (; i < 25; i++) {
+        grid->x = (i / 5) * 0x48 - state->offset - 0x5C;
+        grid->y = state->offset + (i % 5) * 0x48 - 0x48;
+        tiles->x = grid->x - 0x24;
+        tiles->y = grid->y - 0x24;
+        tiles++;
+        grid++;
+    }
+    if (++state->offset >= 0x48U) {
+        state->offset = 0;
+    }
+}
 
 void func_80132B88(void) {
     u8 *p;

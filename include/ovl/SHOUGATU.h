@@ -726,3 +726,15 @@ s32 func_8013E330(void);
 /* Scene initializer; original byte stores at D_80143B1C (T-9740). */
 extern u8 D_80143B1C;
 void func_801326F8(void);
+
+#ifndef OVL_SHOUGATU_BYTE_FLAGS_T10010
+#define OVL_SHOUGATU_BYTE_FLAGS_T10010
+/* Byte flag view for Rec38 +0x0E, including bit 3. T-10010. */
+typedef struct ShouByteFlags {
+    /* 0x00, bit 0 */ u8 b0 : 1;
+    /* 0x00, bit 1 */ u8 b1 : 1;
+    /* 0x00, bit 2 */ u8 b2 : 1;
+    /* 0x00, bit 3 */ u8 b3 : 1;
+    /* 0x00, bits 4-7 */ u8 rest : 4;
+} ShouByteFlags; /* size 0x01 */
+#endif

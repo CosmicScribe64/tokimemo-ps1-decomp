@@ -8309,3 +8309,763 @@ All 27 unit checksums pass at the nine-match checkpoint. BUNKAKEN func_80143DD0 
 ## [2026-10-11] lint | T-9960 appended type guards
 
 The supplemental scratch survey includes overlay headers twice and exposed missing repeat-include guards around this batch's appended BUNKAKEN/BUNKASAI types. Added guards around only the new declarations. Existing single-include builds had passed. The checkpoint printed 26 rebuilt unit checks; the remaining unit's check was already current. Final validation will explicitly recompute all 27 hashes.
+
+## [2026-10-11] ticket | Start wave 11 list 1
+
+Created [[tickets/T-10010-wave-11-list-1]] In Progress, with matching kanban/index entries. Read the shared brief, standards, workflow, aggregate and allocator guidance. Clean checkout needs Docker configure before the 130-function quick pass; session starts 00:54 UTC, four-hour minimum requested. Scratch remains in scratchpad/w11-1/ and changes remain uncommitted.
+
+## [2026-10-11] build | T-10010 baseline passes
+
+Docker configure and the initial 659-step ninja build complete successfully: all 27 unit checksums pass. Generated assembly and drafts remain untracked build/scratch material. First-pass inspection confirms menu_bar_color's m2c output collapses the two shared-HI16 array-element stores, the known InitMouse-family limitation; repair from target offsets in the deep pass. [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 quick pass DATE:func_80149F48
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 56 differing text lines. Draft/build/diff records in scratchpad/w11-1/DATE-func_80149F48/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GYOZI:func_8014494C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GYOZI-func_8014494C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass ENDING:func_80139B48
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/ENDING-func_80139B48/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:menu_bar_color
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-menu_bar_color/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_80042808
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80042808/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_80042908
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80042908/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_80134110
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 62 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_80134110/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_80105DF8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_80105DF8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_8004284C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_8004284C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] decision | T-10010 refine draft migration
+
+Nine first-pass attempts exposed missing width information for old GameState union symbols. Paused only this worktree's quick-pass container and verified its finally block restored source. Scratch migration now uses m2c stderr declaration views; restart at the affected main helpers. Forty-eight func_80042940 return-shape probes retain the final-store scheduling gap. Evidence recorded in [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 quick pass main:func_80042808
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 1 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80042808/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_80042908
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 1 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80042908/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_80134110
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 62 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_80134110/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_80105DF8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_80105DF8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_8004284C
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 1 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_8004284C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013AE14
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013AE14/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass OPTION:func_80132624
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/OPTION-func_80132624/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_8010B614
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_8010B614/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:menu_check_2
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-menu_check_2/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_800FAA04
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_800FAA04/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_801341E4
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 17 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_801341E4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_800FA25C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_800FA25C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_80050324
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80050324/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:menu_check_1
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-menu_check_1/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GYOZI:func_80137188
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GYOZI-func_80137188/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GYOZI:func_80136488
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GYOZI-func_80136488/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80147FD0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80147FD0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_8013D348
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 31 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_8013D348/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013A63C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013A63C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_80042940
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 1 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80042940/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 first deep scheduling attempt
+
+Completed 96 total return/store-view probes and a 300-second permutation for main func_80042940. No match; the final zero byte store remains before jr rather than in its delay slot. Kept source assembly. [[matching-notes]] records the result; this is a scheduling observation, not a new allocator-cause claim. [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013ACBC
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013ACBC/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:menu_bar_show
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-menu_bar_show/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:menu_set
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-menu_set/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80142AF0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80142AF0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_8005B2BC
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_8005B2BC/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_80136078
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_80136078/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_80136340
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 68 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_80136340/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013C4E4
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013C4E4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013CF88
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013CF88/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 first verified match
+
+SHOUGATU func_801341E4 matches, 168 bytes, after narrow-value, live-range, and compare-type probes. Real-file funcdiff --resolve reports MATCH; incremental ninja passes SHOUGATU, restored TAIIKU, and globals. Matching tricks are documented in source and [[matching-notes]]. Updated [[tickets/T-10010-wave-11-list-1]]; resume first pass at list index 33 with this match retained.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_8014D260
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 99 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_8014D260/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass RPG_BAT:func_801453B4
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/RPG_BAT-func_801453B4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_8015CF30
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_8015CF30/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_801347E0
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 10 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_801347E0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass BUNKA_SD:func_80134850
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/BUNKA_SD-func_80134850/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_8013A610
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_8013A610/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_8013A710
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_8013A710/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_80133D94
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 40 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_80133D94/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_80141050
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 134 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_80141050/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_80141170
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 134 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_80141170/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013C780
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013C780/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_80135A98
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_80135A98/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GEKO:func_8013A2EC
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GEKO-func_8013A2EC/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013D114
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013D114/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_801436BC
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_801436BC/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_801449A0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_801449A0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_801339C4
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_801339C4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:csr_load_vram
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-csr_load_vram/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_801419D0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_801419D0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass DATE:func_801511B4
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/DATE-func_801511B4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass RPG_BAT:func_80144480
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 126 differing text lines. Draft/build/diff records in scratchpad/w11-1/RPG_BAT-func_80144480/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_8005B1A8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_8005B1A8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass DATE2:func_80136794
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 57 differing text lines. Draft/build/diff records in scratchpad/w11-1/DATE2-func_80136794/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013F948
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013F948/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80142570
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80142570/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_80135650
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_80135650/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80147D08
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80147D08/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8014430C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8014430C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80148244
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80148244/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013CD34
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013CD34/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_8013506C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_8013506C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80139E34
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80139E34/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_8005A410
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_8005A410/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:x_taku_menu_set
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-x_taku_menu_set/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GYOZI:func_80144B70
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GYOZI-func_80144B70/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_801557E8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_801557E8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_801430A0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_801430A0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_8013CE78
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_8013CE78/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass OPTION:func_80136434
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/OPTION-func_80136434/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass OPTION:func_801328C0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/OPTION-func_801328C0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass ENDING:func_80137E40
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 73 differing text lines. Draft/build/diff records in scratchpad/w11-1/ENDING-func_80137E40/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80133258
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80133258/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GYOZI:func_80145384
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GYOZI-func_80145384/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80132198
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80132198/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80146E10
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80146E10/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80144E54
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80144E54/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8014357C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8014357C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_801437F0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_801437F0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass ENDING:func_80139F3C
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 44 differing text lines. Draft/build/diff records in scratchpad/w11-1/ENDING-func_80139F3C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass OPTION:func_801326BC
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/OPTION-func_801326BC/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013D788
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013D788/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GYOZI:func_8013506C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GYOZI-func_8013506C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_8013546C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_8013546C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass DATE2:func_801338F8
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 70 differing text lines. Draft/build/diff records in scratchpad/w11-1/DATE2-func_801338F8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_800FEDC8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_800FEDC8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80147150
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80147150/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80144464
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80144464/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHUGAKU:func_80139FD4
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHUGAKU-func_80139FD4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80132BD0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80132BD0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass BUNKAKEN:func_80145550
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/BUNKAKEN-func_80145550/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass OPTION:func_80132384
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/OPTION-func_80132384/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_801400D8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_801400D8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:menu_girl_taku_set
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 125 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-menu_girl_taku_set/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass DATE:func_8014DCCC
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/DATE-func_8014DCCC/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_80103774
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_80103774/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_800FFA4C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_800FFA4C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_80053418
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80053418/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80139FE4
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80139FE4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_80155C64
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_80155C64/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_80132A38
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_80132A38/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass RPG_BAT:func_8013BBF8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/RPG_BAT-func_8013BBF8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80143814
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80143814/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_8013D3F4
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_8013D3F4/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 table dispatcher deep pass
+
+Repaired SHOUGATU func_80136078's 0xC8 local callback table and narrow index argument. Current best has correct frame and all registers, with only two branch operand swaps. Bounded type/expression probes and 300-second permutation did not match. Ran register_shapes, recorded current evidence in [[matching-notes]] and appended one row to [[data/t0018-cases]]. [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80132810
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80132810/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_80147A18
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_80147A18/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_800F9730
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_800F9730/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TACO:func_8013B2A0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TACO-func_8013B2A0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_8013635C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_8013635C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass NAME_ENT:func_80132B78
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/NAME_ENT-func_80132B78/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass GYOZI:func_80135518
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/GYOZI-func_80135518/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_8013A314
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_8013A314/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80139AB0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80139AB0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass DATE2:func_801328D0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/DATE2-func_801328D0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_8005D448
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_8005D448/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_80140314
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_80140314/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_801022C0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_801022C0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TAIIKU:func_80132E20
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TAIIKU-func_80132E20/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_8004443C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_8004443C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_800603C0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_800603C0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_8013644C
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 79 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_8013644C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass TT:func_8013B4A0
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/TT-func_8013B4A0/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass EVENT:func_800FD00C
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/EVENT-func_800FD00C/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:InitMouse
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 4 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-InitMouse/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass SHOUGATU:func_80138758
+
+[[tickets/T-10010-wave-11-list-1]]: diff; 68 differing text lines. Draft/build/diff records in scratchpad/w11-1/SHOUGATU-func_80138758/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass OPTION:func_801373C8
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/OPTION-func_801373C8/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass ENDING:func_8013A004
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/ENDING-func_8013A004/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass main:func_80052F68
+
+[[tickets/T-10010-wave-11-list-1]]: compile_error; 0 differing text lines. Draft/build/diff records in scratchpad/w11-1/main-func_80052F68/. Original source restored for ranked deep pass.
+
+## [2026-10-11] build | T-10010 quick pass complete
+
+All 130 list entries received the quick draft/build/diff pass, with one independently deepened and verified gain retained. Nonmatches were restored. The separate scratch scan and 50 recovered wave-10 drafts provide scores for the ranked deep pass; all 130 saved farm candidates were copied read-only into scratchpad/w11-1/farm-drafts. [[tickets/T-10010-wave-11-list-1]] records the limits: raw compiler failures still need type repair.
+
+## [2026-10-11] build | T-10010 deep-pass checkpoints
+
+TACO func_8013D348's unsigned post-increment draft remains a five-row near miss after a 300-second permutation. ENDING func_80139F3C improves to ten rows using its existing unprototyped sprite-call alias. TAIIKU func_801449A0's queue search now has the original indexed form, with a remaining height reload/aliasing difference. Scratch-only hypotheses are not retained as matches; evidence is in [[matching-notes]].
+
+## [2026-10-11] build | T-10010 ENDING fade-out match
+
+Retained ENDING func_80139F3C (200 bytes) after real resolved funcdiff MATCH and an incremental ENDING checksum/global-check pass. Direct global brightness accesses preserve a1; the existing unprototyped sprite-call view plus two documented FAKE idioms reproduce the remaining bytes. [[tickets/T-10010-wave-11-list-1]] now records two matches / 368 bytes; see [[matching-notes]].
+
+## [2026-10-11] build | T-10010 NAME_ENT selector match
+
+NAME_ENT func_80135A98 passes the real resolved function comparison after replacing the saved draft's default-body test with explicit case 3. Added three overlay globals in include/ovl/NAME_ENT.h. The full incremental header-triggered rebuild is running. [[tickets/T-10010-wave-11-list-1]] records three functions / 652 bytes; [[matching-notes]] records the control-flow evidence.
+
+## [2026-10-11] build | T-10010 checksum checkpoint and data-island boundary
+
+The NAME_ENT header rebuild finishes with all 27 checksums OK. The TAIIKU/80138950 data-island dry run identifies 60 pieces in its owned 0x660-byte data range, but activation would edit forbidden YAML. No configuration was changed. Recorded the integration blocker and m2c shared-HI store-collapse evidence in [[matching-notes]].
+
+## [2026-10-11] build | T-10010 NAME_ENT cursor match
+
+Retained func_80133D94 after its real resolved diff and NAME_ENT checksum passed. Direct global accesses provide the correct lifetime without FAKE constructs. The owned-file duplicate sweep has zero applicable plans. [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]] record four matches / 844 bytes.
+
+## [2026-10-11] build | T-10010 timer repair and scroll type integration
+
+DATE2 func_801328D0 passes the real resolved comparison after restoring old-value post-increment tests and documenting its implicit-result fall-through. Added D_80122D00 through sync_protos. TAIIKU func_8014430C's typed scratch match required an explicit overlay prototype for an earlier caller; fixed that declaration before retrying. The full rebuild is running; see [[matching-notes]].
+
+## [2026-10-11] build | T-10010 six-match full build passes
+
+TAIIKU func_8014430C and DATE2 func_801328D0 pass real resolved diffs; the full incremental build passes all 27 checksums. Total verified gain is six functions / 1,476 bytes. [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]] contain type, prototype, and post-increment evidence. TACO's selection handler is the next scratch match to verify.
+
+## [2026-10-11] build | T-10010 TACO selection handler match
+
+TACO func_8013546C passes the real resolved diff after removing local copies of the input and selection globals. Added its overlay prototype for an earlier caller. [[tickets/T-10010-wave-11-list-1]] records seven functions / 1,716 bytes; checksum rebuilding continues. DATE2's paired state-adjustment helper has a new narrow-local scratch match, recorded in [[matching-notes]].
+
+## [2026-10-11] build | T-10010 paired DATE2 status helper match
+
+DATE2 func_801338F8 passes real resolved funcdiff with u8 status locals, direct accumulators, and a documented s32 fall-through. Eight matches total 1,972 bytes. The preceding full rebuild passes 27 checksums, and a fresh incremental run checks the latest state. [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]] updated.
+
+## [2026-10-11] build | T-10010 SHOUGATU score selector match
+
+SHOUGATU func_80136340 passes real resolved funcdiff using a byte status, explicit indirect flag reads, and a word-sized girl copy. Matching-specific read/order choices are documented FAKE. [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]] record nine functions / 2,200 bytes; overlay checksum rebuilding follows.
+
+## [2026-10-11] build | T-10010 three deep-pass matches verified
+
+Real resolved comparisons match SHOUGATU func_8013644C, TAIIKU func_801449A0, and TACO func_8013D348. The key changes are old-value timer testing, the permuter's factored stride preserving a reload, and an indexed particle loop explaining the initial v0 constant. [[tickets/T-10010-wave-11-list-1]] records twelve functions / 3,112 bytes. Combined checksums and the unused-frame-word audit are running; see [[matching-notes]].
+
+## [2026-10-11] build | T-10010 twelve-match checksum and frame audit
+
+The three changed overlay checksums pass at the twelve-match checkpoint. Removing the TAIIKU unused pointer shifts the table four bytes, so its FAKE-marked frame word remains necessary. [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]] updated. The indexed-loop idiom also reduces TACO func_8013CE78 to four operand-order diff rows after repairing its score table to s32 elements.
+
+## [2026-10-11] build | T-10010 actor and second particle loop match
+
+TACO func_8013CE78 and func_8013D3F4 pass real-file resolved diffs after indexed-loop, word-table, operand-order, and byte post-increment repairs. Cleanup probes confirm unused locals can be removed. Fourteen retained functions total 3,772 bytes; combined checksum build started. Updated [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 weighted selector and packed-field repair
+
+RPG_BAT func_801453B4 passes the real resolved diff (308 bytes); SHOUGATU func_80138758 passes scratch cleanup verification (272 bytes), with real verification pending. The fourteen-match full incremental build completed all 27 checksum checks. Updated [[matching-notes]]; the next aggregate attempt rolls TT's 25-element grid setup back into a typed loop instead of preserving invalid negative-offset members in the saved draft.
+
+## [2026-10-11] build | T-10010 sixteenth real-file match
+
+SHOUGATU func_80138758 also passes the real resolved diff. Sixteen retained functions total 4,352 bytes. Started the next full incremental checksum rebuild after the overlay type addition; updated [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] query | T-10010 grid and counter-range deep probes
+
+TT func_80132810 now compiles as a typed 25-element loop; the pointer form reproduces the target unrolling and arithmetic, leaving an index/grid register swap (68 rows). Testing mixed indexing and pointer increments. GYOZI func_8013506C's bounded permuter improved the resolved candidate from 12 to 10 rows, now just the counter register; func_80137188's five-minute run found no improvement. Continued C-level live-range probes; no new source retained for these cases. See [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 GYOZI selection handler matches
+
+GYOZI func_80135518 passes the real resolved diff after the byte-local branch-order fix and callee prototype addition. Seventeen functions total 4,624 bytes. The sixteen-match build passed all 27 checksums; started another scoped duplicate sweep and incremental rebuild. Updated [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] query | T-10010 grid loop reaches scratch zero
+
+TT func_80132810 now matches in scratch after typed loop recovery, initialization order, and tile/grid increment order. Testing a cleanup that reuses the existing core-state type. The bounded permuter found a lower raw score but did not resolve the register swap; the manual initialization-order probe did. Updated [[matching-notes]].
+
+## [2026-10-11] build | T-10010 eighteenth match and prior checksum checkpoint
+
+TT func_80132810 passes the real resolved diff (888 bytes), bringing the retained total to 18 / 5,512 bytes. The 17-match build passes all 27 checksums, and scoped dupes reports zero plans. Started the 18-match build. Updated [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] query | T-10010 menu, drawing, and actor-pair type repair
+
+Typed u32 menu records and a paired GsRecF90 view reduce menu_bar_show to eight resolved rows. TT func_8013A610's local-frame repair reduces its miss to twelve; TACO actor-pair drafts required stride corrections before register work. No additional code retained yet. Updated [[matching-notes]].
+
+## [2026-10-11] build | T-10010 nineteenth real match and three more scratch matches
+
+OPTION func_80132624 passes its real diff. RPG_BAT func_80144480 and TT func_8013A610/func_8013A710 pass cleanup probes and are placed for real verification. The 18-match full incremental rebuild passed all 27 checksums. Updated [[matching-notes]]; no new tool/config changes.
+
+## [2026-10-11] build | T-10010 twenty-two real-file matches
+
+The RPG switch and both TT drawing helpers pass real resolved diffs, joining the verified OPTION grid. Retained total is 22 functions / 6,536 bytes. Started the combined checksum build and updated [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 twenty-two-match checksum checkpoint
+
+The combined incremental build passes all 27 checksums with headers and globals checks. Near-miss passes continue: menu_bar_show remains eight rows after alternate callee prototypes; TT func_80142570's recovered typed loops reproduce the rolling/unrolling but retain the known higher-register constant pattern. No prototype override was retained. See [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 next aggregate repairs
+
+TT func_80147FD0's restored ten-entry trail loop reproduces the original unrolling; the remaining twelve resolved rows concern two materialized zero registers. Plain, chain, address and full-width bit-field variants are in agent scratch. TACO func_8013506C's word-buffer repair fixes the invalid typed-pointer stride but retains register/frame differences. TACO func_80155C64 has ten operand-order rows remaining; a five-minute scratch permutation is running. The retained 22-function build still passes all 27 checksums. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 two further scratch zeros
+
+TACO func_80155C64 reaches zero after xor-zero on both trig results, byte-stride pointer calculations after the calls, and an indexed final timer clear. Main func_8005B2BC also reaches zero with word-stride table indexing and the selected-girl store inside the third call argument. Both are undergoing cleanup before real-file verification. Main func_8005B1A8's draft omitted the target's return 1/0; restoring those leaves its frame and address-temporary differences. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 24 real matches and paired interaction recovery
+
+Both new real-file resolved comparisons pass: main func_8005B2BC and TACO func_80155C64. Total 24 functions / 7,188 bytes. The paired main func_8005B1A8 now has a cleaned scratch zero using word-stride table indexing and a documented two-word frame home; one-word/no-padding controls fail. Header declarations are generated centrally, and real verification is underway. See [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]].
+
+## [2026-10-11] build | T-10010 25 real matches
+
+Main func_8005B1A8 passes the real resolved diff. Running total 25 functions / 7,464 bytes. sync_protos updates its previous unprototyped void declaration to the observed s32(void) definition and adds the two data declarations; its report has no new risky view changes. Started the 54-file duplicate sweep and full incremental checksum build. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 callback and fade-loop deep pass
+
+SHOUGATU func_801419D0's native 40-callback aggregate and direct signed-halfword pre-increment reduce the resolved miss to eight rows around load scheduling; a bounded permuter is running. BUNKA_SD func_80134850's recovered 0x44 sprite loop and unsigned GameState views reduce invalid negative-field code to eighteen rows around quotient/zero registers. DATE func_8014DCCC reuses the existing DateCallbacks39 aggregate; local-home order and selector lifetimes remain under test. These are scratch-only. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 menu search loop reconstruction
+
+Main func_80050324 reaches scratch zero (228 bytes) after replacing duplicated goto returns with ordinary forward/reverse for loops over the two interleaved GsRecF90 menu columns. Both loops reuse one signed index and access the table through a local GameState pointer; separate counters leave eight rows. No scheduling trick is needed. Checking renamed parameters and then the real file. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 26 real matches
+
+Main func_80050324 passes the real-file resolved comparison, bringing the total to 26 functions / 7,692 bytes. All 27 checksums passed at the preceding 25-match build; header generation reports no new risky views. DATE func_801511B4 now reuses its file's existing FnTbl40 and is two rows from a match after an explicit brightness return; its remaining high-half load scheduling is in a bounded permutation. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 DATE permutation resolved match
+
+The DATE func_801511B4 permuter candidate scores zero when relocations are resolved. A redundant brightness assignment in the alternate blink branch shifts the hoisted address load into the original slot; removing it leaves two rows. Cleanup now uses the scalar index, normal formatting, and FAKE comments for that store and the integer return convention. The menu-selection struct cleanup also reaches zero and its real-file verification is running. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 DATE signature conflict and review cleanup
+
+Real DATE verification rejects the scratch-zero candidate because the existing overlay header declares func_801511B4 void. The brief allows overlay-header appends only, so the integer candidate is restored to INCLUDE_ASM while void-preserving variants are tested. Retained total remains 26 / 7,692 bytes. Main func_80050324's MenuSelection5 review cleanup passes the real resolved diff. Review is pinned to c55a3b8c564cd5c58d1eb7a7e8f987e72d4c165f and runs inline under the explicit brief, covering CODING_STANDARDS.md, CONTRIBUTING.md and the wave-11 scope. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 natural two-counter lookup loop
+
+Main func_80053418 is down to twelve resolved rows after restoring a sixteen-entry loop, a separate byte-offset counter, and the lookup table's twenty-byte rows. The initial saved s16-pointer +=2 was incorrect: original advances two bytes, so the typed pointer advances one element. The remaining differences are buffer home offsets (four bytes) and increment scheduling. No source retained yet. See [[matching-notes]].
+
+## [2026-10-11] query | T-10010 inline review checkpoint
+
+The retained changes have been read against CODING_STANDARDS.md and CONTRIBUTING.md. The new menu-selection view resolves the first-field-indexing concern without a byte change. Header additions have fixed-width types and documented layouts; all deliberate register/frame tricks have FAKE comments. Existing TT helper type placement is preserved semantically. DATE func_801511B4 remains unretained because its integer scratch match conflicts with the existing void declaration; the void form remains four rows away. Final scope/build/prototype checks and elapsed-time floor are still pending. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 lookup-buffer scratch zero
+
+Main func_80053418 reaches scratch zero. Declaring its element index before the two sixteen-byte buffers puts their homes at +0x44/+0x54; reversing the two for-loop increments restores scheduling. This removes the twelve-row miss with ordinary C and no dummy padding. Testing full brace formatting and the established integer return view before placing it. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 27 real matches
+
+Main func_80053418 passes real resolved diff; total 27 functions / 7,968 bytes. Its two-dimensional table declaration is generated by sync_protos and the return is ordinary C. Inline review requests offset-based names for the new TT scene's unclassified selectors; that cleanup is undergoing real rechecks. Scope audit will consume a host-git source snapshot because the Docker mount cannot resolve this linked worktree's host .git path. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 final retained checkpoint
+
+All 27 unit checksums pass for 27 retained functions / 7,968 bytes. Prototype branch checking reports zero new disagreements and 17 known; globals pass. The final exact-path duplicate sweep applies zero plans, and the scope audit confirms owned C paths, append-only overlay headers, and no tools/config edits. git diff --check passes. Progress is 5,009/6,958 functions and 844,908/2,279,368 bytes (37.1%). TACO's final vector-copy probes remain nonmatching and scratch-only. The remaining session time is used for an ENDING aggregate-recovery attempt. See [[matching-notes]] and [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 ENDING record initializer scratch match
+
+ENDING func_8013A004 (740 bytes) reaches zero resolved scratch differences immediately after replacing the invalid memcpy draft and individual aliases with the existing Rec24 array. Five ordinary structure assignments model the exact copies, and all scalar stores use existing fields. No added declarations or FAKE idioms are needed. Real-file verification is running. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 28 real matches
+
+ENDING func_8013A004 passes real resolved comparison; retained total is 28 functions / 8,708 bytes. Its ordinary Rec24 assignments reuse existing declarations. The next incremental checksum build is running. See [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]].
+
+## [2026-10-11] build | T-10010 EVENT record loop repair
+
+EVENT func_800FAA04 now compiles through the existing Rec24 view. A signed-halfword view at +0x0A shares the two constant-8 stores; a signed local width preserves the original checked division, and placing the computed x assignment immediately after the random call fixes its scheduling. A post-increment in the final halfword-array store reduces the candidate to four resolved rows. A bounded five-minute permutation and line-schedule probes are running; the source remains assembly. ENDING's new checksum passes. See [[matching-notes]].
+
+## [2026-10-11] build | T-10010 late aggregate follow-up
+
+EVENT func_800FAA04 remains four rows away after counter and line-layout probes. OPTION func_80132384 compiles using the neighboring Arrs4x8 grid and a word-sized coordinate, but still differs in saved-register lifetimes and the grid's stack home. Neither is retained; current count remains 28 / 8,708 bytes. See [[matching-notes]].
+
+## [2026-10-11] ticket | T-10010 enters In Review
+
+The retained 28-match batch enters In Review, with ticket, kanban and index synchronized. Review is inline as the shared brief requires. Final aggregate-view cleanup checks and the session's four-hour floor remain pending; late scratch probes do not alter the retained source. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] query | T-10010 brightness-view review evidence
+
+Direct Rec24 field and local field-pointer views of ENDING's brightness each leave 32 resolved rows: IDO chooses v0 instead of the original a1. The matching fade retains its existing central scalar alias, now with a FAKE comment documenting the measured constraint. The new initializer uses the aggregate directly. No declaration changes are required. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 final near misses stay assembly
+
+EVENT's five-minute permutation resolves to eight rows, worse than the manual four-row candidate. Its remaining scheduling variants and OPTION's grid/expression variants do not match; neither changes the source. Final scoped dupes apply zero plans. The retained set remains 28 functions / 8,708 bytes, now under final incremental build, guards and scope checks. See [[matching-notes]].
+
+## [2026-10-11] query | T-10010 inline review passes
+
+Standards and Spec axes are recorded in the ticket with zero unresolved findings. All 27 final linked-binary hashes pass, headers/globals pass, prototype checking has zero new disagreements, and scope/diff checks pass. The final progress line is 5,010/6,958 functions, 845,648/2,279,368 bytes (37.1%). One last 300-second EVENT permutation starts from the improved four-row candidate while the minimum session duration completes; it remains scratch-only unless independently verified. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] lint | T-10010 wiki boundaries and status
+
+Scoped wiki lint confirms all pre-existing log, matching-note and T-0018 table content is preserved; the batch adds exactly one T-0018 row and its own matching-notes section. Ticket, kanban and index agree on In Review, and all implementation/review acceptance checks are complete. Only the final bounded scratch run and four-hour timing gate remain. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] build | T-10010 final EVENT permutation complete
+
+The second 300-second run finishes at raw score 120; its only retained candidate resolves to the same four differing rows as the manual seed. It remains scratch-only, with no source changes. Final result stays 28 matched functions / 8,708 bytes. See [[tickets/T-10010-wave-11-list-1]].
+
+## [2026-10-11] ticket | T-10010 completed after four-hour session
+
+Session ended 2026-10-12 04:54:25 UTC, 4h 0m after the 00:54:19 UTC start. Retained 28 functions / 8,708 bytes; all 27 binary checksums, headers/globals/prototypes and scoped checks pass. Final second EVENT permutation still has four resolved rows and stays assembly. Inline Standards and Spec reviews have no unresolved findings. Ticket, kanban and index are Done; work is uncommitted for integration. See [[tickets/T-10010-wave-11-list-1]] and [[matching-notes]].

@@ -1,17 +1,55 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A3E0);
-
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A610);
-
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A710);
-
 typedef struct {
     s16 x;
     s16 y;
     u8 pad4[0x1C];
 } TtXY; /* FAKE: pad4 and fake_pad below reproduce the original's frame (locals 0x30..0x54); real locals unknown. T-8060 */
+
+INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A3E0);
+
+void func_8013A610(void) {
+    TtSceneDraw *p;
+    u8 unused; /* FAKE: preserve the pointer and position homes. T-10010. */
+    TtXY pos;
+    s32 fake_pad; /* FAKE: preserve the frame-index home at +0x30. T-10010. */
+    u32 frame;
+    u32 kind;
+    p = (TtSceneDraw *)D_80158A8C;
+    kind = p->unk_3E;
+    frame = p->unk_3A4[0] % 3U;
+    if (p->unk_3C == 2 && p->unk_3E != 3) {
+        kind += 3;
+    }
+    pos.x = p->x + p->xs[0];
+    pos.y = p->y + p->ys[0];
+    func_8013A3E0(&pos, kind * 6 + D_80155C78, 0);
+    pos.x = p->x + p->xs[1];
+    pos.y = p->y + p->ys[1];
+    func_8013A3E0(&pos, frame * 6 + 0x54 + D_80155C78, -1);
+}
+
+void func_8013A710(void) {
+    TtSceneDraw *p;
+    u8 unused; /* FAKE: preserve the pointer and position homes. T-10010. */
+    TtXY pos;
+    s32 fake_pad; /* FAKE: preserve the frame-index home at +0x30. T-10010. */
+    u32 frame;
+    u32 kind;
+    p = (TtSceneDraw *)D_80158A8C;
+    kind = p->unk_66;
+    frame = p->unk_3A4[1] % 3U;
+    if (p->unk_64 == 2 && p->unk_66 != 3) {
+        kind += 3;
+    }
+    pos.x = p->x + p->xs[2];
+    pos.y = p->y + p->ys[2];
+    func_8013A3E0(&pos, kind * 6 + D_80155C78, 1);
+    pos.x = p->x + p->xs[3];
+    pos.y = p->y + p->ys[3];
+    func_8013A3E0(&pos, frame * 6 + 0x42 + D_80155C78, -1);
+}
 
 void func_8013A810(void) {
     u8 *p;
