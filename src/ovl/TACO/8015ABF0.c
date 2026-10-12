@@ -76,7 +76,45 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BD30);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BF70);
 
+/* NON_MATCHING: T-10620, only the base register of the actor pointer: the original keeps &D_8015EDB4[arg1] in v0 (no copy), IDO allocates the local and the expression as two ranges (v1, v0), about 6 lines */
+#ifdef NON_MATCHING
+void func_8015C0A0(arg0, arg1)
+s32 arg0;
+s32 arg1;
+{
+    TcActor *a;
+    s32 i;
+
+    a = &D_8015EDB4[arg1];
+    if (a->pad0[1] & 0x80) {
+        if (arg0 == 1) {
+            if (a->unk84[2] < 0xB) {
+                *(s32 *)((u8 *)a + 4) = 0;
+                return;
+            }
+            *(s32 *)((u8 *)a + 4) = 0x80000000;
+            for (i = 0; i < 0x40; i++) {
+                if (arg1 == D_80161D9C[i]) {
+                    D_80127080[i].unk0 = 0;
+                }
+            }
+            return;
+        }
+        if (a->unk84[2] < 9) {
+            *(s32 *)((u8 *)a + 4) = 0x80000000;
+            return;
+        }
+        *(s32 *)((u8 *)a + 4) = 0x80000000;
+        for (i = 0; i < 0x40; i++) {
+            if (arg1 == D_80161D9C[i]) {
+                D_80127080[i].unk0 = 0x80000000;
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015C0A0);
+#endif
 
 void func_8015C208(s32 arg0) {
     s32 i;
@@ -116,6 +154,33 @@ s32 func_8015CC54(void) {
     return n;
 }
 
+/* NON_MATCHING: T-10620, two lines: the two address recomputations after the clearing store are addu a1,a0,t5 (offset first) in the original, addu a1,t5,a0 here; permuter 240 s found nothing */
+#ifdef NON_MATCHING
+s32 func_8015CCC8(arg0)
+s32 arg0;
+{
+    s32 n;
+    s32 i;
+
+    n = 0;
+    for (i = 16; i != 63; i++) {
+        if (D_8015EDB4[i].unk84[1] != 0) {
+            if (!(D_8015EDB4[i].pad0[1] & 0x80)) {
+                D_8015EDB4[i].unk84[1] = 0;
+            }
+        }
+        if (arg0 != 0xFF) {
+            if (arg0 == D_8015EDB4[i].unk84[2] && D_8015EDB4[i].unk84[1] != 0) {
+                n++;
+            }
+        } else if (D_8015EDB4[i].unk84[1] != 0) {
+            n++;
+        }
+    }
+    return n;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015CCC8);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015CE64);
