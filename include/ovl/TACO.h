@@ -475,3 +475,14 @@ typedef struct TcRotations14 {
 extern TcDirections28 D_80160480;
 extern TcRotations14 D_801604A8;
 #endif
+
+#ifndef OVL_TACO_ACTOR_INIT_T10020
+#define OVL_TACO_ACTOR_INIT_T10020
+extern u8 D_8015FA44[];
+extern u8 D_8015FA50[];
+#endif
+
+#ifndef OVL_TACO_MENU_RESOURCE_T10020
+#define OVL_TACO_MENU_RESOURCE_T10020
+extern s16 *D_80160444;
+#endif

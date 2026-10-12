@@ -43,7 +43,43 @@ void func_801490C0(u8 *arg0) {
     *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x26);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149108);
+void func_80149108(void) {
+    s32 index;
+    u16 state;
+    TtState58 *record;
+
+    record = (TtState58 *)D_80158A88;
+    index = 0;
+    do {
+        if (record->unk_00 != 0) {
+            state = record->unk_04;
+            switch (state) {
+            case 0x20:
+                func_80148E7C((u8 *)record, index);
+                record->unk_04 = 0x40U;
+                record->unk_0A = 0;
+                record->unk_08 = 0;
+                record->unk_06 = 0;
+                record->unk_0F = 0;
+                record->unk_0E = 0;
+                record->unk_0D = 0;
+                break;
+            case 0x40:
+                func_80149098((u8 *)record);
+                break;
+            case 0x80:
+                record->unk_00 = 0;
+                break;
+            }
+            /* FAKE: the dead bound test gives 8 its original saved register;
+             * no extra instructions are emitted. T-10020. */
+            if (index != 8) {}
+            func_801490C0((u8 *)record);
+        }
+        index += 1;
+        record++;
+    } while (index != 8);
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801491F0);
 

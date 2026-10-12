@@ -32,7 +32,8 @@ INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139AF8);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139AFC);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139B00);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139B04);
-INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139B08);
+/* Ten status bytes followed by two bytes of end padding. T-10020. */
+u8 D_80139B08[12] = { 0 };
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139B14);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139B18);
 INCLUDE_RODATA("asm/ovl/EN_NICHI/data/EN_NICHI/80132000.data", D_80139B1C);
@@ -59,7 +60,32 @@ void func_80132040(void) {
     D_801391FC = 0x801E0408;
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801320C0);
+void func_801320C0(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_8013216C();
+        return;
+    case 1:
+        func_80132834();
+        return;
+    case 2:
+        func_80132450();
+        func_8013275C();
+        func_80042808();
+        return;
+    case 3:
+        func_80132A0C();
+        return;
+    case 4:
+        func_801362A4();
+        return;
+    case 5:
+        func_80132278();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 void func_8013216C(void) {
     switch (D_800E6280.unk_110A) {
@@ -129,7 +155,33 @@ void func_80132378(void) {
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132450);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_8013275C);
+void func_8013275C(void) {
+    s32 index;
+    s32 *word;
+
+    for (index = 0; index < 10; index++) {
+        func_80134258(index, 0);
+    }
+    func_801354E0();
+    /* FAKE: reusing index for this reset keeps the first loop bound
+     * as an immediate comparison instead of a saved register. T-10020. */
+    index = 0;
+    D_801392A0 = index;
+    /* FAKE: the shared line preserves the pointer setup schedule. T-10020. */
+    word = D_80139278; do {
+        *word++ = 0;
+    } while (word < &D_801392A0);
+    D_80139B20 = 0;
+    D_80139AF4 = 0;
+    D_80139AF8 = 0;
+    D_80139AFC = 0;
+    D_80139B00 = 0;
+    D_80139B04 = 0;
+    for (index = 0; index < 10; index++) {
+        D_80139B08[index] = 0;
+    }
+    D_80139B18 = 0;
+}
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80132834);
 
@@ -287,7 +339,35 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801333B0);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_8013358C);
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801337E0);
+void func_801337E0(void) {
+    s32 distance;
+    s32 radius;
+    u8 *status;
+    EnObj *object;
+
+    radius = ((s32) D_80139B00 / 2) + 5;
+    if (radius >= 0xB) {
+        radius = 0xA;
+    }
+    radius *= radius;
+    /* FAKE: this shared line preserves the loop-setup load schedule. T-10020. */
+    object = (EnObj *)D_8013984C; status = D_80139B08; do {
+        distance = func_80132A74((s32) object->unk_16, (s32) object->unk_1A, (s32) D_8011ECF6, (s32) D_8011ECFA);
+        if (object->unk_00 != 0) {
+            if (distance < radius) {
+                *status = 2;
+            } else if (distance < 0x100) {
+                *status = 1;
+            } else {
+                *status = 0;
+            }
+        } else {
+            *status = 0;
+        }
+        status += 1;
+        object++;
+    } while (status != D_80139B12);
+}
 
 void func_801338EC(void) {
     func_801340CC();

@@ -8309,3 +8309,107 @@ All 27 unit checksums pass at the nine-match checkpoint. BUNKAKEN func_80143DD0 
 ## [2026-10-11] lint | T-9960 appended type guards
 
 The supplemental scratch survey includes overlay headers twice and exposed missing repeat-include guards around this batch's appended BUNKAKEN/BUNKASAI types. Added guards around only the new declarations. Existing single-include builds had passed. The checkpoint printed 26 rebuilt unit checks; the remaining unit's check was already current. Final validation will explicitly recompute all 27 hashes.
+
+## [2026-10-11] ticket | T-10020 Wave 11 list 2 started
+
+Created [[tickets/T-10020-wave-11-list-2]] and In Progress card. Read the shared brief and source ownership list (158 functions, 53 files), [[decompile-workflow]], [[register-allocation-wave7]] and allocator trace evidence. All experiments use Docker and scratchpad/w11-2; changes remain uncommitted.
+
+## [2026-10-11] build | T-10020 baseline and draft collection
+
+Configured the fresh worktree and started Docker ninja. Private scratchpad/w11-2/harvest.py collects unit-scoped m2c drafts; screen.py records scratch compilation and resolved differences without editing repository C. [[matching-notes]] records the initial scope and MATRIX type-repair evidence for [[tickets/T-10020-wave-11-list-2]].
+
+## [2026-10-11] build | T-10020 clean starting baseline verified
+
+Initial Docker ninja passed all 27 executable/overlay SHA1 checks. [[tickets/T-10020-wave-11-list-2]] records the baseline and initial source experiments. Private draft/error logs preserve the distinction between missing aggregate types and measured register/scheduling differences.
+
+## [2026-10-11] build | T-10020 first deep near misses
+
+Collected all 158 unit-scoped m2c drafts. Scoped dupes/neardupes yielded no accepted additions. [[matching-notes]] records main func_8007B2B4 and TT func_80134178 at two fresh full-object diff lines, source variations and the first five-minute permutation. Scratch type-repair probes retain failed code separately from repository sources; [[tickets/T-10020-wave-11-list-2]] remains In Progress.
+
+## [2026-10-11] build | T-10020 first verified match, 164 bytes
+
+Matched main func_8007B2B4 in src/main/80079B10.c. [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]] document the K&R parameter, FAKE selector block and source-line scheduling. Real resolved function comparison passes; Docker ninja confirms all 27 unit SHA1s. Changes remain uncommitted.
+
+## [2026-10-11] build | T-10020 second verified match, 396 bytes total
+
+Matched TT func_80149108 in src/ovl/TT/80148DB0.c with the existing TtState58 record and an explicitly documented dead bound test. [[matching-notes]] records the allocation evidence; [[tickets/T-10020-wave-11-list-2]] records two matches / 396 bytes. Real resolved comparison and TT checksum pass. Other source experiments remain in scratchpad/w11-2.
+
+## [2026-10-11] query | T-10020 typed and control-flow deep pass
+
+Recorded DATE post-increment, EN_NICHI pointer scaling and TT base-specific store-width corrections in [[matching-notes]]. OPTION is down to four lines and BUNKAKEN to two after source-type, lifetime and scheduling probes. Five-minute permutation batches rebuild every improving candidate in the full source object; the first DATE search remains four lines. All unresolved drafts remain scratch-only for [[tickets/T-10020-wave-11-list-2]].
+
+## [2026-10-11] build | T-10020 four verified matches, 924 bytes
+
+Real resolved comparisons and unit SHA1s pass for DATE func_8013E3C4 and ETC func_8014BF2C. [[matching-notes]] records the comparison-cast/store-order and GameState-pointer fixes. [[tickets/T-10020-wave-11-list-2]] records the gains and reviewed TT pointer-cast cleanup. Remaining work continues in the assigned files; no tool/configuration changes or commits.
+
+## [2026-10-11] build | T-10020 five-match all-unit checkpoint
+
+TAIIKU func_801482BC and its typed slot/controller accesses match. The header-triggered rebuild verifies all 27 unit SHA1s; batch total is five functions / 1,104 bytes. [[matching-notes]] records the index comparison, shared-high stores, input-queue snapshot correction and unresolved MATRIX spill. [[tickets/T-10020-wave-11-list-2]] remains In Progress for continued matching; scoped duplicate reuse is restricted to the 53 owned files.
+
+## [2026-10-11] build | T-10020 sixth match and checkpoint
+
+TACO func_80148B58 adds 532 bytes (six functions / 1,636 total). Shared loop counter, indexed constructor data and existing actor fields pass resolved funcdiff and all 27 SHA1 checks. Scoped dupes retained zero candidates. Evidence and source findings in [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]].
+
+## [2026-10-11] query | T-10020 bounded register-shape retries
+
+Appended six classified retry rows to [[data/t0018-cases]], with source-search limits and remaining resolved differences. [[matching-notes]] records OPTION allocator trace interpretation and a permute.py success-status/duration-reporting bug on an uncompilable base. Failed setup is excluded from matching evidence. [[tickets/T-10020-wave-11-list-2]] continues with repaired aggregate and loop candidates.
+
+## [2026-10-11] build | T-10020 eight verified matches
+
+EN_NICHI func_801337E0 and DATE func_80139DD0 add 632 bytes; total eight functions / 2,268 bytes. Both resolved function comparisons and all 27 unit checksums pass. [[matching-notes]] explains the nested comparison and structured switch recovery; [[tickets/T-10020-wave-11-list-2]] tracks the retained scheduling FAKE and six T-0018 rows.
+
+## [2026-10-11] build | T-10020 ninth match
+
+Main func_800836A0 adds 360 bytes with exact early returns and a unified record-table view. All 27 unit checksums and resolved funcdiff pass. [[matching-notes]] records the byte-cast range and store ordering; [[tickets/T-10020-wave-11-list-2]] now records nine functions / 2,628 bytes. Prototype synchronization reported no view changes; unrelated header reordering was restored by editing.
+
+## [2026-10-11] build | T-10020 eleven matches
+
+ETC parameter counting and TAIIKU slot update add 592 bytes. Both resolved diffs match, the checkpoint passes 27 unit checksums, and scoped duplicate matching adds none. [[matching-notes]] records the natural array-loop recovery and reduced empty-test workaround. [[tickets/T-10020-wave-11-list-2]] records eleven matches / 3,220 bytes. Further aggregate/signature repairs remain scratch-only.
+
+## [2026-10-11] build | T-10020 twelfth match
+
+TT projectile initialization matches after actor recovery and declaration ordering. Its angle helper’s return type now reflects the caller’s use without changing its instructions. Both resolved comparisons and the TT checksum pass. [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]] record 12 functions / 3,504 bytes.
+
+## [2026-10-11] query | T-10020 deep-pass source and frame evidence
+
+Typed EN_NICHI func_80134F2C now differs only in frame size, confirming the existing T-9610 limitation. MATRIX copying, shared-HI data stores, word strides and SDK call arity received bounded retries. [[matching-notes]] records the evidence and scratch-only status. Midpoint `ninja progress` reports 4,994 / 6,958 functions, 840,444 / 2,279,368 bytes (36.9%): twelve verified gains / 3,504 bytes before the next data-owning reset checkpoint.
+
+## [2026-10-11] build | T-10020 thirteenth match and data alignment verification
+
+The EN_NICHI reset matches with the real twelve-byte status-data extent. The first split-array definition failed the unit checksum by adding alignment; one array restores the original layout. The completed checkpoint passes all 27 units and both affected resolved comparisons. [[matching-notes]] records the source and alignment evidence; [[tickets/T-10020-wave-11-list-2]] records thirteen gains / 3,720 bytes.
+
+## [2026-10-11] query | T-10020 additional classified near misses
+
+Read current register-shape classifications and appended five bounded retries to [[data/t0018-cases]], bringing this batch to eleven rows. Each records actual full-object differences and manual/permutation scope; assembly remains for all five. [[tickets/T-10020-wave-11-list-2]] records the count.
+
+## [2026-10-11] build | T-10020 CD averaging match
+
+Correct narrow types, indexed channel reads and documented explicit result masks match SD_CalcCDAve (264 bytes). Real resolved comparison and the main executable SHA1 pass; total fourteen gains / 3,984 bytes. [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]] record the evidence. Inline review of the earlier thirteen changes found no unresolved finding; the completed branch-prototype check reports zero new disagreements.
+
+## [2026-10-11] build | T-10020 17-match checkpoint
+
+Owned-file extension: TACO func_80152764 (164 bytes) matches with the correctly typed s16 resource pointer D_80160444; SHUGAKU func_80139400 (152 bytes) uses a documented FAKE local s32 selector to preserve v0; DATE func_8013DEF8 (188 bytes) matches after moving the independent girl-field store before D_80122D20. The latter two routines have ordinary control flow and unchanged strings. All 27 unit checksums and the resolved function comparisons pass. [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]] record 17 gains / 4,488 bytes.
+
+## [2026-10-11] query | T-10020 late register and scheduling retries
+
+Read register_shapes classifications and appended four bounded retry rows to [[data/t0018-cases]]; batch total is fifteen. [[matching-notes]] distinguishes the pure register/scheduling misses from a mixed TACO actor-loop draft. [[tickets/T-10020-wave-11-list-2]] records the current evidence; unmatched functions remain assembly-backed.
+
+## [2026-10-11] build | T-10020 23-match checkpoint
+
+Six further owned-file functions match: DATE func_8013BFF8 and EVENT func_801189B4 (172 bytes each) are natural switch dispatchers; DATE func_80138314 / func_801385D8 (168 / 164 bytes) copy real 11- and 12-entry tables of paired s32 arguments into typed local aggregates; EVENT func_80117304 (140 bytes) copies two byte-table rows through the existing word address views, with integer addition before the pointer cast preserving ADDU operand order; EN_NICHI func_801320C0 (172 bytes) needs forward void declarations for its already matched local callees. No extra dummy statements are retained in these six. Jump-table data is verified by the unit SHA1s, and byte counts exclude table words. All 27 unit checksums and the resolved function comparisons pass. [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]] record 23 gains / 5,476 bytes.
+
+## [2026-10-11] build | T-10020 collateral branch-order correction
+
+The SHUGAKU checksum caught a two-byte change in an existing neighboring function despite the new callback resolving exactly. A documented dead branch in the new function restores the original compilation context; the neighbor source stays unchanged. Both resolved comparisons and the resumed 27-unit checkpoint pass. [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]] record the evidence.
+
+## [2026-10-11] build | T-10020 twenty-six verified functions
+
+OPTION func_80138A8C (192 bytes) uses GameState.unk_1104.w and a forward void declaration; DATE func_8014A1E4 (156 bytes) reads its signed-storage selector through a u16 memory view and declares four existing void callees; SHUGAKU func_80138B20 (184 bytes) copies the real 71-callback aggregate, with a documented FAKE wrapper adding the observed unused 0x10-byte extent to reproduce the 0x158 frame. All body instructions and stack locations match. The wrapper does not claim a recovered source purpose or change compiler flags. The three new real resolved comparisons and all 27 unit checksums pass. [[matching-notes]] and [[tickets/T-10020-wave-11-list-2]] record 26 gains / 6,008 bytes.
+
+## [2026-10-11] lint | T-10020 final scope, checks and review
+
+Inline CODING_STANDARDS review, allowed-file scope, append-only headers/wiki history, whitespace, 27 final checksums, globals, and the zero-new-disagreement prototype guard all pass. A source-aware scoped duplicate scan finds no copy plans; 20 refreshed near misses remain nonmatching. [[matching-notes]] records the tooling limitations and final result: 26 functions / 6,008 bytes, 15 new rows in [[data/t0018-cases]]. No commit was made.
+
+## [2026-10-11] ticket | T-10020 Done
+
+Moved [[tickets/T-10020-wave-11-list-2]] from In Progress to Done in [[kanban]] after resolving every review finding and completing more than four hours of work. Final progress: `grand total   5008/6958   842948/2279368  37.0%`. Changes remain uncommitted on w11-2 for the orchestrator.

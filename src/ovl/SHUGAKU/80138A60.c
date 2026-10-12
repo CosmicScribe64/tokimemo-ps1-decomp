@@ -20,7 +20,24 @@ void func_80138ADC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80138B20);
+void func_80138B20(void) {
+    /* FAKE: the wrapper reserves the observed extra frame extent. T-10020. */
+    ShugakuCallbackLocal12C local;
+    u8 state;
+
+    local.callbacks = D_8013C984;
+    /* FAKE: the dead branch preserves the later func_80138DD8 comparison
+     * operand order in this compilation unit; it emits no code. T-10020. */
+    if (1) {}
+    if (D_800CA2CC == 1) {
+        state = D_800E6280.unk_110A;
+        if (state >= 0x1FU && state < 0x25U) {
+            func_8006B900();
+        }
+    }
+    state = D_800E6280.unk_110A;
+    local.callbacks.callback[state](0x80);
+}
 
 void func_80138BD8(void) {
     func_801386C4();
@@ -115,7 +132,24 @@ void func_801393C4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139400);
+void func_80139400(void) {
+    /* FAKE: the local selector preserves v0 instead of v1. T-10020. */
+    s32 selection;
+    D_8013C974 = 0;
+    selection = D_800CA2CC;
+    switch (selection) {
+    case 0:
+        func_800AE0F0(D_800CA23C, "京都");
+        break;
+    case 1:
+        func_800AE0F0(D_800CA23C, "那覇");
+        break;
+    case 2:
+        func_800AE0F0(D_800CA23C, "札幌");
+        break;
+    }
+    func_8004284C();
+}
 
 void func_80139498(void) {
     if (D_80122CDC != 0) {

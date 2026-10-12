@@ -544,7 +544,23 @@ void func_801172E4(void) {
     func_80011EC4(0x32);
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117304);
+void func_80117304(void) {
+    s32 offset;
+    u8 *first;
+    u8 *second;
+
+    offset = D_800B1746 * 3;
+    /* The canonical word globals contain byte-table addresses. */
+    first = (u8 *)(offset + D_801251F0);
+    D_8012439C = (s16) first[0];
+    D_8012439E = (s16) first[1];
+    D_801243A0 = (s16) first[2];
+    second = (u8 *)(offset + D_801251F4);
+    D_8012438C = (s16) second[0];
+    D_8012438E = (s16) second[1];
+    D_80124390 = (s16) second[2];
+    func_80114B0C();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117390);
 
@@ -755,7 +771,31 @@ void func_80118950(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801189B4);
+void func_801189B4(void) {
+    switch (D_800B1746) {
+    case 0:
+        func_800335E0(0x55BA);
+        return;
+    case 4:
+        func_800335E0(0x64D8);
+        return;
+    case 5:
+        func_800335E0(0x5E84);
+        return;
+    case 6:
+        func_800335E0(0x60CD);
+        return;
+    case 7:
+        func_800335E0(0x5B5A);
+        return;
+    case 8:
+        func_800335E0(0x50CE);
+        return;
+    default:
+        func_800335E0(0x6721);
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118A60);
 

@@ -16,7 +16,29 @@ void func_8014A1B0(void) {
     D_8015DE30 = 0x801950C0;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014A1E4);
+void func_8014A1E4(void) {
+    /* The dispatcher reads the selector as an unsigned halfword. */
+    switch (*(u16 *)&D_8015DE40) {
+    case 0:
+        func_8014A280();
+        return;
+    case 1:
+        func_8014A2AC();
+        return;
+    case 2:
+        func_8014A314();
+        return;
+    case 3:
+        func_8014A360();
+        return;
+    case 4:
+        func_8014A39C();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_8014A280(void) {
     if (D_8015DE44 == 0) {

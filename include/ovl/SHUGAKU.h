@@ -495,3 +495,13 @@ typedef struct ShugakuCallbacks71 {
 } ShugakuCallbacks71; /* size 0x11C */
 extern ShugakuCallbacks71 D_8013C984;
 #endif
+
+#ifndef OVL_SHUGAKU_DISPATCH_T10020
+#define OVL_SHUGAKU_DISPATCH_T10020
+/* FAKE: the additional 0x10 bytes reproduce the original 0x158 frame.
+ * The source purpose of that unused extent is unknown. T-10020. */
+typedef struct ShugakuCallbackLocal12C {
+    /* 0x000 */ ShugakuCallbacks71 callbacks;
+    /* 0x11C */ u8 pad_11C[0x10];
+} ShugakuCallbackLocal12C; /* size 0x12C */
+#endif

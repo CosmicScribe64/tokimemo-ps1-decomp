@@ -88,3 +88,8 @@ typedef struct OptDraw44 {
     /* 0x2C */ u8 pad2C[0x18];
 } OptDraw44; /* size 0x44 */
 #endif
+
+#ifndef OVL_OPTION_DISPATCH_T10020
+#define OVL_OPTION_DISPATCH_T10020
+void func_8013990C(void);
+#endif

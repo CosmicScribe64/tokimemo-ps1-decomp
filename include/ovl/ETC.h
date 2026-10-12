@@ -1098,3 +1098,11 @@ typedef struct EtcConfig8 {
     /* 0x07 */ u8 unk_07;
 } EtcConfig8; /* size 0x08 */
 #endif
+
+#ifndef OVL_ETC_PARAMETER_COUNTS_T10020
+#define OVL_ETC_PARAMETER_COUNTS_T10020
+extern s32 D_8015186C;
+extern s32 D_80151870;
+extern s32 D_80151874;
+extern s32 D_80151878;
+#endif

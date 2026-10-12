@@ -80,7 +80,45 @@ s32 func_8014AE8C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014AF28);
+s32 func_8014AF28(void) {
+    s32 index;
+    s32 count;
+
+    D_80151870 = 0;
+    D_80151874 = 0;
+    D_80151878 = 0;
+    count = 0;
+    D_8015186C = 0;
+    /* The nine contiguous parameter records start at GameState +0xFC. */
+    for (index = 1; index != 8; index++) {
+        func_800AE0B0("param %d %d \n", index, ((GsRec0FC *)((u8 *)&D_800E6280 + 0xFC))[index].unk_02);
+        if (((GsRec0FC *)((u8 *)&D_800E6280 + 0xFC))[index].unk_02 >= 0x65) {
+            count++;
+        }
+    }
+    if (D_800E6280.unk_100.unk_02 < 0x65) {
+        D_8015186C += 1;
+    }
+    if (D_800E6280.unk_104.unk_02 < 0x65) {
+        D_8015186C++;
+    }
+    if (D_800E6280.unk_108.unk_02 < 0x65) {
+        D_8015186C++;
+    }
+    if (D_800E6280.unk_10C.unk_02 < 0x65) {
+        D_80151870 += 1;
+    }
+    if (D_800E6280.unk_118.unk_02 < 0x65) {
+        D_80151870 += 2;
+    }
+    if (D_800E6280.unk_110.unk_02 < 0x65) {
+        D_80151874 += 1;
+    }
+    if (D_800E6280.unk_114.unk_02 < 0x65) {
+        D_80151878 += 1;
+    }
+    return count;
+}
 
 s32 func_8014B0D0(void) {
     s32 var_s7;
@@ -266,7 +304,35 @@ s32 func_8014BE98(void) {
     return 3;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BF2C);
+/* The fallthrough s32 form preserves the selector/result copies. T-10020. */
+s32 func_8014BF2C(void) {
+    s32 result;
+    GameState *state;
+
+    state = &D_800E6280;
+    switch (state->unk_110D) {
+    case 0:
+        result = dec_bg_cd_read(0x408D, 1);
+        if (result != -1) {
+            if (result == 0 || result == 1) {
+                D_800E6280.unk_110D += 2;
+                dec_bg_show_set(1, result);
+            }
+        } else {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            dec_bg_show_set(1, func_8005751C(1));
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        func_8004284C();
+        break;
+    }
+}
 
 s32 func_8014C018(void) {
     switch (D_800E6280.unk_110A) {

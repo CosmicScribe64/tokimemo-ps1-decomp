@@ -91,7 +91,10 @@ u8 *func_80133BA4(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-void func_80133BE0(u8 *arg0, u8 *arg1) {
+/* The caller consumes the angle left in v0 by func_8014D260.
+ * Keep the fallthrough return: an explicit return through its void API
+ * is unavailable, and this definition matches the original helper. T-10020. */
+s32 func_80133BE0(u8 *arg0, u8 *arg1) {
     s32 dx = *(s32 *)(arg1 + 0x20) - *(s32 *)(arg0 + 0x20);
     s32 dy = *(s32 *)(arg1 + 0x24) - *(s32 *)(arg0 + 0x24);
 
@@ -100,7 +103,36 @@ void func_80133BE0(u8 *arg0, u8 *arg1) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133C1C);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133D14);
+void func_80133D14(s16 x, s16 y, s32 speed, u16 kind) {
+    TtActor68 *object;
+    u8 *source;
+    s32 angle;
+
+    source = D_80158A74;
+    object = (TtActor68 *)func_80133BA4(D_80158AA0, D_80158AA0 + 0x3400);
+    if (object != 0) {
+        object->unk_20 = x << 16;
+        object->unk_24 = y << 16;
+        angle = func_80133BE0((u8 *)object, source);
+        object->unk_28 = func_800A0140(angle) * speed;
+        object->unk_2C = func_800A0070(angle) * speed;
+        switch (kind) {
+        case 0xA0:
+            func_80133C1C(object, 0xA0, 0x12);
+            break;
+        case 0xA8:
+            func_80133C1C(object, 0xA8, 0x15);
+            break;
+        }
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133E30);
 

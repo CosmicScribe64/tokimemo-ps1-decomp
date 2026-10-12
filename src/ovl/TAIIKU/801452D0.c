@@ -80,8 +80,6 @@ typedef struct TkPl {
     /* 0x18 */ u8 pad18[4];
 } TkPl; /* size 0x1C */
 extern Lim3 D_8014A5FC;
-extern u8 D_8014A400[];
-extern u8 D_8014A400[]; /* func_80146FA0: stride 0x1C */
 extern u8 D_8014A401;
 extern u8 D_8014A41D;
 extern u8 D_8014A439;
@@ -353,7 +351,24 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147594);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147928);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147A6C);
+void func_80147A6C(s32 index) {
+    TaiikuSlot1C *slot;
+
+    slot = &((TaiikuSlot1C *)D_8014A454)[index];
+    /* FAKE: this empty test preserves the slot pointer's register range. T-10020. */
+    if (!slot) {
+    }
+    if (slot->unk_0C == 0 && (index != 0 || D_8014A3F4 > 0 || D_8014A3E0 != 0) && slot->unk_16 >= 6) {
+        if (slot->unk_08 > 0) {
+            slot->unk_02++;
+            slot->unk_16 = 0;
+        }
+        if (slot->unk_08 < 0) {
+            slot->unk_16 = 0;
+            slot->unk_02--;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147B14);
 
@@ -406,7 +421,35 @@ void func_80148228(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_801482BC);
+void func_801482BC(s32 index) {
+    TaiikuController *controller;
+    TaiikuSlot1C *slot;
+
+    slot = &((TaiikuSlot1C *)D_8014A454)[index];
+    if (slot->unk_0C != 0 && slot->unk_0D >= 0x65U) {
+        slot->unk_0C = 0;
+        if (index == 0) {
+            D_8014A3E4.unk_00 = 0;
+            D_8014A3E4.unk_08 = 0;
+            D_8014A3E4.unk_0C = 0;
+            D_8014A3E4.unk_04 = 0;
+            D_8014A3E4.unk_14 = 0;
+        } else {
+            controller = &((TaiikuController *)D_8014A400)[index - 1];
+            controller->unk_00 = 0;
+            controller->unk_08 = 0;
+            controller->unk_0C = 0;
+            controller->unk_04 = 0;
+            controller->unk_14 = 0;
+        }
+        slot->unk_02 = 0x37;
+        slot->unk_06 = 0x19;
+        slot->unk_08 = 0;
+        slot->unk_14 = 0;
+        slot->unk_16 = 0;
+        slot->unk_0D = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80148370);
 

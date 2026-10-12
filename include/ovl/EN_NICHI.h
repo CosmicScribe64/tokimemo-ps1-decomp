@@ -131,3 +131,28 @@ typedef struct EnResetSlot8 {
 } EnResetSlot8; /* size 0x08, 15 rows of 12 records, T-9710. */
 extern EnResetSlot8 D_801392AC[15][12];
 #endif
+
+#ifndef OVL_EN_NICHI_DISTANCE_T10020
+#define OVL_EN_NICHI_DISTANCE_T10020
+extern s32 D_80139B00;
+extern u8 D_80139B08[];
+/* Exclusive end of the ten status bytes beginning at D_80139B08. */
+extern u8 D_80139B12[];
+#endif
+
+#ifndef OVL_EN_NICHI_RESET_T10020
+#define OVL_EN_NICHI_RESET_T10020
+extern s32 D_801392A0;
+extern s32 D_80139AF4;
+extern s32 D_80139B04;
+extern s32 D_80139B18;
+void func_801354E0(void);
+#endif
+
+#ifndef OVL_EN_NICHI_TABLES_T10020
+#define OVL_EN_NICHI_TABLES_T10020
+void func_8013216C(void);
+void func_80132278(void);
+void func_8013275C(void);
+void func_80132A0C(void);
+#endif
