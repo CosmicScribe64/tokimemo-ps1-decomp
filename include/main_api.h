@@ -661,6 +661,8 @@ extern u8 D_800CA23C[];
 extern u8 D_800CA250[];
 extern u8 D_800CA25C[];
 extern u8 D_800CA2A4[4]; /* [1], [2] are the former D_800CA2A5/6 */
+extern u8 D_800CA2A5;
+extern u8 D_800CA2A6;
 extern u8 D_800CA2A8;
 extern s16 D_800CA2AC;
 extern u8 D_800CA2B0[];
