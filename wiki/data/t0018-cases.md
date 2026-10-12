@@ -1606,3 +1606,20 @@ EVENT SHA1 pass. Historical rows remain unchanged.
 | SHUGAKU/80135430 | `func_80135480` | regorder | function pointer in `$v0` and index in `$v1` in the original, reversed by IDO (two extra `move`s; the permuter refuses the base) (T-10310) |
 | SHUGAKU/80138A60 | `func_801398E8` | regorder | selector `D_80122CDC` in `$v1`, game-state byte in `$a1`; IDO uses `$v0`/`$t6` (58 lines) (T-10310) |
 | EVENT/801011A0 | `func_801022C0` | regorder | `c` in `$a3` and `i` in `$a0` in the original; IDO `$v1`/`$a0` (32 lines after the frame is right) (T-10310) |
+| 800451D0 | `func_80045318` | regorder | constant 48 in `$v0` and incremented index in `$v1` in the original; IDO `$t0`/`$v0` (16 lines, K&R definition matches the prologue) (T-10520) |
+| 80058D20 | `func_80058F9C` | regorder | `arg0` also stored to its home slot and the record pointer shares the spill slot of `arg0+4` (16 lines) (T-10520) |
+| 80079B10 | `func_8007B64C` | promo | `D_80125CC0` promoted in `$v0`, `D_80125CC2` loaded early in `$v1`; IDO sinks the load or colours `$v1` first (T-10520) |
+| 80047550 | `load_tpage_buf_lock` | sched | parameters reloaded from the home slots in the second branch; extra `move`s through `$t9` (T-10520) |
+| TT/8014AF00 | `func_8014C5F8` | regorder | the zero of two `sb` stores kept in `$a0`, `arg0` reloaded into `$a2` (12 lines) (T-10520) |
+| TT/80144D70 | `func_80145370` | regorder | hoisted constants 0x70/0x40/0x80 in `$a3/$a2`, IDO `$a1/$a0` (10 lines) (T-10520) |
+| TT/8013BD10 | `func_8013BE9C` | regorder | `arg0` in `$a3` and the table base in `$a2` in the original; base has priority 1.5 against 2 for `arg0` (T-10520, retried) |
+| ENDING/80133C10 | `func_80134B18` | promo | promoted `D_80120657` is one range in `$a1` across the calls in the original, `$v0` plus `$a1` in IDO (9 lines) (T-10520) |
+| VALEN/80132760 | `func_80133670` | regorder | base register of the `D_800E71DF` argument load is `$v0` in the original, `$a0` here (ugen temporary, 2 lines) (T-10520) |
+| TACO/80133870 | `func_801347F4` | sched | `move s2,s3; addiu s2,s2,8` and the order of the loop constants' `lui`/`addiu` (7 lines) (T-10520) |
+| TACO/80146D60 | `func_80146D60` | regorder | saved-register order: arg0 `$s1`, table base `$s2`, loop end `$s3` in the original (9 lines) (T-10520) |
+| TAIIKU/80138950 | `func_8013AE14` | regorder | ugen temp of `D+0x48` is `$t1` in the original, `$t9` here (2 lines) (T-10520) |
+| TAIIKU/80133C80 | `func_80138800` | regorder | the original consumes two more expression temporaries per loop (`$t3/$t4/$t5/$t8` against `$t1..$t4`) (T-10520) |
+| TAIIKU/80133C80 | `func_80136DA4` | regorder | promoted `D_8014929C` in `$v1`, f10 in `$a0`, limit in `$a1`: the original never uses `$v0` (14 lines) (T-10520) |
+| TAIIKU/80133C80 | `func_80137228` | promo | `D_8014929A` hoisted out of the loop in `$a1` in the original, never hoisted by IDO whatever the access form (T-10520) |
+| TAIIKU/80133C80 | `func_801368B8` | sched | one `lui`/`sw` swap: the original schedules `lui t4` of the next load before the `sw` (T-10520) |
+| GEKO/80142760 | `func_80144198` | regorder | `arg0` kept in `$a2` in the original, left in memory by IDO; locals fill 7 registers (T-10520) |
