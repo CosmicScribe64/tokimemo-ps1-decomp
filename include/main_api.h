@@ -897,7 +897,9 @@ extern s16 D_8011ED82;
 extern u8 *D_8011ED8C;
 extern s32 D_8011ED90;
 extern s8 D_8011ED9F;
+extern u8 D_8011EDE0[];
 extern s8 D_8011EDE3;
+extern u8 D_8011EEF0[];
 extern u8 D_8011F0CD;
 extern u8 D_8011F0CE;
 extern u8 D_8011F0CF;
@@ -1477,6 +1479,12 @@ extern u32 D_800B59B0[16];
 extern u32 D_800B0C4C;
 extern u8 D_800E94A0[];
 extern u8 D_800FD4A0[];
+extern s16 D_800B0962;
+extern u8 D_800E7D4E;
+extern s32 D_80122E98;
+extern s32 D_80122EA8;
+extern s32 D_80122EB0;
+extern s32 D_80122EB4;
 
 /* ---- functions ---- */
 void func_80010678();
@@ -2250,12 +2258,5 @@ s32 func_80067DFC(void);
 s32 func_80053418();
 s32 func_800463E8(void);
 s32 func_80049FF0();
-
-extern s16 D_800B0962;
-extern u8 D_800E7D4E;
-extern s32 D_80122E98;
-extern s32 D_80122EA8;
-extern s32 D_80122EB0;
-extern s32 D_80122EB4;
 
 #endif /* MAIN_API_H */

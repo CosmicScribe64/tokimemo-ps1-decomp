@@ -1,5 +1,25 @@
 #include "common.h"
 #include "ovl/NAME_ENT.h"
+
+typedef union NameMotionWord {
+    /* 0x00 */ s32 word;
+    struct {
+        /* 0x00 */ s16 low;
+        /* 0x02 */ s16 high;
+    } half;
+} NameMotionWord; /* size 0x04; signed fixed-point coordinate view */
+
+typedef struct NameMotionActor44 {
+    /* 0x00 */ u8 pad[3];
+    /* 0x03 */ u8 flags;
+    /* 0x04 */ u8 pad04[3];
+    /* 0x07 */ u8 phase;
+    /* 0x08 */ u8 pad08[0x1C];
+    /* 0x24 */ NameMotionWord x;
+    /* 0x28 */ NameMotionWord y;
+    /* 0x2C */ u8 pad2C[0x18];
+} NameMotionActor44; /* size 0x44; T-10030 */
+
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80144AD0.data", D_8014D180);
@@ -152,7 +172,28 @@ void func_801454CC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_801455E4);
+void func_801455E4(s32 arg0) {
+    NameMotionActor44 *p;
+
+    /* FAKE: sharing the initialization and loop source line places the actor
+     * base setup after the two endpoint loads. T-10030. */
+    p = (NameMotionActor44 *)D_8011ECD0; do {
+        p[96].phase++;
+        p[96].x.word += func_800A0070(p[96].phase << 5) * 8;
+        if (arg0 == 0) {
+            p[96].x.half.high--;
+        }
+        p[96].y.half.high++;
+        if (p[96].y.half.high >= 41) {
+            if (arg0 == 1 && p >= (NameMotionActor44 *)D_8011EDE0) {
+                p[96].flags = 0;
+            }
+            p[96].x.half.high = (func_800AE0D0() % 320) - 160;
+            p[96].y.half.high = -120 - (func_800AE0D0() % 48);
+        }
+        p++;
+    } while (p != (NameMotionActor44 *)D_8011EEF0);
+}
 
 void func_80145760(void) {
     switch (D_800E6280.unk_110D) {

@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-10030-wave-11-list-3|T-10030]] Wave 11: list 3 (Done; 12 functions / 4,172 bytes).
 - [[tickets/T-9930-wave-10-list-3|T-9930]] Wave 10: list 3 (In Progress).
 - [[tickets/T-9910-wave-10-list-1|T-9910]] Wave 10: list 1 (In Progress).
 - [[tickets/T-9920-wave-10-list-2|T-9920]] Wave 10: list 2 (In Progress).

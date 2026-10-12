@@ -1,5 +1,15 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+
+typedef struct TaiRecord44 {
+    /* 0x00 */ u8 pad[2];
+    /* 0x02 */ u8 active;
+    /* 0x03 */ u8 flags;
+    /* 0x04 */ u8 pad04[0x22];
+    /* 0x26 */ s16 y;
+    /* 0x28 */ u8 pad28[0x1C];
+} TaiRecord44; /* size 0x44; T-10030 */
+
 extern u8 D_80149232;
 extern u8 D_80149256;
 extern u8 D_8014927A;
@@ -301,7 +311,42 @@ void func_8013732C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137440);
+/* The original leaves the K&R result in v0 without an explicit return. */
+s32 func_80137440(void) {
+    s32 timer;
+    s16 y;
+    TaiRecord44 *record;
+
+    /* FAKE: the indirect halfword reads retain the timer in a0; direct scalar
+     * reads introduce an extra v0-to-a0 copy. T-10030. */
+    timer = *(s16 *)&D_8014929A;
+    if (timer < 0x3C1) {
+        if (((D_80120676 + 0x10) >= D_80120786) && (D_80120762 != 0)) {
+            if (D_80122EA0 == 1) {
+                func_80044750(0x609);
+            } else {
+                func_80044750(0x509);
+            }
+            D_80120762 = 0;
+            timer = *(s16 *)&D_8014929A;
+            D_80120763 = 0;
+        }
+        /* FAKE: joining initialization and loop opening preserves the two
+         * address-setup instructions' order. T-10030. */
+        record = (TaiRecord44 *)D_8011ECD0; do {
+            if (record[97].y >= record[101].y) {
+                record[101].active = 0;
+                record[101].flags = 0;
+            }
+            record++;
+        } while ((u32) record < (u32) (D_8011ECD0 + 0xCC));
+        y = 0xE8 - (timer * 2);
+        D_80120786 = y;
+        D_801207CA = y;
+        D_8012080E = y;
+        D_80120852 = y;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
 

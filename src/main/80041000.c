@@ -2,6 +2,11 @@
 #include "game.h"
 #include "libapi.h"
 
+/* The original clears GameState +0x56C through +0x66B as one byte block. */
+typedef struct StateClearBytes100 {
+    /* 0x00 */ u8 bytes[0x100];
+} StateClearBytes100; /* size 0x100 */
+
 void func_80041000(void) {
     func_80097D90(0x140, 0xF0, 0, 0, 0);
     func_80098380();
@@ -235,7 +240,34 @@ INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800419FC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041C2C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041F48);
+void func_80041F48(void) {
+    s32 i;
+
+    bzero(D_800E6280.unk_54C, 0x20);
+    bzero(D_800E6280.unk_66C, 0x30);
+    for (i = 0; i < 32; i++) {
+        D_800E6280.unk_71C = 0;
+        ((GsWord *)&D_800E6280.unk_69C[i])->w = 0;
+    }
+    for (i = 0; i < 256; i++) {
+        ((StateClearBytes100 *)D_800E6280.unk_56C)->bytes[i] = 0;
+    }
+    for (i = 0; i < 4; i++) {
+        ((GsWord *)&D_800E6280.unk_724)->b[i] = 0;
+    }
+    D_800E6280.unk_75D = 0;
+    for (i = 0; i < 4; i++) {
+        D_800E6280.unk_728[i] = 0;
+    }
+    i = 0;
+    while (i < 16) {
+        D_800E6280.unk_72C[i] = 0;
+        i++;
+    }
+    D_800E6280.unk_75C = 0;
+    D_800E6280.unk_F5E = 0;
+    bzero(D_800E6280.unk_75E, 0x800);
+}
 
 void func_80042058(void) {
     D_800E6280.unk_F5F = 0;

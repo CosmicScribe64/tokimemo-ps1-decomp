@@ -39,7 +39,36 @@ void func_80134930(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134890", func_80134A54);
+/* K&R return shape: failure returns zero; scene advance falls through. T-10030. */
+s32 func_80134A54(void) {
+    func_80134890();
+    if (((s32 *)D_80143DB4)[0] != 0x801CC000 ||
+        ((s32 *)D_80143DB4)[1] != 0x801CE000 ||
+        ((s32 *)D_80143DB4)[2] != 0x801D0000 ||
+        ((s32 *)D_80143DB4)[3] != 0x801D2000 ||
+        ((s32 *)D_80143DB4)[4] != 0x801D4000 ||
+        ((s32 *)D_80143DB4)[5] != 0x801D6000 ||
+        ((s32 *)D_80143DB4)[6] != 0x801D8000 ||
+        ((s32 *)D_80143DB0)[0] != 0x801C4000 ||
+        ((s32 *)D_80143DB0)[1] != 0x801C8000 ||
+        ((s32 *)D_80143DC4)[0] != 0x801DB634 ||
+        ((s32 *)D_80143DC4)[1] != 0x801DB644 ||
+        ((s32 *)D_80143DC4)[2] != 0x801DB654 ||
+        ((s32 *)D_80143DC0)[0] != 0x801DAB84 ||
+        ((s32 *)D_80143DC0)[1] != 0x801DAB8C ||
+        ((s32 *)D_80143DC0)[2] != 0x801DABA0 ||
+        ((s32 *)D_80143DC0)[3] != 0x801DABB4 ||
+        ((s32 *)D_80143DC0)[4] != 0x801DABC0 ||
+        ((s32 *)D_80143DC0)[5] != 0x801DABCC) {
+        D_800E6280.unk_110A -= 2;
+        return 0;
+    }
+    if (func_8004636C(0x37, 0x801C0000) == 0) {
+        D_800E6280.unk_110A -= 2;
+        return 0;
+    }
+    func_8004284C();
+}
 
 void func_80134C34(void) {
     if ((D_80143B20 == 0) && (D_800E6280.unk_75E[D_800E6280.unk_F5E - 1].unk_02 != 5)) {

@@ -1,6 +1,15 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
+/* ETC view of shared work memory: the two six-word arrays are also walked
+ * by func_801465F8. Other overlays use the first word as a scalar. T-10030. */
+typedef struct EtcWork40 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 pad_04[0xC];
+    /* 0x10 */ s32 unk_10[6];
+    /* 0x28 */ s32 unk_28[6];
+} EtcWork40; /* size 0x40 */
+
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146400);
 
 s32 func_801464D4(s32 mode) {
@@ -149,7 +158,17 @@ void func_80146A38(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146AC0);
+void func_80146AC0(void) {
+    s32 i;
+
+    if (D_800E6280.unk_041 == 0) {
+        for (i = 0; i < 6; i++) {
+            ((EtcWork40 *)&D_801230D0)->unk_10[i] = 0;
+            ((EtcWork40 *)&D_801230D0)->unk_28[i] = 0;
+        }
+    }
+    func_80042808();
+}
 
 s32 func_80146B40(void) {
     switch (D_800E6280.unk_110A) {

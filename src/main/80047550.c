@@ -1,6 +1,12 @@
 #include "common.h"
 #include "game.h"
 
+typedef struct TextureRecord44 {
+    /* 0x00 */ u8 pad[0x34];
+    /* 0x34 */ s32 *pages;
+    /* 0x38 */ u8 pad38[0x0C];
+} TextureRecord44; /* size 0x44; texture-page table view, T-10030 */
+
 void func_80047550(void) {
     D_801255DC = 4;
 }
@@ -34,7 +40,26 @@ void tpage_buf_clear(void) {
     _sys_default_tpage_set();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", _sys_default_tpage_set);
+void _sys_default_tpage_set(void) {
+    s32 i;
+
+    for (i = 0; i < 5; i++) {
+        D_800E6280.unk_1228[i + 11] = 0x77;
+        D_800E6280.unk_1228[i + 43] = 0x77;
+        D_800E6280.unk_1228[i + 21] = 0x77;
+        D_800E6280.unk_1228[i + 53] = 0x77;
+    }
+    D_800E6280.unk_1228[60] = *(s32 *)D_800C9730;
+    D_800E6280.unk_1228[61] = D_800C9734;
+    D_800E6280.unk_1228[62] = D_800C9738;
+    D_800E6280.unk_1228[63] = D_800C973C;
+    D_800E6280.unk_1228[31] = D_800C974C;
+    D_800E6280.unk_1228[30] = D_800C9750;
+    D_800E6280.unk_1228[29] = D_800C9754;
+    D_800E6280.unk_1228[28] = D_800C9758;
+    D_800E6280.unk_1228[27] = D_800C5FCC;
+    D_800E6280.unk_1228[59] = D_800C5FD0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/80047550", load_tpage_buf_lock);
 
@@ -91,9 +116,99 @@ s32 search_tpage_multi(s32 arg0, u8 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage);
+s32 search_tpage(s16 arg0, s32 arg1, u8 arg2) {
+    s32 j;
+    s32 i;
+    TextureRecord44 *record;
+    s16 index;
 
-INCLUDE_ASM("asm/nonmatchings/main/80047550", search_tpage8);
+    if (arg0 == 0x7FFF) {
+        for (i = 0; i < 64; i++) {
+            if (D_800E6280.unk_1228[i] == -1) {
+                D_800E6280.unk_1128[i] = 0x7FFF;
+            } else {
+                D_800E6280.unk_1128[i] = 0x7FFE;
+            }
+        }
+        return 0;
+    }
+    record = &((TextureRecord44 *)D_8011ECD0)[arg1];
+    index = (s16)(arg0 >> 6);
+    for (i = 0xF; i >= 5; i--) {
+        for (j = 3; j >= 0; j--) {
+            if (D_800E6280.unk_1128[i + j * 16] == 0x7FFE &&
+                D_800E6280.unk_1228[i + j * 16] == record->pages[index]) {
+                return (j * 16 + i) & 0xFFFF;
+            }
+        }
+    }
+    for (i = 0; i < 0x40; i++) {
+        if (D_800E6280.unk_1128[i] == record->pages[index]) {
+            return i & 0xFFFF;
+        }
+    }
+    for (i = 0; i < 0x40; i++) {
+        if (D_800E6280.unk_1128[i] == 0x7FFF) {
+            D_800E6280.unk_1128[i] = record->pages[index];
+            if (i < 0x20) {
+                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
+            } else {
+                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0x80, 0x80, 0x80);
+            }
+            return i & 0xFFFF;
+        }
+        if (i == 0x3F) {
+            return 0x3F;
+        }
+    }
+}
+
+s32 search_tpage8(s16 arg0, s32 arg1, u8 arg2) {
+    s32 j;
+    s32 i;
+    TextureRecord44 *record;
+    s16 index;
+
+    if (arg0 == 0x7FFF) {
+        for (i = 0; i < 64; i++) {
+            if (D_800E6280.unk_1228[i] == -1) {
+                D_800E6280.unk_1128[i] = 0x7FFF;
+            } else {
+                D_800E6280.unk_1128[i] = 0x7FFE;
+            }
+        }
+        return 0;
+    }
+    record = &((TextureRecord44 *)D_8011ECD0)[arg1];
+    index = (s16)(arg0 >> 8);
+    for (i = 0xF; i >= 5; i--) {
+        for (j = 3; j >= 0; j--) {
+            if (D_800E6280.unk_1128[i + j * 16] == 0x7FFE &&
+                D_800E6280.unk_1228[i + j * 16] == record->pages[index]) {
+                return (j * 16 + i) & 0xFFFF;
+            }
+        }
+    }
+    for (i = 0; i < 0x40; i++) {
+        if (D_800E6280.unk_1128[i] == record->pages[index]) {
+            return i & 0xFFFF;
+        }
+    }
+    for (i = 0; i < 0x40; i++) {
+        if (D_800E6280.unk_1128[i] == 0x7FFF) {
+            D_800E6280.unk_1128[i] = record->pages[index];
+            if (i < 0x20) {
+                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0, 0x80, 0x80);
+            } else {
+                load_csr_tp(record->pages[index], i & 0xFF, arg2, 0, 0x80, 0x80, 0x80);
+            }
+            return i & 0xFFFF;
+        }
+        if (i == 0x3F) {
+            return 0x3F;
+        }
+    }
+}
 
 void func_80048CF8(void) {
     s32 i;

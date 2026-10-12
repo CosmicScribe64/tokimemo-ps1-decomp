@@ -8309,3 +8309,259 @@ All 27 unit checksums pass at the nine-match checkpoint. BUNKAKEN func_80143DD0 
 ## [2026-10-11] lint | T-9960 appended type guards
 
 The supplemental scratch survey includes overlay headers twice and exposed missing repeat-include guards around this batch's appended BUNKAKEN/BUNKASAI types. Added guards around only the new declarations. Existing single-include builds had passed. The checkpoint printed 26 rebuilt unit checks; the remaining unit's check was already current. Final validation will explicitly recompute all 27 hashes.
+
+## [2026-10-11] ticket | Start wave 11 list 3
+
+Claimed [[tickets/T-10030-wave-11-list-3]] and read [[decompile-workflow]],
+[[register-allocation-wave7]] and [[uopt-register-allocation]]. The worktree
+needs its initial configure/build before m2c can read generated assembly.
+
+## [2026-10-11] build | Wave 11 list 3 baseline and first deep probes
+
+Baseline header check passes. Read prior wave drafts, collected 46 historical
+candidates and started bounded pointer/lifetime probes for the model initializer
+and narrow-parameter checksum loop. Early results in [[matching-notes]];
+[[tickets/T-10030-wave-11-list-3]] remains In Progress.
+
+## [2026-10-11] build | Wave 11 list 3 baseline passes
+
+Initial Docker ninja build completed successfully: all 27 executable/overlay
+SHA1 checks pass, including headers and globals guards. Scoped duplicate reuse
+and the first-pass draft queue follow. [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 matches ETC clear loop
+
+ETC `func_80146AC0`: 128 bytes, resolved comparison and incremental full
+Docker build pass. Recovered two six-word arrays and the original loop
+shape; see [[matching-notes]] and [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] query | Wave 11 list 3 source-shape results
+
+Repeated checksum bounds reach eight resolved edits; the model initializer
+reaches seven. Bounded permutation searches started. ETC's first array-view
+batch was a declaration error, repaired with the documented shared-memory
+struct view; only the successful compiling loop is codegen evidence.
+See [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | Two wave 11 list 3 deep searches remain open
+
+Model initializer: 192 source variants and 300-second permutation search.
+Checksum: 288 source variants and 300-second search. Neither verifies a match;
+added two rows to [[data/t0018-cases]] with best drafts. The historical pass
+also recompiled 46 prior drafts. [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 matches default texture pages
+
+`_sys_default_tpage_set`: 300 bytes, resolved comparison and full incremental
+Docker ninja pass. Five-iteration GameState loop and corrected word access.
+Batch total two functions / 428 bytes; see [[matching-notes]] and
+[[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 matches SHOUGATU validation
+
+`func_80134A54`: 480 bytes verified by resolved function diff and full
+incremental Docker ninja. Word-array views and the original return-value
+shape resolve the draft. Three functions / 908 bytes total; see
+[[matching-notes]] and [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | Wave 11 list 3 quick pass complete
+
+The assigned list has been traversed through entry 132 (the newly matched ETC
+function was skipped after its independent verification). Drafts, migration
+notes, compile failures and resolved diffs are preserved in scratchpad/w11-3/.
+A scratch-only field-width repair pass also completed. Three retained functions
+(908 bytes) have passed full incremental builds. Ranked source iteration
+continues under [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | Wave 11 list 3 second deep pass
+
+[[tickets/T-10030-wave-11-list-3]] completed the first-pass queue and repaired
+scratch drafts. VALEN's date check is down to four differing lines; a five-minute
+search did not close the address-register difference. ETC model setup improved
+to 18 lines after correcting pointer strides. KANGEI RECT and video-mode
+argument-sharing variants are under test. All retained source remains the three
+previously verified matches; the exploratory drafts are in scratchpad/w11-3/.
+
+## [2026-10-11] build | Wave 11 list 3 aggregate and frame probes
+
+[[tickets/T-10030-wave-11-list-3]] records typed model-binding, RECT and TACO
+frame experiments in [[matching-notes]]. TACO's arithmetic now agrees, with
+stack-slot placement still open. A serial queue of bounded five-minute searches
+covers the remaining compiling drafts; candidate results require source review
+and real unit checks before installation.
+
+## [2026-10-11] build | Wave 11 list 3 counter and spill evidence
+
+[[tickets/T-10030-wave-11-list-3]] records TAIIKU's corrected 0x24 record loop,
+header-return repairs, and TACO's six-line scratch spill near miss. No diagnostic
+self-copy or padding source has been installed. Retained gains remain three
+functions / 908 bytes with full build verification.
+
+## [2026-10-11] build | T-10030 matches TACO command walker
+
+`func_8015435C`, 224 bytes, passes resolved function diff and the full incremental
+Docker build. Unsigned command locals resolve comparison ordering; no FAKE is
+needed. Four functions / 1132 bytes total. See [[matching-notes]] and
+[[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 matches game-state clears
+
+`func_80041F48`, 272 bytes, matches with aggregate-indexed loops and a documented
+0x100-byte view. Resolved diff and full incremental Docker build pass. Five
+functions / 1404 bytes total. See [[matching-notes]] and
+[[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 verifies clear-helper formatting
+
+The final byte clear in `func_80041F48` uses a multiline while loop, preserving
+its unrolled store order without a source-line trick. Real diff and incremental
+Docker build pass. [[tickets/T-10030-wave-11-list-3]] records the review.
+
+## [2026-10-11] build | T-10030 checks duplicate propagation after five gains
+
+Scoped exact/near duplicate tools ran with the 53 owned file stems and
+per-object checking; logs are scratchpad/w11-3/dupes-five.log and
+neardupes-five.log. See [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | Wave 11 list 3 packed fields and history loop
+[[tickets/T-10030-wave-11-list-3]]: recovered scratch RGB5551 pair views for
+main `col2sepia` and `make_color_bar`, and a compiling three-record draft for
+TAIIKU `func_80137440`. Main `func_80076DA0` reaches five differing lines,
+with one extra loop address load. Continued source/alias experiments and
+bounded permuter searches; retained total remains five functions / 1,404 bytes.
+
+## [2026-10-11] build | Wave 11 list 3 typed drawing and matrix drafts
+[[tickets/T-10030-wave-11-list-3]]: TT TILE helpers now use the shared SDK and
+TT buffer types in scratch, with the fade helper at 24 differing lines.
+TACO `func_801472D4` has a 28-line MATRIX near miss. Recovered local arrays
+and a function table for NAME_ENT/main/KANGEI candidates. Continued bounded
+source variants and permuters; no additional retained matches yet.
+
+## [2026-10-11] build | Wave 11 list 3 bounded blocker evidence
+[[tickets/T-10030-wave-11-list-3]] appended 17 measured rows to
+[[data/t0018-cases]] after scoped register_shapes checks. Pointer ranges,
+constant sharing, loop unrolling, and temporary/scheduling differences remain
+after typed source variants and bounded permuters. Total rows added: 19.
+
+## [2026-10-11] build | Wave 11 list 3 texture searches and review cleanup
+[[tickets/T-10030-wave-11-list-3]]: both texture-page searches are four-line
+comparison-operand near misses; longer bounded search started. SHOUGATU
+`func_80134A54` retains its exact match with ordinary array indexing after
+inline review. Duplicate tools use asm-directory status; a current-C audit
+finds no owned twins for the five gains. Grand progress is 4,987/6,958 functions,
+838,344/2,279,368 bytes (36.8%).
+
+## [2026-10-11] build | T-10030 sixth match: TT animation records
+
+Recovered the scene/0x14-byte animation-record view for `TT:func_8013F878` in
+`src/ovl/TT/8013F040.c`. The natural field-based body and its cleaned formatting
+both match in scratch, and the real resolved comparison passes. Batch total is
+six functions / 1676 bytes, with no new FAKE. Evidence and layouts are recorded
+in [[matching-notes]] and [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 NAME_ENT actor motion source
+
+Typed 0x44-byte actor records reduce `NAME_ENT:func_801455E4` from 48 edits to
+one address-setup scheduling difference. Joining the initialization and loop
+opening source line matches in scratch; ordinary declaration, for/goto, pointer
+endpoint, and K&R alternatives were checked. The installed C marks this line
+layout FAKE with its purpose and ticket. `sync_protos.py --add-global` added the
+two main-exe endpoint declarations and normalized six existing declarations
+into its globals section without changing their types. Real-object validation
+and the header-triggered incremental build are being checked. See
+[[tickets/T-10030-wave-11-list-3]] and [[matching-notes]].
+
+## [2026-10-11] build | T-10030 seven-match all-unit verification
+
+The header-triggered incremental Docker build completed all 521 actions and all
+27 binary SHA1 checks passed; headers and globals checks passed. Seven verified
+functions total 2056 bytes. A separate 600-second permuter independently found
+the same NAME_ENT source-line FAKE, so it supplies no cleaner replacement.
+Additional typed drafts now include `TT:func_8013F9E0` (six edits) and
+`schedule_girls_gakko` (ten edits: three branch operand reversals and frame size).
+These remain scratch-only. See [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 eighth match: KANGEI table dispatch
+
+`KANGEI:func_80135678` passes the real resolved comparison after typed callback
+and adjacent-byte recovery plus a marked scheduling FAKE. Appended the overlay
+callback-table declaration; no config or tooling edits. Eight functions / 2356
+bytes, two new FAKEs. The header-triggered incremental build is running.
+See [[matching-notes]] and [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 eleven verified functions
+
+Real resolved comparisons pass for both texture-page searches and the RPG_BAT
+six-record flag-toggle helper. Batch total: eleven functions / 3912 bytes, two
+marked source-line FAKEs. The searches now use ordinary typed array bases;
+the RPG helper reuses an existing overlay record type. Review cleanup added
+nested halfword offsets and removed extra whitespace; current-source comparisons
+were repeated. Scoped duplicate passes and the final all-unit build are next.
+See [[matching-notes]] and [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 all-unit and declaration verification
+
+All 27 binary SHA1 checks pass after the eleven retained matches. Prototype
+check: zero new disagreements, 17 known, branch check OK. Global migration
+check passes. Progress is 4993/6958 functions, 840852/2279368 bytes (36.9%).
+Scoped duplicate and near-duplicate passes apply no changes; a separate audit
+of current owned INCLUDE_ASM targets finds no missed twin. The generated-asm
+classification caveat in dupes.py remains unchanged. Continued bounded scratch
+experiments while completing the requested four-hour work period.
+See [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 twelfth verified function
+
+TAIIKU `func_80137440` passes the real resolved comparison: 260 bytes, taking
+the batch to twelve functions / 4172 bytes. Recovered record fields and reload
+placement remove the main differences. Indirect timer reads and source-line
+grouping remain necessary and are marked FAKE. No declaration changes were
+needed. Final incremental build and guards are being rerun for this addition.
+See [[matching-notes]] and [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] build | T-10030 twelve-match final checks
+
+Incremental ninja after refreshing only the checksum stamps passes all 27
+binary checks. Headers and globals pass, as does the prototype branch guard
+with zero new disagreements (17 known). A scope audit confirms twelve owned
+functions / 4172 bytes and no tools/config/raw edits. Added three measured
+blocker rows in [[data/t0018-cases]], bringing this batch to 22 so far.
+ETC table and NAME_ENT average repairs remain non-matching scratch drafts.
+See [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] ticket | T-10030 inline review complete
+
+Moved [[tickets/T-10030-wave-11-list-3]] to In Review and synchronized the index
+and kanban card. Inline review against CODING_STANDARDS.md and the shared brief
+has no unresolved findings; scope, C89/types, layout, declarations, matching
+evidence and all four FAKE annotations were checked. Final bounded searches
+continue through the requested four-hour work period. Changes remain uncommitted.
+
+## [2026-10-11] query | T-10030 final schedule blocker
+
+Additional signedness, comparison and conditional-expression variants leave
+schedule_girls_gakko six edits away only with scratch padding; the natural
+draft remains ten edits away. Added the measured row to [[data/t0018-cases]]
+(23 rows for this batch) and recorded final blocker context in [[matching-notes]].
+The real source remains assembly-backed. See [[tickets/T-10030-wave-11-list-3]].
+
+## [2026-10-11] query | T-10030 timer allocation evidence
+
+Two scratch allocator traces isolate TAIIKU's timer FAKE: the scalar form adds
+a profitable global range in v0; the indirect expression leaves that range
+unallocated and loads into the a0 local. The instrumented comparison verifies
+the indirect case and reports 13 edits for the scalar case. Detailed priorities
+and evidence paths are filed in [[matching-notes]] and
+[[tickets/T-10030-wave-11-list-3]]. No production tooling changed.
+
+## [2026-10-11] ticket | T-10030 complete after four-hour batch
+
+Moved [[tickets/T-10030-wave-11-list-3]] to Done after inline review and more
+than four hours of work (approximately 00:53–04:55 UTC October 12). Twelve
+functions / 4172 bytes match; final incremental verification passes 27/27
+SHA1 checks, headers/globals, and zero-new-disagreement prototype branch check.
+Progress: 4994/6958 functions, 841112/2279368 bytes (36.9%). Added 23 measured
+T-0018 rows. The scalar-timer follow-up found no zero; the broad queue ended
+after 34 bounded searches. All owned searches have stopped. Shared wiki/header
+append-only and scope audits pass. Index and kanban are synchronized; source,
+headers and documentation remain uncommitted for the orchestrator.
