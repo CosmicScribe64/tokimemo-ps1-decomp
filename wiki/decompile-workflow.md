@@ -353,3 +353,21 @@ farm lifecycle. For committed two-parent header merges, run
 omit `--check` to rebuild both-changed headers as ours plus whole other-side
 additions. Review the resulting declarations and rerun header/build guards.
 See [[matching-notes]] and [[tickets/T-10100-wave-9-10-tool-fixes]].
+
+## Unblocking orphan tables and strings (T-10200)
+
+For an `O` function, build the current tree, then run
+`tools/docker.sh python3 tools/orphan_rodata.py UNIT` to preview ownership.
+Run the same command with `--apply` to create the C objects and `.rodata`
+islands, then configure and rebuild. Read any rejected-layout diagnostics;
+do not simply remove `O` from the queue blockers. The object configuration
+removes only successfully claimed orphan rows, so the queue then treats their
+jump tables and strings like other islands.
+
+Replace the assembly fallback by the C switch or string-using function in its
+new source file. Keep original function order. Let the compiler emit tables
+and literals; INCLUDE_RODATA is only for the unowned pieces the splitter
+places. A resolved instruction MATCH is insufficient: verify the unit SHA1,
+then the clean 27-unit build and progress. See [[build-system]] for the
+word-aligned text boundary support and why adjacent table chunks cannot simply
+be merged. BUNKASAI's 21 T-10040 drafts now use this recipe.
