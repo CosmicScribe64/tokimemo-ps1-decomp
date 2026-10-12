@@ -1223,6 +1223,8 @@ void func_8014A280(void);
 void func_8014A2AC(void);
 void func_8014A314(void);
 void func_8014A360(void);
+#endif
+
 
 #ifndef OVL_DATE_T10040
 #define OVL_DATE_T10040
