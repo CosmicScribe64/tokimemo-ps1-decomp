@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-10340-wave-12-list-4|T-10340 Wave 12: list 4]]
 - [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 
@@ -50,6 +49,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-10340-wave-12-list-4|T-10340 Wave 12: list 4]]
 - [ ] [[tickets/T-10210-wave-11-tool-fixes|T-10210 Wave-11 tool fixes]]
 - [ ] [[tickets/T-10200-orphan-jump-tables|T-10200 Orphan jump tables: enable 21 instruction-exact functions]]
 - [ ] [[tickets/T-10100-wave-9-10-tool-fixes|T-10100 Wave 9/10 tool fixes]]

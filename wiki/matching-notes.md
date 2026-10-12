@@ -4149,3 +4149,10 @@ loaded value instead left a two-instruction scheduling difference. Retained
 FAKE two-word local padding preserves the observed frame and local homes,
 as already found in T-9330. Both affected unit SHA1s pass; final clean proof
 and totals are recorded in [[tickets/T-10200-orphan-jump-tables]].
+
+## Wave 12 list 4 (T-10340, w12-4)
+No new matches. Attempts (all reverted, assembly retained):
+- `menu_bar_color`: draft is exact except the shared `lui $at` of the two stores to `D_800E3680`/`D_800E3684`; the symbol lies outside the object's data range (800B40F0-800B4390), so it cannot be defined in the file (T-9010 route unavailable).
+- `func_8013D150` (TT): hoisted global pointer locals and `unk32` before `unk34` order fix the first half (60 differing rows left); the constant 0x30000 is CSE-shared across the two clamp blocks (`lui a0,3`) where the original keeps a separate `lui t7`. `U` suffix, assignment order and chain forms did not change it.
+- `func_80140E0C` (GYOZI): `!(D_800F5750 & 2)` compiles to the original `sll; bltz` through a `u32 pad:1, f:1, rest:30` bit-field view. Remaining: the original keeps 0 in `$a1` (`move a1,zero` before the first branch, `sb a1,D_800F62CF`, `or a0,a1,zero`); locals holding 0 are constant-propagated.
+- `func_8006D6E0`, `func_801471D0`, `func_8013AF78`, `func_8013243C`, `func_8013E498`, `func_80142A8C`: drafts with 56-180 differing rows (loop shape, hoisted base registers, one s-register short, extra 4-8 bytes of frame). No near miss.
