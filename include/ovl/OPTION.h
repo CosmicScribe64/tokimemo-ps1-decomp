@@ -33,6 +33,7 @@ void func_80135C0C(void);
 void func_80136688(void);
 void func_801368FC(void);
 void func_80136A50(void);
+void func_80139878(void);
 
 void func_80139A30();
 void func_801394F4();

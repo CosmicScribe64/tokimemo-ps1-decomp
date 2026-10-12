@@ -175,7 +175,27 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", date_sasoi_judge);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", yuukou_down);
+void yuukou_down(void) {
+    s32 i;
+    u32 q;
+    s32 two;
+
+    two = 2; /* FAKE: constant 2 kept in a local gives the original operand order of the bne (T-10510) */
+    for (i = 0; i < 0xB; i++) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1) {
+            q = D_800E6280.unk_040 / 7;
+            if (q == 0) {
+                if (D_800E6280.unk_1BC[i].unk_06 > 0) {
+                    D_800E6280.unk_1BC[i].unk_06 -= 1;
+                }
+            } else if (two == q && i == 0) {
+                if (D_800E6280.unk_1BC[i].unk_06 > 0) {
+                    D_800E6280.unk_1BC[i].unk_06 -= 1;
+                }
+            }
+        }
+    }
+}
 
 void syoushin_up(void) {
     s32 i;

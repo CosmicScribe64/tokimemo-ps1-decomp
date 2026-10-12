@@ -101,7 +101,44 @@ s32 func_80133BE0(u8 *arg0, u8 *arg1) {
     func_8014D260(dy >> 16, dx >> 16);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133C1C);
+void func_80133C1C(o, kind, idx)
+    TtActor68 *o;
+    u16 kind;
+    s32 idx;
+{
+    o->unk_00 = 1;
+    o->unk_02 = kind;
+    o->unk_10 = 1;
+    o->unk_38 = (void *)(&D_8014E34C)[idx];
+    o->unk_40 = 0x80;
+    switch (idx) {
+    case 18:
+    case 19:
+        *(s16 *)((u8 *)o + 0x52) = 0xA;
+        *(s16 *)((u8 *)o + 0x54) = 0x3C8B;
+        o->unk_4C = (u8 *)&D_80155B30[3];
+        return;
+    case 20:
+        *(s16 *)((u8 *)o + 0x52) = 0xA;
+        *(s16 *)((u8 *)o + 0x54) = 0x3C8C;
+        o->unk_4C = (u8 *)&D_80155B30[3];
+        return;
+    case 21:
+        *(s16 *)((u8 *)o + 0x52) = 0x12;
+        *(s16 *)((u8 *)o + 0x54) = 0x3CD3;
+        o->unk_4C = (u8 *)&D_80155B30[3];
+        return;
+    case 22:
+        *(s16 *)((u8 *)o + 0x52) = 0x12;
+        *(s16 *)((u8 *)o + 0x54) = 0x3CD4;
+        o->unk_4C = (u8 *)&D_80155B30[2];
+        return;
+    case 23:
+        *(s16 *)((u8 *)o + 0x52) = 0x12;
+        *(s16 *)((u8 *)o + 0x54) = 0x3CD5;
+        o->unk_4C = (u8 *)&D_80155B30[2];
+    }
+}
 
 void func_80133D14(s16 x, s16 y, s32 speed, u16 kind) {
     TtActor68 *object;
@@ -146,7 +183,39 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134470);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134630);
 
+/* NON_MATCHING: T-10510, 30 lines: object in v0 / constants 1 and 0 in a2 and a0 in the original */
+#ifdef NON_MATCHING
+void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
+    TtActor68 *object;
+
+    object = (TtActor68 *)func_80133BA4(D_80158AA0, D_80158AA0 + 0x3400);
+    if (object != 0) {
+        object->unk_00 = 1;
+        object->unk_02 = 0xAB;
+        object->unk_04 = 0x40;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0A = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+        object->unk_10 = 1;
+        object->unk_20 = x << 16;
+        object->unk_24 = y << 16;
+        object->unk_28 = func_800A0140(angle) * speed;
+        object->unk_2C = func_800A0070(angle) * speed;
+        object->unk_38 = D_80151A50;
+        object->unk_3C = 0;
+        object->unk_3D = 9;
+        object->unk_3E = 0x14;
+        object->unk_40 = 0x60;
+        object->unk_41 = 0;
+        object->unk_4C = (u8 *)&D_80155B30[5];
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134768);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134874);
 

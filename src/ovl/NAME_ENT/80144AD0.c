@@ -234,7 +234,35 @@ void func_80145A74(void) {
 }
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145AC4);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145EA4);
+void func_80145EA4(void) {
+    s32 i;
+    u32 *p;
+    u32 *q;
+
+    q = (u32 *)0x801BC004;
+    p = (u32 *)0x801BC000;
+    if (!(q[0] & 0x7FFF0000)) {
+        q[0] |= 0x17FFF;
+    }
+    /* FAKE: the last store of the first word shares a source line with the loop (as1 orders the loop set-up by line). T-10510 */
+    if (!(q[0] & 0x7FFF)) { q[0] |= 0x7FFF0001; } for (i = 1; i < 0x40; i++) {
+        if (!(p[i * 2] & 0x7FFF0000)) {
+            p[i * 2] |= 0x17FFF;
+        }
+        if (!(p[i * 2] & 0x7FFF)) {
+            p[i * 2] |= 0x7FFF0001;
+        }
+        if (!(p[i * 2 + 1] & 0x7FFF0000)) {
+            p[i * 2 + 1] |= 0x17FFF;
+        }
+        if (!(p[i * 2 + 1] & 0x7FFF)) {
+            p[i * 2 + 1] |= 0x7FFF0001;
+        }
+    }
+}
+
+
+
 
 void func_80145F74(void) {
     func_801455E4(1);

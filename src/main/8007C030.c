@@ -334,7 +334,7 @@ void normal_date_girl_out_init(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
 
-/* NON_MATCHING: T-10310, near miss */
+/* NON_MATCHING: T-10510, 8 lines (wave 12): load order of D_8011F4CB and 0x80000000 constant in a2 (original) vs a1 */
 #ifdef NON_MATCHING
 s32 normal_date_girl_suddenout(void) {
     D_8011F50F &= 0xFF7F;
@@ -363,7 +363,26 @@ s32 normal_date_bg_fadein(void) {
     }
 }
 
+/* NON_MATCHING: T-10510, 28 lines: u8 x in a0 with the D_800B593C base in v1, copy and andi variants for the two chains (known family, see register-allocation-wave7) */
+#ifdef NON_MATCHING
+void normal_date_bggirl_fadein(void) {
+    u8 x;
+
+    D_8011F50F |= 0x80;
+    normal_date_bg_fadein();
+    x = D_800B593C;
+    D_8011F513 = x;
+    D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+    D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+    D_801217E5 = D_801217E4 = x;
+    D_80121809 = D_80121808 = x;
+    D_80122CF4 = 1;
+    D_801217E6 = x;
+    D_8012180A = x;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadein);
+#endif
 
 void normal_date_bg_fadeout(void) {
     D_80122CF8 = 1;
@@ -566,7 +585,29 @@ void normal_date_three_select(void) {
     }
 }
 
+/* NON_MATCHING: T-10510, 4 register lines: 0x10 constant in v0 (original) vs t3 */
+#ifdef NON_MATCHING
+void normal_date_three_select_init(void) {
+    s32 pad;
+    s16 x[3];
+    s16 y[3];
+    s16 w[3];
+    s16 h[3];
+
+    x[0] = x[1] = x[2] = -0x80;
+    y[0] = 0x30;
+    y[1] = 0x40;
+    y[2] = 0x50;
+    w[0] = w[1] = w[2] = 0xFC;
+    h[0] = h[1] = h[2] = 0x10;
+    menu_set(1, 3, x, y, w, h);
+    D_800E6280.unk_1094 = 0;
+    D_80122D30 = 1;
+    D_800E6280.unk_1104.w++;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_init);
+#endif
 
 s32 normal_date_three_select_main(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -817,7 +858,27 @@ void select_girl2(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_main);
+s32 select_girl_main(s32 arg0) {
+    s16 i;
+    u32 n;
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    if (D_800E6280.unk_F88 & 0x200020) {
+        n = 0xC - (u8)arg0;
+        for (i = 0; i < n; i++) {
+            if (((u8 *)&D_800E6280)[i * 16 + 0xF9E] != 0 && D_800CA330[i] != 0) {
+                D_80122CDC = i;
+                D_8011ECD3 &= 0xFF7F;
+                D_80122D30 = 0;
+                k_reset(1);
+                func_8004284C();
+                return 0;
+            }
+        }
+    }
+}
 
 void sprite_brightness(s16 idx, u8 val) {
     u8 *p = (u8 *)D_801217D0 + idx * 36;
