@@ -10,7 +10,41 @@ void func_80053650(s32 arg0, s32 arg1, s32 arg2) {
     D_80125C04 = arg2;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800536AC);
+s32 func_800536AC(arg0, arg1, arg2, arg3)
+u16 arg0;
+u16 arg1;
+u16 arg2;
+u16 arg3;
+{
+    RECT rect;
+    s32 pad[2]; /* FAKE: unused 8-byte local reproduces the original frame (0x58); real source unknown. T-10320 */
+    u32 end;
+    s32 v;
+
+    if ((*(u32 *)D_80125C04 & 0xFFFF0000) != 0x38000000 || (((u32 *)D_80125C04)[1] & 0xFF010000) != 0x10000) {
+        return -1;
+    }
+    DecDCTReset(0);
+    func_800869C8(0);
+    func_800869A4(0);
+    func_80086870(D_80125C04, D_80125C08);
+    func_800868BC(D_80125C08, 2);
+    rect.y = arg1;
+    rect.w = 0x10;
+    rect.x = arg0;
+    rect.h = arg3;
+    end = arg0 + arg2;
+    if (rect.x < end) {
+        v = ((arg3 + 8) >> 4) << 7;
+        do {
+            func_80086944(D_80125C0C, v);
+            func_80086984(0);
+            func_8009C884(&rect, D_80125C0C);
+            rect.x += 0x10;
+        } while (rect.x < end);
+    }
+    return 1;
+}
 
 void card_ev_set(void) {
     Sw_Start();
