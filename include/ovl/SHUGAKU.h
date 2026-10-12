@@ -504,4 +504,8 @@ typedef struct ShugakuCallbackLocal12C {
     /* 0x000 */ ShugakuCallbacks71 callbacks;
     /* 0x11C */ u8 pad_11C[0x10];
 } ShugakuCallbackLocal12C; /* size 0x12C */
+typedef struct ShFnTbl74 { void (*f[74])(); } ShFnTbl74;
+extern ShFnTbl74 D_8013C2F0;
+s32 func_80135A80(void);
+s32 func_801360B0();
 #endif

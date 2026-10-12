@@ -284,6 +284,8 @@ void func_8013FF64(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
 void func_80140040(void) {
     s16 i;
     s32 any;
@@ -310,6 +312,9 @@ void func_80140040(void) {
     }
     D_801470AC += 1;
 }
+#else
+INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_80140040);
+#endif
 
 void func_8014016C(void) {
     D_800E6280.unk_F5F = 0xA;

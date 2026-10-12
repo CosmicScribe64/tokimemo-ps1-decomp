@@ -526,6 +526,8 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80082764);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
 s32 junban_init(void) {
     u8 r;
     u8 q;
@@ -546,6 +548,9 @@ s32 junban_init(void) {
         D_800CA2A4[0] = r;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
+#endif
 
 void normal_date_three_select(void) {
     switch (D_800E6280.unk_1104.u) {
