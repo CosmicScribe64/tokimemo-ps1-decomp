@@ -134,7 +134,15 @@ void func_8013F770(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_8013F800);
+void func_8013F800(void) {
+    u8 s;
+
+    s = get_g_zyotai_s(D_800E6280.unk_F5F) & 0x7F;
+    if (s >= 2U) {
+        D_800CA150 = (u16)D_800CA150 + 2;
+    }
+    func_8004284C();
+}
 
 extern FnTbl61 D_801471D0;
 

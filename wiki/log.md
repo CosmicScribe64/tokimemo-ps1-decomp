@@ -9831,3 +9831,9 @@ Added [[register-cheatsheet]], a one-page symptom-to-C guide distilled from [[uo
 [[tickets/T-10610-wave-14-list-1]] In Progress: 54 functions, 33 files.
 ## [2026-10-12] ticket | T-10610 wave 14 list 1 done
 [[tickets/T-10610-wave-14-list-1]] Done: 6 matches (964 bytes), 5 guarded near misses, 11 rows in [[data/t0018-cases]], notes in [[matching-notes]]. Build, headers and globals pass.
+## [2026-10-12] ticket | T-10620 wave 14 list 2 started
+[[tickets/T-10620-wave-14-list-2]] In Progress: 56 functions in 33 files. Board: [[kanban]].
+## [2026-10-12] build | T-10620 wave 14 list 2
+[[tickets/T-10620-wave-14-list-2]]: 8 matches (1,784 bytes), 2 new guarded near misses, 26 rows in [[data/t0018-cases]], patterns in [[matching-notes]]. `src/ovl/OMIMAI/80132AD0.c`, `src/main/8004AD60.c` and six more files changed. 27 unit sha1 `OK`, headers and globals pass; grand total 5138/6958 functions, 921336/2279368 bytes.
+## [2026-10-12] ticket | T-10620 done
+[[tickets/T-10620-wave-14-list-2]] Done after the inline review against `CODING_STANDARDS.md` (no findings). Board: [[kanban]].

@@ -50,6 +50,7 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-10610-wave-14-list-1|T-10610 Wave 14: list 1]]
+- [ ] [[tickets/T-10620-wave-14-list-2|T-10620 Wave 14: list 2]]
 - [ ] [[tickets/T-10520-wave-13-list-2|T-10520 Wave 13: list 2]]
 - [ ] [[tickets/T-10510-wave-13-list-1|T-10510 Wave 13: list 1]]
 - [ ] [[tickets/T-10400-regdiff-explain-register-choice|T-10400 regdiff - explain why a draft gets different registers]]

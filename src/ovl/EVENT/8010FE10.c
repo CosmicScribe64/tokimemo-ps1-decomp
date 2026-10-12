@@ -1040,7 +1040,16 @@ void func_80119C40(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119C9C);
+void func_80119C9C(void) {
+    (&D_80124394)[0] = (&D_80124394)[1] = (&D_80124394)[2] = 3;
+    (&D_8012439C)[0] = (&D_8012439C)[1] = (&D_8012439C)[2] = 4;
+    (&D_801243A4)[0] = (&D_801243A4)[1] = (&D_801243A4)[2] = 2;
+    func_80011DFC();
+    func_80011DFC();
+    func_80011DFC();
+    func_80011DFC();
+    func_80011DFC();
+}
 
 void func_80119D2C(void) {
     if ((D_800B1746 == 7) && (D_800EECBC == 0) && (D_8012531C == 0)) {
@@ -1373,7 +1382,13 @@ void func_8011B588(void) {
     func_80046B88(0x3E8);
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011B5A8);
+/* FAKE: the first chain is dead (uopt drops its stores as overwritten); it moves the shared `li v0,0x80` above the second `lui $at` as in the original. Twin of DATE func_8013FA6C, T-9380 */
+void func_8011B5A8(void) {
+    (&D_800EC1C8)[0] = (&D_800EC1C9)[0] = (&D_800EC1CA)[0] = (&D_800EC1A4)[0] = (&D_800EC1A5)[0] = (&D_800EC1A6)[0] = (&D_800E9E63)[0] = 0x80;
+    D_800EECD0 = 1;
+    (&D_800EC1C8)[0] = (&D_800EC1C9)[0] = (&D_800EC1CA)[0] = (&D_800EC1A4)[0] = (&D_800EC1A5)[0] = (&D_800EC1A6)[0] = (&D_800E9E63)[0] = 0x80;
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011B60C);
 

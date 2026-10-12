@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_8008D610 /* matched with s32 return (main_api.h: void) */
 #include "common.h"
 #include "ovl/GYOZI.h"
+
+s32 func_8008D610();
 
 void func_8013EB10(void) {
     D_801481D0 = 0x801972B8;
@@ -291,7 +294,16 @@ void func_8013FD20(void) {
     func_8008D610(D_8012E66C, 1, 0);
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013EB10", func_8013FD9C);
+void func_8013FD9C(void) {
+    D_800D9234 = (u8 *)&D_80148620;
+    D_800D9238 = (u8 *)&D_80148624;
+    D_800D923C = D_80148614;
+    D_800D9240 = D_80148618;
+    D_800D9244 = D_8014861C;
+    if (func_8008D610(D_8012E66C, 1, 0) == 1) {
+        func_8004DE1C();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013EB10", func_8013FE2C);
 
