@@ -855,8 +855,6 @@ extern u8 D_800F62CF;
 extern s8 D_800F6412;
 extern s32 D_800F6458;
 extern s32 D_800F6468;
-extern s16 D_800F54B6;
-extern u8 D_800D9320[];
 extern s32 D_800F6474;
 extern u8 D_800F6479;
 extern u8 D_800F647A;
@@ -1325,9 +1323,6 @@ typedef struct TaiikuBig {
     /* 0x24 */ u8 unk24[0x2C];
 } TaiikuBig; /* size 0x50 */
 extern TaiikuBig D_801227A0[];
-extern TaiikuBig D_80122840[];
-extern TaiikuBig D_80122B10[];
-extern u8 D_80122660[];
 extern TaiikuBig D_80122CA0[];
 extern u32 D_80122640[];
 extern s32 D_80122740;
@@ -1511,6 +1506,11 @@ extern u8 *D_800B3628;
 extern s32 D_800EED08;
 extern s32 D_801230D4;
 extern s32 D_801230D8;
+extern s16 D_800F54B6;
+extern u8 D_800D9320[];
+extern TaiikuBig D_80122840[];
+extern TaiikuBig D_80122B10[];
+extern u8 D_80122660[];
 
 /* ---- functions ---- */
 void func_80010678();
