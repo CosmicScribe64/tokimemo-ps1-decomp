@@ -18,12 +18,9 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
-<<<<<<< HEAD
 - [[tickets/T-10330-wave-12-list-3|T-10330]] Wave 12: list 3 (In Progress).
-=======
 - [[tickets/T-10210-wave-11-tool-fixes|T-10210]] Wave-11 tool fixes (Done).
 - [[tickets/T-10200-orphan-jump-tables|T-10200]] Orphan jump tables: enable 21 instruction-exact functions (Done; +22 functions / 27,036 bytes, clean 27/27, 5,099/6,958).
->>>>>>> main
 - [[tickets/T-10100-wave-9-10-tool-fixes|T-10100]] Wave 9/10 tool fixes (Done; 649 tests, final header regressions, 27/27 checksums).
 - [[tickets/T-10020-wave-11-list-2|T-10020]] Wave 11: list 2 (In Progress).
 - [[tickets/T-10010-wave-11-list-1|T-10010]] Wave 11: list 1 (Done).
