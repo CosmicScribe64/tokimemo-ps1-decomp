@@ -455,4 +455,5 @@ void func_80142DF4(void);
 extern s32 D_8015EC70;
 void func_8013D3E4(void);
 void func_8015461C(void);
+extern s32 D_8015EC68;
 #endif
