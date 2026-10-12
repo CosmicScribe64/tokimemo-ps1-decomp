@@ -435,7 +435,28 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136B70);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136D3C);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136F2C);
+void func_80136F2C(void) {
+    s16 i;
+
+    for (i = 0; i < 3; i++) {
+        /* no temporary for the copied value: the store's address is then the first use of D_800CA224 (T-10400) */
+        D_800CA224[i] = D_800CA22C[i];
+        if (D_800CA224[i] == 0) {
+            D_800CA224[i] = 1;
+        }
+        if (D_800CA224[i] == 4) {
+            D_800CA224[i] = 3;
+        }
+        D_800CA234[i] = D_800CA22C[i] - 1;
+        if (D_800CA234[i] == -1) {
+            D_800CA234[i] = 0;
+        }
+        if (D_800CA234[i] == 3) {
+            D_800CA234[i] = 2;
+        }
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136FF0);
 
