@@ -52,6 +52,22 @@ class Repo:
 
 
 class FingerprintTests(unittest.TestCase):
+    def test_source_state_overrides_stale_folders_and_deduplicates(self):
+        r = Repo()
+        self.addCleanup(r.close)
+        r.write('src/main/80041000.c',
+                'void f(void) { }\n#ifdef NON_MATCHING\nvoid g(void) { }\n#else\n'
+                'INCLUDE_ASM("asm/nonmatchings/main/80041000", g);\n#endif\n')
+        for folder in ('matchings', 'nonmatchings'):
+            for name in ('f', 'g', 'old'):
+                r.write('asm/%s/main/80041000/%s.s' % (folder, name),
+                        func_asm(name, 'D_80150000', 'D_80150004', 'callee'))
+        funcs = dupes.load_funcs(r.root)
+        self.assertEqual({f.name: f.matched for f in funcs}, {'f': True, 'g': False})
+        self.assertEqual(len(funcs), 2)
+        self.assertIn('/matchings/', next(f.path for f in funcs if f.name == 'f'))
+        self.assertIn('/nonmatchings/', next(f.path for f in funcs if f.name == 'g'))
+
     def test_reloc_symbols_do_not_change_key(self):
         k1, r1, b1 = dupes.parse_asm(func_asm('f', 'D_80150000', 'D_80150004', 'func_80140000'))
         k2, r2, b2 = dupes.parse_asm(func_asm('g', 'D_80151110', 'D_80151114', 'func_80142222'))

@@ -50,6 +50,8 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-10210-wave-11-tool-fixes|T-10210 Wave-11 tool fixes]]
+- [ ] [[tickets/T-10200-orphan-jump-tables|T-10200 Orphan jump tables: enable 21 instruction-exact functions]]
 - [ ] [[tickets/T-10100-wave-9-10-tool-fixes|T-10100 Wave 9/10 tool fixes]]
 
 - [ ] [[tickets/T-10020-wave-11-list-2|T-10020 Wave 11: list 2]]

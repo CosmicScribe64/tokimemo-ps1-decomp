@@ -1,0 +1,8 @@
+// Rodata labels for the INCLUDE_RODATA lines of overlay TACO (T-0500). Written by
+// tools/split_objects.py, do not edit. splat names a symbol only when something in the same
+// subsegment points at it; strings reached through .data pointer tables lost their labels when
+// the rodata was cut into per-object islands, so they are listed here.
+D_8015F5F8 = 0x8015F5F8;
+D_8015F5FC = 0x8015F5FC;
+D_8015F604 = 0x8015F604;
+D_8015F82C = 0x8015F82C;

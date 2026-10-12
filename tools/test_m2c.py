@@ -5,6 +5,7 @@ Run: tools/docker.sh python3 tools/test_m2c.py   (from the repo root)
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -210,7 +211,7 @@ class LoLiteral(unittest.TestCase):
 
 class SharedTableBase(unittest.TestCase):
     @unittest.skipUnless(shutil.which("m2c"), "m2c is only in Docker")
-    def test_distinct_low_symbols_are_upstream_table_store_bug(self):
+    def test_distinct_low_symbols_preserve_both_table_stores(self):
         text = ("glabel f\n lui $at, %hi(D_80010000)\n"
                 " sw $a0, %lo(D_80010000)($at)\n jr $ra\n"
                 " sw $a1, %lo(D_80010004)($at)\n")
@@ -224,9 +225,59 @@ class SharedTableBase(unittest.TestCase):
             raw = draft()
             self.assertIn("*D_80010000 = arg0;", raw)
             self.assertIn("*D_80010000 = arg1;", raw)
-            _decls, body = m2c.split_draft(raw, "f")
-            self.assertIn("*D_80010000 = arg0;", body)
-            self.assertIn("*D_80010000 = arg1;", body)
+            with open(path, 'w') as f:
+                f.write(m2c.fix_shared_hi(text))
+            fixed = draft()
+            # Two stores to two distinct offsets (offset 0 may print as ->unk0, 4 as ->unk4).
+            self.assertRegex(fixed, r"D_80010000(\[0\]|->unk0) = arg0;")
+            self.assertRegex(fixed, r"D_80010000(\[1\]|->unk4) = arg1;")
+
+    def test_addends_signed_low_carry_and_register_overwrites(self):
+        text = ('glabel f\n lui $at, %hi(D_80018000)\n'
+                ' sh $a0, %lo(D_80018002)($at)\n'
+                ' sh $a1, %lo(D_80018000 + 4)($at)\n'
+                ' li $at, 1\n sh $a2, %lo(D_80018006)($at)\n')
+        out = m2c.fix_shared_hi(text)
+        self.assertIn('sh $a0, 2($at)', out)
+        self.assertIn('sh $a1, 4($at)', out)
+        self.assertIn('%lo(D_80018006)', out)
+        with self.assertRaisesRegex(RuntimeError, 'incompatible high halves'):
+            m2c.fix_shared_hi('lui $at, %hi(D_80017FFE)\nsh $a0, %lo(D_80018000)($at)\n')
+
+    def test_call_delay_slot_repaired_then_base_discarded(self):
+        out = m2c.fix_shared_hi('lui $at, %hi(D_80010000)\njal g\n'
+                               'sw $a0, %lo(D_80010004)($at)\n'
+                               'sw $a1, %lo(D_80010008)($at)\n')
+        self.assertIn('sw $a0, 4($at)', out)
+        self.assertIn('%lo(D_80010008)', out)
+
+    def test_wave11_three_halfword_store_shapes(self):
+        # Synthetic reconstruction of the reported shared-HI patterns, no game asm.
+        for name in ('func_8013ACBC', 'func_8013C4E4', 'func_801489D0', 'func_8011EDFC'):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as root:
+                touch(root, 'asm/nonmatchings/main/probe/%s.s' % name,
+                      'glabel %s\nlui $at, %%hi(D_80010000)\n'
+                      'sh $a0, %%lo(D_80010000)($at)\n'
+                      'sh $a1, %%lo(D_80010002)($at)\n'
+                      'jr $ra\nsh $a2, %%lo(D_80010004)($at)\n' % name)
+                touch(root, 'include/game.h', 'extern short D_80010000[3];\n')
+                draft = m2c.run_m2c(root, name, rodata=False, callee_args=False)
+                for i in range(3):
+                    self.assertRegex(draft, r'D_80010000(\[%d\]%s) = arg%d;' %
+                                     (i, '|->unk0' if i == 0 else '', i))
+
+    def test_negative_member_uses_typed_byte_offset(self):
+        # TEL func_8013639C exposed upstream's .unk-130A spelling.
+        with tempfile.TemporaryDirectory() as root:
+            name = 'func_8013639C'
+            touch(root, 'asm/nonmatchings/main/probe/%s.s' % name,
+                  'glabel %s\nlui $v0, %%hi(D_8001130A)\njr $ra\n'
+                  'lh $v0, -0x130A($v0)\n' % name)
+            touch(root, 'include/game.h', 'extern short D_8001130A;\n')
+            draft = m2c.run_m2c(root, name, rodata=False, callee_args=False)
+            self.assertNotIn('unk-', draft)
+            self.assertIn('(unsigned char *)', draft)
+            self.assertIn('(-4874)', draft)
 
 
 
