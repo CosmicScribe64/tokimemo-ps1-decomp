@@ -1,8 +1,8 @@
 ---
 type: research
-updated: 2026-10-11
+updated: 2026-10-12
 ticket: T-9800
-sources: ["tools/ido-ecvt.patch", "tools/uopt_eval.py"]
+sources: ["tools/ido-ecvt.patch", "tools/uopt_eval.py", "tools/regdiff.py"]
 ---
 
 # uopt register allocation: trace and uniform experiments
@@ -10,6 +10,7 @@ sources: ["tools/ido-ecvt.patch", "tools/uopt_eval.py"]
 Results for [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch]].
 Context: [[original-compiler]], [[ido-52-evaluation]],
 [[register-allocation-wave7]], T-9000 in [[matching-notes]].
+Tool built on this trace: `tools/regdiff.py` (T-10400, section "regdiff" at the end and [[decompile-workflow]]).
 
 ## Reproducibility and source boundary
 
@@ -426,3 +427,71 @@ Wiki ticket/board links, all eight score records, tool hashes and isolated gain
 proofs are checked. Proof logs: scratchpad/r9-uopt/final-clean-build.log and
 final-checks.log. Inline standards/spec review is recorded in the ticket;
 all findings are resolved. No commits, stashes or branches were created.
+
+## regdiff: the trace as a diagnostic tool (T-10400)
+
+`tools/regdiff.py` ([[decompile-workflow]], section "regdiff") puts the T-9800 trace to work for a single draft. It
+compiles the stripped function through `tools/cc.py` (the exact build pipeline) with the traced uopt, links each
+register difference to a live range of the trace and prints the range's priority, order and colour against the
+competing range, with a hint from the rules above. Nothing about the traced uopt enters the repository; the default
+path is `/scratch/r9-uopt/variants/trace`, built with the recipe at the top of this page, and it runs in the normal image.
+
+How an instruction is linked to a range: the draft's code is split into register webs (reaching definitions per
+register, a call clobbers the caller-saved registers after its delay slot, `sw`/`lw` of the same stack slot join
+the pieces of a range saved across a call, `lui`+`addiu` on one register is one value). Webs and trace ranges of the
+same hardware register are paired by the def/use counts of the trace and by program order; the report says when
+the register has only one range, when the counts agree and when it is a guess. Variable names come from the
+ucode (`loc` lines of each `lod`/`str` against the identifiers on those lines of the draft); a hoisted constant is
+named by the constant its web builds. Registers `$at` and t6..t9 are ugen's, not uopt colours, and are reported as such.
+
+### Rules the tool's cases made visible
+
+- **Hoisted temporaries are numbered in the order the code first uses them.** Bits past the expression table (hoisted
+  constants and addresses, e.g. bits 32..39) follow the first use in the loop body; at equal priority the lower bit is
+  coloured first and gets the lower register. DATE `func_80136F2C` (bits 32 `D_800CA22C`, 33 `D_800CA224`, 34 `1`, 35 `4`,
+  36 `3`, 37 `D_800CA234`, 38 `-1`, 39 `2`) and EVENT `func_80114B0C` (68 `D_8012439C`, 69 `D_80124394`, 70 `1`, 71 `4`,
+  72 `3`, 73 `D_801243A4`, 74 `-1`, 75 `2`) show the same sequence: source array, destination array, the constants in the
+  order of the tests, the third array, the constants of its tests.
+- **The address of the left side of an assignment is used before its right side** (`a[i] = b[i]` pushes a's address
+  first). `v = b[i]; a[i] = v;` therefore numbers b first. Dropping the temporary (the later `v - 1` reads `b[i]` again, which
+  uopt shares) swapped the two base registers and matched DATE `func_80136F2C`, after 28 hand variants and a 300 s
+  permuter run had failed (tie of two priority 3.333 ranges, bits 32 and 33).
+- **A swapped `bne` with equal registers is operand order**, not allocation. uopt puts a plain variable first, and a
+  narrow global is no plain variable after the cvt pass. A local copy of the global (`u8 sel; sel = D_8012531C; if (sel == 1)`)
+  puts the register first like the original and matched EVENT `func_80119518` (a `u32` copy matched too, `s32` did not).
+  Writing the operands of the `==` the other way round (`1 == D`, `D == sel`) did not change the order in these tests.
+- Unconstrained ranges are coloured in bit order even when a later bit has the higher priority; the tool prints the
+  note when it matters.
+
+### Validation
+
+Draft sources are the T-9800 draft corpus and the guarded drafts of T-10330; the original side is the unit's
+all-`INCLUDE_ASM` object (funcdiff). "Before" rows are the older drafts, run with `--src`.
+
+| case | what the draft gets | what regdiff says | outcome |
+|---|---|---|---|
+| EVENT `func_80119518` (draft 78, T-0018 row) | `bne v1,v0` against `bne v0,v1`, nothing else | operand order only; local-copy hint | `u8 sel` copy of `D_8012531C` matches; landed |
+| DATE `func_80136F2C` (draft 162) | base registers t0/t1 swapped, 4 lines | tie 3.333/3.333, bits 32/33, first-use order, hoisted sequence | no temporary `v`: matches; landed |
+| EVENT `func_80114B0C` (guarded) | t1/t2 bases swapped plus a `bne` order | tie 2.5/2.5, bits 68/69 | not matched; draft cut from 10 to 5 differing lines with `*p = v = *r` |
+| TT `func_801475C8` (draft 132) | s2/s3 swapped (`0x40`, `6`) | tie 5/5, bits 21/22, saved-register cost 4 | not matched (`while`, `do`, down-counting loops tried) |
+| GYOZI `func_8013E638` (guarded) | i in v0, element pointer v1 | i 25.5 outranks pointer 20, 5 loop references against 4 | not matched (scalar `D_800F62CF` view changes the structure) |
+| ETC `func_80143F24` (guarded) | global in v1, original a1 | global 15 outranks the loop counter expression | not matched |
+| TT `func_8014A814` (draft 137) | five constants in other registers | constant table lists each value, draft register, original register | not matched |
+| DATE `func_801511B4` (draft 221) | `lui v0` for `D_800B593C`, original v1 | original keeps another value in v0 across the block | not matched |
+| main `MouseState` (draft 8) | locals `first`/`result` tie 1.5/1.5, unconstrained, bits 7/11 | tie, first mention order | repository version has no `first` and matches |
+| control EVENT `func_8010AC40`, GYOZI `func_8013AE80`, main `MouseState` | exact | `MATCH`, no divergence | as expected |
+
+Two more of the old drafts, DATE `func_8013E3C4` and SHUGAKU `func_801322F0`, are pure operand-order differences, and
+the tool reports them as such; both are matched in the repository today with a local copy (a narrow `u16` plus cast, FAKE
+T-10020, and a `GameState *` local), the same remedy.
+
+Survey of the whole best-draft manifest of T-9800 (163 drafts): all 163 drafts ran without a failure (traced compile 2.9 s on average, analysis 0.2 s, at load average 20 to 55): 5 identical, 4 operand order only, 25 register differences only, 127 with other instruction differences as well (14 of them without any register difference), 2 with nothing found. Of the 138 first register divergences, 49 are ugen temporaries (t6..t9 and $at), 46 priority order, 19 an extra or missing live range, 14 without a matching range and 10 ties.
+
+Speed: the traced compile of the stripped function takes 1.5 to 2 s on an idle machine, the whole call about
+3 s inside a running container (cached original object) and 6 to 12 s from the shell at load average 20 (container start,
+imports, symbol lookup). `regdiff.run` can be called repeatedly from one container to try variants.
+
+Limits: the tool explains one decision at a time and is only as good as the link from instruction to range; it does not
+know the original's C. Splitting after a failed colour check is reported as a piece of the parent range. ugen's t6..t9 and
+`$at` are shown as a sequence only. Rules the tool cannot yet turn into a C change (TT `func_801475C8`, GYOZI
+`func_8013E638`) stay open.

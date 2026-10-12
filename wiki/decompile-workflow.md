@@ -1,9 +1,9 @@
 ---
 type: concept
-updated: 2026-10-11
+updated: 2026-10-12
 sources: ["tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/funcloc.py", "tools/sync_protos.py", "tools/migrate_globals.py", "tools/data_island.py", "tools/data_pieces.py"]
 sources: ["tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py"]
-sources: ["tools/type_recovery.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py"]
+sources: ["tools/type_recovery.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/regdiff.py"]
 ---
 
 # How to decompile a function
@@ -38,7 +38,28 @@ The build compiles in K&R mode (`-cckr`, [[toolchain]]): an unsigned char or sho
 - `tools/queue.py` hints were calibrated in ANSI mode but still hold: U0/U1 and R/V come from the `tools/cvt_pass.py` rules, which see the same ucode after the widening step, and the `T` hint (try a `u32`/`u16` declaration for a word selector in `$v1`) is about the variable's type, not promotion. The old advice to add `(u32)` casts or `U` suffixes for `sltiu`/`srl` is obsolete: plain C gives them now.
 - A callee's return type changes the registers around the call: declare a function that returns a value as such (`s32 func_8009AD70();`, TACO `func_8014A8E0`), as K&R code called undeclared functions as `int`.
 
+## regdiff: why does the draft get other registers? (T-10400)
+
+Use it when `funcdiff.py --resolve` shows the right instructions in other registers, before a permuter run and before a T-0018 row. It compiles the draft with the instrumented uopt of T-9800 and tells you which register-allocation decision differs, with the numbers the allocator used.
+
+```
+TOKIMEMO_SCRATCH=<shared scratch> tools/docker.sh python3 tools/regdiff.py [UNIT:]func_X [--src draft.c] [--unit UNIT] [-v]
+```
+
+- **Needs the traced uopt**, which is not in the repository (no compiler binaries): build it once as [[uopt-register-allocation]] describes (`tools/ido-ecvt.patch`, `tools/uopt_patch.py trace`, the pinned ido-static-recomp) and keep it under the scratch directory. Default path `/scratch/r9-uopt/variants/trace` (`TOKIMEMO_SCRATCH` is mounted at `/scratch` by `tools/docker.sh`), or `--uopt PATH` / `REGDIFF_UOPT`. It runs in the normal `tokimemo-decomp` image; no separate image is needed.
+- **Draft:** the function's C in its source file (a `#ifdef NON_MATCHING` draft counts) or `--src` for a scratch copy of the file. The function is cut out like the permuter's base.c and compiled by `tools/cc.py` itself (IDO 5.3, K&R, cvt pass, frame pass, asm-processor), so the code is what ninja would build; only the uopt binary differs. Work files: `build/scratch/regdiff/<func>/`.
+- **Speed:** about 1.5 to 2 s for the traced compile plus 1 to 2 s of start-up and original-side lookup (the original object is cached by `funcdiff`); 5 to 10 s per call on a loaded machine. To try many variants in one go, import `regdiff` and call `regdiff.run(args, out=...)` per variant in one container (about 3 s each).
+- **Output:** the instruction counts; `MATCH` for an identical function (a control reports no divergence); the first structural difference if the instructions differ (fix those first, the register analysis covers only instructions that agree); `operand order` lines for commutative instructions whose source registers are exchanged; the register map (draft -> original); then `FIRST DIVERGENCE` with
+  1. the draft range that holds the register (bit position, what it holds: local or parameter by its guessed C name and source lines, an expression, or "constant 0x... built by `lui`"), its priority = uses + defs over units with the loop weight and denominator, constrained or unconstrained, its place in the allocation order, the cost of its cheapest colour and the colour it got, and how sure the link between instruction and range is;
+  2. the competing range: the one that holds the original's register in the draft (the mirror of a swap) with the same numbers, or, when the original keeps a value in a register that the draft lacks (or the other way round), the value that occupies the register in the original's or the draft's code;
+  3. a hint: tie (equal priorities, lower bit first), priority order (what to raise or lower), argument precolour, ugen temporary (not an allocator decision), or an extra/missing live range;
+  4. the constants kept in registers that sit in other registers than in the original; `-v` lists every range.
+- **Limits:** the link from an instruction to a range is made from the draft's own register webs and the def/use counts of the trace, so it is a strong hint, not proof (the line says "the only range in $x", "def/use counts agree" or "best guess"). Registers t6..t9 and `at` are ugen's, not uopt's: the tool says so and shows the temporaries' order. Names of variables come from the ucode references and the draft's declarations. It does not search; it tells you what to change, then you change the C and run it again.
+- **What the hints mean in C** (cases and numbers in [[uopt-register-allocation]], "regdiff (T-10400)"): equal-priority hoisted constants and addresses are numbered in the order the code first uses them, and the address of the left side of `a[i] = b[i]` is used before the right side, so dropping the temporary in `v = b[i]; a[i] = v;` swapped the two base registers (DATE `func_80136F2C` matched); a swapped `bne` that no register change explains is an operand-order or local-copy question (`u8 sel; sel = D_8012531C; if (sel == 1)` matched EVENT `func_80119518`); a priority gap names the range to give an extra use or take one from.
+
 ## Before recording a T-0018 row (T-9000)
+
+First run `tools/regdiff.py` (T-10400, section above): it names the range and the rule behind a register difference.
 
 T-9410 additions (experiment details in [[register-allocation-wave7]]):
 - For a GameState selector read after a call, try a `u8 state` local assigned

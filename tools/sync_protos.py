@@ -976,9 +976,11 @@ def all_overrides(model):
     return out
 
 
-def write_api(model, plan_, path=None):
+def write_api(model, plan_, path=None, keep_guards=False):
+    """Rewrite main_api.h from `plan_`. keep_guards: also keep every guard the file already has (--add-global
+    reads no .c file, so it cannot see the overrides defined there, T-10400)."""
     entries = build_entries(model, plan_)
-    guards = all_overrides(model) & set(entries)
+    guards = (all_overrides(model) | (api_guards(model) if keep_guards else set())) & set(entries)
     path = path or os.path.join(model.inc, API)
     old = _read(path) if os.path.exists(path) else ""
     keep = parse_foreign(old, set(entries)) if old else None
@@ -1470,9 +1472,12 @@ def add_global(inc, src, name, typ, log=print):
     got = list(ch.declarations_text(raw + ";"))
     if len(got) != 1 or got[0][0] != name:
         return "cannot read '%s' as a declaration of %s" % (raw, name)
-    plan_ = plan(model)
+    # Minimal diff (T-10400): the plan is the file as it is plus the new symbol. plan(model) would also
+    # pull in whatever the headers declare that main_api.h does not hold yet, and re-decide views that
+    # need the sources; --write does that, --add-global changes one line.
+    plan_ = {n: (t, r, "kept") for n, (t, r) in model.api.items()}
     plan_[name] = (got[0][1], raw, "--add-global")
-    write_api(model, plan_)
+    write_api(model, plan_, keep_guards=True)
     log("%s: added extern %s;" % (os.path.join(inc, API), raw))
     return None
 

@@ -9,6 +9,7 @@ sources: ["tools/register_shapes.py", "tools/test_register_shapes.py", "wiki/dat
 Ticket [[tickets/T-9410-register-allocation-shapes-after-wave-7]]. Workflow
 idioms: [[decompile-workflow]]. Earlier investigation: [[matching-notes]],
 T-9000. All experiments use IDO 5.3, `-cckr`, the cvt pass and frame pass.
+Register differences: run `tools/regdiff.py` first (T-10400, [[decompile-workflow]]); it names the live range, priority and rule behind them.
 
 ## Inventory
 

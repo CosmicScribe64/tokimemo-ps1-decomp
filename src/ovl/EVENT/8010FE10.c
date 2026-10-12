@@ -162,7 +162,8 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114784);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114948);
 
-/* NON_MATCHING: T-10330, 10 lines: base registers of D_80124394/D_8012439C swapped (t1/t2) and bne operand order. */
+/* NON_MATCHING: T-10330, 5 lines: base registers of D_80124394/D_8012439C swapped (t1/t2) and the operand order of the sel bne. T-10400
+ * (tools/regdiff.py): both hoisted addresses have priority 2.5 and the lower bit, D_8012439C, is coloured first. */
 #ifdef NON_MATCHING
 void func_80114B0C(void) {
     u8 sel;
@@ -177,15 +178,14 @@ void func_80114B0C(void) {
         p = &D_80124394 + i;
         r = &D_8012439C + i;
         q = &D_801243A4 + i;
-        v = *r;
-        *p = v;
+        *p = v = *r;
         if (*p == 0) {
             *p = 1;
         }
         if (*p == 4) {
             *p = 3;
         }
-        if (sel == D_800B0F2C) {
+        if (D_800B0F2C == sel) {
             *p = 3;
         }
         *q = v - 1;
@@ -940,7 +940,34 @@ void func_80119440(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119518);
+void func_80119518(void) {
+    u8 sel; /* local copy of the selector: the original compares the register as the first operand (T-10400) */
+
+    if (D_800B1746 == 1) {
+        sel = D_8012531C;
+        if (sel == 0) {
+            D_80094730 = 4;
+        }
+        if (sel == 1) {
+            D_80094730 = 7;
+        }
+        if (sel == 2) {
+            D_80094730 = 0xA;
+        }
+        if ((D_800B0896 >= 6) && (D_800B0896 < 9)) {
+            D_80094730 = 0;
+            D_8012439C = 1;
+            D_8012439E = 4;
+            D_801243A0 = 2;
+            D_8012438C = 2;
+            D_8012438E = 3;
+            D_80124390 = 3;
+        }
+        func_80114B0C();
+        return;
+    }
+    func_80011DFC();
+}
 
 s32 func_80119600(void) {
     if ((D_800B1746 == 1) && (D_800B0896 >= 6) && (D_800B0896 < 9) && (D_800EECBC == 1)) {
