@@ -9818,7 +9818,7 @@ Hoisted constants and addresses (bits past the expression table) are numbered by
 Ticket [[tickets/T-10520-wave-13-list-2]] In Progress (59 functions, 30 files).
 
 ## [2026-10-12] build | T-10520 wave 13 list 2 matches
-10 matches (2496 bytes): GEKO `func_80139D54`, SHOUGATU `func_80138D2C`, `func_80139514`, `func_80137D0C`, TACO `func_8013474C`, OMIMAI `func_801331B0`, TAIIKU `func_8013A63C`, `func_8013ACBC`, `func_8013C4E4`, main `func_8007A354`. TAIIKU/80138950 shared-`lui $at` groups and TAIIKU/80133C80 slot data (`TaiikuSlots`) are now defined in the C files. 17 guarded near misses, rows in [[data/t0018-cases]], notes in [[matching-notes]]. Progress 5109 -> 5119 of 6958.
+10 matches (2496 bytes): GEKO `func_80139D54`, SHOUGATU `func_80138D2C`, `func_80139514`, `func_80137D0C`, TACO `func_8013474C`, OMIMAI `func_801331B0`, TAIIKU `func_8013A63C`, `func_8013ACBC`, `func_8013C4E4`, main `func_8007A354`. TAIIKU/80138950 shared-`lui $at` groups and TAIIKU/80133C80 slot data (`TaiikuSlots`) are now defined in the C files. 15 guarded near misses, rows in [[data/t0018-cases]], notes in [[matching-notes]]. Progress 5109 -> 5119 of 6958.
 
 ## [2026-10-12] ticket | T-10520 done
 [[tickets/T-10520-wave-13-list-2]] Done after the inline review against `CODING_STANDARDS.md` (no findings). Build: 27/27 unit sha1 OK, `build/headers.ok`, `build/globals.ok`; `sync_protos.py --check-branch` and `migrate_globals.py --check` clean. Board: [[kanban]].
