@@ -463,4 +463,7 @@ extern Taiiku2s32 D_80149974;
 extern Taiiku2s16 D_80149980;
 extern Taiiku3s32 D_80149990;
 
+extern u8 D_8014920B;
+extern u16 D_80149214;
+
 #endif

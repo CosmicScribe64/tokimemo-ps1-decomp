@@ -51,7 +51,43 @@ void func_800452C4(void) {
     D_800B3D6C = 0;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10520, prologue and body match with a K&R definition; the constant 48 sits in $t0 (original $v0) and the incremented index in $v0 (original $v1), about 16 lines */
+s32 func_80045318(arg0, arg1, arg2)
+u8 arg0;
+s32 arg1;
+s32 arg2;
+{
+    u8 *rec;
+    u32 next;
+    u32 n;
+    s32 src;
+
+    src = arg2;
+    next = D_80125129 + 1;
+    if ((next % 0x30U) == (D_80125128 % 0x30U)) {
+        return -1;
+    }
+    rec = D_80125130 + D_80125129 * 0x18;
+    rec[0] = arg0;
+    *(s32 *)(rec + 4) = arg1;
+    rec[0x17] = 0;
+    if (src == 1) {
+        rec[0x17] = 0xFF;
+    } else if (src != 0) {
+        memcpy(rec + 8, src, 0x10);
+        next = D_80125129 + 1;
+    }
+    n = next & 0xFF;
+    if (n < 0x30U) {
+        D_80125129 = n;
+        return 1;
+    }
+    D_80125129 = 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_80045318);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_80045414);
 

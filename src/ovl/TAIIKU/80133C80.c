@@ -417,7 +417,31 @@ s32 func_80138680(s32 arg0, s32 arg1) {
     return slot;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10520, only the ugen temporaries differ ($t1/$t2/$t3/$t4 against $t3/$t4/$t5/$t8: the original consumes two more expression temporaries per loop), 6 lines */
+void func_80138800(void) {
+    s32 i;
+    s32 t;
+
+    if (D_80149214 >= 0xBU) {
+        D_8014920B += 1;
+        D_80149214 = 0;
+    }
+    if (D_8014920B >= 4U) {
+        D_8014920B = 0;
+    }
+    for (i = 0; i < 4; i++) {
+        t = func_80138680(i, 1);
+        *(s16 *)(D_8011ECD0 + i * 0x44 + 0x1998) = D_8014920B + t;
+    }
+    for (i = 0; i != 4; i++) {
+        t = func_80138680(i, 0);
+        *(s16 *)(D_8011ECD0 + i * 0x44 + 0x1C84) = (D_8014920B & 1) + t;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80138800);
+#endif
 
 s16 func_801388E4(s32 arg0) {
     s32 key;

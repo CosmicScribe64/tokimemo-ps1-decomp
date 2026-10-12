@@ -333,7 +333,34 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C0E4);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C33C);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C4E4);
+void func_8013C4E4(s32 arg0) {
+    s32 var_a0;
+    /* FAKE: two unused locals reproduce the original's frame (the real locals are unknown). T-10520 */
+    s32 pad;
+    s32 pad2;
+    s32 sp40;
+    s32 sp3C;
+    s32 sp38;
+    s32 sp34;
+
+    if (func_800AE0C0((D_80149984[0] >> 3) - D_801206BA) < 0x50) {
+        if (D_80149974.unk_04 < 0) {
+            D_80149974.unk_04 = 0;
+        }
+        var_a0 = -((((D_80149984[0] >> 3) - D_801206BA) << 0xA) >> 6);
+        if ((D_80122EC4 % 3) != 0) {
+            var_a0 = var_a0 - 0x100;
+        }
+        sp40 = 0;
+        sp3C = arg0;
+        func_80086204(var_a0, &sp40, &sp3C, &sp38, &sp34);
+        D_801499A0.unk_08 = sp38;
+        D_801499A0.unk_0C = sp34;
+        return;
+    }
+    D_801499A0.unk_08 = 0;
+    D_801499A0.unk_0C = 0;
+}
 
 void func_8013C5C8(s32 arg0)
 {
