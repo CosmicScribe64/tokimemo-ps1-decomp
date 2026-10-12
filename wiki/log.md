@@ -9756,3 +9756,6 @@ functions and 865160/2279368 bytes (38.0%). Changes remain uncommitted.
 
 ## [2026-10-11] ticket | T-10330 wave 12 list 3 started
 [[tickets/T-10330-wave-12-list-3]] created In Progress; 149 functions in 49 files.
+
+## [2026-10-11] ticket | T-10330 early stop
+[[tickets/T-10330-wave-12-list-3]]: 0 matches, one guarded near miss in `src/ovl/EVENT/8010FE10.c`; ticket stays In Progress.
