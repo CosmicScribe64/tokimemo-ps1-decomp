@@ -64,7 +64,20 @@ void func_8010B570(void) {
     }
 }
 
+/* NON_MATCHING: T-10610, the original stores the constant 4 straight from $a0 (li a0,4; sb a0 in the jal delay slot); every form tried gets a separate li (u8 store narrows the shared constant) */
+#ifdef NON_MATCHING
+void func_8010B614(void) {
+    u8 *p;
+    s32 i;
+    D_800B1746 = i = 4;
+    func_8004BC20(i);
+    p = D_800B0860 + D_800B1746 * 0x34;
+    p[0x1B0] &= 0xFFFD;
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010B360", func_8010B614);
+#endif
 
 extern s16 D_800E9E3E;
 extern s16 D_800EC194;
