@@ -159,3 +159,31 @@ void func_80158FD4(void);
 
 void func_80151364(void);
 #endif
+
+/* T-10630: shared dialogue continuation in the 8013C430 object. */
+void func_8013FCBC(void);
+void func_8013FC58(void);
+void func_8013FD20(void);
+
+#ifndef OVL_BUNKASAI_T10630_FLAGS_H
+#define OVL_BUNKASAI_T10630_FLAGS_H
+/* T-10630: byte D_800E7D4F, preserving bits 0 and 5..7. */
+typedef struct BunkaReturnFlags {
+    u8 b0 : 1;
+    u8 b1 : 1;
+    u8 unk_2_4 : 3;
+    u8 unk_5_7 : 3;
+} BunkaReturnFlags; /* size 0x01 */
+#endif
+
+/* T-10630: scene helper has no return value; callers use its side effects. */
+void func_801431D4(void);
+
+#ifndef BUNKA_DISPATCH8_T10630_H
+#define BUNKA_DISPATCH8_T10630_H
+/* T-10630: adjacent route/character words at D_80122EB8, used by both overlays. */
+typedef struct BunkaDispatch8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} BunkaDispatch8; /* size 0x08 */
+#endif

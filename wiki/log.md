@@ -9837,3 +9837,361 @@ Added [[register-cheatsheet]], a one-page symptom-to-C guide distilled from [[uo
 [[tickets/T-10620-wave-14-list-2]]: 8 matches (1,784 bytes), 2 new guarded near misses, 26 rows in [[data/t0018-cases]], patterns in [[matching-notes]]. `src/ovl/OMIMAI/80132AD0.c`, `src/main/8004AD60.c` and six more files changed. 27 unit sha1 `OK`, headers and globals pass; grand total 5138/6958 functions, 921336/2279368 bytes.
 ## [2026-10-12] ticket | T-10620 done
 [[tickets/T-10620-wave-14-list-2]] Done after the inline review against `CODING_STANDARDS.md` (no findings). Board: [[kanban]].
+## [2026-10-12] ticket | T-10630 big-function batch begins
+
+Created [[tickets/T-10630-big-functions-astra]] and its In Progress card.
+Read shared wave-11 brief and matching workflow; own six objects only.
+Largest assigned function is TEL func_80136724 (7,260 bytes).
+
+## [2026-10-12] build | T-10630 baseline and TEL type recovery
+
+Initial Docker configure/build passed all 27 units. Began the largest assigned
+TEL handler; assembly extent is 0x19B4 (6,580 bytes), smaller than list metadata.
+Recovered its packed calendar entry and typed dialogue tables in
+include/ovl/TEL.h; details in [[decompile-workflow]]. Initial draft compiled;
+regdiff reports structural and register differences, including stack-local
+placement. [[tickets/T-10630-big-functions-astra]] remains In Progress.
+
+## [2026-10-12] ingest | T-10630 TEL selector view
+
+regdiff narrowed TEL func_80132FC4 to one selector copy and initialization
+scheduling. Bounded permutation setup rejected the extra instruction; a
+source sweep found the byte-lvalue switch view instruction-exact. Applied
+that candidate with its FAKE explanation; real verification is running.
+The reusable spelling and rejected alternatives are in [[decompile-workflow]].
+
+## [2026-10-12] build | T-10630 first verified large match
+
+TEL func_80132FC4 is instruction-exact (3,472 bytes), and build/ovl/TEL.bin
+SHA1 is OK. Recorded the match and FAKE review points in
+[[tickets/T-10630-big-functions-astra]]. Started DATE func_80147958: its
+sprite updates use the existing Rec24 table and its four stack halfwords
+are a RECT; no duplicate geometry or sprite types are needed.
+
+## [2026-10-12] ingest | T-10630 movie transition layouts and register experiments
+
+Added the observed EVENT movie-control layout to `include/ovl/EVENT.h` and
+staged missing main declarations through `tools/sync_protos.py`. DATE/EVENT
+share Rec24 sprite and RECT stack patterns; recorded the narrow-counter
+for-loop scheduling and stale m2c call-argument pitfall in
+[[decompile-workflow]]. Source sweeps retain per-candidate regdiff evidence in
+scratchpad/a14. TEL's 3,472-byte match is verified by real resolved funcdiff
+and the TEL SHA1; other large handlers are still being refined.
+
+## [2026-10-12] ingest | T-10630 MASTER sprite and particle types
+
+Recovered the 20-record sprite block, ten coordinate pairs, and parallel
+halfword speeds for MASTER `func_801344E0`; added reusable types and table
+declarations to `include/ovl/MASTER.h`. Restored the existing Rec38 game-state
+array in its four-way unrolled stat loops. Recorded the evidence in
+[[decompile-workflow]]. Draft compiles; regdiff and instruction-structure
+checks are in progress. No raw assets or object configuration changed.
+
+## [2026-10-12] decision | T-10630 register-only BUNKASAI draft and MASTER search
+
+BUNKASAI `func_8013DE3C` now reproduces the instruction structure after
+restoring direct message-ID assignments and reading Rec38 flag b2 as a
+bit-field (shift/sign test). Its remaining differences are register allocation;
+regdiff identifies the scene selector competing with the message-ID global.
+MASTER `func_801344E0` reaches the target instruction count. A five-minute
+permuter search found no exact candidate; its best result introduces an
+uninitialized pointer via an unreachable assignment and was rejected.
+Declaration-order, return-type and aggregate-view experiments remain in
+scratchpad/a14. Reusable layout evidence remains in [[decompile-workflow]].
+
+## [2026-10-12] build | T-10630 six BUNKAKEN instruction matches
+
+Six assigned BUNKAKEN handlers resolve exactly after recovering the Rec38
+bit-field and local GameState pointer idioms. The remaining two are down
+to 26 and six differing lines; the latter is in a short permuter search.
+Overlay checksum verification follows isolation of the remaining drafts.
+Recorded the reusable mixed-width flag and direct message-ID forms in
+[[decompile-workflow]] and [[tickets/T-10630-big-functions-astra]].
+
+## [2026-10-12] build | T-10630 fourteen matches pass all checksums
+
+All 27 binaries pass SHA1 after enabling seven BUNKAKEN matches, six
+BUNKASAI matches and the earlier TEL match. Header and global checks pass.
+BUNKAKEN `func_8014B378` matches after placing the message assignment before
+the flag write; the five-minute permuter found no improvement on its earlier
+seed. BUNKASAI's remaining successful repairs use ascending case order,
+explicit if/else message assignments, and Rec38 b12/b13 stores. The scoped
+duplicate pass proposes no changes. Wide drafts remain temporarily guarded
+for further investigation; final cleanup will keep only close candidates.
+
+## [2026-10-12] build | T-10630 completes the eight BUNKAKEN handlers
+
+`func_8014D65C` resolves exactly and BUNKAKEN passes SHA1. Reduced the
+permuter-inspired register trick to one empty pointer test, documented as
+FAKE/T-10630 in the source and [[decompile-workflow]]. Total new matches:
+15. The MASTER table types now compile; frame and register-range experiments
+continue. No other agent's source files changed.
+
+## [2026-10-12] ingest | T-10630 shared MASTER tables and paired movie loops
+
+Added MASTER's thirteen- and five-halfword table wrappers and the five-byte
+shuffle array to `include/ovl/MASTER.h`; documented the load/copy evidence in
+[[decompile-workflow]]. Compiled and traced all four remaining MASTER drafts.
+Reconstructed DATE `func_8014718C` and EVENT `func_8011D5C4` as Rec24 loops
+in scratch; both still have wide differences. Their common structure reuses
+the recovered movie-control and sprite types. Long searches on the largest
+MASTER and BUNKASAI residuals continue; no unsafe permuter output accepted.
+
+## [2026-10-12] build | T-10630 second clean integration checkpoint
+
+All 27 SHA1 checks pass with fifteen newly matched handlers enabled.
+`sync_protos.py --check-branch` and `migrate_globals.py --check` also pass.
+The remaining exploratory C is guarded while bounded searches run in scratch.
+No data-island or toolchain configuration has been changed.
+
+## [2026-10-12] ingest | T-10630 MASTER threshold signedness and shuffle order
+
+Corrected the new five-entry threshold table to unsigned halfwords after
+checking its indexed `lhu` (the arithmetic result is separately narrowed to
+`s16`). Two explicit byte loads before each swap substantially reduce the
+MASTER `func_80133F80` residual. Recorded both observations in
+[[decompile-workflow]]; loop and frame placement probes continue in scratch.
+
+## [2026-10-12] query | T-10630 paired movie return paths
+
+Original DATE `func_8014718C` and EVENT `func_8011D5C4` early exits write a
+zero return value despite inherited void prototypes. Recorded the evidence
+and unresolved shared-tail behavior in [[decompile-workflow]]. Stopped two
+obsolete declaration sweeps and tested corrected return paths in scratch;
+wide residuals remain, and no preexisting header declarations were edited.
+
+## [2026-10-12] build | T-10630 sixteenth match: MASTER flag and palette handler
+
+MASTER `func_80133AA0` matches with relocations resolved and its overlay
+SHA1 passes. Recovered the eleven-element loop and reused its counter across
+the palette loop; declaration order fixes the final spill slot. Appended
+`MasterClubBits` in `include/ovl/MASTER.h` and documented the idioms in
+[[decompile-workflow]]. Total: 16 functions / 23,896 bytes.
+
+## [2026-10-12] ingest | T-10630 BUNKASAI packed return flags
+
+Appended the one-byte `BunkaReturnFlags` layout to `include/ovl/BUNKASAI.h`
+and its mask equivalence to [[decompile-workflow]]. This records a reusable
+finding from the still-unmatched `func_8013DE3C` investigation.
+
+## [2026-10-12] build | T-10630 BUNKASAI helper return declaration
+
+The scene helper `func_801431D4` does not supply a return value. Its missing
+prototype made IDO treat it as returning int and changed live-range
+allocation in `func_8013DE3C`. Appended its void declaration; all existing
+BUNKASAI matches still pass the overlay SHA1. The draft residual falls to
+24 lines with correct call order. Rejected a permuter candidate that swapped
+two side-effecting calls, then tested the declaration directly with regdiff.
+
+## [2026-10-12] build | T-10630 seventeenth match: MASTER threshold shuffle
+
+MASTER `func_80133F80` matches and passes its unit SHA1. Reusing the
+threshold local as the later random index fixes frame placement; an indexed
+for loop fixes the final store scheduling. Documented these source idioms
+in [[decompile-workflow]]. Total: 17 functions / 25,272 bytes. Stopped the
+now-obsolete near-miss permuter. The hour-long `func_801344E0` search ended
+without a valid exact candidate; unsafe pointer mutations remain rejected.
+
+## [2026-10-12] decision | T-10630 retain only close experimental bodies
+
+Archived wide DATE, EVENT, TEL and MASTER drafts to scratch and restored
+their INCLUDE_ASM lines. Kept three new guarded near misses: MASTER
+`func_80137044` (table offset / one flag load), MASTER `func_801375E8`
+(table offset / three flag loads), and BUNKASAI `func_8013DE3C` (case-16
+ugen temporary order). Existing DATE/EVENT data-island near misses remain
+unchanged. Seventeen verified matches stay active. Further bounded searches
+work from scratch; no broad draft is left enabled.
+
+## [2026-10-12] build | T-10630 seventeen-match full integration checkpoint
+
+Fresh full build passes all 27 SHA1 checks after broad-draft cleanup and the
+BUNKASAI helper prototype. The landed matches contain no unused simple
+scalar declarations in the local audit. Exact-byte manifest is updated in
+scratchpad/a14/matches.json. Read-only queue inspection is restricted to the
+six assigned objects while the three close candidates continue searching.
+
+## [2026-10-12] ingest | T-10630 neighboring MASTER resource table
+
+The scoped queue identifies `func_801359F0` in the assigned MASTER object.
+Generated its draft and recovered `D_8013C678` as an eleven-word table,
+reusing `MasterWords11` in the overlay header. Recorded the copy-size
+and indexing evidence in [[decompile-workflow]]. Source-form probes and
+regdiff run only in scratch while the larger near-miss searches continue.
+
+## [2026-10-12] build | T-10630 additional neighboring MASTER match
+
+The brief-authorized scoped queue produced `func_801359F0`, now a resolved
+match with MASTER SHA1 passing. It reuses `MasterWords11` for the recovered
+resource table; two marked FAKE padding words preserve the original frame.
+Total: 18 functions / 26,044 bytes, comprising 17 assigned big functions and
+one neighboring handler in the same owned object. Added the frame lesson to
+[[decompile-workflow]].
+
+## [2026-10-12] lint | T-10630 preliminary inline review
+
+Started the standards/spec review against HEAD and the batch brief, inline
+as required. Added explicit offset/size comments to the new MASTER halfword
+table types and restored an unrelated blank line removed by prototype sync.
+The source scope remains the six assigned objects; broad drafts are archived,
+matching tricks are marked, and the existing DATE/EVENT guarded bodies are
+preserved. Final review remains open until searches and validation finish.
+
+## [2026-10-12] lint | T-10630 matching-trick comments
+
+Adjusted the three new guarded near-miss comments to start with FAKE as
+required by CODING_STANDARDS.md, keeping the reason and ticket reference.
+The retained matched tricks have explicit rationale: TEL scalar selector,
+BUNKAKEN eliminated pointer test, MASTER scalar byte views/local reuse, and
+the neighboring MASTER frame padding. Candidate review continues inline.
+
+## [2026-10-12] query | T-10630 closer MASTER permuter candidates
+
+Checked the new permuter bodies with regdiff using normal headers. A cached
+Rec38 array pointer fixes `func_80137044`'s table offset; a constant local
+fixes the same offset in `func_801375E8`. Remaining residuals are four and
+twelve scheduling lines respectively (object padding marker excluded).
+Both are safe source transformations; the BUNKASAI nested-mask candidate
+provides no real improvement and is not retained. Scoped dupes found zero
+plans with 5,148 matched functions.
+
+## [2026-10-12] build | T-10630 two MASTER table handlers verified
+
+`func_80137044` and `func_801375E8` pass resolved comparisons; all 27 SHA1
+checks pass after appending the missing canonical main-memory Rec24 base
+`D_801217D0` to `config/symbol_addrs_types.txt`. The recovered sprite view
+fixes the remaining load hoists. Total: 20 functions / 28,884 bytes (19
+assigned plus one neighboring handler). Stopped their obsolete searches and
+recorded the source idioms in [[decompile-workflow]]. Added the time-boxed
+MASTER `func_801344E0` register/frame residual to [[data/t0018-cases]].
+
+## [2026-10-12] build | T-10630 final assigned BUNKASAI handler
+
+`func_8013DE3C` passes its resolved comparison and overlay checksum; the
+incremental full build passes. All seven assigned BUNKASAI handlers match.
+Recorded flag-store ordering and the void helper prototype in
+[[decompile-workflow]]. Total: 21 functions / 30,772 bytes.
+
+## [2026-10-12] build | T-10630 three scoped neighboring matches
+
+After the assigned-function deep pass, the scoped queue yielded matching
+BUNKASAI `8013CA64` and BUNKAKEN `8014AF48` / `8014DFB8`. All three pass
+resolved comparisons. Total: 24 functions / 33,484 bytes, including four
+neighbors in owned objects. Recorded type reuse in [[decompile-workflow]].
+The final MASTER aggregate-view experiment did not improve its wide draft.
+
+## [2026-10-12] ticket | T-10630 enters inline review
+
+Moved [[tickets/T-10630-big-functions-astra]] to In Review and synchronized
+the board/index. All 24 resolved comparisons pass; branch prototype check
+and global migration check pass. Refreshed stale intermediate claims in
+[[decompile-workflow]]. Final checksum validation and the bounded neighboring
+MASTER search are finishing.
+
+## [2026-10-12] build | T-10630 four more BUNKASAI neighbors
+
+Resolved comparisons pass for `8013EBDC`, `8013EFB8`, `8013F234`, and
+`8013FA28`, bringing the batch to 28 functions / 36,596 bytes. All are in the
+owned BUNKASAI object and reuse the documented Rec38 flag and pointer idioms.
+The preceding 24-match checkpoint passed all 27 SHA1 checks and headers.
+Started a final bounded MASTER register search and DATE fade/counter sweep;
+all speculative work remains in the agent's scratch directory.
+
+## [2026-10-12] lint | T-10630 aggregate consistency review
+
+The shared sprite view also gives exact scratch comparisons for MASTER
+`80133AA0` and `80133F80`. Applied those field accesses and documented the
+two observed signed halfwords at +0x1A/+0x1C in the overlay header and
+[[decompile-workflow]], resolving the aggregate-consistency review finding.
+Real object comparisons and the full checksum build follow this refinement.
+
+## [2026-10-12] build | T-10630 MASTER club-result handler matched
+
+`80136E24` passes resolved comparison after replacing the final byte mask
+with `MasterClubBits.b30 = 1`. Recorded the separate-record-zero loop shape
+and bit-field register effect in [[decompile-workflow]]. Total: 29 functions
+/ 37,140 bytes (20 assigned, nine scoped neighbors).
+
+## [2026-10-12] build | T-10630 shared dispatch view matches both entries
+
+BUNKAKEN `8014A6A0` and BUNKASAI `8013C430` pass resolved comparisons
+using `BunkaDispatch8`. Added the guarded view to both overlay headers and
+recorded its alias/scheduling effect in [[decompile-workflow]]. Total: 31
+functions / 38,288 bytes. Also documented the MASTER sprite 16.16 position
+union recovered from the neighboring animation helper.
+
+## [2026-10-12] build | T-10630 neighboring MASTER animation helper
+
+`80137BF4` passes resolved comparison after pointer/load ordering and narrow
+argument repairs; its compiler-shaping cast is marked FAKE. Total: 32
+functions / 39,216 bytes. Both owned BUNKAKEN/BUNKASAI objects are now all C.
+The previous checkpoint passed all 31 resolved comparisons and 27 SHA1
+checks. Stopped the obsolete helper search and fixed one trailing blank.
+
+## [2026-10-12] query | T-10630 final wide-draft experiments
+
+The additional DATE fade/counter sweep did not beat the existing 120-line
+scratch residual. TEL control-flow variants improved only two differing lines
+and remain too wide to retain. Uniform MASTER sprite-base and direct-aggregate
+views did not fix the frame/register mismatch; testing branch-specific views
+in scratch while the final bounded register search runs. No speculative
+source or declaration overrides were integrated.
+
+## [2026-10-12] lint | T-10630 reusable guidance consolidated
+
+Consolidated the batch section of [[decompile-workflow]] by overlay and
+source idiom. Removed intermediate status repetition while retaining all
+recovered layouts, verified examples, FAKE explanations, and limits of the
+remaining scratch drafts. Historical log entries were left intact.
+
+## [2026-10-12] lint | T-10630 retained near misses audited
+
+Fresh regdiff traces confirm the original guarded DATE `801489D0` and EVENT
+`8011EDFC` drafts compile with the final headers. Each has 11 normalized
+initialization/data-ownership differing lines, below the retention threshold.
+Their source files remain unchanged. Prototype branch check and global
+migration check pass after all added types; whitespace check is clean.
+
+## [2026-10-12] build | T-10630 32-match checkpoint verified
+
+All 27 SHA1 checks pass with the final headers and latest MASTER helper.
+Header/global stamps are present; prototype and global checks pass; scoped
+dupes apply zero plans. The manifest/list audit confirms 20 assigned matches
+(30,000 bytes) plus 12 owned neighbors (9,216 bytes). Progress is
+`grand total   5162/6958   958768/2279368  42.1%`. Recorded the inline standards
+review and resolved findings in [[tickets/T-10630-big-functions-astra]]. The
+last bounded register search is still running; no completion is claimed yet.
+
+## [2026-10-12] setup | T-10630 current-header handoff drafts
+
+Prepared and recompiled all eleven unmatched assigned drafts in the agent's
+`scratchpad/a14/handoff/`. All compile through regdiff; the score table and
+readme distinguish wide research drafts from the two retained near misses.
+Updated MASTER position-field accesses to the final union view. Linked the
+handoff from [[tickets/T-10630-big-functions-astra]] and [[decompile-workflow]].
+
+## [2026-10-12] decision | T-10630 final large MASTER search rejected
+
+The additional 30-minute MASTER `801344E0` search ended without a score-zero
+candidate. Its best mutation initializes a pointer before the first switch
+case label, so that initialization is skipped and the later read is unsafe;
+it was not integrated. The function remains an assembly fallback, with the
+safe typed seed in the handoff. The final DATE byte-view sweep also failed
+to improve its existing 120-line residual.
+
+## [2026-10-12] lint | T-10630 permanent match manifest
+
+Saved the complete 32-function manifest with text sizes and assigned/neighbor
+scope in [[tickets/T-10630-big-functions-astra]], so the verification record
+does not depend on scratch retention. The final TEL condition-form sweep
+was worse than the handoff seed and was not integrated.
+
+## [2026-10-12] ticket | T-10630 complete after four-hour batch
+
+Completed [[tickets/T-10630-big-functions-astra]] at 23:47 UTC and moved its
+card/index to Done after inline review, with all findings resolved. Result:
+32 functions / 39,216 bytes (20 assigned plus 12 scoped neighbors). All
+27 SHA1 checks, header/global checks, branch prototype check and whitespace
+check pass. Progress: `grand total   5162/6958   958768/2279368  42.1%`.
+One T-0018 row records the remaining large MASTER register issue. The eleven
+unmatched seeds compile with final headers in the handoff; source retains
+only the two original small guarded movie near misses. Changes are uncommitted.

@@ -99,3 +99,88 @@ typedef struct MasterWords11 {
 extern MasterWords11 D_8013C64C;
 
 #endif /* OVL_MASTER_H */
+
+#ifndef OVL_MASTER_T10630_H
+#define OVL_MASTER_T10630_H
+/* 16.16 position: word arithmetic, signed high halfword coordinate. */
+typedef union MasterFixed32 {
+    /* 0x00 */ s32 w;
+    /* 0x00 */ s16 h[2];
+} MasterFixed32; /* size 0x04 */
+
+/* Main sprite record view used by the MASTER baseball effect, T-10630. */
+typedef struct MasterSprite44 {
+    /* 0x00 */ u8 pad00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad0A[2];
+    /* 0x0C */ u8 *unk_0C;
+    /* 0x10 */ u8 *unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ u8 pad1E[8];
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ MasterFixed32 unk_28;
+    /* 0x2C */ u8 pad2C[8];
+    /* 0x34 */ u8 *unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 pad3C[7];
+    /* 0x43 */ u8 unk_43;
+} MasterSprite44; /* size 0x44 */
+typedef struct MasterPoint2 {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+} MasterPoint2; /* size 0x04 */
+extern s32 D_8013C570;
+extern u8 D_8013C578;
+extern u8 D_8013C588;
+extern MasterPoint2 D_8013C58C[10];
+extern s16 D_8013C5B4[10];
+#endif
+
+#ifndef OVL_MASTER_T10630_TABLES_H
+#define OVL_MASTER_T10630_TABLES_H
+/* Message and threshold tables copied into local frames, T-10630. */
+typedef struct MasterHalfwords13 {
+    /* 0x00 */ s16 v[13];
+} MasterHalfwords13; /* size 0x1A */
+typedef struct MasterHalfwords5 {
+    /* 0x00 */ u16 v[5];
+} MasterHalfwords5; /* size 0x0A */
+extern MasterHalfwords13 D_8013C6C0;
+extern MasterHalfwords13 D_8013C6DC;
+extern MasterHalfwords5 D_8013C640;
+extern u8 D_8013C584;
+extern s32 D_8013C574;
+extern u8 D_8013C57C[5];
+#endif
+
+/* Calls from the large scene handlers to later definitions in this object. */
+void func_80137F94(void);
+void func_80138088(void);
+void func_80138374(void);
+void func_80138F10(void);
+
+#ifndef OVL_MASTER_T10630_CLUB_BITS_H
+#define OVL_MASTER_T10630_CLUB_BITS_H
+/* Word read / byte write at GameState.unk_66C[6], T-10630. */
+typedef struct MasterClubBits {
+    u32 unk_00_24 : 25;
+    u32 count : 2;
+    u32 unk_27_29 : 3;
+    u32 b30 : 1;
+    u32 unk_31 : 1;
+} MasterClubBits; /* size 0x04 */
+#endif
+
+/* T-10630: eleven resource IDs copied by the neighboring selector. */
+extern MasterWords11 D_8013C678;

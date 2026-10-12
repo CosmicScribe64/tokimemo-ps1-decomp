@@ -210,3 +210,63 @@ extern u8 *D_801441A0;
 extern u8 *D_801441A4;
 void func_801380D8(void);
 #endif
+
+#ifndef OVL_TEL_T10630_H
+#define OVL_TEL_T10630_H
+/* Four-byte calendar entry passed by value to func_8006B5BC. T-10630. */
+typedef union TelDateEntry {
+    /* 0x00 */ GsWord word;
+    /* 0x00 */ struct {
+        u32 place : 5;  /* bits 0..4 */
+        u32 year : 7;   /* bits 5..11 */
+        u32 month : 4;  /* bits 12..15 */
+        u32 day : 5;    /* bits 16..20 */
+        u32 unk_21 : 3;
+        u32 unk_24 : 1;
+        u32 girl : 4;   /* bits 25..28 */
+        u32 active : 1; /* bit 29 */
+        u32 unk_30 : 2;
+    } bits;
+} TelDateEntry; /* size 0x04 */
+extern s32 D_80140550;
+extern s32 D_80140560;
+/* One 21-place byte row per girl. */
+extern u8 D_80141134[][21];
+extern u8 *D_801413C8[];
+extern u32 D_801413F8[];
+extern u32 D_80141458[];
+extern u8 *D_80141680[];
+extern u32 D_801416B0[];
+extern u32 D_80141710[];
+extern u8 *D_801418D0[];
+extern u8 *D_8014197C[];
+extern u32 D_801419AC[];
+extern u32 D_80141A0C[];
+extern u8 *D_80141AB0[];
+extern u8 *D_80141D80[];
+extern u32 D_80141DB4[];
+extern u32 D_80141E1C[];
+extern u8 *D_80141FE0[];
+extern u8 *D_80142254[];
+extern u32 D_80142288[];
+extern u32 D_801422F0[];
+extern u8 *D_80142570[];
+extern u8 *D_80142798[];
+extern u32 D_801427C8[];
+extern u32 D_80142828[];
+extern u8 *D_801429E0[];
+extern u8 *D_80142B40[];
+extern u32 D_80142B70[];
+extern u32 D_80142BD0[];
+extern u8 *D_80142CB0[];
+extern u8 *D_80142E70[];
+extern u32 D_80142EA0[];
+extern u32 D_80142F00[];
+extern u8 *D_8014306C[];
+extern u8 *D_801431E8[];
+extern u32 D_80143218[];
+extern u32 D_80143278[];
+extern u8 *D_8014333C[];
+#endif
+
+void func_8013D88C();

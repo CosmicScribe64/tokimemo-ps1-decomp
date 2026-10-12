@@ -86,11 +86,299 @@ void func_80133A2C(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80133AA0);
+/* FAKE: scalar byte view of D_800B593C preserves its target live range
+ * across the case-1 calls; ordinary access selects v0 instead (T-10630). */
+void func_80133AA0(void) {
+    GameState *g = &D_800E6280;
+    s32 i;
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80133F80);
+    switch (g->unk_110A) {
+    case 0:
+        func_80044750(0xBF);
+        func_80044890(1, 0xC043, 0xC01D, 0xC982, 0xC935, 0xC91B);
+        func_80085E30(1, 0);
+        func_8008585C();
+        dec_bg_reset();
+        set_dec_bri(0);
+        hizuke_init();
+        message_window_init();
+        parameter_disp_switch(0);
+        icon_disp_switch(0);
+        k_reset(0);
+        func_8006612C((s32) "甲子園");
+        func_80065F34(0);
+        func_800AE120(g->unk_10F4);
+        for (i = 0; i < 11; i++) {
+            D_800CA2B0[i] = g->unk_1BC[i].unk_0C.f.b1;
+        }
+        func_8004284C();
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            dec_bg_cd_read(0x41A8, 1);
+            (*(u8 *)&D_800B593C) = 0;
+            func_8004284C();
+        }
+        if ((u8) (*(u8 *)&D_800B593C) >= 4U) {
+            (*(u8 *)&D_800B593C) -= 4;
+        } else {
+            (*(u8 *)&D_800B593C) = 0;
+        }
+        break;
+    case 2:
+        if (func_800460CC() & 1) {
+            func_80044750(0x200);
+            func_80065F34(1);
+            dec_bg_show_set(1, func_8005751C(1));
+            func_80046318(2U, 0x801E8000, 0xA9BA);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        normal_date_bg_fadein();
+        break;
+    case 4:
+        if (func_800460CC() & 1) {
+            func_80133680();
+            g->unk_F5F = 0;
+            func_800847B8(0U);
+            func_80084E4C();
+            D_800CA148 = 0;
+            D_800CA14C = 0;
+            D_800CA160 = (s32) D_8013C4A0;
+            D_800CA164 = (s32) D_8013C4A4;
+            D_800CA168 = (s32) D_8013C4A8;
+            func_8004284C();
+        }
+        break;
+    case 5:
+        normal_date_speak();
+        break;
+    case 6:
+        dec_bg_cd_read(0x417A, 1);
+        func_8004284C();
+        break;
+    case 7:
+        if (func_800460CC() & 1) {
+            func_8005751C(1);
+            func_8004284C();
+        }
+        break;
+    case 8:
+        func_80046318(0x1BU, 0x80197000, 0xB03E);
+        func_8004284C();
+        break;
+    case 9:
+        normal_date_move_place();
+        break;
+    case 10:
+        if (func_800460CC() & 1) {
+            func_80138F10();
+            i = 0;
+            do {
+                load_palette(D_8013C730, (i + 0x10) & 0xFF, 1, 1, i);
+                i += 1;
+            } while (i != 5);
+            func_80048F64(0x60);
+            ((MasterSprite44 *)D_80120650)->unk_01 = 3;
+            ((MasterSprite44 *)D_80120650)->unk_38 = 0x01000000;
+            ((MasterSprite44 *)D_80120650)->unk_07 = 0x80;
+            ((MasterSprite44 *)D_80120650)->unk_05 = 0x80;
+            ((MasterSprite44 *)D_80120650)->unk_1A = 0x1000;
+            ((MasterSprite44 *)D_80120650)->unk_1C = 0x1000;
+            ((MasterSprite44 *)D_80120650)->unk_06 = 1;
+            ((MasterSprite44 *)D_80120650)->unk_26 = -0x60;
+            ((MasterSprite44 *)D_80120650)->unk_28.h[1] = 0x20;
+            ((MasterSprite44 *)D_80120650)->unk_0C = (u8 *) D_8013C724;
+            ((MasterSprite44 *)D_80120650)->unk_10 = (u8 *) D_8013C728;
+            ((MasterSprite44 *)D_80120650)->unk_34 = (u8 *) D_8013C720;
+            ((MasterSprite44 *)D_80120650)->unk_14 = D_8013C72C;
+            func_8004284C();
+        }
+        break;
+    case 11:
+        D_8013C570 = 0;
+        ((MasterClubBits *)&g->unk_66C[6])->count += 1;
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
+
+
+/* FAKE: the scalar byte view prevents promotion of the probability byte
+ * into a conflicting live range. value is reused after the threshold tests
+ * as the second shuffle index, preserving the frame layout (T-10630). */
+void func_80133F80(void) {
+    u8 swap;
+    u8 other;
+    s32 i;
+    s32 swap_count;
+    u8 *a;
+    s32 first;
+    s32 value;
+    MasterHalfwords5 thresholds;
+
+    thresholds = D_8013C640;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        D_800CA148 = (D_8013C570 * 3) + 1;
+        func_8004284C();
+        break;
+    case 1:
+        normal_date_speak();
+        break;
+    case 2:
+        if ((func_800AE0D0() % 100) == 0) {
+            func_80042940(0xA);
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 3:
+        value = (s16)((D_800E6280.unk_66C[6].unk_00 + ((s16) D_800E6280.unk_118.unk_02 >> 4)) - thresholds.v[D_8013C570]);
+        if (value < -0x1E) {
+            (*(u8 *)&D_8013C578) = 0;
+        } else if (value < -0x14) {
+            (*(u8 *)&D_8013C578) = 1;
+        } else if (value < -0xA) {
+            (*(u8 *)&D_8013C578) = 1;
+        } else if (value < 0) {
+            (*(u8 *)&D_8013C578) = 2;
+        } else if (value >= 0x1E) {
+            (*(u8 *)&D_8013C578) = 5;
+        } else if (value >= 0x14) {
+            (*(u8 *)&D_8013C578) = 4;
+        } else if (value >= 0xA) {
+            (*(u8 *)&D_8013C578) = 4;
+        } else if (value >= 0) {
+            (*(u8 *)&D_8013C578) = 3;
+        }
+        for (a = D_8013C57C; a < D_8013C57C + 5; a++) {
+            *a = 0;
+        }
+        for (i = 0; i < (u8)(*(u8 *)&D_8013C578); i++) {
+            D_8013C57C[i] = 1;
+        }
+        i = 0;
+        swap_count = func_800AE0D0() & 0xF;
+        if ((u8) (*(u8 *)&D_8013C578) >= 3U) {
+            swap = D_8013C57C[0];
+            other = D_8013C57C[4];
+            D_8013C57C[0] = other;
+            D_8013C57C[4] = swap;
+        }
+        if (swap_count > 0) {
+            do {
+
+                first = func_800AE0D0() & 3;
+                value = func_800AE0D0() & 3;
+                swap = D_8013C57C[first];
+                i++;
+                other = D_8013C57C[value];
+                D_8013C57C[first] = other;
+                D_8013C57C[value] = swap;
+            } while (i != swap_count);
+        }
+        ((MasterSprite44 *)D_80120650)->unk_43 = ((s32) (D_8013C570 + 2) % 5) + 0x10;
+        D_8013C574 = 0;
+        func_8004284C();
+        break;
+    case 4:
+        if (((MasterSprite44 *)D_80120650)->unk_02 == 0) {
+            if (D_8013C574 >= 5) {
+                func_8004284C();
+            } else {
+                ((MasterSprite44 *)D_80120650)->unk_03 = 0x84;
+                ((MasterSprite44 *)D_80120650)->unk_02 = 5;
+                ((MasterSprite44 *)D_80120650)->unk_18 = 0;
+                ((MasterSprite44 *)D_80120650)->unk_08 = 0;
+                if (D_8013C57C[D_8013C574] == 1) {
+                    ((MasterSprite44 *)D_80120650)->unk_16 = 0;
+                } else {
+                    ((MasterSprite44 *)D_80120650)->unk_16 = 1;
+                }
+                D_8013C574 += 1;
+            }
+        }
+        break;
+    case 5:
+        ((MasterSprite44 *)D_80120650)->unk_03 = 0x84;
+        ((MasterSprite44 *)D_80120650)->unk_02 = 1;
+        ((MasterSprite44 *)D_80120650)->unk_18 = 0;
+        ((MasterSprite44 *)D_80120650)->unk_08 = 0;
+        if ((u8) (*(u8 *)&D_8013C578) >= 3U) {
+            ((MasterSprite44 *)D_80120650)->unk_16 = 2;
+        } else {
+            ((MasterSprite44 *)D_80120650)->unk_16 = 3;
+            if (D_8013C570 == 3) {
+                D_800CA148 = 0x17;
+            } else {
+                D_800CA148 = 0x19;
+            }
+        }
+        if ((u8) (*(u8 *)&D_8013C578) >= 3U) {
+            func_80044750(0x204);
+        } else {
+            func_80044750(0x205);
+        }
+        func_8004284C();
+        break;
+    case 6:
+        normal_date_speak();
+        break;
+    case 7:
+        k_reset(1);
+        func_8004284C();
+        break;
+    case 8:
+        normal_date_speak();
+        break;
+    case 9:
+        ((MasterSprite44 *)D_80120650)->unk_03 = 0;
+        ((MasterSprite44 *)D_80120650)->unk_02 = 0;
+        func_80042808();
+        break;
+    case 10:
+        D_800CA148 = 0x10;
+        func_8004284C();
+        break;
+    case 11:
+        normal_date_speak();
+        break;
+    case 12:
+        k_reset(1);
+        D_800CA148 += D_8013C570;
+        func_8004284C();
+        break;
+    case 13:
+        normal_date_speak();
+        break;
+    case 14:
+        func_80044750(0x204);
+        D_800CA148 = 0x16;
+        func_8004284C();
+        break;
+    case 15:
+        normal_date_speak();
+        break;
+    case 16:
+        (*(u8 *)&D_8013C578) = 3;
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
+
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801344E0);
+
 
 void func_80135040(void) {
     if (((D_800E6280.unk_1BC[0].unk_10.w & 0xF) == D_800E6280.unk_03F) && (((u32)(D_800E6280.unk_1BC[0].unk_10.w << 0x17) >> 0x1B) == D_800E6280.unk_040)) {
@@ -314,7 +602,72 @@ void func_801350A8(void) {
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801358C8);
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801359F0);
+void func_801359F0(void) {
+    s32 pad[2]; /* FAKE: keep the original 0x68-byte frame without
+                 * moving the table or call spill (T-10630). */
+    s32 selection;
+    MasterWords11 messages;
+
+    messages = D_8013C678;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8004284C();
+        selection = func_8008647C();
+        if ((u8) D_800E6280.unk_1BC[12].unk_0C.b[3] >= 0x41U) {
+            D_8013C584 = 0xC;
+            func_80062CD0(0x57FB);
+        } else {
+            if (func_8008667C(selection) < 2) {
+                D_8013C584 = (u8) selection;
+                if ((((u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4) == 6) && (func_8008667C(0) < 2)) {
+                    D_8013C584 = 0;
+                }
+                if ((((u8) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4) == 6) && (func_8008667C(4) < 2) && (D_800E6280.unk_1BC[4].unk_0C.f.b1 == 1)) {
+                    D_8013C584 = 4;
+                }
+                func_80062CD0(messages.v[D_8013C584]);
+            } else if ((u8) D_800E6280.unk_1BC[11].unk_0C.b[3] >= 2U) {
+                D_8013C584 = 0xB;
+                func_80062CD0(0x6B51);
+            } else {
+                D_8013C584 = 0xFF;
+                func_80042940(4);
+            }
+        }
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_80044890(0, 0xC043, 0xC01D, D_800B3688[D_8013C584], D_800B36C8[D_8013C584], D_800B3708[D_8013C584]);
+            func_8004284C();
+        }
+        break;
+    case 2:
+        if (func_80044E8C() == 1) {
+            func_80046318(0xBU, 0x801E8000, 0xA9C5);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        if (func_800460CC() & 1) {
+            func_801336B4();
+            D_800CA160 = (s32) D_8013C4A0;
+            D_800CA164 = (s32) D_8013C4A4;
+            D_800CA168 = (s32) D_8013C4A8;
+            D_800CA148 = 0;
+            D_800CA14C = 0;
+            func_80042808();
+        }
+        break;
+    case 4:
+        func_80042808();
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80086424();
+}
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80135CF4);
 
@@ -322,11 +675,415 @@ INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80135FB8);
 
 INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801363F4);
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80136E24);
+void func_80136E24(void) {
+    s32 i;
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80137044);
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (((MasterClubBits *)&D_800E6280.unk_66C[6])->count < 3U) {
+            func_80042940(2);
+        } else {
+            func_80046318(0xBU, 0x801E8000, 0xA9C5);
+            func_8004284C();
+        }
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_801336B4();
+            D_800CA160 = (s32) D_8013C4A0;
+            D_800CA164 = (s32) D_8013C4A4;
+            D_800CA168 = (s32) D_8013C4A8;
+            D_800CA148 = 0;
+            D_800CA14C = 0;
+            func_8004284C();
+        }
+        break;
+    case 2:
+        if ((u8) D_8013C578 >= 3U) {
+            D_800E6280.unk_1BC[0].unk_02 += 5;
+            for (i = 1; i < 13; i++) {
+                D_800E6280.unk_1BC[i].unk_02 += 5;
+            }
+            ((MasterClubBits *)&D_800E6280.unk_66C[6])->b30 = 1;
+        }
+        if (D_8013C584 == 0xFF) {
+            func_80042808();
+            func_80042808();
+            func_80042808();
+        } else {
+            D_800E6280.unk_1BC[D_8013C584].unk_06 += 2;
+            func_80044750(0x200);
+            if ((u8) D_8013C578 >= 3U) {
+                func_80042808();
+            } else {
+                func_80042808();
+                func_80042808();
+            }
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80086424();
+}
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801375E8);
+/* FAKE: scalar byte views preserve the target live ranges, and
+ * the cached girls pointer preserves the copied table offset (T-10630).
+ * The sprite aggregate keeps flag loads after neighboring field stores. */
+void func_80137044(void) {
+    Rec38 *girls;
+    u8 index;
+    MasterHalfwords13 messages;
+
+    messages = D_8013C6C0;
+    func_80083808();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80083474();
+        switch ((*(u8 *)&D_8013C584)) {
+        case 0:
+            func_80083440(0U);
+            break;
+        case 6:
+            func_80083440(1U);
+            break;
+        case 7:
+            func_80083440(1U);
+            break;
+        case 9:
+            func_80083440(5U);
+            D_801217D0[0].unk_0C = 7;
+            D_801217D0[0].unk_0E = 0x70;
+            break;
+        case 12:
+            func_80083440(0U);
+            break;
+        }
+        func_80046318(0xEU, 0x80197000, 0xA9D0);
+        dec_bg_show_switch(1);
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            girls = D_800E6280.unk_1BC;
+            func_80137F94();
+            index = (*(u8 *)&D_8013C584);
+            if ((index == 4) && (((u16) D_800E6280.unk_0F4.h >> 0xC) != ((u8) girls[4].unk_0C.b[2] >> 4))) {
+                D_800CA148 = 0x40;
+            } else if (index == 6) {
+                D_800CA148 = 0x4B;
+            } else {
+                D_800CA148 = messages.v[index];
+            }
+            if (index == 9) {
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                ((MasterSprite44 *)D_80120650)->unk_16 = 8;
+            }
+            func_8004284C();
+        }
+        break;
+    case 2:
+        if ((*(u8 *)&D_8013C584) == 0xB) {
+            normal_date_bg_fadein();
+        } else {
+            normal_date_bggirl_fadein();
+        }
+        if ((*(u8 *)&D_8013C584) == 9) {
+            (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) += 4;
+            if ((*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) >= 0x7DU) {
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0x80;
+            }
+        }
+        if (((*(u8 *)&D_8013C584) != 0xB) && (D_800E6280.unk_110A == 3)) {
+            func_8004500C(0, 0);
+        }
+        break;
+    case 3:
+        normal_date_speak();
+        break;
+    case 4:
+        switch ((*(u8 *)&D_8013C584)) {
+        case 0:
+            if (D_800CA148 == 0x2A) {
+                func_80083440(1U);
+                func_80063668();
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x21;
+                func_8004284C();
+            }
+            break;
+        case 1:
+            D_800CA148 = 0x21;
+            func_8004284C();
+            break;
+        case 2:
+            D_800CA148 = 0x21;
+            func_8004284C();
+            break;
+        case 3:
+            D_800CA148 = 0x21;
+            func_8004284C();
+            break;
+        case 4:
+            if (D_800CA148 == 0x3F) {
+                ((MasterSprite44 *)D_80120650)->unk_16 = 4;
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0x80;
+                func_80083440(5U);
+                D_801217D0[0].unk_0C = 7;
+                D_801217D0[0].unk_0E = 0x70;
+                func_80063668();
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x21;
+                func_8004284C();
+            }
+            break;
+        case 5:
+            D_800CA148 = 0x21;
+            func_8004284C();
+            break;
+        case 6:
+            if (D_800CA148 == 0x4C) {
+                func_80083440(0U);
+                func_80063668();
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x21;
+                func_8004284C();
+            }
+            break;
+        case 7:
+            if (D_800CA148 == 0x52) {
+                func_80083440(0U);
+                func_80063668();
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x21;
+                func_8004284C();
+            }
+            break;
+        case 8:
+            D_800CA148 = 0x21;
+            func_8004284C();
+            break;
+        case 9:
+            D_800CA148 = 0x21;
+            func_8004284C();
+            break;
+        case 10:
+            D_800CA148 = 0x21;
+            func_8004284C();
+            break;
+        case 11:
+            func_80042940(6);
+            break;
+        case 12:
+            D_800CA148 = 0x23;
+            func_8004284C();
+            break;
+        }
+        break;
+    case 5:
+        normal_date_speak();
+        break;
+    case 6:
+        if ((*(u8 *)&D_8013C584) == 0xB) {
+            normal_date_bg_fadeout();
+        } else {
+            normal_date_bggirl_fadeout();
+        }
+        if ((u8) (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) < 4U) {
+            (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0;
+        } else {
+            (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) -= 4;
+        }
+        break;
+    case 7:
+        func_80138088();
+        func_80042808();
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
+
+
+/* FAKE: scalar byte views preserve the target live ranges, and
+ * the constant value local preserves the copied table offset (T-10630).
+ * The sprite aggregate keeps flag loads after neighboring field stores. */
+void func_801375E8(void) {
+    s32 value;
+    u8 index;
+    MasterHalfwords13 messages;
+
+    messages = D_8013C6DC;
+    func_80083808();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80083474();
+        func_80083440(5U);
+        if ((*(u8 *)&D_8013C584) == 0xC) {
+            func_80083440(0U);
+        }
+        dec_bg_show_switch(1);
+        func_80046318(0xEU, 0x80197000, 0xA9D0);
+        break;
+    case 1:
+        if (func_800460CC() & 1) {
+            func_80137F94();
+            index = (*(u8 *)&D_8013C584);
+            D_800CA148 = messages.v[index];
+            D_800CA14C = 0;
+            if (index == 9) {
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                value = 8;
+                ((MasterSprite44 *)D_80120650)->unk_16 = value;
+            }
+            if (index == 0xA) {
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                ((MasterSprite44 *)D_80120650)->unk_16 = 0xA;
+            }
+            func_8004284C();
+        }
+        break;
+    case 2:
+        if ((*(u8 *)&D_8013C584) == 0xB) {
+            normal_date_bg_fadein();
+        } else {
+            normal_date_bggirl_fadein();
+        }
+        if (((*(u8 *)&D_8013C584) == 0xA) || ((*(u8 *)&D_8013C584) == 9)) {
+            if ((u8) (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) >= 0x81U) {
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0x80;
+            } else {
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) += 4;
+            }
+        }
+        if (((*(u8 *)&D_8013C584) != 0xB) && (D_800E6280.unk_110A == 3)) {
+            func_8004500C(0, 0);
+        }
+        break;
+    case 3:
+    case 5:
+        normal_date_speak();
+        break;
+    case 4:
+        switch ((*(u8 *)&D_8013C584)) {
+        case 0:
+            if (D_800CA148 == 0x2C) {
+                ((MasterSprite44 *)D_80120650)->unk_16 = 0;
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0x80;
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x24;
+                func_8004284C();
+            }
+            break;
+        case 1:
+            if (D_800CA148 == 0x31) {
+                ((MasterSprite44 *)D_80120650)->unk_16 = 2;
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0x80;
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x24;
+                func_8004284C();
+            }
+            break;
+        case 2:
+            D_800CA148 = 0x24;
+            func_8004284C();
+            break;
+        case 3:
+            D_800CA148 = 0x24;
+            func_8004284C();
+            break;
+        case 4:
+            if (D_800CA148 == 0x42) {
+                ((MasterSprite44 *)D_80120650)->unk_16 = 4;
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0x80;
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x24;
+                func_8004284C();
+            }
+            break;
+        case 5:
+            if (D_800CA148 == 0x47) {
+                func_80083440(2U);
+                func_80063668();
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x24;
+                func_8004284C();
+            }
+            break;
+        case 6:
+            if (D_800CA148 == 0x4E) {
+                ((MasterSprite44 *)D_80120650)->unk_03 |= 0x80;
+                ((MasterSprite44 *)D_80120650)->unk_16 = 6;
+                (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0x80;
+                func_80042940(3);
+            } else {
+                D_800CA148 = 0x24;
+                func_8004284C();
+            }
+            break;
+        case 7:
+            D_800CA148 = 0x24;
+            func_8004284C();
+            break;
+        case 8:
+            D_800CA148 = 0x24;
+            func_8004284C();
+            break;
+        case 9:
+            D_800CA148 = 0x24;
+            func_8004284C();
+            break;
+        case 10:
+            D_800CA148 = 0x24;
+            func_8004284C();
+            break;
+        case 11:
+            func_80042940(6);
+            break;
+        case 12:
+            D_800CA148 = 0x26;
+            func_8004284C();
+            break;
+        }
+        break;
+    case 6:
+        if ((*(u8 *)&D_8013C584) == 0xB) {
+            normal_date_bg_fadeout();
+        } else {
+            normal_date_bggirl_fadeout();
+        }
+        if ((u8) (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) < 4U) {
+            (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) = 0;
+        } else {
+            (*(u8 *)&((MasterSprite44 *)D_80120650)->unk_07) -= 4;
+        }
+        break;
+    case 7:
+        func_80138374();
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    Default_Disp();
+}
+
 
 void func_80137B5C(void) {
     if (D_800E6280.unk_110A == 0) {
@@ -344,7 +1101,69 @@ void func_80137B5C(void) {
     Default_Disp();
 }
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_80137BF4);
+void func_80137BF4(void) {
+    MasterPoint2 *temp_s0_2;
+    s16 *temp_s1;
+    /* FAKE: wide X local plus a narrow third argument preserves the
+     * original sign-extension sequence. T-10630. */
+    s32 temp_a0;
+    s16 temp_a1;
+    s16 temp_v0;
+    s16 temp_v0_2;
+    s16 var_s2;
+    s32 temp_hi;
+    MasterSprite44 *temp_s0;
+
+    if ((((MasterSprite44 *)D_80120650)->unk_16 == 0) && (((MasterSprite44 *)D_80120650)->unk_18 == 7) && (((MasterSprite44 *)D_80120650)->unk_08 == 2)) {
+        ((MasterSprite44 *)D_80120650)->unk_16 = 1;
+        ((MasterSprite44 *)D_80120650)->unk_18 = 0;
+        ((MasterSprite44 *)D_80120650)->unk_08 = 0;
+        ((MasterSprite44 *)D_80120650)->unk_02 = 1;
+    }
+    var_s2 = 0x61;
+    if ((((MasterSprite44 *)D_80120650)->unk_16 == 2) && (((MasterSprite44 *)D_80120650)->unk_18 == 1) && (((MasterSprite44 *)D_80120650)->unk_08 == 4)) {
+        ((MasterSprite44 *)D_80120650)->unk_16 = 3;
+        ((MasterSprite44 *)D_80120650)->unk_18 = 0;
+        ((MasterSprite44 *)D_80120650)->unk_08 = 0;
+        ((MasterSprite44 *)D_80120650)->unk_02 = 1;
+    }
+    do {
+        temp_s0 = &((MasterSprite44 *)D_8011ECD0)[var_s2];
+        temp_v0 = temp_s0->unk_18;
+        if ((temp_v0 < 2) || (temp_v0 >= 8)) {
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((MasterSprite44 *)D_80120650)->unk_16 == 3) * 0x50000) - 0x50000;
+        } else if ((temp_v0 == 4) || (temp_v0 == 7)) {
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((MasterSprite44 *)D_80120650)->unk_16 == 3) * 0x30000) - 0x30000;
+        } else {
+            temp_s0->unk_28.w = temp_s0->unk_28.w - ((((MasterSprite44 *)D_80120650)->unk_16 == 3) * 0x20000) - 0x20000;
+        }
+        if (temp_s0->unk_28.h[1] < -0x9F) {
+            temp_hi = func_800AE0D0() % 320;
+            temp_s0->unk_26 = (s16) (temp_hi - 0xA0);
+            temp_s0->unk_28.h[1] = 0x3C;
+            temp_s0->unk_18 = (s16) (func_800AE0D0() % 10);
+        }
+        var_s2 += 1;
+    } while (var_s2 < 0x74);
+    var_s2 = 0;
+    if ((u8) ((MasterSprite44 *)D_80120650)->unk_07 >= 0x78U) {
+        do {
+            temp_s0_2 = &D_8013C58C[var_s2];
+            temp_s1 = &D_8013C5B4[var_s2];
+            temp_a0 = temp_s0_2->x;
+            temp_v0_2 = *temp_s1;
+            temp_s0_2->y -= temp_v0_2 * 4 * ((((MasterSprite44 *)D_80120650)->unk_16 == 3) + 1);
+            temp_a1 = temp_s0_2->y;
+            func_80049FF0((s32) temp_a0, (s32) temp_a1, (s16) temp_a0, (s32) (s16) ((temp_v0_2 * 0x14) + temp_a1), 0xFFFFFF, 0xFFFFFF, 0xB);
+            if (temp_s0_2->y < -0xAA) {
+                temp_s0_2->y = 0x3C;
+                temp_s0_2->x = (func_800AE0D0() % 320) - 0xA0;
+                *temp_s1 = (func_800AE0D0() % 5) + 1;
+            }
+            var_s2 += 1;
+        } while (var_s2 < 0xA);
+    }
+}
 
 void func_80137F94(void) {
     func_80138EC0();

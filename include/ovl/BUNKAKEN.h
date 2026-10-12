@@ -103,3 +103,12 @@ extern BunkakenTexts4 D_801564CC;
 extern u8 D_801564DC;
 s32 func_80152F4C(void);
 #endif
+
+#ifndef BUNKA_DISPATCH8_T10630_H
+#define BUNKA_DISPATCH8_T10630_H
+/* T-10630: adjacent route/character words at D_80122EB8, used by both overlays. */
+typedef struct BunkaDispatch8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} BunkaDispatch8; /* size 0x08 */
+#endif

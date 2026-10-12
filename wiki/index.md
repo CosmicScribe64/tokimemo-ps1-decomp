@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-10630-big-functions-astra|T-10630]] Big functions (astra), six owned objects (Done).
 - [[tickets/T-10400-regdiff-explain-register-choice|T-10400]] regdiff: explain why a draft gets different registers (Done; `tools/regdiff.py`, 2 functions matched with it, `sync_protos --add-global` guard fix, clean 27/27).
 - [[tickets/T-10330-wave-12-list-3|T-10330]] Wave 12: list 3 (In Progress).
 - [[tickets/T-10210-wave-11-tool-fixes|T-10210]] Wave-11 tool fixes (Done).

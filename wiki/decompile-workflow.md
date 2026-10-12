@@ -394,3 +394,154 @@ places. A resolved instruction MATCH is insufficient: verify the unit SHA1,
 then the clean 27-unit build and progress. See [[build-system]] for the
 word-aligned text boundary support and why adjacent table chunks cannot simply
 be merged. BUNKASAI's 21 T-10040 drafts now use this recipe.
+
+## T-10630 large handlers: recovered types and matching idioms
+
+The overlay headers retain the following layouts for later drafts. Matching
+examples below pass resolved comparisons and unit checksums. DATE/EVENT movie
+and TEL calendar layouts also have direct assembly evidence, but those large
+handlers remain scratch drafts and assembly fallbacks. See
+[[tickets/T-10630-big-functions-astra]] for validation and remaining work.
+
+### TEL calendar and selector
+
+`TelDateEntry` is a four-byte union with `GsWord`, passed by value to
+`func_8006B5BC(GsWord)`. Its fields occupy place bits 0..4, year 5..11,
+month 12..15, day 16..20, unknown 21..23 and 24, girl 25..28, active 29,
+and unknown 30..31. Evidence in `80136724`: masked byte/halfword stores at
+sp+0x44..0x47, then `lw a0,0x44(sp)` and the argument home store.
+`D_80141134` has unsigned-byte rows of 21 places per girl. Dialogue tables
+are pointer arrays; animation command tables passed to `func_80052060` are
+word arrays. These declarations add no asset data.
+
+In matching `80132FC4`, `switch ((u8) D_800E6280.unk_110D)` introduces a
+redundant selector copy. `switch (*(u8 *)&D_800E6280.unk_110D)` removes it
+and places the second zero initializer in the first branch delay slot. This
+scalar lvalue view is marked FAKE. Selector locals, ordinary signed/unsigned
+casts, chained initializers and same-line initializers did not solve it.
+
+### DATE/EVENT movie transitions
+
+DATE `80147958` and EVENT `8011DDB8` share a template with `Rec24` records
+4..7 and a stack `RECT`. Reuse a signed halfword counter for the two-trip
+initialization and four-trip flag loops; `for` loops recover the target
+increment/compare/store scheduling better than m2c's lowered `do` loops.
+Restore aggregate fields before changing register order. The first background
+read takes two arguments; m2c initially treated stale loop registers as two
+additional arguments.
+
+`EventMovieWork` describes the minimum 0x1C-byte control area at
+`D_800F1990`: signed halfwords at 0,2,4,6,0xA; signed bytes at 0x18..0x1A;
+unknown bytes remain padding. DATE `D_8015CFA0` and EVENT `D_801258E0`
+are signed halfword UV steps. EVENT `func_8011F530(u32 seed)` is a void RNG
+seed wrapper. These types are independent of the remaining fade/state-spill
+mismatches in the large drafts.
+
+DATE `8014718C` and EVENT `8011D5C4` have inherited `void` declarations,
+but their early error exits explicitly set v0 to zero; the common animation
+tail does not. Scratch integer-return variants recover that instruction but
+do not match the whole function. The inherited declarations were left intact
+under append-only isolation. The existing `801489D0`/`8011EDFC` near misses
+also require own-data/splitter changes outside this batch's YAML scope.
+
+### BUNKAKEN/BUNKASAI dialogue and dispatch
+
+Use `Rec38.unk_0C.f.b2` for the word-read/byte-write bit-2 flag: the test
+becomes `lw; sll 29; bltz/bgez`, while `= 1` writes one byte. Raw `.w & 4`
+instead emits `andi` and rotates later temporaries. m2c sometimes combines
+the views into a signed-byte cast followed by a word store; repair that
+incorrect store. A local `GameState *g = &D_800E6280` restores the needed
+pointer live ranges in these handlers, including neighboring `8014AF48`,
+`8014DFB8`, `8013EBDC`, `8013F234`, and `8013FA28`.
+
+Replace m2c's signed-halfword message temporaries and shared `block_N` store
+labels with direct case-local `D_800CA148` assignments. Preserve no-write
+behavior for unmatched switch values. In BUNKAKEN `8014B378`, assign message
+5 before setting b2 to schedule the constant before the flag address. In
+BUNKASAI `8013C5A4`, byte-1 masks 0x10/0x20 are `.f.b12`/`.f.b13`; their
+bit-field stores remove the raw byte-OR register residual.
+
+BUNKAKEN `8014D65C` has one marked FAKE: `if (!g) {}` after the case-5
+call result. The initialized pointer test disappears, but changes its live
+range so later cases use v1 rather than v0. One test suffices; the permuter's
+three repeated tests were unnecessary.
+
+`BunkaReturnFlags` describes byte `D_800E7D4F`. Setting b1 and clearing
+bits 2..4 preserves b0 and bits 5..7, matching `(value | 2) & 0xE3` without
+extra mask temporaries. In `8013DE3C`, put these two updates before the
+three saved-state byte copies. Its side-effect-only helper `801431D4` needs
+the missing `void` prototype: the unused implicit-int result otherwise
+changes register allocation. Verify the whole overlay after adding a shared
+prototype; do not rearrange calls to compensate for the wrong return type.
+
+`BunkaDispatch8` covers the adjacent words at `D_80122EB8`/+4. The entry
+handlers write 0/3 to the second word before switching on the first. Separate
+symbols let IDO hoist the selector load; the two-field aggregate preserves
+the original store/load order. The identical guarded definition is in both
+overlay headers. Both owned dialogue objects now contain only C functions.
+
+### MASTER sprites, tables, and loops
+
+`MasterSprite44` is the 0x44-byte record view at `D_80120650`: twenty records,
+identical in address to `D_8011ECD0` records 96..115. Whole-record assignment
+replaces `M2C_MEMCPY_ALIGNED(..., 0x44)`. Important fields are byte flags +3,
+fade +7, signed halfwords +0x1A/+0x1C (initialized to 0x1000), and the
+16.16 position word at +0x28. `MasterFixed32` exposes the signed word and
+halfword views; `unk_28.h[1]` is the coordinate formerly labeled +0x2A.
+`80137BF4` subtracts 0x50000/0x30000/0x20000 increments and tests that
+signed high halfword against negative Y bounds.
+
+`MasterPoint2 D_8013C58C[10]` and `s16 D_8013C5B4[10]` are parallel
+coordinate/speed arrays, evidenced by strides 4/2 and the +40 endpoint.
+`MasterHalfwords13` describes the two 13-entry signed message tables
+`D_8013C6C0`/`D_8013C6DC`: 0x1A bytes, copied as six words plus a halfword.
+`MasterHalfwords5` describes the five **unsigned** thresholds at `D_8013C640`
+(0x0A bytes, indexed `lhu`); the computed difference is separately truncated
+to signed 16 bits. `D_8013C57C[5]` includes the old `D_8013C580` label.
+`D_8013C678` reuses `MasterWords11` from `D_8013C64C`, with the observed
+0x24-byte copy plus two words, totaling 0x2C bytes.
+
+In `80133AA0`, write all eleven flag copies as one `for (i=0; i<11; i++)`,
+then reuse i for the five-palette loop. IDO emits three initial copies and
+two groups of four; spelling out the initial copies changes allocation.
+Declare the GameState pointer before i to obtain the target spill slot.
+`MasterClubBits.count` occupies word bits 25..26 of `unk_66C[6]`; its
+increment reads a word and writes only byte 3. The fade scalar view is FAKE.
+
+In `80133F80`, reuse the signed threshold-result local for the second random
+index later in the case; a separate local enlarges its 0x50-byte frame. Load
+both swap bytes before either store. Use an indexed `for` for the initial
+run of ones; an if/do version leaves a scheduling residual. The scalar view
+of `D_8013C578` is marked FAKE. Both this handler and `80133AA0` use the
+shared sprite fields without changing their instructions.
+
+In `801359F0`, declare the scalar selection before the copied `MasterWords11`
+table. Two padding words before those declarations preserve the 0x68-byte
+frame, table and spill offsets; padding after the table does not. The padding
+is FAKE because the original extra frame extent remains unexplained.
+
+In `80137044`/`801375E8`, access both the flag byte and neighboring halfword
+through `MasterSprite44`; separate symbols allow an unwanted flag-load hoist.
+The fade also uses the sprite view. Scalar selector/fade views, a cached
+Rec38 pointer in the first handler, and a constant local in the second are
+marked FAKE for live-range/frame placement. The existing Rec24 table needed
+its canonical main linker name `D_801217D0` added to the allowed type-symbol
+list.
+
+In `80136E24`, update record 0 separately, then loop over records 1..12 with
+an s32 index. The resulting three groups of four match; combining record 0
+into the loop introduces index arithmetic. Use `MasterClubBits.b30 = 1`
+for the final byte-3 mask. Raw byte OR has the same instruction kinds but
+shifts later temporaries, leaving 26 differing lines.
+
+In `80137BF4`, reuse the signed halfword counter across both loops. Compute
+point/speed pointers, then load point X before speed to select the original
+saved-register bases. Source reset-X before reset-Y still schedules the
+target store order. Keeping X wide and explicitly narrowing the repeated
+third drawing argument reproduces a sign-extension sequence; this is marked
+FAKE pending better source evidence.
+
+Compile-checked copies of all eleven unmatched assigned drafts are retained
+in `scratchpad/a14/handoff/` with normalized regdiff scores and current-header
+field accesses. These are research seeds, not accepted near misses; only the
+two existing guarded movie handlers remain in repository source.

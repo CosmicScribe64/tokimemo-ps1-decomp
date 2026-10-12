@@ -387,8 +387,6 @@ void func_8013226C(void) {
     cal_base_show();
 }
 
-/* NON_MATCHING: T-10040, selector copy and counter initialization order. */
-#ifdef NON_MATCHING
 void func_80132FC4(void) {
     /* FAKE: extent preserves the observed sp+0x3C buffer home. T-10040. */
     u8 sp3C[44];
@@ -398,7 +396,8 @@ void func_80132FC4(void) {
 
     var_v1 = 0;
     var_a2 = 0;
-    switch ((u8) D_800E6280.unk_110D) {
+    /* FAKE: scalar byte view avoids the redundant selector copy. T-10630. */
+    switch (*(u8 *)&D_800E6280.unk_110D) {
     case 0x0:
         for (var_a0 = 0; var_a0 < 21; var_a0++) {
             if (D_800E6280.unk_120[var_a0] & 0x80) {
@@ -710,9 +709,6 @@ void func_80132FC4(void) {
     menu_bar_show(0);
     cal_base_show();
 }
-#else
-INCLUDE_ASM("asm/ovl/TEL/nonmatchings/TEL/80132000", func_80132FC4);
-#endif
 
 void func_80133D54(void) {
     /* FAKE: buffer extent preserves the original frame and sp+0x5C address. T-10040. */
