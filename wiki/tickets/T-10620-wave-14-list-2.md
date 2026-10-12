@@ -23,6 +23,8 @@ Matched, 8 functions, 1,784 bytes: OMIMAI `func_80132AD0` (628), main `func_8004
 Guarded near misses added: TACO `func_8015C0A0` (6 lines), `func_8015CCC8` (2 lines). Earlier guarded drafts re-tested with the permuter or regdiff and left as they were: `junban_init`, TT `func_8013D2E0`, TAIIKU `func_8013AE14`, `func_801368B8`, DATE `func_8013E6A4`, OPTION `func_80139F8C`.
 Not matched, with drafts in the scratch directory and 26 rows in [[data/t0018-cases]]: see the section "Wave 14, list 2" in [[matching-notes]] for the patterns (loop shape of the RPG_BAT clear loops, constants IDO folds, data it will not hoist, ugen temporaries of the TT search loops). Skipped as not compiler output: DATE `func_8015A640`, `func_8015A980`, TACO `func_8015D0D0` (hand-written rotation helpers, [[gcc-objects]]) and TT `func_8014D260` (gcc, open in [[gcc-objects]]).
 
+Raw m2c translation only (built and diffed, 100 to 440 differing lines, no deep attempt): TT `func_801498C8`, `func_80138B90`, `func_80146E10`, TAIIKU `func_80139FE4`, `func_8013F948`, `func_8013C780`, BUNKAKEN `func_80145550`, RPG_BAT `func_8014D380`, main `make_color_bar16`. They need struct recovery first (GameState bit-field records, record tables of 0x14/0x78 stride) and are the first candidates for a later wave.
+
 ## Review (inline, against CODING_STANDARDS.md)
 - Matches verified by `funcdiff --resolve` and by `ninja` (all unit sha1 `OK`); no unverified claim. One `MATCH` from `funcdiff` for TT `func_80149B20` under load did not survive a rebuild and was reverted (noted in [[matching-notes]]).
 - The two guards use `#ifdef NON_MATCHING` with the INCLUDE_ASM fallback and `T-10620` in the comment; the default build matches.
