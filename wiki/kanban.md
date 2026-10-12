@@ -53,6 +53,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-10340-wave-12-list-4|T-10340 Wave 12: list 4]]
 - [ ] [[tickets/T-10330-wave-12-list-3|T-10330 Wave 12: list 3]]
 - [ ] [[tickets/T-10320-wave-12-list-2|T-10320 Wave 12: list 2]]
+- [ ] [[tickets/T-10310-wave-12-list-1|T-10310 Wave 12: list 1]]
 - [ ] [[tickets/T-10210-wave-11-tool-fixes|T-10210 Wave-11 tool fixes]]
 - [ ] [[tickets/T-10200-orphan-jump-tables|T-10200 Orphan jump tables: enable 21 instruction-exact functions]]
 - [ ] [[tickets/T-10100-wave-9-10-tool-fixes|T-10100 Wave 9/10 tool fixes]]

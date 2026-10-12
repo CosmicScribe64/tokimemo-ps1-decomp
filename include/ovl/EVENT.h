@@ -1416,4 +1416,8 @@ extern s16 D_801258EC[3];
 extern s16 D_801258F4[3];
 extern s16 D_801258FC[3];
 extern u16 D_801258DC;
+typedef struct EvFnTbl53 { void (*f[53])(); } EvFnTbl53;
+extern EvFnTbl53 D_801225A8;
+typedef struct EvFnTbl44 { void (*f[44])(); } EvFnTbl44;
+extern EvFnTbl44 D_801228E0;
 #endif

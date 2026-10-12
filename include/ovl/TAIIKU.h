@@ -106,8 +106,7 @@ extern s32 D_8014A3B4;
 extern s32 D_8014A3B8;
 
 extern u8 D_8014A454[];
-extern s16 D_80149984;
-extern s16 D_80149986;
+extern s16 D_80149984[2]; /* [0] x, [1] y; defined in 80138950.c */
 extern s32 D_80149940;
 typedef struct TaiikuPair {
     /* 0x0 */ s16 unk0;
@@ -427,4 +426,9 @@ extern u8 D_8014A400[];
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
 void func_8014430C(void);
 extern TaiikuPosition D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
+extern s32 D_80149968;
+extern s32 D_8014996C;
+extern s32 D_8014997C;
+extern s32 D_80149980;
+void func_8013D254(void);
 #endif

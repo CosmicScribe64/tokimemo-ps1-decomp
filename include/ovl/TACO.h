@@ -506,6 +506,8 @@ void func_801483B0(void);
 void func_80148D6C(void);
 void func_8013E778();
 void func_8013EAA4();
+extern s32 D_8016024C[];
+extern s32 D_80160264;
 #endif
 
 extern u8 D_80161ECD;

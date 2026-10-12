@@ -9763,6 +9763,8 @@ Created [[tickets/T-10340-wave-12-list-4]] (In Progress), 149 functions in 48 fi
 [[tickets/T-10330-wave-12-list-3]]: 0 matches, one guarded near miss in `src/ovl/EVENT/8010FE10.c`; ticket stays In Progress.
 ## [2026-10-11] ticket | T-10320 wave 12 list 2 started
 Created [[tickets/T-10320-wave-12-list-2]], In Progress.
+## [2026-10-11] ticket | T-10310 wave 12 list 1 started
+Worktree w12-1, ticket [[tickets/T-10310-wave-12-list-1]] In Progress.
 ## [2026-10-11] ticket | Claim wave-11 tool fixes
 Created [[tickets/T-10210-wave-11-tool-fixes]] and aligned [[kanban]]/[[index]]. Read shared tooling12 brief, standards and wave-11 evidence in [[matching-notes]] and [[decompile-workflow]]. Wrapper regressions and local-frame investigation are assigned; configure.py, tools/split_objects.py and config/ are excluded.
 
@@ -9809,3 +9811,5 @@ Hoisted constants and addresses (bits past the expression table) are numbered by
 
 ## [2026-10-12] ticket | T-10400 done
 [[tickets/T-10400-regdiff-explain-register-choice]] moved to Done after the inline review against `CODING_STANDARDS.md` (no findings). Clean `rm -rf asm build` Docker build: 27/27 SHA1 OK, headers OK, globals OK; progress 5,101/6,958 functions (+2: EVENT `func_80119518`, DATE `func_80136F2C`). Tests: `tools/test_regdiff.py` 41, `tools/test_sync_protos.py` 70, funcdiff, permute and check_headers suites OK. Board: [[kanban]].
+## [2026-10-12] ticket | T-10310 wave 12 list 1 done
+[[tickets/T-10310-wave-12-list-1]] Done: 2 matches (BUNKA_SD `func_80132708`, SHUGAKU `func_80139740`), 9 guarded near misses, data islands for main/8007C030 and TAIIKU/80138950, notes in [[matching-notes]] and rows in [[data/t0018-cases]]. Inline review recorded in the ticket; all 27 unit checks pass.
