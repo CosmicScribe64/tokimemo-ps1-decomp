@@ -804,6 +804,7 @@ extern s32 D_800EB0A0;
 extern s32 D_800EB0A4;
 extern s8 D_800EB0AF;
 extern u8 D_800EC190[];
+extern u8 D_800EC1C8;
 extern s32 D_800EC2F8;
 extern u8 D_800EC30C;
 extern u8 D_800EC30D;
@@ -1530,6 +1531,11 @@ extern u8 D_80122660[];
 extern s16 D_800CA330[];
 extern u32 D_800E3680[16];
 extern s16 D_801217D4;
+extern u8 D_800EC1A4;
+extern u8 D_800EC1A5;
+extern u8 D_800EC1A6;
+extern u8 D_800EC1C9;
+extern u8 D_800EC1CA;
 
 /* ---- functions ---- */
 void func_80010678();
@@ -2175,7 +2181,9 @@ void func_8008BFB0();
 s32 func_8008C1B0();
 s32 func_8008C620();
 void SsVabTransCompleted();
+#ifndef MAIN_API_OVERRIDE_func_8008D610
 void func_8008D610();
+#endif
 void func_8008E280();
 void func_8008E2E0();
 void func_8008E310();

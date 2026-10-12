@@ -130,7 +130,13 @@ void func_80143A74(void) {
     func_8009AD60(0x7FFF);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801430B0", func_80143AF4);
+void func_80143AF4(void) {
+    s32 i;
+
+    for (i = 2; i != 0xA0; i += 2) {
+        func_80059688(i);
+    }
+}
 
 void func_80143B34(s32 arg0) {
     func_80059688((arg0 * 2) + 2);

@@ -1424,4 +1424,6 @@ typedef struct EvFnTbl53 { void (*f[53])(); } EvFnTbl53;
 extern EvFnTbl53 D_801225A8;
 typedef struct EvFnTbl44 { void (*f[44])(); } EvFnTbl44;
 extern EvFnTbl44 D_801228E0;
+void func_8011B5A8(void);
+
 #endif
