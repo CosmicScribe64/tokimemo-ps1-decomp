@@ -149,7 +149,33 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143968);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143A88);
 
+/* NON_MATCHING: T-10330, 23 lines: c and the Rec24 pointer sit in v1/v0 (original a1/v1, the original reads D_800E62BA as its own scalar). */
+#ifdef NON_MATCHING
+void func_80143F24(void) {
+    s32 i;
+
+    func_80142AE8();
+    if (D_800E6280.unk_03A != 0) {
+        for (i = 2; i < 5; i++) {
+            D_801217D0[i].unk_16 = D_800E6280.unk_03A;
+            D_801217D0[i].unk_15 = D_800E6280.unk_03A;
+            D_801217D0[i].unk_14 = D_800E6280.unk_03A;
+        }
+        D_800E6280.unk_03A -= 1;
+    }
+    D_80150138 -= 0xC8;
+    if (D_80150138 < -0x7530) {
+        func_80059048();
+        if (D_800E6280.unk_F5F >= 0xD) {
+            func_80042878(0x12);
+        } else {
+            func_80042878(0xC3);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143F24);
+#endif
 
 void func_80143FE0(void) {
     D_800E6280.unk_1104.w += 1;

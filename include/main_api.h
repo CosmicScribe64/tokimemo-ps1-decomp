@@ -470,14 +470,17 @@ extern u8 D_800B00FC[];
 extern u8 D_800B0194[];
 extern u8 D_800B0860[];
 extern u8 D_800B0896;
+extern u8 D_800B0897;
 extern u8 D_800B0929[];
 extern u32 D_800B0940;
+extern s32 D_800B0948;
 extern s16 D_800B094E;
 extern s16 D_800B0956;
 extern s16 D_800B095E;
 extern s16 D_800B0966;
 extern s16 D_800B096E;
 extern Rec34 D_800B0A04[]; /* 12 records */
+extern u8 D_800B0A14;
 extern s16 D_800B0B0E[];
 extern u8 D_800B0B64[];
 extern u8 D_800B0B6C[];
