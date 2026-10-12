@@ -902,9 +902,7 @@ extern s16 D_8011ED82;
 extern u8 *D_8011ED8C;
 extern s32 D_8011ED90;
 extern s8 D_8011ED9F;
-extern u8 D_8011EDE0[];
 extern s8 D_8011EDE3;
-extern u8 D_8011EEF0[];
 extern u8 D_8011F0CD;
 extern u8 D_8011F0CE;
 extern u8 D_8011F0CF;
@@ -2268,4 +2266,6 @@ s32 func_80053418();
 s32 func_800463E8(void);
 s32 func_80049FF0();
 
+extern u8 D_8011EDE0[];
+extern u8 D_8011EEF0[];
 #endif /* MAIN_API_H */
