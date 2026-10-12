@@ -1,7 +1,33 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10520, only the saved-register order differs ($s1/$s2/$s3 for arg0, the first table base and the loop end: the original ranks the end constant last), 9 lines */
+void func_80146D60(s32 arg0) {
+    TcObj50 *q;
+    TcObj50 *p;
+    TcObj50 *e;
+    s32 i;
+
+    q = D_80127480;
+    func_80099E30(0, q);
+    p = &D_80127480[1];
+    e = (TcObj50 *)D_80128880;
+    do {
+        func_80099E30(q, p);
+        p->unk20 = arg0;
+        p->unk1C = 0;
+        p->unk18 = 0;
+        *(s32 *)p = 0;
+        p++;
+    } while (p < e);
+    for (i = 0; i < 0x24; i++) {
+        D_80128880[i].x = D_80128880[i].y = D_80128880[i].z = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80146D60);
+#endif
 
 void func_80146E3C(void) {
     D_80122760 = 0x14;

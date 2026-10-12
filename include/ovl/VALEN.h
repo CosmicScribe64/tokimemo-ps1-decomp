@@ -1,6 +1,9 @@
 #ifndef OVL_VALEN_H
 #define OVL_VALEN_H
 
+/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
+#define MAIN_API_OVERRIDE_normal_date_girl_out /* implicit int declaration: func_80133670 returns its result (void in main_api.h) */
+
 #include "common.h"
 #include "game.h"
 
@@ -101,5 +104,9 @@ s32 func_80133AA8(void);
 void func_801339D0(void);
 
 extern s16 D_80134524[];
+
+extern u8 D_80134540;
+extern u8 D_80134541;
+extern u8 D_80134542;
 
 #endif /* OVL_VALEN_H */

@@ -2058,7 +2058,9 @@ void normal_date_girl_in();
 #endif
 s32 normal_date_girl_in_init(void);
 void normal_date_girl_in_main();
+#ifndef MAIN_API_OVERRIDE_normal_date_girl_out
 void normal_date_girl_out(void);
+#endif
 void normal_date_girl_out_init(void);
 void normal_date_girl_out_main(void);
 s32 normal_date_bg_fadein(void);
