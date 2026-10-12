@@ -514,6 +514,9 @@ typedef struct {
 extern TcPart D_8015EB30[16];
 extern TcPart D_8015EC70;
 void func_8013DEE4();
+extern u8 D_8015FA80[];
+void func_801483B0(void);
+void func_80148D6C(void);
 #endif
 
 extern u8 D_80161ECD;

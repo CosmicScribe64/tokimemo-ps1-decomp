@@ -43,7 +43,33 @@ void func_80148308(void) {
     D_800E6280.unk_1104.u += 1;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10320, loop exit test is slti in the original but IDO converts the 11-trip loop to bne against a register, which also shifts the saved registers (about 25 lines) */
+void func_801483B0(void) {
+    s32 i;
+    s32 j;
+
+    func_8013A790(1, 1);
+    for (i = 0; i < 0xB; i++) {
+        func_801487A4(D_8015FA44[i], i, D_8015FA80, D_8015FA50, D_8015FA68);
+    }
+    func_80148D6C();
+    func_8014B2A4(D_800E6280.unk_1104.w);
+    if (func_80147B24(0xB, D_8015FA68) >= 0x50) {
+        D_80127090.unk0 = 0x40000000;
+        D_801270A0.unk0 = 0x40000000;
+        for (j = 3; j < 0x1F; j++) {
+            D_80127080[j].unk0 = 0x40000000;
+        }
+        func_801335A0(0, 0x505);
+        D_8015EDCC += 1;
+        func_8004284C();
+    }
+    D_800E6280.unk_1104.w += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801483B0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801484E4);
 
