@@ -45,6 +45,14 @@ write. If it needs a dummy variable, forced cast or similar to hit the bytes it 
 must carry a FAKE comment (CODING_STANDARDS section 7). The permuter cannot fix compiler gaps
 (register promotion of globals, T-0018; ugen temporary order).
 """
+import os
+import sys
+# tools/queue.py would shadow the stdlib `queue` the permuter imports (`from queue import
+# Empty`): drop the script directory from the front of sys.path and load the stdlib module
+# first; tools/ is appended again below.
+if sys.path and os.path.abspath(sys.path[0]) == os.path.dirname(os.path.abspath(__file__)):
+    sys.path.pop(0)
+import queue  # noqa: F401,E402  (stdlib)
 import argparse
 from collections import Counter
 from contextlib import contextmanager
@@ -59,7 +67,7 @@ import sys
 import tempfile
 import time
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # after stdlib: tools/queue.py must not shadow queue
 import cc  # noqa: E402  (AS flags and pad_text: one definition of the pipeline)
 import funcloc  # noqa: E402
 import srcscan  # noqa: E402
