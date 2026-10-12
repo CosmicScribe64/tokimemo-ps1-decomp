@@ -1243,4 +1243,5 @@ extern s16 D_8015CFB4[3];
 extern s16 D_8015CFBC[3];
 extern u16 D_8015CF9C;
 extern s16 D_8015CFC4;
+void func_8014E108(void);
 #endif

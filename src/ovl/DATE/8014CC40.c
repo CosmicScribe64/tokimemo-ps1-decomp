@@ -370,7 +370,39 @@ void func_8014DC94(void) {
     func_8004284C();
 }
 
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+extern FnTbl39 D_8015E3C4;
+
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10320, base/index registers swapped (a0/v1) around a local function-pointer table, 20 differing lines */
+void func_8014DCCC(void) {
+    FnTbl39 tbl;
+    void (*fn)();
+
+    tbl = D_8015E3C4;
+    fn = tbl.f[D_800E6280.unk_110A];
+    if (fn == place_init2) {
+        D_80120653 |= 0x80;
+    }
+    if (fn == normal_date_bg_out) {
+        D_80120653 &= 0xFF7F;
+    }
+    fn(0x80);
+    if (D_80122D04 != 0) {
+        func_8014E010();
+    }
+    if (D_800E6280.unk_110A == 0xE) {
+        func_8014E108();
+    }
+    if (D_800E6280.unk_110A >= 0x19 && D_800E6280.unk_110A < 0x24) {
+        func_80140D38();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DCCC);
+#endif
 
 void func_8014DDD8(void) {
     func_80046318(0x1D, 0x801B0000, 0xBD41);

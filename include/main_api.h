@@ -2265,6 +2265,8 @@ s32 func_80067DFC(void);
 s32 func_80053418();
 s32 func_800463E8(void);
 s32 func_80049FF0();
+void place_init2(void);
+void normal_date_bg_out(void);
 
 extern u8 D_8011EDE0[];
 extern u8 D_8011EEF0[];
