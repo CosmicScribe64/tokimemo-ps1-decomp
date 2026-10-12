@@ -162,7 +162,45 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114784);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114948);
 
+/* NON_MATCHING: T-10330, 10 lines: base registers of D_80124394/D_8012439C swapped (t1/t2) and bne operand order. */
+#ifdef NON_MATCHING
+void func_80114B0C(void) {
+    u8 sel;
+    s16 i;
+    s16 *p;
+    s16 *r;
+    s16 *q;
+    s16 v;
+
+    sel = D_800B0F35[D_800B1746];
+    for (i = 0; i < 3; i++) {
+        p = &D_80124394 + i;
+        r = &D_8012439C + i;
+        q = &D_801243A4 + i;
+        v = *r;
+        *p = v;
+        if (*p == 0) {
+            *p = 1;
+        }
+        if (*p == 4) {
+            *p = 3;
+        }
+        if (sel == D_800B0F2C) {
+            *p = 3;
+        }
+        *q = v - 1;
+        if (*q == -1) {
+            *q = 0;
+        }
+        if (*q == 3) {
+            *q = 2;
+        }
+    }
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114B0C);
+#endif
 
 void func_80114BFC(void) {
     if (D_8012531C == 0) {

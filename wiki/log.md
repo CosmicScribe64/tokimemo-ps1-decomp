@@ -9756,6 +9756,11 @@ functions and 865160/2279368 bytes (38.0%). Changes remain uncommitted.
 
 ## [2026-10-11] ticket | T-10340 wave 12 list 4 started
 Created [[tickets/T-10340-wave-12-list-4]] (In Progress), 149 functions in 48 files.
+## [2026-10-11] ticket | T-10330 wave 12 list 3 started
+[[tickets/T-10330-wave-12-list-3]] created In Progress; 149 functions in 49 files.
+
+## [2026-10-11] ticket | T-10330 early stop
+[[tickets/T-10330-wave-12-list-3]]: 0 matches, one guarded near miss in `src/ovl/EVENT/8010FE10.c`; ticket stays In Progress.
 ## [2026-10-11] ticket | Claim wave-11 tool fixes
 Created [[tickets/T-10210-wave-11-tool-fixes]] and aligned [[kanban]]/[[index]]. Read shared tooling12 brief, standards and wave-11 evidence in [[matching-notes]] and [[decompile-workflow]]. Wrapper regressions and local-frame investigation are assigned; configure.py, tools/split_objects.py and config/ are excluded.
 
@@ -9783,3 +9788,5 @@ Moved [[tickets/T-10200-orphan-jump-tables]] to In Review with matching [[kanban
 
 ## [2026-10-11] ticket | T-10340 closed, no matches
 Wave 12 list 4 produced no matches; attempts recorded in [[matching-notes]]. [[tickets/T-10340-wave-12-list-4]] moved to Done.
+## [2026-10-11] ticket | T-10330 done
+[[tickets/T-10330-wave-12-list-3]] moved to Done: 0 exact matches, three guarded near misses in `src/ovl/EVENT/8010FE10.c`, `src/ovl/GYOZI/8013E5B0.c`, `src/ovl/ETC/80143240.c`.
