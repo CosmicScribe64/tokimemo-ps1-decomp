@@ -27,6 +27,7 @@
 #define MAIN_API_OVERRIDE_D_80120734 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80121874 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
 #define MAIN_API_OVERRIDE_D_801206B0 /* EVENT overlay data at this address, s32 (main_api.h: volatile s16) */
+#define MAIN_API_OVERRIDE_D_80120694 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
 
 #include "common.h"
 #include "game.h"
@@ -1425,3 +1426,31 @@ extern EvFnTbl53 D_801225A8;
 typedef struct EvFnTbl44 { void (*f[44])(); } EvFnTbl44;
 extern EvFnTbl44 D_801228E0;
 #endif
+
+#ifndef OVL_EVENT_T10630_H
+#define OVL_EVENT_T10630_H
+/* Movie control bytes at D_800F1990, cleared by func_8011DDB8. */
+typedef struct EventMovieWork {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ u8 pad08[2];
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 pad0C[12];
+    /* 0x18 */ s8 unk_18;
+    /* 0x19 */ s8 unk_19;
+    /* 0x1A */ s8 unk_1A;
+    /* 0x1B */ u8 pad1B;
+} EventMovieWork; /* size 0x1C, minimum observed extent */
+s32 func_80015A44();
+void func_8002469C();
+void func_80027438();
+void func_8002746C();
+void func_8002755C();
+void func_800352B4();
+#endif
+
+/* T-10630: signed UV step and RNG seed helper in the EVENT object. */
+extern s16 D_801258E0;
+void func_8011F530(u32 seed);

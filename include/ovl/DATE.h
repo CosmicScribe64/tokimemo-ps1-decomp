@@ -1249,3 +1249,6 @@ extern u16 D_8015CF9C;
 extern s16 D_8015CFC4;
 void func_8014E108(void);
 #endif
+
+/* T-10630: signed UV oscillation step used by func_801462B0. */
+extern s16 D_8015CFA0;
