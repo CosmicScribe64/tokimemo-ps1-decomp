@@ -876,7 +876,9 @@ extern s32 D_8011ECC8;
 extern u8 D_8011ECD0[]; /* 3 records of 0x44 bytes; s16 at +0x19EA is read */
 extern u8 D_8011ECD3;
 extern s16 D_8011ECE8;
+extern s32 D_8011ECF4;
 extern s16 D_8011ECF6;
+extern s32 D_8011ECF8;
 extern s16 D_8011ECFA;
 extern u8 D_8011ED15;
 extern u8 D_8011ED16;
@@ -1262,6 +1264,8 @@ extern s8 D_8012152F;
 extern u8 D_80121531;
 extern u8 D_80121533;
 extern s16 D_80121548;
+extern s16 D_80121556;
+extern s16 D_8012155A;
 extern s16 D_8012158C;
 extern s8 D_801215FD;
 extern u8 D_801215FF;

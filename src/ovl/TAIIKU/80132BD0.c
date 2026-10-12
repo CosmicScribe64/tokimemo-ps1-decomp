@@ -104,4 +104,52 @@ void func_80133928(s32 arg0) {
     }
 }
 
+/* NON_MATCHING: T-10610, 4 lines: the original loads D_800E7200 into $v1, IDO $v0 (selector register, T-0018 shape); the live argument is a0 (caller passes none), hence the K&R definition and the `()` prototype */
+#ifdef NON_MATCHING
+void func_801339C4(arg0)
+s32 arg0;
+{
+    u8 *p;
+
+    switch (D_800E6280.unk_F80 & 0xF000) {
+    case 0x3000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x28) += -0x1E000;
+        *(s32 *)(p + 0x24) += 0x22000;
+        break;
+    case 0x9000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x28) += -0x1E000;
+        *(s32 *)(p + 0x24) += -0x22000;
+        break;
+    case 0x6000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x28) += 0x1E000;
+        *(s32 *)(p + 0x24) += 0x22000;
+        break;
+    case 0xC000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x28) += 0x1E000;
+        *(s32 *)(p + 0x24) += -0x22000;
+        break;
+    case 0x1000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x28) += -0x20000;
+        break;
+    case 0x4000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x28) += 0x20000;
+        break;
+    case 0x8000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x24) += -0x24000;
+        break;
+    case 0x2000:
+        p = D_8011ECD0 + arg0 * 0x44;
+        *(s32 *)(p + 0x24) += 0x24000;
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_801339C4);
+#endif
