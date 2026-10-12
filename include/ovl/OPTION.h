@@ -92,6 +92,8 @@ typedef struct OptDraw44 {
 #ifndef OVL_OPTION_DISPATCH_T10020
 #define OVL_OPTION_DISPATCH_T10020
 void func_8013990C(void);
+#endif
+
 #ifndef OVL_OPTION_GRID_T10010
 #define OVL_OPTION_GRID_T10010
 /* Sixteen menu rectangles stored as separate coordinate/extent arrays. */

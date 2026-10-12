@@ -421,6 +421,8 @@ typedef struct TaiikuSlot1C {
 } TaiikuSlot1C; /* size 0x1C; D_8014A454 record stride, T-10020. */
 /* Three 0x1C controller records; byte view retained for existing users. */
 extern u8 D_8014A400[];
+#endif
+
 #ifndef OVL_TAIIKU_T10010_SCROLL_POSITION
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
 void func_8014430C(void);

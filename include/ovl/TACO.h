@@ -486,6 +486,7 @@ extern u8 D_8015FA50[];
 #define OVL_TACO_MENU_RESOURCE_T10020
 extern s16 *D_80160444;
 #endif
+
 #ifndef OVL_TACO_T10010_SELECTION
 #define OVL_TACO_T10010_SELECTION
 void func_8013546C(void);
