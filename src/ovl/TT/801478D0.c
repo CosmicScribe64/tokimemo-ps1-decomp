@@ -82,7 +82,44 @@ void func_80147F14(u8 *arg0) {
     *(s16 *)(arg0 + 0x16) = *(s16 *)(arg0 + 0x70);
 }
 
+/* NON_MATCHING: T-10610, the original keeps the zero of the byte and halfword store pairs in registers (move v1,zero; move a1,zero) and the loop counter/pointer in v1/a1; ~14 lines */
+#ifdef NON_MATCHING
+void func_80147FD0(u8 *arg0) {
+    s32 i;
+    u8 *p;
+    u8 *src;
+
+    src = D_80158A74;
+    arg0[0] = 1;
+    *(s16 *)(arg0 + 4) = 0x40;
+    arg0[0xE] = arg0[0xD] = 0;
+    *(u16 *)(arg0 + 8) = *(u16 *)(arg0 + 6) = 0;
+    arg0[0xF] = 0;
+    *(s16 *)(arg0 + 0xA) = 0;
+    p = arg0 + 4;
+    *(s16 *)(arg0 + 0x14) = *(s16 *)(src + 0x14);
+    i = 2;
+    *(s16 *)(arg0 + 0x16) = *(s16 *)(src + 0x16);
+    *(s16 *)(arg0 + 0x50) = *(s16 *)(src + 0x14);
+    *(s16 *)(arg0 + 0x70) = *(s16 *)(src + 0x16);
+    *(s16 *)(arg0 + 0x52) = *(s16 *)(src + 0x14);
+    *(s16 *)(arg0 + 0x72) = *(s16 *)(src + 0x16);
+    do {
+        i += 4;
+        *(s16 *)(p + 0x50) = *(s16 *)(src + 0x14);
+        p += 8;
+        *(s16 *)(p + 0x68) = *(s16 *)(src + 0x16);
+        *(s16 *)(p + 0x4A) = *(s16 *)(src + 0x14);
+        *(s16 *)(p + 0x6A) = *(s16 *)(src + 0x16);
+        *(s16 *)(p + 0x4C) = *(s16 *)(src + 0x14);
+        *(s16 *)(p + 0x6C) = *(s16 *)(src + 0x16);
+        *(s16 *)(p + 0x4E) = *(s16 *)(src + 0x14);
+        *(s16 *)(p + 0x6E) = *(s16 *)(src + 0x16);
+    } while (i != 0xA);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801478D0", func_80147FD0);
+#endif
 
 void func_801480BC(void) {
     s32 i;

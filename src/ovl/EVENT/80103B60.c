@@ -17,7 +17,12 @@ void func_80103BC0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80103BF8);
+void func_80103BF8(void) {
+    if (D_800B0A04[5].unk_0C.b14) {
+        D_80094714 += 1;
+    }
+    func_80011DFC();
+}
 
 void func_80103C3C(void) {
     if (!D_800B0A04[5].unk_0C.b14) {
@@ -334,7 +339,15 @@ void func_80104AA8(void) {
     func_8004A8EC(func_8002336C(D_800B1746));
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80104B00);
+void func_80104B00(void) {
+    u8 s;
+
+    s = func_8002328C(D_800B1746) & 0x7F;
+    if (s >= 2U) {
+        D_80094714 += 5;
+    }
+    func_80011DFC();
+}
 
 typedef struct {
     void (*f[55])();
@@ -364,7 +377,14 @@ void func_80104C14(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80104C3C);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80104D48);
+s32 func_80104D48(void) {
+    D_800B0860[6] += 0x10;
+    D_800B0860[7] += 0x10;
+    D_800B0860[8] += 0x10;
+    if (D_800B0860[6] >= 0xF0U) {
+        func_80011DFC();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80104DB4);
 

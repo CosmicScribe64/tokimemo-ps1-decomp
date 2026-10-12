@@ -226,7 +226,30 @@ void func_8007A618(u32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A6AC);
 
+/* NON_MATCHING: T-10610, globals D10/D14 are promoted (&= pairs) but the original loads them at the top of the block, ~12 lines */
+#ifdef NON_MATCHING
+void func_8007A868(void) {
+    s32 t;
+    D_80125E60 = 0;
+    D_80125E62 = 0;
+    t = D_80125D20;
+    D_80125D1C = D_80125D24;
+    D_80125D5C = D_80125D5D;
+    D_80125D5E = D_80125D5F;
+    D_80125D20 = 0;
+    D_80125D24 = 0;
+    D_80125D5D = 0;
+    D_80125D5F = 0;
+    D_80125D28 = t;
+    D_80125D18 = t;
+    D_80125D10.unk_00 &= ~0x400;
+    D_80125D10.unk_00 &= ~0x4000;
+    D_80125D14 &= ~0x200;
+    D_80125D14 &= ~0x100;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007A868);
+#endif
 
 void func_8007A924(s32 arg0) {
     func_8007BA54();

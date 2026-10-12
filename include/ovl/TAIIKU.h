@@ -147,7 +147,7 @@ typedef struct TaiikuRec {
 } TaiikuRec; /* size 0x10 */
 extern s32 D_80149944;
 
-void func_801339C4(void);
+void func_801339C4();
 extern u8 D_801492C4;
 void func_8013DDB8(void);
 s8 func_8013FE44();

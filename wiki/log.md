@@ -9827,3 +9827,7 @@ Ticket [[tickets/T-10520-wave-13-list-2]] In Progress (59 functions, 30 files).
 
 ## [2026-10-12] ingest | Register cheat sheet
 Added [[register-cheatsheet]], a one-page symptom-to-C guide distilled from [[uopt-register-allocation]], [[register-allocation-wave7]] and [[decompile-workflow]]; linked from the T-0018 section of [[decompile-workflow]] and the wave briefs.
+## [2026-10-12] ticket | T-10610 wave 14 list 1 started
+[[tickets/T-10610-wave-14-list-1]] In Progress: 54 functions, 33 files.
+## [2026-10-12] ticket | T-10610 wave 14 list 1 done
+[[tickets/T-10610-wave-14-list-1]] Done: 6 matches (964 bytes), 5 guarded near misses, 11 rows in [[data/t0018-cases]], notes in [[matching-notes]]. Build, headers and globals pass.

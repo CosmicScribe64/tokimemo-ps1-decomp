@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-11
+updated: 2026-10-12
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -1647,3 +1647,15 @@ EVENT SHA1 pass. Historical rows remain unchanged.
 | main/80042A00 | `func_80042CB0` | regorder | pad-repeat state machine (330 lines in the first draft): x/y halfwords in `$a3`/`$t0`, signed bytes via `lb` (T-10510) |
 | main/8007C030 | `normal_date_bggirl_fadein` | regorder | `u8 x` read from D_800B593C: the original keeps x in `$a0` with the address base in `$v1` and stores through `move v0,a0` and `andi v0,a0,0xff` copies for the two chains; IDO x in `$v0` and no copies (28 lines; known T-9410 case) (T-10510) |
 | TACO/8013B170 | `func_8013B2A0` | other | structure and the `lwl/lwr` 8-byte save/restore (`typedef struct { u8 b[8]; }` copy of the bytes at +0x7C) match; the frame places the copy at sp+0x30 and the saved byte at sp+0x38 (frame 0x40), every declaration order and `pad` tried gives 0x2C/0x34 (4 bytes low) or frame 0x38; the three `li 0x10` stores also want `v0` shared by two (55 lines) (T-10510) |
+| main/80059710 | `InitMouse` | other | two word stores to D_800E36C0/D_800E36C4 under ONE `lui $at`: arrays, struct and a second extern all give two luis; the object has no data range, so the symbols cannot be owned (T-10610) |
+| main/800451D0 | `func_8004636C` | regorder | checksum loop: draft with `u16 sum` or `sum = (sum + *p + *q) & 0xFFFF` keeps the original's shape but puts `n` in $v0, `sum` in $a2 and `i` in $a3 (original $a2/$v0/$v1); the original has two more instructions (a dead `li v0,1` after the return and one more `or`), so the permuter refuses the base (T-10610) |
+| main/80079B10 | `func_8007B64C` | promo | FIFO pop: with `base = &D_80125CC0` inside the `n >= 2` block the structure is within 6 places; the original loads the address of D_80125CC2 (`lui v1`) before the first compare and keeps `i` in $a0, IDO sinks it and colours $v1/$v0 the other way (T-10610) |
+| main/80079B10 | `func_8007A868` | sched | straight-line reset of ten words: `D_80125D10`/`D_80125D14` become promoted registers with `&=` pairs, but the original loads them before the first store while IDO loads each at its first use (about 12 lines); array and struct-member views of D_80125D10 do not change the load placement (T-10610) |
+| BUNKA_SD/80134260 | `func_80134418` | regorder | two record loops (0x44 stride, field +7) and the 0x80 constant: structure matches with a pointer loop plus an indexed second loop (IDO unrolls it 4x like the original); the original keeps D_800E738B's value in $v1 across the first loop and reuses $v1 for 0x80, one lui/addiu pair more in the draft (T-10610) |
+| EVENT/8010B360 | `func_8010B614` | regorder | `D_800B1746 = 4; func_8004BC20(4)`: the original stores the argument register itself (`li a0,4; ... sb a0` in the jal delay slot); every spelling (chain, local, cast) gets a separate `li` for the u8 store (T-10610) |
+| ETC/8013BEF0 | `func_8013E094` | other | table update with an uninitialised s16 local read from sp+0x12 (original frame 0x18): the draft is right except that the local lands at sp+0x14/0x16 for every declaration order of four s16 locals, and the original loads both record halfwords before the stores (T-10610) |
+| NAME_ENT/80139740 | `func_80140B20` | regorder | six byte stores of one value `t & 0xFF` (twice `andi`): IDO folds the second mask into the first; `u8`/`u32` and K&R locals tried, plus the six scalar globals vs one array (the original has six `lui at`) (T-10610) |
+| TAIIKU/801452D0 | `func_80147120` | other | same Lim3 frame problem as before: lim lands at sp+0x18 or, with `s32 pad[2]` declared after it, sp+0x20 but then the frame is 0x38 instead of 0x30 (T-10610) |
+| TT/801478D0 | `func_80147FD0` | regorder | record init with chained zero stores: the original keeps the byte-pair zero and the halfword-pair zero in $a1 and $v1 (`move v1,zero; move a1,zero` before the stores) and the loop counter/pointer in $v1/$a1 afterwards; chains through `u16` give `$zero` stores (T-10610) |
+| TAIIKU/80132BD0 | `func_801339C4` | regorder | 8-case selector on `D & 0xF000` (live a0 index, K&R definition): everything matches except the selector global's register: original `$v1`, IDO `$v0` for a plain global, a local copy (u32/s32) and an s32 return; 4 lines, permuter found nothing in 120 s (T-10610) |
+| EN_NICHI/80132000 | `func_801330D0` | other | cursor movement with the `D_8011ECF4[0..1]` switch matching; the closing clamps of the two s16 positions are forwarded through registers by IDO while the original reloads after each store and keeps the record base in $v1 (volatile pointers and typed structs tried) (T-10610) |
