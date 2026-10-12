@@ -231,6 +231,7 @@ class SkippedAndAddGlobalTest(Repo):
         self.assertTrue(any("D_800E7388 lies inside GS D_800E7380" in t for t in text))
 
     def test_add_global_declares_in_address_order_and_survives_write(self):
+        self.src("main/AAAA.c", "#define MAIN_API_OVERRIDE_func_80083440 /* word */\n")   # the API fixture's guard
         inc, src = str(self.inc), str(self.root / "src")
         self.assertIsNone(sp.add_global(inc, src, "D_800E7386", "s16[4]", log=lambda _m: None))
         text = (self.inc / "main_api.h").read_text()
@@ -240,6 +241,33 @@ class SkippedAndAddGlobalTest(Repo):
         m = sp.Model(inc, src)
         changed, _n, _g = sp.write_api(m, sp.plan(m))
         self.assertFalse(changed)
+
+    def test_add_global_keeps_guards_and_changes_one_line(self):
+        """T-10400: --add-global dropped every `#ifndef MAIN_API_OVERRIDE_<sym>` guard whose override
+        lives in a .c file (it read only the headers), and re-decided unrelated declarations."""
+        old = (sp.HEADER_TEXT + "\n/* ---- globals ---- */\n"
+               "#ifndef MAIN_API_OVERRIDE_D_800E7388\nextern u8 D_800E7388;\n#endif\n"
+               "/* keep: out of order on purpose */\nextern s32 D_800E7384;\n"
+               "\n/* ---- functions ---- */\nvoid func_80042808(void);\n"
+               "#ifndef MAIN_API_OVERRIDE_func_80083440\nvoid func_80083440(u8 arg0);\n#endif\n"
+               "\n#endif /* MAIN_API_H */\n")
+        self.write("main_api.h", old)
+        self.src("main/AAAA.c", "#define MAIN_API_OVERRIDE_D_800E7388 /* lb */\n"
+                 "#define MAIN_API_OVERRIDE_func_80083440 /* word */\n#include \"game.h\"\n")
+        self.ovl("AAA", "extern u8 D_800E7000;\n")     # declared by a header, not yet in main_api.h
+        inc, src = str(self.inc), str(self.root / "src")
+        self.assertIsNone(sp.add_global(inc, src, "D_800E7386", "s16", log=lambda _m: None))
+        added = (self.inc / "main_api.h").read_text()
+        line = "extern s16 D_800E7386;\n"
+        self.assertIn(line, added)
+        self.assertEqual(added.replace(line, "", 1), old)      # one line more, nothing else touched
+        self.assertLess(added.index("D_800E7386"), added.index("MAIN_API_OVERRIDE_D_800E7388"))
+        # the --write after it changes only what --write alone would (the header's own D_800E7000)
+        m = sp.Model(inc, src)
+        sp.write_api(m, sp.plan(m))
+        after = (self.inc / "main_api.h").read_text()
+        self.assertEqual(after.replace("extern u8 D_800E7000;\n", "", 1), added)
+        self.assertIn("#ifndef MAIN_API_OVERRIDE_D_800E7388\nextern u8 D_800E7388;\n#endif", after)
 
     def test_add_global_refuses_known_or_non_main_names(self):
         inc, src = str(self.inc), str(self.root / "src")
