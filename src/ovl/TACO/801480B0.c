@@ -75,6 +75,49 @@ void func_8014866C(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801487A4);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_80148B58);
+void func_80148B58(s32 arg0) {
+    s32 index;
+
+    index = 0x10;
+    do {
+        func_80143B34(index);
+        index += 1;
+    } while (index < 0x3F);
+    index = 0;
+    if (arg0 > 0) {
+        do {
+            func_80147928(D_8015FA44[index], index, 0x8018D000, D_8015FA50, D_8015FA68, 2);
+            index += 1;
+        } while (index != 0xB);
+    }
+    D_8015EDB4[16].unk84[2] = 0;
+    D_8015EDB4[16].unk3 = 0;
+    D_8015EDB4[16].unk2 = 0;
+    D_8015EDB4[17].unk84[2] = 0;
+    D_8015EDB4[17].unk3 = 0;
+    D_8015EDB4[17].unk2 = 1;
+    D_8015EDB4[18].unk84[2] = 0;
+    D_8015EDB4[18].unk3 = 0;
+    D_8015EDB4[18].unk2 = 0;
+    D_8015EDB4[19].unk84[2] = 0;
+    D_8015EDB4[19].unk3 = 0;
+    D_8015EDB4[19].unk2 = 0;
+    D_8015EDB4[20].unk84[2] = 0;
+    D_8015EDB4[20].unk3 = 0;
+    D_8015EDB4[20].unk2 = 0;
+    D_8015EDB4[21].unk84[2] = 0;
+    D_8015EDB4[21].unk3 = 0;
+    D_8015EDB4[21].unk2 = 0;
+    D_8015EDB4[22].unk84[2] = 0;
+    D_8015EDB4[22].unk3 = 0;
+    D_8015EDB4[22].unk2 = 0;
+    D_8015EDB4[23].unk84[2] = 0;
+    D_8015EDB4[24].unk84[2] = 0;
+    D_8015EDB4[24].unk3 = 0;
+    D_8015EDB4[24].unk2 = 0;
+    D_8015EDB4[25].unk84[2] = 0;
+    D_8015EDB4[25].unk3 = 0;
+    D_8015EDB4[25].unk2 = 0;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_80148D6C);

@@ -41,7 +41,32 @@ void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n) {
     *r *= 2;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_CalcCDAve);
+void SD_CalcCDAve(s16 *left, s16 *right, u16 start, u16 count) {
+    s32 left_sum;
+    s32 right_sum;
+    u16 index;
+    s16 left_sample;
+    s16 right_sample;
+
+    left_sum = 0;
+    right_sum = 0;
+    for (index = 0; index < count; index++) {
+        left_sample = D_80126080[start];
+        right_sample = D_80126080[start + 0x200];
+        if (left_sample & 0x8000) {
+            left_sample = ~(left_sample - 1);
+        }
+        left_sum += left_sample;
+        if (right_sample & 0x8000) {
+            right_sample = ~(right_sample - 1);
+        }
+        right_sum += right_sample;
+        start += (u16)(256U / count);
+    }
+    /* FAKE: explicit masks retain the ANDIs before the halfword stores. T-10020. */
+    *left = ((u32)(left_sum * 2) / count) & 0xFFFF;
+    *right = ((u32)(right_sum * 2) / count) & 0xFFFF;
+}
 
 s16 getCDlevel(void) {
     if (D_80125D10.unk_00 & 0x400) {
@@ -581,7 +606,27 @@ void func_80083628(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_800836A0);
+s32 func_800836A0(void) {
+    /* The two early failure paths return zero; the success path falls through. */
+    if ((((s32 *)D_800CA120)[0] != 0x801820AC) || (((s32 *)D_800CA120)[1] != 0x801860AC) || (((s32 *)D_800CA120)[2] != 0x8018A0AC) || (((s32 *)D_800CA120)[3] != 0x8018E0AC) || (((s32 *)D_800CA120)[4] != 0x801920AC)) {
+        D_800E6280.unk_110A -= 4;
+        return 0;
+    }
+    if (func_8004636C(0x2D, 0x80180000) == 0) {
+        func_8004284C();
+        D_800E6280.unk_110A -= 5;
+        return 0;
+    }
+    /* FAKE: narrowing before the mask preserves temporary allocation. T-10020. */
+    func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, (u8)get_g_zyotai_h((s32) D_800E6280.unk_F5F) & 0x7F);
+    /* One record-table view keeps the byte clear before the flag updates. */
+    D_8011ECD0[31 * 0x44 + 7] = 0;
+    *(s32 *)&D_8011ECD0[31 * 0x44 + 0x38] |= 0x81000000;
+    *(s32 *)&D_8011ECD0[30 * 0x44 + 0x38] |= 0x81000000;
+    D_801217D0->unk_00 |= 0x81000000;
+    D_801217D0[1].unk_00 |= 0x81000000;
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083808);
 

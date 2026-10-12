@@ -1200,3 +1200,27 @@ extern DateCallbacks39 D_8015F2B4;
 void func_80139AC8(void);
 s32 func_80149268(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 #endif
+
+#ifndef OVL_DATE_TABLES_T10020
+#define OVL_DATE_TABLES_T10020
+typedef struct DateChoice8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} DateChoice8; /* size 0x08; paired arguments, T-10020. */
+typedef struct DateChoices58 {
+    /* 0x00 */ DateChoice8 rows[11];
+} DateChoices58; /* size 0x58 */
+typedef struct DateChoices60 {
+    /* 0x00 */ DateChoice8 rows[12];
+} DateChoices60; /* size 0x60 */
+extern DateChoices58 D_8015B6A4;
+extern DateChoices60 D_8015B6FC;
+#endif
+
+#ifndef OVL_DATE_DISPATCH_T10020
+#define OVL_DATE_DISPATCH_T10020
+void func_8014A280(void);
+void func_8014A2AC(void);
+void func_8014A314(void);
+void func_8014A360(void);
+#endif

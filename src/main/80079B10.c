@@ -290,7 +290,38 @@ INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007AF0C);
 
 INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B144);
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_8007B2B4);
+/* FAKE: the constant branch retains the selector in v0. Keeping it on the
+ * flag-store line also preserves the ORI scheduling. T-10020. */
+void func_8007B2B4(arg0)
+u16 arg0;
+{
+    s32 temp_v0;
+    if (!(D_80125D10.unk_04 & 1))
+    {
+        D_80125D10.unk_2E = 0;
+        D_80125D10.unk_04 |= 1; if (1)
+        {
+            temp_v0 = arg0 & 0xFF;
+        }
+        switch (temp_v0)
+        {
+        case 0xB1:
+            D_80125D10.unk_32 = 0x100;
+            D_80125D10.unk_30 = 0xA;
+            return;
+
+        case 0xC1:
+            D_80125D10.unk_32 = 0xC0;
+            D_80125D10.unk_30 = 1;
+            return;
+
+        case 0xD1:
+            D_80125D10.unk_32 = 0x80;
+            D_80125D10.unk_30 = 1;
+            break;
+        }
+    }
+}
 
 void func_8007B358(u16 arg0) {
     s32 a;

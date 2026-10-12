@@ -110,7 +110,19 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801523D0);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_8015266C);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152764);
+void func_80152764(s32 arg0) {
+    if (arg0 < 5) {
+        func_80147674(0x23, D_80160444, 1, 0, 0);
+        return;
+    }
+    if ((arg0 >= 5) && (arg0 < 0xF)) {
+        func_80147674(0x23, D_80160444, 2, 0, 0);
+        return;
+    }
+    if ((arg0 >= 0xF) && (arg0 < 0x14)) {
+        func_80147674(0x23, D_80160444, 1, 0, 0);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152808);
 

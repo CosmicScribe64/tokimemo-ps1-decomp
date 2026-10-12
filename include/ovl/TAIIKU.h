@@ -403,3 +403,22 @@ void func_80143AC8(void);
 void func_80143C04(void);
 void func_80144768(void);
 #endif
+
+#ifndef OVL_TAIIKU_SLOT_T10020
+#define OVL_TAIIKU_SLOT_T10020
+typedef struct TaiikuSlot1C {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ u8 unk_0C;
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 pad_0E[6];
+    /* 0x14 */ u16 unk_14;
+    /* 0x16 */ u16 unk_16;
+    /* 0x18 */ u8 pad_18[4];
+} TaiikuSlot1C; /* size 0x1C; D_8014A454 record stride, T-10020. */
+/* Three 0x1C controller records; byte view retained for existing users. */
+extern u8 D_8014A400[];
+#endif

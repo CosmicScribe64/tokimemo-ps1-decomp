@@ -50,6 +50,8 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-10100-wave-9-10-tool-fixes|T-10100 Wave 9/10 tool fixes]]
+
+- [ ] [[tickets/T-10020-wave-11-list-2|T-10020 Wave 11: list 2]]
 - [ ] [[tickets/T-9800-uopt-register-allocation-trace-and-uniform-patch|T-9800 uopt register allocation: trace and uniform patch]]
 
 - [ ] [[tickets/T-9810-permuter-farm-for-near-misses|T-9810 Permuter farm for near misses]]

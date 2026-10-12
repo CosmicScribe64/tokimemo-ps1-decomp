@@ -66,7 +66,32 @@ void func_80138A24(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80138A8C);
+void func_80138A8C(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80139198();
+        return;
+    case 1:
+        func_80139878();
+        return;
+    case 2:
+        func_8013990C();
+        return;
+    case 3:
+        func_80138C20();
+        return;
+    case 4:
+        func_80138FC0();
+        return;
+    case 5:
+        func_80138DF8();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80138B4C(s32 arg0) {
     s32 i;
