@@ -498,21 +498,8 @@ void func_8013546C(void);
 #define OVL_TACO_T10010_SCORE_TABLE
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
 
-typedef struct {
-    /* 0x00 */ s16 unk_00;
-    /* 0x02 */ s16 unk_02;
-    /* 0x04 */ s16 unk_04;
-    /* 0x06 */ u8 pad_06[2];
-    /* 0x08 */ s16 unk_08;
-    /* 0x0A */ s16 unk_0A;
-    /* 0x0C */ s16 unk_0C;
-    /* 0x0E */ u8 pad_0E[3];
-    /* 0x11 */ u8 unk_11;
-    /* 0x12 */ u8 unk_12;
-    /* 0x13 */ u8 unk_13;
-} TcPart; /* size 0x14; 16 particles at D_8015EB30 */
-extern TcPart D_8015EB30[16];
-extern TcPart D_8015EC70;
+extern Tc14 D_8015EB30[16];
+extern Tc14 D_8015EC70;
 void func_8013DEE4();
 extern u8 D_8015FA80[];
 void func_801483B0(void);
