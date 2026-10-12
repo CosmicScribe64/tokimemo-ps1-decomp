@@ -67,9 +67,6 @@ extern s32 D_8014A12C;
 extern s32 D_8014A148;
 extern u32 D_8014A14C;
 extern s32 D_801491E8;
-extern s32 D_80149218;
-extern s32 D_80149220;
-extern u32 D_80149224;
 extern s32 D_8014A3D4;
 extern u32 D_8014A3F0;
 extern s32 D_8014A3F4;
@@ -165,7 +162,6 @@ void func_80146B8C(void);
 void func_801488F0(s16 *);
 void func_8013D9B4(s32, u8);
 extern s16 D_80149204;
-extern u32 D_8014921C;
 extern s32 D_801491E4;
 extern u8 D_801491E0[4];
 extern s32 D_8014994C;
@@ -230,7 +226,7 @@ typedef struct TkCnt {
     /* 0x8 */ u32 unk_08;
 } TkCnt; /* size 0xC */
 
-extern s16 D_8014929A;
+extern s16 D_80149298[2]; /* [1] is D_8014929A; defined in 80133C80.c */
 void func_80133438(void);
 void func_801345A4(void);
 s32 func_801365C8();
@@ -280,7 +276,6 @@ typedef struct TaiValue44 {
 extern TaiWords4 D_801498AC;
 extern TaiWords11 D_801498BC;
 extern s16 D_80149320[];
-extern u8 D_80149208[];
 extern s32 D_8014929C;
 #endif /* OVL_TAIIKU_W8_3_TYPES_H */
 #ifndef TAIIKU_W8_CONTROLLER_TYPES_H
@@ -463,7 +458,46 @@ extern Taiiku2s32 D_80149974;
 extern Taiiku2s16 D_80149980;
 extern Taiiku3s32 D_80149990;
 
-extern u8 D_8014920B;
-extern u16 D_80149214;
+
+
+
+
+typedef struct {
+    /* 0x00 */ u8 pad00[3];
+    /* 0x03 */ u8 f03;
+    /* 0x04 */ u8 pad04[3];
+    /* 0x07 */ u8 f07;
+    /* 0x08 */ u8 pad08[4];
+    /* 0x0C */ u16 f0C;
+    /* 0x0E */ u16 f0E;
+    /* 0x10 */ s32 f10;
+    /* 0x14 */ u32 f14;
+    /* 0x18 */ s32 f18;
+    /* 0x1C */ u32 f1C;
+    /* 0x20 */ u8 pad20[0x10];
+    /* 0x30 */ u16 f30;
+    /* 0x32 */ u16 f32;
+    /* 0x34 */ s32 f34;
+    /* 0x38 */ s32 f38;
+    /* 0x3C */ s32 f3C;
+    /* 0x40 */ s32 f40;
+    /* 0x44 */ u8 pad44[0x10];
+    /* 0x54 */ u16 f54;
+    /* 0x56 */ u16 f56;
+    /* 0x58 */ s32 f58;
+    /* 0x5C */ s32 f5C;
+    /* 0x60 */ s32 f60;
+    /* 0x64 */ s32 f64;
+    /* 0x68 */ s32 f68;
+    /* 0x6C */ u8 pad6C[0xC];
+    /* 0x78 */ u16 f78;
+    /* 0x7A */ u16 f7A;
+    /* 0x7C */ s32 f7C;
+    /* 0x80 */ s32 f80;
+    /* 0x84 */ s32 f84;
+    /* 0x88 */ s32 f88;
+    /* 0x8C */ s32 f8C;
+} TaiikuSlots; /* size 0x90, D_80149208..D_80149297 */
+extern TaiikuSlots D_80149208;
 
 #endif
