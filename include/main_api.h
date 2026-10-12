@@ -1320,6 +1320,9 @@ typedef struct TaiikuBig {
     /* 0x24 */ u8 unk24[0x2C];
 } TaiikuBig; /* size 0x50 */
 extern TaiikuBig D_801227A0[];
+extern TaiikuBig D_80122840[];
+extern TaiikuBig D_80122B10[];
+extern u8 D_80122660[];
 extern TaiikuBig D_80122CA0[];
 extern u32 D_80122640[];
 extern s32 D_80122740;
@@ -2182,7 +2185,9 @@ void GsSetAmbient();
 void func_8009B310(s32 arg0, s32 arg1, s32 arg2);
 void func_8009B340();
 void func_8009B3C0(s32 arg0);
+#ifndef MAIN_API_OVERRIDE_func_8009B430
 void func_8009B430(s32 arg0, u8 *arg1, s32 arg2, s32 arg3);
+#endif
 void func_8009B560();
 void func_8009C210(s32 arg0);
 void func_8009C5E0();

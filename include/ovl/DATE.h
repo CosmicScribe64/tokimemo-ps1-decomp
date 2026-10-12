@@ -5,8 +5,12 @@
 #define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
 #define MAIN_API_OVERRIDE_normal_date_girl_in /* implicit int declaration: func_80132000 returns its result (void in main_api.h) */
 
+#define MAIN_API_OVERRIDE_func_8009B430 /* matched with 3 arguments: the original leaves $a3 unset (main_api.h: 4) */
+
 #include "common.h"
 #include "game.h"
+
+void func_8009B430(s32 arg0, u8 *arg1, s32 arg2);
 
 extern s16 D_8015D084;
 extern s16 D_8015D088;
