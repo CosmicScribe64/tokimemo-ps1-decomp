@@ -1564,3 +1564,18 @@ EVENT SHA1 pass. Historical rows remain unchanged.
 |---|---|---|---|
 | TEL/80132000 | `func_80132FC4` | regorder | Selector/compare chain: reconstructed count/select loops and native unlock flags leave the compiler copying the byte selector from a0 to v0 for dispatch, plus the selected-index zero initialization moving earlier. Other instructions match; padded buffer home is separately marked FAKE. Typed selector/counter variants, local state views and bounded permuters have not verified a match. Guarded draft retained, T-10040; finite-search evidence only. |
 | BUNKASAI/801511E0 | `func_80151364` | sched | Pointer/base/CSE and scheduling: byte-year captures plus a marked state-pointer reassignment reduce the real resolved diff to two lines, one `lui v1` moving before the year-address `lui v0`. Widths, separate/scoped base views, explicit defaults, declaration order, return type and statement variants do not close it; a fresh 600-second permuter finds no improvement. Guarded draft retained, T-10040; finite-search evidence only. |
+
+### Wave 12, list 1 (T-10310)
+
+| File | Function | Category | Symptom |
+|---|---|---|---|
+| 8007C030 | `junban_init` | regorder | `u32 g` loaded into `$v1` and the `% 3` result copied into `$v0` in the original; IDO swaps them (34 lines); `if (g) {}`, switch on the remainder, `u32`/`s32` result types do not help (T-10310) |
+| 8007C030 | `normal_date_girl_suddenout` | regorder | `lui a2` (0x80000000 in a higher register than IDO's a0/a1) and the store order of the two byte chains; 18 lines (T-10310) |
+| ETC/80146400 | `func_80146400` | regorder | reloaded value in `$a0`/difference in `$v1`; IDO uses `$v1` and two temporaries; string `lui` hoisted into the first branch delay slot in the original (20 lines) (T-10310) |
+| GEKO/8013F360 | `func_80140040` | sched | loop-promoted `D_801470AC`: the original re-loads it unconditionally after the join, IDO reuses the hoisted register on the no-call path (7 lines) (T-10310) |
+| TACO/80154230 | `func_801546FC` | regorder | original keeps `move s0,a0` before the loads through `s0`; IDO copy-propagates `a0` into the loads and folds the move into the `addiu` (9 lines) (T-10310) |
+| TACO/80135720 | `func_801357B0` | regorder | saved-register numbering of the stack arguments (s2 q, s3 arg3, s4 arg6, s5 arg1...) and a dead `move v0,zero` in the first delay slot (29 lines) (T-10310) |
+| RPG_BAT/8014DF60 | `func_8014E300` | sched | as1 hoists `lw D_8015EC2C` above `sw D_8015EC50`; the original keeps the order (4 lines) (T-10310) |
+| SHUGAKU/80135430 | `func_80135480` | regorder | function pointer in `$v0` and index in `$v1` in the original, reversed by IDO (two extra `move`s; the permuter refuses the base) (T-10310) |
+| SHUGAKU/80138A60 | `func_801398E8` | regorder | selector `D_80122CDC` in `$v1`, game-state byte in `$a1`; IDO uses `$v0`/`$t6` (58 lines) (T-10310) |
+| EVENT/801011A0 | `func_801022C0` | regorder | `c` in `$a3` and `i` in `$a0` in the original; IDO `$v1`/`$a0` (32 lines after the frame is right) (T-10310) |
