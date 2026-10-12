@@ -19,8 +19,9 @@ What it adds over a bare `m2c <file>.s`:
   has no symbol of its own) to the signed low half; m2c drops such a %lo (T-3300, fix_lo_literals);
 - uses the IDO little-endian target (`mipsel-ido-c`), the compiler family of the game code;
 - gives m2c real argument counts (T-7030): a callee that the context declares with `()` or not at all
-  gets the prototype `ret f(s32, ...)` with as many parameters as its own asm reads (tools/m2c_args.py;
-  94% of the 313 prototyped main-exe functions agree), because m2c otherwise counts every argument
+  gets a prototype based on its own asm reads, including call delay slots, supplemented by explicit
+  caller assignments (tools/m2c_args.py, T-10100). Zero-word callees get `(void)`.
+  Without this, m2c counts every argument
   register that happens to hold a value at the call, stale ones included (`abs(x, 1, 0, y)`).
   Callees with a prototype in main_api.h or the overlay header keep it. The counts used are listed on
   stderr. `--no-callee-args` turns it off;
@@ -299,22 +300,25 @@ def callee_asm(root, overlay, name):
 
 def callee_prototypes(root, overlay, asm_text, context):
     """(context with prototypes added, {name: argument count}) for the callees of `asm_text` that the
-    context declares with `()` or not at all and whose own asm reads at least one parameter."""
+    context declares with `()` or not at all. Callee reads include jal delay slots;
+    explicit outgoing caller assignments can supplement unused callee words."""
     counts, text = {}, context
+    supplied = m2c_args.caller_arities(asm_text)
     for name in dict.fromkeys(JAL_RE.findall(asm_text)):
         proto = re.search(r"\b%s\s*\(([^()]*(?:\([^()]*\)[^()]*)*)\)\s*;" % re.escape(name), context)
         if proto and proto.group(1).strip():
             continue                      # a real prototype, (void) included: keep it
         body = callee_asm(root, overlay, name)
         n = m2c_args.arity(body) if body else None
-        if not n:
+        if n is None:
             continue
+        n = max(n, supplied.get(name, 0))
         counts[name] = n
         old = re.search(KR_DECL % re.escape(name), text, re.M)
         ret = old.group(1).strip() if old else "s32"
         if old:
             text = text[:old.start()] + text[old.end():]
-        text += "%s %s(%s);\n" % (ret, name, ", ".join(["s32"] * n))
+        text += "%s %s(%s);\n" % (ret, name, ", ".join(["s32"] * n) if n else "void")
     return text, counts
 
 

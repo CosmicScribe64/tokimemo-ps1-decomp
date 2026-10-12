@@ -170,6 +170,42 @@ class KnrBase(unittest.TestCase):
         self.assertIn('int other(', stripped)
         self.assertIn('return 7', stripped)
 
+    def test_setup_alarm_interrupts_python_work_and_restores_handler(self):
+        import signal
+        before = signal.getsignal(signal.SIGALRM)
+        start = time.monotonic()
+        with self.assertRaises(TimeoutError):
+            with permute.setup_limit(0.05):
+                time.sleep(5)
+        self.assertLess(time.monotonic() - start, 1)
+        self.assertEqual(signal.getsignal(signal.SIGALRM), before)
+        self.assertEqual(signal.getitimer(signal.ITIMER_REAL), (0, 0))
+
+    def test_all_deducts_setup_time_from_search_budget(self):
+        with mock.patch.object(permute, 'setup', return_value='out'), \
+                mock.patch.object(permute.time, 'monotonic', side_effect=[0, 0, 4]), \
+                mock.patch.object(permute, 'run', return_value=[]) as run:
+            self.assertEqual(permute.main(['all', 'f', '--time', '10']), 0)
+        self.assertEqual(run.call_args.args[:3], ('out', 6, os.cpu_count() or 1))
+
+    def test_setup_timeout_reports_failure_without_starting_worker(self):
+        with mock.patch.object(permute, 'setup', side_effect=TimeoutError), \
+                mock.patch.object(permute, 'run') as run:
+            self.assertEqual(permute.main(['all', 'f', '--time', '1']), 124)
+            self.assertEqual(permute.main(['setup', 'f', '--time', '1']), 124)
+        run.assert_not_called()
+
+    def test_setup_alarm_kills_helper_children(self):
+        with tempfile.TemporaryDirectory() as root:
+            marker = os.path.join(root, 'child-finished')
+            child = 'import time,pathlib; time.sleep(1); pathlib.Path(%r).touch()' % marker
+            parent = 'import subprocess,sys; subprocess.run([sys.executable,"-c",%r])' % child
+            with self.assertRaises(TimeoutError):
+                with permute.setup_limit(0.3):
+                    permute.sh([sys.executable, '-c', parent])
+            time.sleep(1.1)
+            self.assertFalse(os.path.exists(marker))
+
     def test_build_base_accepts_a_knr_target(self):
         with tempfile.TemporaryDirectory() as root:
             src = touch(root, "a.c", "int D;\nvoid other(void) {\n    D = 2;\n}\n\n"

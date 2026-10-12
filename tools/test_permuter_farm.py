@@ -5,6 +5,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import permute
@@ -35,6 +36,56 @@ class FarmTests(unittest.TestCase):
 
     def rows(self, rows):
         (self.wave / 'ranked.jsonl').write_text('\n'.join(json.dumps(r) for r in rows))
+
+    def worker_args(self, wall_time=None):
+        return SimpleNamespace(farm=str(self.farm), root=str(self.root), wall_time=wall_time,
+                               time=17, max_time=68, patience=1)
+
+    def test_worker_without_wall_time_keeps_budget_and_drains_multiple_claims(self):
+        self.rows([dict(func='first', body='void first(void) { }', edits=1),
+                   dict(func='shared', unit='TT', body='void shared(void) { }', edits=2),
+                   dict(func='shared', unit='DATE', body='void shared(void) { }', edits=3)])
+        farm.collect(self.root, self.scratch, self.farm)
+        with patch.object(farm, 'private_root', return_value=self.root), \
+                patch.object(farm, 'search', side_effect=lambda *a: dict(score=2, baseline_score=2)) as search:
+            farm.worker(self.worker_args(), '0')
+        self.assertEqual(search.call_count, 3)
+        self.assertEqual([call.args[4] for call in search.call_args_list], [17, 17, 17])
+        state = farm.load_json(self.farm / 'state.json', {})
+        self.assertTrue(all(r['status'] == 'hopeless' for r in state.values()))
+
+    def test_worker_waits_for_retryable_claims_held_by_other_workers(self):
+        self.farm.mkdir(parents=True)
+        cand = dict(unit='main', function='first')
+        farm.atomic_json(self.farm / 'queue.json', [cand])
+        farm.atomic_json(self.farm / 'state.json', {'main:first': dict(status='running')})
+        with patch.object(farm, 'private_root', return_value=self.root), \
+                patch.object(farm, 'claim', side_effect=[None, (cand, 17), None]), \
+                patch.object(farm.time, 'sleep') as sleep, \
+                patch.object(farm, 'search', return_value={}) as search, \
+                patch.object(farm, 'finish', side_effect=lambda *a: farm.atomic_json(
+                    self.farm / 'state.json', {'main:first': dict(status='won')})):
+            farm.worker(self.worker_args(), '0')
+        sleep.assert_called_once()
+        search.assert_called_once()
+
+    def test_worker_honors_stop_file(self):
+        self.farm.mkdir(parents=True)
+        (self.farm / 'STOP').touch()
+        with patch.object(farm, 'private_root', return_value=self.root), patch.object(farm, 'claim') as claim:
+            farm.worker(self.worker_args(), '0')
+        claim.assert_not_called()
+
+    def test_worker_with_deadline_caps_claimed_budget(self):
+        self.farm.mkdir(parents=True)
+        cand = dict(unit='main', function='first')
+        with patch.object(farm, 'private_root', return_value=self.root), \
+                patch.object(farm, 'claim', return_value=(cand, 17)), \
+                patch.object(farm, 'search', return_value={}) as search, \
+                patch.object(farm, 'finish'), \
+                patch.object(farm.time, 'monotonic', side_effect=[0, 0, 2, 6]):
+            farm.worker(self.worker_args(wall_time=5), '0')
+        self.assertEqual(search.call_args.args[4], 3)
 
     def test_inline_scoped_ranking_and_duplicate_best(self):
         self.rows([dict(func='shared', unit='TT', body='void shared(void) { }', edits=8),

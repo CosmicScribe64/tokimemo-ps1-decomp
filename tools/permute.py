@@ -26,6 +26,8 @@ setup builds the directory decomp-permuter wants:
 - settings.toml: func_name and compiler_type = "ido".
 The worker adapts upstream type lookup for K&R parameter declarations, default-int
 parameters and implicit C89 callees; compiler input stays unchanged.
+setup is bounded by --time (including Python scanning and build helpers); a setup
+timeout reports the phase and exits 124. all deducts setup time from the search budget.
 run starts permuter.py in its own process group and enforces --time as a wall-clock limit for the
 whole group (SIGINT at the limit, SIGKILL ten seconds later; the limit also covers the Loading
 phase, T-7030). It prints a progress line every 10 s (elapsed time, best score so far) and lists the
@@ -44,6 +46,7 @@ must carry a FAKE comment (CODING_STANDARDS section 7). The permuter cannot fix 
 (register promotion of globals, T-0018; ugen temporary order).
 """
 import argparse
+from contextlib import contextmanager
 import glob
 import json
 import os
@@ -151,14 +154,21 @@ SH_TIMEOUT = 300   # seconds for any single helper command (preprocessor, assemb
 
 
 def sh(cmd, **kw):
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                            start_new_session=True, **kw)
     try:
-        proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-                              timeout=SH_TIMEOUT, **kw)
-    except subprocess.TimeoutExpired:
-        sys.exit("permute.py: %s did not finish in %d s" % (" ".join(cmd[:2]), SH_TIMEOUT))
+        stdout, stderr = proc.communicate(timeout=SH_TIMEOUT)
+    except BaseException as exc:
+        # gcc may have a cc1 child; kill the helper's whole session on the setup
+        # alarm as well as its own timeout, before returning control to main.
+        kill_group(proc, signal.SIGKILL)
+        proc.communicate()
+        if isinstance(exc, subprocess.TimeoutExpired):
+            sys.exit("permute.py: %s did not finish in %d s" % (" ".join(cmd[:2]), SH_TIMEOUT))
+        raise
     if proc.returncode != 0:
-        sys.exit("permute.py: %s failed:\n%s" % (" ".join(cmd[:2]), proc.stderr or proc.stdout))
-    return proc.stdout
+        sys.exit("permute.py: %s failed:\n%s" % (" ".join(cmd[:2]), stderr or stdout))
+    return stdout
 
 
 def install_permuter_compat():
@@ -595,16 +605,55 @@ def report_outputs(outs, directory, root, args, out=print):
 
 def main(argv):
     args = parse_args(argv)
+    if args.time <= 0:
+        print("permute.py: --time must be positive", file=sys.stderr)
+        return 2
+    start = time.monotonic()
+    try:
+        if args.cmd == "run":
+            directory = args.directory
+        else:
+            # An alarm also bounds Python setup work (e.g. a pathological regex),
+            # which subprocess timeouts alone cannot interrupt. Docker is Unix.
+            with setup_limit(args.time):
+                directory = setup(".", args.func, args.src, args.out, args.unit, args.allow_decl_edits)
+    except TimeoutError:
+        print("permute.py: time limit reached during setup (%d s); search not started" % args.time,
+              file=sys.stderr)
+        return 124
     if args.cmd == "setup":
-        print(setup(".", args.func, args.src, args.out, args.unit, args.allow_decl_edits))
+        print(directory)
         return 0
-    directory = args.directory if args.cmd == "run" else setup(".", args.func, args.src, args.out, args.unit,
-                                                               args.allow_decl_edits)
-    outs = run(directory, args.time, args.j, args.args)
+    remaining = args.time - (time.monotonic() - start)
+    if remaining <= 0:
+        print("permute.py: time limit exhausted by setup; search not started", file=sys.stderr)
+        return 124
+    outs = run(directory, remaining, args.j, args.args)
     if not outs:
         print("permute.py: no output better than the base in %d s (%s)" % (args.time, directory))
         return 0
     return 0 if report_outputs(outs, directory, ".", args) or outs[0][0] != 0 else 1
+
+
+@contextmanager
+def setup_limit(seconds):
+    """Interrupt all CLI setup work after seconds; restore the caller's alarm."""
+    def expired(_signum, _frame):
+        raise TimeoutError("permuter setup deadline")
+
+    handler = signal.getsignal(signal.SIGALRM)
+    previous = signal.setitimer(signal.ITIMER_REAL, 0)
+    start = time.monotonic()
+    signal.signal(signal.SIGALRM, expired)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, handler)
+        if previous[0]:
+            signal.setitimer(signal.ITIMER_REAL, max(0.000001, previous[0] - (time.monotonic() - start)),
+                            previous[1])
 
 
 if __name__ == "__main__":

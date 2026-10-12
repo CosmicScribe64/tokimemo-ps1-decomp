@@ -76,6 +76,7 @@ def arity(text):
         return None
     written, used = set(), set()
     frame = 0
+    pending_clobber = set()
     for mn, ops in insns:
         if mn in ("addiu", "addi") and len(ops) == 3 and ops[0] == "$sp" and ops[1] == "$sp":
             try:
@@ -88,7 +89,11 @@ def arity(text):
         for r in reads:
             if r in ARG_REGS and r not in written:
                 used.add(r)
-        written |= writes
+        # The instruction after jal/jalr runs before the callee. Incoming
+        # arguments saved there still belong to this function (T-10100).
+        written |= (writes - CALL_CLOBBER) if mn in ("jal", "jalr") else writes
+        written |= pending_clobber
+        pending_clobber = set(CALL_CLOBBER) if mn in ("jal", "jalr") else set()
         if mn in LOADS and len(ops) > 1:
             m = re.match(r"^(-?(?:0x)?[0-9A-Fa-f]+)\(\$sp\)$", ops[1])
             if m and frame:
@@ -101,6 +106,37 @@ def arity(text):
             n = i + 1
     stack = [int(s[5:]) for s in used if s.startswith("stack")]
     return max([n] + [k + 1 for k in stack])
+
+
+def caller_arities(text):
+    """Explicit outgoing register words, including call delay slots.
+
+    A lone lui is an address base, not a complete argument. An assignment used
+    as an intermediate for another result is not evidence of an outgoing word.
+    Forget assignments after each call so stale values cannot inflate the next.
+    These counts supplement callee reads; they never override real prototypes.
+    """
+    assigned, counts = set(), {}
+    insns = parse(text)
+
+    def assignment(mn, ops):
+        reads, writes = effects(mn, ops)
+        assigned.difference_update(reads - writes)
+        assigned.difference_update(writes & set(ARG_REGS))
+        if mn != "lui":
+            assigned.update(writes & set(ARG_REGS))
+
+    for i, (mn, ops) in enumerate(insns):
+        if mn in ("jal", "jalr"):
+            if i + 1 < len(insns):
+                assignment(*insns[i + 1])
+            if mn == "jal" and ops:
+                n = max([0] + [ARG_REGS.index(r) + 1 for r in assigned])
+                counts[ops[0]] = max(counts.get(ops[0], 0), n)
+            assigned.clear()
+        elif i == 0 or insns[i - 1][0] not in ("jal", "jalr"):
+            assignment(mn, ops)
+    return counts
 
 
 def post_increment_old(text):

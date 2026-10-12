@@ -43,6 +43,30 @@ class Arity(unittest.TestCase):
     def test_no_code(self):
         self.assertIsNone(m2c_args.arity("nothing\n"))
 
+    def test_arguments_saved_in_call_delay_slot(self):
+        for reg, count in (("a1", 2), ("a2", 3)):
+            with self.subTest(reg=reg):
+                self.assertEqual(m2c_args.arity(asm("jal g", "sw $%s, 0x20($sp)" % reg,
+                                                   "jr $ra", "nop")), count)
+        self.assertEqual(m2c_args.arity(asm("jalr $t9", "move $s0, $a2",
+                                           "addu $v0, $a3, $zero")), 3)
+
+    def test_explicit_unused_arguments_and_stale_high_base(self):
+        calls = asm("li $a0, 1", "li $a1, 2", "jal dialogue", "li $a2, 0x5A",
+                    "lui $a2, %hi(data)", "lbu $a0, %lo(data)($a2)",
+                    "jal display", "li $a1, 1")
+        self.assertEqual(m2c_args.caller_arities(calls), {"dialogue": 3, "display": 2})
+
+    def test_delay_slot_lui_overwrites_an_earlier_complete_argument(self):
+        calls = asm("li $a0, 1", "li $a1, 2", "li $a2, 3", "jal display", "lui $a2, %hi(data)")
+        self.assertEqual(m2c_args.caller_arities(calls), {"display": 2})
+
+    def test_caller_temporaries_used_for_indexing_are_not_arguments(self):
+        calls = asm("lbu $a3, 0($t0)", "sll $t2, $a3, 1", "lbu $a2, 1($t0)",
+                    "addu $t4, $a2, $s0", "addu $a1, $a2, $v0", "addiu $a1, $a1, -1",
+                    "jal helper", "move $a0, $zero")
+        self.assertEqual(m2c_args.caller_arities(calls), {"helper": 2})
+
 
 LOOP = asm("lui $v1, %hi(D_800E738D)", "lbu $v1, %lo(D_800E738D)($v1)", "addiu $sp, $sp, -0x28",
            "sltiu $v0, $v1, 0x41", "bnez $v0, .L1", "nop", "lui $at, %hi(D_800E738D)", "addiu $t6, $v1, 0x1",
@@ -110,11 +134,19 @@ class CalleePrototypes(unittest.TestCase):
         out, counts = m2c.callee_prototypes(self.root, "AAA", caller, "")
         self.assertEqual(counts, {"func_80132100": 4, "abs": 1})
 
-    def test_callee_without_parameters_is_left_to_m2c(self):
+    def test_callee_without_parameters_gets_void(self):
         self.put("asm/nonmatchings/main/80041000/func_80041100.s", asm("jr $ra", "nop", name="func_80041100"))
         out, counts = m2c.callee_prototypes(self.root, None, asm("jal func_80041100", "nop"), "void func_80041100();\n")
-        self.assertEqual(counts, {})
-        self.assertIn("func_80041100();", out)
+        self.assertEqual(counts, {"func_80041100": 0})
+        self.assertIn("func_80041100(void);", out)
+
+    def test_explicit_third_argument_supplements_callee_reads(self):
+        self.put("asm/nonmatchings/main/80041000/func_80041100.s",
+                 asm("addu $v0, $a0, $a1", "jr $ra", "nop"))
+        caller = asm("li $a0, 1", "li $a1, 2", "jal func_80041100", "li $a2, 90")
+        out, counts = m2c.callee_prototypes(self.root, None, caller, "void func_80041100();\n")
+        self.assertEqual(counts, {"func_80041100": 3})
+        self.assertIn("void func_80041100(s32, s32, s32);", out)
 
 
 if __name__ == "__main__":

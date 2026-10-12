@@ -3582,3 +3582,42 @@ Two scratch-only m2c correctness findings: RPG_BAT's `func_8014B738` calls omit 
 Further T-9960 source evidence: BUNKAKEN `func_80143DD0` needs an explicit signed-halfword cast on the already shifted character nibble in its text-id addition. It changes temporary numbering without adding target instructions. Its later dynamic `CharFlags.b2` test compares explicitly with 1; using truthiness omits two instructions. Together with direct selected-character accesses this reduces the draft to eight changed lines at a final masked switch. Narrowing the masked selector gets the subsequent temporary sequence correct, but the mask still lands in t5 instead of t4; a bounded permuter is running. The original nine-match build checkpoint passes all 27 checksums.
 
 MASTER `func_80139CC8` has a shared-high-relocation swap that needs its data owned by the C object. `tools/data_island.py --dry-run MASTER/80139000` identifies 8013C760–80162000 and 16 pieces. Applying the tool would edit YAML, forbidden by the batch's isolation rule, so no data island was applied; this is an integration follow-up rather than an unexplained register-allocation claim. The extra-function survey stays inside the same seventeen owned C files.
+
+## Wave 9/10 tool fixes (T-10100)
+
+[[tickets/T-10100-wave-9-10-tool-fixes]] fixes tooling only; no C function gains.
+
+- `sync_protos.py --add-global` has CLI coverage for D_80122E98/s32, unsized
+  u8 arrays, sized s16 arrays, const pointers, renamed symbols and both main
+  address boundaries. The report of every name being rejected does not reproduce
+  on this checkout: Model.addr returns 0x80122E98 and in_main_range returns True.
+  Registration now reads only headers/config, rejects malformed names/types, and
+  avoids the unrelated whole-source scan. No production header was changed.
+- `m2c_args.arity` applies jal/jalr clobbers after their delay slot. This repairs
+  GEKO func_80132D04's incoming a1 spill and RPG_BAT func_8014B738's a2 save.
+  Caller assignments, including delay slots, supplement callee reads for ignored
+  outgoing words such as dialogue's literal third argument. A lone lui base and
+  stale assignments from previous calls and consumed indexing intermediates do
+  not add parameters. Zero-word callees
+  receive `(void)`; explicit header prototypes remain authoritative.
+- `permute.py --time` bounds CLI setup (Python work and helper process groups).
+  Setup timeout names the phase and exits 124; `all` deducts setup from search
+  time. `setup` alone uses the same limit (default 60 s). Existing bounded K&R
+  scanning remains. Worker shutdown may take the documented ten-second grace;
+  final real-build candidate verification remains a separate operation.
+- The farm's no-wall-time fix from main now has a worker regression test proving
+  claimed budgets survive and multiple candidates are drained. An unavailable
+  claim while another worker holds retryable work causes a wait, not exit.
+  `farm/STOP` requests a graceful stop between searches. Worker log messages name
+  each claim, drained queue and stop request. Historical worker-0.log contains
+  `Exiting.` followed by JSON results and another Loading phase; that message is
+  upstream decomp-permuter's single-search shutdown, not the farm's shutdown.
+- `tools/header_merge.py [--root REPO] [--merge HEAD] [--check]` implements the
+  orchestrator's ours-plus-other-insert/replace-block rule for .h paths changed
+  on both sides of a two-parent merge. Deletions are ignored. New conditional
+  and braced declaration blocks are expanded whole when difflib shares closing
+  lines; contiguous whole blocks already present are skipped. Append before an
+  outer guard's trailing endif, preserving trailing comments. Git reads fail
+  loudly, paths with spaces work, results are computed before writes, and --check
+  is read-only (exit 1 for needed repairs). Other-side deletions preserve ours,
+  including restoring a missing merged file, as the reference rule requires.

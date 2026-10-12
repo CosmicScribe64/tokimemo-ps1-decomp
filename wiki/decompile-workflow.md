@@ -333,3 +333,14 @@ unit SHA-1 verification with source restoration asserted. See
 Queue/state/search paths use the container `/scratch` prefix; on the host replace
 it with `$SCRATCHPAD`. Every collected score-zero output is verified, including
 outputs encountered after an earlier verified zero for the same function.
+
+T-10100 tooling: `permute.py all ... --time N` shares N seconds between setup
+and search; `setup` alone is also bounded (default 60 s, exit 124 on timeout).
+The farm continues claiming without `--wall-time`; create its `STOP` file for a
+stop after the current search, and remove that file to resume. Upstream's
+`Exiting.` log line closes one search; worker claim/drain messages identify the
+farm lifecycle. For committed two-parent header merges, run
+`tools/docker.sh python3 tools/header_merge.py --check` to preview repairs, then
+omit `--check` to rebuild both-changed headers as ours plus whole other-side
+additions. Review the resulting declarations and rerun header/build guards.
+See [[matching-notes]] and [[tickets/T-10100-wave-9-10-tool-fixes]].

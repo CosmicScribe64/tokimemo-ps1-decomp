@@ -8309,3 +8309,107 @@ All 27 unit checksums pass at the nine-match checkpoint. BUNKAKEN func_80143DD0 
 ## [2026-10-11] lint | T-9960 appended type guards
 
 The supplemental scratch survey includes overlay headers twice and exposed missing repeat-include guards around this batch's appended BUNKAKEN/BUNKASAI types. Added guards around only the new declarations. Existing single-include builds had passed. The checkpoint printed 26 rebuilt unit checks; the remaining unit's check was already current. Final validation will explicitly recompute all 27 hashes.
+
+## [2026-10-11] ticket | Claim Wave 9/10 tool fixes
+
+Created [[tickets/T-10100-wave-9-10-tool-fixes]] and synchronized [[kanban]] and
+[[index]]. Read tooling11 brief, standards and relevant workflow/evidence pages.
+Scope is tools, synthetic tests and wiki; leave changes uncommitted.
+
+## [2026-10-11] decision | Wave-9 argument and worker failure evidence
+
+[[tickets/T-10100-wave-9-10-tool-fixes]]: added synthetic delay-slot and explicit
+caller argument cases from [[matching-notes]]. The current Model recognizes
+D_80122E98 correctly; registration now avoids the unnecessary source scan and has
+CLI coverage for scalar, pointer, sized and unsized array types. Existing main
+already contains the int(infinity) worker fix. The historical worker-0.log shows
+upstream "Exiting." followed by a result and another Loading/search; it is a
+single-search shutdown, not proof of worker exit. Added claim/drain/stop messages
+and waiting while other workers hold retryable work. Added setup deadlines and
+whole-block tools/header_merge.py with disposable-git tests.
+
+## [2026-10-11] build | Targeted tooling regressions and review follow-ups
+
+[[tickets/T-10100-wave-9-10-tool-fixes]]: targeted Docker runs passed 18 m2c
+argument tests, 69 prototype tests, 72 combined permuter/farm tests and eight
+initial header-merge tests. Inline review found setup helper children needed
+process-group cleanup; added it and a child-marker regression. Added exact-line
+block duplicate checks and multiline-comment/include-guard tests. Full tool
+suite and clean 27-unit build are running. Updated [[matching-notes]] and
+[[decompile-workflow]] with CLI behavior and worker-log interpretation.
+
+## [2026-10-11] query | Real wave-9 argument checks catch caller temporaries
+
+The generated GEKO func_80132D04 assembly now yields two parameter words, and
+RPG_BAT func_8014B738 yields three; four dialogue callers retain their explicit
+third word. A real GEKO func_80133024 probe also exposed a false four-word caller
+count: a2/a3 are indexing temporaries consumed before the call. Tightened the
+caller supplement to discard assignments consumed for another result, while
+retaining self-updates, and added a synthetic GEKO-shaped regression. See
+[[tickets/T-10100-wave-9-10-tool-fixes]] and [[matching-notes]].
+
+## [2026-10-11] ticket | Wave 9/10 tool fixes ready for final review
+
+Moved [[tickets/T-10100-wave-9-10-tool-fixes]] to In Review and synchronized
+[[kanban]] and [[index]]. Clean configure/ninja passed 27/27 SHA1 checks and both
+header/global sentinels. Full Docker suite passed 644 tests (two existing skips);
+final relevant reruns passed 41 m2c, 73 permuter/farm, ten header merge and 69
+prototype tests. Real GEKO/RPG_BAT argument probes now all produce the expected
+counts. Final branch/progress checks are running. Functions gained: zero.
+
+## [2026-10-11] build | Branch guards and progress pass; isolate git test trust
+
+[[tickets/T-10100-wave-9-10-tool-fixes]]: --check-branch passes with zero new
+and 17 known disagreements. Progress remains 4,982/6,958 functions and
+836,940/2,279,368 bytes (36.7%), meeting the brief's floor with zero gains.
+Final header-guard variants exposed an intermittent Docker Desktop ownership
+remap in the disposable-git test. Isolated safe.directory to that test-created
+repo via temporary environment config; no global/host git config was changed.
+Added valued guards and !defined variants to the existing guard regression.
+
+## [2026-10-11] build | Reload corrected disposable-git regression
+
+The 649-test rerun loaded test_header_merge.py before its safe.directory fixture
+fix and finished with that single Docker ownership error (two existing skips).
+The corrected ten-test module passes independently. Restarted the full suite
+with current files; no implementation failure or build mismatch was found.
+See [[tickets/T-10100-wave-9-10-tool-fixes]].
+
+## [2026-10-11] decision | Preserve ours when the other side deletes a header
+
+Final reference-rule review of tools/header_merge.py found deletion filtering was
+an unnecessary departure: a header changed by ours and deleted by theirs must
+still become ours plus any other-side additions (none for a deletion). Removed
+the filter, allow restoring a missing path, and added a disposable-git deletion
+regression. Corrected [[matching-notes]]; [[tickets/T-10100-wave-9-10-tool-fixes]]
+remains In Review while verification finishes.
+
+## [2026-10-11] decision | Inline tool review passes
+
+Reviewed the uncommitted T-10100 diff against HEAD, CODING_STANDARDS.md and the
+five requested fixes. Resolved all findings: setup process-group cleanup, caller
+intermediate disqualification, whole/exact block duplicate detection, valued and
+commented include guards, and reference-compatible deletion handling. Both-side
+deletions retain an absent file. Updated review and guard/progress evidence in
+[[tickets/T-10100-wave-9-10-tool-fixes]]. No source/header edits, build passes,
+function gains, host dependencies, or commits. Final tests remain running.
+
+## [2026-10-11] ticket | Complete Wave 9/10 tool fixes
+
+[[tickets/T-10100-wave-9-10-tool-fixes]] is Done after inline standards/spec
+review with all findings resolved. Final full Docker suite: 649 tests pass,
+two existing skips; final header suite: 11 pass; m2c: 41; permuter/farm: 73;
+prototype: 69. Clean configure/ninja: 27/27 SHA1 OK, headers.ok/globals.ok present.
+Branch check: zero new and 17 known disagreements. Progress remains 4982/6958,
+836940/2279368 bytes, zero gains. Synchronized [[kanban]] and [[index]]. Edits
+remain uncommitted and confined to tools/tests/wiki. The reported universal
+add-global rejection does not reproduce on this HEAD; six CLI name/type cases
+pass. Earlier review's "new build passes" means toolchain emulation passes;
+none were introduced.
+
+## [2026-10-11] lint | Final T-10100 handoff consistency
+
+Focused Docker lint confirms [[tickets/T-10100-wave-9-10-tool-fixes]] status
+matches its sole Done card in [[kanban]], the ticket is indexed, and both build
+sentinels exist. git diff --check is clean; modified/untracked paths are only
+tools, their tests and wiki pages. No files staged or committed.

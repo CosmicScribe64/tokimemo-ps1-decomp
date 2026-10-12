@@ -247,6 +247,28 @@ class SkippedAndAddGlobalTest(Repo):
         self.assertIn("not a main-exe global", sp.add_global(inc, src, "D_80200000", "u8"))
         self.assertIn("not a main-exe global", sp.add_global(inc, src, "func_80042808", "u8"))
 
+    def test_add_global_cli_names_types_and_boundaries(self):
+        (self.root / "config" / "symbol_addrs.txt").write_text("renamed_data = 0x80122EA0;\n")
+        cases = [("D_80122E98", "s32", "s32 D_80122E98"),
+                 ("D_80122E99", "u8[]", "u8 D_80122E99[]"),
+                 ("D_80122E9A", "s16[4]", "s16 D_80122E9A[4]"),
+                 ("renamed_data", "const u8 *", "const u8 *renamed_data"),
+                 ("D_80041000", "u32", "u32 D_80041000"),
+                 ("D_8012B537", "u8[0x10]", "u8 D_8012B537[0x10]")]
+        for name, typ, decl in cases:
+            with self.subTest(name=name, typ=typ):
+                self.assertEqual(sp.main(["--inc", str(self.inc), "--src", str(self.root / "src"),
+                                          "--add-global", name, typ]), 0)
+                self.assertIn("extern " + decl + ";", (self.inc / "main_api.h").read_text())
+        for name in ("D_80040FFF", "D_8012B538", "D_80132000", "unknown", "D_80122E9B;"):
+            self.assertIn("not a main-exe global", sp.add_global(str(self.inc), None, name, "u8[]"))
+
+    def test_add_global_bad_type_does_not_write(self):
+        before = (self.inc / "main_api.h").read_text()
+        for typ in ("", "u8; void evil()", "u8[", "u8()"):
+            self.assertIn("cannot read", sp.add_global(str(self.inc), None, "D_80122E98", typ))
+        self.assertEqual((self.inc / "main_api.h").read_text(), before)
+
 
 class WriteFixTest(Repo):
     def model(self):

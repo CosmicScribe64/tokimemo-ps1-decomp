@@ -1453,15 +1453,19 @@ def add_implicit_overrides(model, changes, log=print):
 def add_global(inc, src, name, typ, log=print):
     """Add `extern TYPE NAME;` to main_api.h (T-9220): the supported way to declare a new main-exe
     global, which --write/--fix cannot find when only a .c file declares it. TYPE is a base type
-    with optional pointer stars and array suffix (`u8`, `s16 *`, `s16[4]`, `u8[0x10]`). Returns
+    with optional pointer stars and array suffix (`u8`, `s16 *`, `s16[4]`, `u8[]`). Returns
     an error string, or None."""
-    model = Model(inc, src)
-    if not model.in_main_range(name) or is_func_name(name):
+    # Registration only needs the headers and symbol map. Scanning every source
+    # adds no evidence for a new declaration and can take minutes.
+    model = Model(inc)
+    if not re.fullmatch(r"[A-Za-z_]\w*", name) or not model.in_main_range(name) or is_func_name(name):
         return "%s is not a main-exe global (address 0x%X-0x%X, D_XXXXXXXX or a name of config/symbol_addrs*.txt)" % (
             name, MAIN_LO, MAIN_HI - 1)
     if name in model.api:
         return "%s is already declared in main_api.h as %s" % (name, model.api[name][0])
     m = re.match(r"^(.*?)\s*((?:\[[^\]]*\])*)\s*$", typ.strip())
+    if not m or not re.fullmatch(r"[A-Za-z_]\w*(?:\s+[A-Za-z_]\w*)*(?:\s*\*)*", m.group(1).strip()):
+        return "cannot read '%s' as a type of %s" % (typ, name)
     raw = re.sub(r"\s+", " ", "%s %s%s" % (m.group(1), name, m.group(2))).replace("* ", "*")
     got = list(ch.declarations_text(raw + ";"))
     if len(got) != 1 or got[0][0] != name:

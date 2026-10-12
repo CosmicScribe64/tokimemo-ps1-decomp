@@ -4,6 +4,8 @@
 collect scans wave scratch directories, NON_MATCHING definitions and T-0018 rows.
 run uses private build roots, never the live src/ tree. tools/permuter_farm.sh
 starts one persistent Docker container per job. See wiki/decompile-workflow.md.
+Workers claim until no retryable work remains; a farm/STOP file requests a
+graceful stop between searches. Upstream "Exiting." closes one search only.
 """
 import argparse
 from collections import Counter
@@ -467,9 +469,9 @@ def worker(args, number):
     farm.mkdir(parents=True, exist_ok=True)
     # Held for the whole worker lifetime: OS releases the lock on crashes, so the
     # next run can recover claims immediately without stealing work from live jobs.
-    with (farm / ('owner-' + owner + '.lock')).open('a') as owner_lock:
+    with (farm / ('owner-' + owner + '.lock')).open('a') as owner_lock, \
+            (farm / ('worker-' + str(number) + '.lock')).open('a') as slot_lock:
         fcntl.flock(owner_lock, fcntl.LOCK_EX)
-        slot_lock = (farm / ('worker-' + str(number) + '.lock')).open('a')
         try:
             fcntl.flock(slot_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
@@ -477,12 +479,28 @@ def worker(args, number):
         private = private_root(root, farm, str(number))
         deadline = time.monotonic() + args.wall_time if args.wall_time else float('inf')
         while time.monotonic() < deadline:
+            if (farm / 'STOP').exists():
+                print('farm worker %s: STOP requested' % number, flush=True)
+                break
             item = claim(farm, owner, args.time, args.max_time, args.patience)
             if item is None:
-                break
+                # Other workers can finish with an improved, retryable candidate.
+                # No claim right now is not the same as a drained queue.
+                with state_lock(farm):
+                    state = load_json(farm / 'state.json', {})
+                    queue = load_json(farm / 'queue.json', [])
+                    active = any(state.get(c['unit'] + ':' + c['function'], {}).get('status')
+                                 not in ('won', 'hopeless') for c in queue)
+                if not active:
+                    print('farm worker %s: queue drained' % number, flush=True)
+                    break
+                time.sleep(min(1, max(0, deadline - time.monotonic())))
+                continue
             cand, seconds = item
             if deadline != float('inf'):  # no --wall-time: keep the claimed budget
                 seconds = max(1, min(seconds, int(deadline - time.monotonic())))
+            print('farm worker %s: claiming %s:%s (%s s)' %
+                  (number, cand['unit'], cand['function'], seconds), flush=True)
             result = search(root, private, farm, cand, seconds, str(number))
             result['actual_budget'] = seconds
             finish(farm, cand, result, args.time, args.max_time, args.patience)
