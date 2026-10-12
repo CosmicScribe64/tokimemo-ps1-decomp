@@ -109,13 +109,54 @@ class FindAsm(unittest.TestCase):
         b = touch(self.root, "asm/ovl/B/nonmatchings/B/func_80132100.s")
         seen = {}
         with mock.patch.object(permute, "build_base", side_effect=lambda r, src, f: seen.update(src=src) or "x"), \
-                mock.patch.object(permute, "build_target", side_effect=lambda r, asm, o: seen.update(asm=asm)):
+                mock.patch.object(permute, "build_target", side_effect=lambda r, asm, o: seen.update(asm=asm)), \
+                mock.patch.object(permute, "validate_base") as validate:
             permute.setup(self.root, "B:func_80132100", out=os.path.join(self.root, "out"))
+            validate.assert_called_once()
         self.assertEqual(seen["asm"], b)
         self.assertTrue(seen["src"].endswith("B.c"))
         with self.assertRaises(SystemExit) as cm:
             permute.setup(self.root, "func_80132100", out=os.path.join(self.root, "out2"))
         self.assertIn("held by 2", str(cm.exception))
+
+
+class BaseValidation(unittest.TestCase):
+    def directory(self, source):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        root = tmp.name
+        touch(root, 'base.c', source)
+        touch(root, 'settings.toml', permute.settings_toml('f'))
+        script = touch(root, 'compile.sh', permute.compile_script('.'))
+        os.chmod(script, 0o755)
+        target = touch(root, 'target.s', 'glabel f\n jr $ra\n addu $v0,$a0,$a1\n')
+        permute.build_target('.', target, os.path.join(root, 'target.o'))
+        return root
+
+    def test_unbuildable_base_refused_before_search(self):
+        root = self.directory('int f(void) { syntax error; }\n')
+        with self.assertRaisesRegex(RuntimeError, 'base.c does not build'):
+            permute.validate_base(root)
+        with mock.patch.object(permute.subprocess, 'Popen') as worker, \
+                mock.patch.object(permute, 'validate_base', side_effect=RuntimeError('invalid base')):
+            self.assertEqual(permute.main(['run', root]), 1)
+            worker.assert_not_called()
+
+    def test_wrong_instruction_shape_refused(self):
+        root = self.directory('int f(int a, int b) { return a * b; }\n')
+        with self.assertRaisesRegex(RuntimeError, 'instruction shape differs from target'):
+            permute.validate_base(root)
+
+    def test_compatible_base_builds_and_is_accepted(self):
+        root = self.directory('int f(int a, int b) { return a + b; }\n')
+        permute.validate_base(root)
+        self.assertEqual(os.listdir(root).count('base.o'), 0)
+
+    def test_worker_failure_is_not_success(self):
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaisesRegex(RuntimeError, 'worker failed'):
+                permute.run(root, 10, 1, cmd=[sys.executable, '-c', 'raise SystemExit(3)'],
+                            progress=lambda _: None)
 
 
 class Args(unittest.TestCase):

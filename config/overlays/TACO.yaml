@@ -41,6 +41,7 @@ options:
   symbol_addrs_path:
     - config/symbol_addrs.txt
     - config/symbols_TACO.txt
+    - config/labels/TACO.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/TACO_undefined_funcs_auto.txt
@@ -76,6 +77,7 @@ segments:
       - [0x9990, c, TACO/8013B990]
       - [0xB1E0, c, TACO/8013D1E0]
       - [0xBB80, c, TACO/8013DB80]
+      - [0xD250, c, TACO/8013F250]
       - [0xEDF0, c, TACO/80140DF0]
       - [0xFDE0, c, TACO/80141DE0]
       - [0x10820, c, TACO/80142820]
@@ -112,7 +114,7 @@ segments:
       - [0x2B9B0, .rodata, TACO/8013B170]
       - [0x2B9E0, .rodata, TACO/8013B990]
       - [0x2BA40, .rodata, TACO/8013DB80]
-      - [0x2BA90, rodata, TACO_rodata_8015DA90]
+      - [0x2BA90, .rodata, TACO/8013F250]
       - [0x2BAA0, .rodata, TACO/80142820]
       - [0x2BAE0, .rodata, TACO/801430B0]
       - [0x2BC00, .rodata, TACO/801447D0]

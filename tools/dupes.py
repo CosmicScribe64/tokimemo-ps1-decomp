@@ -43,6 +43,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sync_protos import is_main_symbol  # noqa: E402
+import srcscan  # noqa: E402
 
 # asm/[ovl/<NAME>/](non)matchings/[main/]<c subsegment name>/<func>.s; the name is <addr>, <NAME> or
 # <NAME>/<addr> (per-object overlay files, T-0500)
@@ -60,7 +61,7 @@ class Func:
     def __init__(self, name, unit, matched, path, key, relocs, bad):
         self.name = name
         self.unit = unit          # 'main' or overlay name
-        self.matched = matched    # asm lives under matchings/
+        self.matched = matched    # C definition with no INCLUDE_ASM fallback
         self.path = path
         self.key = key
         self.relocs = relocs      # [(kind, symbol, addend)]
@@ -155,7 +156,13 @@ def parse_asm(text, imm=None, imm_out=None, info=None):
 
 
 def load_funcs(root, units=None, near=False):
-    funcs = []
+    """Fingerprint original asm, taking current matched state from its owning C source.
+
+    Splat leaves stale files in both folders after a conversion or reversion.
+    Read each C file once and retain only one asm copy per source/function.
+    A NON_MATCHING definition with an assembly fallback is still unmatched.
+    """
+    funcs, states, copies = [], {}, {}
     for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True)):
         rel = os.path.relpath(p, root).replace(os.sep, '/')
         m = ASM_RE.match(rel)
@@ -164,19 +171,34 @@ def load_funcs(root, units=None, near=False):
         unit = m.group(1) or 'main'
         if units and unit not in units:
             continue
-        if not os.path.exists(os.path.join(root, src_for_dir(unit, m.group(3)))):
+        source = os.path.join(root, src_for_dir(unit, m.group(3)))
+        if not os.path.exists(source):
             continue          # a folder of an old source layout (asm/ is not cleaned by splat)
+        if source not in states:
+            from pathlib import Path
+            path = Path(source)
+            states[source] = (srcscan.defined_functions(path),
+                              {e.name for e in srcscan.include_asm_entries(path)})
+        defined, included = states[source]
+        name = m.group(4)
+        if name not in defined and name not in included:
+            continue          # stale function from an old split of this source
+        matched = name in defined and name not in included
+        identity = (source, name)
+        preferred = (m.group(2) is None) == matched
+        if identity in copies and (copies[identity][0] or not preferred):
+            continue
         with open(p) as f:
             text = f.read()
         info = {}
         key, relocs, bad = parse_asm(text, info=info)
-        fn = Func(m.group(4), unit, m.group(2) is None, rel, key, relocs, bad)
+        fn = Func(name, unit, matched, rel, key, relocs, bad)
         fn.n = info.get('n', 0)
         if near:      # T-3320: key becomes the immediate-masked fingerprint, exact keeps the old one
             fn.key = parse_asm(text, 'alu', fn.imm_words)[0]
             fn.wide = parse_asm(text, 'wide')[0]
-        funcs.append(fn)
-    return funcs
+        copies[identity] = (preferred, fn)
+    return [fn for _preferred, fn in copies.values()]
 
 
 def group_funcs(funcs):

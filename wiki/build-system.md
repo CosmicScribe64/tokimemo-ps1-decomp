@@ -112,3 +112,30 @@ object 8013F250 80140DF0 8015DA90 8015DAA0 yes choice/1 owner
 ```
 
 Remove `orphan 8015DA90 8015DAA0 second_chunk_of_8013DB80`, run `split_objects.py TACO/8013DB80`, configure and build `build/ovl/TACO.ok`. Trial: four planned writes, no added prototypes, TACO sha1 OK, and both string blocks handed to `func_8013F250.s` in the new island. This proves placement for the existing asm and matched C in the file; the pending C draft still needs its own checksum verification after conversion. The exact historical boundary remains a hypothesis (`choice/1`), not a claim about the original source. Queue's `O` flag now covers orphan strings as well as tables, even when their C file already has another island.
+
+## Owning orphan chunks with word-aligned text splits (T-10200)
+
+`tools/orphan_rodata.py UNIT` previews ownership changes; `--apply` writes the
+object map, C files and splat YAML through `split_objects.py`. Run it after a
+build. It uses actual symbol references, preserves each original rodata chunk,
+and chooses the latest function boundary between the previous chunk's last
+user and the orphan's first user. This is a layout hypothesis. All users must
+belong to one proposed object, and each island must pass the existing ordering
+checks. Shared users, interleaved references and unsupported layouts remain
+orphans with a diagnostic. Strings become ordinary C literals when their user
+is converted; unreferenced early pieces use the existing INCLUDE_RODATA path.
+
+The old detector required 16-aligned text boundaries. BUNKASAI needs a split at
+80154018, with a second at 80158EB0. Each corresponding rodata chunk is still
+16-aligned. Merging the table-only chunks loses their internal zero padding;
+the trial shortened rodata by 16 bytes and failed SHA1. Keep the chunks separate.
+
+`configure.py` runs `tools/object_layout.py SOURCE OBJECT` after every C compile.
+If compiler text rounding to 16 exceeds the configured source span, the step
+removes only that surplus: all bytes must be zero and no non-section symbol or
+relocation may occupy them. It changes no instructions or relocation values.
+Other size discrepancies remain visible to funcdiff and the unit checksum.
+This permits word-aligned source boundaries without changing `cc.py` or its
+compiler flags. Synthetic coverage lives in `tools/test_object_layout.py` and
+`tools/test_orphan_rodata.py`. Rebuild the unit and verify SHA1 after applying:
+planning alone does not prove code, table contents, padding or string placement.

@@ -45,7 +45,16 @@ write. If it needs a dummy variable, forced cast or similar to hit the bytes it 
 must carry a FAKE comment (CODING_STANDARDS section 7). The permuter cannot fix compiler gaps
 (register promotion of globals, T-0018; ugen temporary order).
 """
+import os
+import sys
+# tools/queue.py would shadow the stdlib `queue` the permuter imports (`from queue import
+# Empty`): drop the script directory from the front of sys.path and load the stdlib module
+# first; tools/ is appended again below.
+if sys.path and os.path.abspath(sys.path[0]) == os.path.dirname(os.path.abspath(__file__)):
+    sys.path.pop(0)
+import queue  # noqa: F401,E402  (stdlib)
 import argparse
+from collections import Counter
 from contextlib import contextmanager
 import glob
 import json
@@ -58,10 +67,11 @@ import sys
 import tempfile
 import time
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # after stdlib: tools/queue.py must not shadow queue
 import cc  # noqa: E402  (AS flags and pad_text: one definition of the pipeline)
 import funcloc  # noqa: E402
 import srcscan  # noqa: E402
+import funcdiff  # noqa: E402
 
 PERMUTER = os.environ.get("PERMUTER_DIR", "/opt/decomp-permuter")
 OUT_ROOT = "build/permute"
@@ -278,6 +288,59 @@ def scratch_free(src, root):
     return rel.startswith("src/")
 
 
+def instruction_shape(disassembly, func):
+    """Mnemonic counts of one function, ignoring alignment nops and instruction order.
+
+    Register allocation, constants, relocations and scheduling are search inputs.
+    A different instruction inventory indicates an unsuitable seed/target pair.
+    """
+    lines = funcdiff.split_functions(disassembly).get(func)
+    if lines is None:
+        raise RuntimeError("invalid base: object has no function %s" % func)
+    mnemonics = []
+    for line in lines:
+        m = re.match(r"\s*[0-9a-f]+:\s+[0-9a-f]{8}\s+(\w+)", line)
+        if m:
+            mnemonics.append(m.group(1))
+    while mnemonics and mnemonics[-1] == "sll":
+        # Only sll zero,zero,0 is padding; retain real shifts.
+        last = next(l for l in reversed(lines) if re.match(r"\s*[0-9a-f]+:\s+[0-9a-f]{8}", l))
+        if not re.search(r"\bsll\s+zero,zero,0x0\s*$", last):
+            break
+        mnemonics.pop()
+        lines = lines[:lines.index(last)]
+    if not mnemonics:
+        raise RuntimeError("invalid base: %s has no instructions" % func)
+    return Counter(mnemonics)
+
+
+def validate_base(directory):
+    """Compile the exact search seed and refuse missing or incompatible instruction shapes."""
+    directory = os.path.abspath(directory)
+    try:
+        with open(os.path.join(directory, "settings.toml")) as f:
+            import toml
+            func = toml.loads(f.read())["func_name"]
+        with tempfile.TemporaryDirectory(prefix="preflight-", dir=directory) as tmp:
+            obj = os.path.join(tmp, "base.o")
+            try:
+                sh([os.path.join(directory, "compile.sh"), os.path.join(directory, "base.c"), "-o", obj],
+                   cwd=directory)
+            except SystemExit as exc:
+                raise RuntimeError("invalid base: base.c does not build; search not started\n%s" % exc) from exc
+            shapes = []
+            for path in (obj, os.path.join(directory, "target.o")):
+                dump = sh(["mips-linux-gnu-objdump", "-d", "-z", "-M", "no-aliases", path])
+                shapes.append(instruction_shape(dump, func))
+            if shapes[0] != shapes[1]:
+                raise RuntimeError("invalid base: instruction shape differs from target (%d vs %d instructions; "
+                                   "base-only %s; target-only %s); search not started" %
+                                   (sum(shapes[0].values()), sum(shapes[1].values()),
+                                    dict(shapes[0] - shapes[1]), dict(shapes[1] - shapes[0])))
+    except (OSError, KeyError, ValueError) as exc:
+        raise RuntimeError("invalid base: cannot validate search directory: %s" % exc) from exc
+
+
 def setup(root, func, src=None, out=None, unit=None, allow_decl_edits=False):
     func, unit = funcloc.split_scope(func, unit)
     try:
@@ -304,6 +367,7 @@ def setup(root, func, src=None, out=None, unit=None, allow_decl_edits=False):
     with open(os.path.join(out, "meta.json"), "w") as f:     # what `run DIR` needs to verify a candidate
         json.dump({"func": func, "unit": unit, "src": os.path.relpath(src, root) if scratch_free(src, root) else None,
                    "scratch": not scratch_free(src, root)}, f)
+    validate_base(out)
     return out
 
 
@@ -322,6 +386,13 @@ def run(directory, seconds, jobs, extra=(), progress=print, interval=10, clock=t
     seconds later SIGKILL (its worker processes ignore a SIGINT that arrives while they compile; a
     plain proc.kill() left them running and the call never returned, T-7030). Every `interval`
     seconds `progress` gets a line with the elapsed time and the best score so far."""
+    if cmd is None:
+        preflight_start = time.monotonic()
+        with setup_limit(seconds):
+            validate_base(directory)
+        seconds -= time.monotonic() - preflight_start
+        if seconds <= 0:
+            raise TimeoutError("time limit reached validating base; search not started")
     cmd = cmd or [sys.executable, os.path.abspath(__file__), "_worker", directory, "-j", str(jobs),
                   "--stop-on-zero", "--best-only", "--quiet", "--stack-diffs"] + list(extra)
     start = clock()
@@ -350,6 +421,8 @@ def run(directory, seconds, jobs, extra=(), progress=print, interval=10, clock=t
             proc.wait(timeout=10)
         except subprocess.TimeoutExpired:
             pass
+    if proc.returncode not in (0, -signal.SIGINT, -signal.SIGKILL):
+        raise RuntimeError("permuter worker failed (exit %s); search did not complete" % proc.returncode)
     return list_outputs(directory)
 
 
@@ -621,6 +694,9 @@ def main(argv):
         print("permute.py: time limit reached during setup (%d s); search not started" % args.time,
               file=sys.stderr)
         return 124
+    except RuntimeError as exc:
+        print("permute.py: %s" % exc, file=sys.stderr)
+        return 1
     if args.cmd == "setup":
         print(directory)
         return 0
@@ -628,7 +704,11 @@ def main(argv):
     if remaining <= 0:
         print("permute.py: time limit exhausted by setup; search not started", file=sys.stderr)
         return 124
-    outs = run(directory, remaining, args.j, args.args)
+    try:
+        outs = run(directory, remaining, args.j, args.args)
+    except (RuntimeError, TimeoutError) as exc:
+        print("permute.py: %s" % exc, file=sys.stderr)
+        return 124 if isinstance(exc, TimeoutError) else 1
     if not outs:
         print("permute.py: no output better than the base in %d s (%s)" % (args.time, directory))
         return 0
