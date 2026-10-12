@@ -10,6 +10,8 @@ typedef struct EtcWork40 {
     /* 0x28 */ s32 unk_28[6];
 } EtcWork40; /* size 0x40 */
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
 s32 func_80146400(void) {
     s32 x;
     s32 pad[3];
@@ -52,6 +54,9 @@ s32 func_80146400(void) {
     }
     return 0;
 }
+#else
+INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146400);
+#endif
 
 s32 func_801464D4(s32 mode) {
     u32 i;

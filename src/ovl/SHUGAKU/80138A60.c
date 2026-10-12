@@ -231,7 +231,45 @@ void func_801396F4(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
+s32 func_80139740(void) {
+    s32 pad[2];
+    s32 state;
+    s32 t;
+
+    t = func_80051A68(D_800E6280.unk_F5F);
+    D_8013C97C = 0xFF;
+    if ((t & 0x7F) == 4 && D_800CA2EC == 0) {
+        D_8013C97C = D_800E6280.unk_F5F;
+        if (D_800E6280.unk_F5F == 1) {
+            state = D_800E6280.unk_110A;
+            func_8007E5A0();
+            if (state == D_800E6280.unk_110A) {
+                return 0;
+            }
+        }
+        D_800CA2EC = 1;
+        D_800E6280.unk_F5F = 0xD;
+        func_800847B8(0xD);
+        func_80051438(D_800CA190, D_8013C97C);
+        func_8004284C();
+    } else {
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+        func_8004284C();
+        if (D_800CA2EC != 0) {
+            func_8004284C();
+            func_8004284C();
+            func_8004284C();
+            func_8004284C();
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139740);
+#endif
 
 void func_80139870(void) {
     D_800CA2DC = 0;

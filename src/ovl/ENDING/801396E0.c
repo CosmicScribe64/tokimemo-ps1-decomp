@@ -84,6 +84,8 @@ void func_80139AA0(s32 arg0) {
     dtd_on(0xB);
 }
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
 void func_80139B48(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 s32 arg0;
 s32 arg1;
@@ -121,6 +123,9 @@ s32 arg6;
     *(s16 *)(p + 0x22) = D_800E6280.unk_018[D_8011ECA0] + arg1 + arg3;
     func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 0xA) + (arg5 * 4)], p);
 }
+#else
+INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139B48);
+#endif
 
 void func_80139D24(void) {
     func_80046318(9, 0x80180000, 0xAE18);
