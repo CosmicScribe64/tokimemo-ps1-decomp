@@ -839,7 +839,27 @@ void select_girl2(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_init);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_main);
+s32 select_girl_main(s32 arg0) {
+    s16 i;
+    u32 n;
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    menu_bar_show(1);
+    if (D_800E6280.unk_F88 & 0x200020) {
+        n = 0xC - (u8)arg0;
+        for (i = 0; i < n; i++) {
+            if (((u8 *)&D_800E6280)[i * 16 + 0xF9E] != 0 && D_800CA330[i] != 0) {
+                D_80122CDC = i;
+                D_8011ECD3 &= 0xFF7F;
+                D_80122D30 = 0;
+                k_reset(1);
+                func_8004284C();
+                return 0;
+            }
+        }
+    }
+}
 
 void sprite_brightness(s16 idx, u8 val) {
     u8 *p = (u8 *)D_801217D0 + idx * 36;
