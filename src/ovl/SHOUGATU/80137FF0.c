@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "ovl/SHOUGATU.h"
 
 typedef struct {
@@ -128,7 +129,24 @@ void func_80138710(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138758);
+void func_80138758(void) {
+    s32 unused; /* FAKE: preserves RECT at stack +0x2C. T-10010. */
+    RECT rect;
+
+    rect.x = 0x480;
+    rect.y = 0x160;
+    rect.w = 0x10;
+    rect.h = 0x10;
+    func_8009C7F8(&rect, 0, 0, 0);
+    ((GsByteNibbles *)&D_800E6280.unk_0F4.b[1])->high = ((GsByteNibbles *)&D_800E6280.unk_1BC[2].unk_0C.b[2])->high;
+    D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;
+    ((ShouByteFlags *)&D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.b[2])->b3 = 1;
+    D_80144E08 = 6;
+    D_80144E0C = 0;
+    func_800AE0F0(D_800CA19C, "廊下");
+    func_800AE0F0(D_800CA1DC, "実験室");
+    func_8004284C();
+}
 
 void func_80138868(void) {
     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0C.f.b2 = 1;

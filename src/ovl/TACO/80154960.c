@@ -99,7 +99,33 @@ void func_8015595C(void) {
     D_801604CC += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80154960", func_80155C64);
+void func_80155C64(s32 arg0) {
+    TcActor *actor;
+    s32 trig;
+
+    /* FAKE: byte-stride pointer calculations and xor-zero keep the original
+     * addition and multiplication operand order. T-10010. */
+    trig = func_800A0070((arg0 + D_8015EDB4)->unk7A * 0x3C);
+    actor = (TcActor *)((u8 *)D_8015EDB4 + arg0 * sizeof(TcActor));
+    actor->unk74 = ((s32) ((trig ^ 0) * (0x3E8 - (actor->unk7A * 0xA))) >> 0xD) + actor->unk7C;
+    trig = func_800A0140((arg0 + D_8015EDB4)->unk7A * 0x3C);
+    actor = (TcActor *)((u8 *)D_8015EDB4 + arg0 * sizeof(TcActor));
+    actor->unk76 = ((s32) ((trig ^ 0) * (0x3E8 - (actor->unk7A * 0xA))) >> 0xD) + actor->unk7E;
+    actor = arg0 + D_8015EDB4;
+    actor->unk78 = actor->unk80;
+    if (!((arg0 + D_8015EDB4)->unk7A & 1)) {
+        func_8015C0A0(0, arg0);
+    } else {
+        func_8015C0A0(1, arg0);
+    }
+    actor = arg0 + D_8015EDB4;
+    if (actor->unk7A >= 0x65) {
+        actor->unk84[0] = D_80161ECD;
+        D_8015EDB4[arg0].unk2 = 5;
+        D_8015EDB4[arg0].unk7A = 0;
+        D_8015EDB4[arg0].unk7E = 0;
+    }
+}
 
 void func_80155E10(s32 arg0) {
     (arg0 + D_8015EDB4)->unk74 = ((func_800A0070((arg0 + D_8015EDB4)->unk7A * 0x3C + 0x800) * (0x3E8 - (D_8015EDB4 + arg0)->unk7A * 0xA)) >> 0xD) + (D_8015EDB4 + arg0)->unk7C;

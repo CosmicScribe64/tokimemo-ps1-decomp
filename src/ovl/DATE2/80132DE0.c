@@ -171,7 +171,31 @@ void func_801338C4(void) {
     func_80042940(0x1B);
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801338F8);
+/* FAKE: s32 fall-through keeps the original counter/result register. T-10010. */
+s32 func_801338F8(void) {
+    u8 previous_state;
+    u8 first_state;
+    first_state = func_80051A68(0U) & 0x7F;
+    if (first_state >= 2U) {
+        D_8013A430 += 0xA;
+    }
+    if (first_state >= 3U) {
+        D_8013A430 += 0xA;
+    }
+    if (first_state == 4) {
+        D_8013A430 += 0xA;
+    }
+    previous_state = func_80051A68(D_800E6280.unk_75D) & 0x7F;
+    if (previous_state >= 2U) {
+        D_8013A438 += 0xA;
+    }
+    if (previous_state >= 3U) {
+        D_8013A438 += 0xA;
+    }
+    if (previous_state == 4) {
+        D_8013A438 += 0xA;
+    }
+}
 
 void func_801339F8(void) {
     D_8013A5B0 = 0x801C6000;

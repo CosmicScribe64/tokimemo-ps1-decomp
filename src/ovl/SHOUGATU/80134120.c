@@ -25,7 +25,30 @@ void func_80134120(void) {
     tbl.f[D_800E6280.unk_110A](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80134120", func_801341E4);
+void func_801341E4(void) {
+    u16 six;
+    u32 result;
+    u32 mode;
+
+    /* FAKE: the narrow call cast reserves a temporary; the dead raw-byte
+     * test retains separate raw/shifted ranges, and u16 six keeps the branch
+     * operand order. T-10010. */
+    six = 6;
+    if (D_80143B20 == 0) {
+        result = (u8) func_80051A68(D_800E6280.unk_F5F) & 0x7F;
+        if ((D_800E6280.unk_F5F == 4) && (result >= 2U)) {
+            mode = (u8) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4;
+            if (D_800E6280.unk_1BC[4].unk_0C.b[2]) {
+            }
+            if ((mode == six) && (D_80143B04 == 1)) {
+                D_80143B04 = 2;
+            } else if ((mode != six) && (D_80143B04 == 0)) {
+                D_80143B04 = 1;
+            }
+        }
+    }
+    func_801323D4();
+}
 
 void func_8013428C(void) {
     func_801323D4();

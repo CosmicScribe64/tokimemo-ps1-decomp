@@ -88,4 +88,32 @@ s32 func_801452C0(void) {
     return 4;
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801447E0", func_801453B4);
+/* FAKE: the word view at +0x0C fills an unrecovered RpgStat field; the
+ * comma return preserves the original decrement scheduling. T-10010. */
+s32 func_801453B4(void) {
+    s32 roll;
+    s32 total;
+
+    total = (*(s32 *)&D_8015EBFC.pad_0C[0]) + D_8015EBFC.unk_00 + D_8015EBFC.unk_04 + D_8015EBFC.unk_08;
+    if (total < 6) {
+        (*(s32 *)&D_8015EBFC.pad_0C[0]) = 0xA;
+        D_8015EBFC.unk_04 = 5;
+        D_8015EBFC.unk_08 = 0xA;
+        D_8015EBFC.unk_00 = 0xF;
+        total = 0x28;
+    }
+    roll = func_8013E9A8(total);
+    if (roll < D_8015EBFC.unk_00) {
+        D_8015EBFC.unk_00 -= 5;
+        return 0;
+    }
+    if (roll < (D_8015EBFC.unk_04 + D_8015EBFC.unk_00)) {
+        return (D_8015EBFC.unk_04 -= 5, 4);
+    }
+    if (roll < (D_8015EBFC.unk_08 + D_8015EBFC.unk_00 + D_8015EBFC.unk_04)) {
+        D_8015EBFC.unk_08 -= 5;
+        return 1;
+    }
+    (*(s32 *)&D_8015EBFC.pad_0C[0]) -= 5;
+    return 2;
+}

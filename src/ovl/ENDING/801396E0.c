@@ -140,9 +140,80 @@ void func_80139EC4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139F3C);
+void func_80139F3C(void) {
+    s16 i;
+    s32 shade;
+    /* FAKE: keep the existing scalar brightness view for a1 promotion;
+     * Rec24 field/pointer views use v0 and do not match. T-10010. */
+    if (D_80121874 == 128) {
+        func_80044750(0xD1);
+        D_80122CD4 = 0;
+    }
+    D_80121874 -= 4;
+    if (D_80121874 < 5U) {
+        func_8004284C();
+        D_80121874 = 0;
+    }
+    for (i = 4; i < 10; i++) {
+        /* FAKE: comma expression retains the brightness register, as in
+         * the adjacent fade-in routine. T-10010. */
+        func_80084C98(i, (0, D_80121874));
+    }
+    shade = (((u32)(D_80121874 << 6)) >> 7) & 0xFF;
+    /* FAKE: the empty test preserves the final shift register. T-10010. */
+    if (1) {
+    }
+    func_80139AA0((shade << 16) | (shade << 8) | shade);
+}
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013A004);
+void func_8013A004(void) {
+    D_801217D0[4].unk_00 = 0x02000000;
+    D_801217D0[4].unk_08 = 0xC0;
+    D_801217D0[4].unk_0A = 0x80;
+    D_801217D0[4].unk_0E = 0;
+    D_801217D0[4].unk_0F = 0x38;
+    D_801217D0[4].unk_10 = 0;
+    D_801217D0[4].unk_0C = 0x15;
+    D_801217D0[4].unk_12 = 0x1F1;
+    D_801217D0[4].unk_14 = 0;
+    D_801217D0[4].unk_15 = 0;
+    D_801217D0[4].unk_16 = 0;
+    D_801217D0[4].unk_18 = 0;
+    D_801217D0[4].unk_1A = 0;
+    D_801217D0[4].unk_1C = 0x1000;
+    D_801217D0[4].unk_1E = 0x1000;
+    D_801217D0[4].unk_20 = 0;
+    D_801217D0[4].unk_04 = -0xA0;
+    D_801217D0[4].unk_06 = -0x40;
+    D_800E6280.unk_10A5[4] = 0xD;
+    D_801217D0[5] = D_801217D0[4];
+    D_801217D0[5].unk_08 = 0x80;
+    D_801217D0[5].unk_0C = 0x18;
+    D_801217D0[5].unk_04 = 0x20;
+    D_800E6280.unk_10A5[5] = 0xD;
+    D_801217D0[6] = D_801217D0[4];
+    D_801217D0[6].unk_0F = 0;
+    D_801217D0[6].unk_0A = 0x38;
+    D_801217D0[6].unk_06 = -0x78;
+    D_800E6280.unk_10A5[6] = 1;
+    D_801217D0[7] = D_801217D0[5];
+    D_801217D0[7].unk_0F = 0;
+    D_801217D0[7].unk_0A = 0x38;
+    D_801217D0[7].unk_06 = -0x78;
+    D_800E6280.unk_10A5[7] = 1;
+    D_801217D0[8] = D_801217D0[4];
+    D_801217D0[8].unk_06 = 0x40;
+    D_801217D0[8].unk_0F = 0xB8;
+    D_801217D0[8].unk_0A = 0x38;
+    D_800E6280.unk_10A5[8] = 1;
+    D_801217D0[9] = D_801217D0[5];
+    D_801217D0[9].unk_06 = 0x40;
+    D_801217D0[9].unk_0F = 0xB8;
+    D_801217D0[9].unk_0A = 0x38;
+    D_800E6280.unk_10A5[9] = 1;
+    func_80044750(0x201);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013A2E8);
 

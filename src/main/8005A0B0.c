@@ -292,9 +292,40 @@ s32 func_8005B0F4(void) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B1A8);
+s32 func_8005B1A8(void) {
+    /* FAKE: unused word homes preserve girl at sp+0x2C and frame 0x38. T-10010. */
+    s32 pad[2];
+    s32 girl;
+    s32 variant;
+    s32 *pair;
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B2BC);
+    if ((*D_8011F3FF & 0x80) && (D_8011ECF6 < (D_8011F422 + 0xC)) && ((D_8011F422 - 0xC) < D_8011ECF6) && (D_8011ECFA < (D_8011F426 + 0x30)) && (D_8011F426 < D_8011ECFA) && (D_800E6280.unk_F88 & 0x20) && ((u32) (D_800E6280.unk_10F8 - D_800B59F0) >= 0xF1U)) {
+        D_800E6280.unk_F5F = D_8011F414;
+        girl = (s32) D_8011F414;
+        if (get_g_zyotai_s((s32) D_8011F414) & 0x80) {
+            variant = 1;
+        } else {
+            variant = 0;
+        }
+        pair = D_800B3B9C + girl * 4 + variant * 2;
+        func_80046290(pair[0], pair[1], girl);
+        func_80044750(0x300);
+        return 1;
+    }
+    return 0;
+}
+
+s32 func_8005B2BC(void) {
+    s32 *pair;
+
+    if ((*D_8011F3FF & 0x80) && (D_8011ECF6 < (D_8011F422 + 0xC)) && ((D_8011F422 - 0xC) < D_8011ECF6) && (D_8011ECFA < (D_8011F426 + 0x30)) && (D_8011F426 < D_8011ECFA) && (D_800E6280.unk_F88 & 0x20) && ((u32) (D_800E6280.unk_10F8 - D_800B59F4) >= 0xF1U)) {
+        pair = D_800B37D4 + D_8011F414 * 2;
+        func_80046290(pair[0], pair[1], (s32)(D_800E6280.unk_F5F = D_8011F414));
+        func_80044750(0x300);
+        return 1;
+    }
+    return 0;
+}
 
 void func_8005B39C(void) {
     k_disp_inc();

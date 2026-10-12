@@ -50,7 +50,32 @@ void func_801328A8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/801326F0", func_801328D0);
+/* FAKE: s32 fall-through preserves the original implicit v0 result. T-10010. */
+s32 func_801328D0(void) {
+    if ((D_800E6280.unk_F88 & 0x400040) && D_800E6280.unk_1104.u >= 2U) {
+        func_80044750(0x1508);
+        D_80122D00 = 0;
+        k_reset(1);
+        D_800CA2AC = 0;
+        D_8013A428 = 1;
+        D_8013A42C = 0;
+        func_8004284C();
+        return 0;
+    }
+    if (check_end_k()) {
+        if (D_800E6280.unk_110D++ < 0x40U) {
+            return 0;
+        }
+        D_800E6280.unk_110D = 0;
+        k_reset(1);
+    }
+    func_801325F4();
+    if (D_800E6280.unk_1104.u++ == 0) {
+        if (D_8013A42C < 3 && D_8013A428 == 0) {
+            func_80044750(0x609);
+        }
+    }
+}
 
 void func_801329F0(void) {
     func_80132670();
