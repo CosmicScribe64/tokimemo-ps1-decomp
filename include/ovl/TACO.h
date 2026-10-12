@@ -361,6 +361,8 @@ extern u8 D_8015EDDC;
 extern u8 D_8015EDE0;
 extern u8 D_8015EDE4;
 
+void func_8013F430(void);
+
 #endif
 
 typedef struct TacoCam {

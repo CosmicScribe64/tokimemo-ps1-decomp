@@ -18,7 +18,12 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+<<<<<<< HEAD
 - [[tickets/T-10330-wave-12-list-3|T-10330]] Wave 12: list 3 (In Progress).
+=======
+- [[tickets/T-10210-wave-11-tool-fixes|T-10210]] Wave-11 tool fixes (Done).
+- [[tickets/T-10200-orphan-jump-tables|T-10200]] Orphan jump tables: enable 21 instruction-exact functions (Done; +22 functions / 27,036 bytes, clean 27/27, 5,099/6,958).
+>>>>>>> main
 - [[tickets/T-10100-wave-9-10-tool-fixes|T-10100]] Wave 9/10 tool fixes (Done; 649 tests, final header regressions, 27/27 checksums).
 - [[tickets/T-10020-wave-11-list-2|T-10020]] Wave 11: list 2 (In Progress).
 - [[tickets/T-10010-wave-11-list-1|T-10010]] Wave 11: list 1 (Done).
@@ -172,6 +177,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - Raw sources (plain paths): `raw/disc-findings.md`, `wiki/raw/compiler-mismatch-research-sources.md`, `wiki/raw/ai-disclosure-research.md`, `wiki/raw/original-compiler-sources.md` (T-3100)
 
 ## Tooling
+- `tools/orphan_rodata.py` and `tools/object_layout.py` (T-10200): reference-based orphan ownership and configured text tail alignment; [[build-system]], [[decompile-workflow]].
 - `tools/header_merge.py` (T-10100): rebuild both-changed headers of a two-parent merge as ours plus whole other-side additions; `--check` previews; tests `tools/test_header_merge.py`; [[matching-notes]].
 - `tools/identify_version.py` (T-3200): identify which release a disc image or folder is, from `config/versions.txt`; reads bin/iso/cue, folders and zip/7z/chd (T-3300); tests `tools/test_identify_version.py`
 - `tools/prepare_disc.py` (T-3300): finds the game in `game/`, identifies it, unpacks it into `disc/`; ninja step `build/disc.stamp`; tests `tools/test_prepare_disc.py`

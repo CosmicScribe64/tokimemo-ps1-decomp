@@ -774,6 +774,28 @@
       }
     },
     {
+      "name": "src/ovl/BUNKASAI/80154018",
+      "target_path": "expected/ovl/BUNKASAI/80154018.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80154018.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80154018.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/BUNKASAI/80158EB0",
+      "target_path": "expected/ovl/BUNKASAI/80158EB0.o",
+      "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/80158EB0.o",
+      "metadata": {
+        "source_path": "src/ovl/BUNKASAI/80158EB0.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
       "name": "src/ovl/BUNKASAI/8015AF90",
       "target_path": "expected/ovl/BUNKASAI/8015AF90.o",
       "base_path": "build/ovl/BUNKASAI/src/ovl/BUNKASAI/8015AF90.o",
@@ -3980,6 +4002,17 @@
       "base_path": "build/ovl/TACO/src/ovl/TACO/8013DB80.o",
       "metadata": {
         "source_path": "src/ovl/TACO/8013DB80.c",
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "src/ovl/TACO/8013F250",
+      "target_path": "expected/ovl/TACO/8013F250.o",
+      "base_path": "build/ovl/TACO/src/ovl/TACO/8013F250.o",
+      "metadata": {
+        "source_path": "src/ovl/TACO/8013F250.c",
         "progress_categories": [
           "overlays"
         ]
