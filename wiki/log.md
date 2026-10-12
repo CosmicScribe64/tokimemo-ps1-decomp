@@ -9815,4 +9815,4 @@ Hoisted constants and addresses (bits past the expression table) are numbered by
 [[tickets/T-10310-wave-12-list-1]] Done: 2 matches (BUNKA_SD `func_80132708`, SHUGAKU `func_80139740`), 9 guarded near misses, data islands for main/8007C030 and TAIIKU/80138950, notes in [[matching-notes]] and rows in [[data/t0018-cases]]. Inline review recorded in the ticket; all 27 unit checks pass.
 
 ## [2026-10-12] ticket | T-10510 wave 13 list 1 done
-[[tickets/T-10510-wave-13-list-1]] Done: 11 matches (2,380 bytes) and 15 guarded near misses; patterns in [[matching-notes]], 31 rows in [[data/t0018-cases]]. Inline review recorded in the ticket; 27 unit checks, headers and globals pass.
+[[tickets/T-10510-wave-13-list-1]] Done: 11 matches (2,380 bytes) and 15 guarded near misses; patterns in [[matching-notes]], 24 rows in [[data/t0018-cases]]. Inline review recorded in the ticket; 27 unit checks, headers and globals pass.
