@@ -324,4 +324,70 @@ void func_8013BAD0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013BB28);
+void func_8013BB28(s32 arg0) {
+    u8 *state;
+    u8 *view;
+    u8 *pool;
+    u8 *aux;
+
+    state = D_80158A8C;
+    view = D_80158A64;
+    aux = D_80158A74;
+    switch (*(u16 *)(state + 4)) {
+    case 0x0:
+        func_80142570(arg0, aux);
+        if (*(u16 *)(view + 4) == 0) {
+            func_80044750(0xB1);
+            func_800451E0(0x8019A000);
+            func_80044750(0x12);
+            func_80044750(0x23);
+            func_80044750(0x2E);
+            func_80044750(0x21);
+            func_80044750(4);
+            func_80044750(0x200);
+        }
+        func_8013AC0C();
+        *(s16 *)(state + 4) = 0x20;
+        break;
+    case 0x20:
+        func_8013AA44();
+        func_8013AACC();
+        func_8013AB50();
+        func_8013ABB0();
+        func_8013ADC0();
+        func_8013B4A0();
+        break;
+    case 0x40:
+        func_8013B150();
+        func_8013B4A0();
+        func_8013BAD0();
+        func_8013AA44();
+        func_8013AACC();
+        func_8013AB50();
+        func_8013ABB0();
+        if (*(u16 *)(state + 782) == 1 && *(s16 *)(state + 780) < 0) {
+            *(s16 *)(state + 4) = 0x80;
+            *(s16 *)(state + 10) = 0;
+            *(s16 *)(state + 8) = 0;
+            *(s16 *)(state + 6) = 0;
+            state[15] = 0;
+            state[14] = 0;
+            state[13] = 0;
+        }
+        break;
+    case 0x80:
+        func_80044750(0xC1);
+        aux[82] = 1;
+        func_8013B1C4();
+        break;
+    case 0xA0:
+        func_80044750(0xB1);
+        *state = 0;
+        view[18] = 0;
+        pool = (u8 *)D_80158A70;
+        *(s16 *)(pool + 30) = 1;
+        *(s16 *)(view + 2) = 0xA0;
+        break;
+    }
+    func_8013A960();
+}
