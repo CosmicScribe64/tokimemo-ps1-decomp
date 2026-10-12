@@ -503,4 +503,5 @@ typedef struct TtSceneDraw {
     /* 0x2A8 */ u8 pad2A8[0xFC];
     /* 0x3A4 */ u16 unk_3A4[4];
 } TtSceneDraw; /* accessed prefix size 0x3AC */
+extern TtCollision6 D_80155B36;
 #endif
