@@ -9530,3 +9530,226 @@ T-0018 rows. The scalar-timer follow-up found no zero; the broad queue ended
 after 34 bounded searches. All owned searches have stopped. Shared wiki/header
 append-only and scope audits pass. Index and kanban are synchronized; source,
 headers and documentation remain uncommitted for the orchestrator.
+## [2026-10-11] ticket | Wave 11 list 4 started
+
+Created [[tickets/T-10040-wave-11-list-4]] In Progress and synchronized
+[[kanban]] and [[index]]. Read the shared brief, [[decompile-workflow]],
+[[register-allocation-wave7]], [[uopt-register-allocation]] and large-function
+notes in [[matching-notes]]. Scope: four owned C files, 25 functions, 65,612
+bytes. Work started 2026-10-12 00:54 UTC; scratchpad/w11-4/ holds experiments.
+
+## [2026-10-11] build | Fresh worktree setup and draft prerequisite
+
+T-10040 initial configure/build generates the assembly in this fresh worktree.
+An early m2c pass reported missing assembly for all 25 functions; those are
+setup failures, not matching attempts. The pass is queued again after TEL's
+split stamp. The premature duplicate inventory saw only partially generated
+assembly and will also be repeated after the baseline completes.
+
+## [2026-10-11] ingest | First large BUNKASAI draft
+
+T-10040 generated and inspected BUNKASAI func_801527A8 while the baseline
+build continues. Recorded alias/argument repair and the reusable continuation
+flag type in [[matching-notes]]. Draft repair scripts live only in scratchpad/w11-4/.
+
+## [2026-10-11] build | Wave 11 baseline verified
+
+T-10040 fresh baseline completes all 27 SHA1 checks. Progress is 4,982/6,958
+functions, 836,940/2,279,368 text bytes (36.7%). First repaired BUNKASAI
+func_801527A8 scratch compile measures 124 changed lines; four direct/local
+GameState and return-type probes reach 114. These are diagnostic scores only,
+not matches. Added the target's lbu/sb timer declaration D_80160AD0 to its
+overlay header. Details and next source repairs remain in [[matching-notes]].
+
+## [2026-10-11] build | Large-function first pass and first zero-diff candidate
+
+T-10040 generated all 25 m2c drafts. TEL func_801352F0 compares at zero lines
+in scratch; all other scores remain diagnostic pending real-file checks.
+Documented the repeated target store and initial aggregate/control-flow repairs
+in [[matching-notes]]. Duplicate and near-duplicate scans find no fillable
+function in the four owned paths. Main globals were added with sync_protos,
+and TEL's pointer tables/packed word streams were appended to its header.
+
+## [2026-10-11] decision | Owned-data constraint in DATE and EVENT
+
+Recorded target evidence for signed-halfword arrays and m2c shared-high
+relocation collapse in [[matching-notes]]. Configured owning data ranges exist,
+but creating islands would require forbidden YAML edits. T-10040 will leave
+that integration step to the orchestrator and continue permitted source repairs.
+## [2026-10-11] build | T-10040 real-file matches and orphan tables
+
+[[tickets/T-10040-wave-11-list-4]]: five functions pass resolved instruction
+comparison; TEL 801345C4/801352F0 and BUNKASAI 801527A8 remain active C.
+BUNKASAI 8015706C/80159FBC require orphan-table ownership changes outside the
+authorized batch file scope, so preserved matching drafts with assembly
+fallbacks. [[matching-notes]] records the linker evidence, timer/flag idioms
+and marked frame padding. Continuing ranked control-flow and type repair.
+
+## [2026-10-11] build | T-10040 five active C conversions
+
+[[tickets/T-10040-wave-11-list-4]]: TEL 8013226C and 80133D54 pass resolved
+diffs and TEL SHA-1, bringing active C to five functions. Added TelRec44 to
+include/ovl/TEL.h and marked unknown buffer extents as FAKE. Three further
+BUNKASAI functions have matching instructions and ticketed assembly fallbacks
+for orphan table ownership. [[matching-notes]] records the scoped GameState
+pointer, flag fields, unsuccessful bounded permuter runs, and duplicated store.
+
+## [2026-10-11] query | T-10040 flag-store repair and allocator traces
+
+[[tickets/T-10040-wave-11-list-4]]: BUNKASAI 80154D64 resolves exactly after
+correcting byte-versus-word flag access; retained the eighth orphan-blocked
+matching draft. [[matching-notes]] records the evidence. Five active C
+conversions pass all 27 checksums. A repeated own-files duplicate scan finds
+no applicable copies. Continuing TEL near-miss tracing and DATE/EVENT record,
+loop and caller-local reconstruction inside scratchpad/w11-4/.
+
+## [2026-10-11] query | T-10040 animation tail and caller-local repair
+
+[[tickets/T-10040-wave-11-list-4]]: corrected scratch packet-loop index timing,
+reconstructed shared DATE/EVENT animation tails, and checked explicit return
+register assignments against target assembly. [[matching-notes]] records the
+source evidence and why the current large diffs are not yet allocator rows.
+Five active conversions remain verified; further bounded source-range and
+permuter experiments run only in scratchpad/w11-4/.
+
+## [2026-10-11] build | T-10040 thirteen active conversions
+
+[[tickets/T-10040-wave-11-list-4]] now has thirteen active C conversions:
+six more BUNKASAI dispatchers and TEL 80135A44/8013655C pass resolved diffs
+and unit SHA-1 checks. [[matching-notes]] records the halfword-array and
+local-home reconstruction. The scoped follow-up survey stays within the four
+owned files. Ongoing near-miss searches and extra drafts remain private.
+
+## [2026-10-11] build | T-10040 packet and dialogue matches
+
+[[tickets/T-10040-wave-11-list-4]]: fifteen active conversions passed a full
+27-checksum build; the DATE dispatcher and EVENT packet updater then passed
+unit checksums. [[matching-notes]] records their type evidence and seven
+additional guarded BUNKASAI instruction matches. Further TEL dialogue
+candidates are being validated in their real unit.
+
+## [2026-10-11] build | T-10040 twenty-six unit-verified conversions
+
+[[tickets/T-10040-wave-11-list-4]]: five TEL dialogue states, two BUNKASAI
+routines, and two TEL near-misses now pass their unit checksums. The active
+total reaches 26. [[matching-notes]] records the state-pair view, XA pointer,
+and unsigned index evidence. DATE/EVENT bounce routines are now close enough
+to preserve as guarded drafts; the data-island configuration remains outside
+this batch's authorized edit scope.
+
+## [2026-10-11] build | T-10040 twenty-seventh active match and draft audit
+
+[[tickets/T-10040-wave-11-list-4]]: TEL 801380D8 passes its overlay SHA-1.
+The preceding 26 conversions passed all 27 binary checksums. Four guarded
+near-misses were verified as C with resolved diffs, then their fallbacks were
+restored. [[matching-notes]] records the record-pointer improvement and the
+rejected semantic change from a permuter output. Preliminary header review
+passes; prototype checking reports zero new disagreements.
+
+## [2026-10-11] build | T-10040 cleanup verified and duplicate scan refreshed
+
+[[tickets/T-10040-wave-11-list-4]] retains 27 active conversions and 25,648
+added text bytes after source/header cleanup; all 27 binary checksums pass.
+Header/global checks pass and prototype checking has zero new disagreements.
+[[matching-notes]] records the stale generated-folder status in the duplicate
+scanner and a private current-source scan that found no additional plans.
+Matching experiments continue within scratchpad/w11-4/.
+
+## [2026-10-11] query | T-10040 close register-range follow-up
+
+[[matching-notes]] records the BUNKASAI year-capture improvement to two
+standalone scheduling differences and a rejected uninitialized-local
+permuter candidate. The additional TEL selector search did not improve its
+verified draft; one bounded-evidence row was appended to
+[[data/t0018-cases]]. [[tickets/T-10040-wave-11-list-4]] remains In Progress.
+
+## [2026-10-11] build | T-10040 improved guarded BUNKASAI drafts
+
+[[tickets/T-10040-wave-11-list-4]] now retains five near-match guards in
+addition to nineteen instruction-exact orphan-table guards. Real-source
+resolved checks confirm two differences for BUNKASAI 80151364 and ten for
+80155388. Their source accommodations are marked FAKE and documented in
+[[matching-notes]]. A second finite-search row was appended to
+[[data/t0018-cases]]; active conversions remain 27.
+
+## [2026-10-11] query | T-10040 flag-range trace
+
+[[matching-notes]] records the improved BUNKASAI flag local's measured
+priority and v0 allocation from the existing allocator trace tool. No tool
+or compiler change was made. The default build after the two guarded-source
+updates passes BUNKASAI SHA-1 and global checks; active progress is unchanged.
+
+## [2026-10-11] build | T-10040 another large BUNKASAI instruction match
+
+BUNKASAI func_80155388 passes real-source `funcdiff --resolve`. The marked
+empty-result-test accommodation is recorded in [[matching-notes]] and
+[[tickets/T-10040-wave-11-list-4]]. Its orphan jump tables keep the assembly
+fallback necessary. The batch now retains twenty instruction-exact guards
+and four other near-match guards; active conversions remain 27.
+
+## [2026-10-11] build | T-10040 all retained guards reverified
+
+The current-source audit recorded in [[matching-notes]] confirms twenty
+instruction-exact guards and four bounded near misses (2/9/13/13 lines).
+Every assembly fallback was restored. Two guard comments were normalized;
+no source behavior changed. Additional private typed-range probes found no
+new conversion. [[tickets/T-10040-wave-11-list-4]] remains In Progress while
+bounded searches and the final default-build review continue.
+
+## [2026-10-11] build | T-10040 BUNKASAI shared-store match
+
+BUNKASAI func_80153A98 passes resolved funcdiff and its overlay checksum.
+[[matching-notes]] records the direct-store and year-capture repair, adding
+1,292 bytes for a batch total of 28 active conversions and 26,940 bytes.
+[[tickets/T-10040-wave-11-list-4]] remains In Progress during the remaining
+matching time and final verification.
+
+## [2026-10-11] build | T-10040 neighboring BUNKASAI dispatcher matched
+
+BUNKASAI func_80151A10 passes resolved funcdiff and BUNKASAI SHA-1 after the
+selective year-capture repair described in [[matching-notes]]. Active total
+is 29 functions and 28,220 bytes. No new FAKE, header or configuration change
+was needed; [[tickets/T-10040-wave-11-list-4]] is still In Progress.
+
+## [2026-10-11] build | T-10040 twenty-first guarded instruction match
+
+BUNKASAI func_80157860 passes real-source resolved funcdiff with corrected
+message/flag stores and a marked temporary-range accommodation. Its orphan
+tables require the restored assembly fallback. [[matching-notes]] records
+the result and rejected late permuter hints. Header/global checks pass, with
+zero new branch-prototype disagreements (17 known).
+
+## [2026-10-11] build | T-10040 final binary and scope audit
+
+The incremental default build, all 27 independent binary checksum checks,
+header/global checks and branch-prototype check pass. [[matching-notes]] and
+[[tickets/T-10040-wave-11-list-4]] record 29 active conversions / 28,220 text
+bytes and grand progress 5011/6958, 865160/2279368 (38.0%). A current-source
+owned-file duplicate scan finds no plans. Later range probes improve no
+retained source; inline review and the requested elapsed-time minimum remain.
+
+## [2026-10-11] lint | T-10040 inline standards review
+
+The review recorded in [[tickets/T-10040-wave-11-list-4]] checks C89, native
+aggregate use, shared declarations, seven explained FAKE accommodations,
+guard fallbacks, byte verification and scope. Cleanup/comment findings are
+resolved; the diff is whitespace-clean and nothing is staged. A safe DATE
+source-layout candidate reduces its private comparison from 172 to 170
+lines and receives one final bounded search before ticket closure.
+
+## [2026-10-11] ticket | T-10040 entered In Review
+
+[[tickets/T-10040-wave-11-list-4]] and [[kanban]] now agree on In Review.
+The inline standards review has no unresolved findings, all binary and
+declaration checks pass, and changes remain uncommitted. The last private
+DATE search and the requested elapsed-time minimum are the remaining steps.
+
+## [2026-10-11] ticket | T-10040 reviewed and complete
+
+[[tickets/T-10040-wave-11-list-4]], [[kanban]] and [[index]] now agree on Done
+after inline standards review and more than four hours of work. All 25
+assigned functions received deep attempts. [[matching-notes]] records the
+final 29 active matches / 28,220 bytes, 21 exact-instruction guards, four
+near misses, two [[data/t0018-cases]] rows and the rejected last DATE output.
+All 27 binary checksums and declaration checks pass; progress is 5011/6958
+functions and 865160/2279368 bytes (38.0%). Changes remain uncommitted.

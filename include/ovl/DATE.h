@@ -1223,4 +1223,22 @@ void func_8014A280(void);
 void func_8014A2AC(void);
 void func_8014A314(void);
 void func_8014A360(void);
+
+#ifndef OVL_DATE_T10040
+#define OVL_DATE_T10040
+/* Forward declarations for the original object, T-10040. */
+void func_801461B0(void);
+u16 func_801462B0(void);
+void func_8014718C(void);
+void func_80147958(void);
+s32 func_80148924(s16 a0);
+s32 func_801489D0(void);
+void func_801491E4(s32 arg0);
+
+extern s16 D_8015CFA4[3];
+extern s16 D_8015CFAC[3];
+extern s16 D_8015CFB4[3];
+extern s16 D_8015CFBC[3];
+extern u16 D_8015CF9C;
+extern s16 D_8015CFC4;
 #endif

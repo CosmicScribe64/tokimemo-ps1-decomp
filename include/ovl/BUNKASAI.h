@@ -112,3 +112,50 @@ typedef struct BunkasaiModeFlags {
 void func_8013B120(void);
 void func_801508C4(void);
 #endif
+
+
+#ifndef OVL_BUNKASAI_T10040
+#define OVL_BUNKASAI_T10040
+/* Byte timer: lbu/sb in func_801527A8, T-10040. */
+extern u8 D_80160AD0;
+
+/* Forward declarations for the original object, T-10040. */
+void func_801527A8(void);
+void func_80153FA4(void);
+void func_801541D8(void);
+void func_80154D64(void);
+void func_80155388(void);
+void func_80155B1C(void);
+void func_80156284(void);
+void func_801569BC(void);
+void func_8015706C(void);
+void func_801580EC(void);
+void func_80158764(void);
+void func_80158DD8(void);
+void func_80158E3C(void);
+void func_80159FBC(void);
+void func_8015AF20(void);
+
+/* Forward calls for guarded dispatchers, T-10040. */
+void func_80157DD4(void);
+void func_80159344(void);
+void func_80159698(void);
+void func_80159AD4(void);
+void func_8015A5DC(void);
+void func_8015A870(void);
+void func_8015AB58(void);
+
+void func_801511E0(void);
+
+void func_80151F10(void);
+
+void func_80154018(void);
+
+void func_801548C8(void);
+
+void func_80158EB0(void);
+
+void func_80158FD4(void);
+
+void func_80151364(void);
+#endif

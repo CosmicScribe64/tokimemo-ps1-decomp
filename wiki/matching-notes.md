@@ -3855,3 +3855,277 @@ bit 0's priority rises from 1 to 4/3 and retains a0. This removes the extra
 global-to-local copy. Both trace cases compile; the indirect source matches
 and the direct scalar has 13 edits. Evidence is in scratchpad/w11-3/trace-timer/
 and trace-timer-manifest.json; production compiler/tools remain unchanged.
+## Wave 11, list 4 (T-10040)
+
+The large-function batch owns TEL/80132000, BUNKASAI/801511E0,
+DATE/801461B0 and EVENT/8011C650. First-pass drafts and ranked deep attempts
+are retained privately in scratchpad/w11-4/. Prior wave-10 large-function
+idioms (unsigned nested selectors, direct global accesses, continuation
+bit-field stores before saved state bytes) will be tested against each target.
+
+Initial BUNKASAI `func_801527A8` inspection: m2c emits obsolete main-function
+names and stale arguments for alias-named zero-argument routines (for example
+`normal_date_girl_out`). Normalize through config/obin_renames.txt and current
+prototypes, then verify call setup against assembly. The continuation byte at
+D_800E7D4F has the existing `BunkasaiModeFlags` view; no new duplicate type is
+needed for this file.
+
+TEL `func_801352F0` has a zero-line standalone resolved comparison after
+GameState migration and proper dialogue pointer-table declarations; real-file
+verification is pending. Its repeated store to the selected girl's `unk_06`
+is present twice in the target, so both stores must remain. Other TEL drafts
+misidentify local character buffers as scalars and byte walks as `GameState *`
+steps; repaired those representations before scoring.
+
+BUNKASAI dialogue drafts merge separate case stores into goto-shared labels.
+Direct global stores and reconstructed sparse switches improve `func_80155388`
+from 315 to 251 lines, with GameState base allocation and flag accesses still
+unresolved. This is a source-control-flow issue, not yet a T-0018 classification.
+
+DATE `func_801489D0` and EVENT `func_8011EDFC` initialize three signed
+halfwords through a shared `lui $at`; m2c incorrectly repeats the first member
+for several stores. The targets identify three-element arrays at DATE
+D_8015CFA4/D_8015CFAC and EVENT D_801258E4/D_801258EC. Their owning data ranges
+exist in config/objects/DATE.txt and config/objects/EVENT.txt, but moving those
+ranges into C requires data-island YAML changes forbidden by this batch's
+isolation rules. Continue source/type repair and record any residual shared-LUI
+near misses for integration; do not add a per-function compiler workaround.
+
+Real-file resolved diffs match TEL `func_801345C4`/`func_801352F0` and
+BUNKASAI `func_801527A8`/`func_8015706C`/`func_80159FBC`. The latter two
+BUNKASAI functions cannot yet link: their tables remain in orphan chunk
+8015F730–8015FF70, whose references to removed `.L` labels become undefined.
+Keep those two matching drafts under NON_MATCHING with original assembly.
+The allowed file scope excludes the object/YAML split needed by [[build-system]].
+`func_801527A8` uses an explicitly marked FAKE two-word frame pad to preserve
+the original 0x40 frame and real halfword spill at sp+0x36. Direct timer
+increment and the existing BunkasaiModeFlags bitfield view otherwise match.
+
+Reconstructing sparse dialogue switches and flag stores brings BUNKASAI
+`func_801580EC` to 15 standalone diff lines (including alignment padding),
+with a five-minute permuter run queued. Its remaining load-base choice is
+being investigated before any allocator-gap classification.
+
+Further real-file matches: TEL `func_8013226C` and `func_80133D54` both pass
+TEL's SHA-1. The latter uses a documented TelRec44 view of the 0x44-byte
+D_8011ECD0 table. Both keep explicitly marked FAKE local buffer extents
+because the original array bounds are unknown despite exact stack offsets.
+BUNKASAI `func_801541D8`, `func_801569BC`, and `func_801580EC` pass resolved
+function comparisons but share the orphan-table blocker. A GameState pointer
+with the right scope recovers the original base-address lifetime; native
+Rec38Flags fields recover byte-store temporary ordering. Five-minute permuter
+runs on 541D8 and 580EC did not improve them; the pointer/type changes did.
+BUNKASAI `func_80156284` requires identical `D_80122EAC = 0` stores in both
+arms of the calendar-nibble condition; the assembly retains the test and both
+stores. m2c had simplified them away. Preserve the observed duplication.
+
+BUNKASAI `func_80154D64` also passes the real resolved diff after repairing
+m2c's signed-byte store through a word-typed flag member: use the existing
+`unk_0C.f.b2` field. A word store polluted both semantics and allocation,
+so its 157-line register-looking diff was not an allocator defect. It remains
+NON_MATCHING because its table belongs to the orphan chunks. Eight BUNKASAI
+matching-instruction drafts are now guarded; only 801527A8 is active C.
+
+TEL `func_80132FC4` reaches 10 standalone differing lines, chiefly the initial
+selector copy and initialization scheduling; its five-minute permuter run
+found no improvement. Further pointer and selector-lifetime probes remain in
+scratchpad/w11-4/. The allocator trace tool is being used against this draft,
+BUNKASAI 80155388, and matching control 801569BC; no toolchain changes are made.
+
+DATE/EVENT packet reconstruction uses Rec24 records, RECT locals and real
+three-halfword coordinate arrays. Preserve the old index when m2c materializes
+`index * 0x24` before `index++`; substituting an indexed expression after the
+increment is incorrect. The corrected scratch pipeline captures the record
+pointer first. DATE 8014718C and 801462B0 also need their shared animation
+blocks moved after the outer switch; m2c places them at an early case label.
+The 8014718C target explicitly returns zero on ordinary case exits, while
+its animation tail leaves the last computed value. Its provisional void
+prototype obscured those assignments; return-type probes now hide that
+prototype in scratch. No DATE/EVENT draft is active yet.
+
+BUNKASAI 80155388 remains at 155 resolved differing lines after scoped bases,
+real flag fields, result-local reuse and return-type probes. The remaining
+message/global-base live ranges differ, but the two unmatched dispatchers
+are not yet classified solely from register appearances. TEL 80132FC4 has a
+longer bounded permuter search following the unsuccessful five-minute run.
+
+The owned-file follow-up adds verified BUNKASAI 801516B0, 801523A0,
+80152F08, 80153260, 80153530 and 801537BC; each resolved diff and the
+BUNKASAI checksum passes. These earlier tables are already owned correctly.
+TEL 80135A44 and 8013655C also pass TEL's checksum. In 8013655C the four
+0x20-byte local arrays hold sixteen signed halfwords, not eight words.
+Use a promoted day counter, inline the repeated day-minus-one expression,
+and declare the month-offset scalar before the arrays; the two loop counters
+then occupy sp+0x88/sp+0x84 and the 0x110 frame matches without padding.
+The broader scratch layout search was stopped after this verified result.
+
+DATE 801489D0 drops from 188 to 39 standalone differing lines when the
+index increment follows both coordinate-bound checks, the return type is
+signed with the observed error return, and the modulo-two result is a real
+local. This removes the extra preserved pointer/register; residual differences
+are shared-data ownership and scheduling. EVENT's analogous m2c loop also
+materializes a separate loop-condition variable; remove that variable only
+when moving the increment and rewriting the loop condition together.
+
+TEL 8013639C's m2c draft contains invalid `D_8011ECF6.unk-130A` syntax even
+though the target is a direct signed-halfword load of D_8011ECF6. Restore
+that symbol from the target rather than interpreting the negative member as
+an aggregate offset. This tooling symptom is retained for the merge report.
+
+Further owned-file work: DATE `func_80146224` requires an unsigned byte view
+of the signed-declared selector (target `lbu`); EVENT `func_8011ED50` matches
+using the existing `Rec24` view and an `s32` definition with no explicit
+return, as in its DATE twin. Both pass resolved diffs and unit checksums.
+TEL `80135C4C`/`80135E28` also pass unit checksums. Seven further BUNKASAI
+functions (`80157DD4`, `80159344`, `80159698`, `80159AD4`, `8015A5DC`,
+`8015A870`, `8015AB58`) have matching instructions retained behind guards,
+with the same orphan-table ownership blocker. Byte-sized year captures
+also produce standalone exact candidates for `80151F10` and `801548C8`.
+
+The follow-up TEL dialogue states `801384F0`, `8013883C`, `80138D20`,
+`80139064`, and `801393A8` pass resolved diffs and TEL SHA-1. The existing
+`BunkSelectWords` view fixes the last scheduling differences in `801511E0`,
+`80154018`, and `80158EB0`; `801511E0` and the byte-year `80151F10` pass
+BUNKASAI SHA-1, while the later dispatchers need orphan-table guards.
+TEL `8013586C` matches with a shared local XA-table pointer and an unsigned
+byte speaker capture immediately before each XA call. `8013639C` matches
+when a `u32` choice local captures the signed-byte selector for its test and
+again for the day-table read. Both pass TEL SHA-1. Active conversion count
+is now 26, pending the next full build.
+
+DATE bounce `801489D0` is down to 13 standalone differing lines using direct
+velocity-array accesses. EVENT `8011EDFC` reaches the same residual when
+stage and fade at D_800B1AF0/+6 use a documented struct view. The remaining
+initial coordinate stores need object data ownership; real initializers for
+all four halfword arrays are zero. A scratch-only definition experiment
+reduces DATE's diff to nine lines, so data ownership alone is not yet a
+claim of a complete match. No YAML or raw-source changes were made.
+
+TEL `801380D8` now passes its real resolved diff and TEL SHA-1. The useful
+permuter hint was a pointer to the girl-record array in case 4; a simpler
+pointer to `Rec38` record 12 also matches. No artificial reads or forced
+registers are needed. Its unsigned byte counter is then allocated like the
+original. Active count is 27.
+
+The four additional guarded drafts were checked in the real source one at a
+time and restored: TEL `80132FC4` retains its selector copy/order residual;
+BUNKASAI `80151364` retains 30 year/base range differences; DATE `801489D0`
+and EVENT `8011EDFC` each retain 13 initialization differences. Five-minute
+permuter runs did not close the bounce routines. DATE's lower weighted-score
+output moved an initialization into the animation loop and was rejected as
+semantically wrong. The default build keeps the assembly fallbacks.
+
+The post-cleanup default build verifies all 27 checksums. Header and global
+checks pass; branch prototype checking finds zero new disagreements (17
+known). A duplicate scan scoped to the four owned queue labels finds no new
+plans. `dupes.load_funcs` derives matched status from the generated asm
+folder, so it misses C conversions made since the last split; a private
+wrapper recomputed status from current C definitions/fallbacks for this scan
+and reported 5009 matched functions, still with zero owned-file plans.
+Further scratch probes target the close state-load and flag-word ranges.
+
+Further bounded work leaves TEL `80132FC4` at its verified selector-copy
+residual after another 30-minute permuter; the safe byte-pointer hint does
+not improve its resolved diff. Its finite-search evidence is appended to
+[[data/t0018-cases]]. BUNKASAI `80151364` improves from 30 to 16 standalone
+differing lines with year captures at every use, then to two scheduling
+lines when the state pointer is reassigned at the last year comparison.
+This remains a scratch candidate pending a real-source check and final
+scheduling work. The short permuter's lower weighted-score output hoisted a
+read before a case label and introduced an uninitialized local; rejected.
+
+Real-source verification confirms BUNKASAI `80151364` at two differing lines
+(one `lui v1` moves across `lui v0`) after the pointer-range change. The
+600-second search from this improved seed finds no better result. The
+updated guard marks the redundant pointer reassignment FAKE and a second
+bounded-evidence row is appended to [[data/t0018-cases]].
+
+BUNKASAI `80155388` now has only ten real resolved differing lines after a
+permuter-derived redundant `& 0xFFFFU` on the first byte/nibble expression.
+A plain `u16` cast does not reproduce the improvement; the retained guarded
+version explicitly marks the mask FAKE. The remaining difference is the
+flag word promoted to v0 instead of a t-register, followed by two shifted
+temporaries. A new bounded search runs from this seed. No active match is
+claimed; its orphan-table blocker also remains.
+
+DATE `8014718C` reaches 172 standalone differing lines with a signed halfword
+color temporary and a word-sized timer local with explicit 16-bit wrapping.
+This removes duplicate `andi` operations in the animation tail. Equivalent
+three-byte color views do not improve the remaining register differences;
+this larger draft stays private while further bounded work continues.
+
+Allocator tracing of the improved `80155388` draft identifies the local flag
+as bit 113: one load and one store in block 149, priority 2, assigned colour
+1 (v0). The shared base and message ranges receive colours 2 and 3. This
+explains why removing the flag capture can disturb much more than its own
+load; the ten-line residual is tied to the source's live ranges, not evidence
+for a global register-renumbering patch. Trace artifacts remain private in
+scratchpad/w11-4/trace553-mask.*. The post-guard default build passes BUNKASAI
+SHA-1 and the global check.
+
+BUNKASAI `80155388` now passes the real-source resolved instruction comparison.
+Removing the flag capture and retaining an empty test of the already defined
+helper result after the flag branch supplies the needed range; removing the
+redundant nibble mask then aligns all later temporaries. The empty test is
+explicitly marked FAKE. The function remains guarded because its jump tables
+are in the orphan chunks. This supersedes its ten-line draft above: there are
+now twenty instruction-exact BUNKASAI guards and four other near-match guards,
+with 27 active conversions unchanged. No T-0018 row is needed for 80155388.
+
+The final current-source guard audit activates each of the 24 drafts alone,
+runs resolved funcdiff, and restores its fallback. All twenty BUNKASAI
+instruction-exact guards still match after header cleanup. The four near
+misses have 2 (BUNKASAI 80151364), 9 (TEL 80132FC4), 13 (DATE 801489D0),
+and 13 (EVENT 8011EDFC) real differing lines. Two early guard comments were
+normalized to the same ticketed NON_MATCHING spelling; no C behavior changed.
+Additional BUNKASAI 80158764 typed-adjustment and dead-result-range probes
+leave its best standalone draft at 102 lines, so it remains private.
+
+BUNKASAI `80153A98` is a further active match (1,292 bytes). Replacing the
+m2c shared-store goto with direct stores restores the actual branch layout;
+capturing the two year reads in case 14 into a `u8` local then restores the
+register ranges. The cleaned real-source body passes resolved funcdiff and
+BUNKASAI SHA-1 without a FAKE accommodation. Active total is 28 conversions,
+26,940 text bytes; the twenty instruction-exact guards are unchanged.
+
+The same repair reaches an active match in BUNKASAI `80151A10` (1,280 bytes):
+use direct message stores, then capture the year only in the later case-15
+comparison/arithmetic region. Capturing all year reads did not reproduce the
+allocation. The clean `void` definition passes its real-source resolved diff
+and BUNKASAI SHA-1, bringing the batch to 29 active conversions / 28,220 bytes.
+
+BUNKASAI `80157860` now has exact real-source resolved instructions. Its
+private draft had lost the case-14 stores and reconstructed the byte flag
+update as a word write; direct stores and the native `f.b2` store repair
+those errors. Removing a byte capture and adding a ticketed FAKE empty test
+of the initialized helper result restores the remaining temporary range.
+The orphan-table guard is retained, making 21 instruction-exact guards and
+four other near misses. Active total stays 29 / 28,220 bytes. The later DATE
+permuter output again removed a required animation-loop initialization and
+was rejected; a TEL dead-test hint did not improve the resolved instruction
+diff under current headers.
+
+The latest verification snapshot is 29 active conversions / 28,220 text
+bytes: five assigned functions / 10,432 bytes and 24 owned-file follow-ups /
+17,788 bytes. Totals use the original assembly headers and progress tool;
+the work list's ranking sizes are not used as text-byte totals. All 27 final
+binary SHA-1 values match after the incremental default build. Header/global
+checks pass, with zero new prototype disagreements (17 known). Progress is
+`grand total   5011/6958   865160/2279368  38.0%`. The refreshed current-source
+owned-file duplicate scan reports zero plans at 5011 matched functions.
+
+A further allocator trace of `80158764` distinguishes the local message copy,
+shifted nibble, year and global-message ranges. Replacing the case-15 local
+copy with direct global accesses worsens the standalone diff (152 versus
+102); selective year captures and combinations of byte captures/result tests
+also do not improve it. TEL `80134FE4` selective index captures reach 140
+lines but remain outside the retention threshold. Neither experiment changes
+the retained source. Trace and candidate artifacts remain in scratchpad/w11-4/.
+
+The final 300-second DATE search from the safe 170-line draft produced no
+acceptable conversion: its best candidate relocated the animation-loop
+initialization after a return. Rejected without changing retained source.
+The inline standards review has no unresolved findings; T-10040 is Done
+after more than four hours. Final result remains 29 active conversions /
+28,220 bytes, 21 instruction-exact orphan-table guards, four bounded near
+matches, and two T-0018 rows. All 27 checksums and declaration checks pass.
