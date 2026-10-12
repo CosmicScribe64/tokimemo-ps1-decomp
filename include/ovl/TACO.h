@@ -504,6 +504,8 @@ void func_8013DEE4();
 extern u8 D_8015FA80[];
 void func_801483B0(void);
 void func_80148D6C(void);
+void func_8013E778();
+void func_8013EAA4();
 #endif
 
 extern u8 D_80161ECD;
