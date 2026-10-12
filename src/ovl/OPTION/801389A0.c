@@ -219,7 +219,26 @@ void func_80139F04(void) {
     func_80044750((D_8013E730 | 0x500) & 0xFFFF);
 }
 
+/* NON_MATCHING: T-10510, 18 lines: dispatch matches, D_8013D3A8 copy through a0 and v1 vs v0 */
+#ifdef NON_MATCHING
+void func_80139F8C(void) {
+    s32 t;
+
+    t = D_800E6280.unk_F88 & 0x60;
+    if (t != 0x20) {
+        if (t == 0x40) {
+            D_8013D3A8--;
+        }
+    } else {
+        D_8013D3A8++;
+    }
+    if (D_8013D3A8 > 0x10) {
+        func_80044750((D_8013D3A8 | 0x1200) & 0xFFFF);
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139F8C);
+#endif
 
 void func_8013A010(void) {
     func_8004500C(0, D_8013D3A8);

@@ -578,7 +578,31 @@ void func_80137CF4(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-10510, 9 lines: constant 0x14 shared in a1 (call argument and sw) in the original, ugen temp t9 in IDO */
+#ifdef NON_MATCHING
+void func_80137D1C(void) {
+    u8 v;
+
+    func_80044750(0x207);
+    func_800AE0F0(D_800CA19C, "ヒーローショー");
+    func_8007ED84(0x4374);
+    if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x14] & 1)) {
+        v = 0;
+    } else {
+        v = 1;
+    }
+    D_800CA148 += v * 2;
+    D_800CA2FC = v;
+    if ((D_800E6280.unk_75E - 1)[D_800E6280.unk_F5E].unk_02 == 1) {
+        D_800E6280.unk_F5E -= 1;
+    }
+    D_80122D08 = 0x14;
+    func_80085B3C(0, 0x14);
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137D1C);
+#endif
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137DF4);
 
