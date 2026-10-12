@@ -635,8 +635,12 @@ def unit_of(arg):
     return arg.split("/", 1)[0]
 
 
-def plan(root, args, out=sys.stdout):
-    """[(path, new text or None to delete)], [(prototype, header)] for the selected units."""
+def plan(root, args, out=sys.stdout, object_maps=None):
+    """[(path, new text or None to delete)], [(prototype, header)] for the selected units.
+
+    object_maps optionally supplies proposed read_objects tuples by unit, so an
+    ownership planner can preview new maps without writing them first (T-10200).
+    """
     by_unit = {}
     for a in args:
         by_unit.setdefault(unit_of(a), []).append(a)
@@ -645,7 +649,8 @@ def plan(root, args, out=sys.stdout):
     for unit, sel in by_unit.items():
         if unit not in units:
             raise SplitError("unknown unit %s" % unit)
-        objs, ro_end, _orph = ob.read_objects(ob.objects_path(unit, root))
+        objs, ro_end, _orph = (object_maps[unit] if object_maps and unit in object_maps
+                               else ob.read_objects(ob.objects_path(unit, root)))
         all_c = srcscan.unit_c_files(unit, root)
         cfiles = all_c
         if unit not in sel:

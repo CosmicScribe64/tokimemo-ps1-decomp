@@ -198,6 +198,82 @@ def fix_lo_literals(text):
     return "\n".join(out) + ("\n" if text.endswith("\n") else "")
 
 
+def fix_shared_hi(text):
+    """Keep distinct LO16 addresses when m2c treats a HI16 as the full symbol.
+
+    Within a straight-line block, replace the LO16 by its displacement from
+    the full HI16 symbol. Only address-bearing names with equal relocated
+    high halves are eligible. Register writes and control-flow joins discard
+    the tracked base; calls discard it after their delay slot.
+    """
+    bases, out, after_delay = {}, [], False
+    for line in text.splitlines():
+        if re.match(r"\s*(?:\.L\w+:|[gj]label\b)", line):
+            bases.clear()
+        code = re.sub(r"/\*.*?\*/", "", line).strip()
+        insn = re.match(r"([a-z][a-z0-9]*)\s*(.*)", code)
+        if not insn:
+            out.append(line)
+            continue
+        mn, operands = insn.groups()
+        ops = [o.strip() for o in re.split(r",(?![^()]*\))", operands) if o.strip()]
+        hi = LUI_RE.search(line)
+        if hi:
+            match = re.fullmatch(r"%hi\((\w+)\)", hi.group(2))
+            bases[hi.group(1)] = match.group(1) if match else None
+        else:
+            base = re.search(r"%lo\([^)]*\)\s*\((\$\w+)\)", line)
+            if base is None:
+                base = re.search(r"\baddiu?\s+\$\w+\s*,\s*(\$\w+)\s*,\s*%lo\(", line)
+            symbol = bases.get(base.group(1)) if base else None
+            anchor = ADDR_NAME_RE.search(symbol or "")
+
+            def replace_lo(match):
+                address = ADDR_NAME_RE.search(match.group(1))
+                if not anchor or not address:
+                    return match.group(0)
+                a, b = int(anchor.group(1), 16), int(address.group(1), 16)
+                if match.group(2):
+                    b += int(match.group(3), 0) * (-1 if match.group(2) == "-" else 1)
+                if ((a + 0x8000) >> 16) != ((b + 0x8000) >> 16):
+                    raise RuntimeError("shared HI16 has incompatible high halves: %s and %s" %
+                                       (symbol, match.group(0)))
+                # Equal symbols without addends already work upstream.
+                if a == b:
+                    return match.group(0)
+                return str(b - a)
+
+            line = LO_RE.sub(replace_lo, line)
+            _reads, writes = m2c_args.effects(mn, ops)
+            if mn not in ("jal", "jalr"):
+                for reg in writes:
+                    bases.pop("$" + reg, None)
+        out.append(line)
+        if after_delay:
+            bases.clear()
+        after_delay = mn in ("jal", "jalr")
+    return "\n".join(out) + ("\n" if text.endswith("\n") else "")
+
+
+def install_member_formatter(translate):
+    """Render unresolved member offsets as typed byte accesses, including negatives.
+
+    Known context fields keep upstream's spelling. Unknown fields must not
+    become fabricated member names (notably the invalid `unk-130A`).
+    """
+    original = translate.StructAccess.format
+
+    def format_member(self, fmt):
+        if self.offset and self.late_field_path() is None:
+            var = translate.late_unwrap(self.struct_var)
+            pointer = translate.Type.ptr(self.type).format(fmt)
+            return "*(%s)((unsigned char *)%s + (%d))" % (pointer,
+                         translate.parenthesize_for_struct_access(var, fmt), self.offset)
+        return original(self, fmt)
+
+    translate.StructAccess.format = format_member
+
+
 def context_sources(root, overlay):
     """Headers whose declarations make up the context, in include order."""
     heads = ["include/game.h"]
@@ -367,7 +443,7 @@ def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=
     sys.stderr.write("m2c.py: %s (%s)\n" % (os.path.relpath(asm, root), overlay or "main"))
     name = func_name(name)
     with tempfile.TemporaryDirectory(prefix="m2c") as tmp:
-        cmd = ["m2c", "-t", target]
+        cmd = [sys.executable, os.path.abspath(__file__), "_worker", "-t", target]
         if context:
             ctx = os.path.join(tmp, "ctx.c")
             with open(asm, errors="replace") as f:
@@ -378,7 +454,7 @@ def run_m2c(root, name, target=DEFAULT_TARGET, context=True, rodata=True, extra=
         func_text = open(asm).read()
         asm_in = os.path.join(tmp, os.path.basename(asm))
         with open(asm_in, "w") as f:
-            f.write(fix_lo_literals(func_text))
+            f.write(fix_shared_hi(fix_lo_literals(func_text)))
         cmd += list(extra) + [asm_in]
         if rodata:
             blocks, seen = "", set()
@@ -439,4 +515,13 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    if sys.argv[1:2] == ["_worker"]:
+        # Import the installed m2c package instead of this tools/m2c.py.
+        sys.path = [p for p in sys.path if os.path.abspath(p) != os.path.dirname(os.path.abspath(__file__))]
+        from m2c import translate
+        from m2c.main import main as upstream_main
+        install_member_formatter(translate)
+        sys.argv = ["m2c"] + sys.argv[2:]
+        sys.exit(upstream_main())
+    else:
+        main(sys.argv[1:])

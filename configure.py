@@ -194,7 +194,8 @@ def overlay_targets(n, overlays):
                     variables={"toolchain": " ".join(OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN))},
                     implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "include/common.h", "include/include_asm.h",
                               "include/asmproc_prelude.inc",
-                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py"])
+                              "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py",
+                              "tools/object_layout.py"])
             c_os.append(cf.obj)
         data_os = []
         for data_s in data_ss:
@@ -252,7 +253,7 @@ def main():
     n.build("globals", "phony", GLOBALS_OK)
     n.rule("as", command="python3 tools/asm.py $in $out", description="AS $in")
     n.rule("cc",
-           command="python3 tools/cc.py $in $out $toolchain",
+           command="python3 tools/cc.py $in $out $toolchain && python3 tools/object_layout.py $in $out",
            depfile="$out.d", deps="gcc", description="CC $in")
     n.rule("ld",
            command=("mips-linux-gnu-ld -EL -T build/%s.ld "
@@ -277,7 +278,8 @@ def main():
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "tools/cc.py", "tools/frame_pass.py"] + headers)
+                implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "tools/cc.py", "tools/frame_pass.py",
+                          "tools/object_layout.py"] + headers)
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"

@@ -20,10 +20,10 @@ object 80148040 8014ABC0 8015DFD0 8015E5B0 yes pad jtbl-pad
 object 8014ABC0 8014DD90 8015E5B0 8015EC20 yes pad jtbl-pad
 object 8014DD90 80150930 8015EC20 8015F140 yes pad jtbl-pad
 object 80150930 801511E0 8015F140 8015F1C0 yes pad jtbl-pad
-object 801511E0 8015AF90 8015F1C0 8015F730 yes pad jtbl-end
+object 801511E0 80154018 8015F1C0 8015F730 yes pad jtbl-end
+object 80154018 80158EB0 8015F730 8015FF70 yes orphan-cut orphan-owner
+object 80158EB0 8015AF90 8015FF70 80160380 yes orphan-cut orphan-owner
 object 8015AF90 8015B900 80160380 801604F0 yes pad jtbl-pad
-orphan 8015F730 8015FF70 second_chunk_of_801511E0
-orphan 8015FF70 80160380 second_chunk_of_801511E0
 # data|bss <text start> <start> <end> <start evidence> <end evidence> <items> (T-9010): the
 # object's .data/.bss range; written by tools/object_boundaries.py --data --write.
 data 80142700 80160520 80160640 owner-min/2 owner at:0,ref:5
