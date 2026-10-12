@@ -94,7 +94,20 @@ void func_801408F0(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013FF80", func_80140AE4);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013FF80", func_80140BC4);
+s32 func_80140BC4(void) {
+    s32 r;
+    r = 0;
+    if (D_800E6280.unk_1124 == 0) {
+        if (D_800E6280.unk_53C[0] >= 2U && D_800E6280.unk_53C[1] >= 2U && D_800E6280.unk_53C[2] >= 2U && D_800E6280.unk_53C[3] >= 2U && D_800E6280.unk_53C[4] >= 2U && D_800E6280.unk_53C[5] >= 2U && D_800E6280.unk_53C[6] >= 2U && D_800E6280.unk_53C[7] >= 2U && D_800E6280.unk_53C[8] >= 2U && D_800E6280.unk_53C[9] >= 2U && D_800E6280.unk_53C[10] >= 2U && D_800E6280.unk_53C[11] >= 2U && D_800E6280.unk_53C[12] >= 2U) {
+            return 2;
+        }
+        if (D_800E6280.unk_53C[0] != 0 && D_800E6280.unk_53C[1] != 0 && D_800E6280.unk_53C[2] != 0 && D_800E6280.unk_53C[3] != 0 && D_800E6280.unk_53C[4] != 0 && D_800E6280.unk_53C[5] != 0 && D_800E6280.unk_53C[6] != 0 && D_800E6280.unk_53C[7] != 0 && D_800E6280.unk_53C[8] != 0 && D_800E6280.unk_53C[9] != 0 && D_800E6280.unk_53C[10] != 0 && D_800E6280.unk_53C[11] != 0 && D_800E6280.unk_53C[12] != 0) {
+            return 1;
+        }
+        return 0;
+    }
+    return r;
+}
 
 s32 func_80140DC8(void) {
     s32 i;

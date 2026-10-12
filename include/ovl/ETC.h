@@ -929,7 +929,7 @@ extern s32 D_8014F994[];
 extern s32 D_8014F9D0[];
 extern s32 D_8014FA0C[];
 extern s32 D_8014FA48[];
-void func_80140BC4(void);
+s32 func_80140BC4(void);
 s32 func_80140DC8(void);
 s32 func_80140E80(void);
 s32 func_80143240(void);
