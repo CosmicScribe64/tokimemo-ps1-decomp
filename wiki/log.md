@@ -9813,3 +9813,6 @@ Hoisted constants and addresses (bits past the expression table) are numbered by
 [[tickets/T-10400-regdiff-explain-register-choice]] moved to Done after the inline review against `CODING_STANDARDS.md` (no findings). Clean `rm -rf asm build` Docker build: 27/27 SHA1 OK, headers OK, globals OK; progress 5,101/6,958 functions (+2: EVENT `func_80119518`, DATE `func_80136F2C`). Tests: `tools/test_regdiff.py` 41, `tools/test_sync_protos.py` 70, funcdiff, permute and check_headers suites OK. Board: [[kanban]].
 ## [2026-10-12] ticket | T-10310 wave 12 list 1 done
 [[tickets/T-10310-wave-12-list-1]] Done: 2 matches (BUNKA_SD `func_80132708`, SHUGAKU `func_80139740`), 9 guarded near misses, data islands for main/8007C030 and TAIIKU/80138950, notes in [[matching-notes]] and rows in [[data/t0018-cases]]. Inline review recorded in the ticket; all 27 unit checks pass.
+
+## [2026-10-12] ticket | T-10520 wave 13 list 2 started
+Ticket [[tickets/T-10520-wave-13-list-2]] In Progress (59 functions, 30 files).

@@ -20,8 +20,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149978);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014997C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149980);
 s16 D_80149984[2] = { 0, 0 };
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149988);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014998C);
+TaiikuSel D_80149988 = { 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149990);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149994);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149998);
@@ -146,7 +145,30 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A6FC);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013ACBC);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10520, only the ugen temp of D+0x48 differs ($t9 vs $t1), 2 lines */
+void func_8013AE14(void) {
+    if (D_80149988.unk_04 >= 0xB) {
+        if (D_80149988.unk_00 >= 3 && D_80149990 != 0 && (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6)) {
+            D_80149988.unk_00 = 0;
+        } else if (D_80149988.unk_00 >= 5) {
+            D_80149988.unk_00 = 0;
+        } else {
+            D_80149988.unk_00 = D_80149988.unk_00 + 1;
+        }
+        D_80149948 = 0;
+        D_80149988.unk_04 = 0;
+    }
+    D_80120668 = D_80149988.unk_00;
+    if (D_80149990 != 0) {
+        if (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6) {
+            D_80120668 = D_80149988.unk_00 + 0x48;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013AE14);
+#endif
 
 void func_8013AEFC(void) {
     if (D_80120676 > 0xA0) {
@@ -355,7 +377,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D114);
 
 void func_8013D254(void) {
     func_80044750(0x504);
-    D_80149988 = 0;
+    D_80149988.unk_00 = 0;
     D_8014999C = 0;
     D_801499B0[0].unk0 = 0;
     D_80149974 = 0;

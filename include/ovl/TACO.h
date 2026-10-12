@@ -1,6 +1,9 @@
 #ifndef OVL_TACO_H
 #define OVL_TACO_H
 
+/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
+#define MAIN_API_OVERRIDE_func_8009B430 /* implicit declaration: called with 3 and with 4 arguments (main_api.h: 4) */
+
 #include "common.h"
 #include "psx_types.h"
 #include "game.h"

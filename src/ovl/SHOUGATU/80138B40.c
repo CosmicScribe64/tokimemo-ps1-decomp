@@ -56,7 +56,32 @@ void func_80138CA4(void) {
     tbl.f[idx]();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80138B40", func_80138D2C);
+void func_80138D2C(void) {
+    func_800438DC(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    func_800438F0(1);
+    func_80048390();
+    func_8004E58C();
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    func_8007C740();
+    func_800649D4();
+    func_80064E84();
+    func_80084E4C();
+    /* FAKE: the byte-typed store as the argument keeps the constant in $a0 (T-9020 idiom); T-10520 */
+    func_800847B8(*(u8 *)&D_800E6280.unk_F5F = 3);
+    func_80136F90();
+    D_80144DFC = D_80144D98;
+    D_80144E00 = D_80144DBC;
+    D_80144E04 = D_80144DE0;
+    func_8004284C();
+}
 
 void func_80138E1C(void) {
     D_80144E08 = 0;

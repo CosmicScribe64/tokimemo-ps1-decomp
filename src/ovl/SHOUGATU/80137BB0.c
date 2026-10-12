@@ -50,7 +50,14 @@ void func_80137CD4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137BB0", func_80137D0C);
+s32 func_80137D0C(void) {
+    func_80137AB4();
+    if (D_800E6280.unk_1104.w++ == 1) {
+        if (D_80144E0C == 3) {
+            func_80083440(3);
+        }
+    }
+}
 
 typedef struct {
     void (*f[34])();

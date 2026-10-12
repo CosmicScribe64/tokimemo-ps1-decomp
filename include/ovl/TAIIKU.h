@@ -172,7 +172,12 @@ extern u8 D_801491E0[4];
 extern s32 D_8014994C;
 extern s32 D_80149950;
 extern s32 D_80149974;
-extern s32 D_80149988;
+typedef struct {
+    s32 unk_00;
+    u16 unk_04;
+    u16 unk_06;
+} TaiikuSel; /* size 8 */
+extern TaiikuSel D_80149988;
 extern s32 D_8014999C;
 void func_8013B104(void);
 void func_8013C780(void);
@@ -431,4 +436,6 @@ extern s32 D_8014996C;
 extern s32 D_8014997C;
 extern s32 D_80149980;
 void func_8013D254(void);
+extern s32 D_80149948;
+
 #endif
