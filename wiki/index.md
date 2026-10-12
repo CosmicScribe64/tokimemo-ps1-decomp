@@ -21,6 +21,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-10100-wave-9-10-tool-fixes|T-10100]] Wave 9/10 tool fixes (Done; 649 tests, final header regressions, 27/27 checksums).
 - [[tickets/T-10020-wave-11-list-2|T-10020]] Wave 11: list 2 (In Progress).
 - [[tickets/T-10010-wave-11-list-1|T-10010]] Wave 11: list 1 (Done).
+- [[tickets/T-10030-wave-11-list-3|T-10030]] Wave 11: list 3 (Done; 12 functions / 4,172 bytes).
 - [[tickets/T-9930-wave-10-list-3|T-9930]] Wave 10: list 3 (In Progress).
 - [[tickets/T-9910-wave-10-list-1|T-9910]] Wave 10: list 1 (In Progress).
 - [[tickets/T-9920-wave-10-list-2|T-9920]] Wave 10: list 2 (In Progress).

@@ -449,3 +449,10 @@ extern u8 D_8015E92C[]; /* text destination; size unknown, func_801563A0. T-9710
 #define RPG_BAT_MOTION_T9930
 void func_80142DF4(void);
 #endif
+
+#ifndef OVL_RPG_BAT_TOGGLE_T10030
+#define OVL_RPG_BAT_TOGGLE_T10030
+extern s32 D_8015EC70;
+void func_8013D3E4(void);
+void func_8015461C(void);
+#endif

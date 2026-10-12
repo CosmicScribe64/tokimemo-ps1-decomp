@@ -1,6 +1,19 @@
 #include "common.h"
 #include "ovl/TT.h"
 
+typedef struct TtAnimRecord14 {
+    /* 0x00 */ u8 pad[0x12];
+    /* 0x12 */ u8 frame;
+    /* 0x13 */ u8 pad13;
+} TtAnimRecord14; /* size 0x14 */
+
+typedef struct TtAnimScene366 {
+    /* 0x000 */ u8 pad[0x40];
+    /* 0x040 */ TtAnimRecord14 frames[10];
+    /* 0x108 */ u8 pad108[0x25C];
+    /* 0x364 */ u16 timer;
+} TtAnimScene366; /* accessed prefix size 0x366; T-10030 */
+
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F040);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F3B4);
@@ -104,7 +117,39 @@ void func_8013F7B0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F878);
+void func_8013F878(void) {
+    TtAnimScene366 *scene;
+
+    scene = (TtAnimScene366 *)D_80158A8C;
+    scene->frames[0].frame = ((scene->timer >> 2) & 1) + 14;
+    scene->frames[1].frame = ((scene->timer >> 2) & 1) + 14;
+    if ((scene->timer & 7) == 7) {
+        scene->frames[2].frame++;
+        if (scene->frames[2].frame >= 52U) {
+            scene->frames[2].frame = 46;
+        }
+        scene->frames[3].frame = scene->frames[2].frame;
+        scene->frames[4].frame++;
+        if (scene->frames[4].frame >= 46U) {
+            scene->frames[4].frame = 40;
+        }
+        scene->frames[5].frame = scene->frames[4].frame;
+        scene->frames[6].frame++;
+        if (scene->frames[6].frame >= 40U) {
+            scene->frames[6].frame = 34;
+        }
+        scene->frames[7].frame = scene->frames[6].frame;
+    }
+    if ((scene->timer & 15) == 15) {
+        if (scene->frames[8].frame & 1) {
+            scene->frames[8].frame--;
+        } else {
+            scene->frames[8].frame++;
+        }
+    }
+    scene->frames[9].frame = (scene->timer >> 4) & 1;
+    scene->timer++;
+}
 
 /* FAKE: the loop counter and pointer are declared as parameters so that they get $a0/$a1 like the original; nothing reads the incoming values. T-4050 */
 void func_8013F988(s32 i, u8 *p) {

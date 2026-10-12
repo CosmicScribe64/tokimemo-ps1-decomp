@@ -1,6 +1,11 @@
 #include "common.h"
 #include "ovl/KANGEI.h"
 
+typedef struct KangeiControlPair {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+} KangeiControlPair; /* size 0x02; byte pair at D_80120652, T-10030 */
+
 void func_801355F0(void) {
     D_80139D10 = 0x801D4074;
     D_80139D14 = 0x801D4078;
@@ -15,7 +20,29 @@ void func_80135634(void) {
     D_80139D2C = *(s16 *)0x801D4094;
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/801355F0", func_80135678);
+/* The original leaves the K&R result in v0 without an explicit return. */
+s32 func_80135678(void) {
+    s32 tick;
+    KangeiDispatchTable80 table;
+    u8 girl;
+
+    table = D_80139D30;
+    table.functions[D_800E6280.unk_110A](0x80);
+    girl = D_800E6280.unk_F5F;
+    /* FAKE: the condition and store share a source line to retain the original
+     * timer/girl address-load scheduling. T-10030. */
+    if ((D_8011F4CA & 0x10) && (girl != 5)) { D_8011F4CA = 3;
+    }
+    tick = ((u32)D_800E6280.unk_1100++ % 300U) == 0;
+    if (tick != 0) {
+        if (D_8011F50F & 0x80) {
+            if ((girl == 10) || (girl == 3)) {
+                ((KangeiControlPair *)&D_80120652)->unk_00 = 9;
+                ((KangeiControlPair *)&D_80120652)->unk_01 |= 0x80;
+            }
+        }
+    }
+}
 
 void func_801357A4(void) {
     D_800E6280.unk_F5F = D_800E6280.unk_75D;

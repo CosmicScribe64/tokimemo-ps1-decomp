@@ -296,3 +296,11 @@ void func_80137484(void);
 
 /* Integer definition retains the original fade-out result register (T-9740). */
 s32 func_80137544(void);
+
+#ifndef OVL_KANGEI_DISPATCH_T10030
+#define OVL_KANGEI_DISPATCH_T10030
+typedef struct KangeiDispatchTable80 {
+    /* 0x00 */ void (*functions[32])(s32);
+} KangeiDispatchTable80; /* size 0x80; T-10030 */
+extern KangeiDispatchTable80 D_80139D30;
+#endif

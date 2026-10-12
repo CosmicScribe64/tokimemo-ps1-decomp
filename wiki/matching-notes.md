@@ -3735,3 +3735,123 @@ Late aggregate pass: EVENT func_800FAA04 reaches four resolved rows after using 
 The final 300-second EVENT permutation resolves to eight rows, so the manually repaired four-row candidate is still best; counter, array-view, line-layout and pointer-temporary variants did not close it. OPTION's multiply/expression, pointer reuse and grid-home variations likewise did not match. Both remain INCLUDE_ASM. Review also confirms ENDING func_80139F3C's scalar brightness alias is required: direct Rec24 field and pointer views change promotion from a1 to v0 (32 rows). The retained source documents that scalar view as FAKE.
 
 T-10010 completed after 4h 0m: 28 matches / 8,708 bytes, all 27 final checksums and guards pass. The second EVENT permutation still leaves four resolved rows. Standards/spec review has zero unresolved findings; ticket, kanban and index move to Done. All changes remain uncommitted.
+## Wave 11, list 3 (T-10030)
+
+Initial work and measurements for [[tickets/T-10030-wave-11-list-3]].
+Scratch outputs live in `scratchpad/w11-3/`; all compilation runs in Docker.
+The model initializer's repaired three-argument SDK call and explicit pointer
+locals reach seven resolved instruction edits in the early source sweep. The
+loop is identical; a folded pointer copy/addition and address-load scheduling
+remain. This is a measured near miss, not a match or proof of a compiler limit.
+
+ETC `func_80146AC0` matches as a six-iteration `s32` loop over two arrays
+at +0x10 and +0x28 of the shared work block at `D_801230D0`. IDO emits
+the first two iterations as absolute stores, then retains index 2 and the
+shared base for the final four. The old unfolded-constant blocker was a
+missing loop/aggregate shape. `func_801465F8` independently walks both
+arrays. The file-local struct view preserves the shared scalar declaration
+used by other overlays. Real resolved comparison and full ninja pass.
+
+The same partially unrolled-loop repair matches `_sys_default_tpage_set`
+(300 bytes): five iterations set four GameState array slices starting at
+11, 43, 21 and 53. IDO peels one iteration and retains index 1 for the
+remaining four. The final `D_800C9730` read is a word access through the
+existing byte buffer, not m2c's inferred byte dereference. Both this helper
+and ETC's clear loop resolve historical unfolded-constant rows with ordinary C.
+
+SHOUGATU `func_80134A54` (480 bytes) was nine edits away after typed
+word reads repaired m2c's generic fields. Its return type is `s32`, with
+`return 0` in both failure paths; successful scene advance falls through
+as in the K&R original. This supplies the early `move v0,zero` and the
+second failure's return-delay instruction. Ordinary word-array indexing
+and multiline comparisons preserve the exact match. No FAKE needed.
+
+Further wave-11 list-3 scratch evidence: model drafts must distinguish pointer
+strides from byte strides (`TaiikuBig` already has size 0x50; `u32 *` steps are
+four bytes). Correcting this reduced ETC `func_8014354C` to 18 differing lines
+and main `func_80058F9C` to 26. TACO `func_8013A580` has a five-value draft whose
+arithmetic and control flow match, with four spill offsets still displaced by
+four bytes; retaining redundant m2c aliases instead increases the overall frame.
+Neither a padding local nor a compiler adjustment has been landed. KANGEI
+`func_80135004` needs a real RECT to retain all four halfword stores, but its
+frame and selector allocation are still open. Detailed sources and measured
+variants are in scratchpad/w11-3/ under the function names.
+
+TACO `func_8015435C` (224 bytes) matches with a u16 second parameter
+and three named u32 command constants compared against a u32 command word.
+Reversing textual operands alone did not fix the six-line branch-operand miss;
+the unsigned constant locals did. The range table is indexed at a four-byte
+stride and supplies adjacent start/end pointers, not eight-byte records. The
+clean pointer-array view verifies in the real object and all-unit build.
+
+Main `func_80041F48` (272 bytes) matches as five indexed clearing loops.
+A byte-array member permits induction-variable strength reduction where an
+explicit `(u8 *)` expression retained an integer index. The 0x100-byte clear
+spans `GameState.unk_56C` and `unk_668`; a documented block view covers the whole
+range without indexing beyond the 0xFC-byte member. Existing GsWord views cover
+the four-byte record stores and the four adjacent bytes at +0x724. No FAKE.
+
+TT `func_8013F878` (272 bytes) matches with a scene view containing ten
+0x14-byte animation records at +0x40 and a u16 timer at +0x364. Each record's
+frame byte is at +0x12. Plain increment/clamp/copy field accesses reproduce the
+duplicate timer loads and the narrow-value promotion; the raw offset draft was
+146 differing lines. This is a type-repair match with no FAKE.
+
+NAME_ENT `func_801455E4` (380 bytes) matches with a 0x44-byte actor view:
+flags at +3, phase at +7, and signed fixed-point x/y words at +0x24/+0x28.
+Independent endpoint symbols preserve the loop's three address ranges; deriving
+the endpoints from the actor base folds them. Pointer initialization shares the
+do-loop opening line to schedule its base after the endpoint loads. This last
+source-line dependency is marked FAKE, T-10030; the typed body otherwise matches
+without extra locals or forced registers. Main endpoint declarations were added
+through `sync_protos.py --add-global`.
+
+KANGEI `func_80135678` (300 bytes) copies a 32-entry callback table into a
+0x80-byte local aggregate. Declaring the result flag before the table and the
+girl byte after it gives the original frame. A two-byte control view preserves
+the second byte's load after the first byte's store. The early condition/store
+shares a source line to order timer/girl address setup; that dependency is
+marked FAKE. A signed result with no explicit return reproduces the original
+fall-through v0 value, following the existing K&R idiom.
+
+Main `search_tpage` and `search_tpage8` (616 bytes each) match when their page
+lookups remain expressions in the comparisons, assignment, and load calls.
+Caching that lookup in a scalar made uopt canonicalize the comparison operands
+in the opposite order. Inlining it, then writing the slot operand first, fixes
+both branches and preserves the required reloads after slot writes. The record
+base can consequently use normal typed array indexing; no integer-address FAKE
+is needed. A 30-minute permuter on the cached-value draft found no improvement.
+
+RPG_BAT `func_8015461C` (324 bytes) matches as a six-iteration record flag XOR
+loop using the existing `RpgFlagRecord44`. IDO peels two iterations and groups
+the remaining four, retaining the constant-two multiply seen in the original.
+Writing the six operations as unrelated byte globals obscured that shape.
+The subsequent helper takes no arguments; the raw draft's live a0/a1 values
+were not actual call arguments. No FAKE.
+
+TAIIKU `func_80137440` (260 bytes) matches with a three-record walk over
+0x44-byte records, comparing signed y at +0x26 and clearing bytes +2/+3.
+An indirect halfword read of the timer keeps it in a0 instead of creating
+an extra v0-to-a0 copy; equivalent struct and halfword views also match.
+The direct scalar does not, so the indirect read is explicitly marked FAKE.
+Reloading the timer between the two initial flag stores fixes load scheduling.
+Joining pointer initialization to the do-loop opening orders the loop's two
+address setups and is separately marked FAKE. The real resolved comparison
+passes; the function retains its existing signed K&R fall-through result.
+
+Final bounded blockers: `schedule_girls_gakko` reaches six resolved edits only
+with scratch padding, leaving three comparison operands reversed; the natural
+draft is ten edits away. TT `func_8013F9E0` remains six edits away, solely setup
+instruction order, after explicit flag-cursor and loop-width variants. TACO
+`func_8013A580` remains the closest non-T-0018 blocker: scalar and aggregate
+local layouts trade the correct total frame against the correct spill homes.
+These are finite source searches, not evidence that matching C is impossible.
+
+The final TAIIKU timer trace explains the indirect-read FAKE more precisely.
+With the direct scalar, the global range (bit 2) has priority 0.5 and receives
+colour 1 (v0), while the timer local (bit 0) receives colour 3 (a0). With the
+indirect halfword expression, bit 2 has priority zero and is not allocated;
+bit 0's priority rises from 1 to 4/3 and retains a0. This removes the extra
+global-to-local copy. Both trace cases compile; the indirect source matches
+and the direct scalar has 13 edits. Evidence is in scratchpad/w11-3/trace-timer/
+and trace-timer-manifest.json; production compiler/tools remain unchanged.
