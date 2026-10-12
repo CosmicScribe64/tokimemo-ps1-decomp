@@ -9780,3 +9780,6 @@ Moved [[tickets/T-10200-orphan-jump-tables]] to In Review with matching [[kanban
 ## [2026-10-11] build | T-10200 clean 27/27 and 22 gains
 
 [[tickets/T-10200-orphan-jump-tables]] passes the clean Docker build with 27/27 SHA1s, header/global markers and prototype audit (zero new disagreements, 17 known). Progress is 5099/6958 functions, 911084/2279368 bytes (40.0%): +22 functions / 27036 bytes. All 124 relevant tests pass; ownership and splitter reruns are idempotent; fresh queue has zero O rows. Inline standards/spec review has no unresolved findings. Moved ticket/card to Done, updated [[index]], and left all edits uncommitted for orchestrator review. Recipe: [[build-system]] and [[decompile-workflow]].
+
+## [2026-10-12] ticket | T-10310 wave 12 list 1 done
+[[tickets/T-10310-wave-12-list-1]] Done: 2 matches (BUNKA_SD `func_80132708`, SHUGAKU `func_80139740`), 9 guarded near misses, data islands for main/8007C030 and TAIIKU/80138950, notes in [[matching-notes]] and rows in [[data/t0018-cases]]. Inline review recorded in the ticket; all 27 unit checks pass.

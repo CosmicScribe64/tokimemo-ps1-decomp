@@ -1293,7 +1293,31 @@ void func_80150F44(s32 arg0) {
     }
 }
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
+void func_801511C0(s32 arg0, s32 arg1) {
+    s32 i;
+    s32 n;
+    s32 *p;
+
+    i = 0;
+    n = arg0;
+    p = D_8016024C + arg1;
+    do {
+        func_801478F8(n, *p);
+        i += 1;
+        n += 1;
+        p += 1;
+    } while (i != 6);
+    if (arg1 != 0) {
+        func_801478F8(0x1B, D_80160280);
+        return;
+    }
+    func_801478F8(0x1A, D_80160264);
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_801511C0);
+#endif
 
 void func_80151264(u32 arg0) {
     if (arg0 < D_8015EDB4[16].unk3) {
