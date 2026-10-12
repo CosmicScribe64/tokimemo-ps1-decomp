@@ -9753,3 +9753,6 @@ final 29 active matches / 28,220 bytes, 21 exact-instruction guards, four
 near misses, two [[data/t0018-cases]] rows and the rejected last DATE output.
 All 27 binary checksums and declaration checks pass; progress is 5011/6958
 functions and 865160/2279368 bytes (38.0%). Changes remain uncommitted.
+
+## [2026-10-11] ticket | T-10330 wave 12 list 3 started
+[[tickets/T-10330-wave-12-list-3]] created In Progress; 149 functions in 49 files.
