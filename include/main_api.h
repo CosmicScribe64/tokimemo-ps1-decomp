@@ -1002,7 +1002,13 @@ extern s16 D_8012066A;
 #ifndef MAIN_API_OVERRIDE_D_8012066C
 extern s16 D_8012066C;
 #endif
+#ifndef MAIN_API_OVERRIDE_D_80120674
+extern s16 D_80120674;
+#endif
 extern s16 D_80120676;
+#ifndef MAIN_API_OVERRIDE_D_80120678
+extern s16 D_80120678;
+#endif
 extern s16 D_8012067A;
 extern u8 *D_80120684;
 extern s32 D_80120688;
@@ -1028,7 +1034,13 @@ extern s16 D_801206AC;
 #ifndef MAIN_API_OVERRIDE_D_801206B0
 extern volatile s16 D_801206B0;
 #endif
+#ifndef MAIN_API_OVERRIDE_D_801206B8
+extern s16 D_801206B8;
+#endif
 extern s16 D_801206BA;
+#ifndef MAIN_API_OVERRIDE_D_801206BC
+extern s16 D_801206BC;
+#endif
 extern s16 D_801206BE;
 #ifndef MAIN_API_OVERRIDE_D_801206C8
 extern s32 D_801206C8;
@@ -1389,6 +1401,7 @@ extern s32 D_80122EB8;
 #endif
 extern s32 D_80122EBC;
 extern s32 D_80122EC0;
+extern s32 D_80122EC4;
 #ifndef MAIN_API_OVERRIDE_D_80122EC8
 extern s32 D_80122EC8;
 #endif

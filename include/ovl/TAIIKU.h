@@ -170,7 +170,6 @@ extern s32 D_801491E4;
 extern u8 D_801491E0[4];
 extern s32 D_8014994C;
 extern s32 D_80149950;
-extern s32 D_80149974;
 typedef struct {
     s32 unk_00;
     u16 unk_04;
@@ -181,7 +180,6 @@ extern s32 D_8014999C;
 void func_8013B104(void);
 void func_8013C780(void);
 void func_8013C978(void);
-extern s32 D_80149990;
 extern TaiikuPair D_801499B4[];
 
 extern u8 D_8014A3C4;
@@ -426,10 +424,7 @@ extern u8 D_8014A400[];
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
 void func_8014430C(void);
 extern TaiikuPosition D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
-extern s32 D_80149968;
-extern s32 D_8014996C;
 extern s32 D_8014997C;
-extern s32 D_80149980;
 void func_8013D254(void);
 extern s32 D_80149948;
 
@@ -449,5 +444,23 @@ extern Taiiku2x16 D_80149970;
 extern TaiikuA0 D_801499A0;
 extern u8 D_801499DC;
 extern s16 D_801499E0;
+
+typedef struct {
+    s32 unk_00;
+    s32 unk_04;
+} Taiiku2s32; /* size 8 */
+typedef struct {
+    s16 unk_00;
+    s16 unk_02;
+} Taiiku2s16; /* size 4 */
+typedef struct {
+    s32 unk_00;
+    s32 unk_04;
+    s32 unk_08;
+} Taiiku3s32; /* size 0xC */
+extern Taiiku2s32 D_80149968;
+extern Taiiku2s32 D_80149974;
+extern Taiiku2s16 D_80149980;
+extern Taiiku3s32 D_80149990;
 
 #endif

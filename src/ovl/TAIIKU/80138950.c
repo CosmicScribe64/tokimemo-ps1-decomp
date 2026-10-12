@@ -12,18 +12,14 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149958);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014995C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149960);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149964);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149968);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014996C);
+Taiiku2s32 D_80149968 = { 0, 0 };
 Taiiku2x16 D_80149970 = { 0, 0 };
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149974);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149978);
+Taiiku2s32 D_80149974 = { 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014997C);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149980);
+Taiiku2s16 D_80149980 = { 0, 0 };
 s16 D_80149984[2] = { 0, 0 };
 TaiikuSel D_80149988 = { 0, 0, 0 };
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149990);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149994);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149998);
+Taiiku3s32 D_80149990 = { 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014999C);
 TaiikuA0 D_801499A0 = { 0, 0, 0, 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B0);
@@ -152,13 +148,49 @@ void func_8013A63C(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A6FC);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013ACBC);
+void func_8013ACBC(void) {
+    D_80149990.unk_00 = 0;
+    D_80149988.unk_00 = 0;
+    D_80149990.unk_04 = 0;
+    D_80149990.unk_08 = 0;
+    D_8014999C = 0;
+    D_801499A0.unk_02 = 0;
+    D_801499A0.unk_08 = 0;
+    D_801499A0.unk_0C = 0;
+    D_801499B0[0].val = 0;
+    D_8014997C = 0;
+    D_80149980.unk_00 = 0;
+    D_80149980.unk_02 = 0x80;
+    D_80149968.unk_00 = 0;
+    D_80149968.unk_04 = 0;
+    D_80149974.unk_00 = 0;
+    D_80149974.unk_04 = 0;
+    D_8014995A = 0;
+    D_80149944 = 1;
+    D_80120674 = 0;
+    D_80120676 = 0x20;
+    D_80120678 = 0;
+    D_8012067A = 0x30;
+    D_801206B8 = 0;
+    if (((D_80122EC4 % 3) == 0) || (D_80149940 == 2)) {
+        D_801206BA = -0x20;
+    } else {
+        D_801206BA = 0;
+    }
+    D_801206BC = 0;
+    D_801206BE = 0x30;
+    D_80120668 = 0;
+    D_801206AC = (D_80149940 * 6) + 6;
+    D_80120653 = 0xA4;
+    D_80120697 = 0xA4;
+    D_801207CA = 0xA0;
+}
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-10520, only the ugen temp of D+0x48 differs ($t9 vs $t1), 2 lines */
 void func_8013AE14(void) {
     if (D_80149988.unk_04 >= 0xB) {
-        if (D_80149988.unk_00 >= 3 && D_80149990 != 0 && (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6)) {
+        if (D_80149988.unk_00 >= 3 && D_80149990.unk_00 != 0 && (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6)) {
             D_80149988.unk_00 = 0;
         } else if (D_80149988.unk_00 >= 5) {
             D_80149988.unk_00 = 0;
@@ -169,7 +201,7 @@ void func_8013AE14(void) {
         D_80149988.unk_04 = 0;
     }
     D_80120668 = D_80149988.unk_00;
-    if (D_80149990 != 0) {
+    if (D_80149990.unk_00 != 0) {
         if (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6) {
             D_80120668 = D_80149988.unk_00 + 0x48;
         }
@@ -197,7 +229,7 @@ void func_8013AEFC(void) {
 s32 func_8013AF74(void) {
     s32 v;
 
-    if (D_80149990 != 0) {
+    if (D_80149990.unk_00 != 0) {
         return 7;
     }
     if (D_8012067A < 0x31 && D_8012067A >= ((s16)D_80149984[1] >> 3) + 0x10 && ((s16)D_80149984[0] >> 3) + 0x50 >= D_80120676 && D_80120676 >= ((s16)D_80149984[0] >> 3) - 0x50) {
@@ -220,7 +252,7 @@ s32 func_8013AF74(void) {
 }
 
 void func_8013B0AC(void) {
-    if (D_80149990 == 0) {
+    if (D_80149990.unk_00 == 0) {
         func_8013B104();
     } else {
         func_8013C978();
@@ -389,7 +421,7 @@ void func_8013D254(void) {
     D_80149988.unk_00 = 0;
     D_8014999C = 0;
     D_801499B0[0].unk0 = 0;
-    D_80149974 = 0;
+    D_80149974.unk_00 = 0;
     D_8014994C = 0;
     D_80149950 = 0;
     D_801207A7 |= 0x80;

@@ -2,6 +2,10 @@
 #define OVL_EVENT_H
 
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
+#define MAIN_API_OVERRIDE_D_80120674 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
+#define MAIN_API_OVERRIDE_D_80120678 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
+#define MAIN_API_OVERRIDE_D_801206B8 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
+#define MAIN_API_OVERRIDE_D_801206BC /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120650 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
 #define MAIN_API_OVERRIDE_D_80120658 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_8012066C /* EVENT overlay data at this address, s32 (main_api.h: s16) */
