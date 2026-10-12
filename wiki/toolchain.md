@@ -127,3 +127,15 @@ while gaining one isolated case; a2/a3 preference gains two cases but keeps
 3653/4870 and 5/27 units. No candidate is adopted. Stock control reproduces
 4870/4870 functions and 27/27 units; full scores and coverage are on the research
 page and wiki/data/t9800-allocator-scores.json.
+
+## Configured subobject text extent (T-10200)
+
+After `cc.py`, configure runs `object_layout.py` uniformly for C objects. IDO and
+cc.py round text size to 16, but a source split can lie on a four-byte boundary.
+When that rounding alone exceeds the YAML subsegment span, remove the surplus
+zero tail only if no non-section symbol or relocation occupies it. Any other
+size mismatch is left for comparison/checksum; instructions are never rewritten.
+BUNKASAI's 80154018 boundary needs this to own its orphan jump tables in C.
+This extends the section-layout model rather than changing compiler flags.
+Synthetic ELF tests include rejection of nonzero tails, symbols and relocations;
+[[build-system]] and [[tickets/T-10200-orphan-jump-tables]] record the real proof.

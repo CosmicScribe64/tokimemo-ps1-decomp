@@ -12,8 +12,9 @@ not, number of calls, and flags:
      asm blob the C object cannot provide. Per-object C files (tools/split_objects.py, T-0500)
      give every object with rodata an island, so J and S are workable there (decompile-workflow).
   O  its table or string lies in an orphan rodata chunk (config/objects/<UNIT>.txt `orphan` lines: no single
-     object owns it), so no C object can provide it and the function cannot be built even with an island
-     (BUNKASAI func_80158EB0 in second_chunk_of_801511E0, T-9220). Blocks always, P(match) 0.
+     object owns it). Run tools/orphan_rodata.py UNIT --apply, then rebuild (T-10200).
+     Claimed ranges leave the orphan map and become workable islands; unresolved ranges
+     still block even if the file owns another island. P(match) 0 until ownership is fixed.
   P  one trailing nop after the last jr (end address 12 mod 16): asm-processor needs 2 (matching-notes);
      or a function whose first instruction is a nop (an alignment pad in front, T-9030): agents skip these
   R  T-0018 register promotion of an UNSIGNED narrow global (lbu/lhu): loaded in two or more basic
@@ -859,6 +860,9 @@ def main(argv=None):
             calibrate(lr, lm, cases, title="T-1320 rule, for comparison")
         return 0
     funcs = select(remaining, wanted)
+    for unit in sorted({f.unit for f in funcs if f.orphan}):
+        print("O ownership: tools/docker.sh python3 tools/orphan_rodata.py %s --apply; "
+              "then rebuild and verify the unit SHA1" % unit, file=sys.stderr)
     if a.summary:
         summary(funcs)
         return 0

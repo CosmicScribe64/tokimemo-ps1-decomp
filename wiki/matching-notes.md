@@ -4129,3 +4129,23 @@ The inline standards review has no unresolved findings; T-10040 is Done
 after more than four hours. Final result remains 29 active conversions /
 28,220 bytes, 21 instruction-exact orphan-table guards, four bounded near
 matches, and two T-0018 rows. All 27 checksums and declaration checks pass.
+
+## Orphan table and string ownership (T-10200)
+
+BUNKASAI's 21 instruction-exact T-10040 guards are now enabled. Preserve the
+three rodata chunks with C objects at 801511E0, 80154018 and 80158EB0. The old
+object detector missed the word-aligned boundary at 80154018. Merging all
+three chunks fails despite resolved instruction matches: internal padding is
+lost and the unit becomes 16 bytes shorter. `orphan_rodata.py` now plans such
+splits from reference order; `object_layout.py` removes only unused compiler
+text alignment beyond the configured source span. The compiler emits the
+switch tables, including their internal-label relocations.
+
+TACO's orphan strings belong to the new 8013F250 object. `func_8013F250` is
+also enabled with ordinary SCORE/TIME literals. Its counter D_8015EDD0 has a
+signed declaration used by other functions; both this function's condition
+and decrement use the unsigned byte lvalue `*(u8 *)&D_8015EDD0`. Casting the
+loaded value instead left a two-instruction scheduling difference. Retained
+FAKE two-word local padding preserves the observed frame and local homes,
+as already found in T-9330. Both affected unit SHA1s pass; final clean proof
+and totals are recorded in [[tickets/T-10200-orphan-jump-tables]].

@@ -9753,3 +9753,23 @@ final 29 active matches / 28,220 bytes, 21 exact-instruction guards, four
 near misses, two [[data/t0018-cases]] rows and the rejected last DATE output.
 All 27 binary checksums and declaration checks pass; progress is 5011/6958
 functions and 865160/2279368 bytes (38.0%). Changes remain uncommitted.
+
+## [2026-10-11] ticket | T-10200 orphan ownership
+
+Claimed [[tickets/T-10200-orphan-jump-tables]]. Read the shared round-12 brief, standards and ownership documentation. Initial inspection finds two consecutive orphan chunks following BUNKASAI's 801511E0 island; investigate object boundaries before enabling its 21 exact guarded drafts.
+
+## [2026-10-11] build | T-10200 orphan layout experiment
+
+[[tickets/T-10200-orphan-jump-tables]]: baseline full Docker build passed. A merged BUNKASAI island lost 16 bytes of internal rodata padding despite matching sampled instructions, so discarded that layout. Added tools/orphan_rodata.py to assign separate islands from reference-ordered function boundaries, plus tools/object_layout.py to trim only unused compiler text tail alignment at configured subsegments. Enabled the 21 exact guards and applied BUNKASAI and TACO splits; unit checks pending. See [[build-system]] for the earlier TACO evidence.
+
+## [2026-10-11] build | T-10200 22 active conversions
+
+Both affected overlays pass SHA1: 21 enabled BUNKASAI guards and TACO func_8013F250. The latter uses a consistent unsigned counter lvalue and the ticketed two-word local frame pad. Documented the ownership recipe in [[build-system]], [[decompile-workflow]], [[toolchain]] and [[matching-notes]]. tools/queue.py has only diagnostic/documentation edits; claimed orphan-map rows disappear so their functions become workable. Started the mandatory clean 27-unit build; applying the code-review checklist inline per the shared brief.
+
+## [2026-10-11] ticket | T-10200 In Review
+
+Moved [[tickets/T-10200-orphan-jump-tables]] to In Review with matching [[kanban]] card. All 21 requested guards plus TACO 8013F250 are active. Original-map audit also identifies BUNKASAI 80158764, whose recorded 102-line C mismatch remains assembly but now has a workable island. Relevant synthetic suites pass; the clean build and prototype audit are finishing.
+
+## [2026-10-11] build | T-10200 clean 27/27 and 22 gains
+
+[[tickets/T-10200-orphan-jump-tables]] passes the clean Docker build with 27/27 SHA1s, header/global markers and prototype audit (zero new disagreements, 17 known). Progress is 5099/6958 functions, 911084/2279368 bytes (40.0%): +22 functions / 27036 bytes. All 124 relevant tests pass; ownership and splitter reruns are idempotent; fresh queue has zero O rows. Inline standards/spec review has no unresolved findings. Moved ticket/card to Done, updated [[index]], and left all edits uncommitted for orchestrator review. Recipe: [[build-system]] and [[decompile-workflow]].
