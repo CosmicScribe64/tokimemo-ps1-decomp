@@ -103,4 +103,6 @@ typedef struct OptionGrid80 {
     /* 0x40 */ s16 w[16];
     /* 0x60 */ s16 h[16];
 } OptionGrid80; /* size 0x80 */
+extern u32 *D_8013D2C4[];
+extern s32 D_8013D2FC;
 #endif

@@ -76,7 +76,41 @@ void func_8013BE08(u8 *arg0, u16 arg1) {
     *(s16 *)(arg0 + 0x54) = 0x3C81;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10320, saved pointers swap $a2/$a3 (base vs arg0) and the constant stores schedule one slot apart, 23 lines */
+void func_8013BE9C(u8 *arg0) {
+    u8 *base;
+    u8 *p;
+
+    base = D_80158A90;
+    func_80133AD0(0x606);
+    p = func_8013BD10(base, base + 0xD80);
+    *(s32 *)(p + 0x20) = *(s32 *)(arg0 + 0xC);
+    *(s32 *)(p + 0x24) = *(s32 *)(arg0 + 0x10);
+    *(s16 *)(p + 0x14) = *(s16 *)arg0;
+    *(s32 *)(p + 0x30) = 0;
+    *(s32 *)(p + 0x34) = 0;
+    *(s32 *)(p + 0x2C) = 0;
+    *(s32 *)(p + 0x28) = 0;
+    p[0] = 1;
+    *(s16 *)(p + 0x16) = *(s16 *)(arg0 + 2);
+    p[0x40] = 0x80;
+    *(s16 *)(p + 0x10) = 6;
+    *(s16 *)(p + 0x62) = 0;
+    *(s16 *)(p + 0x50) = 0;
+    *(s16 *)(p + 4) = 0x90;
+    p[0xD] = 0;
+    p[0xE] = 0;
+    p[0xF] = 0;
+    *(s16 *)(p + 6) = 0;
+    *(s16 *)(p + 8) = 0;
+    *(s16 *)(p + 0xA) = 0;
+    *(s32 *)(p + 0x38) = D_8014E34C;
+    func_8013BE08(p, 0x2C);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013BE9C);
+#endif
 
 void func_8013BF68(u8 *arg0) {
     *(s32 *)(arg0 + 0x20) = 0;
@@ -152,7 +186,53 @@ void func_8013C048(TtMover *arg0) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10320, saved-register order of the loop constants and D_80158A6C ($s2/$s4 swap) plus one scheduling nop, 28 lines */
+void func_8013C0A8(void) {
+    s32 i;
+    u8 *q;
+    u8 *p;
+
+    q = D_80158A6C;
+    p = D_80158A90;
+    i = 0;
+    do {
+        if (*p != 0) {
+            switch (*(u16 *)(p + 4)) {
+            case 0x40:
+                break;
+            case 0x90:
+                *(u16 *)(p + 98) = *(u16 *)(p + 98) + 0x80;
+                if (*(u16 *)(p + 98) > 0x1000) {
+                    *(u16 *)(p + 98) = 0x1000;
+                    *(u16 *)(p + 4) = 0x91;
+                }
+                break;
+            case 0x91:
+                *(u16 *)(p + 90) = 0x3C;
+                *(u16 *)(p + 4) = 0x92;
+                *(s32 *)(p + 44) = *(s32 *)q;
+                break;
+            case 0x92:
+                *(u16 *)(p + 90) = *(u16 *)(p + 90) - 1;
+                *(s32 *)(p + 44) = *(s32 *)q;
+                if (*(u16 *)(p + 90) == 0) {
+                    *p = 0;
+                }
+                break;
+            }
+            func_8013C048(p);
+            if (*(u16 *)(p + 4) < 0x90) {
+                func_80132000(p + 0x38, p + 0x56, p + 0x57);
+            }
+        }
+        i++;
+        p += 0x6C;
+    } while (i != 0x20);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013C0A8);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013C1FC);
 

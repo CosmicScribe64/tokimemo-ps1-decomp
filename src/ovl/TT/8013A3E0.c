@@ -7,7 +7,72 @@ typedef struct {
     u8 pad4[0x1C];
 } TtXY; /* FAKE: pad4 and fake_pad below reproduce the original's frame (locals 0x30..0x54); real locals unknown. T-8060 */
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10320, IDO hoists the loop-invariant &D_80155B36 into $s8 (the original keeps lui/addiu in the loop and hoists 12 into $s7), 26 lines */
+void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2) {
+    u8 *a;
+    u8 *b;
+    u8 *c;
+    u8 *p;
+    s32 i;
+    s32 j;
+    s32 k;
+
+    a = D_80158A74;
+    b = D_80158A64;
+    c = D_80158A8C;
+    if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, arg0, arg1) != 0) {
+        func_80144094();
+        *(u16 *)(a + 4) = 0x60;
+        *(s16 *)(a + 10) = 0;
+        *(s16 *)(a + 8) = 0;
+        *(s16 *)(a + 6) = 0;
+        a[15] = 0;
+        a[14] = 0;
+        a[13] = 0;
+    }
+    p = D_80158A80;
+    i = 0;
+    do {
+        if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, arg0, arg1) != 0) {
+            b[0x25] = b[0x25] + 1;
+            if (b[0x24] != 0 && !(b[0x25] & 3)) {
+                func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
+            }
+            func_80133AD0(0x508);
+            *(u16 *)(p + 4) = 0x80;
+            *(s16 *)(p + 10) = 0;
+            *(s16 *)(p + 8) = 0;
+            *(s16 *)(p + 6) = 0;
+            p[15] = 0;
+            p[14] = 0;
+            p[13] = 0;
+            if (arg2 >= 0) {
+                if (i >= 6) {
+                    *(s16 *)(c + arg2 * 2 + 0x2D8) -= 1;
+                } else if (*(u16 *)(p + 2) == 9) {
+                    *(s16 *)(c + arg2 * 2 + 0x2D8) -= 4;
+                } else {
+                    *(s16 *)(c + arg2 * 2 + 0x2D8) -= 2;
+                }
+                j = arg2 * 2;
+                if (arg2 >= 2) {
+                    j = arg2 * 2 + 2;
+                }
+                c[j * 0x14 + 0x42] = 1;
+                if (*(s16 *)(c + arg2 * 2 + 0x2D8) < 0) {
+                    func_80133AD0(0x50A);
+                    c[arg2 + 0x343] = 1;
+                }
+            }
+        }
+        i++;
+        p += 0x54;
+    } while (i != 12);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A3E0);
+#endif
 
 void func_8013A610(void) {
     TtSceneDraw *p;
@@ -324,4 +389,70 @@ void func_8013BAD0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013BB28);
+void func_8013BB28(s32 arg0) {
+    u8 *state;
+    u8 *view;
+    u8 *pool;
+    u8 *aux;
+
+    state = D_80158A8C;
+    view = D_80158A64;
+    aux = D_80158A74;
+    switch (*(u16 *)(state + 4)) {
+    case 0x0:
+        func_80142570(arg0, aux);
+        if (*(u16 *)(view + 4) == 0) {
+            func_80044750(0xB1);
+            func_800451E0(0x8019A000);
+            func_80044750(0x12);
+            func_80044750(0x23);
+            func_80044750(0x2E);
+            func_80044750(0x21);
+            func_80044750(4);
+            func_80044750(0x200);
+        }
+        func_8013AC0C();
+        *(s16 *)(state + 4) = 0x20;
+        break;
+    case 0x20:
+        func_8013AA44();
+        func_8013AACC();
+        func_8013AB50();
+        func_8013ABB0();
+        func_8013ADC0();
+        func_8013B4A0();
+        break;
+    case 0x40:
+        func_8013B150();
+        func_8013B4A0();
+        func_8013BAD0();
+        func_8013AA44();
+        func_8013AACC();
+        func_8013AB50();
+        func_8013ABB0();
+        if (*(u16 *)(state + 782) == 1 && *(s16 *)(state + 780) < 0) {
+            *(s16 *)(state + 4) = 0x80;
+            *(s16 *)(state + 10) = 0;
+            *(s16 *)(state + 8) = 0;
+            *(s16 *)(state + 6) = 0;
+            state[15] = 0;
+            state[14] = 0;
+            state[13] = 0;
+        }
+        break;
+    case 0x80:
+        func_80044750(0xC1);
+        aux[82] = 1;
+        func_8013B1C4();
+        break;
+    case 0xA0:
+        func_80044750(0xB1);
+        *state = 0;
+        view[18] = 0;
+        pool = (u8 *)D_80158A70;
+        *(s16 *)(pool + 30) = 1;
+        *(s16 *)(view + 2) = 0xA0;
+        break;
+    }
+    func_8013A960();
+}

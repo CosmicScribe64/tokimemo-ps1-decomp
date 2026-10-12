@@ -43,7 +43,28 @@ void func_80148308(void) {
     D_800E6280.unk_1104.u += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801483B0);
+void func_801483B0(void) {
+    s32 i;
+
+    func_8013A790(1, 1);
+    for (i = 0; i < 0xB; i++) {
+        func_801487A4(D_8015FA44[i], i, D_8015FA80, D_8015FA50, D_8015FA68);
+    }
+    func_80148D6C();
+    func_8014B2A4(D_800E6280.unk_1104.w);
+    if (func_80147B24(0xB, D_8015FA68) >= 0x50) {
+        D_80127090.unk0 = 0x40000000;
+        for (i = 3; i < 0x1F; i++) {
+            D_80127080[i].unk0 = 0x40000000;
+            /* FAKE: loop-invariant store; uopt hoists it behind the loop address setup, which places it as the original does. Real source unknown. T-10320 */
+            D_801270A0.unk0 = 0x40000000;
+        }
+        func_801335A0(0, 0x505);
+        D_8015EDCC += 1;
+        func_8004284C();
+    }
+    D_800E6280.unk_1104.w += 1;
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_801484E4);
 
@@ -120,4 +141,60 @@ void func_80148B58(s32 arg0) {
     D_8015EDB4[25].unk2 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/801480B0", func_80148D6C);
+void func_80148D6C(void) {
+    u32 v;
+    u8 t;
+
+    v = func_80147B24(0xB, D_8015FA68);
+    if (D_8015EDB4[20].unk2 < v) {
+        D_80122760 = 0;
+        D_80122764 = 0;
+        D_80122768 = -0x64;
+        D_8012276C = 0xFF;
+        D_8012276D = 0x80;
+        D_8012276E = 0x80;
+        func_8009AD70(0, &D_80122760);
+        D_80122770 = 0;
+        D_80122774 = 0;
+        D_80122778 = -0x64;
+        D_8012277C = 0xFF;
+        D_8012277D = 0x80;
+        D_8012277E = 0x80;
+        func_8009AD70(1, &D_80122770);
+        D_80122780 = 0;
+        D_80122784 = 0;
+        D_80122788 = -0x64;
+        D_8012278C = 0xFF;
+        D_8012278D = 0x80;
+        D_8012278E = 0x80;
+        func_8009AD70(2, &D_80122780);
+        t = D_8015EDB4[20].unk3;
+        if (t >= 3U) {
+            D_8015EDB4[20].unk2 = v;
+            D_80122760 = -0x64;
+            D_80122764 = 0x1E;
+            D_80122768 = -0x1E;
+            D_8012276C = 0xE0;
+            D_8012276D = 0xE0;
+            D_8012276E = 0xE0;
+            func_8009AD70(0, &D_80122760);
+            D_80122770 = 0x28;
+            D_80122774 = 0x32;
+            D_80122778 = -0x64;
+            D_8012277C = 0x40;
+            D_8012277D = 0x40;
+            D_8012277E = 0x40;
+            func_8009AD70(1, &D_80122770);
+            D_80122780 = 0xA;
+            D_80122784 = -0x14;
+            D_80122788 = -0x64;
+            D_8012278C = 0x30;
+            D_8012278D = 0x30;
+            D_8012278E = 0x30;
+            func_8009AD70(2, &D_80122780);
+            D_8015EDB4[20].unk3 = 0;
+        } else {
+            D_8015EDB4[20].unk3 = t + 1;
+        }
+    }
+}

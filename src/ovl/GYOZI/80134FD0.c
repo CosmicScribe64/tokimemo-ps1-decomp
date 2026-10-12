@@ -20,7 +20,19 @@ void func_80135044(void) {
     func_8004DE1C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10320, only the register of the post-incremented D_800F6474 differs ($v1/$v0 vs $a0/$v1), 8 lines */
+s32 func_8013506C(void) {
+    func_801343A4();
+    if (D_800F6474++ == 0 && (*(u8 ***)&D_80145EAC)[D_80145EB4][D_80145EB8 - 1] == 7) {
+        if (func_800BDC20((*(s32 ***)&D_80145EA8)[D_80145EB4][D_80145EB8 - 1], "\203\113\203\140\203\203") == 0) {
+            func_80086AB0(0x60C);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134FD0", func_8013506C);
+#endif
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134FD0", func_80135118);
 

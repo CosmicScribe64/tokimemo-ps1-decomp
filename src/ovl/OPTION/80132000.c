@@ -724,7 +724,42 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801378DC);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137C1C);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10320, only temporary numbering of the D_801230D0 load differs (t7 vs t8), 17 lines */
+void func_80137E38(void) {
+    u32 **e;
+    s32 sel;
+
+    sel = D_800E6280.unk_1094;
+    if (D_8013D2FC == 0) {
+        if (func_800460EC() & 4) {
+            D_8013D2FC = 1;
+        }
+    }
+    if (D_8013D2FC != 0) {
+        e = &D_8013D2C4[sel];
+        if (D_801230D0 < **e) {
+            if (func_800460EC() & 2) {
+                D_8013D2FC = 0;
+                func_80046290(*(s32 *)((u8 *)*e + D_801230D0 * 8 + 4), *(s32 *)((u8 *)*e + D_801230D0 * 8 + 8), sel);
+                D_801230D0 += 1;
+                func_80044750(0x300);
+            }
+        } else if (func_800460EC() & 2) {
+            D_801230D0 = 0;
+            func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        D_801230D0 = 0;
+        func_80044750(0x74);
+        func_80042940((D_800E6280.unk_110A - 1) & 0xFF);
+    }
+    func_801320C0();
+}
+#else
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80137E38);
+#endif
 
 void func_80137FA0(void) {
     s32 i;

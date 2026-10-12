@@ -497,6 +497,15 @@ void func_8013546C(void);
 #ifndef OVL_TACO_T10010_SCORE_TABLE
 #define OVL_TACO_T10010_SCORE_TABLE
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
+
+extern Tc14 D_8015EB30[16];
+extern Tc14 D_8015EC70;
+void func_8013DEE4();
+extern u8 D_8015FA80[];
+void func_801483B0(void);
+void func_80148D6C(void);
+void func_8013E778();
+void func_8013EAA4();
 #endif
 
 extern u8 D_80161ECD;

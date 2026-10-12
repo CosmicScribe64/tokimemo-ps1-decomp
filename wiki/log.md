@@ -9761,6 +9761,8 @@ Created [[tickets/T-10340-wave-12-list-4]] (In Progress), 149 functions in 48 fi
 
 ## [2026-10-11] ticket | T-10330 early stop
 [[tickets/T-10330-wave-12-list-3]]: 0 matches, one guarded near miss in `src/ovl/EVENT/8010FE10.c`; ticket stays In Progress.
+## [2026-10-11] ticket | T-10320 wave 12 list 2 started
+Created [[tickets/T-10320-wave-12-list-2]], In Progress.
 ## [2026-10-11] ticket | Claim wave-11 tool fixes
 Created [[tickets/T-10210-wave-11-tool-fixes]] and aligned [[kanban]]/[[index]]. Read shared tooling12 brief, standards and wave-11 evidence in [[matching-notes]] and [[decompile-workflow]]. Wrapper regressions and local-frame investigation are assigned; configure.py, tools/split_objects.py and config/ are excluded.
 
@@ -9790,3 +9792,5 @@ Moved [[tickets/T-10200-orphan-jump-tables]] to In Review with matching [[kanban
 Wave 12 list 4 produced no matches; attempts recorded in [[matching-notes]]. [[tickets/T-10340-wave-12-list-4]] moved to Done.
 ## [2026-10-11] ticket | T-10330 done
 [[tickets/T-10330-wave-12-list-3]] moved to Done: 0 exact matches, three guarded near misses in `src/ovl/EVENT/8010FE10.c`, `src/ovl/GYOZI/8013E5B0.c`, `src/ovl/ETC/80143240.c`.
+## [2026-10-12] ticket | T-10320 wave 12 list 2 done
+6 functions matched (2,640 bytes: TT `func_8013BB28`, TACO `func_80148D6C`, `func_801483B0`, `func_8013E4FC`, `func_8013DDE4`, main `func_800536AC`), 13 near misses kept under `NON_MATCHING`, 26 T-0018 rows added. New idioms (counter reuse, end-label base spelling, one-line loop entry, sibling clone) in [[matching-notes]]; inline review recorded in [[tickets/T-10320-wave-12-list-2]]. Tooling notes: `sync_protos --add-global` rewrites main_api.h wholesale; `ninja progress` fails after the merge with main (BUNKASAI/80154018.c).
