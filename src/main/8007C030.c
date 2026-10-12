@@ -526,33 +526,26 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80082764);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
-/* NON_MATCHING: T-10310, near miss */
-#ifdef NON_MATCHING
 s32 junban_init(void) {
-    u32 g;
     u8 r;
+    u8 q;
 
-    g = D_800E6280.unk_10F8;
-    r = g % 3;
+    q = D_800E6280.unk_10F8 % 3;
+    r = q;
     if (r == 0) {
-        D_800CA2A4[1] = r + (g & 1) + 1;
-        D_800CA2A4[2] = r + ((g + 1) & 1) + 1;
+        D_800CA2A4[1] = r + (D_800E6280.unk_10F8 & 1) + 1;
+        D_800CA2A4[2] = r + ((D_800E6280.unk_10F8 + 1) & 1) + 1;
         D_800CA2A4[0] = r;
-        return;
-    }
-    if (r == 1) {
-        D_800CA2A4[1] = (r - 1) + ((g & 1) * 2);
-        D_800CA2A4[2] = (r - 1) + (((g + 1) & 1) * 2);
+    } else if (r == 1) {
+        D_800CA2A4[1] = (r - 1) + ((D_800E6280.unk_10F8 & 1) * 2);
+        D_800CA2A4[2] = (r - 1) + (((D_800E6280.unk_10F8 + 1) & 1) * 2);
         D_800CA2A4[0] = r;
-        return;
+    } else {
+        D_800CA2A4[1] = (r - 1) - (D_800E6280.unk_10F8 & 1);
+        D_800CA2A4[2] = (r - 1) - ((D_800E6280.unk_10F8 + 1) & 1);
+        D_800CA2A4[0] = r;
     }
-    D_800CA2A4[1] = (r - 1) - (g & 1);
-    D_800CA2A4[2] = (r - 1) - ((g + 1) & 1);
-    D_800CA2A4[0] = r;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
-#endif
 
 void normal_date_three_select(void) {
     switch (D_800E6280.unk_1104.u) {

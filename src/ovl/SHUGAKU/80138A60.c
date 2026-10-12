@@ -231,12 +231,10 @@ void func_801396F4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-10310, near miss */
-#ifdef NON_MATCHING
 s32 func_80139740(void) {
-    s32 pad[2];
+    s32 pad[2]; /* FAKE: unused locals, frame slots only (T-10310) */
     s32 state;
-    s32 t;
+    u8 t; /* FAKE: narrow type shifts the temporary numbering to the original's (permuter, T-10310) */
 
     t = func_80051A68(D_800E6280.unk_F5F);
     D_8013C97C = 0xFF;
@@ -267,9 +265,6 @@ s32 func_80139740(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139740);
-#endif
 
 void func_80139870(void) {
     D_800CA2DC = 0;

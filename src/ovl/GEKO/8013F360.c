@@ -284,26 +284,19 @@ void func_8013FF64(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-10310, near miss */
-#ifdef NON_MATCHING
 void func_80140040(void) {
     s16 i;
-    u32 cnt;
     s32 any;
-    u8 *p;
 
-    cnt = D_801470AC;
     for (i = 0; i < 0xA; i++) {
-        if (cnt >= (u32)(i * 0x1E)) {
-            p = D_8011ECD0 + i * 0x44;
-            *(s16 *)(p + 0x1A7A) = -1;
-            *(s16 *)(p + 0x1A7E) = 1;
+        if (D_801470AC >= (u32)(i * 0x1E)) {
+            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7A] = -1;
+            *(s16 *)&D_8011ECD0[i * 0x44 + 0x1A7E] = 1;
         }
-        p = D_8011ECD0 + i * 0x44;
-        *(s32 *)(p + 0x1A74) += *(s32 *)(p + 0x1A7C);
-        *(s32 *)(p + 0x1A70) += *(s32 *)(p + 0x1A78);
-        if (*(s16 *)(p + 0x1A76) >= 0xA1) {
-            p[0x1A4F] &= ~0x80;
+        *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A70] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A78];
+        *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A74] += *(s32 *)&D_8011ECD0[i * 0x44 + 0x1A7C];
+        if (*(s16 *)&D_8011ECD0[i * 0x44 + 0x1A76] >= 0xA1) {
+            D_8011ECD0[i * 0x44 + 0x1A4F] &= ~0x80;
         }
     }
     any = 0;
@@ -317,9 +310,6 @@ void func_80140040(void) {
     }
     D_801470AC += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013F360", func_80140040);
-#endif
 
 void func_8014016C(void) {
     D_800E6280.unk_F5F = 0xA;
