@@ -106,8 +106,7 @@ extern s32 D_8014A3B4;
 extern s32 D_8014A3B8;
 
 extern u8 D_8014A454[];
-extern s16 D_80149984;
-extern s16 D_80149986;
+extern s16 D_80149984[2]; /* [0] x, [1] y; defined in 80138950.c */
 extern s32 D_80149940;
 typedef struct TaiikuPair {
     /* 0x0 */ s16 unk0;

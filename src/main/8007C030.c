@@ -2,6 +2,53 @@
 #define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #include "common.h"
 #include "game.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800C9F60);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800C9FF8);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA048);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA108);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA120);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA124);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA128);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA130);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA134);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA138);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA13C);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA140);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA144);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA148);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA14C);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA160);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA164);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA168);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA16C);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA174);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA17C);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA188);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA190);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA19C);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA1DC);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA23C);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA248);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA250);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA25C);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA280);
+u8 D_800CA2A4[4] = { 0, 1, 2, 0 };
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2A8);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2AC);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2B0);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2BC);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2C0);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2C4);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2C8);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA2F0);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA300);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA318);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA330);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA348);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA360);
+INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA36C);
 /* FAKE: typed view of the existing same-address alias keeps the byte argument load in a1 and the index conversion inside the matched callee. T-9540 */
 void func_80084C98(s32 idx, u8 val);
 /* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
@@ -287,7 +334,22 @@ void normal_date_girl_out_init(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
+s32 normal_date_girl_suddenout(void) {
+    D_8011F50F &= 0xFF7F;
+    D_8011F4CB &= 0xFF7F;
+    D_801217D0[0].unk_00 |= 0x80000000;
+    D_801217D0[1].unk_00 |= 0x80000000;
+    ((u8 *)&D_801217E5)[0] = ((u8 *)&D_801217E4)[0] = ((u8 *)&D_801217E6)[0] = 0x80;
+    ((u8 *)&D_80121809)[0] = ((u8 *)&D_80121808)[0] = ((u8 *)&D_8012180A)[0] = 0x80;
+    D_80122CF4 = 0;
+    D_80122CF8 = 1;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenout);
+#endif
 
 s32 normal_date_bg_fadein(void) {
     D_80122CF8 = 1;
@@ -464,7 +526,33 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80082764);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
+s32 junban_init(void) {
+    u32 g;
+    u8 r;
+
+    g = D_800E6280.unk_10F8;
+    r = g % 3;
+    if (r == 0) {
+        D_800CA2A4[1] = r + (g & 1) + 1;
+        D_800CA2A4[2] = r + ((g + 1) & 1) + 1;
+        D_800CA2A4[0] = r;
+        return;
+    }
+    if (r == 1) {
+        D_800CA2A4[1] = (r - 1) + ((g & 1) * 2);
+        D_800CA2A4[2] = (r - 1) + (((g + 1) & 1) * 2);
+        D_800CA2A4[0] = r;
+        return;
+    }
+    D_800CA2A4[1] = (r - 1) - (g & 1);
+    D_800CA2A4[2] = (r - 1) - ((g + 1) & 1);
+    D_800CA2A4[0] = r;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
+#endif
 
 void normal_date_three_select(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -489,11 +577,11 @@ s32 normal_date_three_select_main(void) {
     if (D_800E6280.unk_F88 & 0x200020) {
         if (check_end_k() != 0) {
             if (D_800E6280.unk_F90[1].unk_06 != 0) {
-                D_80122CDC = D_800CA2A4;
+                D_80122CDC = D_800CA2A4[0];
             } else if (D_800E6280.unk_F90[3].unk_06 != 0) {
-                D_80122CDC = D_800CA2A5;
+                D_80122CDC = D_800CA2A4[1];
             } else if (D_800E6280.unk_F90[5].unk_06 != 0) {
-                D_80122CDC = D_800CA2A6;
+                D_80122CDC = D_800CA2A4[2];
             } else {
                 return 0;
             }

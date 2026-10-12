@@ -84,7 +84,48 @@ void func_80139AA0(s32 arg0) {
     dtd_on(0xB);
 }
 
+/* NON_MATCHING: T-10310, near miss */
+#ifdef NON_MATCHING
+void func_80139B48(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+s32 arg0;
+s32 arg1;
+s32 arg2;
+s32 arg3;
+u32 arg4;
+s32 arg5;
+s32 arg6;
+{
+    s32 unused; /* FAKE: unused local, only its frame slot above p is observed (T-6030) */
+    u8 *p;
+
+    p = func_800490F0(0x24, D_8011ECA0);
+    func_8009F054(p);
+    func_8009EF84(p, arg6);
+    p[5] = arg4 >> 8;
+    p[4] = arg4 >> 16;
+    p[6] = arg4;
+    p[0xD] = arg4 >> 8;
+    p[0xC] = arg4 >> 16;
+    p[0xE] = arg4;
+    p[0x15] = arg4 >> 8;
+    p[0x14] = arg4 >> 16;
+    p[0x16] = arg4;
+    p[0x1C] = arg4 >> 16;
+    p[0x1E] = arg4;
+    p[0x1D] = arg4 >> 8;
+    *(s16 *)(p + 8) = D_800E6280.unk_014[D_8011ECA0] + arg0;
+    *(s16 *)(p + 0xA) = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    *(s16 *)(p + 0x10) = D_800E6280.unk_014[D_8011ECA0] + arg0 + arg2;
+    *(s16 *)(p + 0x12) = D_800E6280.unk_018[D_8011ECA0] + arg1;
+    *(s16 *)(p + 0x18) = D_800E6280.unk_014[D_8011ECA0] + arg0;
+    *(s16 *)(p + 0x1A) = D_800E6280.unk_018[D_8011ECA0] + arg1 + arg3;
+    *(s16 *)(p + 0x20) = D_800E6280.unk_014[D_8011ECA0] + arg0 + arg2;
+    *(s16 *)(p + 0x22) = D_800E6280.unk_018[D_8011ECA0] + arg1 + arg3;
+    func_8009EED0(&D_800E8CA0[(D_8011ECA0 << 0xA) + (arg5 * 4)], p);
+}
+#else
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139B48);
+#endif
 
 void func_80139D24(void) {
     func_80046318(9, 0x80180000, 0xAE18);

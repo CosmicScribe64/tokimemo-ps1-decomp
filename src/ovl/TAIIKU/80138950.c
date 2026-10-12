@@ -1,5 +1,67 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149940);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149944);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149948);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014994C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149950);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149954);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149958);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014995C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149960);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149964);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149968);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014996C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149970);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149974);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149978);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014997C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149980);
+s16 D_80149984[2] = { 0, 0 };
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149988);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014998C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149990);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149994);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149998);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014999C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499A0);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499A4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499A8);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499AC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B0);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499C0);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499C4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499CC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499D4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499D8);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499DC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499E0);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499E4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149A84);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149B24);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149BC4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149C64);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149D04);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149DA4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149DAC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149DF4);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149E08);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149E2C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149E34);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149E7C);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149E90);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149EBC);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149EE8);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149F00);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149F20);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149F40);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149F50);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149F68);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149F80);
+INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149F8C);
 
 void func_80138950(void) {
     TaiikuTbl11 a;
@@ -107,20 +169,20 @@ s32 func_8013AF74(void) {
     if (D_80149990 != 0) {
         return 7;
     }
-    if (D_8012067A < 0x31 && D_8012067A >= ((s16)D_80149986 >> 3) + 0x10 && ((s16)D_80149984 >> 3) + 0x50 >= D_80120676 && D_80120676 >= ((s16)D_80149984 >> 3) - 0x50) {
+    if (D_8012067A < 0x31 && D_8012067A >= ((s16)D_80149984[1] >> 3) + 0x10 && ((s16)D_80149984[0] >> 3) + 0x50 >= D_80120676 && D_80120676 >= ((s16)D_80149984[0] >> 3) - 0x50) {
         return 1;
     }
-    v = ((s16)D_80149986 >> 3) + 0x10;
-    if (D_8012067A < v && ((s16)D_80149984 >> 3) + 0x50 < D_80120676) {
+    v = ((s16)D_80149984[1] >> 3) + 0x10;
+    if (D_8012067A < v && ((s16)D_80149984[0] >> 3) + 0x50 < D_80120676) {
         return 2;
     }
-    if (D_8012067A < v && D_80120676 < ((s16)D_80149984 >> 3) - 0x50) {
+    if (D_8012067A < v && D_80120676 < ((s16)D_80149984[0] >> 3) - 0x50) {
         return 3;
     }
-    if (D_8012067A >= v && D_80120676 < ((s16)D_80149984 >> 3) - 0x50) {
+    if (D_8012067A >= v && D_80120676 < ((s16)D_80149984[0] >> 3) - 0x50) {
         return 5;
     }
-    if (D_8012067A >= v && ((s16)D_80149984 >> 3) + 0x50 < D_80120676) {
+    if (D_8012067A >= v && ((s16)D_80149984[0] >> 3) + 0x50 < D_80120676) {
         return 6;
     }
     return 0;
@@ -244,17 +306,17 @@ void func_8013C5C8(s32 arg0)
 }
 
 void func_8013C694(void) {
-    if (D_801206BE < (D_80149986 >> 3) + 0x10) {
-        if (D_801206BA < (D_80149984 >> 3) + 0x50 && (D_80149984 >> 3) - 0x50 < D_801206BA) {
-            D_801206BE = (D_80149986 >> 3) + 0x10;
+    if (D_801206BE < (D_80149984[1] >> 3) + 0x10) {
+        if (D_801206BA < (D_80149984[0] >> 3) + 0x50 && (D_80149984[0] >> 3) - 0x50 < D_801206BA) {
+            D_801206BE = (D_80149984[1] >> 3) + 0x10;
         }
     }
-    if ((D_80149984 >> 3) - 0x50 < D_801206BA && D_801206BA < (D_80149984 >> 3) && D_801206BE < (D_80149986 >> 3) + 0x10) {
-        D_801206BA = (D_80149984 >> 3) - 0x50;
+    if ((D_80149984[0] >> 3) - 0x50 < D_801206BA && D_801206BA < (D_80149984[0] >> 3) && D_801206BE < (D_80149984[1] >> 3) + 0x10) {
+        D_801206BA = (D_80149984[0] >> 3) - 0x50;
     }
-    if (D_801206BA < (D_80149984 >> 3) + 0x50) {
-        if ((D_80149984 >> 3) < D_801206BA && D_801206BE < (D_80149986 >> 3) + 0x10) {
-            D_801206BA = (D_80149984 >> 3) + 0x50;
+    if (D_801206BA < (D_80149984[0] >> 3) + 0x50) {
+        if ((D_80149984[0] >> 3) < D_801206BA && D_801206BE < (D_80149984[1] >> 3) + 0x10) {
+            D_801206BA = (D_80149984[0] >> 3) + 0x50;
         }
     }
 }
@@ -276,8 +338,8 @@ s32 func_8013CEF8(void) {
     s32 dx;
     s32 temp_v0;
 
-    dx = func_800AE0C0(((s16) D_80149984 >> 3) - D_80120676);
-    temp_v0 = func_800AE0C0(((s16) D_80149986 >> 3) - D_8012067A);
+    dx = func_800AE0C0(((s16) D_80149984[0] >> 3) - D_80120676);
+    temp_v0 = func_800AE0C0(((s16) D_80149984[1] >> 3) - D_8012067A);
     if (D_80149944 != 1) {
         return 0;
     }
@@ -448,14 +510,14 @@ void func_8013FEF0(void) {
     scale.vz = D_80149954;
     func_800A0F4C(&m2, &scale);
     func_800A0C64(&m1, &m2);
-    m1.t[0] = D_80149984;
-    m1.t[1] = D_80149986;
+    m1.t[0] = D_80149984[0];
+    m1.t[1] = D_80149984[1];
     m1.t[2] = 0x1B58;
     *(TaiikuMat *)D_801227A4 = m1;
     D_801227A0->unk0 = 0;
     D_80149954 -= 0x80;
-    if ((D_80149986 >> 3) >= -0x3F) {
-        D_80149986 -= 8;
+    if ((D_80149984[1] >> 3) >= -0x3F) {
+        D_80149984[1] -= 8;
     }
 }
 
