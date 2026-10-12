@@ -128,7 +128,6 @@ void func_8013703C(void);
 void func_80137090(void);
 void func_80137228(void);
 void func_8013732C(void);
-extern u16 D_801499A2;
 void func_8013F3A4(s32);
 void func_8013F948(void);
 void func_80147F58(s32);
@@ -316,10 +315,7 @@ typedef struct TaiikuScene44 {
 
 #endif
 
-
 /* T-9510: coordinate bounds loaded with LH in func_8013C5C8. */
-extern s16 D_801499A4;
-extern s16 D_801499A6;
 
 #ifndef OVL_TAIIKU_T9510_COORD_TYPES
 #define OVL_TAIIKU_T9510_COORD_TYPES
@@ -345,7 +341,6 @@ extern TaiikuWords48 D_80149030;
 extern TaiikuWords48 D_801490F0;
 
 extern s32 D_8014A1D0;
-
 
 #ifndef OVL_TAIIKU_RANDOM_T9610
 #define OVL_TAIIKU_RANDOM_T9610
@@ -437,5 +432,22 @@ extern s32 D_8014997C;
 extern s32 D_80149980;
 void func_8013D254(void);
 extern s32 D_80149948;
+
+typedef struct {
+    u16 unk_00;
+    u16 unk_02;
+} Taiiku2x16; /* size 4 */
+typedef struct {
+    u16 unk_00;
+    u16 unk_02;
+    s16 unk_04;
+    s16 unk_06;
+    s32 unk_08;
+    s32 unk_0C;
+} TaiikuA0; /* size 0x10 */
+extern Taiiku2x16 D_80149970;
+extern TaiikuA0 D_801499A0;
+extern u8 D_801499DC;
+extern s16 D_801499E0;
 
 #endif

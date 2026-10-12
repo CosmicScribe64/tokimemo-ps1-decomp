@@ -1,3 +1,6 @@
+/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
+#define MAIN_API_OVERRIDE_func_8009B430 /* implicit declaration: called with 3 arguments, the original leaves $a3 unset (main_api.h: 4) */
+
 #include "common.h"
 #include "game.h"
 
@@ -58,7 +61,33 @@ void initCoordinate(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", initModelingData_init);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10520, the original also stores arg0 to its home slot and keeps the record pointer in the same spill slot as arg0+4 (16 lines) */
+s32 func_80058F9C(s32 arg0, s32 arg1, u32 arg2) {
+    s32 q;
+    u32 limit;
+    s32 p;
+
+    p = arg0 + 4;
+    func_8009B3C0(p);
+    q = p + 4;
+    limit = *(u32 *)q;
+    if (limit >= 0x11) {
+        limit = 0xF;
+    }
+    q += 4;
+    if (arg2 < limit) {
+        p = (s32)D_80122640 + arg1 * 0x10;
+        func_8009B430(q, (u8 *)p, arg2);
+        *(TaiikuBig **)(p + 4) = &D_801227A0[arg1];
+        *(s32 *)p = 0;
+        return 1;
+    }
+    return -1;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058F9C);
+#endif
 
 void func_80059048(void) {
     s32 i;

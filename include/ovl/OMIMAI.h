@@ -34,4 +34,38 @@ extern u8 D_80134CCC;
 s32 func_801323F8(void);
 s32 func_80133500(void);
 
+extern s32 D_80134C34;
+extern s32 D_80134C38;
+extern s32 D_80134C3C;
+extern s32 D_80134C40;
+extern s32 D_80134C44;
+extern s32 D_80134C48;
+extern s32 D_80134C4C;
+extern s32 D_80134C50;
+extern s32 D_80134C54;
+extern s32 D_80134C58;
+extern s32 D_80134C60;
+extern s32 D_80134C68;
+extern s32 D_80134C6C;
+extern s32 D_80134C70;
+extern s32 D_80134C74;
+extern s32 D_80134C78;
+extern s32 D_80134C7C;
+extern s32 D_80134C80;
+extern s32 D_80134C84;
+extern s32 D_80134C88;
+extern s32 D_80134C8C;
+extern s32 D_80134C94;
+extern s32 D_80134C9C;
+extern s32 D_80134CA0;
+extern s32 D_80134CA4;
+extern s32 D_80134CA8;
+extern s32 D_80134CAC;
+extern s32 D_80134CB0;
+extern s32 D_80134CB4;
+extern s32 D_80134CB8;
+extern s32 D_80134CBC;
+extern s32 D_80134CC0;
+extern s32 D_80134CC8;
+
 #endif /* OVL_OMIMAI_H */

@@ -14,7 +14,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149960);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149964);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149968);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014996C);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149970);
+Taiiku2x16 D_80149970 = { 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149974);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149978);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014997C);
@@ -25,10 +25,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149990);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149994);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149998);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_8014999C);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499A0);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499A4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499A8);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499AC);
+TaiikuA0 D_801499A0 = { 0, 0, 0, 0, 0, 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499B4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_801499C0);
@@ -139,7 +136,19 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139FE4);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A314);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A63C);
+void func_8013A63C(void) {
+    if (Vblnk_Timer() >= 2) {
+        D_801499A0.unk_02 += 1;
+        Vblnk_Timer_Init();
+    }
+    D_801499DC += 1;
+    D_80149970.unk_00 += 1;
+    D_80149970.unk_02 += 1;
+    D_801499E0 += 1;
+    D_80149988.unk_04 += 1;
+    D_80149988.unk_06 += 1;
+    D_801499A0.unk_00 += 1;
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A6FC);
 
@@ -267,12 +276,12 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B200);
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B3B0);
 
 void func_8013B5C0(void) {
-    if (D_801499A2 == 1) {
+    if (D_801499A0.unk_02 == 1) {
         func_80044750(0x800);
         return;
     }
-    if ((u32)(u16)D_801499A2 >= 0x2D1) {
-        D_801499A2 = 0;
+    if ((u32)(u16)D_801499A0.unk_02 >= 0x2D1) {
+        D_801499A0.unk_02 = 0;
     }
 }
 
@@ -299,13 +308,13 @@ void func_8013C5C8(s32 arg0)
   /* FAKE: empty conditions retain the shared record base in V1 instead
    * of folding the word accesses to separate addresses. T-9510. */
   TkCoordsView *records = (TkCoordsView *) D_8011ECD0;
-  if ((D_801499A4 + 2) < D_801206BA)
+  if ((D_801499A0.unk_04 + 2) < D_801206BA)
   {
     records->pos[0].word -= arg0;
   }
   else
   {
-    if ((records->pos[0].halves.hi + 2) < D_801499A4)
+    if ((records->pos[0].halves.hi + 2) < D_801499A0.unk_04)
     {
       records->pos[0].word += arg0;
     }
@@ -316,12 +325,12 @@ void func_8013C5C8(s32 arg0)
     {
     }
   }
-  if ((D_801499A6 + 2) < D_801206BE)
+  if ((D_801499A0.unk_06 + 2) < D_801206BE)
   {
     records->pos[1].word -= arg0;
     return;
   }
-  if ((records->pos[1].halves.hi + 2) < D_801499A6)
+  if ((records->pos[1].halves.hi + 2) < D_801499A0.unk_06)
   {
     records->pos[1].word += arg0;
   }
