@@ -1105,4 +1105,5 @@ extern s32 D_8015186C;
 extern s32 D_80151870;
 extern s32 D_80151874;
 extern s32 D_80151878;
+extern s32 D_801506F8[];
 #endif

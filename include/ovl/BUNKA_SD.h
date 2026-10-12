@@ -16,7 +16,7 @@ void func_80135630(void);
 void func_80135CD4(void);
 void func_80136578(void);
 void func_80138810(s32 arg0, s32 arg1, s32 arg2);
-void func_80132708(void);
+s32 func_80132708(void);
 
 void func_80134B88(void);
 void func_80134D94(void);

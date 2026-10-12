@@ -119,7 +119,43 @@ void func_8013261C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80132000", func_80132708);
+s32 func_80132708(void) {
+    u8 v;
+    u32 q;
+    s32 t;
+
+    v = *(u8 *)&D_800E6280.unk_110C;
+    D_801206DA = 0x40;
+    q = v / 14;
+    if (q >= 2) {
+        v = 0;
+        q = 0;
+    }
+    t = q * 2;
+    /* FAKE: dead test keeps q * 2 computed once before the switch (T-10310) */
+    if (t < 0) {
+    }
+    switch (D_80122EAC) {
+    case 0:
+        D_801206F0 = 0x19 - t;
+        break;
+    case 1:
+        D_801206F0 = 0x45 - t;
+        break;
+    case 2:
+        D_801206F0 = 0x71 - t;
+        break;
+    case 3:
+        D_801206F0 = 0x9D - t;
+        break;
+    case 4:
+    default:
+        D_801206F0 = 0xBD - t;
+        break;
+    }
+    v = v + 1;
+    D_800E6280.unk_110C = v;
+}
 
 void func_801327E4(void) {
     if (D_800E6280.unk_1104.w == 1) {

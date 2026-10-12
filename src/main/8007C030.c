@@ -334,8 +334,6 @@ void normal_date_girl_out_init(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
 
-/* NON_MATCHING: T-10310, near miss */
-#ifdef NON_MATCHING
 s32 normal_date_girl_suddenout(void) {
     D_8011F50F &= 0xFF7F;
     D_8011F4CB &= 0xFF7F;
@@ -347,9 +345,6 @@ s32 normal_date_girl_suddenout(void) {
     D_80122CF8 = 1;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenout);
-#endif
 
 s32 normal_date_bg_fadein(void) {
     D_80122CF8 = 1;
@@ -526,8 +521,6 @@ INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80082764);
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
-/* NON_MATCHING: T-10310, near miss */
-#ifdef NON_MATCHING
 s32 junban_init(void) {
     u32 g;
     u8 r;
@@ -550,9 +543,6 @@ s32 junban_init(void) {
     D_800CA2A4[2] = (r - 1) - ((g + 1) & 1);
     D_800CA2A4[0] = r;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
-#endif
 
 void normal_date_three_select(void) {
     switch (D_800E6280.unk_1104.u) {

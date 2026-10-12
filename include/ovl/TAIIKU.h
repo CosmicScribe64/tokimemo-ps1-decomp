@@ -426,4 +426,9 @@ extern u8 D_8014A400[];
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
 void func_8014430C(void);
 extern TaiikuPosition D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
+extern s32 D_80149968;
+extern s32 D_8014996C;
+extern s32 D_8014997C;
+extern s32 D_80149980;
+void func_8013D254(void);
 #endif
