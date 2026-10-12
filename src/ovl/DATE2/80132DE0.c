@@ -233,7 +233,16 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801348F0);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801350A4);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80135DA4);
+s32 func_80135DA4(s16 arg0) {
+    D_801217D0[4].unk_06 += arg0;
+    D_801217D0[5].unk_06 += arg0;
+    D_801217D0[4].unk_0A -= arg0;
+    D_801217D0[5].unk_0A -= arg0;
+    D_801217D0[6].unk_0A += arg0;
+    D_801217D0[7].unk_0A += arg0;
+    D_801217D0[6].unk_0F -= arg0;
+    D_801217D0[7].unk_0F -= arg0;
+}
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80135E50);
 

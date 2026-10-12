@@ -128,7 +128,26 @@ void func_80139C90(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/801397D0", func_80139CCC);
+void func_80139CCC(void) {
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_80122CF8 = 0;
+    D_80122CF4 = 0;
+    D_800B5940 = 0;
+    func_8007C740();
+    func_80084E4C();
+    /* FAKE: the store inside the call shares $a0 with the argument (T-9020, T-9170) */
+    func_800847B8(*(u8 *)&D_800E6280.unk_F5F = 1);
+    func_80136F90();
+    D_80144DFC = D_80144DA0;
+    /* three words of a 0x24-byte record array reached through one base: as1 keeps the loads in order */
+    D_80144E00 = (&D_80144DA0)[9];
+    D_80144E04 = (&D_80144DA0)[18];
+    func_8004284C();
+}
 
 void func_80139D80(void) {
     D_80144E08 = 0;

@@ -34,9 +34,77 @@ s8 menu_check(arg0, arg1, arg2)
     return menu_check_1(arg0, arg1, arg2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_1);
+/* NON_MATCHING: T-10510, pointer CSE/hoist shape, 40 lines */
+#ifdef NON_MATCHING
+s8 menu_check_1(arg0, arg1, arg2)
+    s32 arg0;
+    s16 arg1;
+    s16 arg2;
+{
+    s32 cnt;
+    s32 sel;
+    s32 d;
+    u32 i;
 
+    cnt = 0;
+    sel = -1;
+    i = 0;
+    if (((u8 *)&D_800E6280 + arg0)[0x1090] != 0) {
+        do {
+            d = arg1 - D_800E6280.unk_F90[arg0 + i * 2].unk_00;
+            D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 0;
+            if ((d - (s32) D_800E6280.unk_F90[arg0 + i * 2].unk_04) * d < 0) {
+                d = arg2 - D_800E6280.unk_F90[arg0 + i * 2].unk_02;
+                if ((d - (s32) D_800E6280.unk_F90[arg0 + i * 2].unk_05) * d < 0) {
+                    D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 1;
+                    cnt += 1;
+                    sel = i;
+                }
+            }
+            i += 1;
+        } while (i < (&D_800E6280.unk_1090)[arg0]);
+    }
+    if (cnt == 0) {
+        ((s8 *)&D_800E6280 + arg0)[0x1093] = -1;
+    }
+    if (!(D_800E6280.unk_F80 & 4) && sel != -1) {
+        ((s8 *)&D_800E6280 + arg0)[0x1095] = sel;
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_1);
+#endif
+
+/* NON_MATCHING: T-10510, about 30 differing lines: pointer CSE and chain */
+#ifdef NON_MATCHING
+s8 menu_check_2(arg0, arg1, arg2)
+    s32 arg0;
+    s32 arg1;
+    s32 arg2;
+{
+    s32 sel;
+    u32 i;
+
+    sel = (&D_800E6280.unk_1095)[arg0] = -1;
+    i = 0;
+    if ((&D_800E6280.unk_1090)[arg0] != 0) {
+        do {
+            if (i != (&D_800E6280.unk_1093)[arg0]) {
+                D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 0;
+            } else {
+                D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 10;
+                sel = i;
+            }
+            i += 1;
+        } while (i < (&D_800E6280.unk_1090)[arg0]);
+    }
+    if (!(D_800E6280.unk_F80 & 4) && sel != -1) {
+        (&D_800E6280.unk_1095)[arg0] = sel;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_2);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FC10);
 
@@ -72,7 +140,18 @@ s32 func_80050324(s32 menu, s32 reverse) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
 
+/* NON_MATCHING: T-10510, the original defines D_800E3680 in this object (one lui at for both stores), no data range for it */
+#ifdef NON_MATCHING
+void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    if (arg0 >= 0x10) {
+        D_800E3680[0] = 0x832F7FAF; D_800E3680[1] = 0x822F7F2F;
+        return;
+    }
+    D_800E3680[arg0] = ((arg2 & 0xF) << 0x18) + arg1 + (arg3 << 0x1C);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_color);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_show);
 

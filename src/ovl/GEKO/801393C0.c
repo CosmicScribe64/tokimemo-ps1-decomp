@@ -96,7 +96,15 @@ void func_80139640(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801393C0", func_801397A8);
+void func_801397A8(void) {
+    func_801393C0();
+    func_80043914(D_80146290, 0x11, 1, 2, 0);
+    func_80084E90((s32) D_80146294, (s32) D_80146298, (s32) D_8014629C, (s32) D_801462A0, (s32) D_801462A4, (s32) D_801462A8);
+    func_800850D4((s32) D_80146284, (s32) D_80146288, (s32) D_80146280, (s32) D_8014628C);
+    D_80120666 = 4;
+    D_80122D10 = 1;
+    func_8004284C();
+}
 
 void func_80139864(void) {
     bg_read_sub2(0x4045);
