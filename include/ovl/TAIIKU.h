@@ -226,7 +226,14 @@ typedef struct TkCnt {
     /* 0x8 */ u32 unk_08;
 } TkCnt; /* size 0xC */
 
-extern s16 D_80149298[2]; /* [1] is D_8014929A; defined in 80133C80.c */
+typedef union {
+    s32 word;
+    struct {
+        s16 low;
+        s16 high; /* D_8014929A */
+    } halves;
+} TaiHalves;
+extern TaiHalves D_80149298; /* defined in 80133C80.c */
 void func_80133438(void);
 void func_801345A4(void);
 s32 func_801365C8();
@@ -474,7 +481,9 @@ typedef struct {
     /* 0x14 */ u32 f14;
     /* 0x18 */ s32 f18;
     /* 0x1C */ u32 f1C;
-    /* 0x20 */ u8 pad20[0x10];
+    /* 0x20 */ u8 pad20[2];
+    /* 0x22 */ s16 f22;
+    /* 0x24 */ u8 pad24[0xC];
     /* 0x30 */ u16 f30;
     /* 0x32 */ u16 f32;
     /* 0x34 */ s32 f34;

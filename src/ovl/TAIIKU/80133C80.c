@@ -15,7 +15,7 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491E8);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801491EC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_80149204);
 TaiikuSlots D_80149208 = { 0 };
-s16 D_80149298[2] = { 0, 0 };
+TaiHalves D_80149298 = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_8014929C);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A0);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80133C80.data", D_801492A4);
@@ -125,13 +125,13 @@ void func_801345A4(void) {
         func_801368B8();
         func_801369F0();
         func_80136DA4();
-        func_80132E20((s32) D_80149298[1], 3);
+        func_80132E20((s32) D_80149298.halves.high, 3);
         func_80137EA8();
         func_801365C8();
         func_80136E80();
         func_80137C44();
         func_80137440();
-        if (D_80149298[1] >= 0x140) {
+        if (D_80149298.halves.high >= 0x140) {
             func_80042808();
         }
         break;
@@ -154,9 +154,9 @@ void func_80134D94(void) {
         func_80136E80();
         func_80137C44();
         func_80136DA4();
-        func_80132E20((s32) D_80149298[1], 3);
+        func_80132E20((s32) D_80149298.halves.high, 3);
         func_80137EA8();
-        if (D_80149298[1] >= 0x401) {
+        if (D_80149298.halves.high >= 0x401) {
             func_80044750(0x1700);
             func_80044750(0x605);
             func_8004284C();
@@ -167,7 +167,7 @@ void func_80134D94(void) {
         func_801369F0();
         func_80136E80();
         func_80137C44();
-        func_80132E20((s32) D_80149298[1], 3);
+        func_80132E20((s32) D_80149298.halves.high, 3);
         func_80136DA4();
         if (func_80137EA8() != 0) {
             func_80044750(0x604);
@@ -176,9 +176,9 @@ void func_80134D94(void) {
         }
         break;
     case 2:
-        Scroll((s32) ((s16) D_80149298[1] >> 1) % 640, 0xF, 0, 0x70, 0x280);
-        Scroll(D_80149298[1] & 0x7F, 0xF, 0x70, 0x80, 0x80);
-        func_80132E20((s32) D_80149298[1], 3);
+        Scroll((s32) ((s16) D_80149298.halves.high >> 1) % 640, 0xF, 0, 0x70, 0x280);
+        Scroll(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
+        func_80132E20((s32) D_80149298.halves.high, 3);
         if (Fade_Out_Main() != 0) {
             func_80044750(0xC2);
             var_s0 = 0;
@@ -330,7 +330,7 @@ void func_80136B18(void) {
     TaiSlot24 *state;
 
     state = (TaiSlot24 *)&D_80149208;
-    if (D_80149208.f10 < 0 || D_80149298[1] == 0) {
+    if (D_80149208.f10 < 0 || D_80149298.halves.high == 0) {
         ((TaiSlot24 *)&D_80149208)->unk_20.word -= D_8014929C;
     } else {
         ((TaiSlot24 *)&D_80149208)->unk_20.word = ((TaiSlot24 *)&D_80149208)->unk_20.word + 0x8000;
@@ -346,7 +346,23 @@ void func_80136B18(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136BB4);
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10520, structure matches (promoted D_8014929C written back after the 9298 update); only registers differ: the original never uses $v0 (v1 = D_8014929C, a0 = f10, a1 = limit), 14 lines */
+s32 func_80136DA4() {
+    D_8014929C += D_80149208.f10;
+    if (D_801491E8 < D_8014929C) {
+        D_8014929C = D_801491E8;
+    }
+    if (D_8014929C < 0 || (D_80149208.f10 < 0 && D_80149208.f22 < -0x9F)) {
+        D_8014929C = 0;
+    }
+    D_80149298.word += D_8014929C;
+    func_80085F0C(((D_80149298.halves.high >> 1)) % 640, 0xF, 0, 0x70, 0x280);
+    func_80085F0C(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136DA4);
+#endif
 
 void func_80136E80(void) {
     func_80136EC0();
@@ -376,7 +392,7 @@ void func_8013703C(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137090);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, D_80149298[1] (D_8014929A) is not hoisted out of the loop as in the original; the rest has the original structure, large diff (all registers) */
+/* NON_MATCHING: T-10520, D_80149298.halves.high (D_8014929A) is not hoisted out of the loop as in the original; the rest has the original structure, large diff (all registers) */
 void func_80137228(void) {
     s32 i;
     s32 y;
@@ -387,7 +403,7 @@ void func_80137228(void) {
     a = (u8 *)&D_80149208;
     for (i = 0; i < 3; i++) {
         *(s32 *)(a + i * 0x24 + 0x44) += *(s32 *)(a + i * 0x24 + 0x3C);
-        y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298[1];
+        y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
         if (D_80120A72 + i * 8 + 8 < y - 0x60) {
             if (a[i * 0x24 + 0x2A] == 0) {
                 (&D_80120A72)[0x1B] = 0x8D;
@@ -399,7 +415,7 @@ void func_80137228(void) {
                     D_801491E0[j] = i + 2;
                 }
                 a[i * 0x24 + 0x2A] = 1;
-                y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298[1];
+                y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
             }
         }
         r = D_8011ECD0 + i * 0x44;
@@ -449,7 +465,7 @@ s32 func_80137440(void) {
 
     /* FAKE: the indirect halfword reads retain the timer in a0; direct scalar
      * reads introduce an extra v0-to-a0 copy. T-10030. */
-    timer = *(s16 *)&D_80149298[1];
+    timer = *(s16 *)&D_80149298.halves.high;
     if (timer < 0x3C1) {
         if (((D_80120676 + 0x10) >= D_80120786) && (D_80120762 != 0)) {
             if (D_80122EA0 == 1) {
@@ -458,7 +474,7 @@ s32 func_80137440(void) {
                 func_80044750(0x509);
             }
             D_80120762 = 0;
-            timer = *(s16 *)&D_80149298[1];
+            timer = *(s16 *)&D_80149298.halves.high;
             D_80120763 = 0;
         }
         /* FAKE: joining initialization and loop opening preserves the two
@@ -500,7 +516,7 @@ s32 func_8013815C(void) {
         }
     }
     if (v[0] >= v[1] && v[0] >= v[2]) {
-        D_80149208.pad20[0xA] = 1;
+        D_80149208.pad24[6] = 1;
         return 2;
     }
     if (v[1] >= v[2]) {
