@@ -78,7 +78,60 @@ void func_8004B338(s32 arg0, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004B358);
 
-INCLUDE_ASM("asm/nonmatchings/main/8004AD60", func_8004B590);
+/* Two 5-5-5 colours per word (CLUT entries): read as u32 fields, written as u16 fields. */
+typedef struct {
+    u32 r0 : 5;
+    u32 g0 : 5;
+    u32 b0 : 5;
+    u32 x0 : 1;
+    u32 r1 : 5;
+    u32 g1 : 5;
+    u32 b1 : 5;
+    u32 x1 : 1;
+} Pix2In;
+
+typedef struct {
+    u16 r0 : 5;
+    u16 g0 : 5;
+    u16 b0 : 5;
+    u16 x0 : 1;
+    u16 r1 : 5;
+    u16 g1 : 5;
+    u16 b1 : 5;
+    u16 x1 : 1;
+} Pix2Out;
+
+void func_8004B590(arg0, arg1)
+Pix2In *arg0;
+Pix2Out *arg1;
+{
+    Pix2In *src;
+    Pix2Out *dst;
+    s32 i;
+    s32 lum;
+    s32 t;
+
+    src = arg0;
+    dst = arg1;
+    for (i = 0; i != 0x80; i++) {
+        lum = src->r0 * 0x1E + src->g0 * 0x3B + src->b0 * 0xB;
+        if (lum != 0 && lum < 0x64) {
+            lum = 0x64;
+        }
+        dst->r0 = t = lum / 100;
+        dst->g0 = t;
+        dst->b0 = t;
+        lum = src->r1 * 0x1E + src->g1 * 0x3B + src->b1 * 0xB;
+        if (lum != 0 && lum < 0x64) {
+            lum = 0x64;
+        }
+        dst->r1 = t = lum / 100;
+        dst->g1 = t;
+        dst->b1 = t;
+        src++;
+        dst++;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004AD60", make_color_bar);
 
