@@ -681,7 +681,6 @@ extern s8 D_800CA2F0;
 extern u8 D_800CA2F4;
 extern u8 D_800CA2F8;
 extern u8 D_800CA2FC;
-extern s16 D_800CA330[];
 extern s8 D_800CA360;
 extern s8 D_800CA364;
 extern u8 D_800CA368;
@@ -704,7 +703,6 @@ extern s32 D_800D92E0;
 extern u8 D_800D9328[];
 extern u8 D_800D9388[];
 extern s32 D_800DE500[];
-extern u32 D_800E3680[16];
 extern s8 *D_800E36C0[];
 extern s32 D_800E36C8[];
 extern s32 D_800E36D0[];
@@ -1279,7 +1277,6 @@ extern s16 D_80121728;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
 extern Rec24 D_801217D0[]; /* at least 12 records */
-extern s16 D_801217D4;
 extern u8 D_801217E4;
 extern u8 D_801217E5;
 extern u8 D_801217E6;
@@ -1530,6 +1527,9 @@ extern u8 D_800D9320[];
 extern TaiikuBig D_80122840[];
 extern TaiikuBig D_80122B10[];
 extern u8 D_80122660[];
+extern s16 D_800CA330[];
+extern u32 D_800E3680[16];
+extern s16 D_801217D4;
 
 /* ---- functions ---- */
 void func_80010678();
