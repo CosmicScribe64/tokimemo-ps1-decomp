@@ -9790,3 +9790,18 @@ Moved [[tickets/T-10200-orphan-jump-tables]] to In Review with matching [[kanban
 Wave 12 list 4 produced no matches; attempts recorded in [[matching-notes]]. [[tickets/T-10340-wave-12-list-4]] moved to Done.
 ## [2026-10-11] ticket | T-10330 done
 [[tickets/T-10330-wave-12-list-3]] moved to Done: 0 exact matches, three guarded near misses in `src/ovl/EVENT/8010FE10.c`, `src/ovl/GYOZI/8013E5B0.c`, `src/ovl/ETC/80143240.c`.
+
+## [2026-10-12] ticket | T-10400 claimed
+Created [[tickets/T-10400-regdiff-explain-register-choice]] and the [[kanban]] card (In Progress). Read [[uopt-register-allocation]], [[register-allocation-wave7]] and the trace tools `tools/uopt_eval.py`, `tools/uopt_patch.py`, `tools/ido-ecvt.patch`.
+
+## [2026-10-12] build | T-10400 regdiff tool
+Built `tools/regdiff.py` and `tools/test_regdiff.py` (41 tests) on the T-9800 trace ([[uopt-register-allocation]], section "regdiff"). It compiles the permuter-stripped draft with `tools/cc.py` and the traced uopt, links register differences to live ranges through register webs of the draft's code and the trace's def/use counts, and prints the first divergence with priority, order, colour and a hint. Survey of the 163 best drafts of T-9800: no failure; traced compile 2.9 s average under load average 20 to 55, 1.4 to 2 s on a quieter machine. Usage: [[decompile-workflow]]. No compiler binary or reconstruction source added.
+
+## [2026-10-12] decision | T-10400 rules from the tool's cases
+Hoisted constants and addresses (bits past the expression table) are numbered by first use, left side of an assignment first; equal priority colours the lower bit first. A swapped `bne` with equal registers is operand order and a local copy of the narrow global fixes it. Two T-0018 rows matched with it: EVENT `func_80119518` (`u8 sel` copy) and DATE `func_80136F2C` (no temporary `v`), both through the real build (EVENT and DATE SHA1 OK). EVENT `func_80114B0C` draft improved to 5 differing lines (still guarded); TT `func_801475C8`, GYOZI `func_8013E638`, ETC `func_80143F24` explained, not matched. Notes in [[matching-notes]], rows in [[data/t0018-cases]].
+
+## [2026-10-12] build | T-10400 sync_protos --add-global
+`tools/sync_protos.py --add-global` dropped the `MAIN_API_OVERRIDE_<sym>` guards whose override is defined in a .c file and planned from the headers alone. It now plans from the declarations main_api.h holds plus the new symbol and keeps the existing guards, so exactly one line is added; test in `tools/test_sync_protos.py` (guards from a .c override survive, one line added, a following --write adds only what --write alone adds). The reported reordering by the following --write did not reproduce on a copy of the real include/ and src/ trees (only the guard loss did).
+
+## [2026-10-12] ticket | T-10400 done
+[[tickets/T-10400-regdiff-explain-register-choice]] moved to Done after the inline review against `CODING_STANDARDS.md` (no findings). Clean `rm -rf asm build` Docker build: 27/27 SHA1 OK, headers OK, globals OK; progress 5,101/6,958 functions (+2: EVENT `func_80119518`, DATE `func_80136F2C`). Tests: `tools/test_regdiff.py` 41, `tools/test_sync_protos.py` 70, funcdiff, permute and check_headers suites OK. Board: [[kanban]].
