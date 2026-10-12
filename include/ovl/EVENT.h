@@ -10,6 +10,7 @@
 #define MAIN_API_OVERRIDE_D_80120658 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_8012066C /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80120698 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
+#define MAIN_API_OVERRIDE_D_80120694 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
 #define MAIN_API_OVERRIDE_D_801206A8 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_801206AC /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_801206C8 /* EVENT overlay data at this address, s16 (main_api.h: s32) */
@@ -27,7 +28,6 @@
 #define MAIN_API_OVERRIDE_D_80120734 /* EVENT overlay data at this address, s32 (main_api.h: s16) */
 #define MAIN_API_OVERRIDE_D_80121874 /* EVENT overlay data at this address, s32 (main_api.h: u8) */
 #define MAIN_API_OVERRIDE_D_801206B0 /* EVENT overlay data at this address, s32 (main_api.h: volatile s16) */
-#define MAIN_API_OVERRIDE_D_80120694 /* EVENT overlay data at this address, s32 (main_api.h: u8[]) */
 
 #include "common.h"
 #include "game.h"

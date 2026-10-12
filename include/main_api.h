@@ -445,7 +445,6 @@ typedef struct GameState {
 extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
 extern s32 D_8007E850[];
-extern s32 D_80080710;
 extern s8 D_8008093C;
 extern u16 D_80094714;
 extern u16 D_80094718;
@@ -822,7 +821,6 @@ extern s32 D_800EECE0;
 extern s32 D_800EECE4;
 extern s32 D_800EECE8;
 extern s32 D_800EECEC;
-extern s16 D_800F1990[14];
 extern u8 D_800F19AB;
 extern u8 D_800F53DA;
 extern u8 D_800F53DE;
@@ -1017,9 +1015,6 @@ extern s16 D_8012067A;
 extern u8 *D_80120684;
 extern s32 D_80120688;
 extern s8 D_80120693;
-#ifndef MAIN_API_OVERRIDE_D_80120694
-extern u8 D_80120694[];
-#endif
 extern u8 D_80120695;
 extern u8 D_80120696;
 extern u8 D_80120697;
@@ -1547,6 +1542,11 @@ extern u8 D_800EC1A5;
 extern u8 D_800EC1A6;
 extern u8 D_800EC1C9;
 extern u8 D_800EC1CA;
+extern s32 D_80080710;
+extern s16 D_800F1990[14];
+#ifndef MAIN_API_OVERRIDE_D_80120694
+extern u8 D_80120694[];
+#endif
 
 /* ---- functions ---- */
 void func_80010678();
@@ -1664,7 +1664,6 @@ void func_8004A7F4();
 #ifndef MAIN_API_OVERRIDE_func_8004A8EC
 void func_8004A8EC();
 #endif
-void func_8004A9CC();
 void func_8004AC18(s32 arg0);
 void func_8004ACA8();
 void func_8004ACC8(s32 arg0);
@@ -1672,7 +1671,6 @@ void func_8004ADE4(void);
 void func_8004AE28(s32 a0, s32 a1, s32 a2);
 void func_8004AE54(s32 a0, s32 a1, s32 a2, s32 a3);
 void func_8004AEB0();
-void func_8004AFB8();
 void func_8004B19C(s32 a, s32 b, s32 c);
 void func_8004B338(s32 arg0, s32 arg1, s32 arg2);
 void func_8004B358(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -1912,8 +1910,6 @@ void func_80064FA4(s32);
 void icon_disp_switch(s32 a);
 void icon_can_use_set(s32 idx, s32 on);
 void func_8006509C(void);
-void func_800651F8();
-void func_80065234();
 void func_80065900(u8 arg0);
 void func_80065B0C(s32 a);
 void func_80065F34(s32 arg0);
@@ -1944,7 +1940,6 @@ void func_800696DC(s32, s32);
 void func_8006A044();
 void func_8006A2CC();
 void func_8006B0C8();
-void func_8006B5BC(GsWord arg0);
 void func_8006B648(void);
 void func_8006B900(void);
 void func_8006BA40(void);
@@ -2333,5 +2328,10 @@ s32 func_800463E8(void);
 s32 func_80049FF0();
 void place_init2(void);
 void normal_date_bg_out(void);
+void func_8004A9CC();
+void func_8004AFB8();
+void func_800651F8();
+void func_80065234();
+void func_8006B5BC(GsWord arg0);
 
 #endif /* MAIN_API_H */
