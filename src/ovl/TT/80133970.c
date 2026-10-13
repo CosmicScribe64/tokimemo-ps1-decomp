@@ -338,13 +338,10 @@ void func_801342CC(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
     }
 }
 
-/* NON_MATCHING: T-11000, 1 line: addu s1,v0,t6 in the original, addu s1,t6,v0 here (even-index branch); no operand order or += form changes it */
-#ifdef NON_MATCHING
 void func_80134470(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
     TtActor68 *object;
     u8 *source;
     s32 angle;
-    s32 base;
     s32 i;
 
     object = (TtActor68 *)D_80158AA0;
@@ -356,13 +353,12 @@ void func_80134470(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
         }
         object->unk_20 = x << 16;
         object->unk_24 = y << 16;
-        base = func_80133BE0((u8 *)object, source);
-        angle = base;
+        angle = func_80133BE0((u8 *)object, source);
         if (i != 0) {
             if (i & 1) {
-                angle = base - ((i / 2 + 1) * spread);
+                angle -= (i / 2 + 1) * spread;
             } else {
-                angle = base + (i / 2) * spread;
+                angle += (i / 2) * spread;
             }
         }
         object->unk_28 = func_800A0140(angle) * speed;
@@ -384,9 +380,6 @@ void func_80134470(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
         object->unk_0D = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134470);
-#endif
 
 void func_80134630(s16 x, s16 y, s32 speed, u16 kind) {
     TtActor68 *object;
