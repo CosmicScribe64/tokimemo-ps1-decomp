@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-10900-big-functions-astra-22|T-10900]] Big functions (astra) 22 (In Progress).
 - [[tickets/T-10860-big-functions-4-astra|T-10860]] Big functions 4 (astra), five owned objects (Done; 88 matches / 68,856 code bytes).
 - [[tickets/T-10870-big-functions-5-astra|T-10870]] Big functions 5 (astra), ten matches / 11460 bytes (Done).
 - [[tickets/T-10840-wave-13-15-tool-fixes|T-10840]] Wave 13-15 tool fixes (Done; literal-byte funcdiff proof, guarded C, prototypes, seed tolerance, full-file regdiff).

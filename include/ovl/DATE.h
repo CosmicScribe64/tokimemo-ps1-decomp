@@ -1435,3 +1435,33 @@ typedef struct DateEventChoice6 {
     /* 0x04 */ s16 index;
 } DateEventChoice6; /* size 0x06, minimum observed extent */
 #endif
+
+#ifndef OVL_DATE_PARK_TABLES_T10900_H
+#define OVL_DATE_PARK_TABLES_T10900_H
+/* func_80133EA0: flat byte tables, nine bytes per girl (three choices for
+ * each of three park variants). Keeping the flat pointer view preserves
+ * the original reloads between writes to the two result rows. */
+extern u8 *D_8015B5B8;
+extern u8 *D_8015B5BC;
+/* func_80137154: eighteen bytes per girl: three shops, two flag variants,
+ * three result bytes. A multidimensional view lets IDO elide target loads. */
+extern u8 *D_8015B580;
+extern u8 *D_8015B584;
+#endif
+
+#ifndef OVL_DATE_CONCERT_TABLES_T10900_H
+#define OVL_DATE_CONCERT_TABLES_T10900_H
+/* func_80136340: thirty-six bytes per girl, twelve chronological seasonal
+ * variants with three result bytes each. Use flat indexing to retain the
+ * target's reloads while populating D_800CA22C and D_800CA21C. */
+extern u8 *D_8015B530;
+extern u8 *D_8015B534;
+#endif
+
+#ifndef OVL_DATE_CINEMA_TABLES_T10900_H
+#define OVL_DATE_CINEMA_TABLES_T10900_H
+/* func_80135E7C: thirty-three bytes per girl, eleven seasonal variants
+ * with three result bytes each. The first year starts with summer. */
+extern u8 *D_8015B558;
+extern u8 *D_8015B55C;
+#endif

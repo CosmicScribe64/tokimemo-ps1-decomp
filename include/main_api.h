@@ -757,6 +757,9 @@ extern s8 D_800CA2F0;
 extern u8 D_800CA2F4;
 extern u8 D_800CA2F8;
 extern u8 D_800CA2FC;
+extern s16 D_800CA300[12];
+extern s16 D_800CA318[12];
+extern s16 D_800CA348[12];
 extern s8 D_800CA360;
 extern s8 D_800CA364;
 extern u8 D_800CA368;
@@ -2233,7 +2236,9 @@ void k_disp_inc2();
 #ifndef MAIN_API_OVERRIDE_func_800847B8
 void func_800847B8(u8 arg0);
 #endif
+#ifndef MAIN_API_OVERRIDE_select_girl_init
 void select_girl_init(s32 arg0);
+#endif
 s32 select_girl_main(s32 arg0);
 #ifndef MAIN_API_OVERRIDE_func_80084C98
 void func_80084C98();
