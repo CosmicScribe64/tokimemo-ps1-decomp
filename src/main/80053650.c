@@ -495,7 +495,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800552DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
 
-/* NON_MATCHING: T-10810, structure and loops match (pointer walk *p++, b as s32, 4x unrolled by IDO); only register assignment of q/r/p/n/b/sum differs */
+/* NON_MATCHING: T-10810, structure, loops and counters match (pointer walk *p++, j from 4, b as s32, 4x unrolled by IDO); only 10 register fields differ: q/b swap (colour order n,b,q,p,r) */
 #ifdef NON_MATCHING
 s32 func_80055A38(s32 arg0) {
     s32 b;
@@ -506,13 +506,16 @@ s32 func_80055A38(s32 arg0) {
     u8 *q;
     u8 *r;
 
+    n = 0;
+    b = 0;
     q = D_80123324;
+    p = D_80123324;
     r = D_80123120;
     for (b = 0; b < 2; b++) {
         n = 0;
         p = q;
         sum = 0;
-        for (j = 0; j < 0xF00; j++) {
+        for (j = 4; j < 0xF00; j++) {
             if (*p != 0) {
                 n++;
             }

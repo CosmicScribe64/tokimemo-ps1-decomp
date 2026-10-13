@@ -719,9 +719,77 @@ void func_80134D74(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134F2C);
+void func_80134F2C(s32 arg0, s32 arg1) {
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135044);
+    if (EN_OBJ(arg0)->unk_28 < 3) {
+        switch (EN_OBJ(arg0)->unk_04) {
+        case 1:
+            if (arg1 < 0x384) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x80;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        case 2:
+            if (arg1 < 0x844) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x81;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        }
+        if (EN_OBJ(arg0)->unk_1C >= 0x1000) {
+            EN_OBJ(arg0)->unk_1C -= 0x1000;
+        }
+        if (EN_OBJ(arg0)->unk_1C < 0) {
+            EN_OBJ(arg0)->unk_1C += 0x1000;
+        }
+    }
+}
+
+void func_80135044(s32 arg0, s32 arg1) {
+
+    if (EN_OBJ(arg0)->unk_28 < 3) {
+        switch (EN_OBJ(arg0)->unk_04) {
+        case 1:
+            if (arg1 < 0x384) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x40;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        case 2:
+            if (arg1 < 0x844) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x41;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        }
+        if (EN_OBJ(arg0)->unk_1C >= 0x1000) {
+            EN_OBJ(arg0)->unk_1C -= 0x1000;
+        }
+        if (EN_OBJ(arg0)->unk_1C < 0) {
+            EN_OBJ(arg0)->unk_1C += 0x1000;
+        }
+    }
+}
 
 void func_8013515C(s32 arg0, s32 arg1) {
     u8 *p;
