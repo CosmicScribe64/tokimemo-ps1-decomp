@@ -100,7 +100,7 @@ void func_80137C3C(void) {
 }
 
 void func_80137CC0(void) {
-    func_80046318(0x2D, 0x80197000, 0xAF7C);
+    cd_read_sectors(0x2D, 0x80197000, 0xAF7C);
     func_80136380();
     func_8004284C();
 }
@@ -217,7 +217,7 @@ void func_80138320(void) {
         func_801383C8();
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_800E6280.unk_1104.w += 1;
         }
         break;
@@ -234,7 +234,7 @@ void func_80138320(void) {
 }
 
 void func_801383C8(void) {
-    func_80046318(0xD, 0x801D0000, 0xBB98);
+    cd_read_sectors(0xD, 0x801D0000, 0xBB98);
     D_800E6280.unk_1104.w += 1;
 }
 

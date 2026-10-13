@@ -21,13 +21,13 @@ void func_80133C84(void) {
 }
 
 void func_80133CB0(void) {
-    func_80046318(0x3B, 0x80197000, 0xAE60);
+    cd_read_sectors(0x3B, 0x80197000, 0xAE60);
     func_80132E74();
     func_8004284C();
 }
 
 void func_80133CEC(void) {
-    func_80046318(0x2D, 0x801B4400, 0xAE9B);
+    cd_read_sectors(0x2D, 0x801B4400, 0xAE9B);
     func_80132E40();
     func_8004284C();
 }

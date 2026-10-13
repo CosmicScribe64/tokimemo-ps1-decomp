@@ -14,10 +14,10 @@ s32 func_80132000(void) {
             D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
         }
     } else if (D_800E6280.unk_110D == 3) {
-        func_80046318(0x52, 0x80180000, 0x4B82);
+        cd_read_sectors(0x52, 0x80180000, 0x4B82);
         D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
     } else if (D_800E6280.unk_110D == 4) {
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8004284C();
         }
     }

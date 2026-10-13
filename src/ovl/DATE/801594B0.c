@@ -230,7 +230,7 @@ void func_80159F4C(void) {
 }
 
 void func_80159F74(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8E02);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8E02);
     func_801594B0();
     func_8004284C();
 }

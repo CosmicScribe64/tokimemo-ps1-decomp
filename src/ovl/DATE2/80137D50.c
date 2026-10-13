@@ -74,7 +74,7 @@ void func_80138048(void) {
 }
 
 void func_801380C4(void) {
-    func_80046318(2, 0x801E8000, 0xBD02);
+    cd_read_sectors(2, 0x801E8000, 0xBD02);
     func_80138100();
     func_8004284C();
 }
@@ -100,13 +100,13 @@ void func_80138170(void) {
 }
 
 void func_801381A4(void) {
-    func_80042878(0x50);
+    main_state_set(0x50);
     func_80042908(1);
     func_80042940(0x11);
 }
 
 void func_801381D4(void) {
-    func_80046318(3, 0x801B0000, 0xAF39);
+    cd_read_sectors(3, 0x801B0000, 0xAF39);
     func_80137D50();
     func_8004284C();
 }

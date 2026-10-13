@@ -41,7 +41,7 @@ void func_80132294(void) {
 }
 
 void func_801323AC(void) {
-    func_80042878(0x34);
+    main_state_set(0x34);
 }
 
 void func_801323CC(void) {

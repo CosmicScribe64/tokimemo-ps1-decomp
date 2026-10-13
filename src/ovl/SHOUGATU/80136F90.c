@@ -94,14 +94,14 @@ void func_801379D8(void) {
 }
 
 void func_80137A04(void) {
-    func_80046318(0x10, 0x80197000, 0xAEFD);
+    cd_read_sectors(0x10, 0x80197000, 0xAEFD);
     func_80136F90();
     D_80144E10 = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
     func_80042808();
 }
 
 void func_80137A5C(void) {
-    func_80046318(0x10, 0x80197000, 0xAEFD);
+    cd_read_sectors(0x10, 0x80197000, 0xAEFD);
     func_80136F90();
     D_80144E10 = D_800E6280.unk_69C[D_800E6280.unk_71C].unk_01;
     func_8004284C();

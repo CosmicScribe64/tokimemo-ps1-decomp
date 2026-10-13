@@ -53,7 +53,7 @@ s16 D_8015D08C = 0;
 u8 D_8015D090 = 0;
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D094);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D098);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D108);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", date_gift_names);
 
 typedef struct {
     u8 s[0xCC3];
@@ -126,7 +126,7 @@ void func_80149630(void) {
 }
 
 void func_80149660(void) {
-    func_80046318(0x16, 0x801B0000, 0xAF0D);
+    cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
     func_80149310();
     func_8004284C();
 }
@@ -173,7 +173,7 @@ void func_80149C1C(void) {
         if ((u8)D_800E6280.unk_F5E < 0xFEU) {
             D_800E6280.unk_F5E -= 1;
         }
-        func_80042878(0x50);
+        main_state_set(0x50);
         func_80042908(3);
         return;
     }
@@ -189,13 +189,13 @@ void func_80149CA0(void) {
     func_8004284C();
 }
 
-extern DateTxt D_8015D108;
+extern DateTxt date_gift_names;
 
 void func_80149D04(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */
     DateTxt tbl;
 
-    tbl = D_8015D108;
+    tbl = date_gift_names;
     func_800AE0F0(D_800CA25C, &tbl.s[D_800E6280.unk_F5F * 0x129 + D_8015D090 * 0x63 + D_80122CDC * 0x21]);
 }
 

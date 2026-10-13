@@ -87,7 +87,7 @@ void func_80139AA0(s32 arg0) {
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_80139B48);
 
 void func_80139D24(void) {
-    func_80046318(9, 0x80180000, 0xAE18);
+    cd_read_sectors(9, 0x80180000, 0xAE18);
     func_8004284C();
 }
 

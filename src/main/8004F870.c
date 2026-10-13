@@ -270,7 +270,7 @@ s32 get_g_name(u8 *arg0, s32 arg1) {
     } else if (arg1 == 0xC) {
         strcpy(arg0, D_800B3624);
     } else {
-        strcpy(arg0, D_800B35F4[arg1 & 0xF]);
+        strcpy(arg0, girl_short_name_table[arg1 & 0xF]);
         strcat(arg0, "さん");
     }
     if (arg1 >= 0x10 || arg1 < 0) {

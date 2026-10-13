@@ -600,7 +600,7 @@ block_97:
 
 /* Plain char outputs preserve IDO's separate byte-store constant range.
  * Explicit s8/u8 outputs change sharing with signed helper results. T-10730 */
-s32 func_8006FB4C(char *arg0, char *arg1) {
+s32 special_event_select(char *arg0, char *arg1) {
     GameState *g;
     /* FAKE: 11 counts are used; the extra bytes and pad reproduce sp+0x7C
      * in the original 0xA8 frame. T-10730 */
@@ -897,7 +897,7 @@ void func_80070ECC(void) {
     if (func_800460EC() & 4) {
         func_80045414(9, 0, 0);
     }
-    func_80042878(0x31);
+    main_state_set(0x31);
 }
 
 void func_80070F14(void) {
@@ -929,7 +929,7 @@ void func_80070FD0(void) {
         D_800E6280.unk_110D++;
     } else if (func_80044E8C() == 1) {
         func_80044750(0x200);
-        func_80042878(0x63);
+        main_state_set(0x63);
     }
 }
 
@@ -1104,7 +1104,7 @@ void func_800725B0(void) {
         break;
     case 1:
         D_800E6280.unk_71C += 1;
-        func_80042878(0x31);
+        main_state_set(0x31);
         break;
     }
     if (D_8011F113 & 0x80) {
@@ -1139,7 +1139,7 @@ void func_800728A4(void) {
         break;
     case 1:
         D_800E6280.unk_71C += 1;
-        func_80042878(0x31);
+        main_state_set(0x31);
         break;
     }
     func_800578F4(get_last_gamen_mode());
@@ -1172,14 +1172,14 @@ void func_80072B20(void) {
 
 s32 func_80072B5C(s32 arg0) {
     if (D_800B3C6C != 0) {
-        func_80042878(0x22);
+        main_state_set(0x22);
         return 0;
     }
     if (arg0 == 1) {
         func_8004500C(0, 0);
     }
     D_800E6280.unk_71C++;
-    func_80042878(0x31);
+    main_state_set(0x31);
     /* no return on this path: the original leaves $v0 as the call result */
 }
 
@@ -1337,7 +1337,7 @@ s32 func_80072D70(void) {
                 if (D_800E6280.unk_1BC[s2].unk_0C.f.b1 && (get_h_tokimeki(s2) >= 0x33U) && (get_g_zyotai_s(sp38) != 4)) {
                     if ((rand() & 0xFF) < 0x3F) {
                         D_800E6280.unk_75D = s2;
-                        func_80042878(0x62);
+                        main_state_set(0x62);
                         return 1;
                     }
                 }
@@ -1379,7 +1379,7 @@ s32 func_80073198(void) {
         return;
     case 2:
         if (((u32)(D_800E6280.unk_10F8 & 0xFF) < 0x19U) && (D_800E6280.unk_56C[0x4B] == 0) && (D_800E6280.unk_03D == 0)) {
-            func_80042878(0x5D);
+            main_state_set(0x5D);
             D_80122CD4 = 0xB;
             D_80122CD0 = 2;
             D_800E6280.unk_56C[0x4B] = 1;

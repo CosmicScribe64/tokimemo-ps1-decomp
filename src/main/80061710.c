@@ -185,7 +185,7 @@ void func_80062524(void) {
         func_80048EB8(0);
         func_80044750(0x7F);
         func_8006BD6C(0);
-        func_80042878(0x11);
+        main_state_set(0x11);
     }
 }
 
@@ -220,15 +220,15 @@ void func_800626B0(void) {
     func_8004AC18(0xFF);
     switch (*(u32 *)&D_801230D0) {
     case 0:
-        func_80042878(0x13);
+        main_state_set(0x13);
         break;
     case 1:
-        func_80042878(0x20);
+        main_state_set(0x20);
         if (D_800B3220 == 1) {
             if (D_800E6280.unk_F80 & 0x2000) {
-                func_80042878(0x21);
+                main_state_set(0x21);
             } else if (D_800E6280.unk_F80 & 0x8000) {
-                func_80042878(0x22);
+                main_state_set(0x22);
             }
         }
         break;
@@ -286,7 +286,7 @@ void func_80062840(void) {
             if (D_800E6280.unk_1109 >= 2) {
                 func_8006BD6C(0);
                 func_80044750(0x7F);
-                func_80042878(0x11);
+                main_state_set(0x11);
                 func_80042908(1);
                 func_80044750(0x501);
             }
@@ -307,5 +307,5 @@ void func_80062C28(void) {
     func_80041168(0);
     func_8009C674(0);
     back_clear_switch(1);
-    func_80042878(0);
+    main_state_set(0);
 }

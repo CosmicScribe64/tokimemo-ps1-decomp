@@ -112,7 +112,7 @@ void func_8014E8F4(void) {
     func_800438F0(1);
     D_80122CE0 = D_8015EC14;
     D_800E6280.unk_F5F = (s8) D_8015EC18;
-    func_80042878((s32) D_800E6280.unk_720);
+    main_state_set((s32) D_800E6280.unk_720);
     func_80042908((s32) D_800E6280.unk_721);
     func_80042940((s32) D_800E6280.unk_722);
 }

@@ -29,7 +29,7 @@ void func_8014F36C(void) {
         func_8007E934();
         break;
     case 2:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80057418(1, func_8005751C(1));
             func_8004284C();
         }
@@ -51,14 +51,14 @@ void func_8014F36C(void) {
         func_80085A60();
         break;
     case 7:
-        func_80046318(0xFU, 0x801E8000, 0x4B13);
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
         func_8004284C();
         break;
     case 8:
         func_8007E390();
         break;
     case 9:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             temp_v0 = func_8008667C(6);
             switch (temp_v0) {
             case 0:
@@ -122,7 +122,7 @@ void func_8014F36C(void) {
         D_800E6280.unk_720 = D_800E6280.unk_1108;
         D_800E6280.unk_721 = D_800E6280.unk_1109;
         D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
-        func_80042878(0xD0);
+        main_state_set(0xD0);
         break;
     case 18:
         D_80122E98 = 1;
@@ -153,7 +153,7 @@ void func_8014F36C(void) {
         }
         break;
     case 21:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80057418(1, func_8005751C(1));
             func_8004284C();
         }
@@ -165,13 +165,13 @@ void func_8014F36C(void) {
         func_8007C740();
         D_800E6280.unk_F5F = 6;
         func_80083474();
-        func_80046318(0xFU, 0x801E8000, 0x4B13);
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
         break;
     case 24:
         func_8007E884();
         break;
     case 25:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             temp_v0_3 = func_8008667C(6);
             switch (temp_v0_3) {
             case 0:
@@ -235,7 +235,7 @@ void func_8014F36C(void) {
         }
         break;
     case 32:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80057418(1, func_8005751C(1));
             func_8004284C();
         }
@@ -247,7 +247,7 @@ void func_8014F36C(void) {
         func_8007C740();
         D_800E6280.unk_F5F = 6;
         func_80083474();
-        func_80046318(0xFU, 0x801E8000, 0x4B13);
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
         break;
     case 35:
         if (func_8008667C(6) == 4) {
@@ -257,7 +257,7 @@ void func_8014F36C(void) {
         }
         break;
     case 36:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             temp_v0_4 = func_8008667C(6);
             switch (temp_v0_4) {
             case 0:

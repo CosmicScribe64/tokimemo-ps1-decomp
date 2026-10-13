@@ -15,7 +15,7 @@ void func_80138490(void) {
             if (!(D_800E6280.unk_71E & 4)) {
                 if (func_8008667C(0) < 2) {
                     D_800E6280.unk_71E |= 4;
-                    func_80046318(3U, 0x801B0000, 0xAF43);
+                    cd_read_sectors(3U, 0x801B0000, 0xAF43);
                     func_80042940(0x1B);
                 } else {
                     goto block_7;
@@ -26,7 +26,7 @@ void func_80138490(void) {
         } else {
 block_7:
 block_8:
-            func_80046318(3U, 0x801E8000, 0x49B7);
+            cd_read_sectors(3U, 0x801E8000, 0x49B7);
             func_8004284C();
         }
         break;
@@ -34,7 +34,7 @@ block_8:
         func_8007EAAC();
         break;
     case 2:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80044890(1, 0xC043, 0xC01D, 0xCA95, 0xCA4F, 0xCA3E);
             D_800E6280.unk_F5F = 0;
             func_800847B8(0U);
@@ -95,7 +95,7 @@ block_8:
         func_80085A60();
         break;
     case 14:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8007C740();
             func_80083474();
         }
@@ -198,7 +198,7 @@ block_8:
         func_8007EAAC();
         break;
     case 28:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_800E6280.unk_F5F = 0;
             func_800847B8(0U);
             func_801337B8();
@@ -212,7 +212,7 @@ block_8:
         }
         break;
     case 29:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8007C740();
             func_80083474();
             func_80044750(0xBF);
@@ -235,11 +235,11 @@ block_8:
         func_80085A60();
         break;
     case 34:
-        func_80046318(3U, 0x801E8000, 0x49B7);
+        cd_read_sectors(3U, 0x801E8000, 0x49B7);
         func_8004284C();
         break;
     case 35:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_801336E8();
             D_800CA148 = 0xC;
             D_800CA14C = 0;

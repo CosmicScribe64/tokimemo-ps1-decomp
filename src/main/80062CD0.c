@@ -6,7 +6,7 @@
 void func_80049A40();
 
 void func_80062CD0(s32 arg0) {
-    func_80046318(0x2D, 0x80180000, arg0);
+    cd_read_sectors(0x2D, 0x80180000, arg0);
     D_8011F50F = 0;
     D_8011F4CB = 0;
     D_800B5A60 = 0;
@@ -310,7 +310,7 @@ void parameter_show_init(void) {
         ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_02 = 0x40;
         ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_38 = 0x40000000;
         ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_03 = 0x84;
-        ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_0C = D_800C975C;
+        ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_0C = sprite_frame_table;
         ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_10 = D_800C9A14;
         ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_34 = D_800C9730;
         ((DisplayActor44 *)D_8011ECD0)[i + 32].unk_14 = D_800C9A54;
@@ -505,7 +505,7 @@ void message_window_init(void) {
     D_8011ED16 = 0x40;
     D_8011ED4C = 0x40000000;
     D_8011ED17 = 0x84;
-    D_8011ED20 = D_800C975C;
+    D_8011ED20 = sprite_frame_table;
     D_8011ED24 = D_800C9A14;
     D_8011ED48 = D_800C9730;
     D_8011ED28 = D_800C9A54;

@@ -41,6 +41,7 @@ options:
   symbol_addrs_path:
     - config/symbol_addrs.txt
     - config/overlays/DATE_symbols.txt
+    - config/symbols_DATE.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt
   undefined_funcs_auto_path: build/ovl/DATE_undefined_funcs_auto.txt

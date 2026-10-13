@@ -65,11 +65,11 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013A7EC);
 s32 func_8013AC30(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_80046318(0x95U, 0x801A0000, 0x9B94);
+        cd_read_sectors(0x95U, 0x801A0000, 0x9B94);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 1);
             D_800B5BC8 = 0xEF;
             func_800674B0();
@@ -381,58 +381,58 @@ void func_8013C52C(void) {
         switch (D_800E6280.unk_1093) {
         case 0:
             D_800B3C6C = 0;
-            func_80042878(0x34);
+            main_state_set(0x34);
         default:
             break;
         case 1:
-            func_80042878(0x50);
+            main_state_set(0x50);
             break;
         case 2:
             func_8004E58C();
             func_80048DD0(0);
-            func_80042878(0x5D);
+            main_state_set(0x5D);
             break;
         case 3:
-            func_80042878(0x57);
+            main_state_set(0x57);
             break;
         case 4:
-            func_80042878(0x56);
+            main_state_set(0x56);
             break;
         case 5:
-            func_80042878(0x5A);
+            main_state_set(0x5A);
             break;
         case 6:
-            func_80042878(0x72);
+            main_state_set(0x72);
             break;
         case 7:
-            func_80042878(0x71);
+            main_state_set(0x71);
             if (D_800E6280.unk_0F4.h >> 0xC < 6) {
-                func_80042878(0x70);
+                main_state_set(0x70);
             }
             break;
         case 8:
-            func_80042878(0x51);
+            main_state_set(0x51);
             break;
         case 9:
-            func_80042878(0x53);
+            main_state_set(0x53);
             break;
         case 10:
-            func_80042878(0x55);
+            main_state_set(0x55);
             break;
         case 11:
-            func_80042878(0x54);
+            main_state_set(0x54);
             break;
         case 12:
-            func_80042878(0x58);
+            main_state_set(0x58);
             break;
         case 13:
-            func_80042878(0x52);
+            main_state_set(0x52);
             break;
         case 14:
-            func_80042878(0x5E);
+            main_state_set(0x5E);
             break;
         case 15:
-            func_80042878(0x59);
+            main_state_set(0x59);
             break;
         }
     }

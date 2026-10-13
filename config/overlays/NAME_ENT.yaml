@@ -40,6 +40,7 @@ options:
 
   symbol_addrs_path:
     - config/symbol_addrs.txt
+    - config/symbols_NAME_ENT.txt
     - config/labels/NAME_ENT.txt
   reloc_addrs_path:
     - config/reloc_addrs.txt

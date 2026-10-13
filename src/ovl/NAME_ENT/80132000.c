@@ -45,7 +45,7 @@ void func_80132198(void)
   if (D_800E6280.unk_110D == 0)
   {
     func_8004E58C();
-    func_8004E750(0x10);
+    text_set_advance(0x10);
     draw2d3d(1, 0);
     func_80048DAC(1);
     func_80041584();
@@ -70,20 +70,20 @@ void func_80132198(void)
   else
     if (D_800E6280.unk_110D == 1)
   {
-    if (func_800460CC() & 1)
+    if (cd_read_sync_status() & 1)
     {
       func_80053650(0x80167000, 0x80188000, 0x80162000);
       func_800536AC(0x140, 0x100, 0x140, 0xF0);
-      func_80046318(0x36U, 0x80190000, 0xA9E2);
+      cd_read_sectors(0x36U, 0x80190000, 0xA9E2);
       D_800E6280.unk_110D += 1;
     }
   }
   else
     if (D_800E6280.unk_110D == 2)
   {
-    if (func_800460CC() & 1)
+    if (cd_read_sync_status() & 1)
     {
-      func_80046318(6U, 0x801E0000, 0x9DBF);
+      cd_read_sectors(6U, 0x801E0000, 0x9DBF);
       func_8004284C();
     }
   }

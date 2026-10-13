@@ -63,7 +63,7 @@ s32 func_80134A54(void) {
         D_800E6280.unk_110A -= 2;
         return 0;
     }
-    if (func_8004636C(0x37, 0x801C0000) == 0) {
+    if (file_checksum_ok(0x37, 0x801C0000) == 0) {
         D_800E6280.unk_110A -= 2;
         return 0;
     }
@@ -143,6 +143,6 @@ void func_80135B10(void) {
 }
 
 void func_80135B54(void) {
-    func_80046318(0x37, 0x801C0000, 0xBD5E);
+    cd_read_sectors(0x37, 0x801C0000, 0xBD5E);
     func_8004284C();
 }

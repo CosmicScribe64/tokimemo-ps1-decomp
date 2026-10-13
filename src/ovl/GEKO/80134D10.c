@@ -499,7 +499,7 @@ void func_801355B8(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801355E8);
 
 void func_80135894(void) {
-    func_80046318(3, 0x801B0000, 0xAF43);
+    cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80134F84();
     func_8004284C();
 }
@@ -541,7 +541,7 @@ void func_80135C48(void) {
 }
 
 void func_80135CC8(void) {
-    func_80046318(0x16, 0x801B0000, 0xAF0D);
+    cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
     func_80134D10();
     func_8004284C();
 }
@@ -592,7 +592,7 @@ s32 func_80136714(void) {
         D_800E6280.unk_110A += 5;
     } else {
         D_80145060 = 0x13;
-        if ((func_8006AEC4(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) > 0) && (D_800E6280.unk_F5F == ((u32)(D_800E6280.unk_54C[0].w << 3) >> 0x1C)) && (D_80122D4C == 0)) {
+        if ((appointment_find_today(D_800E6280.unk_03E, D_800E6280.unk_03F, D_800E6280.unk_040) > 0) && (D_800E6280.unk_F5F == ((u32)(D_800E6280.unk_54C[0].w << 3) >> 0x1C)) && (D_80122D4C == 0)) {
             func_80042940(0x3D);
             return 0;
         }

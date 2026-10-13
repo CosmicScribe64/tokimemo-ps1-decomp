@@ -106,7 +106,7 @@ void func_80132AB8(void) {
     if (D_800E6280.unk_03A < 2U) {
         D_800E6280.unk_03A = 0;
         func_80048EB8(0);
-        func_80042878(0x12);
+        main_state_set(0x12);
     }
 }
 
@@ -801,15 +801,15 @@ void func_801385F0(void) {
 void func_801386C8(void) {
     func_80048EB8(0);
     D_800E6280.unk_F5F = D_800E7D68;
-    func_80042878(0x91);
+    main_state_set(0x91);
     func_801320C0();
 }
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80138708);
 
 void func_801387A8(void) {
-    if (func_800460CC() & 1) {
-        func_80042878(0x63);
+    if (cd_read_sync_status() & 1) {
+        main_state_set(0x63);
         func_80042908(3);
     }
 }
@@ -820,7 +820,7 @@ s32 func_801387E4(void) {
     } else {
         func_80048E78();
         func_80041584();
-        func_80042878(0x63);
+        main_state_set(0x63);
         func_80042908(7);
         func_80042940(0xF);
     }

@@ -85,7 +85,7 @@ void func_8013E1A0(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E22C);
 
 void func_8013E410(void) {
-    func_80046318(0x45, 0x801B0000, 0x8A88);
+    cd_read_sectors(0x45, 0x801B0000, 0x8A88);
     func_8013DF70();
     func_8004284C();
 }

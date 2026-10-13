@@ -359,13 +359,13 @@ s32 func_8014DB98(void) {
 }
 
 void func_8014DC5C(void) {
-    func_80046318(0xD, 0x801D0000, 0x90FC);
+    cd_read_sectors(0xD, 0x801D0000, 0x90FC);
     func_8014CFB0();
     func_8004284C();
 }
 
 void func_8014DC94(void) {
-    func_80046318(0x3D, 0x801B0000, 0x7DD3);
+    cd_read_sectors(0x3D, 0x801B0000, 0x7DD3);
     func_8014CC40();
     func_8004284C();
 }
@@ -405,7 +405,7 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014DCCC);
 #endif
 
 void func_8014DDD8(void) {
-    func_80046318(0x1D, 0x801B0000, 0xBD41);
+    cd_read_sectors(0x1D, 0x801B0000, 0xBD41);
     func_80132458();
     func_8004284C();
 }
@@ -434,7 +434,7 @@ void func_8014DE10(void) {
 }
 
 void func_8014DF1C(void) {
-    func_80046318(0x45, 0x801B0000, 0x7E10);
+    cd_read_sectors(0x45, 0x801B0000, 0x7E10);
     func_8014CCF0();
     func_8004284C();
 }
@@ -514,7 +514,7 @@ s32 func_8014E38C(void) {
     if (n < 0x10) {
         return 0;
     }
-    func_80046318(0x3D, 0x801B0000, 0x7E55);
+    cd_read_sectors(0x3D, 0x801B0000, 0x7E55);
     func_8014CDA0();
     func_8004284C();
 }
@@ -544,7 +544,7 @@ void func_8014EC90(void) {
 }
 
 void func_8014ECB8(void) {
-    func_80046318(0x3D, 0x801B0000, 0x7E92);
+    cd_read_sectors(0x3D, 0x801B0000, 0x7E92);
     func_8014CE50();
     func_8004284C();
 }
@@ -588,7 +588,7 @@ void func_8014EE68(void) {
 }
 
 void func_8014EE90(void) {
-    func_80046318(0x45, 0x801B0000, 0x7ECF);
+    cd_read_sectors(0x45, 0x801B0000, 0x7ECF);
     func_8014CF00();
     func_8004284C();
 }

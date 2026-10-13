@@ -119,7 +119,7 @@ void func_80132B88(void) {
 }
 
 void func_80132BB0(void) {
-    func_80046318(0x11, 0x80197000, 0xAEEC);
+    cd_read_sectors(0x11, 0x80197000, 0xAEEC);
     func_80132000();
     func_8004284C();
 }

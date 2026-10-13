@@ -2,15 +2,15 @@
 #include "game.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3DC0);
+INCLUDE_RODATA("asm/data/main/8004E500.data", text_list);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3F58);
-KWork D_800B3F60 = { 0, 0, 0, 0, 0, 0, 0 };
+KWork text_list_count = { 0, 0, 0, 0, 0, 0, 0 };
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3F6C);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3FAC);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3FCC);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B3FEC);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B400C);
-INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B402C);
+INCLUDE_RODATA("asm/data/main/8004E500.data", font_range_table);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B4030);
 INCLUDE_RODATA("asm/data/main/8004E500.data", D_800B40E4);
 
@@ -30,11 +30,11 @@ void func_8004E500(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004E58C);
 
-void func_8004E750(u8 arg0) {
+void text_set_advance(u8 arg0) {
     if (arg0 == 0x10) {
-        D_800B3F60.unk_6A = 0x10;
+        text_list_count.unk_6A = 0x10;
     } else {
-        D_800B3F60.unk_6A = 0xE;
+        text_list_count.unk_6A = 0xE;
     }
 }
 
@@ -42,30 +42,30 @@ void func_8004E780(void) {
 }
 
 s32 set_kanji_string(s16 x, s16 y, u8 col, u8 *str, s32 arg4) {
-    if (D_800B3F60.count >= 0x34) {
+    if (text_list_count.count >= 0x34) {
         return -1;
     }
     if (str == 0) {
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_07 = 0;
+        ((Entry8 *)text_list)[text_list_count.count].unk_07 = 0;
     } else if (str[0] == 0 || str[1] == 0) {
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_07 = 0;
+        ((Entry8 *)text_list)[text_list_count.count].unk_07 = 0;
     } else {
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_02 = y;
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_04 = col;
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_00 = x;
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_05 = load_string(str, y, col);
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_06 = arg4;
-        ((Entry8 *)D_800B3DC0)[D_800B3F60.count].unk_07 = 1;
+        ((Entry8 *)text_list)[text_list_count.count].unk_02 = y;
+        ((Entry8 *)text_list)[text_list_count.count].unk_04 = col;
+        ((Entry8 *)text_list)[text_list_count.count].unk_00 = x;
+        ((Entry8 *)text_list)[text_list_count.count].unk_05 = load_string(str, y, col);
+        ((Entry8 *)text_list)[text_list_count.count].unk_06 = arg4;
+        ((Entry8 *)text_list)[text_list_count.count].unk_07 = 1;
     }
-    return ++D_800B3F60.count;
+    return ++text_list_count.count;
 }
 
 void k_disp_start(s32 arg0) {
     s32 i;
 
-    D_800B3F60.pos = 0;
+    text_list_count.pos = 0;
     for (i = 0; i < arg0; i++) {
-        D_800B3F60.pos += D_800B3DC0[i * 8 + 5];
+        text_list_count.pos += text_list[i * 8 + 5];
     }
 }
 
@@ -81,15 +81,15 @@ u8 *get_k_work(s32 arg0) {
     if (arg0 >= 0x35) {
         return D_800B3F58;
     }
-    return D_800B3DC0 + arg0 * 8;
+    return text_list + arg0 * 8;
 }
 
 s16 *get_ksys(void) {
-    return (u8 *)&D_800B3F60;
+    return (u8 *)&text_list_count;
 }
 
 void set_k_work(s32 arg0, Entry8 arg1) {
-    Entry8 *p = (Entry8 *)D_800B3DC0 + arg0;
+    Entry8 *p = (Entry8 *)text_list + arg0;
 
     p->unk_00 = arg1.unk_00;
     p->unk_02 = arg1.unk_02;
@@ -105,23 +105,23 @@ void k_reset(s32 arg0) {
 
     sum = 0;
     for (i = 0; i < arg0; i++) {
-        sum += D_800B3DC0[i * 8 + 5];
+        sum += text_list[i * 8 + 5];
     }
-    D_800B3F60.count = arg0;
-    D_800B3F60.total = sum;
-    D_800B3F60.pos = sum;
+    text_list_count.count = arg0;
+    text_list_count.total = sum;
+    text_list_count.pos = sum;
 }
 
 void k_sub_reset_point_set(void) {
-    D_800B3F60.mark = D_800B3F60.count;
+    text_list_count.mark = text_list_count.count;
 }
 
 void k_sub_reset(void) {
-    k_reset(D_800B3F60.mark);
+    k_reset(text_list_count.mark);
 }
 
 void k_sub_disp_start(s32 arg0) {
-    k_disp_start(D_800B3F60.mark + arg0);
+    k_disp_start(text_list_count.mark + arg0);
 }
 
 s16 k_disp_goto_line_end(void) {
@@ -130,9 +130,9 @@ s16 k_disp_goto_line_end(void) {
 
     sum = 0;
     for (i = 0; i < 0x34; i++) {
-        sum += D_800B3DC0[i * 8 + 5];
-        if (sum >= D_800B3F60.pos) {
-            D_800B3F60.pos = sum;
+        sum += text_list[i * 8 + 5];
+        if (sum >= text_list_count.pos) {
+            text_list_count.pos = sum;
             return sum;
         }
     }
@@ -140,25 +140,25 @@ s16 k_disp_goto_line_end(void) {
 }
 
 void k_speed_set(u8 arg0) {
-    D_800B3F60.speed = arg0;
+    text_list_count.speed = arg0;
     if ((u32)arg0 >= 0x81) {
-        D_800B3F60.speed = 0x7F;
+        text_list_count.speed = 0x7F;
     }
 }
 
 u8 get_k_speed(void) {
-    return D_800B3F60.speed;
+    return text_list_count.speed;
 }
 
 s32 k_disp_inc(void) {
-    if (D_800E6280.unk_10F8 % (D_800B3F60.speed + 1) == 0) {
-        if (D_800B3F60.pos < D_800B3F60.total) {
-            D_800B3F60.pos += 1;
+    if (D_800E6280.unk_10F8 % (text_list_count.speed + 1) == 0) {
+        if (text_list_count.pos < text_list_count.total) {
+            text_list_count.pos += 1;
             return 0;
         }
         return 1;
     }
-    if (D_800B3F60.pos == D_800B3F60.total) {
+    if (text_list_count.pos == text_list_count.total) {
         return 1;
     }
     return 0;
@@ -166,14 +166,14 @@ s32 k_disp_inc(void) {
 
 /* The operand order sets the load order of the two globals (T-0017). */
 s32 check_end_k(void) {
-    if (D_800B3F60.pos == D_800B3F60.total) {
+    if (text_list_count.pos == text_list_count.total) {
         return 1;
     }
     return 0;
 }
 
 u8 check_set_k(void) {
-    return *(u8 *)&D_800B3F60;
+    return *(u8 *)&text_list_count;
 }
 
 u8 get_now_k(void) {
@@ -181,9 +181,9 @@ u8 get_now_k(void) {
     s32 sum;
 
     sum = 0;
-    for (i = 0; i < D_800B3F60.pos; i++) {
-        sum += D_800B3DC0[i * 8 + 5];
-        if (sum >= D_800B3F60.pos) {
+    for (i = 0; i < text_list_count.pos; i++) {
+        sum += text_list[i * 8 + 5];
+        if (sum >= text_list_count.pos) {
             return i;
         }
     }
@@ -197,22 +197,22 @@ INCLUDE_ASM("asm/nonmatchings/main/8004E500", load_string);
 void vload_font(arg0)
 s32 arg0;
 {
-    func_8004F4F0(arg0, D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
-    if (D_800B3F60.total < 0x80) {
-        D_800B3F60.total = D_800B3F60.total;
-        LoadSquare((D_800B3F60.total & 7) * 4 + 0x320, (D_800B3F60.total & 0x78) * 2 + 0x100, 4, 0xC,
-                   D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
-    } else if (D_800B3F60.total < 0x100) {
-        D_800B3F60.total = D_800B3F60.total;
-        LoadSquare((D_800B3F60.total & 7) * 4 + 0x360, (D_800B3F60.total & 0x78) * 2 + 0x100, 4, 0xC,
-                   D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
+    glyph_expand_1bpp(arg0, D_801255F0 + (text_list_count.total & 0xF) * 0x18);
+    if (text_list_count.total < 0x80) {
+        text_list_count.total = text_list_count.total;
+        LoadSquare((text_list_count.total & 7) * 4 + 0x320, (text_list_count.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   D_801255F0 + (text_list_count.total & 0xF) * 0x18);
+    } else if (text_list_count.total < 0x100) {
+        text_list_count.total = text_list_count.total;
+        LoadSquare((text_list_count.total & 7) * 4 + 0x360, (text_list_count.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   D_801255F0 + (text_list_count.total & 0xF) * 0x18);
     } else {
-        D_800B3F60.total = D_800B3F60.total;
-        LoadSquare((D_800B3F60.total & 7) * 4 + 0x3A0, (D_800B3F60.total & 0x78) * 2 + 0x100, 4, 0xC,
-                   D_801255F0 + (D_800B3F60.total & 0xF) * 0x18);
+        text_list_count.total = text_list_count.total;
+        LoadSquare((text_list_count.total & 7) * 4 + 0x3A0, (text_list_count.total & 0x78) * 2 + 0x100, 4, 0xC,
+                   D_801255F0 + (text_list_count.total & 0xF) * 0x18);
     }
     func_8009C674(0);
-    D_800B3F60.total += 1;
+    text_list_count.total += 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004E500", func_8004F4F0);
+INCLUDE_ASM("asm/nonmatchings/main/8004E500", glyph_expand_1bpp);

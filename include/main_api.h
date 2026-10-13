@@ -567,7 +567,7 @@ extern u8 D_800B3220;
 extern u8 *D_800B3288[];
 extern u8 **D_800B32CC;
 extern s32 D_800B3538[];
-extern u8 *D_800B35F4[];
+extern u8 *girl_short_name_table[];
 extern u8 *D_800B3624;
 extern u8 *D_800B3630;
 extern u8 D_800B3644[3];
@@ -586,7 +586,7 @@ extern s32 D_800B372C;
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3750[][3];
 extern s32 D_800B37D4[];
-extern u8 *D_800B3908[];
+extern u8 *club_name_table[];
 extern s32 D_800B3B9C[];
 extern u8 D_800B3C6C;
 extern u8 D_800B3C70[];
@@ -606,12 +606,12 @@ extern s32 D_800B3648[16];
 extern u8 D_800B3D80;
 extern u8 D_800B3D84[];
 extern s8 D_800B3DB0;
-extern u8 D_800B3DC0[];
+extern u8 text_list[];
 extern u8 D_800B3DC7[];  /* stride 8 from k_disp_switch: likely a field of an 8-byte struct array */
 extern u8 D_800B3F58[];
 /* Text display state, defined in src/main/8004E500.c (T-9150). */
 typedef struct KWork {
-    /* 0x0 */ s16 count;   /* number of entries in D_800B3DC0 */
+    /* 0x0 */ s16 count;   /* number of entries in text_list */
     /* 0x2 */ s16 total;
     /* 0x4 */ s16 mark;
     /* 0x6 */ u8 speed;
@@ -620,7 +620,7 @@ typedef struct KWork {
     /* 0xA */ u8 unk_6A;
     /* 0xB */ u8 pad_0B;
 } KWork; /* size 0xC */
-extern KWork D_800B3F60;
+extern KWork text_list_count;
 extern u8 D_800B4100[13];
 extern u8 D_800B4110[13];
 extern u8 D_800B4120[13];
@@ -689,11 +689,11 @@ extern s32 D_800B6780[];
 extern s32 D_800B6810[];
 extern s32 D_800B69E0[];
 extern u8 D_800B6D30;
-extern u8 D_800B6D34;
-extern u8 D_800B6D38;
-extern s32 D_800B6D3C;
-extern s32 D_800B6D40;
-extern u8 D_800B6D50[];
+extern u8 ovl_load_state;
+extern u8 ovl_load_sectors;
+extern s32 ovl_load_buf;
+extern s32 ovl_load_lba;
+extern u8 font_glyphs[];
 extern s8 D_800C51C4;
 extern s32 D_800C5FCC;
 extern s32 D_800C5FD0;
@@ -706,7 +706,7 @@ extern s32 D_800C974C;
 extern s32 D_800C9750;
 extern s32 D_800C9754;
 extern s32 D_800C9758;
-extern u8 D_800C975C[];
+extern u8 sprite_frame_table[];
 extern u8 D_800C9A14[];
 extern s16 D_800C9A54;
 extern u8 D_800C9A60[];
@@ -739,7 +739,7 @@ extern u8 D_800CA16C[];
 extern u8 D_800CA174[];
 extern u8 D_800CA17C[];
 extern u8 D_800CA188[];
-extern u8 D_800CA190[];
+extern u8 girl_name_buf[];
 extern u8 D_800CA19C[];
 extern u8 D_800CA1DC[];
 /* Four s16[4] rows (T-9020): DATE indexes each from its own base (D_800CA22C[i]) and sets a row
@@ -1543,7 +1543,7 @@ extern s32 D_80125120;
 extern s32 D_80125124;
 extern u8 D_80125128;
 extern u8 D_80125129;
-extern u8 D_8012512A;
+extern u8 cd_read_status;
 extern s8 D_8012512B;
 extern u8 D_80125130[];
 extern s32 D_801255B0;
@@ -1701,7 +1701,7 @@ void func_80042458(void);
 void func_80042488(void);
 s32 func_80042808(void);
 s32 func_8004284C(void);
-void func_80042878();
+void main_state_set();
 s32 func_80042908(s32 arg0);
 s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
@@ -1714,7 +1714,7 @@ void func_800433D0(s32 arg0);
 s32 func_80046590(s16 arg0, u8 arg1);
 s32 search_load_tpage_buf_lock(s32 arg0, u8 arg1);
 u8 *get_k_work(s32 arg0);
-void func_8004F4F0();
+void glyph_expand_1bpp();
 void draw2d3d(u8 arg0, u8 arg1);
 void func_800438DC();
 void back_clear_switch(s32 arg0);
@@ -1743,7 +1743,7 @@ s32 func_80045FF4(void);
 #ifndef MAIN_API_OVERRIDE_func_80046094
 u8 func_80046094(void);
 #endif
-u8 func_800460CC(void);
+u8 cd_read_sync_status(void);
 u8 func_800460DC(void);
 u8 func_800460EC(void);
 s32 func_80046274(void);
@@ -1752,8 +1752,8 @@ void func_800462BC(u8 arg0, s32 arg1, s32 *arg2);
 #ifndef MAIN_API_OVERRIDE_func_800462C8
 void func_800462C8(u8 arg0, s32 arg1, s32 arg2);
 #endif
-void func_80046318(u8 arg0, s32 arg1, s32 arg2);
-s32 func_8004636C();
+void cd_read_sectors(u8 arg0, s32 arg1, s32 arg2);
+s32 file_checksum_ok();
 s32 func_80046500(void);
 void func_800469F4();
 void func_80046A7C();
@@ -2072,7 +2072,7 @@ void func_800696DC(s32, s32);
 void func_8006A044();
 void func_8006A2CC();
 void func_8006B0C8();
-void func_8006B648(void);
+void club_list_menu(void);
 void func_8006B900(void);
 void func_8006BA40(void);
 void func_8006BC28(s32 arg0);
@@ -2134,7 +2134,7 @@ void func_80076450();
 void func_80076630(void);
 s32 func_80076B48(void);
 void func_80076C7C(void);
-void func_80076DA0(void);
+void appointment_launch(void);
 void func_8007739C(void);
 void func_80077694(void);
 void func_80077900(void);
@@ -2152,8 +2152,8 @@ s32 func_800789A0();
 void func_800789E0(void);
 void func_80078A94();
 void func_80078C48();
-void func_80078FE0(void);
-void func_80079014(void);
+void ovl_load_poll(void);
+void ovl_load_verify(void);
 void func_80079070();
 s32 func_80079524(void);
 void func_80079B10(u16 arg0);
@@ -2235,8 +2235,8 @@ void check_k_scroll();
 void func_8007EDF8();
 void wait_sub_sub(s16 arg0);
 void func_80081128(void);
-#ifndef MAIN_API_OVERRIDE_func_80081190
-void func_80081190(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
+#ifndef MAIN_API_OVERRIDE_dialogue_render
+void dialogue_render(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
 #endif
 void func_80081D30();
 s32 func_80082764();

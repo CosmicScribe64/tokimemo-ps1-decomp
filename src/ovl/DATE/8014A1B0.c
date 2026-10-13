@@ -68,7 +68,7 @@ void func_8014A314(void) {
 }
 
 void func_8014A360(void) {
-    if (func_800460CC() & 1) {
+    if (cd_read_sync_status() & 1) {
         D_8015DE40 += 1;
     }
 }

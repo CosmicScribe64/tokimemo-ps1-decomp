@@ -10,7 +10,7 @@ extern FnTbl44 D_801609F8;
 extern u32 D_80122CD0;
 
 void func_8015A190(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8E3F);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8E3F);
     func_80159560();
     func_8004284C();
 }
@@ -25,7 +25,7 @@ void func_8015A1C8(void) {
 }
 
 void func_8015A250(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8E7C);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8E7C);
     func_80159610();
     func_8004284C();
 }
@@ -43,7 +43,7 @@ void func_8015A350(void) {
 }
 
 void func_8015A378(void) {
-    func_80046318(0x45, 0x801B0000, 0x8EB9);
+    cd_read_sectors(0x45, 0x801B0000, 0x8EB9);
     func_801596C0();
     func_8004284C();
 }

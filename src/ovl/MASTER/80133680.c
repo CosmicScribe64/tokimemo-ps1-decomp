@@ -126,11 +126,11 @@ void func_80133AA0(void) {
         }
         break;
     case 2:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80044750(0x200);
             func_80065F34(1);
             dec_bg_show_set(1, func_8005751C(1));
-            func_80046318(2U, 0x801E8000, 0xA9BA);
+            cd_read_sectors(2U, 0x801E8000, 0xA9BA);
             func_8004284C();
         }
         break;
@@ -138,7 +138,7 @@ void func_80133AA0(void) {
         normal_date_bg_fadein();
         break;
     case 4:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80133680();
             g->unk_F5F = 0;
             func_800847B8(0U);
@@ -159,20 +159,20 @@ void func_80133AA0(void) {
         func_8004284C();
         break;
     case 7:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8005751C(1);
             func_8004284C();
         }
         break;
     case 8:
-        func_80046318(0x1BU, 0x80197000, 0xB03E);
+        cd_read_sectors(0x1BU, 0x80197000, 0xB03E);
         func_8004284C();
         break;
     case 9:
         normal_date_move_place();
         break;
     case 10:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80138F10();
             i = 0;
             do {
@@ -435,14 +435,14 @@ void func_801350A8(void) {
         }
         break;
     case 4:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8007C740();
             func_80083474();
-            func_80046318(3U, 0x801B0000, 0xAF43);
+            cd_read_sectors(3U, 0x801B0000, 0xAF43);
         }
         break;
     case 5:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_801337B8();
             func_800847B8(D_800E6280.unk_F5F);
             D_800CA148 = 0;
@@ -537,7 +537,7 @@ void func_801350A8(void) {
         break;
     case 12:
         if (func_80044E8C() == 1) {
-            func_80046318(0x1BU, 0x80197000, 0xB03E);
+            cd_read_sectors(0x1BU, 0x80197000, 0xB03E);
             func_8004284C();
         }
         break;
@@ -545,15 +545,15 @@ void func_801350A8(void) {
         func_8007EAAC();
         break;
     case 14:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80138F10();
             func_80043914(D_8013C730, 0x10, 1, 1, 0);
-            func_80046318(2U, 0x801E8000, 0xA9BA);
+            cd_read_sectors(2U, 0x801E8000, 0xA9BA);
             func_8004284C();
         }
         break;
     case 15:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80133680();
             D_800E6280.unk_F5F = 0;
             func_800847B8(0U);
@@ -567,7 +567,7 @@ void func_801350A8(void) {
         break;
     case 16:
         if ((flags = D_800E6280.unk_71E) & 1) {
-            func_80046318(2U, 0x801E8000, 0xA9BA);
+            cd_read_sectors(2U, 0x801E8000, 0xA9BA);
             func_8004284C();
         } else {
             D_800CA148 = 0x1B;
@@ -575,7 +575,7 @@ void func_801350A8(void) {
         }
         break;
     case 17:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80133680();
             D_800E6280.unk_F5F = 0;
             func_800847B8(0U);
@@ -636,19 +636,19 @@ void func_801359F0(void) {
         }
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80044890(0, 0xC043, 0xC01D, D_800B3688[D_8013C584], D_800B36C8[D_8013C584], D_800B3708[D_8013C584]);
             func_8004284C();
         }
         break;
     case 2:
         if (func_80044E8C() == 1) {
-            func_80046318(0xBU, 0x801E8000, 0xA9C5);
+            cd_read_sectors(0xBU, 0x801E8000, 0xA9C5);
             func_8004284C();
         }
         break;
     case 3:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_801336B4();
             D_800CA160 = (s32) D_8013C4A0;
             D_800CA164 = (s32) D_8013C4A4;
@@ -683,12 +683,12 @@ void func_80136E24(void) {
         if (((MasterClubBits *)&D_800E6280.unk_66C[6])->count < 3U) {
             func_80042940(2);
         } else {
-            func_80046318(0xBU, 0x801E8000, 0xA9C5);
+            cd_read_sectors(0xBU, 0x801E8000, 0xA9C5);
             func_8004284C();
         }
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_801336B4();
             D_800CA160 = (s32) D_8013C4A0;
             D_800CA164 = (s32) D_8013C4A4;
@@ -760,11 +760,11 @@ void func_80137044(void) {
             func_80083440(0U);
             break;
         }
-        func_80046318(0xEU, 0x80197000, 0xA9D0);
+        cd_read_sectors(0xEU, 0x80197000, 0xA9D0);
         dec_bg_show_switch(1);
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             girls = D_800E6280.unk_1BC;
             func_80137F94();
             index = (*(u8 *)&D_8013C584);
@@ -931,10 +931,10 @@ void func_801375E8(void) {
             func_80083440(0U);
         }
         dec_bg_show_switch(1);
-        func_80046318(0xEU, 0x80197000, 0xA9D0);
+        cd_read_sectors(0xEU, 0x80197000, 0xA9D0);
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80137F94();
             index = (*(u8 *)&D_8013C584);
             D_800CA148 = messages.v[index];

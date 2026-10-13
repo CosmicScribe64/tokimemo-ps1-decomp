@@ -16,8 +16,10 @@ Read this first. Update on every ingest or new page.
 - [[game-state]] - `GameState D_800E6280`, the main game-state struct (0x800E6280..0x800E7D10): field map, evidence, confidence, `tools/migrate_globals.py` (T-5100); one view for every unit, access audit (T-7010)
 - Repo-root `README.md`, `ROADMAP.md`, `CONTRIBUTING.md`, `LICENSE` (CC0) - public face of the project (T-0901)
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
+- [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-11090-ingest-english-patch-notes|T-11090]] Ingest the English patch notes as a reference (Done; 50 symbols renamed, [[ref-english-patch]]).
 - [[tickets/T-11070-small-functions-gemini-30|T-11070]] Small functions (Gemini) 30 (In Progress).
 - [[tickets/T-11060-big-functions-gemini-29|T-11060]] Big functions (Gemini) 29 (In Progress).
 - [[tickets/T-11000-tt-overlay|T-11000]] TT overlay (Done; 12 matches / 5,476 bytes, 13 guarded near misses, TT 32.5%).

@@ -107,7 +107,7 @@ void func_80141C44(void) {
 }
 
 void func_80141CA0(void) {
-    func_80046318(0x55, 0x801B0000, 0x8065);
+    cd_read_sectors(0x55, 0x801B0000, 0x8065);
     func_80141780();
     func_8004284C();
 }
@@ -157,7 +157,7 @@ void func_801425CC(void) {
 }
 
 void func_801425F4(void) {
-    func_80046318(0x45, 0x801B0000, 0x8571);
+    cd_read_sectors(0x45, 0x801B0000, 0x8571);
     func_80141850();
     func_8004284C();
 }
@@ -210,7 +210,7 @@ void func_80143228(void) {
 }
 
 void func_80143248(void) {
-    func_80046318(0x45, 0x801B0000, 0x8BC9);
+    cd_read_sectors(0x45, 0x801B0000, 0x8BC9);
     func_80141920();
     func_8004284C();
 }

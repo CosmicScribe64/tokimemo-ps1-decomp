@@ -143,7 +143,7 @@ void func_8013A59C(void) {
     D_800E6280.unk_722 = 0x32;
     func_8006492C(0);
     func_8004E9F4(0);
-    func_80042878(0x81);
+    main_state_set(0x81);
 }
 
 void func_8013A648(void) {
@@ -167,7 +167,7 @@ void func_8013A648(void) {
 
 void func_8013A74C(void) {
     if (D_800CA2CC == 1) {
-        func_80046318(0x3D, 0x801E0000, 0xBD04);
+        cd_read_sectors(0x3D, 0x801E0000, 0xBD04);
         func_80139D00();
         func_8004284C();
         return;

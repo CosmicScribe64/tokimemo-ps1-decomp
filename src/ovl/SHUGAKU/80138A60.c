@@ -277,7 +277,7 @@ s32 func_80139740(void) {
         D_800CA2EC = 1;
         D_800E6280.unk_F5F = 0xD;
         func_800847B8(0xD);
-        func_80051438(D_800CA190, D_8013C97C);
+        func_80051438(girl_name_buf, D_8013C97C);
         func_8004284C();
     } else {
         func_8004284C();

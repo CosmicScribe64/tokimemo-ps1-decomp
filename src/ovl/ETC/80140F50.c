@@ -29,7 +29,7 @@ void func_801413FC(void) {
     func_800AE0B0("データセーブ");
     if (D_800E6280.unk_1124 != 0) {
         func_8004482C();
-        func_80042878(0x12);
+        main_state_set(0x12);
         return;
     }
     func_8004E58C();
@@ -42,11 +42,11 @@ s32 func_80141468(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         dec_bg_reset();
-        func_80046318(9U, 0x80162000, 0xA1A2);
+        cd_read_sectors(9U, 0x80162000, 0xA1A2);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_800E6280.unk_110D += 1;
             return;
         }
@@ -97,7 +97,7 @@ void func_80141700(void) {
         func_8004284C();
     } else if (D_800E6280.unk_F88 & 0x40) {
         func_8004482C();
-        func_80042878(0xC4);
+        main_state_set(0xC4);
     }
     func_800578F4(2);
 }
@@ -172,7 +172,7 @@ void func_801421AC(void) {
             func_80042940(4);
         } else if (D_800E6280.unk_F88 & 0x40) {
             func_8004482C();
-            func_80042878(0xC4);
+            main_state_set(0xC4);
         }
         break;
     }
@@ -211,7 +211,7 @@ void func_80142390(void) {
             func_80042940(4);
         } else if (D_800E6280.unk_F88 & 0x40) {
             func_8004482C();
-            func_80042878(0xC4);
+            main_state_set(0xC4);
         }
         break;
     }
@@ -242,15 +242,15 @@ void func_80142974(void) {
     if (func_800460EC() & 4) {
         if (D_800E6280.unk_F88 & 0x200000) {
             if (D_800E6280.unk_1124 != 0) {
-                func_80042878(0x11);
+                main_state_set(0x11);
             } else {
-                func_80042878(0xC4);
+                main_state_set(0xC4);
             }
         } else if (D_800E6280.unk_F88 & 0x400000) {
             if (D_800E6280.unk_1124 != 0) {
-                func_80042878(0x11);
+                main_state_set(0x11);
             } else {
-                func_80042878(0x91);
+                main_state_set(0x91);
             }
         }
     }

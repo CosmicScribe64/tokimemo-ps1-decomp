@@ -58,7 +58,7 @@ void func_80132000(void) {
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80132000", func_80132334);
 
 void func_80132400(void) {
-    func_80042878(0xC2);
+    main_state_set(0xC2);
 }
 
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80132000", func_80132420);

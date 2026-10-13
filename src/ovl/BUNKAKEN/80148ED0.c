@@ -58,13 +58,13 @@ void func_80149144(void) {
         func_800573AC();
         func_80057390(0);
         func_80044750(0xCF);
-        func_80046318(3U, 0x801E8000, 0x49B7);
+        cd_read_sectors(3U, 0x801E8000, 0x49B7);
         func_80085ED0();
         func_8004284C();
         break;
     case 0x1:
         if (func_80085EEC() >= 0x15) {
-            if (func_800460CC() & 1) {
+            if (cd_read_sync_status() & 1) {
                 func_80044890(1, 0xC478, 0xC44B, 0xCA95, 0xCA4F, 0xCA3E);
                 D_800E6280.unk_F5F = 0;
                 func_800847B8(0U);
@@ -102,7 +102,7 @@ void func_80149144(void) {
         func_80085A60();
         break;
     case 0x5:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80044750(0x200);
             func_8004E9F4(0);
             if (func_8008667C(0) < 2) {
@@ -220,14 +220,14 @@ void func_80149144(void) {
         func_80085A60();
         break;
     case 0x18:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80085B3C(0x14, 0x19);
             func_80044750(0x200);
             func_8004E9F4(0);
             func_8006612C((s32) "近所の公園");
             D_80125CA0 = 0xC0;
             func_80057418(1, func_8005751C(1));
-            func_80046318(3U, 0x801B0000, 0xAF43);
+            cd_read_sectors(3U, 0x801B0000, 0xAF43);
             func_8004284C();
         }
         break;
@@ -235,7 +235,7 @@ void func_80149144(void) {
         func_8007E884();
         break;
     case 0x1A:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80148ED0();
             D_800CA148 = 1;
             D_800CA14C = 0;
@@ -249,11 +249,11 @@ void func_80149144(void) {
         func_80085A60();
         break;
     case 0x1C:
-        func_80046318(3U, 0x801E8000, 0x49B7);
+        cd_read_sectors(3U, 0x801E8000, 0x49B7);
         func_8004284C();
         break;
     case 0x1D:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8013257C();
             D_800CA148 = 0x26;
             D_800CA14C = 0;
@@ -376,7 +376,7 @@ void func_80149144(void) {
         func_80085A60();
         break;
     case 0x30:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80057418(1, func_8005751C(1));
             temp_t7 = (u8) D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4;
             switch (temp_t7) {
@@ -423,7 +423,7 @@ void func_80149144(void) {
         func_80082F70();
         break;
     case 0x37:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_800CA148 = 6;
             func_8014A5EC();
             func_8007C740();

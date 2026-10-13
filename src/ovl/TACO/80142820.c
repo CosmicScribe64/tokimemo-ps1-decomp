@@ -22,7 +22,7 @@ void func_80142DE0(void) {
     if (((TcBits *) &D_800E7D50)->flag == 1) {
         func_80048EB8(0);
         func_80048390();
-        func_80042878(D_800E6280.unk_720);
+        main_state_set(D_800E6280.unk_720);
         func_80042908(D_800E6280.unk_721);
         func_80042940(D_800E6280.unk_722);
         func_8006BC28(0);
@@ -33,7 +33,7 @@ void func_80142DE0(void) {
         func_8006492C(1);
         return;
     }
-    func_80042878(0x12);
+    main_state_set(0x12);
 }
 
 void func_80142EC4(void) {
@@ -53,11 +53,11 @@ void func_80142F0C(void) {
 u8 func_80142F34(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_80046318(0x95, 0x801A0000, 0x9B94);
+        cd_read_sectors(0x95, 0x801A0000, 0x9B94);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 0);
             D_800E6280.unk_110D += 1;
         }

@@ -70,14 +70,14 @@ void func_80152680(void) {
     player_blood_types = D_801564CC;
     switch (g->unk_110A) {
     case 0:
-        func_80046318(1U, 0x801E8000, 0x4B80);
+        cd_read_sectors(1U, 0x801E8000, 0x4B80);
         for (i = 0; i < 11; i++) {
             D_800CA2B0[i] = g->unk_1BC[i].unk_0C.f.b1;
         }
         func_8004284C();
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80132548();
             D_800CA14C = 0;
             D_800CA160 = (s32) D_80155E90;
@@ -118,9 +118,9 @@ void func_80152680(void) {
         break;
     case 8:
         if (D_80122EBC == 0xB) {
-            func_8004E788(-0x80, 0x42, 0, (s32) *D_800B35F4, 0);
+            func_8004E788(-0x80, 0x42, 0, (s32) *girl_short_name_table, 0);
         } else {
-            func_8004E788(-0x80, 0x42, 0, (s32) D_800B35F4[D_80122EBC], 0);
+            func_8004E788(-0x80, 0x42, 0, (s32) girl_short_name_table[D_80122EBC], 0);
         }
         func_8004E788(-0x48, 0x42, 0, (s32)names.text[D_80122EBC], 0);
         func_8004E884(4);

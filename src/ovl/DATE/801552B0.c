@@ -199,7 +199,7 @@ void func_80155D80(void) {
 }
 
 void func_80155E08(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8816);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8816);
     func_801552B0();
     func_8004284C();
 }
@@ -215,7 +215,7 @@ void func_80156024(void) {
 }
 
 void func_80156080(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8853);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8853);
     func_80155360();
     func_8004284C();
 }
@@ -242,7 +242,7 @@ void func_801563A8(void) {
 }
 
 void func_8015645C(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8890);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8890);
     func_80155410();
     func_8004284C();
 }
@@ -259,7 +259,7 @@ void func_80156494(void) {
 }
 
 void func_80156538(void) {
-    func_80046318(0x35, 0x801B0000, 0x88CD);
+    cd_read_sectors(0x35, 0x801B0000, 0x88CD);
     func_801554C0();
     func_8004284C();
 }

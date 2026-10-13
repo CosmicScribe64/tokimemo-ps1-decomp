@@ -283,7 +283,7 @@ void func_8013C2E4(void) {
     D_80145F1C = 0x8019B494;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", func_8013D180);
+INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", shougatu_stage_dispatch);
 
 void func_8013D2A8(void) {
     D_800CA134 = &D_80145F2C;
