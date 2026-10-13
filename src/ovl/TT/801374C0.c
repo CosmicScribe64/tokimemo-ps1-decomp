@@ -14,7 +14,57 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801374C0);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137654);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137878);
+void func_80137878(void) {
+    u8 *c;
+    u8 *b;
+    /* FAKE: unused homes retain the observed frame. T-11000. */
+    s32 frame_pad[8];
+    s16 pt[2];
+    u8 *p;
+    s32 i;
+    s32 n;
+
+    c = D_80158A8C;
+    pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x254);
+    b = D_80158A64;
+    pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x284);
+    c[0xBA] = 0;
+    p = D_80158A80;
+    for (i = 0, n = 12; i != n; i++, p += 0x54) {
+        if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155C70) != 0) {
+            if (*(u16 *)(c + 0x30E) == 2) {
+                b[0x25] = b[0x25] + 1;
+                if (b[0x24] != 0) {
+                    if (!(b[0x25] & 3)) {
+                        if (!(b[0x25] & 7)) {
+                            func_801342CC(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+                        } else {
+                            func_80133FB0(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+                        }
+                    }
+                }
+                func_80133AD0(0x507);
+                if (i >= 6) {
+                    *(s16 *)(c + 0x30C) -= 1;
+                } else if (*(u16 *)(p + 2) == 9) {
+                    *(s16 *)(c + 0x30C) -= 4;
+                } else {
+                    *(s16 *)(c + 0x30C) -= 2;
+                }
+            } else {
+                func_80133AD0(0x506);
+            }
+            c[0xBA] = 1;
+            *(u16 *)(p + 4) = 0x80;
+            p[13] = 0;
+            p[14] = 0;
+            p[15] = 0;
+            *(s16 *)(p + 6) = 0;
+            *(s16 *)(p + 8) = 0;
+            *(s16 *)(p + 10) = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137A78);
 
