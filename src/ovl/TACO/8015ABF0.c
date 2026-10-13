@@ -22,7 +22,7 @@ void func_8015ABF0(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
 
-/* NON_MATCHING: T-10710, shape identical; MATRIX local at sp+0x24, the original keeps it at sp+0x20 (same frame 0x48): the 8-aligned-union and unused-scalar tries grow the frame by 8 */
+/* NON_MATCHING: T-10810, frame and MATRIX offset match now (declare i, j before matrix: later-declared locals sit lower); only the struct-copy temporary differs (ugen t2 against t3, 8 lines) */
 #ifdef NON_MATCHING
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;
@@ -30,10 +30,10 @@ void func_8015B1B8(arg0, arg1, arg2, arg3)
     s16 *arg2;
     s32 arg3;
 {
-    TcTransformObj50 *obj;
-    MATRIX matrix;
     s32 i;
     s32 j;
+    MATRIX matrix;
+    TcTransformObj50 *obj;
 
     arg2 += arg3 * 9;
     arg1 += arg3 * 3;

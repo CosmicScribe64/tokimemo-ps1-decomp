@@ -155,4 +155,6 @@ void func_8013216C(void);
 void func_80132278(void);
 void func_8013275C(void);
 void func_80132A0C(void);
+extern u8 D_80139A2C[]; /* end of the D_8013984C records (T-10810) */
+extern s16 D_80139228[][4]; /* 8-byte pop-up records (T-10810) */
 #endif

@@ -531,6 +531,7 @@ extern u8 D_800B3C6C;
 extern u8 D_800B3C70[];
 extern u8 D_800B3C88[];
 extern s8 D_800B3CA0;
+extern u8 D_800B3CF8;
 extern u8 D_800B3CFC;
 extern u8 D_800B3D24;
 extern u8 D_800B3D40;
