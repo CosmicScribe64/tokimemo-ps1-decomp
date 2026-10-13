@@ -311,6 +311,21 @@ typedef struct TtPoolDraw14 {
     /* 0x10 */ u16 ot;
     /* 0x12 */ u16 count;
 } TtPoolDraw14; /* size 0x14; draw pool stride */
+/* Sized sprite packet (code 0x65) written by func_80147150. T-11000. */
+typedef struct TtSpritePacket20 {
+    /* 0x00 */ TtOtTag tag;
+    /* 0x04 */ u8 r;
+    /* 0x05 */ u8 g;
+    /* 0x06 */ u8 b;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x;
+    /* 0x0A */ s16 y;
+    /* 0x0C */ u8 u;
+    /* 0x0D */ u8 v;
+    /* 0x0E */ u16 clut;
+    /* 0x10 */ s16 w;
+    /* 0x12 */ s16 h;
+} TtSpritePacket20;
 /* Textured rectangle packet written by func_80148244. T-11000. */
 typedef struct TtRectPacket16 {
     /* 0x00 */ TtOtTag tag;
