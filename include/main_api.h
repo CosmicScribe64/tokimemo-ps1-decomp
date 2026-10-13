@@ -2322,6 +2322,7 @@ s32 func_80087954(s32 arg0, u8 *arg1);
 s32 func_800879D0();
 s32 func_80087C64();
 s32 func_80087E4C(s32 arg0, u8 *arg1);
+s32 func_80087E6C(s32 arg0, s32 arg1, s32 arg2);
 void func_80088070();
 s32 func_800880C0();
 void func_80088150(u8 *p, s32 n);

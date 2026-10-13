@@ -25,7 +25,27 @@ void func_80142DA8(void *arg0, s16 arg1, s16 arg2) {
     func_8009C884(&r, arg0);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80142DEC);
+void func_80142DEC(s32 arg0, s32 arg1, s32 arg2) {
+    u8 pos[4];
+    s32 sec;
+    s32 min;
+    s32 frame;
+
+    frame = arg1 % 75;
+    sec = arg1 / 75;
+    pos[2] = (frame / 10) * 16 + frame % 10;
+    min = sec / 60;
+    sec = sec % 60;
+    pos[0] = (min / 10) * 16 + min % 10;
+    pos[1] = (sec / 10) * 16 + sec % 10;
+    while (func_800879D0(2, pos, 0) == 0) {
+    }
+    while (func_80087954(1, 0) != 2) {
+    }
+    func_80087E6C((arg2 + 0x7FF) / 0x800, arg0, 0x80);
+    while (func_80087E4C(1, 0) > 0) {
+    }
+}
 
 void func_8014304C(s32 arg0, s32 arg1, s32 arg2) {
     D_80156784 = D_80156780;
