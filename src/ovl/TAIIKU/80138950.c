@@ -128,7 +128,78 @@ void func_80139DDC(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139E34);
 
+/* NON_MATCHING: T-11040, register allocation only: all opcodes, the frame (sp+0x1C array, four scalar slots) and the loop shapes match (one nop fewer, the scheduler); the loop-2 pointer constant D_800E62B8 takes $a0 where the original has $a3 and the record address (i * 0x44) $a1 (regdiff: bit 7 is coloured before bit 64, the original has the other order), about 80 register lines. */
+#ifdef NON_MATCHING
+typedef struct {
+    u32 low : 1;
+    u32 f : 1;
+    u32 rest : 30;
+} TaiikuBit1;
+
+void func_80139FE4(void) {
+    s32 n;
+    s32 i;
+    s32 cnt;
+    s16 pos;
+    s32 sp1C[11];
+
+    n = 0;
+    for (i = 0; i < 0xB; i++) {
+        if (((TaiikuBit1 *)&D_800E6280.unk_1BC[i].unk_0C)->f == 1) {
+            sp1C[n] = i;
+            n++;
+        }
+    }
+    cnt = 0;
+    if (((TaiikuBit1 *)&D_800E6280.unk_1BC[0].unk_0C)->f == 1) {
+        cnt = 1;
+        if (D_800E6280.unk_F80 & 4) {
+            pos = D_80120676 - 4;
+        } else {
+            pos = D_80120676 - 1;
+        }
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = pos;
+        if (pos < -0xC0) {
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + sp1C[(n - 1) % n]].unk_26 + 0x78;
+            if (((DisplayActor44 *)D_8011ECD0)[96].unk_26 < 0xA0) {
+                ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0xA0;
+            }
+        }
+    }
+    for (i = 1; i != 0xB; i += 2) {
+        if (((TaiikuBit1 *)&D_800E6280.unk_1BC[i].unk_0C)->f == 1) {
+            if (D_800E6280.unk_F80 & 4) {
+                ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 - 4;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 - 1;
+            }
+            if (((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 < -0xC0) {
+                ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + sp1C[(cnt + n - 1) % n]].unk_26 + 0x78;
+                if (((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 < 0xA0) {
+                    ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 = 0xA0;
+                }
+            }
+            cnt++;
+        }
+        if (((TaiikuBit1 *)&D_800E6280.unk_1BC[i + 1].unk_0C)->f == 1) {
+            if (D_800E6280.unk_F80 & 4) {
+                ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 - 4;
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 - 1;
+            }
+            if (((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 < -0xC0) {
+                ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + sp1C[(cnt + n - 1) % n]].unk_26 + 0x78;
+                if (((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 < 0xA0) {
+                    ((DisplayActor44 *)D_8011ECD0)[97 + i].unk_26 = 0xA0;
+                }
+            }
+            cnt++;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139FE4);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A314);
 
@@ -350,8 +421,6 @@ void func_8013ACBC(void) {
     D_801207CA = 0xA0;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, only the ugen temp of D+0x48 differs ($t9 vs $t1), 2 lines */
 void func_8013AE14(void) {
     if (D_80149988.unk_04 >= 0xB) {
         if (D_80149988.unk_00 >= 3 && D_80149990.unk_00 != 0 && (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6)) {
@@ -367,13 +436,10 @@ void func_8013AE14(void) {
     D_80120668 = D_80149988.unk_00;
     if (D_80149990.unk_00 != 0) {
         if (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6) {
-            D_80120668 = D_80149988.unk_00 + 0x48;
+            D_80120668 += 0x48;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013AE14);
-#endif
 
 void func_8013AEFC(void) {
     if (D_80120676 > 0xA0) {

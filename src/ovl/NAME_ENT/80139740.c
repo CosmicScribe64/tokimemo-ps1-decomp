@@ -1723,7 +1723,7 @@ void func_801422F0(void) {
     }
 }
 
-/* NON_MATCHING: T-11010, 28 differing lines: registers and structure match; the second loop's four loads/stores are scheduled in a different order (original loads +9659 first and +9591 last) and the two loop-1 address setups are swapped */
+/* NON_MATCHING: T-11040, 4 differing lines: the setup of the first loop emits `addiu v0,D_8011ECD0` before `addiu v1,D_8011F044` where the original has them the other way round. The second loop is eight records of stride 0x44 (flag byte +3, records 144..151) that IDO unrolls by four, which reproduces the original load/store order (was a 2x4 nest with 28 lines of reordering). */
 #ifdef NON_MATCHING
 void func_8014231C(void) {
     u8 *p;
@@ -1737,11 +1737,8 @@ void func_8014231C(void) {
     D_8011ECD0[9591] &= 0x7F;
     D_8011ECD0[9659] &= 0x7F;
     D_8011ECD0[9727] &= 0x7F;
-    for (i = 0; i < 2; i++) {
-        D_8011ED9C[i * 0x110 + 9591] &= 0x7F;
-        D_8011ED9C[i * 0x110 + 9659] &= 0x7F;
-        D_8011ED9C[i * 0x110 + 9727] &= 0x7F;
-        D_8011ED9C[i * 0x110 + 9795] &= 0x7F;
+    for (i = 0; i < 8; i++) {
+        D_8011ED9C[i * 0x44 + 9591] &= 0x7F;
     }
     func_8013AF78(0);
     D_800E6280.unk_1100 += 1;
