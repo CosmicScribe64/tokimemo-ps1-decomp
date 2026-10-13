@@ -1166,3 +1166,223 @@ The two guarded drafts described above were removed after literal 476-/436-byte
 matches and TEL SHA1 verification; their newly added T-0018 rows remain as
 history. All functions in the owned TEL file are now C. The final retained
 set is only NAME_ENT 80147A80/80149144/801460D8 (20/20/21 differing lines).
+## T-10870 full-file scheduling follow-up
+
+Fresh T-10840 tooling confirms that main `func_8007EF48`'s retained
+DialogueWork draft has 2,168 instructions and ten differing positions:
+two four-position scheduling rotations at the incremented-Y calls and
+one swapped address load in case 1. This is a scheduling residual, not
+an unexplained uopt register allocation. Use full-file regdiff when tuning
+it; earlier standalone three-pair counts hide the positional rotations.
+
+An explicit scratch compile needs `trailing_pad.pad_functions` with the
+original C path and the draft's active INCLUDE_ASM set, followed by the
+normal object-extent trim, before testing linked bytes. The DATE seasonal
+candidate initially passed normalized words but failed literal bytes solely
+because this scratch compile omitted the trailing nop. Restoring the normal
+pipeline gives an exact 5,768-byte function and the complete original DATE
+SHA1. Do not bypass literal verification to hide this distinction.
+
+For dialogue case 1, combine the voice-leaf test and the following voice-mode
+condition into one short-circuit condition, using `sp7C[sp286 - 1]` and
+`sp7C[sp286 - 2]` directly. This removes the saved leaf-index move/address-load
+swap. The retained draft now has only the two incremented-Y call rotations
+(eight differing positions), with the same 2,168 instructions.
+
+`set_tarao_bg`'s four coordinate additions need a separate signed word local:
+`offset = (col % 2) * 8; y = row_y + offset;`. Reversing the inline sum does
+not help; naming the parity offset recovers the original operand order in
+all four loops. The counter variables are signed halfwords and the row base
+is a word. Its caller also needs the unprototyped sprite helper view; a typed
+narrow prototype inserts 45 extra conversion instructions. Literal checks
+verify 764 bytes for the caller and the existing 264-byte helper; all 27
+unit checksums still match after the helper is expressed in K&R form.
+
+`SD_GetCDLevel` uses the shared `CdLevelWork` prefix (five halfwords, offsets
+0x00 through 0x08): left/right output, precision, sample count, and mode.
+Keep arithmetic channels as `u32`; halfword locals truncate intermediate
+shaping results. Write both switches directly on the masked flags member,
+without retaining separate selector locals. This preserves the raw flags
+in a2 and channels in a0/a1. The final assignments explicitly mask each
+shifted result with `0xFFFF`; a narrowing cast gives identical operations
+but skips two ugen temporary numbers. With those masks the 736 literal
+bytes match. The two 512-halfword sample planes are one `D_80126080` array;
+`&D_80126080[0x200]` resolves to the older `D_80126480` alias exactly.
+
+For `func_80081190`, the character-expansion dispatch must be an exclusive
+if/else-if chain. The older scratch seed's independent tests keep its
+character byte live across calls, consuming saved registers that the target
+uses for three string bases. Removing the integer cast from the destination
+of `strncpy` also eliminates a spilled buffer-address range. Reuse the first
+scan's cursor in the outer parser to reproduce its extra zero move. These
+changes recover the 1,397-instruction count but do not yet match the body;
+the broad formatter drafts stay in scratch, not NON_MATCHING source.
+
+Full-file literal comparison of `func_80082764` exposes five positional
+differences: a three-load rotation at the table lookup and the two known
+byte-row additions. Regdiff's two-register summary alone misses that load
+rotation; retain the funcdiff evidence when describing this near miss.
+
+DATE `func_80140374` reveals `DateParticleView44`, a shared 0x44-byte sprite
+view, and `D_8015BD40[20]`, fixed-point horizontal positions. It initializes
+records 98 through 117. Access position high halves as `(s16)word.h[1]`:
+the union's halfword type is unsigned, but the drift arithmetic is signed.
+Keep the array-index expression on each record store; a retained record
+pointer introduces an extra saved-register copy. The loop increments its
+index after the final random call. Store byte 0x07 after scale halfwords
+0x1A and 0x1C. Naming the signed drift before adding it to the old high
+halfword restores temporary numbering and addition order. A typed palette
+helper view preserves the caller's byte mask. The resulting scratch draft
+has only three operand-order differences in 261 instructions; its return
+type still conflicts with the existing void overlay declaration.
+
+Main `func_8007D8AC` needs one shared signed-halfword outer counter across
+its switch cases. The default tile pass is an ordinary `for` loop: this
+lets IDO hoist its zero initialization before the switch while preserving
+the explicit resets in the other cases. Calculate the case-5 left edge
+inside its loop, and the default diagonal coordinates inside their inner
+loops. Keep the second case-4 limit narrowed after subtracting 480. Its
+case-2 initial limit is a signed low-halfword read, unlike the other word
+state reads. These corrections restore all 697 target instructions.
+The compact draft has the original 104-byte frame; an indirect word view
+in case 1 removes four residual register differences, leaving a spill
+slot four bytes low. A blanket indirect state view changes many other
+allocations, so this is not a general pointer conversion rule.
+
+For the DATE shop tables, both parts matter: a local initialized GameState
+pointer and explicit byte-stride indexing. Typed `DatePlaceChoices18`
+array indexing strength-reduces the 18-byte product and shares it across
+the three output bytes. A local state pointer plus explicit byte offsets
+preserves the original repeated `multu` operations. An earlier scratch
+`park3-...-ptrg.c` seed omitted the pointer initialization; do not copy it
+unchanged. The corrected shop draft is still a broad register/control-flow
+miss and remains in scratch.
+
+EVENT `func_8011B190` initializes ten `EventParticleView44` records at
+indices 96..105 of `D_800E9620`. The apparent standalone byte symbols
+`D_800E9E9F` and `D_800EAFA3` are record 31's byte 0x43 and record 96's
+byte 0x03. Reuse the shared `Rec24` view for `D_800EC190`: the initial
+0x1EF stores are records 0 and 1, field 0x12; the final loops update
+records 4..9. `EventEffectTables` records the six bytes at legacy state
++0x1031 and the word table at +0x13A8, observed through element 47.
+The initializer clears indices 11..15 and those indices plus 32 in one
+mode, or 21..25 and those indices plus 16 in the other. The ten-word
+`D_801257DC` array stores the signed fixed-point vertical steps.
+
+The EVENT initializer now matches all 254 instructions. Its final
+`func_80011DFC()` call has no arguments: m2c inferred four stale argument
+registers left by the preceding loop. Those invented arguments distorted
+allocation throughout the function. Express the random vertical step as
+`((u32)-(rand_value % 9) << 16) - 0x280000`; multiplying by a negative
+constant instead changes the assembler's negate scheduling. In the final
+record loop, clear the high flag bit before assigning palette 0x1EE,
+then store the mode byte. This orders equal-priority constant ranges so
+the mask receives v1 and the palette receives a2. Chain RGB stores as
+`r = g = b = 0x80` to emit blue first without hoisting 128 across the
+earlier sprite loop. The palette halfword load belongs before the
+record's state stores, allowing its final store in the RNG call delay slot.
+
+DATE `func_8013FD6C` has a 372-instruction draft with 17 differing
+register/operand positions in scratch. Its phase byte is reused across
+paths but must be refreshed immediately after calls that can change it.
+Capture the RNG result, reload phase, then update state or the random X
+position: reloading after the store changes branch delays and introduces
+duplicate constants. Indexed `D_8015BCB4[i]` word/high-half reads restore
+the target's early signed-halfword load and its load-delay instruction.
+The negative random step uses the same negate-then-positive-shift form
+as the EVENT initializer. These observations also apply to the related
+EVENT motion routine, pending separate comparison.
+
+DATE `func_80138934` confirms two `DateRideChoices36 *` table globals,
+`D_8015B5B0` and `D_8015B5B4`: six ride slots, two choices per slot,
+three result bytes per choice, for a 36-byte girl row. Its older ptrg
+scratch seed also needs `GameState *g = &D_800E6280`; the uninitialized
+pointer in that seed is invalid. The flag bytes are Rec38 `unk_14[21..25]`.
+
+The ride handler matches all 434 instructions with
+`*(girl * 36 + (u8 *)table + choice_offset + field_offset)`.
+Writing `((u8 *)table)[girl * 36 + choice_offset + field_offset]`
+has the same instruction count but 192 positional differences. The
+integer row offset must be the left operand before the table pointer:
+this fixes the first-use order of the index/table ranges, both `addu`
+operands, and the later shifted temporaries. An initialized local
+GameState pointer plus this integer-first address shape is required;
+direct global member reads collapse the repeated multiplications.
+
+The same integer-first address shape matches all 444 instructions of
+EVENT `func_80115C18`. Its girl selector is `EventStateView.unk_EE6`,
+ride flags are Rec34 `pad28[0..4]`, and the two table-address words are
+`D_80125260`/`D_80125264`. They use the existing EventRideChoices36
+layout. The DATE linked function spans 1740 bytes, including its final
+padding instruction; the list's larger span also includes string data.
+
+DATE museum tables `D_8015B520` and `D_8015B524` use the existing
+DateMuseumChoices15 layout (five three-byte choices per girl row).
+Selector 5 is the special-case path: the handler performs the table
+reads first, then overwrites the six result halfwords with chained 3/4
+assignments. Preserve that ordering when translating the special case.
+
+DATE museum `func_80134C64` first reached a 329-word draft with ten
+store-order differences, then matched as described below. A shared `s16 three = 3` keeps the target's
+multiply-by-three and comparison constant in a2; literal 3 becomes a
+shift/subtract and shifts other allocations. This allocation-only local
+is marked FAKE. Accessing the selection byte through DateSelectionView
+removes the unwanted promoted global range. Use two separate assignment
+chains, one per three-halfword result row; one six-store chain loses two
+constant loads. That intermediate draft exchanged row offsets 0 and 2.
+
+Resolved: use `row[0] = row[1] = row[2] = value` in **all** result-row
+chains, including the later girl-3 overwrite. Changing only the six-store
+branch leaves a different temporary sequence earlier in the function.
+The consistent three-chain spelling matches all 329 instructions of the
+DATE museum handler. The target store order is 1, 0, 2; source chain
+order is 0, 1, 2 after IDO scheduling.
+
+EVENT's `func_80112BEC` matches all 320 instructions with the same
+three-store chains. Its girl cases must be a switch (1,3,7,8 plus default):
+an equivalent four-comparison if-chain raises the girl range's priority
+above the shared 3 constant, swapping a1/a2 in 18 instructions. Its final
+`func_800469F4` call takes only the message id; m2c's second argument is a
+stale constant left in a1. Signed-halfword views of the legacy result
+symbols are needed to share the constants within each row.
+
+DATE func_8013F638 matches all 261 words using the EVENT initializer
+shape above. DateParticleView44 now includes control bytes 04/05/06,
+palette halfword 14, halfword 18 and word 2C. D_8015BCB4 is ten GsWord
+velocity entries (earlier motion-only scratch declared just four). The
+mode-dependent movie reset uses words 2/3 of the existing D_800B5920[4]
+array. No separate field globals are needed. EVENT museum result rows
+now use the shared EventResultRow6 signed three-halfword view.
+
+DATE func_8013A94C copies two DateCounts22 records, each eleven signed
+halfwords, from D_8015B75C and D_8015B774. The second local table is
+modified at element 3 before selection. Its result globals have legacy
+u8 declarations, but this handler uses sh/lh at D_8015BF1C and BF20.
+DateEventChoice6 records those two signed halfwords at offsets 0/4;
+use the shared view in future drafts. B65C/B660 are independent byte
+flags. Scalar halfword views versus the aggregate alter the promoted
+ranges, so compare both while retaining the actual access widths.
+
+Final T-10870 review: the DATE/EVENT museum handlers and EVENT ride
+handler still match after cleanup and use EventResultRow6 for signed
+output rows. SD_GetCDLevel masks are explicitly FAKE because they are
+redundant for a u16 destination but select the original ugen temporaries.
+The count-selection draft remains broad after table and halfword repairs;
+its word-copy prologue, reloads and signed-remainder branch still differ.
+
+EVENT func_8011BE00 matches all 199 instructions using the DATE particle
+initializer's indexed sprite fields and an ordinary for loop. The explicit
+signed local `drift` must precede the high-halfword addition; folding that
+expression back into the store exchanges two addu operands. Store scale
+halfwords 1A/1C before opacity byte 07. EventParticleView44 now includes
+those halfwords and word 30, and D_80125868 is a twenty-entry GsWord array.
+The RNG call after scale setup takes no argument (m2c carried a stale a0).
+
+The same left-hand narrow-constant idiom also resolves DATE func_80140374:
+declare `s16 two` at block top, assign 2 after the validation path, and use
+`two == selector` for both branches and `two != selector` for the final
+scale expression. All 261 words then match. A right-hand constant left
+three operand swaps; s32 adds an instruction, u8 leaves two swaps.
+This is an allocation-only local to mark FAKE on integration. The exact
+scratch draft still needs the existing void return prototype corrected
+to s32, which is outside the batch's append-only header permission.

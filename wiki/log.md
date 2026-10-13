@@ -12182,3 +12182,268 @@ Standards and Spec review has no unresolved findings, three small guarded
 drafts remain, and all 27 unit checksums pass with zero new prototype issues.
 Moved [[tickets/T-10860-big-functions-4-astra]], [[kanban]] and [[index]] to Done.
 Progress: `grand total   5285/6958  1043564/2279368  45.8%`. All changes remain uncommitted.
+## [2026-10-13] ticket | T-10870 big functions 5 started
+
+Claimed [[tickets/T-10870-big-functions-5-astra]] in a19. Read shared batch
+brief, [[index]], [[register-cheatsheet]], standards and [[decompile-workflow]].
+Owned C: src/main/8007C030.c, src/ovl/DATE/80132000.c,
+src/ovl/EVENT/8010FE10.c. Reuse prior layout research, verify current literal
+bytes, and keep scratch in scratchpad/a19. No commits or tooling edits.
+
+## [2026-10-13] build | T-10870 dialogue baseline
+
+Fresh configuration/build started in a19 (generated files were absent).
+Full-file funcdiff of main func_8007EF48 reports ten differing instruction
+positions, all scheduling; regdiff has 2,168/2,168 instructions and no
+register-color residual. Saved evidence in scratchpad/a19. Testing physical
+call-line layout around the two incremented-Y calls without changing behavior.
+
+## [2026-10-13] build | T-10870 baseline passes
+
+Fresh Docker configure plus ninja -j 4 completed all 662 steps, with all 27
+unit checksums OK. No source changes yet. Twelve dialogue call-argument
+line-break candidates produced the same ten-position residual; stopped that
+owned sweep and kept the condition/coordinate-expression experiments.
+
+## [2026-10-13] build | T-10870 DATE candidate reverified
+
+Recompiled the T-10730 seasonal-handler patch against current headers in
+scratch, restoring normal per-function trailing padding and object extent.
+Literal-byte verification confirms DATE func_8013272C: 5,768 bytes equal;
+complete overlay SHA1 b5fb83738364a317a590735578f5878077fcda3d matches.
+The shared brief forbids changing existing overlay declarations, so requested
+an explicit exception for the required void-to-s32 prototype correction.
+No source or header mutation has been made pending that answer.
+
+## [2026-10-13] decision | T-10870 scope prototype generation
+
+`sync_protos.py --write` discovered unrelated missing main declarations and
+triggered five duplicate-header findings outside a19 ownership. Reverted
+those generated hunks by restoring the original header text and retaining
+only the generator-produced read_bustup_uniform and set_tarao_sprt entries.
+The source-scoped generator also altered unrelated override guards, so its
+other changes were discarded. No unowned C file was edited.
+
+## [2026-10-13] build | T-10870 uniform handler literal match
+
+Replaced read_bustup_uniform in src/main/8007C030.c with the natural seasonal
+switch and GameState fields. Full-file regdiff matches; default funcdiff
+confirms 980 linked text bytes including padding. A full build is running
+to validate the two narrowly retained generated prototypes. See
+[[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] build | T-10870 first integrated checkpoint
+
+After the uniform handler and two generated declarations, the incremental
+Docker build completed all 490 steps with 27/27 checksums OK. The typed
+set_tarao_bg caller adds 45 unwanted instructions; its K&R caller view
+recovers the original 191 words, leaving four addition operand swaps.
+Register evidence and source variants remain in scratchpad/a19.
+
+## [2026-10-13] build | T-10870 sprite background and CD-level matches
+
+set_tarao_bg matches 764 literal bytes; converting its existing helper to
+K&R preserves that helper's 264-byte match and all 27 unit checksums.
+SD_GetCDLevel matches 736 literal bytes after recovering CdLevelWork,
+direct masked switches and explicit final 0xFFFF masks. Generated only
+the owned helper declarations and the explained transfer-status override.
+See [[decompile-workflow]] and [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] build | T-10870 third checkpoint and large-draft refinement
+
+Docker build after SD_GetCDLevel completed all 513 steps with 27/27 checksums
+OK; the owned-file duplicate pass found no extra matches. Formatter research
+recovered exclusive expansion dispatch, direct buffer argument typing and
+cursor reuse, but its remaining differences are too broad to retain in C.
+Corrected the dispatcher guard's description to include its three-load
+rotation. DATE's particle initializer is down to eight register/operand
+differences and exposes a larger 0x44-byte record view. See
+[[decompile-workflow]] and [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] ingest | T-10870 DATE particle layout and transition loops
+
+Appended DateParticleView44 and the 20-word fixed-point position table to
+include/ovl/DATE.h. A named signed drift reduces the particle initializer
+to three operand swaps; documented its loop, store order and typed palette
+call in [[decompile-workflow]]. The main transition draft now has 697/697
+instructions and twelve positional differences after restoring loop-body
+coordinate calculations and direct state increment. Scratch research
+continues under [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] query | T-10870 transition and table-access idioms
+
+Recorded the transition's shared halfword counter, natural default for loop,
+case-2 halfword state read and case-4 narrowing in [[decompile-workflow]].
+The compact draft now has all 697 instructions and the correct frame;
+an indirect case-1 state view leaves only two spill-offset differences.
+Corrected the old DATE shop seed's missing GameState pointer initialization
+and recovered repeated multu with explicit byte-stride table access.
+See [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] ingest | T-10870 EVENT particle and effect table views
+
+Appended EventParticleView44, EventEffectTables and the observed particle
+step/control declarations to include/ovl/EVENT.h. Mapped the old standalone
+flag aliases back to records 31 and 96 and the final palette loops to
+Rec24 records 4..9. Documented these reusable layouts in
+[[decompile-workflow]]. The transition near miss is retained under
+NON_MATCHING with its explained indirect-view FAKE and two spill offsets.
+Its conditional prototype override was not recognized by check_headers;
+using the normal file-level override resolves the header check.
+
+## [2026-10-13] build | T-10870 EVENT initializer instruction match
+
+Integrated func_8011B190: all 254 words (1016 bytes) match in regdiff.
+Recovered its no-argument final call, positive-shift spelling of the
+negative random step, palette/mask first-use ordering, and RGB chain
+direction. Added its two main globals through sync_protos. The layouts
+and allocator evidence are recorded in [[decompile-workflow]].
+Full-file literal comparison and overlay checksum are being checked.
+
+## [2026-10-13] build | T-10870 fourth match verified
+
+funcdiff --resolve confirms all 1016 bytes of EVENT func_8011B190 in the
+default build. Incremental ninja completed all 526 steps with 27/27
+checksum OK, including headers and globals checks. Batch gain is four
+functions / 3496 bytes; DATE motion remains scratch research.
+
+## [2026-10-13] ingest | T-10870 DATE motion control flow recovered
+
+Recovered the exact 372-instruction sequence for DATE func_8013FD6C;
+23 register/operand differences remain. Indexed target word/high-half
+reads and early phase reloads after RNG calls remove the structural
+differences. Recorded the idioms in [[decompile-workflow]] and started
+a five-minute permuter run while inspecting the remaining live ranges.
+
+## [2026-10-13] ingest | T-10870 ride table declarations and motion comparisons
+
+Appended DATE's two ride-table pointers using the existing
+DateRideChoices36 layout. Corrected another inherited scratch seed's
+uninitialized GameState pointer before comparison. Narrow signed constant
+locals on the left of DATE motion comparisons remove six operand swaps;
+17 positional differences remain. Its first five-minute permuter run
+did not improve the seed; a narrowed-constant follow-up is running.
+
+## [2026-10-13] build | T-10870 DATE ride handler instruction match
+
+DATE func_80138934 matches all 434 words after moving the integer row
+offset before the table pointer in byte-address expressions. Integrated
+the body and documented the address-order idiom in [[decompile-workflow]].
+Testing the same shape in the related EVENT ride and DATE shop handlers.
+
+## [2026-10-13] build | T-10870 EVENT ride handler instruction match
+
+Integrated EVENT func_80115C18 after all 444 words matched. The same
+integer-first table address form fixes the DATE and EVENT pair. DATE's
+resolved default-build comparison verifies 1740 literal bytes; EVENT's
+literal comparison and the combined unit build are running.
+
+## [2026-10-13] build | T-10870 six literal matches
+
+Resolved default-build comparisons verify DATE func_80138934 (1740 bytes)
+and EVENT func_80115C18 (1780 bytes). The first ride checkpoint passes
+27/27 checksums. Six matches now add 7016 bytes; the combined incremental
+build is running after the EVENT integration. See
+[[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] ingest | T-10870 museum table pointers
+
+Appended the DATE museum's two table pointers using DateMuseumChoices15.
+The special selector performs its table reads before replacing the
+result rows. Documented that ordering in [[decompile-workflow]] and
+started full-file comparisons of the DATE/EVENT museum seeds.
+
+## [2026-10-13] build | T-10870 museum near miss retained
+
+Retained DATE func_80134C64 under NON_MATCHING at 329/329 instructions,
+ten store-order differences (20 differing lines). Registers agree.
+The narrow shared constant is explicitly FAKE; DateSelectionView and
+separate result-row chains are documented in [[decompile-workflow]].
+The EVENT twin also exposed an invented second argument to func_800469F4;
+its corrected call takes only the message id.
+
+## [2026-10-13] build | T-10870 DATE museum instruction match
+
+All 329 words of DATE func_80134C64 now match. The remaining difference
+was the inconsistent final overwrite chain: all row chains must use
+indices 0,1,2. Promoted the guarded draft to active C with the explained
+narrow-constant FAKE. Applying the same store order to EVENT's twin.
+
+## [2026-10-13] build | T-10870 EVENT museum instruction match
+
+All 320 words of EVENT func_80112BEC match after the same row-chain
+correction. A switch lowers the girl selector range's priority and
+restores a1/a2; the final message helper has one argument. Integrated
+the body with its explained narrow constant and signed output views.
+DATE's counterpart passes resolved literal comparison at 1320 bytes.
+
+## [2026-10-13] build | DATE particle initializer matches
+
+[[tickets/T-10870-big-functions-5-astra]]: transferred the recovered EVENT
+initializer shape; regdiff reports all 261 instructions exact. Expanded
+the owned DateParticleView44 fields and recovered ten velocity words at
+D_8015BCB4. Generated D_80122D14 declaration; integrated source in
+src/ovl/DATE/80132000.c. See [[decompile-workflow]].
+
+## [2026-10-13] lint | T-10870 inline review and remaining register cases
+
+Reviewed owned source/header changes against CODING_STANDARDS.md and the
+batch brief. Marked the allocation-only output masks FAKE, simplified
+museum byte expressions, and used EventResultRow6 in the ride handler.
+All three changed overlay bodies pass regdiff exactly. Added two rows
+to [[data/t0018-cases]] for the DATE particle drafts. Global access check
+passes. Nine active matches total 10664 literal bytes; final prototype,
+duplicate and whole-build verification remain.
+
+## [2026-10-13] ticket | T-10870 enters inline review
+
+[[tickets/T-10870-big-functions-5-astra]] moved to In Review; board and
+index agree. All 27 checksums pass, prototype/global checks pass and the
+owned duplicate pass adds nothing. Added DateEventChoice6 and two
+DateCounts22 table declarations after confirming signed-halfword
+accesses and eleven-element copies in func_8013A94C. Final header and
+scratch-result checks continue.
+
+## [2026-10-13] lint | T-10870 final layout and byte checks
+
+All 27 checksums pass again with the added DATE count/result layouts.
+Headers pass. Resolved literal checks reconfirm both museum handlers
+and EVENT ride after cleanup. Refreshed stale intermediate counts in
+[[decompile-workflow]]; scratch best-probes.json indexes 941 traced
+probe results across 22 functions, including the already-matched helper.
+
+## [2026-10-13] build | T-10870 tenth match in EVENT particle family
+
+EVENT func_8011BE00 matches 199 instructions (796 bytes) using indexed
+EventParticleView44 accesses, correct RNG argument count and a separate
+signed drift local. Recovered scale fields 1A/1C, word 30 and the twenty
+coordinate words at D_80125868. Batch gain is ten functions / 11460 bytes.
+See [[decompile-workflow]] and [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] lint | T-10870 standards and scope review complete
+
+Inline code-review of the uncommitted diff found no remaining findings
+against CODING_STANDARDS.md or the batch scope. The tenth match uses
+C89 signed locals and the shared EVENT particle view; the earlier mask
+comment and result-row findings are resolved. Recorded both review
+axes in [[tickets/T-10870-big-functions-5-astra]]. Final checks continue.
+
+## [2026-10-13] query | T-10870 DATE particle operand-order solution
+
+All 261 instructions of DATE func_80140374 match with s16 constant two
+on the left of its comparisons and final inequality. Updated the owned
+[[data/t0018-cases]] row to record the scratch resolution and documented
+the idiom in [[decompile-workflow]]. Integration still requires the
+pending exception for the existing void prototype. Integrated gains
+remain ten functions / 11460 bytes.
+
+## [2026-10-13] ticket | T-10870 done after four-hour batch
+
+[[tickets/T-10870-big-functions-5-astra]] completed at 14:42:18 UTC. Ten matches / 11460 bytes;
+three guarded main near misses, two [[data/t0018-cases]] rows, and shared
+layouts/idioms documented in [[decompile-workflow]]. All 27 checksums,
+header/global guards and prototype branch check pass; owned duplicate
+scan applies nothing. Inline review findings resolved. Grand total
+5236/6958 functions, 1022884/2279368 bytes (44.9%). Board/index agree;
+changes left uncommitted. The 5768-byte DATE match remains in scratch
+pending the append-only prototype exception.

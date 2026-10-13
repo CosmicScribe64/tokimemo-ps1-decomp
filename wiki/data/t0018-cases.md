@@ -1830,3 +1830,5 @@ recorded immediately above, now match in active C. The scalar switch-selector
 view `*(u8 *)&D_800E6280.unk_110D` fixes the later returned-index comparison
 registers as well as the selector branch. Both literal comparisons and TEL
 SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
+| DATE/80132000 | `func_80140374` | regorder (resolved in scratch) | All 261 instructions match with a signed s16 two constant on the LEFT of the selector comparisons and final != expression, plus the recovered particle layout and separate drift local. Right-hand two left three operand swaps. Integration still needs an s32 return view; existing void overlay prototype is append-only. T-10870 |
+| DATE/80132000 | `func_8013FD6C` | regorder | 372/372 instruction draft, 17 differing positions: reset-loop pointer uses v0 instead of s0, physics word/high-halfword temporaries and one addu order. Explicit signed phase reload after RNG calls and left-hand s16 constants 3/37 solve earlier differences; pointer reuse, word views and two five-minute permuters did not solve the remaining ranges. Scratch only. T-10870 |

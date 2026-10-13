@@ -1541,3 +1541,62 @@ typedef struct EventMovieState {
     /* 0x0A */ u8 pad0A[2];
 } EventMovieState; /* size 0x0C; observed fields through byte 0x09 */
 #endif
+
+#ifndef OVL_EVENT_PARTICLE_T10870_H
+#define OVL_EVENT_PARTICLE_T10870_H
+/* func_8011B190 initializes records 96..105 at D_800E9620. The same
+ * allocation's record 31 uses byte 0x43. Coordinate high halves are signed. */
+typedef struct EventParticleView44 {
+    /* 0x00 */ u8 pad00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 pad08[4];
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ u8 pad1E[6];
+    /* 0x24 */ GsWord unk_24;
+    /* 0x28 */ GsWord unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 pad3C[7];
+    /* 0x43 */ u8 unk_43;
+} EventParticleView44; /* size 0x44 */
+
+/* Partial state view at D_800B0860. The word table's observed accesses
+ * extend through element 47; its full allocation size is not yet known. */
+typedef struct EventEffectTables {
+    /* 0x0000 */ u8 pad0000[0x1031];
+    /* 0x1031 */ u8 unk_1031[6];
+    /* 0x1037 */ u8 pad1037[0x371];
+    /* 0x13A8 */ s32 unk_13A8[48];
+} EventEffectTables; /* size 0x1468, minimum observed extent */
+
+extern s32 D_801257DC[10];
+extern s16 D_8012527C;
+extern s32 D_8012585C;
+extern s16 D_80125860;
+extern u8 D_80125864;
+/* func_8011BE00 preserves twenty horizontal coordinate words. */
+extern GsWord D_80125868[20];
+#endif
+
+#ifndef OVL_EVENT_RESULT_ROW_T10870_H
+#define OVL_EVENT_RESULT_ROW_T10870_H
+/* Three signed results at D_8012438C and D_8012439C. The rows are
+ * separate allocations/views, not adjacent elements of one array. */
+typedef struct EventResultRow6 {
+    /* 0x00 */ s16 value[3];
+} EventResultRow6; /* size 0x06 */
+#endif

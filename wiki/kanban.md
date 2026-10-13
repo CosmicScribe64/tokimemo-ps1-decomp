@@ -59,6 +59,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-10850-wave-17-astra|T-10850 Wave 17 (astra, easiest first)]]
 - [x] [[tickets/T-10910-wave-17-list-1|T-10910 Wave 17: list 1]]
 - [ ] [[tickets/T-10860-big-functions-4-astra|T-10860 Big functions 4 (astra)]]
+- [ ] [[tickets/T-10870-big-functions-5-astra|T-10870 Big functions 5 (astra)]]
 - [ ] [[tickets/T-10810-wave-16-list-1|T-10810 Wave 16: list 1]]
 - [ ] [[tickets/T-10840-wave-13-15-tool-fixes|T-10840 Wave 13-15 tool fixes]]
 - [ ] [[tickets/T-10820-wave-16-list-2|T-10820 Wave 16: list 2]]
