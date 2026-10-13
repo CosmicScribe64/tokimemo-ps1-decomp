@@ -938,7 +938,41 @@ void func_80137EE4(void) {
     D_80120695 = 3;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137FC4);
+void func_80137FC4(void) {
+    func_8004E58C();
+    func_80137EE4();
+    func_8004E788(-0x18, 0x40, 0xA, "これでいい？", 0);
+    func_8004E788(-0x38, -0x37, 0xA, D_8014CC74, 0);
+    func_8004E788(0, -0x37, 0xA, D_8014CC7C, 0);
+    func_8004E788(-0x38, -0x17, 0xA, D_8014CC84, 0);
+    if (D_8014CC90 + 1 >= 10) {
+        func_8004E788(-0x38, 8, 0xA, D_800B3288[(D_8014CC90 + 1) / 10], 0);
+    }
+    func_8004E788(-0x28, 8, 0xA, D_800B3288[(D_8014CC90 + 1) % 10], 0);
+    if (D_8014CC94 + 1 >= 10) {
+        func_8004E788(-8, 8, 0xA, D_800B3288[(D_8014CC94 + 1) / 10], 0);
+    }
+    func_8004E788(8, 8, 0xA, D_800B3288[(D_8014CC94 + 1) % 10], 0);
+    switch (D_8014CC98) {
+    case 0:
+        func_8004E788(-0x28, 0x28, 0xA, "Ａ", 0);
+        break;
+    case 1:
+        func_8004E788(-0x28, 0x28, 0xA, "Ｂ", 0);
+        break;
+    case 2:
+        func_8004E788(-0x38, 0x28, 0xA, "ＡＢ", 0);
+        break;
+    case 3:
+        func_8004E788(-0x28, 0x28, 0xA, "Ｏ", 0);
+        break;
+    }
+    func_80046290(D_8014CC60, D_8014CC64, 0);
+    func_80044750(0x300);
+    func_8004EA98();
+    func_8004EAD4(0);
+    func_8004284C();
+}
 
 void func_80138268(s32 arg0) {
     s32 color;
