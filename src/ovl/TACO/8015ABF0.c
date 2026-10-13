@@ -22,7 +22,7 @@ void func_8015ABF0(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
 
-/* NON_MATCHING: T-10710, shape identical; MATRIX local at sp+0x24, the original keeps it at sp+0x20 (same frame 0x48): the 8-aligned-union and unused-scalar tries grow the frame by 8 */
+/* NON_MATCHING: T-10810, frame and MATRIX offset match now (declare i, j before matrix: later-declared locals sit lower); only the struct-copy temporary differs (ugen t2 against t3, 8 lines) */
 #ifdef NON_MATCHING
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;
@@ -30,10 +30,10 @@ void func_8015B1B8(arg0, arg1, arg2, arg3)
     s16 *arg2;
     s32 arg3;
 {
-    TcTransformObj50 *obj;
-    MATRIX matrix;
     s32 i;
     s32 j;
+    MATRIX matrix;
+    TcTransformObj50 *obj;
 
     arg2 += arg3 * 9;
     arg1 += arg3 * 3;
@@ -101,7 +101,43 @@ INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B59C);
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BD30);
 
+/* NON_MATCHING: T-10810, loop, callee arguments and saved-register set match (78 vs 76 instructions); the local actor pointer and the type byte take s4/s2 where the original has s2/s4 (the CSE'd &D_8015EDB4[arg0] range is coloured before the local), plus a spill-order difference in the prologue */
+#ifdef NON_MATCHING
+void func_8015BF70(s32 arg0) {
+    TcActor *a;
+    u32 n;
+    s32 i;
+    u8 *id;
+    u8 t;
+    s32 *rec;
+
+    a = &D_8015EDB4[arg0];
+    n = 0;
+    if (a->unk82 >= 0xF) {
+        a->unk82 = 0;
+        a = &D_8015EDB4[arg0];
+    }
+    t = a->unk84[2];
+    id = D_80161D9C;
+    i = 0;
+    do {
+        if (arg0 == *id) {
+            rec = D_80161E60[t] + n * 2;
+            func_8015B1B8(i, rec[0], rec[1], a->unk82);
+            n++;
+            a = &D_8015EDB4[arg0];
+            t = a->unk84[2];
+        }
+        i++;
+        if (n >= D_80161E20[t]) {
+            break;
+        }
+        id++;
+    } while (i != 0x40);
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BF70);
+#endif
 
 /* NON_MATCHING: T-10620, only the base register of the actor pointer: the original keeps &D_8015EDB4[arg1] in v0 (no copy), IDO allocates the local and the expression as two ranges (v1, v0), about 6 lines */
 #ifdef NON_MATCHING

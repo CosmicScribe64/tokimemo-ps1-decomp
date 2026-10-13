@@ -66,6 +66,16 @@ typedef struct {
     s32 v[3];
 } Lim3; /* size 0xC */
 
+typedef struct Tk1C {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 pad02[0xA];
+    /* 0x0C */ u32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+} Tk1C; /* size 0x1C */
+
 typedef struct TkPl {
     /* 0x00 */ u8 pad0[2];
     /* 0x02 */ s16 unk_02;
@@ -80,6 +90,7 @@ typedef struct TkPl {
     /* 0x18 */ u8 pad18[4];
 } TkPl; /* size 0x1C */
 extern Lim3 D_8014A5FC;
+extern Lim3 D_8014A608;
 extern u8 D_8014A401;
 extern u8 D_8014A41D;
 extern u8 D_8014A439;
@@ -324,24 +335,37 @@ void func_801470A0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147120);
+void func_80147120(void) {
+    s32 i;
+    Lim3 lim;
 
-/* NON_MATCHING: T-10710, 21 differing lines: init order of the three pointer setups, and the inner q loop copies the hoisted D_8014A3D8 address (move) where the original builds a second lui/addiu */
-#ifdef NON_MATCHING
+    lim = D_8014A608;
+    for (i = 0; i < 3; i++) {
+        if (((Tk1C *)D_8014A400)[i].unk_01 == 1 && D_80120896 + 0x140 < *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA)) {
+            ((Tk1C *)D_8014A400)[i].unk_14 = 0;
+        } else if (((Tk1C *)D_8014A400)[i].unk_0C >= 0xB) {
+            ((Tk1C *)D_8014A400)[i].unk_14 += ((Tk1C *)D_8014A400)[i].unk_10;
+            if (((Tk1C *)D_8014A400)[i].unk_14 < 0) {
+                ((Tk1C *)D_8014A400)[i].unk_14 = 0;
+            }
+            if (lim.v[i] < ((Tk1C *)D_8014A400)[i].unk_14) {
+                ((Tk1C *)D_8014A400)[i].unk_14 = lim.v[i];
+            }
+            ((Tk1C *)D_8014A400)[i].unk_0C = 0;
+        }
+    }
+}
+
+
 void func_80147210(void) {
     s32 i;
     s32 k;
-    s32 x;
-    s32 d;
-    u8 *a;
     u8 *v;
-    u8 *q;
+    u8 *a;
+    s32 d;
+    s32 x;
 
-    i = 0;
-    v = D_8014A400;
-    a = D_8011ECD0;
-    d = D_8014A3DE;
-    do {
+    for (i = 0, v = D_8014A400, a = D_8011ECD0, d = D_8014A3DE; i < 3; i++, v += 0x1C, a += 0x44) {
         *(s32 *)(v + 0x18) += *(s32 *)(v + 0x14);
         x = *(s16 *)(v + 0x1A) - d;
         *(s16 *)(a + 0x19EA) = x - 0xA0;
@@ -349,29 +373,21 @@ void func_80147210(void) {
             D_801208CC = 0x4F;
             k = 0;
             if (D_8014A3D8[0] != 0) {
-                q = D_8014A3D8;
                 do {
                     k += 1;
-                    q += 1;
-                } while (*q != 0);
+                } while (D_8014A3D8[k] != 0);
             }
             D_8014A3D8[k] = i + 2;
             v[1] = 1;
             x = *(s16 *)(v + 0x1A) - d;
         }
-        i += 1;
         if (x >= 0x1E1 || x < -0xA0) {
             a[0x19C7] = 0;
         } else {
             a[0x19C7] = 0xA4;
         }
-        v += 0x1C;
-        a += 0x44;
-    } while (i != 3);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147210);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147318);
 

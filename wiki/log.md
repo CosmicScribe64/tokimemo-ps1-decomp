@@ -10206,3 +10206,9 @@ Wave 15 list 2 begun, see [[tickets/T-10720-wave-15-list-2]].
 
 ## [2026-10-12] build | T-10720 wave 15 list 2 done
 [[tickets/T-10720-wave-15-list-2]]: 6 functions matched (4172 bytes: GEKO `func_8013E69C`/`func_8013E760`, SHOUGATU `func_801366A4`/`func_80141AE8` via dupes, TAIIKU `func_80137090`, RPG_BAT `func_8014D380`), 10 near misses kept as NON_MATCHING, rows added to [[data/t0018-cases]], recipe in [[matching-notes]]. ninja 27/27 OK. Status Done after inline review.
+
+## [2026-10-12] ticket | T-10810 wave 16 list 1
+Started [[tickets/T-10810-wave-16-list-1]] (batch agent w16-1).
+
+## [2026-10-13] build | T-10810 wave 16 list 1 done
+4 functions matched (1,064 bytes: TAIIKU `func_80147210`, `func_80147120`; EN_NICHI `func_80134F2C`, `func_80135044`), 4 guarded near misses (EN_NICHI `func_80136A2C`, main `func_80055A38`, TACO `func_8015B1B8`, `func_8015BF70`), 13 rows added to [[data/t0018-cases]], idioms in [[matching-notes]]. Ticket [[tickets/T-10810-wave-16-list-1]] moved to Done after the inline review. Progress `grand total 5184/6958 963648/2279368 42.3%`; ninja complete, headers, globals and `sync_protos.py --check-branch` OK.
