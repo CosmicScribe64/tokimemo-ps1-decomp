@@ -505,3 +505,5 @@ typedef struct TtSceneDraw {
 } TtSceneDraw; /* accessed prefix size 0x3AC */
 extern TtCollision6 D_80155B36;
 #endif
+
+extern u8 D_80150A50[];
