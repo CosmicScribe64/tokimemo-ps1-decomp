@@ -13076,3 +13076,9 @@ Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 4
 
 ## [2026-10-13] ticket | T-11110 started
 Opened [[tickets/T-11110-small-functions-gemini-34]] (In Progress): 16 functions (4,800 bytes) in `src/ovl/EVENT/8010FE10.c`.
+
+## [2026-10-13] ticket | T-11500 TT batch 2 opened
+
+Opened [[tickets/T-11500-tt-batch-2]] (In Progress) after PR #3 (T-11000) was merged. The maintainer confirmed TT is
+ours in issue #2. Plan: an Opus agent on the five closest T-11000 near misses first, then a Sonnet list over the
+untried unflagged TT functions.
