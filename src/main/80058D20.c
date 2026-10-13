@@ -59,7 +59,28 @@ void initCoordinate(void) {
     } while (p != D_80122CA0);
 }
 
+/* NON_MATCHING: T-10710, 7 differing lines: the original copies the model block pointer (move s2,s3) and adds 8 after the lui setup, the draft folds it into one addiu; pointer parameter type needed (an s32 parameter keeps the pointer in a0 first) */
+#ifdef NON_MATCHING
+void initModelingData_init(s32 *arg0) {
+    s32 *t;
+    TaiikuBig *q;
+    u32 *p;
+
+    t = arg0 + 1;
+    func_8009B3C0(t);
+    q = D_801227A0;
+    p = D_80122640;
+    do {
+        func_8009B430(t + 2, p, 0);
+        p[1] = (u32)q;
+        q++;
+        p += 4;
+        p[-4] = 0x80000000;
+    } while (q != D_80122CA0);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", initModelingData_init);
+#endif
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-10520, the original also stores arg0 to its home slot and keeps the record pointer in the same spill slot as arg0+4 (16 lines) */
