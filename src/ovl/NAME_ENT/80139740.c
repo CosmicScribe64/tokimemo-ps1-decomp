@@ -1723,7 +1723,71 @@ void func_801422F0(void) {
     }
 }
 
+/* NON_MATCHING: T-11010, 28 differing lines: registers and structure match; the second loop's four loads/stores are scheduled in a different order (original loads +9659 first and +9591 last) and the two loop-1 address setups are swapped */
+#ifdef NON_MATCHING
+void func_8014231C(void) {
+    u8 *p;
+    s32 i;
+
+    p = D_8011ECD0;
+    do {
+        p[8707] &= 0x7F;
+        p += 0x44;
+    } while (p < D_8011F044);
+    D_8011ECD0[9591] &= 0x7F;
+    D_8011ECD0[9659] &= 0x7F;
+    D_8011ECD0[9727] &= 0x7F;
+    for (i = 0; i < 2; i++) {
+        D_8011ED9C[i * 0x110 + 9591] &= 0x7F;
+        D_8011ED9C[i * 0x110 + 9659] &= 0x7F;
+        D_8011ED9C[i * 0x110 + 9727] &= 0x7F;
+        D_8011ED9C[i * 0x110 + 9795] &= 0x7F;
+    }
+    func_8013AF78(0);
+    D_800E6280.unk_1100 += 1;
+    switch (D_800E6280.unk_1109) {
+    case 0x0:
+        func_8013C4A8();
+        break;
+    case 0x1:
+        func_8013C934();
+        break;
+    case 0x2:
+        func_80140044();
+        break;
+    case 0x3:
+        func_80140CCC();
+        break;
+    case 0x4:
+        func_80140ED4();
+        break;
+    case 0xC0:
+        func_801422F0();
+        break;
+    case 0xD0:
+        func_80141FA4();
+        break;
+    case 0xF0:
+        func_80140430();
+        break;
+    case 0xFF:
+        func_80140574();
+        break;
+    }
+    func_8013B5F0();
+    func_801398EC();
+    func_8004EC24();
+    func_8006BA40();
+    func_8013B0A0();
+    func_801425C0();
+    func_80142560();
+    if (D_8014D0A8 != 0) {
+        D_800E6280.unk_1092 = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014231C);
+#endif
 
 void func_80142560(void) {
     if ((D_800E6280.unk_1109 | D_800E6280.unk_110A) != 0) {

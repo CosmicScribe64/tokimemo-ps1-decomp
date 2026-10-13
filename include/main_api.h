@@ -1011,8 +1011,11 @@ extern s16 D_8011ED7E;
 extern s16 D_8011ED82;
 extern u8 *D_8011ED8C;
 extern s32 D_8011ED90;
+extern u8 D_8011ED9C[];
 extern s8 D_8011ED9F;
 extern s8 D_8011EDE3;
+extern u8 D_8011EFBC[];
+extern u8 D_8011F044[];
 extern u8 D_8011F0CD;
 extern u8 D_8011F0CE;
 extern u8 D_8011F0CF;
@@ -1332,8 +1335,11 @@ extern s16 D_8012121C;
 #endif
 extern s32 D_80121238;
 extern u8 D_80121246;
+extern u8 D_80121247;
 extern s32 D_8012127C;
+extern u8 D_8012128B;
 extern s8 D_801212CB;
+extern u8 D_801212CF;
 extern s8 D_80121311;
 extern u8 D_80121313;
 #ifndef MAIN_API_OVERRIDE_D_80121317

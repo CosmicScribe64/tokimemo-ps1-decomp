@@ -403,5 +403,6 @@ extern u8 D_8014CCE4[]; /* Argument block passed to func_801330E8 and friends. *
 
 #ifndef OVL_NAME_ENT_T11010_C_H
 #define OVL_NAME_ENT_T11010_C_H
+void func_80142560(void);
 extern u8 D_8014CD10[];
 #endif
