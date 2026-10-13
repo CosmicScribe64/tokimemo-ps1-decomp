@@ -1,6 +1,6 @@
 #define MAIN_API_OVERRIDE_func_80049FF0 /* Transition calls narrow four coordinates at the call site. T-10870. */
 #define MAIN_API_OVERRIDE_SsVabTransCompleted /* SD_GetCDLevel reads the transfer status; canonical legacy view is void. T-10870. */
-#define MAIN_API_OVERRIDE_func_80081190 /* integer result read by k_disp_start; callee narrows K&R arguments, T-10730 */
+#define MAIN_API_OVERRIDE_dialogue_render /* integer result read by k_disp_start; callee narrows K&R arguments, T-10730 */
 #define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
 #define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
