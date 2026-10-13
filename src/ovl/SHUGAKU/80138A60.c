@@ -121,7 +121,31 @@ void func_80139018(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10720, only the register of the D_800CA2CC selector differs (v0 here, a1 in the original), 6 instructions; regdiff: constant 0x800D0000 range lands in v0 */
+void func_80139054(void) {
+    switch (D_800CA2CC) {
+    case 0:
+        bg_read_sub2(0x425E);
+        func_800AE0F0(D_800CA19C, "社寺巡り");
+        break;
+    case 1:
+        bg_read_sub2(0x424B);
+        func_800AE0F0(D_800CA19C, "守礼門");
+        break;
+    default:
+        bg_read_sub2(0x4271);
+        func_800AE0F0(D_800CA19C, "時計台前");
+        break;
+    }
+    if (D_800CA2EC == 0) {
+        func_80085B3C(3, D_800CA2CC);
+    }
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139054);
+#endif
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80138A60", func_80139118);
 
