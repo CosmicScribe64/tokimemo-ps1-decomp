@@ -49,23 +49,27 @@ s32 func_801535E4(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
 
-/* NON_MATCHING: T-10710, registers only (41 of 41 instructions): the original keeps D_8015EC74/D_8015EB98 in a0/a1, the pointer in v1 and the end D_80120650 in a3 (v0 unused), the draft uses v1/a0, v0, a2; array-indexed stores are needed for the loop-invariant loads to hoist */
+/* NON_MATCHING: T-10820, 14 differing lines (was 41 register lines): reading D_8015EC74 through a pointer and keeping the compare as a dead `dead = (... >= 0x61)` local (decomp-permuter) gets the original's a0/a1/a2/a3 assignment; left: the pointer takes v0 and the compare v1 where the original has the pointer in v1 and `slti at` (v0 unused) */
 #ifdef NON_MATCHING
 void func_80153A60(void) {
+    int dead;
     s32 i;
+    s32 *p;
 
     i = 0;
+    p = &D_8015EC74;
     do {
-        D_8011ECD0[i * 0x44 + 0x1107] = D_8015EC74;
-        *(s8 *)&D_800E6280.unk_3A = D_8015EC74;
-        if (D_8015EB98 == 0x20000 && D_8015EC74 >= 0x61) {
+        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        *(s8 *)&D_800E6280.unk_3A = *p;
+        /* FAKE: dead compare local and pointer read, found by decomp-permuter; they only steer the register assignment. T-10820 */
+        if (D_8015EB98 == 0x20000 && (dead = (*p >= 0x61))) {
             D_80120E93 = 0x60;
         }
         i++;
     } while (&D_8011ECD0[i * 0x44] != D_80120650);
     func_8013E7C0(0x1F, 0, 1, 0);
     D_8015EC74 += 2;
-    if (D_8015EC74 > 0x80) {
+    if (*p > 0x80) {
         D_8015EC74 = 0x80;
     }
 }
