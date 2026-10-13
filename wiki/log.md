@@ -10195,3 +10195,6 @@ check pass. Progress: `grand total   5162/6958   958768/2279368  42.1%`.
 One T-0018 row records the remaining large MASTER register issue. The eleven
 unmatched seeds compile with final headers in the handoff; source retains
 only the two original small guarded movie near misses. Changes are uncommitted.
+
+## [2026-10-12] ticket | T-10720 started
+Wave 15 list 2 begun, see [[tickets/T-10720-wave-15-list-2]].
