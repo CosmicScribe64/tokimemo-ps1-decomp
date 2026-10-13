@@ -807,7 +807,48 @@ s32 func_8006FB4C(char *arg0, char *arg1) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", geko_judge);
 
+/* NON_MATCHING: T-11030, register-only (10 insns): unk_040 and unk_03F swap v0/v1 (tie of two 1.333 ranges; original colours 03F first). Frame and loop match. */
+#ifdef NON_MATCHING
+s32 date_sasoi_judge(s8 *arg0) {
+    s32 i;
+    s32 idx;
+    s32 n;
+    u8 sp7C[0x18];
+    u8 sp5C[0x20];
+
+    *arg0 = 0;
+    if (((u32)(D_800E6280.unk_54C[0].w << 2) >> 31) == 1) {
+        return 0;
+    }
+    if (((u32)(D_800E6280.unk_040 + 6) / 7 == 2) && ((u32)(D_800E6280.unk_0F4.h >> 12) < 0xB)) {
+        return 0;
+    }
+    if ((D_800E6280.unk_03F == 0xC) && (D_800E6280.unk_040 == 0x11)) {
+        return 0;
+    }
+    if ((D_800E6280.unk_03F == 0xC) && (D_800E6280.unk_040 == 0x18)) {
+        return 0;
+    }
+    if ((D_800E6280.unk_03E == 0x62) && (D_800E6280.unk_03F >= 2)) {
+        return 0;
+    }
+    n = (u32)D_800E7D10 % 11;
+    func_80053418(sp7C, sp5C);
+    for (i = 0, idx = n; i != 11; i++, idx++) {
+        n = idx % 11;
+        if ((D_800E6280.unk_1BC[n].unk_0C.f.b1 != 0) && (D_800E6280.unk_1BC[n].unk_0A < 0x3C) && (get_g_zyotai_s(n) != 4) && (sp7C[n] >= 0x21) && ((rand() % 100) < 8)) {
+            if (D_800B6740 != n) {
+                *arg0 = n;
+                D_800B6740 = n;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", date_sasoi_judge);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
 
@@ -986,7 +1027,70 @@ void func_800722C4(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072338);
+void func_80072338(void) {
+    D_800E6280.unk_041++;
+    if (D_800E6280.unk_041 == 7) {
+        D_800E6280.unk_041 = 0;
+    }
+    D_800E6280.unk_040++;
+    switch ((*(u8 *)&D_800E6280.unk_03F)) {
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
+        if (D_800E6280.unk_040 >= 0x20) {
+            D_800E6280.unk_040 = 1;
+            (*(u8 *)&D_800E6280.unk_03F)++;
+            func_800722C4();
+        }
+        break;
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+        if (D_800E6280.unk_040 >= 0x1F) {
+            D_800E6280.unk_040 = 1;
+            (*(u8 *)&D_800E6280.unk_03F)++;
+            func_800722C4();
+        }
+        break;
+    case 2:
+        if (D_800E6280.unk_03E == 0x60) {
+            if (D_800E6280.unk_040 >= 0x1E) {
+                D_800E6280.unk_040 = 1;
+                (*(u8 *)&D_800E6280.unk_03F)++;
+                func_800722C4();
+            }
+        } else if (D_800E6280.unk_040 >= 0x1D) {
+            D_800E6280.unk_040 = 1;
+            (*(u8 *)&D_800E6280.unk_03F)++;
+            func_800722C4();
+        }
+        break;
+    }
+    if ((*(u8 *)&D_800E6280.unk_03F) >= 0xD) {
+        D_800E6280.unk_03E++;
+        (*(u8 *)&D_800E6280.unk_03F) = 1;
+    }
+    ((GsHalf *)&D_800E6280.unk_042)->h++;
+    if ((*(u8 *)&D_800E6280.unk_03F) % 3 == 0) {
+        func_8006D038();
+    }
+    if (D_800E6280.unk_71C != 0) {
+        func_8007259C(0);
+        D_800E6280.unk_71F = 0;
+    } else {
+        func_8007259C(0);
+        D_800E6280.unk_71F = 1;
+    }
+    if ((D_800E6280.unk_041 == 6) && (*(u16 *)&D_800E6280.unk_0F6 & 1) && (D_800E6280.unk_69C[0].unk_00 != 0x40)) {
+        *(s8 *)&D_800E6280.unk_0F6 = (u8)D_800E6280.unk_0F6.h & 0xFFFE;
+    }
+    func_8006B0C8();
+}
 
 void func_8007259C(u8 arg0) {
     D_800E6280.unk_71E = arg0;

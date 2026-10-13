@@ -13011,3 +13011,11 @@ movie functions now have regdiff-backed region comparisons and bounded search.
 
 ## [2026-10-13] ticket | T-11010 Done
 Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on [[kanban]].
+
+## [2026-10-13] ticket | T-11030 big functions (Sonnet) 26
+
+[[tickets/T-11030-big-functions-sonnet-26]] opened (In Progress): big functions in DATE/80132000, EVENT/8010FE10, `src/main/8007C030.c`, `src/main/8006CB30.c`.
+
+## [2026-10-13] build | T-11030 big functions (Sonnet) 26
+
+[[tickets/T-11030-big-functions-sonnet-26]]: 2 functions matched (1,552 bytes): `src/main/8006CB30.c` `func_80072338`, `src/ovl/DATE/80132000.c` `func_8013CDF8`; two near misses guarded with `NON_MATCHING` (`date_sasoi_judge`, DATE `func_8013C7D0`). Nine other drafts reverted to INCLUDE_ASM; findings in [[matching-notes]] section "T-11030". Ticket Done after inline review; ninja all OK, headers and globals OK.
