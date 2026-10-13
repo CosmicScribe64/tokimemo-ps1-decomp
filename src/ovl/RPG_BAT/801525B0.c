@@ -3,7 +3,34 @@
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801525B0);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801528DC);
+void func_801528DC(void) {
+    s32 i;
+    u8 *p;
+
+    p = (u8 *)&D_800E6280.unk_110C;
+    if (D_800E6280.unk_1100 == 0) {
+        D_800E6280.unk_1100 += 1;
+        *p = 0x80;
+    }
+    i = 0;
+    do {
+        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        D_800E6280.unk_03A = *p;
+        if (D_8015EB98 == 0x20000 && *p >= 0x61) {
+            D_80120E93 = 0x60;
+        }
+        i++;
+    } while (D_80120650 != &D_8011ECD0[i * 0x44]);
+    *p -= 2;
+    if (*p == 0) {
+        func_8004E58C();
+        D_800E6280.unk_03A = 0x80;
+        func_80048EB8(0);
+        func_8006BC28(0);
+        func_800438F0(1);
+        func_80042808();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801529B4);
 
@@ -49,23 +76,29 @@ s32 func_801535E4(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
 
-/* NON_MATCHING: T-10710, registers only (41 of 41 instructions): the original keeps D_8015EC74/D_8015EB98 in a0/a1, the pointer in v1 and the end D_80120650 in a3 (v0 unused), the draft uses v1/a0, v0, a2; array-indexed stores are needed for the loop-invariant loads to hoist */
+/* NON_MATCHING: T-10820, 4 differing lines (was 41 register lines): the pointer read of D_8015EC74, the dead compare local with an else branch and the swapped loop compare get the original's registers and order; left: the compare lands in $v0 (`slti v0`) where the original has `slti at` and leaves $v0 unused */
 #ifdef NON_MATCHING
 void func_80153A60(void) {
+    int dead;
     s32 i;
+    s32 *p;
 
     i = 0;
+    p = &D_8015EC74;
     do {
-        D_8011ECD0[i * 0x44 + 0x1107] = D_8015EC74;
-        *(s8 *)&D_800E6280.unk_3A = D_8015EC74;
-        if (D_8015EB98 == 0x20000 && D_8015EC74 >= 0x61) {
+        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        *(s8 *)&D_800E6280.unk_3A = *p;
+        /* FAKE: dead compare local with an else branch (found with decomp-permuter); only steers the register assignment. T-10820 */
+        if (D_8015EB98 == 0x20000 && (dead = (*p >= 0x61))) {
             D_80120E93 = 0x60;
+        } else {
+            dead = 0;
         }
         i++;
-    } while (&D_8011ECD0[i * 0x44] != D_80120650);
+    } while (D_80120650 != &D_8011ECD0[i * 0x44]);
     func_8013E7C0(0x1F, 0, 1, 0);
     D_8015EC74 += 2;
-    if (D_8015EC74 > 0x80) {
+    if (*p > 0x80) {
         D_8015EC74 = 0x80;
     }
 }

@@ -10235,3 +10235,8 @@ Checked new ticket links/index/card, updated current workflow against implementa
 
 ## [2026-10-13] ticket | T-10840 In Review -> Done
 [[tickets/T-10840-wave-13-15-tool-fixes]], [[kanban]] and [[index]] synchronized after review and final checks. Five tool fixes complete; zero game-function gains, clean 27/27 checksums and 5186/6958 progress retained. Changes left uncommitted for the orchestrator; logs remain external in scratchpad/r16-fixes/.
+## [2026-10-12] ticket | T-10820 started
+Wave 16 list 2 begun, see [[tickets/T-10820-wave-16-list-2]].
+
+## [2026-10-13] build | T-10820 wave 16 list 2 done
+[[tickets/T-10820-wave-16-list-2]]: 4 functions matched (852 bytes: VALEN `func_80132274`, SHOUGATU `func_80136078`, GEKO `func_8013A2EC`, RPG_BAT `func_801528DC`), near misses RPG_BAT `func_80153A60` (4 lines), TT `func_80145370` (4 lines), GEKO `func_80137580` (22 lines) kept as NON_MATCHING, 16 rows in [[data/t0018-cases]], recipes in [[matching-notes]]. ninja all OK, `headers.ok`, `globals.ok`. Status Done after inline review.
