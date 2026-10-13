@@ -1284,23 +1284,29 @@ extern s16 D_80121728;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
 extern Rec24 D_801217D0[]; /* at least 12 records */
+extern s16 D_801217D6;
 extern u8 D_801217E4;
 extern u8 D_801217E5;
 extern u8 D_801217E6;
 extern s16 D_801217F8;
+extern s16 D_801217FA;
 #ifndef MAIN_API_OVERRIDE_D_80121808
 extern s32 D_80121808;
 #endif
 extern u8 D_80121809;
 extern u8 D_8012180A;
 extern s32 D_80121818; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_8012181E;
 extern s32 D_8012183C; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_80121842;
 extern s32 D_80121860; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 extern s16 D_80121864; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_80121866;
 #ifndef MAIN_API_OVERRIDE_D_80121874
 extern u8 D_80121874;
 #endif
 extern s32 D_80121884; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_8012188A;
 extern s32 D_80121FD4;
 extern s16 D_80121FD8;
 extern s16 D_80121FDA;
