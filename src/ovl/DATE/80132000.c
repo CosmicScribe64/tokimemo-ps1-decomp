@@ -300,7 +300,266 @@ void func_801326B0(s16 arg0, s16 arg1, u8 arg2) {
     func_80042878(0x5E);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013272C);
+s32 func_8013272C(void) {
+    GameState *g;
+    /* FAKE: byte-local order preserves stack slots +0x33/+0x31. T-11060 */
+    u8 rank;
+    u8 rankFlags;
+    u8 highFlag;
+    u8 selection;
+    /* FAKE: unsigned reload local preserves comparison operands. T-11060 */
+    u32 place;
+    u32 flag;
+    u32 status;
+
+    g = &D_800E6280;
+    rankFlags = func_80051A68(g->unk_F5F);
+    highFlag = rankFlags & 0x80;
+    rank = rankFlags & 0x7F;
+    status = func_80051B48(g->unk_F5F);
+    if (g->unk_F5F == 0) {
+        if (((place = D_800CA2F8) == 1) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[3] == 0) && (g->unk_110A == 0xD)) {
+            func_801326B0(4, 1, 3);
+            D_80122D44 |= 1;
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x10) && ((u8)g->unk_03E >= 0x60U) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && (rank < 3U) && (status < 2U) && (g->unk_56C[5] == 0)) {
+            if ((g->unk_1BC[g->unk_F5F].unk_14[0x1D] != 0) && (g->unk_1109 == 1) && (g->unk_110A == 0xA)) {
+                func_801326B0(6, 1, 5);
+                return 0;
+            }
+        }
+        if (((place = D_800CA2F8) == 0) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && ((rank < 2U) && ((status == 0) && ((g->unk_56C[2] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 1))))) {
+            func_801326B0(3, 1, 2);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xC) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (rank == 0) && (status == 0) && (highFlag != 0) && (g->unk_56C[4] == 0) && (D_80122CDC == 2) && (g->unk_1109 == 1) && (g->unk_110A == 0x23)) {
+            func_801326B0(5, 1, 4);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 1) {
+        if (((place = D_800CA2F8) == 0xC) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[9] == 0) && (D_80122CDC == 0) && ((D_8015B674 != 0) && ((g->unk_1109 == 1) && (g->unk_110A == 0x23)))) {
+            func_801326B0(2, 0, 9);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x11) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && ((g->unk_56C[10] == 0) && ((g->unk_1109 == 1) && (g->unk_110A == 0xA)))) {
+            func_801326B0(3, 1, 0xA);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 8) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && ((g->unk_56C[11] == 0) || ((g->unk_56C[11] == 1) && !(g->unk_10F8 & 1))) && (g->unk_1109 == 1) && (g->unk_110A == 0xB)) {
+            func_801326B0(4, 1, 0xB);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xE) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (g->unk_56C[12] == 0) && (D_8015B684 == 6) && (g->unk_1109 == 1) && (g->unk_110A == 0x11)) {
+            func_801326B0(5, 1, 0xC);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 2) {
+        if (((place = D_800CA2F8) == 4) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[15] == 0) && (((u8)g->unk_03E >= 0x60U) && (g->unk_1109 == 1) && (g->unk_110A == 8))) {
+            func_801326B0(2, 1, 0xF);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xA) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && (g->unk_56C[16] == 0) && ((g->unk_03E == 0x61) && ((g->unk_1109 == 1) && (g->unk_110A == 9)))) {
+            func_801326B0(3, 1, 0x10);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 9) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && (g->unk_56C[17] == 0) && ((u8)g->unk_03E >= 0x60U) && (D_8015B670 != 0) && (D_80122CDC == 1) && (g->unk_1109 == 1) && (g->unk_110A == 0xC)) {
+            func_801326B0(4, 1, 0x11);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 2) && (g->unk_03F == 0xC) && ((flag = (u8)D_8015B690) == 2) && (g->unk_1109 == 1) && (g->unk_110A == 0xF)) {
+            func_801326B0(5, 1, 0x12);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 3) {
+        if (((place = D_800CA2F8) == 0xB) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[22] == 0) && ((g->unk_03E == 0x61) && ((g->unk_1109 == 1) && (g->unk_110A == 9)))) {
+            func_801326B0(2, 1, 0x16);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x11) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && ((g->unk_56C[23] == 0) && ((g->unk_1109 == 1) && (g->unk_110A == 0xA)))) {
+            func_801326B0(3, 1, 0x17);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 7) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && (g->unk_56C[24] == 0) && (((flag = (u8)D_8015B664) == 1) && ((g->unk_1109 == 1) && (g->unk_110A == 7)))) {
+            func_801326B0(4, 1, 0x18);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 6) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (rank < 2U) && (status == 0) && (g->unk_56C[25] == 0) && ((g->unk_03E == 0x61) || (g->unk_03E == 0x62) || ((g->unk_03E == 0x60) && (g->unk_03F == 0xC))) && (g->unk_1109 == 1) && (g->unk_110A == 0xB)) {
+            func_801326B0(5, 1, 0x19);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 4) {
+        if (((place = D_800CA2F8) == 1) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && ((((g->unk_56C[28] == 0) && (rank == 0) && (highFlag != 0)) && (status == 0)) && ((g->unk_1109 == 1) && (g->unk_110A == 0xD)))) {
+            func_801326B0(2, 1, 0x1C);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x10) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->unk_56C[29] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 0xA) && (g->unk_1BC[g->unk_F5F].unk_14[0x1D] != 0)) {
+            func_801326B0(3, 1, 0x1D);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xD) && (D_8015B698 == 0) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && (g->unk_56C[30] == 0) && ((u8)((DateSelectionView *)&D_800CA2F8)->option < 2U) && (g->unk_1109 == 1) && (g->unk_110A == 8)) {
+            func_801326B0(4, 1, 0x1E);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 2) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (g->unk_56C[31] == 0) && (D_80122CDC == 1) && (g->unk_1109 == 1) && (g->unk_110A == 0xF)) {
+            func_801326B0(5, 1, 0x1F);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 5) {
+        if (((place = D_800CA2F8) == 5) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[35] == 0) && ((g->unk_03E == 0x61) && ((g->unk_1109 == 1) && (g->unk_110A == 9)))) {
+            func_801326B0(3, 1, 0x23);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 3) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && (rank < 3U) && (status < 2U) && (g->unk_56C[36] == 0) && ((u8)g->unk_03E >= 0x61U) && (g->unk_1109 == 1) && (g->unk_110A == 9)) {
+            func_801326B0(4, 1, 0x24);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 1) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && ((((g->unk_56C[37] == 0) && (rank == 0) && (highFlag != 0)) && (status == 0)) && ((g->unk_1109 == 1) && (g->unk_110A == 0xD)))) {
+            func_801326B0(5, 1, 0x25);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x14) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (g->unk_56C[38] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)) {
+            func_801326B0(6, 1, 0x26);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 6) {
+        if (((place = D_800CA2F8) == 7) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[41] == 0) && ((D_8015B668 != 0) && ((g->unk_1109 == 1) && (g->unk_110A == 7)))) {
+            func_801326B0(2, 1, 0x29);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x11) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->unk_56C[42] == 0) && (g->unk_10C.unk_02 >= 0x96) && (g->unk_1109 == 1) && (g->unk_110A == 0xD)) {
+            func_801326B0(3, 1, 0x2A);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 5) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && ((g->unk_56C[43] == 0) && ((g->unk_1109 == 1) && (g->unk_110A == 9)))) {
+            func_801326B0(4, 1, 0x2B);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xA) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (g->unk_56C[44] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 9)) {
+            func_801326B0(5, 1, 0x2C);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 7) {
+        if (((place = D_800CA2F8) == 2) && (D_80122CDC == 0) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && ((g->unk_56C[47] == 0) && ((g->unk_1109 == 1) && (g->unk_110A == 0xF)))) {
+            func_801326B0(2, 1, 0x2F);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x11) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && (g->unk_1109 == 1) && (g->unk_110A == 0xA)) {
+            func_801326B0(3, 1, 0x30);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xC) && (D_80122CDC == 1) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && ((((g->unk_56C[49] == 0) && (rank == 0) && (highFlag != 0)) && (status == 0)) && ((g->unk_1109 == 1) && (g->unk_110A == 0x23)))) {
+            func_801326B0(4, 0, 0x31);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x14) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (g->unk_56C[50] == 0) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->unk_1109 == 1) && (g->unk_110A == 8)) {
+            func_801326B0(5, 1, 0x32);
+            return 0;
+        }
+        if ((g->unk_56C[51] == 0) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->unk_1109 == 0) && (g->unk_110A == 0x29)) {
+            func_801326B0(6, 1, 0x33);
+            g->unk_54C[0].b[3] &= 0xFFDF;
+            return 0;
+        }
+    }
+    flag = (u8)D_8015B680;
+    if (g->unk_F5F == 8) {
+        if (((place = D_800CA2F8) == 9) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[55] == 0) && ((D_8015B670 == 0) || (D_80122CDC == 0)) && (g->unk_1109 == 1) && (g->unk_110A == 0xC)) {
+            func_801326B0(2, 1, 0x37);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xC) && (flag == 1) && ((u8)g->unk_03F >= 6U) && (((u8)g->unk_03F < 9U) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->unk_56C[56] == 0) && ((g->unk_1109 == 1) && (g->unk_110A == 0x3C)))))) {
+            func_801326B0(3, 1, 0x38);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xF) && (D_8015B688 == 0xA) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && ((g->unk_56C[57] == 0) && ((g->unk_1109 == 1) && (g->unk_110A == 0x11)))) {
+            func_801326B0(4, 1, 0x39);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x13) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (g->unk_56C[58] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 8)) {
+            func_801326B0(5, 1, 0x3A);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 8) && (((g->unk_03E == 0x5F) && (g->unk_03F == 0xC) && (g->unk_040 == 0xA)) || ((g->unk_03E == 0x60) && (g->unk_03F == 0xC) && (g->unk_040 == 8)) || ((g->unk_03E == 0x61) && (g->unk_03F == 0xC) && (g->unk_040 == 7))) && (rank < 3U) && (((DateFlag17 *)&g->unk_0F4)->b17 != 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)) {
+            func_801326B0(6, 1, 0x3B);
+            return 0;
+        }
+    }
+    if (g->unk_F5F == 9) {
+        if (((place = D_800CA2F8) == 0xC) && (D_8015B694 != 0) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[62] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 0x1B)) {
+            func_801326B0(3, 1, 0x3E);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 1) && ((u8)g->unk_03F >= 6U) && (((u8)g->unk_03F < 9U) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->unk_56C[63] == 0) && ((g->unk_1109 == 0) && (g->unk_110A == 0x29)))))) {
+            g->unk_54C[0].b[3] &= 0xFFDF;
+            func_801326B0(4, 1, 0x3F);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 4) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && ((g->unk_56C[64] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 8))) {
+            func_801326B0(5, 1, 0x40);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x13) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (g->unk_56C[65] == 0) && (rank == 0) && (highFlag != 0) && (status == 0) && (g->unk_10C.unk_02 >= 0x50) && (g->unk_1109 == 1) && (g->unk_110A == 8)) {
+            func_801326B0(6, 1, 0x41);
+            return 0;
+        }
+    }
+    /* FAKE: this copy fixes one comparison operand order. T-11060 */
+    selection = ((DateSelectionView *)&D_800CA2F8)->option;
+    if (g->unk_F5F == 0xA) {
+        if (((place = D_800CA2F8) == 0xC) && ((u8)g->unk_03F >= 3U) && ((u8)g->unk_03F < 6U) && (g->unk_56C[69] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)) {
+            func_801326B0(3, 1, 0x45);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 1) && ((u8)g->unk_03F >= 6U) && (((u8)g->unk_03F < 9U) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->unk_56C[70] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 1))))) {
+            func_801326B0(4, 1, 0x46);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0xD) && ((u8)g->unk_03F >= 9U) && ((u8)g->unk_03F < 0xCU) && (g->unk_56C[71] == 0) && (((u8)selection >= 2U) && (g->unk_1109 == 1) && (g->unk_110A == 8))) {
+            func_801326B0(5, 1, 0x47);
+            return 0;
+        }
+        if (((place = D_800CA2F8) == 0x14) && ((g->unk_03F == 0xC) || (g->unk_03F == 1) || (g->unk_03F == 2)) && (rank == 0) && (highFlag != 0) && ((status == 0) && ((g->unk_56C[72] == 0) && (g->unk_1109 == 1) && (g->unk_110A == 0)))) {
+            func_801326B0(6, 1, 0x48);
+            return 0;
+        }
+    }
+    if (((place = D_800CA2F8) == 0xB) && (selection == 2) && (g->unk_1109 == 1) && (g->unk_110A == 9)) {
+        D_80122D44 = 2;
+        func_80042878(0x5C);
+        return 0;
+    }
+    if ((g->unk_03F >= 3) && ((u8)g->unk_03F < 6U) && (g->unk_1BC[11].unk_0C.f.f9 >= 2U) && ((g->unk_56C[76] == 0) && ((g->unk_1109 == 0) && (g->unk_110A == 0xF)))) {
+        D_80122CD0 = 3;
+        g->unk_720 = 0x50;
+        g->unk_721 = 0;
+        g->unk_722 = g->unk_110A + 1;
+        D_80122CD4 = 0xB;
+        func_80042878(0x5E);
+        g->unk_56C[76] = 1;
+        D_80122D44 |= 2;
+        return 0;
+    }
+    if (((place = D_800CA2F8) == 0x11) && ((u8)g->unk_03F >= 6U) && ((u8)g->unk_03F < 9U) && (g->unk_1BC[11].unk_0C.f.f9 >= 2U) && (g->unk_56C[78] == 0) && (g->unk_1109 == 0) && (g->unk_110A == 0xF)) {
+        D_80122CD0 = 5;
+        g->unk_720 = 0x50;
+        g->unk_721 = 0;
+        g->unk_722 = g->unk_110A + 1;
+        D_80122CD4 = 0xB;
+        func_80042878(0x5E);
+        g->unk_56C[78] = 1;
+        D_80122D44 |= 3;
+        return 0;
+    }
+    func_8004284C();
+}
 
 void func_80133DB4(void) {
     k_reset(0);
