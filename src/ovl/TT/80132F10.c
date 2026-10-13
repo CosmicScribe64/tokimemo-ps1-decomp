@@ -72,7 +72,63 @@ void func_80133058(u8 *arg0, u16 arg1) {
     }
 }
 
+/* T-11000 near miss: stack slot of id matches (declared before t); beq operand order of the hoisted -1 (s3, v0), call-argument/store scheduling in the record init; about 45 listing rows. */
+#ifdef NON_MATCHING
+void func_801330D8(void) {
+    u8 *g;
+    u8 *a;
+    s32 id;
+    s16 t;
+    s32 x;
+    s32 m;
+
+    m = -1;
+    g = (u8 *)D_80158A70;
+    while (1) {
+        t = *(s16 *)(*(u8 **)(g + 8) + 2);
+        if (m == t || *(u16 *)(g + 2) < (u32)t || (a = func_80132F10(D_80158A9C, D_80158A9C + 0xF00)) == 0) {
+            break;
+        }
+        *(u16 *)(a + 2) = *(u16 *)(*(u8 **)(g + 8) + 4);
+        switch (*(u16 *)(a + 2)) {
+        case 0x60:
+            id = 0xE;
+            break;
+        case 0x61:
+            id = 0xF;
+            break;
+        case 0x62:
+            id = 0x10;
+            break;
+        case 0x63:
+            id = 0x11;
+            break;
+        }
+        *(s32 *)(a + 0x20) = *(s16 *)(*(u8 **)(g + 8)) << 16;
+        x = *(s16 *)(*(u8 **)(g + 8) + 2) << 16;
+        *(s32 *)(a + 0x1C) = x;
+        *(s32 *)(a + 0x28) = 0;
+        *(s32 *)(a + 0x24) = *(s32 *)g - x;
+        *(s32 *)(a + 0x2C) = 0;
+        *(s16 *)(a + 0x5E) = 0;
+        a[0x60] = 0;
+        *(s16 *)(a + 0x14) = *(s16 *)(a + 0x22);
+        *(s16 *)(a + 0x16) = *(s16 *)(a + 0x26);
+        func_80132FC8(a, *(u16 *)(a + 2), id);
+        *(s16 *)(a + 4) = 0x40;
+        a[0x40] |= 0x40;
+        *(s16 *)(a + 10) = 0;
+        *(s16 *)(a + 8) = 0;
+        *(s16 *)(a + 6) = 0;
+        a[15] = 0;
+        a[14] = 0;
+        a[13] = 0;
+        *(u8 **)(g + 8) += 6;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_801330D8);
+#endif
 
 void func_80133288(u8 *arg0) {
     u8 *q;

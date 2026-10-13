@@ -13,7 +13,54 @@ void func_80148210(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148210", func_80148244);
+void func_80148244(TtPoolDraw14 *r) {
+    u8 *s;
+    s16 x;
+    u16 i;
+    u8 c;
+    TtDrawBuffer80B8 *buffer;
+    TtRectPacket16 *q;
+
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    s = D_8015694C[r->text];
+    x = r->x;
+    i = 0;
+    c = *s++;
+    while (c != 0xFF) {
+        if (r->unk_01 != 0 && i >= r->count) {
+            break;
+        }
+        if (c != 0x3F) {
+            q = (TtRectPacket16 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
+            if (r->flags & 4) {
+                q->tag.len = 3;
+                q->code = 0x74;
+                q->r = r->rgb[0];
+                q->g = r->rgb[1];
+                q->b = r->rgb[2];
+            } else if (r->flags & 8) {
+                TtCore30 *core;
+
+                core = (TtCore30 *)D_80158A64;
+                q->code = 0x74;
+                q->tag.len = 3;
+                q->r = core->unk_1D;
+                q->g = core->unk_1E;
+                q->b = core->unk_1F;
+            } else {
+                q->tag.len = 3;
+                q->code = 0x75;
+            }
+            /* T-11000: IDO orders these stores by source line; keep them on one line. */
+            q->x = x; q->y = r->y; q->u = (c & 0xF) * 8; q->v = (c >> 4) * 8; q->clut = (r->unk_02 & 0xF) + 0x3C00; q->tag.addr = buffer->ordering[r->ot].addr; buffer->ordering[r->ot].addr = (u32)q;
+        }
+        c = *s;
+        x += 8;
+        i++;
+        s++;
+    }
+}
 
 void func_80148460(void) {
     /* FAKE: unused homes retain the observed 0x50-byte frame. T-9760. */
@@ -28,7 +75,7 @@ void func_80148460(void) {
     i = 0;
     do {
         if ((p->unk_00 != 0) && !(p->flags & 1)) {
-            func_80148244((s32)p);
+            func_80148244(p);
         }
         i++;
         p++;

@@ -10,11 +10,109 @@ typedef struct TtPhase3AE {
     /* 0x3AC */ u16 step;
 } TtPhase3AE; /* size 0x3AE */
 
+/* T-11000 near miss: frame, spill slots, hoisted constants and stores match; only the saved-register numbering of a, &pt and D_80155C64 is rotated (original s2, s3, s4; here s4, s2, s3), 32 line pairs. */
+#ifdef NON_MATCHING
+void func_801374C0(u8 *arg0) {
+    u8 *a;
+    u8 *p;
+    s32 j;
+    s32 n;
+    /* FAKE: unused homes (pa/pm) place pt at sp+0x68 and the spilled q, i at sp+0x54/0x58 in the 152-byte frame. T-11000. */
+    s32 pa[7];
+    s16 pt[2];
+    s32 pm[3];
+    s32 i;
+    u8 *q;
+
+    a = D_80158A74;
+    i = 0;
+    q = arg0;
+    do {
+        pt[0] = *(s16 *)(q + 0x1E);
+        pt[1] = *(s16 *)(q + 0x9E);
+        if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, (u8 *)pt, D_80155C64) != 0) {
+            func_80144094();
+            *(u16 *)(a + 4) = 0x60;
+            *(s16 *)(a + 10) = 0;
+            *(s16 *)(a + 8) = 0;
+            *(s16 *)(a + 6) = 0;
+            a[15] = 0;
+            a[14] = 0;
+            a[13] = 0;
+        }
+        p = D_80158A80;
+        for (j = 0, n = 12; j != n; j++, p += 0x54) {
+            if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, D_80155C64) != 0) {
+                *(u16 *)(p + 4) = 0x80;
+                *(s16 *)(p + 10) = 0;
+                *(s16 *)(p + 8) = 0;
+                *(s16 *)(p + 6) = 0;
+                p[15] = 0;
+                p[14] = 0;
+                p[13] = 0;
+            }
+        }
+        i += 4;
+        q += 4;
+    } while (i != 0x20);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801374C0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137654);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137878);
+void func_80137878(void) {
+    u8 *c;
+    u8 *b;
+    /* FAKE: unused homes retain the observed frame. T-11000. */
+    s32 frame_pad[8];
+    s16 pt[2];
+    u8 *p;
+    s32 i;
+    s32 n;
+
+    c = D_80158A8C;
+    pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x254);
+    b = D_80158A64;
+    pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x284);
+    c[0xBA] = 0;
+    p = D_80158A80;
+    for (i = 0, n = 12; i != n; i++, p += 0x54) {
+        if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155C70) != 0) {
+            if (*(u16 *)(c + 0x30E) == 2) {
+                b[0x25] = b[0x25] + 1;
+                if (b[0x24] != 0) {
+                    if (!(b[0x25] & 3)) {
+                        if (!(b[0x25] & 7)) {
+                            func_801342CC(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+                        } else {
+                            func_80133FB0(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+                        }
+                    }
+                }
+                func_80133AD0(0x507);
+                if (i >= 6) {
+                    *(s16 *)(c + 0x30C) -= 1;
+                } else if (*(u16 *)(p + 2) == 9) {
+                    *(s16 *)(c + 0x30C) -= 4;
+                } else {
+                    *(s16 *)(c + 0x30C) -= 2;
+                }
+            } else {
+                func_80133AD0(0x506);
+            }
+            c[0xBA] = 1;
+            *(u16 *)(p + 4) = 0x80;
+            p[13] = 0;
+            p[14] = 0;
+            p[15] = 0;
+            *(s16 *)(p + 6) = 0;
+            *(s16 *)(p + 8) = 0;
+            *(s16 *)(p + 10) = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137A78);
 
