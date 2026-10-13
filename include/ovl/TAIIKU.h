@@ -510,3 +510,12 @@ typedef struct {
 extern TaiikuSlots D_80149208;
 
 #endif
+
+#ifndef OVL_TAIIKU_SCALARS_T10720
+#define OVL_TAIIKU_SCALARS_T10720
+/* Words inside D_80149968/D_80149974/D_80149990/D_801499A0 that func_8013CF88 reaches as separate symbols. */
+extern s32 D_8014996C;
+extern s32 D_80149978;
+extern s32 D_80149994;
+extern s32 D_801499A8;
+#endif
