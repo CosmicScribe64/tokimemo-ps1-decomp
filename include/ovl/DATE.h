@@ -1464,6 +1464,8 @@ extern u8 *D_8015B534;
  * with three result bytes each. The first year starts with summer. */
 extern u8 *D_8015B558;
 extern u8 *D_8015B55C;
+#endif
+
 #ifndef DATE_MOVIE_SCENE_T10910A
 #define DATE_MOVIE_SCENE_T10910A
 /* T-10910A: data range 8015CF80..8015CFD0 belongs to 801461B0.
