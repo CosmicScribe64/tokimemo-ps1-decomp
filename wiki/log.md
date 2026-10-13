@@ -10206,3 +10206,290 @@ Wave 15 list 2 begun, see [[tickets/T-10720-wave-15-list-2]].
 
 ## [2026-10-12] build | T-10720 wave 15 list 2 done
 [[tickets/T-10720-wave-15-list-2]]: 6 functions matched (4172 bytes: GEKO `func_8013E69C`/`func_8013E760`, SHOUGATU `func_801366A4`/`func_80141AE8` via dupes, TAIIKU `func_80137090`, RPG_BAT `func_8014D380`), 10 near misses kept as NON_MATCHING, rows added to [[data/t0018-cases]], recipe in [[matching-notes]]. ninja 27/27 OK. Status Done after inline review.
+
+## [2026-10-12] ticket | T-10830 large-function batch started
+
+Created [[tickets/T-10830-big-functions-3-astra]] and matching kanban card.
+Read shared batch isolation/procedure rules and [[decompile-workflow]].
+Work is limited to the six assigned objects, additive declarations and wiki
+records; no commits. Prior DATE/EVENT drafts will seed the largest-first pass.
+
+## [2026-10-12] build | T-10830 baseline and first DATE comparison
+
+Generated the worktree's missing build files and assembly; the default Docker
+build passes all 27 unit checksums. Scoped duplicate discovery finds no direct
+copies in the six owned objects. DATE func_80147958's inherited research seed
+compiles; regdiff identifies fade narrowing and state-spill range differences.
+Experiments and full diagnostics are retained in scratchpad/a16/.
+
+## [2026-10-12] build | T-10830 first twelve scene handlers verified
+
+Twelve assigned BUNKASAI functions replace their assembly fallbacks. Whole
+BUNKASAI SHA-1 and the full 27-unit build pass. Added four forward declarations
+for existing void scene-table helpers in include/ovl/BUNKASAI.h; real builds
+caught these missing declarations, which standalone probes could not.
+Further bit-field and control-flow repairs are in scratchpad/a16/; see
+[[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-12] ingest | T-10830 shared flag and movie layout evidence
+
+Recorded the stored-member call idiom, return flag field values, shared-3
+multiply, and m2c flag-store repair in [[decompile-workflow]]. Added
+DateMovieWork and DateMovieHeader8 to include/ovl/DATE.h; scratch recompilation
+preserves the existing DATE draft's exact instruction stream. All 29 assigned
+BUNKASAI handlers now have instruction-exact candidates; 28 have already
+passed both real funcdiff and the overlay checksum. Final candidate is in
+real-build verification. See [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] build | T-10830 all assigned BUNKASAI handlers match
+
+All 29 assigned BUNKASAI functions pass resolved real-object comparisons;
+the final whole-tree Docker build passes 27/27 checksums with header/global
+guards. The last handler, func_801417DC, uses the ordinary stored-member
+argument idiom documented in [[decompile-workflow]]. Continuing the larger
+DATE/EVENT movie routines within the requested four-hour session.
+
+## [2026-10-13] build | Movie control-flow and frame refinement
+
+T-10830 scratch experiments preserve all 29 installed BUNKASAI matches.
+DATE 80147958's exploratory candidate improves from 119 to 85 differing
+lines after branch-offset normalization (171 real lines): direct global
+counter updates avoid carrying a stale local across the helper call.
+EVENT 8011DDB8 improves from 586 to 158 normalized lines with a word counter
+and RECT declared after the scalar locals. These are research scores, not
+match claims; regdiff and resolved instruction comparisons remain required.
+The broad DATE 801462B0 declaration permutation was stopped in its own
+container after a directed frame arrangement outperformed it. See
+[[tickets/T-10830-big-functions-3-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | Movie RGB loop and shared-tail idioms
+
+Recorded the one-load/three-store RGB loop and post-switch animation tail
+in [[decompile-workflow]]. Scratch experiments for DATE 8014718C now have
+502 instructions against 498 original; EVENT 8011D5C4 has 512 against 508.
+Reusing the wider color temporary for the later height operation improves
+DATE's register allocation but is not yet a match. Existing overlay void
+prototypes conflict with observed zero return values; no shared declaration
+was rewritten. T-10830's installed total is 29 functions / 36,716 progress
+bytes, all previously verified against the 27 unit checksums.
+
+## [2026-10-13] query | Correct DATE candidate attribution and verify guards
+
+A token-level comparison of the DATE 80147958 seed and output-3790-1
+shows that its substantive improvement came from moving read_bustup after
+the explicit state self-save. The earlier log entry attributing the gain
+to direct global counter updates was incorrect; the seed already used
+that counter form. This remains a research candidate, not a match.
+Prototype branch validation reports 0 new disagreements (17 known), and
+global migration validation reports globals OK. Evidence: scratchpad/a16/
+check-protos.log, check-globals.log, and date479-source-review.log.
+See [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] ingest | Extend EVENT movie scene-control layout
+
+Appended EventMovieState to include/ovl/EVENT.h, preserving all existing
+header declarations. The view covers D_800B1AF0's word, existing byte
+symbols at +5/+6, and 8011C750's page selector at +9. Documented in
+[[decompile-workflow]]. Typed-access probes and a full rebuild are running;
+no additional function is claimed matched. [[tickets/T-10830-big-functions-3-astra]]
+retains the verified 29-function BUNKASAI total.
+
+## [2026-10-13] build | EVENT layout verified and movie seeds improved
+
+build-event-state-header.log completes 526 build steps and all 27 SHA1
+checks. EventMovieState's inline view reduces the 8011C750 scratch draft
+from 539 to 489 normalized differing lines, with structural discrepancies
+falling from 46 to 36. DATE 801462B0's local GameState and Rec24 pointers
+reduce its research comparison to 428 normalized lines. These stronger
+seeds replace the planned search inputs; neither is accepted source C.
+The large EVENT movie's stack-refined draft is at 97 normalized / 175 real
+lines. See [[decompile-workflow]] and [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] ingest | Preserve decoder control ABI views
+
+Read the matched decoder definitions and accessors in src/main/80057390.c.
+The DATE overlay's halfword clears coexist with main's four word-sized file
+IDs at D_800B5920. Kept the shared main declaration intact and documented
+the distinct access views in [[decompile-workflow]]. Filled previously
+padded DateMovieWork fields at 0x1B, 0x1C, 0x20, and 0x24 from the matched
+main definitions, without changing its size or existing field offsets.
+See [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] query | T-10830 movie candidate review and selector width
+
+Compared the EVENT movie tail directly with target assembly. Case 43 needs a
+word view of D_80125320, as already used by the matched dispatcher; case 40
+restores its saved phase after the helper call. Recorded both in
+[[decompile-workflow]]. The refined scratch search again produced a lower
+score by changing a state transition to 2; rejected that candidate. Regdiff
+continues to verify every manual and search candidate. No additional source
+body was accepted; the 29 BUNKASAI matches remain the verified result.
+
+## [2026-10-13] query | T-10830 identify unsafe exploratory assignment split
+
+Read the existing upstream permuter implementation inside Docker. Its
+perm_split_assignment pass explains the rejected EVENT transition: splitting
+phase = phase + 1 can overwrite phase before reusing it. Disabled the pass
+for subsequent a16 scratch searches and documented the failure shape in
+[[decompile-workflow]]. This is candidate-review guidance; tools/ is unchanged.
+
+## [2026-10-13] query | T-10830 restore EVENT scrolling hold case in research
+
+The jump table for EVENT 8011C750 proves that state 10 is an empty switch case,
+not the default cleanup. Added it to scratch candidates and replaced the
+four-way page ladder with a switch. The resulting draft has 924 instructions,
+matching the target length, with 11 structural differences and a substantial
+register residual. Recorded the case shape in [[decompile-workflow]]. Audited
+the other five large movie draft case lists against their jump tables; no
+other omitted outer cases were found. No repository function body changed.
+
+## [2026-10-13] lint | T-10830 clarify DATE control view ownership
+
+Clarified the new DateMovieWork comment: the overlay resets its halfword
+fields and three bytes, while matched main code owns the word-array view
+and establishes the later fields. This keeps [[decompile-workflow]] and the
+header consistent without claiming every observed field is reset by the
+large handler. Existing declarations and raw data remain unchanged.
+
+## [2026-10-13] build | T-10830 completed header and prototype validation
+
+The completed DATE/EVENT header views pass a full Docker rebuild: 27/27
+checksums, headers OK, globals OK (scratchpad/a16/final-build.log).
+sync_protos.py --check-branch reports zero new disagreements and 17 known;
+migrate_globals.py --check reports globals OK. The accepted result remains
+29 BUNKASAI functions and 36,716 progress bytes. Movie research is still in
+scratch and cannot affect the default build. See
+[[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] decision | T-10830 review K&R call view and prepare handoff
+
+Inline standards review identified a clearer view for func_80083440 in
+src/ovl/BUNKASAI/80143770.c. The target callee narrows its saved word argument
+with lbu, so changed the local override from a word prototype to the project's
+K&R declaration style. Resolved funcdiff still reports MATCH for 80145334
+(scratchpad/a16/review-45334.log). Prepared eight explicitly labelled research
+seeds in scratchpad/a16/handoff/ with real/normalized diffs and semantic,
+prototype, frame, and ownership caveats; compile verification is running.
+See [[tickets/T-10830-big-functions-3-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] query | T-10830 compile-check curated research handoff
+
+All eight scratchpad/a16/handoff/ source copies compile through regdiff with
+the current headers. Their real and normalized differences are recorded in
+scratchpad/a16/handoff-verification.log and the handoff README. Added the a16
+section to [[matching-notes]], including 29 accepted matches, header/idiom
+recovery, zero new T-0018 rows, and the remaining declaration, structural, and
+data-ownership limitations. Wide drafts remain outside repository source.
+
+## [2026-10-13] build | T-10830 post-review BUNKASAI and prototype checks
+
+The K&R override refinement retains BUNKASAI's checksum; post-review ninja
+also reports globals OK. The repeated branch prototype check reports zero
+new disagreements, 17 known, branch check OK. Added this evidence and the
+curated handoff caveats to [[tickets/T-10830-big-functions-3-astra]]. The
+completed-header full build remains 27/27. No other source changes followed.
+
+## [2026-10-13] decision | T-10830 reject return reordering and restrict search
+
+DATE exploratory output-4015-1 moved a return before a required state update.
+Rejected it, disabled perm_reorder_stmts in the scratch search settings, and
+restarted the DATE pass at 09:26:40 UTC from the corrected phase-restore seed.
+Stopped only the confirmed a16 search container (its /work mount was checked);
+other agents' containers and the queued EVENT search were untouched. Recorded
+the additional candidate-review hazard in [[decompile-workflow]]. No project
+tool or repository function body changed.
+
+## [2026-10-13] query | T-10830 finish DATE scrolling search and start corrected EVENT pass
+
+The DATE 801462B0 search completed its hour at 09:29:10 UTC. Its best search
+score (6480) still had 570 real differing lines, worse than the manual typed
+seed's 464, so no source or handoff replacement was made. The corrected EVENT
+8011C750 hour began next, with both assignment splitting and statement
+reordering disabled. Also reconciled the DateMovieWork field inventory in
+[[decompile-workflow]] with the completed header.
+
+## [2026-10-13] query | T-10830 remaining-function duplicate and return-view checks
+
+A read-only lenient dupes.py scan, restricted to the eight remaining assigned
+functions in DATE/801461B0 and EVENT/8011C650, found zero reuse plans. Word
+return-view probes for the scrolling handlers emitted the same instructions,
+so they do not justify changing those shared declarations. Counter-cast and
+scalar/aggregate variants likewise did not improve the curated seed. Results
+are retained in scratchpad/a16/remaining-dupes.log, movie-returns.log, and
+related regdiff logs. Updated the ticket date; accepted code is unchanged.
+
+## [2026-10-13] lint | T-10830 batch scope and open-case tracking
+
+Clarified the ticket goal to match the user's time-boxed batch scope:
+maximize matches among the assigned functions, with broad unresolved drafts
+kept in scratch. Checked all 29 accepted names against [[data/t0018-cases]];
+none has an existing row needing a resolution note. Ticket, kanban, and index
+still consistently show In Progress while the final searches run. No new
+T-0018 rows are warranted by the structural residuals.
+
+## [2026-10-13] query | T-10830 focus final EVENT search on residual regions
+
+Confirmed the upstream permuter supports paired randomizer-region pragmas.
+Started a 25-minute scratch-only EVENT pass at 10:01:18 UTC, limited to local
+declarations, fade cases, and scrolling logic; already matching initialization
+is excluded. Known unsafe passes remain disabled, and output candidates still
+receive regdiff and source review. The broad DATE/EVENT searches retain their
+original deadlines. No repository code changed.
+
+## [2026-10-13] query | T-10830 preserve focused alias experiment separately
+
+The focused EVENT search reached 395 real differing lines using two aliases
+for the tail's state pointer. Both pointers can use EventMovieState directly;
+merging them regresses to 445 lines. Kept the cleaner primary handoff seed
+and saved the two-alias form under scratchpad/a16/handoff/alternatives/ with
+explicit FAKE/research warnings. It remains far above the source threshold.
+The README also records the rejected early-return mutation. No accepted code
+or matching total changed; see [[matching-notes]].
+
+## [2026-10-13] lint | T-10830 accepted-code review coverage
+
+Reviewed the four new helper declarations against their actual definitions,
+checked the added layout comments, and rechecked the uncommitted diff for
+whitespace errors. The complete build's warnings are in unrelated existing
+code; none names an owned source file or added overlay header section. The
+accepted 29 bodies still introduce no FAKEs. The inline review record is
+prepared pending search completion and the closing required checks.
+
+## [2026-10-13] query | T-10830 focused EVENT search completed
+
+The 25-minute focused EVENT run ended at 10:26:30 UTC. Its best search-score
+candidate has 409 real differing lines; the separately retained two-alias
+experiment has 395. Neither meets the guarded-source threshold. No further
+code was accepted. Started the required closing prototype, global, header,
+build, and progress checks on the stable accepted changes.
+
+## [2026-10-13] ticket | T-10830 moves to In Review
+
+Moved [[tickets/T-10830-big-functions-3-astra]], its kanban card, and index
+entry to In Review. The accepted scope is 29 verified BUNKASAI bodies, three
+append-only overlay-header additions, and the recorded research handoff.
+The closing prototype check passes with zero new disagreements. Inline
+standards review and the remaining closing results will be recorded before
+Done; no new source body has been accepted from the final searches.
+
+## [2026-10-13] ticket | T-10830 reviewed and Done after four-hour batch
+
+All final searches completed without another acceptable source candidate.
+Closing checks pass: zero new prototype disagreements (17 known), globals OK,
+headers OK, current incremental build; the full completed-header build remains
+27/27 and the reviewed BUNKASAI checksum also passes. Final progress is
+5215/6958 functions, 1003464/2279368 bytes, 44.0%: 29 matches and 36,716 bytes
+added by this batch. Session ran from 06:30 UTC through after 10:30 UTC.
+
+Recorded the inline CODING_STANDARDS review in
+[[tickets/T-10830-big-functions-3-astra]], resolved its K&R declaration finding,
+and moved the ticket/card/index to Done. Updated [[matching-notes]] with the
+final search disposition. Zero new T-0018 rows; broad movie drafts remain in
+scratch, and the two inherited 13-line guards are unchanged. Changes remain
+uncommitted and confined to the authorized files.
+
+## [2026-10-13] lint | T-10830 final tracking and worker check
+
+Post-status verification confirms ticket, kanban, and index all show Done;
+`git diff --check` passes. No a16 search or watcher containers remain running.
+Final clock check was 10:31:59 UTC, more than four hours after session start.

@@ -545,3 +545,114 @@ Compile-checked copies of all eleven unmatched assigned drafts are retained
 in `scratchpad/a14/handoff/` with normalized regdiff scores and current-header
 field accesses. These are research seeds, not accepted near misses; only the
 two existing guarded movie handlers remain in repository source.
+
+## T-10830 large BUNKASAI scenes and movie layouts
+
+BUNKASAI `801417DC` needs the stored girl member as the call argument:
+`g->unk_F5F = id; func_800847B8(g->unk_F5F);`. Repeating the literal as
+an argument adds another constant load. Putting the assignment inside the
+call gives the right instructions but reverses `li a0` and `lui at` at
+seven sites. The ordinary member-read spelling recovers both constant
+sharing and instruction order, without a FAKE. `g` is a local pointer to
+`D_800E6280`; keep its declaration at block start.
+
+In `8014C528` and `80140F4C`, the existing `BunkaReturnFlags.unk_2_4` field
+is assigned 1 or 3 respectively. Set b1, assign that field, then copy the
+saved scene bytes (`unk_720..722`). These stores recover `ori 2`, `andi
+0xFFE3`, and `ori 4`/`ori 0xC` with the target temporaries. Later clearing
+of the same field must also use the bit-field view. Partial conversion
+shifts temporary numbering for the remaining cases. `80144D20` and
+`80133E18` use the same pattern with a zero field value.
+
+`80132DB4`, `801328D4`, and `80134CF8` combine a word-read b2 test and a
+byte-write b2 assignment of Rec38 flags. m2c can emit an incorrect signed
+byte cast followed by a **word** store; replace both with `.unk_0C.f.b2`.
+A local GameState pointer also retains the repeated-3 `multu` in
+`8014B9D8`/`80144374` instead of strength-reducing it into shift/subtract.
+Inline m2c's shared `block_N` message-store labels into each switch case.
+
+`DATE.h` now includes `DateMovieWork`, the minimum 0x2C-byte view beginning
+at `D_800B5920`: signed halfwords at 0,2,4,6,0xA, byte fields at
+0x18..0x1C and 0x20, and words at 0x24 and 0x28. Its first 0x1C bytes correspond to the
+existing EventMovieWork layout. `DateMovieHeader8` is the two-word prefix
+of the bitstream pointer held in `D_80125C04`; word 0 is checked with
+0xFFFF0000 against 0x38000000, word 1 with 0xFF010000 against 0x10000.
+A fresh traced compile of DATE `80147958` gives the same instructions
+with these typed accesses as with the old scalar/cast accesses. These
+layouts do not resolve its separate fade and state-spill residuals.
+
+For the eight-record RGB copy loops in DATE `8014718C` and EVENT `8011D5C4`,
+read record 4's red byte once **inside** each iteration, then assign that
+local to the destination's three bytes. Three repeated member reads are
+not equivalent for IDO's alias analysis: an indexed destination might
+alias record 4, so it emits three loads. The original has one load and
+three stores. This recovers the loop shape; it is not a whole-function
+match. Their common animation tail belongs after the switch, reached by
+cases 7/8/9; the other cases return early. Existing void declarations hide
+observed zero return values in m2c output, so return-type research remains
+in scratch until the shared declarations can be reconciled.
+
+`EVENT.h` also exposes `EventMovieState` at D_800B1AF0: a signed word at
+0, unsigned bytes at 5 and 6, and the scrolling page selector at 9. The
+view is 0x0C bytes after alignment, with observed fields only through 9;
+it extends the earlier 0x08-byte EventTransitionState prefix. The selector
+in `8011C750` cycles through four source images. Keep this layout available
+for smaller neighbouring handlers instead of inventing independent offsets.
+
+The scrolling-handler research seeds improve when related accesses remain
+in those aggregates: DATE `801462B0` uses local GameState and Rec24 pointers;
+EVENT `8011C750` uses the inline EventMovieState view for phase, fade, and
+page bytes. The EVENT view reduces structural differences as well as the
+register diff. These are useful starting forms, not verified matching
+idioms for the entire handlers. The byte-wide RGB bit-field alternatives
+were also tested and emit the same instructions as ordinary byte members;
+there is no evidence to add another packed-color type.
+
+The DATE control layout deliberately preserves the overlay's **halfword**
+reset accesses at 0,2,4,6,0xA. Matched main code in src/main/80057390.c
+instead owns `s32 D_800B5920[4]` and compares word-sized file IDs there;
+do not change that shared declaration to make an overlay draft convenient.
+That main object also confirms four flag bytes at 0x18, brightness at 0x1C,
+another byte at 0x20, a signed word counter at 0x24, and the last-screen-mode
+word at 0x28. These known fields are exposed in DateMovieWork with neutral
+offset names; the two views describe accesses, not a claim of one recovered
+original C declaration.
+
+EVENT `8011DDB8` case 43 reads `D_80125320` as a **word**, despite the
+inherited byte declaration. The existing `8011C6C4` dispatcher already uses
+`*(u32 *)&D_80125320`; preserve that word view in future drafts. This is an
+access-width correction, not permission to change the shared declaration
+without checking other owners. The case-40 helper path also stores the saved
+phase before the call and restores it after the call, even when the fade byte
+has not changed. A numerically closer draft that omits the latter store is
+not a faithful reconstruction of that path.
+
+The exploratory permuter's `perm_split_assignment` pass needs particular
+review for self-referential assignments. In this batch it rewrote
+`phase = phase + 1` into `phase = 1; phase = phase + phase`, changing the
+transition to 2. Its implementation chooses either operand for the first
+assignment without checking whether the other operand reads the destination.
+Disable this pass in scratch `settings.toml` for these handlers, and inspect
+all candidate source changes before accepting a score improvement. The
+project tool itself was not modified.
+
+EVENT `8011C750` needs an explicit empty `case 10: break;` before case 11.
+The inherited research seed omitted it. Jump-table slot 10 targets
+`.L8011CD2C`, which loads the scrolling-loop constants and enters the common
+tail; it must not run the default cleanup. Restoring that case and expressing
+the four page loads as an ordinary switch recovers the exact 924-instruction
+length (still a register/scheduling miss). A table-slot audit found no other
+missing outer cases in the six large DATE/EVENT research drafts. The final
+selector in this handler also uses the D_80125320 word view.
+
+BUNKASAI `80145334` passes the full result of `get_g_zyotai_h(7)` to
+`func_80083440`; the main `u8` prototype inserts an unwanted caller-side mask.
+The callee itself narrows its saved argument with `lbu`. This object therefore
+uses the documented MAIN_API_OVERRIDE guard and `void func_80083440();` K&R
+view, which preserves the exact caller bytes without changing main_api.h.
+
+A second rejected DATE candidate moved `return;` ahead of the phase increment
+in case 40, leaving that increment unreachable. Disable `perm_reorder_stmts`
+as well for these exploratory handler searches. These passes deliberately
+explore source changes that need not preserve behavior; a lower score is only
+a search hint, never evidence that the draft is an acceptable near miss.

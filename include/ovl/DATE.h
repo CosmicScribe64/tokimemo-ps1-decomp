@@ -1252,3 +1252,37 @@ void func_8014E108(void);
 
 /* T-10630: signed UV oscillation step used by func_801462B0. */
 extern s16 D_8015CFA0;
+
+#ifndef OVL_DATE_MOVIE_T10830_H
+#define OVL_DATE_MOVIE_T10830_H
+/* Overlay access view at D_800B5920. func_80147958 resets the halfword
+ * fields and bytes 0x18..0x1A. Main 80057390 owns the word-array view
+ * and confirms the later fields. EVENT shares the first 0x1C-byte layout. */
+typedef struct DateMovieWork {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ u8 pad08[2];
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 pad0C[12];
+    /* 0x18 */ u8 unk_18;
+    /* 0x19 */ u8 unk_19;
+    /* 0x1A */ u8 unk_1A;
+    /* 0x1B */ u8 unk_1B;
+    /* 0x1C */ u8 unk_1C;
+    /* 0x1D */ u8 pad1D[3];
+    /* 0x20 */ u8 unk_20;
+    /* 0x21 */ u8 pad21[3];
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+} DateMovieWork; /* size 0x2C, minimum observed extent */
+
+/* First two words of the bitstream reached through D_80125C04.
+ * func_80147958 validates word 0 with 0xFFFF0000 and word 1 with
+ * 0xFF010000; later bytes have not been recovered here. */
+typedef struct DateMovieHeader8 {
+    /* 0x00 */ u32 unk_00;
+    /* 0x04 */ u32 unk_04;
+} DateMovieHeader8; /* size 0x08, minimum observed extent */
+#endif
