@@ -218,7 +218,42 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_801342CC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134470);
 
+/* NON_MATCHING: T-11000, 2 lines: case constants 0xA0/0xA2 are kept in s7/s8 and passed as andi a1,s7,0xFFFF; IDO emits li a1,const */
+#ifdef NON_MATCHING
+void func_80134630(s16 x, s16 y, s32 speed, u16 kind) {
+    TtActor68 *object;
+    s32 i;
+
+    object = (TtActor68 *)D_80158AA0;
+    for (i = 0; i < 2; i++) {
+        object = (TtActor68 *)func_80133BA4((u8 *)object, (u8 *)object + 0x3400);
+        if (object == 0) {
+            break;
+        }
+        object->unk_20 = ((x - i * 0x30) + 0x18) << 16;
+        object->unk_24 = y << 16;
+        object->unk_28 = 0;
+        object->unk_2C = speed << 16;
+        switch (kind) {
+        case 0xA0:
+            func_80133C1C(object, 0xA0, 0x12);
+            break;
+        case 0xA2:
+            func_80133C1C(object, 0xA2, 0x14);
+            break;
+        }
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134630);
+#endif
 
 /* NON_MATCHING: T-10510, 30 lines: object in v0 / constants 1 and 0 in a2 and a0 in the original */
 #ifdef NON_MATCHING
