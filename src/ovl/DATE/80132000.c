@@ -2336,7 +2336,65 @@ void func_8013CBF4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013CDF8);
+s32 func_8013CDF8(void) {
+    GameState *g = &D_800E6280;
+    if (g->unk_110D == 0) {
+        func_800674B0();
+        g->unk_110D++;
+    }
+    if (g->unk_110D == 1) {
+        if (g->unk_1104.u++ >= 0x400U) {
+            func_800452C4();
+            func_8004482C();
+            g->unk_110D = 0;
+        }
+        if (func_80044E8C() == 1) {
+            g->unk_110D += 1;
+        } else {
+            return 0;
+        }
+    }
+    if (!((ScheduleEntryFlags *)&g->unk_54C[0])->active) {
+        if ((D_80122D08 > 0) && ((u8)D_800CA364 == 0)) {
+            g->unk_1BC[g->unk_F5F].unk_14[D_80122D08] += 1;
+        }
+        if ((g->unk_114.unk_02 >= 0x23) || ((g->unk_114.unk_02 >= 0x1E) && (g->unk_F5F != 7))) {
+            if (D_80122D08 > 0) {
+                g->unk_72C[g->unk_F5F] = D_80122D08;
+                g->unk_73C[g->unk_F5F] = 0xC;
+            }
+            if (D_80122D08 == 8) {
+                g->unk_72C[g->unk_F5F] = 7;
+            }
+            if (D_80122D08 == 6) {
+                g->unk_72C[g->unk_F5F] = 5;
+            }
+        }
+        if ((g->unk_114.unk_02 >= 0x23) || ((g->unk_114.unk_02 >= 0x1E) && (g->unk_75D != 7))) {
+            if (D_800CA2F8 == 0x12) {
+                g->unk_1BC[g->unk_F5F].unk_02 += 1;
+            }
+            if ((g->unk_03F == 5) && ((g->unk_040 == 4) || (g->unk_040 == 5)) && (g->unk_1BC[g->unk_F5F].unk_0C.f.b4)) {
+                g->unk_1BC[g->unk_F5F].unk_02 += 2;
+            }
+            if ((D_80122CE0 == 0) && (g->unk_725 == D_800CA2F8)) {
+                g->unk_1BC[g->unk_F5F].unk_0A -= 0x28;
+                if ((g->unk_03F == 5) && ((g->unk_040 == 3) || (g->unk_040 == 4))) {
+                    g->unk_1BC[g->unk_F5F].unk_0C.f.b4 = 1;
+                }
+            }
+        }
+    }
+    func_80084D3C();
+    g->unk_724 = D_800CA2F8;
+    g->unk_728[3] = g->unk_728[2];
+    g->unk_728[2] = g->unk_728[1];
+    g->unk_728[1] = g->unk_728[0];
+    g->unk_728[0] = D_800CA2F8;
+    D_80122D44 = 0;
+    func_80044750(0xCF);
+    return func_80072B5C(1);
+}
 
 void func_8013D174(void) {
     s32 v;
