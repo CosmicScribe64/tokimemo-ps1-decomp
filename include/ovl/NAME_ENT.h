@@ -395,3 +395,8 @@ extern u8 D_8014D0C4;
 extern u8 D_8014D0C8;
 extern u8 D_8014D0CC;
 #endif
+
+#ifndef OVL_NAME_ENT_T11010_B_H
+#define OVL_NAME_ENT_T11010_B_H
+extern u8 D_8014CCE4[]; /* Argument block passed to func_801330E8 and friends. */
+#endif
