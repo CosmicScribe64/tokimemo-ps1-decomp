@@ -12,6 +12,14 @@
 # can coexist; IMG overrides it.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Git Bash / MSYS on Windows (T-10700): stop MSYS from rewriting the container paths
+# (/work became C:/Program Files/Git/work) and give docker the Windows form of the repo path.
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*)
+    export MSYS_NO_PATHCONV=1
+    ROOT="$(cd "$ROOT" && pwd -W)"
+    if [ -n "${TOKIMEMO_SCRATCH:-}" ]; then TOKIMEMO_SCRATCH="$(cd "$TOKIMEMO_SCRATCH" && pwd -W)"; fi ;;
+esac
 if [ -z "${TOKIMEMO_PLATFORM:-}" ]; then
   case "$(docker info --format '{{.Architecture}}' 2>/dev/null || uname -m)" in
     aarch64|arm64) TOKIMEMO_PLATFORM=linux/arm64 ;;

@@ -50,6 +50,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-10700-windows-host-baseline-build|T-10700 Windows host setup and baseline build]]
 - [ ] [[tickets/T-10610-wave-14-list-1|T-10610 Wave 14: list 1]]
 - [ ] [[tickets/T-10620-wave-14-list-2|T-10620 Wave 14: list 2]]
 - [ ] [[tickets/T-10630-big-functions-astra|T-10630 Big functions (astra)]]

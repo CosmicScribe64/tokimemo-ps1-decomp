@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-11
+updated: 2026-10-13
 ---
 
 # Wiki Index
@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-10700-windows-host-baseline-build|T-10700]] Windows host setup and baseline build: docker.sh MSYS paths, 32-bit gcc cpp on WSL2 mounts (Done; 27/27, 5,176/6,958).
 - [[tickets/T-10630-big-functions-astra|T-10630]] Big functions (astra), six owned objects (Done).
 - [[tickets/T-10400-regdiff-explain-register-choice|T-10400]] regdiff: explain why a draft gets different registers (Done; `tools/regdiff.py`, 2 functions matched with it, `sync_protos --add-global` guard fix, clean 27/27).
 - [[tickets/T-10330-wave-12-list-3|T-10330]] Wave 12: list 3 (In Progress).

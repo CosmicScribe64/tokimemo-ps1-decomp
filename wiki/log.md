@@ -10195,3 +10195,23 @@ check pass. Progress: `grand total   5162/6958   958768/2279368  42.1%`.
 One T-0018 row records the remaining large MASTER register issue. The eleven
 unmatched seeds compile with final headers in the handoff; source retains
 only the two original small guarded movie near misses. Changes are uncommitted.
+
+## [2026-10-13] ticket | T-10700 Windows host setup opened
+
+Opened [[tickets/T-10700-windows-host-baseline-build]] (In Progress): first build on a Windows 11 host with
+Docker Desktop (WSL2). The user supplied the PlayStation the Best disc (Track 1 702072000 bytes), copied to
+`game/best/`. The Shokai Genteiban Rev 1 disc they also have would be refused (see [[versions]]).
+
+## [2026-10-13] build | T-10700 baseline build on Windows: 27/27
+
+Built the `tokimemo-decomp` image and the full tree on Windows 11 / Docker Desktop (WSL2) from Git Bash.
+Two host fixes: `tools/docker.sh` disables MSYS path conversion and passes the repo as `pwd -W`;
+`tools/cc.py` runs the 32-bit old-gcc `cpp` on a tmpfs copy of `include/` and the source (EOVERFLOW
+on the bind mount). `tools/test_cc.py` 14/14. All 27 checksums OK; progress
+`grand total   5176/6958   961516/2279368  42.2%`. Also confirmed that T-10630's "uncommitted" note
+predates commit f8e4411e, which holds the work. Windows notes in [[toolchain]].
+
+## [2026-10-13] ticket | T-10700 Done
+
+Inline review against CODING_STANDARDS.md, no findings. Moved [[tickets/T-10700-windows-host-baseline-build]]
+to Done.

@@ -83,8 +83,8 @@ CVT_PASS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cvt_pass.py
 SHIMS = {"as1": FRAME_PASS, "uopt": CVT_PASS}
 
 
-def run_stage(cmd, data, env=None):
-    proc = subprocess.run(cmd, input=data, stdout=subprocess.PIPE, env=env)
+def run_stage(cmd, data, env=None, cwd=None):
+    proc = subprocess.run(cmd, input=data, stdout=subprocess.PIPE, env=env, cwd=cwd)
     if proc.returncode != 0:
         sys.exit("cc.py: stage failed (%d): %s" % (proc.returncode, " ".join(cmd)))
     return proc.stdout
@@ -92,7 +92,18 @@ def run_stage(cmd, data, env=None):
 
 def compile_gcc(src, out, gcc_ver, aspsx_ver):
     gcc = "/opt/gcc/" + gcc_ver
-    data = run_stage([gcc + "/cpp", "-Iinclude", "-undef", "-lang-c", src], None)
+    # The old-gcc cpp is a 32-bit binary: on a Windows bind mount (WSL2) stat() returns
+    # 64-bit inode numbers and it fails with EOVERFLOW (T-10700). It reads a copy of
+    # include/ and the source in tmpfs, under the same relative paths, so its output
+    # (line markers included) is unchanged.
+    shm = "/dev/shm" if os.path.isdir("/dev/shm") else None
+    rel = os.path.basename(src) if os.path.isabs(src) else src
+    with tempfile.TemporaryDirectory(dir=shm) as tmp:
+        if os.path.isdir("include"):
+            shutil.copytree("include", os.path.join(tmp, "include"))
+        os.makedirs(os.path.join(tmp, os.path.dirname(rel)), exist_ok=True)
+        shutil.copy(src, os.path.join(tmp, rel))
+        data = run_stage([gcc + "/cpp", "-Iinclude", "-undef", "-lang-c", rel], None, cwd=tmp)
     data = run_stage([gcc + "/cc1"] + GCC_CFLAGS, data)
     data = run_stage(["python3", MASPSX, "--aspsx-version=" + aspsx_ver] + MASPSX_FLAGS, data)
     run_stage(AS + ["-o", out], data)
