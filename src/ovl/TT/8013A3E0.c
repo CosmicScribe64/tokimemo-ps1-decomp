@@ -517,7 +517,77 @@ void func_8013B4A0(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B4A0);
 #endif
 
+/* T-11500 near miss (13 lines): the original keeps the 0x368 value loaded for the >= 8 test in $v1 up to the final increments (skip path reloads only 0x364/0x366); here that load lands in $v0 and all three are reloaded */
+#ifdef NON_MATCHING
+void func_8013B6C8(void) {
+    u8 *c;
+    u16 k;
+    u16 w;
+
+    k = *(u16 *)(D_80158A8C + 6);
+    c = D_80158A8C;
+    switch (k) {
+    case 0:
+        switch (*(u16 *)(D_80158A8C + 0x364)) {
+        case 0:
+            *(u16 *)(c + 0x3A8) = 2;
+            *(u16 *)(c + 0x3AA) = 2;
+            break;
+        case 0x3E:
+            *(s16 *)(c + 0x3A8) = 1;
+            *(s16 *)(c + 0x3AA) = 1;
+            break;
+        case 0x40:
+            *(s16 *)(c + 0x3A8) = 0;
+            *(s16 *)(c + 0x3AA) = 0;
+            func_80133D14(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16) + 0x38, 0x18, 0xA8);
+            if (*(s16 *)(c + 0x2DC) >= 0) {
+                func_80134178(*(s16 *)(c + 0x14) + 0x26, *(s16 *)(c + 0x16) + 0x3E, 0x100, 0x18, 0xA8);
+            }
+            if (*(s16 *)(c + 0x2DE) >= 0) {
+                func_80134178(*(s16 *)(c + 0x14) - 0x26, *(s16 *)(c + 0x16) + 0x3E, 0x100, 0x18, 0xA8);
+            }
+            break;
+        case 0x48:
+            *(s16 *)(c + 0x3A8) = 1;
+            *(s16 *)(c + 0x3AA) = 1;
+            break;
+        case 0x4E:
+            *(u16 *)(c + 0x3A8) = 2;
+            *(u16 *)(c + 0x3AA) = 2;
+            break;
+        }
+        if (*(u16 *)(c + 0x364) >= 0x80) {
+            *(u16 *)(c + 0x364) = 0;
+        }
+        break;
+    case 2:
+        if (*(u16 *)(D_80158A8C + 0x364) >= 0x40) {
+            *(u16 *)(c + 0x364) = 0;
+            func_80133FB0(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16) + 0x38, 0x100, 0x20, 0xA8);
+        }
+        w = *(u16 *)(c + 0x368);
+        if (w >= 8) {
+            if (*(s16 *)(c + 0x2D8) >= 0 || *(s16 *)(c + 0x2DA) >= 0) {
+                func_80133AD0(0x50C);
+            }
+            *(u16 *)(c + 0x368) = 0;
+            if (*(s16 *)(c + 0x2D8) >= 0) {
+                func_80134768(*(s16 *)(c + 0x14) + 0x38, *(s16 *)(c + 0x16) + 0x10, 0x20, 0x400);
+            }
+            if (*(s16 *)(c + 0x2DA) >= 0) {
+                func_80134768(*(s16 *)(c + 0x14) - 0x38, *(s16 *)(c + 0x16) + 0x10, 0x20, 0x400);
+            }
+        }
+        break;
+    }
+    *(u16 *)(c + 0x364) += 1;
+    *(u16 *)(c + 0x366) += 1;
+    *(u16 *)(c + 0x368) += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B6C8);
+#endif
 
 void func_8013B928(void) {
     u8 *c;
