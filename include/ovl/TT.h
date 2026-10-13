@@ -70,6 +70,18 @@ extern u8 D_80152CA4[];
 extern u8 D_80152CB0[];
 extern u8 D_80152CC4[];
 extern u8 D_80151A50[];
+typedef struct TtSlot14 {
+    /* 0x00 */ u8 *unk_00;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 pad_06[4];
+    /* 0x0A */ u8 unk_0A;
+    /* 0x0B */ u8 pad_0B[5];
+    /* 0x10 */ u8 unk_10;
+    /* 0x11 */ u8 pad_11[3];
+} TtSlot14; /* size 0x14 */
+extern s16 D_80155A90[];
+extern u8 D_80150950[];
 extern u8 D_80150978[];
 extern u8 D_80155B54[];
 void func_8013AE3C(void);
