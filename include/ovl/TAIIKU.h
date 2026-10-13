@@ -661,3 +661,6 @@ extern s32 D_8014A070[6];
 void func_80133C30(void);
 void func_801330D4(void);
 #endif
+
+/* T-11080: six-entry s16 table in the data of 80133C80.c (read by func_80137C44). */
+extern s16 D_801492B8[6];

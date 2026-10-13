@@ -13070,3 +13070,6 @@ New page [[ref-english-patch]]: about 150 addresses (overlay loader, CD, boot, t
 
 ## [2026-10-13] ticket | T-11090 Done
 Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on [[kanban]].
+
+## [2026-10-13] ticket | T-11080 started
+Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 48 big functions in NAME_ENT, main 8006CB30, TAIIKU and DATE.
