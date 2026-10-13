@@ -527,3 +527,7 @@ extern TtCollision6 D_80155B36;
 #endif
 
 extern u8 D_80150A50[];
+extern u8 D_8014ED60[]; /* T-11000 */
+extern u8 D_80151AF0[];
+extern u8 D_80152E20[];
+extern u8 D_80154590[];
