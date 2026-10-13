@@ -737,4 +737,27 @@ typedef struct ShouByteFlags {
     /* 0x00, bit 3 */ u8 b3 : 1;
     /* 0x00, bits 4-7 */ u8 rest : 4;
 } ShouByteFlags; /* size 0x01 */
+void func_801366A4(void);
+void func_80141AE8(void);
+
+#endif
+
+#ifndef OVL_SHOUGATU_T10850_TYPES
+#define OVL_SHOUGATU_T10850_TYPES
+/* T-10850: 23 callback pointers copied by func_8013DDD0. */
+typedef struct ShoCallbacks23 {
+    /* 0x00 */ void (*f[23])();
+} ShoCallbacks23; /* size 0x5C */
+extern ShoCallbacks23 D_80145FE8;
+
+/* T-10850: sprite fields used together by func_8013DDD0. */
+typedef struct ShoCounter44 {
+    /* 0x00 */ u8 pad_00[7];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad_0A[0xC];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad_1A[0x2A];
+} ShoCounter44; /* size 0x44 */
 #endif

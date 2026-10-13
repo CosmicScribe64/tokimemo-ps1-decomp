@@ -44,6 +44,28 @@ s32 func_80134314(void) {
     }
 }
 
+/* NON_MATCHING: T-10850, 26 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+void func_80134418(void) {
+    s32 i;
+    s32 sel;
+
+    sel = *(u8 *)&D_800E6280.unk_110B;
+    for (i = 0; i < 64; i++) {
+        D_80120650[i * 0x44 + 7] = sel;
+    }
+    sel = (u8)(sel + 2);
+    D_800E6280.unk_110B = sel;
+    if (sel > 0x80) {
+        for (i = 0; i < 64; i++) {
+            D_80120650[i * 0x44 + 7] = 0x80;
+        }
+        *(u8 *)&D_800E6280.unk_110B = 0x80;
+        func_8004284C();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134260", func_80134418);
+#endif
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134260", func_801344A8);

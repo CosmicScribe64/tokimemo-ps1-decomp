@@ -22,6 +22,63 @@
 #include "common.h"
 #include "libgpu.h"
 
+/* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
+typedef struct DialogueVoice8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} DialogueVoice8; /* size 0x08 */
+
+/* T-10730: sixteen byte selectors copied to the dialogue handler's stack. */
+typedef struct DialogueBytes16 {
+    /* 0x00 */ u8 value[16];
+} DialogueBytes16; /* size 0x10 */
+
+/* T-10730: minimum dialogue work range at D_80122CD0. Reset clears words
+ * 5..30; retain existing scalar/array declarations as views in older users. */
+typedef struct DialogueWork {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ s32 unk_20;
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ s32 unk_3C;
+    /* 0x40 */ s32 unk_40;
+    /* 0x44 */ s32 unk_44;
+    /* 0x48 */ s32 unk_48;
+    /* 0x4C */ s32 unk_4C;
+    /* 0x50 */ s32 unk_50;
+    /* 0x54 */ s32 unk_54;
+    /* 0x58 */ s32 unk_58;
+    /* 0x5C */ s32 unk_5C;
+    /* 0x60 */ s32 unk_60;
+    /* 0x64 */ s32 unk_64;
+    /* 0x68 */ s32 unk_68;
+    /* 0x6C */ s32 unk_6C;
+    /* 0x70 */ s32 unk_70;
+    /* 0x74 */ s32 unk_74;
+    /* 0x78 */ s32 unk_78;
+} DialogueWork; /* minimum size 0x7C */
+
+/* T-10730: pointer slots at D_800CA134..D_800CA144. The cursor pointers
+ * address signed halfwords; legacy scalar declarations remain valid views. */
+typedef struct DialogueTables {
+    /* 0x00 */ s16 *group;
+    /* 0x04 */ s16 *line;
+    /* 0x08 */ u8 ***text;
+    /* 0x0C */ u8 **command;
+    /* 0x10 */ DialogueVoice8 ***voice;
+} DialogueTables; /* size 0x14 on PS1 */
+
 /* ---- aggregate types (T-5000) ----
  * Records whose fields splat names as separate D_ globals. tools/type_recovery.py proposes them from
  * the original asm (indexed accesses with one stride, pointer walks, ordered store/load pairs);
@@ -446,6 +503,7 @@ extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
 extern s32 D_8007E850[];
 extern s8 D_8008093C;
+extern s32 D_80094710;
 extern u16 D_80094714;
 extern u16 D_80094718;
 extern u8 *D_8009471C;
@@ -525,6 +583,7 @@ extern s32 D_800B3708[];
 #endif
 extern s32 D_800B372C;
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
+extern u8 D_800B3750[][3];
 extern s32 D_800B37D4[];
 extern s32 D_800B3B9C[];
 extern u8 D_800B3C6C;
@@ -560,9 +619,19 @@ typedef struct KWork {
     /* 0xB */ u8 pad_0B;
 } KWork; /* size 0xC */
 extern KWork D_800B3F60;
+extern u8 D_800B4100[13];
+extern u8 D_800B4110[13];
+extern u8 D_800B4120[13];
+extern s8 D_800B4130[13][8];
+extern u8 D_800B4198[7];
 extern u8 D_800B41A0[];
 extern u8 D_800B41B0[20][20];
 extern u8 D_800B4341[]; /* table read by func_80052E60 */
+extern s8 D_800B4349[11];
+extern u8 D_800B4355[10];
+extern u8 D_800B4361[10];
+extern s8 D_800B436C[15];
+extern s8 D_800B437C[15];
 extern s32 D_800B58E4;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
@@ -589,12 +658,24 @@ extern s32 D_800B5BD8[];
 extern s32 D_800B5BE8[];
 extern s32 D_800B5BF8[];
 extern s16 D_800B5C08;
+extern u8 D_800B5C2C[][17];
+extern u8 D_800B5D0C[];
+extern u8 D_800B5D1C[][17];
+extern u8 D_800B5DFC[];
+extern u8 D_800B5EA4[][3][36];
+extern s32 D_800B66A4[];
 extern s16 D_800B66E0[];
 extern s16 D_800B66F4[];
+extern u8 D_800B6708;
 extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
+extern s32 D_800B6748;
+extern s32 D_800B674C;
+extern s32 D_800B6750;
+extern s32 D_800B6754;
+extern s32 D_800B6758;
 extern s32 D_800B6760[];
 extern s32 D_800B6780[];
 extern s32 D_800B6810[];
@@ -604,6 +685,7 @@ extern u8 D_800B6D34;
 extern u8 D_800B6D38;
 extern s32 D_800B6D3C;
 extern s32 D_800B6D40;
+extern u8 D_800B6D50[];
 extern s8 D_800C51C4;
 extern s32 D_800C5FCC;
 extern s32 D_800C5FD0;
@@ -668,6 +750,7 @@ extern s16 D_800CA2AC;
 extern u8 D_800CA2B0[];
 extern s16 D_800CA2C0;
 extern u8 D_800CA2C4;
+extern s32 D_800CA2C8;
 extern u8 D_800CA2CC;
 extern s32 D_800CA2D0;
 extern s32 D_800CA2D4;
@@ -684,6 +767,7 @@ extern u8 D_800CA2FC;
 extern s8 D_800CA360;
 extern s8 D_800CA364;
 extern u8 D_800CA368;
+extern DialogueBytes16 D_800CA36C;
 extern u8 *D_800D9234;
 extern u8 *D_800D9238;
 extern s32 D_800D923C;
@@ -701,6 +785,7 @@ extern u8 D_800D9288;
 extern s32 D_800D92A0;
 extern s32 D_800D92E0;
 extern u8 D_800D9328[];
+extern u8 D_800D9334[];
 extern u8 D_800D9388[];
 extern s32 D_800DE500[];
 extern s8 *D_800E36C0[];
@@ -746,6 +831,7 @@ extern u8 D_800E7D68;
 #ifndef MAIN_API_OVERRIDE_D_800E8BEE
 extern s8 D_800E8BEE;
 #endif
+extern u8 D_800E8BEF;
 extern u8 D_800E8BF0[];
 extern u8 D_800E8C30[];
 extern s32 D_800E8C70;
@@ -817,10 +903,12 @@ extern s32 D_800EECC0;
 extern s32 D_800EECC8;
 extern s32 D_800EECCC;
 extern s32 D_800EECD0;
+extern s32 D_800EECD4;
 extern s32 D_800EECE0;
 extern s32 D_800EECE4;
 extern s32 D_800EECE8;
 extern s32 D_800EECEC;
+extern s32 D_800EECF0;
 extern u8 D_800F19AB;
 extern u8 D_800F53DA;
 extern u8 D_800F53DE;
@@ -873,7 +961,7 @@ extern s32 D_8011ECBC;
 extern s32 D_8011ECC0;
 extern s32 D_8011ECC4;
 extern s32 D_8011ECC8;
-extern u8 D_8011ECD0[]; /* 3 records of 0x44 bytes; s16 at +0x19EA is read */
+extern u8 D_8011ECD0[]; /* 0x44-byte records; DATE uses entries 96..99 (T-10730). */
 extern u8 D_8011ECD3;
 extern s16 D_8011ECE8;
 extern s32 D_8011ECF4;
@@ -1162,7 +1250,9 @@ extern s16 D_80120852;
 extern s16 D_80120856;
 extern s32 D_80120860;
 extern s32 D_80120864;
+extern s16 D_80120896;
 extern s16 D_8012089A;
+extern s16 D_801208CC;
 extern s16 D_801208DE;
 extern u8 D_801208FB;
 extern s16 D_80120912[];
@@ -1209,6 +1299,7 @@ extern u8 D_80120E07;
 extern s16 D_80120E1C;
 extern u8 D_80120E4E;
 extern s16 D_80120E60;
+extern s8 D_80120E93;
 extern s16 D_80120EE6;
 extern s16 D_80120EF6;
 extern s16 D_80120EFA;
@@ -1281,23 +1372,29 @@ extern s16 D_80121728;
 extern u8 D_80121750[];
 extern u8 D_801217A0[];
 extern Rec24 D_801217D0[]; /* at least 12 records */
+extern s16 D_801217D6;
 extern u8 D_801217E4;
 extern u8 D_801217E5;
 extern u8 D_801217E6;
 extern s16 D_801217F8;
+extern s16 D_801217FA;
 #ifndef MAIN_API_OVERRIDE_D_80121808
 extern s32 D_80121808;
 #endif
 extern u8 D_80121809;
 extern u8 D_8012180A;
 extern s32 D_80121818; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_8012181E;
 extern s32 D_8012183C; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_80121842;
 extern s32 D_80121860; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
 extern s16 D_80121864; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_80121866;
 #ifndef MAIN_API_OVERRIDE_D_80121874
 extern u8 D_80121874;
 #endif
 extern s32 D_80121884; /* EVENT data at this address; for the other units it is a field of D_801217D0[] */
+extern s16 D_8012188A;
 extern s32 D_80121FD4;
 extern s16 D_80121FD8;
 extern s16 D_80121FDA;
@@ -1328,6 +1425,9 @@ extern s16 D_801220EC;
 extern s16 D_801220EE;
 extern s32 D_801220F0;
 extern s32 D_801220F4;
+extern u8 D_80122104;
+extern u8 D_80122105;
+extern u8 D_80122106;
 extern s16 D_80122790;
 extern s32 D_80122794;
 extern s8 D_80122798;
@@ -1388,11 +1488,16 @@ extern s32 D_80122D04;
 extern s32 D_80122D08;
 extern s32 D_80122D0C;
 extern s32 D_80122D10;
+extern s32 D_80122D14;
+extern s32 D_80122D18;
+extern s32 D_80122D1C;
 extern s32 D_80122D20;
+extern s32 D_80122D28;
 extern s32 D_80122D2C;
 extern s32 D_80122D30;
 extern s32 D_80122D34;
 extern s32 D_80122D38;
+extern u32 D_80122D3C;
 extern s32 D_80122D40;
 extern s32 D_80122D44;
 extern s32 D_80122D4C;
@@ -1547,6 +1652,8 @@ extern s16 D_800F1990[14];
 #ifndef MAIN_API_OVERRIDE_D_80120694
 extern u8 D_80120694[];
 #endif
+extern s32 D_80122CD8;
+extern u8 D_800B3CF8;
 
 /* ---- functions ---- */
 void func_80010678();
@@ -1575,11 +1682,11 @@ void func_80042058(void);
 void func_80042134();
 void func_80042458(void);
 void func_80042488(void);
-void func_80042808(void);
-void func_8004284C(void);
+s32 func_80042808(void);
+s32 func_8004284C(void);
 void func_80042878();
-void func_80042908(s32 arg0);
-void func_80042940(s32 arg0);
+s32 func_80042908(s32 arg0);
+s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
 s32 func_80042AC8();
 void func_80042C30(void);
@@ -1587,6 +1694,7 @@ void func_80042CB0();
 s32 func_80043010(void);
 void func_800430C0();
 void func_800433D0(s32 arg0);
+void func_8004F4F0();
 void draw2d3d(u8 arg0, u8 arg1);
 void func_800438DC();
 void back_clear_switch(s32 arg0);
@@ -1712,7 +1820,9 @@ void func_8004E9F4();
 void k_reset(s32 arg0);
 void func_8004EA98();
 void k_sub_reset_point_set(void);
+#ifndef MAIN_API_OVERRIDE_func_8004EAAC
 void func_8004EAAC();
+#endif
 void k_sub_reset(void);
 void func_8004EAD4();
 void k_sub_disp_start(s32 arg0);
@@ -1741,7 +1851,9 @@ void x_taku_menu_set(s32 arg0, s32 arg1);
 void func_80050D60();
 void func_80050D78();
 void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+#ifndef MAIN_API_OVERRIDE_func_80050DFC
 void func_80050DFC(u8 *arg0);
+#endif
 void gnsx(u8 *arg0);
 void func_80050E8C(u8 *arg0, s32 arg1, s32 arg2);
 void sndisp();
@@ -1810,8 +1922,8 @@ void func_80058398();
 void func_80058D20();
 void initView(void);
 void func_80058EB0();
-void func_80058F0C(s32 arg0);
-void initModelingData_init(s32 arg0);
+void func_80058F0C(s32 *arg0);
+void initModelingData_init(s32 *arg0);
 void func_80059048();
 void func_800590CC();
 void func_800591D8(s32 arg0);
@@ -1945,7 +2057,7 @@ void func_8006B900(void);
 void func_8006BA40(void);
 void func_8006BC28(s32 arg0);
 void func_8006BD6C(s32 arg0);
-void func_8006C334(s32 a, s32 b, s32 c, s32 d);
+s32 func_8006C334(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_8006C700(void);
 void func_8006C848(s32 arg0);
 u8 *func_8006CA9C(void);
@@ -1957,6 +2069,8 @@ s32 func_8006CDD4(void);
 void func_8006D038(void);
 void func_8006D138(void);
 void func_8006D6E0();
+s32 func_8006EB64(u8 *arg0, u8 *arg1);
+s32 func_8006EEC4(u8 *arg0, u8 *arg1);
 void yuukou_down(void);
 void syoushin_up(void);
 void func_80070F80(void);
@@ -2099,7 +2213,10 @@ void func_8007ED84();
 void check_k_scroll();
 void func_8007EDF8();
 void wait_sub_sub(s16 arg0);
+void func_80081128(void);
+#ifndef MAIN_API_OVERRIDE_func_80081190
 void func_80081190(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
+#endif
 void func_80081D30();
 s32 func_80082764();
 void normal_date_three_select(void);
@@ -2191,7 +2308,9 @@ void func_8008BEE0();
 void func_8008BFB0();
 s32 func_8008C1B0();
 s32 func_8008C620();
+#ifndef MAIN_API_OVERRIDE_SsVabTransCompleted
 void SsVabTransCompleted();
+#endif
 #ifndef MAIN_API_OVERRIDE_func_8008D610
 void func_8008D610();
 #endif
@@ -2325,7 +2444,9 @@ void func_801040F0(void);
 s32 func_80067DFC(void);
 s32 func_80053418();
 s32 func_800463E8(void);
+#ifndef MAIN_API_OVERRIDE_func_80049FF0
 s32 func_80049FF0();
+#endif
 void place_init2(void);
 void normal_date_bg_out(void);
 void func_8004A9CC();
@@ -2333,5 +2454,27 @@ void func_8004AFB8();
 void func_800651F8();
 void func_80065234();
 void func_8006B5BC(GsWord arg0);
+/* SD_GetCDLevel request/output prefix, verified from halfword accesses. T-10870. */
+typedef struct CdLevelWork {
+    /* 0x00 */ u16 unk_00; /* left output */
+    /* 0x02 */ u16 unk_02; /* right output */
+    /* 0x04 */ u16 unk_04; /* output precision: shift by 16 minus this value */
+    /* 0x06 */ u16 unk_06; /* sample count */
+    /* 0x08 */ u16 unk_08; /* method, square and shaping selectors */
+} CdLevelWork; /* accessed size 0x0A */
+void read_bustup_uniform(void);
+void set_tarao_sprt();
+void set_tarao_bg(s32 arg0);
+void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n);
+void SD_CalcCDAve(s16 *left, s16 *right, u16 start, u16 count);
+s32 func_8006F218(u8 *arg0, u8 *arg1);
 
+/* T-10860: generated from src/main/8007C030.c by sync_protos.py. */
+s16 getCDlevel(void);
 #endif /* MAIN_API_H */
+
+/* T-10860: declaration generated by sync_protos.py. */
+#ifndef MAIN_API_STRNCAT_T10860
+#define MAIN_API_STRNCAT_T10860
+u8 *strncat(u8 *dst, u8 *src, s32 count);
+#endif

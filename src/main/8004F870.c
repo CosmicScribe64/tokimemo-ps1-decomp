@@ -1,7 +1,75 @@
 #include "common.h"
 #include "game.h"
 
+/* Accessed menu-selection view at GameState +0x1090. */
+typedef struct MenuSelection5 {
+    /* 0x00 */ u8 count[2];
+    /* 0x02 */ u8 pad_02;
+    /* 0x03 */ s8 current[2];
+} MenuSelection5; /* size 0x05 */
+
+/* NON_MATCHING: T-10710, loops and stores match; the original keeps n=(arg1 & 0xFF) in s0 (frame 0x18), the draft uses a2 */
+#ifdef NON_MATCHING
+s32 menu_set(arg0, arg1, arg2, arg3, arg4, arg5)
+    s32 arg0;
+    s32 arg1;
+    s16 *arg2;
+    s16 *arg3;
+    s16 *arg4;
+    s16 *arg5;
+{
+    GameState *g;
+    s32 i;
+    u32 n;
+    s16 *p2;
+    s16 *p3;
+    s16 *p4;
+    s16 *p5;
+
+    g = &D_800E6280;
+    for (i = 0; i < 0x10; i++) {
+        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_07 = 0;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_05 = 0;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_04 = 0;
+    }
+    n = arg1 & 0xFF;
+    if (n >= 0x11) {
+        return -1;
+    }
+    ((MenuSelection5 *)&g->unk_1090)->count[arg0] = n;
+    g->unk_1095[arg0] = -1;
+    if (arg0 >= 2) {
+        return -1;
+    }
+    p2 = arg2;
+    p3 = arg3;
+    p4 = arg4;
+    p5 = arg5;
+    i = 0;
+    if (n != 0) {
+        do {
+            ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_00 = *p2;
+            ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_02 = *p3;
+            p2++;
+            p3++;
+            i++;
+            if (*p5 * *p4 == 0) {
+                ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_07 = 1;
+            } else {
+                ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_07 = 0;
+            }
+            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_04 = *p4;
+            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_06 = 0;
+            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_05 = *p5;
+            p4++;
+            p5++;
+        } while (i < n);
+    }
+    return i;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_set);
+#endif
 
 s8 menu_check(arg0, arg1, arg2)
     s32 arg0;
@@ -34,86 +102,89 @@ s8 menu_check(arg0, arg1, arg2)
     return menu_check_1(arg0, arg1, arg2);
 }
 
-/* NON_MATCHING: T-10510, pointer CSE/hoist shape, 40 lines */
+/* NON_MATCHING: T-10850, 27 differing listing lines; see the ticket scratch evidence. */
 #ifdef NON_MATCHING
+/* FAKE: duplicate GameState pointer steers record/base allocation. T-10850 */
 s8 menu_check_1(arg0, arg1, arg2)
     s32 arg0;
     s16 arg1;
     s16 arg2;
 {
+    GameState *g;
     s32 cnt;
     s32 sel;
     s32 d;
     u32 i;
-
+    GameState *new_var;
+    g = &D_800E6280;
     cnt = 0;
     sel = -1;
+    new_var = g;
     i = 0;
-    if (((u8 *)&D_800E6280 + arg0)[0x1090] != 0) {
-        do {
-            d = arg1 - D_800E6280.unk_F90[arg0 + i * 2].unk_00;
-            D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 0;
-            if ((d - (s32) D_800E6280.unk_F90[arg0 + i * 2].unk_04) * d < 0) {
-                d = arg2 - D_800E6280.unk_F90[arg0 + i * 2].unk_02;
-                if ((d - (s32) D_800E6280.unk_F90[arg0 + i * 2].unk_05) * d < 0) {
-                    D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 1;
+    if (((MenuSelection5 *) (&new_var->unk_1090))->count[arg0] != 0)
+    {
+        do
+        {
+            d = arg1 - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_00;
+            ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_06 = 0;
+            if (((s32) ((d - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_04) * d)) < 0)
+            {
+                d = arg2 - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_02;
+                if (((s32) ((d - ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_05) * d)) < 0)
+                {
+                    ((GsRecF90 (*)[2]) new_var->unk_F90)[i][arg0].unk_06 = 1;
                     cnt += 1;
                     sel = i;
                 }
             }
             i += 1;
-        } while (i < (&D_800E6280.unk_1090)[arg0]);
+        }
+        while (i < ((MenuSelection5 *) (&new_var->unk_1090))->count[arg0]);
     }
-    if (cnt == 0) {
-        ((s8 *)&D_800E6280 + arg0)[0x1093] = -1;
+    if (cnt == 0)
+    {
+        ((MenuSelection5 *) (&new_var->unk_1090))->current[arg0] = -1;
     }
-    if (!(D_800E6280.unk_F80 & 4) && sel != -1) {
-        ((s8 *)&D_800E6280 + arg0)[0x1095] = sel;
+    if ((!(g->unk_F80 & 4)) && (sel != (-1)))
+    {
+        g->unk_1095[arg0] = sel;
     }
+    return sel;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_1);
 #endif
 
-/* NON_MATCHING: T-10510, about 30 differing lines: pointer CSE and chain */
-#ifdef NON_MATCHING
 s8 menu_check_2(arg0, arg1, arg2)
     s32 arg0;
     s32 arg1;
     s32 arg2;
 {
+    GameState *g;
     s32 sel;
     u32 i;
 
-    sel = (&D_800E6280.unk_1095)[arg0] = -1;
+    g = &D_800E6280;
+    sel = -1;
+    g->unk_1095[arg0] = -1;
     i = 0;
-    if ((&D_800E6280.unk_1090)[arg0] != 0) {
+    if (((MenuSelection5 *)&g->unk_1090)->count[arg0] != 0) {
         do {
-            if (i != (&D_800E6280.unk_1093)[arg0]) {
-                D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 0;
+            if (i != ((MenuSelection5 *)&g->unk_1090)->current[arg0]) {
+                ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_06 = 0;
             } else {
-                D_800E6280.unk_F90[arg0 + i * 2].unk_06 = 10;
+                ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_06 = 10;
                 sel = i;
             }
             i += 1;
-        } while (i < (&D_800E6280.unk_1090)[arg0]);
+        } while (i < ((MenuSelection5 *)&g->unk_1090)->count[arg0]);
     }
-    if (!(D_800E6280.unk_F80 & 4) && sel != -1) {
-        (&D_800E6280.unk_1095)[arg0] = sel;
+    if (!(g->unk_F80 & 4) && sel != -1) {
+        g->unk_1095[arg0] = sel;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_check_2);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", func_8004FC10);
-
-/* Accessed menu-selection view at GameState +0x1090. */
-typedef struct MenuSelection5 {
-    /* 0x00 */ u8 count[2];
-    /* 0x02 */ u8 pad_02;
-    /* 0x03 */ s8 current[2];
-} MenuSelection5; /* size 0x05 */
 
 s32 func_80050324(s32 menu, s32 reverse) {
     GameState *g;

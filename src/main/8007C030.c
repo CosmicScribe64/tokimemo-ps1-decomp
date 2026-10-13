@@ -1,7 +1,13 @@
+#define MAIN_API_OVERRIDE_func_80049FF0 /* Transition calls narrow four coordinates at the call site. T-10870. */
+#define MAIN_API_OVERRIDE_SsVabTransCompleted /* SD_GetCDLevel reads the transfer status; canonical legacy view is void. T-10870. */
+#define MAIN_API_OVERRIDE_func_80081190 /* integer result read by k_disp_start; callee narrows K&R arguments, T-10730 */
 #define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
 #define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #include "common.h"
 #include "game.h"
+s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
+s32 SsVabTransCompleted();
+s32 func_80081190();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800C9F60);
@@ -54,7 +60,82 @@ void func_80084C98(s32 idx, u8 val);
 /* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
 extern s32 D_80122CD0[];
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", SD_GetCDLevel);
+void SD_GetCDLevel(CdLevelWork *arg0) {
+    s32 shift;
+    u32 left;
+    u32 right;
+
+    arg0->unk_00 = 0U;
+    arg0->unk_02 = 0U;
+    if (((u32) D_80125D14 >> 0x18) == 0) {
+        if (!(D_80125D10.unk_00 & 0x4000) && (func_80094B80(0) == 1)) {
+            if (SsVabTransCompleted(0) == 1) {
+                func_80094C60(0);
+                func_80094C90((s32) D_80126080, 0x200);
+                func_80094B80(1);
+                func_80094C60(0x400);
+                func_80094C90((s32) &D_80126080[0x200], 0x200);
+                func_80094B80(1);
+                switch (arg0->unk_08 & 0xF) {
+                case 1:
+                    SD_DetectCDPeak(&arg0->unk_00, &arg0->unk_02, 0, (s32) arg0->unk_06);
+                    break;
+                case 2:
+                    SD_CalcCDAve(&arg0->unk_00, &arg0->unk_02, 0, (s32) arg0->unk_06);
+                    break;
+                }
+                left = arg0->unk_00;
+                right = arg0->unk_02;
+                if ((arg0->unk_08 & 0xF0) == 0x20) {
+                    left = ((u32) (left * left) >> 0xF);
+                    right = ((u32) (right * right) >> 0xF);
+                }
+                switch (arg0->unk_08 & 0xF00) {
+                case 0x100:
+                    if (left < 0x3333U) {
+                        left *= 4;
+                    } else {
+                        left = (left >> 2) + 0xC000;
+                    }
+                    if (right < 0x3333U) {
+                        right *= 4;
+                    } else {
+                        right = (right >> 2) + 0xC000;
+                    }
+                    break;
+                case 0x400:
+                    if (left < 0x9999U) {
+                        left = ((u32) (left * 4) / 6U);
+                    } else {
+                        left = ((u32) (left * 6) >> 2) + 0xFFFF7FFF;
+                    }
+                    if (right < 0x9999U) {
+                        right = ((u32) (right * 4) / 6U);
+                    } else {
+                        right = ((u32) (right * 6) >> 2) + 0xFFFF7FFF;
+                    }
+                    break;
+                case 0x800:
+                    if (left < 0xB333U) {
+                        left = ((u32) (left * 2) / 7U);
+                    } else {
+                        left = ((u32) (left * 8) / 3U) + 0xFFFE5555;
+                    }
+                    if (right < 0xB333U) {
+                        right = ((u32) (right * 2) / 7U);
+                    } else {
+                        right = ((u32) (right * 8) / 3U) + 0xFFFE5555;
+                    }
+                    break;
+                }
+                shift = 0x10 - arg0->unk_04;
+                /* FAKE: explicit output masks reproduce the ugen temporaries; casts alone do not. T-10870. */
+                arg0->unk_00 = (left >> shift) & 0xFFFF;
+                arg0->unk_02 = (right >> shift) & 0xFFFF;
+            }
+        }
+    }
+}
 
 void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n) {
     u16 i;
@@ -212,9 +293,69 @@ void func_8007C8A4(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007C8D8);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", set_tarao_bg);
+void set_tarao_bg(s32 arg0) {
+    s16 row;
+    s16 col;
+    s32 x;
+    s32 y;
+    s32 row_y;
+    s32 offset;
 
-void set_tarao_sprt(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, s16 arg6, u8 arg7, u8 arg8, u8 arg9) {
+    for (row = 0; row < 20; row++) {
+        row_y = row * 8;
+        for (col = 0; col < 16; col += 2) {
+            x = col * 10;
+            offset = (col % 2) * 8;
+            y = row_y + offset;
+            set_tarao_sprt(x, y, 10, arg0, x, y, 12, 128, 128, 128);
+        }
+        for (col = 1; col < 16; col += 2) {
+            x = col * 10;
+            offset = (col % 2) * 8;
+            y = row_y + offset - arg0;
+            set_tarao_sprt(x, y, 10, arg0, x, y, 12, 128, 128, 128);
+        }
+    }
+    if (D_800B5939 != 0) {
+        goto_tpage(0x140, 0x100, 12, 0, 2);
+    } else {
+        goto_tpage(0x2C0, 0, 12, 0, 2);
+    }
+    for (row = 0; row < 20; row++) {
+        row_y = row * 8;
+        for (col = 16; col < 32; col += 2) {
+            x = col * 10;
+            offset = (col % 2) * 8;
+            y = row_y + offset;
+            set_tarao_sprt(x, y, 10, arg0, x - 128, y, 12, 128, 128, 128);
+        }
+        for (col = 17; col < 32; col += 2) {
+            x = col * 10;
+            offset = (col % 2) * 8;
+            y = row_y + offset - arg0;
+            set_tarao_sprt(x, y, 10, arg0, x - 128, y, 12, 128, 128, 128);
+        }
+    }
+    if (D_800B5939 != 0) {
+        goto_tpage(0x1E0, 0x100, 12, 0, 2);
+    } else {
+        goto_tpage(0x360, 0, 12, 0, 2);
+    }
+}
+
+/* K&R parameters preserve promoted callers; the helper narrows them. T-10870. */
+void set_tarao_sprt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+s16 arg0;
+s16 arg1;
+s16 arg2;
+s16 arg3;
+u8 arg4;
+u8 arg5;
+s16 arg6;
+u8 arg7;
+u8 arg8;
+u8 arg9;
+{
     u8 *p;
 
     p = (u8 *)GetWorkBase(0x14, D_8011ECA0);
@@ -262,7 +403,229 @@ void normal_date_bg_out(void) {
     }
 }
 
+/* NON_MATCHING: T-10870, 697/697 instructions; two accesses spill at
+ * sp+0x50 instead of sp+0x54. All register choices agree.
+ * FAKE: the redundant word view in case 1 preserves its original raw-state
+ * register. A direct member read changes four instructions. */
+#ifdef NON_MATCHING
+s32 func_8007D8AC(void) {
+    s16 line_y;
+    s16 bottom_y;
+    s16 right_x;
+    s16 inner;
+    s16 outer;
+    s32 limit;
+    s32 coordinate;
+
+    D_800B593C -= 8;
+    if ((u8)D_800B593C >= 0x81U) {
+        D_800B593C = 0;
+    }
+    if (D_800E6280.unk_1104.u == 0) {
+        D_80122D3C = (u8) D_800E6280.unk_03F % 7U;
+    }
+    if (D_80122D3C == 6) {
+        D_80122CF8 = 0;
+    }
+    switch (D_80122D3C) {
+    case 1:
+        limit = (s16)(((GsWord *)&D_800E6280.unk_1104)->u * 5);
+        if (limit > 0x50) limit = 0x50;
+        for (outer=0; outer<limit; outer++) {
+            func_80049FF0(-0xA0, outer-0x78, 0xA0, outer-0x78, 0, 0, 6);
+            func_80049FF0(-0xA0, 0x27-outer, 0xA0, 0x27-outer, 0, 0, 6);
+        }
+        break;
+    case 2:
+        limit = (s16) D_800E6280.unk_1104.h[0];
+        if (limit >= 0x11) {
+            limit = 0x10;
+        }
+        outer = 0;
+        if (limit > 0) {
+            do {
+                inner = 0;
+                do {
+                line_y = (inner * 0x10 - outer) - 0x69;
+                func_80049FF0(-0xA0, line_y, 0xA0, line_y, 0, 0, 6);
+                inner += 1;
+                } while (inner < 0xA);
+                outer += 1;
+            } while (outer < limit);
+        }
+        break;
+    case 3:
+        limit = (s16)(D_800E6280.unk_1104.u << 5);
+        if (limit >= 0x1E1) {
+            limit = 0x1E0;
+        }
+        outer = 0;
+        if (limit > 0) {
+            do {
+
+                if (outer >= 0x141) {
+                    func_80049FF0(((0x1DF - outer) - 0xA0), -0x78, -0xA0, ((0x1DF - outer) - 0x78), 0, 0, 0xD);
+                } else if (outer >= 0xA1) {
+
+                    func_80049FF0(((0x1DF - outer) - 0xA0), -0x78, ((0x1DF - outer) - 0x140), 0x27, 0, 0, 0xD);
+                } else {
+
+                    func_80049FF0(0xA0, ((0x1DF - outer) - 0x1B8), ((0x1DF - outer) - 0x140), 0x27, 0, 0, 0xD);
+                }
+                outer += 1;
+            } while (outer < limit);
+        }
+        break;
+    case 4:
+        limit = (s16)(D_800E6280.unk_1104.u << 6);
+        if (limit >= 0x1E1) {
+            limit = 0x1E0;
+        }
+        outer = 0;
+        if (limit > 0) {
+            do {
+
+                if (outer >= 0x141) {
+                    func_80049FF0(((0x1DF - outer) - 0xA0), -0x78, -0xA0, ((0x1DF - outer) - 0x78), 0, 0, 0xD);
+                } else if (outer >= 0xA1) {
+
+                    func_80049FF0(((0x1DF - outer) - 0xA0), -0x78, ((0x1DF - outer) - 0x140), 0x27, 0, 0, 0xD);
+                } else {
+
+                    func_80049FF0(0xA0, ((0x1DF - outer) - 0x1B8), ((0x1DF - outer) - 0x140), 0x27, 0, 0, 0xD);
+                }
+                outer += 4;
+            } while (outer < limit);
+            outer = 0;
+        }
+        if (limit > 0) {
+            do {
+
+                if (outer >= 0x141) {
+                    func_80049FF0(((0x1DF - outer) - 0x9F), -0x78, -0xA0, ((0x1DF - outer) - 0x77), 0, 0, 0xD);
+                } else if (outer >= 0xA1) {
+
+                    func_80049FF0(((0x1DF - outer) - 0x9F), -0x78, ((0x1DF - outer) - 0x13F), 0x27, 0, 0, 0xD);
+                } else {
+
+                    func_80049FF0(0xA0, ((0x1DF - outer) - 0x1B7), ((0x1DF - outer) - 0x13F), 0x27, 0, 0, 0xD);
+                }
+                outer += 4;
+            } while (outer < limit);
+            outer = 0;
+        }
+        limit = (s16)((D_800E6280.unk_1104.u << 6) - 0x1E0);
+        if (limit >= 0x1E1) {
+            limit = 0x1E0;
+        }
+        if (limit > 0) {
+            do {
+
+                if (outer >= 0x141) {
+                    func_80049FF0(((0x1DF - outer) - 0x9E), -0x78, -0xA0, ((0x1DF - outer) - 0x76), 0, 0, 0xD);
+                } else if (outer >= 0xA1) {
+
+                    func_80049FF0(((0x1DF - outer) - 0x9E), -0x78, ((0x1DF - outer) - 0x13E), 0x27, 0, 0, 0xD);
+                } else {
+
+                    func_80049FF0(0xA0, ((0x1DF - outer) - 0x1B6), ((0x1DF - outer) - 0x13E), 0x27, 0, 0, 0xD);
+                }
+                outer += 4;
+            } while (outer < limit);
+            outer = 0;
+        }
+        if (limit > 0) {
+            do {
+
+                if (outer >= 0x141) {
+                    func_80049FF0(((0x1DF - outer) - 0x9D), -0x78, -0xA0, ((0x1DF - outer) - 0x75), 0, 0, 0xD);
+                } else if (outer >= 0xA1) {
+
+                    func_80049FF0(((0x1DF - outer) - 0x9D), -0x78, ((0x1DF - outer) - 0x13D), 0x27, 0, 0, 0xD);
+                } else {
+
+                    func_80049FF0(0xA0, ((0x1DF - outer) - 0x1B5), ((0x1DF - outer) - 0x13D), 0x27, 0, 0, 0xD);
+                }
+                outer += 4;
+            } while (outer < limit);
+        }
+        break;
+    case 5:
+        limit = (s16)(D_800E6280.unk_1104.u * 0xA);
+        if (limit >= 0xA1) {
+            limit = 0xA0;
+        }
+        outer = 0;
+        if (limit > 0) {
+            do {
+                inner = outer - 0xA0;
+                right_x = 0x9F - outer;
+                coordinate = outer / 2;
+                line_y = coordinate - 0x78;
+                func_80049FF0(inner, line_y, right_x, line_y, 0, 0, 0xD);
+                bottom_y = 0x27 - coordinate;
+                func_80049FF0(inner, bottom_y, right_x, bottom_y, 0, 0, 0xD);
+                func_80049FF0(inner, line_y, inner, bottom_y, 0, 0, 0xD);
+                func_80049FF0((0xA0 - outer), line_y, right_x, bottom_y, 0, 0, 0xD);
+                outer += 1;
+            } while (outer < limit);
+        }
+        break;
+    case 6:
+        if ((u32) D_800E6280.unk_1104.u < 0x10U) {
+            set_tarao_bg(8 - ((u32) D_800E6280.unk_1104.u >> 1));
+        } else {
+            set_tarao_bg(0);
+        }
+        break;
+    default:
+        limit = (s16)(D_800E6280.unk_1104.u * 2);
+        if (limit >= 0x21) {
+            limit = 0x20;
+        }
+        for (outer = 0; outer < 15; outer++) {
+            inner = 0;
+            if ((outer << 5) < 0xA0) {
+                coordinate = (outer << 5) + 0x1F;
+                if (limit > 0) {
+                    do {
+
+                        func_80049FF0(((coordinate - inner) - 0xA0), -0x78, -0xA0, ((coordinate - inner) - 0x78), 0, 0, 0xD);
+                        inner += 1;
+                    } while (inner < limit);
+                }
+            } else if ((outer << 5) < 0x140) {
+                coordinate = (outer << 5) + 0x1F;
+                if (limit > 0) {
+                    do {
+
+                        func_80049FF0(((coordinate - inner) - 0xA0), -0x78, ((coordinate - inner) - 0x140), 0x28, 0, 0, 0xD);
+                        inner += 1;
+                    } while (inner < limit);
+                }
+            } else {
+                coordinate = (outer << 5) + 0x1F;
+                if (limit > 0) {
+                    do {
+
+                        func_80049FF0(0xA0, ((coordinate - inner) - 0x1B8), ((coordinate - inner) - 0x140), 0x28, 0, 0, 0xD);
+                        inner += 1;
+                    } while (inner < limit);
+                }
+            }
+        }
+        break;
+    }
+    D_800E6280.unk_1104.u++;
+    if (D_800E6280.unk_1104.u >= 0x12U) {
+        D_80122CF8 = 0;
+        return 1;
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007D8AC);
+#endif
 
 void normal_date_girl_in(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -526,7 +889,517 @@ void wait_sub_sub(s16 arg0) {
     }
 }
 
+/* NON_MATCHING: T-10870, two four-word scheduling rotations remain at the incremented-Y calls. */
+#ifdef NON_MATCHING
+s32 func_8007EF48(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+u8 *arg0;
+u8 arg1;
+u8 arg2;
+DialogueVoice8 ***arg3;
+u16 arg4;
+u16 arg5;
+u8 arg6;
+{
+    s16 temp_s1;
+    s16 var_v1;
+    DialogueWork *dialogue;
+    s16 sp286;
+    s16 var_a1_2;
+    u8 *sp27C;
+    u8 *p;
+    u8 sp7C[0x200];
+    u8 sp74[8];
+    u8 sp68[12];
+    DialogueBytes16 sp58;
+    /* FAKE: observed 0x290-byte frame extent; T-10730. */
+    s32 pad[1];
+
+    dialogue = (DialogueWork *)D_80122CD0;
+    sp58 = D_800CA36C;
+    /* FAKE: line grouping preserves as1 scheduling; T-10730. */
+    if (arg1 != 0xFF) { strcpy(sp7C, arg0); }
+    dialogue->unk_20 = 0;
+    D_800CA2A8 = 0;
+    temp_s1 = (dialogue->unk_58 * 0x10) + 0x30;
+    /* FAKE: byte view shares the 0xFF constant in v1; T-10730. */
+    switch (*(u8 *)&arg1) {
+    case 0x7:
+        if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&D_800E6280.unk_03C != 0)) {
+            if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[D_800E6280.unk_F5F]);
+                func_80044750(0x300);
+            }
+            if (D_800CA2AC < 0x400) {
+                if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                    D_800CA2A8 = 1;
+                    func_80081128();
+                    if (D_800CA2A8 == 1) {
+                        return 0;
+                    }
+                }
+            } else {
+                D_800CA2AC = 0;
+                func_8007B640();
+                func_80044750(0x74);
+                return 0x64;
+            }
+            dialogue->unk_20 = 1;
+            D_800CA2AC = 0;
+        }
+        if (sp7C[0] == 0x3E) {
+            strncpy(sp74, &sp7C[1], 4);
+            sp74[4] = 0;
+            sprintf(sp68, "%s ", sp74);
+            set_kanji_string(-0x78, temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "", "", 0);
+        } else if (sp7C[0] == 0x2D) {
+            strncpy(sp74, &sp7C[1], 6);
+            sp74[6] = 0;
+            sprintf(sp68, "%s ", sp74);
+            set_kanji_string(-0x80, temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[7], 0, "", "", 0);
+        } else if (sp7C[0] == 0x2B) {
+            strncpy(sp74, &sp7C[1], 2);
+            sp74[2] = 0;
+            sprintf(sp68, "%s ", sp74);
+            set_kanji_string(-0x70, temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[3], 0, "", "", 0);
+        } else if (sp7C[0] == 0x3C) {
+            strncpy(sp74, &sp7C[1], 4);
+            sp74[4] = 0;
+            sprintf(sp68, "%s ", sp74);
+            set_kanji_string(-0x78, temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "（", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "）", "", 0);
+        } else if (strcmp(sp7C, "そして…") == 0) {
+            temp_s1 += 0x10;
+            func_80081190(-0x28, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        } else if ((strcmp(sp7C, "ガチャ") == 0) || (strcmp(sp7C, "カチャ") == 0) || (strcmp(sp7C, "ガラッ") == 0) || (strcmp(sp7C, "ごそごそ") == 0)) {
+            func_80081190(-0x80, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
+        } else if ((strcmp(sp7C, "ジロジロ") == 0) || (strcmp(sp7C, "ドン") == 0)) {
+            func_80081190(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
+        } else if (strcmp(sp7C, "ピンポーン") == 0) {
+            temp_s1 += 0x10;
+            func_80081190(-0x28, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
+        } else {
+            func_80081190(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        }
+        dialogue->unk_14 = 1;
+        break;
+    case 0x10:
+        func_80081190(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue->unk_30 = 1;
+        break;
+    case 0x11:
+        func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue->unk_30 = 1;
+        break;
+    case 0x9:
+        if (sp7C[0] != 0) {
+            if (strcmp(sp7C, "ドン") == 0) {
+                func_80081190(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
+            }
+            func_80081190(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        }
+        break;
+    case 0x0:
+        sp286 = strlen(sp7C);
+        if ((sp7C[sp286 - 1] == 0x6E) && (sp7C[sp286 - 2] == 0x6E)) {
+            if (dialogue->unk_0C == 0) {
+                sp7C[sp286 - 2] = 0;
+                sp286 = strlen(D_800CA16C);
+                sprintf(sp68, "%s ", D_800CA16C);
+                set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+                set_kanji_string(-0x56, temp_s1, arg6, "『 ", 0);
+                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue->unk_14 = 1;
+            }
+        } else {
+            sp286 = strlen(D_800CA16C);
+            sprintf(sp68, "%s ", D_800CA16C);
+            set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "『 ", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue->unk_14 = 1;
+        }
+        break;
+    case 0xE:
+        sp286 = strlen(D_800CA16C);
+        sprintf(sp68, "%s ", D_800CA16C);
+        set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+        set_kanji_string(-0x56, temp_s1, arg6, "（ ", 0);
+        func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
+        break;
+    case 0x1:
+        sp286 = strlen(sp7C);
+        if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && ((*(u8 *)&D_800E6280.unk_03C != 0) && ((sp7C[sp286 - 1] != 0x6E) || (sp7C[sp286 - 2] != 0x6E) || (dialogue->unk_0C == 0)))) {
+                if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                    func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[D_800E6280.unk_F5F]);
+                    func_80044750(0x300);
+                }
+                if (D_800CA2AC < 0x400) {
+                    if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                        D_800CA2A8 = 1;
+                        func_80081128();
+                        if (D_800CA2A8 == 1) {
+                            return 0;
+                        }
+                    }
+                } else {
+                    D_800CA2AC = 0;
+                    func_8007B640();
+                    func_80044750(0x74);
+                    return 0x64;
+                }
+                dialogue->unk_20 = 1;
+                D_800CA2AC = 0;
+        }
+        p = &sp7C[sp286];
+        if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
+            if (dialogue->unk_0C == 0) {
+                p[-2] = 0U;
+                sp286 = strlen(D_800CA188);
+                sprintf(sp68, "%s ", D_800CA188);
+                set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+                set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
+                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue->unk_14 = 1;
+            }
+        } else {
+            sp286 = strlen(D_800CA188);
+            sprintf(sp68, "%s ", D_800CA188);
+            set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue->unk_14 = 1;
+        }
+        break;
+    case 0xF:
+        if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&D_800E6280.unk_03C != 0)) {
+            if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[D_800E6280.unk_F5F]);
+                func_80044750(0x300);
+            }
+            if (D_800CA2AC < 0x400) {
+                if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                    D_800CA2A8 = 1;
+                    func_80081128();
+                    if (D_800CA2A8 == 1) {
+                        return 0;
+                    }
+                }
+            } else {
+                D_800CA2AC = 0;
+                func_8007B640();
+                func_80044750(0x74);
+                return 0x64;
+            }
+            dialogue->unk_20 = 1;
+            D_800CA2AC = 0;
+        }
+        sp286 = strlen(D_800CA188);
+        sprintf(sp68, "%s ", D_800CA188);
+        set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+        set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
+        func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue->unk_48 = 1;
+        break;
+    case 0xC:
+        D_800CA2C4 = 0;
+        sp286 = strlen(sp7C);
+        if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&D_800E6280.unk_03C != 0)) {
+            if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[D_800E6280.unk_F5F]);
+                func_80044750(0x300);
+            }
+            if (D_800CA2AC < 0x400) {
+                if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                    D_800CA2A8 = 1;
+                    func_80081128();
+                    if (D_800CA2A8 == 1) {
+                        return 0;
+                    }
+                }
+            } else {
+                D_800CA2AC = 0;
+                func_8007B640();
+                func_80044750(0x74);
+                return 0x64;
+            }
+            dialogue->unk_20 = 1;
+            D_800CA2AC = 0;
+        }
+        p = &sp7C[sp286];
+        if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
+            if (dialogue->unk_0C == 0) {
+                p[-2] = 0U;
+                sp286 = strlen(D_800CA188);
+                sprintf(sp68, "%s ", D_800CA188);
+                set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+                set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
+                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue->unk_30 = 1;
+            }
+        } else {
+            sp286 = strlen(D_800CA188);
+            sprintf(sp68, "%s ", D_800CA188);
+            set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue->unk_30 = 1;
+        }
+        break;
+    case 0xD:
+        sp286 = strlen(sp7C);
+        if (((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) && (*(u8 *)&D_800E6280.unk_03C != 0) && (D_800CA2C4 == 0)) {
+            if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[D_800E6280.unk_F5F]);
+                func_80044750(0x300);
+            }
+            if (D_800CA2AC < 0x400) {
+                if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                    D_800CA2A8 = 1;
+                    func_80081128();
+                    if (D_800CA2A8 == 1) {
+                        return 0;
+                    }
+                }
+            } else {
+                D_800CA2AC = 0;
+                func_8007B640();
+                func_80044750(0x74);
+                return 0x64;
+            }
+            dialogue->unk_20 = 1;
+            D_800CA2AC = 0;
+        }
+        p = &sp7C[sp286];
+        if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
+            if (dialogue->unk_0C == 0) {
+                p[-2] = 0U;
+                func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue->unk_14 = 1;
+            }
+        } else {
+            set_kanji_string(-0x56, temp_s1, arg6, "　 ", 0);
+            func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue->unk_14 = 1;
+        }
+        break;
+    case 0x12:
+        strlen(sp7C);
+        if ((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) { /* FAKE: same-line branches preserve scheduling, T-10730. */ if (*(u8 *)&D_800E6280.unk_03C != 0) {
+
+                if (D_800CA2C4 == 0) {
+                    if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                            func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, sp58.value[D_800E6280.unk_F5F]);
+                        func_80044750(0x300);
+                    }
+                    if (D_800CA2AC < 0x400) {
+                        if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                            D_800CA2A8 = 1;
+                            func_80081128();
+                            if (D_800CA2A8 == 1) {
+                                return 0;
+                            }
+                        }
+                    } else {
+                        D_800CA2AC = 0;
+                        func_8007B640();
+                        func_80044750(0x74);
+                        return 0x64;
+                    }
+                    dialogue->unk_20 = 1;
+                    D_800CA2AC = 0;
+                }
+            }
+        }
+        set_kanji_string(-0x56, temp_s1, arg6, "　 ", 0);
+        func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue->unk_30 = 1;
+        break;
+    case 0xB:
+        sp286 = strlen(sp7C);
+        if ((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) { /* FAKE: same-line branches preserve scheduling, T-10730. */ if (*(u8 *)&D_800E6280.unk_03C != 0) {
+                if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                    func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, 0);
+                    func_80044750(0x300);
+                }
+                if (D_800CA2AC < 0x400) {
+                    if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                        D_800CA2A8 = 1;
+                        func_80081128();
+                        if (D_800CA2A8 == 1) {
+                            return 0;
+                        }
+                    }
+                } else {
+                    D_800CA2AC = 0;
+                    func_8007B640();
+                    func_80044750(0x74);
+                    return 0x64;
+                }
+                dialogue->unk_20 = 1;
+                D_800CA2AC = 0;
+            }
+        }
+        p = &sp7C[sp286];
+        if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
+            if (dialogue->unk_0C == 0) {
+                p[-2] = 0U;
+                set_kanji_string((s16) (-0x68 - ((s16) strlen("藤崎") * 4)), temp_s1, arg6, "藤崎", 0);
+                set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue->unk_14 = 1;
+            }
+        } else {
+            set_kanji_string((s16) (-0x68 - ((s16) strlen("藤崎") * 4)), temp_s1, arg6, "藤崎", 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue->unk_14 = 1;
+        }
+        break;
+    case 0xA:
+        sp286 = strlen(sp7C);
+        if ((arg3[arg4][arg5]->unk_00 != 0) || (arg3[arg4][arg5]->unk_04 != 0)) { /* FAKE: same-line branches preserve scheduling, T-10730. */ if (*(u8 *)&D_800E6280.unk_03C != 0) {
+                if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                    func_80046290(arg3[arg4][arg5]->unk_00, arg3[arg4][arg5]->unk_04, 0xD);
+                    func_80044750(0x300);
+                }
+                if (D_800CA2AC < 0x400) {
+                    if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                        D_800CA2A8 = 1;
+                        func_80081128();
+                        if (D_800CA2A8 == 1) {
+                            return 0;
+                        }
+                    }
+                } else {
+                    D_800CA2AC = 0;
+                    func_8007B640();
+                    func_80044750(0x74);
+                    return 0x64;
+                }
+                dialogue->unk_20 = 1;
+                D_800CA2AC = 0;
+            }
+        }
+        p = &sp7C[sp286];
+        if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
+            if (dialogue->unk_0C == 0) {
+                p[-2] = 0U;
+                set_kanji_string((s16) (-0x68 - ((s16) strlen("好雄") * 4)), temp_s1, arg6, "好雄", 0);
+                set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue->unk_14 = 1;
+            }
+        } else {
+            set_kanji_string((s16) (-0x68 - ((s16) strlen("好雄") * 4)), temp_s1, arg6, "好雄", 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue->unk_14 = 1;
+        }
+        break;
+    case 0x4:
+    case 0x6:
+        sp286 = strlen(D_800CA16C);
+        sprintf(sp68, "%s ", D_800CA16C);
+        set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+        set_kanji_string(-0x56, temp_s1, arg6, "（ ", 0);
+        func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
+        dialogue->unk_14 = 1;
+        break;
+    case 0x3:
+        if (arg2 != 0xFF) {
+            junban_init();
+            make_three_select(sp7C);
+        } else {
+            D_800CA2A4[0] = 0;
+            D_800CA2A4[1] = 1;
+            D_800CA2A4[2] = 2;
+        }
+        k_disp_start(func_80081190(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
+        break;
+    case 0x8:
+        D_800CA2A4[0] = 0;
+        D_800CA2A4[1] = 1;
+        k_disp_start(func_80081190(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
+        break;
+    case 0x13:
+        D_800CA2A4[0] = 0;
+        D_800CA2A4[1] = 1;
+        k_disp_start(func_80081190(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "（", 1));
+        break;
+    case 0x2:
+    case 0x5:
+        if ((((s32 *)arg3[arg4][arg5])[dialogue->unk_0C * 2] != 0) && (*(u8 *)&D_800E6280.unk_03C != 0)) {
+            if ((D_800CA2AC++ == 0) && (dialogue->unk_14 == 0)) {
+                func_80046290(((s32 *)arg3[arg4][arg5])[dialogue->unk_0C * 2], ((s32 *)arg3[arg4][arg5])[dialogue->unk_0C * 2 + 1], sp58.value[D_800E6280.unk_F5F]);
+                func_80044750(0x300);
+            }
+            if (D_800CA2AC < 0x400) {
+                if (!(func_800460EC() & 4) && dialogue->unk_14 == 0) {
+                    D_800CA2A8 = 1;
+                    func_80081128();
+                    if (D_800CA2A8 == 1) {
+                        return 0;
+                    }
+                }
+            } else {
+                D_800CA2AC = 0;
+                func_8007B640();
+                func_80044750(0x74);
+                return 0x64;
+            }
+            dialogue->unk_20 = 1;
+            D_800CA2AC = 0;
+        }
+        sp286 = 0;
+        var_a1_2 = 0;
+        for (var_v1 = 0; ; var_v1 += 2) {
+            if (sp7C[var_v1] == 0x20 || sp7C[var_v1] == 0x6D ||
+                sp7C[var_v1] == 0x4D || sp7C[var_v1] == 0x41 ||
+                sp7C[var_v1] == 0x57 || sp7C[var_v1] == 0x4F ||
+                sp7C[var_v1] == 0x46 || sp7C[var_v1] == 0x59 ||
+                sp7C[var_v1] == 0x70 || sp7C[var_v1] == 0x47 ||
+                sp7C[var_v1] == 0x50 || sp7C[var_v1] == 0x53) {
+                var_v1--;
+            } else if (sp7C[var_v1] == 0x71 || sp7C[var_v1] == 0) {
+                sp7C[var_v1] = 0;
+                p = &sp7C[sp286];
+                var_a1_2++;
+                if (arg2 < var_a1_2) {
+                    break;
+                }
+                sp286 = var_v1 + 1;
+                var_v1--;
+            }
+        }
+        if (*p != 0x6E) {
+            sp27C = p;
+            sp286 = strlen(D_800CA188);
+            sprintf(sp68, "%s ", D_800CA188);
+            set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
+            set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
+            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp27C, 0, "", "", 0);
+            dialogue->unk_14 = 1;
+        }
+        break;
+    case 0xFF:
+        func_8004284C();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007EF48);
+#endif
 
 void func_80081128(void) {
     if (D_800CA2AC > 0x200) {
@@ -541,7 +1414,112 @@ void func_80081128(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80081190);
 
+/* NON_MATCHING: T-10870, five positions: a three-load rotation and two addu operand orders. */
+#ifdef NON_MATCHING
+s32 func_80082764(arg0,arg1,arg2)
+u8 arg0;
+u8 arg1;
+u8 arg2;
+{
+    DialogueTables *tables;
+    DialogueWork *dialogue;
+    s16 line;
+    s16 nextLine;
+    s16 group;
+    s16 nextGroup;
+    s32 result;
+    u8 command;
+
+    tables = (DialogueTables *)&D_800CA134;
+    dialogue = (DialogueWork *)D_80122CD0;
+    if (dialogue->unk_30 != 0) {
+        if ((check_end_k() != 0) && ((dialogue->unk_20 == 0) || ((dialogue->unk_20 == 1) && (func_800460EC() != 4)) || ((*(u8 *)&D_800E6280.unk_03C) == 0))) {
+            dialogue->unk_30 = 0;
+            D_800CA2AC = 0;
+        } else if ((D_800E6280.unk_F88 & 0x400040) && ((*(u8 *)&D_800E6280.unk_03C) == 2)) {
+            func_80044750(0xB4);
+            dialogue->unk_30 = 2;
+            D_800CA2AC = 0;
+            D_800CA2C4 = 1;
+        }
+        if ((check_end_k() != 0) && (dialogue->unk_30 == 2) && (func_800460EC() != 4)) {
+            dialogue->unk_30 = 0;
+            D_800CA2AC = 0;
+        }
+        goto finish;
+    }
+    if (dialogue->unk_48 != 0) {
+        if ((check_end_k() != 0) && ((dialogue->unk_20 == 0) || ((dialogue->unk_20 == 1) && (func_800460EC() != 4)) || ((*(u8 *)&D_800E6280.unk_03C) == 0))) {
+            k_reset(1);
+            dialogue->unk_48 = 0;
+            D_800CA2AC = 0;
+        }
+        goto finish;
+    }
+    if (dialogue->unk_14 != 0) {
+        if ((D_800E6280.unk_F88 & 0x400040) && ((*(u8 *)&D_800E6280.unk_03C) == 2)) {
+            func_80044750(0xB4);
+            D_800CA2C4 = 1;
+            dialogue->unk_14 = 2;
+            D_800CA2AC = 0;
+        }
+        if ((check_end_k() != 0) && (dialogue->unk_14 == 2) && (func_800460EC() != 4)) {
+            k_reset(1);
+            dialogue->unk_14 = 0;
+            D_8011ED5B &= 0xFF7F;
+            D_800CA2AC = 0;
+            dialogue->unk_20 = 0;
+            return 1;
+        }
+        if ((D_800E6280.unk_F88 & 0x200020) && (check_end_k() != 0) && ((dialogue->unk_20 == 0) || (dialogue->unk_20 == 0xA) || ((dialogue->unk_20 == 1) && (func_800460EC() != 4)) || ((*(u8 *)&D_800E6280.unk_03C) == 0))) {
+            k_reset(1);
+            dialogue->unk_14 = 0;
+            D_8011ED5B &= 0xFF7F;
+            D_800CA2AC = 0;
+            dialogue->unk_20 = 0;
+            return 1;
+        }
+        if ((check_end_k() != 0) && ((dialogue->unk_20 == 0) || (dialogue->unk_20 == 0xA) || ((dialogue->unk_20 == 1) && (func_800460EC() != 4)) || ((*(u8 *)&D_800E6280.unk_03C) == 0))) {
+            D_8011ED5B |= 0x80;
+            func_8006C934();
+        } else {
+            D_8011ED5B &= 0x7F;
+        }
+        goto finish;
+    }
+    D_800CA2C8 = 0;
+    D_800E6280.unk_1104.w = 0;
+    group = *tables->group;
+    line = *tables->line;
+    result = func_8007EF48(tables->text[group][line], (s32) tables->command[group][line], (s32) arg0, tables->voice, (s32) group, (s32) line, (s32) arg2);
+    if ((arg1 != 0) && (D_800CA2A8 == 0) && ((result & 0xFF) != 0x64)) {
+        nextLine = *tables->line;
+        nextGroup = *tables->group;
+        if (tables->command[nextGroup][nextLine] == 0xFF) {
+            *tables->group = (s16) (nextGroup + 1);
+            *tables->line = 0;
+        } else {
+            *tables->line = (s16) (nextLine + 1);
+        }
+    }
+finish:
+    if ((dialogue->unk_30 != 0) || (dialogue->unk_14 != 0) || (dialogue->unk_48 != 0)) {
+        if ((check_end_k() == 0) && ((*(u8 *)&D_800E6280.unk_03C) == 0)) {
+            command = tables->command[*tables->group][*tables->line - 1];
+            if (((command == 1) || (command == 2) || (command == 5) || (command == 0xA) || (command == 0xB) || (command == 0xC) || (command == 0xD)) && (dialogue->unk_2C == 0)) {
+                if ((dialogue->unk_24 != 0) && (dialogue->unk_4C == 0) && (dialogue->unk_50 == 0)) {
+                    bustup_speech();
+                } else if ((dialogue->unk_34 != 0) && (dialogue->unk_40 == 0) && (dialogue->unk_4C == 0)) {
+                    func_80067DFC();
+                }
+            }
+        }
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80082764);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
@@ -769,9 +1747,242 @@ void hizuke_appear(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", read_bustup);
+void read_bustup(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x55B2);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x55DF);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x560C);
+        } else {
+            func_80062CD0(0x5639);
+        }
+        break;
+    case 1:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x5D9B);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x5DC8);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x5DF5);
+        } else {
+            func_80062CD0(0x5E22);
+        }
+        break;
+    case 2:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x5288);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x52B5);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x52E2);
+        } else {
+            func_80062CD0(0x530F);
+        }
+        break;
+    case 3:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x5909);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x5936);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x5963);
+        } else {
+            func_80062CD0(0x5990);
+        }
+        break;
+    case 4:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x6719);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x6746);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x6773);
+        } else {
+            func_80062CD0(0x67A0);
+        }
+        break;
+    case 5:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x6011);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x603E);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x606B);
+        } else {
+            func_80062CD0(0x6098);
+        }
+        break;
+    case 6:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x6287);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x62B4);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x62E1);
+        } else {
+            func_80062CD0(0x630E);
+        }
+        break;
+    case 7:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x5B52);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x5B7F);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x5BAC);
+        } else {
+            func_80062CD0(0x5BD9);
+        }
+        break;
+    case 8:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x503F);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x506C);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x5099);
+        } else {
+            func_80062CD0(0x50C6);
+        }
+        break;
+    case 9:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x64FD);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x652A);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x6557);
+        } else {
+            func_80062CD0(0x6584);
+        }
+        break;
+    case 10:
+        if (D_800E6280.unk_03F >= 3U && D_800E6280.unk_03F < 6U) {
+            func_80062CD0(0x698F);
+        } else if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 9U) {
+            func_80062CD0(0x69BC);
+        } else if (D_800E6280.unk_03F >= 9U && D_800E6280.unk_03F < 12U) {
+            func_80062CD0(0x69E9);
+        } else {
+            func_80062CD0(0x6A16);
+        }
+        break;
+    case 13:
+        func_80062CD0(0x6C8C);
+        break;
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", read_bustup_uniform);
+void read_bustup_uniform(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x541D);
+        } else {
+            func_80062CD0(0x544A);
+        }
+        break;
+    case 1:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x5D14);
+        } else {
+            func_80062CD0(0x5D41);
+        }
+        break;
+    case 2:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x5201);
+        } else {
+            func_80062CD0(0x522E);
+        }
+        break;
+    case 3:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x5882);
+        } else {
+            func_80062CD0(0x58AF);
+        }
+        break;
+    case 4:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x6692);
+        } else {
+            func_80062CD0(0x66BF);
+        }
+        break;
+    case 5:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x5F8A);
+        } else {
+            func_80062CD0(0x5FB7);
+        }
+        break;
+    case 6:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x6200);
+        } else {
+            func_80062CD0(0x622D);
+        }
+        break;
+    case 7:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x5AF8);
+        } else {
+            func_80062CD0(0x5B25);
+        }
+        break;
+    case 8:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x4FE5);
+        } else {
+            func_80062CD0(0x5012);
+        }
+        break;
+    case 9:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x64A3);
+        } else {
+            func_80062CD0(0x64D0);
+        }
+        break;
+    case 10:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x6908);
+        } else {
+            func_80062CD0(0x6935);
+        }
+        break;
+    case 12:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x57FB);
+        } else {
+            func_80062CD0(0x5828);
+        }
+        break;
+    case 11:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x6B51);
+        } else {
+            func_80062CD0(0x6B7E);
+        }
+        break;
+    case 13:
+        if (D_800E6280.unk_03F >= 6U && D_800E6280.unk_03F < 10U) {
+            func_80062CD0(0x6C32);
+        } else {
+            func_80062CD0(0x6C5F);
+        }
+        break;
+    case 14:
+        func_80062CD0(0x6B24);
+        break;
+    }
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", read_bustup_swimsuit);
 

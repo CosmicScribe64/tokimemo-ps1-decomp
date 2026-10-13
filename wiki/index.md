@@ -19,6 +19,12 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-10700-windows-host-baseline-build|T-10700]] Windows host setup and baseline build: docker.sh MSYS paths, 32-bit gcc cpp on WSL2 mounts (Done; 27/27, 5,176/6,958).
+- [[tickets/T-10860-big-functions-4-astra|T-10860]] Big functions 4 (astra), five owned objects (Done; 88 matches / 68,856 code bytes).
+- [[tickets/T-10870-big-functions-5-astra|T-10870]] Big functions 5 (astra), ten matches / 11460 bytes (Done).
+- [[tickets/T-10880-big-functions-6-astra|T-10880]] Big functions 6 (astra), four owned objects (Done).
+- [[tickets/T-10840-wave-13-15-tool-fixes|T-10840]] Wave 13-15 tool fixes (Done; literal-byte funcdiff proof, guarded C, prototypes, seed tolerance, full-file regdiff).
+- [[tickets/T-10730-big-functions-2-astra|T-10730]] Big functions 2 (astra), three integrated matches + verified DATE patch (Done).
+- [[tickets/T-10830-big-functions-3-astra|T-10830]] Big functions 3 (astra), 29 matches and movie layouts in six owned objects (Done).
 - [[tickets/T-10630-big-functions-astra|T-10630]] Big functions (astra), six owned objects (Done).
 - [[tickets/T-10400-regdiff-explain-register-choice|T-10400]] regdiff: explain why a draft gets different registers (Done; `tools/regdiff.py`, 2 functions matched with it, `sync_protos --add-global` guard fix, clean 27/27).
 - [[tickets/T-10330-wave-12-list-3|T-10330]] Wave 12: list 3 (In Progress).
@@ -196,3 +202,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9610-aggregate-and-local-copy-types|T-9610]] Aggregate and local-copy types (Done).
 
 - [[tickets/T-9780-wave-9-list-8|T-9780]] Wave 9: list 8 (Done; 18 matches / 8580 bytes, four-hour session).
+
+- [[tickets/T-10850-wave-17-astra|T-10850]] Wave 17 (astra, easiest first), Done: 5 matches, 936 bytes.

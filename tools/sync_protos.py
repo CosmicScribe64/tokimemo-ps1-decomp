@@ -236,6 +236,7 @@ class Model:
         text = re.sub(r"/\*.*?\*/", " ", text, flags=re.S)
         names = set(re.findall(r"}\s*(\w+)\s*;", text))
         names |= set(re.findall(r"typedef\s+[^;{]*?\b(\w+)\s*;", text))
+        names |= set(re.findall(r"\b(?:struct|union|enum)\s+(\w+)\s*\{", text))
         return names
 
     def api_types(self):
@@ -385,10 +386,16 @@ def used_in(model, name, header):
 def definitions(model):
     """{function: (type, raw)} defined with a body in the main exe's C files (src/main)."""
     out = {}
+    model.definition_local_types = {}
     for path, info in model.sources.items():
         if os.sep + "main" + os.sep not in path.replace(os.path.sep, os.sep) and "/main/" not in path:
             continue
         text = ch.strip(info["text"])
+        local_types = set(re.findall(r"}\s*(\w+)\s*;", text))
+        local_types |= set(re.findall(r"typedef\s+[^;{]*?\b(\w+)\s*;", text))
+        local_types |= set(re.findall(r"\b(?:struct|union|enum)\s+(\w+)\s*\{", text))
+        for header in closure_of_file(model, path):
+            local_types |= model.local_types(header)
         # Parameter declarations in an old-style definition do not declare a prototype.
         knr = re.compile(r'(^[A-Za-z_][\w \t*]*[ \t*]\w+)\(\s*'
                          r'(?:\w+\s*(?:,\s*\w+\s*)*)?\)\s*'
@@ -396,8 +403,9 @@ def definitions(model):
         text = knr.sub(r'\1() {', text)
         defined = set(srcscan.DEF_RE.findall(text)) | set(srcscan.KR_DEF_RE.findall(text))
         for name, typ, raw in ch.declarations_text(text, defs=True):
-            if is_func(typ) and name in defined:
+            if is_func(typ) and name in defined and not re.match(r"\s*static\b", raw):
                 out[name] = (typ, raw)
+                model.definition_local_types[name] = local_types
     return out
 
 
@@ -494,8 +502,14 @@ def plan(model):
     cands = candidates(model)
     out = {}
     model.skipped = {}
-    for name in sorted(set(cands) | set(model.api)):
+    for name in sorted(set(cands) | set(model.api) | {n for n in defs if model.in_main_range(n)}):
         group = cands.get(name, [])
+        if name in defs and not group and name not in model.api:
+            private_types = model.definition_local_types[name] & tokens(defs[name][1]) - model.api_types()
+            if private_types:
+                model.skipped[name] = ("definition uses types absent from main_api.h: %s; move their declarations "
+                                       "to the shared header and rerun --write" % ", ".join(sorted(private_types)))
+                continue
         if name not in cands and name not in defs:
             t, r = model.api[name]
             out[name] = (t, r, "main_api.h")

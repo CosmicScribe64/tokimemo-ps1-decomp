@@ -1,5 +1,59 @@
 #include "common.h"
 #include "ovl/DATE.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFD0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFD4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFD8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFDC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFE0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFE4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFE8);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFEC);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFF0);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFF4);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015CFF8);
+s32 D_8015CFFC = 0x801B9DA0;
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D000);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D004);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D008);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D00C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D010);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D014);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D018);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D01C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D020);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D024);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D028);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D02C);
+s32 D_8015D030 = 0x801B9EA8;
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D034);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D038);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D03C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D040);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D044);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D048);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D04C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D050);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D054);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D058);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D05C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D060);
+s32 D_8015D064 = 0x801BA2C8;
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D068);
+s32 D_8015D06C = 0;
+s32 D_8015D070 = 0;
+s32 D_8015D074 = 0;
+s32 D_8015D078 = 0;
+s32 D_8015D07C = 0;
+s32 D_8015D080 = 0;
+s16 D_8015D084 = 0;
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D088);
+s16 D_8015D08C = 0;
+u8 D_8015D090 = 0;
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D094);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D098);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/80149310.data", D_8015D108);
 
 typedef struct {
     u8 s[0xCC3];
@@ -174,7 +228,26 @@ void func_80149ED0(void) {
     func_80082764(0xFF, 1, 0);
 }
 
+/* NON_MATCHING: T-10910, own data defined, instruction order and shared lui at match (43 of 43); the first copy takes $v0 with the double assignment of D_8015D084; the three constant-pointer loads take t9/t0/t1 where the original has t5/t6/t7, 15 lines */
+#ifdef NON_MATCHING
+void func_80149F48(void) {
+    u8 new_var;
+
+    D_8015D08C = D_8015D084;
+    D_8015D078 = D_8015D06C;
+    D_8015D07C = D_8015D070;
+    D_8015D080 = D_8015D074;
+    D_8015D06C = D_8015CFFC;
+    D_8015D070 = D_8015D030;
+    D_8015D074 = D_8015D064;
+    new_var = D_800E6280.unk_F5F;
+    D_8015D084 = new_var;
+    D_8015D084 = (D_8015D084 * 3) + D_8015D090;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80149310", func_80149F48);
+#endif
 
 void func_80149FF8(void) {
     func_80083440(D_80122CDC + 1);

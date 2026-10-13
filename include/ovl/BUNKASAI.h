@@ -187,3 +187,21 @@ typedef struct BunkaDispatch8 {
     /* 0x04 */ s32 unk_04;
 } BunkaDispatch8; /* size 0x08 */
 #endif
+
+#ifndef OVL_BUNKASAI_T10830_H
+#define OVL_BUNKASAI_T10830_H
+/* Side-effect-only scene table setters defined later in their objects. */
+void func_80135448(void);
+void func_80142694(void);
+void func_80145FC0(void);
+void func_8014DD28(void);
+#endif
+#ifndef OVL_BUNKASAI_T10860_H
+#define OVL_BUNKASAI_T10860_H
+void func_80149404(void);
+void func_80137788(void);
+void func_8014AB54(void);
+#endif
+
+/* T-10860: forward call into the owned 801362A0 object. */
+void func_80138A00(void);

@@ -411,7 +411,42 @@ void func_8013C694(void) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10720, instruction shape and stack layout match; only register assignment differs (the two local table copies take a3/t1 and the temp v takes a2 where the original has a2/t0 and reuses a0), about 50 lines */
+void func_8013C780(void) {
+    TaiikuU11 a;
+    TaiikuS11 b;
+    s32 v;
+
+    a = D_80149F50;
+    b = D_80149F68;
+    if (a.v[D_80149940] < D_801499A0.unk_00 && (D_80149940 != 2 || (D_80149940 == 2 && D_80149960 > 0) || D_80149990.unk_00 != 0)) {
+        if (D_8014999C >= 3 && D_80149990.unk_00 != 0 && (D_80149950 == 2 || D_80149950 == 4 || D_80149950 == 6)) {
+            v = 0;
+        } else if (D_8014999C >= 5) {
+            v = 0;
+        } else {
+            v = D_8014999C + 1;
+        }
+        D_801499A0.unk_00 = 0;
+        D_8014999C = v;
+    }
+    D_801206AC = D_80149940 * 6 + D_8014999C + 6;
+    if (D_80149990.unk_00 != 0 && (D_80149950 == 2 || D_80149950 == 4 || D_80149950 == 6)) {
+        v = D_8014999C;
+        if (v >= 3) {
+            v = 0;
+        }
+        D_801206AC = b.v[D_80149940] + v;
+        D_8014999C = v;
+        if (D_80149940 == 2 && D_80120697 == 0xA5) {
+            D_801206AC += 4;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C780);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C978);
 
@@ -439,7 +474,63 @@ s32 func_8013CEF8(void) {
     return 0;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10720, instruction order: lw of D_8014996C and the sh to D_80149970+2 are swapped, plus lui a2 placement, 6 lines */
+void func_8013CF88(void) {
+    if (D_80149990.unk_00 != 0 && D_8014994C == 4 && D_80149950 == 4) {
+        D_80149978 = 0;
+        if (D_80149990.unk_00 == 1) {
+            D_80149974.unk_00 = -0x10000;
+            return;
+        }
+        D_80149974.unk_00 = 0x10000;
+        return;
+    }
+    if (D_80149970.unk_02 > 10) {
+        D_80149978 += D_8014996C;
+        D_80149970.unk_02 = 0;
+        if (D_80149978 < 0) {
+            D_80149978 = 0;
+        }
+        if (D_80149978 > 0x10000) {
+            D_80149978 = 0x10000;
+        }
+        if (D_80149974.unk_00 > 0) {
+            D_80149974.unk_00 += D_80149968.unk_00;
+            if (D_80149974.unk_00 <= 0) {
+                D_80149994 = 0;
+                D_801499A8 = 0;
+                D_80149968.unk_00 = 0;
+                D_80149974.unk_00 = 0;
+            }
+        } else if (D_80149974.unk_00 < 0) {
+            D_80149974.unk_00 += D_80149968.unk_00;
+            if (D_80149974.unk_00 >= 0) {
+                D_80149994 = 0;
+                D_801499A8 = 0;
+                D_80149968.unk_00 = 0;
+                D_80149974.unk_00 = 0;
+            }
+        } else {
+            D_80149974.unk_00 += D_80149968.unk_00;
+        }
+        if (D_80149974.unk_00 < -0x10000) {
+            D_80149974.unk_00 = -0x10000;
+        }
+        if (D_80149974.unk_00 > 0x10000) {
+            D_80149974.unk_00 = 0x10000;
+        }
+        if (D_80149978 < -0x10000) {
+            D_80149978 = -0x10000;
+        }
+        if (D_80149978 > 0x10000) {
+            D_80149978 = 0x10000;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013CF88);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D114);
 
@@ -696,7 +787,32 @@ void func_8014064C(void) {
     }
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-10720, same as TACO func_801347F4: the original keeps 'move s2,s3; addiu s2,s2,8' where this folds to one addiu (s3 = arg0 + 4), 5 lines */
+void func_801406A8(arg0)
+s32 arg0;
+{
+    TaiikuBig *q;
+    u32 *p;
+    s32 b;
+
+    arg0 += 4;
+    func_8009B3C0(arg0);
+    b = arg0;
+    b += 8;
+    q = D_801227A0;
+    p = D_80122640;
+    do {
+        func_8009B430(b, (u8 *)p, 0);
+        *(TaiikuBig **)(p + 1) = q;
+        q++;
+        p += 4;
+        p[-4] = 0x80000000;
+    } while (q != D_80122CA0);
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_801406A8);
+#endif
 
 void func_80140738(s32 arg0, s32 arg1) {
     u8 *p;

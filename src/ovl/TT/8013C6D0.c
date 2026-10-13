@@ -199,7 +199,80 @@ void func_8013D060(void) {
     }
 }
 
+/* NON_MATCHING: T-10710, 99 of 99 instructions: locals for the four pointer globals (hoisted loads) match; remaining diff is register/constant sharing: the draft hoists 0x30000/0x8000 into a0/a1 while the original builds them in t7/v0/a0 per use, and the first-branch constant stays separate */
+#ifdef NON_MATCHING
+void func_8013D150(void) {
+    u8 *p;
+    s32 *q;
+    s32 *r;
+    u8 *t;
+    u8 mode;
+    u16 w;
+    s16 h;
+    s32 target;
+    s32 cur;
+    s32 diff;
+
+    p = D_80158A64;
+    q = (s32 *)D_80158A6C;
+    r = D_80158A70;
+    t = D_80158A74;
+    mode = p[0x1C];
+    if (mode == 0x10) {
+        *(u16 *)(p + 0x32) = *(u16 *)(p + 0x32) + 1;
+        w = *(u16 *)(p + 0x34);
+        if (w < 0x101) {
+            *(u16 *)(p + 0x34) = 0x100;
+        } else {
+            *(u16 *)(p + 0x34) = w - 0x20;
+        }
+    } else if (mode == 0x11) {
+        *(u16 *)(p + 0x32) = *(u16 *)(p + 0x32) + 1;
+        w = *(u16 *)(p + 0x34);
+        if (w >= 0x1000) {
+            *(u16 *)(p + 0x34) = 0x1000;
+            p[0x1C] = 2;
+        } else {
+            *(u16 *)(p + 0x34) = w + 0x40;
+        }
+    }
+    target = 0;
+    if (*(u16 *)((u8 *)r + 2) >= 0x401) {
+        q[1] = 0;
+    } else {
+        h = *(s16 *)(t + 0x16);
+        if (h < 0x50) {
+            q[1] = 0x30000U;
+        } else {
+            q[1] = 0x28000 - (((h - 0x50) / 32) << 15);
+        }
+        target = q[1];
+        if (target < 0x8000) {
+            target = q[1] = 0x8000;
+        }
+        if (target > 0x30000) {
+            q[1] = target = 0x30000;
+        }
+    }
+    cur = q[0];
+    if (target < cur) {
+        q[0] = cur - 0x400;
+    } else {
+        q[0] = cur + 0x200;
+    }
+    target = q[1];
+    diff = q[0] - target;
+    cur = diff;
+    if (diff < 0) {
+        cur = -diff;
+    }
+    if (cur < 0x1000) {
+        q[0] = target;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D150);
+#endif
 
 /* NON_MATCHING: T-10510, registers only (v in a1: a0 left unused by the original) */
 #ifdef NON_MATCHING
@@ -228,8 +301,9 @@ void func_8013D2E0(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D2E0);
 #endif
 
-/* NON_MATCHING: T-10510, registers: r/g in a2/a1, sb order of len/code (24 lines) */
+/* NON_MATCHING: T-10850, 20 differing listing lines; regdiff evidence in the ticket scratch. */
 #ifdef NON_MATCHING
+/* FAKE: same-line stores preserve packet instruction scheduling. T-10850 */
 void func_8013D3C0(void) {
     u8 *c;
     TtDrawBuffer80B8 *p;
@@ -242,8 +316,7 @@ void func_8013D3C0(void) {
     p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
     v = (TILE *)p->cursor;
     p->cursor = (DR_MODE *)(v + 1);
-    ((TtOtTag *)v)->len = 3;
-    v->code = 0x61;
+    ((TtOtTag *)v)->len = 3; v->code = 0x61;
     r = (c[0x13] * c[0x1D]) >> 7;
     if ((s32)r >= 0x100) {
         r = 0xFF;
@@ -261,8 +334,7 @@ void func_8013D3C0(void) {
     v->b0 = b;
     v->x0 = -0x80;
     v->y0 = 8;
-    v->w = 0x100;
-    v->h = 0xE8;
+    v->w = 0x100; v->h = 0xE8;
     ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[15];
     (&p->ordering[15])->addr = (u32)v;
 }

@@ -1252,3 +1252,186 @@ void func_8014E108(void);
 
 /* T-10630: signed UV oscillation step used by func_801462B0. */
 extern s16 D_8015CFA0;
+
+#ifndef DATE_SELECTION_TYPES_T10730
+#define DATE_SELECTION_TYPES_T10730
+/* T-10730: unsigned triples selected by girl, option, then its two-state flag. */
+typedef struct DateChoice3 {
+    /* 0x00 */ u8 value[3];
+} DateChoice3; /* size 0x03 */
+
+typedef struct DatePlaceChoices18 {
+    /* 0x00 */ DateChoice3 choice[3][2];
+} DatePlaceChoices18; /* size 0x12 */
+
+typedef struct DateRideChoices36 {
+    /* 0x00 */ DateChoice3 choice[6][2];
+} DateRideChoices36; /* size 0x24 */
+
+#endif
+
+#ifndef OVL_DATE_MOTION_T10730
+#define OVL_DATE_MOTION_T10730
+/* Record view recovered from func_8013FD6C, D_8011ECD0.
+ * Records 96..99 use signed high halves of the two fixed-point words.
+ * Byte names remain provisional; existing raw-array declarations are views. */
+typedef struct DateMotion44 {
+    /* 0x00 */ u8 pad00[2];
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 pad04[3];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad0A[0xC];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0xA];
+    /* 0x24 */ GsWord unk_24;
+    /* 0x28 */ GsWord unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ u8 pad30[0x14];
+} DateMotion44; /* size 0x44 */
+typedef struct DateMuseumChoices15 {
+    /* 0x00 */ DateChoice3 choice[5];
+} DateMuseumChoices15; /* size 0x0F */
+#endif
+
+#ifndef OVL_DATE_FLAG_T10730
+#define OVL_DATE_FLAG_T10730
+extern u8 D_8015B698;
+#endif
+
+#ifndef OVL_DATE_COUNTS_T10730
+#define OVL_DATE_COUNTS_T10730
+/* Two signed-halfword local copies in func_8013A94C, from D_8015B75C/B774. */
+typedef struct DateCounts22 {
+    /* 0x00 */ s16 value[11];
+} DateCounts22; /* size 0x16 */
+#endif
+
+#ifndef OVL_DATE_FLAG17_T10730
+#define OVL_DATE_FLAG17_T10730
+/* Word view at GameState +0xF4; the seasonal event tests bit 17. */
+typedef struct DateFlag17 {
+    /* bits 0..16 */ u32 pad : 17;
+    /* bit 17 */ u32 b17 : 1;
+    /* bits 18..31 */ u32 rest : 14;
+} DateFlag17; /* size 0x04 */
+#endif
+
+#ifndef DATE_SELECTION_VIEW_T10730
+#define DATE_SELECTION_VIEW_T10730
+/* T-10730: byte selector slots at D_800CA2F8 and D_800CA2FC. This view
+ * records only the observed range, not the complete allocation size. */
+typedef struct DateSelectionView {
+    /* 0x00 */ u8 place;
+    /* 0x01 */ u8 pad01[3];
+    /* 0x04 */ u8 option;
+} DateSelectionView; /* minimum size 0x05 */
+#endif
+
+#ifndef OVL_DATE_MOVIE_T10830_H
+#define OVL_DATE_MOVIE_T10830_H
+/* Overlay access view at D_800B5920. func_80147958 resets the halfword
+ * fields and bytes 0x18..0x1A. Main 80057390 owns the word-array view
+ * and confirms the later fields. EVENT shares the first 0x1C-byte layout. */
+typedef struct DateMovieWork {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s16 unk_04;
+    /* 0x06 */ s16 unk_06;
+    /* 0x08 */ u8 pad08[2];
+    /* 0x0A */ s16 unk_0A;
+    /* 0x0C */ u8 pad0C[12];
+    /* 0x18 */ u8 unk_18;
+    /* 0x19 */ u8 unk_19;
+    /* 0x1A */ u8 unk_1A;
+    /* 0x1B */ u8 unk_1B;
+    /* 0x1C */ u8 unk_1C;
+    /* 0x1D */ u8 pad1D[3];
+    /* 0x20 */ u8 unk_20;
+    /* 0x21 */ u8 pad21[3];
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+} DateMovieWork; /* size 0x2C, minimum observed extent */
+
+/* First two words of the bitstream reached through D_80125C04.
+ * func_80147958 validates word 0 with 0xFFFF0000 and word 1 with
+ * 0xFF010000; later bytes have not been recovered here. */
+typedef struct DateMovieHeader8 {
+    /* 0x00 */ u32 unk_00;
+    /* 0x04 */ u32 unk_04;
+} DateMovieHeader8; /* size 0x08, minimum observed extent */
+#endif
+
+#ifndef OVL_DATE_PARTICLE_T10870_H
+#define OVL_DATE_PARTICLE_T10870_H
+/* T-10870: func_80140374 initializes 20 records starting at sprite 98.
+ * The coordinate words are also read and written as signed high halves. */
+typedef struct DateParticleView44 {
+    /* 0x00 */ u8 pad00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 pad08[4];
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ u8 pad1E[6];
+    /* 0x24 */ GsWord unk_24;
+    /* 0x28 */ GsWord unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 pad3C[7];
+    /* 0x43 */ u8 unk_43;
+} DateParticleView44; /* size 0x44 */
+
+/* Fixed-point horizontal positions, with signed high-halfword updates. */
+extern GsWord D_8015BD40[20];
+/* func_8013F638 initializes ten falling-particle velocities. */
+extern GsWord D_8015BCB4[10];
+extern s32 D_8015BD34;
+extern s16 D_8015BD38;
+extern u8 D_8015BD3C;
+#endif
+
+#ifndef OVL_DATE_RIDE_TABLES_T10870_H
+#define OVL_DATE_RIDE_TABLES_T10870_H
+/* func_80138934: girl rows contain six rides, two choices per ride,
+ * and three byte-valued results per choice (36 bytes per girl). */
+extern DateRideChoices36 *D_8015B5B0;
+extern DateRideChoices36 *D_8015B5B4;
+#endif
+
+#ifndef OVL_DATE_MUSEUM_TABLES_T10870_H
+#define OVL_DATE_MUSEUM_TABLES_T10870_H
+/* func_80134C64 reads three result bytes from each 15-byte girl row. */
+extern DateMuseumChoices15 *D_8015B520;
+extern DateMuseumChoices15 *D_8015B524;
+#endif
+
+#ifndef OVL_DATE_EVENT_CHOICE_T10870_H
+#define OVL_DATE_EVENT_CHOICE_T10870_H
+/* func_8013A94C copies eleven signed counts from each table. */
+extern DateCounts22 D_8015B75C;
+extern DateCounts22 D_8015B774;
+extern u8 D_8015B65C;
+extern u8 D_8015B660;
+/* Halfword access view at D_8015BF1C. The legacy declarations describe
+ * individual low bytes; this handler reads/stores signed halfwords. */
+typedef struct DateEventChoice6 {
+    /* 0x00 */ s16 kind;
+    /* 0x02 */ u8 pad02[2];
+    /* 0x04 */ s16 index;
+} DateEventChoice6; /* size 0x06, minimum observed extent */
+#endif

@@ -6,6 +6,21 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+## Wave 13-15 tooling reliability (T-10840)
+
+[[tickets/T-10840-wave-13-15-tool-fixes]] addresses the five wave reports. The
+guarded TAIIKU `func_801368B8`/`func_80137228` compare their C rather than asm by
+default; equal-length diffs display positional swaps. `funcdiff --resolve` now
+gates MATCH with literal private-link bytes against the disc, including address,
+size and padding, rather than normalized references alone. It snapshots objects,
+checks source/header contents, serializes expected builds and includes all zero
+instructions and local-label continuations. The historical loaded TT run has no
+preserved race evidence, so its precise cause remains unproven; known false-MATCH
+paths have synthetic regressions. Whole-unit SHA1 still checks data/tables.
+`sync_protos --write` discovers newly defined main prototypes; permuter count
+tolerance defaults to four with a warning; regdiff keeps full-file data/context.
+Options and usage are in [[decompile-workflow]]. No game functions gained.
+
 T-9520 second-pass continuation: EVENT `func_801035BC` now has a recovered
 0x44-byte record block with 96 prefix records. Its girl selector at offset
 0x1987 and the destination fields at 0x1A0F belong to that same block. Reading
@@ -4251,3 +4266,161 @@ Matches: EVENT `func_80103BF8`, `func_80104B00`, `func_80104D48`; SHOUGATU `func
 - **Constant folding that the original does not do** (RPG_BAT `func_80132B34`): the original stores `x + 0x30` and `y - 0xB0` computed from registers that hold 0x84 and 0x6C; uopt folds them in every C form tried (locals, chain, store read-back).
 - **Do-while word-clear loops** (RPG_BAT `func_8014EF8C`, `func_8014E994`, `func_8014F278`): start pointer in `v1`, end in `v0`, and a 24-record byte loop kept rolled in straight store order. IDO gives start `v0`/end `v1` (the pointer is a named local with a lower bit than the hoisted end), unrolls the record loop or rotates its stores. Not a register-allocation row alone: both loop kinds need a different source shape.
 - **Open tooling points:** `funcdiff.py` printed `MATCH (relocations resolved)` once for TT `func_80149B20` while the machine was loaded (a first run that took more than ten minutes); the identical source later gave 62 differing lines and a failing TT unit sha1. Treat any `MATCH` as unconfirmed until `ninja` ends with the unit `OK`. `permute.py` refuses bases whose instruction count differs by one (seen four times here), which hides the near misses with a single missing instruction. TT `func_8014D260` (gcc `ratan2`) still needs the ASPSX division layout ([[gcc-objects]]).
+
+## Wave 15, list 1 (T-10710, w15-1)
+
+4 matches (1,068 bytes): main `menu_check_2`, GYOZI `func_8013E0A4`, TACO `func_8015CCC8`, ETC `func_8013E094`. About 17 guarded near misses (list in [[tickets/T-10710-wave-15-list-1]]); the rest are rows in [[data/t0018-cases]].
+
+Idioms that worked:
+- **Record view for the +0xF90 menu records.** `((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_06` with `MenuSelection5` for `count`/`current` (the idiom of `func_80050324`) matches `menu_check_2` once `sel = -1;` is written before `g->unk_1095[arg0] = -1;` (first use fixes the bit order, so `sel` gets `$v1` and the pointer expression `$a1`). The same views give `menu_check_1` with identical structure and loop; there the K&R product `(d - u8field) * d < 0` must be `(s32)(...) < 0` (an unsigned product is folded away), but d/cond/cnt registers still differ.
+- **Offset-first element address.** `i * 0x88 + (u8 *)D_8015EDB4` (written out at every use, no macro) gives `addu a1,a0,t5`; `D_8015EDB4[i]` and `i[D_8015EDB4]` give `addu a1,t5,a0` (TACO `func_8015CCC8`). This answers the regdiff hint "write the operands of the sum the other way round" when the sum is an array element address.
+- **Twin of a matched function in another overlay.** GYOZI `func_8013E0A4` is EVENT `func_8010F4B8` with the overlay's own callee names (`dupes.py` cannot see it because the callee names differ); the queue flag `apply:` names the twin.
+- **Two unused `s16` slots above a stack local** (ETC `func_8013E094`): a local `s16 base` that is only set in the first block of a function lands at sp+0x16, the original has it at sp+0x12; one unused `s32 pad;` declared first (marked FAKE) moves it by exactly 4 without growing the frame. The same trick failed for a `Lim3`/`MATRIX` local (TAIIKU `func_80147120`, TACO `func_8015B1B8`), where it grows the frame by 8.
+- **Locals for pointer globals hoist their loads.** TT `func_8013D150`: `p = D_80158A64; q = D_80158A6C; r = D_80158A70; t = D_80158A74;` at the top gives the original's four hoisted loads (99 of 99 instructions); written through the globals each access reloads (126 instructions).
+- **Pointer parameter types change the first instructions.** `initModelingData_init(s32 *arg0)` keeps `s3 = a0 + 4` as one instruction where `s32 arg0` computes it in `a0` first; the header declaration changes with it (`sync_protos.py --write`, and the alias `func_80058F0C` by hand).
+- **Array-indexed stores let loop-invariant global loads hoist** (RPG_BAT `func_80153A60`): `D_8011ECD0[i * 0x44 + 0x1107] = D_8015EC74` with an `&D_8011ECD0[i * 0x44] != D_80120650` do-while bound gives the original's 41 instructions; a `u8 *p` loop reloads inside the loop.
+
+Dead ends (rows in [[data/t0018-cases]]): the RotMatrix helpers (`func_8015D0D0`, DATE `func_8015A640`, `func_8015A980`) are hand-written libgte assembly (`addu` moves, `multu` + `nop nop`), see [[gcc-objects]]; every `lui at` pair that the original shares between D_8015EDC4/EDC8 or D_8015EDF0..EDFC needs the words as one C-defined struct, but the other RPG_BAT files read them as scalars; `InitMouse` needs a data range that `config/objects/main.txt` does not have for object 80059710; hoisting differences for scalars versus GameState fields (SHOUGATU `func_801347E0`, main `func_8006BA40`) change the base register of every field load.
+
+Tooling notes: `funcdiff.py` builds without `NON_MATCHING`, so a guarded draft reports `MATCH` (the `INCLUDE_ASM` fallback); use `regdiff.py` (it compiles the guarded variant and prints `MATCH` for identical instructions) or remove the guard before trusting `funcdiff`. `put2.py`-style replacement of a guarded definition keeps the guard; a stale `#else`/`#endif` pair from an earlier replacement broke one build in this wave (caught by `ninja`).
+## Wave 15, list 2 (T-10720)
+
+Ticket [[tickets/T-10720-wave-15-list-2]]. Recipe that matched TAIIKU `func_80137090` (slot loop over `D_80149208`, stride 0x24):
+- Reach the slot fields as members of the one defined object, indexed (`D_80149208.pad24[i * 0x24 + 6]`, `*(s32 *)&D_80149208.pad24[i * 0x24 + 0x18]`), not through a `u8 *p = (u8 *)&D_80149208 + ...` pointer. With the pointer IDO assumes the stores alias the s16 global `D_80120A72` and does not hoist its load; with member indexing it hoists the load into a1 as the original does.
+- Stack layout: each *used* scalar local takes a 4-byte slot (unused ones are removed). Locals are placed top-down in declaration order, so `i`, `lim`, `th` then a throw-away `s16 y` (used once) reproduced the original's `sp+0x2C`/`sp+0x24` copies and the 0x40 frame. A `u8 f` copy of a loaded flag adds a register copy (`move a2,a0`); leave it out.
+- Load order: `th.v[i] <= (y = ...)` puts the table load before the member load (`y >= th.v[i]` loaded y first).
+- dupes.py with `--lenient --apply --check --files <list>` copied 4 matches (GEKO `func_8013E69C`, `func_8013E760`, SHOUGATU `func_801366A4`, `func_80141AE8`); the plain run skipped them for declaration differences that the build accepts.
+Dead ends logged in [[data/t0018-cases]]: TT phantom a0/a1 constants (`func_8014A814`, `func_80147D08`, `func_80145370`), GameState field vs separate scalar promotion (`func_80136948`, `func_80137F48`), the `move s2,s3; addiu s2,s2,8` copy (TACO `func_801347F4`, TAIIKU `func_801406A8`). Tooling note: `tools/sync_protos.py --write` does not add a prototype for a newly C-defined main function that is called before its definition in the same file (main `func_8007BBE8` needed `void func_8007BBE8();` added by hand to main_api.h).
+
+## Wave 16, list 1 (T-10810, w16-1)
+
+4 matches (1,064 bytes): TAIIKU `func_80147210`, `func_80147120`; EN_NICHI `func_80134F2C`, `func_80135044`. Guarded near misses: EN_NICHI `func_80136A2C` (6 lines), main `func_80055A38` (10), TACO `func_8015B1B8` (8). Rows for the rest are in [[data/t0018-cases]].
+
+Idioms that worked:
+- **`for` with a comma-separated init decides the colour order.** TAIIKU `func_80147210`: `for (i = 0, v = D_8014A400, a = D_8011ECD0, d = D_8014A3DE; i < 3; i++, v += 0x1C, a += 0x44)` gives the original's allocation (i=v0, v=v1, a=a0, d=a1) and the original's init schedule (as1 schedules by source line). The same body as a do-while with the inits on separate lines gave the right instructions in the wrong registers for every statement order (`regdiff`: "unconstrained ranges are coloured in bit order", bit order is the order of first mention). An `(i + 1) * 8` operand is enough: do not add a separate `j += 8` counter, IDO strength-reduces it into the later-coloured temporary the original has.
+- **A loop exit test written through the index: `slti` instead of `bne`.** `for (sh = 0; sh < 8; sh++) w += *b++ << (sh * 4)` keeps the original's `slti at,a2,32` (the `sh += 4` form turns the test into `bne` against a hoisted constant). Backward `goto` loops (`L: ...; if (i < n) goto L;`) are never unrolled, which is how main `func_8004F4F0` keeps its three nibble loops rolled (108 of 109 instructions; not matched, see the row).
+- **Accesses through a struct array on the symbol, not through a local pointer, let loop-invariant loads hoist and keep the frame small.** TAIIKU `func_80147120`: `((Tk1C *)D_8014A400)[i].unk_14` for every access hoists `D_80120896` before the loop without a named local (a local `y` or a pointer `v` each add an 8-byte frame slot because every named scalar gets one). Only `i` and `lim` remain: frame 0x30, `lim` at sp+0x20.
+- **Declaration order moves stack locals: later-declared sits lower.** TACO `func_8015B1B8`: declaring `i, j` before `matrix` puts the MATRIX at sp+0x20 (frame 0x48 unchanged). Main `func_8004F4F0` needs two scalars above the bit buffer and four below (`row, sh, bits[0x90], src, ...`).
+- **The record pointer stays an expression when the original spills it.** EN_NICHI `func_80134F2C` / `func_80135044` use the file's `EN_OBJ(arg0)` macro at every access; a local `EnObj *e` gives frame 0x38 (the local keeps a home slot next to the spill slot at sp+0x28) where the original has 0x30. With the expression the pointer sits in `$v1` and is saved and reloaded around `func_800AE0D0` exactly as in the original. Statement order decides the ugen temporaries: `e->unk_28 = e->unk_08 * 2 + 4;` before `e->unk_2C = 0x80;` gives `lw t9` before `li t2` as in the original.
+- **Dead initial assignments set the colour order.** Main `func_80055A38`: writing `n = 0; b = 0; q = ...; p = ...; r = ...;` at the top (the loop re-assigns them) changes which local is coloured first; it cut the register diff from 26 to 10 fields. Not plain C that survives review as a final form, so the function stays guarded.
+- **`j` starts at 4 in unrolled-by-4 byte loops.** `for (j = 4; j < 0xF00; j++)` gives `li t0,4` and the original's `bne t0,t2`; with `j = 0` the counter starts at `move t0,zero` (the loop processes 0xEFC bytes, the last four bytes of the bank hold the checksum).
+
+Dead ends: see the T-10810 rows. The RPG_BAT trio needs a header change: the build already generates interior data symbols for C-defined data (`build/ovl/RPG_BAT_data_syms.ld`), so only `include/ovl/RPG_BAT.h` (`extern s32 D_8015EDF0`/`D_8015EDF4`) blocks a struct definition. TT `func_8014D260` stays blocked on the ASPSX division expansion ([[gcc-objects]]).
+
+Tooling notes: `regdiff.py --src` takes a path under the mounted scratch directory (`/scratch/<name>/draft.c` inside Docker); a scratch `rv.sh` that replaces the function's `INCLUDE_ASM` or its whole `#ifdef NON_MATCHING` block and runs regdiff made 5 to 10 s experiments possible. `permute.py` refuses a base whose instruction multiset differs from the target (it stopped on `li t0,0` against `li t0,4`).
+## Wave 16, list 2 (T-10820)
+
+Ticket [[tickets/T-10820-wave-16-list-2]]. Matched: VALEN `func_80132274`, SHOUGATU `func_80136078`, GEKO `func_8013A2EC`, RPG_BAT `func_801528DC`. Recipes that worked:
+- **Switch dispatch shell** (VALEN `func_80132274`): same shape as GYOZI `func_80138784` (call, `switch (D_800E6280.unk_1109)` over four handlers plus `func_80046500`, then seven calls). dupes.py skipped it; a hand copy with the GameState field name matched at once.
+- **Function-pointer table copy** (SHOUGATU `func_80136078`, GEKO `func_8013A2EC`): a local `FnTblN tbl` assigned from the overlay table, then `p = &tbl.f[idx]` compare/replace and `tbl.f[idx](0x80)`. Frame check: the original's table sits at `sp+0x34` / `sp+0x30`; a `void (**p)()` local and the double-test FAKE of `func_80134120` (T-4090: `if (!x && !x) {}`) give exactly that. For GEKO the decomp-permuter found the FAKE in the second `if` (permuter score 20 was a real match: scores of 20-25 can be 0 against the real build, always rebuild a candidate with `funcdiff` before dismissing it).
+- **Unsigned view of a signed GameState field** (RPG_BAT `func_801528DC`): `unk_110C` is `s8` in `GameState` but the original reads it with `lbu`/`sltiu`. `u8 *p = (u8 *)&D_800E6280.unk_110C;` and `*p` everywhere reproduced the promoted value in $v1 (a `(u8)` cast on each use did not). The loop compare also needed the operand order the original has: `while (D_80120650 != &D_8011ECD0[i * 0x44])` (the other order gives `bne a2,v0` instead of `bne v0,a2`).
+- **RPG_BAT `func_80153A60`** went from 41 register lines to 4 (kept `#ifdef NON_MATCHING`): same pointer view (`s32 *p = &D_8015EC74`), the swapped loop compare, and a FAKE dead local `dead = (*p >= 0x61)` with `else dead = 0` that holds $v0 so the pointer takes $v1 as in the original. Left: the original uses `slti at` and leaves $v0 unused.
+- **Permuter reach** (`tools/permute.py`): `invalid base ... instruction shape differs` means the guarded draft differs from the target by instructions, not registers (TAIIKU `func_8013AE14`, `func_80137228`, `func_8013C780`, TT `func_80147FD0`, ETC `func_80143F24`, TACO `func_801347F4`, ...); fix the shape first. A candidate with a dead-compare local (`int dead; ... (dead = (cmp))`) is the permuter's standard way of reserving a register; TT `func_80145370` went 20 -> 4 lines this way (constants then sit in a1/a2 instead of a0/a1; a3 for 0x70 still missing).
+- **dupes.py**: `--files` takes a comma-separated list. A space-separated list (zsh word splitting) silently scans nothing.
+
+Dead ends and shapes, rows in [[data/t0018-cases]]:
+- The four-function copy family (SHOUGATU `func_80136948`, GEKO `func_80137580`, DATE `func_80149F48`, SHUGAKU `func_80133038`): the original keeps the first load (an `s16`) in $v0 and the later loads in t5/t2/t1 (uopt colours). The permuter found a 22-line variant for GEKO (`u8 new_var` copy of the selector plus an empty test of `D_80144FA4`, kept under NON_MATCHING); the other three need the same trick.
+- Base register of an argument load (SHOUGATU `func_801347E0`, VALEN `func_80133670`, DATE2 `func_80136794`, EVENT `func_8010B614`): the original emits `lui rA; lbu a0,0(rA)` with the base in a different register, the GameState view emits `lui a0; lbu a0,3935(a0)`.
+- Frames: TACO `func_8013E424` (signature `(SVECTOR v, s32 c)`, frame 0x60 with 0x30 bytes of other locals) and GEKO `func_80144198` (no `sw a0` home store in the original; a 24-byte local table copy always gets one) keep their frames in INCLUDE_ASM.
+- The three DATE/TACO 416-byte rotation helpers (`func_8015A7E0`, `func_8015CF30`, `func_8015D270`) are the hand-written libgte routine ([[gcc-objects]]), not attempted.
+- Loops: ETC `func_80143758`, TT `func_8014A814` (phantom a0/a1 constants), TACO `func_80147B24` (index and pointer forms both 91 of 91 instructions, 92 differing lines of register choice), TAIIKU `func_801406A8`/TACO `func_801347F4` (`move s2,s3; addiu s2,s2,8`, now with six C variants for the shared base, none changes it).
+
+## T-10730 big-function batch (a15)
+
+Three integrated matches add 6,044 text bytes: `read_bustup`,
+`func_8006F524`, and `func_8006FB4C`. The complete Docker build verified
+27/27 units after integration. Current retained near misses are
+`func_8007EF48` (three scheduling pairs) and `func_80082764` (two commutative
+addition operand orders), both below thirty funcdiff lines.
+
+All 21 assigned functions received an initial draft, regdiff and type/control
+flow iterations. The broad drafts remain in `scratchpad/a15/`; the exact
+seed names and per-function evidence are in `scratchpad/a15/HANDOFF.md`.
+See [[decompile-workflow]] for shared dialogue, choice-row, motion-record,
+bitfield, frame and selector idioms. No T-0018 rows are added: the retained
+gaps are scheduling or operand ordering, and the broad drafts still have
+source-shape differences rather than an isolated allocator failure.
+
+DATE `func_8013272C` now passes its complete overlay SHA1 in an isolated
+scratch build (`b5fb83738364a317a590735578f5878077fcda3d`). DateFlag17 fixed the
+last temporary gap. A DateSelectionView over byte slots at D_800CA2F8/+4
+then fixed one comparison operand swap that only appeared in the complete
+source file. The unsigned-load pass tracks rewritten global locations across
+procedures; this is a concrete reason to verify complete objects/units.
+Its inherited void prototype conflicts with the recovered signed result, and
+the append-only exception remains pending. `scratchpad/a15/date-match-pending.diff`
+contains the exact body and one-line prototype correction. Source stays
+INCLUDE_ASM, so this fourth verified scratch match is excluded from the
+three integrated matches and progress total above.
+
+Full-file NON_MATCHING verification at the final review gives eight resolved
+funcdiff lines for func_8007EF48 and six for func_80082764. The latter includes
+one load-scheduling pair in addition to the standalone addition operand-order
+pairs. Both compile with all existing guarded drafts enabled and satisfy the
+retention threshold.
+## Big functions 3 (T-10830, a16)
+
+Ticket [[tickets/T-10830-big-functions-3-astra]]. Accepted: all 29 assigned
+BUNKASAI functions, 36,716 official progress bytes. The four owned BUNKASAI
+objects pass real resolved funcdiff and the complete 27-unit checksum build.
+Progress is `5215/6958  1003464/2279368  44.0%`. No new T-0018 rows: the
+remaining cases still have structural, access-width, declaration, or data
+ownership differences rather than an isolated compiler register-order proof.
+
+Reusable findings are in [[decompile-workflow]] under T-10830. Appended
+DateMovieWork and DateMovieHeader8 to DATE.h, EventMovieState to EVENT.h,
+and four later-defined scene-helper declarations to BUNKASAI.h. The matching
+BUNKASAI idioms use stored-member call arguments, the existing return-flag
+bit fields in target store order, and Rec38 bit-field accesses. No new FAKEs
+were needed in the 29 accepted bodies. The 80143770 object keeps a justified
+K&R call override for func_80083440, whose callee narrows the argument.
+
+Eight compile-checked research seeds are retained in scratchpad/a16/handoff/.
+Its README distinguishes real diffs from normalized rankings, valid corrected
+seeds from numerically closer but unfaithful experiments, and the inherited
+13-line bounce guards from broad drafts. Do not paste the smaller movie
+handlers without reconciling their inherited void prototypes; observed zero
+returns were hidden by that declaration view. The bounce ownership probes
+need data-island/YAML integration outside this batch and used dummy data
+initializers only to investigate code generation. Keep those probes out of
+source. EVENT 8011C750's omitted empty state-10 case was recovered from its
+jump table; all six large movie draft outer case lists were audited.
+
+The exploratory permuter's assignment-splitting pass can change
+`phase = phase + 1` to a transition to 2. That candidate is rejected even if
+its search score improves. The pass is disabled in subsequent a16 scratch
+searches; project tools are unchanged. All bounded movie searches completed
+without another acceptable source candidate. The final checks and inline
+standards review pass; the ticket is Done after more than four hours of work.
+
+## Wave 17, astra easiest-first (T-10850, a17)
+
+Five literal-byte matches (936 bytes): EVENT `func_80104DB4` (176), GYOZI `func_80137E84` (196), KANGEI `func_80136970` (180), OPTION `func_80139878` (148), SHOUGATU `func_8013DDD0` (236). Final totals and verification are recorded in [[tickets/T-10850-wave-17-astra]]. All 69 assigned functions have a compiling draft and resolved diff in `scratchpad/a17/attempts/`.
+
+- GYOZI's copied text table is a 0xCC3-byte aggregate. Declaring the scalar girl index before the aggregate reproduces the frame and copy sequence without padding tricks.
+- SHOUGATU copies a 23-entry callback table. A typed 0x44 counter record (byte +7, signed halves +8/+0x16/+0x18) allows the original load ordering; the implicit-int/no-return form preserves its epilogue.
+- KANGEI's final operand swaps need a shared unsigned constant and a separate byte local for the post-call selector. Merely reversing the source comparisons did not work. The constant steering is marked FAKE.
+- EVENT's six record-flag updates match with the loop header and its preceding store on one source line. That scheduling dependency is marked FAKE. Removing m2c's spurious arguments to `func_80011DFC` is also necessary.
+- OPTION's byte update needs an empty conditional between the raw sum and its truncated uses. It separates their live ranges and is marked FAKE. Removing the test, using an empty scope, chaining the stores, or capturing the assignment loses the match; the permuter's float cast and unused constant were unnecessary and removed. The full OPTION checksum passed.
+- TAIIKU's four contiguous 0x1C slot records at `D_8014A454` are all zero-initialized owned data. A 0x70-byte C definition preserves the overlay checksum and removes the repeated `$at` loads from its tick updater. The remaining loop-bound/register scheduling miss is kept separately from this confirmed data-layout result.
+- For register diagnostics, use a scratch translation unit that disables unrelated NON_MATCHING guards; this makes the traced function correspond to the default-build candidate being compared. The new function-level harness also checks that the installed source stayed unchanged during verification.
+
+Known unchanged blockers: `InitMouse` and `menu_bar_color` need owned data outside the available object data ranges; the three DATE/TACO rotation helpers are handwritten SDK assembly; TT `func_8014D260` retains the documented ASPSX division-expansion gap. No object configuration or tool files were changed.
+
+Final near-miss retention: main byte checksum and GYOZI counter each differ by four listing lines; TAIIKU tick updater also differs by four. ETC selector improved from 24 to 14 lines; simplifying its marked zero-valued comparison loses that improvement. The extra owned GYOZI sprite initializer improved from 101 to 19 lines with a documented 0x44 record view. The menu helper keeps its compatible s8 return because s32 breaks its matched caller. Thirty-four case rows record these and other remaining patterns in [[data/t0018-cases]].
+## Wave 17, list 1 (T-10910)
+
+Ticket [[tickets/T-10910-wave-17-list-1]]. Matched (4 functions, 1,476 bytes): RPG_BAT `func_80153A60` (168), TT `func_8014A814` (228), TT `func_80147D08` (524), TAIIKU `func_801339C4` (556). All four came from long `tools/permute.py` runs on guarded near-miss drafts, then a manual strip of the permuter noise. The recipes are FAKE-tagged in the sources.
+
+What worked:
+- **Long permuter runs (900 s, `-j 3..4`) on guarded near misses with a base score of 25-45** found the answer where 240 s runs and a day of manual variants had not: RPG_BAT `func_80153A60` (base 45 -> 10, verified MATCH), TAIIKU `func_801339C4` (30 -> 10, MATCH), TT `func_8014A814` (110 -> 0, verified by the tool). A candidate with score 10 is a real match when the only leftovers are the permuter's stripped-unit effects; always rebuild it and run `funcdiff --resolve`. Bases above ~300 (loads in another order, frames) did not converge in the same time. `permute.py` cannot see data the C file defines itself, so its base score for such functions is meaningless (TAIIKU `func_801368B8` showed 6760 for a 2-row diff).
+- **Phantom a0/a1 constants (TT `func_8014A814`, `func_80147D08`)**: a dead pair inside the loop, `new_var = D_80158A80 && D_80158A80;` early and `if (new_var && D_80158A80) {}` a few stores later, reserves two registers without emitting code, so the hoisted constants start at a2 as in the original. Both statements are needed, neither alone nor a single `if (G) {}` works. In `func_80147D08` the second loop needs its own pointer (`q`), otherwise the pointer shares $v1 with the first loop's `p`. The loop counter must stay shared between the two loops, or loop 1 turns from `slti at,v0,3` into `bne v0,t4`.
+- **Dead copy + empty branch (RPG_BAT `func_80153A60`)**: `(dead = *p) >= 0x61` keeps the compare as `slti at`, and an `if (0) {}` right before `i++` moves the table pointer to $v1.
+- **Selector through a pointer (TAIIKU `func_801339C4`)**: `sel = *(ptr = &D_800E6280.unk_F80) & 0xF000; switch (sel)` puts the selector load into $v1 (the "switch selector $v1 vs $v0" T-0018 shape).
+
+Levers found but not finished:
+- **Own data fixes the copy-chain family's schedule.** DATE `func_80149F48`, GEKO `func_80137580`, SHOUGATU `func_80136948` (and SHUGAKU `func_80133038`) copy globals the object itself owns. After `tools/data_island.py <UNIT>/<addr>` and C definitions for the twelve (six) variables (their initial words are the pointers 0x801B9DA0/0x801B9EA8/0x801BA2C8 and zeros), the instruction order, the shared `lui at` and the interleaving all match (43 of 43 instructions, only registers differ); with the extern declarations every variant tried was out of order. With `new_var = F5F; D = new_var; D = D * 3 + k;` on the destination the first copy also gets $v0. What remains is one puzzle: the original loads the first of the three "constant pointer" globals into the uopt colour t5 and the other two into ugen t6/t7, and keeps the product in a uopt range (sll t9; subu t1); every statement order (630 orders), local, dead-pair and type variant tried (3,000 compiles) keeps the first of the three as a ugen temp.
+- **Frame homes for promoted locals** (BUNKAKEN `func_80145550`, GEKO `func_80144198`, TAIIKU `func_80139FE4`): the original's local tables sit 4-16 bytes lower than ours. In exp files a pad declared before the scalar (`u8 q[4]`) shifts them exactly, but in the full function two `+= 2` statements raise the frame by 8 again; GEKO `func_80144198` gets the frame right with `s32 pad[2]` before the scalars and the table last, but keeps the `sw a0,64(sp)` home store the original does not have.
+- ETC `func_80143F24`: a 280-point base reached 40 after 900 s (chain assignment `((u8 *)base)[i*0x24+0x14] = ... [0x15] = ... [0x16] = D_800E6280.unk_03A` through a `s32 *base` local): the value now lands in $a1 as in the original, 24 lines left (pointer $v0 vs $v1, the `lui v0` of D_80150138 not hoisted); kept as the older guarded draft.
+- Near misses kept guarded (INCLUDE_ASM fallback): main `func_800764AC` (24 lines), DATE `func_80149F48`, GEKO `func_80137580`, SHOUGATU `func_80136948` (14-15 lines each). Everything else on the list got its m2c draft, a build and a funcdiff; the three libgte rotation helpers (DATE `func_8015A7E0`, TACO `func_8015CF30`, `func_8015D270`) were re-read and are hand-written assembly, not compiled C.
+- Tooling: `permute.py` scores for functions that need the object's own data defined in C are unreliable (TAIIKU `func_801368B8` base 6760 for a 2-row diff); `funcdiff` row counts are in rows, `--resolve` lines in instructions. With the machine at load 40 a 3,000-compile exp grid takes hours: keep grids under ~600 compiles.

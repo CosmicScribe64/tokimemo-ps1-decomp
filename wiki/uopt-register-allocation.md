@@ -1,6 +1,6 @@
 ---
 type: research
-updated: 2026-10-12
+updated: 2026-10-13
 ticket: T-9800
 sources: ["tools/ido-ecvt.patch", "tools/uopt_eval.py", "tools/regdiff.py"]
 ---
@@ -431,7 +431,7 @@ all findings are resolved. No commits, stashes or branches were created.
 ## regdiff: the trace as a diagnostic tool (T-10400)
 
 `tools/regdiff.py` ([[decompile-workflow]], section "regdiff") puts the T-9800 trace to work for a single draft. It
-compiles the stripped function through `tools/cc.py` (the exact build pipeline) with the traced uopt, links each
+compiles the full translation unit through `tools/cc.py` (T-10840: retain file-scope data and helpers) with the traced uopt, links each
 register difference to a live range of the trace and prints the range's priority, order and colour against the
 competing range, with a hint from the rules above. Nothing about the traced uopt enters the repository; the default
 path is `/scratch/r9-uopt/variants/trace`, built with the recipe at the top of this page, and it runs in the normal image.
@@ -487,7 +487,7 @@ T-10020, and a `GameState *` local), the same remedy.
 
 Survey of the whole best-draft manifest of T-9800 (163 drafts): all 163 drafts ran without a failure (traced compile 2.9 s on average, analysis 0.2 s, at load average 20 to 55): 5 identical, 4 operand order only, 25 register differences only, 127 with other instruction differences as well (14 of them without any register difference), 2 with nothing found. Of the 138 first register divergences, 49 are ugen temporaries (t6..t9 and $at), 46 priority order, 19 an extra or missing live range, 14 without a matching range and 10 ties.
 
-Speed: the traced compile of the stripped function takes 1.5 to 2 s on an idle machine, the whole call about
+Historical stripped-function timing (T-10400; T-10840 now retains the full file): the traced compile takes 1.5 to 2 s on an idle machine, the whole call about
 3 s inside a running container (cached original object) and 6 to 12 s from the shell at load average 20 (container start,
 imports, symbol lookup). `regdiff.run` can be called repeatedly from one container to try variants.
 

@@ -108,7 +108,93 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80112750);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80112930);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80112BEC);
+/* FAKE: a signed narrow constant preserves the shared multiply/compare
+ * range. EventResultRow6 models the two signed three-halfword outputs.
+ * T-10870: the final message helper takes only its message id. */
+void func_80112BEC(void) {
+    s16 three = 3;
+    s32 choice_offset;
+    EventStateView *g;
+
+    g = (EventStateView *)&D_800B0860;
+    D_8009473C = D_80124200;
+    D_80094740 = D_8012426C;
+    D_80094744 = D_801242D8;
+    func_80078970(D_80094784, "美術館");
+    D_801252E8 = three;
+    if ((g->unk_035 == 0x61) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+        (*(u8 *)&D_8012531C) = 2;
+        D_801252F4 = 1;
+        func_80078970(D_800947C4, "ガーキー展");
+        if (g->unk_1A4[g->unk_EE6].pad18[7] != 0) {
+            (*(u8 *)&D_8012531C) = 5;
+        }
+        D_800EECE4 = 0xB;
+        if (g->unk_EE6 == 7) {
+            D_80094730 = 2;
+        }
+    } else if ((g->unk_035 == 0x61) && ((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U)) {
+        (*(u8 *)&D_8012531C) = three;
+        D_801252F8 = 1;
+        func_80078970(D_800947C4, "彫塑展");
+        if (g->unk_1A4[g->unk_EE6].pad18[8] != 0) {
+            (*(u8 *)&D_8012531C) = 5;
+        }
+        D_800EECE4 = 0xC;
+        if (g->unk_EE6 == 7) {
+            D_80094730 = 4;
+        }
+    } else if ((g->unk_035 == 0x5F) && ((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+        (*(u8 *)&D_8012531C) = 4;
+        D_801252FC = 1;
+        func_80078970(D_800947C4, "有名画家展");
+        if (g->unk_1A4[g->unk_EE6].pad18[9] != 0) {
+            (*(u8 *)&D_8012531C) = 5;
+        }
+        D_800EECE4 = 0xD;
+        if (g->unk_EE6 == 7) {
+            D_80094730 = 4;
+        }
+    } else if (!(g->unk_1A4[g->unk_EE6].pad18[6] & 1)) {
+        (*(u8 *)&D_8012531C) = 0;
+        func_80078970(D_800947C4, "館内");
+        D_800EECE4 = 0xA;
+    } else {
+        (*(u8 *)&D_8012531C) = 1;
+        func_80078970(D_800947C4, "館内");
+        D_800EECE4 = 0xA;
+        if (g->unk_EE6 == 7) {
+            D_80094730 = 2;
+        }
+    }
+    choice_offset = (*(u8 *)&D_8012531C) * three;
+    ((EventResultRow6 *)&D_8012439C)->value[0] = (s16) *(u8 *)((g->unk_EE6 * 0xF) + D_801251D0 + choice_offset);
+    ((EventResultRow6 *)&D_8012439C)->value[1] = (s16) *(u8 *)((u8 *)((g->unk_EE6 * 0xF) + D_801251D0 + choice_offset) + (1));
+    ((EventResultRow6 *)&D_8012439C)->value[2] = (s16) *(u8 *)((u8 *)((g->unk_EE6 * 0xF) + D_801251D0 + choice_offset) + (2));
+    ((EventResultRow6 *)&D_8012438C)->value[0] = (s16) *(u8 *)((g->unk_EE6 * 0xF) + D_801251D4 + choice_offset);
+    ((EventResultRow6 *)&D_8012438C)->value[1] = (s16) *(u8 *)((u8 *)((g->unk_EE6 * 0xF) + D_801251D4 + choice_offset) + (1));
+    ((EventResultRow6 *)&D_8012438C)->value[2] = (s16) *(u8 *)((u8 *)((g->unk_EE6 * 0xF) + D_801251D4 + choice_offset) + (2));
+    if ((*(u8 *)&D_8012531C) == 5) {
+        switch (g->unk_EE6) {
+        default:
+            ((EventResultRow6 *)&D_8012438C)->value[0] = ((EventResultRow6 *)&D_8012438C)->value[1] = ((EventResultRow6 *)&D_8012438C)->value[2] = three;
+            ((EventResultRow6 *)&D_8012439C)->value[0] = ((EventResultRow6 *)&D_8012439C)->value[1] = ((EventResultRow6 *)&D_8012439C)->value[2] = three;
+            break;
+        case 1: case 3: case 7: case 8:
+            ((EventResultRow6 *)&D_8012438C)->value[0] = ((EventResultRow6 *)&D_8012438C)->value[1] = ((EventResultRow6 *)&D_8012438C)->value[2] = 4;
+            ((EventResultRow6 *)&D_8012439C)->value[0] = ((EventResultRow6 *)&D_8012439C)->value[1] = ((EventResultRow6 *)&D_8012439C)->value[2] = 4;
+            break;
+        }
+        if ((g->unk_EE6 == three) && (D_801252F4 != 0)) {
+            ((EventResultRow6 *)&D_8012439C)->value[0] = ((EventResultRow6 *)&D_8012439C)->value[1] = ((EventResultRow6 *)&D_8012439C)->value[2] = three;
+        }
+        if (g->unk_EE6 == 0xA) {
+            D_80094730 += 1;
+        }
+    }
+    func_800469F4(0x445D);
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801130F0);
 
@@ -381,7 +467,99 @@ void func_80115BD8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80115C18);
+void func_80115C18(void) {
+    EventStateView *g;
+    s32 temp_t0;
+    s32 temp_t1;
+    s32 temp_t1_2;
+    s32 temp_t8;
+    s32 temp_t9;
+
+    g = (EventStateView *)D_800B0860;
+    func_80078970(D_800947C4, "遊園地");
+    if ((u8) D_80125320 == 0) {
+        func_80078970(D_80094784, "ジェットコースター");
+        if (!(D_800B0A04[g->unk_EE6].pad28[0] & 1)) {
+            D_8012531C = 0;
+        } else {
+            D_8012531C = 1;
+        }
+        temp_t1 = D_8012531C * 3;
+        ((EventResultRow6 *)&D_8012439C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t1);
+        ((EventResultRow6 *)&D_8012439C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t1 + 1);
+        ((EventResultRow6 *)&D_8012439C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t1 + 2);
+        ((EventResultRow6 *)&D_8012438C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t1);
+        ((EventResultRow6 *)&D_8012438C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t1 + 1);
+        ((EventResultRow6 *)&D_8012438C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t1 + 2);
+        D_800EECE4 = 0x14;
+        return;
+    }
+    if ((u8) D_80125320 == 3) {
+        func_80078970(D_80094784, "絶叫マシーンビビール");
+        if (!(D_800B0A04[g->unk_EE6].pad28[3] & 1)) {
+            D_8012531C = 0;
+        } else {
+            D_8012531C = 1;
+        }
+        temp_t0 = D_8012531C * 3;
+        D_800EECE4 = 0x17;
+        ((EventResultRow6 *)&D_8012439C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t0 + 18);
+        ((EventResultRow6 *)&D_8012439C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t0 + 19);
+        ((EventResultRow6 *)&D_8012439C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t0 + 20);
+        ((EventResultRow6 *)&D_8012438C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t0 + 18);
+        ((EventResultRow6 *)&D_8012438C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t0 + 19);
+        ((EventResultRow6 *)&D_8012438C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t0 + 20);
+        return;
+    }
+    if ((u8) D_80125320 == 1) {
+        func_80078970(D_80094784, "ゴーストハウス");
+        if (!(D_800B0A04[g->unk_EE6].pad28[1] & 1)) {
+            D_8012531C = 0;
+        } else {
+            D_8012531C = 1;
+        }
+        temp_t8 = D_8012531C * 3;
+        D_800EECE4 = 0x15;
+        ((EventResultRow6 *)&D_8012439C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t8 + 6);
+        ((EventResultRow6 *)&D_8012439C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t8 + 7);
+        ((EventResultRow6 *)&D_8012439C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t8 + 8);
+        ((EventResultRow6 *)&D_8012438C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t8 + 6);
+        ((EventResultRow6 *)&D_8012438C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t8 + 7);
+        ((EventResultRow6 *)&D_8012438C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t8 + 8);
+        return;
+    }
+    if ((u8) D_80125320 == 4) {
+        func_80078970(D_80094784, "バーチャルシップ");
+        if (!(D_800B0A04[g->unk_EE6].pad28[4] & 1)) {
+            D_8012531C = 0;
+        } else {
+            D_8012531C = 1;
+        }
+        temp_t1_2 = D_8012531C * 3;
+        D_800EECE4 = 0x18;
+        ((EventResultRow6 *)&D_8012439C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t1_2 + 24);
+        ((EventResultRow6 *)&D_8012439C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t1_2 + 25);
+        ((EventResultRow6 *)&D_8012439C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t1_2 + 26);
+        ((EventResultRow6 *)&D_8012438C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t1_2 + 24);
+        ((EventResultRow6 *)&D_8012438C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t1_2 + 25);
+        ((EventResultRow6 *)&D_8012438C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t1_2 + 26);
+        return;
+    }
+    func_80078970(D_80094784, "観覧車");
+    if (!(D_800B0A04[g->unk_EE6].pad28[2] & 1)) {
+        D_8012531C = 0;
+    } else {
+        D_8012531C = 1;
+    }
+    temp_t9 = D_8012531C * 3;
+    D_800EECE4 = 0x16;
+    ((EventResultRow6 *)&D_8012439C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t9 + 12);
+    ((EventResultRow6 *)&D_8012439C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t9 + 13);
+    ((EventResultRow6 *)&D_8012439C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + temp_t9 + 14);
+    ((EventResultRow6 *)&D_8012438C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t9 + 12);
+    ((EventResultRow6 *)&D_8012438C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t9 + 13);
+    ((EventResultRow6 *)&D_8012438C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + temp_t9 + 14);
+}
 
 void func_8011630C(void) {
     if (D_80125300 == 0) {
@@ -1376,7 +1554,72 @@ void func_8011B09C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011B190);
+void func_8011B190(void) {
+    s16 i;
+    EventParticleView44 *p;
+
+    if ((u8)((EventMovieWork *)D_800F1990)->unk_19 == 1) {
+        for (i = 11; i < 16; i++) {
+            ((EventEffectTables *)D_800B0860)->unk_13A8[i] = -1;
+            ((EventEffectTables *)D_800B0860)->unk_13A8[i + 32] = -1;
+        }
+        ((EventMovieWork *)D_800F1990)->unk_06 = 0;
+    } else {
+        for (i = 21; i < 26; i++) {
+            ((EventEffectTables *)D_800B0860)->unk_13A8[i] = -1;
+            ((EventEffectTables *)D_800B0860)->unk_13A8[i + 16] = -1;
+        }
+        ((EventMovieWork *)D_800F1990)->unk_04 = 0;
+    }
+    D_80125864 = 0x80;
+    D_800EECF0 = 1;
+    D_8012585C = 0;
+    D_80125860 = 1;
+    func_80110094();
+    func_80012D64(D_80094710, 15, 1, 2, 0);
+    ((EventParticleView44 *)D_800E9620)[31].unk_43 = 15;
+    ((Rec24 *)D_800EC190)[0].unk_12 = 0x1EF;
+    ((Rec24 *)D_800EC190)[1].unk_12 = 0x1EF;
+    for (i = 16; i < 32; i++) {
+        func_80012D64(D_80125280, i & 0xFF, 1, 0, i - 16);
+    }
+    func_80012D64(D_80125284, 14, 1, 0, 0);
+    func_80012D64(D_80125288, 13, 1, 0, 0);
+    for (i = 0; i < 10; i++) {
+        func_800189C4(i + 96);
+        p = (EventParticleView44 *)D_800E9620 + i;
+        p[96].unk_01 = 13;
+        p[96].unk_02 = 1;
+        p[96].unk_38 = 0x1000000;
+        p[96].unk_03 = 4;
+        p[96].unk_0C = D_80125274;
+        p[96].unk_10 = D_80125278;
+        p[96].unk_34 = D_80125270;
+        p[96].unk_14 = D_8012527C;
+        p[96].unk_16 = 3;
+        p[96].unk_18 = 0;
+        p[96].unk_06 = 1;
+        p[96].unk_43 = 0;
+        p[96].unk_24.h[1] = (func_800789A0() % 256) - 0x80;
+        p[96].unk_28.h[1] = 0xA0;
+        p[96].unk_07 = 0;
+        p[96].unk_05 = 0x80;
+        p[96].unk_04 = 8;
+        p[96].unk_2C = (func_800789A0() % 0x8000) - 0x4000;
+        D_801257DC[i] = ((u32)-(func_800789A0() % 9) << 16) - 0x280000;
+    }
+    ((EventParticleView44 *)D_800E9620)[96].unk_03 |= 0x80;
+    func_8004C46C(D_8012528C, D_80125290, D_80125294, D_80125298, D_8012529C, D_801252A0);
+    for (i = 0; i < 6; i++) {
+        ((Rec24 *)D_800EC190)[i + 4].unk_00 &= 0x7FFFFFFF;
+        ((Rec24 *)D_800EC190)[i + 4].unk_12 = 0x1EE;
+        ((EventEffectTables *)D_800B0860)->unk_1031[i] = 12;
+    }
+    for (i = 0; i < 6; i++) {
+        ((Rec24 *)D_800EC190)[i + 4].unk_14 = ((Rec24 *)D_800EC190)[i + 4].unk_15 = ((Rec24 *)D_800EC190)[i + 4].unk_16 = 0x80;
+    }
+    func_80011DFC();
+}
 
 void func_8011B588(void) {
     func_80046B88(0x3E8);
@@ -1400,7 +1643,57 @@ void func_8011BDC8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011BE00);
+void func_8011BE00(void) {
+    s32 drift;
+    s16 size_variant;
+    s16 i;
+    s32 scale;
+    s32 divisor;
+    s32 random_span;
+    s32 choice;
+    GsWord *position;
+
+    if (D_8012531C == 2) {
+        func_80012D64(D_801252DC, 0x12, 1, 2, 0);
+    } else {
+        func_80012D64(D_801252E0, 0x12, 1, 2, 0);
+    }
+    for (i = 0; i < 0x14; i++) {
+        func_800189C4(i + 0x62);
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_38 = 0x01000000;
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_01 = 0xD;
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_02 = 1;
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_03 = 4;
+        if (D_8012531C == 2) {
+            ((EventParticleView44 *) D_800E9620)[i + 98].unk_0C = (s32) D_801252C4;
+            ((EventParticleView44 *) D_800E9620)[i + 98].unk_10 = (s32) D_801252CC;
+            ((EventParticleView44 *) D_800E9620)[i + 98].unk_34 = (s32) D_801252BC;
+        } else {
+            ((EventParticleView44 *) D_800E9620)[i + 98].unk_0C = (s32) D_801252C8;
+            ((EventParticleView44 *) D_800E9620)[i + 98].unk_10 = (s32) D_801252D0;
+            ((EventParticleView44 *) D_800E9620)[i + 98].unk_34 = (s32) D_801252C0;
+        }
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_16 = (s16) (func_800789A0() % 8);
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_43 = 0x12;
+        choice = func_800789A0() % 2;
+        scale = 0x1000 / ((s32) ((((s16) choice) * 2) + 2));
+        size_variant = (s16) choice;
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_1A = (s16) scale;
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_1C = (s16) scale;
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_07 = 0x80;
+        position = &D_80125868[i];
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_24.h[1] = (s16) ((func_800789A0() % 300) - 0x96);
+        position->w = (s32) ((EventParticleView44 *) D_800E9620)[i + 98].unk_24.w;
+        random_span = func_800789A0();
+        divisor = size_variant + 1;
+        drift = ((s32) (((((func_800789A0() % 2) * 2) - 1) * (random_span % 8)) + 8)) / divisor;
+        position->h[1] = (s16) (((s16) position->h[1]) + drift);
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_28.h[1] = (s16) ((func_800789A0() % 160) - 0x78);
+        ((EventParticleView44 *) D_800E9620)[i + 98].unk_30 = (s32) (0x8000 / divisor);
+    }
+
+    func_80011DFC();
+}
 
 void func_8011C11C(void) {
     s16 i;

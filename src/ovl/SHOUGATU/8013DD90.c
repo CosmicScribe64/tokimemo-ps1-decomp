@@ -14,7 +14,21 @@ void func_8013DD90(void) {
     D_80145FE0 = 0x801A0000;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013DD90", func_8013DDD0);
+s32 func_8013DDD0(void) {
+    s32 index;
+    ShoCallbacks23 table;
+
+    table = D_80145FE8;
+    index = D_800E6280.unk_110A;
+    table.f[index](0x80);
+    ((ShoCounter44 *)D_80120650)->unk_07 = D_800B593C;
+    if (((ShoCounter44 *)D_80120650)->unk_18 == 0 && ((ShoCounter44 *)D_80120650)->unk_08 == 0) {
+        ((ShoCounter44 *)D_80120650)->unk_16++;
+        if (((ShoCounter44 *)D_80120650)->unk_16 >= 3) {
+            ((ShoCounter44 *)D_80120650)->unk_16 = 0;
+        }
+    }
+}
 
 void func_8013DEBC(void) {
     func_80044750(0x204);

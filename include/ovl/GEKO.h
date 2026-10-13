@@ -731,4 +731,9 @@ typedef struct GekoThresholds {
 } GekoThresholds; /* size 0x16 */
 extern GekoThresholds D_80144CE0;
 s32 func_80132A4C(s16 arg0);
+void func_8013E69C(void);
+void func_8013E760(void);
+
+void func_8013A2EC(void);
+void func_8013A668(void);
 #endif

@@ -10196,6 +10196,2537 @@ One T-0018 row records the remaining large MASTER register issue. The eleven
 unmatched seeds compile with final headers in the handoff; source retains
 only the two original small guarded movie near misses. Changes are uncommitted.
 
+## [2026-10-12] ticket | T-10710 wave 15 list 1
+Started [[tickets/T-10710-wave-15-list-1]] (batch agent w15-1).
+
+## [2026-10-12] build | T-10710 wave 15 list 1 done
+4 functions matched (1,068 bytes: `menu_check_2`, GYOZI `func_8013E0A4`, TACO `func_8015CCC8`, ETC `func_8013E094`), about 12 guarded near misses, 34 rows added to [[data/t0018-cases]], notes in [[matching-notes]]. Ticket [[tickets/T-10710-wave-15-list-1]] moved to Done after the inline review. Progress `grand total 5180/6958 962584/2279368 42.2%`; 27 SHA1 checks, headers and globals OK.
+## [2026-10-12] ticket | T-10720 started
+Wave 15 list 2 begun, see [[tickets/T-10720-wave-15-list-2]].
+
+## [2026-10-12] build | T-10720 wave 15 list 2 done
+[[tickets/T-10720-wave-15-list-2]]: 6 functions matched (4172 bytes: GEKO `func_8013E69C`/`func_8013E760`, SHOUGATU `func_801366A4`/`func_80141AE8` via dupes, TAIIKU `func_80137090`, RPG_BAT `func_8014D380`), 10 near misses kept as NON_MATCHING, rows added to [[data/t0018-cases]], recipe in [[matching-notes]]. ninja 27/27 OK. Status Done after inline review.
+
+## [2026-10-12] ticket | T-10810 wave 16 list 1
+Started [[tickets/T-10810-wave-16-list-1]] (batch agent w16-1).
+
+## [2026-10-13] build | T-10810 wave 16 list 1 done
+4 functions matched (1,064 bytes: TAIIKU `func_80147210`, `func_80147120`; EN_NICHI `func_80134F2C`, `func_80135044`), 4 guarded near misses (EN_NICHI `func_80136A2C`, main `func_80055A38`, TACO `func_8015B1B8`, `func_8015BF70`), 13 rows added to [[data/t0018-cases]], idioms in [[matching-notes]]. Ticket [[tickets/T-10810-wave-16-list-1]] moved to Done after the inline review. Progress `grand total 5184/6958 963648/2279368 42.3%`; ninja complete, headers, globals and `sync_protos.py --check-branch` OK.
+## [2026-10-12] ticket | T-10840 In Progress
+Created [[tickets/T-10840-wave-13-15-tool-fixes]] and its board/index entries after reading the shared tooling16 brief and required project pages. Work owns tools/tests/wiki only; edits remain uncommitted.
+
+## [2026-10-12] decision | T-10840 MATCH requires literal bytes
+Investigation found guarded C using asm fallback, normalized string/table references admitting diagnostic equality, cached freshness, shared expected outputs, folded zero words, and local-label truncation hazards in tools/funcdiff.py. Historical loaded-run races are not reproducible from the report alone. Private object snapshots, serialized/atomic expected builds, complete ELF-bounded disassembly and a private unit link against immutable target bytes now gate MATCH. Equal-length diffs show both sides of scheduling swaps. [[decompile-workflow]] documents the new controls.
+
+## [2026-10-12] build | T-10840 first regression checkpoint
+Docker incremental ninja finished with all 27 unit checksums OK. Targeted suites passed: funcdiff/proof 60, regdiff 42 (including actual file-scope-data compile with the patched trace uopt), permute 52, sync_protos 71. Additional race/static/local-label regressions and clean verification follow. Guarded TAIIKU func_801368B8/func_80137228 report DIFF; default func_801368B8 and main func_8007BBE8 pass literal linked-byte proof. Details in [[tickets/T-10840-wave-13-15-tool-fixes]].
+
+## [2026-10-12] ticket | T-10840 In Progress -> In Review
+Five fixes implemented with synthetic coverage; [[tickets/T-10840-wave-13-15-tool-fixes]] and [[kanban]] moved together. Standards review has no findings; Spec review found section-owned and conflicting absolute-symbol scratch relocations, now rejected with tests. Private-type definitions produce a skipped-prototype diagnostic rather than an invalid shared declaration.
+
+## [2026-10-12] build | T-10840 clean 27/27 proof
+Deleted generated asm/build, configured and ran ninja in Docker: all 27 `: OK` lines, build/headers.ok and build/globals.ok exist. tools/sync_protos.py --check-branch passes (zero new, 17 known). Progress unchanged at 5186/6958 and 966748/2279368 bytes. Broad suite passed 743 tests with two baseline skips; final suite includes review regressions. Full logs remain external in scratchpad/r16-fixes/clean-build.log, branch-check.log, progress.log and tests.log. No game function gains or source/header changes.
+
+## [2026-10-13] build | T-10840 final tests and review
+Full Docker suite: 748 tests passed, two baseline skips. Final prototype suite: 75/75, including the two later const-pointer/header-private-type regressions; header suite: 16/16. Final ninja and branch guard pass. Literal proofs cover a main function, asm fallback, and jump-table C; guarded TAIIKU drafts return DIFF with the lui/sw swap fully visible. Both Standards and Spec reviews report zero unresolved findings after scratch ownership/absolute-value and prototype visibility corrections. [[uopt-register-allocation]] now describes full-file regdiff; [[decompile-workflow]]'s earlier table-MATCH instructions are refreshed.
+
+## [2026-10-13] lint | T-10840 scoped wiki and ownership
+Checked new ticket links/index/card, updated current workflow against implementation, and reconciled full-file regdiff wording. Git diff whitespace check passes; changed paths are tools/tests/wiki only. No src/include/config/raw modifications and no commits. Historical loaded-run cause remains explicitly unproven.
+
+## [2026-10-13] ticket | T-10840 In Review -> Done
+[[tickets/T-10840-wave-13-15-tool-fixes]], [[kanban]] and [[index]] synchronized after review and final checks. Five tool fixes complete; zero game-function gains, clean 27/27 checksums and 5186/6958 progress retained. Changes left uncommitted for the orchestrator; logs remain external in scratchpad/r16-fixes/.
+## [2026-10-12] ticket | T-10820 started
+Wave 16 list 2 begun, see [[tickets/T-10820-wave-16-list-2]].
+
+## [2026-10-13] build | T-10820 wave 16 list 2 done
+[[tickets/T-10820-wave-16-list-2]]: 4 functions matched (852 bytes: VALEN `func_80132274`, SHOUGATU `func_80136078`, GEKO `func_8013A2EC`, RPG_BAT `func_801528DC`), near misses RPG_BAT `func_80153A60` (4 lines), TT `func_80145370` (4 lines), GEKO `func_80137580` (22 lines) kept as NON_MATCHING, 16 rows in [[data/t0018-cases]], recipes in [[matching-notes]]. ninja all OK, `headers.ok`, `globals.ok`. Status Done after inline review.
+## [2026-10-12] ticket | T-10730 big functions 2 started
+
+Created [[tickets/T-10730-big-functions-2-astra]] and its In Progress card.
+Read the batch isolation/procedure brief, [[decompile-workflow]], and coding
+standards. Scope is four objects from scratchpad/astra15-list.txt; largest
+function first, regdiff for register misses, no Git mutations.
+
+## [2026-10-12] ingest | T-10730 dialogue table layouts
+
+The initial Docker configure/build passed all 27 checksums. Recovered the
+three-level pointer table and eight-byte leaves in main func_8007EF48, plus
+its copied 16-byte selector table. Added documented types and tool-generated
+global declarations to include/main_api.h; recorded evidence in
+[[decompile-workflow]]. A repaired scratch draft now compiles in Docker.
+
+## [2026-10-12] build | T-10730 dialogue draft reaches original instruction count
+
+main func_8007EF48 now compiles to 2,168 instructions, equal to the original.
+Keeping D_800CA2A4 defined in its owning object restores shared upper-address
+stores. Replacing m2c's return-label graph with case breaks and explicit early
+returns, and retaining the selection index across the voice-table accesses,
+removed extra instructions. Regdiff still reports scheduling/register misses;
+no match claimed. All frame offsets can be reproduced with a marked scratch
+padding word; investigate real locals before retaining that workaround.
+
+## [2026-10-12] decision | T-10730 signed lengths and word-pair indexing
+
+Regdiff narrowed the func_8007EF48 draft from 215 register differences to a
+single scheduling-associated difference. Cast the fixed speaker-name strlen
+results to signed halfword before their width calculation; use the leaf words
+with index D_80122CDC * 2; compute the parser substring pointer before the
+counter increment. An indirect byte selector view and line grouping remain
+marked experimental FAKE candidates. Findings are in [[decompile-workflow]];
+a bounded scratch permuter search is running independently.
+
+## [2026-10-12] build | T-10730 retained dialogue near miss and shared layouts
+
+Retained func_8007EF48 behind a ticketed NON_MATCHING fallback in
+src/main/8007C030.c. The standalone draft has 2,168 instructions, matching
+registers/constants, and three scheduling pairs remaining. Added DialogueWork
+to include/main_api.h and EventStateView to include/ovl/EVENT.h. The dialogue
+return-view override follows callee assembly evidence. Default Docker build
+passes all 27 unit checksums. Integrated regdiff exposed a missing forward
+prototype for func_80081128; registered its existing void definition through
+sync_protos rather than retaining an implicit-int conflict. Recovery notes
+and remaining DATE/EVENT/formatter issues are in [[decompile-workflow]] and
+[[tickets/T-10730-big-functions-2-astra]]. Scratch trials remain in a15/.
+
+## [2026-10-13] build | T-10730 portrait seasonal switch recovered
+
+`read_bustup` has an instruction-exact 394-instruction draft after recovering
+the seasonal range chain; integrated it into `src/main/8007C030.c` for whole
+object verification. Recorded the shape in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 relationship selector matched in scratch
+
+`func_8006F524` matches all 394 instructions after recovering the two output
+arrays, five live score/character locals, empty switch case 7, and signed
+club-9 comparison. Integrated into `src/main/8006CB30.c`; main declarations
+registered using `sync_protos.py`. Idioms recorded in [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10730 DATE and EVENT selection-table layouts
+
+Appended three-byte choice and 0x12/0x24 girl-row types to `include/ovl/DATE.h`
+and `include/ovl/EVENT.h`. Documented table dimensions and EVENT record flag
+positions in [[decompile-workflow]]. Existing declarations are preserved;
+large table handlers still require multiplication/lifetime work.
+
+## [2026-10-13] build | T-10730 two matches and dialogue dispatcher near miss
+
+Whole build passed all 27 checksums after the two matches (`read_bustup` and
+`func_8006F524`). Scoped duplicate reuse found no additional copies.
+Retained `func_80082764` behind NON_MATCHING after regdiff reduced it to two
+commutative operand orders; appended `DialogueTables` to `include/main_api.h`.
+See [[decompile-workflow]] and [[tickets/T-10730-big-functions-2-astra]].
+
+## [2026-10-13] build | T-10730 DATE large handler within retention threshold
+
+Unsigned place reload locals, high-mask-first initialization and byte-local
+layout reduce DATE `func_8013272C` to nine differing instructions with the
+original frame and instruction count. Every probe was checked with regdiff;
+a longer permuter pass is running on the close seed. Recorded the reusable
+source shapes and ugen distinction in [[decompile-workflow]].
+
+
+## [2026-10-13] ingest | T-10730 motion records and museum rows
+
+Recovered matching DATE/EVENT motion-record offsets from the original loads
+and stores, and appended their 0x44-byte views plus 0x0F-byte museum rows to
+the two overlay headers. Recorded signed coordinate-halfword semantics,
+record indices, target-array indexing and museum flag offsets in
+[[decompile-workflow]]. Scratch probes still have structural differences;
+these are type-recovery findings, not additional matches.
+
+
+## [2026-10-13] build | T-10730 retain DATE seasonal-event draft
+
+Integrated DATE `func_8013272C` behind a ticketed NON_MATCHING guard. The
+standalone seed is nine instructions from matching; verifying the defining
+unit context next. The inherited overlay `void` prototype is hidden only in
+NON_MATCHING compilation because the recovered body returns a value. The
+append-only header rule is preserved. Allocation aids are marked FAKE.
+See [[tickets/T-10730-big-functions-2-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 DATE header compatibility check
+
+The integrated DATE draft remains nine instructions from matching. The
+full `check_headers.py include src` check rejects its `s32` return type
+against the inherited `void` header declaration; the header-only invocation
+had passed. Requested a narrow exception to the brief's append-only rule.
+Until approved, the prototype is unchanged and no new match is claimed.
+
+
+## [2026-10-13] decision | T-10730 keep prototype-dependent draft pending
+
+Saved the verified nine-instruction DATE body and its integration block in
+scratchpad/a15/date-pending-block.txt, and restored its INCLUDE_ASM while
+awaiting the requested prototype exception. This keeps subsequent complete
+builds reviewable without changing a pre-existing overlay declaration.
+The new layouts and flag declaration remain append-only header additions.
+
+## [2026-10-13] build | T-10730 selector instruction and register match
+
+`func_8006FB4C` reaches the original 722 instructions with no structural or
+register differences. Remaining mismatches are local-buffer stack offsets.
+Recovered the loop, bit equality, word-load view, and plain-char output
+parameter behavior; recorded them in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 selector scratch match
+
+The 722-instruction `func_8006FB4C` seed now matches every instruction word
+and relocation in regdiff after reproducing the 0xA8 frame and sp+0x7C
+count buffer. Plain indexed GameState record accesses match too; the
+interior GameState pointer walk is unnecessary. Cleaning the explicit
+frame padding before integration and complete-build verification.
+
+
+## [2026-10-13] build | T-10730 integrate third selector match
+
+Integrated `func_8006FB4C` from the exact 722-instruction seed into
+src/main/8006CB30.c. The source uses indexed records, plain-char outputs,
+explicit signed return, and documented FAKE frame padding. Running the
+integrated regdiff and complete build; no third match counted until those
+checks finish. Source idioms updated in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 third match verified across all units
+
+The integrated `func_8006FB4C` passes regdiff exactly and the default build
+passes all 27 checksums with header/global checks. Its text contributes
+2,888 bytes. The two previous matches remain verified. Scoped duplicate
+reuse is restricted to the four owned files. See
+[[tickets/T-10730-big-functions-2-astra]] and [[decompile-workflow]].
+
+
+## [2026-10-13] lint | T-10730 inline standards review improvements
+
+Review found that the new dialogue dispatcher could use the recovered work
+and pointer-table aggregates throughout. Regdiff confirms no extra mismatch;
+applied the aggregate views. Moved the new EVENT state type to its own
+appended guard so existing overlay-header content remains untouched. Fixed
+two comment-indent issues. Prototype and global branch checks pass.
+PS1 compiler layout verification is in progress; no host dependency installs.
+
+## [2026-10-13] build | T-10730 recovered type layouts verified on PS1 ABI
+
+Compiled size/offset initializer fixtures with the project IDO toolchain
+and checked their MIPS object data: 46 checks passed across main_api.h,
+DATE.h and EVENT.h. This covers pointer width, aggregate sizes, motion-field
+offsets and the full EventStateView prefix. Fixtures stay in scratchpad/a15/;
+no test dependencies were installed. See [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 DATE comparison orders recovered
+
+Regdiff now reports only five ugen-register instructions for the 1,441-word
+DATE handler. Local unsigned flag views and one earlier byte copy fix all
+four former comparison swaps. The exact stack frame is preserved. Updated
+[[decompile-workflow]]; prototype-dependent integration remains pending.
+
+
+## [2026-10-13] ingest | T-10730 final halfword-table and seed findings
+
+Appended `DateCounts22`, documented the two 22-byte local copies and signed
+halfword counter views, and corrected D_8011ECD0's stale three-record
+comment using observed DATE entries 96..99. Recorded the full-word RNG
+seed loads and EVENT shop-table asymmetry in [[decompile-workflow]].
+A corrected transition seed stays in scratch for the follow-up batch.
+
+## [2026-10-13] build | T-10730 DATE large handler matches in scratch
+
+Replacing the raw word mask with a bit-17 field at GameState +0xF4 removes
+the final ugen mismatch and the artificial boolean hoist. Regdiff verifies
+all 1,441 instruction words. Appended `DateFlag17` to DATE.h and recorded
+the idiom in [[decompile-workflow]]. Cleaning the frame declaration and
+preparing the body plus one-line prototype fix for handoff; integration
+still awaits the explicitly requested append-only exception.
+
+## [2026-10-13] build | T-10730 DATE whole-unit context check
+
+Standalone DATE `func_8013272C` is exact in regdiff, but the isolated complete
+source build changes one comparison's operand order at 0x80133BFC. The
+whole-overlay SHA1 therefore fails by one instruction. Continuing full-file
+probes; no integrated match is claimed. Prepared a concrete source/prototype
+patch in `scratchpad/a15/date-match-pending.diff`, pending the append-only
+exception. Recorded all 21 handoff seeds in `scratchpad/a15/HANDOFF.md` and
+[[matching-notes]]. The original source/prototype remain unchanged.
+
+## [2026-10-13] build | T-10730 DATE complete overlay verified in isolation
+
+DateSelectionView repairs the full-file operand swap after DateFlag17 repaired
+the temporary sequence. The final scratch source, compiled with the proposed
+signed-return prototype, links to DATE SHA1
+`b5fb83738364a317a590735578f5878077fcda3d` exactly. Appended the selector view to
+include/ovl/DATE.h, refreshed the concrete pending patch and handoff, and
+documented the cross-procedure conversion-pass interaction in
+[[decompile-workflow]] and [[matching-notes]]. The source/prototype exception
+remains pending; integrated progress remains three matches / 6,044 bytes.
+
+## [2026-10-13] ticket | T-10730 inline standards and spec review
+
+Moved [[tickets/T-10730-big-functions-2-astra]] to In Review and synchronized
+[[kanban]] and [[index]]. Complete NON_MATCHING source compilation confirms
+eight resolved differing lines for func_8007EF48 and six for func_80082764.
+Both retain ticketed guards. Reviewed generated main declarations, append-only
+overlay types, C89 syntax, FAKE annotations, source ownership and raw-data
+isolation. Header, branch-prototype, global and 50 PS1 ABI checks pass; the
+last default build is running after the final appended selector view.
+
+## [2026-10-13] lint | T-10730 final retained-scope review passes
+
+Inline Standards and Spec reviews pass for [[tickets/T-10730-big-functions-2-astra]].
+All 27 default checksums, full header/source validation, prototype/global
+guards and 50 PS1 ABI checks pass. Grand total remains 5179/6958 and
+967560/2279368 bytes (42.4%). The isolated DATE patch also passes full
+header/source compatibility; it awaits the explicit append-only exception.
+No unresolved retained-code findings or new T-0018 rows. No Git mutations,
+tool changes, raw-data edits or files outside the authorized scope.
+
+## [2026-10-13] build | T-10730 bounded searches finish
+
+The final DATE permuter runs completed at their 1,800/2,400-second limits:
+no improvement for the five-word seed, best score 1,040 for the older seed.
+Neither beats the manually recovered aggregate/bitfield implementation,
+which already passes the complete isolated overlay checksum. Final dialogue
+local-width, signed-command, line-grouping and parameter variants likewise
+do not improve its two operand-order misses. No additional source changes
+were accepted. All a15 containers have exited; other agents' containers
+were untouched. Results are retained in `scratchpad/a15/` for handoff.
+
+## [2026-10-13] lint | T-10730 DATE byte-count convention
+
+The pending DATE match contains 1,441 non-padding instruction words (5,764
+bytes) plus four restored trailing padding bytes. Its progress-size header is
+0x1688, so eventual integrated progress gains 5,768 bytes. Clarified the ticket
+and final handoff accounting; the three integrated matches remain 6,044 bytes.
+
+## [2026-10-13] ticket | T-10730 four-hour batch complete
+
+Moved [[tickets/T-10730-big-functions-2-astra]] from In Review to Done after
+more than four hours and passing inline Standards/Spec review. Synchronized
+[[kanban]] and [[index]]. Three integrated matches add 6,044 bytes; guarded
+drafts have eight/six resolved differing lines. DATE's additional 5,768-byte
+match is verified as a complete overlay and left in a concrete pending patch
+under the append-only prototype rule. Final progress: 5179/6958 functions,
+967560/2279368 bytes (42.4%); all 27 checksums, header/global/prototype guards
+and 50 ABI checks pass. Zero T-0018 rows. Shared layouts and idioms are in
+[[decompile-workflow]]; all 21 handoff seeds are indexed from [[matching-notes]].
+Changes remain uncommitted, with no Git mutations or tooling changes.
+## [2026-10-12] ticket | T-10830 large-function batch started
+
+Created [[tickets/T-10830-big-functions-3-astra]] and matching kanban card.
+Read shared batch isolation/procedure rules and [[decompile-workflow]].
+Work is limited to the six assigned objects, additive declarations and wiki
+records; no commits. Prior DATE/EVENT drafts will seed the largest-first pass.
+
+## [2026-10-12] build | T-10830 baseline and first DATE comparison
+
+Generated the worktree's missing build files and assembly; the default Docker
+build passes all 27 unit checksums. Scoped duplicate discovery finds no direct
+copies in the six owned objects. DATE func_80147958's inherited research seed
+compiles; regdiff identifies fade narrowing and state-spill range differences.
+Experiments and full diagnostics are retained in scratchpad/a16/.
+
+## [2026-10-12] build | T-10830 first twelve scene handlers verified
+
+Twelve assigned BUNKASAI functions replace their assembly fallbacks. Whole
+BUNKASAI SHA-1 and the full 27-unit build pass. Added four forward declarations
+for existing void scene-table helpers in include/ovl/BUNKASAI.h; real builds
+caught these missing declarations, which standalone probes could not.
+Further bit-field and control-flow repairs are in scratchpad/a16/; see
+[[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-12] ingest | T-10830 shared flag and movie layout evidence
+
+Recorded the stored-member call idiom, return flag field values, shared-3
+multiply, and m2c flag-store repair in [[decompile-workflow]]. Added
+DateMovieWork and DateMovieHeader8 to include/ovl/DATE.h; scratch recompilation
+preserves the existing DATE draft's exact instruction stream. All 29 assigned
+BUNKASAI handlers now have instruction-exact candidates; 28 have already
+passed both real funcdiff and the overlay checksum. Final candidate is in
+real-build verification. See [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] build | T-10830 all assigned BUNKASAI handlers match
+
+All 29 assigned BUNKASAI functions pass resolved real-object comparisons;
+the final whole-tree Docker build passes 27/27 checksums with header/global
+guards. The last handler, func_801417DC, uses the ordinary stored-member
+argument idiom documented in [[decompile-workflow]]. Continuing the larger
+DATE/EVENT movie routines within the requested four-hour session.
+
+## [2026-10-13] build | Movie control-flow and frame refinement
+
+T-10830 scratch experiments preserve all 29 installed BUNKASAI matches.
+DATE 80147958's exploratory candidate improves from 119 to 85 differing
+lines after branch-offset normalization (171 real lines): direct global
+counter updates avoid carrying a stale local across the helper call.
+EVENT 8011DDB8 improves from 586 to 158 normalized lines with a word counter
+and RECT declared after the scalar locals. These are research scores, not
+match claims; regdiff and resolved instruction comparisons remain required.
+The broad DATE 801462B0 declaration permutation was stopped in its own
+container after a directed frame arrangement outperformed it. See
+[[tickets/T-10830-big-functions-3-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | Movie RGB loop and shared-tail idioms
+
+Recorded the one-load/three-store RGB loop and post-switch animation tail
+in [[decompile-workflow]]. Scratch experiments for DATE 8014718C now have
+502 instructions against 498 original; EVENT 8011D5C4 has 512 against 508.
+Reusing the wider color temporary for the later height operation improves
+DATE's register allocation but is not yet a match. Existing overlay void
+prototypes conflict with observed zero return values; no shared declaration
+was rewritten. T-10830's installed total is 29 functions / 36,716 progress
+bytes, all previously verified against the 27 unit checksums.
+
+## [2026-10-13] query | Correct DATE candidate attribution and verify guards
+
+A token-level comparison of the DATE 80147958 seed and output-3790-1
+shows that its substantive improvement came from moving read_bustup after
+the explicit state self-save. The earlier log entry attributing the gain
+to direct global counter updates was incorrect; the seed already used
+that counter form. This remains a research candidate, not a match.
+Prototype branch validation reports 0 new disagreements (17 known), and
+global migration validation reports globals OK. Evidence: scratchpad/a16/
+check-protos.log, check-globals.log, and date479-source-review.log.
+See [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] ingest | Extend EVENT movie scene-control layout
+
+Appended EventMovieState to include/ovl/EVENT.h, preserving all existing
+header declarations. The view covers D_800B1AF0's word, existing byte
+symbols at +5/+6, and 8011C750's page selector at +9. Documented in
+[[decompile-workflow]]. Typed-access probes and a full rebuild are running;
+no additional function is claimed matched. [[tickets/T-10830-big-functions-3-astra]]
+retains the verified 29-function BUNKASAI total.
+
+## [2026-10-13] build | EVENT layout verified and movie seeds improved
+
+build-event-state-header.log completes 526 build steps and all 27 SHA1
+checks. EventMovieState's inline view reduces the 8011C750 scratch draft
+from 539 to 489 normalized differing lines, with structural discrepancies
+falling from 46 to 36. DATE 801462B0's local GameState and Rec24 pointers
+reduce its research comparison to 428 normalized lines. These stronger
+seeds replace the planned search inputs; neither is accepted source C.
+The large EVENT movie's stack-refined draft is at 97 normalized / 175 real
+lines. See [[decompile-workflow]] and [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] ingest | Preserve decoder control ABI views
+
+Read the matched decoder definitions and accessors in src/main/80057390.c.
+The DATE overlay's halfword clears coexist with main's four word-sized file
+IDs at D_800B5920. Kept the shared main declaration intact and documented
+the distinct access views in [[decompile-workflow]]. Filled previously
+padded DateMovieWork fields at 0x1B, 0x1C, 0x20, and 0x24 from the matched
+main definitions, without changing its size or existing field offsets.
+See [[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] query | T-10830 movie candidate review and selector width
+
+Compared the EVENT movie tail directly with target assembly. Case 43 needs a
+word view of D_80125320, as already used by the matched dispatcher; case 40
+restores its saved phase after the helper call. Recorded both in
+[[decompile-workflow]]. The refined scratch search again produced a lower
+score by changing a state transition to 2; rejected that candidate. Regdiff
+continues to verify every manual and search candidate. No additional source
+body was accepted; the 29 BUNKASAI matches remain the verified result.
+
+## [2026-10-13] query | T-10830 identify unsafe exploratory assignment split
+
+Read the existing upstream permuter implementation inside Docker. Its
+perm_split_assignment pass explains the rejected EVENT transition: splitting
+phase = phase + 1 can overwrite phase before reusing it. Disabled the pass
+for subsequent a16 scratch searches and documented the failure shape in
+[[decompile-workflow]]. This is candidate-review guidance; tools/ is unchanged.
+
+## [2026-10-13] query | T-10830 restore EVENT scrolling hold case in research
+
+The jump table for EVENT 8011C750 proves that state 10 is an empty switch case,
+not the default cleanup. Added it to scratch candidates and replaced the
+four-way page ladder with a switch. The resulting draft has 924 instructions,
+matching the target length, with 11 structural differences and a substantial
+register residual. Recorded the case shape in [[decompile-workflow]]. Audited
+the other five large movie draft case lists against their jump tables; no
+other omitted outer cases were found. No repository function body changed.
+
+## [2026-10-13] lint | T-10830 clarify DATE control view ownership
+
+Clarified the new DateMovieWork comment: the overlay resets its halfword
+fields and three bytes, while matched main code owns the word-array view
+and establishes the later fields. This keeps [[decompile-workflow]] and the
+header consistent without claiming every observed field is reset by the
+large handler. Existing declarations and raw data remain unchanged.
+
+## [2026-10-13] build | T-10830 completed header and prototype validation
+
+The completed DATE/EVENT header views pass a full Docker rebuild: 27/27
+checksums, headers OK, globals OK (scratchpad/a16/final-build.log).
+sync_protos.py --check-branch reports zero new disagreements and 17 known;
+migrate_globals.py --check reports globals OK. The accepted result remains
+29 BUNKASAI functions and 36,716 progress bytes. Movie research is still in
+scratch and cannot affect the default build. See
+[[tickets/T-10830-big-functions-3-astra]].
+
+## [2026-10-13] decision | T-10830 review K&R call view and prepare handoff
+
+Inline standards review identified a clearer view for func_80083440 in
+src/ovl/BUNKASAI/80143770.c. The target callee narrows its saved word argument
+with lbu, so changed the local override from a word prototype to the project's
+K&R declaration style. Resolved funcdiff still reports MATCH for 80145334
+(scratchpad/a16/review-45334.log). Prepared eight explicitly labelled research
+seeds in scratchpad/a16/handoff/ with real/normalized diffs and semantic,
+prototype, frame, and ownership caveats; compile verification is running.
+See [[tickets/T-10830-big-functions-3-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] query | T-10830 compile-check curated research handoff
+
+All eight scratchpad/a16/handoff/ source copies compile through regdiff with
+the current headers. Their real and normalized differences are recorded in
+scratchpad/a16/handoff-verification.log and the handoff README. Added the a16
+section to [[matching-notes]], including 29 accepted matches, header/idiom
+recovery, zero new T-0018 rows, and the remaining declaration, structural, and
+data-ownership limitations. Wide drafts remain outside repository source.
+
+## [2026-10-13] build | T-10830 post-review BUNKASAI and prototype checks
+
+The K&R override refinement retains BUNKASAI's checksum; post-review ninja
+also reports globals OK. The repeated branch prototype check reports zero
+new disagreements, 17 known, branch check OK. Added this evidence and the
+curated handoff caveats to [[tickets/T-10830-big-functions-3-astra]]. The
+completed-header full build remains 27/27. No other source changes followed.
+
+## [2026-10-13] decision | T-10830 reject return reordering and restrict search
+
+DATE exploratory output-4015-1 moved a return before a required state update.
+Rejected it, disabled perm_reorder_stmts in the scratch search settings, and
+restarted the DATE pass at 09:26:40 UTC from the corrected phase-restore seed.
+Stopped only the confirmed a16 search container (its /work mount was checked);
+other agents' containers and the queued EVENT search were untouched. Recorded
+the additional candidate-review hazard in [[decompile-workflow]]. No project
+tool or repository function body changed.
+
+## [2026-10-13] query | T-10830 finish DATE scrolling search and start corrected EVENT pass
+
+The DATE 801462B0 search completed its hour at 09:29:10 UTC. Its best search
+score (6480) still had 570 real differing lines, worse than the manual typed
+seed's 464, so no source or handoff replacement was made. The corrected EVENT
+8011C750 hour began next, with both assignment splitting and statement
+reordering disabled. Also reconciled the DateMovieWork field inventory in
+[[decompile-workflow]] with the completed header.
+
+## [2026-10-13] query | T-10830 remaining-function duplicate and return-view checks
+
+A read-only lenient dupes.py scan, restricted to the eight remaining assigned
+functions in DATE/801461B0 and EVENT/8011C650, found zero reuse plans. Word
+return-view probes for the scrolling handlers emitted the same instructions,
+so they do not justify changing those shared declarations. Counter-cast and
+scalar/aggregate variants likewise did not improve the curated seed. Results
+are retained in scratchpad/a16/remaining-dupes.log, movie-returns.log, and
+related regdiff logs. Updated the ticket date; accepted code is unchanged.
+
+## [2026-10-13] lint | T-10830 batch scope and open-case tracking
+
+Clarified the ticket goal to match the user's time-boxed batch scope:
+maximize matches among the assigned functions, with broad unresolved drafts
+kept in scratch. Checked all 29 accepted names against [[data/t0018-cases]];
+none has an existing row needing a resolution note. Ticket, kanban, and index
+still consistently show In Progress while the final searches run. No new
+T-0018 rows are warranted by the structural residuals.
+
+## [2026-10-13] query | T-10830 focus final EVENT search on residual regions
+
+Confirmed the upstream permuter supports paired randomizer-region pragmas.
+Started a 25-minute scratch-only EVENT pass at 10:01:18 UTC, limited to local
+declarations, fade cases, and scrolling logic; already matching initialization
+is excluded. Known unsafe passes remain disabled, and output candidates still
+receive regdiff and source review. The broad DATE/EVENT searches retain their
+original deadlines. No repository code changed.
+
+## [2026-10-13] query | T-10830 preserve focused alias experiment separately
+
+The focused EVENT search reached 395 real differing lines using two aliases
+for the tail's state pointer. Both pointers can use EventMovieState directly;
+merging them regresses to 445 lines. Kept the cleaner primary handoff seed
+and saved the two-alias form under scratchpad/a16/handoff/alternatives/ with
+explicit FAKE/research warnings. It remains far above the source threshold.
+The README also records the rejected early-return mutation. No accepted code
+or matching total changed; see [[matching-notes]].
+
+## [2026-10-13] lint | T-10830 accepted-code review coverage
+
+Reviewed the four new helper declarations against their actual definitions,
+checked the added layout comments, and rechecked the uncommitted diff for
+whitespace errors. The complete build's warnings are in unrelated existing
+code; none names an owned source file or added overlay header section. The
+accepted 29 bodies still introduce no FAKEs. The inline review record is
+prepared pending search completion and the closing required checks.
+
+## [2026-10-13] query | T-10830 focused EVENT search completed
+
+The 25-minute focused EVENT run ended at 10:26:30 UTC. Its best search-score
+candidate has 409 real differing lines; the separately retained two-alias
+experiment has 395. Neither meets the guarded-source threshold. No further
+code was accepted. Started the required closing prototype, global, header,
+build, and progress checks on the stable accepted changes.
+
+## [2026-10-13] ticket | T-10830 moves to In Review
+
+Moved [[tickets/T-10830-big-functions-3-astra]], its kanban card, and index
+entry to In Review. The accepted scope is 29 verified BUNKASAI bodies, three
+append-only overlay-header additions, and the recorded research handoff.
+The closing prototype check passes with zero new disagreements. Inline
+standards review and the remaining closing results will be recorded before
+Done; no new source body has been accepted from the final searches.
+
+## [2026-10-13] ticket | T-10830 reviewed and Done after four-hour batch
+
+All final searches completed without another acceptable source candidate.
+Closing checks pass: zero new prototype disagreements (17 known), globals OK,
+headers OK, current incremental build; the full completed-header build remains
+27/27 and the reviewed BUNKASAI checksum also passes. Final progress is
+5215/6958 functions, 1003464/2279368 bytes, 44.0%: 29 matches and 36,716 bytes
+added by this batch. Session ran from 06:30 UTC through after 10:30 UTC.
+
+Recorded the inline CODING_STANDARDS review in
+[[tickets/T-10830-big-functions-3-astra]], resolved its K&R declaration finding,
+and moved the ticket/card/index to Done. Updated [[matching-notes]] with the
+final search disposition. Zero new T-0018 rows; broad movie drafts remain in
+scratch, and the two inherited 13-line guards are unchanged. Changes remain
+uncommitted and confined to the authorized files.
+
+## [2026-10-13] lint | T-10830 final tracking and worker check
+
+Post-status verification confirms ticket, kanban, and index all show Done;
+`git diff --check` passes. No a16 search or watcher containers remain running.
+Final clock check was 10:31:59 UTC, more than four hours after session start.
+
+## [2026-10-13] ticket | T-10850 Wave 17 started
+
+Created [[tickets/T-10850-wave-17-astra]] and In Progress card; read [[register-cheatsheet]], [[decompile-workflow]] and standards. Explicit ownership covers 45 C files and 69 functions. Scratch isolated to `scratchpad/a17/`.
+
+## [2026-10-13] build | T-10850 baseline verified
+
+Fresh worktree configure/build passed all 27 unit SHA1 checks with header/global guards. [[tickets/T-10850-wave-17-astra]] baseline evidence: `scratchpad/a17/baseline-build.log`. Initial dupes scan before assembly generation found no functions; rerunning now that splat outputs exist. Assembly of four state reset helpers explicitly sets v0 to zero despite inherited void declarations.
+
+## [2026-10-13] build | T-10850 main:InitMouse first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_InitMouse`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80042940 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80042940`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8004284C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8004284C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80042908 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80042908`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80042808 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80042808`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_bar_color first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_bar_color`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8004636C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8004636C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_80135A48 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_80135A48`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80055A38 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80055A38`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014F278 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014F278`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013D2E0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013D2E0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_check_1 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_check_1`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_80136A2C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_80136A2C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014EF8C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014EF8C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_8015B1B8 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_8015B1B8`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_set first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_set`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8006C988 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8006C988`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 NAME_ENT:func_8013AF78 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/NAME_ENT_func_8013AF78`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013D3C0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013D3C0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_8015C0A0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_8015C0A0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_80138B90 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_80138B90`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_80142AF0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_80142AF0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013D150 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013D150`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8014D260 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8014D260`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 DATE:func_8015A640 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/DATE_func_8015A640`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 DATE:func_8015A980 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/DATE_func_8015A980`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_8015D0D0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_8015D0D0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_80132B34 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_80132B34`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8004F4F0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8004F4F0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014E994 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014E994`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TAIIKU:func_8014666C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TAIIKU_func_8014666C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8006BA40 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8006BA40`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 NAME_ENT:func_801398EC first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/NAME_ENT_func_801398EC`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013E498 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013E498`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_80146E10 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_80146E10`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8013E54C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8013E54C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_801330D0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_801330D0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_80135600 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_80135600`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TAIIKU:func_80147B14 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TAIIKU_func_80147B14`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80052F68 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80052F68`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:get_h_tokimeki first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_get_h_tokimeki`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 NAME_ENT:func_80140B20 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/NAME_ENT_func_80140B20`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 OPTION:func_80139F8C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/OPTION_func_80139F8C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8014C5F8 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8014C5F8`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:initModelingData_init first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_initModelingData_init`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 BUNKA_SD:func_80134418 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/BUNKA_SD_func_80134418`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 OPTION:func_80139878 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/OPTION_func_80139878`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_80137F48 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_80137F48`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_801511C0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_801511C0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80058F9C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80058F9C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_8013506C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_8013506C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EVENT:func_80104DB4 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EVENT_func_80104DB4`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_80137188 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_80137188`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 SHUGAKU:func_80133038 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/SHUGAKU_func_80133038`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 KANGEI:func_80136970 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/KANGEI_func_80136970`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_80137E84 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_80137E84`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 SHUGAKU:func_80139054 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/SHUGAKU_func_80139054`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 OPTION:func_80139E3C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/OPTION_func_80139E3C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_801357B0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_801357B0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_bar_show first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_bar_show`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 ENDING:func_80134B18 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/ENDING_func_80134B18`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 ETC:func_80146400 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/ETC_func_80146400`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 KANGEI:func_80135004 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/KANGEI_func_80135004`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 BUNKA_SD:func_80134850 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/BUNKA_SD_func_80134850`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_8013E638 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_8013E638`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 SHOUGATU:func_8013DDD0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/SHOUGATU_func_8013DDD0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_80154230 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_80154230`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:csr_load_vram first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_csr_load_vram`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014AB84 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014AB84`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 first pass and prototype verification
+
+All 69 assigned functions received a draft, compilation attempt and resolved diff attempt. Failed drafts are preserved for type repair; no first-pass match was claimed. Register misses were passed to regdiff. [[tickets/T-10850-wave-17-astra]]: generated four corrected s32 reset-helper declarations with `sync_protos.py --write`, retained only those scoped declarations, and verified every unit checksum after the change. Helpers still need return-zero scheduling work. Checksum helper `func_80055A38` improved from 20 to eight differing lines by regdiff-guided first-use ordering. Exact and near duplicate reuse found no applicable plans in the owned files.
+
+## [2026-10-13] build | T-10850 main_InitMouse bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 314.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_InitMouse.log`.
+
+## [2026-10-13] build | T-10850 KANGEI_func_80136970 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 331.2 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/KANGEI_func_80136970.log`.
+
+## [2026-10-13] build | T-10850 aggregate and scalar repairs
+
+[[tickets/T-10850-wave-17-astra]]: repaired eleven initial syntax/type failures using existing GameState, Rec24 and record-table views and concrete pointer widths. Compiled drafts and their diffs are in `scratchpad/a17/attempts/*type_repair*`; the two NAME_ENT drafts required additional scalar declarations. Recovered local 0xCC3 text, 0x5C callback and 0x100 word-copy extents for GYOZI, SHOUGATU and EN_NICHI, appending types to their overlay headers. The RPG_BAT object's four-byte owned data islands now have literal C initializers; its default overlay checksum still passes. Added four missing main scalar/buffer declarations through `sync_protos.py --add-global`; D_800B6708 has no aggregate proposal and D_800E8BEF only implausibly broad proposals.
+
+## [2026-10-13] build | T-10850 GYOZI_func_80137E84 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant aggregate_repair passed literal-byte funcdiff verification. 196 bytes; C retained. Evidence `scratchpad/a17/attempts/GYOZI_func_80137E84_aggregate_repair.diff`.
+
+## [2026-10-13] build | T-10850 EVENT_func_80104DB4 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant source_idiom passed literal-byte funcdiff verification. 176 bytes; C retained. Evidence `scratchpad/a17/attempts/EVENT_func_80104DB4_source_idiom.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80042940 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.3 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80042940.log`.
+
+## [2026-10-13] build | T-10850 SHOUGATU_func_8013DDD0 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant sprite_fields passed literal-byte funcdiff verification. 236 bytes; C retained. Evidence `scratchpad/a17/attempts/SHOUGATU_func_8013DDD0_sprite_fields.diff`.
+
+## [2026-10-13] build | T-10850 main_func_8004284C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 318.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004284C.log`.
+
+## [2026-10-13] build | T-10850 KANGEI_func_80136970 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant u8_coin passed literal-byte funcdiff verification. 180 bytes; C retained. Evidence `scratchpad/a17/attempts/KANGEI_func_80136970_u8_coin.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80042908 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 302.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80042908.log`.
+
+## [2026-10-13] build | T-10850 main_func_80042808 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80042808.log`.
+
+## [2026-10-13] build | T-10850 type repair and operand-order pass
+
+[[tickets/T-10850-wave-17-astra]]: KANGEI `func_80136970` now passes literal-byte verification after a byte selector local resolved the remaining reversed branch operands. TAIIKU's owned 112-byte zero-initialized slot array passes its overlay checksum; the counter updater is within one loop-branch difference. Repaired main score-table drafts now build and diff. Register traces use a scratch translation unit with unrelated NON_MATCHING guards disabled, matching the default-build candidate under analysis. Evidence remains in `scratchpad/a17/attempts/`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 305.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/OPTION_func_80139878.log`.
+
+## [2026-10-13] build | T-10850 main_initModelingData_init bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 306.7 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_initModelingData_init.log`.
+
+## [2026-10-13] build | T-10850 TAIIKU_func_8014666C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 607.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TAIIKU_func_8014666C.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_80154230 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_80154230.log`.
+
+## [2026-10-13] build | T-10850 complete buildable draft coverage
+
+[[tickets/T-10850-wave-17-astra]]: audited all 69 work-list entries against successful MATCH/DIFF logs; no entry lacks a compiling draft. Four literal-byte matches total 788 bytes. Width/layout sweeps and bounded searches continue for the near cases. InitMouse and menu_bar_color retain an additional `$at` load because their referenced data has no owned range in the permitted object configuration; no configuration changes made.
+
+## [2026-10-13] build | T-10850 EN_NICHI_func_80136A2C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/EN_NICHI_func_80136A2C.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_8015C0A0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_8015C0A0.log`.
+
+## [2026-10-13] build | T-10850 GYOZI_func_8013506C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 308.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_8013506C.log`.
+
+## [2026-10-13] build | T-10850 SHUGAKU_func_80139054 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/SHUGAKU_func_80139054.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004636C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 604.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004636C.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 7.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004F4F0.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014AB84 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014AB84.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant prior_13 passed literal-byte funcdiff verification. 448 bytes; C retained. Evidence `scratchpad/a17/attempts/main_func_8004F4F0_prior_13.diff`.
+
+## [2026-10-13] build | T-10850 discard overlapping nibble-draft verification
+
+The `main_func_8004F4F0` prior_13 MATCH entry above is invalid: prototype generation restored the assembly fallback while the candidate check was in flight. A stable re-check (`stable_prior13`) is DIFF; no C match is retained or counted. The scratch harness now requires the installed source to remain unchanged throughout verification. Re-running the prior-candidate scan after prototype generation has completed; authoritative match count remains four.
+
+## [2026-10-13] build | T-10850 NAME_ENT_func_80140B20 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.7 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/NAME_ENT_func_80140B20.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004636C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 603.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004636C.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_8015B1B8 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 302.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_8015B1B8.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 900-second search budget, 10.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004F4F0.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_801511C0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_801511C0.log`.
+
+## [2026-10-13] build | T-10850 main_menu_bar_color bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 330.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_menu_bar_color.log`.
+
+## [2026-10-13] build | T-10850 main_csr_load_vram bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 602.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_csr_load_vram.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139F8C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/OPTION_func_80139F8C.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant refine0 passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_refine0.diff`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 900-second search budget, 911.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004F4F0.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant typed passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_typed.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant no_float passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_no_float.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80055A38 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80055A38.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant no_local passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_no_local.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant value_test passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_value_test.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant true_test passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_true_test.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant empty_loop passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_empty_loop.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant threshold passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_threshold.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80058F9C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80058F9C.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant reviewed_form passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_reviewed_form.diff`.
+
+## [2026-10-13] build | T-10850 GYOZI_func_8013E638 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 305.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_8013E638.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014E994 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 13.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014E994.log`.
+
+## [2026-10-13] build | T-10850 ENDING_func_80134B18 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 305.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/ENDING_func_80134B18.log`.
+
+## [2026-10-13] build | T-10850 main_initModelingData_init bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 610.3 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_initModelingData_init.log`.
+
+## [2026-10-13] build | T-10850 refined near-match searches
+
+[[tickets/T-10850-wave-17-astra]]: OPTION cleanup variants confirm that its empty test is necessary; reviewed C and the full overlay checksum retain the fifth match (936 bytes total). Two 600-second searches were started for the checksum helper and RPG initializer; the latter is rejected on extra address-load instruction shape, not merely register colour. EN_NICHI refinement reached six differing listing lines and started another bounded search. TAIIKU gets a focused address-load scheduling sweep. Evidence remains in `scratchpad/a17/`; [[matching-notes]] records the OPTION idiom.
+
+## [2026-10-13] build | T-10850 ETC_func_80146400 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 308.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/ETC_func_80146400.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004636C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 605.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004636C.log`.
+
+## [2026-10-13] build | T-10850 TT_func_8013D3C0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TT_func_8013D3C0.log`.
+
+## [2026-10-13] build | T-10850 EN_NICHI_func_80136A2C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 606.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/EN_NICHI_func_80136A2C.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014E994 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 605.2 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014E994.log`.
+
+## [2026-10-13] build | T-10850 pointer and return-type evidence
+
+[[tickets/T-10850-wave-17-astra]]: typed-pointer variants of `func_80058F9C` reduce its resolved diff from 20 to 14 listing lines. `menu_check_1` as an s32 return removes sign-extension instructions absent from the target, reaching the original 57-instruction count with 34 differing listing lines. Its declaration was generated in an isolated include tree with `tools/sync_protos.py` and only that generated declaration adopted for the experiment; whole-build compatibility remains to be checked. Both improved drafts receive 600-second searches. The checksum helper's extra 600-second search found no match. Removed OPTION's stale pre-match NON_MATCHING comment during inline review.
+
+## [2026-10-13] build | T-10850 TT_func_8014C5F8 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 312.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TT_func_8014C5F8.log`.
+
+## [2026-10-13] build | T-10850 BUNKA_SD_func_80134418 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 306.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/BUNKA_SD_func_80134418.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_8015C0A0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 607.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_8015C0A0.log`.
+
+## [2026-10-13] build | T-10850 main_func_80058F9C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 606.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80058F9C.log`.
+
+## [2026-10-13] build | T-10850 main_menu_check_1 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 607.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_menu_check_1.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_801357B0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 309.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_801357B0.log`.
+
+## [2026-10-13] query | T-10850 owned-file queue follow-up
+
+[[tickets/T-10850-wave-17-astra]]: the assigned 69-function first deep pass is complete. The scoped `tools/queue.py --by bytes --next 20 --files` result mostly repeats known blockers; two additional candidates in already owned files are `main:func_80045318` (252 bytes) and `GYOZI:func_80136488` (604 bytes). Both received fresh m2c drafts; bounded follow-up experiments stay inside their owned objects. The original assignment manifest remains unchanged, with extras tracked separately in `scratchpad/a17/extras.json`.
+
+## [2026-10-13] decision | T-10850 preserve the matched menu caller
+
+[[tickets/T-10850-wave-17-astra]]: the generated s32 `menu_check_1` declaration causes extra sign extensions in the already-matched `menu_check` caller. Its resolved diff proves the compatibility failure (`scratchpad/a17/menu-caller-check.diff`). Restored the prior s8 declaration and retain the alternative s32 implementation in scratch only. The callee's original unextended return remains useful evidence, but does not justify breaking the caller. GYOZI queue follow-up adds two overlay-local word declarations from observed loads, with no main-exe redeclarations.
+
+## [2026-10-13] ingest | T-10850 GYOZI load-width correction
+
+Direct assembly inspection shows `lh`, not `lw`, for `D_80146168` and `D_8014616C`. Corrected the just-added declarations to s16 before retaining or counting any result; this supersedes the preceding entry's word-width description. The two sprite slot fields at `D_8012B91A` and `D_8012B95E` are also halfwords (`sh`). [[tickets/T-10850-wave-17-astra]].
+
+## [2026-10-13] build | T-10850 SHUGAKU_func_80139054 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 611.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/SHUGAKU_func_80139054.log`.
+
+## [2026-10-13] build | T-10850 reviewed near-match guards
+
+[[tickets/T-10850-wave-17-astra]]: retained 15 individually recompiled and diffed near drafts behind ticketed NON_MATCHING guards. Existing unchanged guards are preserved. Source mutations use per-file locks; active searches are skipped for a later pass. Evidence: `scratchpad/a17/guard-results.json` and `attempts/*_retention_review.diff`.
+
+## [2026-10-13] build | T-10850 remaining source-shape experiments
+
+[[tickets/T-10850-wave-17-astra]]: the checksum helper now has correct registers and only the compare/mask instruction order differs (four listing lines). Exhaustive local line grouping is testing scheduling. Expressing the first RPG initializer bound from the following array eliminates a retained common address and reaches eight listing lines, consisting of two swapped LUI pairs; this is a marked-FAKE research candidate until aggregate declarations can be reconciled. The menu permuter's pointer-local form, converted back to the compatible s8 return, improves its draft from 43 to 27 listing lines without changing the shared declaration. GYOZI's extra queue draft compiles at 150/151 instructions and receives a bounded search.
+
+## [2026-10-13] build | T-10850 TACO_func_801511C0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 609.3 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_801511C0.log`.
+
+## [2026-10-13] lint | T-10850 guarded-draft cleanup and shared checks
+
+[[tickets/T-10850-wave-17-astra]]: `tools/check_headers.py` reports headers OK and `tools/migrate_globals.py --check` reports globals OK after the added declarations and guards. Removed CSR's unused base copy with the same 26-line resolved diff. Retained the compatible menu draft (27), model-loader pointer draft (14), RPG initializer bound draft (8), and TACO pointer draft (9) behind explicit guards; every retained trick has a specific FAKE explanation. The RPG initializer's newly reduced scheduling-only base receives one more 600-second search. Prototype audit and remaining refinements are still running.
+
+## [2026-10-13] build | T-10850 GYOZI_func_80136488 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 610.7 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_80136488.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139F8C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 610.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/OPTION_func_80139F8C.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014E994 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 611.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014E994.log`.
+
+## [2026-10-13] lint | T-10850 ownership and preliminary source review
+
+[[tickets/T-10850-wave-17-astra]]: the tracked-file audit covers 33 changed files, all within assigned source ownership or allowed shared headers/wiki pages; no tools, configuration, raw data or build outputs are changed. `git diff --check` passes. Inline review checked C89 declarations/comments, fixed-width types, aggregate offsets, shared declaration placement, guard fallbacks, and FAKE explanations. Removed superseded NON_MATCHING comments immediately preceding the new guards. All assigned drafts and deep-pass criteria are complete; the four-hour minimum and final all-unit checksum remain pending.
+
+## [2026-10-13] build | T-10850 GYOZI_func_80136488 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 609.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_80136488.log`.
+
+## [2026-10-13] build | T-10850 main_func_80055A38 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 609.2 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80055A38.log`.
+
+## [2026-10-13] build | T-10850 GYOZI initializer reconstruction
+
+[[tickets/T-10850-wave-17-astra]]: the additional owned GYOZI initializer improves from 101 to 37 listing lines by forming the sprite base-plus-stride expression directly and using unsigned byte stores for 128/129. Moving the counter increment to the loop tail reaches 21 lines; the natural for-loop reaches 19. Its 0x44-byte sprite layout is now documented in an overlay-local struct, with a field-based candidate prepared for comparison. A 600-second search is running on the improved loop. Shared header/global/prototype checks passed before this final struct addition; they will be repeated with final verification.
+
+## [2026-10-13] build | T-10850 typed GYOZI near draft retained
+
+[[tickets/T-10850-wave-17-astra]]: the new GYOZI queue draft is retained behind a guard at 19 differing listing lines. All accesses now use the documented `GyoziInitSprite44` array view at slots 0x60..0x63, with fixed-width field types and no redundant pointer/integer casts. The field/indexed version preserves the same diff as the raw-pointer version. Its two bounded searches did not find a match. OPTION's improved draft is guarded at 11 lines and TACO `func_801511C0` at ten; fixed-width cleanup preserves both diffs.
+
+## [2026-10-13] build | T-10850 main_func_80058F9C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 606.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80058F9C.log`.
+
+## [2026-10-13] ingest | T-10850 opaque GYOZI call boundary
+
+[[tickets/T-10850-wave-17-astra]]: the five-line `func_8013E638` candidate adds an explicit `li a1,56` before `func_8008FB00`. The name is an absolute undefined-function export in `build/ovl/GYOZI_undefined_funcs_auto.txt`; m2c finds no main asm file for it. In the checksum-matching main ELF, 0x8008FB00 lies inside `SsUtChangeADSR`, so the placeholder cannot be assigned a semantic prototype from its name. The shared declaration remains unprototyped; call-form experiments are judged by literal instruction comparison, with no callee rename or ABI claim.
+
+## [2026-10-13] build | T-10850 GYOZI_func_8013E638 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 605.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_8013E638.log`.
+
+## [2026-10-13] build | T-10850 ETC_func_80146400 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 603.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/ETC_func_80146400.log`.
+
+## [2026-10-13] query | T-10850 final case inventory
+
+Appended 34 remaining cases to [[data/t0018-cases]] after register-shape lookup and literal source audit. Exactly five unguarded conversions total 936 bytes; scoped lenient dupes applied zero additional functions. All 69 assigned functions have a successful compile and resolved diff. Removed superseded guard comments, normalized menu indentation and removed blank lines left by the TAIIKU data conversion. No tool/config/raw edits. See [[matching-notes]].
+
+## [2026-10-13] ticket | T-10850 in review
+
+Moved [[tickets/T-10850-wave-17-astra]] and its [[kanban]] card to In Review. Full build passed 27/27 SHA1 checks; prototype/global/header checks passed. Inline standards review and final formatting verification remain.
+
+## [2026-10-13] build | T-10850 final validation and review
+
+Final full build: 27/27 SHA1 checks OK; formatting follow-up rechecked main and TAIIKU. Header/global guards, prototype branch guard (0 new/17 known), source ownership, 69-function evidence audit and git whitespace check pass. The 34 new [[data/t0018-cases]] identities resolve as open. Inline CODING_STANDARDS.md review has no unresolved findings; matching tricks are marked FAKE. Progress: 5195/6958 functions, 968748/2279368 bytes (42.5%). See [[matching-notes]] and [[tickets/T-10850-wave-17-astra]].
+
+## [2026-10-13] ticket | T-10850 done
+
+After more than four hours, moved [[tickets/T-10850-wave-17-astra]] and its [[kanban]] card from In Review to Done. Result: five matched functions, 936 bytes; 69 assigned drafts built/diffed; 34 remaining-case rows. All changes remain uncommitted for orchestrator integration.
+
+## [2026-10-13] ticket | T-10910 wave 17 list 1
+Started [[tickets/T-10910-wave-17-list-1]] (In Progress).
+
+## [2026-10-13] build | T-10910 wave 17 list 1 done
+[[tickets/T-10910-wave-17-list-1]]: 4 functions matched (1,476 bytes: RPG_BAT `func_80153A60`, TT `func_8014A814`, `func_80147D08`, TAIIKU `func_801339C4`), data islands for DATE/GEKO/SHOUGATU, near misses guarded, rows in [[data/t0018-cases]], recipes in [[matching-notes]]. ninja 27/27 OK.
+
+## [2026-10-13] ticket | T-10860 big functions 4
+
+Started [[tickets/T-10860-big-functions-4-astra]] in a18; initial worktree clean.
+Read shared brief, [[register-cheatsheet]], [[decompile-workflow]], standards and
+local setup. Restrict C edits to the five assigned objects, append header types,
+and leave changes uncommitted for the orchestrator. Largest target is TEL
+func_8013B54C (2,428 bytes).
+
+## [2026-10-13] build | T-10860 initialize worktree outputs
+
+Initial m2c/ninja calls found no generated asm or build.ninja. Started Docker
+configure and full build to establish the baseline before matching. No tool or
+config source changes; see [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 baseline and first draft
+
+Docker configure/full build passed all 27 checksums and header/global guards.
+Generated the assigned m2c drafts in scratchpad/a18. TEL func_8013B54C uses
+256-byte text and 32-byte name stack buffers plus a saved selector, and its
+existing header requires an s32 fallthrough definition. Added its missing
+local text/XA declarations and a temporary guarded draft for comparison.
+[[tickets/T-10860-big-functions-4-astra]] tracks the ongoing work.
+
+## [2026-10-13] ingest | T-10860 TEL dialogue layout and exact function
+
+TEL func_8013B54C passes literal linked funcdiff (2,192 code bytes; list's
+2,428 includes associated rodata). regdiff identified a separate selector
+range in v0. Documented the scalar selector view and marked frame padding in
+[[decompile-workflow]]. Moved TelEntryFlags to include/ovl/TEL.h for reuse.
+Whole-overlay verification follows before the match is counted.
+
+## [2026-10-13] build | T-10860 two TEL matches
+
+TEL func_8013ADC0 (1,932 code bytes) and func_8013B54C (2,192) are active,
+literal-byte verified, and pass TEL SHA1. Total: 2 functions / 4,124 code bytes.
+Recorded buffer frame differences in [[decompile-workflow]]. Started the
+NAME_ENT func_80149E3C draft and routed its missing SDK strncat prototype
+through sync_protos.py. [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 prototype sync scope repair
+
+sync_protos.py --fix discovered many unrelated public prototypes, edited 18
+unowned source/header files, and introduced three alias conflicts plus two
+duplicate declarations. Restored those tool-generated edits by writing their
+original content back (no Git mutations), retaining only its generated strncat
+prototype for the new NAME_ENT draft. No tooling changes. Detailed output:
+scratchpad/a18/sync-name.log. [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] ingest | T-10860 NAME_ENT profile word
+
+Added NameProfileFlags and the four-entry blood-type text pointer declaration.
+Documented the 128-byte buffer endpoint in [[decompile-workflow]]. Initial
+NAME_ENT structure repair removes six extra sign-extension instructions; the
+remaining pointer/selector live ranges are under regdiff investigation. All
+unrelated prototype-sync edits are confirmed restored by git diff --stat.
+
+## [2026-10-13] build | T-10860 BUNKAKEN large scene match
+
+BUNKAKEN func_801362EC passes literal funcdiff (1,760 code bytes) and its
+whole-overlay checksum. Set BunkakenModeFlags b1/mode before copying the three
+saved-state bytes; raw byte masks or the opposite statement order changed
+ugen temporaries. No FAKE needed. Total: 3 functions / 5,884 code bytes.
+Started the two largest assigned BUNKASAI handlers with the same state pattern.
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80137304
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148F98
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80136EC8
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148B84
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80149A88
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80136AE8
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 five-match checkpoint
+
+BUNKASAI func_80149404 (1,668 bytes) and func_80137788 (1,616 bytes) pass
+literal linked funcdiff and full default build, including all 27 checksums.
+Total: 5 functions / 9,168 code bytes. Applying the same measured return-flag
+idiom to the remaining assigned BUNKAKEN/BUNKASAI drafts in descending size;
+each candidate must pass regdiff, literal funcdiff, and its unit checksum
+before retention. NAME_ENT variants use isolated scratch trace directories.
+
+## [2026-10-13] build | T-10860 BUNKASAI func_8013866C
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148800
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80137DD8
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_801367A0
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80149E68
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801359AC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_8014A1AC
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148524
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80138388
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80135D00
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801372CC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_8014A49C
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80136008
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801369CC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801356C8
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801339F4
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the first source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80134C1C
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80136414
+
+Literal funcdiff and BUNKASAI SHA1 pass after the bits source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80133020
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_801481B0
+
+Literal funcdiff and BUNKASAI SHA1 pass after the bits source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801345CC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80132774
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801336AC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801333A8
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_8013491C
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80133EC4
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80132D40
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 all assigned Bunka handlers matched
+
+The size-ordered pass retained 33 more functions after literal funcdiff and
+per-unit SHA1. Full build again passed 27 checksums. BUNKASAI func_8014A778
+then passed (988 bytes): reconstruct its case-local message stores and use a
+local GameState pointer. Total now 39 functions / 38,972 code bytes: all 37
+assigned BUNKAKEN/BUNKASAI functions plus two TEL handlers. Individual proofs
+are in scratchpad/a18/batch-*.diff and .build. The NAME_ENT 485-instruction
+candidate still differs in buffer-loop and actor-register choices after a
+five-minute permuter run; further typed-record experiments are ongoing.
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80146FE0
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 928 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801462B4
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 836 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 shared actor and greeting types
+
+Exported existing NAME_ENT fixed-point actor types to its overlay header.
+Appended TEL greeting pointer/XA tables and NAME_ENT forward declarations.
+The first remaining-function pass found exact NAME_ENT 80146FE0/801462B4
+bodies and localized the 801488DC mismatch to the shared actor base.
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_80139AA4
+
+Literal linked funcdiff and TEL SHA1 pass: 920 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 42-match checkpoint
+
+The incremental full build passes all 27 checksum targets, header checks,
+and the GameState global audit. Scoped duplicate propagation over the five
+owned C files found no additional candidates. Active gain: 42 functions,
+41,656 code bytes. The paired TEL permuter pass ran 300 seconds without
+improvement. NAME_ENT regdiff exposed two postincrement tests and an API
+argument-conversion mismatch; recorded in [[decompile-workflow]].
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80145AC4
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 992 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 callee return type resolves actor registers
+
+NAME_ENT 80147590 is instruction-exact after declaring the side-effect-only
+801473AC helper void. This removes an implicit integer return's interference
+with the coordinate register. Appended the declaration to NAME_ENT.h and
+recorded the general rule in [[decompile-workflow]]. The separate 80145AC4
+match passes literal bytes and the NAME_ENT checksum.
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80147590
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 804 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 actor views remove two source-shape gaps
+
+Regdiff verifies instruction-exact NAME_ENT 80144FDC and 801488DC with
+consistent actor record views. Added NameAssetActor44.image (+0x34), and
+recorded the full-base scope and palette-counter idioms in
+[[decompile-workflow]]. The earlier NAME_ENT 80147590 match now passes
+literal linked bytes and its whole-overlay checksum.
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80144FDC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 924 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801488DC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 792 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80147BEC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 864 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 47 assigned functions integrated
+
+Literal byte comparisons and NAME_ENT SHA1 now pass for 80144FDC (924),
+801488DC (792), and 80147BEC (864). Restored the drawing helper 80147A08's
+integer fallthrough signature in the same owned file; no new instructions
+are needed. Its caller's final two register differences disappear.
+Shared actor types and the return-type evidence are in [[decompile-workflow]].
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013C4D8
+
+Literal linked funcdiff and TEL SHA1 pass: 1028 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013BFDC
+
+Literal linked funcdiff and TEL SHA1 pass: 1028 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 explicit TEL reset-call view
+
+The integer-reset view makes all three remaining TEL handlers instruction
+exact. Installed the standards 8a file-scoped override and generated its
+main_api guard with the sync_protos module; retained only that generated
+guard, avoiding unrelated declaration movement. Header validation passes.
+TEL 8013C4D8 now passes literal linked bytes and TEL SHA1 (1,028 bytes).
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_80139FEC
+
+Literal linked funcdiff and TEL SHA1 pass: 572 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 all assigned TEL and Bunka functions match
+
+All six assigned TEL handlers are active; 8013BFDC and 80139FEC pass literal
+linked comparisons and TEL SHA1 (1,028 and 572 bytes). Combined assigned
+result: 50 functions / 48,660 code bytes. The full incremental build passes,
+including headers and globals. sync_protos branch check reports zero new
+disagreements and 17 known; scoped duplicate propagation again finds no plans.
+The two remaining assigned functions are NAME_ENT 8014826C and 80149E3C.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 NAME_ENT switch and profile loops narrowed
+
+8014826C now has an instruction-exact draft with the record-99 completion
+flag and a marked scalar-selector read. The profile handler 80149E3C's
+buffer loops match when the name-setting call uses its historical integer
+return view; 32 later temporary-register instructions remain. No loop
+unrolling or manual store-order trick is needed. Findings recorded in
+[[decompile-workflow]]; see [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014826C
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 1120 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 final profile idiom and table extent
+
+NAME_ENT 8014826C passes literal bytes and SHA1 (1,120 bytes). The final
+80149E3C draft is instruction-exact, with its signed narrowing, frame word,
+and same-line clear-loop scheduling explicitly marked FAKE. All 52 assigned
+functions now have exact drafts; literal verification of the last waits for
+the running permuter to finish its isolated verification window. Corrected
+six newly appended TEL reply-table extents to 12 actual nonzero pointers.
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149E3C
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 1944 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 all 52 assigned functions verified
+
+NAME_ENT 80149E3C passes literal linked funcdiff and the full NAME_ENT
+checksum: 1,944 code bytes. All 52 assigned functions are now active C,
+with a combined gain of 51,724 code bytes and no assigned near misses.
+Ten fresh PS1 ABI assertions also pass for the exported NAME_ENT/TEL layouts.
+The brief permits continuing within the same five owned files; remaining
+session time is being used on their largest residual functions, starting
+with NAME_ENT 80144C8C and shared dialogue-record types.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 residual dialogue-table layout
+
+The largest residual handler, NAME_ENT 80144C8C, indexes two 43-entry tables
+at stride eight and a 44-byte companion table. Added NameCommandPair8
+(+0/+4 word fields), typed table declarations, and two needed forward
+prototypes in NAME_ENT.h. Shared Entry8 supplies the two moving text work
+records; the active request returned by 80046284 is a word array with the
+compared command at word 2. Work remains in scratch while registers/frame
+are refined. See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80132AC4
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 636 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_8013544C
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 636 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801341A4
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 604 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80135200
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 588 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80137080
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 588 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80138148
+
+Literal linked funcdiff and BUNKASAI SHA1 pass: 576 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014A600
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 540 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014AF28
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 536 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014AB18
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 512 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80136CB0
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 492 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149340
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 492 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80136E9C
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 484 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 residual dialogue and level types
+
+After all 52 assigned functions matched, the owned-file queue supplied twelve
+further literal and unit-SHA1 matches. Recovered NAME_ENT's four-word signed
+getCDlevel history at D_8014D1B4, actor halfword +0x08, and TEL's three 13-entry
+reply pointer tables. Declarations are appended to the overlay headers; use-site
+matching remains in progress. See [[decompile-workflow]] and
+[[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 checkpoint and review cleanup
+
+Full incremental build passes all 27 checksum targets plus header/global checks
+at 64 new matches. Inline review removed the redundant self-assignment in
+NAME_ENT func_80145AC4 and replaced TEL func_80139FEC's raw byte pointer with the
+shared Entry8 member. Literal function bytes and both unit SHA1s still match.
+Further table types and the byte-constant comparison idiom are recorded in
+[[decompile-workflow]]. See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80148C20
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 700 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80134400
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 460 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801325B0
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 452 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80135060
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 416 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014A98C
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 352 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149840
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 668 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_801399CC
+
+Literal linked funcdiff and TEL SHA1 pass: 216 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013A228
+
+Literal linked funcdiff and TEL SHA1 pass: 200 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013A88C
+
+Literal linked funcdiff and TEL SHA1 pass: 420 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013CBA0
+
+Literal linked funcdiff and TEL SHA1 pass: 304 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 second helper return view
+
+Literal funcdiff confirms unchanged NAME_ENT func_8014977C bytes with an s32
+fallthrough declaration. With that view, func_80149840 matches and the unit
+SHA1 passes. Recorded the reusable call-view constraint in
+[[decompile-workflow]]. The remaining CD-level, dialogue, rectangle and state
+near misses are receiving short permuter runs after manual type/register
+iterations. See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013C9D4
+
+Literal linked funcdiff and TEL SHA1 pass: 352 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_801362A0
+
+Literal linked funcdiff and BUNKASAI SHA1 pass: 372 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148040
+
+Literal linked funcdiff and BUNKASAI SHA1 pass: 368 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 Bunka objects fully decompiled
+
+The existing BunkaDispatch8 view fixes the last two BUNKASAI entry dispatchers.
+Literal funcdiff and BUNKASAI SHA1 pass. All three owned Bunka objects are now
+fully in C. TEL's club-record bit-field view also passed literal and unit
+verification. Added the reusable evidence to [[decompile-workflow]]; continuing
+inline review and NAME_ENT/TEL residual attempts under
+[[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013A4FC
+
+Literal linked funcdiff and TEL SHA1 pass: 624 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] lint | T-10860 unused-local review
+
+Removed four dead temporaries from NAME_ENT func_80145AC4 and one from
+func_80147590; literal funcdiff and NAME_ENT SHA1 remain exact. TEL
+func_8013A4FC's only remaining mismatch was its girl-index spill home: the
+order unused-word, table-index, girl reproduces sp+0x2C in the 0x38 frame.
+The unused word is explicitly FAKE. See [[tickets/T-10860-big-functions-4-astra]]
+and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 header layout and extent audit
+
+Ten additional IDO layout/extent assertions pass for NameCommandPair8,
+NameActorHead44, the CD history, TelClubFlags, and the 13-entry reply tables.
+The NAME_ENT data confirms 43 text pointers and 43 first command pairs; the
+D_8014DB88 splat label also covers trailing untyped data, so its extern is now
+unsized while the 43 used dialogue records remain documented. Generated the
+missing s16 getCDlevel(void) declaration from its matched main definition.
+The CD-level helper remains instruction-exact with that canonical prototype.
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801473AC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 484 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801486F8
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 484 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801469D0
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 364 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 CD-level template verified
+
+NAME_ENT func_801473AC now passes literal linked bytes and unit SHA1, including
+the generated canonical getCDlevel prototype. Natural ring sum order and a
+later latest-sample store fix the load/division schedule; marked dead
+initialization and frame homes resolve the remaining IDO allocation differences.
+Related helpers are being verified individually. See [[decompile-workflow]]
+and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80147F78
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 360 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149558
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 360 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 83-match checkpoint
+
+Incremental Docker Ninja completed all 518 steps and all 27 checksum targets;
+headers and globals checks pass. Inline review corrected copied CD-helper frame
+comments to cover both one-actor and two-actor layouts. See
+[[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80145848
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 556 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 RECT timer and store ordering
+
+Recovered the old-value post-increment timer in NAME_ENT 80145848, plus the
+SDK RECT local placement and same-line store schedule. Literal funcdiff and
+the NAME_ENT checksum pass; 84 new active functions / 66,920 bytes. Reusable
+idioms and FAKE explanations are in [[decompile-workflow]]. Inline unused-local
+audit across all five owned files found no unmarked new padding.
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80146624
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 752 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] lint | T-10860 scope and byte accounting
+
+Compared the five owned files against HEAD snapshots: 85 asm replacements,
+67,664 original code bytes; all four overlay-header diffs are append-only.
+Earlier cumulative totals counted eight trailing padding bytes from TEL
+8013CBA0's linked funcdiff extent (304 bytes versus 296 function bytes).
+The corrected code-only total excludes that padding. All 52 assigned big
+functions remain exact; extra match NAME_ENT 80146624 now verifies as well.
+The final prototype check reports zero new disagreements and 17 known ones.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013BE38
+
+Literal linked funcdiff and TEL SHA1 pass: 280 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 final reusable flag type and near drafts
+
+Added TEL's four-byte Rec38 bit-12/13/16 view and matched 8013BE38 with the
+reused-counter/ordered-clear idiom in [[decompile-workflow]]. Preserved five
+small ticketed NON_MATCHING drafts: TEL AA30/AC0C and NAME_ENT 47A80/49144/460D8.
+Final regdiff confirms four register-only cases, appended to [[data/t0018-cases]];
+460D8 also has one extra byte conversion and is not classified as pure T-0018.
+All retained diffs are below 30 differing lines. Scoped dupes found zero plans.
+
+## [2026-10-13] build | T-10860 final 86-function verification
+
+Literal default-version funcdiff verified all 86 new active functions.
+Incremental Ninja passed; then refreshing only the 27 checksum stamps gave
+one complete 27/27 OK run, retaining all objects and generated sources.
+The final TEL record-flag sizeof assertion passes under IDO. Inline review
+added the missing FAKE explanation for TEL 80139FEC's explicit upper switch
+case, rechecked its 572 bytes, and resolved that finding. Assigned-list audit
+confirms all 52 names active, totaling 51,724 original function bytes.
+[[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]] record
+the types, idioms, bounded attempts and retained drafts.
+
+## [2026-10-13] ticket | T-10860 In Review
+
+Moved [[tickets/T-10860-big-functions-4-astra]] and its [[kanban]] card to
+In Review. Inline Standards review passes after resolved findings; matching,
+types and validation satisfy the spec. Final focused scratch work continues
+until the four-hour session gate at 12:38 UTC.
+
+## [2026-10-13] lint | T-10860 handoff review
+
+`git diff --check` is clean. The assigned-list audit reconciles its estimates
+with original code extents, and the scope audit confirms only authorized
+source/header/wiki paths changed. Inline review records the earlier broad
+prototype-generator overreach and its complete restoration; no unowned edits
+remain. Ticket/frontmatter, [[kanban]] and [[index]] agree on In Review while
+the final bounded brightness-handler attempt runs. See
+[[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013AA30
+
+Literal linked funcdiff and TEL SHA1 pass: 476 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013AC0C
+
+Literal linked funcdiff and TEL SHA1 pass: 436 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 two final TEL matches
+
+A scalar switch-selector view fixes the later decoder-return comparisons in
+TEL 8013AA30 and 8013AC0C. Both pass literal funcdiff (476 and 436 bytes) and
+TEL SHA1. Removed their guards, retained the historical [[data/t0018-cases]]
+rows with a resolution note, and documented the cross-block effect in
+[[decompile-workflow]]. Final count is 88 new active functions / 68,856 code
+bytes; only three NAME_ENT guarded drafts remain. All functions in four of
+the five owned source files are now C. The remaining brightness experiments
+and five-minute permuter did not improve the preserved draft.
+
+## [2026-10-13] ticket | T-10860 Done
+
+Completed the four-hour session at 12:38 UTC. All 52 assigned functions
+match; total 88 new functions / 68,856 original code bytes. Final inline
+Standards and Spec review has no unresolved findings, three small guarded
+drafts remain, and all 27 unit checksums pass with zero new prototype issues.
+Moved [[tickets/T-10860-big-functions-4-astra]], [[kanban]] and [[index]] to Done.
+Progress: `grand total   5285/6958  1043564/2279368  45.8%`. All changes remain uncommitted.
+## [2026-10-13] ticket | T-10870 big functions 5 started
+
+Claimed [[tickets/T-10870-big-functions-5-astra]] in a19. Read shared batch
+brief, [[index]], [[register-cheatsheet]], standards and [[decompile-workflow]].
+Owned C: src/main/8007C030.c, src/ovl/DATE/80132000.c,
+src/ovl/EVENT/8010FE10.c. Reuse prior layout research, verify current literal
+bytes, and keep scratch in scratchpad/a19. No commits or tooling edits.
+
+## [2026-10-13] build | T-10870 dialogue baseline
+
+Fresh configuration/build started in a19 (generated files were absent).
+Full-file funcdiff of main func_8007EF48 reports ten differing instruction
+positions, all scheduling; regdiff has 2,168/2,168 instructions and no
+register-color residual. Saved evidence in scratchpad/a19. Testing physical
+call-line layout around the two incremented-Y calls without changing behavior.
+
+## [2026-10-13] build | T-10870 baseline passes
+
+Fresh Docker configure plus ninja -j 4 completed all 662 steps, with all 27
+unit checksums OK. No source changes yet. Twelve dialogue call-argument
+line-break candidates produced the same ten-position residual; stopped that
+owned sweep and kept the condition/coordinate-expression experiments.
+
+## [2026-10-13] build | T-10870 DATE candidate reverified
+
+Recompiled the T-10730 seasonal-handler patch against current headers in
+scratch, restoring normal per-function trailing padding and object extent.
+Literal-byte verification confirms DATE func_8013272C: 5,768 bytes equal;
+complete overlay SHA1 b5fb83738364a317a590735578f5878077fcda3d matches.
+The shared brief forbids changing existing overlay declarations, so requested
+an explicit exception for the required void-to-s32 prototype correction.
+No source or header mutation has been made pending that answer.
+
+## [2026-10-13] decision | T-10870 scope prototype generation
+
+`sync_protos.py --write` discovered unrelated missing main declarations and
+triggered five duplicate-header findings outside a19 ownership. Reverted
+those generated hunks by restoring the original header text and retaining
+only the generator-produced read_bustup_uniform and set_tarao_sprt entries.
+The source-scoped generator also altered unrelated override guards, so its
+other changes were discarded. No unowned C file was edited.
+
+## [2026-10-13] build | T-10870 uniform handler literal match
+
+Replaced read_bustup_uniform in src/main/8007C030.c with the natural seasonal
+switch and GameState fields. Full-file regdiff matches; default funcdiff
+confirms 980 linked text bytes including padding. A full build is running
+to validate the two narrowly retained generated prototypes. See
+[[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] build | T-10870 first integrated checkpoint
+
+After the uniform handler and two generated declarations, the incremental
+Docker build completed all 490 steps with 27/27 checksums OK. The typed
+set_tarao_bg caller adds 45 unwanted instructions; its K&R caller view
+recovers the original 191 words, leaving four addition operand swaps.
+Register evidence and source variants remain in scratchpad/a19.
+
+## [2026-10-13] build | T-10870 sprite background and CD-level matches
+
+set_tarao_bg matches 764 literal bytes; converting its existing helper to
+K&R preserves that helper's 264-byte match and all 27 unit checksums.
+SD_GetCDLevel matches 736 literal bytes after recovering CdLevelWork,
+direct masked switches and explicit final 0xFFFF masks. Generated only
+the owned helper declarations and the explained transfer-status override.
+See [[decompile-workflow]] and [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] build | T-10870 third checkpoint and large-draft refinement
+
+Docker build after SD_GetCDLevel completed all 513 steps with 27/27 checksums
+OK; the owned-file duplicate pass found no extra matches. Formatter research
+recovered exclusive expansion dispatch, direct buffer argument typing and
+cursor reuse, but its remaining differences are too broad to retain in C.
+Corrected the dispatcher guard's description to include its three-load
+rotation. DATE's particle initializer is down to eight register/operand
+differences and exposes a larger 0x44-byte record view. See
+[[decompile-workflow]] and [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] ingest | T-10870 DATE particle layout and transition loops
+
+Appended DateParticleView44 and the 20-word fixed-point position table to
+include/ovl/DATE.h. A named signed drift reduces the particle initializer
+to three operand swaps; documented its loop, store order and typed palette
+call in [[decompile-workflow]]. The main transition draft now has 697/697
+instructions and twelve positional differences after restoring loop-body
+coordinate calculations and direct state increment. Scratch research
+continues under [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] query | T-10870 transition and table-access idioms
+
+Recorded the transition's shared halfword counter, natural default for loop,
+case-2 halfword state read and case-4 narrowing in [[decompile-workflow]].
+The compact draft now has all 697 instructions and the correct frame;
+an indirect case-1 state view leaves only two spill-offset differences.
+Corrected the old DATE shop seed's missing GameState pointer initialization
+and recovered repeated multu with explicit byte-stride table access.
+See [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] ingest | T-10870 EVENT particle and effect table views
+
+Appended EventParticleView44, EventEffectTables and the observed particle
+step/control declarations to include/ovl/EVENT.h. Mapped the old standalone
+flag aliases back to records 31 and 96 and the final palette loops to
+Rec24 records 4..9. Documented these reusable layouts in
+[[decompile-workflow]]. The transition near miss is retained under
+NON_MATCHING with its explained indirect-view FAKE and two spill offsets.
+Its conditional prototype override was not recognized by check_headers;
+using the normal file-level override resolves the header check.
+
+## [2026-10-13] build | T-10870 EVENT initializer instruction match
+
+Integrated func_8011B190: all 254 words (1016 bytes) match in regdiff.
+Recovered its no-argument final call, positive-shift spelling of the
+negative random step, palette/mask first-use ordering, and RGB chain
+direction. Added its two main globals through sync_protos. The layouts
+and allocator evidence are recorded in [[decompile-workflow]].
+Full-file literal comparison and overlay checksum are being checked.
+
+## [2026-10-13] build | T-10870 fourth match verified
+
+funcdiff --resolve confirms all 1016 bytes of EVENT func_8011B190 in the
+default build. Incremental ninja completed all 526 steps with 27/27
+checksum OK, including headers and globals checks. Batch gain is four
+functions / 3496 bytes; DATE motion remains scratch research.
+
+## [2026-10-13] ingest | T-10870 DATE motion control flow recovered
+
+Recovered the exact 372-instruction sequence for DATE func_8013FD6C;
+23 register/operand differences remain. Indexed target word/high-half
+reads and early phase reloads after RNG calls remove the structural
+differences. Recorded the idioms in [[decompile-workflow]] and started
+a five-minute permuter run while inspecting the remaining live ranges.
+
+## [2026-10-13] ingest | T-10870 ride table declarations and motion comparisons
+
+Appended DATE's two ride-table pointers using the existing
+DateRideChoices36 layout. Corrected another inherited scratch seed's
+uninitialized GameState pointer before comparison. Narrow signed constant
+locals on the left of DATE motion comparisons remove six operand swaps;
+17 positional differences remain. Its first five-minute permuter run
+did not improve the seed; a narrowed-constant follow-up is running.
+
+## [2026-10-13] build | T-10870 DATE ride handler instruction match
+
+DATE func_80138934 matches all 434 words after moving the integer row
+offset before the table pointer in byte-address expressions. Integrated
+the body and documented the address-order idiom in [[decompile-workflow]].
+Testing the same shape in the related EVENT ride and DATE shop handlers.
+
+## [2026-10-13] build | T-10870 EVENT ride handler instruction match
+
+Integrated EVENT func_80115C18 after all 444 words matched. The same
+integer-first table address form fixes the DATE and EVENT pair. DATE's
+resolved default-build comparison verifies 1740 literal bytes; EVENT's
+literal comparison and the combined unit build are running.
+
+## [2026-10-13] build | T-10870 six literal matches
+
+Resolved default-build comparisons verify DATE func_80138934 (1740 bytes)
+and EVENT func_80115C18 (1780 bytes). The first ride checkpoint passes
+27/27 checksums. Six matches now add 7016 bytes; the combined incremental
+build is running after the EVENT integration. See
+[[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] ingest | T-10870 museum table pointers
+
+Appended the DATE museum's two table pointers using DateMuseumChoices15.
+The special selector performs its table reads before replacing the
+result rows. Documented that ordering in [[decompile-workflow]] and
+started full-file comparisons of the DATE/EVENT museum seeds.
+
+## [2026-10-13] build | T-10870 museum near miss retained
+
+Retained DATE func_80134C64 under NON_MATCHING at 329/329 instructions,
+ten store-order differences (20 differing lines). Registers agree.
+The narrow shared constant is explicitly FAKE; DateSelectionView and
+separate result-row chains are documented in [[decompile-workflow]].
+The EVENT twin also exposed an invented second argument to func_800469F4;
+its corrected call takes only the message id.
+
+## [2026-10-13] build | T-10870 DATE museum instruction match
+
+All 329 words of DATE func_80134C64 now match. The remaining difference
+was the inconsistent final overwrite chain: all row chains must use
+indices 0,1,2. Promoted the guarded draft to active C with the explained
+narrow-constant FAKE. Applying the same store order to EVENT's twin.
+
+## [2026-10-13] build | T-10870 EVENT museum instruction match
+
+All 320 words of EVENT func_80112BEC match after the same row-chain
+correction. A switch lowers the girl selector range's priority and
+restores a1/a2; the final message helper has one argument. Integrated
+the body with its explained narrow constant and signed output views.
+DATE's counterpart passes resolved literal comparison at 1320 bytes.
+
+## [2026-10-13] build | DATE particle initializer matches
+
+[[tickets/T-10870-big-functions-5-astra]]: transferred the recovered EVENT
+initializer shape; regdiff reports all 261 instructions exact. Expanded
+the owned DateParticleView44 fields and recovered ten velocity words at
+D_8015BCB4. Generated D_80122D14 declaration; integrated source in
+src/ovl/DATE/80132000.c. See [[decompile-workflow]].
+
+## [2026-10-13] lint | T-10870 inline review and remaining register cases
+
+Reviewed owned source/header changes against CODING_STANDARDS.md and the
+batch brief. Marked the allocation-only output masks FAKE, simplified
+museum byte expressions, and used EventResultRow6 in the ride handler.
+All three changed overlay bodies pass regdiff exactly. Added two rows
+to [[data/t0018-cases]] for the DATE particle drafts. Global access check
+passes. Nine active matches total 10664 literal bytes; final prototype,
+duplicate and whole-build verification remain.
+
+## [2026-10-13] ticket | T-10870 enters inline review
+
+[[tickets/T-10870-big-functions-5-astra]] moved to In Review; board and
+index agree. All 27 checksums pass, prototype/global checks pass and the
+owned duplicate pass adds nothing. Added DateEventChoice6 and two
+DateCounts22 table declarations after confirming signed-halfword
+accesses and eleven-element copies in func_8013A94C. Final header and
+scratch-result checks continue.
+
+## [2026-10-13] lint | T-10870 final layout and byte checks
+
+All 27 checksums pass again with the added DATE count/result layouts.
+Headers pass. Resolved literal checks reconfirm both museum handlers
+and EVENT ride after cleanup. Refreshed stale intermediate counts in
+[[decompile-workflow]]; scratch best-probes.json indexes 941 traced
+probe results across 22 functions, including the already-matched helper.
+
+## [2026-10-13] build | T-10870 tenth match in EVENT particle family
+
+EVENT func_8011BE00 matches 199 instructions (796 bytes) using indexed
+EventParticleView44 accesses, correct RNG argument count and a separate
+signed drift local. Recovered scale fields 1A/1C, word 30 and the twenty
+coordinate words at D_80125868. Batch gain is ten functions / 11460 bytes.
+See [[decompile-workflow]] and [[tickets/T-10870-big-functions-5-astra]].
+
+## [2026-10-13] lint | T-10870 standards and scope review complete
+
+Inline code-review of the uncommitted diff found no remaining findings
+against CODING_STANDARDS.md or the batch scope. The tenth match uses
+C89 signed locals and the shared EVENT particle view; the earlier mask
+comment and result-row findings are resolved. Recorded both review
+axes in [[tickets/T-10870-big-functions-5-astra]]. Final checks continue.
+
+## [2026-10-13] query | T-10870 DATE particle operand-order solution
+
+All 261 instructions of DATE func_80140374 match with s16 constant two
+on the left of its comparisons and final inequality. Updated the owned
+[[data/t0018-cases]] row to record the scratch resolution and documented
+the idiom in [[decompile-workflow]]. Integration still requires the
+pending exception for the existing void prototype. Integrated gains
+remain ten functions / 11460 bytes.
+
+## [2026-10-13] ticket | T-10870 done after four-hour batch
+
+[[tickets/T-10870-big-functions-5-astra]] completed at 14:42:18 UTC. Ten matches / 11460 bytes;
+three guarded main near misses, two [[data/t0018-cases]] rows, and shared
+layouts/idioms documented in [[decompile-workflow]]. All 27 checksums,
+header/global guards and prototype branch check pass; owned duplicate
+scan applies nothing. Inline review findings resolved. Grand total
+5236/6958 functions, 1022884/2279368 bytes (44.9%). Board/index agree;
+changes left uncommitted. The 5768-byte DATE match remains in scratch
+pending the append-only prototype exception.
+## [2026-10-13] ticket | T-10880 big functions 6 started
+
+Created [[tickets/T-10880-big-functions-6-astra]] and claimed the four objects
+in the astra20 list. Read the shared isolation/Git/procedure brief,
+[[register-cheatsheet]], and [[decompile-workflow]]. Work stays uncommitted.
+
+## [2026-10-13] build | T-10880 baseline and schedule draft
+
+Docker configure/build generated the fresh worktree outputs; all 27 unit
+checksums pass. Generated the assigned m2c drafts in scratchpad/a20.
+The largest schedule builder needs repaired pointer scaling, structured
+loops and word-width flag reads. Added assembly-evidenced ScheduleFlags and
+ScheduleClubFlags access views to include/game.h; recorded the caveat and
+loop extents in [[decompile-workflow]]. Regdiff is used on each compiled
+variant; no new function match claimed yet.
+
+## [2026-10-13] ingest | T-10880 NAME_ENT status-record layout
+
+Identified the NAME_ENT status renderer's 0xF00 record stride and byte flags
+at +0x688. Added NameRecordF00 to include/ovl/NAME_ENT.h and documented its
+relationship to FlagsWork24 and NameRecord44 in [[decompile-workflow]].
+The m2c pointer walks incorrectly inherit s32-pointer scaling from old
+scalar declarations; current research replaces them with indexed fields.
+
+## [2026-10-13] build | T-10880 first two literal-byte matches
+
+NAME_ENT func_8013ACA4 (724 bytes) and func_80140044 (1,004 bytes) pass
+funcdiff's linked literal-byte check. The full build reports all 27 checksums
+OK. Recovered signed metric rows: four-byte entries, nine rows of sixteen
+at work +0xA88, and nine saved entries at record +0x2C4. The dispatcher
+matches using a local unsigned-byte selector; the global switch adds a move.
+Added NameMetric4/NameMetricWork in include/ovl/NAME_ENT.h. Work remains
+In Progress under [[tickets/T-10880-big-functions-6-astra]].
+
+## [2026-10-13] ingest | T-10880 shared album metadata layout
+
+Recovered calendar/name/club members from main `func_800696DC` and moved
+new album access types into `include/game.h`, included by NAME_ENT.
+Existing metric and flag offsets are unchanged. [[decompile-workflow]]
+records the shared layout and differing flag-loop extents.
+
+## [2026-10-13] build | T-10880 prototype sync scope repaired
+
+`sync_protos.py --fix --only game.h,ovl/NAME_ENT.h` also added unrelated
+main definitions and source overrides. Those edits were restored by file
+editing from read-only Git output; only its generated `func_8006F218`
+declaration was retained. The broad output had introduced existing-name
+alias conflicts. Verification restarted with the minimal header delta.
+[[tickets/T-10880-big-functions-6-astra]] tracks the tooling limitation.
+
+## [2026-10-13] build | T-10880 third literal-byte match
+
+Main `func_8006F218` matches 780 linked bytes. NAME_ENT `func_8013ACA4`
+(724) and `func_80140044` (1004) still match after the shared album layout
+move: three matches, 2508 bytes. [[decompile-workflow]] records signed club
+selection, direct returns, and the shared bit-18 flag view. Full checksums
+are running again.
+
+## [2026-10-13] ingest | T-10880 repair value-returning sine helper prototype
+
+Original `func_8006C334` returns signed values, but its old `void` header
+entry truncated m2c output. Regenerated that declaration through a targeted
+`sync_protos` plan and regenerated the caller draft. No unrelated header or
+source views changed. [[decompile-workflow]] documents the blind-prototype
+recovery; the prior three matches passed all 27 checksums.
+
+## [2026-10-13] decision | T-10880 reject unsafe permutation results
+
+The bounded searches for main `func_8006D7EC` and DATE `func_80147958`
+did not produce usable near misses. Best-score candidates changed a live
+month variable, removed a conditional, or read an uninitialized loop index
+in an empty condition. None was integrated. Scratch retains the faithful
+seeds and regdiff traces; score improvement alone is not semantic evidence.
+[[tickets/T-10880-big-functions-6-astra]] remains In Progress.
+
+## [2026-10-13] ingest | T-10880 display and menu storage layouts
+
+Added `DisplayRecord44` to `include/game.h` after checking the initializer's
+byte/halfword/word stores. Recorded the four 12-entry halfword arrays in
+main's club menu and the two-byte pointer increment in
+[[decompile-workflow]]. These layouts support remaining owned drafts.
+
+## [2026-10-13] build | T-10880 five literal-byte matches
+
+Main `func_8006C334` now matches 972 bytes; NAME_ENT `func_801425C0` matches
+704 bytes. Total five functions, 4,184 bytes. Recorded the sine helper's
+explicit FAKE stack home, nested argument assignment, implicit-int
+fall-through, and promoted call view in [[decompile-workflow]]. All other
+research candidates remain in scratch until sufficiently close and reviewed.
+
+## [2026-10-13] build | T-10880 five-match integration checks
+
+Full incremental Docker ninja passed all 27 unit checksums after the fifth
+match and shared declaration changes. No unowned C edits remain. Calendar
+renderer and NAME_ENT initializer research continues from aggregate-corrected
+scratch drafts; [[tickets/T-10880-big-functions-6-astra]] remains In Progress.
+
+## [2026-10-13] ingest | T-10880 pointer-valued display fields
+
+NAME_ENT initializer experiments reduce a 332-instruction target to only
+its frame-size difference. Real pointer types at DisplayRecord44 +0x0C,
++0x10/+0x34 fix fifteen instruction substitutions; updated `include/game.h`
+and [[decompile-workflow]]. Recovered two six-entry address tables and
+eight local halfword arrays. No speculative draft is integrated yet.
+
+## [2026-10-13] build | T-10880 sixth match, NAME_ENT initializer
+
+Integrated `func_8013BF74` after literal-byte funcdiff MATCH (1,332 bytes).
+Total six functions / 5,516 bytes. Coordinate temporaries recover the frame
+naturally; pointer-valued fields recover constant allocation. Added only
+three overlay-local declarations and used the canonical main API name.
+[[decompile-workflow]] records the successful source idioms.
+
+## [2026-10-13] query | T-10880 album clearing bound and text buffers
+
+Verified the fifteen-byte clear in NAME_ENT `func_8013DF88` against the
+original stores and loop end; the sixteenth status slot is untouched.
+Recorded the clear bound and two 256-byte text buffers in
+[[decompile-workflow]]. Owned-file duplicate propagation found no candidates;
+no unrelated source was changed.
+
+## [2026-10-13] build | T-10880 seventh literal match
+
+NAME_ENT `func_8013EBEC` matches 656 linked bytes. Total seven / 6,172 bytes.
+Two ordinary locals recover the text-buffer frame without padding. Updated
+[[decompile-workflow]]; remaining album clear-loop and dispatch experiments
+are still in scratch.
+
+## [2026-10-13] ingest | T-10880 paired call table
+
+Recovered the two-word / two-pair row layout at `D_800B3B9C`, documented in
+[[decompile-workflow]] and shared `CallPair8`. NAME_ENT func_8014068C now
+has a corrected 290-instruction candidate for its 293-instruction target;
+a bounded search continues in scratch. The one-hour scheduler search ended
+without an exact or sufficiently close candidate.
+
+## [2026-10-13] build | T-10880 seven-match branch checks
+
+All 27 unit checksums pass. `migrate_globals --check` reports globals OK;
+`sync_protos --check-branch` reports zero new disagreements and branch check
+OK. Its old void-result baseline for main `func_8006C334` is now stale;
+left `config/proto_known.txt` unchanged per the batch ownership rules.
+Inline standards review is in progress while remaining searches run.
+
+## [2026-10-13] decision | T-10880 remove the sine-helper frame workaround
+
+Ordinary offset and magnitude locals reproduce the complete C334 instruction
+stream and frame; removed the oversized day aggregate. Updated
+[[decompile-workflow]] and [[tickets/T-10880-big-functions-6-astra]]. Also
+named the album selection byte at work +0x26. The related fifteen-byte clear
+candidate is now 30 diff lines and has a bounded follow-up search.
+
+## [2026-10-13] ingest | T-10880 schedule-entry date layout
+
+Recovered the eight-entry compaction and December/January selection-sort
+shape in main func_8006B0C8. Added ScheduleEntryDate and ScheduleEntryFlags
+to include/game.h; recorded bit positions, whole-record swaps and the key
+array in [[decompile-workflow]]. Docker regdiff confirms that the active
+bitfield restores lw/sll/bgez; the overall scratch routine remains far
+from matching and is not integrated. [[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] build | T-10880 layout checks and guarded near misses
+
+Latest shared-layout build passes all 27 unit checksums. Integrated guarded
+main func_8006EB64 (four instruction substitutions) and NAME_ENT
+func_8013DF88 (15 instruction differences); the default paths remain
+INCLUDE_ASM. Regdiff explains every remaining register miss. Helper
+comparison constants and zero-valued predicate are explicitly marked FAKE;
+recorded the limits and failed pointer/union alternatives in
+[[decompile-workflow]]. Continuing bounded searches before final review.
+
+## [2026-10-13] build | T-10880 rebuild a corrupted Ninja dependency cache
+
+Two concurrent funcdiff invocations for different units raced while rebuilding
+after a shared-header edit. One reported an absent deps log; later Ninja runs
+exited 139 with no output, and this worktree's .ninja_deps was only 256 bytes.
+Preserved that generated cache under scratchpad/a20/ninja-deps-corrupt-1442
+and started one `ninja -j4` rebuild. Source and raw data are unchanged by
+this repair. Keep build-backed funcdiff calls sequential; scratch regdiff
+compiles have separate output directories. Final checksum validation will
+use the rebuilt cache. [[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] ingest | T-10880 profile tables and three near misses
+
+Recovered Ninja cache rebuild passes 27/27. A plain while loop improves
+NAME_ENT DF88 to 22 diff lines without a wrapper trick. The EB64 allocation
+idiom transfers to EEC4 at eight diff lines; retained both guarded helpers,
+with their FAKE notes, and generated their main API declarations.
+Confirmed A2CC table strides and load widths directly in original assembly;
+generated seven reusable profile-table declarations in include/main_api.h.
+In particular D_800B66A4 is s32[], correcting a scratch m2c byte guess.
+Updated [[decompile-workflow]] and [[tickets/T-10880-big-functions-6-astra]].
+
+## [2026-10-13] ingest | T-10880 adjacent schedule-entry nibble
+
+Refined ScheduleEntryFlags with the four-bit value at bits 25..28, recovered
+from A2CC's word shifts beside its bit-29 activity test. Kept the field's
+unknown name; no source function or global alias is changed. Documented
+in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10880 review restores the near-miss guard
+
+The shared-header validation caught a NAME_ENT checksum failure after the
+DF88 improvement. The scratch replacement helper unwraps NON_MATCHING
+blocks; using it for that source update had dropped DF88's wrapper.
+Restored the explicit guard and INCLUDE_ASM fallback and restarted the
+remaining checks. Both main helper guards were intact. Recorded this as a
+resolved integration-review finding; no new match is counted.
+[[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] query | T-10880 register-allocation handoff cases
+
+After consulting [[register-allocation-wave7]] and the trace evidence in
+[[uopt-register-allocation]], appended four measured cases to
+[[data/t0018-cases]]: DF88, EB64, EEC4 and CB44. The first three are guarded
+near misses; CB44 remains assembly because its best draft exceeds the
+requested cutoff and still has a frame difference. Every diagnosis is
+backed by scratch regdiff traces. [[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] build | T-10880 final byte and layout verification
+
+Serialized funcdiff rechecks confirm all seven literal matches: 724, 1004,
+780, 972, 704, 1332 and 656 bytes, total 6172. Integrated guards compile
+through funcdiff and regdiff at 8/8/22 diff lines. A direct fresh checksum
+pass verifies all 27 built units. IDO compilation of scratch static size
+and offset assertions passes for the new album, display, schedule and
+call-pair views. Prototype branch check has zero new disagreements;
+globals check and git diff --check pass. Final source review continues
+while the last bounded searches finish.
+[[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] lint | T-10880 source and wiki review
+
+Reviewed the owned changes against CODING_STANDARDS.md, including C89,
+fixed-width layouts, generated main declarations, overlay append-only
+rules, FAKE annotations, explicit guards and checksum evidence. No
+unresolved source findings. Corrected the workflow's header-location
+wording after moving shared album layouts to game.h; clarified the ticket's
+batch objective as attempting the assigned list. Ticket/card remain In
+Progress until the final searches and minimum four-hour session finish.
+[[tickets/T-10880-big-functions-6-astra]], [[decompile-workflow]]
+
+## [2026-10-13] ticket | T-10880 enters final review
+
+Moved [[tickets/T-10880-big-functions-6-astra]] to In Review and synchronized
+[[kanban]] and [[index]]. Inline standards review has no unresolved code
+findings. The seven matches and three guarded drafts have final byte/trace
+evidence; the last bounded searches and minimum session duration are still
+being completed before closing the batch.
+
+## [2026-10-13] lint | T-10880 final scoped handoff audit
+
+All bounded searches ended; no further literal match was found. Retained
+seven exact functions and three guarded drafts, with four T-0018 rows.
+Scoped lint verifies all seven ASM removals, all three explicit fallback
+guards, helper FAKE comments, ticket links and ticket/board/index status
+agreement. Post-guard branch check remains zero new disagreements, and
+globals check passes. Recorded the exact progress line and merge follow-up
+in [[tickets/T-10880-big-functions-6-astra]].
+
+## [2026-10-13] query | T-10880 final pointer-lifetime check
+
+Six final EB64 output-pointer alias variants leave the retained draft at
+eight diff lines; signed word-copy variants stay wider misses. Regdiff
+confirms no improved allocation. No source change followed this check.
+The shared layouts, retained drafts and register cases in
+[[decompile-workflow]] and [[data/t0018-cases]] remain the final handoff.
+
+## [2026-10-13] ticket | T-10880 complete after four-hour batch
+
+Completed more than four hours of focused matching, type recovery, bounded
+searches and verification. Moved [[tickets/T-10880-big-functions-6-astra]]
+from In Review to Done and synchronized [[kanban]] and [[index]]. Seven
+literal matches total 6,172 bytes; three guarded drafts remain at 8/8/22
+lines. All 27 unit checksums, prototype/global checks, IDO layout assertions
+and the inline coding-standards review pass; all findings are resolved.
+Four T-0018 cases and reusable header/workflow details are recorded.
+Progress: grand total 5238/6958, 1018532/2279368 bytes, 44.7%.
+Changes remain uncommitted for the orchestrator; no Git mutation occurred.
+
 ## [2026-10-13] ticket | T-10700 Windows host setup opened
 
 Opened [[tickets/T-10700-windows-host-baseline-build]] (In Progress): first build on a Windows 11 host with

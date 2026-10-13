@@ -389,7 +389,39 @@ void func_8013703C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137090);
+/* Slot records of 0x24 bytes at D_80149208 + 0x24 * i, reached as members of D_80149208 so IDO sees the object
+ * (loop-invariant D_80120A72 is hoisted). FAKE: the unused-looking s16 y reserves the 4 stack bytes the original has
+ * and `th.v[i] <= (y = ...)` keeps the load order. T-10720. */
+void func_80137090(void) {
+    s32 i;
+    s16 y;
+    TaiikuI3 lim;
+    TaiikuH3 th;
+
+    lim = D_80149808;
+    th = D_80149814;
+    for (i = 0; i < 3; i++) {
+        if (D_80149208.pad24[i * 0x24 + 6] == 1 && D_80120A72 + i * 8 + 0x148 < *(s16 *)(D_8011ECD0 + i * 0x44 + 0x19EA)) {
+            *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = 0;
+        } else {
+            if (th.v[i] <= (y = *(s16 *)&D_80149208.pad24[i * 0x24 + 0x22]) && D_80149208.pad24[i * 0x24 + 0] == 0) {
+                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = 0;
+                D_80149208.pad24[i * 0x24 + 1] = 1;
+            } else if (y >= 0x140 && D_80149208.pad24[i * 0x24 + 0] == 0) {
+                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = (lim.v[i] >> 1) + 1;
+            } else if (*(u32 *)&D_80149208.pad24[i * 0x24 + 0x1C] >= 0xB && D_80149208.pad24[i * 0x24 + 1] == 0 && D_80149208.pad24[i * 0x24 + 6] == 0) {
+                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] += *(s32 *)&D_80149208.pad24[i * 0x24 + 0x10];
+                if (*(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] < 0) {
+                    *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = 0;
+                }
+                if (lim.v[i] < *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18]) {
+                    *(s32 *)&D_80149208.pad24[i * 0x24 + 0x18] = lim.v[i];
+                }
+                *(s32 *)&D_80149208.pad24[i * 0x24 + 0x1C] = 0;
+            }
+        }
+    }
+}
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-10520, D_80149298.halves.high (D_8014929A) is not hoisted out of the loop as in the original; the rest has the original structure, large diff (all registers) */

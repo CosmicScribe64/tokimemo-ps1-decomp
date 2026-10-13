@@ -719,9 +719,77 @@ void func_80134D74(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80134F2C);
+void func_80134F2C(s32 arg0, s32 arg1) {
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135044);
+    if (EN_OBJ(arg0)->unk_28 < 3) {
+        switch (EN_OBJ(arg0)->unk_04) {
+        case 1:
+            if (arg1 < 0x384) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x80;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        case 2:
+            if (arg1 < 0x844) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x81;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        }
+        if (EN_OBJ(arg0)->unk_1C >= 0x1000) {
+            EN_OBJ(arg0)->unk_1C -= 0x1000;
+        }
+        if (EN_OBJ(arg0)->unk_1C < 0) {
+            EN_OBJ(arg0)->unk_1C += 0x1000;
+        }
+    }
+}
+
+void func_80135044(s32 arg0, s32 arg1) {
+
+    if (EN_OBJ(arg0)->unk_28 < 3) {
+        switch (EN_OBJ(arg0)->unk_04) {
+        case 1:
+            if (arg1 < 0x384) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x40;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        case 2:
+            if (arg1 < 0x844) {
+                EN_OBJ(arg0)->unk_28 = EN_OBJ(arg0)->unk_08 * 2 + 4;
+                EN_OBJ(arg0)->unk_2C = 0x41;
+                if (!(func_800AE0D0() & 1)) {
+                    EN_OBJ(arg0)->unk_24 = 1;
+                } else {
+                    EN_OBJ(arg0)->unk_24 = 2;
+                }
+            }
+            break;
+        }
+        if (EN_OBJ(arg0)->unk_1C >= 0x1000) {
+            EN_OBJ(arg0)->unk_1C -= 0x1000;
+        }
+        if (EN_OBJ(arg0)->unk_1C < 0) {
+            EN_OBJ(arg0)->unk_1C += 0x1000;
+        }
+    }
+}
 
 void func_8013515C(s32 arg0, s32 arg1) {
     u8 *p;
@@ -878,4 +946,53 @@ void func_801369F4(s32 arg0) {
     }
 }
 
+/* NON_MATCHING: T-10850, 6 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+/* FAKE: empty test separates the loop constant live ranges. T-10850 */
+void func_80136A2C(void)
+{
+  s32 i;
+  if (D_800B3CFC != 0)
+  {
+    D_800B3CF8 = 0;
+    D_800B3CFC = 0;
+    D_80139B18 += 1;
+  }
+  if (D_80139B18 > 0)
+  {
+    for (i = 0; i < 5; i++)
+    {
+      if ((((EnObj *) D_8013984C)[i * 2].unk_00 > 0) && (((EnObj *) D_8013984C)[i * 2].unk_00 < 4))
+      {
+        if (D_80139B18 < 3)
+        {
+          ((EnObj *) D_8013984C)[i * 2].unk_00 = ((EnObj *) D_8013984C)[i * 2].unk_04 + 1;
+        }
+        else
+        {
+          ((EnObj *) D_8013984C)[i * 2].unk_00 = 4;
+          ((EnObj *) D_8013984C)[i * 2].unk_04 = 0;
+        }
+      }
+      if ((((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 > 0) && (((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 < 4))
+      {
+        if (D_80139B18 < 3)
+        {
+          if (!i)
+          {
+          }
+          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 = ((EnObj *) D_8013984C)[(i * 2) + 1].unk_04 + 1;
+        }
+        else
+        {
+          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_00 = 4;
+          ((EnObj *) D_8013984C)[(i * 2) + 1].unk_04 = 0;
+        }
+      }
+    }
+
+  }
+}
+#else
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80136A2C);
+#endif

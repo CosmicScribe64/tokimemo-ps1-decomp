@@ -155,7 +155,49 @@ void func_80046318(u8 arg0, s32 arg1, s32 arg2) {
     D_800B3D60 = 1;
 }
 
+/* NON_MATCHING: T-10850, 4 differing listing lines; see the ticket scratch evidence. */
+#ifdef NON_MATCHING
+s32 func_8004636C(arg0, arg1)
+u8 arg0;
+u8 *arg1;
+{
+    u32 lo;
+    s32 temp_t0;
+    u32 var_v0;
+    u32 temp_a2;
+    u32 var_v1;
+    u8 *var_a0;
+    u8 *var_a3;
+    u8 *temp_a0;
+    var_v0 = 0;
+    var_v1 = 0;
+    if (((arg0 << 0xB) - 4) != 0)
+    {
+        var_a0 = arg1;
+        var_a3 = arg1 + 1;
+        do
+        {
+            var_v1 += 2;
+            var_v0 += (*var_a0) + (*var_a3);
+            temp_t0 = var_v0 & 0xFFFF;
+            var_a0 += 2;
+            var_a3 += 2;
+            var_v0 = temp_t0;
+        }
+        while (var_v1 < ((arg0 << 0xB) - 4));
+    }
+    temp_a0 = var_v1 + arg1;
+    temp_a2 = temp_a0[0];
+    lo = temp_a0[1];
+    if (var_v0 != ((temp_a2 << 8) + lo))
+    {
+        return 0;
+    }
+    return 1;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800451D0", func_8004636C);
+#endif
 
 /* s32 fallthrough preserves original constant scheduling (T-9710). */
 s32 func_800463E8(void) {

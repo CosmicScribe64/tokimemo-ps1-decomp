@@ -223,3 +223,126 @@ extern u8 D_8014CD04[]; /* Name-entry character buffer. T-10010. */
 extern s32 D_8014CC40; /* Word arguments to func_80046290. */
 extern s32 D_8014CC44;
 #endif
+
+#ifndef OVL_NAME_ENT_T10860_H
+#define OVL_NAME_ENT_T10860_H
+/* Four blood-type text pointers; stride four, T-10860. */
+extern u8 *D_8014D1A0[4];
+#endif
+
+#ifndef OVL_NAME_ENT_PROFILE_FLAGS_H
+#define OVL_NAME_ENT_PROFILE_FLAGS_H
+/* GameState +0x1CC: month/day/blood-type fields read by 80149E3C. T-10860. */
+typedef struct NameProfileFlags {
+    /* 0x00 */ u32 month : 4;
+    /* 0x00 */ u32 day : 5;
+    /* 0x00 */ u32 blood_type : 2;
+    /* 0x00 */ u32 unk_0B : 21;
+} NameProfileFlags; /* size 0x04 */
+#endif
+
+#ifndef OVL_NAME_ENT_T10860_FORWARD_H
+#define OVL_NAME_ENT_T10860_FORWARD_H
+void func_80145EA4(void);
+void func_801478E0(void);
+#endif
+
+#ifndef OVL_NAME_ENT_MOTION_TYPES_H
+#define OVL_NAME_ENT_MOTION_TYPES_H
+/* Shared T-10030 actor view, exported for T-10860 and later drafts. */
+typedef union NameMotionWord {
+    /* 0x00 */ s32 word;
+    struct {
+        /* 0x00 */ s16 low;
+        /* 0x02 */ s16 high;
+    } half;
+} NameMotionWord; /* size 0x04; signed fixed-point coordinate view */
+
+typedef struct NameMotionActor44 {
+    /* 0x00 */ u8 pad[3];
+    /* 0x03 */ u8 flags;
+    /* 0x04 */ u8 pad04[3];
+    /* 0x07 */ u8 phase;
+    /* 0x08 */ u8 pad08[0x1C];
+    /* 0x24 */ NameMotionWord x;
+    /* 0x28 */ NameMotionWord y;
+    /* 0x2C */ u8 pad2C[0x18];
+} NameMotionActor44; /* size 0x44; T-10030 */
+#endif
+
+#ifndef OVL_NAME_ENT_T10860_ACTOR_HELPER_H
+#define OVL_NAME_ENT_T10860_ACTOR_HELPER_H
+/* Side-effect-only actor setup; no returned value (801473AC assembly). */
+void func_801473AC(void);
+#endif
+
+#ifndef OVL_NAME_ENT_ASSET_ACTOR44_H
+#define OVL_NAME_ENT_ASSET_ACTOR44_H
+/* Record 96 image header: word 0 is passed to load_tpage_buf_lock (T-10860). */
+typedef struct NameAssetActor44 {
+    /* 0x00 */ u8 pad00[0x34];
+    /* 0x34 */ s32 *image;
+    /* 0x38 */ u8 pad38[0x0C];
+} NameAssetActor44; /* size 0x44 */
+#endif
+
+#ifndef OVL_NAME_ENT_T10860_FADE_HELPER_H
+#define OVL_NAME_ENT_T10860_FADE_HELPER_H
+/* Original K&R fallthrough signature, required by 80147BEC's live ranges. */
+s32 func_80147A08(void);
+#endif
+
+#ifndef OVL_NAME_ENT_DIALOGUE_TABLES_H
+#define OVL_NAME_ENT_DIALOGUE_TABLES_H
+/* Paired command words, indexed at stride 8 by the dialogue byte (T-10860). */
+typedef struct NameCommandPair8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} NameCommandPair8; /* size 0x08 */
+extern NameCommandPair8 D_8014DA30[43];
+/* At least 43 dialogue pairs; this splat label also covers trailing untyped data. */
+extern NameCommandPair8 D_8014DB88[];
+extern u8 D_8014DA04[44];
+extern s32 D_8014D188;
+void func_80146940(void);
+void func_80146CB8(void);
+#endif
+
+#ifndef OVL_NAME_ENT_T10860_LEVEL_HISTORY
+#define OVL_NAME_ENT_T10860_LEVEL_HISTORY
+/* T-10860: last getCDlevel sample and four signed samples, indexed by frame & 3. */
+extern s32 D_8014D1B0;
+extern s32 D_8014D1B4[4];
+/* Halfword +0x08 is read by func_80146624; the other actor views omit it. */
+typedef struct NameActorHead44 {
+    /* 0x00 */ u8 pad_00[8];
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad_0A[0x3A];
+} NameActorHead44; /* size 0x44 */
+#endif
+
+#ifndef OVL_NAME_ENT_T10860_DIALOGUE_TEXT
+#define OVL_NAME_ENT_T10860_DIALOGUE_TEXT
+/* T-10860: 43 text pointers, immediately before the 44-byte speaker table. */
+extern u8 *D_8014D958[43];
+#endif
+
+#ifndef OVL_NAME_ENT_T10860_SECOND_BOB_HELPER
+#define OVL_NAME_ENT_T10860_SECOND_BOB_HELPER
+/* T-10860: integer fallthrough view keeps caller 80149840's state in v1. */
+s32 func_8014977C(void);
+#endif
+
+/* The album buffer is also read by main/800674B0.c. T-10880. */
+#include "game.h"
+
+#ifndef OVL_NAME_ENT_T10880_FUNCTIONS
+#define OVL_NAME_ENT_T10880_FUNCTIONS
+void func_8013ACA4(void);
+void func_80140044(void);
+/* Original implicit-int display dispatcher falls through. */
+s32 func_801425C0(void);
+extern s32 D_8014D0D0;
+extern s32 D_8014D0D8;
+extern s32 D_8014D0DC;
+#endif

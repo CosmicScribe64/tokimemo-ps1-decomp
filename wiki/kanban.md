@@ -23,6 +23,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+
+
+
 - [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 
@@ -49,8 +53,25 @@ kanban-plugin: board
 
 
 
+
+
+
 ## Done
 - [ ] [[tickets/T-10700-windows-host-baseline-build|T-10700 Windows host setup and baseline build]]
+
+- [ ] [[tickets/T-10880-big-functions-6-astra|T-10880 Big functions 6 (astra)]]
+
+- [ ] [[tickets/T-10850-wave-17-astra|T-10850 Wave 17 (astra, easiest first)]]
+- [x] [[tickets/T-10910-wave-17-list-1|T-10910 Wave 17: list 1]]
+- [ ] [[tickets/T-10860-big-functions-4-astra|T-10860 Big functions 4 (astra)]]
+- [ ] [[tickets/T-10870-big-functions-5-astra|T-10870 Big functions 5 (astra)]]
+- [ ] [[tickets/T-10810-wave-16-list-1|T-10810 Wave 16: list 1]]
+- [ ] [[tickets/T-10840-wave-13-15-tool-fixes|T-10840 Wave 13-15 tool fixes]]
+- [ ] [[tickets/T-10820-wave-16-list-2|T-10820 Wave 16: list 2]]
+- [ ] [[tickets/T-10830-big-functions-3-astra|T-10830 Big functions 3 (astra)]]
+- [x] [[tickets/T-10710-wave-15-list-1|T-10710 Wave 15: list 1]]
+- [ ] [[tickets/T-10720-wave-15-list-2|T-10720 Wave 15: list 2]]
+- [ ] [[tickets/T-10730-big-functions-2-astra|T-10730 Big functions 2 (astra)]]
 - [ ] [[tickets/T-10610-wave-14-list-1|T-10610 Wave 14: list 1]]
 - [ ] [[tickets/T-10620-wave-14-list-2|T-10620 Wave 14: list 2]]
 - [ ] [[tickets/T-10630-big-functions-astra|T-10630 Big functions (astra)]]

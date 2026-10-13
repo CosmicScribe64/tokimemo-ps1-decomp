@@ -115,7 +115,43 @@ void func_8013DEA0(s32 arg0) {
     func_800493A8(0x200, 0x100, 0xD, 0, 2);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013E094);
+void func_8013E094(u8 *arg0) {
+    s32 pad; /* FAKE: unused slot above base, the original frame has it (T-3330 idiom, real source unknown). T-10710 */
+    s16 base;
+    u8 *p;
+    s16 e1;
+    s16 e2;
+
+    if (D_8015004C == 0xA && D_80150050 == 1) {
+        D_8011F536 = -0x15;
+        D_8011F4F2 = -0x15;
+    } else {
+        D_8011F536 = -0xD;
+        D_8011F4F2 = -0xD;
+    }
+    p = *(u8 **)arg0;
+    if (*(s16 *)p >= 6) {
+        base = *(s16 *)(p + 4);
+        e1 = *(s16 *)(p + 0x50);
+        e2 = *(s16 *)(p + 0x42);
+        D_801217D6 = D_8011F536 + e1 - base;
+        D_801217FA = D_8011F536 + e2 - base;
+    }
+    if (*(s16 *)p >= 4) {
+        e1 = *(s16 *)(p + 0x26);
+        e2 = *(s16 *)(p + 0x34);
+        D_8012181E = D_8011F536 + e1 - base;
+        D_80121842 = D_8011F536 + e2 - base;
+    }
+    if (*(s16 *)p >= 7) {
+        e1 = *(s16 *)(p + 0x5E);
+        D_80121866 = D_8011F536 + e1 - base;
+    }
+    if (*(s16 *)p == 8) {
+        e2 = *(s16 *)(p + 0x6C);
+        D_8012188A = D_8011F536 + e2 - base;
+    }
+}
 
 void func_8013E1DC(arg0)
 s32 arg0;

@@ -136,7 +136,7 @@ class BaseValidation(unittest.TestCase):
     def test_unbuildable_base_refused_before_search(self):
         root = self.directory('int f(void) { syntax error; }\n')
         with self.assertRaisesRegex(RuntimeError, 'base.c does not build'):
-            permute.validate_base(root)
+            permute.validate_base(root, instruction_tolerance=0)
         with mock.patch.object(permute.subprocess, 'Popen') as worker, \
                 mock.patch.object(permute, 'validate_base', side_effect=RuntimeError('invalid base')):
             self.assertEqual(permute.main(['run', root]), 1)
@@ -145,7 +145,18 @@ class BaseValidation(unittest.TestCase):
     def test_wrong_instruction_shape_refused(self):
         root = self.directory('int f(int a, int b) { return a * b; }\n')
         with self.assertRaisesRegex(RuntimeError, 'instruction shape differs from target'):
-            permute.validate_base(root)
+            permute.validate_base(root, instruction_tolerance=0)
+
+    def test_near_miss_warns_and_can_be_permuted(self):
+        root = self.directory('int f(int a, int b) { return a * b; }\n')
+        warnings = []
+        permute.validate_base(root, instruction_tolerance=4, warn=warnings.append)
+        self.assertTrue(warnings)
+        self.assertIn("tolerance 4", warnings[0])
+
+    def test_tolerance_option_before_and_after_command(self):
+        for argv in (["--instruction-tolerance", "3", "f"], ["setup", "f", "--instruction-tolerance", "3"]):
+            self.assertEqual(permute.parse_args(argv).instruction_tolerance, 3)
 
     def test_compatible_base_builds_and_is_accepted(self):
         root = self.directory('int f(int a, int b) { return a + b; }\n')

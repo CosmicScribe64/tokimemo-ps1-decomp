@@ -68,7 +68,80 @@ s32 func_80075FA0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076000);
 
+typedef struct {
+    u32 idx : 5;
+    u32 pad : 20;
+    u32 nib : 4;
+    u32 b29 : 1;
+    u32 rest : 2;
+} EntryFlags29;
+
+/* NON_MATCHING: T-10910, structure matches (97 of 97 instructions) with the bit-field entry view, the 5 explicit clears and an if (1) around cnt[idx]++ (found by decomp-permuter, FAKE); only register choice differs: the original colours n, m, arg0, idx in that order (..), 24 lines */
+#ifdef NON_MATCHING
+s32 func_800764AC(u32 *arg0) {
+    s32 padA[1];
+    s32 cnt[32];
+    s32 padB[1];
+    s32 i;
+    s32 n;
+    s32 m;
+    s32 idx;
+
+    switch (D_800E6280.unk_54C[0].w & 0x1F) {
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+        return 1;
+    default:
+        for (i = 0; i < 32; i++) {
+            cnt[i] = 0;
+        }
+        for (i = 0; i < 8; i++) {
+            if (!((EntryFlags29 *)&D_800E6280.unk_54C[i])->b29) {
+                break;
+            }
+            if (1) {
+                cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx]++;
+            }
+        }
+        cnt[16] = 0;
+        cnt[17] = 0;
+        cnt[19] = 0;
+        cnt[20] = 0;
+        cnt[18] = 0;
+        n = 0;
+        m = 0;
+        for (i = 0; i < 32; i++) {
+            if (cnt[i] != 0) {
+                n++;
+            }
+        }
+        if (n < 2) {
+            *arg0 = (u32)(D_800E6280.unk_54C[0].w << 2) >> 31;
+            return 1;
+        }
+        for (i = 0; i < 8; i++) {
+            if (!((EntryFlags29 *)&D_800E6280.unk_54C[i])->b29) {
+                break;
+            }
+            if (cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx] != 0) {
+                idx = ((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx;
+                arg0[m] = idx;
+                m++;
+                cnt[((EntryFlags29 *)&D_800E6280.unk_54C[i])->idx] = 0;
+                if (m >= 3) {
+                    break;
+                }
+            }
+        }
+        return n;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800764AC);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076630);
 

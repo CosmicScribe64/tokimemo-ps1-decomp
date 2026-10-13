@@ -335,7 +335,104 @@ INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801347B8);
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801349A0);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80134C64);
+/* FAKE: the signed narrow constant preserves the shared multiply/compare
+ * range and its a2 register. Literal 3 strength-reduces the multiply.
+ * T-10870: two three-halfword chains preserve each result row's stores. */
+void func_80134C64(void) {
+    s16 three = 3;
+    s32 choice_offset;
+    GameState *g;
+
+    g = &D_800E6280;
+    D_800CA160 = D_8015BDC0;
+    D_800CA164 = D_8015BE2C;
+    D_800CA168 = D_8015BE98;
+    func_800AE0F0(D_800CA19C, "美術館");
+    D_8015B658 = three;
+    D_8015B66C = 0;
+    D_8015B668 = 0;
+    D_8015B664 = 0;
+    if ((g->unk_03E == 0x61) && ((u8) g->unk_03F >= 9U) && ((u8) g->unk_03F < 0xCU)) {
+        ((DateSelectionView *)&D_800CA2F8)->option = 2;
+        D_8015B664 = 1;
+        func_800AE0F0(D_800CA1DC, "ガーギー展");
+        if ((g->unk_1BC[g->unk_F5F].unk_14[12] != 0) && (g->unk_F5F != three)) {
+            ((DateSelectionView *)&D_800CA2F8)->option = 5;
+        }
+        D_80122D08 = 0xC;
+        if (g->unk_F5F == 7) {
+            D_800CA148 = 2;
+        }
+    } else if ((g->unk_03E == 0x61) && ((u8) g->unk_03F >= 3U) && ((u8) g->unk_03F < 6U)) {
+        ((DateSelectionView *)&D_800CA2F8)->option = three;
+        D_8015B668 = 1;
+        func_800AE0F0(D_800CA1DC, "彫塑展");
+        if (g->unk_1BC[g->unk_F5F].unk_14[13] != 0) {
+            ((DateSelectionView *)&D_800CA2F8)->option = 5;
+        }
+        D_80122D08 = 0xD;
+        if (g->unk_F5F == 7) {
+            D_800CA148 = 4;
+        }
+    } else if ((g->unk_03E == 0x5F) && ((u8) g->unk_03F >= 9U) && ((u8) g->unk_03F < 0xCU)) {
+        ((DateSelectionView *)&D_800CA2F8)->option = 4;
+        D_8015B66C = 1;
+        func_800AE0F0(D_800CA1DC, "有名画家展");
+        if (g->unk_1BC[g->unk_F5F].unk_14[14] != 0) {
+            ((DateSelectionView *)&D_800CA2F8)->option = 5;
+        }
+        D_80122D08 = 0xE;
+        if (g->unk_F5F == 7) {
+            D_800CA148 = 4;
+        }
+    } else if (!(g->unk_1BC[g->unk_F5F].unk_14[11] & 1)) {
+        ((DateSelectionView *)&D_800CA2F8)->option = 0;
+        func_800AE0F0(D_800CA1DC, "館内");
+        D_80122D08 = 0xB;
+    } else {
+        ((DateSelectionView *)&D_800CA2F8)->option = 1;
+        func_800AE0F0(D_800CA1DC, "館内");
+        D_80122D08 = 0xB;
+        if (g->unk_F5F == 7) {
+            D_800CA148 = 2;
+        }
+    }
+    choice_offset = ((DateSelectionView *)&D_800CA2F8)->option * three;
+    *D_800CA22C = (s16) *(g->unk_F5F * 0xF + (u8 *)D_8015B520 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 0xF + (u8 *)D_8015B520 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 0xF + (u8 *)D_8015B520 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 0xF + (u8 *)D_8015B524 + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 0xF + (u8 *)D_8015B524 + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 0xF + (u8 *)D_8015B524 + choice_offset + 2);
+    if (((DateSelectionView *)&D_800CA2F8)->option == 5) {
+        switch (g->unk_F5F) {
+        default:
+            D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = three;
+            D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = three;
+            break;
+        case 1:
+        case 7:
+        case 8:
+            /* fallthrough */
+        case 3:
+            D_800CA21C[0] = D_800CA21C[1] = D_800CA21C[2] = 4;
+            D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = 4;
+            break;
+        }
+        if ((g->unk_F5F == three) && (D_8015B664 != 0)) {
+            D_800CA22C[0] = D_800CA22C[1] = D_800CA22C[2] = three;
+        }
+        if (g->unk_F5F == 0xA) {
+            D_800CA148 += 1;
+        }
+        if (g->unk_F5F == 7) {
+            D_800CA148 = 4;
+        }
+    }
+    func_8007ED84(0x44F1);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013518C);
 
@@ -810,7 +907,98 @@ void func_801388F4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80138934);
+void func_80138934(void) {
+    GameState *g = &D_800E6280;
+    s32 temp_t0;
+    s32 temp_t1;
+    s32 temp_t1_2;
+    s32 temp_t8;
+    s32 temp_t9;
+
+    func_800AE0F0(D_800CA1DC, "遊園地");
+    if ((u8) D_8015B68C == 0) {
+        func_800AE0F0(D_800CA19C, "ジェットコースター");
+        if (!(g->unk_1BC[g->unk_F5F].unk_14[21] & 1)) {
+            D_800CA2FC = 0;
+        } else {
+            D_800CA2FC = 1;
+        }
+        temp_t1 = D_800CA2FC * 3;
+        *D_800CA22C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t1);
+        D_800CA22C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t1 + 1);
+        D_800CA22C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t1 + 2);
+        *D_800CA21C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t1);
+        D_800CA21C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t1 + 1);
+        D_800CA21C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t1 + 2);
+        D_80122D08 = 0x15;
+        return;
+    }
+    if ((u8) D_8015B68C == 3) {
+        func_800AE0F0(D_800CA19C, "絶叫マシーンビビール");
+        if (!(g->unk_1BC[g->unk_F5F].unk_14[24] & 1)) {
+            D_800CA2FC = 0;
+        } else {
+            D_800CA2FC = 1;
+        }
+        temp_t0 = D_800CA2FC * 3;
+        D_80122D08 = 0x18;
+        *D_800CA22C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t0 + 18);
+        D_800CA22C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t0 + 19);
+        D_800CA22C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t0 + 20);
+        *D_800CA21C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t0 + 18);
+        D_800CA21C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t0 + 19);
+        D_800CA21C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t0 + 20);
+        return;
+    }
+    if ((u8) D_8015B68C == 1) {
+        func_800AE0F0(D_800CA19C, "ゴーストハウス");
+        if (!(g->unk_1BC[g->unk_F5F].unk_14[22] & 1)) {
+            D_800CA2FC = 0;
+        } else {
+            D_800CA2FC = 1;
+        }
+        temp_t8 = D_800CA2FC * 3;
+        D_80122D08 = 0x16;
+        *D_800CA22C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t8 + 6);
+        D_800CA22C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t8 + 7);
+        D_800CA22C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t8 + 8);
+        *D_800CA21C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t8 + 6);
+        D_800CA21C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t8 + 7);
+        D_800CA21C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t8 + 8);
+        return;
+    }
+    if ((u8) D_8015B68C == 4) {
+        func_800AE0F0(D_800CA19C, "バーチャルシップ");
+        if (!(g->unk_1BC[g->unk_F5F].unk_14[25] & 1)) {
+            D_800CA2FC = 0;
+        } else {
+            D_800CA2FC = 1;
+        }
+        temp_t1_2 = D_800CA2FC * 3;
+        D_80122D08 = 0x19;
+        *D_800CA22C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t1_2 + 24);
+        D_800CA22C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t1_2 + 25);
+        D_800CA22C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t1_2 + 26);
+        *D_800CA21C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t1_2 + 24);
+        D_800CA21C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t1_2 + 25);
+        D_800CA21C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t1_2 + 26);
+        return;
+    }
+    func_800AE0F0(D_800CA19C, "観覧車");
+    if (!(g->unk_1BC[g->unk_F5F].unk_14[23] & 1)) {
+        D_800CA2FC = 0;
+    } else {
+        D_800CA2FC = 1;
+    }
+    temp_t9 = D_800CA2FC * 3;
+    D_80122D08 = 0x17;
+    *D_800CA22C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t9 + 12);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t9 + 13);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B0 + temp_t9 + 14);
+    *D_800CA21C = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t9 + 12);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t9 + 13);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 0x24 + (u8 *)D_8015B5B4 + temp_t9 + 14);
+}
 
 void func_80139000(void) {
     if (D_8015B670 == 0) {
@@ -2125,7 +2313,74 @@ void func_8013F544(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013F638);
+void func_8013F638(void) {
+    s16 i;
+    DateParticleView44 *p;
+
+    if (D_800B5939 == 1) {
+        for (i = 11; i < 16; i++) {
+            D_800E6280.unk_1228[i] = -1;
+            D_800E6280.unk_1228[i + 32] = -1;
+        }
+        D_800B5920[2] = 0;
+    } else {
+        for (i = 21; i < 26; i++) {
+            D_800E6280.unk_1228[i] = -1;
+            D_800E6280.unk_1228[i + 16] = -1;
+        }
+        D_800B5920[3] = 0;
+    }
+    D_800B5BD4 = 13;
+    D_8015BD3C = 0x80;
+    D_80122D14 = 1;
+    D_8015BD34 = 0;
+    D_8015BD38 = 1;
+    func_80132288();
+    func_80043914(D_800CA130, 15, 1, 2, 0);
+    ((DateParticleView44 *)D_8011ECD0)[31].unk_43 = 15;
+    ((Rec24 *)D_801217D0)[0].unk_12 = 0x1EF;
+    ((Rec24 *)D_801217D0)[1].unk_12 = 0x1EF;
+    for (i = 16; i < 32; i++) {
+        func_80043914(D_8015B5D0, i & 0xFF, 1, 0, i - 16);
+    }
+    func_80043914(D_8015B5D4, 14, 1, 0, 0);
+    func_80043914(D_8015B5D8, 13, 1, 0, 0);
+    func_800AE120(D_800E6280.unk_10F8);
+    for (i = 0; i < 10; i++) {
+        func_80048F64(i + 96);
+        p = (DateParticleView44 *)D_8011ECD0 + i;
+        p[96].unk_01 = 13;
+        p[96].unk_02 = 1;
+        p[96].unk_38 = 0x1000000;
+        p[96].unk_03 = 4;
+        p[96].unk_0C = D_8015B5C4;
+        p[96].unk_10 = D_8015B5C8;
+        p[96].unk_34 = D_8015B5C0;
+        p[96].unk_14 = D_8015B5CC;
+        p[96].unk_16 = 3;
+        p[96].unk_18 = 0;
+        p[96].unk_06 = 1;
+        p[96].unk_43 = 0;
+        p[96].unk_24.h[1] = (rand() % 256) - 0x80;
+        p[96].unk_28.h[1] = 0xA0;
+        p[96].unk_07 = 0;
+        p[96].unk_05 = 0x80;
+        p[96].unk_04 = 8;
+        p[96].unk_2C = (rand() % 0x8000) - 0x4000;
+        D_8015BCB4[i].w = ((u32)-(rand() % 9) << 16) - 0x280000;
+    }
+    ((DateParticleView44 *)D_8011ECD0)[96].unk_03 |= 0x80;
+    func_80084E90(D_8015B5DC, D_8015B5E0, D_8015B5E4, D_8015B5E8, D_8015B5EC, D_8015B5F0);
+    for (i = 58; i < 64; i++) {
+        ((Rec24 *)D_801217D0)[i].unk_00 &= 0x7FFFFFFF;
+        ((Rec24 *)D_801217D0)[i].unk_12 = 0x1EE;
+        D_800E6280.unk_10A5[i] = 12;
+    }
+    for (i = 58; i < 64; i++) {
+        ((Rec24 *)D_801217D0)[i].unk_14 = ((Rec24 *)D_801217D0)[i].unk_15 = ((Rec24 *)D_801217D0)[i].unk_16 = 0x80;
+    }
+    func_8004284C();
+}
 
 void func_8013FA4C(void) {
     wait_sub_sub(0x3E8);

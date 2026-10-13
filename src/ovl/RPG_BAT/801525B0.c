@@ -3,7 +3,34 @@
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801525B0);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801528DC);
+void func_801528DC(void) {
+    s32 i;
+    u8 *p;
+
+    p = (u8 *)&D_800E6280.unk_110C;
+    if (D_800E6280.unk_1100 == 0) {
+        D_800E6280.unk_1100 += 1;
+        *p = 0x80;
+    }
+    i = 0;
+    do {
+        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        D_800E6280.unk_03A = *p;
+        if (D_8015EB98 == 0x20000 && *p >= 0x61) {
+            D_80120E93 = 0x60;
+        }
+        i++;
+    } while (D_80120650 != &D_8011ECD0[i * 0x44]);
+    *p -= 2;
+    if (*p == 0) {
+        func_8004E58C();
+        D_800E6280.unk_03A = 0x80;
+        func_80048EB8(0);
+        func_8006BC28(0);
+        func_800438F0(1);
+        func_80042808();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801529B4);
 
@@ -49,7 +76,29 @@ s32 func_801535E4(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153A60);
+void func_80153A60(void) {
+    int dead; /* FAKE: dead copy of *p; only reserves $v0 so the table pointer lands in $v1. Found with decomp-permuter. T-10910 */
+    s32 i;
+    s32 *p;
+
+    i = 0;
+    p = &D_8015EC74;
+    do {
+        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        *(s8 *)&D_800E6280.unk_3A = *p;
+        if (D_8015EB98 == 0x20000 && (dead = *p) >= 0x61) {
+            D_80120E93 = 0x60;
+        }
+        if (0) { /* FAKE: empty dead branch steers the allocation. T-10910 */
+        }
+        i++;
+    } while (D_80120650 != &D_8011ECD0[i * 0x44]);
+    func_8013E7C0(0x1F, 0, 1, 0);
+    D_8015EC74 += 2;
+    if (*p > 0x80) {
+        D_8015EC74 = 0x80;
+    }
+}
 
 void func_80153B08(void) {
     s32 temp_s1;

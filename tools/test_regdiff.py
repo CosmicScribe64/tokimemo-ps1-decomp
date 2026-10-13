@@ -5,6 +5,10 @@ webs, range matching and the hints. No compiler, no game data.
 Run: tools/docker.sh python3 tools/test_regdiff.py
 """
 import unittest
+from pathlib import Path
+import tempfile
+from types import SimpleNamespace
+from unittest import mock
 
 import regdiff as rd
 
@@ -512,6 +516,37 @@ class DraftSourceTest(unittest.TestCase):
         text = rd.WRAPPER % {"tools": "/work/tools"}
         compile(text, "wrapper", "exec")
         self.assertIn("REGDIFF_UCODE", text)
+
+
+class FileScopeDraft(unittest.TestCase):
+    def test_preprocessing_failure_is_an_error_report(self):
+        import funcdiff
+        import funcloc
+        args = SimpleNamespace(func='draft', unit=None, src='missing.c',
+                               uopt='/opt/ido/5.3/uopt', scratch='/tmp/regdiff-test')
+        c = SimpleNamespace(src=Path('missing.c'))
+        messages = []
+        with mock.patch.object(funcloc, 'locate', return_value=c), \
+                mock.patch.object(funcdiff, 'expected_object', return_value=('expected.o', None)), \
+                mock.patch.object(rd, 'compile_draft', side_effect=ValueError('gcc preprocessing failed')):
+            self.assertEqual(rd.run(args, out=messages.append), 2)
+        self.assertIn('gcc preprocessing failed', messages[-1])
+
+    @unittest.skipUnless(Path(rd.DEFAULT_UOPT).exists(), "needs the ecvt-patched trace uopt (TOKIMEMO_SCRATCH)")
+    def test_traced_compile_retains_initialized_data_and_helpers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "source.c"
+            source.write_text('static int values[2] = { 3, 7 };\n'
+                              'int helper(int i) { return values[i]; }\n'
+                              'int draft(int i) { values[0] = i; return helper(i & 1); }\n')
+            comp = rd.compile_draft('.', 'draft', str(source), rd.DEFAULT_UOPT, str(Path(tmp) / 'out'))
+            self.assertEqual(comp.returncode, 0, comp.log)
+            self.assertIn('static int values[2]', comp.base_text)
+            self.assertIn('return values[i]', comp.base_text)
+            import funcdiff
+            dump = funcdiff.disassemble(comp.obj)
+            self.assertIn('<draft>', dump)
+            self.assertIn('<helper>', dump)
 
 
 if __name__ == "__main__":
