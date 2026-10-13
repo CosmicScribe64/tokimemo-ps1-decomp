@@ -109,4 +109,6 @@ segments:
       - [0x119F0, .rodata, SHOUGATU/8013F190]
       - [0x11A20, .rodata, SHOUGATU/80141780]
       - [0x11A40, data, SHOUGATU_data]
+      - [0x11EB0, .data, SHOUGATU/80135B90]
+      - [0x12D90, data, SHOUGATU_data_80144D90]
   - [0x30000]

@@ -97,4 +97,6 @@ segments:
       - [0x12B50, .rodata, GEKO/80141AF0]
       - [0x12B60, .rodata, GEKO/80142760]
       - [0x12BA0, data, GEKO_data]
+      - [0x12F10, .data, GEKO/80134D10]
+      - [0x14270, data, GEKO_data_80146270]
   - [0x30000]
