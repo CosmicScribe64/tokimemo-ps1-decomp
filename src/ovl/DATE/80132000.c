@@ -467,7 +467,69 @@ void func_801344C8(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801347B8);
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801349A0);
+void func_801349A0(void) {
+    GameState *g;
+    s32 temp_v0;
+
+    g = &D_800E6280;
+
+    D_800CA160 = D_8015BDEC;
+    D_800CA164 = D_8015BE58;
+    D_800CA168 = D_8015BEC4;
+    func_800AE0F0(D_800CA19C, "プラネタリウム");
+    D_8015B658 = 7;
+    if (!(g->unk_1BC[g->unk_F5F].unk_14[0xA] & 1)) {
+        ((DateSelectionView *)&D_800CA2F8)->option = 0;
+        func_800AE0F0(D_800CA1DC, "館内");
+    } else {
+        ((DateSelectionView *)&D_800CA2F8)->option = 1;
+        func_800AE0F0(D_800CA1DC, "館内");
+        if (g->unk_F5F == 0xA) {
+            D_800CA148 = 1;
+        }
+    }
+    D_80122D08 = 0xA;
+    temp_v0 = ((DateSelectionView *)&D_800CA2F8)->option * 3;
+    D_800CA22C[0] = (s16) *((g->unk_F5F * 6) + D_8015B568 + temp_v0);
+    D_800CA22C[1] = (s16) *(u8 *)((unsigned char *)((g->unk_F5F * 6) + D_8015B568 + temp_v0) + (1));
+    D_800CA22C[2] = (s16) *(u8 *)((unsigned char *)((g->unk_F5F * 6) + D_8015B568 + temp_v0) + (2));
+    D_800CA21C[0] = (s16) *((g->unk_F5F * 6) + D_8015B56C + temp_v0);
+    D_800CA21C[1] = (s16) *(u8 *)((unsigned char *)((g->unk_F5F * 6) + D_8015B56C + temp_v0) + (1));
+    D_800CA21C[2] = (s16) *(u8 *)((unsigned char *)((g->unk_F5F * 6) + D_8015B56C + temp_v0) + (2));
+    if ((g->unk_104.unk_02 < 0x78) && (((DateSelectionView *)&D_800CA2F8)->option != 0)) {
+        switch (g->unk_F5F) {
+        case 0:
+        case 3:
+            D_800CA22C[0] = 4;
+            D_800CA21C[0] = 4;
+            break;
+        case 2:
+        case 6:
+        case 8:
+            D_800CA22C[0] = 4;
+            D_800CA21C[0] = 3;
+            break;
+        case 1:
+        case 4:
+        case 5:
+        case 9:
+            D_800CA21C[0] = 3;
+            D_800CA22C[0] = 3;
+            break;
+        case 7:
+            D_800CA21C[0] = 3;
+            D_800CA22C[0] = 3;
+            break;
+        case 10:
+            D_800CA21C[2] = 1;
+            D_800CA22C[2] = 1;
+            break;
+        }
+    }
+    func_8007ED84(0x45E6);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 /* FAKE: the signed narrow constant preserves the shared multiply/compare
  * range and its a2 register. Literal 3 strength-reduces the multiply.

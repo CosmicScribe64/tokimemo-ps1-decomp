@@ -233,10 +233,9 @@ void func_80112460(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80112750);
 
-/* NON_MATCHING: T-11020, register-only (174 insns equal): D_8012531C/idx kept in a0 by uopt instead of ugen temps t8/t9 */
-#ifdef NON_MATCHING
 void func_80112930(void) {
     EventStateView *g;
+    s32 temp_v0;
 
     g = (EventStateView *)&D_800B0860;
 
@@ -246,23 +245,24 @@ void func_80112930(void) {
     func_80078970(D_80094784, "プラネタリウム");
     D_801252E8 = 7;
     if (!(D_800B0860[g->unk_EE6 * 0x34 + 0x1C1] & 1)) {
-        D_8012531C = 0;
+        (*((u8 *)&D_80125318 + 4)) = 0;
         func_80078970(D_800947C4, "館内");
     } else {
-        D_8012531C = 1;
+        (*((u8 *)&D_80125318 + 4)) = 1;
         func_80078970(D_800947C4, "館内");
         if (g->unk_EE6 == 0xA) {
             D_80094730 = 1;
         }
     }
     D_800EECE4 = 9;
-    D_8012439C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125218) + D_8012531C * 3);
-    D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125218) + D_8012531C * 3) + (1));
-    D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125218) + D_8012531C * 3) + (2));
-    D_8012438C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + D_8012531C * 3);
-    D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + D_8012531C * 3) + (1));
-    D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + D_8012531C * 3) + (2));
-    if ((D_800B0956 < 0x78) && (D_8012531C != 0)) {
+    temp_v0 = (*((u8 *)&D_80125318 + 4)) * 3;
+    D_8012439C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125218) + temp_v0);
+    D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125218) + temp_v0) + (1));
+    D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125218) + temp_v0) + (2));
+    D_8012438C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + temp_v0);
+    D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + temp_v0) + (1));
+    D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + temp_v0) + (2));
+    if ((D_800B0956 < 0x78) && ((*((u8 *)&D_80125318 + 4)) != 0)) {
         switch (g->unk_EE6) {
         case 0:
         case 3:
@@ -295,9 +295,6 @@ void func_80112930(void) {
     func_800469F4(0x4552);
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80112930);
-#endif
 
 /* FAKE: a signed narrow constant preserves the shared multiply/compare
  * range. EventResultRow6 models the two signed three-halfword outputs.

@@ -1512,3 +1512,5 @@ extern u8 *D_8015B53C;
 extern u8 *D_8015B598;
 extern u8 *D_8015B59C;
 #endif
+extern u8 *D_8015B568;
+extern u8 *D_8015B56C;
