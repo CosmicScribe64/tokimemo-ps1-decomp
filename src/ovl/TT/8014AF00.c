@@ -242,7 +242,82 @@ void func_8014B67C(u8 arg0) {
     } while (i != 6);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014B7A8);
+void func_8014B7A8(u8 *arg0) {
+    s16 idx;
+    u8 *e;
+
+    switch (*(u16 *)(arg0 + 6)) {
+    case 0:
+        if (arg0[0x63] != 0) {
+            arg0[0x5C] = 0xD0;
+            arg0[0x5D] = 0x30;
+            arg0[0x3C] = 0;
+            if (*(s32 *)(arg0 + 0x20) < 0x80001) {
+                *(u16 *)(arg0 + 6) = 1;
+                *(u16 *)(arg0 + 0x6E) = 0x1C00;
+            }
+        } else {
+            arg0[0x5C] = 0xD0;
+            arg0[0x5D] = 0x30;
+            arg0[0x3C] = 2;
+            if (*(s32 *)(arg0 + 0x20) >= -0x80000) {
+                *(u16 *)(arg0 + 6) = 1;
+                *(u16 *)(arg0 + 0x6E) = 0xC00;
+            }
+        }
+        break;
+    case 1:
+        if (arg0[0x63] != 0) {
+            *(s32 *)(arg0 + 0x20) = func_800A0140(*(u16 *)(arg0 + 0x6E)) * 0x300;
+            *(s32 *)(arg0 + 0x24) = func_800A0070(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
+            *(s32 *)(arg0 + 0x28) = 0;
+            if (*(u16 *)(arg0 + 0x6E) < 0xC00) {
+                *(u16 *)(arg0 + 6) = 2;
+            }
+            *(u16 *)(arg0 + 0x6E) -= 0x40;
+            idx = ((*(u16 *)(arg0 + 0x6E) + 0x100) & 0xFFF) / 512 * 3;
+        } else {
+            *(s32 *)(arg0 + 0x20) = func_800A0140(*(u16 *)(arg0 + 0x6E)) * 0x300;
+            *(s32 *)(arg0 + 0x24) = func_800A0070(*(u16 *)(arg0 + 0x6E)) * 0x300 + 0x680000;
+            *(s32 *)(arg0 + 0x28) = 0;
+            if (*(u16 *)(arg0 + 0x6E) > 0x1C00) {
+                *(u16 *)(arg0 + 6) = 2;
+            }
+            *(u16 *)(arg0 + 0x6E) += 0x40;
+            idx = ((*(u16 *)(arg0 + 0x6E) + 0x900) & 0xFFF) / 512 * 3;
+        }
+        e = D_80158AC0 + idx;
+        arg0[0x5C] = e[0];
+        arg0[0x5D] = e[1];
+        arg0[0x3C] = e[2];
+        break;
+    case 2:
+        if (arg0[0x63] != 0) {
+            *(u16 *)(arg0 + 0x6E) = 0;
+            *(s32 *)(arg0 + 0x28) = 0xFFFC0000;
+            arg0[0x5C] = 0xD0;
+            arg0[0x5D] = 0x30;
+            arg0[0x3C] = 0;
+        } else {
+            *(u16 *)(arg0 + 0x6E) = 0;
+            *(s32 *)(arg0 + 0x28) = 0x40000;
+            arg0[0x5C] = 0xD0;
+            arg0[0x5D] = 0x30;
+            arg0[0x3C] = 2;
+        }
+        break;
+    }
+    if (*(u16 *)(arg0 + 0x5E) > 0x3C) {
+        if (arg0[0x60] == 0) {
+            *(u16 *)(arg0 + 0x5E) = 0;
+            arg0[0x60] += 1;
+            func_80133D14(*(s16 *)(arg0 + 0x14), *(s16 *)(arg0 + 0x16), 0x20, 0xA0);
+        }
+    }
+    if (arg0[0x51] != 0) {
+        *(u16 *)(arg0 + 0x5E) += 1;
+    }
+}
 
 void func_8014BA54(s32 arg0) {
     u8 *p = D_80158A98;
