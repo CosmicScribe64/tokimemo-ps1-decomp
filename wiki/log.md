@@ -13019,3 +13019,9 @@ Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on
 ## [2026-10-13] build | T-11030 big functions (Sonnet) 26
 
 [[tickets/T-11030-big-functions-sonnet-26]]: 2 functions matched (1,552 bytes): `src/main/8006CB30.c` `func_80072338`, `src/ovl/DATE/80132000.c` `func_8013CDF8`; two near misses guarded with `NON_MATCHING` (`date_sasoi_judge`, DATE `func_8013C7D0`). Nine other drafts reverted to INCLUDE_ASM; findings in [[matching-notes]] section "T-11030". Ticket Done after inline review; ninja all OK, headers and globals OK.
+
+## [2026-10-13] ticket | T-11050 started
+Opened [[tickets/T-11050-big-functions-sonnet-28]] for big functions list 28.
+
+## [2026-10-13] ticket | T-11050 findings
+No matches. Notes in [[matching-notes]] section "T-11050". See [[tickets/T-11050-big-functions-sonnet-28]].

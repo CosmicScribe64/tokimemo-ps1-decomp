@@ -62,6 +62,8 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-11050-big-functions-sonnet-28|T-11050 Big functions (Sonnet) 28]]
 - [ ] [[tickets/T-11030-big-functions-sonnet-26|T-11030 Big functions (Sonnet) 26]]
 - [ ] [[tickets/T-11020-big-functions-sonnet-25|T-11020 Big functions (Sonnet) 25]]
 
