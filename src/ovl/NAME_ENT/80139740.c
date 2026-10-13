@@ -58,7 +58,27 @@ void func_80139C24(void) {
     func_80139BA0();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139CB4);
+void func_80139CB4(void) {
+    u8 sp30[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+
+    if (D_800E8BEE != 0) {
+        func_800AE090(sp30, D_800B3288[D_800E7D36], 5);
+        func_800AE100(sp30, "番");
+        func_8004E788(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+        func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 0);
+        func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 0);
+        func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0);
+        func_8004E788(0x20, -0x2B, 0xF, (s32) D_800B3908[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]], 0);
+        return;
+    }
+    func_800AE090(sp30, D_800B3288[D_800E6280.unk_1118], 5);
+    func_800AE100(sp30, "番");
+    func_8004E788(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+    func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 0);
+    func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 0);
+    func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0);
+    func_8004E788(0x20, -0x2B, 0xF, (s32) D_800B3908[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 0xC], 0);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139F30);
 
