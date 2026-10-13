@@ -12752,3 +12752,8 @@ to Done.
 Per the owner's review of PR #1, `tools/cc.py` runs the old-gcc `cpp` in place and retries from a
 `/dev/shm` copy only on EOVERFLOW, so hosts where cpp works are unchanged. Tests in `tools/test_cc.py`
 (17/17); all 27 checksums OK. Details in [[tickets/T-10700-windows-host-baseline-build]].
+
+## [2026-10-13] ticket | T-11000 TT overlay opened
+
+Opened [[tickets/T-11000-tt-overlay]] (In Progress) for the remaining TT functions, claimed upstream in
+issue #2 (fork contribution). Start: TT 175/303, 27.6%; 115 unflagged queue entries.
