@@ -1525,4 +1525,17 @@ typedef struct EventStateView {
     /* 0x1296 */ u8 unk_1296;
     /* 0x1297 */ u8 pad_1297;
 } EventStateView; /* minimum size 0x1298 */
+#ifndef OVL_EVENT_MOVIE_STATE_T10830_H
+#define OVL_EVENT_MOVIE_STATE_T10830_H
+/* Scene-control view at D_800B1AF0. Extends EventTransitionState's
+ * observed prefix with the page selector used by func_8011C750. */
+typedef struct EventMovieState {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ u8 pad04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 pad07[2];
+    /* 0x09 */ u8 unk_09;
+    /* 0x0A */ u8 pad0A[2];
+} EventMovieState; /* size 0x0C; observed fields through byte 0x09 */
 #endif

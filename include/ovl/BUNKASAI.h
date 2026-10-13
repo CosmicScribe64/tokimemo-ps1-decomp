@@ -187,3 +187,12 @@ typedef struct BunkaDispatch8 {
     /* 0x04 */ s32 unk_04;
 } BunkaDispatch8; /* size 0x08 */
 #endif
+
+#ifndef OVL_BUNKASAI_T10830_H
+#define OVL_BUNKASAI_T10830_H
+/* Side-effect-only scene table setters defined later in their objects. */
+void func_80135448(void);
+void func_80142694(void);
+void func_80145FC0(void);
+void func_8014DD28(void);
+#endif

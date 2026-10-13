@@ -4358,3 +4358,37 @@ funcdiff lines for func_8007EF48 and six for func_80082764. The latter includes
 one load-scheduling pair in addition to the standalone addition operand-order
 pairs. Both compile with all existing guarded drafts enabled and satisfy the
 retention threshold.
+## Big functions 3 (T-10830, a16)
+
+Ticket [[tickets/T-10830-big-functions-3-astra]]. Accepted: all 29 assigned
+BUNKASAI functions, 36,716 official progress bytes. The four owned BUNKASAI
+objects pass real resolved funcdiff and the complete 27-unit checksum build.
+Progress is `5215/6958  1003464/2279368  44.0%`. No new T-0018 rows: the
+remaining cases still have structural, access-width, declaration, or data
+ownership differences rather than an isolated compiler register-order proof.
+
+Reusable findings are in [[decompile-workflow]] under T-10830. Appended
+DateMovieWork and DateMovieHeader8 to DATE.h, EventMovieState to EVENT.h,
+and four later-defined scene-helper declarations to BUNKASAI.h. The matching
+BUNKASAI idioms use stored-member call arguments, the existing return-flag
+bit fields in target store order, and Rec38 bit-field accesses. No new FAKEs
+were needed in the 29 accepted bodies. The 80143770 object keeps a justified
+K&R call override for func_80083440, whose callee narrows the argument.
+
+Eight compile-checked research seeds are retained in scratchpad/a16/handoff/.
+Its README distinguishes real diffs from normalized rankings, valid corrected
+seeds from numerically closer but unfaithful experiments, and the inherited
+13-line bounce guards from broad drafts. Do not paste the smaller movie
+handlers without reconciling their inherited void prototypes; observed zero
+returns were hidden by that declaration view. The bounce ownership probes
+need data-island/YAML integration outside this batch and used dummy data
+initializers only to investigate code generation. Keep those probes out of
+source. EVENT 8011C750's omitted empty state-10 case was recovered from its
+jump table; all six large movie draft outer case lists were audited.
+
+The exploratory permuter's assignment-splitting pass can change
+`phase = phase + 1` to a transition to 2. That candidate is rejected even if
+its search score improves. The pass is disabled in subsequent a16 scratch
+searches; project tools are unchanged. All bounded movie searches completed
+without another acceptable source candidate. The final checks and inline
+standards review pass; the ticket is Done after more than four hours of work.
