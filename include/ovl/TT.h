@@ -25,7 +25,7 @@ extern u8 *D_80158A84;
 extern u8 *D_80158A78;
 extern u8 *D_80158A94;
 extern u8 *D_80158A98;
-void func_8014D260(s32 arg0, s32 arg1);
+s32 func_8014D260(s32 arg0, s32 arg1);
 extern u8 *D_80158A60;
 extern u8 *D_80158AB4;
 void func_8013E320(void);

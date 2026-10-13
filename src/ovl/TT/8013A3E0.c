@@ -376,7 +376,44 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B4A0);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B6C8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B928);
+void func_8013B928(void) {
+    u8 *c;
+    u8 *a;
+    s32 ang;
+    s32 i;
+    s32 v;
+
+    c = D_80158A8C;
+    a = D_80158A74;
+    if (*(u16 *)(c + 0x364) == 0x80 || *(u16 *)(c + 0x364) == 0x100) {
+        func_80133AD0(0x618);
+        ang = func_8014D260((*(s32 *)(a + 0x24) - *(s32 *)(c + 0x24)) >> 16,
+                            (*(s32 *)(a + 0x20) - *(s32 *)(c + 0x20)) >> 16);
+        i = 0x180;
+        v = ang + 0x180;
+        do {
+            func_80133E30(*(s16 *)(c + 0x14) - 0x12, *(s16 *)(c + 0x16) + 0xA, 0x18, v, 0xAC);
+            i += 0x100;
+            v += 0x100;
+        } while (i < 0x680);
+        v = ang - 0x180;
+        for (i = 0x180; i != 0x680; i += 0x100) {
+            func_80133E30(*(s16 *)(c + 0x14) + 0x12, *(s16 *)(c + 0x16) + 0xA, 0x18, v, 0xAC);
+            v -= 0x100;
+        }
+    }
+    if (*(u16 *)(c + 0x364) == 0x178 || *(u16 *)(c + 0x364) == 0x200) {
+        func_80134470(*(s16 *)(c + 0x14) - 0x12, *(s16 *)(c + 0x16) + 0xA, 0xC0, 0x28, 0xA0);
+    }
+    if (*(u16 *)(c + 0x364) == 0x180 || *(u16 *)(c + 0x364) == 0x1F8) {
+        func_80134470(*(s16 *)(c + 0x14) + 0x12, *(s16 *)(c + 0x16) + 0xA, 0xC0, 0x28, 0xA0);
+    }
+    if (*(u16 *)(c + 0x364) >= 0x200) {
+        *(u16 *)(c + 0x364) = 0;
+    } else {
+        *(u16 *)(c + 0x364) += 1;
+    }
+}
 
 void func_8013BAD0(void) {
     switch (*(u16 *)(D_80158A8C + 0x30E)) {
