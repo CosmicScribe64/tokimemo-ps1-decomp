@@ -172,7 +172,7 @@ void func_8014D380(void) {
             D_8015EEB4 = 0x801E43D4;
             D_8015EECC = 0x801E4440;
             break;
-        case 11:
+        case 11: /* explicit label: the original jump table has 12 entries (T-10720) */
         default:
             D_8015EE9C = 0x801D9370;
             D_8015EEB4 = 0x801D9388;
@@ -245,7 +245,7 @@ void func_8014D380(void) {
         D_8015EEB8 = 0x801D32D4;
         D_8015EED0 = 0x801D332C;
         break;
-    case 14:
+    case 14: /* explicit empty label: the original jump table has 15 entries (T-10720) */
         break;
     }
 }
