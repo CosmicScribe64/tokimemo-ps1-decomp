@@ -9,6 +9,11 @@ typedef struct {
 } Ev44; /* size 0x44: record of D_800EAFA0 */
 
 typedef struct {
+    void (*f[55])();
+} FnTbl55; /* size 0xDC */
+extern FnTbl55 D_80146518;
+
+typedef struct {
     void (*f[39])();
 } FnTbl39; /* size 0x9C */
 extern FnTbl39 D_80146420;
@@ -189,7 +194,24 @@ void func_8013A26C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013A2EC);
+void func_8013A2EC(void) {
+    void (**p)();
+    FnTbl55 tbl;
+
+    tbl = D_80146518;
+    tbl.f[D_800E6280.unk_110A](0x80);
+    p = &tbl.f[D_800E6280.unk_110A];
+    if (tbl.f[D_800E6280.unk_110A] == func_80085368) {
+        D_801206DB |= 0x80;
+    }
+    if (func_800853FC == *p) {
+        /* FAKE: empty double test (decomp-permuter, score 20), same register-choice shift as SHOUGATU func_80136078 (T-4090); real source unknown. T-10820 */
+        if (!D_800E6280.unk_110A && !D_800E6280.unk_110A) {
+        }
+        D_801206DB &= 0xFF7F;
+    }
+    func_8013A668();
+}
 
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80139910", func_8013A3C4);
 
