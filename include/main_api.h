@@ -2438,8 +2438,6 @@ void func_800651F8();
 void func_80065234();
 void func_8006B5BC(GsWord arg0);
 
-extern s32 D_80122CD8;
-extern u8 D_800B3CF8;
 /* T-10860: generated from src/main/8007C030.c by sync_protos.py. */
 s16 getCDlevel(void);
 #endif /* MAIN_API_H */
