@@ -12999,3 +12999,7 @@ movie functions now have regdiff-backed region comparisons and bounded search.
 ## [2026-10-13] ticket | T-11020 started
 
 [[tickets/T-11020-big-functions-sonnet-25]] opened (In Progress): big functions in DATE/80132000, EVENT/8010FE10, `src/main/8007C030.c`, `src/main/8006CB30.c`.
+
+## [2026-10-13] build | T-11020 big functions (Sonnet) 25
+
+[[tickets/T-11020-big-functions-sonnet-25]]: 11 functions matched (7,520 bytes) in `src/ovl/EVENT/8010FE10.c` and `src/ovl/DATE/80132000.c`; six near misses guarded with `NON_MATCHING` (DATE func_80140374 is 5 instructions off, main `src/main/8006CB30.c` func_80072D70). Idioms (struct-member girl index, address-read globals that stop promotion, chain-store order, frame slots of declared locals) are in [[matching-notes]]. `D_800CA158` is an `s16` override in `include/ovl/DATE.h` with the guard in `include/main_api.h`. Ticket moved to Done after the inline review; ninja 27/27 OK, headers and globals OK, `sync_protos --check-branch` OK.

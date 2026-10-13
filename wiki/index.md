@@ -208,3 +208,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-10850-wave-17-astra|T-10850]] Wave 17 (astra, easiest first), Done: 5 matches, 936 bytes.
 
 - [[tickets/T-10910A-big-functions-astra-23|T-10910A]] Big functions (astra) 23 (In Progress).
+
+- [[tickets/T-11020-big-functions-sonnet-25|T-11020]] Big functions (Sonnet) 25, Done: 11 matches / 7,520 bytes (EVENT and DATE scene setup), six near misses guarded; idioms in [[matching-notes]].
