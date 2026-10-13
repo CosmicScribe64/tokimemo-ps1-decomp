@@ -373,3 +373,9 @@ extern u8 **D_8014CE68;
 void func_80134248(s32 arg0);
 void func_80138F00(void);
 #endif
+
+#ifndef OVL_NAME_ENT_T11010_H
+#define OVL_NAME_ENT_T11010_H
+extern s32 D_8014CC60; /* Word arguments to func_80046290. */
+extern s32 D_8014CC64;
+#endif

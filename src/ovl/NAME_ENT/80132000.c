@@ -1008,7 +1008,40 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138634);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138714);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801387F4);
+void func_801387F4(void) {
+    func_8004E58C();
+    func_8004E788(-0x18, 0x40, 0xA, "これでいい？", 0);
+    func_8004E788(-0x38, -0x38, 0xA, "藤崎", 0);
+    func_8004E788(0, -0x38, 0xA, "詩織", 0);
+    if (D_8014CC9C + 1 >= 10) {
+        func_8004E788(-0x38, -0x18, 0xA, D_800B3288[(D_8014CC9C + 1) / 10], 0);
+    }
+    func_8004E788(-0x28, -0x18, 0xA, D_800B3288[(D_8014CC9C + 1) % 10], 0);
+    if (D_8014CCA0 + 1 >= 10) {
+        func_8004E788(-8, -0x18, 0xA, D_800B3288[(D_8014CCA0 + 1) / 10], 0);
+    }
+    func_8004E788(8, -0x18, 0xA, D_800B3288[(D_8014CCA0 + 1) % 10], 0);
+    switch (D_8014CCA4) {
+    case 0:
+        func_8004E788(-0x28, 8, 0xA, "Ａ", 0);
+        break;
+    case 1:
+        func_8004E788(-0x28, 8, 0xA, "Ｂ", 0);
+        break;
+    case 2:
+        func_8004E788(-0x38, 8, 0xA, "ＡＢ", 0);
+        break;
+    case 3:
+        func_8004E788(-0x28, 8, 0xA, "Ｏ", 0);
+        break;
+    }
+    func_80138714();
+    func_80046290(D_8014CC60, D_8014CC64, 0);
+    func_80044750(0x300);
+    func_8004EA98();
+    func_8004EAD4(0);
+    func_8004284C();
+}
 
 void func_80138A7C(void) {
     s32 pad; /* FAKE: unused local, the original frame has the spill slots 4 bytes higher (T-3330) */
