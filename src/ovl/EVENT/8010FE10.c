@@ -392,7 +392,28 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80113520);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801136FC);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801138D8);
+void func_801138D8(void) {
+    EventStateView *g;
+
+    g = (EventStateView *)&D_800B0860;
+    D_8009473C = D_80124250;
+    D_80094740 = D_801242BC;
+    D_80094744 = D_80124328;
+    if ((g->unk_035 >= 0x62U) || ((g->unk_035 == 0x61) && (g->unk_036 >= 3U))) {
+        D_80125304 = 1;
+    } else {
+        D_80125304 = 0;
+    }
+    if ((g->unk_035 == 0x62) || ((g->unk_035 == 0x61) && (g->unk_036 >= 0xCU))) {
+        D_80125308 = 1;
+    } else {
+        D_80125308 = 0;
+    }
+    D_801252E8 = 0;
+    func_80078970(D_80094784, "遊園地");
+    func_800469F4(0x429B);
+    func_80011DFC();
+}
 
 void func_801139CC(void) {
     D_8009473C = D_80124238;
@@ -768,7 +789,44 @@ void func_80115868(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80115890);
+void func_80115890(void) {
+    switch (D_80125314) {
+    case 0:
+        func_800469F4(0x4372);
+        break;
+    case 1:
+        func_800469F4(0x437B);
+        break;
+    case 2:
+        func_800469F4(0x4384);
+        break;
+    case 3:
+        func_800469F4(0x438C);
+        break;
+    case 4:
+        func_800469F4(0x4396);
+        break;
+    case 5:
+        func_800469F4(0x439F);
+        break;
+    case 6:
+        func_800469F4(0x43A7);
+        break;
+    case 7:
+        func_800469F4(0x43B0);
+        break;
+    case 8:
+        func_800469F4(0x43B9);
+        break;
+    case 9:
+        func_800469F4(0x43C3);
+        break;
+    case 10:
+        func_800469F4(0x43CD);
+        break;
+    }
+    func_80011DFC();
+}
 
 void func_80115984(void) {
     func_800469F4(0x4360);
@@ -1129,7 +1187,25 @@ void func_80117304(void) {
     func_80114B0C();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117390);
+void func_80117390(void) {
+    D_80094730 += D_801243AC;
+    switch (D_801243AC) {
+    case 0:
+        D_800B096E += 5;
+        break;
+    case 1:
+        D_800B094E += 5;
+        break;
+    case 2:
+        *(s16 *)(D_800B0860 + D_800B1746 * 0x34 + 0x1A6) -= 1;
+        break;
+    case 3:
+        *(s16 *)(D_800B0860 + D_800B1746 * 0x34 + 0x1A6) += 1;
+        break;
+    }
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_8011749C(void) {
     D_800EECC8 = D_800EECBC;
@@ -1364,7 +1440,43 @@ void func_801189B4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118A60);
+void func_80118A60(void) {
+    switch (D_800B1746) {
+    case 0:
+        func_800335E0(0x5614);
+        break;
+    case 1:
+        func_800335E0(0x5C68);
+        break;
+    case 2:
+        func_800335E0(0x51DC);
+        break;
+    case 3:
+        func_800335E0(0x593E);
+        break;
+    case 4:
+        func_800335E0(0x6532);
+        break;
+    case 5:
+        func_800335E0(0x5DD0);
+        break;
+    case 6:
+        func_800335E0(0x6127);
+        break;
+    case 7:
+        func_800335E0(0x5BE1);
+        break;
+    case 8:
+        func_800335E0(0x4F93);
+        break;
+    case 9:
+        func_800335E0(0x6316);
+        break;
+    case 10:
+        func_800335E0(0x666D);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118B4C);
 
@@ -1446,7 +1558,21 @@ void func_801190F0(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119110);
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119370);
+void func_80119370(void) {
+    if ((((EventStateView *)&D_800B0860)->unk_036 == ((EventBirthday4 *)&D_800B0A04[D_800B1746].pad10[0])->month) &&
+        (D_800B0897 == ((EventBirthday4 *)&D_800B0A04[D_800B1746].pad10[0])->day)) {
+        func_80011E28(0x50);
+        func_80011E8C(2);
+        return;
+    }
+    if ((D_800B0896 == ((EventBirthday4 *)&D_800B0948)->month) &&
+        (D_800B0897 == ((EventBirthday4 *)&D_800B0948)->day)) {
+        func_80011E28(0x50);
+        func_80011E8C(3);
+        return;
+    }
+    func_80011DFC();
+}
 
 void func_80119440(void) {
     s32 one; /* FAKE: keeps the constant 1 in a register shared by the compare and the store (permuter) */
@@ -2079,4 +2205,17 @@ void func_8011C514(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C588);
+s32 func_8011C588(void) {
+    EventStateView *g;
+    u8 v;
+
+    g = (EventStateView *)&D_800B0860;
+    v = func_8002328C(D_800B1746);
+    D_80124354 = g->unk_035 * 3 + ((v & 0x7F) >= 2U) + ((v & 0x7F) >= 3U) - 0x111;
+    D_8009471C = (u8 *)&D_80124354;
+    D_80094720 = &D_80124358;
+    D_80094724 = D_80124258;
+    D_80094728 = D_801242C4;
+    D_8009472C = D_80124330;
+    return func_80049B20(D_800EECBC, 1, 0);
+}

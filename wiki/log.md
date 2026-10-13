@@ -13049,3 +13049,7 @@ Opened [[tickets/T-11050-big-functions-sonnet-28]] for big functions list 28.
 
 ## [2026-10-13] ticket | T-11050 findings
 No matches. Notes in [[matching-notes]] section "T-11050". See [[tickets/T-11050-big-functions-sonnet-28]].
+
+## [2026-10-13] ticket | T-11070 started
+Opened [[tickets/T-11070-small-functions-gemini-30]] (In Progress): 12 functions (2,780 bytes) in `src/ovl/EVENT/8010FE10.c`.
+

@@ -1600,4 +1600,17 @@ typedef struct EventResultRow6 {
     /* 0x00 */ s16 value[3];
 } EventResultRow6; /* size 0x06 */
 #endif
+typedef struct EventBirthday4 {
+    /* 0x00 */ u32 month : 4;
+    /* 0x00 */ u32 day : 5;
+    /* 0x00 */ u32 rest : 23;
+} EventBirthday4; /* size 0x04 */
 extern s8 D_8012532C;
+extern s16 D_80124354;
+extern u8 D_80124358;
+extern u8 D_801243AC;
+extern s16 D_801243A2;
+extern s8 D_8012530C;
+void func_80011E8C();
+
+
