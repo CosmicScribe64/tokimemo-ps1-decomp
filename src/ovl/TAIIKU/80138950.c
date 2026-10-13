@@ -350,8 +350,6 @@ void func_8013ACBC(void) {
     D_801207CA = 0xA0;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, only the ugen temp of D+0x48 differs ($t9 vs $t1), 2 lines */
 void func_8013AE14(void) {
     if (D_80149988.unk_04 >= 0xB) {
         if (D_80149988.unk_00 >= 3 && D_80149990.unk_00 != 0 && (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6)) {
@@ -367,13 +365,10 @@ void func_8013AE14(void) {
     D_80120668 = D_80149988.unk_00;
     if (D_80149990.unk_00 != 0) {
         if (D_8014994C == 2 || D_8014994C == 4 || D_8014994C == 6) {
-            D_80120668 = D_80149988.unk_00 + 0x48;
+            D_80120668 += 0x48;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013AE14);
-#endif
 
 void func_8013AEFC(void) {
     if (D_80120676 > 0xA0) {
