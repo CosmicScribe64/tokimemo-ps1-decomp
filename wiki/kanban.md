@@ -23,6 +23,11 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-10900-big-functions-astra-22|T-10900 Big functions (astra) 22]]
+
+- [ ] [[tickets/T-10890-big-functions-astra-21|T-10890 Big functions (astra) 21]]
+
+- [ ] [[tickets/T-10910A-big-functions-astra-23|T-10910A Big functions (astra) 23]]
 
 
 
@@ -58,6 +63,9 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-11000-tt-overlay|T-11000 TT overlay: remaining functions]]
+- [ ] [[tickets/T-11020-big-functions-sonnet-25|T-11020 Big functions (Sonnet) 25]]
+
+- [ ] [[tickets/T-11010-big-functions-sonnet-24|T-11010 Big functions (Sonnet) 24]]
 - [ ] [[tickets/T-10700-windows-host-baseline-build|T-10700 Windows host setup and baseline build]]
 
 - [ ] [[tickets/T-10880-big-functions-6-astra|T-10880 Big functions 6 (astra)]]

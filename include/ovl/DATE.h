@@ -5,6 +5,7 @@
 #define MAIN_API_OVERRIDE_func_80083440 /* matched with void(s32) (main_api.h: void(u8)) */
 #define MAIN_API_OVERRIDE_normal_date_girl_in /* implicit int declaration: func_80132000 returns its result (void in main_api.h) */
 
+#define MAIN_API_OVERRIDE_D_800CA158 /* matched as s16 (main_api.h: u8) */
 #define MAIN_API_OVERRIDE_func_8009B430 /* matched with 3 arguments: the original leaves $a3 unset (main_api.h: 4) */
 
 #include "common.h"
@@ -1435,3 +1436,83 @@ typedef struct DateEventChoice6 {
     /* 0x04 */ s16 index;
 } DateEventChoice6; /* size 0x06, minimum observed extent */
 #endif
+
+#ifndef OVL_DATE_PARK_TABLES_T10900_H
+#define OVL_DATE_PARK_TABLES_T10900_H
+/* func_80133EA0: flat byte tables, nine bytes per girl (three choices for
+ * each of three park variants). Keeping the flat pointer view preserves
+ * the original reloads between writes to the two result rows. */
+extern u8 *D_8015B5B8;
+extern u8 *D_8015B5BC;
+/* func_80137154: eighteen bytes per girl: three shops, two flag variants,
+ * three result bytes. A multidimensional view lets IDO elide target loads. */
+extern u8 *D_8015B580;
+extern u8 *D_8015B584;
+#endif
+
+#ifndef OVL_DATE_CONCERT_TABLES_T10900_H
+#define OVL_DATE_CONCERT_TABLES_T10900_H
+/* func_80136340: thirty-six bytes per girl, twelve chronological seasonal
+ * variants with three result bytes each. Use flat indexing to retain the
+ * target's reloads while populating D_800CA22C and D_800CA21C. */
+extern u8 *D_8015B530;
+extern u8 *D_8015B534;
+#endif
+
+#ifndef OVL_DATE_CINEMA_TABLES_T10900_H
+#define OVL_DATE_CINEMA_TABLES_T10900_H
+/* func_80135E7C: thirty-three bytes per girl, eleven seasonal variants
+ * with three result bytes each. The first year starts with summer. */
+extern u8 *D_8015B558;
+extern u8 *D_8015B55C;
+#endif
+
+#ifndef DATE_MOVIE_SCENE_T10910A
+#define DATE_MOVIE_SCENE_T10910A
+/* T-10910A: data range 8015CF80..8015CFD0 belongs to 801461B0.
+ * The seven buffer addresses are initialized by func_801461B0. Three-element
+ * signed coordinate/velocity rows have eight-byte storage strides, not six.
+ * This view preserves the existing scalar declarations used by matched code. */
+typedef struct DateMovieScene50 {
+    /* 0x00 */ u32 buffer_addr[7];
+    /* 0x1C */ u16 timer;
+    /* 0x1E */ u16 unk_1E;
+    /* 0x20 */ s16 step;
+    /* 0x22 */ u8 pad22[2];
+    /* 0x24 */ s16 x[3];
+    /* 0x2A */ u8 pad2A[2];
+    /* 0x2C */ s16 y[3];
+    /* 0x32 */ u8 pad32[2];
+    /* 0x34 */ s16 dx[3];
+    /* 0x3A */ u8 pad3A[2];
+    /* 0x3C */ s16 dy[3];
+    /* 0x42 */ u8 pad42[2];
+    /* 0x44 */ s16 sound_timer;
+    /* 0x46 */ u8 pad46[10];
+} DateMovieScene50; /* size 0x50 */
+#endif
+extern s16 D_8015BF0C;
+extern s16 D_8015BF10;
+#ifndef OVL_DATE_T11020_H
+#define OVL_DATE_T11020_H
+/* T-11020: 20-byte table copied to the stack (func_8013C190). */
+typedef struct DateTbl20 {
+    /* 0x00 */ s32 w[5];
+} DateTbl20; /* size 0x14 */
+extern DateTbl20 D_8015B78C;
+void func_8013C410(s16 arg0, s32 *arg1, s32 *arg2);
+#endif
+#ifndef OVL_DATE_T11020_TABLES_H
+#define OVL_DATE_T11020_TABLES_H
+extern u8 *D_8015B5A0;
+extern u8 *D_8015B5A4;
+extern u8 *D_8015B5A8;
+extern u8 *D_8015B5AC;
+extern u8 *D_8015B538;
+extern u8 *D_8015B53C;
+extern u8 *D_8015B598;
+extern u8 *D_8015B59C;
+#endif
+extern u8 *D_8015B568;
+extern u8 *D_8015B56C;
+extern s16 D_800CA158;

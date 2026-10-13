@@ -1573,3 +1573,259 @@ by multiplying a byte-array index by four. Outer row counts remain unknown.
 `ScheduleEntryFlags.unk_25` records the adjacent four-bit value at word
 bits 25..28, also used by A2CC; its semantic name remains unresolved.
 Keep it distinct from bit 29's active flag when drafting the display code.
+
+## T-10890 display record recovery (work in progress)
+
+The main parameter initializer uses D_8011ECD0 records of stride 0x44, with
+halfword sprite id +0x18, position +0x26/+0x2A, update value +0x2E and byte
+update mode +0x43. DisplayActor44 in include/game.h names the observed fields.
+The setup loop also writes bytes +1..5, pointers +0x0C/+0x10/+0x34, halfword
++0x14 and word +0x38. A pointer view preserves the shared pool declaration.
+Current and previous parameter values live in the existing GameState: current
+nine GsRec0FC members at +0xFC..+0x11C; previous halfwords at +0x17A..+0x19A,
+inside unk_120. Do not add separate GameState symbol declarations.
+
+parameter_show_init now verifies all 3,316 linked bytes. Use indexed setup loops
+(i != 28), assigning the +0x14 halfword before bytes +4/+5. Its straight-line
+three-digit updates explicitly assign the signed parameter to an s32 local and
+pass (s16)value to the implicit-prototype helper; this preserves the original
+sll/sra sequence. Three actor mode bytes and enable halfwords use three-way
+chain assignments in ascending record order. The generated store order is
+middle, first, last. Pairing each digit call/store with its following x store on
+one line prevents two comparison LUIs from moving above that x store; this
+source-line dependency is FAKE-marked in the C.
+
+Frame cleanup: the initializer needs four ordinary locals, declared in order:
+s32 index, s32 value, u8 *snapshot, s32 digit. The copied snapshot destination
+pointer gives the fourth home without an unused padding variable. A digit result
+local also preserves the bytes when its call, sprite-id store and x store share
+one source line; the y store may stay on the next line. No frame padding remains.
+
+NAME_ENT table views: two 0x44-byte regions at D_8014CD28 and D_8014CD6C each
+contain 17 text pointers, indexed by row * 3 + column / 6. The final row has
+only two valid pages; do not silently extend the allocation to 18 pointers.
+The older matched callers read the first pointer through the existing scalar
+declaration; NameKanaPages44 provides the full table view for the new draft.
+D_8014CDB0 is 45 text pointers (next symbol at +0xB4). D_8014CE64 points to
+unsigned halfword character counts, and D_8014CE68 points to text pointers.
+
+Main image metadata: DisplayImage78 has count at +0, signed origins at +2/+4,
+an unknown halfword +6, then eight observed DisplayImagePart0E records from +8.
+Each 14-byte part has signed halfwords, with position accesses at +0/+2 and
+size/texture-related accesses at +0x0A/+0x0C. func_80062DBC uses parts 5/4 for
+slots 0/1, parts 2/3 for slots 2/3, and parts 6/7 for slots 4/5 of Rec24.
+Preloading part values before slot stores matches the original live ranges.
+Reuse the second local coordinate/size set for part 7: that fixes the otherwise
+misleading constant-allocation difference (C1000000 in a2 instead of t5).
+
+### T-10890 packed palette and renderer draft
+
+The main background renderer func_80066C08 uses a 10-by-8 byte mask (column
+first), 0x14-byte SDK SPRT packets, four 16-colour palettes at D_800B5B28 and
+one 16-colour output at D_800B5BA8. DisplayColorPair4 models two adjacent
+5:5:5 colours in one word, preserving each high bit. Its six unsigned bitfields
+reproduce the observed word extraction and byte/halfword masked stores; these
+are required bitfield operations, not ordinary channel bytes.
+The 32-byte palette stride is eight such words.
+
+A source switch needs explicit case 0 adjacent to default to retain the
+six-entry jump table. The current renderer draft has the expected instruction
+count but still has substantial register/loop differences. In particular its
+palette index stays in a saved register where the original spills it, and the
+original computes sprite x and row-base y before the allocation calls. Drafts
+and regdiff output are isolated under scratchpad/a21; no match claimed.
+
+The first full checkpoint after parameter_show_init passed all 27 checksums.
+The 600-second func_80062DBC permuter search found no exact candidate. Reusing
+a dead argument or grouping coordinate pairs did not improve the frame-only
+draft; the original 26-line guarded version remains the clean baseline.
+
+The func_80062DBC frame-only miss is resolved: order the real halfword locals
+as x0, y0, w0, h0, x1, y1, origin_x, origin_y, w1, h1, then the metadata
+pointer. IDO local declaration order changes spill homes and frame rounding
+even when every expression/register instruction already agrees. Moving the
+origins before the last size pair yields the original 72-byte frame and
++58/+56 origin homes. No dummy local is needed; linked bytes match (1,856).
+
+The renderer now matches too. Use multiplication for sprite x (col * 32) and
+an unsigned intermediate for row * 32 + 240; this keeps both coordinates in
+saved registers before the packet allocation calls. Brace the mask loop body
+on separate source lines for the original four-way store scheduling. Walk
+the three palette pointers explicitly. A shared u32 blend local for all six
+channels takes v1 and shifts the pointer/weight colours into place. Assign
+the next weight before the old weight to break their equal-priority tie.
+Useful x/y and palette-index locals, with current declared after the SPRT
+pointer, reproduce the frame without padding locals. Resolved linked
+verification covers 1,968 code bytes (the work list counts 1,992 including the 24-byte jump table).
+
+D_80125CA0 is a signed halfword animation counter. An asm-wide scan finds
+two signed lh reads and 152 sh writes, with no lhu reads. The old u16
+declaration was inferred from setters alone; T-10890 corrects it via the
+prototype tool's canonical declaration writer. This avoids redundant
+sign-extension and promoted unsigned copies in func_80066334.
+
+### T-10890 consistent actor views and call width
+
+NAME_ENT func_80136808 matches with a signed 32-bit loop counter and one
+mouse-x snapshot. Keep the row-coordinate calculation before the hit-test;
+moving it inside the horizontal test changes IDO's unroll factor. Read actor
+0's +0x26/+0x2A and write actor 104's +0x18/+0x26/+0x2A through the same
+DisplayActor44 array view. Mixing those fields with separately declared
+scalar aliases left a 49-line near miss; consistent aggregate accesses
+resolve aliasing and all load scheduling. The loops unroll naturally by four.
+
+func_80066334 needs full-width coordinate expressions passed to func_80049A40,
+so its file uses the existing MAIN_API_OVERRIDE mechanism with an old-style
+declaration. The canonical narrow prototype added eighteen conversion
+instructions. The shared Entry8 type describes get_k_work's result. Declare
+real x/y call temporaries before that pointer for the original frame, and
+pair its x/y field writes on one source line (FAKE-marked as1 scheduling).
+
+### T-10890: TAIIKU local result tables
+
+func_801346FC copies one eleven-halfword sprite table, two eleven-pointer
+text tables and two eleven-word delta tables. Use TaiikuS11, TaiText11
+and TaiWords11 aggregates so IDO emits the original copy loops. Inlining
+the nested result index independently in both delta accesses lets uopt keep
+the shared scaled index in the target register; a named index changes its
+priority even with identical instruction count. Declarations before these
+aggregates affect the 264-byte frame. Current best is a ten-line register miss.
+
+ 
+### T-10890: TAIIKU movement states and fixed-point tables
+
+func_8013A6FC uses signed word temporaries for vertical displacement even
+though the final actor coordinates are halfwords. Narrow locals insert eight
+unwanted sign extensions. Inline the horizontal fixed-point shift separately
+at each comparison/store; naming it reserves a0 and moves the state and
+coordinates into the wrong registers. In case 3, assign actor y before
+incrementing D_8014994C. The resulting draft is within twenty listing lines.
+The actor 101 coordinate at D_801207CA is +0x26, not +0x2A.
+
+The selection initializer's D_80149784 is eleven rows of eight byte flags:
+TaiFlags58. Its neighbouring sprite tables are TaiikuS11 aggregates and the
+exclusion table is TaiWords11. Keep local tables as aggregates to reproduce
+aligned block-copy loops. Camera operations use the three signed words
+x/y/angle in TaiikuCamera0C. D_801499C0 uses the existing TaiHalves word and
+high-half view; D_801499CB has a leading unused byte and three phase bytes.
+
+ 
+### T-10890: NAME_ENT actor initializer loops
+
+func_801324AC initializes actor slots 96..127, then clears bit 7 for slots
+114..118. Recover the latter as a five-iteration loop: IDO peels the first
+iteration and unrolls the remaining four. Use the same base-plus-index actor
+expression in the initialization loop and the flag loop. The shared
+expression stays in s0 because the first loop crosses calls; a separately
+walked pointer in the first loop leaves the second loop's base in v0.
+
+Assign +0x34 from GameState.unk_1A3C before the remaining constant fields.
+That puts its load before the induction update and its store in the branch
+delay slot without introducing a promoted local. The current match re-indexes
+after advancing the index and keeps the flag loop on one source line;
+both scheduling dependencies are explicitly FAKE-marked. No padding local
+is required. DisplayActor44 is the common view for all actor accesses.
+
+ 
+func_80134060 copies three nine-halfword choice tables at D_801493C0,
+D_801493D4 and D_801493E8. TaiShorts12 has size 0x12; the data addresses
+and local homes have four-byte alignment, so successive table starts are
+0x14 apart. Do not enlarge the aggregate to 0x14: the original copies only
+four words and one halfword. Texture-page handle tables have 5, 6 and 10
+words at D_801492C8, D_801492DC and D_801492F8, plus six words at D_8014A070.
+The main helper is the already-renamed search_load_tpage_buf_lock(s32,u8);
+m2c's third argument is the loop pointer kept live across the call.
+
+## T-10900 transition and dialogue follow-up
+
+Main `func_8007C8D8` needs an initialized local `GameState *g` (or a local
+pointer to `unk_1104.u`) to keep the raw unsigned tick value across the
+selector switch. Direct repeated member reads in this larger function
+reload the word at case entries and add conversion temporaries. The state
+pointer reduces the first reconstruction from 699 to 686 instructions
+(target 683); this is an intermediate result, not a match claim.
+The case-4 threshold compares `(g->unk_1104.u << 6) < 480U` before narrowing
+`(g->unk_1104.u << 6) - 480` to a signed halfword. Narrowing before the
+comparison introduces two extra instructions and changes the branch shape.
+
+For main `func_8007EF48`, 96 combinations of the two empty-string pointer
+lifetimes and statement line grouping did not beat the existing eight
+scheduling positions. Coordinate locals also changed the frame without
+fixing the rotations. Standard permuter preprocessing/prettyprinting
+substantially worsens this large seed; full-file funcdiff remains the
+acceptance check. Experiments belong in scratch, not in production tools.
+
+`select_girl_init` now matches 656 linked bytes. Its menu geometry is four
+12-element signed-halfword arrays: x at `D_800CA300`, y at `D_800CA318`,
+width at `D_800CA330`, height at `D_800CA348` (eleven girls plus Cancel).
+New declarations live in `include/main_api.h`. Use one `s16` loop cursor
+for both passes, an eight-byte name buffer, and a signed `s32 length`
+between `strlen` and `/ 2`; unsigned length removes the signed division
+sequence. The K&R `u8` parameter retains the byte home reloads. Its local
+API override preserves the existing wide canonical caller prototype.
+
+Inlining the repeated `outer << 5` expression in the transition's default
+case removes six commutative `addu` operand mismatches; naming the common
+coordinate forces the opposite operand order. The current reconstruction
+has 683/683 instructions and only its frame-size pair differs (112 vs 104).
+
+Avoid broad `sync_protos.py --fix` during isolated batches: `--only` limits
+header cleanup but its implicit-override pass still edits other source
+files. T-10900 discarded those unrelated generated additions and retained
+only the needed declaration guard and array declarations.
+
+The transition frame issue is resolved: inline both `width / 2` and the
+right edge `159 - width` in case 5, removing their named locals. Inlining
+either one alone changes spill placement or leaves the oversized frame;
+together they recover the 104-byte frame and exact spill at `sp+0x50`.
+`func_8007C8D8` now matches 2,732 linked bytes. Keep the local state pointer,
+signed-halfword outer/inner cursors, and full-width case-4 threshold above.
+
+The reverse transition, `func_8007D8AC`, matches 2,788 linked bytes after
+inlining `159 - outer` in case 5 and removing only the `right_x` local.
+Keep the named half-width used there and the named coordinate in the
+default case. This moves the temporary spill from `sp+0x50` to the required
+`sp+0x54` without changing the 104-byte frame. Thus the two related
+transitions need different sets of named coordinate temporaries.
+
+DATE `func_80133EA0` matches 972 linked bytes with an initialized local
+`GameState *g` and flat `u8 *` table pointers `D_8015B5B8`/`D_8015B5BC`.
+Each girl occupies nine bytes: three park variants with three results each.
+Direct singleton member expressions remove seventeen target instructions;
+the local pointer view preserves the original reloads. `func_8007ED84`
+takes one argument here: leftover values in `$a1` belong to earlier
+comparisons/string calls, not an extra parameter. Removing an erroneous
+second argument resolves the final three differing positions.
+
+For full-file scratch permutation, score the selected function after
+resolving relocations. A raw object score also penalizes correct aggregate
+aliases (`D_800E6280 + offset` versus an original interior symbol), and
+unfiltered objdump includes unrelated functions. T-10900's scratch-only
+resolved scorer reproduces the real eight-position dialogue seed (score
+120) and one-position dialogue-advance seed (score 10); no project tool
+changes are needed for these experiments.
+
+DATE `func_80136340` matches 868 linked bytes using the same local-state
+and flat-table idioms. Its tables at `D_8015B530`/`D_8015B534` have 36-byte
+girl rows (twelve seasonal variants, three results each). Preserve distinct
+stores in the year/season chain: rewrite m2c's shared January–February
+`goto` as a normal `if (...) { variant = 3; } else if (...)` branch. Sharing
+that store with a later fallback removes three instructions from the target.
+## T-10910A schedule and DATE continuation
+
+DATE's object at `801461B0` owns the data range `8015CF80..8015CFD0`
+(`config/objects/DATE.txt`). `DateMovieScene50` in `include/ovl/DATE.h`
+records its seven buffer-address words, unsigned timer at +0x1C, halfword
+at +0x1E, signed step at +0x20, and four signed three-halfword rows at
++0x24/+0x2C/+0x34/+0x3C. The row storage stride is eight bytes; do not
+pack these as adjacent six-byte arrays. The signed sound timer is +0x44.
+The view leaves existing declarations unchanged and allows aggregate
+experiments without adding aliases for members. The YAML has no data
+island for this object yet; adopting C-owned data would require an
+integration change outside this batch's permitted configuration edits.
+
+For the schedule builder, a local unsigned-byte copy at the later year
+comparison restores a load removed by common-subexpression elimination.
+Keep the original signed `(rand() & 15) <= 0` spelling: equality changes
+`bgtz` to `bnez`. These are improvements to a structural draft, not a
+claim that the complete builder matches.

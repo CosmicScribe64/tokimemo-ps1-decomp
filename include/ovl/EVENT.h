@@ -1600,3 +1600,4 @@ typedef struct EventResultRow6 {
     /* 0x00 */ s16 value[3];
 } EventResultRow6; /* size 0x06 */
 #endif
+extern s8 D_8012532C;

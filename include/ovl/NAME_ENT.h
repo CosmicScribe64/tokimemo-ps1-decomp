@@ -7,7 +7,7 @@
 
 #include "common.h"
 #include "main_api.h"
-void func_80142028(void);
+s32 func_80142028(void);
 void func_801460D8(void);
 void func_801462B4(void);
 void func_80146624(void);
@@ -211,6 +211,7 @@ typedef struct NameRecord44 {
 } NameRecord44; /* size 0x44 */
 #endif
 
+
 #ifndef OVL_NAME_ENT_T9770_SELECTION_GLOBALS
 #define OVL_NAME_ENT_T9770_SELECTION_GLOBALS
 extern s32 D_8014CCAC; /* Word reset in func_801341A8. T-9770 */
@@ -345,4 +346,79 @@ s32 func_801425C0(void);
 extern s32 D_8014D0D0;
 extern s32 D_8014D0D8;
 extern s32 D_8014D0DC;
+#endif
+
+#ifndef OVL_NAME_ENT_T10890_BIRTHDAY
+#define OVL_NAME_ENT_T10890_BIRTHDAY
+/* T-10890: byte selections at four-byte intervals; read with lbu, 255 means unset. */
+extern u8 D_8014CC90;
+extern u8 D_8014CC94;
+extern u8 D_8014CC98;
+extern u8 D_8014CC9C;
+extern u8 D_8014CCA0;
+extern u8 D_8014CCA4;
+void func_80136808(s32 arg0);
+#endif
+
+#ifndef OVL_NAME_ENT_T10890_CHARACTER_TABLES
+#define OVL_NAME_ENT_T10890_CHARACTER_TABLES
+/* T-10890: 17 pointers per kana table (CD28..CD6C and CD6C..CDB0).
+ * Existing scalar declarations retain the first-pointer view for older callers. */
+typedef struct NameKanaPages44 {
+    /* 0x00 */ u8 *text[17];
+} NameKanaPages44; /* size 0x44; index = row * 3 + column / 6 */
+extern u8 *D_8014CDB0[45];
+extern u16 *D_8014CE64;
+extern u8 **D_8014CE68;
+void func_80134248(s32 arg0);
+void func_80138F00(void);
+#endif
+
+#ifndef OVL_NAME_ENT_T11010_H
+#define OVL_NAME_ENT_T11010_H
+extern s32 D_8014CC60; /* Word arguments to func_80046290. */
+extern s32 D_8014CC64;
+#endif
+
+#ifndef OVL_NAME_ENT_T11010_OPTIONS_H
+#define OVL_NAME_ENT_T11010_OPTIONS_H
+void func_8013BB1C(void);
+void func_8013B994(void);
+/* Option values read back by func_8013B77C (one word each; only the low byte is read). */
+extern s32 D_8014D0AC;
+extern u8 D_8014D0B0;
+extern u8 D_8014D0B4;
+extern u8 D_8014D0B8;
+extern u8 D_8014D0BC;
+extern u8 D_8014D0C0;
+extern u8 D_8014D0C4;
+extern u8 D_8014D0C8;
+extern u8 D_8014D0CC;
+#endif
+
+#ifndef OVL_NAME_ENT_T11010_B_H
+#define OVL_NAME_ENT_T11010_B_H
+extern u8 D_8014CCE4[]; /* Argument block passed to func_801330E8 and friends. */
+#endif
+
+#ifndef OVL_NAME_ENT_T11010_C_H
+#define OVL_NAME_ENT_T11010_C_H
+void func_80142560(void);
+extern u8 D_8014CD10[];
+#endif
+
+#ifndef OVL_NAME_ENT_T11010_D_H
+#define OVL_NAME_ENT_T11010_D_H
+extern s32 D_8014CC38; /* Word arguments to func_80046290. */
+extern s32 D_8014CC3C;
+#endif
+
+#ifndef OVL_NAME_ENT_T11010_E_H
+#define OVL_NAME_ENT_T11010_E_H
+extern u8 D_8014CC7A; /* loop bounds: addresses inside D_8014CC74 / D_8014CC7C / D_8014CC84 */
+extern u8 D_8014CC82;
+extern u8 D_8014CC8E;
+extern u8 D_8014CC7B;
+extern u8 D_8014CC83;
+extern u8 D_8014CC8F;
 #endif

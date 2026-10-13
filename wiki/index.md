@@ -20,6 +20,8 @@ Read this first. Update on every ingest or new page.
 ## Tickets
 - [[tickets/T-11000-tt-overlay|T-11000]] TT overlay (Done; 12 matches / 5,476 bytes, 13 guarded near misses, TT 32.5%).
 - [[tickets/T-10700-windows-host-baseline-build|T-10700]] Windows host setup and baseline build: docker.sh MSYS paths, 32-bit gcc cpp on WSL2 mounts (Done; 27/27, 5,176/6,958).
+- [[tickets/T-10890-big-functions-astra-21|T-10890]] Big functions (astra) 21 (In Progress).
+- [[tickets/T-10900-big-functions-astra-22|T-10900]] Big functions (astra) 22 (In Progress).
 - [[tickets/T-10860-big-functions-4-astra|T-10860]] Big functions 4 (astra), five owned objects (Done; 88 matches / 68,856 code bytes).
 - [[tickets/T-10870-big-functions-5-astra|T-10870]] Big functions 5 (astra), ten matches / 11460 bytes (Done).
 - [[tickets/T-10880-big-functions-6-astra|T-10880]] Big functions 6 (astra), four owned objects (Done).
@@ -205,3 +207,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9780-wave-9-list-8|T-9780]] Wave 9: list 8 (Done; 18 matches / 8580 bytes, four-hour session).
 
 - [[tickets/T-10850-wave-17-astra|T-10850]] Wave 17 (astra, easiest first), Done: 5 matches, 936 bytes.
+
+- [[tickets/T-10910A-big-functions-astra-23|T-10910A]] Big functions (astra) 23 (In Progress).
+
+- [[tickets/T-11020-big-functions-sonnet-25|T-11020]] Big functions (Sonnet) 25, Done: 11 matches / 7,520 bytes (EVENT and DATE scene setup), six near misses guarded; idioms in [[matching-notes]].
