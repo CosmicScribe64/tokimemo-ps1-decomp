@@ -8,10 +8,14 @@ import io
 import os
 import shutil
 import stat
+import struct
 import subprocess
 import sys
 import tempfile
+import threading
+import time
 import unittest
+from pathlib import Path
 from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -172,6 +176,13 @@ class Fresh(unittest.TestCase):
         self.touch("a.c", 100)
         self.touch("a.o", 200)
         self.assertIsNone(funcdiff.check_fresh("a.o", "a.c", build=False))
+
+    def test_freshness_is_not_cached_after_source_changes(self):
+        self.touch("a.c", 100)
+        self.touch("a.o", 200)
+        self.assertIsNone(funcdiff.check_fresh("a.o", "a.c", build=False))
+        self.touch("a.c", 300)
+        self.assertIn("older than", funcdiff.check_fresh("a.o", "a.c", build=False))
 
     def fake_ninja(self, exit_code):
         os.mkdir("bin")
@@ -336,7 +347,9 @@ LoadImage:
 
     def test_resolve_mode_matches(self):
         rc, out = self.run_main("--resolve", "func_80100000")
-        self.assertEqual((rc, out.strip()), (0, "func_80100000: MATCH (relocations resolved)"))
+        self.assertEqual(rc, 0, out)
+        self.assertIn("MATCH (exact resolved instruction bytes)", out)
+        self.assertIn("compared explicit object", out)
 
     STR_ORIGINAL = """.set noat
 .set noreorder
@@ -377,7 +390,9 @@ func_80100100:
 
     def test_resolve_compares_string_relocations_by_content(self):
         rc, out = self.string_case("hello")
-        self.assertEqual((rc, out.strip()), (0, "func_80100100: MATCH (relocations resolved)"))
+        self.assertEqual(rc, 1, out)
+        self.assertIn("literal-byte proof", out)
+        self.assertNotIn(": MATCH", out)
 
     def test_resolve_different_string_is_a_diff(self):
         rc, out = self.string_case("jello")
@@ -399,7 +414,91 @@ func_80100100:
 
     def test_function_starting_with_L(self):
         rc, out = self.run_main("LoadImage")
-        self.assertEqual((rc, out.strip()), (0, "LoadImage: MATCH"))
+        self.assertEqual(rc, 0, out)
+        self.assertIn("LoadImage: MATCH", out)
+
+    def test_instruction_swap_is_a_diff(self):
+        self.got = self.assemble("swap", self.BUILT.replace(
+            "    lui $t9, 0x801D\n    lh $t0, 0x63C8($t9)",
+            "    lh $t0, 0x63C8($t9)\n    lui $t9, 0x801D"))
+        rc, out = self.run_main("--resolve", "func_80100000")
+        self.assertEqual(rc, 1, out)
+        self.assertNotIn(": MATCH", out)
+
+    def test_folded_zero_words_cannot_hide_a_length_difference(self):
+        self.got = self.assemble("zeros", self.BUILT.replace(".globl LoadImage", ".word 0, 0, 0\n.globl LoadImage"))
+        rc, out = self.run_main("--resolve", "func_80100000")
+        self.assertEqual(rc, 1, out)
+        self.assertNotIn(": MATCH", out)
+
+    def test_guarded_auto_mode_compiles_c_and_requires_literal_proof(self):
+        import funcdiff_verify as proof
+        source = os.path.join(self.tmp, "draft.c")
+        with open(source, "w") as f:
+            f.write('#ifdef NON_MATCHING\nint func_80100000(void) { return 1; }\n#else\n'
+                    'INCLUDE_ASM("asm", func_80100000);\n#endif\n')
+        c = mock.Mock(src=source, obj=self.got, unit="main")
+        out = io.StringIO()
+        with mock.patch.object(funcdiff, "locate", return_value=c), \
+                mock.patch.object(funcdiff, "check_fresh", return_value=None), \
+                mock.patch.object(funcdiff, "header_problem", return_value=None), \
+                mock.patch.object(proof, "compile_guarded", return_value=self.got) as compile_c, \
+                mock.patch.object(proof, "exact_match", return_value=(False, "wrong linked bytes")), \
+                contextlib.redirect_stdout(out):
+            rc = funcdiff.main(["--expected", self.exp, "--resolve", "func_80100000"])
+        self.assertEqual(rc, 1, out.getvalue())
+        compile_c.assert_called_once()
+        self.assertIn("compared NON_MATCHING C", out.getvalue())
+        self.assertNotIn(": MATCH", out.getvalue())
+
+    def test_local_symbol_cannot_hide_a_difference_after_the_prefix(self):
+        template = '.set noreorder\n.text\n.globl f\nf:\nnop\ninner:\naddiu $v0,$zero,%d\njr $ra\nnop\n'
+        self.exp = self.assemble("local-e", template % 1)
+        self.got = self.assemble("local-g", template % 2)
+        rc, out = self.run_main("--resolve", "f")
+        self.assertEqual(rc, 1, out)
+        self.assertNotIn(": MATCH", out)
+
+    def test_address_named_own_data_cannot_match_without_layout(self):
+        self.exp = self.assemble("owned", self.ORIGINAL +
+                                 '.data\n.globl D_801D63C8\nD_801D63C8:\n.word 1\n')
+        rc, out = self.run_main("--resolve", "func_80100000")
+        self.assertEqual(rc, 1, out)
+        self.assertIn("requires unit layout", out)
+        self.assertNotIn(": MATCH", out)
+
+    def test_absolute_elf_value_cannot_be_replaced_by_symbol_spelling(self):
+        import trailing_pad
+        elf = trailing_pad.Elf(Path(self.exp).read_bytes())
+        table = elf.find('.symtab')
+        for i, symbol in enumerate(trailing_pad.read_symbols(elf, table)):
+            if symbol[0] == 'D_801D63C8':
+                struct.pack_into('<I', elf.sections[table]['data'], i * 16 + 4, 0x80100000)
+                struct.pack_into('<H', elf.sections[table]['data'], i * 16 + 14, 0xFFF1)
+        Path(self.exp).write_bytes(elf.to_bytes())
+        rc, out = self.run_main('--resolve', 'func_80100000')
+        self.assertEqual(rc, 1, out)
+        self.assertIn('ELF value differing', out)
+        self.assertNotIn(': MATCH', out)
+
+    def test_source_change_during_proof_cannot_match(self):
+        import funcdiff_verify as proof
+        source = Path(self.tmp) / 'draft.c'
+        source.write_text('int func_80100000(void) { return 1; }\n')
+        c = mock.Mock(src=source, obj=self.got, unit='main')
+        def changing(*args):
+            source.write_text('int func_80100000(void) { return 2; }\n')
+            return True, 'equal'
+        out = io.StringIO()
+        with mock.patch.object(funcdiff, 'locate', return_value=c), \
+                mock.patch.object(funcdiff, 'check_fresh', return_value=None), \
+                mock.patch.object(funcdiff, 'header_problem', return_value=None), \
+                mock.patch.object(proof, 'exact_match', side_effect=changing), \
+                contextlib.redirect_stdout(out):
+            rc = funcdiff.main(['--expected', self.exp, '--resolve', 'func_80100000'])
+        self.assertEqual(rc, 1, out.getvalue())
+        self.assertIn('changed during comparison', out.getvalue())
+        self.assertNotIn(': MATCH', out.getvalue())
 
 
 @unittest.skipUnless(HAVE_BINUTILS, "needs binutils")
@@ -445,9 +544,9 @@ f:
         exp = self.assemble("e", self.GLOBL + self.TABLE % ("jtbl_80100100", "jtbl_80100100", "jtbl_80100100"))
         got = self.assemble("g", self.TABLE % ("L1", "L1", "L1"))
         rc, out = self.run_main(exp, got, "f")
-        self.assertEqual(rc, 0, out)
-        self.assertIn("MATCH (relocations resolved automatically", out)
-        self.assertIn("unit sha1", out)
+        self.assertEqual(rc, 1, out)
+        self.assertNotIn(": MATCH", out)
+        self.assertIn("literal-byte proof", out)
 
     def test_jump_table_function_with_another_instruction_is_still_a_diff(self):
         exp = self.assemble("e", self.GLOBL + self.TABLE % ("jtbl_80100100", "jtbl_80100100", "jtbl_80100100"))
@@ -628,6 +727,32 @@ class ExpectedObject(unittest.TestCase):
         self.assertEqual(problem, "boom")
         obj, problem = funcdiff.expected_object(self.c, compile_fn=self.compile)
         self.assertIsNone(problem)
+        self.assertEqual(len(self.compiled), 1)
+
+    def test_concurrent_readers_publish_one_complete_reference(self):
+        barrier = threading.Barrier(2)
+        def slow_compile(source, obj):
+            time.sleep(0.05)
+            return self.compile(source, obj)
+        def compare(_):
+            barrier.wait()
+            obj, problem = funcdiff.expected_object(self.c, compile_fn=slow_compile)
+            self.assertIsNone(problem)
+            return Path(obj).read_bytes()
+        results, errors = [None, None], []
+        def worker(i):
+            try:
+                results[i] = compare(i)
+            except BaseException as error:
+                errors.append(error)
+        workers = [threading.Thread(target=worker, args=(i,)) for i in range(2)]
+        for worker in workers:
+            worker.start()
+        for worker in workers:
+            worker.join(timeout=10)
+            self.assertFalse(worker.is_alive())
+        self.assertEqual(errors, [])
+        self.assertEqual(results[0], results[1])
         self.assertEqual(len(self.compiled), 1)
 
     def test_no_asm_is_an_error_not_an_empty_reference(self):

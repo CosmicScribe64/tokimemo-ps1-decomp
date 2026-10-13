@@ -10206,3 +10206,27 @@ Wave 15 list 2 begun, see [[tickets/T-10720-wave-15-list-2]].
 
 ## [2026-10-12] build | T-10720 wave 15 list 2 done
 [[tickets/T-10720-wave-15-list-2]]: 6 functions matched (4172 bytes: GEKO `func_8013E69C`/`func_8013E760`, SHOUGATU `func_801366A4`/`func_80141AE8` via dupes, TAIIKU `func_80137090`, RPG_BAT `func_8014D380`), 10 near misses kept as NON_MATCHING, rows added to [[data/t0018-cases]], recipe in [[matching-notes]]. ninja 27/27 OK. Status Done after inline review.
+
+## [2026-10-12] ticket | T-10840 In Progress
+Created [[tickets/T-10840-wave-13-15-tool-fixes]] and its board/index entries after reading the shared tooling16 brief and required project pages. Work owns tools/tests/wiki only; edits remain uncommitted.
+
+## [2026-10-12] decision | T-10840 MATCH requires literal bytes
+Investigation found guarded C using asm fallback, normalized string/table references admitting diagnostic equality, cached freshness, shared expected outputs, folded zero words, and local-label truncation hazards in tools/funcdiff.py. Historical loaded-run races are not reproducible from the report alone. Private object snapshots, serialized/atomic expected builds, complete ELF-bounded disassembly and a private unit link against immutable target bytes now gate MATCH. Equal-length diffs show both sides of scheduling swaps. [[decompile-workflow]] documents the new controls.
+
+## [2026-10-12] build | T-10840 first regression checkpoint
+Docker incremental ninja finished with all 27 unit checksums OK. Targeted suites passed: funcdiff/proof 60, regdiff 42 (including actual file-scope-data compile with the patched trace uopt), permute 52, sync_protos 71. Additional race/static/local-label regressions and clean verification follow. Guarded TAIIKU func_801368B8/func_80137228 report DIFF; default func_801368B8 and main func_8007BBE8 pass literal linked-byte proof. Details in [[tickets/T-10840-wave-13-15-tool-fixes]].
+
+## [2026-10-12] ticket | T-10840 In Progress -> In Review
+Five fixes implemented with synthetic coverage; [[tickets/T-10840-wave-13-15-tool-fixes]] and [[kanban]] moved together. Standards review has no findings; Spec review found section-owned and conflicting absolute-symbol scratch relocations, now rejected with tests. Private-type definitions produce a skipped-prototype diagnostic rather than an invalid shared declaration.
+
+## [2026-10-12] build | T-10840 clean 27/27 proof
+Deleted generated asm/build, configured and ran ninja in Docker: all 27 `: OK` lines, build/headers.ok and build/globals.ok exist. tools/sync_protos.py --check-branch passes (zero new, 17 known). Progress unchanged at 5186/6958 and 966748/2279368 bytes. Broad suite passed 743 tests with two baseline skips; final suite includes review regressions. Full logs remain external in scratchpad/r16-fixes/clean-build.log, branch-check.log, progress.log and tests.log. No game function gains or source/header changes.
+
+## [2026-10-13] build | T-10840 final tests and review
+Full Docker suite: 748 tests passed, two baseline skips. Final prototype suite: 75/75, including the two later const-pointer/header-private-type regressions; header suite: 16/16. Final ninja and branch guard pass. Literal proofs cover a main function, asm fallback, and jump-table C; guarded TAIIKU drafts return DIFF with the lui/sw swap fully visible. Both Standards and Spec reviews report zero unresolved findings after scratch ownership/absolute-value and prototype visibility corrections. [[uopt-register-allocation]] now describes full-file regdiff; [[decompile-workflow]]'s earlier table-MATCH instructions are refreshed.
+
+## [2026-10-13] lint | T-10840 scoped wiki and ownership
+Checked new ticket links/index/card, updated current workflow against implementation, and reconciled full-file regdiff wording. Git diff whitespace check passes; changed paths are tools/tests/wiki only. No src/include/config/raw modifications and no commits. Historical loaded-run cause remains explicitly unproven.
+
+## [2026-10-13] ticket | T-10840 In Review -> Done
+[[tickets/T-10840-wave-13-15-tool-fixes]], [[kanban]] and [[index]] synchronized after review and final checks. Five tool fixes complete; zero game-function gains, clean 27/27 checksums and 5186/6958 progress retained. Changes left uncommitted for the orchestrator; logs remain external in scratchpad/r16-fixes/.

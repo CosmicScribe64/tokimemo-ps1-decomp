@@ -68,9 +68,46 @@ class Repo(unittest.TestCase):
 
 
 class CheckApiTest(Repo):
+    def test_write_adds_new_main_definition_called_earlier(self):
+        self.src("main/8007BB00.c", '#include "game.h"\n'
+                 's32 func_8007BB00(void) { return func_8007BBE8(1); }\n'
+                 's32 func_8007BBE8(s32 x) { return x; }\n')
+        sp.run_write(str(self.inc), str(self.root / "src"), log=lambda _: None)
+        text = (self.inc / "main_api.h").read_text()
+        self.assertIn("func_8007BBE8(s32", text)
+        self.assertEqual(text.count("func_8007BBE8("), 1)
+        self.assertEqual(self.problems(), [])
+
     def test_clean(self):
         self.ovl("AAA", "extern s32 D_80140000;\nvoid func_80132000(void);\n")
         self.assertEqual(self.problems(), [])
+
+    def test_write_does_not_export_address_named_static_helpers(self):
+        self.src("main/8007BB00.c", 'static s32 func_8007BBE8(s32 x) { return x; }\n')
+        sp.run_write(str(self.inc), str(self.root / "src"), log=lambda _: None)
+        self.assertNotIn("func_8007BBE8", (self.inc / "main_api.h").read_text())
+
+    def test_write_explains_new_definition_with_private_type(self):
+        self.src("main/8007BB00.c", 'typedef struct Local { s32 x; } Local;\n'
+                 'Local *func_8007BBE8(void) { return 0; }\n')
+        messages = []
+        sp.run_write(str(self.inc), str(self.root / "src"), log=messages.append)
+        self.assertNotIn("func_8007BBE8", (self.inc / "main_api.h").read_text())
+        self.assertTrue(any("SKIPPED func_8007BBE8" in s and "Local" in s for s in messages), messages)
+
+    def test_write_adds_const_pointer_return_with_shared_types(self):
+        self.src("main/8007BB00.c", 'const u8 *func_8007BBE8(void) { return 0; }\n')
+        sp.run_write(str(self.inc), str(self.root / "src"), log=lambda _: None)
+        self.assertIn("func_8007BBE8(void)", (self.inc / "main_api.h").read_text())
+
+    def test_write_explains_definition_using_type_from_source_header(self):
+        game = (self.inc / 'game.h').read_text()
+        self.write('game.h', game.replace('#endif', 'typedef struct Entry8 { s32 x; } Entry8;\n#endif'))
+        self.src('main/8007BB00.c', '#include "game.h"\nEntry8 *func_8007BBE8(void) { return 0; }\n')
+        messages = []
+        sp.run_write(str(self.inc), str(self.root / 'src'), log=messages.append)
+        self.assertNotIn('func_8007BBE8', (self.inc / 'main_api.h').read_text())
+        self.assertTrue(any('SKIPPED func_8007BBE8' in s and 'Entry8' in s for s in messages), messages)
 
     def test_main_symbol_in_overlay_header_must_move(self):
         self.ovl("AAA", "extern u8 D_800E7399;\n")

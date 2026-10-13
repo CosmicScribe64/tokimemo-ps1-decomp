@@ -5,8 +5,9 @@ Usage (in Docker, repo root as cwd, TOKIMEMO_SCRATCH set; wiki/decompile-workflo
     python3 tools/regdiff.py [UNIT:]func_80114B0C [--unit UNIT] [--src draft.c] [-v] [--uopt PATH]
 
 The draft is the function's C definition in its source file (a `#ifdef NON_MATCHING` draft counts,
-`--src` names a scratch copy of the file). It is stripped to the one function like the permuter's
-base.c and compiled with the build's exact pipeline (tools/cc.py: IDO 5.3, K&R, cvt pass, frame
+`--src` names a scratch copy of the file). The complete translation unit is retained, including
+file-scope data, helper functions and active asm includes, and compiled with the build's exact
+pipeline (tools/cc.py: IDO 5.3, K&R, cvt pass, frame
 pass, asm-processor), but with the instrumented uopt of T-9800 (wiki/uopt-register-allocation.md),
 which prints every live range of the register allocator: its priority, its uses and stores per
 basic block, the cost of its cheapest colour and the colour it got. The draft is then compared with
@@ -1170,12 +1171,11 @@ class Compiled:
 
 
 def compile_draft(root, func, src, uopt, workdir, unit=None):
-    """Compile the stripped draft of `func` with the traced uopt. Returns a Compiled with the object,
-    the stripped source, the R9 log, the native listing and the saved ucode."""
-    import permute
+    """Compile the complete draft TU with traced uopt; retain file-scope ownership/aliasing."""
+    from funcdiff_verify import preprocess_draft
     workdir = os.path.abspath(workdir)
     os.makedirs(workdir, exist_ok=True)
-    text = permute.build_base(root, src, func)
+    text = preprocess_draft(src)
     base = os.path.join(workdir, "draft.c")
     with open(base, "w") as f:
         f.write(text)
@@ -1261,7 +1261,7 @@ def run(args, out=print):
     t1 = time.time()
     try:
         comp = compile_draft(root, name, src, uopt, os.path.join(args.scratch, name))
-    except SystemExit as e:
+    except (SystemExit, OSError, ValueError) as e:
         out("regdiff: %s" % e)
         return 2
     t2 = time.time()

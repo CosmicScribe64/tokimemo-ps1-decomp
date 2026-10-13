@@ -6,6 +6,21 @@ sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 
 # Matching notes
 
+## Wave 13-15 tooling reliability (T-10840)
+
+[[tickets/T-10840-wave-13-15-tool-fixes]] addresses the five wave reports. The
+guarded TAIIKU `func_801368B8`/`func_80137228` compare their C rather than asm by
+default; equal-length diffs display positional swaps. `funcdiff --resolve` now
+gates MATCH with literal private-link bytes against the disc, including address,
+size and padding, rather than normalized references alone. It snapshots objects,
+checks source/header contents, serializes expected builds and includes all zero
+instructions and local-label continuations. The historical loaded TT run has no
+preserved race evidence, so its precise cause remains unproven; known false-MATCH
+paths have synthetic regressions. Whole-unit SHA1 still checks data/tables.
+`sync_protos --write` discovers newly defined main prototypes; permuter count
+tolerance defaults to four with a warning; regdiff keeps full-file data/context.
+Options and usage are in [[decompile-workflow]]. No game functions gained.
+
 T-9520 second-pass continuation: EVENT `func_801035BC` now has a recovered
 0x44-byte record block with 96 prefix records. Its girl selector at offset
 0x1987 and the destination fields at 0x1A0F belong to that same block. Reading
