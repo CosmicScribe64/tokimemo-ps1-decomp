@@ -19,6 +19,10 @@ typedef struct TtRec2 {
 } TtRec2; /* size 0x4 */
 extern u8 *D_80158A6C;
 extern u16 D_80155D50[];
+extern u16 D_80155D58;
+extern u16 D_80155D5A;
+extern u16 D_80155D5C;
+extern u16 D_80155D5E;
 extern u8 *D_80158AA4;
 extern u8 *D_80158AA8;
 extern u8 *D_80158A8C;
