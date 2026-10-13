@@ -583,14 +583,15 @@ void func_80134ADC(TtActor68 *p) {
     p->unk_58++;
 }
 
-/* NON_MATCHING: T-11000, 7 hoisted-constant lines: the original keeps 0x80 and an unused 0x40 (s2, s3) ahead of 0xAD/0xAB/12/0x30/0xAC in s-registers, uses s8 too; same instruction body otherwise */
+/* NON_MATCHING: T-11500, register shift from one missing constant: the n loop bound now gives li s2,0x80 as in the original, but the original also keeps an unused 0x40 in s3 (bit position between n and 0xAD, so it comes from the loop head or the unk_00 test) and the remaining constants in s4..s8; the 0xAB block also loads D_80158A60 into v1 early in the original (t1 here) */
 #ifdef NON_MATCHING
 void func_80134BBC(void) {
     TtActor68 *object;
     s32 i;
+    s32 n;
 
     object = (TtActor68 *)D_80158AA0;
-    for (i = 0; i != 0x80; i++, object++) {
+    for (i = 0, n = 0x80; i != n; i++, object++) {
         if (object->unk_00 != 0) {
             if (object->unk_02 == 0xAD) {
                 func_80134ADC(object);
