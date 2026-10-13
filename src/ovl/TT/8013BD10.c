@@ -234,6 +234,62 @@ void func_8013C0A8(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013C0A8);
 #endif
 
+/* NON_MATCHING: T-11000, ~18 lines: addu operand order buf+idx*4 (original addu t9,s2,t8; same blocker as func_8014CC04) and the nop/store scheduling after it */
+#ifdef NON_MATCHING
+void func_8013C1FC(void) {
+    u8 *q;
+    u8 *p;
+    u8 *buf;
+    u8 *v;
+    s32 i;
+
+    q = D_80158AB0;
+    p = D_80158A90;
+    i = 0;
+    buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    do {
+        if (*p != 0 && !(*(u16 *)(p + 0x50) & 1)) {
+            v = *(u8 **)(buf + 4);
+            *(u8 **)(buf + 4) += 0x30;
+            *(s16 *)(q + 4) = *(s16 *)(p + 0x14);
+            *(s16 *)(q + 6) = *(s16 *)(p + 0x16);
+            v[0x29] = 0;
+            v[0x2A] = 1;
+            v[0x28] = p[0x3C];
+            *(u16 *)(v + 0x16) = *(u16 *)(p + 0x52);
+            v[0x2C] = 0;
+            *(u16 *)(v + 0xE) = *(u16 *)(p + 0x54);
+            if (*(u16 *)(p + 4) < 0x90) {
+                *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+                *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 8;
+                v[0xC] = p[0x56];
+                v[0x2B] = 0;
+                v[0xD] = p[0x57] + 0x80;
+                func_80141C6C(*(u16 *)(p + 0x10) * 4 + buf + 0x8008, v, q);
+            } else {
+                s16 t = *(s16 *)(p + 0x62);
+
+                *(s16 *)(q + 2) = t;
+                *(s16 *)q = t;
+                *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 0x1F;
+                *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 7;
+                v[0xC] = p[0x56];
+                v[0x2B] = 1;
+                *(s16 *)(v + 0x10) = 0x40;
+                *(s16 *)(v + 0x12) = 0x10;
+                *(u16 *)(v + 0x16) = 0xB;
+                *(u16 *)(v + 0xE) = 0x3C81;
+                v[0x28] = 0;
+                v[0xD] = p[0x57];
+                func_80141EBC(*(u16 *)(p + 0x10) * 4 + buf + 0x8008, v, q);
+            }
+        }
+        i++;
+        p += 0x6C;
+    } while (i != 0x20);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013C1FC);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013C41C);
