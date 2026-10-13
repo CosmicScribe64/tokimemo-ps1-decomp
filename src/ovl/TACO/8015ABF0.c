@@ -22,7 +22,7 @@ void func_8015ABF0(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015ACCC);
 
-/* NON_MATCHING: T-10710, shape identical; MATRIX local at sp+0x24, the original keeps it at sp+0x20 (same frame 0x48): one extra 4-byte slot above it, unused-scalar and 8-aligned-union tries grow the frame by 8 */
+/* NON_MATCHING: T-10710, shape identical; MATRIX local at sp+0x24, the original keeps it at sp+0x20 (same frame 0x48): the 8-aligned-union and unused-scalar tries grow the frame by 8 */
 #ifdef NON_MATCHING
 void func_8015B1B8(arg0, arg1, arg2, arg3)
     s32 arg0;
@@ -181,8 +181,6 @@ s32 func_8015CC54(void) {
     return n;
 }
 
-/* NON_MATCHING: T-10620, two lines: the two address recomputations after the clearing store are addu a1,a0,t5 (offset first) in the original, addu a1,t5,a0 here; permuter 240 s found nothing */
-#ifdef NON_MATCHING
 s32 func_8015CCC8(arg0)
 s32 arg0;
 {
@@ -191,23 +189,20 @@ s32 arg0;
 
     n = 0;
     for (i = 16; i != 63; i++) {
-        if (D_8015EDB4[i].unk84[1] != 0) {
-            if (!(D_8015EDB4[i].pad0[1] & 0x80)) {
-                D_8015EDB4[i].unk84[1] = 0;
+        if (((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[1] != 0) {
+            if (!(((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->pad0[1] & 0x80)) {
+                ((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[1] = 0;
             }
         }
         if (arg0 != 0xFF) {
-            if (arg0 == D_8015EDB4[i].unk84[2] && D_8015EDB4[i].unk84[1] != 0) {
+            if (arg0 == ((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[2] && ((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[1] != 0) {
                 n++;
             }
-        } else if (D_8015EDB4[i].unk84[1] != 0) {
+        } else if (((TcActor *)(i * 0x88 + (u8 *)D_8015EDB4))->unk84[1] != 0) {
             n++;
         }
     }
     return n;
 }
-#else
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015CCC8);
-#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015CE64);
