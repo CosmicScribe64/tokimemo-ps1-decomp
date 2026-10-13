@@ -503,6 +503,7 @@ extern s32 D_8007E7D0[];
 extern s32 D_8007E810[];
 extern s32 D_8007E850[];
 extern s8 D_8008093C;
+extern s32 D_80094710;
 extern u16 D_80094714;
 extern u16 D_80094718;
 extern u8 *D_8009471C;
@@ -885,6 +886,7 @@ extern s32 D_800EECE0;
 extern s32 D_800EECE4;
 extern s32 D_800EECE8;
 extern s32 D_800EECEC;
+extern s32 D_800EECF0;
 extern u8 D_800F19AB;
 extern u8 D_800F53DA;
 extern u8 D_800F53DE;
@@ -1464,6 +1466,7 @@ extern s32 D_80122D04;
 extern s32 D_80122D08;
 extern s32 D_80122D0C;
 extern s32 D_80122D10;
+extern s32 D_80122D14;
 extern s32 D_80122D18;
 extern s32 D_80122D1C;
 extern s32 D_80122D20;
@@ -1472,6 +1475,7 @@ extern s32 D_80122D2C;
 extern s32 D_80122D30;
 extern s32 D_80122D34;
 extern s32 D_80122D38;
+extern u32 D_80122D3C;
 extern s32 D_80122D40;
 extern s32 D_80122D44;
 extern s32 D_80122D4C;
@@ -2273,7 +2277,9 @@ void func_8008BEE0();
 void func_8008BFB0();
 s32 func_8008C1B0();
 s32 func_8008C620();
+#ifndef MAIN_API_OVERRIDE_SsVabTransCompleted
 void SsVabTransCompleted();
+#endif
 #ifndef MAIN_API_OVERRIDE_func_8008D610
 void func_8008D610();
 #endif
@@ -2407,7 +2413,9 @@ void func_801040F0(void);
 s32 func_80067DFC(void);
 s32 func_80053418();
 s32 func_800463E8(void);
+#ifndef MAIN_API_OVERRIDE_func_80049FF0
 s32 func_80049FF0();
+#endif
 void place_init2(void);
 void normal_date_bg_out(void);
 void func_8004A9CC();
@@ -2415,6 +2423,19 @@ void func_8004AFB8();
 void func_800651F8();
 void func_80065234();
 void func_8006B5BC(GsWord arg0);
+/* SD_GetCDLevel request/output prefix, verified from halfword accesses. T-10870. */
+typedef struct CdLevelWork {
+    /* 0x00 */ u16 unk_00; /* left output */
+    /* 0x02 */ u16 unk_02; /* right output */
+    /* 0x04 */ u16 unk_04; /* output precision: shift by 16 minus this value */
+    /* 0x06 */ u16 unk_06; /* sample count */
+    /* 0x08 */ u16 unk_08; /* method, square and shaping selectors */
+} CdLevelWork; /* accessed size 0x0A */
+void read_bustup_uniform(void);
+void set_tarao_sprt();
+void set_tarao_bg(s32 arg0);
+void SD_DetectCDPeak(u16 *l, u16 *r, u16 pos, u16 n);
+void SD_CalcCDAve(s16 *left, s16 *right, u16 start, u16 count);
 
 extern s32 D_80122CD8;
 extern u8 D_800B3CF8;

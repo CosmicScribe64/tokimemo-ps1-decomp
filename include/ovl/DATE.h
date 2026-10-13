@@ -1363,3 +1363,75 @@ typedef struct DateMovieHeader8 {
     /* 0x04 */ u32 unk_04;
 } DateMovieHeader8; /* size 0x08, minimum observed extent */
 #endif
+
+#ifndef OVL_DATE_PARTICLE_T10870_H
+#define OVL_DATE_PARTICLE_T10870_H
+/* T-10870: func_80140374 initializes 20 records starting at sprite 98.
+ * The coordinate words are also read and written as signed high halves. */
+typedef struct DateParticleView44 {
+    /* 0x00 */ u8 pad00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 pad08[4];
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ u8 pad1E[6];
+    /* 0x24 */ GsWord unk_24;
+    /* 0x28 */ GsWord unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 pad3C[7];
+    /* 0x43 */ u8 unk_43;
+} DateParticleView44; /* size 0x44 */
+
+/* Fixed-point horizontal positions, with signed high-halfword updates. */
+extern GsWord D_8015BD40[20];
+/* func_8013F638 initializes ten falling-particle velocities. */
+extern GsWord D_8015BCB4[10];
+extern s32 D_8015BD34;
+extern s16 D_8015BD38;
+extern u8 D_8015BD3C;
+#endif
+
+#ifndef OVL_DATE_RIDE_TABLES_T10870_H
+#define OVL_DATE_RIDE_TABLES_T10870_H
+/* func_80138934: girl rows contain six rides, two choices per ride,
+ * and three byte-valued results per choice (36 bytes per girl). */
+extern DateRideChoices36 *D_8015B5B0;
+extern DateRideChoices36 *D_8015B5B4;
+#endif
+
+#ifndef OVL_DATE_MUSEUM_TABLES_T10870_H
+#define OVL_DATE_MUSEUM_TABLES_T10870_H
+/* func_80134C64 reads three result bytes from each 15-byte girl row. */
+extern DateMuseumChoices15 *D_8015B520;
+extern DateMuseumChoices15 *D_8015B524;
+#endif
+
+#ifndef OVL_DATE_EVENT_CHOICE_T10870_H
+#define OVL_DATE_EVENT_CHOICE_T10870_H
+/* func_8013A94C copies eleven signed counts from each table. */
+extern DateCounts22 D_8015B75C;
+extern DateCounts22 D_8015B774;
+extern u8 D_8015B65C;
+extern u8 D_8015B660;
+/* Halfword access view at D_8015BF1C. The legacy declarations describe
+ * individual low bytes; this handler reads/stores signed halfwords. */
+typedef struct DateEventChoice6 {
+    /* 0x00 */ s16 kind;
+    /* 0x02 */ u8 pad02[2];
+    /* 0x04 */ s16 index;
+} DateEventChoice6; /* size 0x06, minimum observed extent */
+#endif
