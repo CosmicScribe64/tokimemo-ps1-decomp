@@ -6,6 +6,10 @@ typedef struct {
     u8 s[0xCC3];
 } DateTxt; /* size 0xCC3 */
 extern DateTxt D_801440C0;
+typedef struct {
+    void (*f[50])();
+} FnTbl50; /* size 0xC8 */
+extern FnTbl50 D_80143FF8;
 
 void func_80083440(s32 arg0);
 
@@ -93,7 +97,22 @@ void func_80135E04(void) {
     D_80143FE4 = 0x801B155C;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136078);
+void func_80136078(void) {
+    void (**p)();
+    FnTbl50 tbl;
+
+    tbl = D_80143FF8;
+    if (D_80143B20 != 0) {
+        p = &tbl.f[D_800E6280.unk_110A];
+        if (*p == normal_date_girl_in || tbl.f[D_800E6280.unk_110A] == normal_date_girl_out) {
+            tbl.f[D_800E6280.unk_110A] = func_8004284C;
+            /* FAKE: empty double test, same register-choice shift as func_80134120 (T-4090); real source unknown. T-10820 */
+            if (!D_800E6280.unk_110A && !D_800E6280.unk_110A) {
+            }
+        }
+    }
+    tbl.f[D_800E6280.unk_110A](0x80);
+}
 
 void func_80136148(void) {
     D_800CA148 = 2;
