@@ -13003,3 +13003,11 @@ movie functions now have regdiff-backed region comparisons and bounded search.
 ## [2026-10-13] build | T-11020 big functions (Sonnet) 25
 
 [[tickets/T-11020-big-functions-sonnet-25]]: 11 functions matched (7,520 bytes) in `src/ovl/EVENT/8010FE10.c` and `src/ovl/DATE/80132000.c`; six near misses guarded with `NON_MATCHING` (DATE func_80140374 is 5 instructions off, main `src/main/8006CB30.c` func_80072D70). Idioms (struct-member girl index, address-read globals that stop promotion, chain-store order, frame slots of declared locals) are in [[matching-notes]]. `D_800CA158` is an `s16` override in `include/ovl/DATE.h` with the guard in `include/main_api.h`. Ticket moved to Done after the inline review; ninja 27/27 OK, headers and globals OK, `sync_protos --check-branch` OK.
+## [2026-10-13] ticket | T-11010 started
+[[tickets/T-11010-big-functions-sonnet-24]] In Progress: big functions list 24 (Sonnet).
+
+## [2026-10-13] build | T-11010 big functions 24
+[[tickets/T-11010-big-functions-sonnet-24]]: 7 functions matched in NAME_ENT (`func_80139CB4`, `func_801387F4`, `func_80137FC4`, `func_80142028`, `func_8013D054`, `func_8013B77C`, `func_801372A0`; 4,680 bytes), 8 guarded near misses in `src/ovl/NAME_ENT/80139740.c` and `src/ovl/NAME_ENT/80132000.c`. Levers and open blockers in [[matching-notes]] ("Big functions (Sonnet) 24"). New overlay declarations in `include/ovl/NAME_ENT.h`. ninja 27/27 OK, headers and globals OK.
+
+## [2026-10-13] ticket | T-11010 Done
+Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on [[kanban]].

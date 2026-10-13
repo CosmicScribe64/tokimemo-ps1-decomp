@@ -58,7 +58,27 @@ void func_80139C24(void) {
     func_80139BA0();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139CB4);
+void func_80139CB4(void) {
+    u8 sp30[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+
+    if (D_800E8BEE != 0) {
+        func_800AE090(sp30, D_800B3288[D_800E7D36], 5);
+        func_800AE100(sp30, "番");
+        func_8004E788(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+        func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 0);
+        func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 0);
+        func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0);
+        func_8004E788(0x20, -0x2B, 0xF, (s32) D_800B3908[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]], 0);
+        return;
+    }
+    func_800AE090(sp30, D_800B3288[D_800E6280.unk_1118], 5);
+    func_800AE100(sp30, "番");
+    func_8004E788(-0x20, -0x5C, 0xF, (s32) sp30, 0);
+    func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 0);
+    func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 0);
+    func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0);
+    func_8004E788(0x20, -0x2B, 0xF, (s32) D_800B3908[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 0xC], 0);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139F30);
 
@@ -179,7 +199,53 @@ void func_8013B5F0(void) {
     func_80046AC8(0x1A, 0, 0x1F7, D_8014D0E0, D_8014D0E4, D_8014D0E8, 0x01DF7FCF, 2);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B77C);
+void func_8013B77C(void) {
+    if (D_8014D0AC != 0) {
+        func_800AE0B0("option  kidou back ");
+        if (D_8014D0AC & 0x80) {
+            k_speed_set(D_8014D0B0);
+        }
+        func_800AE0B0("kanji_speed%d \n", D_8014D0B0);
+        if (D_8014D0B4 >= 3) {
+            D_800E6280.unk_F6C = D_8014D0B4 % 3;
+        }
+        func_800AE0B0("icon_mode %d \n", D_8014D0B4);
+        if (D_8014D0B8 >= 4) {
+            D_800E6280.unk_1092 = D_8014D0B8 & 3;
+        }
+        func_800AE0B0("menu_mode %d \n", D_8014D0B8);
+        if (D_8014D0AC & 8) {
+            D_800E6280.unk_F6F = D_8014D0BC;
+        }
+        func_800AE0B0("cursor_speed %d \n", D_8014D0BC);
+        if (D_8014D0C0 >= 3) {
+            D_800E6280.unk_03C = D_8014D0C0 % 3;
+        }
+        func_800AE0B0("sound_mode %d \n", D_8014D0C0);
+        if (D_8014D0AC & 0x40) {
+            D_800E6280.unk_F70 = D_8014D0C4;
+        }
+        func_800AE0B0("click_mode %d \n", D_8014D0C4);
+        if (D_8014D0AC & 0x20) {
+            D_800E6280.unk_F73 = D_8014D0C8;
+        }
+        func_800AE0B0("click_speed %d \n", D_8014D0C8);
+        if (D_8014D0AC & 0x10) {
+            D_800E6280.unk_F75 = D_8014D0CC;
+        }
+        func_800AE0B0("mouse_ok %d \n", D_8014D0CC);
+        if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+            D_800E6280.unk_F6D = 0xF;
+        } else {
+            D_800E6280.unk_F6D = 0xE;
+        }
+        func_8006509C();
+        func_80064FA4(0);
+    }
+    D_8014D0A8 = 0;
+    func_8013BB1C();
+    func_8013B994();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B994);
 
@@ -190,7 +256,79 @@ void func_8013BB10(void) {
 void func_8013BB1C(void) {
 }
 
+/* NON_MATCHING: T-11010, only instruction order differs: seven pairs of 'lui a0,string' / 'lui at,store' swapped and the kanji_speed store placed before the string address, 16 swaps */
+#ifdef NON_MATCHING
+void func_8013BB24(void) {
+    u8 speed;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        D_800B3C6C = 0;
+        func_800438DC(1, 0);
+        func_80048DAC(1);
+        func_80041584();
+        *(s32 *)&D_800E6280.unk_1095[3] = 0xA0;
+        func_80048E78();
+        if (D_800E6280.unk_1124 != 0) {
+            func_800AE0B0("option setting!");
+            D_8014D0AC = D_800E6280.unk_1124;
+            speed = get_k_speed();
+            D_8014D0B0 = speed;
+            func_800AE0B0("kanji_speed%d \n", speed);
+            D_8014D0B4 = *(u8 *)&D_800E6280.unk_F6C;
+            func_800AE0B0("icon_mode %d \n", *(u8 *)&D_800E6280.unk_F6C);
+            D_8014D0B8 = *(u8 *)&D_800E6280.unk_1092;
+            func_800AE0B0("menu_mode %d \n", *(u8 *)&D_800E6280.unk_1092);
+            D_8014D0BC = *(u8 *)&D_800E6280.unk_F6F;
+            func_800AE0B0("cursor_speed %d \n", *(u8 *)&D_800E6280.unk_F6F);
+            D_8014D0C0 = *(u8 *)&D_800E6280.unk_03C;
+            func_800AE0B0("sound_mode %d \n", *(u8 *)&D_800E6280.unk_03C);
+            D_8014D0C4 = *(u8 *)&D_800E6280.unk_F70;
+            func_800AE0B0("click_mode %d \n", *(u8 *)&D_800E6280.unk_F70);
+            D_8014D0C8 = *(u8 *)&D_800E6280.unk_F73;
+            func_800AE0B0("click_speed %d \n", *(u8 *)&D_800E6280.unk_F73);
+            D_8014D0CC = *(u8 *)&D_800E6280.unk_F75;
+            func_800AE0B0("mouse_ok %d \n", *(u8 *)&D_800E6280.unk_F75);
+        } else {
+            D_8014D0AC = 0;
+        }
+        D_800E6280.unk_1124 = 0;
+        D_8014D0A8 = 1;
+        D_8014D0A4 = 0;
+        srand(D_800E7D10);
+        k_speed_set(1);
+        back_clear_switch(1);
+        func_8006764C(0);
+        tpage_buf_clear();
+        D_800E6280.unk_10A2 = 0;
+        func_80065F34(0);
+        func_8004E58C();
+        func_8004E750(0xE);
+        D_800E6280.unk_03A = 0;
+        D_801230D0 = 0xFF;
+        func_8006BC28(0);
+        func_8006BD6C(0);
+        D_8014D0E0 = 1;
+        D_8014D0E4 = -0x50;
+        D_8014D0E8 = -0x50;
+        D_8014D0EC = 8;
+        D_8014D0F0 = 8;
+        make_color_bar16(&D_800E6280.unk_163C, 0xDF7FCF, 0xDF7FCF, 0x10, 0);
+        load_palette(&D_800E6280.unk_163C, 0x17, 1, 1, 0);
+        func_80046754(0x80180000, 0x1A, 0);
+        func_80044890(0, 0xBF98, 0xBF79, 0xCD21, 0xCCD9, 0xCCD1);
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            func_8004284C();
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
+#endif
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BE18);
 
@@ -386,7 +524,64 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CEC8);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D054);
+void func_8013D054(void) {
+    u8 state;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            func_80053D10();
+            D_800E6280.unk_110D++;
+        } else if ((state = D_800E6280.unk_1115) == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (state == 0xD0)) {
+            func_80053D10();
+            func_80042908(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            D_800E6280.unk_110D++;
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xF0);
+        }
+        break;
+    case 3:
+        if (func_80055AFC(0) == 1) {
+            func_8013BB10();
+            func_800AE0B0("SYS0 DATA OK!");
+            func_80053D10();
+            func_80044750(0x501);
+            func_80053CE0();
+            D_800E7D36 = D_800E6280.unk_1118;
+            func_80054E6C();
+            D_800E6280.unk_110D++;
+        } else {
+            state = D_800E6280.unk_1115;
+            func_800AE0B0("s->mem_stat %d \n", state);
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xF0);
+        }
+        break;
+    case 4:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            func_80042908(3);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || ((state = D_800E6280.unk_1115) == 0xF0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    }
+    func_8013B1D8();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D2AC);
 
@@ -861,7 +1056,76 @@ void func_8013F058(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F0DC);
 
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* NON_MATCHING: T-11010, frame is 8 bytes larger than the original (buffer at sp+0x38 instead of 0x30) once the jump-table switch holds the calls; rest matches, 6 lines */
+#ifdef NON_MATCHING
+/* Falls through without a return statement. */
+s32 func_8013F208(void) {
+    u8 sp30[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D++;
+    default:
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            D_800E6280.unk_110D++;
+        } else if (D_800E6280.unk_1115 == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xD0)) {
+            func_80053D10();
+            func_80042908(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            func_8013B59C();
+            D_800E6280.unk_110D++;
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 3:
+        if (func_80055AFC(0) == 1) {
+            func_8013BB10();
+            D_8014D0A8 = 1;
+            func_800AE0B0("COPY LOAD SUM !\n");
+            D_800E6280.unk_110D++;
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 4:
+        func_8004E58C();
+        func_800AE0F0(sp30, D_800B3288[D_800E6280.unk_1118]);
+        func_800AE100(sp30, "番アルバムを");
+        func_8004E788(-0x40, 0x20, 0xF, sp30, 0);
+        func_8004E788(-0x40, 0x30, 0xF, "どのアルバムにコピーしますか？", 0);
+        func_8004E788(-0x40, 0x40, 0xF, "カーソルで選んで下さい。", 0);
+        func_8004E884(3);
+        func_8004284C();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F208);
+#endif
+
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F454);
 
@@ -1400,7 +1664,58 @@ s32 func_80141FA4(void) {
     D_800E6280.unk_1092 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80142028);
+s32 func_80142028(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, "未初期化のメモリーカードです。", 0);
+        func_8004E884(1);
+        D_800E6280.unk_110D++;
+    default:
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, "初期化していいですか？", 0);
+        func_8004E788(-0x40, 0x30, 0xF, D_800B3C70, 0);
+        func_8004E788(0x14, 0x30, 1, func_8006CA9C(), 0);
+        func_8004E788(-0x40, 0x40, 0xF, D_800B3C88, 0);
+        func_8004E788(0x14, 0x40, 2, func_8006CAE0(), 0);
+        func_8004E884(5);
+        D_800E6280.unk_110D++;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            if (func_80054108() == 1) {
+                func_80042908(2);
+            } else {
+                func_80042908(1);
+            }
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 4:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, "別のメモリーカードを", 0);
+        func_8004E788(-0x40, 0x30, 1, "差し込み口１", 0);
+        func_8004E788(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
+        func_8004E788(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
+        func_8004E788(-0x40, 0x40, 1, func_8006CA9C(), 0);
+        func_8004E884(5);
+        D_800E6280.unk_110D++;
+        break;
+    case 5:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80042908(1);
+        }
+        break;
+    }
+}
 
 void func_801422F0(void) {
     if (D_800E6280.unk_110A == 0) {
@@ -1408,7 +1723,71 @@ void func_801422F0(void) {
     }
 }
 
+/* NON_MATCHING: T-11010, 28 differing lines: registers and structure match; the second loop's four loads/stores are scheduled in a different order (original loads +9659 first and +9591 last) and the two loop-1 address setups are swapped */
+#ifdef NON_MATCHING
+void func_8014231C(void) {
+    u8 *p;
+    s32 i;
+
+    p = D_8011ECD0;
+    do {
+        p[8707] &= 0x7F;
+        p += 0x44;
+    } while (p < D_8011F044);
+    D_8011ECD0[9591] &= 0x7F;
+    D_8011ECD0[9659] &= 0x7F;
+    D_8011ECD0[9727] &= 0x7F;
+    for (i = 0; i < 2; i++) {
+        D_8011ED9C[i * 0x110 + 9591] &= 0x7F;
+        D_8011ED9C[i * 0x110 + 9659] &= 0x7F;
+        D_8011ED9C[i * 0x110 + 9727] &= 0x7F;
+        D_8011ED9C[i * 0x110 + 9795] &= 0x7F;
+    }
+    func_8013AF78(0);
+    D_800E6280.unk_1100 += 1;
+    switch (D_800E6280.unk_1109) {
+    case 0x0:
+        func_8013C4A8();
+        break;
+    case 0x1:
+        func_8013C934();
+        break;
+    case 0x2:
+        func_80140044();
+        break;
+    case 0x3:
+        func_80140CCC();
+        break;
+    case 0x4:
+        func_80140ED4();
+        break;
+    case 0xC0:
+        func_801422F0();
+        break;
+    case 0xD0:
+        func_80141FA4();
+        break;
+    case 0xF0:
+        func_80140430();
+        break;
+    case 0xFF:
+        func_80140574();
+        break;
+    }
+    func_8013B5F0();
+    func_801398EC();
+    func_8004EC24();
+    func_8006BA40();
+    func_8013B0A0();
+    func_801425C0();
+    func_80142560();
+    if (D_8014D0A8 != 0) {
+        D_800E6280.unk_1092 = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014231C);
+#endif
 
 void func_80142560(void) {
     if ((D_800E6280.unk_1109 | D_800E6280.unk_110A) != 0) {
