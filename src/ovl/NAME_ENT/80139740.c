@@ -406,7 +406,64 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CEC8);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D054);
+void func_8013D054(void) {
+    u8 state;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            func_80053D10();
+            D_800E6280.unk_110D++;
+        } else if ((state = D_800E6280.unk_1115) == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (state == 0xD0)) {
+            func_80053D10();
+            func_80042908(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            D_800E6280.unk_110D++;
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xF0);
+        }
+        break;
+    case 3:
+        if (func_80055AFC(0) == 1) {
+            func_8013BB10();
+            func_800AE0B0("SYS0 DATA OK!");
+            func_80053D10();
+            func_80044750(0x501);
+            func_80053CE0();
+            D_800E7D36 = D_800E6280.unk_1118;
+            func_80054E6C();
+            D_800E6280.unk_110D++;
+        } else {
+            state = D_800E6280.unk_1115;
+            func_800AE0B0("s->mem_stat %d \n", state);
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xF0);
+        }
+        break;
+    case 4:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            func_80042908(3);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || ((state = D_800E6280.unk_1115) == 0xF0)) {
+            func_80053D10();
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    }
+    func_8013B1D8();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D2AC);
 
