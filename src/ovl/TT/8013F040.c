@@ -169,7 +169,93 @@ void func_8013F988(s32 i, u8 *p) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F9E0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013FBD0);
+void func_8013FBD0(void) {
+    u8 *c;
+    s32 i;
+    s16 *t;
+    s16 j;
+    u8 *e;
+    u16 k;
+
+    k = *(u16 *)(D_80158A8C + 8);
+    c = D_80158A8C;
+    switch (k) {
+    case 0:
+        func_80133AD0(0x501);
+        *(u16 *)(c + 0x364) = 0;
+        *(u16 *)(c + 0x3D4) = 0;
+        for (i = 3; i < 9; i++) {
+            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
+            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 4;
+            ((TtSlot14 *)(c + 0x38))[i].unk_08 = 0x80;
+            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
+            ((s16 *)(c + 0x2A8))[i] = 6;
+        }
+        ((s16 *)(c + 0x248))[3] = -0x26;
+        ((s16 *)(c + 0x278))[3] = 0xF;
+        ((s16 *)(c + 0x248))[4] = 0x26;
+        ((s16 *)(c + 0x278))[4] = 0xF;
+        ((s16 *)(c + 0x248))[5] = -0x2C;
+        ((s16 *)(c + 0x278))[5] = 0xA;
+        ((s16 *)(c + 0x248))[6] = 0x2C;
+        ((s16 *)(c + 0x278))[6] = 0xA;
+        ((s16 *)(c + 0x248))[7] = -0x30;
+        ((s16 *)(c + 0x278))[7] = 0;
+        ((s16 *)(c + 0x248))[8] = 0x30;
+        ((s16 *)(c + 0x278))[8] = 0;
+        for (i = 3; i < 9; i++) {
+            func_80142AF0(D_80155DF0, i);
+        }
+        for (i = 0x10; i != 0x13; i++) {
+            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
+            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 4;
+            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
+            c[0x310 + i] = 0;
+            ((s16 *)(c + 0x2A8))[i] = 8;
+            ((s16 *)(c + 0x248))[i] = 0;
+            ((s16 *)(c + 0x278))[i] = 0;
+        }
+        *(u16 *)(c + 8) = 0x40;
+        break;
+    case 0x40:
+        t = D_80155E74;
+        e = D_80158A8C;
+        if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
+            func_80133AD0(0x501);
+            j = t[*(u16 *)(c + 0x3D4) + 4];
+            c[j + 0x310] = 1;
+            c[j * 0x14 + 0x40] = 0x80;
+            *(s16 *)(c + j * 2 + 0x248) = t[*(u16 *)(c + 0x3D4) + 1];
+            *(s16 *)(c + j * 2 + 0x278) = t[*(u16 *)(c + 0x3D4) + 2];
+            *(s16 *)(c + j * 2 + 0x2A8) = t[*(u16 *)(c + 0x3D4) + 3];
+            *(u16 *)(c + 0x3D4) += 5;
+        }
+        for (i = 3; i < 9; i++) {
+            func_80142AF0(D_80155DF0, i);
+        }
+        for (i = 0x10; i < 0x13; i++) {
+            func_80142AF0(D_80150950, i);
+        }
+        if (*(u16 *)(c + 0x364) == 0x8F) {
+            for (i = 0; i != 0x10; i++) {
+                c[0x310 + i] = 0;
+            }
+        }
+        if (*(u16 *)(c + 0x364) == 0xA6) {
+            for (i = 0; i != 0x18; i++) {
+                c[0x310 + i] = 0;
+            }
+            *(s16 *)(c + 8) = 0;
+            *(s16 *)(c + 4) = 0xA0;
+        }
+        break;
+    }
+    *(u16 *)(c + 0x364) += 1;
+}
 
 /* FAKE: the one/period locals and declaration order reproduce the original
  * constant allocation and stack layout; original source unknown. T-9520. */
