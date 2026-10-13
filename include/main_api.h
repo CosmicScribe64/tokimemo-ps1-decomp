@@ -2093,6 +2093,7 @@ void func_80070F80(void);
 void func_80070FD0(void);
 void func_8007132C(void);
 void func_80072338(void);
+void func_8007259C(u8 arg0);
 void func_800726F0(void);
 void func_80072734();
 s32 func_80072944(void);
