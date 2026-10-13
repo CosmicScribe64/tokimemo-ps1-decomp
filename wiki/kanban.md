@@ -26,6 +26,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 
@@ -54,7 +55,10 @@ kanban-plugin: board
 
 
 
+
 ## Done
+
+- [ ] [[tickets/T-10880-big-functions-6-astra|T-10880 Big functions 6 (astra)]]
 
 - [ ] [[tickets/T-10850-wave-17-astra|T-10850 Wave 17 (astra, easiest first)]]
 - [ ] [[tickets/T-10810-wave-16-list-1|T-10810 Wave 16: list 1]]

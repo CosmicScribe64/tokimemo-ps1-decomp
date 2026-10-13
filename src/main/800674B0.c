@@ -366,7 +366,82 @@ void func_8006C308(void) {
     func_8006C334(1, 1, 1, 2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006C334);
+s32 func_8006C334(s32 a, s32 b, s32 c, s32 scale) {
+    s32 magnitude;
+    s32 offset;
+    s32 day;
+    s32 wave_a;
+    s32 wave_b;
+    s32 wave_c;
+    s32 bad;
+    s32 count;
+    s32 total;
+
+    wave_a = rsin((day = (offset = func_8006C700()) + (u16)D_800E6280.unk_042) * 0xB2);
+    wave_b = rsin(day * 0x92);
+    wave_c = rsin(day * 0x7C);
+    bad = 0;
+    count = 0;
+    total = 0;
+    if (a != 0) {
+        count++;
+        if ((magnitude = abs(wave_a)) < 0x199) {
+            total -= 0x1000;
+            bad++;
+        } else if (wave_a > 0) {
+            total += wave_a;
+        } else {
+            total -= wave_a / 2;
+        }
+    }
+    if (b != 0) {
+        count++;
+        if ((magnitude = abs(wave_b)) < 0x199) {
+            total -= 0x1000;
+            bad++;
+        } else if (wave_b > 0) {
+            total += wave_b;
+        } else {
+            total -= wave_b / 2;
+        }
+    }
+    if (c != 0) {
+        count++;
+        if ((magnitude = abs(wave_c)) < 0x199) {
+            total -= 0x1000;
+            bad++;
+        } else if (wave_c > 0) {
+            total += wave_c;
+        } else {
+            total -= wave_c / 2;
+        }
+    }
+    if (count == 0) return 1;
+    if (scale > 0) {
+        if (total / count < 0) return 0;
+        return (total * scale / 4096) / count;
+    } else if (scale < 0) {
+        if (a != 0) return wave_a * scale / 4096;
+        if (b != 0) return wave_b * scale / 4096;
+        if (c != 0) return wave_c * scale / 4096;
+    } else {
+        /* The original retains this count check in the zero-scale path. T-10880. */
+        if (count == 0) return 1;
+        if (count == 1) {
+            if (bad != 0) return -1;
+            return 1;
+        }
+        if (count == 2) {
+            if (bad != 0) return -1;
+            return 1;
+        }
+        if (count == 3) {
+            if (bad >= 2) return -1;
+            else return 1;
+        }
+        return 1;
+    }
+}
 
 s32 func_8006C700(void) {
     s32 result;

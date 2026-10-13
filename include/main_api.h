@@ -582,6 +582,7 @@ extern s32 D_800B3708[];
 #endif
 extern s32 D_800B372C;
 extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
+extern u8 D_800B3750[][3];
 extern s32 D_800B37D4[];
 extern s32 D_800B3B9C[];
 extern u8 D_800B3C6C;
@@ -656,6 +657,12 @@ extern s32 D_800B5BD8[];
 extern s32 D_800B5BE8[];
 extern s32 D_800B5BF8[];
 extern s16 D_800B5C08;
+extern u8 D_800B5C2C[][17];
+extern u8 D_800B5D0C[];
+extern u8 D_800B5D1C[][17];
+extern u8 D_800B5DFC[];
+extern u8 D_800B5EA4[][3][36];
+extern s32 D_800B66A4[];
 extern s16 D_800B66E0[];
 extern s16 D_800B66F4[];
 extern u8 D_800B6708;
@@ -2042,7 +2049,7 @@ void func_8006B900(void);
 void func_8006BA40(void);
 void func_8006BC28(s32 arg0);
 void func_8006BD6C(s32 arg0);
-void func_8006C334(s32 a, s32 b, s32 c, s32 d);
+s32 func_8006C334(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_8006C700(void);
 void func_8006C848(s32 arg0);
 u8 *func_8006CA9C(void);
@@ -2054,6 +2061,8 @@ s32 func_8006CDD4(void);
 void func_8006D038(void);
 void func_8006D138(void);
 void func_8006D6E0();
+s32 func_8006EB64(u8 *arg0, u8 *arg1);
+s32 func_8006EEC4(u8 *arg0, u8 *arg1);
 void yuukou_down(void);
 void syoushin_up(void);
 void func_80070F80(void);
@@ -2433,5 +2442,6 @@ void func_8004AFB8();
 void func_800651F8();
 void func_80065234();
 void func_8006B5BC(GsWord arg0);
+s32 func_8006F218(u8 *arg0, u8 *arg1);
 
 #endif /* MAIN_API_H */

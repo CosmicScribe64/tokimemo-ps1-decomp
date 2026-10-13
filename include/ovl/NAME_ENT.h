@@ -223,3 +223,17 @@ extern u8 D_8014CD04[]; /* Name-entry character buffer. T-10010. */
 extern s32 D_8014CC40; /* Word arguments to func_80046290. */
 extern s32 D_8014CC44;
 #endif
+
+/* The album buffer is also read by main/800674B0.c. T-10880. */
+#include "game.h"
+
+#ifndef OVL_NAME_ENT_T10880_FUNCTIONS
+#define OVL_NAME_ENT_T10880_FUNCTIONS
+void func_8013ACA4(void);
+void func_80140044(void);
+/* Original implicit-int display dispatcher falls through. */
+s32 func_801425C0(void);
+extern s32 D_8014D0D0;
+extern s32 D_8014D0D8;
+extern s32 D_8014D0DC;
+#endif
