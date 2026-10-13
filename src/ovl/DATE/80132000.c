@@ -2256,7 +2256,69 @@ void func_8013C700(void) {
     func_80084D3C();
 }
 
+/* NON_MATCHING: T-11030, 2 insns: the two lui of D_800CA2F8 and D_800E6280+0x728 are in the other order (the original reads D_800E69A8 as its own symbol, as1 orders the lui by symbol). */
+#ifdef NON_MATCHING
+s32 func_8013C7D0(void) {
+    GameState *g = &D_800E6280;
+    s32 any;
+    s16 i;
+
+    any = 0;
+    for (i = 0; i < 11; i++) {
+        if (g->unk_66C[i].unk_00 != 0) {
+            any = 1;
+        }
+        if (((((ScheduleClubFlags *)&g->unk_66C[i])->unk_25 == 3) || ((DateFlags0F4 *)&g->unk_0F4)->b19) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E == 0x61) && (g->unk_03F == 9)) {
+            g->unk_56C[0x55] = 2;
+            ((DateFlags0F4 *)&g->unk_0F4)->b20 = 1;
+            g->unk_71E &= 8;
+            D_80122CE0 = 5;
+            g->unk_720 = g->unk_1108;
+            g->unk_721 = g->unk_1109;
+            g->unk_722 = 0x3E;
+            g->unk_728[0] = 0;
+            g->unk_728[1] = 0;
+            g->unk_728[2] = 0;
+            g->unk_728[3] = 0;
+            func_80042940(0x40);
+            return 0;
+        }
+    }
+    if ((any == 0) && (g->unk_03E == 0x61) && (g->unk_03F == 9) && !((DateFlags0F4 *)&g->unk_0F4)->b20) {
+        ((ScheduleClubFlags *)&g->unk_66C[11])->unk_25 = 3;
+        g->unk_56C[0x55] = 2;
+        ((DateFlags0F4 *)&g->unk_0F4)->b20 = 1;
+        g->unk_71E &= 8;
+        D_80122CE0 = 5;
+        g->unk_720 = g->unk_1108;
+        g->unk_721 = g->unk_1109;
+        g->unk_722 = 0x3E;
+        g->unk_728[0] = 0;
+        g->unk_728[1] = 0;
+        g->unk_728[2] = 0;
+        g->unk_728[3] = 0;
+        func_80042940(0x40);
+        return 0;
+    }
+    if ((g->unk_728[0] == D_800CA2F8) && (g->unk_728[0] == g->unk_728[1]) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E >= 0x60) && (D_800CA2F8 != 0)) {
+        D_80122CE0 = 4;
+        g->unk_56C[0x55] = 1;
+        g->unk_71E &= 8;
+        ((DateFlags0F4 *)&g->unk_0F4)->b19 = 1;
+        g->unk_720 = g->unk_1108;
+        g->unk_721 = g->unk_1109;
+        g->unk_722 = 0x3E;
+        g->unk_728[1] = 0;
+        g->unk_728[2] = 0;
+        g->unk_728[3] = 0;
+        g->unk_728[0] = 0;
+        return func_80042940(0x40);
+    }
+    return func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013C7D0);
+#endif
 
 void func_8013CADC(void) {
     func_80046318(1U, 0x801B0000, 0xAFCA);
