@@ -1501,3 +1501,14 @@ typedef struct DateTbl20 {
 extern DateTbl20 D_8015B78C;
 void func_8013C410(s16 arg0, s32 *arg1, s32 *arg2);
 #endif
+#ifndef OVL_DATE_T11020_TABLES_H
+#define OVL_DATE_T11020_TABLES_H
+extern u8 *D_8015B5A0;
+extern u8 *D_8015B5A4;
+extern u8 *D_8015B5A8;
+extern u8 *D_8015B5AC;
+extern u8 *D_8015B538;
+extern u8 *D_8015B53C;
+extern u8 *D_8015B598;
+extern u8 *D_8015B59C;
+#endif
