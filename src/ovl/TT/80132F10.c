@@ -182,4 +182,40 @@ call:
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_801333D4);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_801336F8);
+void func_801336F8(void) {
+    TtDrawBuffer80B8 *buffer;
+    TtSpritePacket20 *q;
+    DR_MODE *m;
+    u8 *p;
+    u8 *g;
+    s32 i;
+
+    g = D_80158A60;
+    p = D_80158A9C;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0; i != 0x20; i++, p += 0x78) {
+        if (p[0] != 0 && (!(*(u16 *)(p + 0x56) & 2) || !((*(u16 *)(g + 8) >> 1) & 1))) {
+            if (*(u16 *)(p + 4) == 0x71) {
+                func_80147A18(p + 0x14, p + 0x38, *(u16 *)(p + 0x10));
+            } else {
+                q = (TtSpritePacket20 *)buffer->cursor;
+                buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
+                q->tag.len = 4; q->code = 0x65;
+                q->x = *(s16 *)(p + 0x14) - 8;
+                q->y = *(s16 *)(p + 0x16) - 8;
+                q->h = 0x10;
+                q->w = 0x10;
+                q->u = p[0x5C];
+                q->v = p[0x5D];
+                q->clut = *(u16 *)(p + 0x5A);
+                q->tag.addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+                buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)q;
+                m = buffer->cursor;
+                buffer->cursor++;
+                func_8009D294((s32)m, 0, 0, *(u16 *)(p + 0x58), 0);
+                ((TtOtTag *)m)->addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+                buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)m;
+            }
+        }
+    }
+}
