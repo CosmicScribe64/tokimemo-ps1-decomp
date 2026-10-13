@@ -20,14 +20,14 @@ s32 func_80133980(void) {
         func_80048EB8(0);
         func_80143AF4();
         D_8015EDB8 = 0;
-        func_80046318(0x21, 0x80180000, 0xB4F3);
-        func_80046318(1, 0x801FA800, 0xB514);
+        cd_read_sectors(0x21, 0x80180000, 0xB4F3);
+        cd_read_sectors(1, 0x801FA800, 0xB514);
         func_80041168(0xFF);
         D_800E6280.unk_110D += 1;
         return;
     case 1:
     case 2:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_800E6280.unk_110D += 1;
             return;
         }

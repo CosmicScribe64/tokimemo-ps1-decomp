@@ -14,10 +14,10 @@ s32 func_801369D0(void) {
             D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
         }
     } else if (D_800E6280.unk_110D == 3) {
-        func_80046318(0x6E, 0x80180000, 0x4EAF);
+        cd_read_sectors(0x6E, 0x80180000, 0x4EAF);
         D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
     } else if (D_800E6280.unk_110D == 4) {
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_8013CEC0 = D_8013C750;
             D_8013CEC4 = D_8013C7B4;
             D_800E6280.unk_F5F = 0xE;

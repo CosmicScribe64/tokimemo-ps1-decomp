@@ -56,7 +56,7 @@ void func_8014F300(void) {
     D_8015E72C = 0x801C6000;
 }
 
-void func_8014F370(void) {
+void date_shiori_dispatch(void) {
     switch (D_80122CD0) {
     case 3:
         func_8014FAE0();
@@ -226,7 +226,7 @@ void func_8014FAE0(void) {
 }
 
 void func_8014FB68(void) {
-    func_80046318(0x45, 0x801B0000, 0x7F61);
+    cd_read_sectors(0x45, 0x801B0000, 0x7F61);
     func_8014F0F0();
     func_8004284C();
 }
@@ -248,7 +248,7 @@ void func_8014FBA0(void) {
 }
 
 void func_8014FC48(void) {
-    func_80046318(0x45, 0x801B0000, 0x7FA6);
+    cd_read_sectors(0x45, 0x801B0000, 0x7FA6);
     func_8014F1A0();
     func_8004284C();
 }
@@ -302,7 +302,7 @@ s32 func_8014FDA0(void) {
 }
 
 void func_8014FE24(void) {
-    func_80046318(0x45, 0x801B0000, 0x7FEB);
+    cd_read_sectors(0x45, 0x801B0000, 0x7FEB);
     func_8014F250();
     func_8004284C();
 }
@@ -346,7 +346,7 @@ void func_8014FF54(void) {
 }
 
 void func_8014FFD0(void) {
-    func_80046318(0x35, 0x801B0000, 0x8030);
+    cd_read_sectors(0x35, 0x801B0000, 0x8030);
     func_8014F300();
     func_8004284C();
 }

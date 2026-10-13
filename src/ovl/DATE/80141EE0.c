@@ -1,7 +1,7 @@
 #include "common.h"
 #include "ovl/DATE.h"
 
-void func_80141EE0(void) {
+void date_fill_sections_ayako(void) {
     D_8015BDC0 = 0x8019864C;
     D_8015BDC4 = 0x80198CFC;
     D_8015BDC8 = 0x801990B4;
@@ -82,7 +82,7 @@ void func_80141EE0(void) {
     D_8015BF00 = 0x8019DB88;
 }
 
-void func_801423C4(void) {
+void date_fill_sections_saki(void) {
     D_8015BDC0 = 0x801986B4;
     D_8015BDC4 = 0x80198D60;
     D_8015BDC8 = 0x80199124;
@@ -166,7 +166,7 @@ void func_801423C4(void) {
     D_8015BF00 = 0x8019DB44;
 }
 
-void func_801428D8(void) {
+void date_fill_sections_yukari(void) {
     D_8015BDC0 = 0x80198658;
     D_8015BDC4 = 0x80198D1C;
     D_8015BDC8 = 0x801990D4;
@@ -250,7 +250,7 @@ void func_801428D8(void) {
     D_8015BF00 = 0x8019DE14;
 }
 
-void func_80142DEC(void) {
+void date_fill_sections_nozomi(void) {
     D_8015BDC0 = 0x801984E4;
     D_8015BDC4 = 0x80198B4C;
     D_8015BDC8 = 0x80198EAC;
@@ -334,7 +334,7 @@ void func_80142DEC(void) {
     D_8015BF00 = 0x8019D66C;
 }
 
-void func_80143300(void) {
+void date_fill_sections_mira(void) {
     D_8015BDC0 = 0x801987B0;
     D_8015BDC4 = 0x80198F70;
     D_8015BDC8 = 0x801992FC;
@@ -418,7 +418,7 @@ void func_80143300(void) {
     D_8015BF00 = 0x8019E220;
 }
 
-void func_80143814(void) {
+void date_fill_sections_yuko(void) {
     D_8015BDC0 = 0x80198548;
     D_8015BDC4 = 0x80198BB0;
     D_8015BDC8 = 0x80198F58;
@@ -502,7 +502,7 @@ void func_80143814(void) {
     D_8015BF00 = 0x8019D62C;
 }
 
-void func_80143D28(void) {
+void date_fill_sections_megumi(void) {
     D_8015BDC0 = 0x8019867C;
     D_8015BDC4 = 0x80198CF0;
     D_8015BDC8 = 0x8019909C;
@@ -583,7 +583,7 @@ void func_80143D28(void) {
     D_8015BF00 = 0x8019DC20;
 }
 
-void func_8014420C(void) {
+void date_fill_sections_yumi(void) {
     D_8015BDC0 = 0x8019868C;
     D_8015BDC4 = 0x80198D9C;
     D_8015BDC8 = 0x80199134;
@@ -688,9 +688,9 @@ void func_80144720(void) {
     D_800CA2F8 = D_800E6280.unk_724;
     *(u32 *)&D_80122CD4 = D_800E6280.unk_75D;
     D_800CA148 = 0;
-    D_8015B654 = 1;
+    date_arrival = 1;
     if (!(D_800E6280.unk_10F8 & 3) && (D_800E6280.unk_75D != 2)) {
-        D_8015B654 = 0;
+        date_arrival = 0;
     }
     D_8015BF4C = 0;
     D_8015BF3C = 0;

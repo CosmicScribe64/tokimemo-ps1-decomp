@@ -1,6 +1,6 @@
 #define MAIN_API_OVERRIDE_func_80049FF0 /* Transition calls narrow four coordinates at the call site. T-10870. */
 #define MAIN_API_OVERRIDE_SsVabTransCompleted /* SD_GetCDLevel reads the transfer status; canonical legacy view is void. T-10870. */
-#define MAIN_API_OVERRIDE_func_80081190 /* integer result read by k_disp_start; callee narrows K&R arguments, T-10730 */
+#define MAIN_API_OVERRIDE_dialogue_render /* integer result read by k_disp_start; callee narrows K&R arguments, T-10730 */
 #define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
 #define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
 #define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
@@ -8,7 +8,7 @@
 #include "game.h"
 s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 s32 SsVabTransCompleted();
-s32 func_80081190();
+s32 dialogue_render();
 void select_girl_init();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
@@ -34,7 +34,7 @@ INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA16C);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA174);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA17C);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA188);
-INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA190);
+INCLUDE_RODATA("asm/data/main/8007C030.data", girl_name_buf);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA19C);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA1DC);
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA23C);
@@ -258,7 +258,7 @@ void func_8007C784(void) {
     u8 sp2A;
     u8 sp29;
 
-    if (func_800460CC() & 1) {
+    if (cd_read_sync_status() & 1) {
         func_8004284C();
         return;
     }
@@ -1013,7 +1013,7 @@ void wait_sub_sub(s16 arg0) {
 
 /* NON_MATCHING: T-10870, two four-word scheduling rotations remain at the incremented-Y calls. */
 #ifdef NON_MATCHING
-s32 func_8007EF48(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
 u8 arg1;
 u8 arg2;
@@ -1074,57 +1074,57 @@ u8 arg6;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x78, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "", "", 0);
         } else if (sp7C[0] == 0x2D) {
             strncpy(sp74, &sp7C[1], 6);
             sp74[6] = 0;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x80, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[7], 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[7], 0, "", "", 0);
         } else if (sp7C[0] == 0x2B) {
             strncpy(sp74, &sp7C[1], 2);
             sp74[2] = 0;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x70, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[3], 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[3], 0, "", "", 0);
         } else if (sp7C[0] == 0x3C) {
             strncpy(sp74, &sp7C[1], 4);
             sp74[4] = 0;
             sprintf(sp68, "%s ", sp74);
             set_kanji_string(-0x78, temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "（", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "）", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) &sp7C[5], 0, "）", "", 0);
         } else if (strcmp(sp7C, "そして…") == 0) {
             temp_s1 += 0x10;
-            func_80081190(-0x28, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x28, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         } else if ((strcmp(sp7C, "ガチャ") == 0) || (strcmp(sp7C, "カチャ") == 0) || (strcmp(sp7C, "ガラッ") == 0) || (strcmp(sp7C, "ごそごそ") == 0)) {
-            func_80081190(-0x80, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x80, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
         } else if ((strcmp(sp7C, "ジロジロ") == 0) || (strcmp(sp7C, "ドン") == 0)) {
-            func_80081190(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
         } else if (strcmp(sp7C, "ピンポーン") == 0) {
             temp_s1 += 0x10;
-            func_80081190(-0x28, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x28, (s32) temp_s1, 2, (s32) sp7C, 0, "", "", 0);
         } else {
-            func_80081190(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         }
         dialogue->unk_14 = 1;
         break;
     case 0x10:
-        func_80081190(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_30 = 1;
         break;
     case 0x11:
-        func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_30 = 1;
         break;
     case 0x9:
         if (sp7C[0] != 0) {
             if (strcmp(sp7C, "ドン") == 0) {
-                func_80081190(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
+                dialogue_render(-0x80, (s32) temp_s1, 1, (s32) sp7C, 0, "", "", 0);
             }
-            func_80081190(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x80, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         }
         break;
     case 0x0:
@@ -1136,7 +1136,7 @@ u8 arg6;
                 sprintf(sp68, "%s ", D_800CA16C);
                 set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "『 ", 0);
-                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
@@ -1144,7 +1144,7 @@ u8 arg6;
             sprintf(sp68, "%s ", D_800CA16C);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "『 ", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1153,7 +1153,7 @@ u8 arg6;
         sprintf(sp68, "%s ", D_800CA16C);
         set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
         set_kanji_string(-0x56, temp_s1, arg6, "（ ", 0);
-        func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
+        dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
         break;
     case 0x1:
         sp286 = strlen(sp7C);
@@ -1187,7 +1187,7 @@ u8 arg6;
                 sprintf(sp68, "%s ", D_800CA188);
                 set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
@@ -1195,7 +1195,7 @@ u8 arg6;
             sprintf(sp68, "%s ", D_800CA188);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1226,7 +1226,7 @@ u8 arg6;
         sprintf(sp68, "%s ", D_800CA188);
         set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
         set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-        func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_48 = 1;
         break;
     case 0xC:
@@ -1262,7 +1262,7 @@ u8 arg6;
                 sprintf(sp68, "%s ", D_800CA188);
                 set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_30 = 1;
             }
         } else {
@@ -1270,7 +1270,7 @@ u8 arg6;
             sprintf(sp68, "%s ", D_800CA188);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「 ", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_30 = 1;
         }
         break;
@@ -1302,12 +1302,12 @@ u8 arg6;
         if ((p[-1] == 0x6E) && (p[-2] == 0x6E)) {
             if (dialogue->unk_0C == 0) {
                 p[-2] = 0U;
-                func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
             set_kanji_string(-0x56, temp_s1, arg6, "　 ", 0);
-            func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1340,7 +1340,7 @@ u8 arg6;
             }
         }
         set_kanji_string(-0x56, temp_s1, arg6, "　 ", 0);
-        func_80081190(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+        dialogue_render(-0x48, (s32) D_800CA2C0, (s32) arg6, (s32) sp7C, 0, "", "", 0);
         dialogue->unk_30 = 1;
         break;
     case 0xB:
@@ -1374,13 +1374,13 @@ u8 arg6;
                 p[-2] = 0U;
                 set_kanji_string((s16) (-0x68 - ((s16) strlen("藤崎") * 4)), temp_s1, arg6, "藤崎", 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
             set_kanji_string((s16) (-0x68 - ((s16) strlen("藤崎") * 4)), temp_s1, arg6, "藤崎", 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1415,13 +1415,13 @@ u8 arg6;
                 p[-2] = 0U;
                 set_kanji_string((s16) (-0x68 - ((s16) strlen("好雄") * 4)), temp_s1, arg6, "好雄", 0);
                 set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-                func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+                dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
                 dialogue->unk_14 = 1;
             }
         } else {
             set_kanji_string((s16) (-0x68 - ((s16) strlen("好雄") * 4)), temp_s1, arg6, "好雄", 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1431,7 +1431,7 @@ u8 arg6;
         sprintf(sp68, "%s ", D_800CA16C);
         set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
         set_kanji_string(-0x56, temp_s1, arg6, "（ ", 0);
-        func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
+        dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "", 0);
         dialogue->unk_14 = 1;
         break;
     case 0x3:
@@ -1443,17 +1443,17 @@ u8 arg6;
             D_800CA2A4[1] = 1;
             D_800CA2A4[2] = 2;
         }
-        k_disp_start(func_80081190(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
+        k_disp_start(dialogue_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
         break;
     case 0x8:
         D_800CA2A4[0] = 0;
         D_800CA2A4[1] = 1;
-        k_disp_start(func_80081190(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
+        k_disp_start(dialogue_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "』", "『", 1));
         break;
     case 0x13:
         D_800CA2A4[0] = 0;
         D_800CA2A4[1] = 1;
-        k_disp_start(func_80081190(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "（", 1));
+        k_disp_start(dialogue_render(-0x72, (s32) temp_s1, (s32) arg6, (s32) sp7C, 0, "）", "（", 1));
         break;
     case 0x2:
     case 0x5:
@@ -1506,7 +1506,7 @@ u8 arg6;
             sprintf(sp68, "%s ", D_800CA188);
             set_kanji_string((s16) (-0x68 - (sp286 * 4)), temp_s1, arg6, sp68, 0);
             set_kanji_string(-0x56, temp_s1, arg6, "「", 0);
-            func_80081190(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp27C, 0, "", "", 0);
+            dialogue_render(-0x48, (s32) temp_s1, (s32) arg6, (s32) sp27C, 0, "", "", 0);
             dialogue->unk_14 = 1;
         }
         break;
@@ -1520,7 +1520,7 @@ u8 arg6;
     return 0;
 }
 #else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007EF48);
+INCLUDE_ASM("asm/nonmatchings/main/8007C030", dialogue_speak_part);
 #endif
 
 void func_80081128(void) {
@@ -1534,7 +1534,7 @@ void func_80081128(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80081190);
+INCLUDE_ASM("asm/nonmatchings/main/8007C030", dialogue_render);
 
 /* NON_MATCHING: T-10870, five positions: a three-load rotation and two addu operand orders. */
 #ifdef NON_MATCHING
@@ -1613,7 +1613,7 @@ u8 arg2;
     D_800E6280.unk_1104.w = 0;
     group = *tables->group;
     line = *tables->line;
-    result = func_8007EF48(tables->text[group][line], (s32) tables->command[group][line], (s32) arg0, tables->voice, (s32) group, (s32) line, (s32) arg2);
+    result = dialogue_speak_part(tables->text[group][line], (s32) tables->command[group][line], (s32) arg0, tables->voice, (s32) group, (s32) line, (s32) arg2);
     if ((arg1 != 0) && (D_800CA2A8 == 0) && ((result & 0xFF) != 0x64)) {
         nextLine = *tables->line;
         nextGroup = *tables->group;
@@ -1839,7 +1839,7 @@ s32 func_800836A0(void) {
         D_800E6280.unk_110A -= 4;
         return 0;
     }
-    if (func_8004636C(0x2D, 0x80180000) == 0) {
+    if (file_checksum_ok(0x2D, 0x80180000) == 0) {
         func_8004284C();
         D_800E6280.unk_110A -= 5;
         return 0;
@@ -2113,7 +2113,7 @@ void bustup_return(void) {
 }
 
 void return_step(void) {
-    func_80042878(D_800E6280.unk_720);
+    main_state_set(D_800E6280.unk_720);
     func_80042908(D_800E6280.unk_721);
     func_80042940(D_800E6280.unk_722);
 }
@@ -2156,8 +2156,8 @@ void func_800847B8(u8 arg0) {
     if (arg0 < 0xE) {
         t = arg0;
         get_p_name(D_800CA17C, t);
-        strcpy(D_800CA188, D_800B35F4[arg0]);
-        get_g_name(D_800CA190, t);
+        strcpy(D_800CA188, girl_short_name_table[arg0]);
+        get_g_name(girl_name_buf, t);
     }
 }
 
@@ -2201,7 +2201,7 @@ u8 arg0;
         D_800CA300[i] = ((i / 3) << 6) - 0x80;
         D_800CA318[i] = ((i % 3) * 16) + 0x30;
         if (D_800CA2B0[i] != 0) {
-            strcpy(label, D_800B35F4[i]);
+            strcpy(label, girl_short_name_table[i]);
             result = set_kanji_string(D_800CA300[i], D_800CA318[i], 0, label, 0);
             length = strlen(label);
             D_800CA330[i] = (length / 2) * 14;

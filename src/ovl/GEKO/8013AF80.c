@@ -56,7 +56,7 @@ void func_8013B0D0(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013AF80", func_8013B10C);
 
 void func_8013B290(void) {
-    func_80046318(0x45, 0x801B0000, 0x80FF);
+    cd_read_sectors(0x45, 0x801B0000, 0x80FF);
     func_8013AF80();
     func_8004284C();
 }
@@ -77,7 +77,7 @@ void func_8013B350(void) {
     D_800E6280.unk_720 = D_800E6280.unk_1108;
     D_800E6280.unk_721 = D_800E6280.unk_1109;
     D_800E6280.unk_722 = D_800E6280.unk_110A + 1;
-    func_80042878(0x81);
+    main_state_set(0x81);
 }
 
 void func_8013B3C0(void) {

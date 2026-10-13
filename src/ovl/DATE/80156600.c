@@ -242,7 +242,7 @@ void func_801570C4(void) {
 }
 
 void func_801570EC(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8984);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8984);
     func_80156600();
     func_8004284C();
 }
@@ -280,7 +280,7 @@ void func_801571D4(void) {
 }
 
 void func_80157284(void) {
-    func_80046318(0x45, 0x801B0000, 0x89C1);
+    cd_read_sectors(0x45, 0x801B0000, 0x89C1);
     func_801566B0();
     func_8004284C();
 }
@@ -346,7 +346,7 @@ void func_8015750C(void) {
 }
 
 void func_80157594(void) {
-    func_80046318(0x45, 0x801B0000, 0x8A06);
+    cd_read_sectors(0x45, 0x801B0000, 0x8A06);
     func_80156760();
     func_8004284C();
 }
@@ -373,7 +373,7 @@ void func_8015761C(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80156600", func_80157698);
 
 void func_801577C4(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8A4B);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8A4B);
     func_80156810();
     func_8004284C();
 }

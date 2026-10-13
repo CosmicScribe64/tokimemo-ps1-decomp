@@ -27,7 +27,7 @@ s32 func_80137340(void) {
 
 void func_801374BC(void) {
     if (D_800E6280.unk_1124 != 0) {
-        func_80042878(0xC2);
+        main_state_set(0xC2);
         return;
     }
     func_80042808();

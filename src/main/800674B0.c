@@ -98,7 +98,7 @@ void func_80067E34(void) {
     D_80120652 = 0x40;
     D_80120688 = 0x40000000;
     D_80120653 = 0x84;
-    D_8012065C = D_800C975C;
+    D_8012065C = sprite_frame_table;
     D_80120660 = D_800C9A14;
     D_80120684 = D_800C9730;
     D_80120664 = D_800C9A54;
@@ -250,7 +250,7 @@ void data_save_load_class_init(void) {
     D_80120652 = 0x40;
     D_80120688 = 0x40000000;
     D_80120653 = 0x84;
-    D_8012065C = D_800C975C;
+    D_8012065C = sprite_frame_table;
     D_80120660 = D_800C9A14;
     D_80120684 = D_800C9730;
     D_80120664 = D_800C9A54;
@@ -267,7 +267,7 @@ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A2CC);
 
-s32 func_8006AEC4(s32 arg0, s32 arg1, s32 arg2) {
+s32 appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
     s32 r;
 
@@ -336,7 +336,7 @@ void func_8006B640(void) {
 
 /* NON_MATCHING: T-11040, 10 differing lines: the loop test is `li at,11; bne s0,at` where the original keeps `slti at,s0,11; bnez` (uopt counted-loop normalisation), and the constants for the cancel entry (li a0,40 / a1,8) come after li t9,64 / t0,16 where the original has them first. Frame, array slots and registers match (arrays x,y,w,h declared in that order; `first`,`i` and a pad above them). */
 #ifdef NON_MATCHING
-void func_8006B648(void) {
+void club_list_menu(void) {
     s32 pad[2];
     s32 first;
     s32 i;
@@ -350,7 +350,7 @@ void func_8006B648(void) {
     D_80120652 = 0x40;
     D_80120688 = 0x40000000;
     D_80120653 = 0x84;
-    D_8012065C = D_800C975C;
+    D_8012065C = sprite_frame_table;
     D_80120660 = D_800C9A14;
     D_80120684 = D_800C9730;
     D_80120664 = D_800C9A54;
@@ -367,7 +367,7 @@ void func_8006B648(void) {
         w[i] = 0x40;
         h[i] = 0x10;
         if (!(D_800E6280.unk_66C[i].unk_03 & 1)) {
-            set_kanji_string(x[i], y[i], 3, D_800B3908[i], 0);
+            set_kanji_string(x[i], y[i], 3, club_name_table[i], 0);
             if (first == -1) {
                 first = i;
             }
@@ -385,7 +385,7 @@ void func_8006B648(void) {
     k_sub_disp_start(1);
 }
 #else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006B648);
+INCLUDE_ASM("asm/nonmatchings/main/800674B0", club_list_menu);
 #endif
 
 void func_8006B900(void) {
@@ -514,7 +514,7 @@ void func_8006C760(s32 arg0) {
     } else {
         D_8011F0CF = 0;
     }
-    D_8011F0D8 = D_800C975C;
+    D_8011F0D8 = sprite_frame_table;
     D_8011F0DC = D_800C9A14;
     D_8011F100 = D_800C9730;
     D_8011F0E0 = D_800C9A54;
@@ -532,7 +532,7 @@ void func_8006C848(s32 arg0) {
     D_8011ED59 = 2;
     D_8011ED5A = 0x40;
     D_8011ED90 = 0x40000000;
-    D_8011ED64 = D_800C975C;
+    D_8011ED64 = sprite_frame_table;
     D_8011ED68 = D_800C9A14;
     D_8011ED8C = D_800C9730;
     D_8011ED70 = 1;

@@ -103,8 +103,8 @@ void func_80140E18(void);
 void func_801454CC(void);
 extern s32 D_8014D184;
 
-void func_80144B44(void);
-void func_80144C8C(void);
+void prologue_line_start(void);
+void prologue_line_run(void);
 extern s8 D_8014D180;
 void func_80142E24();
 void func_80143580();

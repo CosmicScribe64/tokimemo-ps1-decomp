@@ -36,7 +36,7 @@ void func_8013D734(void) {
 }
 
 void func_8013D7BC(void) {
-    func_80046318(0xE, 0x80197000, 0xAFBC);
+    cd_read_sectors(0xE, 0x80197000, 0xAFBC);
     func_8013C070();
     func_8004284C();
 }

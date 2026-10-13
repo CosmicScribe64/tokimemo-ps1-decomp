@@ -43,7 +43,7 @@ s32 func_8004284C(void) {
 INCLUDE_ASM("asm/nonmatchings/main/80042540", func_8004284C);
 #endif
 
-void func_80042878(s32 arg0) {
+void main_state_set(s32 arg0) {
     u32 t;
 
     D_800E6280.unk_1108 = arg0;

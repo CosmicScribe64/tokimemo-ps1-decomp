@@ -560,7 +560,7 @@ void func_801596E8(void) {
     case 5:
         func_8004E58C();
         D_8015EDBC = func_8013E934(0xB1, 0xB3, (s32) "番長") - 1;
-        D_8015EE14 = func_8013E934(0xB1, 0xC3, (s32) D_800B35F4[D_8015EB9C]) - 1;
+        D_8015EE14 = func_8013E934(0xB1, 0xC3, (s32) girl_short_name_table[D_8015EB9C]) - 1;
         D_8015EE40 = func_8013E934(0x13, 0xBB, (s32) "元・番長") - 1;
         k_disp_start(D_8015EE40 + 1);
         k_disp_switch(D_8015EDBC, 1);

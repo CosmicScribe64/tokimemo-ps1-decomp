@@ -35,7 +35,7 @@ void func_8014ACB4(void) {
 }
 
 void func_8014AD94(void) {
-    if (func_800460CC() & 1) {
+    if (cd_read_sync_status() & 1) {
         dec_bg_show_set(1, func_8005751C(1));
         func_8004284C();
     }
@@ -323,7 +323,7 @@ s32 func_8014BF2C(void) {
         }
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             dec_bg_show_set(1, func_8005751C(1));
             D_800E6280.unk_110D += 1;
         }

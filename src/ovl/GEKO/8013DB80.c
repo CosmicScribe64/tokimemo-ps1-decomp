@@ -46,7 +46,7 @@ void func_8013DCAC(void) {
 }
 
 void func_8013DD20(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8947);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8947);
     func_8013DB80();
     func_8004284C();
 }

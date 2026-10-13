@@ -47,11 +47,11 @@ void func_80135994(void) {
     D_800E6280.unk_721 = D_800E6280.unk_1109;
     D_800E6280.unk_722 = 0x38;
     func_8004E9F4(0);
-    func_80042878(0x81);
+    main_state_set(0x81);
 }
 
 void func_80135A04(void) {
-    func_80046318(0x25, 0x801B0000, 0x8240);
+    cd_read_sectors(0x25, 0x801B0000, 0x8240);
     func_80135430();
     func_8004284C();
 }

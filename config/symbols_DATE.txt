@@ -1,0 +1,18 @@
+// DATE-only symbols (T-11090, names from the English patch notes, see wiki/ref-english-patch.md). Overlays share VRAM, so these must not go in config/symbol_addrs.txt.
+date_event_trigger = 0x801326B0; // type:func
+date_event_choose = 0x8013272C; // type:func
+date_shiori_dispatch = 0x8014F370; // type:func
+date_fill_sections_shiori = 0x80141004; // type:func
+date_fill_sections_mio = 0x80141518; // type:func
+date_fill_sections_yuina = 0x801419FC; // type:func
+date_fill_sections_ayako = 0x80141EE0; // type:func
+date_fill_sections_saki = 0x801423C4; // type:func
+date_fill_sections_yukari = 0x801428D8; // type:func
+date_fill_sections_nozomi = 0x80142DEC; // type:func
+date_fill_sections_mira = 0x80143300; // type:func
+date_fill_sections_yuko = 0x80143814; // type:func
+date_fill_sections_megumi = 0x80143D28; // type:func
+date_fill_sections_yumi = 0x8014420C; // type:func
+date_place_names = 0x8015B9DC;
+date_gift_names = 0x8015D108;
+date_arrival = 0x8015B654;

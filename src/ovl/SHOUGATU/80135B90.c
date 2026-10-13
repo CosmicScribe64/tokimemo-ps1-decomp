@@ -280,7 +280,7 @@ s32 func_8013644C(void) {
 }
 
 void func_80136590(void) {
-    func_80046318(0x16, 0x801B0000, 0xAF0D);
+    cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
     func_80135B90();
     func_8004284C();
 }
@@ -398,7 +398,7 @@ void func_801369EC(void) {
 }
 
 void func_80136B9C(void) {
-    func_80046318(3, 0x801B0000, 0xAF43);
+    cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80135E04();
     func_8004284C();
 }

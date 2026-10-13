@@ -6,9 +6,9 @@ extern u8 D_80120656;
 
 s32 func_80135160(void) {
     if (D_800E6280.unk_110D == 0) {
-        func_80046318(0x61, 0x80180000, 0x4E4E);
+        cd_read_sectors(0x61, 0x80180000, 0x4E4E);
         D_800E6280.unk_110D += 1;
-    } else if ((D_800E6280.unk_110D == 1) && (func_800460CC() & 1)) {
+    } else if ((D_800E6280.unk_110D == 1) && (cd_read_sync_status() & 1)) {
         func_8004284C();
     }
 }

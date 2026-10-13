@@ -3,24 +3,24 @@
 
 void func_800789E0(void) {
     D_800B6D30 = 0;
-    D_800B6D34 = 0;
-    D_800B6D38 = 0;
-    D_800B6D3C = 0;
-    D_800B6D40 = 0;
+    ovl_load_state = 0;
+    ovl_load_sectors = 0;
+    ovl_load_buf = 0;
+    ovl_load_lba = 0;
 }
 
 void func_80078A0C(void) {
-    u8 sel = D_800B6D34; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
+    u8 sel = ovl_load_state; /* FAKE: copy of unit-private data, which the original does not promote (T-5010) */
 
     switch (sel) {
     case 0:
         func_80078C48();
         break;
     case 1:
-        func_80078FE0();
+        ovl_load_poll();
         break;
     case 2:
-        func_80079014();
+        ovl_load_verify();
         break;
     case 3:
         func_80079070();
@@ -82,19 +82,19 @@ void func_80078A94(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800789E0", func_80078C48);
 
-void func_80078FE0(void) {
-    if (func_800460CC() & 1) {
-        D_800B6D34 = 2;
+void ovl_load_poll(void) {
+    if (cd_read_sync_status() & 1) {
+        ovl_load_state = 2;
     }
 }
 
-void func_80079014(void) {
-    if (func_8004636C(D_800B6D38, D_800B6D3C) != 0) {
-        D_800B6D34 = 3;
+void ovl_load_verify(void) {
+    if (file_checksum_ok(ovl_load_sectors, ovl_load_buf) != 0) {
+        ovl_load_state = 3;
         func_80042458();
     } else {
-        D_800B6D34 = 0;
-        D_800B6D40 = 0;
+        ovl_load_state = 0;
+        ovl_load_lba = 0;
     }
 }
 

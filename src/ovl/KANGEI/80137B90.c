@@ -350,13 +350,13 @@ void func_80138C18(void) {
 }
 
 void func_80138CD0(void) {
-    func_80046318(0x16, 0x801B0000, 0xAF0D);
+    cd_read_sectors(0x16, 0x801B0000, 0xAF0D);
     func_80137E04();
     func_8004284C();
 }
 
 void func_80138D08(void) {
-    func_80046318(3, 0x801B0000, 0xAF43);
+    cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80137B90();
     func_8004284C();
 }

@@ -48,7 +48,7 @@ s32 func_80137BD8(void) {
         func_800450F4(0, 0x201);
         func_80059048();
         func_800573AC();
-        func_80046318(9U, 0x80162000, 0xB380);
+        cd_read_sectors(9U, 0x80162000, 0xB380);
         func_8004E9F4(0);
         D_8015EDEC = 0;
         func_80048DAC(1);
@@ -57,7 +57,7 @@ s32 func_80137BD8(void) {
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_800536AC(0x2C0, 0, 0x140, 0xF0);
             func_80135944();
             func_8004284C();

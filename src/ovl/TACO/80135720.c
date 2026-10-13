@@ -55,12 +55,12 @@ s32 func_8013587C(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         func_800573AC();
-        func_80046318(8, 0x80162000, 0xB378);
+        cd_read_sectors(8, 0x80162000, 0xB378);
         func_80135720();
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_800E6280.unk_110D += 1;
         }
         break;

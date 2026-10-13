@@ -209,7 +209,7 @@ s32 func_80149BC0(void) {
         }
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_80057418(1, func_8005751C(1));
             if (D_800B594C == -1) {
                 func_800573AC();
@@ -248,11 +248,11 @@ s32 func_80149D3C(void) {
 s32 func_80149DD8(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_80046318(9U, 0x801E0000, 0x7D81);
+        cd_read_sectors(9U, 0x801E0000, 0x7D81);
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8007C6A8(1);
             func_80149E68();
             func_8004284C();

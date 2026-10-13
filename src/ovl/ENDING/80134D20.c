@@ -427,7 +427,7 @@ void func_80136D60(void) {
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80134D20", func_80136EE4);
 
 void func_80137128(void) {
-    func_80046318(0x3D, 0x80180000, 0x7B1B);
+    cd_read_sectors(0x3D, 0x80180000, 0x7B1B);
     func_80134D20();
     func_8004284C();
 }

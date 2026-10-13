@@ -88,7 +88,7 @@ s32 func_801489D0(void) {
         D_8015CFBC[2] = (func_800AE0D0() % 3) - 1;
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             D_800E6280.unk_1104.u += 1;
             break;
         }

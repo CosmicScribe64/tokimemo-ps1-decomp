@@ -205,7 +205,7 @@ void func_801468FC(void) {
 }
 
 void func_80146A38(void) {
-    if (func_800460CC() & 1) {
+    if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, func_8005751C(0));
         if (D_800B594C == -1) {
             dec_bg_reset();
@@ -250,11 +250,11 @@ s32 func_80146B40(void) {
 s32 func_80146BC4(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
-        func_80046318(9U, 0x801E0000, *(s32 *)&D_80150720[-(func_80066A84() * 4)]);
+        cd_read_sectors(9U, 0x801E0000, *(s32 *)&D_80150720[-(func_80066A84() * 4)]);
         D_800E6280.unk_110D = 1;
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             func_8007C6A8(1 - func_80066A84());
             func_8004284C();
         }

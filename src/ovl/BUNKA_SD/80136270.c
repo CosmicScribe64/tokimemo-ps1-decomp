@@ -3,9 +3,9 @@
 
 s32 func_80136270(void) {
     if (D_800E6280.unk_110D == 0) {
-        func_80046318(0x6F, 0x80180000, 0x4C59);
+        cd_read_sectors(0x6F, 0x80180000, 0x4C59);
         D_800E6280.unk_110D += 1;
-    } else if ((D_800E6280.unk_110D == 1) && (func_800460CC() & 1)) {
+    } else if ((D_800E6280.unk_110D == 1) && (cd_read_sync_status() & 1)) {
         func_8004284C();
     }
 }

@@ -255,7 +255,7 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80135F10.rodata", D_801398E8);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80135F10.rodata", D_801398EC);
 
 void func_80136DF4(void) {
-    func_80081190(-0x64, 0x30, 2, D_80139AD0->unk_34->unk_08, 0, &D_801398E8, &D_801398EC, 0);
+    dialogue_render(-0x64, 0x30, 2, D_80139AD0->unk_34->unk_08, 0, &D_801398E8, &D_801398EC, 0);
     func_8004284C();
 }
 
@@ -264,12 +264,12 @@ INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80135F10.rodata", D_801398F0);
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80135F10.rodata", D_801398F4);
 
 void func_80136E54(void) {
-    func_80081190(-0x56, 0x40, 1, D_80139AD0->unk_34->unk_0C, 0, &D_801398F0, &D_801398F4, 0);
+    dialogue_render(-0x56, 0x40, 1, D_80139AD0->unk_34->unk_0C, 0, &D_801398F0, &D_801398F4, 0);
     func_8004284C();
 }
 
 void func_80136EB4(void) {
-    func_80081190(-0x2C, 0x50, 0, ((s32 *)D_80139AD0->unk_34)[4], 0, "", "", 0);
+    dialogue_render(-0x2C, 0x50, 0, ((s32 *)D_80139AD0->unk_34)[4], 0, "", "", 0);
     D_80139AE0 = 5;
     func_8004284C();
 }
@@ -308,7 +308,7 @@ void func_80136FDC(void) {
 }
 
 void func_80137064(void) {
-    func_80046318(0x6E, 0x801B4400, 0xBBA5);
+    cd_read_sectors(0x6E, 0x801B4400, 0xBBA5);
     func_80135F84();
     func_8004284C();
 }

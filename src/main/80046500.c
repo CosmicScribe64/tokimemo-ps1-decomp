@@ -4,7 +4,7 @@
 s32 func_80046500(void) {
     func_800789E0();
     func_800412E0(0);
-    func_80042878(0x12);
+    main_state_set(0x12);
     func_80041584();
     func_80048DD0(0);
     back_clear_switch(1);

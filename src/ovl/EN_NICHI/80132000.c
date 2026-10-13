@@ -128,7 +128,7 @@ void func_80132278(void) {
     D_800E6280.unk_038 = 0;
     func_800438F0(1);
     D_800E6280.unk_F6F = (s8) D_80139B14;
-    func_80042878((s32) D_800E6280.unk_720);
+    main_state_set((s32) D_800E6280.unk_720);
     func_80042908((s32) D_800E6280.unk_721);
     func_80042940((s32) D_800E6280.unk_722);
 }
@@ -136,9 +136,9 @@ void func_80132278(void) {
 void func_80132308(void) {
     if (D_800E6280.unk_110D == 0) {
         func_80044750(0x201);
-        func_80046318(0x3F, 0x801B0000, 0x7C8C);
+        cd_read_sectors(0x3F, 0x801B0000, 0x7C8C);
         D_800E6280.unk_110D += 1;
-    } else if (func_800460CC() & 1) {
+    } else if (cd_read_sync_status() & 1) {
         func_8004284C();
     }
 }

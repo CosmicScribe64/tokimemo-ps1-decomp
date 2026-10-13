@@ -223,7 +223,7 @@ void func_801582B8(void) {
 }
 
 void func_80158300(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8ACD);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8ACD);
     func_80157880();
     func_8004284C();
 }
@@ -231,7 +231,7 @@ void func_80158300(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80158338);
 
 void func_80158444(void) {
-    func_80046318(0x45, 0x801B0000, 0x8B0A);
+    cd_read_sectors(0x45, 0x801B0000, 0x8B0A);
     func_80157930();
     func_8004284C();
 }
@@ -271,7 +271,7 @@ void func_80158544(void) {
 }
 
 void func_801585B8(void) {
-    func_80046318(0x3D, 0x801B0000, 0x8B4F);
+    cd_read_sectors(0x3D, 0x801B0000, 0x8B4F);
     func_801579E0();
     func_8004284C();
 }

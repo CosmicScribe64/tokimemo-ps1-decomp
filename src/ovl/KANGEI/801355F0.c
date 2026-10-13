@@ -109,10 +109,10 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/801355F0", func_80135CE0);
 
 void func_80135E90(void) {
     if (D_800E6280.unk_F5F == 0xA) {
-        func_80046318(9, 0x801D0000, 0xBCC8);
+        cd_read_sectors(9, 0x801D0000, 0xBCC8);
         func_801355F0();
     } else {
-        func_80046318(9, 0x801D0000, 0xBD95);
+        cd_read_sectors(9, 0x801D0000, 0xBD95);
         func_80135634();
     }
     func_8004500C(1, 0);

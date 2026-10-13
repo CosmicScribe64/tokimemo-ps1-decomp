@@ -1,0 +1,3 @@
+// NAME_ENT-only symbols (T-11090, names from the English patch notes, see wiki/ref-english-patch.md). Overlays share VRAM, so these must not go in config/symbol_addrs.txt.
+prologue_line_start = 0x80144B44; // type:func
+prologue_line_run = 0x80144C8C; // type:func

@@ -49,7 +49,7 @@ void func_801394EC(void) {
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801393C0", func_8013957C);
 
 void func_801395C0(void) {
-    func_80046318(0x3D, 0x801B0000, 0x7D96);
+    cd_read_sectors(0x3D, 0x801B0000, 0x7D96);
     func_801393C0();
     func_8004284C();
 }

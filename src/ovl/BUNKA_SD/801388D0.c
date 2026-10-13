@@ -5,9 +5,9 @@ INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_801388D0);
 
 s32 func_801389DC(void) {
     if (D_800E6280.unk_110D == 0) {
-        func_80046318(0x56, 0x80180000, 0x4F1D);
+        cd_read_sectors(0x56, 0x80180000, 0x4F1D);
         D_800E6280.unk_110D += 1;
-    } else if (D_800E6280.unk_110D == 1 && (func_800460CC() & 1)) {
+    } else if (D_800E6280.unk_110D == 1 && (cd_read_sync_status() & 1)) {
         switch (D_800E6280.unk_03E) {
         case 0x5F:
             func_80046290(0x3F, 0x0500039C, 0xF);

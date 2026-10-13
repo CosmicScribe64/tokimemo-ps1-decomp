@@ -59,9 +59,9 @@ void func_801389A0(void) {
 
 void func_80138A24(void) {
     if (D_800E6280.unk_110D == 0) {
-        func_80046318(0x3A, 0x80180000, 0xA1AB);
+        cd_read_sectors(0x3A, 0x80180000, 0xA1AB);
         D_800E6280.unk_110D += 1;
-    } else if (func_800460CC() & 1) {
+    } else if (cd_read_sync_status() & 1) {
         func_80042808();
     }
 }

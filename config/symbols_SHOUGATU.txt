@@ -1,0 +1,2 @@
+// SHOUGATU-only symbols (T-11090, names from the English patch notes, see wiki/ref-english-patch.md). Overlays share VRAM, so these must not go in config/symbol_addrs.txt.
+shougatu_stage_dispatch = 0x8013D180; // type:func

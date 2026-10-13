@@ -22,7 +22,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800754C0);
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_800755B4);
 
 void func_80075A64(void) {
-    if (func_800460CC() & 1) {
+    if (cd_read_sync_status() & 1) {
         dec_bg_show_set(0, func_8005751C(0));
         if (D_800B594C == -1) {
             dec_bg_reset();
@@ -186,7 +186,7 @@ s32 func_80076B48(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076C7C);
 
-INCLUDE_ASM("asm/nonmatchings/main/80075320", func_80076DA0);
+INCLUDE_ASM("asm/nonmatchings/main/80075320", appointment_launch);
 
 void func_80076EC0(void) {
     switch (D_800E6280.unk_110A) {
@@ -200,7 +200,7 @@ void func_80076EC0(void) {
         func_80076C7C();
         break;
     case 3:
-        func_80076DA0();
+        appointment_launch();
         break;
     }
     func_80066334();
@@ -352,7 +352,7 @@ INCLUDE_ASM("asm/nonmatchings/main/80075320", func_8007866C);
 void holiday_club_exit(void) {
     func_80048E78();
     if (func_8005352C() == 1 && (u32)(D_800E6280.unk_040 + 6) / 7 == 3 && D_800E6280.unk_03F % 3U == 0 && D_800E6280.unk_041 == 6) {
-        func_80042878(0x73);
+        main_state_set(0x73);
         return;
     }
     func_80042908(5);

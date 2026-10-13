@@ -68,7 +68,7 @@ void func_80139CB4(void) {
         func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->family_name[D_800E7D36], 0);
         func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->given_name[D_800E7D36], 0);
         func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameMetricWork *)&D_800E7D10)->nickname[D_800E7D36], 0);
-        func_8004E788(0x20, -0x2B, 0xF, (s32) D_800B3908[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]], 0);
+        func_8004E788(0x20, -0x2B, 0xF, (s32) club_name_table[((NameMetricWork *)&D_800E7D10)->club[D_800E7D36]], 0);
         return;
     }
     func_800AE090(sp30, D_800B3288[D_800E6280.unk_1118], 5);
@@ -77,7 +77,7 @@ void func_80139CB4(void) {
     func_8004E788(0x20, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].family_name, 0);
     func_8004E788(0x4E, -0x4B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].given_name, 0);
     func_8004E788(0x20, -0x3B, 0xF, (s32) ((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].nickname, 0);
-    func_8004E788(0x20, -0x2B, 0xF, (s32) D_800B3908[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 0xC], 0);
+    func_8004E788(0x20, -0x2B, 0xF, (s32) club_name_table[((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117].club >> 0xC], 0);
 }
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139F30);
@@ -303,7 +303,7 @@ void func_8013BB24(void) {
         D_800E6280.unk_10A2 = 0;
         func_80065F34(0);
         func_8004E58C();
-        func_8004E750(0xE);
+        text_set_advance(0xE);
         D_800E6280.unk_03A = 0;
         D_801230D0 = 0xFF;
         func_8006BC28(0);
@@ -390,7 +390,7 @@ void func_8013BF74(void) {
         record[i + 45].unk_02 = 64;
         record[i + 45].unk_38 = 0x40000000;
         record[i + 45].unk_03 = 36;
-        record[i + 45].unk_0C = D_800C975C;
+        record[i + 45].unk_0C = sprite_frame_table;
         record[i + 45].unk_10 = D_800C9A14;
         record[i + 45].unk_34 = D_800C9730;
         record[i + 45].unk_04 = 8;
@@ -488,10 +488,10 @@ void func_8013C6FC(void) {
 void func_8013C7C0(void) {
     if (D_800E6280.unk_F88 & 0x800) {
         func_8013B77C();
-        func_80042878(0x14);
+        main_state_set(0x14);
     } else if (D_800E6280.unk_F88 & 0x20) {
         func_8013B77C();
-        func_80042878(0x14);
+        main_state_set(0x14);
     } else if (D_800E6280.unk_F88 & 0x40) {
         func_8004284C();
     }
@@ -684,7 +684,7 @@ void func_8013D9A0(void) {
 void func_8013DA08(void) {
     if (D_800E6280.unk_F88 & 0x820) {
         func_8013B77C();
-        func_80042878(0x14);
+        main_state_set(0x14);
     }
 }
 
@@ -785,7 +785,7 @@ s32 func_8013DD94(void) {
     case 3:
         func_80053D10();
         func_8013B77C();
-        func_80042878(0x14);
+        main_state_set(0x14);
         break;
     }
 }
@@ -874,7 +874,7 @@ void func_8013DF88(void) {
     case 7:
         func_80053D10();
         func_8013B77C();
-        func_80042878(0x14);
+        main_state_set(0x14);
         break;
     }
 }
@@ -1032,7 +1032,7 @@ void func_8013EBEC(void) {
         break;
     case 6:
         func_8013B77C();
-        func_80042878(0x14);
+        main_state_set(0x14);
         break;
     }
 }
@@ -1493,7 +1493,7 @@ void func_80140044(void) {
         return;
     default:
         func_8013B77C();
-        func_80042878(0x10);
+        main_state_set(0x10);
         return;
     }
 }
@@ -1535,16 +1535,16 @@ void func_80140BA4(void) {
             func_80041878();
             func_80041F48();
             D_800E6280.unk_F5E = 0;
-            func_80042878(0x14);
+            main_state_set(0x14);
         } else if (D_800E6280.unk_03E == 0x5F && D_800E6280.unk_03F == 4 && D_800E6280.unk_040 == 4) {
             func_8013E71C();
             func_80041878();
             func_80041F48();
             D_800E6280.unk_F5E = 0;
-            func_80042878(0x14);
+            main_state_set(0x14);
         } else {
             func_800674B0();
-            func_80042878(0x34);
+            main_state_set(0x34);
             func_80042908(0xFF);
         }
     }

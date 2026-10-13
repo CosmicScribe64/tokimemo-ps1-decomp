@@ -10,7 +10,7 @@
 /* Game types (structs) of the main exe. The declarations of its functions and globals live in
  * main_api.h (T-3340); this file only adds types that need a struct definition. */
 
-/* 8-byte record of the array at D_800B3DC0 (stride 8; see k_disp_switch). */
+/* 8-byte record of the array at text_list (stride 8; see k_disp_switch). */
 typedef struct Entry8 {
     /* 0x00 */ s16 unk_00;
     /* 0x02 */ s16 unk_02;

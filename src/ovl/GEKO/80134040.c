@@ -53,7 +53,7 @@ void func_8013445C(void) {
 }
 
 void func_8013448C(void) {
-    func_80046318(3, 0x801B0000, 0xAF43);
+    cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80134F84();
     if (!(D_800E6280.unk_71E & 8)) {
         func_80044750(0x603);
@@ -63,7 +63,7 @@ void func_8013448C(void) {
 }
 
 void func_80134500(void) {
-    func_80046318(3, 0x801B0000, 0xAF43);
+    cd_read_sectors(3, 0x801B0000, 0xAF43);
     func_80134F84();
     func_8004284C();
 }

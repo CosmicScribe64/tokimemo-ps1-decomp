@@ -267,7 +267,7 @@ void func_80139FEC(void) {
         return;
     case 0xA:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_80144738[girl], 0, (s32) girl);
         func_80052060((s32) D_80144768, (s32) D_801447B8, (s32) girl, (s32) girl);
         k_sub_disp_start(0);
@@ -278,7 +278,7 @@ void func_80139FEC(void) {
         return;
     case 0x1E:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_80144AA4[girl], 0, (s32) girl);
         func_80052060((s32) D_80144AD4, (s32) D_80144B24, (s32) girl, (s32) girl);
         k_sub_disp_start(0);
@@ -289,7 +289,7 @@ void func_80139FEC(void) {
         return;
     case 0x32:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_80144D6C[girl], 0, (s32) girl);
         func_80052060((s32) D_80144D9C, (s32) D_80144DEC, (s32) girl, (s32) girl);
         k_sub_disp_start(0);
@@ -411,7 +411,7 @@ s32 func_8013A4FC(void) {
         return;
     case 1:
         k_sub_reset();
-        gnsx(D_800B35F4[11]);
+        gnsx(girl_short_name_table[11]);
         table_index = girl;
         sndisp(D_80145C44[girl][0], 0, 0xB);
         func_80052060(D_80145C78[table_index], D_80145CAC[table_index], 0, 0xB);
@@ -433,7 +433,7 @@ s32 func_8013A4FC(void) {
         return;
     case 5:
         k_sub_reset();
-        gnsx(D_800B35F4[11]);
+        gnsx(girl_short_name_table[11]);
         table_index = girl;
         sndisp(D_80145C44[girl][2], 0, 0xB);
         func_80052060(D_80145C78[table_index], D_80145CAC[table_index], 2, 0xB);
@@ -573,7 +573,7 @@ s32 func_8013AA30(void) {
         }
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             dec_bg_show_set(0, func_8005751C(0));
             set_dec_bri(0x80);
             D_800E6280.unk_110D = 2;
@@ -625,7 +625,7 @@ s32 func_8013AC0C(void) {
         }
         break;
     case 1:
-        if (func_800460CC() & 1) {
+        if (cd_read_sync_status() & 1) {
             dec_bg_show_set(0, func_8005751C(0));
             set_dec_bri(0x80);
             D_800E6280.unk_110D = 2;
@@ -1111,7 +1111,7 @@ void func_8013BE38(void) {
 }
 
 void func_8013BF50(void) {
-    func_80042878(0x31);
+    main_state_set(0x31);
 }
 
 s32 func_8013BF70(void) {
@@ -1154,7 +1154,7 @@ s32 func_8013BFDC(void) {
         break;
     case 0xA:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_80146008[girl], 0, girl);
         func_80052060((s32) D_80146038, (s32) D_80146090, girl, girl);
         k_sub_disp_start(0);
@@ -1178,7 +1178,7 @@ s32 func_8013BFDC(void) {
         break;
     case 0x1E:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_801462F0[girl], 0, girl);
         func_80052060((s32) D_80146320, (s32) D_80146378, girl, girl);
         k_sub_disp_start(0);
@@ -1202,7 +1202,7 @@ s32 func_8013BFDC(void) {
         break;
     case 0x32:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_801465B0[girl], 0, girl);
         func_80052060((s32) D_801465E0, (s32) D_80146638, girl, girl);
         k_sub_disp_start(0);
@@ -1286,7 +1286,7 @@ s32 func_8013C4D8(void) {
         break;
     case 0xA:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_80146904[girl], 0, girl);
         func_80052060((s32) D_80146934, (s32) D_8014698C, girl, girl);
         k_sub_disp_start(0);
@@ -1310,7 +1310,7 @@ s32 func_8013C4D8(void) {
         break;
     case 0x1E:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_80146BF4[girl], 0, girl);
         func_80052060((s32) D_80146C24, (s32) D_80146C7C, girl, girl);
         k_sub_disp_start(0);
@@ -1334,7 +1334,7 @@ s32 func_8013C4D8(void) {
         break;
     case 0x32:
         func_8004EAAC();
-        gnsx(D_800B35F4[girl]);
+        gnsx(girl_short_name_table[girl]);
         sndisp(D_80146EE4[girl], 0, girl);
         func_80052060((s32) D_80146F14, (s32) D_80146F6C, girl, girl);
         k_sub_disp_start(0);
@@ -1470,7 +1470,7 @@ s32 func_8013CBA0(void) {
         xa_wait();
         return;
     default:
-        func_80042878(0x34);
+        main_state_set(0x34);
         return;
     }
 }
