@@ -1129,7 +1129,65 @@ void func_80136808(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801372A0);
+void func_801372A0(arg0)
+s32 arg0;
+{
+    s32 a;
+    s32 b;
+    s32 c;
+
+    if (arg0 != 0) {
+        a = D_8014CC9C;
+        b = D_8014CCA0;
+        c = D_8014CCA4;
+    } else {
+        a = D_8014CC90;
+        b = D_8014CC94;
+        c = D_8014CC98;
+    }
+    func_8004EAAC();
+    if (a == 0xFF) {
+        func_8004E788(-0x50, -0x58, 0xE, "　", 0);
+        func_8004E788(-0x40, -0x58, 0xE, "　", 0);
+    } else {
+        if (a >= 9) {
+            func_8004E788(-0x50, -0x58, 0xE, D_800B3288[1], 0);
+        } else {
+            func_8004E788(-0x50, -0x58, 0xE, "　", 0);
+        }
+        func_8004E788(-0x40, -0x58, 0xE, D_800B3288[(a + 1) % 10], 0);
+    }
+    if (b == 0xFF) {
+        func_8004E788(-0x20, -0x58, 0xE, "　", 0);
+        func_8004E788(-0x10, -0x58, 0xE, "　", 0);
+    } else {
+        if (b >= 9) {
+            func_8004E788(-0x20, -0x58, 0xE, D_800B3288[(b + 1) / 10], 0);
+        } else {
+            func_8004E788(-0x20, -0x58, 0xE, D_800B3644, 0);
+        }
+        func_8004E788(-0x10, -0x58, 0xE, D_800B3288[(b + 1) % 10], 0);
+    }
+    switch (c) {
+    case 0:
+        func_8004E788(0x60, -0x58, 0xE, "　", 0);
+        func_8004E788(0x70, -0x58, 0xE, "Ａ", 0);
+        break;
+    case 1:
+        func_8004E788(0x60, -0x58, 0xE, "　", 0);
+        func_8004E788(0x70, -0x58, 0xE, "Ｂ", 0);
+        break;
+    case 2:
+        func_8004E788(0x60, -0x58, 0xE, "Ａ", 0);
+        func_8004E788(0x70, -0x58, 0xE, "Ｂ", 0);
+        break;
+    case 3:
+        func_8004E788(0x60, -0x58, 0xE, "　", 0);
+        func_8004E788(0x70, -0x58, 0xE, "Ｏ", 0);
+        break;
+    }
+    func_8004EAD4(6);
+}
 
 void func_80137608(s32 arg0) {
     s32 pad; /* FAKE: unused locals around the two cursor values, which the original reads without ever assigning them (T-3330 layout) */
