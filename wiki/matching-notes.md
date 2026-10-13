@@ -4251,3 +4251,38 @@ Matches: EVENT `func_80103BF8`, `func_80104B00`, `func_80104D48`; SHOUGATU `func
 - **Constant folding that the original does not do** (RPG_BAT `func_80132B34`): the original stores `x + 0x30` and `y - 0xB0` computed from registers that hold 0x84 and 0x6C; uopt folds them in every C form tried (locals, chain, store read-back).
 - **Do-while word-clear loops** (RPG_BAT `func_8014EF8C`, `func_8014E994`, `func_8014F278`): start pointer in `v1`, end in `v0`, and a 24-record byte loop kept rolled in straight store order. IDO gives start `v0`/end `v1` (the pointer is a named local with a lower bit than the hoisted end), unrolls the record loop or rotates its stores. Not a register-allocation row alone: both loop kinds need a different source shape.
 - **Open tooling points:** `funcdiff.py` printed `MATCH (relocations resolved)` once for TT `func_80149B20` while the machine was loaded (a first run that took more than ten minutes); the identical source later gave 62 differing lines and a failing TT unit sha1. Treat any `MATCH` as unconfirmed until `ninja` ends with the unit `OK`. `permute.py` refuses bases whose instruction count differs by one (seen four times here), which hides the near misses with a single missing instruction. TT `func_8014D260` (gcc `ratan2`) still needs the ASPSX division layout ([[gcc-objects]]).
+
+
+## T-10730 big-function batch (a15)
+
+Three integrated matches add 6,044 text bytes: `read_bustup`,
+`func_8006F524`, and `func_8006FB4C`. The complete Docker build verified
+27/27 units after integration. Current retained near misses are
+`func_8007EF48` (three scheduling pairs) and `func_80082764` (two commutative
+addition operand orders), both below thirty funcdiff lines.
+
+All 21 assigned functions received an initial draft, regdiff and type/control
+flow iterations. The broad drafts remain in `scratchpad/a15/`; the exact
+seed names and per-function evidence are in `scratchpad/a15/HANDOFF.md`.
+See [[decompile-workflow]] for shared dialogue, choice-row, motion-record,
+bitfield, frame and selector idioms. No T-0018 rows are added: the retained
+gaps are scheduling or operand ordering, and the broad drafts still have
+source-shape differences rather than an isolated allocator failure.
+
+DATE `func_8013272C` now passes its complete overlay SHA1 in an isolated
+scratch build (`b5fb83738364a317a590735578f5878077fcda3d`). DateFlag17 fixed the
+last temporary gap. A DateSelectionView over byte slots at D_800CA2F8/+4
+then fixed one comparison operand swap that only appeared in the complete
+source file. The unsigned-load pass tracks rewritten global locations across
+procedures; this is a concrete reason to verify complete objects/units.
+Its inherited void prototype conflicts with the recovered signed result, and
+the append-only exception remains pending. `scratchpad/a15/date-match-pending.diff`
+contains the exact body and one-line prototype correction. Source stays
+INCLUDE_ASM, so this fourth verified scratch match is excluded from the
+three integrated matches and progress total above.
+
+Full-file NON_MATCHING verification at the final review gives eight resolved
+funcdiff lines for func_8007EF48 and six for func_80082764. The latter includes
+one load-scheduling pair in addition to the standalone addition operand-order
+pairs. Both compile with all existing guarded drafts enabled and satisfy the
+retention threshold.

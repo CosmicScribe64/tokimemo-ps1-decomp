@@ -165,9 +165,423 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EEC4);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006F218);
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006F524);
+s32 func_8006F524(u32 arg0) {
+    /* FAKE: the helper writes 16 bytes; four extra bytes reproduce the original frame. T-10730. */
+    u8 rank[20];
+    s16 points[16];
+    GameState *g;
+    s32 firstGirl;
+    s32 firstScore;
+    s32 selfScore;
+    s32 secondGirl;
+    s32 secondScore;
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006FB4C);
+    firstScore = 0;
+    firstGirl = 0;
+    selfScore = 0;
+    secondScore = 0;
+    secondGirl = 0;
+    func_80053418(rank, points);
+    g = &D_800E6280;
+    switch (arg0 % 9U) {
+    case 0:
+        if (g->unk_1BC[1].unk_0C.f.b1) {
+            firstGirl = 1;
+            firstScore = rank[1] - D_800B6748;
+        }
+        selfScore = rank[0] - D_800B6748;
+    default:
+        break;
+    case 1:
+        if (g->unk_1BC[2].unk_0C.f.b1) {
+            firstGirl = 2;
+            firstScore = rank[2] - D_800B6758;
+        }
+        selfScore = rank[0] - D_800B6758;
+        break;
+    case 2:
+        if (g->unk_1BC[3].unk_0C.f.b1) {
+            firstGirl = 3;
+            firstScore = rank[3] - D_800B674C;
+        }
+        selfScore = rank[0] - D_800B674C;
+        break;
+    case 3:
+        if (g->unk_1BC[5].unk_0C.f.b1) {
+            firstGirl = 5;
+            firstScore = rank[5] - D_800B6748;
+        }
+        if (g->unk_1BC[6].unk_0C.f.b1) {
+            secondGirl = 6;
+            secondScore = rank[6] - D_800B6748;
+        }
+        selfScore = rank[0] - D_800B6754;
+        break;
+    case 4:
+        if (((u16)g->unk_0F4.h >> 12) == (((u8) g->unk_1BC[0].unk_0C.b[2] >> 4))) {
+            selfScore = rank[0] - 0xB;
+            if (!(g->unk_1BC[0].unk_0C.f.b2)) {
+                selfScore = 0;
+            }
+            if (((u16)g->unk_0F4.h >> 12) == 0xA) {
+                if (g->unk_1BC[0xA].unk_0C.f.b1) {
+                    if ((g->unk_1BC[0xA].unk_0C.f.b2) && ((((u8) g->unk_1BC[0xA].unk_0C.b[2] >> 4)) == 0xA)) {
+                        firstGirl = 0xA;
+                        firstScore = rank[10] - 0xB;
+                    }
+                }
+            }
+        } else {
+            switch (((u16)g->unk_0F4.h >> 12)) {
+            case 0:
+                if (g->unk_1BC[1].unk_0C.f.b1) {
+                    if ((g->unk_1BC[1].unk_0C.f.b2) && ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4)) == 0)) {
+                        firstGirl = 1;
+                        firstScore = rank[1] - 0xB;
+                    }
+                }
+                break;
+            case 1:
+                if ((g->unk_1BC[1].unk_0C.f.b1) && (g->unk_1BC[1].unk_0C.f.b2)) {
+                    if ((((u8) g->unk_1BC[1].unk_0C.b[2] >> 4)) == 1) {
+                        firstGirl = 1;
+                        firstScore = rank[1] - 0xB;
+                    }
+                }
+                break;
+            case 2:
+                if (g->unk_1BC[2].unk_0C.f.b1) {
+                    if ((g->unk_1BC[2].unk_0C.f.b2) && ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4)) == 2)) {
+                        firstGirl = 2;
+                        firstScore = rank[2] - 0xB;
+                    }
+                }
+                break;
+            case 3:
+                if (g->unk_1BC[2].unk_0C.f.b1) {
+                    if ((g->unk_1BC[2].unk_0C.f.b2) && ((((u8) g->unk_1BC[2].unk_0C.b[2] >> 4)) == 3)) {
+                        firstGirl = 2;
+                        firstScore = rank[2] - 0xB;
+                    }
+                }
+                break;
+            case 4:
+                if (g->unk_1BC[3].unk_0C.f.b1) {
+                    if ((g->unk_1BC[3].unk_0C.f.b2) && ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4)) == 4)) {
+                        firstGirl = 3;
+                        firstScore = rank[3] - 0xB;
+                    }
+                }
+                break;
+            case 5:
+                if (g->unk_1BC[3].unk_0C.f.b1) {
+                    if ((g->unk_1BC[3].unk_0C.f.b2) && ((((u8) g->unk_1BC[3].unk_0C.b[2] >> 4)) == 5)) {
+                        firstGirl = 3;
+                        firstScore = rank[3] - 0xB;
+                    }
+                }
+                break;
+            case 6:
+                if ((g->unk_1BC[4].unk_0C.f.b1) && (g->unk_1BC[4].unk_0C.f.b2)) {
+                    if ((((u8) g->unk_1BC[4].unk_0C.b[2] >> 4)) == 6) {
+                        firstGirl = 4;
+                        firstScore = rank[4] - 0xB;
+                    }
+                }
+                break;
+            case 7:
+                if (g->unk_1BC[4].unk_0C.f.b1) {
+                    if ((g->unk_1BC[4].unk_0C.f.b2) && ((((u8) g->unk_1BC[4].unk_0C.b[2] >> 4)) == 7)) {
+                        firstGirl = 4;
+                        firstScore = rank[4] - 0xB;
+                    }
+                }
+                break;
+            case 8:
+                if (g->unk_1BC[5].unk_0C.f.b1) {
+                    if (g->unk_1BC[5].unk_0C.f.b2) {
+                        if ((((u8) g->unk_1BC[5].unk_0C.b[2] >> 4)) == 8) {
+                            if ((((u8) g->unk_1BC[0].unk_0C.b[2] >> 4)) != 8) {
+                                firstGirl = 5;
+                                firstScore = rank[5] - 0xB;
+                            }
+                        }
+                    }
+                }
+                break;
+            /* FAKE: signed comparison keeps 9 separate from the unsigned modulo constant. T-10730. */
+            case 9:
+                if (g->unk_1BC[6].unk_0C.f.b1) {
+                    if (g->unk_1BC[6].unk_0C.f.b2) {
+                        if (((s32)((u8) g->unk_1BC[6].unk_0C.b[2] >> 4)) == 9) {
+                            if (((s32)((u8) g->unk_1BC[0].unk_0C.b[2] >> 4)) != 9) {
+                                firstGirl = 6;
+                                firstScore = rank[6] - 0xB;
+                            }
+                        }
+                    }
+                }
+                break;
+            case 10:
+                if ((g->unk_1BC[0xA].unk_0C.f.b1) && (g->unk_1BC[0xA].unk_0C.f.b2)) {
+                    if ((((u8) g->unk_1BC[10].unk_0C.b[2] >> 4)) == 0xA) {
+                        firstGirl = 0xA;
+                        firstScore = rank[10] - 0xB;
+                    }
+                }
+                break;
+            }
+        }
+        break;
+    case 5:
+        if (g->unk_1BC[8].unk_0C.f.b1) {
+            firstGirl = 8;
+            firstScore = rank[8] - D_800B6750;
+        }
+        selfScore = rank[0] - D_800B6750;
+        break;
+    case 6:
+        if (g->unk_1BC[7].unk_0C.f.b1) {
+            firstGirl = 7;
+            firstScore = rank[7] - D_800B6758;
+        }
+        selfScore = rank[0] - D_800B6758;
+        break;
+    case 7:
+        break;
+    }
+    if ((firstGirl != 0) && (secondGirl != 0)) {
+        if (secondScore < firstScore) {
+            if ((selfScore < firstScore) && (firstScore > 0)) {
+                return firstGirl;
+            }
+            goto block_97;
+        }
+        if ((selfScore < secondScore) && (secondScore > 0)) {
+            return secondGirl;
+        }
+        goto block_97;
+    }
+    if (firstGirl != 0) {
+        if ((selfScore < firstScore) && (firstScore > 0)) {
+            return firstGirl;
+        }
+        goto block_97;
+    }
+    if ((secondGirl != 0) && (selfScore < secondScore) && (secondScore > 0)) {
+        return secondGirl;
+    }
+block_97:
+    if (selfScore > 0) return 0;
+    return 0xF;
+}
+
+/* Plain char outputs preserve IDO's separate byte-store constant range.
+ * Explicit s8/u8 outputs change sharing with signed helper results. T-10730 */
+s32 func_8006FB4C(char *arg0, char *arg1) {
+    GameState *g;
+    /* FAKE: 11 counts are used; the extra bytes and pad reproduce sp+0x7C
+     * in the original 0xA8 frame. T-10730 */
+    u8 counts[40];
+    u8 framePad[32];
+    s32 i;
+    s32 event;
+    s32 girl;
+
+    g=&D_800E6280;
+    *arg0 = 0;
+    for (i=0;i<11;i++) {
+        counts[i]=0;
+        for (event=1;event<21;event++) {
+            counts[i] += g->unk_1BC[i].unk_14[event];
+        }
+    }
+    for (girl=0; girl<11; girl++) {
+        if ((g->unk_1BC[girl].unk_0C.f.b1) && (get_g_zyotai_h(girl) < 2U) && (counts[girl] != 0) && ((rand() & 0xF) < 5)) {
+            switch (girl) {
+            case 0:
+                if ((rand() % 100) < 3) {
+                    if (((GsWord *)&g->unk_10F8)->w & 1) {
+                        if ((func_80066ACC() == 1) && (g->unk_56C[0] == 0) && ((u32) (get_g_zyotai_s(girl) & 0x7F) < 2U)) {
+                            g->unk_56C[0] = (u8) (g->unk_56C[0] + 1);
+                            *arg0 = 0;
+                            *arg1 = 1;
+                            return 1;
+                        }
+                        break;
+                    }
+                    if (g->unk_56C[1] == 0) {
+                        g->unk_56C[1] = (u8) (g->unk_56C[1] + 1);
+                        *arg0 = 0;
+                        *arg1 = 2;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 1:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                    if (g->unk_56C[8] == 0) {
+                        g->unk_56C[8] += 1;
+                        *arg0 = 1;
+                        *arg1 = 1;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 2:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                    if (g->unk_56C[14] == 0) {
+                        g->unk_56C[14] += 1;
+                        *arg0 = 2;
+                        *arg1 = 1;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 3:
+                if (((rand() % 100) < 7) && (func_80066ACC() == 1)) {
+                    if (g->unk_56C[21] == 0) {
+                        g->unk_56C[21] += 1;
+                        *arg0 = 3;
+                        *arg1 = 1;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 4:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                    g->unk_56C[27] += 1;
+                    *arg0 = 4;
+                    *arg1 = 1;
+                    return 1;
+                }
+                break;
+            case 5:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 1) && (g->unk_56C[33] == 0)) {
+                    g->unk_56C[33] += 1;
+                    *arg0 = 5;
+                    *arg1 = 1;
+                    return 1;
+                }
+                if (((rand() % 100) < 0x32) && (g->unk_56C[37] == 1)) {
+                    if (g->unk_56C[34] == 0) {
+                        g->unk_56C[34] += 1;
+                        *arg0 = 5;
+                        *arg1 = 2;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 6:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 1)) {
+                    if (g->unk_56C[40] == 0) {
+                        g->unk_56C[40] += 1;
+                        *arg0 = 6;
+                        *arg1 = 1;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 7:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 1)) {
+                    if (g->unk_56C[46] == 0) {
+                        g->unk_56C[46] += 1;
+                        *arg0 = 7;
+                        *arg1 = 1;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 8:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 0)) {
+                    if (g->unk_56C[54] == 0) {
+                        g->unk_56C[54] += 1;
+                        *arg0 = 8;
+                        *arg1 = 1;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            case 9:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 0) && (g->unk_56C[60] == 0)) {
+                    g->unk_56C[60] = (u8) (g->unk_56C[60] + 1);
+                    *arg0 = 9;
+                    *arg1 = 1;
+                    return 1;
+                }
+                if ((g->unk_56C[60] == 1) && (g->unk_1BC[9].unk_0C.f.b14 == 1)) {
+                    *(u8 *)((unsigned char *)(&g->unk_56C[60]) + (1)) = (u8) (*(u8 *)((unsigned char *)(&g->unk_56C[60]) + (1)) + 1);
+                    g->unk_1BC[9].unk_0C.b[1] = (u8) (g->unk_1BC[9].unk_0C.b[1] & 0xFFBF);
+                    *arg0 = 9;
+                    *arg1 = 2;
+                    return 1;
+                }
+                break;
+            case 10:
+                if (((rand() % 100) < 3) && (func_80066ACC() == 1) && (g->unk_56C[27] != 0) && (g->unk_56C[67] == 0)) {
+                    g->unk_56C[67] += 1;
+                    *arg0 = 0xA;
+                    *arg1 = 1;
+                    return 1;
+                }
+                if (((rand() % 100) < 0xA) && (g->unk_03E == 0x61) && (g->unk_03F == 9) && ((u8) g->unk_040 >= 0xEU)) {
+                    if (g->unk_56C[68] == 0) {
+                        g->unk_56C[68] += 1;
+                        *arg0 = 0xA;
+                        *arg1 = 2;
+                        return 1;
+                    }
+                    break;
+                }
+                break;
+            default: break;
+            }
+        }
+    }
+    if (((u8) g->unk_1BC[12].unk_0C.b[3] >= 0x15U) && (g->unk_56C[80] == 0) && (func_80066ACC() == 0)) {
+        g->unk_56C[80] += 1;
+        *arg0 = 0xC;
+        *arg1 = 2;
+        return 1;
+    }
+    if ((u8) g->unk_1BC[12].unk_0C.b[3] >= 0x29U) {
+        if (g->unk_56C[79] == 0) {
+            g->unk_56C[79] += 1;
+            *arg0 = 0xC;
+            *arg1 = 1;
+            return 1;
+        }
+    }
+    if (((u8)g->unk_1BC[12].unk_0C.b[3] >= 0x41U) && (g->unk_56C[81] == 0)) {
+        g->unk_56C[81] += 1;
+        *arg0 = 0xC;
+        *arg1 = 3;
+        return 1;
+    }
+    if (((rand() % 100) < 4) && (g->unk_56C[77] == 0) && (g->unk_1BC[11].unk_14[0] == 0) && ((u32) ((u32) (g->unk_1BC[11].unk_0C.w << 0x14) >> 0x1D) < 5U) && ((u16) g->unk_042 >= 0x1DU)) {
+        g->unk_56C[74] += 1;
+        g->unk_1BC[11].unk_14[0] = 4;
+        *arg0 = 0xB;
+        *arg1 = 1;
+        return 1;
+    }
+    if ((g->unk_56C[53] == 0) && (g->unk_56C[52] == 1)) {
+        g->unk_56C[53] += 1;
+        *arg0 = 7;
+        *arg1 = 8;
+        return 1;
+    }
+    return 0;
+}
+
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", geko_judge);
 

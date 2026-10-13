@@ -22,6 +22,63 @@
 #include "common.h"
 #include "libgpu.h"
 
+/* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
+typedef struct DialogueVoice8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} DialogueVoice8; /* size 0x08 */
+
+/* T-10730: sixteen byte selectors copied to the dialogue handler's stack. */
+typedef struct DialogueBytes16 {
+    /* 0x00 */ u8 value[16];
+} DialogueBytes16; /* size 0x10 */
+
+/* T-10730: minimum dialogue work range at D_80122CD0. Reset clears words
+ * 5..30; retain existing scalar/array declarations as views in older users. */
+typedef struct DialogueWork {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s32 unk_1C;
+    /* 0x20 */ s32 unk_20;
+    /* 0x24 */ s32 unk_24;
+    /* 0x28 */ s32 unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ s32 unk_30;
+    /* 0x34 */ s32 unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ s32 unk_3C;
+    /* 0x40 */ s32 unk_40;
+    /* 0x44 */ s32 unk_44;
+    /* 0x48 */ s32 unk_48;
+    /* 0x4C */ s32 unk_4C;
+    /* 0x50 */ s32 unk_50;
+    /* 0x54 */ s32 unk_54;
+    /* 0x58 */ s32 unk_58;
+    /* 0x5C */ s32 unk_5C;
+    /* 0x60 */ s32 unk_60;
+    /* 0x64 */ s32 unk_64;
+    /* 0x68 */ s32 unk_68;
+    /* 0x6C */ s32 unk_6C;
+    /* 0x70 */ s32 unk_70;
+    /* 0x74 */ s32 unk_74;
+    /* 0x78 */ s32 unk_78;
+} DialogueWork; /* minimum size 0x7C */
+
+/* T-10730: pointer slots at D_800CA134..D_800CA144. The cursor pointers
+ * address signed halfwords; legacy scalar declarations remain valid views. */
+typedef struct DialogueTables {
+    /* 0x00 */ s16 *group;
+    /* 0x04 */ s16 *line;
+    /* 0x08 */ u8 ***text;
+    /* 0x0C */ u8 **command;
+    /* 0x10 */ DialogueVoice8 ***voice;
+} DialogueTables; /* size 0x14 on PS1 */
+
 /* ---- aggregate types (T-5000) ----
  * Records whose fields splat names as separate D_ globals. tools/type_recovery.py proposes them from
  * the original asm (indexed accesses with one stride, pointer walks, ordered store/load pairs);
@@ -595,6 +652,11 @@ extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
+extern s32 D_800B6748;
+extern s32 D_800B674C;
+extern s32 D_800B6750;
+extern s32 D_800B6754;
+extern s32 D_800B6758;
 extern s32 D_800B6760[];
 extern s32 D_800B6780[];
 extern s32 D_800B6810[];
@@ -668,6 +730,7 @@ extern s16 D_800CA2AC;
 extern u8 D_800CA2B0[];
 extern s16 D_800CA2C0;
 extern u8 D_800CA2C4;
+extern s32 D_800CA2C8;
 extern u8 D_800CA2CC;
 extern s32 D_800CA2D0;
 extern s32 D_800CA2D4;
@@ -684,6 +747,7 @@ extern u8 D_800CA2FC;
 extern s8 D_800CA360;
 extern s8 D_800CA364;
 extern u8 D_800CA368;
+extern DialogueBytes16 D_800CA36C;
 extern u8 *D_800D9234;
 extern u8 *D_800D9238;
 extern s32 D_800D923C;
@@ -873,7 +937,7 @@ extern s32 D_8011ECBC;
 extern s32 D_8011ECC0;
 extern s32 D_8011ECC4;
 extern s32 D_8011ECC8;
-extern u8 D_8011ECD0[]; /* 3 records of 0x44 bytes; s16 at +0x19EA is read */
+extern u8 D_8011ECD0[]; /* 0x44-byte records; DATE uses entries 96..99 (T-10730). */
 extern u8 D_8011ECD3;
 extern s16 D_8011ECE8;
 extern s32 D_8011ECF4;
@@ -1388,7 +1452,10 @@ extern s32 D_80122D04;
 extern s32 D_80122D08;
 extern s32 D_80122D0C;
 extern s32 D_80122D10;
+extern s32 D_80122D18;
+extern s32 D_80122D1C;
 extern s32 D_80122D20;
+extern s32 D_80122D28;
 extern s32 D_80122D2C;
 extern s32 D_80122D30;
 extern s32 D_80122D34;
@@ -2099,7 +2166,10 @@ void func_8007ED84();
 void check_k_scroll();
 void func_8007EDF8();
 void wait_sub_sub(s16 arg0);
+void func_80081128(void);
+#ifndef MAIN_API_OVERRIDE_func_80081190
 void func_80081190(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, void *arg5, void *arg6, s32 arg7);
+#endif
 void func_80081D30();
 s32 func_80082764();
 void normal_date_three_select(void);

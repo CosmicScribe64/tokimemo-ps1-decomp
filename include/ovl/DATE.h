@@ -1252,3 +1252,80 @@ void func_8014E108(void);
 
 /* T-10630: signed UV oscillation step used by func_801462B0. */
 extern s16 D_8015CFA0;
+
+#ifndef DATE_SELECTION_TYPES_T10730
+#define DATE_SELECTION_TYPES_T10730
+/* T-10730: unsigned triples selected by girl, option, then its two-state flag. */
+typedef struct DateChoice3 {
+    /* 0x00 */ u8 value[3];
+} DateChoice3; /* size 0x03 */
+
+typedef struct DatePlaceChoices18 {
+    /* 0x00 */ DateChoice3 choice[3][2];
+} DatePlaceChoices18; /* size 0x12 */
+
+typedef struct DateRideChoices36 {
+    /* 0x00 */ DateChoice3 choice[6][2];
+} DateRideChoices36; /* size 0x24 */
+
+#endif
+
+#ifndef OVL_DATE_MOTION_T10730
+#define OVL_DATE_MOTION_T10730
+/* Record view recovered from func_8013FD6C, D_8011ECD0.
+ * Records 96..99 use signed high halves of the two fixed-point words.
+ * Byte names remain provisional; existing raw-array declarations are views. */
+typedef struct DateMotion44 {
+    /* 0x00 */ u8 pad00[2];
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 pad04[3];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad0A[0xC];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0xA];
+    /* 0x24 */ GsWord unk_24;
+    /* 0x28 */ GsWord unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ u8 pad30[0x14];
+} DateMotion44; /* size 0x44 */
+typedef struct DateMuseumChoices15 {
+    /* 0x00 */ DateChoice3 choice[5];
+} DateMuseumChoices15; /* size 0x0F */
+#endif
+
+#ifndef OVL_DATE_FLAG_T10730
+#define OVL_DATE_FLAG_T10730
+extern u8 D_8015B698;
+#endif
+
+#ifndef OVL_DATE_COUNTS_T10730
+#define OVL_DATE_COUNTS_T10730
+/* Two signed-halfword local copies in func_8013A94C, from D_8015B75C/B774. */
+typedef struct DateCounts22 {
+    /* 0x00 */ s16 value[11];
+} DateCounts22; /* size 0x16 */
+#endif
+
+#ifndef OVL_DATE_FLAG17_T10730
+#define OVL_DATE_FLAG17_T10730
+/* Word view at GameState +0xF4; the seasonal event tests bit 17. */
+typedef struct DateFlag17 {
+    /* bits 0..16 */ u32 pad : 17;
+    /* bit 17 */ u32 b17 : 1;
+    /* bits 18..31 */ u32 rest : 14;
+} DateFlag17; /* size 0x04 */
+#endif
+
+#ifndef DATE_SELECTION_VIEW_T10730
+#define DATE_SELECTION_VIEW_T10730
+/* T-10730: byte selector slots at D_800CA2F8 and D_800CA2FC. This view
+ * records only the observed range, not the complete allocation size. */
+typedef struct DateSelectionView {
+    /* 0x00 */ u8 place;
+    /* 0x01 */ u8 pad01[3];
+    /* 0x04 */ u8 option;
+} DateSelectionView; /* minimum size 0x05 */
+#endif

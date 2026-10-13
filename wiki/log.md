@@ -10195,3 +10195,271 @@ check pass. Progress: `grand total   5162/6958   958768/2279368  42.1%`.
 One T-0018 row records the remaining large MASTER register issue. The eleven
 unmatched seeds compile with final headers in the handoff; source retains
 only the two original small guarded movie near misses. Changes are uncommitted.
+
+## [2026-10-12] ticket | T-10730 big functions 2 started
+
+Created [[tickets/T-10730-big-functions-2-astra]] and its In Progress card.
+Read the batch isolation/procedure brief, [[decompile-workflow]], and coding
+standards. Scope is four objects from scratchpad/astra15-list.txt; largest
+function first, regdiff for register misses, no Git mutations.
+
+## [2026-10-12] ingest | T-10730 dialogue table layouts
+
+The initial Docker configure/build passed all 27 checksums. Recovered the
+three-level pointer table and eight-byte leaves in main func_8007EF48, plus
+its copied 16-byte selector table. Added documented types and tool-generated
+global declarations to include/main_api.h; recorded evidence in
+[[decompile-workflow]]. A repaired scratch draft now compiles in Docker.
+
+## [2026-10-12] build | T-10730 dialogue draft reaches original instruction count
+
+main func_8007EF48 now compiles to 2,168 instructions, equal to the original.
+Keeping D_800CA2A4 defined in its owning object restores shared upper-address
+stores. Replacing m2c's return-label graph with case breaks and explicit early
+returns, and retaining the selection index across the voice-table accesses,
+removed extra instructions. Regdiff still reports scheduling/register misses;
+no match claimed. All frame offsets can be reproduced with a marked scratch
+padding word; investigate real locals before retaining that workaround.
+
+## [2026-10-12] decision | T-10730 signed lengths and word-pair indexing
+
+Regdiff narrowed the func_8007EF48 draft from 215 register differences to a
+single scheduling-associated difference. Cast the fixed speaker-name strlen
+results to signed halfword before their width calculation; use the leaf words
+with index D_80122CDC * 2; compute the parser substring pointer before the
+counter increment. An indirect byte selector view and line grouping remain
+marked experimental FAKE candidates. Findings are in [[decompile-workflow]];
+a bounded scratch permuter search is running independently.
+
+## [2026-10-12] build | T-10730 retained dialogue near miss and shared layouts
+
+Retained func_8007EF48 behind a ticketed NON_MATCHING fallback in
+src/main/8007C030.c. The standalone draft has 2,168 instructions, matching
+registers/constants, and three scheduling pairs remaining. Added DialogueWork
+to include/main_api.h and EventStateView to include/ovl/EVENT.h. The dialogue
+return-view override follows callee assembly evidence. Default Docker build
+passes all 27 unit checksums. Integrated regdiff exposed a missing forward
+prototype for func_80081128; registered its existing void definition through
+sync_protos rather than retaining an implicit-int conflict. Recovery notes
+and remaining DATE/EVENT/formatter issues are in [[decompile-workflow]] and
+[[tickets/T-10730-big-functions-2-astra]]. Scratch trials remain in a15/.
+
+## [2026-10-13] build | T-10730 portrait seasonal switch recovered
+
+`read_bustup` has an instruction-exact 394-instruction draft after recovering
+the seasonal range chain; integrated it into `src/main/8007C030.c` for whole
+object verification. Recorded the shape in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 relationship selector matched in scratch
+
+`func_8006F524` matches all 394 instructions after recovering the two output
+arrays, five live score/character locals, empty switch case 7, and signed
+club-9 comparison. Integrated into `src/main/8006CB30.c`; main declarations
+registered using `sync_protos.py`. Idioms recorded in [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10730 DATE and EVENT selection-table layouts
+
+Appended three-byte choice and 0x12/0x24 girl-row types to `include/ovl/DATE.h`
+and `include/ovl/EVENT.h`. Documented table dimensions and EVENT record flag
+positions in [[decompile-workflow]]. Existing declarations are preserved;
+large table handlers still require multiplication/lifetime work.
+
+## [2026-10-13] build | T-10730 two matches and dialogue dispatcher near miss
+
+Whole build passed all 27 checksums after the two matches (`read_bustup` and
+`func_8006F524`). Scoped duplicate reuse found no additional copies.
+Retained `func_80082764` behind NON_MATCHING after regdiff reduced it to two
+commutative operand orders; appended `DialogueTables` to `include/main_api.h`.
+See [[decompile-workflow]] and [[tickets/T-10730-big-functions-2-astra]].
+
+## [2026-10-13] build | T-10730 DATE large handler within retention threshold
+
+Unsigned place reload locals, high-mask-first initialization and byte-local
+layout reduce DATE `func_8013272C` to nine differing instructions with the
+original frame and instruction count. Every probe was checked with regdiff;
+a longer permuter pass is running on the close seed. Recorded the reusable
+source shapes and ugen distinction in [[decompile-workflow]].
+
+
+## [2026-10-13] ingest | T-10730 motion records and museum rows
+
+Recovered matching DATE/EVENT motion-record offsets from the original loads
+and stores, and appended their 0x44-byte views plus 0x0F-byte museum rows to
+the two overlay headers. Recorded signed coordinate-halfword semantics,
+record indices, target-array indexing and museum flag offsets in
+[[decompile-workflow]]. Scratch probes still have structural differences;
+these are type-recovery findings, not additional matches.
+
+
+## [2026-10-13] build | T-10730 retain DATE seasonal-event draft
+
+Integrated DATE `func_8013272C` behind a ticketed NON_MATCHING guard. The
+standalone seed is nine instructions from matching; verifying the defining
+unit context next. The inherited overlay `void` prototype is hidden only in
+NON_MATCHING compilation because the recovered body returns a value. The
+append-only header rule is preserved. Allocation aids are marked FAKE.
+See [[tickets/T-10730-big-functions-2-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 DATE header compatibility check
+
+The integrated DATE draft remains nine instructions from matching. The
+full `check_headers.py include src` check rejects its `s32` return type
+against the inherited `void` header declaration; the header-only invocation
+had passed. Requested a narrow exception to the brief's append-only rule.
+Until approved, the prototype is unchanged and no new match is claimed.
+
+
+## [2026-10-13] decision | T-10730 keep prototype-dependent draft pending
+
+Saved the verified nine-instruction DATE body and its integration block in
+scratchpad/a15/date-pending-block.txt, and restored its INCLUDE_ASM while
+awaiting the requested prototype exception. This keeps subsequent complete
+builds reviewable without changing a pre-existing overlay declaration.
+The new layouts and flag declaration remain append-only header additions.
+
+## [2026-10-13] build | T-10730 selector instruction and register match
+
+`func_8006FB4C` reaches the original 722 instructions with no structural or
+register differences. Remaining mismatches are local-buffer stack offsets.
+Recovered the loop, bit equality, word-load view, and plain-char output
+parameter behavior; recorded them in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 selector scratch match
+
+The 722-instruction `func_8006FB4C` seed now matches every instruction word
+and relocation in regdiff after reproducing the 0xA8 frame and sp+0x7C
+count buffer. Plain indexed GameState record accesses match too; the
+interior GameState pointer walk is unnecessary. Cleaning the explicit
+frame padding before integration and complete-build verification.
+
+
+## [2026-10-13] build | T-10730 integrate third selector match
+
+Integrated `func_8006FB4C` from the exact 722-instruction seed into
+src/main/8006CB30.c. The source uses indexed records, plain-char outputs,
+explicit signed return, and documented FAKE frame padding. Running the
+integrated regdiff and complete build; no third match counted until those
+checks finish. Source idioms updated in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 third match verified across all units
+
+The integrated `func_8006FB4C` passes regdiff exactly and the default build
+passes all 27 checksums with header/global checks. Its text contributes
+2,888 bytes. The two previous matches remain verified. Scoped duplicate
+reuse is restricted to the four owned files. See
+[[tickets/T-10730-big-functions-2-astra]] and [[decompile-workflow]].
+
+
+## [2026-10-13] lint | T-10730 inline standards review improvements
+
+Review found that the new dialogue dispatcher could use the recovered work
+and pointer-table aggregates throughout. Regdiff confirms no extra mismatch;
+applied the aggregate views. Moved the new EVENT state type to its own
+appended guard so existing overlay-header content remains untouched. Fixed
+two comment-indent issues. Prototype and global branch checks pass.
+PS1 compiler layout verification is in progress; no host dependency installs.
+
+## [2026-10-13] build | T-10730 recovered type layouts verified on PS1 ABI
+
+Compiled size/offset initializer fixtures with the project IDO toolchain
+and checked their MIPS object data: 46 checks passed across main_api.h,
+DATE.h and EVENT.h. This covers pointer width, aggregate sizes, motion-field
+offsets and the full EventStateView prefix. Fixtures stay in scratchpad/a15/;
+no test dependencies were installed. See [[decompile-workflow]].
+
+## [2026-10-13] build | T-10730 DATE comparison orders recovered
+
+Regdiff now reports only five ugen-register instructions for the 1,441-word
+DATE handler. Local unsigned flag views and one earlier byte copy fix all
+four former comparison swaps. The exact stack frame is preserved. Updated
+[[decompile-workflow]]; prototype-dependent integration remains pending.
+
+
+## [2026-10-13] ingest | T-10730 final halfword-table and seed findings
+
+Appended `DateCounts22`, documented the two 22-byte local copies and signed
+halfword counter views, and corrected D_8011ECD0's stale three-record
+comment using observed DATE entries 96..99. Recorded the full-word RNG
+seed loads and EVENT shop-table asymmetry in [[decompile-workflow]].
+A corrected transition seed stays in scratch for the follow-up batch.
+
+## [2026-10-13] build | T-10730 DATE large handler matches in scratch
+
+Replacing the raw word mask with a bit-17 field at GameState +0xF4 removes
+the final ugen mismatch and the artificial boolean hoist. Regdiff verifies
+all 1,441 instruction words. Appended `DateFlag17` to DATE.h and recorded
+the idiom in [[decompile-workflow]]. Cleaning the frame declaration and
+preparing the body plus one-line prototype fix for handoff; integration
+still awaits the explicitly requested append-only exception.
+
+## [2026-10-13] build | T-10730 DATE whole-unit context check
+
+Standalone DATE `func_8013272C` is exact in regdiff, but the isolated complete
+source build changes one comparison's operand order at 0x80133BFC. The
+whole-overlay SHA1 therefore fails by one instruction. Continuing full-file
+probes; no integrated match is claimed. Prepared a concrete source/prototype
+patch in `scratchpad/a15/date-match-pending.diff`, pending the append-only
+exception. Recorded all 21 handoff seeds in `scratchpad/a15/HANDOFF.md` and
+[[matching-notes]]. The original source/prototype remain unchanged.
+
+## [2026-10-13] build | T-10730 DATE complete overlay verified in isolation
+
+DateSelectionView repairs the full-file operand swap after DateFlag17 repaired
+the temporary sequence. The final scratch source, compiled with the proposed
+signed-return prototype, links to DATE SHA1
+`b5fb83738364a317a590735578f5878077fcda3d` exactly. Appended the selector view to
+include/ovl/DATE.h, refreshed the concrete pending patch and handoff, and
+documented the cross-procedure conversion-pass interaction in
+[[decompile-workflow]] and [[matching-notes]]. The source/prototype exception
+remains pending; integrated progress remains three matches / 6,044 bytes.
+
+## [2026-10-13] ticket | T-10730 inline standards and spec review
+
+Moved [[tickets/T-10730-big-functions-2-astra]] to In Review and synchronized
+[[kanban]] and [[index]]. Complete NON_MATCHING source compilation confirms
+eight resolved differing lines for func_8007EF48 and six for func_80082764.
+Both retain ticketed guards. Reviewed generated main declarations, append-only
+overlay types, C89 syntax, FAKE annotations, source ownership and raw-data
+isolation. Header, branch-prototype, global and 50 PS1 ABI checks pass; the
+last default build is running after the final appended selector view.
+
+## [2026-10-13] lint | T-10730 final retained-scope review passes
+
+Inline Standards and Spec reviews pass for [[tickets/T-10730-big-functions-2-astra]].
+All 27 default checksums, full header/source validation, prototype/global
+guards and 50 PS1 ABI checks pass. Grand total remains 5179/6958 and
+967560/2279368 bytes (42.4%). The isolated DATE patch also passes full
+header/source compatibility; it awaits the explicit append-only exception.
+No unresolved retained-code findings or new T-0018 rows. No Git mutations,
+tool changes, raw-data edits or files outside the authorized scope.
+
+## [2026-10-13] build | T-10730 bounded searches finish
+
+The final DATE permuter runs completed at their 1,800/2,400-second limits:
+no improvement for the five-word seed, best score 1,040 for the older seed.
+Neither beats the manually recovered aggregate/bitfield implementation,
+which already passes the complete isolated overlay checksum. Final dialogue
+local-width, signed-command, line-grouping and parameter variants likewise
+do not improve its two operand-order misses. No additional source changes
+were accepted. All a15 containers have exited; other agents' containers
+were untouched. Results are retained in `scratchpad/a15/` for handoff.
+
+## [2026-10-13] lint | T-10730 DATE byte-count convention
+
+The pending DATE match contains 1,441 non-padding instruction words (5,764
+bytes) plus four restored trailing padding bytes. Its progress-size header is
+0x1688, so eventual integrated progress gains 5,768 bytes. Clarified the ticket
+and final handoff accounting; the three integrated matches remain 6,044 bytes.
+
+## [2026-10-13] ticket | T-10730 four-hour batch complete
+
+Moved [[tickets/T-10730-big-functions-2-astra]] from In Review to Done after
+more than four hours and passing inline Standards/Spec review. Synchronized
+[[kanban]] and [[index]]. Three integrated matches add 6,044 bytes; guarded
+drafts have eight/six resolved differing lines. DATE's additional 5,768-byte
+match is verified as a complete overlay and left in a concrete pending patch
+under the append-only prototype rule. Final progress: 5179/6958 functions,
+967560/2279368 bytes (42.4%); all 27 checksums, header/global/prototype guards
+and 50 ABI checks pass. Zero T-0018 rows. Shared layouts and idioms are in
+[[decompile-workflow]]; all 21 handoff seeds are indexed from [[matching-notes]].
+Changes remain uncommitted, with no Git mutations or tooling changes.

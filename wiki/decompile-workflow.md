@@ -545,3 +545,194 @@ Compile-checked copies of all eleven unmatched assigned drafts are retained
 in `scratchpad/a14/handoff/` with normalized regdiff scores and current-header
 field accesses. These are research seeds, not accepted near misses; only the
 two existing guarded movie handlers remain in repository source.
+
+## T-10730 dialogue handlers and large-function layouts
+
+Main `func_8007EF48` follows a three-level voice pointer table: its fourth
+argument indexes two pointer layers with the two unsigned halfword arguments,
+then accesses eight-byte records. `DialogueVoice8` records hold words at +0
+and +4 passed to `func_80046290`; selection cases 2/5 index those leaves by
+`D_80122CDC`. `DialogueBytes16` is the 16-byte selector table copied from
+`D_800CA36C` and indexed by GameState's girl byte. Both types live in
+`include/main_api.h` for later main and overlay drafts. These are assembly
+layout findings; the large dialogue handler is still being matched.
+
+The dialogue handler's name-width expressions truncate `strlen` to `s16`
+before multiplying by four. This retains the same instructions but corrects
+151 ugen temporary-register differences in the large draft. Case 2/5 voice
+selection uses the two leaf words as `words[D_80122CDC * 2]` and
+`words[D_80122CDC * 2 + 1]`; the struct-element spelling changed index
+lifetime/scheduling. The indirect byte view of the parameter in `switch`
+recovers the shared 0xFF constant in v1 (allocation-only, mark FAKE if kept).
+The current draft has equal instruction count with a small scheduling residual;
+these are measured improvements, not yet a verified match.
+
+The dialogue work area has a minimum 0x7C-byte view, `DialogueWork`, rooted at
+D_80122CD0. The existing reset loop clears words 5..30. Read/write its members
+through one pointer: this prevents the line-counter load at +0x58 from moving
+ahead of the flag clear at +0x20. In the 2,168-instruction dialogue draft this
+removes the last register-associated difference. All work-area accesses can
+use that view with the same result. Existing scalar/array declarations remain
+compatibility views; no repository-wide migration was attempted in this batch.
+
+EVENT's `EventStateView` (in `include/ovl/EVENT.h`) covers the legacy state at
+D_800B0860: date bytes +0x35..0x37, word flags +0xE4, twelve Rec34 records at
++0x1A4, event bytes +0x5CA, three bytes +0x6C8..0x6CA, girl byte +0xEE6, and
+state bytes +0x1295/+0x1296. Minimum extent is 0x1298. The flag at +0xE4 is
+a word bitfield view: `.f.b1` gives the original `lw; sll 30; bgez` test.
+The handler's girl-8 date condition assigns boolean results to the year byte;
+this is visible in three byte stores in the original and must be preserved.
+These are layout/behavior findings; the EVENT handler is not matched yet.
+
+For DATE func_8013272C, a local `GameState *g` turns a 1,453-instruction global
+field draft into the original 1,441 instructions with only two structural
+hunks. Removing m2c's artificial at-register condition variables is necessary.
+The initial mask locals occupy bytes sp+0x33 and sp+0x31: placing a byte result
+local between them reproduces the gap. Temporary registers still differ, so
+this is a diagnostic seed, not a match claim.
+
+Main func_80081190 initializes five `u8[3]` Shift-JIS punctuation strings;
+those C initializers generate its unaligned three-byte copies. Access both
+bytes directly through the input array in the initial scan, rather than
+through m2c's temporary pointer: IDO then promotes the ten punctuation bytes
+into registers as in the original. Reuse the expansion-copy counter across
+cases and recover the outer two-byte delimiter loop before tuning registers.
+
+`read_bustup` matches with a switch on the girl byte and repeated seasonal
+range conditions (`month >= 3 && month < 6`, then 6..8 and 9..11). Remove
+m2c's artificial at-register booleans and gotos rather than retaining their
+SSA shape. The special girl-13 case and final `func_8004284C()` are required.
+
+`func_8006F524` uses a 16-element unsigned-byte rank output and a 16-element
+signed-halfword points output from `func_80053418`. Its matching frame uses
+`u8 rank[20]` (four padding bytes, marked FAKE), `s16 points[16]`, then a
+`GameState *` and five score/character locals. Reuse the five locals across
+the helper call rather than m2c's copied SSA variables. Recover the empty
+outer case 7 explicitly so the first jump table keeps eight entries.
+
+Compare club 9 as `(s32)((u8)flags.b[2] >> 4)`: the cast **after** the shift
+keeps the logical right shift while distinguishing that constant from the
+unsigned `% 9U` divisor. Otherwise uopt shares 9 in an allocated register,
+adding a divide-by-zero check. Keep the other club comparisons unsigned so
+10 remains shared. This allocation spelling is marked FAKE in the source.
+
+DATE `80137154`/`80138934` and EVENT `80114C5C`/`80115C18` select unsigned
+three-byte records from pairs of pointer tables. Girl strides are 0x12 for
+three option pairs and 0x24 for six option pairs; each option has two states
+and each state three bytes. Shared `DateChoice3`/`EventChoice3`,
+`*PlaceChoices18`, and `*RideChoices36` types are appended to the overlay
+headers. EVENT's record flags for the five park rides are `Rec34.pad28[0..4]`.
+Existing integer declarations remain compatibility views. The original
+repeats some girl-stride multiplies even after one girl-byte load; a flat
+byte-offset draft merges them. These handlers are not yet matched.
+
+`DialogueTables` describes the five pointer slots at D_800CA134..D_800CA144:
+signed-halfword group/line cursors, text pointer layers, command byte rows,
+and voice pointer layers. In `func_80082764`, load the next line cursor before
+the next group cursor; this reproduces the original pointer reload order.
+The cursor dereferences must be `s16`, regardless of the old `u8 *` global
+view. The voice-mode byte at GameState +0x3C is read unsigned here. The
+380-instruction draft is retained with only two `addu` operand-order misses.
+
+For DATE `func_8013272C`, storing each place-byte read into an unsigned local
+inside its condition, `(place = D_800CA2F8)`, preserves the original reload
+points while removing the month/place scheduling hunks and most reversed
+comparison operands. Declare that local after the three byte locals (or in
+place of m2c's unused word): the frame is 0x38 and the saved rank/flag bytes
+are +0x33/+0x31. Compute the high-bit mask before the low-seven-bit mask.
+A separate `rank < 3U` boolean before the girl-8 autumn condition changes
+ugen's temporary sequence throughout this large function; the best current
+seed has 1,441 instructions, four swapped comparisons and five register-only
+instructions. Treat this boolean placement as a FAKE allocation aid until
+an ordinary source shape replaces it. Moving it or inlining it rotates
+hundreds of temporaries; this is ugen behavior, not a uopt color choice.
+
+
+DATE `func_8013FD6C` and EVENT `func_8011B848` access matching 0x44-byte
+motion records rooted at D_8011ECD0 and D_800E9620 respectively. The first
+spawn uses index `95 + count`, while the update loop uses `96 + i`. Appended
+`DateMotion44`/`EventMotion44` expose byte fields +2/+3/+7, halfwords
++8/+0x16/+0x18, fixed-point words +0x24/+0x28 (signed high halfwords at
++0x26/+0x2A), and a signed word +0x2C. Keep the table index reloaded across
+random calls. Target positions use a `GsWord` array (DATE D_8015BCB4,
+EVENT D_801257DC); the spawn writes element `count - 1`, update reads `i`.
+The handlers remain scratch drafts, not matches. Do not confuse decimal
+22/24 field offsets with hexadecimal 0x10/0x12.
+
+The museum handlers use five three-byte options per girl, stride 0x0F:
+`DateMuseumChoices15`/`EventMuseumChoices15`. DATE's museum flags occupy
+Rec38.unk_14[11..14]; EVENT's flags occupy Rec34.pad18[6..9]. Selector 5
+is a special override path after the initial table reads. Existing table
+symbols remain integer compatibility views; typed casts retain the widths.
+
+`func_8006FB4C` needs an ordinary girl loop around its switch, followed by
+its extra-character tests. m2c's early counter increments and join labels
+obscure that shape. Test Rec38 bit 14 as `== 1`, rather than only its truth
+value: the original extracts the bit and compares against a shared one.
+Its initial bit-1 test remains a truth-value test. The word at GameState
++0x10F8 must be loaded through `GsWord.w`, not the canonical byte member.
+Plain `char *` output parameters and a signed result preserve the two
+separate constant-one ranges. Explicit `s8 *` merges the byte-store one
+with the signed helper-comparison one; explicit `u8 *` changes additional
+ranges. This is an IDO source-type distinction despite identical byte stores.
+The 722-instruction seed is exact except for its local-buffer stack offsets;
+frame placement is still being verified.
+
+
+The final `func_8006FB4C` scratch match uses indexed GameState records,
+`s32` return and plain `char *` outputs. No interior GameState pointer walk
+or unsigned byte-store casts are needed. `counts[40]` followed by an unused
+32-byte frame pad reproduces sp+0x7C in the 0xA8 frame; only eleven counts
+are exercised, so both excess storage and padding are marked FAKE. Removed
+the m2c unused scalar temporaries before fixing this layout.
+
+
+The retained dialogue dispatcher now uses `DialogueWork` and `DialogueTables`
+throughout its recovered body. Those aggregate views preserve the original
+380 instructions and the same two operand-order misses; keeping the scalar
+aliases in new code is unnecessary. Older matched users retain their header
+compatibility views. All new overlay declarations are appended in guarded
+blocks, including `EventStateView`.
+
+Further DATE seasonal-handler probes reduce the gap to five ugen-register
+instructions. Assign the unsigned D_8015B690/D_8015B664 reads to a local in
+their comparisons, and copy `(u8)D_8015B680` before the girl-8 block. Together
+with the selector copy before girl 10, these restore all comparison operand
+orders without changing load placement. The remaining rank comparison uses
+t6 instead of at and rotates the following flag-word load from t6 to t8.
+The draft's returning signature conflicts with DATE.h's inherited void
+prototype; it stays in scratch while the append-only exception is pending.
+
+
+DATE `func_8013A94C` copies two signed-halfword arrays of eleven elements
+from D_8015B75C and D_8015B774: `DateCounts22` records the 22-byte copy
+extent (the globals are 24 bytes apart). D_8015BF1C and D_8015BF20 are
+read/written as signed halfwords in this handler despite inherited byte
+header views; use explicit halfword address views in a draft. Its RNG seed,
+and main `func_8007C8D8`'s seed, load the full word at GameState +0x10F8.
+Do not accept m2c's canonical byte member as the seed value.
+
+EVENT's third shop-choice path (`func_80114C5C`) reads its second result
+row through D_8012522C, while the first two paths use D_80125234. Preserve
+this asymmetry. Its option flags are Rec34.pad10[5], pad10[6], and unk_17.
+The typed rows reduce drafting errors but these handlers are not matches.
+
+The DATE seasonal handler now has an exact 1,441-instruction scratch match:
+model GameState +0xF4 as the appended `DateFlag17` word view and test `.b17`.
+This removes the artificial `rank < 3` hoist and fixes the temporary sequence
+throughout the function. A hand-written word mask emits the same broad
+branch shape but produces the wrong ugen temporary identities. This is a
+concrete bitfield recovery, not evidence for a global allocator patch.
+Integration still needs the returning-prototype exception requested above.
+
+The DATE handler's final full-file check exposed one more `bne` operand swap
+than its standalone draft. The unsigned-load conversion pass tracks rewritten
+global locations across procedures; a narrow global used elsewhere in the
+object can therefore affect the final comparison order. `DateSelectionView`
+models the byte slots at D_800CA2F8 and +4, with only the observed five-byte
+extent declared. Read the option through that aggregate view. Together with
+DateFlag17 this yields the original complete DATE overlay SHA1 in an isolated
+build. Renaming locals, reordering declarations, reversing `==`, and changing
+local signedness did not fix the whole-file gap. The prepared implementation
+is in `scratchpad/a15/date-match-pending.diff`; integration awaits the existing
+void-to-s32 prototype exception. Do not count it in main progress yet.
