@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-13
+updated: 2026-10-14
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -1856,3 +1856,17 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TAIIKU | `func_80139FE4` | regorder | T-11040: guarded 205/204-instruction draft, every opcode and the 0x58 frame agree (array at sp+0x1C, four scalar slots), about 80 register lines. The loop-2 pointer constant (D_800E62B8) takes $a0 and the record address (i * 0x44) $a3 where the original has $a3 and $a1; regdiff: bit 7 is coloured before bit 64, the original has the other order. The unk_F80 flag word is promoted in the original ($a2) but "no profit" in the draft. |
 | main/800674B0 | `func_8006B648` | counted loop | T-11040: guarded 10-line draft (frame, array slots and registers match). Loop test is `li at,11; bne s0,at` in the draft against `slti at,s0,11; bnez` in the original (uopt normalises the counted loop); the cancel entry constants (li a0,40 / a1,8) come after li t9,64 / t0,16. do-while, `++i < n`, s8 counters and sign-extended forms did not change it. |
 | NAME_ENT/80139740 | `func_8014231C` | setup order | T-11040: guarded 4-line draft. The first loop's setup emits `addiu v0,D_8011ECD0` before `addiu v1,D_8011F044`; the original has them the other way. Eight-record stride-0x44 loop (IDO unrolls it by four) reproduces the original load order; pointer, for, while and local-limit forms of loop 1 all keep the order. |
+| TT/80133970 | `func_80134470` | regorder | T-11500: matched (was a 1-line T-11000 row): `angle = call(); angle += k;` keeps the call result as the first `addu` operand; a separate `base` copy reversed it |
+| TT/80146BE0 | `func_80147150` | sched | T-11500: matched (T-11000 row): packet stores in the order x, y, h, w; the other orders let ugen pull the `sh` stores into the `lh` delay slots |
+| TT/80133970 | `func_801349B0` | regorder | T-11500: matched (T-11000 row): `if (c) { x++; } else { return; }` ends the count's live range before the call block, whose argument registers uopt forbids (`updateforbidden`), so it gets a1 |
+| TT/80133970 | `func_80134BBC` | phantom | T-11500: `n` loop bound now gives `li s2,0x80`; still missing the unused `li s3,0x40` and the early `D_80158A60` load into v1 (about 47 lines) |
+| TT/80142350 | `func_80142350` | regorder | T-11500: trace shows constant 1 touches entry, dispatch and both else blocks with a0 free, so it takes a0; the original needs a0 (and v0 for the pointer) blocked by an entry-block use not visible in the asm; permuter 600 s best score 10 |
+| TT/8013A3E0 | `func_8013B6C8` | regorder | T-11500: guarded, 13 lines: the 0x368 value of the `>= 8` test is in $v0, the original keeps it in $v1 to the final increments; increment order 364, 366, 368 is the best |
+| TT/80147380 | `func_80147644` | regorder | T-11500: guarded, 18 lines: hoisted constants and the counter in other s-registers (original i=s3, 0x50=s4, 0x3C8B=s5); first packet `lui at` later |
+| TT/80142D40 | `func_80144A04` | regorder | T-11500: guarded, 3 lines: the constant 9 stored twice is in $v0, original $a0; needs an `s32` definition without return (with `void` all temps shift by two) |
+| TT/80135360 | `func_80136244` | regorder | T-11500: guarded, register naming only (41 rows): raw u16 load and its s16 copy take v1/v0 instead of v0/v1; case-1 `li t6/t7` swapped; jump table and frame match |
+| TT/801478D0 | `func_80147A18` | regorder | T-11500: arg0 is not copied to s2 early (a0 stays live); frame 112 vs 120; about 106 rows; not kept |
+| TT/8014AF00 | `func_8014C84C` | regorder | T-11500: the original keeps the packet in $v0 for the first block and copies it to $a1 later; we keep $a1 throughout (53 lines); not kept |
+| TT/80133970 | `func_80134E20` | regorder | T-11500: the original avoids v0/v1 (0xF0 in a0, arg0 in a3, buffer in t0); 176 rows; not kept |
+| TT/80135360 | `func_80135B5C` | other | T-11500: 6-trip slot loop with 4-unroll remainder; the original builds the base with `li a0,2; sll/addu/sll`, IDO folds it to `addiu v0,a1,40` in every loop form (as EN_NICHI `func_80132834`) |
+| TT/8013A3E0 | `func_8013AE3C` | regorder | T-11500: 7-case switch with `abs`; all but `p` match ($a1 in the original, $v1 here, as the original's v0/v1/a0 hold case-5 values); about 100 rows; not kept |
