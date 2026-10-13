@@ -677,6 +677,7 @@ extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
 extern u8 D_800B6730[];
+extern s8 D_800B6740;
 extern s32 D_800B6748;
 extern s32 D_800B674C;
 extern s32 D_800B6750;
