@@ -155,7 +155,7 @@ void func_80135FA8(void) {
 /* T-11500 near miss (41 listing rows, register naming only): structure, jump table and frame match; the raw u16 load of +0x3AA is $v1 and its s16 copy $v0 (original: raw $v0, copy $v1), which shifts the later temps, and the case-1 constants of the D_801579D4/D_80158A5C stores take t7/t6 instead of t6/t7. Permuter 300 s: best 665 of base 720 */
 #ifdef NON_MATCHING
 void func_80136244(void) {
-    s32 pad;
+    s32 pad; /* FAKE: unused home declared first keeps the frame layout, real source unknown. T-11500 */
     u8 *p;
     u8 k;
     s16 v;
