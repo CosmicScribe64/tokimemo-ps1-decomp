@@ -13053,3 +13053,18 @@ No matches. Notes in [[matching-notes]] section "T-11050". See [[tickets/T-11050
 ## [2026-10-13] ticket | T-11070 started
 Opened [[tickets/T-11070-small-functions-gemini-30]] (In Progress): 12 functions (2,780 bytes) in `src/ovl/EVENT/8010FE10.c`.
 
+
+## [2026-10-13] ticket | T-11090 started
+Opened [[tickets/T-11090-ingest-english-patch-notes]] (In Progress): ingest the English-patch internals notes as a facts-only reference.
+
+## [2026-10-13] ingest | English patch internals notes
+New page [[ref-english-patch]]: about 150 addresses (overlay loader, CD, boot, text renderer, font, script/dialogue, menus) with our symbol names and meanings. Source `docs/game-internals.md` of the gothamor English-patch repo (no license): facts only, own words, nothing else fetched. Indexed in [[index]].
+
+## [2026-10-13] decision | T-11090 renames
+50 placeholders renamed: 30 main-exe names in `config/symbol_addrs.txt` (15 functions, 15 data), 17 DATE, 2 NAME_ENT and 1 SHOUGATU in `config/symbols_<OVL>.txt` (registered in the overlay yamls); uses in `src` and `include` updated, TT and GameState-range globals untouched. Note in the ticket: delete old-name `asm/**/*.s` and the split stamps after renaming, or rodata_pieces.py attaches the strings to the stale file.
+
+## [2026-10-13] build | T-11090 verification
+`tools/docker.sh ninja` 27/27 checksums OK; `tools/check_headers.py`, `tools/check_symbols.py` and the globals check OK.
+
+## [2026-10-13] ticket | T-11090 Done
+Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on [[kanban]].
