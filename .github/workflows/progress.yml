@@ -75,9 +75,18 @@ jobs:
         if: steps.bundle.outputs.available == 'true'
         # The label is what tools/docker.sh compares; without it the script would rebuild the
         # image from Docker Hub (and hit the pull limit the BASE mirror avoids).
+        # The ECR mirror sometimes answers 429 (data limit). Retry with a growing pause,
+        # then fall back to Docker Hub for the last try.
         run: |
-          docker build --platform linux/amd64 --build-arg BASE=public.ecr.aws/docker/library/ubuntu:22.04 \
-            --label "dockerfile.sha256=$(sha256sum tools/Dockerfile | cut -d' ' -f1)" -t tokimemo-decomp tools
+          label="dockerfile.sha256=$(sha256sum tools/Dockerfile | cut -d' ' -f1)"
+          for base in public.ecr.aws/docker/library/ubuntu:22.04 public.ecr.aws/docker/library/ubuntu:22.04 \
+                      public.ecr.aws/docker/library/ubuntu:22.04 ubuntu:22.04; do
+            if docker build --platform linux/amd64 --build-arg BASE=$base --label "$label" -t tokimemo-decomp tools; then
+              exit 0
+            fi
+            sleep $(( ${pause:-30} )); pause=$(( ${pause:-30} * 2 ))
+          done
+          exit 1
 
       - name: Configure and build
         if: steps.bundle.outputs.available == 'true'
