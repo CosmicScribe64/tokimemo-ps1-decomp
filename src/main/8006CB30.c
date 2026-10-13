@@ -1111,8 +1111,6 @@ void func_80072CA0(void) {
     D_800E6280.unk_1104.w += 1;
     switch (D_800E6280.unk_110A) {
     case 0:
-/* NON_MATCHING: T-11020, control flow equal (265/266 insns); locals s0/s1/s2 allocate differently, frame 0x40 vs 0x50 (original loads D_800E639A straight into s1) */
-#ifdef NON_MATCHING
         func_80072D70();
         return;
     case 1:
@@ -1138,10 +1136,9 @@ void func_80072CA0(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072D70);
-#endif
 
+/* NON_MATCHING: T-11020, control flow equal (265/266 insns); locals s0/s1/s2 allocate differently, frame 0x40 vs 0x50 (original loads D_800E639A straight into s1) */
+#ifdef NON_MATCHING
 s32 func_80072D70(void) {
     s32 sp3C;
     s32 sp38;
@@ -1150,8 +1147,7 @@ s32 func_80072D70(void) {
     s32 s2;
 
     sp3C = 0;
-    s1 = D_800E6280.unk_118.unk_02;
-    s1 = (s1 / 8) + 0xCC;
+    s1 = ((s16) D_800E6280.unk_118.unk_02 / 8) + 0xCC;
     if (s1 >= 0xFF) {
         s1 = 0xFE;
     }
@@ -1254,6 +1250,9 @@ s32 func_80072D70(void) {
         func_80042908(0xFF);
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072D70);
+#endif
 
 s32 func_80073198(void) {
     switch (*(u8 *)&D_800E6280.unk_110D) {
