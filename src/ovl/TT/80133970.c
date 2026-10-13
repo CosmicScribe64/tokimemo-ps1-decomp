@@ -101,11 +101,7 @@ s32 func_80133BE0(u8 *arg0, u8 *arg1) {
     func_8014D260(dy >> 16, dx >> 16);
 }
 
-void func_80133C1C(o, kind, idx)
-    TtActor68 *o;
-    u16 kind;
-    s32 idx;
-{
+void func_80133C1C(TtActor68 *o, u16 kind, s32 idx) {
     o->unk_00 = 1;
     o->unk_02 = kind;
     o->unk_10 = 1;
@@ -171,17 +167,258 @@ void func_80133D14(s16 x, s16 y, s32 speed, u16 kind) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133E30);
+void func_80133E30(s16 x, s16 y, s32 speed, s32 angle, u16 kind) {
+    TtActor68 *object;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80133FB0);
+    object = (TtActor68 *)func_80133BA4(D_80158AA0, D_80158AA0 + 0x3400);
+    if (object != 0) {
+        object->unk_20 = x << 16;
+        object->unk_24 = y << 16;
+        object->unk_28 = func_800A0140(angle) * speed;
+        object->unk_2C = func_800A0070(angle) * speed;
+        switch (kind) {
+        case 0xA0:
+            func_80133C1C(object, 0xA0, 0x12);
+            break;
+        case 0xA1:
+            func_80133C1C(object, 0xA1, 0x13);
+            break;
+        case 0xA8:
+            func_80133C1C(object, 0xA8, 0x15);
+            break;
+        case 0xA9:
+            func_80133C1C(object, 0xA9, 0x16);
+            break;
+        case 0xAC:
+            object->unk_60 = angle + 0x800;
+            object->unk_58 = 0;
+            func_80133C1C(object, 0xAC, 0x14);
+            object->unk_4C = (u8 *)&D_80155B30[2];
+            break;
+        }
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134178);
+void func_80133FB0(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
+    TtActor68 *object;
+    u8 *source;
+    s32 angle;
+    s32 i;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_801342CC);
+    object = (TtActor68 *)D_80158AA0;
+    source = D_80158A74;
+    for (i = 0; i < 3; i++) {
+        object = (TtActor68 *)func_80133BA4((u8 *)object, (u8 *)object + 0x3400);
+        if (object == 0) {
+            break;
+        }
+        object->unk_20 = x << 16;
+        object->unk_24 = y << 16;
+        angle = func_80133BE0((u8 *)object, source);
+        switch (i) {
+        case 1:
+            angle = angle - spread;
+            break;
+        case 2:
+            angle = angle + spread;
+            break;
+        }
+        object->unk_28 = func_800A0140(angle) * speed;
+        object->unk_2C = func_800A0070(angle) * speed;
+        switch (kind) {
+        case 0xA0:
+            func_80133C1C(object, 0xA0, 0x12);
+            break;
+        case 0xA2:
+            func_80133C1C(object, 0xA2, 0x14);
+            break;
+        case 0xA8:
+            func_80133C1C(object, 0xA8, 0x15);
+            break;
+        case 0xAA:
+            func_80133C1C(object, 0xAA, 0x17);
+            break;
+        }
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+    }
+}
 
+void func_80134178(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
+    TtActor68 *object;
+    s32 angle;
+    s32 i;
+
+    object = (TtActor68 *)D_80158AA0;
+    for (i = 0; i < 3; i++) {
+        object = (TtActor68 *)func_80133BA4((u8 *)object, (u8 *)object + 0x3400);
+        if (object == 0) {
+            break;
+        }
+        object->unk_20 = x << 16;
+        object->unk_24 = y << 16;
+        angle = 0x400;
+        switch (i) {
+        case 1:
+            angle = 0x400 - spread;
+            break;
+        case 2:
+            angle = spread + 0x400;
+            break;
+        }
+        object->unk_28 = func_800A0140(angle) * speed;
+        object->unk_2C = func_800A0070(angle) * speed;
+        switch (kind) {
+        case 0xA8:
+            func_80133C1C(object, 0xA8, 0x15);
+            break;
+        }
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+    }
+}
+
+void func_801342CC(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
+    TtActor68 *object;
+    u8 *source;
+    s32 half;
+    s32 angle;
+    s32 i;
+
+    object = (TtActor68 *)D_80158AA0;
+    i = 0;
+    source = D_80158A74;
+    for (;;) {
+        object = (TtActor68 *)func_80133BA4((u8 *)object, (u8 *)object + 0x3400);
+        if (object == 0) {
+            break;
+        }
+        object->unk_20 = x << 16;
+        object->unk_24 = y << 16;
+        half = spread / 2;
+        angle = func_80133BE0((u8 *)object, source);
+        if (i & 1) {
+            angle = (angle + half) - ((i / 2 + 1) * spread);
+        } else {
+            angle = angle + half + (i / 2) * spread;
+        }
+        object->unk_28 = func_800A0140(angle) * speed;
+        object->unk_2C = func_800A0070(angle) * speed;
+        if (kind == 0xA0) {
+            func_80133C1C(object, 0xA0, 0x12);
+        }
+        i++;
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+        if (i == 4) {
+            break;
+        }
+    }
+}
+
+/* NON_MATCHING: T-11000, 1 line: addu s1,v0,t6 in the original, addu s1,t6,v0 here (even-index branch); no operand order or += form changes it */
+#ifdef NON_MATCHING
+void func_80134470(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
+    TtActor68 *object;
+    u8 *source;
+    s32 angle;
+    s32 base;
+    s32 i;
+
+    object = (TtActor68 *)D_80158AA0;
+    source = D_80158A74;
+    for (i = 0; i < 9; i++) {
+        object = (TtActor68 *)func_80133BA4((u8 *)object, (u8 *)object + 0x3400);
+        if (object == 0) {
+            break;
+        }
+        object->unk_20 = x << 16;
+        object->unk_24 = y << 16;
+        base = func_80133BE0((u8 *)object, source);
+        angle = base;
+        if (i != 0) {
+            if (i & 1) {
+                angle = base - ((i / 2 + 1) * spread);
+            } else {
+                angle = base + (i / 2) * spread;
+            }
+        }
+        object->unk_28 = func_800A0140(angle) * speed;
+        object->unk_2C = func_800A0070(angle) * speed;
+        switch (kind) {
+        case 0xA0:
+            func_80133C1C(object, 0xA0, 0x12);
+            break;
+        case 0xAA:
+            func_80133C1C(object, 0xAA, 0x17);
+            break;
+        }
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134470);
+#endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134630);
+void func_80134630(s16 x, s16 y, s32 speed, u16 kind) {
+    TtActor68 *object;
+    s32 i;
+
+    object = (TtActor68 *)D_80158AA0;
+    for (i = 0; i < 2; i++) {
+        object = (TtActor68 *)func_80133BA4((u8 *)object, (u8 *)object + 0x3400);
+        if (object == 0) {
+            break;
+        }
+        object->unk_20 = ((x - i * 0x30) + 0x18) << 16;
+        object->unk_24 = y << 16;
+        object->unk_28 = 0;
+        object->unk_2C = speed << 16;
+        switch (kind) {
+        case 0xA0:
+            func_80133C1C(object, 0xA0, 0x12);
+            break;
+        case 0xA2:
+            func_80133C1C(object, 0xA2, 0x14);
+            break;
+        }
+        object->unk_04 = 0x40;
+        object->unk_0A = 0;
+        object->unk_08 = 0;
+        object->unk_06 = 0;
+        object->unk_0F = 0;
+        object->unk_0E = 0;
+        object->unk_0D = 0;
+    }
+}
 
 /* NON_MATCHING: T-10510, 30 lines: object in v0 / constants 1 and 0 in a2 and a0 in the original */
 #ifdef NON_MATCHING
@@ -273,7 +510,46 @@ void func_80134924(u8 *arg0) {
     }
 }
 
+/* NON_MATCHING: T-11000, 7 lines: lhu count lands in a2 (original a1) and the spilled v sits at sp+0x38 instead of 0x34 (target pointer declared first takes a slot) */
+#ifdef NON_MATCHING
+void func_801349B0(TtActor68 *p) {
+    u8 *target;
+    s32 v;
+    s32 angle;
+
+    target = D_80158A74;
+    v = p->unk_60;
+    if (p->unk_58 < 0x100) {
+        p->unk_58 = p->unk_58 + 1;
+        angle = func_8014D260((*(s32 *)(target + 0x24) - p->unk_24) >> 16,
+                              (*(s32 *)(target + 0x20) - p->unk_20) >> 16);
+        if (v < 0x800) {
+            if (v < ((angle + 0x800) & 0xFFF) && ((angle + 0x800) & 0xFFF) < v + 0x800) {
+                v += 0x18;
+            } else {
+                v -= 0x18;
+            }
+        }
+        if (v >= 0x800) {
+            if (((angle + 0x800) & 0xFFF) < v && v - 0x800 < ((angle + 0x800) & 0xFFF)) {
+                v -= 0x18;
+            } else {
+                v += 0x18;
+            }
+        }
+        if (v < 0) {
+            v += 0x1000;
+        }
+        v &= 0xFFF;
+        angle = v - 0x800;
+        p->unk_28 = func_800A0140(angle) * 0x18;
+        p->unk_2C = func_800A0070(angle) * 0x18;
+        p->unk_60 = v;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_801349B0);
+#endif
 
 void func_80134ADC(TtActor68 *p) {
     TtSceneView *scene;
@@ -317,7 +593,37 @@ void func_80134ADC(TtActor68 *p) {
     p->unk_58++;
 }
 
+/* NON_MATCHING: T-11000, 7 hoisted-constant lines: the original keeps 0x80 and an unused 0x40 (s2, s3) ahead of 0xAD/0xAB/12/0x30/0xAC in s-registers, uses s8 too; same instruction body otherwise */
+#ifdef NON_MATCHING
+void func_80134BBC(void) {
+    TtActor68 *object;
+    s32 i;
+
+    object = (TtActor68 *)D_80158AA0;
+    for (i = 0; i != 0x80; i++, object++) {
+        if (object->unk_00 != 0) {
+            if (object->unk_02 == 0xAD) {
+                func_80134ADC(object);
+            } else if (object->unk_02 == 0xAC) {
+                func_801349B0(object);
+            }
+            func_80134924((u8 *)object);
+            if (object->unk_02 == 0xAB) {
+                object->unk_3E = object->unk_41 / 12 + 0xF;
+                object->unk_3E += *(u16 *)(D_80158A60 + 0xA) & 1;
+                object->unk_41++;
+                if (object->unk_41 >= 0x31) {
+                    object->unk_41 = 0x30;
+                }
+            } else {
+                func_80132000((u8 *)object + 0x38, (u8 *)object + 0x56, (u8 *)object + 0x57);
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134BBC);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134D0C);
 
