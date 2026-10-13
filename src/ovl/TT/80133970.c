@@ -503,46 +503,43 @@ void func_80134924(u8 *arg0) {
     }
 }
 
-/* NON_MATCHING: T-11000, 7 lines: lhu count lands in a2 (original a1) and the spilled v sits at sp+0x38 instead of 0x34 (target pointer declared first takes a slot) */
-#ifdef NON_MATCHING
 void func_801349B0(TtActor68 *p) {
     u8 *target;
-    s32 v;
     s32 angle;
+    s32 v;
 
     target = D_80158A74;
     v = p->unk_60;
     if (p->unk_58 < 0x100) {
         p->unk_58 = p->unk_58 + 1;
-        angle = func_8014D260((*(s32 *)(target + 0x24) - p->unk_24) >> 16,
-                              (*(s32 *)(target + 0x20) - p->unk_20) >> 16);
-        if (v < 0x800) {
-            if (v < ((angle + 0x800) & 0xFFF) && ((angle + 0x800) & 0xFFF) < v + 0x800) {
-                v += 0x18;
-            } else {
-                v -= 0x18;
-            }
-        }
-        if (v >= 0x800) {
-            if (((angle + 0x800) & 0xFFF) < v && v - 0x800 < ((angle + 0x800) & 0xFFF)) {
-                v -= 0x18;
-            } else {
-                v += 0x18;
-            }
-        }
-        if (v < 0) {
-            v += 0x1000;
-        }
-        v &= 0xFFF;
-        angle = v - 0x800;
-        p->unk_28 = func_800A0140(angle) * 0x18;
-        p->unk_2C = func_800A0070(angle) * 0x18;
-        p->unk_60 = v;
+    } else {
+        return;
     }
+    angle = func_8014D260((*(s32 *)(target + 0x24) - p->unk_24) >> 16,
+                          (*(s32 *)(target + 0x20) - p->unk_20) >> 16);
+    if (v < 0x800) {
+        if (v < ((angle + 0x800) & 0xFFF) && ((angle + 0x800) & 0xFFF) < v + 0x800) {
+            v += 0x18;
+        } else {
+            v -= 0x18;
+        }
+    }
+    if (v >= 0x800) {
+        if (((angle + 0x800) & 0xFFF) < v && v - 0x800 < ((angle + 0x800) & 0xFFF)) {
+            v -= 0x18;
+        } else {
+            v += 0x18;
+        }
+    }
+    if (v < 0) {
+        v += 0x1000;
+    }
+    v &= 0xFFF;
+    angle = v - 0x800;
+    p->unk_28 = func_800A0140(angle) * 0x18;
+    p->unk_2C = func_800A0070(angle) * 0x18;
+    p->unk_60 = v;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_801349B0);
-#endif
 
 void func_80134ADC(TtActor68 *p) {
     TtSceneView *scene;
