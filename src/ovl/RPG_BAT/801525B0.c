@@ -3,7 +3,34 @@
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801525B0);
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801528DC);
+void func_801528DC(void) {
+    s32 i;
+    u8 *p;
+
+    p = (u8 *)&D_800E6280.unk_110C;
+    if (D_800E6280.unk_1100 == 0) {
+        D_800E6280.unk_1100 += 1;
+        *p = 0x80;
+    }
+    i = 0;
+    do {
+        D_8011ECD0[i * 0x44 + 0x1107] = *p;
+        D_800E6280.unk_03A = *p;
+        if (D_8015EB98 == 0x20000 && *p >= 0x61) {
+            D_80120E93 = 0x60;
+        }
+        i++;
+    } while (D_80120650 != &D_8011ECD0[i * 0x44]);
+    *p -= 2;
+    if (*p == 0) {
+        func_8004E58C();
+        D_800E6280.unk_03A = 0x80;
+        func_80048EB8(0);
+        func_8006BC28(0);
+        func_800438F0(1);
+        func_80042808();
+    }
+}
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_801529B4);
 
