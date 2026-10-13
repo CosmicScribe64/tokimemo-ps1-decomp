@@ -13053,3 +13053,6 @@ No matches. Notes in [[matching-notes]] section "T-11050". See [[tickets/T-11050
 ## [2026-10-13] ticket | T-11070 started
 Opened [[tickets/T-11070-small-functions-gemini-30]] (In Progress): 12 functions (2,780 bytes) in `src/ovl/EVENT/8010FE10.c`.
 
+
+## [2026-10-13] ticket | T-11080 started
+Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 48 big functions in NAME_ENT, main 8006CB30, TAIIKU and DATE.

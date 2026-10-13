@@ -179,9 +179,8 @@ void func_801346FC(void) {
         func_80137440();
         func_801365C8();
         D_80149298.word += 0x18000;
-        panel_x = ((DisplayActor44 *)D_8011ECD0)[96].unk_26 - 1;
-        ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = panel_x;
-        if (panel_x < -0xAF) {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_26--;
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_26 < -0xAF) {
             ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0xB0;
         }
         if (D_80149298.halves.high >= 0x280) {
@@ -641,7 +640,48 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
 
+#ifdef NON_MATCHING
+/* Falls through without a return statement: $v0 still holds D_8014929A. */
+s32 func_80137C44(void) {
+    s32 i;
+    TaiSlot24 *slot;
+    s32 dx;
+
+    slot = (TaiSlot24 *)&D_80149208;
+    for (i = 0; i < 4; i++, slot++) {
+        if (slot->pad_00[0] != 0) {
+            ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 - 8;
+            if (i == 0) {
+                if (D_80122E94 == 1) {
+                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + D_801491D8].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
+                } else {
+                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
+                }
+            } else {
+                ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[slot->pad_03[0]];
+            }
+            if (i + 0x90 == ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18) {
+                if (D_80122E94 == 1) {
+                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = D_80149320[D_801491DC] * 6 + 5;
+                } else {
+                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + 5;
+                }
+            }
+        }
+    }
+    slot = (TaiSlot24 *)&D_80149208;
+    for (i = 0; i < 3; i++, slot++) {
+        if (((slot[1].pad_03[2] == 2 && ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_02 != 0) || slot[1].pad_00[0] == 1) &&
+            (dx = slot[1].unk_20.halves.high - D_80149298.halves.high, dx < 0x140) && dx >= -0x13F) {
+            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0xA4;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137C44);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137EA8);
 

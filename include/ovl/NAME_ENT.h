@@ -422,3 +422,6 @@ extern u8 D_8014CC7B;
 extern u8 D_8014CC83;
 extern u8 D_8014CC8F;
 #endif
+
+/* T-11080 forward declarations. */
+void func_8013A9C8(void);
