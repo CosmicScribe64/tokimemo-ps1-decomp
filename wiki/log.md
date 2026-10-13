@@ -11435,3 +11435,750 @@ Started [[tickets/T-10910-wave-17-list-1]] (In Progress).
 
 ## [2026-10-13] build | T-10910 wave 17 list 1 done
 [[tickets/T-10910-wave-17-list-1]]: 4 functions matched (1,476 bytes: RPG_BAT `func_80153A60`, TT `func_8014A814`, `func_80147D08`, TAIIKU `func_801339C4`), data islands for DATE/GEKO/SHOUGATU, near misses guarded, rows in [[data/t0018-cases]], recipes in [[matching-notes]]. ninja 27/27 OK.
+
+## [2026-10-13] ticket | T-10860 big functions 4
+
+Started [[tickets/T-10860-big-functions-4-astra]] in a18; initial worktree clean.
+Read shared brief, [[register-cheatsheet]], [[decompile-workflow]], standards and
+local setup. Restrict C edits to the five assigned objects, append header types,
+and leave changes uncommitted for the orchestrator. Largest target is TEL
+func_8013B54C (2,428 bytes).
+
+## [2026-10-13] build | T-10860 initialize worktree outputs
+
+Initial m2c/ninja calls found no generated asm or build.ninja. Started Docker
+configure and full build to establish the baseline before matching. No tool or
+config source changes; see [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 baseline and first draft
+
+Docker configure/full build passed all 27 checksums and header/global guards.
+Generated the assigned m2c drafts in scratchpad/a18. TEL func_8013B54C uses
+256-byte text and 32-byte name stack buffers plus a saved selector, and its
+existing header requires an s32 fallthrough definition. Added its missing
+local text/XA declarations and a temporary guarded draft for comparison.
+[[tickets/T-10860-big-functions-4-astra]] tracks the ongoing work.
+
+## [2026-10-13] ingest | T-10860 TEL dialogue layout and exact function
+
+TEL func_8013B54C passes literal linked funcdiff (2,192 code bytes; list's
+2,428 includes associated rodata). regdiff identified a separate selector
+range in v0. Documented the scalar selector view and marked frame padding in
+[[decompile-workflow]]. Moved TelEntryFlags to include/ovl/TEL.h for reuse.
+Whole-overlay verification follows before the match is counted.
+
+## [2026-10-13] build | T-10860 two TEL matches
+
+TEL func_8013ADC0 (1,932 code bytes) and func_8013B54C (2,192) are active,
+literal-byte verified, and pass TEL SHA1. Total: 2 functions / 4,124 code bytes.
+Recorded buffer frame differences in [[decompile-workflow]]. Started the
+NAME_ENT func_80149E3C draft and routed its missing SDK strncat prototype
+through sync_protos.py. [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 prototype sync scope repair
+
+sync_protos.py --fix discovered many unrelated public prototypes, edited 18
+unowned source/header files, and introduced three alias conflicts plus two
+duplicate declarations. Restored those tool-generated edits by writing their
+original content back (no Git mutations), retaining only its generated strncat
+prototype for the new NAME_ENT draft. No tooling changes. Detailed output:
+scratchpad/a18/sync-name.log. [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] ingest | T-10860 NAME_ENT profile word
+
+Added NameProfileFlags and the four-entry blood-type text pointer declaration.
+Documented the 128-byte buffer endpoint in [[decompile-workflow]]. Initial
+NAME_ENT structure repair removes six extra sign-extension instructions; the
+remaining pointer/selector live ranges are under regdiff investigation. All
+unrelated prototype-sync edits are confirmed restored by git diff --stat.
+
+## [2026-10-13] build | T-10860 BUNKAKEN large scene match
+
+BUNKAKEN func_801362EC passes literal funcdiff (1,760 code bytes) and its
+whole-overlay checksum. Set BunkakenModeFlags b1/mode before copying the three
+saved-state bytes; raw byte masks or the opposite statement order changed
+ugen temporaries. No FAKE needed. Total: 3 functions / 5,884 code bytes.
+Started the two largest assigned BUNKASAI handlers with the same state pattern.
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80137304
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148F98
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80136EC8
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148B84
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80149A88
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80136AE8
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 five-match checkpoint
+
+BUNKASAI func_80149404 (1,668 bytes) and func_80137788 (1,616 bytes) pass
+literal linked funcdiff and full default build, including all 27 checksums.
+Total: 5 functions / 9,168 code bytes. Applying the same measured return-flag
+idiom to the remaining assigned BUNKAKEN/BUNKASAI drafts in descending size;
+each candidate must pass regdiff, literal funcdiff, and its unit checksum
+before retention. NAME_ENT variants use isolated scratch trace directories.
+
+## [2026-10-13] build | T-10860 BUNKASAI func_8013866C
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148800
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80137DD8
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_801367A0
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80149E68
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801359AC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_8014A1AC
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148524
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80138388
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80135D00
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801372CC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_8014A49C
+
+Literal funcdiff and BUNKASAI SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80136008
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801369CC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801356C8
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801339F4
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the first source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80134C1C
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80136414
+
+Literal funcdiff and BUNKASAI SHA1 pass after the bits source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80133020
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_801481B0
+
+Literal funcdiff and BUNKASAI SHA1 pass after the bits source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801345CC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80132774
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801336AC
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801333A8
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_8013491C
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80133EC4
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80132D40
+
+Literal funcdiff and BUNKAKEN SHA1 pass after the raw source repair.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 all assigned Bunka handlers matched
+
+The size-ordered pass retained 33 more functions after literal funcdiff and
+per-unit SHA1. Full build again passed 27 checksums. BUNKASAI func_8014A778
+then passed (988 bytes): reconstruct its case-local message stores and use a
+local GameState pointer. Total now 39 functions / 38,972 code bytes: all 37
+assigned BUNKAKEN/BUNKASAI functions plus two TEL handlers. Individual proofs
+are in scratchpad/a18/batch-*.diff and .build. The NAME_ENT 485-instruction
+candidate still differs in buffer-loop and actor-register choices after a
+five-minute permuter run; further typed-record experiments are ongoing.
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80146FE0
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 928 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801462B4
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 836 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 shared actor and greeting types
+
+Exported existing NAME_ENT fixed-point actor types to its overlay header.
+Appended TEL greeting pointer/XA tables and NAME_ENT forward declarations.
+The first remaining-function pass found exact NAME_ENT 80146FE0/801462B4
+bodies and localized the 801488DC mismatch to the shared actor base.
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_80139AA4
+
+Literal linked funcdiff and TEL SHA1 pass: 920 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 42-match checkpoint
+
+The incremental full build passes all 27 checksum targets, header checks,
+and the GameState global audit. Scoped duplicate propagation over the five
+owned C files found no additional candidates. Active gain: 42 functions,
+41,656 code bytes. The paired TEL permuter pass ran 300 seconds without
+improvement. NAME_ENT regdiff exposed two postincrement tests and an API
+argument-conversion mismatch; recorded in [[decompile-workflow]].
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80145AC4
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 992 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 callee return type resolves actor registers
+
+NAME_ENT 80147590 is instruction-exact after declaring the side-effect-only
+801473AC helper void. This removes an implicit integer return's interference
+with the coordinate register. Appended the declaration to NAME_ENT.h and
+recorded the general rule in [[decompile-workflow]]. The separate 80145AC4
+match passes literal bytes and the NAME_ENT checksum.
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80147590
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 804 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 actor views remove two source-shape gaps
+
+Regdiff verifies instruction-exact NAME_ENT 80144FDC and 801488DC with
+consistent actor record views. Added NameAssetActor44.image (+0x34), and
+recorded the full-base scope and palette-counter idioms in
+[[decompile-workflow]]. The earlier NAME_ENT 80147590 match now passes
+literal linked bytes and its whole-overlay checksum.
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80144FDC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 924 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801488DC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 792 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80147BEC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 864 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 47 assigned functions integrated
+
+Literal byte comparisons and NAME_ENT SHA1 now pass for 80144FDC (924),
+801488DC (792), and 80147BEC (864). Restored the drawing helper 80147A08's
+integer fallthrough signature in the same owned file; no new instructions
+are needed. Its caller's final two register differences disappear.
+Shared actor types and the return-type evidence are in [[decompile-workflow]].
+See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013C4D8
+
+Literal linked funcdiff and TEL SHA1 pass: 1028 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013BFDC
+
+Literal linked funcdiff and TEL SHA1 pass: 1028 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 explicit TEL reset-call view
+
+The integer-reset view makes all three remaining TEL handlers instruction
+exact. Installed the standards 8a file-scoped override and generated its
+main_api guard with the sync_protos module; retained only that generated
+guard, avoiding unrelated declaration movement. Header validation passes.
+TEL 8013C4D8 now passes literal linked bytes and TEL SHA1 (1,028 bytes).
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_80139FEC
+
+Literal linked funcdiff and TEL SHA1 pass: 572 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 all assigned TEL and Bunka functions match
+
+All six assigned TEL handlers are active; 8013BFDC and 80139FEC pass literal
+linked comparisons and TEL SHA1 (1,028 and 572 bytes). Combined assigned
+result: 50 functions / 48,660 code bytes. The full incremental build passes,
+including headers and globals. sync_protos branch check reports zero new
+disagreements and 17 known; scoped duplicate propagation again finds no plans.
+The two remaining assigned functions are NAME_ENT 8014826C and 80149E3C.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 NAME_ENT switch and profile loops narrowed
+
+8014826C now has an instruction-exact draft with the record-99 completion
+flag and a marked scalar-selector read. The profile handler 80149E3C's
+buffer loops match when the name-setting call uses its historical integer
+return view; 32 later temporary-register instructions remain. No loop
+unrolling or manual store-order trick is needed. Findings recorded in
+[[decompile-workflow]]; see [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014826C
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 1120 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 final profile idiom and table extent
+
+NAME_ENT 8014826C passes literal bytes and SHA1 (1,120 bytes). The final
+80149E3C draft is instruction-exact, with its signed narrowing, frame word,
+and same-line clear-loop scheduling explicitly marked FAKE. All 52 assigned
+functions now have exact drafts; literal verification of the last waits for
+the running permuter to finish its isolated verification window. Corrected
+six newly appended TEL reply-table extents to 12 actual nonzero pointers.
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149E3C
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 1944 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 all 52 assigned functions verified
+
+NAME_ENT 80149E3C passes literal linked funcdiff and the full NAME_ENT
+checksum: 1,944 code bytes. All 52 assigned functions are now active C,
+with a combined gain of 51,724 code bytes and no assigned near misses.
+Ten fresh PS1 ABI assertions also pass for the exported NAME_ENT/TEL layouts.
+The brief permits continuing within the same five owned files; remaining
+session time is being used on their largest residual functions, starting
+with NAME_ENT 80144C8C and shared dialogue-record types.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 residual dialogue-table layout
+
+The largest residual handler, NAME_ENT 80144C8C, indexes two 43-entry tables
+at stride eight and a 44-byte companion table. Added NameCommandPair8
+(+0/+4 word fields), typed table declarations, and two needed forward
+prototypes in NAME_ENT.h. Shared Entry8 supplies the two moving text work
+records; the active request returned by 80046284 is a word array with the
+compared command at word 2. Work remains in scratch while registers/frame
+are refined. See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80132AC4
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 636 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_8013544C
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 636 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801341A4
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 604 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80135200
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 588 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80137080
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 588 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80138148
+
+Literal linked funcdiff and BUNKASAI SHA1 pass: 576 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014A600
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 540 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014AF28
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 536 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014AB18
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 512 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80136CB0
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 492 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149340
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 492 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80136E9C
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 484 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 residual dialogue and level types
+
+After all 52 assigned functions matched, the owned-file queue supplied twelve
+further literal and unit-SHA1 matches. Recovered NAME_ENT's four-word signed
+getCDlevel history at D_8014D1B4, actor halfword +0x08, and TEL's three 13-entry
+reply pointer tables. Declarations are appended to the overlay headers; use-site
+matching remains in progress. See [[decompile-workflow]] and
+[[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 checkpoint and review cleanup
+
+Full incremental build passes all 27 checksum targets plus header/global checks
+at 64 new matches. Inline review removed the redundant self-assignment in
+NAME_ENT func_80145AC4 and replaced TEL func_80139FEC's raw byte pointer with the
+shared Entry8 member. Literal function bytes and both unit SHA1s still match.
+Further table types and the byte-constant comparison idiom are recorded in
+[[decompile-workflow]]. See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80148C20
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 700 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80134400
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 460 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_801325B0
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 452 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKAKEN func_80135060
+
+Literal linked funcdiff and BUNKAKEN SHA1 pass: 416 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_8014A98C
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 352 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149840
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 668 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_801399CC
+
+Literal linked funcdiff and TEL SHA1 pass: 216 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013A228
+
+Literal linked funcdiff and TEL SHA1 pass: 200 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013A88C
+
+Literal linked funcdiff and TEL SHA1 pass: 420 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013CBA0
+
+Literal linked funcdiff and TEL SHA1 pass: 304 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 second helper return view
+
+Literal funcdiff confirms unchanged NAME_ENT func_8014977C bytes with an s32
+fallthrough declaration. With that view, func_80149840 matches and the unit
+SHA1 passes. Recorded the reusable call-view constraint in
+[[decompile-workflow]]. The remaining CD-level, dialogue, rectangle and state
+near misses are receiving short permuter runs after manual type/register
+iterations. See [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013C9D4
+
+Literal linked funcdiff and TEL SHA1 pass: 352 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_801362A0
+
+Literal linked funcdiff and BUNKASAI SHA1 pass: 372 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 BUNKASAI func_80148040
+
+Literal linked funcdiff and BUNKASAI SHA1 pass: 368 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 Bunka objects fully decompiled
+
+The existing BunkaDispatch8 view fixes the last two BUNKASAI entry dispatchers.
+Literal funcdiff and BUNKASAI SHA1 pass. All three owned Bunka objects are now
+fully in C. TEL's club-record bit-field view also passed literal and unit
+verification. Added the reusable evidence to [[decompile-workflow]]; continuing
+inline review and NAME_ENT/TEL residual attempts under
+[[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013A4FC
+
+Literal linked funcdiff and TEL SHA1 pass: 624 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] lint | T-10860 unused-local review
+
+Removed four dead temporaries from NAME_ENT func_80145AC4 and one from
+func_80147590; literal funcdiff and NAME_ENT SHA1 remain exact. TEL
+func_8013A4FC's only remaining mismatch was its girl-index spill home: the
+order unused-word, table-index, girl reproduces sp+0x2C in the 0x38 frame.
+The unused word is explicitly FAKE. See [[tickets/T-10860-big-functions-4-astra]]
+and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 header layout and extent audit
+
+Ten additional IDO layout/extent assertions pass for NameCommandPair8,
+NameActorHead44, the CD history, TelClubFlags, and the 13-entry reply tables.
+The NAME_ENT data confirms 43 text pointers and 43 first command pairs; the
+D_8014DB88 splat label also covers trailing untyped data, so its extern is now
+unsized while the 43 used dialogue records remain documented. Generated the
+missing s16 getCDlevel(void) declaration from its matched main definition.
+The CD-level helper remains instruction-exact with that canonical prototype.
+See [[decompile-workflow]] and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801473AC
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 484 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801486F8
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 484 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_801469D0
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 364 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 CD-level template verified
+
+NAME_ENT func_801473AC now passes literal linked bytes and unit SHA1, including
+the generated canonical getCDlevel prototype. Natural ring sum order and a
+later latest-sample store fix the load/division schedule; marked dead
+initialization and frame homes resolve the remaining IDO allocation differences.
+Related helpers are being verified individually. See [[decompile-workflow]]
+and [[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80147F78
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 360 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80149558
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 360 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 83-match checkpoint
+
+Incremental Docker Ninja completed all 518 steps and all 27 checksum targets;
+headers and globals checks pass. Inline review corrected copied CD-helper frame
+comments to cover both one-actor and two-actor layouts. See
+[[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80145848
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 556 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 RECT timer and store ordering
+
+Recovered the old-value post-increment timer in NAME_ENT 80145848, plus the
+SDK RECT local placement and same-line store schedule. Literal funcdiff and
+the NAME_ENT checksum pass; 84 new active functions / 66,920 bytes. Reusable
+idioms and FAKE explanations are in [[decompile-workflow]]. Inline unused-local
+audit across all five owned files found no unmarked new padding.
+
+## [2026-10-13] build | T-10860 NAME_ENT func_80146624
+
+Literal linked funcdiff and NAME_ENT SHA1 pass: 752 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] lint | T-10860 scope and byte accounting
+
+Compared the five owned files against HEAD snapshots: 85 asm replacements,
+67,664 original code bytes; all four overlay-header diffs are append-only.
+Earlier cumulative totals counted eight trailing padding bytes from TEL
+8013CBA0's linked funcdiff extent (304 bytes versus 296 function bytes).
+The corrected code-only total excludes that padding. All 52 assigned big
+functions remain exact; extra match NAME_ENT 80146624 now verifies as well.
+The final prototype check reports zero new disagreements and 17 known ones.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013BE38
+
+Literal linked funcdiff and TEL SHA1 pass: 280 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] ingest | T-10860 final reusable flag type and near drafts
+
+Added TEL's four-byte Rec38 bit-12/13/16 view and matched 8013BE38 with the
+reused-counter/ordered-clear idiom in [[decompile-workflow]]. Preserved five
+small ticketed NON_MATCHING drafts: TEL AA30/AC0C and NAME_ENT 47A80/49144/460D8.
+Final regdiff confirms four register-only cases, appended to [[data/t0018-cases]];
+460D8 also has one extra byte conversion and is not classified as pure T-0018.
+All retained diffs are below 30 differing lines. Scoped dupes found zero plans.
+
+## [2026-10-13] build | T-10860 final 86-function verification
+
+Literal default-version funcdiff verified all 86 new active functions.
+Incremental Ninja passed; then refreshing only the 27 checksum stamps gave
+one complete 27/27 OK run, retaining all objects and generated sources.
+The final TEL record-flag sizeof assertion passes under IDO. Inline review
+added the missing FAKE explanation for TEL 80139FEC's explicit upper switch
+case, rechecked its 572 bytes, and resolved that finding. Assigned-list audit
+confirms all 52 names active, totaling 51,724 original function bytes.
+[[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]] record
+the types, idioms, bounded attempts and retained drafts.
+
+## [2026-10-13] ticket | T-10860 In Review
+
+Moved [[tickets/T-10860-big-functions-4-astra]] and its [[kanban]] card to
+In Review. Inline Standards review passes after resolved findings; matching,
+types and validation satisfy the spec. Final focused scratch work continues
+until the four-hour session gate at 12:38 UTC.
+
+## [2026-10-13] lint | T-10860 handoff review
+
+`git diff --check` is clean. The assigned-list audit reconciles its estimates
+with original code extents, and the scope audit confirms only authorized
+source/header/wiki paths changed. Inline review records the earlier broad
+prototype-generator overreach and its complete restoration; no unowned edits
+remain. Ticket/frontmatter, [[kanban]] and [[index]] agree on In Review while
+the final bounded brightness-handler attempt runs. See
+[[tickets/T-10860-big-functions-4-astra]].
+
+## [2026-10-13] build | T-10860 TEL func_8013AA30
+
+Literal linked funcdiff and TEL SHA1 pass: 476 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] build | T-10860 TEL func_8013AC0C
+
+Literal linked funcdiff and TEL SHA1 pass: 436 code bytes.
+See [[tickets/T-10860-big-functions-4-astra]] and [[decompile-workflow]].
+
+## [2026-10-13] decision | T-10860 two final TEL matches
+
+A scalar switch-selector view fixes the later decoder-return comparisons in
+TEL 8013AA30 and 8013AC0C. Both pass literal funcdiff (476 and 436 bytes) and
+TEL SHA1. Removed their guards, retained the historical [[data/t0018-cases]]
+rows with a resolution note, and documented the cross-block effect in
+[[decompile-workflow]]. Final count is 88 new active functions / 68,856 code
+bytes; only three NAME_ENT guarded drafts remain. All functions in four of
+the five owned source files are now C. The remaining brightness experiments
+and five-minute permuter did not improve the preserved draft.
+
+## [2026-10-13] ticket | T-10860 Done
+
+Completed the four-hour session at 12:38 UTC. All 52 assigned functions
+match; total 88 new functions / 68,856 original code bytes. Final inline
+Standards and Spec review has no unresolved findings, three small guarded
+drafts remain, and all 27 unit checksums pass with zero new prototype issues.
+Moved [[tickets/T-10860-big-functions-4-astra]], [[kanban]] and [[index]] to Done.
+Progress: `grand total   5285/6958  1043564/2279368  45.8%`. All changes remain uncommitted.

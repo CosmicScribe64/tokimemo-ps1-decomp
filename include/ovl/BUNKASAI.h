@@ -196,3 +196,12 @@ void func_80142694(void);
 void func_80145FC0(void);
 void func_8014DD28(void);
 #endif
+#ifndef OVL_BUNKASAI_T10860_H
+#define OVL_BUNKASAI_T10860_H
+void func_80149404(void);
+void func_80137788(void);
+void func_8014AB54(void);
+#endif
+
+/* T-10860: forward call into the owned 801362A0 object. */
+void func_80138A00(void);

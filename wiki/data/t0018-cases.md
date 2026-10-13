@@ -1820,3 +1820,13 @@ EVENT SHA1 pass. Historical rows remain unchanged.
 | GEKO/80142760 | `func_80144198` | frame / param home | `s32 pad[2]` before the scalars and the table last give frame 0x40 and the table at sp+0x18, but IDO homes a0 (`sw a0,64(sp)`) and shifts the colours; 57 lines; T-10910 |
 | TAIIKU/80138950 | `func_8013F948` | hoist / alias | animation counters: with `z = D_80149990.unk_00` hoisted and direct index stores 104 lines, the original keeps D_80120888 in a0 and reloads it after the pointer stores; T-10910 |
 | TAIIKU/80133C80 | `func_801368B8` | scheduling | 2-row swap (`lui t4` before the `sw` to D_80149224); permuter base misleading because it cannot see the file's own data; T-10910 |
+| TEL | `func_8013AA30` | regorder | T-10860: 118 instructions, three register-only misses: selector branch v0 vs v1 and returned decoder index comparisons a1 vs v0. Regdiff allocation trace, legacy call views, casts, split conditions and ten-minute permuter attempted; guarded draft has six differing lines. |
+| TEL | `func_8013AC0C` | regorder | T-10860: 108 instructions, two return-index comparisons use a1 instead of v0 after the same move a1,v0. Regdiff identifies the constrained argument range; casts, legacy calls and ten-minute permuter did not split it. Guarded draft has four differing lines. |
+| NAME_ENT | `func_80147A80` | regorder | T-10860: ring/history types and no-argument getCDlevel recovered; 90 instructions and correct 0x38 frame, ten a0/a1 choices remain. Regdiff level priority 2 outranks frame 1.5; original allocation reverses them. Declaration/init/copy/counter forms and five-minute permuter attempted; 20-line guarded diff. |
+| NAME_ENT | `func_80149144` | regorder | T-10860: same single-actor CD-level template as 80147A80, with display frame +4. Correct 90 instructions and stack slot; level/frame a0/a1 reversed in ten instructions. Shared template investigations and regdiff recorded; 20-line guarded diff. |
+
+T-10860 follow-up (2026-10-13): TEL `func_8013AA30` and `func_8013AC0C`,
+recorded immediately above, now match in active C. The scalar switch-selector
+view `*(u8 *)&D_800E6280.unk_110D` fixes the later returned-index comparison
+registers as well as the selector branch. Both literal comparisons and TEL
+SHA1 pass; the historical rows are retained. See [[decompile-workflow]].

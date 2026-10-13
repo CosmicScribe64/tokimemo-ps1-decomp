@@ -112,3 +112,13 @@ typedef struct BunkaDispatch8 {
     /* 0x04 */ s32 unk_04;
 } BunkaDispatch8; /* size 0x08 */
 #endif
+
+#ifndef OVL_BUNKAKEN_T10860_H
+#define OVL_BUNKAKEN_T10860_H
+void func_801362EC(void);
+void func_801375D0(void);
+void func_80145530(void);
+#endif
+
+/* T-10860: forward call within 80132000.c. */
+void func_80134FFC(void);
