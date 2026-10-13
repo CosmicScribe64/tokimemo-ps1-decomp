@@ -802,7 +802,85 @@ void func_80135A98(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11010, 13 differing lines: uopt promotes the global D_8014CC70 into $v1 (regdiff: priority 0.5, conflicts with the unk_F88 selector in $v0) where the original reloads it into $v0 */
+#ifdef NON_MATCHING
+void func_80135BB4(void) {
+    u8 cur;
+
+    func_8006BA40();
+    func_80133D94();
+    func_80133E54();
+    func_80133FC4();
+    func_80132B78(1);
+    if (D_8014CCC8 == 3) {
+        func_80134110();
+        func_801341A8();
+    }
+    func_80135650();
+    if (D_800E6280.unk_F88 & 0x40) {
+        cur = D_8014CC70;
+        if (cur == 0xC) {
+            cur = 6;
+        }
+        D_8014CC70 = cur;
+        if (cur >= 4) {
+            D_8014CC70 = cur - 1;
+        }
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        if (D_8014CC70 < 6 && D_8014CCC0 >= 0 && D_8014CCC4 >= 0) {
+            func_80134248(1);
+            func_80134B18();
+        }
+        if (D_8014CCC8 == 3) {
+            func_801338DC(2);
+            func_8004EA98();
+            func_80134B18();
+        } else if (D_8014CCC8 == 2) {
+            func_80133510(D_8014CD04);
+            func_8004EA98();
+            func_80134B18();
+        }
+        if (D_8014CCCC == 0) {
+            D_8014CCC8 = 0;
+            func_801330E8(D_8014CD04);
+            func_8004EA98();
+            func_80134B18();
+        }
+        if (D_8014CCCC == 1) {
+            D_8014CCC8 = 1;
+            func_801332FC(D_8014CD04);
+            func_8004EA98();
+            func_80134B18();
+        }
+        if (D_8014CCCC == 2) {
+            D_8014CCC8 = 2;
+            func_80133510(D_8014CD04);
+            func_8004EA98();
+            func_80134B18();
+        }
+        if (D_8014CCCC == 3) {
+            D_8014CCC8 = 3;
+            func_801338DC(2);
+            func_8004EA98();
+            func_80134B18();
+        }
+        if (D_8014CCCC == 4) {
+            D_8014CCC8 = 4;
+            func_80134B94(1);
+            func_80134B18();
+            func_80044750(0x501);
+            func_8004284C();
+        }
+    } else if (D_800E6280.unk_F88 & 0x800) {
+        func_80134B94(1);
+        func_80134B18();
+        func_80044750(0x501);
+        func_8004284C();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135BB4);
+#endif
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135E58);
 
