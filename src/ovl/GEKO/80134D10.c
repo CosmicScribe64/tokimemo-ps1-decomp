@@ -380,7 +380,29 @@ void func_80137560(void) {
     func_80042940(0x31);
 }
 
+/* NON_MATCHING: T-10820, 22 differing lines (was 56 register lines, decomp-permuter): the 8-statement copy chain with the F5F multiply; FAKE-tagged empty test and u8 temp steer the loads, left: loads of D_80144F3C/F70/FA4 take t9/t0/v1 where the original has t5/t6/t7 */
+#ifdef NON_MATCHING
+void func_80137580(void) {
+    u8 new_var;
+
+    D_80145068 = D_80145060;
+    /* FAKE: empty test of D_80144FA4 and the u8 copy of the selector, from decomp-permuter; they only steer the load registers. T-10820 */
+    if (!D_80144FA4) {
+    }
+    D_80145054 = D_80145048;
+    D_80145058 = D_8014504C;
+    D_8014505C = D_80145050;
+    D_80145048 = D_80144F3C;
+    D_8014504C = D_80144F70;
+    D_80145050 = D_80144FA4;
+    new_var = D_800E6280.unk_F5F;
+    D_80145060 = new_var;
+    D_80145060 = (D_80145060 * 3) + D_8014506C;
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_80137580);
+#endif
 
 void func_80137630(void) {
     D_80145060 = D_80145068;

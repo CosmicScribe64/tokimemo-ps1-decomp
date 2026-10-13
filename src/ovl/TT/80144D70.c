@@ -3,16 +3,20 @@
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80144D70", func_80144D70);
 
-#ifdef NON_MATCHING
+#if 1
 /* NON_MATCHING: T-10520, only the hoisted constants 0x70/0x40/0x80 sit in $a1/$a0 instead of $a3/$a2 ("phantom register" gap), 10 lines */
 void func_80145370(void) {
     s32 i;
     u8 *p;
+    int d1;
+    int d2;
+    int d3;
+    int d4;
 
     i = 0;
     p = D_80158A98;
     for (; i < 0x40; i++) {
-        if (p[0] != 0 && *(u16 *)(p + 4) == 0x40) {
+        if (p[0] != 0 && (d1 = (*(u16 *)(p + 4) == 0x40))) {
             *(u16 *)(p + 4) = 0x70;
             *(s16 *)(p + 0xA) = 0;
             *(s16 *)(p + 8) = 0;
@@ -20,13 +24,15 @@ void func_80145370(void) {
             p[0xF] = 0;
             p[0xE] = 0;
             p[0xD] = 0;
+        } else {
+            d1 = 0;
         }
         p += 0x78;
     }
     i = 0;
     p = D_80158AA0;
     for (; i < 0x80; i++) {
-        if (p[0] != 0 && *(u16 *)(p + 4) == 0x40) {
+        if (p[0] != 0 && (d2 = (*(u16 *)(p + 4) == 0x40))) {
             p[0] = 0;
             *(s16 *)(p + 0xA) = 0;
             *(s16 *)(p + 8) = 0;
@@ -34,6 +40,8 @@ void func_80145370(void) {
             p[0xF] = 0;
             p[0xE] = 0;
             p[0xD] = 0;
+        } else {
+            d2 = 0;
         }
         p += 0x68;
     }
