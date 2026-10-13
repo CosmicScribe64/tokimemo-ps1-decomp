@@ -726,7 +726,9 @@ extern s16 D_800CA148;  /* also address-taken by the date code */
 extern s16 D_800CA14C;
 extern s16 D_800CA150;
 extern s16 D_800CA154;
+#ifndef MAIN_API_OVERRIDE_D_800CA158
 extern u8 D_800CA158;
+#endif
 extern u8 D_800CA15C;
 extern s32 D_800CA160;
 extern s32 D_800CA164;

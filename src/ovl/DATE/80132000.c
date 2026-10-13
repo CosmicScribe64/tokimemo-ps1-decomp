@@ -1954,7 +1954,7 @@ void func_8013B208(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013B208);
 #endif
 
-/* NON_MATCHING: T-11020, layout right (locals t,sp3A,sp39,x); 110D clamp-then-increment reload and x in v1 differ (value forwarded across the clamp) */
+/* NON_MATCHING: T-11020, register-only (35 insns, first 45 rows exact): unk_75C and D_80122D08 take v1/a0 where the original has v0/v1 (tie of the lui range with cvt(D_800CA2F8)) */
 #ifdef NON_MATCHING
 void func_8013B488(void) {
     u32 t;
@@ -1963,18 +1963,18 @@ void func_8013B488(void) {
     u8 x;
 
     sp39 = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
-    if (D_800E6280.unk_110D >= 0xBU) {
-        D_800E6280.unk_110D = 0xA;
+    if ((*(u8 *)&D_800E6280.unk_110D) >= 0xBU) {
+        (*(u8 *)&D_800E6280.unk_110D) = 0xA;
     }
-    if (D_800E6280.unk_110D++ == 0) {
+    if ((*(u8 *)&D_800E6280.unk_110D)++ == 0) {
         t = sp39;
-        *(s16 *) &D_800CA158 = ((t >= 2U) + (t >= 3U) + (t >= 4U)) * 3;
+        D_800CA158 = ((t >= 2U) + (t >= 3U) + (t >= 4U)) * 3;
         if (t == 4) {
             func_80083440(4);
             D_800CA234[D_80122CDC] = 0;
         }
     }
-    sp3A = D_800CA234[D_80122CDC] + *(s16 *) &D_800CA158;
+    sp3A = D_800CA234[D_80122CDC] + D_800CA158;
     if (D_800E6280.unk_75C != 0) {
         sp3A = 0xA;
     }
@@ -1989,7 +1989,7 @@ void func_8013B488(void) {
                         if (D_800CA2F8 != 0) {
                             if (D_800CA2F8 != 0x12) {
                                 sp3A = 0xB;
-                                if (D_800E6280.unk_110D == 1) {
+                                if ((*(u8 *)&D_800E6280.unk_110D) == 1) {
                                     func_80083440(3);
                                     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 -= 1;
                                     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 2;
