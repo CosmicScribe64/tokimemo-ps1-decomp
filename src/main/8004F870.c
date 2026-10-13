@@ -8,7 +8,68 @@ typedef struct MenuSelection5 {
     /* 0x03 */ s8 current[2];
 } MenuSelection5; /* size 0x05 */
 
+/* NON_MATCHING: T-10710, loops and stores match; the original keeps n=(arg1 & 0xFF) in s0 (frame 0x18), the draft uses a2 */
+#ifdef NON_MATCHING
+s32 menu_set(arg0, arg1, arg2, arg3, arg4, arg5)
+    s32 arg0;
+    s32 arg1;
+    s16 *arg2;
+    s16 *arg3;
+    s16 *arg4;
+    s16 *arg5;
+{
+    GameState *g;
+    s32 i;
+    u32 n;
+    s16 *p2;
+    s16 *p3;
+    s16 *p4;
+    s16 *p5;
+
+    g = &D_800E6280;
+    for (i = 0; i < 0x10; i++) {
+        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_07 = 0;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_05 = 0;
+        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_04 = 0;
+    }
+    n = arg1 & 0xFF;
+    if (n >= 0x11) {
+        return -1;
+    }
+    ((MenuSelection5 *)&g->unk_1090)->count[arg0] = n;
+    g->unk_1095[arg0] = -1;
+    if (arg0 >= 2) {
+        return -1;
+    }
+    p2 = arg2;
+    p3 = arg3;
+    p4 = arg4;
+    p5 = arg5;
+    i = 0;
+    if (n != 0) {
+        do {
+            ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_00 = *p2;
+            ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_02 = *p3;
+            p2++;
+            p3++;
+            i++;
+            if (*p5 * *p4 == 0) {
+                ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_07 = 1;
+            } else {
+                ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_07 = 0;
+            }
+            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_04 = *p4;
+            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_06 = 0;
+            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_05 = *p5;
+            p4++;
+            p5++;
+        } while (i < n);
+    }
+    return i;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_set);
+#endif
 
 s8 menu_check(arg0, arg1, arg2)
     s32 arg0;
