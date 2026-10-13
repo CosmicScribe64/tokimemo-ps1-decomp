@@ -119,12 +119,13 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139198);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801394F4);
 
-/* NON_MATCHING: T-10510, 16 lines: masked value is an allocated register in the original */
+/* NON_MATCHING: T-10710, 6 lines: the += 4 result lives in a ugen temp (addiu t6,v1,4 and the write-back stores t6) where the original adds in place in v1 and stores the masked v0 */
 #ifdef NON_MATCHING
 void func_80139878(void) {
-    s32 t;
+    u8 t;
 
-    t = (D_800E6280.unk_03A + 4) & 0xFF;
+    *(u8 *)&D_800E6280.unk_03A += 4;
+    t = *(u8 *)&D_800E6280.unk_03A;
     D_801220E2 = t;
     D_801220E1 = t;
     D_801220E0 = t;
@@ -132,9 +133,8 @@ void func_80139878(void) {
     D_801220EA = 0x78;
     D_801220D4 = 0;
     D_801220D6 = 0;
-    D_800E6280.unk_03A = t;
-    if ((u32) t >= 0x80) {
-        D_800E6280.unk_03A = 0x80;
+    if (t >= 0x80) {
+        *(u8 *)&D_800E6280.unk_03A = 0x80;
         func_8004E884(7);
         func_8004284C();
     }
