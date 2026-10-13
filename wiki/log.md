@@ -13011,3 +13011,12 @@ movie functions now have regdiff-backed region comparisons and bounded search.
 
 ## [2026-10-13] ticket | T-11010 Done
 Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on [[kanban]].
+
+## [2026-10-13] ticket | T-11040 In Progress
+[[tickets/T-11040-big-functions-sonnet-27]] started: big functions in TAIIKU 80138950, main 800674B0, NAME_ENT 80139740 and 80132000.
+
+## [2026-10-13] build | T-11040 big functions 27
+[[tickets/T-11040-big-functions-sonnet-27]]: 1 function matched (`func_8013AE14` in `src/ovl/TAIIKU/80138950.c`, 232 bytes); guarded near misses `func_8006B648` (`src/main/800674B0.c`), `func_80139FE4` (TAIIKU) and `func_8014231C` (NAME_ENT, now 4 differing lines). Notes in [[matching-notes]], rows in [[data/t0018-cases]].
+
+## [2026-10-13] ticket | T-11040 Done
+Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on [[kanban]].
