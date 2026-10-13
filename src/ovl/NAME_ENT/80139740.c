@@ -881,7 +881,76 @@ void func_8013F058(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F0DC);
 
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* Falls through without a return statement. */
+/* NON_MATCHING: T-11010, frame is 8 bytes larger than the original (buffer at sp+0x38 instead of 0x30) once the jump-table switch holds the calls; rest matches, 6 lines */
+#ifdef NON_MATCHING
+/* Falls through without a return statement. */
+s32 func_8013F208(void) {
+    u8 sp30[0x108]; /* FAKE: observed frame and buffer slot, T-9580. */
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D++;
+    default:
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            D_800E6280.unk_110D++;
+        } else if (D_800E6280.unk_1115 == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xD0)) {
+            func_80053D10();
+            func_80042908(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            func_8013B59C();
+            D_800E6280.unk_110D++;
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 3:
+        if (func_80055AFC(0) == 1) {
+            func_8013BB10();
+            D_8014D0A8 = 1;
+            func_800AE0B0("COPY LOAD SUM !\n");
+            D_800E6280.unk_110D++;
+        } else {
+            D_800E7D14[D_800E6280.unk_1118] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 4:
+        func_8004E58C();
+        func_800AE0F0(sp30, D_800B3288[D_800E6280.unk_1118]);
+        func_800AE100(sp30, "番アルバムを");
+        func_8004E788(-0x40, 0x20, 0xF, sp30, 0);
+        func_8004E788(-0x40, 0x30, 0xF, "どのアルバムにコピーしますか？", 0);
+        func_8004E788(-0x40, 0x40, 0xF, "カーソルで選んで下さい。", 0);
+        func_8004E884(3);
+        func_8004284C();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F208);
+#endif
+
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F454);
 
