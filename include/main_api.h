@@ -356,7 +356,7 @@ typedef struct GameState {
     /* 0x03F */ u8 unk_03F;            /* 4 at init; compared with Rec38.unk_10 bits 0-3 */
     /* 0x040 */ u8 unk_040;            /* 4 at init; compared with Rec38.unk_10 bits 4-8 */
     /* 0x041 */ u8 unk_041;
-    /* 0x042 */ s16 unk_042;
+    /* 0x042 */ u16 unk_042;
     /* 0x044 */ GsRec044 unk_044[2];
     /* 0x0C4 */ u8 unk_0C4[0x10];      /* +0xC4..+0xF4: text buffers (NAME_ENT) */
     /* 0x0D4 */ u8 unk_0D4[8];

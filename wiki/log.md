@@ -13053,3 +13053,5 @@ No matches. Notes in [[matching-notes]] section "T-11050". See [[tickets/T-11050
 ## [2026-10-13] ticket | T-11070 started
 Opened [[tickets/T-11070-small-functions-gemini-30]] (In Progress): 12 functions (2,780 bytes) in `src/ovl/EVENT/8010FE10.c`.
 
+## [2026-10-13] ticket | T-11060 Big functions (Gemini) 29 In Progress
+Created [[tickets/T-11060-big-functions-gemini-29|T-11060]] and moved to In Progress on [[kanban]]. Owned files: `src/ovl/TAIIKU/80138950.c`, `src/ovl/DATE/80132000.c`, `src/main/8007C030.c`, `src/main/800674B0.c`.

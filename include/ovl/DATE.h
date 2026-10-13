@@ -51,7 +51,7 @@ extern s16 D_8015BF40;
 extern s32 D_8015BD94;
 extern s32 D_8015BDA4;
 extern s32 D_8015BDB4;
-void func_8013272C(void);
+s32 func_8013272C(void);
 void func_80146224(void);
 extern s32 D_8015EE20;
 extern s16 D_8015DE40;

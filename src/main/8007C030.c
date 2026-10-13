@@ -1536,19 +1536,14 @@ void func_80081128(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80081190);
 
-/* NON_MATCHING: T-10870, five positions: a three-load rotation and two addu operand orders. */
-#ifdef NON_MATCHING
-s32 func_80082764(arg0,arg1,arg2)
+s32 func_80082764(arg0, arg1, arg2)
 u8 arg0;
 u8 arg1;
 u8 arg2;
 {
     DialogueTables *tables;
     DialogueWork *dialogue;
-    s16 line;
-    s16 nextLine;
     s16 group;
-    s16 nextGroup;
     s32 result;
     u8 command;
 
@@ -1568,17 +1563,13 @@ u8 arg2;
             dialogue->unk_30 = 0;
             D_800CA2AC = 0;
         }
-        goto finish;
-    }
-    if (dialogue->unk_48 != 0) {
+    } else if (dialogue->unk_48 != 0) {
         if ((check_end_k() != 0) && ((dialogue->unk_20 == 0) || ((dialogue->unk_20 == 1) && (func_800460EC() != 4)) || ((*(u8 *)&D_800E6280.unk_03C) == 0))) {
             k_reset(1);
             dialogue->unk_48 = 0;
             D_800CA2AC = 0;
         }
-        goto finish;
-    }
-    if (dialogue->unk_14 != 0) {
+    } else if (dialogue->unk_14 != 0) {
         if ((D_800E6280.unk_F88 & 0x400040) && ((*(u8 *)&D_800E6280.unk_03C) == 2)) {
             func_80044750(0xB4);
             D_800CA2C4 = 1;
@@ -1607,24 +1598,22 @@ u8 arg2;
         } else {
             D_8011ED5B &= 0x7F;
         }
-        goto finish;
-    }
-    D_800CA2C8 = 0;
-    D_800E6280.unk_1104.w = 0;
-    group = *tables->group;
-    line = *tables->line;
-    result = func_8007EF48(tables->text[group][line], (s32) tables->command[group][line], (s32) arg0, tables->voice, (s32) group, (s32) line, (s32) arg2);
-    if ((arg1 != 0) && (D_800CA2A8 == 0) && ((result & 0xFF) != 0x64)) {
-        nextLine = *tables->line;
-        nextGroup = *tables->group;
-        if (tables->command[nextGroup][nextLine] == 0xFF) {
-            *tables->group = (s16) (nextGroup + 1);
-            *tables->line = 0;
-        } else {
-            *tables->line = (s16) (nextLine + 1);
+    } else {
+        D_800CA2C8 = 0;
+        D_800E6280.unk_1104.w = 0;
+        group = *tables->group;
+        result = func_8007EF48(tables->text[group][*tables->line], (s32) tables->command[group][*tables->line], (s32) arg0, tables->voice, (s32) group, (s32) (*tables->line), (s32) arg2);
+        if ((arg1 != 0) && (D_800CA2A8 == 0) && ((result & 0xFF) != 0x64)) {
+            /* FAKE: expression statement seeds uopt CSE on *tables->line to preserve load and addu operand order. T-11060 */
+            *tables->line;
+            if (tables->command[*tables->group][*tables->line] == 0xFF) {
+                *tables->group = (s16) (*tables->group + 1);
+                *tables->line = 0;
+            } else {
+                *tables->line = (s16) (*tables->line + 1);
+            }
         }
     }
-finish:
     if ((dialogue->unk_30 != 0) || (dialogue->unk_14 != 0) || (dialogue->unk_48 != 0)) {
         if ((check_end_k() == 0) && ((*(u8 *)&D_800E6280.unk_03C) == 0)) {
             command = tables->command[*tables->group][*tables->line - 1];
@@ -1639,9 +1628,6 @@ finish:
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80082764);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
