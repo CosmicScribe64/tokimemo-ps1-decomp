@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80049FF0 /* Line draw calls narrow four coordinates at the call site. T-11060. */
 #include "common.h"
 #include "game.h"
+
+s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 
 /* Flag word of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
 typedef struct {
@@ -132,7 +135,43 @@ s16 func_800688F0(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80068938);
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80068BE4);
+void func_80068BE4(void) {
+    /* FAKE: unused stack locals match original 0x158 frame size and slot offsets. T-11060 */
+    u16 top_pad1;
+    u16 top_pad2;
+    u16 top_pad3;
+    u16 top_pad4;
+    u16 saved;
+    s32 sp10C[16];
+    s32 spCC[16];
+    s32 sp8C[16];
+    s32 half;
+    s32 i;
+    s32 phase;
+    s32 pad;
+
+    phase = D_800E6280.unk_10F8;
+    if ((s32) D_800E6280.unk_10F8 & 0x80) {
+        half = (0x7F - ((s32) D_800E6280.unk_10F8 & 0x7F)) / 2;
+    } else {
+        half = ((s32) D_800E6280.unk_10F8 & 0x7F) / 2;
+    }
+    func_80049FF0(-0x80, -0xC, 0x7C, -0xC, half * 0x10101, half * 0x10101, 0x81);
+    saved = D_800E6280.unk_042;
+    D_800E6280.unk_042 = saved - 8;
+    for (i = 0; i != 0x10; i++) {
+        sp10C[i] = func_8006C334(1, 0, 0, -0x20);
+        spCC[i] = func_8006C334(0, 1, 0, -0x20);
+        sp8C[i] = func_8006C334(0, 0, 1, -0x20);
+        D_800E6280.unk_042 += 1;
+        if (i != 0) {
+            func_80049FF0(i * 0x10 - 0x90, sp10C[i - 1] - 0xC, i * 0x10 - 0x80, sp10C[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x101, (((i + phase) & 0xF) * 4 + half) * 0x101, 0x81);
+            func_80049FF0(i * 0x10 - 0x90, spCC[i - 1] - 0xC, i * 0x10 - 0x80, spCC[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x10100 + 0xF0F00, (((i + phase) & 0xF) * 4 + half) * 0x10100 + 0xF0F00, 0x81);
+            func_80049FF0(i * 0x10 - 0x90, sp8C[i - 1] - 0xC, i * 0x10 - 0x80, sp8C[i] - 0xC, (((i + phase) & 0xF) * 4 + half) * 0x10001, (((i + phase) & 0xF) * 4 + half) * 0x10001, 0x81);
+        }
+    }
+    D_800E6280.unk_042 = saved;
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80068EC0);
 
@@ -412,7 +451,108 @@ void func_8006BD6C(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BDA8);
+s32 func_8006BDA8(s32 arg0) {
+    /* FAKE: unused stack word matches original 0x40 frame size and local offsets. T-11060 */
+    s32 pad;
+    s32 score;
+    s32 failures;
+    u16 day;
+    u16 old_day;
+    s32 factor;
+
+    old_day = D_800E6280.unk_042;
+    day = old_day;
+    D_800E6280.unk_042 = old_day + arg0;
+    score = 0;
+    switch (D_800E6280.unk_F68.w & 15) {
+    case 0:
+        score = func_8006C334(0, 0, 1, 16) + D_800E6280.unk_100.unk_02 / 16;
+        break;
+    case 1:
+        score = func_8006C334(0, 0, 1, 16) + D_800E6280.unk_104.unk_02 / 16;
+        break;
+    case 2:
+        score = func_8006C334(0, 1, 0, 16) + D_800E6280.unk_108.unk_02 / 16;
+        break;
+    case 3:
+        score = func_8006C334(1, 0, 0, 16) + D_800E6280.unk_10C.unk_02 / 16;
+        break;
+    case 4:
+        switch ((u16)D_800E6280.unk_0F4.h >> 12) {
+        case 0:
+            score = func_8006C334(0, 0, 1, 16);
+            break;
+        case 1:
+            score = func_8006C334(0, 1, 0, 16);
+            break;
+        case 2:
+            score = func_8006C334(0, 0, 1, 16);
+            break;
+        case 3:
+            score = func_8006C334(0, 0, 1, 16);
+            break;
+        case 4:
+            score = func_8006C334(0, 1, 0, 16);
+            break;
+        case 5:
+            score = func_8006C334(0, 1, 0, 16);
+            break;
+        case 6:
+            score = func_8006C334(1, 0, 0, 16);
+            break;
+        case 7:
+            score = func_8006C334(1, 0, 0, 16);
+            break;
+        case 8:
+            score = func_8006C334(1, 0, 0, 16);
+            break;
+        case 9:
+            score = func_8006C334(1, 0, 0, 16);
+            break;
+        case 10:
+            score = func_8006C334(1, 0, 0, 16);
+            break;
+        }
+        score += (u16)D_800E6280.unk_66C[(u16)D_800E6280.unk_0F4.h >> 12].unk_00 >> 4;
+        break;
+    case 5:
+        score = func_8006C334(0, 1, 0, 16) + D_800E6280.unk_110.unk_02 / 16;
+        break;
+    case 6:
+        score = func_8006C334(0, 1, 0, 16) + D_800E6280.unk_114.unk_02 / 16;
+        break;
+    case 7:
+        func_8006C334(1, 1, 1, 16);
+        score = 16;
+        break;
+    }
+    score += 6;
+    if (D_800E6280.unk_11C.unk_02 >= 97) {
+        factor = 4;
+    } else {
+        factor = D_800E6280.unk_11C.unk_02 / 32;
+    }
+    score = rand() % (score + 4);
+    score = (8 - factor) * score / 8;
+    failures = 0;
+    if (func_8006C334(1, 0, 0, 3) == 0) {
+        failures++;
+    }
+    if (func_8006C334(0, 1, 0, 3) == 0) {
+        failures++;
+    }
+    if (func_8006C334(0, 0, 1, 3) == 0) {
+        failures++;
+    }
+    if (failures == 3) {
+        score /= 4;
+    }
+    D_800E6280.unk_042 = day;
+    if (score >= 4) {
+        return 0;
+    }
+    return 1;
+}
 
 void func_8006C308(void) {
     func_8006C334(1, 1, 1, 2);
