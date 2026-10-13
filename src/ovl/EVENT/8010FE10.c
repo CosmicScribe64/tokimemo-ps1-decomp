@@ -233,7 +233,71 @@ void func_80112460(void) {
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80112750);
 
+/* NON_MATCHING: T-11020, register-only (174 insns equal): D_8012531C/idx kept in a0 by uopt instead of ugen temps t8/t9 */
+#ifdef NON_MATCHING
+void func_80112930(void) {
+    EventStateView *g;
+
+    g = (EventStateView *)&D_800B0860;
+
+    D_8009473C = D_8012422C;
+    D_80094740 = D_80124298;
+    D_80094744 = D_80124304;
+    func_80078970(D_80094784, "プラネタリウム");
+    D_801252E8 = 7;
+    if (!(D_800B0860[g->unk_EE6 * 0x34 + 0x1C1] & 1)) {
+        D_8012531C = 0;
+        func_80078970(D_800947C4, "館内");
+    } else {
+        D_8012531C = 1;
+        func_80078970(D_800947C4, "館内");
+        if (g->unk_EE6 == 0xA) {
+            D_80094730 = 1;
+        }
+    }
+    D_800EECE4 = 9;
+    D_8012439C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125218) + D_8012531C * 3);
+    D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125218) + D_8012531C * 3) + (1));
+    D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125218) + D_8012531C * 3) + (2));
+    D_8012438C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + D_8012531C * 3);
+    D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + D_8012531C * 3) + (1));
+    D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012521C) + D_8012531C * 3) + (2));
+    if ((D_800B0956 < 0x78) && (D_8012531C != 0)) {
+        switch (g->unk_EE6) {
+        case 0:
+        case 3:
+            D_8012439C = 4;
+            D_8012438C = 4;
+            break;
+        case 2:
+        case 6:
+        case 8:
+            D_8012439C = 4;
+            D_8012438C = 3;
+            break;
+        case 1:
+        case 4:
+        case 5:
+        case 9:
+            D_8012438C = 3;
+            D_8012439C = 3;
+            break;
+        case 7:
+            D_80124390 = 3;
+            D_801243A0 = 3;
+            break;
+        case 10:
+            D_80124390 = 1;
+            D_801243A0 = 1;
+            break;
+        }
+    }
+    func_800469F4(0x4552);
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80112930);
+#endif
 
 /* FAKE: a signed narrow constant preserves the shared multiply/compare
  * range. EventResultRow6 models the two signed three-halfword outputs.
@@ -451,7 +515,66 @@ void func_80113CA0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80113FD4);
+void func_80113FD4(void) {
+    EventStateView *g;
+    s32 temp_t3;
+    u8 var_t1;
+
+    g = (EventStateView *)&D_800B0860;
+
+    D_8009473C = D_80124208;
+    D_80094740 = D_80124274;
+    D_80094744 = D_801242E0;
+    D_801252E8 = 0;
+    if (g->unk_035 == 0x5F) {
+        if (((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            D_80125318 = 2;
+        } else {
+            D_80125318 = 3;
+        }
+    } else if (g->unk_035 == 0x60) {
+        if ((g->unk_036 != 0) && ((u8)g->unk_036 < 3U)) {
+            D_80125318 = 3;
+        } else if (((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U)) {
+            D_80125318 = 4;
+        } else if (((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U)) {
+            D_80125318 = 5;
+        } else if (((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+            D_80125318 = 6;
+        } else {
+            D_80125318 = 7;
+        }
+    } else {
+        var_t1 = 0xB;
+        if (g->unk_035 == 0x61) {
+            if ((g->unk_036 != 0) && ((u8) g->unk_036 < 3U)) {
+                D_80125318 = 7;
+            } else if (((u8) g->unk_036 >= 3U) && ((u8) g->unk_036 < 6U)) {
+                D_80125318 = 8;
+            } else if (((u8) g->unk_036 >= 6U) && ((u8) g->unk_036 < 9U)) {
+                D_80125318 = 9;
+            } else if (((u8) g->unk_036 >= 9U) && ((u8) g->unk_036 < 0xCU)) {
+                D_80125318 = 0xA;
+            } else {
+                D_80125318 = 0xB;
+            }
+        } else {
+            D_80125318 = var_t1;
+        }
+    }
+    D_800EECE4 = -1;
+    func_80078970(D_80094784, "コンサート会場");
+    func_80078970(D_800947C4, "会場内");
+    temp_t3 = D_80125318 * 3;
+    D_8012439C = (s16) *((g->unk_EE6 * 0x24) + ((u8 *)D_801251E0) + temp_t3);
+    D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0x24) + ((u8 *)D_801251E0) + temp_t3) + (1));
+    D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0x24) + ((u8 *)D_801251E0) + temp_t3) + (2));
+    D_8012438C = (s16) *((g->unk_EE6 * 0x24) + ((u8 *)D_801251E4) + temp_t3);
+    D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0x24) + ((u8 *)D_801251E4) + temp_t3) + (1));
+    D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0x24) + ((u8 *)D_801251E4) + temp_t3) + (2));
+    func_800469F4(0x43D6);
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801142E8);
 
