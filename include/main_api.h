@@ -1559,7 +1559,6 @@ extern s16 D_800F1990[14];
 #ifndef MAIN_API_OVERRIDE_D_80120694
 extern u8 D_80120694[];
 #endif
-extern s32 D_80122CD8;
 
 /* ---- functions ---- */
 void func_80010678();
@@ -2347,4 +2346,5 @@ void func_800651F8();
 void func_80065234();
 void func_8006B5BC(GsWord arg0);
 
+extern s32 D_80122CD8;
 #endif /* MAIN_API_H */
