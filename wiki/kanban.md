@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 
@@ -50,8 +51,10 @@ kanban-plugin: board
 
 
 
+
 ## Done
 - [ ] [[tickets/T-10810-wave-16-list-1|T-10810 Wave 16: list 1]]
+- [ ] [[tickets/T-10840-wave-13-15-tool-fixes|T-10840 Wave 13-15 tool fixes]]
 - [x] [[tickets/T-10710-wave-15-list-1|T-10710 Wave 15: list 1]]
 - [ ] [[tickets/T-10720-wave-15-list-2|T-10720 Wave 15: list 2]]
 - [ ] [[tickets/T-10610-wave-14-list-1|T-10610 Wave 14: list 1]]

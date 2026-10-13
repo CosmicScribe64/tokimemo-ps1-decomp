@@ -28,6 +28,8 @@ The worker adapts upstream type lookup for K&R parameter declarations, default-i
 parameters and implicit C89 callees; compiler input stays unchanged.
 setup is bounded by --time (including Python scanning and build helpers); a setup
 timeout reports the phase and exits 124. all deducts setup time from the search budget.
+Seed instruction counts may differ by --instruction-tolerance (default 4); a differing
+mnemonic inventory warns, and a count outside the tolerance refuses the search.
 run starts permuter.py in its own process group and enforces --time as a wall-clock limit for the
 whole group (SIGINT at the limit, SIGKILL ten seconds later; the limit also covers the Loading
 phase, T-7030). It prints a progress line every 10 s (elapsed time, best score so far) and lists the
@@ -292,7 +294,7 @@ def instruction_shape(disassembly, func):
     """Mnemonic counts of one function, ignoring alignment nops and instruction order.
 
     Register allocation, constants, relocations and scheduling are search inputs.
-    A different instruction inventory indicates an unsuitable seed/target pair.
+    A different instruction inventory warns; the configurable count tolerance bounds preflight.
     """
     lines = funcdiff.split_functions(disassembly).get(func)
     if lines is None:
@@ -314,8 +316,8 @@ def instruction_shape(disassembly, func):
     return Counter(mnemonics)
 
 
-def validate_base(directory):
-    """Compile the exact search seed and refuse missing or incompatible instruction shapes."""
+def validate_base(directory, instruction_tolerance=4, warn=print):
+    """Compile the search seed, warn about shape differences and bound the count difference."""
     directory = os.path.abspath(directory)
     try:
         with open(os.path.join(directory, "settings.toml")) as f:
@@ -333,15 +335,20 @@ def validate_base(directory):
                 dump = sh(["mips-linux-gnu-objdump", "-d", "-z", "-M", "no-aliases", path])
                 shapes.append(instruction_shape(dump, func))
             if shapes[0] != shapes[1]:
-                raise RuntimeError("invalid base: instruction shape differs from target (%d vs %d instructions; "
-                                   "base-only %s; target-only %s); search not started" %
-                                   (sum(shapes[0].values()), sum(shapes[1].values()),
-                                    dict(shapes[0] - shapes[1]), dict(shapes[1] - shapes[0])))
+                detail = "instruction shape differs from target (%d vs %d instructions; base-only %s; target-only %s)" % (
+                    sum(shapes[0].values()), sum(shapes[1].values()),
+                    dict(shapes[0] - shapes[1]), dict(shapes[1] - shapes[0]))
+                if instruction_tolerance < 0:
+                    raise RuntimeError("instruction tolerance must be nonnegative")
+                if abs(sum(shapes[0].values()) - sum(shapes[1].values())) > instruction_tolerance:
+                    raise RuntimeError("invalid base: %s; exceeds tolerance %d; search not started" %
+                                       (detail, instruction_tolerance))
+                warn("warning: %s; searching within instruction tolerance %d" % (detail, instruction_tolerance))
     except (OSError, KeyError, ValueError) as exc:
         raise RuntimeError("invalid base: cannot validate search directory: %s" % exc) from exc
 
 
-def setup(root, func, src=None, out=None, unit=None, allow_decl_edits=False):
+def setup(root, func, src=None, out=None, unit=None, allow_decl_edits=False, instruction_tolerance=4):
     func, unit = funcloc.split_scope(func, unit)
     try:
         src = src or find_source(root, func, unit)
@@ -367,7 +374,7 @@ def setup(root, func, src=None, out=None, unit=None, allow_decl_edits=False):
     with open(os.path.join(out, "meta.json"), "w") as f:     # what `run DIR` needs to verify a candidate
         json.dump({"func": func, "unit": unit, "src": os.path.relpath(src, root) if scratch_free(src, root) else None,
                    "scratch": not scratch_free(src, root)}, f)
-    validate_base(out)
+    validate_base(out, instruction_tolerance)
     return out
 
 
@@ -379,7 +386,7 @@ def kill_group(proc, sig):
 
 
 def run(directory, seconds, jobs, extra=(), progress=print, interval=10, clock=time.time, sleep=time.sleep,
-        cmd=None):
+        cmd=None, instruction_tolerance=4):
     """Run permuter.py for at most `seconds` of wall-clock time; returns the list_outputs result.
 
     The permuter runs in its own process group. At the limit the whole group gets SIGINT, and ten
@@ -389,7 +396,7 @@ def run(directory, seconds, jobs, extra=(), progress=print, interval=10, clock=t
     if cmd is None:
         preflight_start = time.monotonic()
         with setup_limit(seconds):
-            validate_base(directory)
+            validate_base(directory, instruction_tolerance)
         seconds -= time.monotonic() - preflight_start
         if seconds <= 0:
             raise TimeoutError("time limit reached validating base; search not started")
@@ -592,7 +599,7 @@ def verify_candidate(root, meta, cand_dir, runner=subprocess.run):
 
 
 SUBCOMMANDS = ("setup", "run", "all")
-VALUE_OPTIONS = ("--unit", "--src", "--out", "--time", "-j", "--args")
+VALUE_OPTIONS = ("--unit", "--src", "--out", "--time", "-j", "--args", "--instruction-tolerance")
 
 
 def with_subcommand(argv):
@@ -624,6 +631,8 @@ def parse_args(argv):
         p.add_argument("--src", default=d(None), help="C file to take the function from (default: find it in src/)")
         p.add_argument("--out", default=d(None), help="permuter directory (default build/permute/<func>)")
         p.add_argument("--time", type=int, default=d(60), help="wall-clock limit in seconds (default 60)")
+        p.add_argument("--instruction-tolerance", type=int, default=d(4),
+                       help="allow this instruction-count difference in the seed (default 4; warn on shape differences)")
         p.add_argument("-j", type=int, default=d(os.cpu_count() or 1), help="threads")
         p.add_argument("--no-verify", action="store_true", default=d(False),
                        help="do not check score-0 candidates against the real build")
@@ -678,6 +687,9 @@ def report_outputs(outs, directory, root, args, out=print):
 
 def main(argv):
     args = parse_args(argv)
+    if args.instruction_tolerance < 0:
+        print("permute.py: --instruction-tolerance must be nonnegative", file=sys.stderr)
+        return 2
     if args.time <= 0:
         print("permute.py: --time must be positive", file=sys.stderr)
         return 2
@@ -689,7 +701,8 @@ def main(argv):
             # An alarm also bounds Python setup work (e.g. a pathological regex),
             # which subprocess timeouts alone cannot interrupt. Docker is Unix.
             with setup_limit(args.time):
-                directory = setup(".", args.func, args.src, args.out, args.unit, args.allow_decl_edits)
+                directory = setup(".", args.func, args.src, args.out, args.unit, args.allow_decl_edits,
+                                  args.instruction_tolerance)
     except TimeoutError:
         print("permute.py: time limit reached during setup (%d s); search not started" % args.time,
               file=sys.stderr)
@@ -705,7 +718,7 @@ def main(argv):
         print("permute.py: time limit exhausted by setup; search not started", file=sys.stderr)
         return 124
     try:
-        outs = run(directory, remaining, args.j, args.args)
+        outs = run(directory, remaining, args.j, args.args, instruction_tolerance=args.instruction_tolerance)
     except (RuntimeError, TimeoutError) as exc:
         print("permute.py: %s" % exc, file=sys.stderr)
         return 124 if isinstance(exc, TimeoutError) else 1

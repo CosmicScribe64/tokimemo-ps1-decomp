@@ -24,6 +24,9 @@ the list of candidates.
 --built compares another object (e.g. a scratch compile or an overlay object)
 instead of the per-file object (the original side is then taken from the C file that holds the
 function); --expected names the original-side object yourself.
+--version auto (default) compiles the full NON_MATCHING translation unit when the requested
+function has guarded C and an asm fallback; --version default compares the production build.
+Every verdict identifies the compared version. --built always compares the supplied object.
 --resolve compares the instruction words with the relocations applied instead of the text: a
 `lui/lh %hi/%lo(D_801D63C8)` against the original's symbol and `*(s16 *)0x801D63C8` in C give the
 same words, so the DIFF that only comes from that idiom (T-3300) disappears. Symbols that carry
@@ -34,6 +37,11 @@ bytes it points at, up to the NUL. Scheduled string HI16s compare as string-base
 the LO16s independently compare the actual contents. PC16 branches use section symbol offsets
 or the named function VRAM, including the encoded -4 addend. Short D_ hexadecimal symbols
 such as D_7FFFFF are absolute constants. Any other relocation is still compared by type and symbol.
+Normalized strings and table references are diagnostic equality only. MATCH for a repository
+function additionally requires a private link with that exact object: the function's address,
+size and literal bytes (including original padding) must equal the immutable disc target.
+Scratch objects without a unit layout can MATCH only exact, fully resolved instruction words;
+unknown section/string/table addresses require unit layout and fail closed.
 The built object is checked first: `ninja <object>` is run (skipped with --no-build or without
 build.ninja), and an object that is missing, older than its C source or than any header it
 includes, or whose build fails, is an error, never a MATCH. The check also applies to `--built`
@@ -41,6 +49,7 @@ when that object is a build/ object of the C files.
 Exit code 1 if any function differs or cannot be compared.
 """
 import argparse
+import fcntl
 import difflib
 import hashlib
 import os
@@ -48,6 +57,8 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
+from pathlib import Path
 
 import funcloc
 import srcscan
@@ -84,7 +95,7 @@ def cfile_of_object(obj):
 def disassemble(obj):
     """`objdump -dr` text of `obj`."""
     try:
-        return subprocess.run(["mips-linux-gnu-objdump", "-dr", obj], check=True,
+        return subprocess.run(["mips-linux-gnu-objdump", "-drz", obj], check=True,
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
     except FileNotFoundError:
         sys.exit(NO_DOCKER)
@@ -394,8 +405,8 @@ def original_rodata(c):
 
 def resolved_functions(obj, wanted, original_file=None):
     """{name: [(key, display)] or None}: like functions(), with relocations resolved."""
-    funcs = split_functions(disassemble(obj))
-    info = object_info(obj) if any(k in funcs for k in wanted) else None
+    funcs = {k: object_instructions(obj, k) for k in wanted}
+    info = object_info(obj) if any(v is not None for v in funcs.values()) else None
     if info is not None and original_file is not None:
         info = ObjInfo(info.rodata, info.symbols, info.tables, original_rodata(original_file), info.text_symbols)
     result = {}
@@ -403,8 +414,52 @@ def resolved_functions(obj, wanted, original_file=None):
         addr = sym_address(k)
         start = info.text_symbols.get(k) if info is not None else None
         base = addr - start if addr is not None and start is not None else None
-        result[k] = resolve(parse_insns(funcs[k]), info, text_base=base) if k in funcs else None
+        result[k] = resolve(funcs[k], info, text_base=base) if funcs[k] is not None else None
     return result
+
+
+def object_instructions(obj, name):
+    """Bound by ELF global text symbols; local objdump headers cannot truncate a function.
+
+    Include original inter-function padding, and disassemble zero words explicitly.
+    ELF bounds also make a missing/truncated disassembly fail closed.
+    """
+    import trailing_pad
+    elf = trailing_pad.Elf(Path(obj).read_bytes())
+    text = elf.find(".text")
+    syms = trailing_pad.read_symbols(elf, elf.find(".symtab"))
+    symbols = {s[0]: s[1] for s in syms if s[5] == text and (s[3] >> 4 or s[3] & 15 == 2)
+               and not LABEL_RE.match(s[0])}
+    if name not in symbols:
+        return None
+    start = symbols[name]
+    end = min([v for v in symbols.values() if v > start] or [elf.sections[text]["size"]])
+    dump = subprocess.run(["mips-linux-gnu-objdump", "-drz", "-j", ".text", obj],
+                          check=True, capture_output=True, text=True).stdout
+    insns = [i for i in parse_insns(dump.splitlines()) if i[0] is not None and start <= i.offset < end]
+    if end <= start or end % 4 or [i.offset for i in insns] != list(range(start, end, 4)):
+        raise ValueError("incomplete function disassembly for " + name)
+    return insns
+
+
+def absolute_object_rows(obj, name):
+    """No layout proof is possible for relocations to a section-owned symbol.
+
+    An address-looking D_/func_ name still belongs to its actual ELF section;
+    only undefined external address conventions or SHN_ABS can resolve here.
+    """
+    import trailing_pad
+    elf = trailing_pad.Elf(Path(obj).read_bytes())
+    symbols = {s[0]: (s[5], s[1]) for s in trailing_pad.read_symbols(elf, elf.find(".symtab"))}
+    insns = object_instructions(obj, name) or []
+    for insn in insns:
+        for _kind, symbol, _addend in insn[2]:
+            section, value = symbols.get(symbol, (0, 0))
+            if section not in (0, 0xFFF1):
+                raise ValueError("section-defined relocation %s requires unit layout" % symbol)
+            if section == 0xFFF1 and sym_address(symbol) != value:
+                raise ValueError("absolute relocation %s has an ELF value differing from its address convention" % symbol)
+    return resolve(insns)
 
 
 _checked = {}
@@ -416,9 +471,6 @@ def check_fresh(obj, src, build=True, deps=()):
     reported instead of leaving the previous object to produce a stale MATCH (`ninja obj` also fails
     while tools/check_headers.py does); then requires the object to exist and to be at least as new
     as its source and every header the source includes."""
-    key = (obj, str(src), tuple(str(d) for d in deps), build)
-    if key in _checked:
-        return _checked[key]
     problem = None
     if build and os.path.exists("build.ninja") and shutil.which("ninja"):
         r = subprocess.run(["ninja", obj], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -434,7 +486,6 @@ def check_fresh(obj, src, build=True, deps=()):
             if newer:
                 problem = "%s is older than %s; rebuild it (ninja %s), or the build failed" % (
                     obj, ", ".join(str(f) for f in newer[:3]), obj)
-    _checked[key] = problem
     return problem
 
 
@@ -538,6 +589,14 @@ def compile_expected(stub_path, obj):
 def expected_object(c, refresh=False, compile_fn=compile_expected, stale=None):
     """(path, problem): the original-side object of the srcscan.CFile `c` under expected/, created or
     refreshed from the original .s files when it is missing, forced, or its key changed."""
+    obj = os.path.join("expected", c.obj)
+    os.makedirs(os.path.dirname(obj), exist_ok=True)
+    with open(obj + ".lock", "a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        return _expected_object(c, refresh, compile_fn, stale)
+
+
+def _expected_object(c, refresh, compile_fn, stale):
     funcs = asm_functions(c, stale)
     if not funcs:
         return None, "no original disassembly found for %s (asm/ is missing: run configure.py and ninja first)" % c.src
@@ -555,11 +614,17 @@ def expected_object(c, refresh=False, compile_fn=compile_expected, stale=None):
     stub_path = obj[:-2] + ".c" if obj.endswith(".o") else obj + ".c"
     with open(stub_path, "w") as fh:
         fh.write(stub)
-    for stale in (obj, obj + ".key"):
+    for stale in (obj + ".key",):
         if os.path.exists(stale):
             os.remove(stale)
-    problem = compile_fn(stub_path, obj)
+    with tempfile.TemporaryDirectory(dir=os.path.dirname(obj), prefix="expected-") as tmp:
+        pending = os.path.join(tmp, "original.o")
+        problem = compile_fn(stub_path, pending)
+        if problem is None:
+            os.replace(pending, obj)
     if problem:
+        if os.path.exists(obj):
+            os.remove(obj)
         return None, problem
     with open(obj + ".key", "w") as fh:
         fh.write(key + "\n")
@@ -575,6 +640,13 @@ def diff_lines(want, got):
     def disp(r):
         return r[1] if isinstance(r, tuple) else r
     rows = []
+    if len(want) == len(got):
+        # SequenceMatcher describes a scheduling swap as one moved instruction,
+        # hiding the other half. Equal-length functions need positional evidence.
+        for i, (a, b) in enumerate(zip(want, got)):
+            if keys([a]) != keys([b]):
+                rows += ["-@row %d %s" % (i, disp(a)), "+@row %d %s" % (i, disp(b))]
+        return rows
     sm = difflib.SequenceMatcher(None, keys(want), keys(got), autojunk=False)
     for op, i1, i2, j1, j2 in sm.get_opcodes():
         if op != "equal":
@@ -597,6 +669,12 @@ def resolved_verdict(built, expected, name, original_file=None):
 
 
 def main(argv):
+    with tempfile.TemporaryDirectory(prefix="funcdiff-") as tmp:
+        return _main(argv, Path(tmp))
+
+
+def _main(argv, directory):
+    import funcdiff_verify as proof
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("names", nargs="+")
     ap.add_argument("--built")
@@ -608,6 +686,8 @@ def main(argv):
                     help="compare instruction words with the relocations applied")
     ap.add_argument("--no-build", action="store_true",
                     help="do not run ninja on the built object (it still fails if it is stale)")
+    ap.add_argument("--version", choices=("auto", "c", "default"), default="auto",
+                    help="auto compiles NON_MATCHING C when guarded; c forces it; default compares the normal build")
     args = ap.parse_args(argv)
     if shutil.which("mips-linux-gnu-objdump") is None:
         sys.exit(NO_DOCKER)
@@ -629,12 +709,31 @@ def main(argv):
             print("%s: ERROR %s" % (n, e))
             bad += 1
             continue
+        inputs = [c.src, *sorted(funcloc.includes_of(c.src))] if c is not None else []
+        before = {str(p): hashlib.sha256(Path(p).read_bytes()).digest() for p in inputs}
         if c is not None:   # an object of the build: its source and headers must not be newer
             problem = check_fresh(b, c.src, not args.no_build, sorted(funcloc.includes_of(c.src)))
             if problem:
                 print("%s: ERROR %s" % (n, problem))
                 bad += 1
                 continue
+        # Each comparison owns its snapshots, even when several names share an object.
+        job = Path(tempfile.mkdtemp(dir=directory))
+        version = "explicit object" if args.built else "default build"
+        try:
+            if not args.built and c is not None and (args.version == "c" or
+                    (args.version == "auto" and proof.guarded(c.src, name))):
+                b = proof.compile_guarded(c, job)
+                version = "NON_MATCHING C (full translation unit)"
+            else:
+                snapshot = job / "built.o"
+                snapshot.write_bytes(Path(b).read_bytes())
+                b = str(snapshot)
+        except (OSError, ValueError, SystemExit) as err:
+            print("%s: ERROR %s" % (n, err))
+            bad += 1
+            continue
+        print("%s: compared %s" % (n, version))
         e = args.expected
         if e is None:
             if c is None:       # a scratch object: the original side is that of the file holding the function
@@ -661,31 +760,53 @@ def main(argv):
                   % (n, problem))
             bad += 1
             continue
-        got = get(b, [name])[name]
-        want = (resolved_functions(e, [name], c) if args.resolve else get(e, [name]))[name]
+        reference = job / "expected.o"
+        reference.write_bytes(Path(e).read_bytes())
+        e = str(reference)
+        try:
+            got = get(b, [name])[name]
+            want = (resolved_functions(e, [name], c) if args.resolve else get(e, [name]))[name]
+        except (OSError, ValueError, subprocess.CalledProcessError) as err:
+            print("%s: ERROR %s" % (n, err))
+            bad += 1
+            continue
         if got is None or want is None:
             print("%s: missing in %s" % (n, "built" if got is None else "expected"))
             bad += 1
         elif keys(got) == keys(want):
-            print("%s: MATCH%s" % (n, " (relocations resolved)" if args.resolve else ""))
+            try:
+                if c is not None:
+                    equal, reason = proof.exact_match(b, c, name, job, not args.no_build,
+                                                      None if args.built else version.startswith("NON_MATCHING") or
+                                                      (not proof.guarded(c.src, name) and name in srcscan.defined_functions(Path(c.src))))
+                else:
+                    # Without unit layout, prove only relocations with known absolute addresses.
+                    strict = [absolute_object_rows(o, name) for o in (b, e)]
+                    equal = (keys(strict[0]) == keys(strict[1]) and bool(strict[0]) and
+                             all(re.fullmatch(r"[0-9a-f]{8}", k) for rows in strict for k in keys(rows)))
+                    reason = "exact resolved instruction bytes" if equal else "unit layout required for literal-byte proof"
+                if any(hashlib.sha256(Path(p).read_bytes()).digest() != digest for p, digest in before.items()):
+                    equal, reason = False, "source or header changed during comparison; rerun"
+            except (OSError, ValueError, subprocess.CalledProcessError, SystemExit) as err:
+                equal, reason = False, "literal-byte proof unavailable: %s" % err
+            print("%s: %s (%s)" % (n, "MATCH" if equal else "DIFF", reason))
+            bad += not equal
         else:
             verdict = ("real", diff_lines(want, got)) if args.resolve else resolved_verdict(b, e, name, c)
             if verdict and verdict[0] == "table":
-                print("%s: MATCH (relocations resolved automatically: the function reads a jump table, whose "
-                      "references and .L labels never agree by name; the table contents are not compared, "
-                      "the unit sha1 of ninja decides)" % n)
-                continue
+                print("%s: normalized table references agree; literal-byte proof requires --resolve" % n)
+                verdict = None
             bad += 1
             print("%s: DIFF (- expected, + built)" % n)
             for d in diff_lines(want, got):
                 print("  " + d)
             if verdict and verdict[0] == "same":
                 print("  resolved: the words are identical once relocations are applied; the rows above differ "
-                      "only in symbol naming (`D_800E6448` against `D_800E6280+0x1C8`). --resolve says MATCH.")
+                      "only in symbol naming (`D_800E6448` against `D_800E6280+0x1C8`). --resolve verifies literal bytes.")
             elif verdict:
                 if not args.resolve:
                     print("  after relocation (- expected, + built):")
-                    for d in verdict[1]:
+                    for d in verdict[1] or []:
                         print("    " + d)
                 print("  resolved: REAL DIFFERENCE, not naming. Symbol+offset or instruction words differ "
                       "after relocation.")
