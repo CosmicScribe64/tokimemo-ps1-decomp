@@ -18,6 +18,11 @@ typedef struct TtRec2 {
     /* 0x2 */ s16 val;
 } TtRec2; /* size 0x4 */
 extern u8 *D_80158A6C;
+extern u16 D_80155D50[];
+extern u16 D_80155D58;
+extern u16 D_80155D5A;
+extern u16 D_80155D5C;
+extern u16 D_80155D5E;
 extern u8 *D_80158AA4;
 extern u8 *D_80158AA8;
 extern u8 *D_80158A8C;
@@ -25,7 +30,7 @@ extern u8 *D_80158A84;
 extern u8 *D_80158A78;
 extern u8 *D_80158A94;
 extern u8 *D_80158A98;
-void func_8014D260(s32 arg0, s32 arg1);
+s32 func_8014D260(s32 arg0, s32 arg1);
 extern u8 *D_80158A60;
 extern u8 *D_80158AB4;
 void func_8013E320(void);
@@ -37,6 +42,7 @@ void func_8013BE9C(u8 *arg0);
 extern u8 *D_8015694C[];
 void func_80142AF0(void *arg0, s32 arg1);
 extern u8 D_80152C54[];
+extern u8 D_80155AE4[]; /* T-11000 */
 extern u8 D_80155C58[];
 extern u8 D_80155E2C[];
 extern u8 D_80155D2C[];
@@ -300,10 +306,51 @@ typedef struct TtActor68 {
 #include "psx_types.h"
 typedef struct TtPoolDraw14 {
     /* 0x00 */ u8 unk_00;
-    /* 0x01 */ u8 pad_01[5];
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 rgb[3];
     /* 0x06 */ u16 flags;
-    /* 0x08 */ u8 pad_08[12];
+    /* 0x08 */ u8 pad_08[2];
+    /* 0x0A */ s16 x;
+    /* 0x0C */ s16 y;
+    /* 0x0E */ u16 text;
+    /* 0x10 */ u16 ot;
+    /* 0x12 */ u16 count;
 } TtPoolDraw14; /* size 0x14; draw pool stride */
+/* Sized sprite packet (code 0x65) written by func_80147150. T-11000. */
+typedef struct TtSpritePacket20 {
+    /* 0x00 */ TtOtTag tag;
+    /* 0x04 */ u8 r;
+    /* 0x05 */ u8 g;
+    /* 0x06 */ u8 b;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x;
+    /* 0x0A */ s16 y;
+    /* 0x0C */ u8 u;
+    /* 0x0D */ u8 v;
+    /* 0x0E */ u16 clut;
+    /* 0x10 */ s16 w;
+    /* 0x12 */ s16 h;
+} TtSpritePacket20;
+/* Timeline stream at D_80158A70: current frame (high half) and the next six-byte command. T-11000. */
+typedef struct TtCmdStream {
+    /* 0x00 */ u16 pad0;
+    /* 0x02 */ u16 time;
+    /* 0x04 */ u8 *cmd;
+} TtCmdStream;
+/* Textured rectangle packet written by func_80148244. T-11000. */
+typedef struct TtRectPacket16 {
+    /* 0x00 */ TtOtTag tag;
+    /* 0x04 */ u8 r;
+    /* 0x05 */ u8 g;
+    /* 0x06 */ u8 b;
+    /* 0x07 */ u8 code;
+    /* 0x08 */ s16 x;
+    /* 0x0A */ s16 y;
+    /* 0x0C */ u8 u;
+    /* 0x0D */ u8 v;
+    /* 0x0E */ u16 clut;
+} TtRectPacket16;
 typedef struct TtDrawBuffer80B8 {
     /* 0x0000 */ u32 unk_0000;
     /* 0x0004 */ DR_MODE *cursor;
@@ -504,6 +551,11 @@ typedef struct TtSceneDraw {
     /* 0x3A4 */ u16 unk_3A4[4];
 } TtSceneDraw; /* accessed prefix size 0x3AC */
 extern TtCollision6 D_80155B36;
+extern TtCollision6 D_80155C70; /* T-11000 */
 #endif
 
 extern u8 D_80150A50[];
+extern u8 D_8014ED60[]; /* T-11000 */
+extern u8 D_80151AF0[];
+extern u8 D_80152E20[];
+extern u8 D_80154590[];

@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-12
+updated: 2026-10-13
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -1837,3 +1837,19 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | main/8006CB30 | `func_8006EEC4` | regorder | T-10880: EB64's idiom transfers to a guarded 212/212-instruction draft with the same eight-line a2/v1 flag-word miss. Output initialization must stay after the random gate. Both allocation devices are marked FAKE. |
 | NAME_ENT/80139740 | `func_8013CB44` | regorder | T-10880: 224/224 instructions, best scratch candidate 36 total +/- lines, including an eight-byte frame excess. The selected-slot load takes v0 instead of t2 and rotates following temporaries. Regdiff, typed slot views, loop rewrites, return/local variants and an hour of bounded permutation found no literal match; no oversized near miss was integrated. |
 | TAIIKU | `func_801346FC` | regorder | T-10890: actor-x decrement uses v0 in original, v1 in draft; 10 resolved listing lines, 422 instructions and frame agree. regdiff identifies the raw decrement local; 600-second permuter and lifetime/table-index variants unsuccessful. |
+| TT/80136830 | `func_80136AD8` | regorder | T-11000: guarded 6-case switch writer; the original keeps the 0xFF compare constant in $t0, IDO uses `li at,255`, so every later hoisted constant shifts one register (about 29 line pairs) |
+| TT/801374C0 | `func_801374C0` | regorder | T-11000: guarded; frame (152), spill slots, hoisted 12/0x40/0x80 and store order match; callee-saved numbering of `a`, `&pt`, `D_80155C64` rotated (original s2/s3/s4, ours s4/s2/s3) |
+| TT/80132F10 | `func_801330D8` | sched | T-11000: guarded; `id` slot fixed by declaring it before `t`; `beq s3,v0` operand order of the hoisted -1 and the record-init store schedule remain (45 rows) |
+| TT/80146BE0 | `func_80147150` | sched | T-11000: guarded; the original hoists `li 4` above the `bnez`, puts `lui at,0xff` in the `lh` delay slot and leaves the `bnez` slot unfilled |
+| TT/8013A3E0 | `func_8013B4A0` | regorder | T-11000: guarded; temp `i*2` in $v0 and the if/else index in $v1, the original has them swapped and hoists `D_80151A50` before `i = 0` |
+| TT/801487D0 | `func_801487D0` | regorder | T-11000: K&R draft with `ot = buffer + 0x8000` reaches the 72-byte frame and structure; all ugen temps differ (cursor+0x14 in $t9, original $t4); not kept |
+| TT/801374C0 | `func_80137654` | sched | T-11000: frame 152 and the `base`/`i`/`pt` slots match with the `n` idiom; the original loads `base` before `i` and hoists it above the `beqz` (131 rows); not kept |
+| TT/801374C0 | `func_80137A78` | frame | T-11000: the original keeps `c`/`aux` in $a1/$a2 and spills them only around calls; named locals spill at entry (frame 56 vs 48); not kept |
+| TT/80142350 | `func_80142350` | regorder | T-11000: guarded; `if (v) { switch 1..4 } else` structure exact; constant 1 in a0 (original a1) and the TtButtons06 pointer in v0 (original a2) |
+| TT/8013BD10 | `func_8013C1FC` | regorder | T-11000: guarded 32-trip draw loop; `addu t9,s2,t8` operand order of buf+idx*4 (same as `func_8014CC04`) and store scheduling (~18 lines) |
+| TT/80133970 | `func_80134BBC` | phantom | T-11000: guarded 128-trip pool loop; the original hoists 0x80 and an unused 0x40 into s2/s3 ahead of the other constants and uses s8; ours has six hoisted constants |
+| TT/80133970 | `func_801349B0` | regorder | T-11000: guarded; `lhu` of the count lands in a2 (original a1) and the spilled `v` at sp+0x38 (original 0x34) |
+| TT/80133970 | `func_80134470` | regorder | T-11000: guarded, one line: `addu s1,v0,t6` in the original, `addu s1,t6,v0` here (even-index branch); operand order and `+=` forms do not move it |
+| TT/8013C6D0 | `func_8013C8DC` | hoist | T-11000: guarded; the original hoists `li 1/15/0x30` before `lui D_80155D50` and keeps the end pointer in a1; only `t != &D_80155D50[3]` avoids unrolling (~25 lines) |
+| TT/8013C6D0 | `func_8013CC24` | regorder | T-11000: guarded; -0x50 takes a2 so `q` lands in a3 (original a2); the frame needs a FAKE `s32 pad` (~60 lines) |
+| TT/80142570 | `func_80142570` | phantom | T-11000: guarded; identical instruction stream including the 4x unroll; the original skips v1/a0 (`i` in a1, 0x40/0x70/0x20 in a2/a3/t0); unused parameters do not help |

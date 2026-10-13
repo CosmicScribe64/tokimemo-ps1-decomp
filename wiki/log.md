@@ -13019,3 +13019,19 @@ Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on
 ## [2026-10-13] build | T-11030 big functions (Sonnet) 26
 
 [[tickets/T-11030-big-functions-sonnet-26]]: 2 functions matched (1,552 bytes): `src/main/8006CB30.c` `func_80072338`, `src/ovl/DATE/80132000.c` `func_8013CDF8`; two near misses guarded with `NON_MATCHING` (`date_sasoi_judge`, DATE `func_8013C7D0`). Nine other drafts reverted to INCLUDE_ASM; findings in [[matching-notes]] section "T-11030". Ticket Done after inline review; ninja all OK, headers and globals OK.
+## [2026-10-13] ticket | T-11000 TT overlay opened
+
+Opened [[tickets/T-11000-tt-overlay]] (In Progress) for the remaining TT functions, claimed upstream in
+issue #2 (fork contribution). Start: TT 175/303, 27.6%; 115 unflagged queue entries.
+
+## [2026-10-13] build | T-11000 TT lists merged: 12 matches
+
+Merged the two TT lists (worktree branches) into the T-11000 branch without conflicts; `include/ovl/TT.h` got the
+same `s32 func_8014D260` change from both. 12 functions / 5,476 bytes matched, 13 guarded near misses. TT 187/303
+(32.5%); grand total `5352/6958   1105788/2279368  48.5%`. All 27 checksums OK; prototype and global checks clean.
+Idioms in [[matching-notes]] ("TT overlay (T-11000)"), 16 rows in [[data/t0018-cases]].
+
+## [2026-10-13] ticket | T-11000 Done
+
+Inline review against CODING_STANDARDS.md; one finding (a FAKE pad without the ticket id) fixed. Moved
+[[tickets/T-11000-tt-overlay]] to Done.

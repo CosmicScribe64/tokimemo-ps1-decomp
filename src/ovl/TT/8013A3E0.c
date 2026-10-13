@@ -372,11 +372,132 @@ void func_8013B41C(void) {
     }
 }
 
+/* T-11000 near miss: structure and stores match; temp t (i*2) is in $v0 and the if/else index in $v1, the original has them swapped, and the original hoists D_80151A50 before i = 0 (44 listing rows). */
+#ifdef NON_MATCHING
+void func_8013B4A0(void) {
+    u8 *c;
+    u8 *f;
+    u8 *r;
+    u8 *a;
+    u8 *a2;
+    s32 i;
+    s32 j;
+    s32 t;
+
+    c = D_80158A8C;
+    c[0x8E] = *(u16 *)(c + 0x3AC) >> 1;
+    *(u16 *)(c + 0x3AC) += 1;
+    if (*(u16 *)(c + 0x3AC) >= 6) {
+        *(u16 *)(c + 0x3AC) = 0;
+    }
+    f = c;
+    r = c;
+    i = 0;
+    do {
+        t = i * 2;
+        a = c + t;
+        if (f[0x343] != 0) {
+            *(u8 **)(r + 0x178) = D_80151A50;
+            r[0x17C] = 0;
+            r[0x17D] = 4;
+            r[0x180] = 0x80;
+            r[0x17E] = 0x34;
+            r[0x182] = 0;
+            r[0x188] = 0;
+            f[0x320] = 1;
+            a2 = c + t * 2;
+            *(s16 *)(a + 0x2C8) = 8;
+            if (i >= 2) {
+                j = t + 2;
+            } else {
+                j = t;
+            }
+            *(s16 *)(a + 0x268) = *(s16 *)(c + j * 2 + 0x248);
+            if (i >= 2) {
+                j = t + 2;
+            } else {
+                j = t;
+            }
+            *(s16 *)(a + 0x298) = *(s16 *)(c + j * 2 + 0x278);
+            if (i >= 2) {
+                *(s16 *)(a + 0x298) += 0xC;
+            }
+            *(u8 **)(r + 0x1C8) = D_80151A50;
+            r[0x1CC] = 0;
+            r[0x1CD] = 4;
+            r[0x1D0] = 0x80;
+            r[0x1CE] = 0x34;
+            r[0x1D2] = 0;
+            r[0x1D8] = 0;
+            f[0x324] = 1;
+            *(s16 *)(a + 0x2D0) = 8;
+            *(s16 *)(a + 0x270) = *(s16 *)(a2 + 0x24A);
+            *(s16 *)(a + 0x2A0) = *(s16 *)(a2 + 0x27A);
+            f[0x343] = 0;
+        }
+        func_80142AF0(D_80155AE4, i + 0x10);
+        func_80142AF0(D_80155AE4, i + 0x14);
+        f++;
+        if (r[0x17E] == 0x38) {
+            if (i >= 2) {
+                j = t + 2;
+            } else {
+                j = t;
+            }
+            c[j + 0x310] = 0;
+            c[i * 2 + 0x311] = 0;
+        }
+        i++;
+        r += 0x14;
+    } while (i != 4);
+    if (*(u16 *)(c + 4) != 0x20 && *(u16 *)(c + 0x30E) == 0) {
+        func_8013B41C();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B4A0);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B6C8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B928);
+void func_8013B928(void) {
+    u8 *c;
+    u8 *a;
+    s32 ang;
+    s32 i;
+    s32 v;
+
+    c = D_80158A8C;
+    a = D_80158A74;
+    if (*(u16 *)(c + 0x364) == 0x80 || *(u16 *)(c + 0x364) == 0x100) {
+        func_80133AD0(0x618);
+        ang = func_8014D260((*(s32 *)(a + 0x24) - *(s32 *)(c + 0x24)) >> 16,
+                            (*(s32 *)(a + 0x20) - *(s32 *)(c + 0x20)) >> 16);
+        i = 0x180;
+        v = ang + 0x180;
+        do {
+            func_80133E30(*(s16 *)(c + 0x14) - 0x12, *(s16 *)(c + 0x16) + 0xA, 0x18, v, 0xAC);
+            i += 0x100;
+            v += 0x100;
+        } while (i < 0x680);
+        v = ang - 0x180;
+        for (i = 0x180; i != 0x680; i += 0x100) {
+            func_80133E30(*(s16 *)(c + 0x14) + 0x12, *(s16 *)(c + 0x16) + 0xA, 0x18, v, 0xAC);
+            v -= 0x100;
+        }
+    }
+    if (*(u16 *)(c + 0x364) == 0x178 || *(u16 *)(c + 0x364) == 0x200) {
+        func_80134470(*(s16 *)(c + 0x14) - 0x12, *(s16 *)(c + 0x16) + 0xA, 0xC0, 0x28, 0xA0);
+    }
+    if (*(u16 *)(c + 0x364) == 0x180 || *(u16 *)(c + 0x364) == 0x1F8) {
+        func_80134470(*(s16 *)(c + 0x14) + 0x12, *(s16 *)(c + 0x16) + 0xA, 0xC0, 0x28, 0xA0);
+    }
+    if (*(u16 *)(c + 0x364) >= 0x200) {
+        *(u16 *)(c + 0x364) = 0;
+    } else {
+        *(u16 *)(c + 0x364) += 1;
+    }
+}
 
 void func_8013BAD0(void) {
     switch (*(u16 *)(D_80158A8C + 0x30E)) {

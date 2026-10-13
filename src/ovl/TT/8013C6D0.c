@@ -92,7 +92,58 @@ u16 func_8013C818(u8 arg0, s8 *arg1) {
     return ret;
 }
 
+/* NON_MATCHING: T-11000, about 25 lines: constant/address hoist order (li 1,15,0x30 vs lui D_80155D50 first) and the end pointer D_80155D56 kept in a1; a two-symbol end compare gets unrolled */
+#ifdef NON_MATCHING
+void func_8013C8DC(void) {
+    u8 *q;
+    u8 *p;
+    s32 y;
+    u16 *t;
+
+    p = D_80158AA8;
+    q = D_80158A60;
+    D_80158A6C[0xA] = 0;
+    func_8013C6D0();
+    p[0] = 1;
+    *(s16 *)(p + 0xA) = -0x48;
+    *(s16 *)(p + 0xC) = 0x30;
+    *(s16 *)(p + 0xE) = 0x12;
+    p[2] = 0xF;
+    *(s16 *)(p + 6) = 0;
+    *(s16 *)(p + 0x10) = 0;
+    p += 0x14;
+    t = D_80155D50;
+    y = 0x60;
+    do {
+        p[0] = 1;
+        *(s16 *)(p + 0xA) = -0x50;
+        *(s16 *)(p + 0xC) = y;
+        *(s16 *)(p + 0xE) = *t;
+        t++;
+        y += 0x10;
+        p += 0x14;
+        p[-0x12] = 0xF;
+        *(s16 *)(p - 0xE) = 0;
+        *(s16 *)(p - 4) = 0;
+    } while (t != &D_80155D50[3]);
+    p = D_80158AA8 + 0x140;
+    D_80158AA8[0x140] = 1;
+    *(s16 *)(p + 0xA) = 0x30;
+    *(s16 *)(p + 0xC) = 0x60;
+    *(s16 *)(p + 0xE) = func_8013C818(q[0x44], p + 2);
+    *(s16 *)(p + 6) = 0;
+    *(s16 *)(p + 0x10) = 0;
+    p[0x14] = 1;
+    *(s16 *)(p + 0x1E) = 0x30;
+    *(s16 *)(p + 0x20) = 0x70;
+    p += 0x14;
+    *(s16 *)(p + 0xE) = func_8013C818(q[0x45], p + 2);
+    *(s16 *)(p + 6) = 0;
+    *(s16 *)(p + 0x10) = 0;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C8DC);
+#endif
 
 void func_8013CA0C(void) {
     u8 *p;
@@ -160,7 +211,82 @@ void func_8013CB58(void) {
     }
 }
 
+/* NON_MATCHING: T-11000, about 60 lines: constants -0x50/0x60 get a2 (q lands in a3 instead of a2) in the original, after the 0x34/0x2C spill; frame matches with the FAKE pad */
+#ifdef NON_MATCHING
+void func_8013CC24(void) {
+    u8 *q;
+    s32 pad; /* FAKE: unused slot keeps the frame layout, real source unknown. T-11000 */
+    u8 *a;
+    u8 *b;
+    u8 *c;
+
+    q = D_80158A60;
+    a = D_80158AA8;
+    D_80158A6C[0xA] = 0;
+    func_8013C6D0();
+    a[0] = 1;
+    *(s16 *)(a + 0xA) = -0x18;
+    *(s16 *)(a + 0xC) = 0x30;
+    *(s16 *)(a + 0xE) = 4;
+    a[2] = 0xF;
+    *(s16 *)(a + 6) = 0;
+    *(s16 *)(a + 0x10) = 0;
+    a[0x14] = 1;
+    *(s16 *)(a + 0x1E) = -0x50;
+    *(s16 *)(a + 0x20) = 0x60;
+    *(s16 *)(a + 0x34) = 0x70;
+    *(s16 *)(a + 0x32) = -0x50;
+    a[0x28] = 1;
+    a[0x16] = 0xF;
+    *(s16 *)(a + 0x1A) = 0;
+    *(s16 *)(a + 0x24) = 0;
+    *(u16 *)(a + 0x22) = D_80155D58;
+    *(s16 *)(a + 0x48) = 0x80;
+    *(s16 *)(a + 0x46) = -0x50;
+    a[0x3C] = 1;
+    *(s16 *)(a + 0x38) = 0;
+    *(s16 *)(a + 0x2E) = 0;
+    a[0x2A] = 0xF;
+    *(u16 *)(a + 0x36) = D_80155D5A;
+    *(s16 *)(a + 0x5C) = 0x90;
+    *(s16 *)(a + 0x5A) = -0x50;
+    a[0x50] = 1;
+    *(s16 *)(a + 0x4C) = 0;
+    *(s16 *)(a + 0x42) = 0;
+    a[0x3E] = 0xF;
+    *(u16 *)(a + 0x4A) = D_80155D5C;
+    *(s16 *)(a + 0x60) = 0;
+    *(s16 *)(a + 0x56) = 0;
+    a[0x52] = 0xF;
+    *(u16 *)(a + 0x5E) = D_80155D5E;
+    b = D_80158AA8 + 0x140;
+    D_80158AA8[0x140] = 1;
+    *(s16 *)(b + 0xA) = 0x20;
+    *(s16 *)(b + 0xC) = 0x70;
+    b[2] = 0xF;
+    *(s16 *)(b + 6) = 0;
+    *(s16 *)(b + 0x10) = 0;
+    if (q[0x43] != 0) {
+        *(s16 *)(b + 0xE) = 0x18;
+    } else {
+        *(s16 *)(b + 0xE) = 0x19;
+    }
+    b[0x14] = 1;
+    *(s16 *)(b + 0x1E) = 0x20;
+    *(s16 *)(b + 0x20) = 0x80;
+    b[0x16] = 0xF;
+    *(s16 *)(b + 0x1A) = 0;
+    *(s16 *)(b + 0x24) = 0;
+    c = b + 0x14;
+    if (q[0x49] != 0) {
+        *(s16 *)(c + 0xE) = 0x16;
+    } else {
+        *(s16 *)(c + 0xE) = 0x15;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CC24);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CDC0);
 

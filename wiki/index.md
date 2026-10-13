@@ -18,6 +18,7 @@ Read this first. Update on every ingest or new page.
 - Repo-root `CODING_STANDARDS.md` - coding conventions and review checklist (T-0007)
 
 ## Tickets
+- [[tickets/T-11000-tt-overlay|T-11000]] TT overlay (Done; 12 matches / 5,476 bytes, 13 guarded near misses, TT 32.5%).
 - [[tickets/T-10700-windows-host-baseline-build|T-10700]] Windows host setup and baseline build: docker.sh MSYS paths, 32-bit gcc cpp on WSL2 mounts (Done; 27/27, 5,176/6,958).
 - [[tickets/T-10890-big-functions-astra-21|T-10890]] Big functions (astra) 21 (In Progress).
 - [[tickets/T-10900-big-functions-astra-22|T-10900]] Big functions (astra) 22 (In Progress).

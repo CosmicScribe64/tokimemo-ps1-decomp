@@ -115,4 +115,40 @@ void func_80147074(void) {
     } while (i != (limit & 0xFF));
 }
 
+/* T-11000 near miss: instructions and registers match; scheduling differs in the packet setup (li 4 hoisted above the bnez in the original, lui at placed in the lh delay slot, unfilled bnez delay slot); about 8 real differences, the rest of the listing is a one-slot shift. */
+#ifdef NON_MATCHING
+void func_80147150(void) {
+    TtDrawBuffer80B8 *buffer;
+    TtSpritePacket20 *q;
+    DR_MODE *m;
+    u8 *p;
+    s32 i;
+    s32 n;
+
+    p = D_80158A84;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0, n = 8; i != n; i++, p += 0x58) {
+        if (p[0] != 0 && !(*(u16 *)(p + 0x3E) & 1)) {
+            q = (TtSpritePacket20 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
+            q->tag.len = 4; q->code = 0x65;
+            q->x = *(s16 *)(p + 0x22) - 8;
+            q->h = 0x10;
+            q->y = *(s16 *)(p + 0x26) - 8;
+            q->w = 0x10;
+            q->u = p[0x44];
+            q->v = p[0x45];
+            q->clut = *(u16 *)(p + 0x42);
+            q->tag.addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)q;
+            m = buffer->cursor;
+            buffer->cursor++;
+            func_8009D294((s32)m, 0, 0, *(u16 *)(p + 0x40), 0);
+            ((TtOtTag *)m)->addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)m;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80147150);
+#endif

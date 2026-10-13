@@ -508,7 +508,50 @@ void func_8014C1BC(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C2F8);
+void func_8014C2F8(void) {
+    TtCmdStream *g;
+
+    g = (TtCmdStream *)D_80158A70;
+    while (1) {
+        if (*(s16 *)g->cmd == -1) {
+            return;
+        }
+        if (g->time < (u32) * (s16 *)g->cmd) {
+            return;
+        }
+        switch (*(u16 *)(g->cmd + 2)) {
+        case 0xC0:
+            func_8014B088(g->cmd[4]);
+            break;
+        case 0xC1:
+            func_8014B274(g->cmd[4]);
+            break;
+        case 0xC2:
+            func_8014B4A4(g->cmd[4]);
+            break;
+        case 0xC3:
+            func_8014B67C(g->cmd[4]);
+            break;
+        case 0xC4:
+            func_8014BA54(g->cmd[4]);
+            break;
+        case 0xC5:
+            func_8014BC74(g->cmd[4]);
+            break;
+        case 0xC6:
+            func_8014BE60(g->cmd[4]);
+            break;
+        case 0xC7:
+            func_8014C0B0(g->cmd[4]);
+            break;
+        case 0x30:
+        case 0x31:
+            func_8014743C((s8)g->cmd[4], *(u16 *)(g->cmd + 2), g->cmd[5]);
+            break;
+        }
+        g->cmd += 6;
+    }
+}
 
 void func_8014C4AC(u8 *arg0) {
     s16 v;
@@ -782,7 +825,43 @@ void func_8014CC04(TtActor78 *arg0) {
 }
 #endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CDBC);
+void func_8014CDBC(u8 *arg0) {
+    DR_MODE *m;
+    TtDrawBuffer80B8 *buffer;
+    TtSpritePacket20 *q;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    q = (TtSpritePacket20 *)buffer->cursor;
+    buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
+    q->tag.len = 4;
+    if (*(u16 *)(arg0 + 0x44) & 8) {
+        TtCore30 *core;
+
+        core = (TtCore30 *)D_80158A64;
+        q->code = arg0[0x3B] & 0xFFFE;
+        q->r = core->unk_1D;
+        q->g = core->unk_1E;
+        q->b = core->unk_1F;
+    } else {
+        q->code = arg0[0x3B];
+        q->r = arg0[0x38];
+        q->g = arg0[0x39];
+        q->b = arg0[0x3A];
+    }
+    q->x = *(s16 *)(arg0 + 0x14);
+    q->y = *(s16 *)(arg0 + 0x16);
+    q->w = *(s16 *)(arg0 + 0x3C);
+    q->h = *(s16 *)(arg0 + 0x3E);
+    q->u = arg0[0x46];
+    q->v = arg0[0x47];
+    q->clut = *(u16 *)(arg0 + 0x42);
+    q->tag.addr = buffer->ordering[*(u16 *)(arg0 + 0x10)].addr;
+    buffer->ordering[*(u16 *)(arg0 + 0x10)].addr = (u32)q;
+    m = buffer->cursor;
+    buffer->cursor++;
+    func_8009D294((s32)m, 0, 0, *(u16 *)(arg0 + 0x40), 0);
+    ((TtOtTag *)m)->addr = buffer->ordering[*(u16 *)(arg0 + 0x10)].addr;
+    buffer->ordering[*(u16 *)(arg0 + 0x10)].addr = (u32)m;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CFEC);
 

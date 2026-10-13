@@ -4487,3 +4487,39 @@ Open:
 - DATE `func_8013C190`: the original keeps `&D_800CA22C[0]` in s0 across the calls; a `p` local, pointer arithmetic or byte arithmetic on the symbol are all folded back to `lui/lh %lo` (frame 0x50 instead of 0x60).
 - main `func_8006D138`: the original loads `D_800E6280` into a0 and the +0xF64 flag word into v0 once before the switch (speculative hoist), with the other fields as separate symbols; the draft with `F64Flags` bit tests has the right shape but no hoist.
 - DATE `func_8013A94C`: frame 0x78 against 0x70; the original has 16 unreferenced bytes below the flag byte, the draft 28.
+## TT overlay (T-11000)
+
+Fork contribution, two parallel lists over disjoint TT files (issue CosmicScribe64/tokimemo-ps1-decomp#2). 12 functions
+matched, 13 guarded near misses, 16 rows in [[data/t0018-cases]]. Ticket [[tickets/T-11000-tt-overlay]].
+
+- **Narrow K&R parameter called in a loop.** Callers of the K&R `func_80133C1C(o, kind, idx)` emitted `li a1,CONST`
+  where the original has `andi a1,sN,0xFFFF` (the hoisted case constant, narrowed). Making the definition itself ANSI
+  (`void func_80133C1C(TtActor68 *o, u16 kind, s32 idx)`) fixes all three loop callers (`func_80133FB0`, `func_801342CC`,
+  `func_80134630`) and leaves the callee's own bytes unchanged. A separate ANSI prototype beside a K&R definition is
+  rejected by `check_headers.py`. `(u16)` casts or a `u16` local give `move`, not `andi`.
+- **Single-case switch vs `if`.** `if (kind == 0xA8)` hoists 0xA8 into a saved register; `switch (kind) { case 0xA8: ...
+  break; }` compares through `$at` and keeps the register free (`func_80134178`).
+- **Unsigned store shares the switch constant.** Storing the case constant into a `u16` field (`*(u16 *)(c + 2) = 0xA0;`)
+  shares the register of the `u16` selector's compare (`li a0,160; beq v0,a0 ... sh a0,2(v1)`); an `s16` store gets its own
+  `li` (`func_801365C4`).
+- **Stack layout by declaration order.** IDO gives locals homes from the top of the frame down in declaration order, and
+  every declared local reserves a word even when it lives in a register; spill slots of promoted variables land below.
+  Reorder declarations, drop or add locals (pads marked `FAKE`) and read the `sw`/`lw` offsets in `funcdiff` to place a
+  slot: `func_80137878` (`c, b, pad[8], pt, p, i, n`), `func_80141A1C` (leading `s32 pad` gives the 72-byte frame),
+  `func_8014CDBC` (`m, buffer, q`), `func_801365C4` (`c, v, t, s`).
+- **`n` loop-bound local.** `for (i = 0, n = 12; i != n; i++, p += 0x54)`, with `n` assigned in the for-init, makes IDO
+  hoist the constant 12 into an s-register instead of `&D_xxxx` (`func_80137878`). Assigning `n` before the loop spills it;
+  a plain `i != 12` does not hoist it.
+- **Stores are scheduled per source line.** Writing several packet stores on one line reproduces the original order
+  (`func_80148244`: `x, y, u, v, clut, tag`; `func_80141A1C`: `len` and `code`). Keep a comment saying why.
+- **Field expression vs named cursor.** Using `g->cmd[...]` and `g->cmd += 6` directly (new `TtCmdStream` over
+  `D_80158A70`) makes the `*(g + 4)` load an s0 expression temp reloaded after each call, as in the original; a named
+  `u8 *cmd` local moves to $a0/$v0 and changes the whole allocation (`func_8014C2F8`).
+- **Callee return types.** m2c's "unset register $v0" after a call means the callee returns a value: `func_8014D260` (gcc
+  SDK atan2) returns `s32`; with the fixed prototype `func_8013B928` matched and `func_801349B0` came within 7 lines.
+- Smaller forms: `x[0x52] = 0; v = x[0x52];` gives `andi v0,zero,0xff` where `v = 0` gives `move`;
+  `*(u8 **)(buf + 4) += 0x30;` after reading the field keeps the value in $v0; `D_80158A70` is `s32 *`, so byte offsets
+  need `(u8 *)` first; pool loops `o = func(o, o + 0x3400)` reuse the previous result as the next base.
+- Tooling: every `include/ovl/TT.h` edit rebuilds all TT objects; iterate with `funcdiff` and run the full `ninja` once
+  at the end. The permuter helped only with pure scheduling (`func_80148244`); for frame and hoisting problems fix the
+  layout by hand first.
