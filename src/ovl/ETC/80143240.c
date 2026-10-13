@@ -151,15 +151,16 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80143A88);
 
 /* NON_MATCHING: T-10330, 23 lines: c and the Rec24 pointer sit in v1/v0 (original a1/v1, the original reads D_800E62BA as its own scalar). */
 #ifdef NON_MATCHING
+/* NON_MATCHING: T-10720, register assignment only: the promoted D_800E6280.unk_03A lands in v1 (plus a copy in a1) and the pointer in v0, the original has the value in a1 and the pointer in v1 with lui v0 for D_80150138 hoisted; the loop is written over D_80121818 so the end folds to a single lui/addiu, about 25 lines */
 void func_80143F24(void) {
     s32 i;
 
     func_80142AE8();
     if (D_800E6280.unk_03A != 0) {
-        for (i = 2; i < 5; i++) {
-            D_801217D0[i].unk_16 = D_800E6280.unk_03A;
-            D_801217D0[i].unk_15 = D_800E6280.unk_03A;
-            D_801217D0[i].unk_14 = D_800E6280.unk_03A;
+        for (i = 0; i < 3; i++) {
+            ((u8 *)&D_80121818)[i * 0x24 + 0x16] = D_800E6280.unk_03A;
+            ((u8 *)&D_80121818)[i * 0x24 + 0x15] = D_800E6280.unk_03A;
+            ((u8 *)&D_80121818)[i * 0x24 + 0x14] = D_800E6280.unk_03A;
         }
         D_800E6280.unk_03A -= 1;
     }
