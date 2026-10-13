@@ -327,6 +327,12 @@ typedef struct TtSpritePacket20 {
     /* 0x10 */ s16 w;
     /* 0x12 */ s16 h;
 } TtSpritePacket20;
+/* Timeline stream at D_80158A70: current frame (high half) and the next six-byte command. T-11000. */
+typedef struct TtCmdStream {
+    /* 0x00 */ u16 pad0;
+    /* 0x02 */ u16 time;
+    /* 0x04 */ u8 *cmd;
+} TtCmdStream;
 /* Textured rectangle packet written by func_80148244. T-11000. */
 typedef struct TtRectPacket16 {
     /* 0x00 */ TtOtTag tag;

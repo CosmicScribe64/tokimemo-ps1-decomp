@@ -508,7 +508,50 @@ void func_8014C1BC(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014C2F8);
+void func_8014C2F8(void) {
+    TtCmdStream *g;
+
+    g = (TtCmdStream *)D_80158A70;
+    while (1) {
+        if (*(s16 *)g->cmd == -1) {
+            return;
+        }
+        if (g->time < (u32) * (s16 *)g->cmd) {
+            return;
+        }
+        switch (*(u16 *)(g->cmd + 2)) {
+        case 0xC0:
+            func_8014B088(g->cmd[4]);
+            break;
+        case 0xC1:
+            func_8014B274(g->cmd[4]);
+            break;
+        case 0xC2:
+            func_8014B4A4(g->cmd[4]);
+            break;
+        case 0xC3:
+            func_8014B67C(g->cmd[4]);
+            break;
+        case 0xC4:
+            func_8014BA54(g->cmd[4]);
+            break;
+        case 0xC5:
+            func_8014BC74(g->cmd[4]);
+            break;
+        case 0xC6:
+            func_8014BE60(g->cmd[4]);
+            break;
+        case 0xC7:
+            func_8014C0B0(g->cmd[4]);
+            break;
+        case 0x30:
+        case 0x31:
+            func_8014743C((s8)g->cmd[4], *(u16 *)(g->cmd + 2), g->cmd[5]);
+            break;
+        }
+        g->cmd += 6;
+    }
+}
 
 void func_8014C4AC(u8 *arg0) {
     s16 v;
