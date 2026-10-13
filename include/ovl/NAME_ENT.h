@@ -406,3 +406,19 @@ extern u8 D_8014CCE4[]; /* Argument block passed to func_801330E8 and friends. *
 void func_80142560(void);
 extern u8 D_8014CD10[];
 #endif
+
+#ifndef OVL_NAME_ENT_T11010_D_H
+#define OVL_NAME_ENT_T11010_D_H
+extern s32 D_8014CC38; /* Word arguments to func_80046290. */
+extern s32 D_8014CC3C;
+#endif
+
+#ifndef OVL_NAME_ENT_T11010_E_H
+#define OVL_NAME_ENT_T11010_E_H
+extern u8 D_8014CC7A; /* loop bounds: addresses inside D_8014CC74 / D_8014CC7C / D_8014CC84 */
+extern u8 D_8014CC82;
+extern u8 D_8014CC8E;
+extern u8 D_8014CC7B;
+extern u8 D_8014CC83;
+extern u8 D_8014CC8F;
+#endif
