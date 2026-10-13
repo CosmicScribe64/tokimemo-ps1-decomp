@@ -514,3 +514,5 @@ void func_8013EAA4();
 extern u8 D_80161ECD;
 extern s32 D_8016024C[];
 extern s32 D_80160264;
+extern u8 D_80161E20[]; /* trigger count per kind (T-10810) */
+extern s32 *D_80161E60[]; /* per kind: table of (s32, s32) pairs (T-10810) */
