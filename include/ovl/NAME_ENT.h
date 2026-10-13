@@ -7,7 +7,7 @@
 
 #include "common.h"
 #include "main_api.h"
-void func_80142028(void);
+s32 func_80142028(void);
 void func_801460D8(void);
 void func_801462B4(void);
 void func_80146624(void);

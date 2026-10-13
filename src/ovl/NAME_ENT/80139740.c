@@ -1420,7 +1420,58 @@ s32 func_80141FA4(void) {
     D_800E6280.unk_1092 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80142028);
+s32 func_80142028(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, "未初期化のメモリーカードです。", 0);
+        func_8004E884(1);
+        D_800E6280.unk_110D++;
+    default:
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, "初期化していいですか？", 0);
+        func_8004E788(-0x40, 0x30, 0xF, D_800B3C70, 0);
+        func_8004E788(0x14, 0x30, 1, func_8006CA9C(), 0);
+        func_8004E788(-0x40, 0x40, 0xF, D_800B3C88, 0);
+        func_8004E788(0x14, 0x40, 2, func_8006CAE0(), 0);
+        func_8004E884(5);
+        D_800E6280.unk_110D++;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            if (func_80054108() == 1) {
+                func_80042908(2);
+            } else {
+                func_80042908(1);
+            }
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 4:
+        func_8004E58C();
+        func_8004E788(-0x40, 0x20, 0xF, "別のメモリーカードを", 0);
+        func_8004E788(-0x40, 0x30, 1, "差し込み口１", 0);
+        func_8004E788(-0x40, 0x30, 0xF, "　　　　　　にセットして、", 0);
+        func_8004E788(-0x40, 0x40, 0xF, "　ボタンを押してください。", 0);
+        func_8004E788(-0x40, 0x40, 1, func_8006CA9C(), 0);
+        func_8004E884(5);
+        D_800E6280.unk_110D++;
+        break;
+    case 5:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80042908(1);
+        }
+        break;
+    }
+}
 
 void func_801422F0(void) {
     if (D_800E6280.unk_110A == 0) {
