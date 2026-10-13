@@ -3,11 +3,13 @@
 #define MAIN_API_OVERRIDE_func_80081190 /* integer result read by k_disp_start; callee narrows K&R arguments, T-10730 */
 #define MAIN_API_OVERRIDE_func_80084C98 /* promoted s32 index view avoids call-site narrowing; existing callee performs the s16 conversion, T-9540 */
 #define MAIN_API_OVERRIDE_D_80122CD0 /* word-indexed clearing view, canonical scalar retained elsewhere, T-9540 */
+#define MAIN_API_OVERRIDE_select_girl_init /* K&R byte parameter is narrowed in the callee. T-10900. */
 #include "common.h"
 #include "game.h"
 s32 func_80049FF0(s16 x0, s16 y0, s16 x1, s16 y1, s32 arg4, s32 arg5, s32 arg6);
 s32 SsVabTransCompleted();
 s32 func_80081190();
+void select_girl_init();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/data/main/8007C030.data", D_800C9F60);
@@ -291,7 +293,134 @@ void func_8007C8A4(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007C8D8);
+s32 func_8007C8D8(void) {
+    /* T-10900: inline half-width and right edge retain the original frame. */
+    s16 top_y;
+    s16 bottom_y;
+    s16 left_x;
+    s16 outer;
+    GameState *g;
+    s32 width;
+
+    g = &D_800E6280;
+    srand(g->unk_10F8);
+    if (g->unk_1104.u == 0) {
+        D_80122D3C = g->unk_03F % 7U;
+    }
+    if (D_80122D3C != 6) {
+        D_80122CF8 = 2;
+    }
+    D_800B593C += 8;
+    if ((u8)D_800B593C >= 0x80U) {
+        D_800B593C = 0x80;
+    }
+    switch (D_80122D3C) {
+    case 1:
+        for (outer = g->unk_1104.u * 5; outer < 0x50; outer++) {
+            func_80049FF0(-0xA0, -0x29 - outer, 0xA0, -0x29 - outer, 0, 0, 0xD);
+            func_80049FF0(-0xA0, outer - 0x29, 0xA0, outer - 0x29, 0, 0, 0xD);
+        }
+        break;
+    case 2:
+        for (outer = g->unk_1104.u; outer < 0x10; outer++) {
+            for (left_x = 0; left_x < 10; left_x++) {
+                top_y = left_x * 16 + outer - 0x78;
+                func_80049FF0(-0xA0, top_y, 0xA0, top_y, 0, 0, 0xD);
+            }
+        }
+        break;
+    case 3:
+        for (outer = g->unk_1104.u << 5; outer < 0x1E0; outer++) {
+            if (outer < 0xA0) {
+                func_80049FF0(outer - 0xa0, -0x78, -0xA0, outer - 0x78, 0, 0, 0xD);
+            } else if (outer < 0x140) {
+                func_80049FF0(outer - 0xa0, -0x78, outer - 0x140, 0x27, 0, 0, 0xD);
+            } else {
+                func_80049FF0(0xA0, outer - 0x1b8, outer - 0x140, 0x27, 0, 0, 0xD);
+            }
+        }
+        break;
+    case 4:
+        for (outer = g->unk_1104.u << 6; outer < 0x1E0; outer += 4) {
+            if (outer < 0xA0) {
+                func_80049FF0(outer - 0xa0, -0x78, -0xA0, outer - 0x78, 0, 0, 0xD);
+            } else if (outer < 0x140) {
+                func_80049FF0(outer - 0xa0, -0x78, outer - 0x140, 0x27, 0, 0, 0xD);
+            } else {
+                func_80049FF0(0xA0, outer - 0x1b8, outer - 0x140, 0x27, 0, 0, 0xD);
+            }
+        }
+        for (outer = g->unk_1104.u << 6; outer < 0x1E0; outer += 4) {
+            if (outer < 0xA0) {
+                func_80049FF0(outer - 0x9f, -0x78, -0xA0, outer - 0x77, 0, 0, 0xD);
+            } else if (outer < 0x140) {
+                func_80049FF0(outer - 0x9f, -0x78, outer - 0x13f, 0x27, 0, 0, 0xD);
+            } else {
+                func_80049FF0(0xA0, outer - 0x1b7, outer - 0x13f, 0x27, 0, 0, 0xD);
+            }
+        }
+        if ((g->unk_1104.u << 6) < 0x1E0U) left_x = 0;
+        else left_x = (g->unk_1104.u << 6) - 0x1E0;
+        for (outer = left_x; outer < 0x1E0; outer += 4) {
+            if (outer < 0xA0) {
+                func_80049FF0(outer - 0x9e, -0x78, -0xA0, outer - 0x76, 0, 0, 0xD);
+            } else if (outer < 0x140) {
+                func_80049FF0(outer - 0x9e, -0x78, outer - 0x13e, 0x27, 0, 0, 0xD);
+            } else {
+                func_80049FF0(0xA0, outer - 0x1b6, outer - 0x13e, 0x27, 0, 0, 0xD);
+            }
+        }
+        for (outer = left_x; outer < 0x1E0; outer += 4) {
+            if (outer < 0xA0) {
+                func_80049FF0(outer - 0x9d, -0x78, -0xA0, outer - 0x75, 0, 0, 0xD);
+            } else if (outer < 0x140) {
+                func_80049FF0(outer - 0x9d, -0x78, outer - 0x13d, 0x27, 0, 0, 0xD);
+            } else {
+                func_80049FF0(0xA0, outer - 0x1b5, outer - 0x13d, 0x27, 0, 0, 0xD);
+            }
+        }
+        break;
+    case 5:
+        for (outer = g->unk_1104.u * 10; outer < 0xA0; outer++) {
+            width = 0xA0 - outer;
+            left_x = width - 0xA0;
+            top_y = (width / 2) - 0x78;
+            func_80049FF0(left_x, top_y, (0x9F - width), top_y, 0, 0, 0xD);
+            bottom_y = 0x27 - (width / 2);
+            func_80049FF0(left_x, bottom_y, (0x9F - width), bottom_y, 0, 0, 0xD);
+            func_80049FF0(left_x, top_y, left_x, bottom_y, 0, 0, 0xD);
+            func_80049FF0(0xA0-width, top_y, (0x9F - width), bottom_y, 0, 0, 0xD);
+        }
+        break;
+    case 6:
+        if (g->unk_1104.u < 0x10U) set_tarao_bg(g->unk_1104.u >> 1);
+        else set_tarao_bg(8);
+        break;
+    default:
+        for (outer = 0; outer < 0xF; outer++) {
+            if ((outer << 5) < 0xA0) {
+                for (left_x = g->unk_1104.u * 2; left_x < 0x20; left_x++) {
+                    func_80049FF0((outer << 5)+left_x-0xA0, -0x78, -0xA0, (outer << 5)+left_x-0x78, 0, 0, 0xD);
+                }
+            } else if ((outer << 5) < 0x140) {
+                for (left_x = g->unk_1104.u * 2; left_x < 0x20; left_x++) {
+                    func_80049FF0((outer << 5)+left_x-0xA0, -0x78, (outer << 5)+left_x-0x140, 0x28, 0, 0, 0xD);
+                }
+            } else {
+                for (left_x = g->unk_1104.u * 2; left_x < 0x20; left_x++) {
+                    func_80049FF0(0xA0, (outer << 5)+left_x-0x1B8, (outer << 5)+left_x-0x140, 0x28, 0, 0, 0xD);
+                }
+            }
+        }
+        break;
+    }
+    g->unk_1104.u++;
+    if (g->unk_1104.u >= 16U) {
+        D_80122CF8 = 2;
+        return 1;
+    }
+    return 0;
+}
 
 void set_tarao_bg(s32 arg0) {
     s16 row;
@@ -403,15 +532,12 @@ void normal_date_bg_out(void) {
     }
 }
 
-/* NON_MATCHING: T-10870, 697/697 instructions; two accesses spill at
- * sp+0x50 instead of sp+0x54. All register choices agree.
+/* T-10900: inline right edge retains the original spill at sp+0x54.
  * FAKE: the redundant word view in case 1 preserves its original raw-state
  * register. A direct member read changes four instructions. */
-#ifdef NON_MATCHING
 s32 func_8007D8AC(void) {
     s16 line_y;
     s16 bottom_y;
-    s16 right_x;
     s16 inner;
     s16 outer;
     s32 limit;
@@ -559,14 +685,13 @@ s32 func_8007D8AC(void) {
         if (limit > 0) {
             do {
                 inner = outer - 0xA0;
-                right_x = 0x9F - outer;
                 coordinate = outer / 2;
                 line_y = coordinate - 0x78;
-                func_80049FF0(inner, line_y, right_x, line_y, 0, 0, 0xD);
+                func_80049FF0(inner, line_y, (0x9F - outer), line_y, 0, 0, 0xD);
                 bottom_y = 0x27 - coordinate;
-                func_80049FF0(inner, bottom_y, right_x, bottom_y, 0, 0, 0xD);
+                func_80049FF0(inner, bottom_y, (0x9F - outer), bottom_y, 0, 0, 0xD);
                 func_80049FF0(inner, line_y, inner, bottom_y, 0, 0, 0xD);
-                func_80049FF0((0xA0 - outer), line_y, right_x, bottom_y, 0, 0, 0xD);
+                func_80049FF0((0xA0 - outer), line_y, (0x9F - outer), bottom_y, 0, 0, 0xD);
                 outer += 1;
             } while (outer < limit);
         }
@@ -623,9 +748,6 @@ s32 func_8007D8AC(void) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_8007D8AC);
-#endif
 
 void normal_date_girl_in(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -2067,7 +2189,44 @@ void select_girl2(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", select_girl_init);
+void select_girl_init(arg0)
+u8 arg0;
+{
+    /* T-10900: promoted scalars precede the eight-byte name buffer. */
+    s16 i;
+    s32 length;
+    s32 result;
+    u8 label[8];
+    for (i = 0; i < 11; i++) {
+        D_800CA300[i] = ((i / 3) << 6) - 0x80;
+        D_800CA318[i] = ((i % 3) * 16) + 0x30;
+        if (D_800CA2B0[i] != 0) {
+            strcpy(label, D_800B35F4[i]);
+            result = set_kanji_string(D_800CA300[i], D_800CA318[i], 0, label, 0);
+            length = strlen(label);
+            D_800CA330[i] = (length / 2) * 14;
+        } else {
+            D_800CA330[i] = 0;
+        }
+        D_800CA348[i] = 16;
+    }
+    D_800CA300[11] = 0x40;
+    D_800CA318[11] = 0x50;
+    D_800CA330[11] = 0x2A;
+    D_800CA348[11] = 0x10;
+    if ((u8)arg0 != 0) D_800CA330[11] = 0;
+    if ((u8)arg0 == 0) result = set_kanji_string(0x40, 0x50, 0, "やめる", 0);
+    k_disp_start(result);
+    menu_set(1, (0xC - (u8)arg0) & 0xFF, D_800CA300, D_800CA318, D_800CA330, D_800CA348);
+    for (i = 0; i < 11; i++) {
+        if (D_800CA330[i] != 0) {
+            D_800E6280.unk_1094 = i;
+            break;
+        }
+    }
+    D_80122D30 = 1;
+    D_800E6280.unk_1104.w++;
+}
 
 s32 select_girl_main(s32 arg0) {
     s16 i;

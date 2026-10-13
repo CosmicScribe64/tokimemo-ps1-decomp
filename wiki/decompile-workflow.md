@@ -1735,3 +1735,79 @@ four words and one halfword. Texture-page handle tables have 5, 6 and 10
 words at D_801492C8, D_801492DC and D_801492F8, plus six words at D_8014A070.
 The main helper is the already-renamed search_load_tpage_buf_lock(s32,u8);
 m2c's third argument is the loop pointer kept live across the call.
+
+## T-10900 transition and dialogue follow-up
+
+Main `func_8007C8D8` needs an initialized local `GameState *g` (or a local
+pointer to `unk_1104.u`) to keep the raw unsigned tick value across the
+selector switch. Direct repeated member reads in this larger function
+reload the word at case entries and add conversion temporaries. The state
+pointer reduces the first reconstruction from 699 to 686 instructions
+(target 683); this is an intermediate result, not a match claim.
+The case-4 threshold compares `(g->unk_1104.u << 6) < 480U` before narrowing
+`(g->unk_1104.u << 6) - 480` to a signed halfword. Narrowing before the
+comparison introduces two extra instructions and changes the branch shape.
+
+For main `func_8007EF48`, 96 combinations of the two empty-string pointer
+lifetimes and statement line grouping did not beat the existing eight
+scheduling positions. Coordinate locals also changed the frame without
+fixing the rotations. Standard permuter preprocessing/prettyprinting
+substantially worsens this large seed; full-file funcdiff remains the
+acceptance check. Experiments belong in scratch, not in production tools.
+
+`select_girl_init` now matches 656 linked bytes. Its menu geometry is four
+12-element signed-halfword arrays: x at `D_800CA300`, y at `D_800CA318`,
+width at `D_800CA330`, height at `D_800CA348` (eleven girls plus Cancel).
+New declarations live in `include/main_api.h`. Use one `s16` loop cursor
+for both passes, an eight-byte name buffer, and a signed `s32 length`
+between `strlen` and `/ 2`; unsigned length removes the signed division
+sequence. The K&R `u8` parameter retains the byte home reloads. Its local
+API override preserves the existing wide canonical caller prototype.
+
+Inlining the repeated `outer << 5` expression in the transition's default
+case removes six commutative `addu` operand mismatches; naming the common
+coordinate forces the opposite operand order. The current reconstruction
+has 683/683 instructions and only its frame-size pair differs (112 vs 104).
+
+Avoid broad `sync_protos.py --fix` during isolated batches: `--only` limits
+header cleanup but its implicit-override pass still edits other source
+files. T-10900 discarded those unrelated generated additions and retained
+only the needed declaration guard and array declarations.
+
+The transition frame issue is resolved: inline both `width / 2` and the
+right edge `159 - width` in case 5, removing their named locals. Inlining
+either one alone changes spill placement or leaves the oversized frame;
+together they recover the 104-byte frame and exact spill at `sp+0x50`.
+`func_8007C8D8` now matches 2,732 linked bytes. Keep the local state pointer,
+signed-halfword outer/inner cursors, and full-width case-4 threshold above.
+
+The reverse transition, `func_8007D8AC`, matches 2,788 linked bytes after
+inlining `159 - outer` in case 5 and removing only the `right_x` local.
+Keep the named half-width used there and the named coordinate in the
+default case. This moves the temporary spill from `sp+0x50` to the required
+`sp+0x54` without changing the 104-byte frame. Thus the two related
+transitions need different sets of named coordinate temporaries.
+
+DATE `func_80133EA0` matches 972 linked bytes with an initialized local
+`GameState *g` and flat `u8 *` table pointers `D_8015B5B8`/`D_8015B5BC`.
+Each girl occupies nine bytes: three park variants with three results each.
+Direct singleton member expressions remove seventeen target instructions;
+the local pointer view preserves the original reloads. `func_8007ED84`
+takes one argument here: leftover values in `$a1` belong to earlier
+comparisons/string calls, not an extra parameter. Removing an erroneous
+second argument resolves the final three differing positions.
+
+For full-file scratch permutation, score the selected function after
+resolving relocations. A raw object score also penalizes correct aggregate
+aliases (`D_800E6280 + offset` versus an original interior symbol), and
+unfiltered objdump includes unrelated functions. T-10900's scratch-only
+resolved scorer reproduces the real eight-position dialogue seed (score
+120) and one-position dialogue-advance seed (score 10); no project tool
+changes are needed for these experiments.
+
+DATE `func_80136340` matches 868 linked bytes using the same local-state
+and flat-table idioms. Its tables at `D_8015B530`/`D_8015B534` have 36-byte
+girl rows (twelve seasonal variants, three results each). Preserve distinct
+stores in the year/season chain: rewrite m2c's shared January–February
+`goto` as a normal `if (...) { variant = 3; } else if (...)` branch. Sharing
+that store with a later fallback removes three instructions from the target.

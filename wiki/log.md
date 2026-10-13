@@ -12888,3 +12888,86 @@ Added the nine-halfword table wrapper and texture-page handle arrays to
 include/ovl/TAIIKU.h. Registered search_load_tpage_buf_lock's existing
 definition with the canonical main-api writer. Findings are recorded in
 [[decompile-workflow]] for the next initializer.
+
+## [2026-10-13] ticket | T-10900 big functions astra 22
+
+Created [[tickets/T-10900-big-functions-astra-22]] and claimed its card. Read
+[[index]], [[register-cheatsheet]], [[decompile-workflow]], shared wave11 brief,
+and coding standards. Scope is three owned C objects; scratch stays in a22.
+Preparing a fresh Docker baseline before largest-first matching.
+
+## [2026-10-13] build | T-10900 baseline and dialogue residual
+
+Fresh Docker build passed all 27 unit checksums. Full-file funcdiff confirms
+[[tickets/T-10900-big-functions-astra-22]] starts with eight scheduling
+positions in main func_8007EF48; regdiff reports four structural rotations,
+not a register-color mismatch. Testing coordinate lifetimes in isolated scratch.
+Prior DATE matches remain pending the two-prototype append-only exception.
+
+## [2026-10-13] query | T-10900 transition state pointer
+
+In main func_8007C8D8, a local GameState pointer changes a 699-instruction
+reconstruction to 686 (target 683), restoring the initial state-word lifetime
+and the first 320 instruction operations/registers. A pointer to the state
+word gives the same result; direct member loads and a separate scalar
+snapshot do not. Remaining structural difference begins at the case-4
+threshold: compare the full shifted word before narrowing the subtraction.
+Evidence retained in a22/inward-snapshot-gameptr.regdiff; see
+[[tickets/T-10900-big-functions-astra-22]].
+
+## [2026-10-13] query | T-10900 girl-selection tables and loop counter
+
+`select_girl_init` proves twelve signed-halfword entries each at D_800CA300
+(x), D_800CA318 (y), D_800CA330 (width), and D_800CA348 (height). Entry 11
+is the cancel option; the first eleven follow the name/enabled tables.
+Reusing one signed-halfword loop index for the final enabled-entry scan
+fixes its saved-register and sign-extension differences. Removing explicit
+x/y pointers preserves the inferred address ranges while restoring the
+120-byte frame. Four local-buffer/result offsets remain. Declaration work
+uses the generated main API; no overlay or unrelated C objects changed.
+See [[tickets/T-10900-big-functions-astra-22]].
+
+## [2026-10-13] build | T-10900 first literal match and transition reduction
+
+`select_girl_init` matches all 656 linked bytes in Docker. Published its
+12-element geometry arrays in `include/main_api.h` and its signed length,
+K&R byte parameter, and shared cursor idioms in [[decompile-workflow]].
+Transition initializer reduced to two frame constants; dialogue advance
+reduced to one addu operand order. All register misses used regdiff.
+The prototype generator's unrelated implicit overrides were removed after
+its `--only` option proved insufficient for source isolation. Changes are
+again confined to owned source, main API declarations, and ticket/wiki.
+See [[tickets/T-10900-big-functions-astra-22]].
+
+## [2026-10-13] build | T-10900 transition initializer matches
+
+`func_8007C8D8` passes the Docker linked-byte comparison (2,732 bytes).
+Its remaining stack frame difference required eliminating both named
+half-width and right-edge locals; the individually tested changes were
+insufficient. Recorded the expression/lifetime interaction in
+[[decompile-workflow]] and [[tickets/T-10900-big-functions-astra-22]].
+
+## [2026-10-13] build | T-10900 reverse transition matches
+
+`func_8007D8AC` passes the Docker linked-byte comparison (2,788 bytes).
+Removing its right-edge local shifts the two spill accesses to the target
+slot while retaining the exact frame. Documented the distinction from its
+forward counterpart in [[decompile-workflow]]. Batch total is three
+functions and 6,176 bytes; see [[tickets/T-10900-big-functions-astra-22]].
+
+## [2026-10-13] build | T-10900 park handler and shared byte tables
+
+DATE `func_80133EA0` matches 972 linked bytes. Appended its nine-byte girl
+rows and the shop handler's eighteen-byte rows to `include/ovl/DATE.h` as
+flat byte-pointer declarations with dimension notes. Correcting a stale
+extra call argument solved the final three positions. The earlier three
+main matches also pass all 27 full-build checksums. Recorded pointer-view,
+argument, and permutation-scoring lessons in [[decompile-workflow]] and
+[[tickets/T-10900-big-functions-astra-22]].
+
+## [2026-10-13] build | T-10900 concert handler matches
+
+DATE `func_80136340` passes the Docker linked-byte comparison (868 bytes).
+Its seasonal table pointers are now declared and dimensioned in header
+comments. Recorded the distinct-store conditional shape in
+[[decompile-workflow]] and [[tickets/T-10900-big-functions-astra-22]].
