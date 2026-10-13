@@ -12995,3 +12995,6 @@ improved the draft from 865 to 946 target-relative instructions, and typed
 callback/switch refinements reach 950/950. Register and branch differences
 remain; these broad drafts stay in the agent's scratch directory. Both DATE
 movie functions now have regdiff-backed region comparisons and bounded search.
+
+## [2026-10-13] ticket | T-11010 started
+[[tickets/T-11010-big-functions-sonnet-24]] In Progress: big functions list 24 (Sonnet).
