@@ -557,16 +557,19 @@ void func_8014C580(u8 *arg0) {
     arg0[0xD] = 0;
 }
 
+/* NON_MATCHING: T-10850, 16 differing listing lines; regdiff evidence in the ticket scratch. */
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, the original keeps the byte zero of the two sb stores in $a0 and reloads arg0 into $a2 ($v1 here), 12 lines */
+/* FAKE: shared zero local preserves constant allocation. T-10850 */
 void func_8014C5F8(u8 *arg0) {
     u8 *p;
+    s32 zero;
 
     p = (u8 *)func_8014AF00(D_80158A98, D_80158A98 + 0x1E00);
     if (p != 0) {
+        zero = 0;
         p[0] = 1;
         *(s16 *)(p + 4) = 0x71;
-        p[0xD] = p[0xE] = 0;
+        p[0xD] = p[0xE] = zero;
         *(s16 *)(p + 0xA) = 0;
         *(s16 *)(p + 8) = 0;
         *(s16 *)(p + 6) = 0;

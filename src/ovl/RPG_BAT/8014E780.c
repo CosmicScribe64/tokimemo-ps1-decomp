@@ -2,57 +2,57 @@
 #include "ovl/RPG_BAT.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015ED90);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015ED94);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015ED98);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015ED9C);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDA0);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDA4);
+s32 D_8015ED90 = 1;
+s32 D_8015ED94 = 0;
+s32 D_8015ED98 = 1;
+s32 D_8015ED9C = 2;
+s32 D_8015EDA0 = 3;
+s32 D_8015EDA4 = 4;
 s32 D_8015EDA8[2] = { 5, 6 };
 RpgBatWords3 D_8015EDB0 = { 7, 8, 9 };
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDBC);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDC0);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDC4);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDC8);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDCC);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDD0);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDD4);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDD8);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDDC);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDE0);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDE4);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDE8);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDEC);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDF0);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDF4);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDF8);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EDFC);
+s32 D_8015EDBC = 0;
+s32 D_8015EDC0 = 0;
+s32 D_8015EDC4 = 1;
+s32 D_8015EDC8 = 2;
+s32 D_8015EDCC = 3;
+s32 D_8015EDD0 = 4;
+s32 D_8015EDD4 = 5;
+s32 D_8015EDD8 = 6;
+s32 D_8015EDDC = 7;
+s32 D_8015EDE0 = 8;
+s32 D_8015EDE4 = 9;
+s32 D_8015EDE8 = 0;
+s32 D_8015EDEC = 0;
+s32 D_8015EDF0 = 1;
+s32 D_8015EDF4 = 2;
+s32 D_8015EDF8 = 3;
+s32 D_8015EDFC = 4;
 RpgBatWords4 D_8015EE00 = { 5, 6, 7, 8 };
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE10);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE14);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE18);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE1C);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE20);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE24);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE28);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE2C);
+s32 D_8015EE10 = 9;
+s32 D_8015EE14 = 0;
+s32 D_8015EE18 = 0;
+s32 D_8015EE1C = 1;
+s32 D_8015EE20 = 2;
+s32 D_8015EE24 = 3;
+s32 D_8015EE28 = 4;
+s32 D_8015EE2C = 5;
 RpgBatWords4 D_8015EE30 = { 6, 7, 8, 9 };
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE40);
+s32 D_8015EE40 = 0;
 RpgBatWords3 D_8015EE44 = { 0, 1, 2 };
 RpgBatWords3 D_8015EE50 = { 0, 1, 2 };
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE5C);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE60);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE64);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE68);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE6C);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE70);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE74);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE78);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE7C);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE80);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE84);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE88);
-INCLUDE_RODATA("asm/ovl/RPG_BAT/data/RPG_BAT/8014E780.data", D_8015EE8C);
+s32 D_8015EE5C = 0;
+s32 D_8015EE60 = 1;
+s32 D_8015EE64 = 2;
+s32 D_8015EE68 = 0;
+s32 D_8015EE6C = 1;
+s32 D_8015EE70 = 2;
+s32 D_8015EE74 = 0;
+s32 D_8015EE78 = 1;
+s32 D_8015EE7C = 2;
+s32 D_8015EE80 = 0;
+s32 D_8015EE84 = 1;
+s32 D_8015EE88 = 2;
+s32 D_8015EE8C = 0;
 
 void func_8014E780(void) {
     func_800AE120(D_800E6280.unk_10F4);
@@ -117,7 +117,93 @@ void func_8014E8F4(void) {
     func_80042940((s32) D_800E6280.unk_722);
 }
 
+/* NON_MATCHING: T-10850, 8 differing listing lines; see the ticket scratch evidence. */
+#ifdef NON_MATCHING
+/* FAKE: first-symbol views bridge unresolved aggregate declarations; the
+ * offset bound prevents address CSE and the same-line loop preserves scheduling.
+ * T-10850. */
+s32 func_8014E994(void) {
+    s32 *end;
+    s32 i;
+    s32 *var_v1;
+    s32 *var_v1_2;
+
+    end = (s32 *)((u8 *)D_8015ED64 - 0x28);
+    var_v1 = &D_8015EBAC;
+    do {
+        var_v1++;
+        var_v1[-1] = 0;
+    } while ((u32) var_v1 < (u32) end);
+    end = (s32 *)D_8015ED64;
+    var_v1_2 = D_8015ED3C;
+    do {
+        var_v1_2++;
+        var_v1_2[-1] = 0;
+    } while ((u32) var_v1_2 < (u32) end);
+    for (i = 0; i < 12; i++) { (&D_8015ED64[0][0])[i] = 0;
+    }
+    D_8015EE44.unk_00 = 0;
+    D_8015EE44.unk_04 = 0;
+    D_8015EE44.unk_08 = 0;
+    D_8015EE50.unk_00 = 0;
+    D_8015EE50.unk_04 = 0;
+    D_8015EE50.unk_08 = 0;
+    D_8015EE5C = 0;
+    D_8015EE60 = 0;
+    *(s32 *)((u8 *)(&D_8015EE60) + (4)) = 0;
+    D_8015EE68 = 0;
+    *(s32 *)((u8 *)(&D_8015EE68) + (4)) = 0;
+    D_8015EE70 = 0;
+    D_8015EE74 = 0;
+    *(s32 *)((u8 *)(&D_8015EE74) + (4)) = 0;
+    *(s32 *)((u8 *)(&D_8015EE74) + (8)) = 0;
+    D_8015EE80 = 0;
+    *(s32 *)((u8 *)(&D_8015EE80) + (4)) = 0;
+    *(s32 *)((u8 *)(&D_8015EE80) + (8)) = 0;
+    D_8015ED94 = 0;
+    *(s32 *)((u8 *)(&D_8015ED94) + (4)) = 0;
+    *(s32 *)((u8 *)(&D_8015ED94) + (8)) = 0;
+    D_8015EDA0 = 0;
+    *(s32 *)((u8 *)(&D_8015EDA0) + (4)) = 0;
+    D_8015EDEC = 0;
+    D_8015EDF0 = 0;
+    *(s32 *)((u8 *)(&D_8015EDF0) + (4)) = 0;
+    *(s32 *)((u8 *)(&D_8015EDF0) + (8)) = 0;
+    *(s32 *)((u8 *)(&D_8015EDF0) + (12)) = 0;
+    D_8015EDC0 = 0;
+    *(s32 *)((u8 *)(&D_8015EDC0) + (4)) = 0;
+    *(s32 *)((u8 *)(&D_8015EDC0) + (8)) = 0;
+    *(s32 *)((u8 *)(&D_8015EDC0) + (12)) = 0;
+    D_8015EDD0 = 0;
+    D_8015EE18 = 0;
+    *(s32 *)((u8 *)(&D_8015EE18) + (4)) = 0;
+    D_8015EE20 = 0;
+    *(s32 *)((u8 *)(&D_8015EE20) + (4)) = 0;
+    *(s32 *)((u8 *)(&D_8015EE20) + (8)) = 0;
+    D_8015EDA8[0] = 0;
+    D_8015EDA8[1] = 0;
+    D_8015EDB0.unk_04 = 0;
+    D_8015EDB0.unk_08 = 0;
+    D_8015EE00.unk_00 = 0;
+    D_8015EE00.unk_04 = 0;
+    D_8015EE00.unk_0C = 0;
+    D_8015EE10 = 0;
+    D_8015EDD4 = 0;
+    *(s32 *)((u8 *)(&D_8015EDD4) + (4)) = 0;
+    D_8015EDE0 = 0;
+    *(s32 *)((u8 *)(&D_8015EDE0) + (4)) = 0;
+    D_8015EE2C = 0;
+    D_8015EE30.unk_00 = 0;
+    D_8015EE30.unk_08 = 0;
+    D_8015EE30.unk_0C = 0;
+    D_8015EDB0.unk_00 = 0;
+    D_8015EE00.unk_08 = 0;
+    D_8015EDDC = 0;
+    D_8015EE30.unk_04 = 0;
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014E994);
+#endif
 
 void func_8014EB58(s32 arg0) {
     switch (arg0) {

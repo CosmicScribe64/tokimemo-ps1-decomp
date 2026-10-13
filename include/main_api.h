@@ -617,9 +617,19 @@ typedef struct KWork {
     /* 0xB */ u8 pad_0B;
 } KWork; /* size 0xC */
 extern KWork D_800B3F60;
+extern u8 D_800B4100[13];
+extern u8 D_800B4110[13];
+extern u8 D_800B4120[13];
+extern s8 D_800B4130[13][8];
+extern u8 D_800B4198[7];
 extern u8 D_800B41A0[];
 extern u8 D_800B41B0[20][20];
 extern u8 D_800B4341[]; /* table read by func_80052E60 */
+extern s8 D_800B4349[11];
+extern u8 D_800B4355[10];
+extern u8 D_800B4361[10];
+extern s8 D_800B436C[15];
+extern s8 D_800B437C[15];
 extern s32 D_800B58E4;
 extern s32 D_800B58F8;
 extern s32 D_800B58FC;
@@ -648,6 +658,7 @@ extern s32 D_800B5BF8[];
 extern s16 D_800B5C08;
 extern s16 D_800B66E0[];
 extern s16 D_800B66F4[];
+extern u8 D_800B6708;
 extern u8 D_800B6724[];
 extern u8 D_800B6728[];
 extern u8 D_800B672C[];
@@ -666,6 +677,7 @@ extern u8 D_800B6D34;
 extern u8 D_800B6D38;
 extern s32 D_800B6D3C;
 extern s32 D_800B6D40;
+extern u8 D_800B6D50[];
 extern s8 D_800C51C4;
 extern s32 D_800C5FCC;
 extern s32 D_800C5FD0;
@@ -765,6 +777,7 @@ extern u8 D_800D9288;
 extern s32 D_800D92A0;
 extern s32 D_800D92E0;
 extern u8 D_800D9328[];
+extern u8 D_800D9334[];
 extern u8 D_800D9388[];
 extern s32 D_800DE500[];
 extern s8 *D_800E36C0[];
@@ -810,6 +823,7 @@ extern u8 D_800E7D68;
 #ifndef MAIN_API_OVERRIDE_D_800E8BEE
 extern s8 D_800E8BEE;
 #endif
+extern u8 D_800E8BEF;
 extern u8 D_800E8BF0[];
 extern u8 D_800E8C30[];
 extern s32 D_800E8C70;
@@ -881,6 +895,7 @@ extern s32 D_800EECC0;
 extern s32 D_800EECC8;
 extern s32 D_800EECCC;
 extern s32 D_800EECD0;
+extern s32 D_800EECD4;
 extern s32 D_800EECE0;
 extern s32 D_800EECE4;
 extern s32 D_800EECE8;
@@ -1626,6 +1641,8 @@ extern s16 D_800F1990[14];
 #ifndef MAIN_API_OVERRIDE_D_80120694
 extern u8 D_80120694[];
 #endif
+extern s32 D_80122CD8;
+extern u8 D_800B3CF8;
 
 /* ---- functions ---- */
 void func_80010678();
@@ -1654,11 +1671,11 @@ void func_80042058(void);
 void func_80042134();
 void func_80042458(void);
 void func_80042488(void);
-void func_80042808(void);
-void func_8004284C(void);
+s32 func_80042808(void);
+s32 func_8004284C(void);
 void func_80042878();
-void func_80042908(s32 arg0);
-void func_80042940(s32 arg0);
+s32 func_80042908(s32 arg0);
+s32 func_80042940(s32 arg0);
 s32 func_80042960(void);
 s32 func_80042AC8();
 void func_80042C30(void);
@@ -1666,6 +1683,7 @@ void func_80042CB0();
 s32 func_80043010(void);
 void func_800430C0();
 void func_800433D0(s32 arg0);
+void func_8004F4F0();
 void draw2d3d(u8 arg0, u8 arg1);
 void func_800438DC();
 void back_clear_switch(s32 arg0);
@@ -2416,6 +2434,4 @@ void func_800651F8();
 void func_80065234();
 void func_8006B5BC(GsWord arg0);
 
-extern s32 D_80122CD8;
-extern u8 D_800B3CF8;
 #endif /* MAIN_API_H */

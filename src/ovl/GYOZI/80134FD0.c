@@ -20,11 +20,14 @@ void func_80135044(void) {
     func_8004DE1C();
 }
 
+/* NON_MATCHING: T-10850, 11 differing listing lines; regdiff evidence in the ticket scratch. */
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, only the register of the post-incremented D_800F6474 differs ($v1/$v0 vs $a0/$v1), 8 lines */
 s32 func_8013506C(void) {
+    s32 old;
+
     func_801343A4();
-    if (D_800F6474++ == 0 && (*(u8 ***)&D_80145EAC)[D_80145EB4][D_80145EB8 - 1] == 7) {
+    old = D_800F6474++;
+    if (old == 0 && (*(u8 ***)&D_80145EAC)[D_80145EB4][D_80145EB8 - 1] == 7) {
         if (func_800BDC20((*(s32 ***)&D_80145EA8)[D_80145EB4][D_80145EB8 - 1], "\203\113\203\140\203\203") == 0) {
             func_80086AB0(0x60C);
         }

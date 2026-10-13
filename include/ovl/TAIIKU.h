@@ -545,3 +545,41 @@ extern TaiikuU11 D_80149F50;
 extern TaiikuS11 D_80149F68;
 extern s32 D_80149960;
 #endif
+
+#ifndef OVL_TAIIKU_T10850_TYPES
+#define OVL_TAIIKU_T10850_TYPES
+/* T-10850: clock fields updated by func_8014666C. */
+typedef struct TaiikuTickController {
+    /* 0x00 */ u8 pad_00[2];
+    /* 0x02 */ u16 unk_02;
+    /* 0x04 */ u32 unk_04;
+    /* 0x08 */ u32 unk_08;
+    /* 0x0C */ u32 unk_0C;
+} TaiikuTickController; /* size 0x10 */
+typedef struct TaiikuTick1C {
+    /* 0x00 */ u8 pad_00[0xD];
+    /* 0x0D */ u8 unk_0D;
+    /* 0x0E */ u8 pad_0E;
+    /* 0x0F */ u8 unk_0F;
+    /* 0x10 */ u8 pad_10[4];
+    /* 0x14 */ u16 unk_14;
+    /* 0x16 */ u16 unk_16;
+    /* 0x18 */ u16 unk_18;
+    /* 0x1A */ u8 pad_1A[2];
+} TaiikuTick1C; /* size 0x1C */
+
+/* T-10850: stack copies in func_80147B14, two 0x14 and two 0x10 byte tables. */
+typedef struct TaiikuHalf10 {
+    /* 0x00 */ s16 h[10];
+} TaiikuHalf10; /* size 0x14 */
+typedef struct TaiikuHalf8 {
+    /* 0x00 */ s16 h[8];
+} TaiikuHalf8; /* size 0x10 */
+extern TaiikuHalf10 D_8014A620;
+extern TaiikuHalf10 D_8014A634;
+extern TaiikuHalf8 D_8014A648;
+extern TaiikuHalf8 D_8014A658;
+extern u16 D_8014A4C4[8];
+extern u16 D_8014A4D8[6];
+extern u16 D_8014A4E4[8];
+#endif

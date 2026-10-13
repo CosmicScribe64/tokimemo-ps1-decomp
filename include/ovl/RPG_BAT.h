@@ -469,3 +469,9 @@ extern s32 D_8015EEB0;
 extern s32 D_8015EEC4;
 extern s32 D_8015EEC8;
 #endif
+
+#ifndef OVL_RPG_BAT_T10850_TYPES
+#define OVL_RPG_BAT_T10850_TYPES
+/* T-10850: initializer is called before its definition in its original object. */
+s32 func_8014E994(void);
+#endif

@@ -10,37 +10,49 @@ typedef struct EtcWork40 {
     /* 0x28 */ s32 unk_28[6];
 } EtcWork40; /* size 0x40 */
 
-/* NON_MATCHING: T-10310, near miss */
+/* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
 #ifdef NON_MATCHING
-s32 func_80146400(void) {
+/* FAKE: unused padding array preserves the frame layout. T-10850 */
+s32 func_80146400(void)
+{
     s32 x;
     s32 pad[3];
     s32 *p;
     s32 a;
     s32 r;
     s32 d;
+    switch (D_800E6280.unk_03E)
+    {
+        case 0x5F:
+            x = 0;
+            break;
 
-    switch (D_800E6280.unk_03E) {
-    case 0x5F:
-        x = 0;
-        break;
-    case 0x60:
-        x = 3;
-        break;
-    case 0x61:
-        x = 6;
-        break;
-    default:
-        x = 6;
-        break;
+        case 0x60:
+            x = 3;
+            break;
+
+        case 0x61:
+            x = 6;
+            break;
+
+        default:
+            x = 6;
+            break;
+
     }
-    if (D_800E6280.unk_03F != 2) {
-        if (D_800E6280.unk_03F != 7) {
-            if (D_800E6280.unk_03F == 0xC) {
+
+    if (D_800E6280.unk_03F != 2)
+    {
+        if (D_800E6280.unk_03F != 7)
+        {
+            if (D_800E6280.unk_03F == 0xC)
+            {
                 x += 1;
             }
         }
-    } else {
+    }
+    else
+    {
         x -= 1;
     }
     p = &D_801506F8[x];
@@ -49,10 +61,12 @@ s32 func_80146400(void) {
     a = *p;
     d = r + a;
     d -= 8;
-    if (d > 0) {
+    if (d > 0)
+    {
         return a;
     }
-    return 0;
+    /* FAKE: zero expression preserves the comparison live range. T-10850 */
+    return (d > 0) * 0;
 }
 #else
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80146400);

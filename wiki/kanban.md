@@ -25,6 +25,7 @@ kanban-plugin: board
 ## In Progress
 
 
+
 - [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 
@@ -52,7 +53,10 @@ kanban-plugin: board
 
 
 
+
 ## Done
+
+- [ ] [[tickets/T-10850-wave-17-astra|T-10850 Wave 17 (astra, easiest first)]]
 - [ ] [[tickets/T-10810-wave-16-list-1|T-10810 Wave 16: list 1]]
 - [ ] [[tickets/T-10840-wave-13-15-tool-fixes|T-10840 Wave 13-15 tool fixes]]
 - [ ] [[tickets/T-10820-wave-16-list-2|T-10820 Wave 16: list 2]]

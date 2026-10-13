@@ -495,8 +495,9 @@ INCLUDE_ASM("asm/nonmatchings/main/80053650", func_800552DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/80053650", func_8005557C);
 
-/* NON_MATCHING: T-10810, structure, loops and counters match (pointer walk *p++, j from 4, b as s32, 4x unrolled by IDO); only 10 register fields differ: q/b swap (colour order n,b,q,p,r) */
+/* NON_MATCHING: T-10850, 8 differing listing lines; regdiff evidence in the ticket scratch. */
 #ifdef NON_MATCHING
+/* FAKE: dead initial assignments preserve induction-register numbering. T-10850 */
 s32 func_80055A38(s32 arg0) {
     s32 b;
     s32 n;
@@ -508,10 +509,10 @@ s32 func_80055A38(s32 arg0) {
 
     n = 0;
     b = 0;
-    q = D_80123324;
     p = D_80123324;
     r = D_80123120;
-    for (b = 0; b < 2; b++) {
+    q = D_80123324;
+    for (; b < 2; b++) {
         n = 0;
         p = q;
         sum = 0;

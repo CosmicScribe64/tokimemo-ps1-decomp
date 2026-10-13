@@ -13,24 +13,8 @@ INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3DC);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A3E0);
 TaiikuController D_8014A3E4 = { 0 };
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A400);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A454);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A45C);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A460);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A468);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A46C);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A478);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A47C);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A484);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A488);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A494);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A498);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4A0);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4A4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4A8);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4B0);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4B4);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4BC);
-INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4C0);
+u8 D_8014A454[0x70] = { 0 };
+
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4C4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4D4);
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/801452D0.data", D_8014A4D8);
@@ -195,7 +179,49 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014607C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80146338);
 
+/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+s32 func_8014666C(void) {
+    TaiikuTickController *controller;
+    TaiikuController *work;
+    TaiikuController *end;
+
+    controller = (TaiikuTickController *)&D_8014A3E4;
+    controller->unk_0C++;
+    controller->unk_08++;
+    controller->unk_04++;
+    controller->unk_02++;
+    end = (TaiikuController *)D_8014A454;
+    work = (TaiikuController *)D_8014A400;
+    do {
+        work[0].unk_0C++;
+        work[0].unk_04++;
+        work++;
+    } while (work < end);
+    ((TaiikuTick1C *)D_8014A454)[0].unk_18++;
+    ((TaiikuTick1C *)D_8014A454)[0].unk_14++;
+    ((TaiikuTick1C *)D_8014A454)[0].unk_16++;
+    ((TaiikuTick1C *)D_8014A454)[0].unk_0D++;
+    ((TaiikuTick1C *)D_8014A454)[0].unk_0F++;
+    ((TaiikuTick1C *)D_8014A454)[1].unk_18++;
+    ((TaiikuTick1C *)D_8014A454)[1].unk_14++;
+    ((TaiikuTick1C *)D_8014A454)[1].unk_16++;
+    ((TaiikuTick1C *)D_8014A454)[1].unk_0D++;
+    ((TaiikuTick1C *)D_8014A454)[1].unk_0F++;
+    ((TaiikuTick1C *)D_8014A454)[2].unk_18++;
+    ((TaiikuTick1C *)D_8014A454)[2].unk_14++;
+    ((TaiikuTick1C *)D_8014A454)[2].unk_16++;
+    ((TaiikuTick1C *)D_8014A454)[2].unk_0D++;
+    ((TaiikuTick1C *)D_8014A454)[2].unk_0F++;
+    ((TaiikuTick1C *)D_8014A454)[3].unk_18++;
+    ((TaiikuTick1C *)D_8014A454)[3].unk_14++;
+    ((TaiikuTick1C *)D_8014A454)[3].unk_16++;
+    ((TaiikuTick1C *)D_8014A454)[3].unk_0D++;
+    ((TaiikuTick1C *)D_8014A454)[3].unk_0F++;
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_8014666C);
+#endif
 
 void func_8014684C(void) {
     func_80146884();
