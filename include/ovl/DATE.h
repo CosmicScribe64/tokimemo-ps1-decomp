@@ -1490,3 +1490,14 @@ typedef struct DateMovieScene50 {
     /* 0x46 */ u8 pad46[10];
 } DateMovieScene50; /* size 0x50 */
 #endif
+extern s16 D_8015BF0C;
+extern s16 D_8015BF10;
+#ifndef OVL_DATE_T11020_H
+#define OVL_DATE_T11020_H
+/* T-11020: 20-byte table copied to the stack (func_8013C190). */
+typedef struct DateTbl20 {
+    /* 0x00 */ s32 w[5];
+} DateTbl20; /* size 0x14 */
+extern DateTbl20 D_8015B78C;
+void func_8013C410(s16 arg0, s32 *arg1, s32 *arg2);
+#endif
