@@ -326,7 +326,52 @@ void func_801470A0(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147120);
 
+/* NON_MATCHING: T-10710, 21 differing lines: init order of the three pointer setups, and the inner q loop copies the hoisted D_8014A3D8 address (move) where the original builds a second lui/addiu */
+#ifdef NON_MATCHING
+void func_80147210(void) {
+    s32 i;
+    s32 k;
+    s32 x;
+    s32 d;
+    u8 *a;
+    u8 *v;
+    u8 *q;
+
+    i = 0;
+    v = D_8014A400;
+    a = D_8011ECD0;
+    d = D_8014A3DE;
+    do {
+        *(s32 *)(v + 0x18) += *(s32 *)(v + 0x14);
+        x = *(s16 *)(v + 0x1A) - d;
+        *(s16 *)(a + 0x19EA) = x - 0xA0;
+        if (D_80120896 + (i + 1) * 8 < *(s16 *)(a + 0x19EA) + 0x40 && v[1] == 0) {
+            D_801208CC = 0x4F;
+            k = 0;
+            if (D_8014A3D8[0] != 0) {
+                q = D_8014A3D8;
+                do {
+                    k += 1;
+                    q += 1;
+                } while (*q != 0);
+            }
+            D_8014A3D8[k] = i + 2;
+            v[1] = 1;
+            x = *(s16 *)(v + 0x1A) - d;
+        }
+        i += 1;
+        if (x >= 0x1E1 || x < -0xA0) {
+            a[0x19C7] = 0;
+        } else {
+            a[0x19C7] = 0xA4;
+        }
+        v += 0x1C;
+        a += 0x44;
+    } while (i != 3);
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147210);
+#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/801452D0", func_80147318);
 
