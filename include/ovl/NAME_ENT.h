@@ -379,3 +379,19 @@ void func_80138F00(void);
 extern s32 D_8014CC60; /* Word arguments to func_80046290. */
 extern s32 D_8014CC64;
 #endif
+
+#ifndef OVL_NAME_ENT_T11010_OPTIONS_H
+#define OVL_NAME_ENT_T11010_OPTIONS_H
+void func_8013BB1C(void);
+void func_8013B994(void);
+/* Option values read back by func_8013B77C (one word each; only the low byte is read). */
+extern s32 D_8014D0AC;
+extern u8 D_8014D0B0;
+extern u8 D_8014D0B4;
+extern u8 D_8014D0B8;
+extern u8 D_8014D0BC;
+extern u8 D_8014D0C0;
+extern u8 D_8014D0C4;
+extern u8 D_8014D0C8;
+extern u8 D_8014D0CC;
+#endif

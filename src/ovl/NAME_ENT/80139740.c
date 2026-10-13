@@ -199,7 +199,53 @@ void func_8013B5F0(void) {
     func_80046AC8(0x1A, 0, 0x1F7, D_8014D0E0, D_8014D0E4, D_8014D0E8, 0x01DF7FCF, 2);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B77C);
+void func_8013B77C(void) {
+    if (D_8014D0AC != 0) {
+        func_800AE0B0("option  kidou back ");
+        if (D_8014D0AC & 0x80) {
+            k_speed_set(D_8014D0B0);
+        }
+        func_800AE0B0("kanji_speed%d \n", D_8014D0B0);
+        if (D_8014D0B4 >= 3) {
+            D_800E6280.unk_F6C = D_8014D0B4 % 3;
+        }
+        func_800AE0B0("icon_mode %d \n", D_8014D0B4);
+        if (D_8014D0B8 >= 4) {
+            D_800E6280.unk_1092 = D_8014D0B8 & 3;
+        }
+        func_800AE0B0("menu_mode %d \n", D_8014D0B8);
+        if (D_8014D0AC & 8) {
+            D_800E6280.unk_F6F = D_8014D0BC;
+        }
+        func_800AE0B0("cursor_speed %d \n", D_8014D0BC);
+        if (D_8014D0C0 >= 3) {
+            D_800E6280.unk_03C = D_8014D0C0 % 3;
+        }
+        func_800AE0B0("sound_mode %d \n", D_8014D0C0);
+        if (D_8014D0AC & 0x40) {
+            D_800E6280.unk_F70 = D_8014D0C4;
+        }
+        func_800AE0B0("click_mode %d \n", D_8014D0C4);
+        if (D_8014D0AC & 0x20) {
+            D_800E6280.unk_F73 = D_8014D0C8;
+        }
+        func_800AE0B0("click_speed %d \n", D_8014D0C8);
+        if (D_8014D0AC & 0x10) {
+            D_800E6280.unk_F75 = D_8014D0CC;
+        }
+        func_800AE0B0("mouse_ok %d \n", D_8014D0CC);
+        if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+            D_800E6280.unk_F6D = 0xF;
+        } else {
+            D_800E6280.unk_F6D = 0xE;
+        }
+        func_8006509C();
+        func_80064FA4(0);
+    }
+    D_8014D0A8 = 0;
+    func_8013BB1C();
+    func_8013B994();
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B994);
 
