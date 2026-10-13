@@ -346,6 +346,8 @@ s32 func_801425C0(void);
 extern s32 D_8014D0D0;
 extern s32 D_8014D0D8;
 extern s32 D_8014D0DC;
+#endif
+
 #ifndef OVL_NAME_ENT_T10890_BIRTHDAY
 #define OVL_NAME_ENT_T10890_BIRTHDAY
 /* T-10890: byte selections at four-byte intervals; read with lbu, 255 means unset. */
