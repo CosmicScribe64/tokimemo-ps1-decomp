@@ -4324,3 +4324,37 @@ Dead ends and shapes, rows in [[data/t0018-cases]]:
 - Frames: TACO `func_8013E424` (signature `(SVECTOR v, s32 c)`, frame 0x60 with 0x30 bytes of other locals) and GEKO `func_80144198` (no `sw a0` home store in the original; a 24-byte local table copy always gets one) keep their frames in INCLUDE_ASM.
 - The three DATE/TACO 416-byte rotation helpers (`func_8015A7E0`, `func_8015CF30`, `func_8015D270`) are the hand-written libgte routine ([[gcc-objects]]), not attempted.
 - Loops: ETC `func_80143758`, TT `func_8014A814` (phantom a0/a1 constants), TACO `func_80147B24` (index and pointer forms both 91 of 91 instructions, 92 differing lines of register choice), TAIIKU `func_801406A8`/TACO `func_801347F4` (`move s2,s3; addiu s2,s2,8`, now with six C variants for the shared base, none changes it).
+
+## T-10730 big-function batch (a15)
+
+Three integrated matches add 6,044 text bytes: `read_bustup`,
+`func_8006F524`, and `func_8006FB4C`. The complete Docker build verified
+27/27 units after integration. Current retained near misses are
+`func_8007EF48` (three scheduling pairs) and `func_80082764` (two commutative
+addition operand orders), both below thirty funcdiff lines.
+
+All 21 assigned functions received an initial draft, regdiff and type/control
+flow iterations. The broad drafts remain in `scratchpad/a15/`; the exact
+seed names and per-function evidence are in `scratchpad/a15/HANDOFF.md`.
+See [[decompile-workflow]] for shared dialogue, choice-row, motion-record,
+bitfield, frame and selector idioms. No T-0018 rows are added: the retained
+gaps are scheduling or operand ordering, and the broad drafts still have
+source-shape differences rather than an isolated allocator failure.
+
+DATE `func_8013272C` now passes its complete overlay SHA1 in an isolated
+scratch build (`b5fb83738364a317a590735578f5878077fcda3d`). DateFlag17 fixed the
+last temporary gap. A DateSelectionView over byte slots at D_800CA2F8/+4
+then fixed one comparison operand swap that only appeared in the complete
+source file. The unsigned-load pass tracks rewritten global locations across
+procedures; this is a concrete reason to verify complete objects/units.
+Its inherited void prototype conflicts with the recovered signed result, and
+the append-only exception remains pending. `scratchpad/a15/date-match-pending.diff`
+contains the exact body and one-line prototype correction. Source stays
+INCLUDE_ASM, so this fourth verified scratch match is excluded from the
+three integrated matches and progress total above.
+
+Full-file NON_MATCHING verification at the final review gives eight resolved
+funcdiff lines for func_8007EF48 and six for func_80082764. The latter includes
+one load-scheduling pair in addition to the standalone addition operand-order
+pairs. Both compile with all existing guarded drafts enabled and satisfy the
+retention threshold.

@@ -1456,3 +1456,73 @@ void func_800352B4();
 /* T-10630: signed UV step and RNG seed helper in the EVENT object. */
 extern s16 D_801258E0;
 void func_8011F530(u32 seed);
+
+#ifndef EVENT_SELECTION_TYPES_T10730
+#define EVENT_SELECTION_TYPES_T10730
+/* T-10730: unsigned triples selected by girl, option, then its two-state flag. */
+typedef struct EventChoice3 {
+    /* 0x00 */ u8 value[3];
+} EventChoice3; /* size 0x03 */
+
+typedef struct EventPlaceChoices18 {
+    /* 0x00 */ EventChoice3 choice[3][2];
+} EventPlaceChoices18; /* size 0x12 */
+
+typedef struct EventRideChoices36 {
+    /* 0x00 */ EventChoice3 choice[6][2];
+} EventRideChoices36; /* size 0x24 */
+
+#endif
+
+#ifndef OVL_EVENT_MOTION_T10730
+#define OVL_EVENT_MOTION_T10730
+/* Record view recovered from func_8011B848, D_800E9620.
+ * Records 96..99 use signed high halves of the two fixed-point words.
+ * Byte names remain provisional; existing raw-array declarations are views. */
+typedef struct EventMotion44 {
+    /* 0x00 */ u8 pad00[2];
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 pad04[3];
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ s16 unk_08;
+    /* 0x0A */ u8 pad0A[0xC];
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 pad1A[0xA];
+    /* 0x24 */ GsWord unk_24;
+    /* 0x28 */ GsWord unk_28;
+    /* 0x2C */ s32 unk_2C;
+    /* 0x30 */ u8 pad30[0x14];
+} EventMotion44; /* size 0x44 */
+typedef struct EventMuseumChoices15 {
+    /* 0x00 */ EventChoice3 choice[5];
+} EventMuseumChoices15; /* size 0x0F */
+#endif
+
+#ifndef OVL_EVENT_STATE_T10730
+#define OVL_EVENT_STATE_T10730
+/* T-10730: legacy EVENT state, offsets relative to D_800B0860. */
+typedef struct EventStateView {
+    /* 0x000 */ u8 pad_000[0x35];
+    /* 0x035 */ u8 unk_035;
+    /* 0x036 */ u8 unk_036;
+    /* 0x037 */ u8 unk_037;
+    /* 0x038 */ u8 pad_038[0xAC];
+    /* 0x0E4 */ Rec38Flags unk_0E4;
+    /* 0x0E8 */ u8 pad_0E8[0xBC];
+    /* 0x1A4 */ Rec34 unk_1A4[12];
+    /* 0x414 */ u8 pad_414[0x1B6];
+    /* 0x5CA */ u8 unk_5CA[0x4B];
+    /* 0x615 */ u8 pad_615[0xB3];
+    /* 0x6C8 */ s8 unk_6C8;
+    /* 0x6C9 */ s8 unk_6C9;
+    /* 0x6CA */ s8 unk_6CA;
+    /* 0x6CB */ u8 pad_6CB[0x81B];
+    /* 0xEE6 */ u8 unk_EE6;
+    /* 0xEE7 */ u8 pad_EE7[0x3AE];
+    /* 0x1295 */ u8 unk_1295;
+    /* 0x1296 */ u8 unk_1296;
+    /* 0x1297 */ u8 pad_1297;
+} EventStateView; /* minimum size 0x1298 */
+#endif

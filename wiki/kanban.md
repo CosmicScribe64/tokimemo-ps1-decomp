@@ -58,6 +58,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-10820-wave-16-list-2|T-10820 Wave 16: list 2]]
 - [x] [[tickets/T-10710-wave-15-list-1|T-10710 Wave 15: list 1]]
 - [ ] [[tickets/T-10720-wave-15-list-2|T-10720 Wave 15: list 2]]
+- [ ] [[tickets/T-10730-big-functions-2-astra|T-10730 Big functions 2 (astra)]]
 - [ ] [[tickets/T-10610-wave-14-list-1|T-10610 Wave 14: list 1]]
 - [ ] [[tickets/T-10620-wave-14-list-2|T-10620 Wave 14: list 2]]
 - [ ] [[tickets/T-10630-big-functions-astra|T-10630 Big functions (astra)]]
