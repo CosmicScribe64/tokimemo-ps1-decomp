@@ -532,3 +532,16 @@ typedef struct {
 extern TaiikuI3 D_80149808;
 extern TaiikuH3 D_80149814;
 #endif
+
+#ifndef OVL_TAIIKU_U16TBL_T10720
+#define OVL_TAIIKU_U16TBL_T10720
+typedef struct {
+    u16 v[11];
+} TaiikuU11; /* size 0x16 */
+typedef struct {
+    s16 v[11];
+} TaiikuS11; /* size 0x16 */
+extern TaiikuU11 D_80149F50;
+extern TaiikuS11 D_80149F68;
+extern s32 D_80149960;
+#endif
