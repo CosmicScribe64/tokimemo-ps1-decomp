@@ -270,3 +270,137 @@ extern u8 *D_8014333C[];
 #endif
 
 void func_8013D88C();
+
+#ifndef OVL_TEL_T10860_H
+#define OVL_TEL_T10860_H
+/* Dialogue pointer and XA command tables, T-10860. */
+extern u8 *D_801450C8;
+extern u8 *D_801450CC;
+extern u8 *D_801450D0;
+extern u8 *D_801450D4;
+extern u8 *D_801450D8;
+extern u8 *D_801450DC;
+extern u8 *D_801450E0;
+extern u8 *D_80145454;
+extern u8 *D_80145458;
+extern u8 *D_8014545C;
+extern u8 *D_80145460;
+extern u8 *D_80145464;
+extern u8 *D_801452C8[10];
+extern u32 D_801450E4[];
+extern u32 D_8014511C[];
+extern u32 D_801452F0[];
+extern u32 D_80145340[];
+extern u32 D_80145468[];
+extern u32 D_801454A0[];
+#endif
+
+#ifndef OVL_TEL_ENTRY_FLAGS_H
+#define OVL_TEL_ENTRY_FLAGS_H
+/* Flag word at +0x54C of the 4-byte entries at GameState +0x54C (GsWord unk_54C[8]): nibble in bits 25..28, flag in bit 29. */
+typedef struct {
+    /* 0x00, bits 0..24 */ u32 pad : 25;
+    /* 0x00, bits 25..28 */ u32 nib : 4;
+    /* 0x00, bit 29 */ u32 b29 : 1;
+    /* 0x00, bits 30..31 */ u32 rest : 2;
+} TelEntryFlags; /* size 4 */
+#endif
+
+#ifndef OVL_TEL_T10860_ADC_H
+#define OVL_TEL_T10860_ADC_H
+s32 func_8013ADC0(void);
+s32 func_8013BDDC(void);
+extern u8 *D_80144FB8;
+extern u8 *D_80144FBC;
+extern u8 *D_80144FC0;
+extern u8 *D_80144FC4;
+extern u32 D_80144FC8[];
+extern u32 D_80144FE8[];
+#endif
+
+#ifndef OVL_TEL_T10860_REPLIES_H
+#define OVL_TEL_T10860_REPLIES_H
+extern u8 *D_80146904[12];
+extern u8 *D_80146BF4[12];
+extern u8 *D_80146EE4[12];
+extern u32 D_80146934[];
+extern u32 D_8014698C[];
+extern u32 D_80146C24[];
+extern u32 D_80146C7C[];
+extern u32 D_80146F14[];
+extern u32 D_80146F6C[];
+extern u8 *D_80146008[12];
+extern u8 *D_801462F0[12];
+extern u8 *D_801465B0[12];
+extern u32 D_80146038[];
+extern u32 D_80146090[];
+extern u32 D_80146320[];
+extern u32 D_80146378[];
+extern u32 D_801465E0[];
+extern u32 D_80146638[];
+s32 func_8013C3E0(void);
+s32 func_8013C8DC(void);
+#endif
+
+#ifndef OVL_TEL_T10860_GREETING_TABLES_H
+#define OVL_TEL_T10860_GREETING_TABLES_H
+/* Text pointer loads and word-indexed XA tables in 80139AA4/80139FEC. */
+extern u8 *D_8014544C;
+extern u8 *D_80145450;
+extern u8 *D_80144D6C[12];
+extern u32 D_80144D9C[];
+extern u32 D_80144DEC[];
+#endif
+
+#ifndef OVL_TEL_T10860_GREETING_TABLES2_H
+#define OVL_TEL_T10860_GREETING_TABLES2_H
+extern u8 *D_80144738[12];
+extern u8 *D_80144AA4[12];
+extern u32 D_80144768[];
+extern u32 D_801447B8[];
+extern u32 D_80144AD4[];
+extern u32 D_80144B24[];
+#endif
+
+#ifndef OVL_TEL_T10860_REPLY_TABLES_13
+#define OVL_TEL_T10860_REPLY_TABLES_13
+/* T-10860: 13 pointer entries each, bounded by the following data symbol. */
+extern u8 **D_80145C44[13];
+extern u32 *D_80145C78[13];
+extern u32 *D_80145CAC[13];
+#endif
+
+#ifndef OVL_TEL_T10860_A4FC_VIEW
+#define OVL_TEL_T10860_A4FC_VIEW
+/* T-10860: preceding dispatcher used the legacy integer return view. */
+s32 func_8013A4FC(void);
+#endif
+
+#ifndef OVL_TEL_T10860_DISPATCH_DECLS
+#define OVL_TEL_T10860_DISPATCH_DECLS
+void func_80139AA4(void);
+void func_80139FEC(void);
+#endif
+
+#ifndef OVL_TEL_T10860_CLUB_FLAGS
+#define OVL_TEL_T10860_CLUB_FLAGS
+/* T-10860: word view of a GameState +0x66C record. */
+typedef struct TelClubFlags {
+    /* 0x00, bits 0..23 */ u32 pad : 24;
+    /* 0x00, bit 24 */ u32 b24 : 1;
+    /* 0x00, bits 25..31 */ u32 rest : 7;
+} TelClubFlags; /* size 0x04 */
+#endif
+
+#ifndef OVL_TEL_RECORD_FLAGS_H
+#define OVL_TEL_RECORD_FLAGS_H
+/* T-10860: bits cleared in a Rec38 +0x0C flag word by func_8013BE38. */
+typedef struct TelRecordFlags {
+    /* 0x00, bits 0..11 */ u32 low : 12;
+    /* 0x00, bit 12 */ u32 b12 : 1;
+    /* 0x00, bit 13 */ u32 b13 : 1;
+    /* 0x00, bits 14..15 */ u32 middle : 2;
+    /* 0x00, bit 16 */ u32 b16 : 1;
+    /* 0x00, bits 17..31 */ u32 high : 15;
+} TelRecordFlags; /* size 0x04 */
+#endif

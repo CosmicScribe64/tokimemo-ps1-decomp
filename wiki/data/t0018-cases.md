@@ -1778,3 +1778,13 @@ EVENT SHA1 pass. Historical rows remain unchanged.
 | TACO/80146D60 | `func_80147B24` | regorder / IV | weighted-average helper (`100 - sum_w*100 / sum_p`) over TcActor records at `D_8015EDB4 + i*0x88 + 0x8FA/0x905`, loop unrolled by 4 with an `arg0 & 3` prologue: pointer-cast form has the original's 91 of 91 instructions, 92 differing lines are register choices (the original copies arg1 to $a3 and walks the table in $a1; the draft keeps arg1 in $a1); T-10820 |
 | RPG_BAT/801525B0 | `func_80153A60` | phantom reg | kept NON_MATCHING at 4 lines: pointer view of D_8015EC74, swapped loop compare and a dead `dead = (*p >= 0x61)` local with `else dead = 0` match everything except `slti v0` (original `slti at`, $v0 unused); T-10820 |
 | TT/80144D70 | `func_80145370` | phantom regs | dead-compare locals (`d1 = (... == 0x40)` with `else d1 = 0`, found by decomp-permuter) move the hoisted constants from a0/a1 to a1/a2: 4 differing lines, the constant 0x70 still sits in $a1 where the original has $a3; T-10820 |
+| TEL | `func_8013AA30` | regorder | T-10860: 118 instructions, three register-only misses: selector branch v0 vs v1 and returned decoder index comparisons a1 vs v0. Regdiff allocation trace, legacy call views, casts, split conditions and ten-minute permuter attempted; guarded draft has six differing lines. |
+| TEL | `func_8013AC0C` | regorder | T-10860: 108 instructions, two return-index comparisons use a1 instead of v0 after the same move a1,v0. Regdiff identifies the constrained argument range; casts, legacy calls and ten-minute permuter did not split it. Guarded draft has four differing lines. |
+| NAME_ENT | `func_80147A80` | regorder | T-10860: ring/history types and no-argument getCDlevel recovered; 90 instructions and correct 0x38 frame, ten a0/a1 choices remain. Regdiff level priority 2 outranks frame 1.5; original allocation reverses them. Declaration/init/copy/counter forms and five-minute permuter attempted; 20-line guarded diff. |
+| NAME_ENT | `func_80149144` | regorder | T-10860: same single-actor CD-level template as 80147A80, with display frame +4. Correct 90 instructions and stack slot; level/frame a0/a1 reversed in ten instructions. Shared template investigations and regdiff recorded; 20-line guarded diff. |
+
+T-10860 follow-up (2026-10-13): TEL `func_8013AA30` and `func_8013AC0C`,
+recorded immediately above, now match in active C. The scalar switch-selector
+view `*(u8 *)&D_800E6280.unk_110D` fixes the later returned-index comparison
+registers as well as the selector branch. Both literal comparisons and TEL
+SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
