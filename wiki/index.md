@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-10700-windows-host-baseline-build|T-10700]] Windows host setup and baseline build: docker.sh MSYS paths, 32-bit gcc cpp on WSL2 mounts (Done; 27/27, 5,176/6,958).
+- [[tickets/T-10890-big-functions-astra-21|T-10890]] Big functions (astra) 21 (In Progress).
 - [[tickets/T-10860-big-functions-4-astra|T-10860]] Big functions 4 (astra), five owned objects (Done; 88 matches / 68,856 code bytes).
 - [[tickets/T-10870-big-functions-5-astra|T-10870]] Big functions 5 (astra), ten matches / 11460 bytes (Done).
 - [[tickets/T-10880-big-functions-6-astra|T-10880]] Big functions 6 (astra), four owned objects (Done).

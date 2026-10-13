@@ -211,6 +211,7 @@ typedef struct NameRecord44 {
 } NameRecord44; /* size 0x44 */
 #endif
 
+
 #ifndef OVL_NAME_ENT_T9770_SELECTION_GLOBALS
 #define OVL_NAME_ENT_T9770_SELECTION_GLOBALS
 extern s32 D_8014CCAC; /* Word reset in func_801341A8. T-9770 */
@@ -345,4 +346,28 @@ s32 func_801425C0(void);
 extern s32 D_8014D0D0;
 extern s32 D_8014D0D8;
 extern s32 D_8014D0DC;
+#ifndef OVL_NAME_ENT_T10890_BIRTHDAY
+#define OVL_NAME_ENT_T10890_BIRTHDAY
+/* T-10890: byte selections at four-byte intervals; read with lbu, 255 means unset. */
+extern u8 D_8014CC90;
+extern u8 D_8014CC94;
+extern u8 D_8014CC98;
+extern u8 D_8014CC9C;
+extern u8 D_8014CCA0;
+extern u8 D_8014CCA4;
+void func_80136808(s32 arg0);
+#endif
+
+#ifndef OVL_NAME_ENT_T10890_CHARACTER_TABLES
+#define OVL_NAME_ENT_T10890_CHARACTER_TABLES
+/* T-10890: 17 pointers per kana table (CD28..CD6C and CD6C..CDB0).
+ * Existing scalar declarations retain the first-pointer view for older callers. */
+typedef struct NameKanaPages44 {
+    /* 0x00 */ u8 *text[17];
+} NameKanaPages44; /* size 0x44; index = row * 3 + column / 6 */
+extern u8 *D_8014CDB0[45];
+extern u16 *D_8014CE64;
+extern u8 **D_8014CE68;
+void func_80134248(s32 arg0);
+void func_80138F00(void);
 #endif

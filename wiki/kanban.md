@@ -24,6 +24,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-10890-big-functions-astra-21|T-10890 Big functions (astra) 21]]
+
 
 
 
