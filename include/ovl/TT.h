@@ -85,6 +85,17 @@ typedef struct TtSlot14 {
 extern s16 D_80155A90[];
 extern u8 D_80150950[];
 extern u8 D_8015099C[];
+extern u8 D_80150A14[];
+extern u8 D_80150A30[];
+extern u8 D_80155B6C[];
+extern u8 D_80155B72[];
+extern u8 D_80155B78[];
+extern u8 D_80155B7E[];
+extern u8 D_80155B84[];
+extern u8 D_80155B8A[];
+extern u8 D_80155B90[];
+extern s16 D_801579D4;
+extern s16 D_80158A5C;
 extern s16 D_801509C0[];
 extern u8 D_80150978[];
 extern u8 D_80155B54[];
