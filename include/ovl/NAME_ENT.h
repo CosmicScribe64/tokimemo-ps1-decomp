@@ -331,6 +331,8 @@ extern u8 *D_8014D958[43];
 #define OVL_NAME_ENT_T10860_SECOND_BOB_HELPER
 /* T-10860: integer fallthrough view keeps caller 80149840's state in v1. */
 s32 func_8014977C(void);
+#endif
+
 /* The album buffer is also read by main/800674B0.c. T-10880. */
 #include "game.h"
 
