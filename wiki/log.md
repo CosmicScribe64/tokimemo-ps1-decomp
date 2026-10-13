@@ -12726,3 +12726,28 @@ and the inline coding-standards review pass; all findings are resolved.
 Four T-0018 cases and reusable header/workflow details are recorded.
 Progress: grand total 5238/6958, 1018532/2279368 bytes, 44.7%.
 Changes remain uncommitted for the orchestrator; no Git mutation occurred.
+
+## [2026-10-13] ticket | T-10910A largest-first batch started
+
+Created [[tickets/T-10910A-big-functions-astra-23]] and its In Progress card. Read the wave-11 isolation/Git/procedure brief, [[register-cheatsheet]], standards, and relevant [[decompile-workflow]] guidance. Work owns five listed C objects; experiments stay in scratchpad/a23 and changes remain uncommitted.
+
+## [2026-10-13] build | T-10910A baseline and schedule draft
+
+Fresh Docker configure/build passed all 27 checksums and header/global gates. The recovered schedule-builder draft was re-evaluated with full-file regdiff: 1175 versus 1173 instructions, still a structural miss. Experiments remain in scratchpad/a23; [[tickets/T-10910A-big-functions-astra-23]] tracks the batch.
+
+## [2026-10-13] query | T-10910A schedule and dispatcher experiments
+
+The schedule builder improves with a local narrow year copy and its original signed random <= 0 comparison; a bounded scratch permutation search is running. Reconstructed two lost pointer-loop initializations in the older func_8007132C scratch draft, replacing them with indexed Rec38 reads. All 53 assigned m2c drafts were generated under scratchpad/a23; broad misses remain outside source. See [[tickets/T-10910A-big-functions-astra-23]].
+
+## [2026-10-13] ingest | T-10910A DATE scene data view
+
+Added the assembly/config-supported DateMovieScene50 layout to include/ovl/DATE.h and documented its eight-byte row spacing in [[decompile-workflow]]. The range has ownership metadata but no YAML data island; configuration remains untouched under the batch isolation rule. [[tickets/T-10910A-big-functions-astra-23]] continues with aggregate and scalar comparisons.
+
+## [2026-10-13] query | T-10910A DATE scene control flow
+
+[[tickets/T-10910A-big-functions-astra-23]] reconstructed the shared animation
+update after the scene switch in `func_801462B0`; moving it out of case zero
+improved the draft from 865 to 946 target-relative instructions, and typed
+callback/switch refinements reach 950/950. Register and branch differences
+remain; these broad drafts stay in the agent's scratch directory. Both DATE
+movie functions now have regdiff-backed region comparisons and bounded search.

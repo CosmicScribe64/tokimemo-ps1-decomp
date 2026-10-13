@@ -1573,3 +1573,22 @@ by multiplying a byte-array index by four. Outer row counts remain unknown.
 `ScheduleEntryFlags.unk_25` records the adjacent four-bit value at word
 bits 25..28, also used by A2CC; its semantic name remains unresolved.
 Keep it distinct from bit 29's active flag when drafting the display code.
+
+## T-10910A schedule and DATE continuation
+
+DATE's object at `801461B0` owns the data range `8015CF80..8015CFD0`
+(`config/objects/DATE.txt`). `DateMovieScene50` in `include/ovl/DATE.h`
+records its seven buffer-address words, unsigned timer at +0x1C, halfword
+at +0x1E, signed step at +0x20, and four signed three-halfword rows at
++0x24/+0x2C/+0x34/+0x3C. The row storage stride is eight bytes; do not
+pack these as adjacent six-byte arrays. The signed sound timer is +0x44.
+The view leaves existing declarations unchanged and allows aggregate
+experiments without adding aliases for members. The YAML has no data
+island for this object yet; adopting C-owned data would require an
+integration change outside this batch's permitted configuration edits.
+
+For the schedule builder, a local unsigned-byte copy at the later year
+comparison restores a load removed by common-subexpression elimination.
+Keep the original signed `(rand() & 15) <= 0` spelling: equality changes
+`bgtz` to `bnez`. These are improvements to a structural draft, not a
+claim that the complete builder matches.

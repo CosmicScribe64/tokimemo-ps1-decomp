@@ -1435,3 +1435,28 @@ typedef struct DateEventChoice6 {
     /* 0x04 */ s16 index;
 } DateEventChoice6; /* size 0x06, minimum observed extent */
 #endif
+
+#ifndef DATE_MOVIE_SCENE_T10910A
+#define DATE_MOVIE_SCENE_T10910A
+/* T-10910A: data range 8015CF80..8015CFD0 belongs to 801461B0.
+ * The seven buffer addresses are initialized by func_801461B0. Three-element
+ * signed coordinate/velocity rows have eight-byte storage strides, not six.
+ * This view preserves the existing scalar declarations used by matched code. */
+typedef struct DateMovieScene50 {
+    /* 0x00 */ u32 buffer_addr[7];
+    /* 0x1C */ u16 timer;
+    /* 0x1E */ u16 unk_1E;
+    /* 0x20 */ s16 step;
+    /* 0x22 */ u8 pad22[2];
+    /* 0x24 */ s16 x[3];
+    /* 0x2A */ u8 pad2A[2];
+    /* 0x2C */ s16 y[3];
+    /* 0x32 */ u8 pad32[2];
+    /* 0x34 */ s16 dx[3];
+    /* 0x3A */ u8 pad3A[2];
+    /* 0x3C */ s16 dy[3];
+    /* 0x42 */ u8 pad42[2];
+    /* 0x44 */ s16 sound_timer;
+    /* 0x46 */ u8 pad46[10];
+} DateMovieScene50; /* size 0x50 */
+#endif
