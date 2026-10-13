@@ -72,13 +72,13 @@ void func_80133058(u8 *arg0, u16 arg1) {
     }
 }
 
-/* T-11000 near miss: id slot at sp+0x50 instead of 0x54, beq operand order of the hoisted -1 (s3, v0), call-argument/store scheduling in the record init; about 47 listing rows. */
+/* T-11000 near miss: stack slot of id matches (declared before t); beq operand order of the hoisted -1 (s3, v0), call-argument/store scheduling in the record init; about 45 listing rows. */
 #ifdef NON_MATCHING
 void func_801330D8(void) {
     u8 *g;
     u8 *a;
-    s16 t;
     s32 id;
+    s16 t;
     s32 x;
     s32 m;
 
