@@ -737,4 +737,7 @@ typedef struct ShouByteFlags {
     /* 0x00, bit 3 */ u8 b3 : 1;
     /* 0x00, bits 4-7 */ u8 rest : 4;
 } ShouByteFlags; /* size 0x01 */
+void func_801366A4(void);
+void func_80141AE8(void);
+
 #endif

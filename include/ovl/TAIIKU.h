@@ -510,3 +510,38 @@ typedef struct {
 extern TaiikuSlots D_80149208;
 
 #endif
+
+#ifndef OVL_TAIIKU_SCALARS_T10720
+#define OVL_TAIIKU_SCALARS_T10720
+/* Words inside D_80149968/D_80149974/D_80149990/D_801499A0 that func_8013CF88 reaches as separate symbols. */
+extern s32 D_8014996C;
+extern s32 D_80149978;
+extern s32 D_80149994;
+extern s32 D_801499A8;
+#endif
+
+#ifndef OVL_TAIIKU_LIMITS_T10720
+#define OVL_TAIIKU_LIMITS_T10720
+/* Limit tables copied to the stack by func_80137090. */
+typedef struct {
+    /* 0x00 */ s32 v[3];
+} TaiikuI3; /* size 0xC */
+typedef struct {
+    /* 0x00 */ s16 v[3];
+} TaiikuH3; /* size 6 */
+extern TaiikuI3 D_80149808;
+extern TaiikuH3 D_80149814;
+#endif
+
+#ifndef OVL_TAIIKU_U16TBL_T10720
+#define OVL_TAIIKU_U16TBL_T10720
+typedef struct {
+    u16 v[11];
+} TaiikuU11; /* size 0x16 */
+typedef struct {
+    s16 v[11];
+} TaiikuS11; /* size 0x16 */
+extern TaiikuU11 D_80149F50;
+extern TaiikuS11 D_80149F68;
+extern s32 D_80149960;
+#endif

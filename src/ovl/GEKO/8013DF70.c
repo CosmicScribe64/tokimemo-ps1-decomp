@@ -139,9 +139,46 @@ void func_8013E650(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E69C);
+void func_8013E69C(void) {
+    s16 i;
+    Rec24 *records;
+    s32 before;
+    s32 after;
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/8013DF70", func_8013E760);
+    before = D_800E6280.unk_110A;
+    func_800853FC();
+    records = (Rec24 *)D_801217D0;
+    for (i = 4; i < 19; i++) {
+        if (D_800B593C < 112) {
+            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800B593C;
+        }
+    }
+    after = D_800E6280.unk_110A;
+    if (before != after) {
+        for (i = 4; i < 19; i++) {
+            records[i].unk_00 |= 0x80000000;
+        }
+    }
+}
+
+void func_8013E760(void) {
+    s16 i;
+    Rec24 *records;
+
+    if (D_800E6280.unk_1104.w == 0) {
+        records = (Rec24 *)D_801217D0;
+        for (i = 4; i < 19; i++) {
+            records[i].unk_00 &= 0x7FFFFFFF;
+        }
+    }
+    func_80085368();
+    records = (Rec24 *)D_801217D0;
+    for (i = 4; i < 19; i++) {
+        if (D_800B593C < 113) {
+            records[i].unk_14 = records[i].unk_15 = records[i].unk_16 = D_800B593C;
+        }
+    }
+}
 
 void func_8013E828(void) {
     D_800E6280.unk_F5F = 9;

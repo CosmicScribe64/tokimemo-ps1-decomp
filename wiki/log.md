@@ -10201,3 +10201,8 @@ Started [[tickets/T-10710-wave-15-list-1]] (batch agent w15-1).
 
 ## [2026-10-12] build | T-10710 wave 15 list 1 done
 4 functions matched (1,068 bytes: `menu_check_2`, GYOZI `func_8013E0A4`, TACO `func_8015CCC8`, ETC `func_8013E094`), about 12 guarded near misses, 34 rows added to [[data/t0018-cases]], notes in [[matching-notes]]. Ticket [[tickets/T-10710-wave-15-list-1]] moved to Done after the inline review. Progress `grand total 5180/6958 962584/2279368 42.2%`; 27 SHA1 checks, headers and globals OK.
+## [2026-10-12] ticket | T-10720 started
+Wave 15 list 2 begun, see [[tickets/T-10720-wave-15-list-2]].
+
+## [2026-10-12] build | T-10720 wave 15 list 2 done
+[[tickets/T-10720-wave-15-list-2]]: 6 functions matched (4172 bytes: GEKO `func_8013E69C`/`func_8013E760`, SHOUGATU `func_801366A4`/`func_80141AE8` via dupes, TAIIKU `func_80137090`, RPG_BAT `func_8014D380`), 10 near misses kept as NON_MATCHING, rows added to [[data/t0018-cases]], recipe in [[matching-notes]]. ninja 27/27 OK. Status Done after inline review.
