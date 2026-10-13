@@ -583,3 +583,81 @@ extern u16 D_8014A4C4[8];
 extern u16 D_8014A4D8[6];
 extern u16 D_8014A4E4[8];
 #endif
+
+#ifndef OVL_TAIIKU_CAMERA_T10890
+#define OVL_TAIIKU_CAMERA_T10890
+/* T-10890: three words at D_80122DD0 used by the rotated track grid. */
+typedef struct TaiikuCamera0C {
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ s32 angle;
+} TaiikuCamera0C; /* size 0x0C */
+#endif
+
+#ifndef OVL_TAIIKU_RESULT_TABLES_T10890
+#define OVL_TAIIKU_RESULT_TABLES_T10890
+/* Eleven parallel per-character result entries, copied by func_801346FC. */
+typedef struct TaiText11 {
+    /* 0x00 */ u8 *value[11];
+} TaiText11; /* size 0x2C */
+extern TaiikuS11 D_801493FC;
+extern TaiText11 D_80149414;
+extern TaiText11 D_80149440;
+extern TaiWords11 D_8014946C;
+extern TaiWords11 D_80149498;
+extern u8 D_801491D4;
+s32 func_80137784(s32 arg0);
+#endif
+
+#ifndef OVL_TAIIKU_SELECTION_T10890
+#define OVL_TAIIKU_SELECTION_T10890
+/* Copied as 0x58 bytes, indexed by eleven rows of eight actor flags. T-10890. */
+typedef struct TaiFlags58 {
+    /* 0x00 */ u8 value[11][8];
+} TaiFlags58; /* size 0x58 */
+extern TaiWords11 D_80149728;
+extern TaiikuS11 D_80149754;
+extern TaiikuS11 D_8014976C;
+extern TaiFlags58 D_80149784;
+extern u8 D_801491D8;
+#endif
+
+#ifndef OVL_TAIIKU_MOTION_CALLS_T10890
+#define OVL_TAIIKU_MOTION_CALLS_T10890
+/* Definitions in 80132BD0.c and 80138950.c. T-10890. */
+void func_80133928(s32 arg0);
+void func_8013ACBC(void);
+void func_8013AE14(void);
+void func_8013AEFC(void);
+s32 func_8013AF74(void);
+#endif
+
+#ifndef OVL_TAIIKU_ACTOR_MOTION_T10890
+#define OVL_TAIIKU_ACTOR_MOTION_T10890
+/* One 16.16 position word; motion reads its signed high half. T-10890. */
+extern TaiHalves D_801499C0;
+/* Indexed at arg0=1..3; the leading byte is the preceding data padding. */
+extern u8 D_801499CB[4];
+s32 func_8013FB14(s32 arg0);
+s16 func_8013FBA8(s32 arg0);
+#endif
+
+ 
+#ifndef OVL_TAIIKU_T10890_PAGE_TABLES
+#define OVL_TAIIKU_T10890_PAGE_TABLES
+/* T-10890: nine signed halfword choices; copied as 16 bytes plus 2 bytes. */
+typedef struct TaiShorts12 {
+    /* 0x00 */ s16 value[9];
+} TaiShorts12; /* size 0x12; data symbols are aligned to four bytes */
+extern TaiShorts12 D_801493C0;
+extern TaiShorts12 D_801493D4;
+extern TaiShorts12 D_801493E8;
+/* Texture-page handles walked in func_80134060. */
+extern s32 D_801492C8[5];
+extern s32 D_801492DC[6];
+extern s32 D_801492F4;
+extern s32 D_801492F8[10];
+extern s32 D_8014A070[6];
+void func_80133C30(void);
+void func_801330D4(void);
+#endif

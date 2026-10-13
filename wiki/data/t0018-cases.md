@@ -1830,3 +1830,4 @@ recorded immediately above, now match in active C. The scalar switch-selector
 view `*(u8 *)&D_800E6280.unk_110D` fixes the later returned-index comparison
 registers as well as the selector branch. Both literal comparisons and TEL
 SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
+| TAIIKU | `func_801346FC` | regorder | T-10890: actor-x decrement uses v0 in original, v1 in draft; 10 resolved listing lines, 422 instructions and frame agree. regdiff identifies the raw decrement local; 600-second permuter and lifetime/table-index variants unsuccessful. |

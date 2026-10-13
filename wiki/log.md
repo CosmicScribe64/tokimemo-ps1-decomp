@@ -12182,3 +12182,139 @@ Standards and Spec review has no unresolved findings, three small guarded
 drafts remain, and all 27 unit checksums pass with zero new prototype issues.
 Moved [[tickets/T-10860-big-functions-4-astra]], [[kanban]] and [[index]] to Done.
 Progress: `grand total   5285/6958  1043564/2279368  45.8%`. All changes remain uncommitted.
+
+## [2026-10-13] ticket | T-10890 big functions astra 21
+
+Created [[tickets/T-10890-big-functions-astra-21]] In Progress and its board card.
+Read the shared brief, [[register-cheatsheet]], standards and [[decompile-workflow]].
+Assigned four objects; work and scratch isolated to a21, with no Git writes.
+
+## [2026-10-13] build | T-10890 baseline and display record draft
+
+Generated local build outputs and verified all 27 baseline unit checksums.
+The first m2c call correctly failed before assembly existed; retried after split.
+Added the parameter initializer's 0x44-byte display record view in include/game.h
+and a guarded draft in src/main/80062CD0.c. Missing record fields were identified
+by compilation and recovered from the original halfword/byte offsets.
+See [[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] build | T-10890 parameter_show_init verified
+
+parameter_show_init passes full-file funcdiff and private linked-byte
+verification: 3,316 bytes. Activated its C in src/main/80062CD0.c. Three-way
+chain assignments reproduce the shared mode/enable constants; an explicit raw
+parameter local produces the sign-extension sequence. A same-line digit/x store
+pair fixes all nine repeated scheduling differences. Frame homes and source-line
+scheduling are FAKE-marked pending cleanup. [[decompile-workflow]],
+[[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] decision | T-10890 remove provisional frame padding
+
+Replaced the initializer's three unused locals with real value, digit and
+snapshot pointer locals. All 829 instructions remain exact in scratch and
+regdiff reports MATCH. See [[decompile-workflow]] and
+[[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] ingest | T-10890 name tables and image metadata
+
+Recovered the kana/label tables in include/ovl/NAME_ENT.h and the eight-part
+image layout in include/game.h. [[decompile-workflow]] records extents and
+matching evidence. The image initializer is down to a frame-only 26-line diff;
+the two large NAME_ENT drafts remain in scratch/in-progress form.
+Started the first full build checkpoint. [[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] ingest | T-10890 packed background palettes
+
+Confirmed the 27-checksum checkpoint and recovered DisplayColorPair4 plus the
+four input palettes and output buffer for func_80066C08. Recorded mask indexing,
+switch shape and saved-register pressure in [[decompile-workflow]]. The bounded
+image-initializer permuter search produced no match. Work continues under
+[[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] build | T-10890 image initializer matched
+
+func_80062DBC now matches all 1,856 linked bytes after reordering its real
+origin locals. Activated C and verified parameter_show_init again: two
+matches, 5,172 bytes. [[decompile-workflow]] records the frame lesson;
+[[tickets/T-10890-big-functions-astra-21]] records verification.
+
+## [2026-10-13] build | T-10890 background renderer matched
+
+Activated func_80066C08 after literal linked verification (1,968 code bytes).
+All 492 instructions agree. [[decompile-workflow]] records the unsigned
+coordinate expression, explicit blend local, weight tie and frame ordering.
+[[tickets/T-10890-big-functions-astra-21]] tracks three active matches.
+
+## [2026-10-13] ingest | T-10890 signed panel counter and second checkpoint
+
+The second full build passed all 27 checksums. An asm-wide scan recovered
+D_80125CA0 as signed (two lh, zero lhu, 152 sh); updated its canonical generated
+declaration. [[decompile-workflow]] records the evidence. The next panel
+function also needs the existing unprototyped func_80049A40 override because
+its original calls pass full-width expressions. [[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] build | T-10890 panel and birthday picker matched
+
+Verified and activated func_80066334 (1,784 linked bytes) and NAME_ENT
+func_80136808 (2,712). Five active matches total 11,636 code bytes, plus the
+renderer jump table. [[decompile-workflow]] records the call-width and
+consistent-aggregate lessons; [[tickets/T-10890-big-functions-astra-21]] has
+the review/verification trail.
+
+## [2026-10-13] build | T-10890 TAIIKU result-table near match
+
+Recorded local-table layout and index lifetime evidence in [[decompile-workflow]]
+and [[tickets/T-10890-big-functions-astra-21]]. func_801346FC is ten listing lines
+from the target; regdiff isolates one raw decrement register and scheduling.
+
+## [2026-10-13] build | T-10890 five-match checkpoint
+
+All 27 binaries match. Added TAIIKU selection-table declarations and began
+func_80135F3C in isolated scratch; see [[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] build | T-10890 retained TAIIKU near miss
+
+Kept func_801346FC guarded at ten differing listing lines, with its frame home
+marked FAKE. The timed permuter did not finish it. Recorded candidates and
+continued motion-state work in [[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] ingest | T-10890 TAIIKU actor motion views
+
+Added the existing motion helpers and fixed-point word/high-half view at
+D_801499C0 to include/ovl/TAIIKU.h. Started func_8013F3A4 using the shared
+DisplayActor44 view. [[tickets/T-10890-big-functions-astra-21]] tracks the batch.
+
+## [2026-10-13] ingest | T-10890 movement and picker findings
+
+Recorded movement-state width/lifetime idioms and selection/camera tables in
+[[decompile-workflow]]. NAME_ENT's picker reached a two-load-width near miss,
+but a narrowing cast still needs correction before retention. Started the
+actor initializer with DisplayActor44 and declared its existing helper.
+See [[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] build | T-10890 movement draft retained
+
+Kept func_8013A6FC guarded at twenty listing lines and removed the far
+func_8013EC60 draft from src/ovl/TAIIKU/80138950.c. Types and loop findings
+remain in [[decompile-workflow]]; [[tickets/T-10890-big-functions-astra-21]]
+records the remaining scheduling differences.
+
+## [2026-10-13] build | T-10890 fourth checksum checkpoint
+
+Default build passes all 27 binary checksums with five active matches and
+the retained TAIIKU drafts. Added the traced decrement-register blocker to
+[[data/t0018-cases]]; [[tickets/T-10890-big-functions-astra-21]] remains active.
+
+## [2026-10-13] build | T-10890 sixth active match
+
+Enabled NAME_ENT func_801324AC (1,420 bytes) after exact scratch verification
+and removal of its unused local. The recovered loop/expression idiom is in
+[[decompile-workflow]], with review details in
+[[tickets/T-10890-big-functions-astra-21]].
+
+## [2026-10-13] ingest | T-10890 texture-page and nine-choice tables
+
+Added the nine-halfword table wrapper and texture-page handle arrays to
+include/ovl/TAIIKU.h. Registered search_load_tpage_buf_lock's existing
+definition with the canonical main-api writer. Findings are recorded in
+[[decompile-workflow]] for the next initializer.
