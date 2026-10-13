@@ -101,11 +101,7 @@ s32 func_80133BE0(u8 *arg0, u8 *arg1) {
     func_8014D260(dy >> 16, dx >> 16);
 }
 
-void func_80133C1C(o, kind, idx)
-    TtActor68 *o;
-    u16 kind;
-    s32 idx;
-{
+void func_80133C1C(TtActor68 *o, u16 kind, s32 idx) {
     o->unk_00 = 1;
     o->unk_02 = kind;
     o->unk_10 = 1;
@@ -209,9 +205,6 @@ void func_80133E30(s16 x, s16 y, s32 speed, s32 angle, u16 kind) {
         object->unk_0D = 0;
     }
 }
-
-/* ANSI view of the K&R definition above: later callers convert the kind argument at the call (andi), T-11000 */
-void func_80133C1C(TtActor68 *, u16, s32);
 
 void func_80133FB0(s16 x, s16 y, s32 spread, s32 speed, u16 kind) {
     TtActor68 *object;
