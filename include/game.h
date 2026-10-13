@@ -91,3 +91,140 @@ typedef struct GsByteNibbles {
     /* 0x00, bits 4-7 */ u8 high : 4;
 } GsByteNibbles; /* size 0x01 */
 #endif
+
+#ifndef TOKIMEMO_SCHEDULE_FLAGS_H
+#define TOKIMEMO_SCHEDULE_FLAGS_H
+/* T-10880: word view at GameState +0xF4 in func_8006D7EC.
+ * Bit 18 is tested with lw/sll 13/srl 31 and stored through byte +0xF6.
+ * Bits 21..23 are a three-bit counter read and decremented through +0xF6. */
+typedef struct ScheduleFlags {
+    /* 0x00 */ u32 unk_00 : 18;
+    /* 0x00 */ u32 b18 : 1;
+    /* 0x00 */ u32 unk_19 : 2;
+    /* 0x00 */ u32 unk_21 : 3;
+    /* 0x00 */ u32 unk_24 : 8;
+} ScheduleFlags; /* size 0x04 */
+
+/* T-10880: word view of GameState.unk_66C[11]. The counter occupies
+ * bits 25..26; increment reads the word and writes byte +3 bits 1..2. */
+typedef struct ScheduleClubFlags {
+    /* 0x00 */ u32 unk_00 : 25;
+    /* 0x00 */ u32 unk_25 : 2;
+    /* 0x00 */ u32 unk_27 : 5;
+} ScheduleClubFlags; /* size 0x04 */
+
+/* T-10880: date and activity views of the eight GameState.unk_54C entries.
+ * func_8006B0C8 sorts by month * 100 + day; January becomes month 13
+ * temporarily when the current month is December. */
+typedef struct ScheduleEntryDate {
+    /* 0x00 */ u16 unk_00 : 12;
+    /* 0x00 */ u16 month : 4;
+    /* 0x02 */ u16 day : 5;
+    /* 0x02 */ u16 unk_15 : 11;
+} ScheduleEntryDate; /* size 0x04 */
+
+typedef struct ScheduleEntryFlags {
+    /* 0x00 */ u32 unk_00 : 25;
+    /* 0x00 */ u32 unk_25 : 4;
+    /* 0x00 */ u32 active : 1;
+    /* 0x00 */ u32 unk_30 : 2;
+} ScheduleEntryFlags; /* size 0x04 */
+#endif
+
+#ifndef TOKIMEMO_ALBUM_LAYOUT_H
+#define TOKIMEMO_ALBUM_LAYOUT_H
+/* T-10880: main album display and NAME_ENT card/metric routines share these views. */
+typedef struct NameMetric4 {
+    /* 0x00 */ u8 unk_00[2];
+    /* 0x02 */ s16 unk_02;
+} NameMetric4; /* size 0x04 */
+
+typedef struct NameMetricWork {
+    /* 0x000 */ s32 unk_000;
+    /* 0x004 */ u8 slot_status[16];
+    /* 0x014 */ u8 flags[16];
+    /* 0x024 */ u8 unk_024[2];
+    /* 0x026 */ u8 selected_slot;
+    /* 0x027 */ u8 unk_027[0x831];
+    /* 0x858 */ u8 year[16];
+    /* 0x868 */ u8 month[16];
+    /* 0x878 */ u8 day[16];
+    /* 0x888 */ u8 family_name[16][8];
+    /* 0x908 */ u8 given_name[16][8];
+    /* 0x988 */ u8 nickname[16][16];
+    /* 0xA88 */ NameMetric4 metrics[9][16];
+    /* 0xCC8 */ u8 unk_CC8[0x200];
+    /* 0xEC8 */ u8 club[16];
+} NameMetricWork; /* minimum observed extent 0xED8 */
+
+typedef struct NameRecordF00 {
+    /* 0x000 */ u8 unk_000[0x205];
+    /* 0x205 */ u8 year;
+    /* 0x206 */ u8 month;
+    /* 0x207 */ u8 day;
+    /* 0x208 */ u8 unk_208[0x94];
+    /* 0x29C */ u8 family_name[8];
+    /* 0x2A4 */ u8 given_name[8];
+    /* 0x2AC */ u8 nickname[16];
+    /* 0x2BC */ u16 club;
+    /* 0x2BE */ u8 unk_2BE[6];
+    /* 0x2C4 */ NameMetric4 metrics[9];
+    /* 0x2E8 */ u8 unk_2E8[0x3A0];
+    /* 0x688 */ u8 flags[14];
+    /* 0x696 */ u8 unk_696[0x86A];
+} NameRecordF00; /* size 0xF00 */
+#endif
+
+#ifndef TOKIMEMO_SCHEDULE_GIRL_FLAGS_H
+#define TOKIMEMO_SCHEDULE_GIRL_FLAGS_H
+/* Additional views of Rec38.unk_0C, used by the scheduling routines. T-10880. */
+typedef struct ScheduleGirlFlags {
+    /* 0x00 */ u32 unk_00 : 16;
+    /* 0x00 */ u32 b16 : 1;
+    /* 0x00 */ u32 b17 : 1;
+    /* 0x00 */ u32 b18 : 1;
+    /* 0x00 */ u32 unk_19 : 1;
+    /* 0x00 */ u32 unk_20 : 4;
+    /* 0x00 */ u32 unk_24 : 8;
+} ScheduleGirlFlags; /* size 0x04 */
+#endif
+
+#ifndef TOKIMEMO_DISPLAY_RECORD44_H
+#define TOKIMEMO_DISPLAY_RECORD44_H
+/* D_8011ECD0 display records. Main func_8006A2CC initializes slots 96..128.
+ * This view also exposes byte +4/+6 and halfword +0x14 used by main. T-10880. */
+typedef struct DisplayRecord44 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ u8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 unk_08[4];
+    /* 0x0C */ u8 *unk_0C;
+    /* 0x10 */ u8 *unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ s16 unk_16;
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ u8 unk_1A[0xC];
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ u8 unk_28[2];
+    /* 0x2A */ s16 unk_2A;
+    /* 0x2C */ u8 unk_2C[8];
+    /* 0x34 */ u8 *unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 unk_3C[8];
+} DisplayRecord44; /* size 0x44 */
+#endif
+
+#ifndef GAME_T10880_CALL_PAIRS
+#define GAME_T10880_CALL_PAIRS
+/* D_800B3B9C is indexed in 0x10-byte rows containing two call pairs.
+ * NAME_ENT func_8014068C passes these words to func_80046290. */
+typedef struct CallPair8 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+} CallPair8; /* size 0x08; table view: CallPair8[][2] */
+#endif

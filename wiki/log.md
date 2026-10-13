@@ -12447,3 +12447,282 @@ scan applies nothing. Inline review findings resolved. Grand total
 5236/6958 functions, 1022884/2279368 bytes (44.9%). Board/index agree;
 changes left uncommitted. The 5768-byte DATE match remains in scratch
 pending the append-only prototype exception.
+## [2026-10-13] ticket | T-10880 big functions 6 started
+
+Created [[tickets/T-10880-big-functions-6-astra]] and claimed the four objects
+in the astra20 list. Read the shared isolation/Git/procedure brief,
+[[register-cheatsheet]], and [[decompile-workflow]]. Work stays uncommitted.
+
+## [2026-10-13] build | T-10880 baseline and schedule draft
+
+Docker configure/build generated the fresh worktree outputs; all 27 unit
+checksums pass. Generated the assigned m2c drafts in scratchpad/a20.
+The largest schedule builder needs repaired pointer scaling, structured
+loops and word-width flag reads. Added assembly-evidenced ScheduleFlags and
+ScheduleClubFlags access views to include/game.h; recorded the caveat and
+loop extents in [[decompile-workflow]]. Regdiff is used on each compiled
+variant; no new function match claimed yet.
+
+## [2026-10-13] ingest | T-10880 NAME_ENT status-record layout
+
+Identified the NAME_ENT status renderer's 0xF00 record stride and byte flags
+at +0x688. Added NameRecordF00 to include/ovl/NAME_ENT.h and documented its
+relationship to FlagsWork24 and NameRecord44 in [[decompile-workflow]].
+The m2c pointer walks incorrectly inherit s32-pointer scaling from old
+scalar declarations; current research replaces them with indexed fields.
+
+## [2026-10-13] build | T-10880 first two literal-byte matches
+
+NAME_ENT func_8013ACA4 (724 bytes) and func_80140044 (1,004 bytes) pass
+funcdiff's linked literal-byte check. The full build reports all 27 checksums
+OK. Recovered signed metric rows: four-byte entries, nine rows of sixteen
+at work +0xA88, and nine saved entries at record +0x2C4. The dispatcher
+matches using a local unsigned-byte selector; the global switch adds a move.
+Added NameMetric4/NameMetricWork in include/ovl/NAME_ENT.h. Work remains
+In Progress under [[tickets/T-10880-big-functions-6-astra]].
+
+## [2026-10-13] ingest | T-10880 shared album metadata layout
+
+Recovered calendar/name/club members from main `func_800696DC` and moved
+new album access types into `include/game.h`, included by NAME_ENT.
+Existing metric and flag offsets are unchanged. [[decompile-workflow]]
+records the shared layout and differing flag-loop extents.
+
+## [2026-10-13] build | T-10880 prototype sync scope repaired
+
+`sync_protos.py --fix --only game.h,ovl/NAME_ENT.h` also added unrelated
+main definitions and source overrides. Those edits were restored by file
+editing from read-only Git output; only its generated `func_8006F218`
+declaration was retained. The broad output had introduced existing-name
+alias conflicts. Verification restarted with the minimal header delta.
+[[tickets/T-10880-big-functions-6-astra]] tracks the tooling limitation.
+
+## [2026-10-13] build | T-10880 third literal-byte match
+
+Main `func_8006F218` matches 780 linked bytes. NAME_ENT `func_8013ACA4`
+(724) and `func_80140044` (1004) still match after the shared album layout
+move: three matches, 2508 bytes. [[decompile-workflow]] records signed club
+selection, direct returns, and the shared bit-18 flag view. Full checksums
+are running again.
+
+## [2026-10-13] ingest | T-10880 repair value-returning sine helper prototype
+
+Original `func_8006C334` returns signed values, but its old `void` header
+entry truncated m2c output. Regenerated that declaration through a targeted
+`sync_protos` plan and regenerated the caller draft. No unrelated header or
+source views changed. [[decompile-workflow]] documents the blind-prototype
+recovery; the prior three matches passed all 27 checksums.
+
+## [2026-10-13] decision | T-10880 reject unsafe permutation results
+
+The bounded searches for main `func_8006D7EC` and DATE `func_80147958`
+did not produce usable near misses. Best-score candidates changed a live
+month variable, removed a conditional, or read an uninitialized loop index
+in an empty condition. None was integrated. Scratch retains the faithful
+seeds and regdiff traces; score improvement alone is not semantic evidence.
+[[tickets/T-10880-big-functions-6-astra]] remains In Progress.
+
+## [2026-10-13] ingest | T-10880 display and menu storage layouts
+
+Added `DisplayRecord44` to `include/game.h` after checking the initializer's
+byte/halfword/word stores. Recorded the four 12-entry halfword arrays in
+main's club menu and the two-byte pointer increment in
+[[decompile-workflow]]. These layouts support remaining owned drafts.
+
+## [2026-10-13] build | T-10880 five literal-byte matches
+
+Main `func_8006C334` now matches 972 bytes; NAME_ENT `func_801425C0` matches
+704 bytes. Total five functions, 4,184 bytes. Recorded the sine helper's
+explicit FAKE stack home, nested argument assignment, implicit-int
+fall-through, and promoted call view in [[decompile-workflow]]. All other
+research candidates remain in scratch until sufficiently close and reviewed.
+
+## [2026-10-13] build | T-10880 five-match integration checks
+
+Full incremental Docker ninja passed all 27 unit checksums after the fifth
+match and shared declaration changes. No unowned C edits remain. Calendar
+renderer and NAME_ENT initializer research continues from aggregate-corrected
+scratch drafts; [[tickets/T-10880-big-functions-6-astra]] remains In Progress.
+
+## [2026-10-13] ingest | T-10880 pointer-valued display fields
+
+NAME_ENT initializer experiments reduce a 332-instruction target to only
+its frame-size difference. Real pointer types at DisplayRecord44 +0x0C,
++0x10/+0x34 fix fifteen instruction substitutions; updated `include/game.h`
+and [[decompile-workflow]]. Recovered two six-entry address tables and
+eight local halfword arrays. No speculative draft is integrated yet.
+
+## [2026-10-13] build | T-10880 sixth match, NAME_ENT initializer
+
+Integrated `func_8013BF74` after literal-byte funcdiff MATCH (1,332 bytes).
+Total six functions / 5,516 bytes. Coordinate temporaries recover the frame
+naturally; pointer-valued fields recover constant allocation. Added only
+three overlay-local declarations and used the canonical main API name.
+[[decompile-workflow]] records the successful source idioms.
+
+## [2026-10-13] query | T-10880 album clearing bound and text buffers
+
+Verified the fifteen-byte clear in NAME_ENT `func_8013DF88` against the
+original stores and loop end; the sixteenth status slot is untouched.
+Recorded the clear bound and two 256-byte text buffers in
+[[decompile-workflow]]. Owned-file duplicate propagation found no candidates;
+no unrelated source was changed.
+
+## [2026-10-13] build | T-10880 seventh literal match
+
+NAME_ENT `func_8013EBEC` matches 656 linked bytes. Total seven / 6,172 bytes.
+Two ordinary locals recover the text-buffer frame without padding. Updated
+[[decompile-workflow]]; remaining album clear-loop and dispatch experiments
+are still in scratch.
+
+## [2026-10-13] ingest | T-10880 paired call table
+
+Recovered the two-word / two-pair row layout at `D_800B3B9C`, documented in
+[[decompile-workflow]] and shared `CallPair8`. NAME_ENT func_8014068C now
+has a corrected 290-instruction candidate for its 293-instruction target;
+a bounded search continues in scratch. The one-hour scheduler search ended
+without an exact or sufficiently close candidate.
+
+## [2026-10-13] build | T-10880 seven-match branch checks
+
+All 27 unit checksums pass. `migrate_globals --check` reports globals OK;
+`sync_protos --check-branch` reports zero new disagreements and branch check
+OK. Its old void-result baseline for main `func_8006C334` is now stale;
+left `config/proto_known.txt` unchanged per the batch ownership rules.
+Inline standards review is in progress while remaining searches run.
+
+## [2026-10-13] decision | T-10880 remove the sine-helper frame workaround
+
+Ordinary offset and magnitude locals reproduce the complete C334 instruction
+stream and frame; removed the oversized day aggregate. Updated
+[[decompile-workflow]] and [[tickets/T-10880-big-functions-6-astra]]. Also
+named the album selection byte at work +0x26. The related fifteen-byte clear
+candidate is now 30 diff lines and has a bounded follow-up search.
+
+## [2026-10-13] ingest | T-10880 schedule-entry date layout
+
+Recovered the eight-entry compaction and December/January selection-sort
+shape in main func_8006B0C8. Added ScheduleEntryDate and ScheduleEntryFlags
+to include/game.h; recorded bit positions, whole-record swaps and the key
+array in [[decompile-workflow]]. Docker regdiff confirms that the active
+bitfield restores lw/sll/bgez; the overall scratch routine remains far
+from matching and is not integrated. [[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] build | T-10880 layout checks and guarded near misses
+
+Latest shared-layout build passes all 27 unit checksums. Integrated guarded
+main func_8006EB64 (four instruction substitutions) and NAME_ENT
+func_8013DF88 (15 instruction differences); the default paths remain
+INCLUDE_ASM. Regdiff explains every remaining register miss. Helper
+comparison constants and zero-valued predicate are explicitly marked FAKE;
+recorded the limits and failed pointer/union alternatives in
+[[decompile-workflow]]. Continuing bounded searches before final review.
+
+## [2026-10-13] build | T-10880 rebuild a corrupted Ninja dependency cache
+
+Two concurrent funcdiff invocations for different units raced while rebuilding
+after a shared-header edit. One reported an absent deps log; later Ninja runs
+exited 139 with no output, and this worktree's .ninja_deps was only 256 bytes.
+Preserved that generated cache under scratchpad/a20/ninja-deps-corrupt-1442
+and started one `ninja -j4` rebuild. Source and raw data are unchanged by
+this repair. Keep build-backed funcdiff calls sequential; scratch regdiff
+compiles have separate output directories. Final checksum validation will
+use the rebuilt cache. [[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] ingest | T-10880 profile tables and three near misses
+
+Recovered Ninja cache rebuild passes 27/27. A plain while loop improves
+NAME_ENT DF88 to 22 diff lines without a wrapper trick. The EB64 allocation
+idiom transfers to EEC4 at eight diff lines; retained both guarded helpers,
+with their FAKE notes, and generated their main API declarations.
+Confirmed A2CC table strides and load widths directly in original assembly;
+generated seven reusable profile-table declarations in include/main_api.h.
+In particular D_800B66A4 is s32[], correcting a scratch m2c byte guess.
+Updated [[decompile-workflow]] and [[tickets/T-10880-big-functions-6-astra]].
+
+## [2026-10-13] ingest | T-10880 adjacent schedule-entry nibble
+
+Refined ScheduleEntryFlags with the four-bit value at bits 25..28, recovered
+from A2CC's word shifts beside its bit-29 activity test. Kept the field's
+unknown name; no source function or global alias is changed. Documented
+in [[decompile-workflow]].
+
+## [2026-10-13] build | T-10880 review restores the near-miss guard
+
+The shared-header validation caught a NAME_ENT checksum failure after the
+DF88 improvement. The scratch replacement helper unwraps NON_MATCHING
+blocks; using it for that source update had dropped DF88's wrapper.
+Restored the explicit guard and INCLUDE_ASM fallback and restarted the
+remaining checks. Both main helper guards were intact. Recorded this as a
+resolved integration-review finding; no new match is counted.
+[[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] query | T-10880 register-allocation handoff cases
+
+After consulting [[register-allocation-wave7]] and the trace evidence in
+[[uopt-register-allocation]], appended four measured cases to
+[[data/t0018-cases]]: DF88, EB64, EEC4 and CB44. The first three are guarded
+near misses; CB44 remains assembly because its best draft exceeds the
+requested cutoff and still has a frame difference. Every diagnosis is
+backed by scratch regdiff traces. [[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] build | T-10880 final byte and layout verification
+
+Serialized funcdiff rechecks confirm all seven literal matches: 724, 1004,
+780, 972, 704, 1332 and 656 bytes, total 6172. Integrated guards compile
+through funcdiff and regdiff at 8/8/22 diff lines. A direct fresh checksum
+pass verifies all 27 built units. IDO compilation of scratch static size
+and offset assertions passes for the new album, display, schedule and
+call-pair views. Prototype branch check has zero new disagreements;
+globals check and git diff --check pass. Final source review continues
+while the last bounded searches finish.
+[[tickets/T-10880-big-functions-6-astra]]
+
+## [2026-10-13] lint | T-10880 source and wiki review
+
+Reviewed the owned changes against CODING_STANDARDS.md, including C89,
+fixed-width layouts, generated main declarations, overlay append-only
+rules, FAKE annotations, explicit guards and checksum evidence. No
+unresolved source findings. Corrected the workflow's header-location
+wording after moving shared album layouts to game.h; clarified the ticket's
+batch objective as attempting the assigned list. Ticket/card remain In
+Progress until the final searches and minimum four-hour session finish.
+[[tickets/T-10880-big-functions-6-astra]], [[decompile-workflow]]
+
+## [2026-10-13] ticket | T-10880 enters final review
+
+Moved [[tickets/T-10880-big-functions-6-astra]] to In Review and synchronized
+[[kanban]] and [[index]]. Inline standards review has no unresolved code
+findings. The seven matches and three guarded drafts have final byte/trace
+evidence; the last bounded searches and minimum session duration are still
+being completed before closing the batch.
+
+## [2026-10-13] lint | T-10880 final scoped handoff audit
+
+All bounded searches ended; no further literal match was found. Retained
+seven exact functions and three guarded drafts, with four T-0018 rows.
+Scoped lint verifies all seven ASM removals, all three explicit fallback
+guards, helper FAKE comments, ticket links and ticket/board/index status
+agreement. Post-guard branch check remains zero new disagreements, and
+globals check passes. Recorded the exact progress line and merge follow-up
+in [[tickets/T-10880-big-functions-6-astra]].
+
+## [2026-10-13] query | T-10880 final pointer-lifetime check
+
+Six final EB64 output-pointer alias variants leave the retained draft at
+eight diff lines; signed word-copy variants stay wider misses. Regdiff
+confirms no improved allocation. No source change followed this check.
+The shared layouts, retained drafts and register cases in
+[[decompile-workflow]] and [[data/t0018-cases]] remain the final handoff.
+
+## [2026-10-13] ticket | T-10880 complete after four-hour batch
+
+Completed more than four hours of focused matching, type recovery, bounded
+searches and verification. Moved [[tickets/T-10880-big-functions-6-astra]]
+from In Review to Done and synchronized [[kanban]] and [[index]]. Seven
+literal matches total 6,172 bytes; three guarded drafts remain at 8/8/22
+lines. All 27 unit checksums, prototype/global checks, IDO layout assertions
+and the inline coding-standards review pass; all findings are resolved.
+Four T-0018 cases and reusable header/workflow details are recorded.
+Progress: grand total 5238/6958, 1018532/2279368 bytes, 44.7%.
+Changes remain uncommitted for the orchestrator; no Git mutation occurred.

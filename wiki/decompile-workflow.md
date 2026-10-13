@@ -1386,3 +1386,190 @@ three operand swaps; s32 adds an instruction, u8 leaves two swaps.
 This is an allocation-only local to mark FAKE on integration. The exact
 scratch draft still needs the existing void return prototype corrected
 to s32, which is outside the batch's append-only header permission.
+## T-10880 schedule and NAME_ENT large functions
+
+The schedule builder `func_8006D7EC` reads a **word** at GameState +0xF4
+when testing bit 18. m2c's canonical halfword view loses that bit entirely.
+`ScheduleFlags` in `include/game.h` records bit 18 and the three-bit counter
+at bits 21..23; the latter is read/decremented through byte +0xF6.
+`ScheduleClubFlags` records bits 25..26 of GameState.unk_66C[11], a word
+read followed by a byte-3 write. These are assembly-confirmed access views;
+the complete builder is still an experimental draft.
+
+Keep the schedule builder's direct GameState scalar accesses separate from
+its local `GameState *g` table accesses. Replacing every direct scalar by
+`g->` changes address live ranges and load scheduling. Its initial girl loop
+walks indices 1..9; the birthday loop walks 1..10. The output is the existing
+four-byte `GsRec69C` table, and the two calendar rows are `GsRec044`.
+
+NAME_ENT `func_80139F30` uses the existing `FlagsWork24` view of
+D_800E7D10: the displayed status bytes are flags[0..12], at +0x14..+0x20.
+The alternate source is `NameRecordF00` at D_80123120, with a 0xF00 stride
+and the corresponding bytes at +0x688. Do not follow m2c's `s32 *` walks:
+the status loop advances by **one byte**. The display updates existing
+`NameRecord44` records 128..135, then 137..140, then 136 for flag 12.
+The existing flag/display views are in NAME_ENT.h, and the saved-record
+view is in game.h, without changing older shared symbol declarations.
+
+`NameMetric4` has a signed value at +2. `NameMetricWork` exposes the nine
+16-entry rows at D_800E7D10+0xA88, while `NameRecordF00.metrics` exposes the
+nine saved entries at +0x2C4. Ordinary indexed member reads reproduce
+`func_8013ACA4` exactly (724 bytes). The work view also records sixteen
+slot-status bytes at +4 and sixteen flag bytes at +0x14, confirmed by the
+clear/copy/merge loops in `func_80140F90`.
+
+The 1,004-byte `func_80140044` dispatches on a local `u8 state` copied after
+incrementing GameState.unk_1104.w. Switching on the global (even with the
+redundant u8 cast in m2c) creates an extra v1-to-v0 move. The local copy
+matches without a FAKE or a compiler option.
+
+The same album work area is read by main `func_800696DC`. Its recovered
+`NameMetricWork`/`NameRecordF00` views now live in `include/game.h` (also
+included by NAME_ENT). The work area has sixteen-byte year/month/day rows at
++0x858/+0x868/+0x878, 16×8-byte family/given names at +0x888/+0x908,
+16×16-byte nicknames at +0x988, and club bytes at +0xEC8. Saved records have
+calendar bytes +0x205..207, names +0x29C/+0x2A4/+0x2AC and a club halfword
+at +0x2BC; their metric and flag offsets remain +0x2C4 and +0x688. The
+record stride is 0xF00. Display code counts thirteen flag bytes, while
+other routines inspect fourteen; retain the per-function loop bound.
+
+Main `func_8006F218` matches with a cached `GameState *`, a **signed** club
+local (loaded from the high nibble of GameState +0xF4), and direct success
+returns. An unsigned club local shares constants 8/9 with unsigned byte
+comparisons, removing two original loads; a final result temporary takes
+`$a1` and shifts both output pointers up one register. `ScheduleGirlFlags`
+adds the bit-18 byte-store view of `Rec38.unk_0C`; bit 18 is byte +2 mask 4.
+The helper matches with fixed-width `u8 *` output parameters.
+
+`func_8006C334` returns a signed result (including -1); its old shared `void`
+prototype hid roughly sixty instructions from m2c drafts and produced unset
+`$v0` placeholders in `func_8006BDA8`. `m2c.py --blind` recovers the return
+expressions. The declaration was regenerated with `sync_protos` using only
+that recovered definition, preserving all other API entries and guards.
+The four arguments select three sine contributions and their scale.
+
+`DisplayRecord44` in `game.h` describes main's 0x44-stride display records
+at `D_8011ECD0`. Its +0x14 field is a **signed halfword**, loaded from the
+halfword `D_800C9A54`; +0x0C/+0x10/+0x34 are word-sized. Do not infer a
+pointer-sized +0x14 store from an untyped m2c assignment. `func_8006A2CC`
+initializes record 96 and then 32 records starting at 97. The existing
+NAME_ENT view covers the same stride with fewer exposed fields.
+
+`func_8006B648` uses four `s16[12]` menu arrays: x/y/width/height, with
+11 club entries and cancellation at index 11. M2c's scalar stack slots
+and `s16 * += 2` are misleading: target pointers advance **two bytes**,
+so a typed pointer advances by one element.
+
+The 972-byte sine classifier `func_8006C334` matches with the first day
+assignment inside the `rsin` argument. This leaves the day spill in the
+call delay slot. A signed `offset` local for `func_8006C700()` and a signed
+`magnitude` local reused for the three `abs()` calls, declared before the
+day and wave locals, recover the original 0x50 frame and every spill offset.
+These ordinary locals replace the initial oversized day home; no FAKE
+remains. Separate terminal returns and the original repeated count-zero
+test retain the original branches. Removing that repeated test changes
+four instructions even though it is logically redundant.
+
+NAME_ENT `func_801425C0` is another implicit-int fall-through routine:
+`s32` with no explicit return preserves two masked-frame-counter moves
+that a `void` definition removes. Its fourteen slot-status entries begin
+at work-area +5. Blink records 126/127 use the shared 0x44 display stride.
+Its box calls pass promoted integer coordinates; the source uses the
+existing `MAIN_API_OVERRIDE_func_80049A40` mechanism and an unprototyped
+local call view, avoiding extra halfword truncation instructions.
+
+Refinement from NAME_ENT `func_8013BF74`: the display record's +0x0C,
++0x10, and +0x34 words are **pointers** (`u8 *`), not integer fields.
+Giving those members pointer types fixes the constant-register order for
+all three texture addresses and the loop's 4/0x40000000 constants. Casting
+stores through `u8 **` instead breaks induction optimization; put the types
+in the struct itself. The +0x14 halfword and +0x38 flag word remain distinct.
+
+That initializer has two `s32[6]` address tables (0x4000 strides), four
+`s16[16]` menu-coordinate arrays with fourteen initialized entries, and
+four `s16[4]` coordinate arrays. A single signed loop index declared before
+the arrays, reused across initialization loops, preserves the rolled
+loops. A clean indexed rewrite removes m2c's many false scalar homes.
+For the address-table loop, assigning the 0x80182000 table before the
+0x801A4000 table makes the latter the controlling induction variable.
+
+`func_8013BF74` now matches all 1,332 bytes with ordinary C. Two signed
+coordinate temporaries (`column` and `row`), reused in both menu loops,
+recover the original 0x130 frame while preserving every array offset.
+No oversized local or source-line workaround is required. Use the existing
+`load_tpage_buf_lock` name for m2c's old `func_80048514` alias; it consumes
+three arguments, and the apparent fourth argument is a residual register.
+
+NAME_ENT `func_8013DF88` clears **fifteen** work-area status bytes (+4
+through +0x12), then sets the selected slot and slot zero. Its three scalar
+stores followed by three groups of four are IDO's unrolling of that bound.
+Do not expand this to all sixteen storage slots. Both this routine and
+`func_8013EBEC` use a 256-byte local text buffer for the album status text.
+
+`func_8013EBEC` matches with a `u8 state` switch copy and one `s32 result`
+for the card-operation return values, both declared before the text buffer.
+Those real locals recover the 0x138 frame with the buffer at +0x30; the
+buffer alone gives 0x130. Its 656 linked bytes include trailing alignment.
+
+NAME_ENT `func_8014068C` views `D_800B3B9C` as 0x10-byte rows, each with
+two 8-byte argument pairs. `CallPair8` in `game.h` records the two signed
+word arguments passed to `func_80046290`; use a `CallPair8[][2]` view.
+M2c's `girl * 0x10 + D_800B3B9C` is byte arithmetic despite the canonical
+symbol's `s32[]` declaration. Adding that expression directly to the typed
+word pointer multiplies the offset by four again.
+
+
+The work-area selection byte at +0x26 is `NameMetricWork.selected_slot`
+(the existing scalar alias is `D_800E7D36`). In the fifteen-byte clear routine,
+storing through this field avoids an extra copy before the clear loop.
+
+`func_8006B0C8` compacts the eight `GameState.unk_54C` records whose bit 29
+is set, zeroes the remaining records with four-byte `bzero` calls, and
+selection-sorts by `month * 100 + day`. `ScheduleEntryDate` records month
+in halfword +0 bits 12..15 and day in halfword +2 bits 0..4;
+`ScheduleEntryFlags.active` records word bit 29. A bitfield test produces
+the original `lw; sll 2; bgez`, whereas a raw mask introduces an `and`
+constant. In December, month 1 becomes 13 before sorting, then becomes
+1 again afterwards. The swap copies the whole four-byte record. Keep
+the eight-element signed key array: the original stores every inner-loop
+key even though only the current minimum determines the swap. This
+routine is still a structural miss; these layouts are evidence from its
+original accesses, not a claim that its current scratch draft matches.
+
+Main `func_8006EB64` now has a guarded 215-instruction draft, with four
+flag-word register substitutions remaining. Its `CharFlags.f9` variant
+must remain unsigned. Named `u32` comparison values 1/2/3 preserve the
+original `bne constant,variant` operand order; literal comparisons reverse
+those operands even when the literal is written on the left. A zero-valued
+comparison in the variant-zero result preserves the variant live range and
+the original delay-slot nop. Both allocation devices are marked `FAKE` in
+the guarded draft; they are not claimed as recovered original source.
+Regdiff isolates the remaining word range to `GameState +0x388`: the draft
+uses a2 while the original uses v1. A cached whole GameState pointer and
+local union copies worsen this routine, despite helping other helpers.
+
+NAME_ENT `func_8013DF88` is retained behind `NON_MATCHING` at 224/224
+instructions and 22 total +/- diff lines. Its file-index range takes a2
+instead of a1. An ordinary `while (i < 15)` loop with its increment in
+the body restores the four unrolled stores' original order; putting the
+increment in a `for` header rotates the first store to the end. Keep the
+fifteen-byte bound and `selected_slot` field view when continuing.
+
+The same unsigned-variant/constant idiom transfers to main `func_8006EEC4`:
+its guarded draft has 212/212 instructions and the same four flag-word
+register substitutions. Unlike EB64, this helper clears the output bytes
+only after its random gate succeeds. Preserve that order when sharing
+source patterns between the two helpers.
+
+Profile-display tables recovered from main `func_8006A2CC` are now declared
+through the generator in `main_api.h`: `D_800B3750` has three-byte rows;
+`D_800B5C2C` and `D_800B5D1C` have 17-byte text rows; `D_800B5EA4` has
+108-byte rows with three 36-byte text lines. `D_800B5D0C` and `D_800B5DFC`
+are byte-indexed icon tables, with 0xFF tested as a sentinel. `D_800B66A4`
+is a **word** table (`s32[]`) passed to `sndisp`: the original uses `lw`,
+not `lbu`. Do not retain m2c's guessed scalar-byte declaration or compensate
+by multiplying a byte-array index by four. Outer row counts remain unknown.
+
+`ScheduleEntryFlags.unk_25` records the adjacent four-bit value at word
+bits 25..28, also used by A2CC; its semantic name remains unresolved.
+Keep it distinct from bit 29's active flag when drafting the display code.
