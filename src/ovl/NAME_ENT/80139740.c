@@ -819,7 +819,27 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140574);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
+/* NON_MATCHING: T-10710, 14 lines: the six stores of the value use t6 (one andi) where the original has an extra andi v0,t6,0xFF (double u8 conversion); the original reads D_800E62BA as its own u8 scalar */
+#ifdef NON_MATCHING
+void func_80140B20(void) {
+    u8 x;
+    u8 y;
+
+    x = *(u8 *)&D_800E6280.unk_3A;
+    if (x >= 3) {
+        x -= 2;
+        y = x;
+        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = y;
+        *(u8 *)&D_800E6280.unk_3A = x;
+        if (x < 0x80) {
+            *(s8 *)&D_800E6280.unk_3A = x;
+            func_80057390(x);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140B20);
+#endif
 
 void func_80140BA4(void) {
     if (D_800E6280.unk_110D++ >= 0x41U) {
