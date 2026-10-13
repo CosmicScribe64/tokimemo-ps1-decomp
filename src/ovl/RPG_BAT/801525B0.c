@@ -76,10 +76,8 @@ s32 func_801535E4(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
 
-/* NON_MATCHING: T-10820, 4 differing lines (was 41 register lines): the pointer read of D_8015EC74, the dead compare local with an else branch and the swapped loop compare get the original's registers and order; left: the compare lands in $v0 (`slti v0`) where the original has `slti at` and leaves $v0 unused */
-#ifdef NON_MATCHING
 void func_80153A60(void) {
-    int dead;
+    int dead; /* FAKE: dead copy of *p; only reserves $v0 so the table pointer lands in $v1. Found with decomp-permuter. T-10910 */
     s32 i;
     s32 *p;
 
@@ -88,11 +86,10 @@ void func_80153A60(void) {
     do {
         D_8011ECD0[i * 0x44 + 0x1107] = *p;
         *(s8 *)&D_800E6280.unk_3A = *p;
-        /* FAKE: dead compare local with an else branch (found with decomp-permuter); only steers the register assignment. T-10820 */
-        if (D_8015EB98 == 0x20000 && (dead = (*p >= 0x61))) {
+        if (D_8015EB98 == 0x20000 && (dead = *p) >= 0x61) {
             D_80120E93 = 0x60;
-        } else {
-            dead = 0;
+        }
+        if (0) { /* FAKE: empty dead branch steers the allocation. T-10910 */
         }
         i++;
     } while (D_80120650 != &D_8011ECD0[i * 0x44]);
@@ -102,9 +99,6 @@ void func_80153A60(void) {
         D_8015EC74 = 0x80;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153A60);
-#endif
 
 void func_80153B08(void) {
     s32 temp_s1;
