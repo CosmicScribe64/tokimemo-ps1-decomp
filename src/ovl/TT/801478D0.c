@@ -60,7 +60,52 @@ void func_80147CE0(void) {
     } while (i != 3);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801478D0", func_80147D08);
+void func_80147D08(void) {
+    s32 i;
+    u8 *p;
+    u8 *q;
+    int new_var; /* FAKE: the dead test of D_80158A78 reserves a0/a1 so the hoisted constants start at a2, as in the original; same trick as func_8014A814. T-10910 */
+
+    for (i = 0, p = D_80158A78; i < 3; i++, p += 0xA4) {
+        p[0] = 0;
+        new_var = D_80158A78 && D_80158A78;
+        *(s16 *)(p + 2) = 4;
+        *(s16 *)(p + 0x10) = 2;
+        *(u8 **)(p + 0x38) = D_80151A50;
+        p[0x3C] = 0;
+        p[0x3D] = 0;
+        p[0x3E] = 0x37;
+        p[0x40] = 0x60;
+        p[0x48] = 0;
+        *(s16 *)(p + 4) = 0x40;
+        *(s16 *)(p + 0xA) = 0;
+        *(s16 *)(p + 8) = 0;
+        *(s16 *)(p + 6) = 0;
+        p[0xF] = 0;
+        if (new_var && D_80158A78) { /* FAKE: see above. T-10910 */
+        }
+        p[0xE] = 0;
+        p[0xD] = 0;
+    }
+    for (i = 0, q = D_80158A7C + 0xC0; i < 6; i++, q += 0x60) {
+        q[0] = 0;
+        *(s16 *)(q + 2) = 0;
+        *(s16 *)(q + 4) = 0;
+        q[0xC] = 0;
+        *(s16 *)(q + 0xA) = 0;
+        *(s16 *)(q + 8) = 0;
+        *(s16 *)(q + 6) = 0;
+        q[0xF] = 0;
+        q[0xE] = 0;
+        q[0xD] = 0;
+        *(s16 *)(q + 0x10) = 2;
+        *(u8 **)(q + 0x38) = D_80151A50;
+        q[0x3C] = 0;
+        q[0x3D] = 0;
+        q[0x3E] = 0;
+        q[0x40] = 0x60;
+    }
+}
 
 void func_80147F14(u8 *arg0) {
     s32 i;

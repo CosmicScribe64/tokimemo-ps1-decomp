@@ -11429,3 +11429,9 @@ Final full build: 27/27 SHA1 checks OK; formatting follow-up rechecked main and 
 ## [2026-10-13] ticket | T-10850 done
 
 After more than four hours, moved [[tickets/T-10850-wave-17-astra]] and its [[kanban]] card from In Review to Done. Result: five matched functions, 936 bytes; 69 assigned drafts built/diffed; 34 remaining-case rows. All changes remain uncommitted for orchestrator integration.
+
+## [2026-10-13] ticket | T-10910 wave 17 list 1
+Started [[tickets/T-10910-wave-17-list-1]] (In Progress).
+
+## [2026-10-13] build | T-10910 wave 17 list 1 done
+[[tickets/T-10910-wave-17-list-1]]: 4 functions matched (1,476 bytes: RPG_BAT `func_80153A60`, TT `func_8014A814`, `func_80147D08`, TAIIKU `func_801339C4`), data islands for DATE/GEKO/SHOUGATU, near misses guarded, rows in [[data/t0018-cases]], recipes in [[matching-notes]]. ninja 27/27 OK.

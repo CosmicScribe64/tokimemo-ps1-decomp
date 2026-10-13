@@ -324,7 +324,28 @@ void func_8014A7E0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014A814);
+void func_8014A814(void) {
+    s32 i;
+    u8 *p;
+    int new_var; /* FAKE: the dead test of D_80158A80 reserves two registers (a0/a1) so the hoisted constants land in a2..t2 as in the original; found with decomp-permuter. T-10910 */
+
+    for (i = 0, p = D_80158A80; i < 12; i++, p += 0x54) {
+        p[0] = 0;
+        new_var = D_80158A80 && D_80158A80;
+        *(s16 *)(p + 0x10) = 3;
+        *(s16 *)(p + 0x3E) = 0xA;
+        *(s16 *)(p + 0x40) = 0x3C87;
+        *(s16 *)(p + 4) = 0x40;
+        *(s16 *)(p + 10) = 0;
+        *(s16 *)(p + 8) = 0;
+        *(s16 *)(p + 6) = 0;
+        p[0xF] = 0;
+        if (new_var && D_80158A80) { /* FAKE: see above. T-10910 */
+        }
+        p[0xE] = 0;
+        p[0xD] = 0;
+    }
+}
 
 void func_8014A8F8(u8 *arg0, u16 arg1) {
     *(u16 *)(arg0 + 2) = arg1;

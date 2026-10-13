@@ -104,14 +104,16 @@ void func_80133928(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10610, 4 lines: the original loads D_800E7200 into $v1, IDO $v0 (selector register, T-0018 shape); the live argument is a0 (caller passes none), hence the K&R definition and the `()` prototype */
-#ifdef NON_MATCHING
 void func_801339C4(arg0)
 s32 arg0;
 {
     u8 *p;
+    s32 *ptr; /* FAKE: the pointer to the selector word moves the load into $v1 as in the original; found with decomp-permuter. T-10910 */
+    int sel;
 
-    switch (D_800E6280.unk_F80 & 0xF000) {
+    sel = *(ptr = &D_800E6280.unk_F80) & 0xF000;
+
+    switch (sel) {
     case 0x3000:
         p = D_8011ECD0 + arg0 * 0x44;
         *(s32 *)(p + 0x28) += -0x1E000;
@@ -150,6 +152,3 @@ s32 arg0;
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0", func_801339C4);
-#endif
