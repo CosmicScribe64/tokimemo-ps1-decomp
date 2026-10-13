@@ -90,9 +90,42 @@ def run_stage(cmd, data, env=None):
     return proc.stdout
 
 
+EOVERFLOW_MSG = b"Value too large for defined data type"
+
+
+def run_cpp(cpp, src):
+    """Run the old-gcc cpp on src, from a tmpfs copy if it hits EOVERFLOW.
+
+    The old-gcc cpp is a 32-bit binary: where stat() returns 64-bit inode
+    numbers (a WSL2 bind mount on Windows, some Linux filesystems) it fails
+    with EOVERFLOW (T-10700). Only then is it rerun on a copy of include/ and
+    the source in /dev/shm, under the same relative paths, so the output (line
+    markers included) is unchanged; hosts where cpp works run it as before.
+    """
+    cmd = [cpp, "-Iinclude", "-undef", "-lang-c", src]
+    proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if proc.returncode == 0 or EOVERFLOW_MSG not in proc.stderr:
+        sys.stderr.buffer.write(proc.stderr)
+        if proc.returncode != 0:
+            sys.exit("cc.py: stage failed (%d): %s" % (proc.returncode, " ".join(cmd)))
+        return proc.stdout
+    shm = "/dev/shm" if os.path.isdir("/dev/shm") else None
+    rel = os.path.basename(src) if os.path.isabs(src) else src
+    with tempfile.TemporaryDirectory(dir=shm) as tmp:
+        if os.path.isdir("include"):
+            shutil.copytree("include", os.path.join(tmp, "include"))
+        os.makedirs(os.path.join(tmp, os.path.dirname(rel)), exist_ok=True)
+        shutil.copy(src, os.path.join(tmp, rel))
+        cmd = [cpp, "-Iinclude", "-undef", "-lang-c", rel]
+        proc = subprocess.run(cmd, stdout=subprocess.PIPE, cwd=tmp)
+    if proc.returncode != 0:
+        sys.exit("cc.py: stage failed (%d): %s" % (proc.returncode, " ".join(cmd)))
+    return proc.stdout
+
+
 def compile_gcc(src, out, gcc_ver, aspsx_ver):
     gcc = "/opt/gcc/" + gcc_ver
-    data = run_stage([gcc + "/cpp", "-Iinclude", "-undef", "-lang-c", src], None)
+    data = run_cpp(gcc + "/cpp", src)
     data = run_stage([gcc + "/cc1"] + GCC_CFLAGS, data)
     data = run_stage(["python3", MASPSX, "--aspsx-version=" + aspsx_ver] + MASPSX_FLAGS, data)
     run_stage(AS + ["-o", out], data)

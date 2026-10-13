@@ -145,6 +145,56 @@ class GccPath(unittest.TestCase):
             self.assertEqual("addiu\tsp,sp" in lines[jr + 1], in_slot, ver)
 
 
+class CppEoverflowFallback(unittest.TestCase):
+    """run_cpp retries from a tmpfs copy only when cpp fails with EOVERFLOW (T-10700).
+
+    A fake cpp stands in for the 32-bit one: it fails with the given message
+    while the marker file `here` is in its working directory (the tmpfs copy
+    holds only include/ and the source), else prints its cwd and the source.
+    """
+
+    def fake_cpp(self, tmp, message):
+        cpp = os.path.join(tmp, "cpp")
+        with open(cpp, "w") as f:
+            f.write("#!/bin/sh\nif [ -e here ]; then echo 'cpp: %s' >&2; exit 33; fi\n"
+                    "pwd; cat include/h.h \"$4\"\n" % message)
+        os.chmod(cpp, 0o755)
+        return cpp
+
+    def run_in(self, tmp, message, marker=True):
+        os.makedirs(os.path.join(tmp, "include"))
+        os.makedirs(os.path.join(tmp, "src", "ovl"))
+        with open(os.path.join(tmp, "include", "h.h"), "w") as f:
+            f.write("header\n")
+        with open(os.path.join(tmp, "src", "ovl", "a.c"), "w") as f:
+            f.write("body\n")
+        if marker:
+            open(os.path.join(tmp, "here"), "w").close()
+        cpp = self.fake_cpp(tmp, message)
+        old = os.getcwd()
+        os.chdir(tmp)
+        try:
+            return cc.run_cpp(cpp, "src/ovl/a.c").decode().splitlines()
+        finally:
+            os.chdir(old)
+
+    def test_eoverflow_retries_from_a_copy_with_the_same_paths(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            lines = self.run_in(tmp, "src/ovl/a.c: Value too large for defined data type")
+        self.assertNotEqual(lines[0], os.path.realpath(tmp))
+        self.assertEqual(lines[1:], ["header", "body"])
+
+    def test_cpp_that_works_runs_in_place(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            lines = self.run_in(tmp, "unused", marker=False)
+        self.assertEqual(lines, [os.path.realpath(tmp), "header", "body"])
+
+    def test_other_failure_is_not_retried(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(SystemExit):
+                self.run_in(tmp, "src/ovl/a.c: No such file or directory")
+
+
 class IncludeDeps(unittest.TestCase):
     def test_include_asm_and_include_rodata_are_dependencies(self):
         text = 'INCLUDE_ASM("a/b", f1);\nINCLUDE_RODATA("a/c", D_1);\nint x;\n'

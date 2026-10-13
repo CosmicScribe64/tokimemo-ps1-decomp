@@ -12726,3 +12726,29 @@ and the inline coding-standards review pass; all findings are resolved.
 Four T-0018 cases and reusable header/workflow details are recorded.
 Progress: grand total 5238/6958, 1018532/2279368 bytes, 44.7%.
 Changes remain uncommitted for the orchestrator; no Git mutation occurred.
+
+## [2026-10-13] ticket | T-10700 Windows host setup opened
+
+Opened [[tickets/T-10700-windows-host-baseline-build]] (In Progress): first build on a Windows 11 host with
+Docker Desktop (WSL2). The user supplied the PlayStation the Best disc (Track 1 702072000 bytes), copied to
+`game/best/`. The Shokai Genteiban Rev 1 disc they also have would be refused (see [[versions]]).
+
+## [2026-10-13] build | T-10700 baseline build on Windows: 27/27
+
+Built the `tokimemo-decomp` image and the full tree on Windows 11 / Docker Desktop (WSL2) from Git Bash.
+Two host fixes: `tools/docker.sh` disables MSYS path conversion and passes the repo as `pwd -W`;
+`tools/cc.py` runs the 32-bit old-gcc `cpp` on a tmpfs copy of `include/` and the source (EOVERFLOW
+on the bind mount). `tools/test_cc.py` 14/14. All 27 checksums OK; progress
+`grand total   5176/6958   961516/2279368  42.2%`. Also confirmed that T-10630's "uncommitted" note
+predates commit f8e4411e, which holds the work. Windows notes in [[toolchain]].
+
+## [2026-10-13] ticket | T-10700 Done
+
+Inline review against CODING_STANDARDS.md, no findings. Moved [[tickets/T-10700-windows-host-baseline-build]]
+to Done.
+
+## [2026-10-13] build | T-10700 cpp copy made a fallback after PR review
+
+Per the owner's review of PR #1, `tools/cc.py` runs the old-gcc `cpp` in place and retries from a
+`/dev/shm` copy only on EOVERFLOW, so hosts where cpp works are unchanged. Tests in `tools/test_cc.py`
+(17/17); all 27 checksums OK. Details in [[tickets/T-10700-windows-host-baseline-build]].

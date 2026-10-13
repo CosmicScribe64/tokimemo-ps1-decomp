@@ -57,6 +57,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-10700-windows-host-baseline-build|T-10700 Windows host setup and baseline build]]
 
 - [ ] [[tickets/T-10880-big-functions-6-astra|T-10880 Big functions 6 (astra)]]
 
