@@ -49,7 +49,29 @@ s32 func_801535E4(void) {
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153784);
 
+/* NON_MATCHING: T-10710, registers only (41 of 41 instructions): the original keeps D_8015EC74/D_8015EB98 in a0/a1, the pointer in v1 and the end D_80120650 in a3 (v0 unused), the draft uses v1/a0, v0, a2; array-indexed stores are needed for the loop-invariant loads to hoist */
+#ifdef NON_MATCHING
+void func_80153A60(void) {
+    s32 i;
+
+    i = 0;
+    do {
+        D_8011ECD0[i * 0x44 + 0x1107] = D_8015EC74;
+        *(s8 *)&D_800E6280.unk_3A = D_8015EC74;
+        if (D_8015EB98 == 0x20000 && D_8015EC74 >= 0x61) {
+            D_80120E93 = 0x60;
+        }
+        i++;
+    } while (&D_8011ECD0[i * 0x44] != D_80120650);
+    func_8013E7C0(0x1F, 0, 1, 0);
+    D_8015EC74 += 2;
+    if (D_8015EC74 > 0x80) {
+        D_8015EC74 = 0x80;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801525B0", func_80153A60);
+#endif
 
 void func_80153B08(void) {
     s32 temp_s1;
