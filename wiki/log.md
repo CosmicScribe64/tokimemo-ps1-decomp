@@ -12757,3 +12757,15 @@ Per the owner's review of PR #1, `tools/cc.py` runs the old-gcc `cpp` in place a
 
 Opened [[tickets/T-11000-tt-overlay]] (In Progress) for the remaining TT functions, claimed upstream in
 issue #2 (fork contribution). Start: TT 175/303, 27.6%; 115 unflagged queue entries.
+
+## [2026-10-13] build | T-11000 TT lists merged: 12 matches
+
+Merged the two TT lists (worktree branches) into the T-11000 branch without conflicts; `include/ovl/TT.h` got the
+same `s32 func_8014D260` change from both. 12 functions / 5,476 bytes matched, 13 guarded near misses. TT 187/303
+(32.5%); grand total `5352/6958   1105788/2279368  48.5%`. All 27 checksums OK; prototype and global checks clean.
+Idioms in [[matching-notes]] ("TT overlay (T-11000)"), 16 rows in [[data/t0018-cases]].
+
+## [2026-10-13] ticket | T-11000 Done
+
+Inline review against CODING_STANDARDS.md; one finding (a FAKE pad without the ticket id) fixed. Moved
+[[tickets/T-11000-tt-overlay]] to Done.
