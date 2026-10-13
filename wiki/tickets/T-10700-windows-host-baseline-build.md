@@ -42,3 +42,9 @@ by default (`%LOCALAPPDATA%\Programs\DockerDesktop\resources\bin`).
   because the wave-14 list-2 merge came after it).
 - Review against CODING_STANDARDS.md (inline): tooling is Python 3/bash, Docker-run, no host installs,
   covered by the existing tests; no findings.
+2026-10-13 (claude): review of PR CosmicScribe64/tokimemo-ps1-decomp#1 by the owner: the `cc.py` copy ran on every
+host. Now a fallback: `run_cpp` runs `cpp` in place as before and retries from the `/dev/shm` copy only when it
+fails with EOVERFLOW ("Value too large for defined data type"), which also covers Linux filesystems with 64-bit
+inodes. Any other cpp failure exits as before; `run_stage` is back to its original form. New tests
+`CppEoverflowFallback` (fake cpp: retry with the same relative paths, in place when cpp works, no retry on other
+errors); `tools/test_cc.py` 17/17; 27/27 `.bin: OK` after deleting every `.ok`.

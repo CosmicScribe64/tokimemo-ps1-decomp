@@ -10215,3 +10215,9 @@ predates commit f8e4411e, which holds the work. Windows notes in [[toolchain]].
 
 Inline review against CODING_STANDARDS.md, no findings. Moved [[tickets/T-10700-windows-host-baseline-build]]
 to Done.
+
+## [2026-10-13] build | T-10700 cpp copy made a fallback after PR review
+
+Per the owner's review of PR #1, `tools/cc.py` runs the old-gcc `cpp` in place and retries from a
+`/dev/shm` copy only on EOVERFLOW, so hosts where cpp works are unchanged. Tests in `tools/test_cc.py`
+(17/17); all 27 checksums OK. Details in [[tickets/T-10700-windows-host-baseline-build]].

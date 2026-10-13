@@ -25,6 +25,7 @@ Before T-3310 the image was forced to linux/amd64, so on Apple Silicon every bui
 
 - Docker Desktop with the WSL2 backend; run `tools/docker.sh` from Git Bash. The Docker CLI is not on the Git Bash PATH by default: `export PATH="$PATH:$LOCALAPPDATA/Programs/DockerDesktop/resources/bin"` (per-user install) or `/c/Program Files/Docker/Docker/resources/bin`. Docker Desktop must be running (`docker version` shows a server).
 - Under MSYS (`uname -s` MINGW/MSYS/CYGWIN) `docker.sh` sets `MSYS_NO_PATHCONV=1` and passes the repo as `pwd -W` (C:/...); otherwise MSYS rewrote `-w /work` into `C:/Program Files/Git/work` and docker refused it. `TOKIMEMO_SCRATCH` is converted the same way.
+- The old-gcc `cpp` is 32-bit; on the bind mount `stat()` fails with EOVERFLOW (64-bit inodes). `tools/cc.py` (`run_cpp`) then reruns it on a `/dev/shm` copy of `include/` and the source under the same relative paths; where `cpp` works it runs in place as before.
 - `.gitattributes` forces LF, so a Windows checkout runs unchanged in the container. The repo stays on the Windows filesystem (bind mount through WSL2); see the ticket for measured build times.
 
 ## Old gcc on arm64 (T-9200)
