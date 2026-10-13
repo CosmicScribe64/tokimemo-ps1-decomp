@@ -121,10 +121,13 @@ void func_80139018(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-10850, 8 differing listing lines; regdiff evidence in the ticket scratch. */
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, only the register of the D_800CA2CC selector differs (v0 here, a1 in the original), 6 instructions; regdiff: constant 0x800D0000 range lands in v0 */
 void func_80139054(void) {
-    switch (D_800CA2CC) {
+    s16 selector;
+
+    selector = D_800CA2CC;
+    switch (selector) {
     case 0:
         bg_read_sub2(0x425E);
         func_800AE0F0(D_800CA19C, "社寺巡り");

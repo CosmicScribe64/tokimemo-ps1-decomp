@@ -158,3 +158,12 @@ void func_80132A0C(void);
 extern u8 D_80139A2C[]; /* end of the D_8013984C records (T-10810) */
 extern s16 D_80139228[][4]; /* 8-byte pop-up records (T-10810) */
 #endif
+
+#ifndef OVL_EN_NICHI_T10850_TYPES
+#define OVL_EN_NICHI_T10850_TYPES
+/* T-10850: 64 words copied to the local motion lookup table. */
+typedef struct EnWords64 {
+    /* 0x000 */ s32 words[64];
+} EnWords64; /* size 0x100 */
+extern EnWords64 D_80139B28;
+#endif

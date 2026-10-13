@@ -16,9 +16,32 @@ void func_80042798(void) {
     func_80042960();
 }
 
+/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+s32 func_80042808(void) {
+    D_800E6280.unk_1109 += 1;
+    D_800E6280.unk_110A = 0;
+    D_800E6280.unk_1100 = 0;
+    D_800E6280.unk_1104.w = 0;
+    D_800E6280.unk_110C = 0;
+    D_800E6280.unk_110D = 0;
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80042540", func_80042808);
+#endif
 
+/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+s32 func_8004284C(void) {
+    D_800E6280.unk_110A += 1;
+    D_800E6280.unk_1104.w = 0;
+    D_800E6280.unk_110D = 0;
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80042540", func_8004284C);
+#endif
 
 void func_80042878(s32 arg0) {
     u32 t;
@@ -42,9 +65,32 @@ void func_80042878(s32 arg0) {
     }
 }
 
+/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+s32 func_80042908(s32 arg0) {
+    D_800E6280.unk_1109 = (s8) arg0;
+    D_800E6280.unk_110A = 0;
+    D_800E6280.unk_1100 = 0;
+    D_800E6280.unk_1104.w = 0;
+    D_800E6280.unk_110C = 0;
+    D_800E6280.unk_110D = 0;
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80042540", func_80042908);
+#endif
 
+/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+s32 func_80042940(s32 arg0) {
+    D_800E6280.unk_110A = (s8) arg0;
+    D_800E6280.unk_1104.w = 0;
+    D_800E6280.unk_110D = 0;
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80042540", func_80042940);
+#endif
 
 s32 func_80042960(void) {
     switch (*(u8 *)&D_800E6280.unk_1108) {

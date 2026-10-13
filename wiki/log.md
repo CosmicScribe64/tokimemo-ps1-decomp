@@ -10235,3 +10235,639 @@ Checked new ticket links/index/card, updated current workflow against implementa
 
 ## [2026-10-13] ticket | T-10840 In Review -> Done
 [[tickets/T-10840-wave-13-15-tool-fixes]], [[kanban]] and [[index]] synchronized after review and final checks. Five tool fixes complete; zero game-function gains, clean 27/27 checksums and 5186/6958 progress retained. Changes left uncommitted for the orchestrator; logs remain external in scratchpad/r16-fixes/.
+
+## [2026-10-13] ticket | T-10850 Wave 17 started
+
+Created [[tickets/T-10850-wave-17-astra]] and In Progress card; read [[register-cheatsheet]], [[decompile-workflow]] and standards. Explicit ownership covers 45 C files and 69 functions. Scratch isolated to `scratchpad/a17/`.
+
+## [2026-10-13] build | T-10850 baseline verified
+
+Fresh worktree configure/build passed all 27 unit SHA1 checks with header/global guards. [[tickets/T-10850-wave-17-astra]] baseline evidence: `scratchpad/a17/baseline-build.log`. Initial dupes scan before assembly generation found no functions; rerunning now that splat outputs exist. Assembly of four state reset helpers explicitly sets v0 to zero despite inherited void declarations.
+
+## [2026-10-13] build | T-10850 main:InitMouse first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_InitMouse`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80042940 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80042940`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8004284C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8004284C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80042908 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80042908`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80042808 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80042808`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_bar_color first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_bar_color`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8004636C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8004636C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_80135A48 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_80135A48`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80055A38 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80055A38`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014F278 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014F278`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013D2E0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013D2E0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_check_1 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_check_1`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_80136A2C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_80136A2C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014EF8C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014EF8C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_8015B1B8 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_8015B1B8`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_set first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_set`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8006C988 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8006C988`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 NAME_ENT:func_8013AF78 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/NAME_ENT_func_8013AF78`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013D3C0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013D3C0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_8015C0A0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_8015C0A0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_80138B90 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_80138B90`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_80142AF0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_80142AF0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013D150 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013D150`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8014D260 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8014D260`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 DATE:func_8015A640 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/DATE_func_8015A640`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 DATE:func_8015A980 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/DATE_func_8015A980`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_8015D0D0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_8015D0D0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_80132B34 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_80132B34`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8004F4F0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8004F4F0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014E994 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014E994`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TAIIKU:func_8014666C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TAIIKU_func_8014666C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_8006BA40 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_8006BA40`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 NAME_ENT:func_801398EC first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/NAME_ENT_func_801398EC`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8013E498 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8013E498`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_80146E10 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_80146E10`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8013E54C first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8013E54C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_801330D0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_801330D0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EN_NICHI:func_80135600 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EN_NICHI_func_80135600`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TAIIKU:func_80147B14 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TAIIKU_func_80147B14`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80052F68 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80052F68`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:get_h_tokimeki first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_get_h_tokimeki`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 NAME_ENT:func_80140B20 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/NAME_ENT_func_80140B20`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 OPTION:func_80139F8C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/OPTION_func_80139F8C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TT:func_8014C5F8 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TT_func_8014C5F8`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:initModelingData_init first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_initModelingData_init`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 BUNKA_SD:func_80134418 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/BUNKA_SD_func_80134418`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 OPTION:func_80139878 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/OPTION_func_80139878`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_80137F48 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_80137F48`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_801511C0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_801511C0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:func_80058F9C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_func_80058F9C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_8013506C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_8013506C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 EVENT:func_80104DB4 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/EVENT_func_80104DB4`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_80137188 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_80137188`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 SHUGAKU:func_80133038 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/SHUGAKU_func_80133038`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 KANGEI:func_80136970 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/KANGEI_func_80136970`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_80137E84 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_80137E84`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 SHUGAKU:func_80139054 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/SHUGAKU_func_80139054`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 OPTION:func_80139E3C first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/OPTION_func_80139E3C`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_801357B0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_801357B0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:menu_bar_show first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_menu_bar_show`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 ENDING:func_80134B18 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/ENDING_func_80134B18`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 ETC:func_80146400 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/ETC_func_80146400`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 KANGEI:func_80135004 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/KANGEI_func_80135004`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 BUNKA_SD:func_80134850 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/BUNKA_SD_func_80134850`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 GYOZI:func_8013E638 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/GYOZI_func_8013E638`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 SHOUGATU:func_8013DDD0 first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: ERROR (0 differing listing lines). Evidence in `scratchpad/a17/attempts/SHOUGATU_func_8013DDD0`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 TACO:func_80154230 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/TACO_func_80154230`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 main:csr_load_vram first pass
+
+[[tickets/T-10850-wave-17-astra]]: m2c draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/main_csr_load_vram`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 RPG_BAT:func_8014AB84 first pass
+
+[[tickets/T-10850-wave-17-astra]]: existing guarded draft built and diffed: DIFF (0 differing listing lines). Evidence in `scratchpad/a17/attempts/RPG_BAT_func_8014AB84`; fallback retained; draft in assigned scratch.
+
+## [2026-10-13] build | T-10850 first pass and prototype verification
+
+All 69 assigned functions received a draft, compilation attempt and resolved diff attempt. Failed drafts are preserved for type repair; no first-pass match was claimed. Register misses were passed to regdiff. [[tickets/T-10850-wave-17-astra]]: generated four corrected s32 reset-helper declarations with `sync_protos.py --write`, retained only those scoped declarations, and verified every unit checksum after the change. Helpers still need return-zero scheduling work. Checksum helper `func_80055A38` improved from 20 to eight differing lines by regdiff-guided first-use ordering. Exact and near duplicate reuse found no applicable plans in the owned files.
+
+## [2026-10-13] build | T-10850 main_InitMouse bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 314.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_InitMouse.log`.
+
+## [2026-10-13] build | T-10850 KANGEI_func_80136970 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 331.2 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/KANGEI_func_80136970.log`.
+
+## [2026-10-13] build | T-10850 aggregate and scalar repairs
+
+[[tickets/T-10850-wave-17-astra]]: repaired eleven initial syntax/type failures using existing GameState, Rec24 and record-table views and concrete pointer widths. Compiled drafts and their diffs are in `scratchpad/a17/attempts/*type_repair*`; the two NAME_ENT drafts required additional scalar declarations. Recovered local 0xCC3 text, 0x5C callback and 0x100 word-copy extents for GYOZI, SHOUGATU and EN_NICHI, appending types to their overlay headers. The RPG_BAT object's four-byte owned data islands now have literal C initializers; its default overlay checksum still passes. Added four missing main scalar/buffer declarations through `sync_protos.py --add-global`; D_800B6708 has no aggregate proposal and D_800E8BEF only implausibly broad proposals.
+
+## [2026-10-13] build | T-10850 GYOZI_func_80137E84 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant aggregate_repair passed literal-byte funcdiff verification. 196 bytes; C retained. Evidence `scratchpad/a17/attempts/GYOZI_func_80137E84_aggregate_repair.diff`.
+
+## [2026-10-13] build | T-10850 EVENT_func_80104DB4 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant source_idiom passed literal-byte funcdiff verification. 176 bytes; C retained. Evidence `scratchpad/a17/attempts/EVENT_func_80104DB4_source_idiom.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80042940 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.3 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80042940.log`.
+
+## [2026-10-13] build | T-10850 SHOUGATU_func_8013DDD0 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant sprite_fields passed literal-byte funcdiff verification. 236 bytes; C retained. Evidence `scratchpad/a17/attempts/SHOUGATU_func_8013DDD0_sprite_fields.diff`.
+
+## [2026-10-13] build | T-10850 main_func_8004284C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 318.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004284C.log`.
+
+## [2026-10-13] build | T-10850 KANGEI_func_80136970 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant u8_coin passed literal-byte funcdiff verification. 180 bytes; C retained. Evidence `scratchpad/a17/attempts/KANGEI_func_80136970_u8_coin.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80042908 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 302.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80042908.log`.
+
+## [2026-10-13] build | T-10850 main_func_80042808 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80042808.log`.
+
+## [2026-10-13] build | T-10850 type repair and operand-order pass
+
+[[tickets/T-10850-wave-17-astra]]: KANGEI `func_80136970` now passes literal-byte verification after a byte selector local resolved the remaining reversed branch operands. TAIIKU's owned 112-byte zero-initialized slot array passes its overlay checksum; the counter updater is within one loop-branch difference. Repaired main score-table drafts now build and diff. Register traces use a scratch translation unit with unrelated NON_MATCHING guards disabled, matching the default-build candidate under analysis. Evidence remains in `scratchpad/a17/attempts/`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 305.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/OPTION_func_80139878.log`.
+
+## [2026-10-13] build | T-10850 main_initModelingData_init bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 306.7 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_initModelingData_init.log`.
+
+## [2026-10-13] build | T-10850 TAIIKU_func_8014666C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 607.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TAIIKU_func_8014666C.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_80154230 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_80154230.log`.
+
+## [2026-10-13] build | T-10850 complete buildable draft coverage
+
+[[tickets/T-10850-wave-17-astra]]: audited all 69 work-list entries against successful MATCH/DIFF logs; no entry lacks a compiling draft. Four literal-byte matches total 788 bytes. Width/layout sweeps and bounded searches continue for the near cases. InitMouse and menu_bar_color retain an additional `$at` load because their referenced data has no owned range in the permitted object configuration; no configuration changes made.
+
+## [2026-10-13] build | T-10850 EN_NICHI_func_80136A2C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/EN_NICHI_func_80136A2C.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_8015C0A0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_8015C0A0.log`.
+
+## [2026-10-13] build | T-10850 GYOZI_func_8013506C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 308.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_8013506C.log`.
+
+## [2026-10-13] build | T-10850 SHUGAKU_func_80139054 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/SHUGAKU_func_80139054.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004636C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 604.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004636C.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 7.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004F4F0.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014AB84 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014AB84.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant prior_13 passed literal-byte funcdiff verification. 448 bytes; C retained. Evidence `scratchpad/a17/attempts/main_func_8004F4F0_prior_13.diff`.
+
+## [2026-10-13] build | T-10850 discard overlapping nibble-draft verification
+
+The `main_func_8004F4F0` prior_13 MATCH entry above is invalid: prototype generation restored the assembly fallback while the candidate check was in flight. A stable re-check (`stable_prior13`) is DIFF; no C match is retained or counted. The scratch harness now requires the installed source to remain unchanged throughout verification. Re-running the prior-candidate scan after prototype generation has completed; authoritative match count remains four.
+
+## [2026-10-13] build | T-10850 NAME_ENT_func_80140B20 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.7 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/NAME_ENT_func_80140B20.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004636C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 603.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004636C.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_8015B1B8 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 302.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_8015B1B8.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 900-second search budget, 10.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004F4F0.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_801511C0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_801511C0.log`.
+
+## [2026-10-13] build | T-10850 main_menu_bar_color bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 330.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_menu_bar_color.log`.
+
+## [2026-10-13] build | T-10850 main_csr_load_vram bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 602.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_csr_load_vram.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139F8C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 303.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/OPTION_func_80139F8C.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant refine0 passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_refine0.diff`.
+
+## [2026-10-13] build | T-10850 main_func_8004F4F0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 900-second search budget, 911.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004F4F0.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant typed passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_typed.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant no_float passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_no_float.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80055A38 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.8 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80055A38.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant no_local passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_no_local.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant value_test passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_value_test.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant true_test passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_true_test.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant empty_loop passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_empty_loop.diff`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant threshold passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_threshold.diff`.
+
+## [2026-10-13] build | T-10850 main_func_80058F9C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 304.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80058F9C.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139878 matched
+
+[[tickets/T-10850-wave-17-astra]]: variant reviewed_form passed literal-byte funcdiff verification. 148 bytes; C retained. Evidence `scratchpad/a17/attempts/OPTION_func_80139878_reviewed_form.diff`.
+
+## [2026-10-13] build | T-10850 GYOZI_func_8013E638 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 305.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_8013E638.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014E994 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 13.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014E994.log`.
+
+## [2026-10-13] build | T-10850 ENDING_func_80134B18 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 305.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/ENDING_func_80134B18.log`.
+
+## [2026-10-13] build | T-10850 main_initModelingData_init bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 610.3 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_initModelingData_init.log`.
+
+## [2026-10-13] build | T-10850 refined near-match searches
+
+[[tickets/T-10850-wave-17-astra]]: OPTION cleanup variants confirm that its empty test is necessary; reviewed C and the full overlay checksum retain the fifth match (936 bytes total). Two 600-second searches were started for the checksum helper and RPG initializer; the latter is rejected on extra address-load instruction shape, not merely register colour. EN_NICHI refinement reached six differing listing lines and started another bounded search. TAIIKU gets a focused address-load scheduling sweep. Evidence remains in `scratchpad/a17/`; [[matching-notes]] records the OPTION idiom.
+
+## [2026-10-13] build | T-10850 ETC_func_80146400 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 308.6 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/ETC_func_80146400.log`.
+
+## [2026-10-13] build | T-10850 main_func_8004636C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 605.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_8004636C.log`.
+
+## [2026-10-13] build | T-10850 TT_func_8013D3C0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 307.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TT_func_8013D3C0.log`.
+
+## [2026-10-13] build | T-10850 EN_NICHI_func_80136A2C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 606.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/EN_NICHI_func_80136A2C.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014E994 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 605.2 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014E994.log`.
+
+## [2026-10-13] build | T-10850 pointer and return-type evidence
+
+[[tickets/T-10850-wave-17-astra]]: typed-pointer variants of `func_80058F9C` reduce its resolved diff from 20 to 14 listing lines. `menu_check_1` as an s32 return removes sign-extension instructions absent from the target, reaching the original 57-instruction count with 34 differing listing lines. Its declaration was generated in an isolated include tree with `tools/sync_protos.py` and only that generated declaration adopted for the experiment; whole-build compatibility remains to be checked. Both improved drafts receive 600-second searches. The checksum helper's extra 600-second search found no match. Removed OPTION's stale pre-match NON_MATCHING comment during inline review.
+
+## [2026-10-13] build | T-10850 TT_func_8014C5F8 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 312.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TT_func_8014C5F8.log`.
+
+## [2026-10-13] build | T-10850 BUNKA_SD_func_80134418 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 306.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/BUNKA_SD_func_80134418.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_8015C0A0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 607.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_8015C0A0.log`.
+
+## [2026-10-13] build | T-10850 main_func_80058F9C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 606.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80058F9C.log`.
+
+## [2026-10-13] build | T-10850 main_menu_check_1 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 607.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_menu_check_1.log`.
+
+## [2026-10-13] build | T-10850 TACO_func_801357B0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 300-second search budget, 309.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_801357B0.log`.
+
+## [2026-10-13] query | T-10850 owned-file queue follow-up
+
+[[tickets/T-10850-wave-17-astra]]: the assigned 69-function first deep pass is complete. The scoped `tools/queue.py --by bytes --next 20 --files` result mostly repeats known blockers; two additional candidates in already owned files are `main:func_80045318` (252 bytes) and `GYOZI:func_80136488` (604 bytes). Both received fresh m2c drafts; bounded follow-up experiments stay inside their owned objects. The original assignment manifest remains unchanged, with extras tracked separately in `scratchpad/a17/extras.json`.
+
+## [2026-10-13] decision | T-10850 preserve the matched menu caller
+
+[[tickets/T-10850-wave-17-astra]]: the generated s32 `menu_check_1` declaration causes extra sign extensions in the already-matched `menu_check` caller. Its resolved diff proves the compatibility failure (`scratchpad/a17/menu-caller-check.diff`). Restored the prior s8 declaration and retain the alternative s32 implementation in scratch only. The callee's original unextended return remains useful evidence, but does not justify breaking the caller. GYOZI queue follow-up adds two overlay-local word declarations from observed loads, with no main-exe redeclarations.
+
+## [2026-10-13] ingest | T-10850 GYOZI load-width correction
+
+Direct assembly inspection shows `lh`, not `lw`, for `D_80146168` and `D_8014616C`. Corrected the just-added declarations to s16 before retaining or counting any result; this supersedes the preceding entry's word-width description. The two sprite slot fields at `D_8012B91A` and `D_8012B95E` are also halfwords (`sh`). [[tickets/T-10850-wave-17-astra]].
+
+## [2026-10-13] build | T-10850 SHUGAKU_func_80139054 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 611.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/SHUGAKU_func_80139054.log`.
+
+## [2026-10-13] build | T-10850 reviewed near-match guards
+
+[[tickets/T-10850-wave-17-astra]]: retained 15 individually recompiled and diffed near drafts behind ticketed NON_MATCHING guards. Existing unchanged guards are preserved. Source mutations use per-file locks; active searches are skipped for a later pass. Evidence: `scratchpad/a17/guard-results.json` and `attempts/*_retention_review.diff`.
+
+## [2026-10-13] build | T-10850 remaining source-shape experiments
+
+[[tickets/T-10850-wave-17-astra]]: the checksum helper now has correct registers and only the compare/mask instruction order differs (four listing lines). Exhaustive local line grouping is testing scheduling. Expressing the first RPG initializer bound from the following array eliminates a retained common address and reaches eight listing lines, consisting of two swapped LUI pairs; this is a marked-FAKE research candidate until aggregate declarations can be reconciled. The menu permuter's pointer-local form, converted back to the compatible s8 return, improves its draft from 43 to 27 listing lines without changing the shared declaration. GYOZI's extra queue draft compiles at 150/151 instructions and receives a bounded search.
+
+## [2026-10-13] build | T-10850 TACO_func_801511C0 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 609.3 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/TACO_func_801511C0.log`.
+
+## [2026-10-13] lint | T-10850 guarded-draft cleanup and shared checks
+
+[[tickets/T-10850-wave-17-astra]]: `tools/check_headers.py` reports headers OK and `tools/migrate_globals.py --check` reports globals OK after the added declarations and guards. Removed CSR's unused base copy with the same 26-line resolved diff. Retained the compatible menu draft (27), model-loader pointer draft (14), RPG initializer bound draft (8), and TACO pointer draft (9) behind explicit guards; every retained trick has a specific FAKE explanation. The RPG initializer's newly reduced scheduling-only base receives one more 600-second search. Prototype audit and remaining refinements are still running.
+
+## [2026-10-13] build | T-10850 GYOZI_func_80136488 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 610.7 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_80136488.log`.
+
+## [2026-10-13] build | T-10850 OPTION_func_80139F8C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 610.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/OPTION_func_80139F8C.log`.
+
+## [2026-10-13] build | T-10850 RPG_BAT_func_8014E994 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 611.0 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/RPG_BAT_func_8014E994.log`.
+
+## [2026-10-13] lint | T-10850 ownership and preliminary source review
+
+[[tickets/T-10850-wave-17-astra]]: the tracked-file audit covers 33 changed files, all within assigned source ownership or allowed shared headers/wiki pages; no tools, configuration, raw data or build outputs are changed. `git diff --check` passes. Inline review checked C89 declarations/comments, fixed-width types, aggregate offsets, shared declaration placement, guard fallbacks, and FAKE explanations. Removed superseded NON_MATCHING comments immediately preceding the new guards. All assigned drafts and deep-pass criteria are complete; the four-hour minimum and final all-unit checksum remain pending.
+
+## [2026-10-13] build | T-10850 GYOZI_func_80136488 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 609.4 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_80136488.log`.
+
+## [2026-10-13] build | T-10850 main_func_80055A38 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 609.2 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80055A38.log`.
+
+## [2026-10-13] build | T-10850 GYOZI initializer reconstruction
+
+[[tickets/T-10850-wave-17-astra]]: the additional owned GYOZI initializer improves from 101 to 37 listing lines by forming the sprite base-plus-stride expression directly and using unsigned byte stores for 128/129. Moving the counter increment to the loop tail reaches 21 lines; the natural for-loop reaches 19. Its 0x44-byte sprite layout is now documented in an overlay-local struct, with a field-based candidate prepared for comparison. A 600-second search is running on the improved loop. Shared header/global/prototype checks passed before this final struct addition; they will be repeated with final verification.
+
+## [2026-10-13] build | T-10850 typed GYOZI near draft retained
+
+[[tickets/T-10850-wave-17-astra]]: the new GYOZI queue draft is retained behind a guard at 19 differing listing lines. All accesses now use the documented `GyoziInitSprite44` array view at slots 0x60..0x63, with fixed-width field types and no redundant pointer/integer casts. The field/indexed version preserves the same diff as the raw-pointer version. Its two bounded searches did not find a match. OPTION's improved draft is guarded at 11 lines and TACO `func_801511C0` at ten; fixed-width cleanup preserves both diffs.
+
+## [2026-10-13] build | T-10850 main_func_80058F9C bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 606.1 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/main_func_80058F9C.log`.
+
+## [2026-10-13] ingest | T-10850 opaque GYOZI call boundary
+
+[[tickets/T-10850-wave-17-astra]]: the five-line `func_8013E638` candidate adds an explicit `li a1,56` before `func_8008FB00`. The name is an absolute undefined-function export in `build/ovl/GYOZI_undefined_funcs_auto.txt`; m2c finds no main asm file for it. In the checksum-matching main ELF, 0x8008FB00 lies inside `SsUtChangeADSR`, so the placeholder cannot be assigned a semantic prototype from its name. The shared declaration remains unprototyped; call-form experiments are judged by literal instruction comparison, with no callee rename or ABI claim.
+
+## [2026-10-13] build | T-10850 GYOZI_func_8013E638 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 605.5 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/GYOZI_func_8013E638.log`.
+
+## [2026-10-13] build | T-10850 ETC_func_80146400 bounded permutation
+
+[[tickets/T-10850-wave-17-astra]]: 600-second search budget, 603.9 seconds elapsed, no verified match; source restored. Evidence in `scratchpad/a17/perms/ETC_func_80146400.log`.
+
+## [2026-10-13] query | T-10850 final case inventory
+
+Appended 34 remaining cases to [[data/t0018-cases]] after register-shape lookup and literal source audit. Exactly five unguarded conversions total 936 bytes; scoped lenient dupes applied zero additional functions. All 69 assigned functions have a successful compile and resolved diff. Removed superseded guard comments, normalized menu indentation and removed blank lines left by the TAIIKU data conversion. No tool/config/raw edits. See [[matching-notes]].
+
+## [2026-10-13] ticket | T-10850 in review
+
+Moved [[tickets/T-10850-wave-17-astra]] and its [[kanban]] card to In Review. Full build passed 27/27 SHA1 checks; prototype/global/header checks passed. Inline standards review and final formatting verification remain.
+
+## [2026-10-13] build | T-10850 final validation and review
+
+Final full build: 27/27 SHA1 checks OK; formatting follow-up rechecked main and TAIIKU. Header/global guards, prototype branch guard (0 new/17 known), source ownership, 69-function evidence audit and git whitespace check pass. The 34 new [[data/t0018-cases]] identities resolve as open. Inline CODING_STANDARDS.md review has no unresolved findings; matching tricks are marked FAKE. Progress: 5195/6958 functions, 968748/2279368 bytes (42.5%). See [[matching-notes]] and [[tickets/T-10850-wave-17-astra]].
+
+## [2026-10-13] ticket | T-10850 done
+
+After more than four hours, moved [[tickets/T-10850-wave-17-astra]] and its [[kanban]] card from In Review to Done. Result: five matched functions, 936 bytes; 69 assigned drafts built/diffed; 34 remaining-case rows. All changes remain uncommitted for orchestrator integration.

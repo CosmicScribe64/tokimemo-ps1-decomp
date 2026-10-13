@@ -166,25 +166,25 @@ void func_80136930(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, only two operand orders differ (xor t0,a1,v1 and bne t6,a1 vs the reverse); 2 lines, T-0018 constant operand order */
+/* FAKE: shared constant and byte selector preserve compare operand order. T-10850 */
 void func_80136970(void) {
     u8 t;
     s32 r;
+    u32 one;
+    u8 coin;
 
+    one = 1;
     func_800AE120(D_800E6280.unk_10F8);
     r = func_800AE0D0();
     D_80139E0C = r % 2;
     t = D_80139DF4[(u8)D_80139DF0];
-    D_80139ADC = (t == 2) * 6 + (t == 1) * 4 + 4;
-    if (D_80139E0C == 1 && t == 0) {
+    D_80139ADC = (t == 2) * 6 + (one == t) * 4 + 4;
+    coin = D_80139E0C;
+    if (coin == one && t == 0) {
         D_80139ADC += 2;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136970);
-#endif
 
 void func_80136A24(void) {
     D_80139ADC = 0xC;

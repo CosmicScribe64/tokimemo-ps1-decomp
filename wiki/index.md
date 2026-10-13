@@ -196,3 +196,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-9610-aggregate-and-local-copy-types|T-9610]] Aggregate and local-copy types (Done).
 
 - [[tickets/T-9780-wave-9-list-8|T-9780]] Wave 9: list 8 (Done; 18 matches / 8580 bytes, four-hour session).
+
+- [[tickets/T-10850-wave-17-astra|T-10850]] Wave 17 (astra, easiest first), Done: 5 matches, 936 bytes.

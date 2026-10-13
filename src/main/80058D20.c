@@ -82,15 +82,15 @@ void initModelingData_init(s32 *arg0) {
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", initModelingData_init);
 #endif
 
+/* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, the original also stores arg0 to its home slot and keeps the record pointer in the same spill slot as arg0+4 (16 lines) */
-s32 func_80058F9C(s32 arg0, s32 arg1, u32 arg2) {
-    s32 q;
+s32 func_80058F9C(u8 *arg0, s32 arg1, u32 arg2) {
+    u8 *q;
     u32 limit;
-    s32 p;
+    u8 *p;
 
-    p = arg0 + 4;
-    func_8009B3C0(p);
+    p = (u8 *)arg0 + 4;
+    func_8009B3C0((s32)p);
     q = p + 4;
     limit = *(u32 *)q;
     if (limit >= 0x11) {
@@ -98,8 +98,8 @@ s32 func_80058F9C(s32 arg0, s32 arg1, u32 arg2) {
     }
     q += 4;
     if (arg2 < limit) {
-        p = (s32)D_80122640 + arg1 * 0x10;
-        func_8009B430(q, (u8 *)p, arg2);
+        p = (u8 *)D_80122640 + arg1 * 0x10;
+        func_8009B430((s32)q, (u8 *)p, arg2);
         *(TaiikuBig **)(p + 4) = &D_801227A0[arg1];
         *(s32 *)p = 0;
         return 1;

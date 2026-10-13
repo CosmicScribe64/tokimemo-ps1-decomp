@@ -236,7 +236,14 @@ void func_80137E24(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801372B0", func_80137E84);
+void func_80137E84(void) {
+    s32 girl;
+    GyoziTextCC3 table;
+
+    table = D_80146428;
+    girl = D_800F53A0.unk_F2F;
+    func_800BCE10(D_800D9334, &table.bytes[girl * 0x129 + D_800F53DE * 0x63 + D_8012E66C * 0x21 - 0x2520]);
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801372B0", func_80137F48);
 

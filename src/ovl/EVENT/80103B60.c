@@ -386,7 +386,20 @@ s32 func_80104D48(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_80104DB4);
+void func_80104DB4(void) {
+    s16 i;
+
+    D_800B0860[7] = 0;
+    D_800B0860[6] = 0;
+    /* FAKE: same-line loop setup preserves the store scheduling. T-10850 */
+    D_800B0860[8] = 0; for (i = 0; i < 6; i++) {
+        ((Rec24 *)D_800EC190)[i + 4].unk_00 &= 0x7FFFFFFF;
+    }
+    D_800EAFA0[3] |= 0x80;
+    D_800EAFA0[0x47] |= 0x80;
+    D_800EECD4 = 1;
+    func_80011DFC();
+}
 
 typedef struct {
     void (*f[41])();

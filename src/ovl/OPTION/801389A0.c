@@ -119,8 +119,6 @@ INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139198);
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_801394F4);
 
-/* NON_MATCHING: T-10710, 6 lines: the += 4 result lives in a ugen temp (addiu t6,v1,4 and the write-back stores t6) where the original adds in place in v1 and stores the masked v0 */
-#ifdef NON_MATCHING
 void func_80139878(void) {
     u8 t;
 
@@ -131,6 +129,9 @@ void func_80139878(void) {
     D_801220E0 = t;
     D_801220E8 = 0xA0;
     D_801220EA = 0x78;
+    /* FAKE: empty test separates raw and truncated byte live ranges. T-10850 */
+    if (t) {
+    }
     D_801220D4 = 0;
     D_801220D6 = 0;
     if (t >= 0x80) {
@@ -139,9 +140,6 @@ void func_80139878(void) {
         func_8004284C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139878);
-#endif
 
 void func_8013990C(void) {
     D_801220EC = rsin(D_800E6280.unk_1104.w << 5);
@@ -219,21 +217,32 @@ void func_80139F04(void) {
     func_80044750((D_8013E730 | 0x500) & 0xFFFF);
 }
 
-/* NON_MATCHING: T-10510, 18 lines: dispatch matches, D_8013D3A8 copy through a0 and v1 vs v0 */
+/* NON_MATCHING: T-10850, 11 differing listing lines; see the ticket scratch evidence. */
 #ifdef NON_MATCHING
-void func_80139F8C(void) {
+/* FAKE: width-staged locals preserve raw-byte and call-argument ranges. T-10850 */
+void func_80139F8C(void)
+{
     s32 t;
-
+    u32 value;
+    u16 code;
     t = D_800E6280.unk_F88 & 0x60;
-    if (t != 0x20) {
-        if (t == 0x40) {
+    if (t != 0x20)
+    {
+        if (t == 0x40)
+        {
             D_8013D3A8--;
         }
-    } else {
+    }
+    else
+    {
         D_8013D3A8++;
     }
-    if (D_8013D3A8 > 0x10) {
-        func_80044750((D_8013D3A8 | 0x1200) & 0xFFFF);
+    if (D_8013D3A8 > 0x10)
+    {
+        value = D_8013D3A8;
+        code = value | 0x1200;
+        t = code & 0xFFFF;
+        func_80044750(t);
     }
 }
 #else

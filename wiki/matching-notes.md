@@ -4308,3 +4308,19 @@ Idioms that worked:
 Dead ends: see the T-10810 rows. The RPG_BAT trio needs a header change: the build already generates interior data symbols for C-defined data (`build/ovl/RPG_BAT_data_syms.ld`), so only `include/ovl/RPG_BAT.h` (`extern s32 D_8015EDF0`/`D_8015EDF4`) blocks a struct definition. TT `func_8014D260` stays blocked on the ASPSX division expansion ([[gcc-objects]]).
 
 Tooling notes: `regdiff.py --src` takes a path under the mounted scratch directory (`/scratch/<name>/draft.c` inside Docker); a scratch `rv.sh` that replaces the function's `INCLUDE_ASM` or its whole `#ifdef NON_MATCHING` block and runs regdiff made 5 to 10 s experiments possible. `permute.py` refuses a base whose instruction multiset differs from the target (it stopped on `li t0,0` against `li t0,4`).
+
+## Wave 17, astra easiest-first (T-10850, a17)
+
+Five literal-byte matches (936 bytes): EVENT `func_80104DB4` (176), GYOZI `func_80137E84` (196), KANGEI `func_80136970` (180), OPTION `func_80139878` (148), SHOUGATU `func_8013DDD0` (236). Final totals and verification are recorded in [[tickets/T-10850-wave-17-astra]]. All 69 assigned functions have a compiling draft and resolved diff in `scratchpad/a17/attempts/`.
+
+- GYOZI's copied text table is a 0xCC3-byte aggregate. Declaring the scalar girl index before the aggregate reproduces the frame and copy sequence without padding tricks.
+- SHOUGATU copies a 23-entry callback table. A typed 0x44 counter record (byte +7, signed halves +8/+0x16/+0x18) allows the original load ordering; the implicit-int/no-return form preserves its epilogue.
+- KANGEI's final operand swaps need a shared unsigned constant and a separate byte local for the post-call selector. Merely reversing the source comparisons did not work. The constant steering is marked FAKE.
+- EVENT's six record-flag updates match with the loop header and its preceding store on one source line. That scheduling dependency is marked FAKE. Removing m2c's spurious arguments to `func_80011DFC` is also necessary.
+- OPTION's byte update needs an empty conditional between the raw sum and its truncated uses. It separates their live ranges and is marked FAKE. Removing the test, using an empty scope, chaining the stores, or capturing the assignment loses the match; the permuter's float cast and unused constant were unnecessary and removed. The full OPTION checksum passed.
+- TAIIKU's four contiguous 0x1C slot records at `D_8014A454` are all zero-initialized owned data. A 0x70-byte C definition preserves the overlay checksum and removes the repeated `$at` loads from its tick updater. The remaining loop-bound/register scheduling miss is kept separately from this confirmed data-layout result.
+- For register diagnostics, use a scratch translation unit that disables unrelated NON_MATCHING guards; this makes the traced function correspond to the default-build candidate being compared. The new function-level harness also checks that the installed source stayed unchanged during verification.
+
+Known unchanged blockers: `InitMouse` and `menu_bar_color` need owned data outside the available object data ranges; the three DATE/TACO rotation helpers are handwritten SDK assembly; TT `func_8014D260` retains the documented ASPSX division-expansion gap. No object configuration or tool files were changed.
+
+Final near-miss retention: main byte checksum and GYOZI counter each differ by four listing lines; TAIIKU tick updater also differs by four. ETC selector improved from 24 to 14 lines; simplifying its marked zero-valued comparison loses that improvement. The extra owned GYOZI sprite initializer improved from 101 to 19 lines with a documented 0x44 record view. The menu helper keeps its compatible s8 return because s32 breaks its matched caller. Thirty-four case rows record these and other remaining patterns in [[data/t0018-cases]].

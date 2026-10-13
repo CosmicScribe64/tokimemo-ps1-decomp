@@ -21,7 +21,15 @@ s32 MouseState(s32 port, s8 *out) {
     return result;
 }
 
+/* NON_MATCHING: T-10850, 1 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+void InitMouse(s8 *arg0, s8 *arg1) {
+    D_800E36C0[0] = arg0;
+    D_800E36C0[1] = arg1;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80059710", InitMouse);
+#endif
 
 void RangeMouse(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
     u32 sx = D_800E36E8;
