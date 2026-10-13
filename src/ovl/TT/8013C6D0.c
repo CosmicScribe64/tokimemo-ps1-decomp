@@ -215,7 +215,7 @@ void func_8013CB58(void) {
 #ifdef NON_MATCHING
 void func_8013CC24(void) {
     u8 *q;
-    s32 pad; /* FAKE: unused slot, real source unknown (frame layout) */
+    s32 pad; /* FAKE: unused slot keeps the frame layout, real source unknown. T-11000 */
     u8 *a;
     u8 *b;
     u8 *c;
