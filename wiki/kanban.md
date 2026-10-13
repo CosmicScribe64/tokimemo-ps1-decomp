@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-10710-wave-15-list-1|T-10710 Wave 15: list 1]]
 - [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 
@@ -51,6 +50,7 @@ kanban-plugin: board
 
 
 ## Done
+- [x] [[tickets/T-10710-wave-15-list-1|T-10710 Wave 15: list 1]]
 - [ ] [[tickets/T-10610-wave-14-list-1|T-10610 Wave 14: list 1]]
 - [ ] [[tickets/T-10620-wave-14-list-2|T-10620 Wave 14: list 2]]
 - [ ] [[tickets/T-10630-big-functions-astra|T-10630 Big functions (astra)]]

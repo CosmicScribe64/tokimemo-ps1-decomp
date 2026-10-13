@@ -10198,3 +10198,6 @@ only the two original small guarded movie near misses. Changes are uncommitted.
 
 ## [2026-10-12] ticket | T-10710 wave 15 list 1
 Started [[tickets/T-10710-wave-15-list-1]] (batch agent w15-1).
+
+## [2026-10-12] build | T-10710 wave 15 list 1 done
+4 functions matched (1,068 bytes: `menu_check_2`, GYOZI `func_8013E0A4`, TACO `func_8015CCC8`, ETC `func_8013E094`), about 12 guarded near misses, 34 rows added to [[data/t0018-cases]], notes in [[matching-notes]]. Ticket [[tickets/T-10710-wave-15-list-1]] moved to Done after the inline review. Progress `grand total 5180/6958 962584/2279368 42.2%`; 27 SHA1 checks, headers and globals OK.
