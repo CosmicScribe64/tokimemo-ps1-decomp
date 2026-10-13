@@ -27,6 +27,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-10890-big-functions-astra-21|T-10890 Big functions (astra) 21]]
 
+- [ ] [[tickets/T-10910A-big-functions-astra-23|T-10910A Big functions (astra) 23]]
+
 
 
 
