@@ -1328,6 +1328,8 @@ typedef struct DateSelectionView {
     /* 0x01 */ u8 pad01[3];
     /* 0x04 */ u8 option;
 } DateSelectionView; /* minimum size 0x05 */
+#endif
+
 #ifndef OVL_DATE_MOVIE_T10830_H
 #define OVL_DATE_MOVIE_T10830_H
 /* Overlay access view at D_800B5920. func_80147958 resets the halfword

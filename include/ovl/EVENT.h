@@ -1525,6 +1525,8 @@ typedef struct EventStateView {
     /* 0x1296 */ u8 unk_1296;
     /* 0x1297 */ u8 pad_1297;
 } EventStateView; /* minimum size 0x1298 */
+#endif
+
 #ifndef OVL_EVENT_MOVIE_STATE_T10830_H
 #define OVL_EVENT_MOVIE_STATE_T10830_H
 /* Scene-control view at D_800B1AF0. Extends EventTransitionState's
