@@ -395,7 +395,126 @@ void func_801472C4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80146560", func_801475CC);
+void func_801475CC(void) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v0_3;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        dec_bg_cd_read(0x4105, 1);
+        func_8004284C();
+        break;
+    case 1:
+        normal_date_bggirl_fadeout();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_80145844();
+            dec_bg_show_set(1, func_8005751C(1));
+            cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        normal_date_bggirl_fadein();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x30;
+                break;
+            case 2:
+                D_800CA148 = 0x31;
+                break;
+            case 3:
+                D_800CA148 = 0x32;
+                break;
+            }
+            func_80148E68();
+        }
+        break;
+    case 5:
+        normal_date_speak();
+        break;
+    case 6:
+        normal_date_girl_out();
+        break;
+    case 7:
+        func_80044750(0x202);
+        D_80122EB0 = (s32) D_800E6280.unk_1109;
+        D_80122EB4 = D_800E6280.unk_110A + 1;
+        func_80042908(0xB);
+        break;
+    case 8:
+        cd_read_sectors(0x10U, 0x801E8000, 0x4B23);
+        func_8004284C();
+        break;
+    case 9:
+        normal_date_girl_in();
+        break;
+    case 10:
+        if (cd_read_sync_status() & 1) {
+            temp_v0_2 = func_8008667C(6);
+            switch (temp_v0_2) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x33;
+                break;
+            case 2:
+                D_800CA148 = 0x36;
+                break;
+            case 3:
+                D_800CA148 = 0x39;
+                break;
+            }
+            D_800CA148 += D_80122EA8;
+            func_80148E68();
+        }
+        break;
+    case 11:
+        normal_date_speak();
+        break;
+    case 12:
+        temp_v0_3 = func_8008667C(6);
+        switch (temp_v0_3) {
+        case 0:
+        case 1:
+            D_800CA148 = 0x3C;
+            break;
+        case 2:
+            D_800CA148 = 0x3D;
+            break;
+        case 3:
+            D_800CA148 = 0x3E;
+            break;
+        }
+        func_8004284C();
+        break;
+    case 13:
+        normal_date_speak();
+        break;
+    case 14:
+        normal_date_bggirl_fadeout();
+        break;
+    case 15:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 16:
+        normal_date_speak();
+        break;
+    case 17:
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80146560", func_80147914);
 
