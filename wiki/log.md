@@ -13204,3 +13204,7 @@ scorer when the climb stalls above 0. `climb` no longer reports a match for a 0 
 ## [2026-10-14] ticket | T-11200 In Review
 
 Moved [[tickets/T-11200-order-search-in-solvers]] to In Review; needs the real-build check and the code review.
+
+## [2026-10-14] ticket | T-11210 In Progress
+
+Created [[tickets/T-11210-bulk-m2c-draft-failure-classes]]: fix the main bulk_m2c failure classes (redeclaration, selector on scalar, memcpy, PC16 relocation) in `tools/bulk_m2c.py` and `tools/permute.py`.

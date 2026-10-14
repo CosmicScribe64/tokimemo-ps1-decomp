@@ -362,6 +362,14 @@ class Text(unittest.TestCase):
                          '.include "asmproc_prelude.inc"\nglabel f\n')
 
 
+    def test_target_labels_of_switch_cases_are_local(self):
+        # T-11210: a global jlabel leaves R_MIPS_PC16 relocations that the permuter's objdump rejects
+        self.assertIn(".purgem jlabel", permute.LOCAL_JLABEL)
+        self.assertIn("visibility=local", permute.LOCAL_JLABEL)
+        text = permute.target_source("glabel f\n").replace("\n", "\n" + permute.LOCAL_JLABEL, 1)
+        self.assertTrue(text.startswith('.include "asmproc_prelude.inc"\n.purgem jlabel'))
+
+
 class Outputs(unittest.TestCase):
     def test_sorted_best_first_and_other_dirs_ignored(self):
         with tempfile.TemporaryDirectory() as d:
