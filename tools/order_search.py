@@ -269,7 +269,9 @@ def search(template, score, jobs=1, max_exhaustive=2000, budget=3000, progress=p
             current = best
             if seen[current] == 0:
                 break
-    return sorted(((v, s) for s, v in seen.items()), key=lambda t: t[0])
+    # On equal scores the written order comes first, so a tie never rewrites the source.
+    ident = template.identity()
+    return sorted(((v, s) for s, v in seen.items()), key=lambda t: (t[0], t[1] != ident))
 
 
 # ---- compile and score (needs the Docker toolchain) ----

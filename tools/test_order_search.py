@@ -99,6 +99,11 @@ class Search(unittest.TestCase):
         self.assertEqual(res[0][0], 0)
         self.assertEqual(res[0][1][0][0], target)
 
+    def test_tie_keeps_the_written_order(self):
+        t = os_.Template(SRC)
+        res = os_.search(t, lambda s: 7, jobs=1, max_exhaustive=100, progress=lambda m: None)
+        self.assertEqual(res[0], (7, t.identity()))
+
     def test_hill_climb_respects_budget(self):
         lines = "".join("    s%d = %d;\n" % (i, i) for i in range(8))
         t = os_.Template("/* ORDER */\n" + lines + "/* END ORDER */\n")
