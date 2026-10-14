@@ -544,4 +544,150 @@ void func_80139770(void) {
     }
 }
 
+/* T-11520 near miss: structure and frame match; 28 differing lines. Spill homes of the promoted a/b pointers are at sp+0x34/0x38 here against 0x38/0x3C in the original (one extra home between them; unused pad locals do not move them), and the hoisted constant 1 takes v0 instead of a2 (case 0x40, 0x52 and 0xA0 stores). The case-0x54 u16 store of 0x80 and the u8 store in case 0xA0 are needed to match the shared li a0,0x80 and sb. */
+#ifdef NON_MATCHING
+void func_80139B98(void) {
+    u8 *c;
+    u8 *a;
+    u8 *b;
+    u8 *d;
+    s32 i;
+    s16 v;
+    u16 k;
+
+    c = D_80158A8C;
+    k = *(u16 *)(c + 4);
+    a = D_80158A60;
+    b = D_80158A64;
+    d = D_80158A74;
+    switch (k) {
+    case 0:
+        func_80142570(a, d);
+        if (b[0x22] != 0 && a[0x52] == 0xFF) {
+            func_80044750(0x71);
+        } else if (*(u16 *)(b + 4) == 0) {
+            func_80044750(0xB1);
+            func_800451E0(0x8019A000);
+            func_80044750(0x12);
+            func_80044750(0x23);
+            func_80044750(0x2E);
+            func_80044750(0x21);
+            func_80044750(4);
+            func_80044750(0x200);
+        }
+        func_80137C20();
+        *(s16 *)(c + 4) = 0x20;
+        break;
+    case 0x20:
+        func_80138178();
+        func_801396C4();
+        break;
+    case 0x30:
+        func_801381E8();
+        func_801396C4();
+        break;
+    case 0x40:
+        v = *(s16 *)(D_80158A8C + 0x30C);
+        if (v < 0x20) {
+            *(s16 *)(c + 6) = 2;
+        } else if (v < 0x40) {
+            *(s16 *)(c + 6) = 1;
+        } else {
+            *(s16 *)(c + 6) = 0;
+        }
+        func_80138240();
+        func_801396C4();
+        if (*(u16 *)(c + 8) == 0) {
+            func_801396E4();
+        }
+        v = *(s16 *)(c + 0x30C);
+        if (v < 0) {
+            *(s16 *)(c + 4) = 0x50;
+            *(s16 *)(c + 10) = 0;
+            *(u16 *)(c + 8) = 0;
+            *(s16 *)(c + 6) = 0;
+            c[15] = 0;
+            c[14] = 0;
+            c[13] = 0;
+        } else if (v < 0x20) {
+            c[0x3E] = 0x3A;
+        } else if (v < 0x40) {
+            c[0x3E] = 0x36;
+        }
+        break;
+    case 0x50:
+        *(s32 *)(c + 0x218) = 0;
+        func_80138808();
+        break;
+    case 0x51:
+        func_80138E28();
+        break;
+    case 0x52:
+        *(s16 *)(c + 4) = 0x53;
+        *(s16 *)(c + 0x30E) = 1;
+        *(s16 *)(c + 0x3A4) = 0;
+        *(s16 *)(c + 0x3AA) = 0;
+        *(s16 *)(c + 0x3AC) = 1;
+        *(s16 *)(c + 0x366) = 0;
+        for (i = 0; i < 4; i++) {
+            *(s16 *)(c + 0x2D8 + i * 2) = 0x18;
+            c[0x353 + i] = 1;
+        }
+        for (i = 0x10; i != 0x15; i++) {
+            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
+            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 6;
+            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
+            c[0x310 + i] = 0;
+            *(s16 *)(c + 0x2A8 + i * 2) = 8;
+            *(s16 *)(c + 0x248 + i * 2) = 0;
+            *(s16 *)(c + 0x278 + i * 2) = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_08 = 0x60;
+        }
+        break;
+    case 0x53:
+        func_80138240();
+        func_8013923C();
+        func_80138D10();
+        func_80138D94();
+        func_80139770();
+        if (c[0x353] == 0 && c[0x354] == 0 && c[0x355] == 0 && c[0x356] == 0) {
+            *(s16 *)(c + 4) = 0x54;
+            *(s16 *)(c + 0x30E) = 2;
+            *(s16 *)(c + 0x30C) = 0x48;
+        }
+        break;
+    case 0x54:
+        func_80138240();
+        func_8013923C();
+        func_80138D10();
+        func_80138D94();
+        func_80139770();
+        if (*(s16 *)(c + 0x30C) < 0) {
+            func_80133AD0(0x504);
+            *(u16 *)(c + 4) = 0x80;
+            *(s16 *)(c + 0x30E) = 3;
+            c[0xB8] = 0x80;
+        }
+        break;
+    case 0x80:
+        func_80044750(0xC1);
+        d[0x52] = 1;
+        func_801392A0();
+        func_80138D10();
+        func_80138D94();
+        break;
+    case 0xA0:
+        func_80044750(0xB1);
+        c[0] = 0;
+        b[0x12] = 0;
+        *(s16 *)((u8 *)D_80158A70 + 0x1E) = 1;
+        *(s16 *)(b + 2) = 0xA0;
+        break;
+    }
+    func_80137A78();
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80139B98);
+#endif
