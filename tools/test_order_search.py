@@ -124,5 +124,29 @@ class Search(unittest.TestCase):
         self.assertLessEqual(len(calls), 20)
 
 
+class FastRescore(unittest.TestCase):
+    """--fast (T-11260): approximate search scores, then the best states and the written order exact."""
+
+    def test_rescore_picks_by_exact_score(self):
+        t = os_.Template(SRC)
+        approx = os_.search(t, lambda s: s[0][0][0] * 10 + s[1][0], jobs=2, max_exhaustive=100, progress=lambda m: None)
+        exact_calls = []
+
+        def exact(state):
+            exact_calls.append(state)
+            return 0 if state == approx[2][1] else 5      # the exact scorer prefers the third approximate state
+        res = os_.rescore_exact(approx, exact, 3, t.identity(), jobs=2)
+        self.assertEqual(res[0], (0, approx[2][1]))
+        self.assertIn(t.identity(), [s for _, s in res])
+        self.assertEqual(len(exact_calls), len(set(exact_calls)))
+        self.assertLessEqual(len(res), 4)
+
+    def test_rescore_tie_keeps_the_written_order(self):
+        t = os_.Template(SRC)
+        approx = os_.search(t, lambda s: 1, jobs=1, max_exhaustive=100, progress=lambda m: None)
+        res = os_.rescore_exact(approx, lambda s: 3, 4, t.identity(), jobs=1)
+        self.assertEqual(res[0], (3, t.identity()))
+
+
 if __name__ == "__main__":
     unittest.main()

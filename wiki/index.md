@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-11260-fast-scoring-order-search-permute|T-11260]] Fast scoring for order_search/permute/farm (In Review; `order_search.py --fast` opt-in with exact rescoring, the stripped compile scores differently; permute/farm have no scoring loop).
 - [[tickets/T-11250-faster-candidate-scoring|T-11250]] Faster candidate scoring for the solvers (In Review; cached strip + parallel prefetch, `tools/fastscore.py`, about 25x).
 - [[tickets/T-11520-tt-batch-4|T-11520]] TT batch 4 (Done; Opus near-miss pass + large-function Sonnet pass, 2 matches / 2,468 bytes, TT 43.8%).
 - [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180]] Twin-guided matching (Gemini) 39 (In Progress).

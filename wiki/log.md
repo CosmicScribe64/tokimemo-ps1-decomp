@@ -13258,3 +13258,7 @@ Created [[tickets/T-11240-typefix-bulk-m2c-autotweak]] (In Progress): `tools/typ
 ## [2026-10-14] ticket | T-11240 to In Review
 
 Added `tools/typefix.py` (post-m2c type rewrites, autotweak type edits), hooks in `tools/bulk_m2c.py` and `tools/autotweak.py`, `tools/test_typefix.py`, section in [[decompile-workflow]]. Bulk rerun and ninja left to the orchestrator (fast scorer).
+
+## [2026-10-14] ticket | T-11260 fast scoring for order_search, permute, farm
+
+[[tickets/T-11260-fast-scoring-order-search-permute]] (In Review). The stripped single-function compile of `tools/fastscore.py` gives different scores from order_search's full-unit compile (0 of 22 equal: sibling-call relocation names, trailing nops, rodata layout), so `tools/order_search.py --fast` is opt-in: stripped search, then exact rescoring of the best variants and the written order. Default path unchanged. About 2-3x candidates/s warm (4.0 to 13.2 and 5.5 to 11.2 with 8 threads). `tools/permute.py` and `tools/permuter_farm.py` have no scoring loop (one `build_base` per job, the permuter compiles). Tests in `tools/test_order_search.py`.
