@@ -957,5 +957,8 @@ typedef struct GyoziInitSprite44 {
     /* 0x43 */ u8 unk_43;
 } GyoziInitSprite44; /* size 0x44 */
 void func_80134EDC(void);
+void func_80134520(void);
+void func_80135CA0(void);
+void func_801342A4(void);
 
 #endif

@@ -160,4 +160,64 @@ void func_801349B8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134040", func_80134A14);
+void func_80134A14(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_80144E80 = D_80144FB0;
+        D_80144E84 = D_80144FE4;
+        D_80144E88 = D_80145018;
+        return;
+    case 1:
+        D_80144E80 = D_80144FC4;
+        D_80144E84 = D_80144FF8;
+        D_80144E88 = D_8014502C;
+        return;
+    case 2:
+        D_80144E80 = D_80144FB8;
+        D_80144E84 = D_80144FEC;
+        D_80144E88 = D_80145020;
+        return;
+    case 3:
+        D_80144E80 = D_80144FBC;
+        D_80144E84 = D_80144FF0;
+        D_80144E88 = D_80145024;
+        return;
+    case 4:
+        D_80144E80 = D_80144FD4;
+        D_80144E84 = D_80145008;
+        D_80144E88 = D_8014503C;
+        return;
+    case 5:
+        D_80144E80 = D_80144FC8;
+        D_80144E84 = D_80144FFC;
+        D_80144E88 = D_80145030;
+        return;
+    case 6:
+        D_80144E80 = D_80144FCC;
+        D_80144E84 = D_80145000;
+        D_80144E88 = D_80145034;
+        return;
+    case 7:
+        D_80144E80 = D_80144FC0;
+        D_80144E84 = D_80144FF4;
+        D_80144E88 = D_80145028;
+        return;
+    case 8:
+        D_80144E80 = D_80144FAC;
+        D_80144E84 = D_80144FE0;
+        D_80144E88 = D_80145014;
+        return;
+    case 9:
+        D_80144E80 = D_80144FD0;
+        D_80144E84 = D_80145004;
+        D_80144E88 = D_80145038;
+        return;
+    case 10:
+        D_80144E80 = D_80144FDC;
+        D_80144E84 = D_80145010;
+        D_80144E88 = D_80145044;
+        /* fallthrough */
+    default:
+        return;
+    }
+}

@@ -736,4 +736,6 @@ void func_8013E760(void);
 
 void func_8013A2EC(void);
 void func_8013A668(void);
+void func_80134A14(void);
+
 #endif
