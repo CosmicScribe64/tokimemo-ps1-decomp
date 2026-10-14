@@ -506,6 +506,9 @@ extern s32 D_8013C334;
 extern s32 D_8013C338;
 extern s32 D_8013C340;
 extern s32 D_8013C348;
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80132400(void);
+
 #endif /* OVL_ENDING_H */
 
 #ifndef OVL_ENDING_TIMER_T9780

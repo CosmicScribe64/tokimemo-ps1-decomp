@@ -283,7 +283,49 @@ void func_8013ED84(void) {
     D_80148610 = 0x8019B460;
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013EB10", func_8013FBF8);
+void func_8013FBF8(void) {
+    func_8008E6AC();
+    switch (D_800F6479) {
+    case 0:
+        func_801400D0();
+        break;
+    case 1:
+        func_80140780();
+        break;
+    case 2:
+        func_80140C90();
+        break;
+    case 3:
+        func_80141944();
+        break;
+    case 4:
+        func_80142D40();
+        break;
+    case 5:
+        func_80143160();
+        break;
+    case 6:
+        func_80143D20();
+        break;
+    case 7:
+        func_801447F0();
+        break;
+    case 8:
+        func_80145384();
+        break;
+    default:
+        func_80052060();
+        break;
+    }
+    func_8008A148();
+    func_8008F54C();
+    func_80076450(2);
+    func_80074A14();
+    func_80075BFC();
+    func_800748B8();
+    func_8008E8B4();
+    func_800530E0();
+}
 
 void func_8013FD20(void) {
     D_800D9234 = (u8 *)&D_80148620;
