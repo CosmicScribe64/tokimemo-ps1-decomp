@@ -43,7 +43,7 @@ void func_8013E454(void) {
     func_8013E320();
 }
 
-/* NON_MATCHING: T-10710, 130 of 130 instructions with locals p/r/q for D_80158A60/D_80158A64/&D_800E7D10; differences are the ugen temp numbering (original skips t8 after the sll) and the constant 1 in t0 (uopt colour) instead of a ugen temp */
+/* NON_MATCHING: T-11540 (order_search: operand order 4 * x of the p[84] shift gave 101 -> 99 diff rows; store order of p[82..65] gives no gain), T-10710, 130 of 130 instructions with locals p/r/q for D_80158A60/D_80158A64/&D_800E7D10; differences are the ugen temp numbering (original skips t8 after the sll) and the constant 1 in t0 (uopt colour) instead of a ugen temp */
 #ifdef NON_MATCHING
 void func_8013E498(void) {
     u8 *p;
@@ -60,8 +60,8 @@ void func_8013E498(void) {
         p[83] = 1;
     }
     p[82] = (u32)(*(s32 *)(q + 0x3C) * 8) >> 0x1D;
+    p[84] = (u32)(4 * *(s32 *)(q + 0x3C)) >> 0x1F;
     p[53] = 0xFF;
-    p[84] = (u32)(*(s32 *)(q + 0x3C) * 4) >> 0x1F;
     p[59] = 0xFF;
     p[65] = 0xFF;
     if (D_800E7D3C == 0) {
