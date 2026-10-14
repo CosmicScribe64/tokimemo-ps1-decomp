@@ -58,6 +58,7 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
 - [ ] [[tickets/T-11230-m2c-variant-sweep|T-11230 m2c variant sweep in bulk_m2c]]
 - [ ] [[tickets/T-11250-faster-candidate-scoring|T-11250 Faster candidate scoring for the solvers]]
 - [ ] [[tickets/T-11220-regdiff-guided-autotweak|T-11220 regdiff-guided edit ordering in autotweak]]

@@ -27,7 +27,7 @@ in funcdiff, so the other guarded drafts of the file keep the normal build's rod
 
 Usage (in Docker, repo root):
     python3 tools/order_search.py func_80147150 [--unit TT] [-j 8] [--max-exhaustive 2000]
-                                  [--budget 3000] [--no-resolve] [--top 5] [--dry-run]
+                                  [--budget 3000] [--no-resolve] [--top 5] [--dry-run] [--fast]
 
 Exhaustive when the number of combinations is at most --max-exhaustive, otherwise a hill-climb from the
 written order (moves: put one unit at another position, flip one swap) until no neighbour improves or
@@ -305,7 +305,25 @@ def compile_variant(c, text, work, non_matching):
     return str(obj)
 
 
-def make_scorer(c, name, template, work_root, resolve=False):
+def compile_variant_fast(builder, c, text, work):
+    """Compile only the target function of `text` (T-11260): fastscore's stripped single-function unit,
+    the pipeline of autotweak and permute. 3-4x cheaper than compile_variant, but the object lacks the
+    other functions, so relocations to them (and the nops after the function) read differently and the
+    score is an approximation of the full-unit score."""
+    import funcdiff_verify as proof
+    import trailing_pad
+    work.mkdir(parents=True, exist_ok=True)
+    source = work / "stripped.c"
+    source.write_text(builder.build(text))
+    obj = work / "stripped.o"
+    proof.command(["python3", "tools/cc.py", str(source), str(obj), "ido", "5.3"])
+    trailing_pad.pad_functions(str(obj), str(c.src), set())
+    return str(obj)
+
+
+def make_scorer(c, name, template, work_root, resolve=False, fast=False):
+    """score(state) -> diff rows against the original. fast: the approximate single-function compile
+    (compile_variant_fast); the default is the exact full-unit compile."""
     import funcdiff
     import funcdiff_verify as proof
     non_matching = proof.guarded(c.src, name)
@@ -316,6 +334,11 @@ def make_scorer(c, name, template, work_root, resolve=False):
     if want is None:
         raise SystemExit("order_search.py: %s is missing from the original object" % name)
     get = funcdiff.resolved_functions if resolve else funcdiff.functions
+    builder = None
+    if fast:
+        import fastscore
+        import permute
+        builder = fastscore.BaseBuilder(permute, os.getcwd(), name)
 
     def score(state):
         text = template.render(state)
@@ -323,7 +346,8 @@ def make_scorer(c, name, template, work_root, resolve=False):
         # in parallel.
         work = work_root / hashlib.sha1(repr(state).encode()).hexdigest()[:16]
         try:
-            got = get(compile_variant(c, text, work, non_matching), [name])[name]
+            obj = compile_variant_fast(builder, c, text, work) if fast else compile_variant(c, text, work, non_matching)
+            got = get(obj, [name])[name]
         except (OSError, ValueError, SystemExit) as err:
             print("order_search: variant failed to compile (%s): %s" % (template.describe(state), str(err).splitlines()[0]))
             return 10 ** 6
@@ -336,6 +360,30 @@ def make_scorer(c, name, template, work_root, resolve=False):
     return score
 
 
+def rescore_exact(results, score, count, ident, jobs):
+    """The `count` best states of an approximate search plus the written order, scored with the exact
+    `score`; [(exact score, state)] with the same tie rule as search()."""
+    states = list(dict.fromkeys([s for _, s in results[:count]] + [ident]))
+    exact = {}
+    lock, pending = threading.Lock(), list(states)
+
+    def worker():
+        while True:
+            with lock:
+                if not pending:
+                    return
+                s = pending.pop()
+            v = score(s)
+            with lock:
+                exact[s] = v
+    threads = [threading.Thread(target=worker) for _ in range(max(1, min(jobs, len(states))))]
+    for th in threads:
+        th.start()
+    for th in threads:
+        th.join()
+    return sorted(((v, s) for s, v in exact.items()), key=lambda t: (t[0], t[1] != ident))
+
+
 def main(argv):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("func")
@@ -346,6 +394,10 @@ def main(argv):
     ap.add_argument("--no-resolve", dest="resolve", action="store_false",
                     help="compare symbol names instead of resolved words (faster, but relocation naming noise keeps "
                          "even a matching variant above 0)")
+    ap.add_argument("--fast", action="store_true",
+                    help="search with the single-function compile (3-4x faster, approximate scores: relocations to the "
+                         "other functions read differently), then score the best --top variants and the written order "
+                         "with the exact full-unit compile; the result is chosen among those exact scores")
     ap.add_argument("--top", type=int, default=5, help="variants to list")
     ap.add_argument("--dry-run", action="store_true", help="write back the written order (markers removed), not the best")
     args = ap.parse_args(argv)
@@ -361,7 +413,12 @@ def main(argv):
     try:
         score = make_scorer(c, name, template, work_root, args.resolve)
         start = time.time()
-        results = search(template, score, args.j, args.max_exhaustive, args.budget)
+        if args.fast:
+            results = search(template, make_scorer(c, name, template, work_root / "fast", args.resolve, fast=True),
+                             args.j, args.max_exhaustive, args.budget)
+            results = rescore_exact(results, score, max(args.top, 5), template.identity(), args.j)
+        else:
+            results = search(template, score, args.j, args.max_exhaustive, args.budget)
         written = dict((s, v) for v, s in results).get(template.identity())
         print("order_search: %d variant(s) compiled in %.0f s; written order scores %s" %
               (len(results), time.time() - start, written))

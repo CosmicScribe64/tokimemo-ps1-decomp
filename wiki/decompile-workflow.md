@@ -313,7 +313,7 @@ Validation: with the four stores of `func_80147150` scrambled to the pre-T-11500
 about 2 s and the one scoring 0 was the matched source, byte for byte; the reversed sum in `func_80139770` was
 flipped back (score 4 -> 0). Keep blocks small: 7 units are 5,040 orders. Rebuild `asm/` after switching branches
 (`configure.py` + `ninja`), or a stale split makes every variant fail to compile, as with funcdiff. Tests:
-`tools/test_order_search.py` (synthetic).
+`--fast` (T-11260) searches with the single-function compile (2-3x faster, scores differ from the full-unit compile) and rescores the best variants and the written order exactly; default is exact. `tools/test_order_search.py` (synthetic).
 ## Cheat-sheet auto-tweaker (T-11170)
 
 `tools/autotweak.py` tries the C changes of [[register-cheatsheet]] on drafts under `#ifdef NON_MATCHING` instead of random rewrites. Each step scores every single edit of the current best text with the permuter's single-function compile (`permute.py` setup, `tools/cc.py`, upstream scorer) and keeps the best improvement; when none improves, it tries pairs of edits. Edits: adjacent statement order (T-11200, below), byte view of a switch selector, operand order of `+`/`==`/`!=`, two statements on one line or split, `x = x + k` <-> `x += k`, empty test `if (v) {}` before a use, unused `s32` local, adjacent declaration swap, `* 2^n` <-> `<< n`, inline or introduce a temporary, width and signedness of a narrow local or parameter. A score of 0 is checked like a permuter output (ninja object, `funcdiff --resolve`, unit sha1). Only then is the guard block replaced by the plain function and `MATCH UNIT:func` printed. Byte views, empty tests and unused locals carry `/* FAKE: ... T-11170 */`.
