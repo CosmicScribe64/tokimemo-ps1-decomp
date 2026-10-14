@@ -431,7 +431,7 @@ void func_8013B41C(void) {
     }
 }
 
-/* T-11000 near miss: structure and stores match; temp t (i*2) is in $v0 and the if/else index in $v1, the original has them swapped, and the original hoists D_80151A50 before i = 0 (44 listing rows). */
+/* T-11540 near miss (order_search, 20 rows left of 22): temp t (i*2) is in $v0 and the if/else index in $v1, the original has them swapped (declaration order and operand swaps of c + t*2 / c + j*2 do not change it; IDO canonicalizes those sums), and the original hoists D_80151A50 before i = 0 (44 listing rows). */
 #ifdef NON_MATCHING
 void func_8013B4A0(void) {
     u8 *c;
@@ -449,9 +449,9 @@ void func_8013B4A0(void) {
     if (*(u16 *)(c + 0x3AC) >= 6) {
         *(u16 *)(c + 0x3AC) = 0;
     }
-    f = c;
     r = c;
     i = 0;
+    f = c;
     do {
         t = i * 2;
         a = c + t;
@@ -464,7 +464,7 @@ void func_8013B4A0(void) {
             r[0x182] = 0;
             r[0x188] = 0;
             f[0x320] = 1;
-            a2 = c + t * 2;
+            a2 = t * 2 + c;
             *(s16 *)(a + 0x2C8) = 8;
             if (i >= 2) {
                 j = t + 2;

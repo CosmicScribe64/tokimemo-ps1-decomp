@@ -550,8 +550,7 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D73C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D988);
 
-/* T-11520 near miss: 7 differing instructions, ugen temporaries only (t6/t7 swapped from the u sum to the v sum: our two adds come out as shift + flags, the original's as flags + shift; every operand order of the u, v and clut sums is worse). Fixed in T-11520: the POLY_G4 block written as setPolyG4/setXY4/setRGB0..3 lines (len and code on one line, the eight coordinates on one line, one line per colour; as1 reorders the stores inside a line and ugen numbers the constants as the original), c loaded before buffer, and the tile index as (row + col) & 0x3FF without the n counter. FAKE: pad1/pad2 only reproduce the 0x78 frame, original source unknown. */
-#ifdef NON_MATCHING
+/* Tile map of D_80158A64 + 0x18, used only here: index (u16 per cell), 3-byte records, flag bytes. */
 typedef struct TtTileMap {
     /* 0x00 */ u8 *index;
     /* 0x04 */ u8 *record;
@@ -581,8 +580,10 @@ void func_8013DE10(void) {
             q->x = (col << 4) - 0x80;
             q->y = row + 0x70;
             r = ((TtTileMap *)*(u8 **)(c + 0x18))->record + ((TtTileMap *)*(u8 **)(c + 0x18))->index[(row + col) & 0x3FF] * 3;
-            q->u = (((TtTileMap *)*(u8 **)(c + 0x18))->flags[r[0]] & 0x80) + ((r[1] & 7) << 4);
-            q->v = ((((TtTileMap *)*(u8 **)(c + 0x18))->flags[r[0]] & 0x40) * 2) + ((r[1] >> 3) << 4);
+            /* Operand order of both sums and of the flags address sets the ugen temps (t6/t7); found with
+               tools/order_search.py. T-11540 */
+            q->u = ((r[1] & 7) << 4) + (*(r[0] + ((TtTileMap *)*(u8 **)(c + 0x18))->flags) & 0x80);
+            q->v = ((r[1] >> 3) << 4) + ((*(r[0] + ((TtTileMap *)*(u8 **)(c + 0x18))->flags) & 0x40) * 2);
             q->clut = (((r[2] >> 4) + 0xF0) << 6) + (r[2] & 0xF);
             q->tag.addr = buffer->ordering[13].addr;
             buffer->ordering[13].addr = (u32)q;
@@ -614,8 +615,5 @@ void func_8013DE10(void) {
     ((TtOtTag *)m)->addr = buffer->ordering[15].addr;
     buffer->ordering[15].addr = (u32)m;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013DE10);
-#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013E1E8);

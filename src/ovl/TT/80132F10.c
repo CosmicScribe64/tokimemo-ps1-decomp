@@ -72,21 +72,17 @@ void func_80133058(u8 *arg0, u16 arg1) {
     }
 }
 
-/* T-11000 near miss: stack slot of id matches (declared before t); beq operand order of the hoisted -1 (s3, v0), call-argument/store scheduling in the record init; about 45 listing rows. */
-#ifdef NON_MATCHING
+/* T-11540/T-11550: matched without the t and x locals: the record's y is read inline in both loop tests (uopt CSEs it; the named s16 gave the beq operand order v0, s3) and a+0x24 is computed from the stored a+0x1C (the x local took v0 and shifted the ugen temporaries). */
 void func_801330D8(void) {
     u8 *g;
     u8 *a;
     s32 id;
-    s16 t;
-    s32 x;
     s32 m;
 
     m = -1;
     g = (u8 *)D_80158A70;
     while (1) {
-        t = *(s16 *)(*(u8 **)(g + 8) + 2);
-        if (m == t || *(u16 *)(g + 2) < (u32)t || (a = func_80132F10(D_80158A9C, D_80158A9C + 0xF00)) == 0) {
+        if (m == *(s16 *)(*(u8 **)(g + 8) + 2) || *(u16 *)(g + 2) < (u32)*(s16 *)(*(u8 **)(g + 8) + 2) || (a = func_80132F10(D_80158A9C, D_80158A9C + 0xF00)) == 0) {
             break;
         }
         *(u16 *)(a + 2) = *(u16 *)(*(u8 **)(g + 8) + 4);
@@ -105,10 +101,9 @@ void func_801330D8(void) {
             break;
         }
         *(s32 *)(a + 0x20) = *(s16 *)(*(u8 **)(g + 8)) << 16;
-        x = *(s16 *)(*(u8 **)(g + 8) + 2) << 16;
-        *(s32 *)(a + 0x1C) = x;
+        *(s32 *)(a + 0x1C) = *(s16 *)(*(u8 **)(g + 8) + 2) << 16;
+        *(s32 *)(a + 0x24) = *(s32 *)g - *(s32 *)(a + 0x1C);
         *(s32 *)(a + 0x28) = 0;
-        *(s32 *)(a + 0x24) = *(s32 *)g - x;
         *(s32 *)(a + 0x2C) = 0;
         *(s16 *)(a + 0x5E) = 0;
         a[0x60] = 0;
@@ -126,9 +121,6 @@ void func_801330D8(void) {
         *(u8 **)(g + 8) += 6;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_801330D8);
-#endif
 
 void func_80133288(u8 *arg0) {
     u8 *q;

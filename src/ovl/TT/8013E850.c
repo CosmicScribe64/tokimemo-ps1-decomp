@@ -1,8 +1,7 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-/* T-11520 near miss: 2 instruction lines left. Storing the 0 through another symbol (FAKE, see the line) gives the original 'lbu; or; sb' for the first |= (every cast, signed, struct and local form of the same symbol let uopt forward the 0 into 'sb v0'). Left: the original puts the store's lui $at in the delay slot of the first test (bnez t9) and a nop after the second; here as1 fills the second test's delay slot with it. Tried: the && / nested if / goto forms of the condition, the e load in three places, permuter 240 s (no gain). */
-#ifdef NON_MATCHING
+/* T-11550: matched by writing the restart/loop/reset gotos as two nested for (;;) loops (break to the reset call, goto tail out): same code, but the CFG lets as1 fill the first test's delay slot with the store's lui $at (the goto form left it in the second test's slot). The 0 is still stored through another symbol (FAKE, see the line) so uopt keeps 'lbu; or; sb' for the first |=. */
 void func_8013E850(void) {
     u8 *a;
     u8 *b;
@@ -19,66 +18,65 @@ void func_8013E850(void) {
     func_8013E824();
     func_801430D4();
     func_80133970();
-restart:
-    b[0xE] = 0;
-    b[0x10] = 0;
-    func_80044750(0x21);
-    func_80044750(0x22);
-    func_80044750(0x2F);
-    func_80044750(0x21);
-    func_80044750(0xF1);
-    func_800452C4();
-loop:
-    func_8013EF38();
-    if (func_8013EE88() != 0) {
-        if (a[0x53] != 0) {
-            goto reset;
+    for (;;) {
+        b[0xE] = 0;
+        b[0x10] = 0;
+        func_80044750(0x21);
+        func_80044750(0x22);
+        func_80044750(0x2F);
+        func_80044750(0x21);
+        func_80044750(0xF1);
+        func_800452C4();
+        for (;;) {
+            func_8013EF38();
+            if (func_8013EE88() != 0) {
+                if (a[0x53] != 0) {
+                    break;
+                }
+                *(u16 *)b = 8;
+                *(s16 *)(b + 6) = 0;
+                *(s16 *)(b + 4) = 0;
+                *(s16 *)(b + 2) = 0;
+                b[0xB] = 0;
+                b[0xA] = 0;
+                b[9] = 0;
+            }
+            if (b[0x11] != 0) {
+                func_8013ED70();
+            }
+            if (b[0x10] == 0) {
+                D_801564B0[*(u16 *)b]();
+                *(u16 *)(a + 0xA) += 1;
+            }
+            if (a[0x55] != 0) {
+                goto tail;
+            }
+            func_80148584(*(u16 *)(t + 8), 0x27);
+            *(u16 *)(a + 8) += 1;
+            func_80148460();
+            func_8014D168();
+            func_80144854();
+            func_80148154();
+            func_8014ACEC();
+            func_80147150();
+            func_801491F0();
+            func_8014C84C();
+            func_8013C1FC();
+            func_80142C70();
+            func_80147644();
+            func_801336F8();
+            func_80135148();
+            func_8013E1E8();
+            func_8009C674(0);
+            func_800AD950(0);
+            func_80142110();
+            func_8013EFAC();
+            func_80079B34();
+            func_800455C4();
+            func_80133B3C();
         }
-        *(u16 *)b = 8;
-        *(s16 *)(b + 6) = 0;
-        *(s16 *)(b + 4) = 0;
-        *(s16 *)(b + 2) = 0;
-        b[0xB] = 0;
-        b[0xA] = 0;
-        b[9] = 0;
+        func_8013E320();
     }
-    if (b[0x11] != 0) {
-        func_8013ED70();
-    }
-    if (b[0x10] == 0) {
-        D_801564B0[*(u16 *)b]();
-        *(u16 *)(a + 0xA) += 1;
-    }
-    if (a[0x55] == 0) {
-        func_80148584(*(u16 *)(t + 8), 0x27);
-        *(u16 *)(a + 8) += 1;
-        func_80148460();
-        func_8014D168();
-        func_80144854();
-        func_80148154();
-        func_8014ACEC();
-        func_80147150();
-        func_801491F0();
-        func_8014C84C();
-        func_8013C1FC();
-        func_80142C70();
-        func_80147644();
-        func_801336F8();
-        func_80135148();
-        func_8013E1E8();
-        func_8009C674(0);
-        func_800AD950(0);
-        func_80142110();
-        func_8013EFAC();
-        func_80079B34();
-        func_800455C4();
-        func_80133B3C();
-        goto loop;
-    }
-    goto tail;
-reset:
-    func_8013E320();
-    goto restart;
 tail:
     D_800E7D3C = *(u16 *)(a + 0x30);
     D_800E7D42 = a[0x32];
@@ -110,9 +108,6 @@ tail:
     func_8009C674(0);
     func_800AE0B0("return to main!!\n");
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E850", func_8013E850);
-#endif
 
 void func_8013EC1C(void) {
     u8 *q = D_80158A64;

@@ -13270,3 +13270,50 @@ Created [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c]] (In Progress): auto
 ## [2026-10-14] ticket | T-11270 to In Review
 
 Exact rescoring in `tools/autotweak.py` (climb: top `--exact-top` 3 plus every candidate at or under `--exact-threshold` 40 per stage rescored with the full-unit compile, exact 0 verified, steps accepted by exact score, cache by text hash) and `tools/bulk_m2c.py` (variant/start pick, climb). Full-unit scorer reused from `tools/order_search.py` (`make_text_scorer`). `--no-exact-rescore` restores the stripped-only path. Tests with disagreeing mocked scorers in `tools/test_autotweak.py` and `tools/test_bulk_m2c.py`; [[decompile-workflow]] updated. Real-build measurement left to the orchestrator.
+
+
+## [2026-10-14] ticket | T-11540 TT order_search pass opened
+
+Opened [[tickets/T-11540-tt-order-search-pass]] (In Progress, stacked on T-11520): `tools/order_search.py` on the TT
+near misses that are down to scheduling or temp numbering. (Opened after the first runs had started.)
+
+## [2026-10-14] build | T-11540 func_8013DE10 matched with order_search
+
+`tools/order_search.py` matched TT `func_8013DE10` (984 bytes): both u/v sums reversed and the flags address written
+`*(r[0] + flags)`, found among 192 operand-order variants in about 4 s. `func_8013E850` showed no order dependence
+(written order best over 96 + 198 variants). TT 206/303 (44.7%); grand total `5426/6958   1171560/2279368  51.4%`;
+27/27. Tool fixes (tie keeps the written order, nested `ORDER_SWAP`) pushed to PR #11. See
+[[tickets/T-11540-tt-order-search-pass]].
+
+## [2026-10-14] build | T-11540 order_search pass over the guarded TT drafts
+
+A Sonnet agent ran `tools/order_search.py` over the guarded TT near misses (12 order-type symptoms first, a few of the
+register-allocation ones briefly). No further match; five drafts improved through store order (`func_8013C1FC` down to the
+buf+idx*4 `addu` operand order, `func_80140920`, `func_801330D8`, `func_8013B4A0`, `func_8013E498`). Top-level `+` swaps
+rarely matter (IDO canonicalizes); operand order inside address arithmetic and statement order do. Removed the stale
+NON_MATCHING draft of `func_8014CC04` (matched since T-9940). 27/27; prototype and global checks clean. Notes in
+[[matching-notes]] ("TT overlay, order_search pass (T-11540)").
+
+## [2026-10-14] ticket | T-11540 Done
+
+Inline review against CODING_STANDARDS.md: guard comments carry T-11540 and the lines left, no new fakematches, the stale
+draft removal changes no bytes. Moved [[tickets/T-11540-tt-order-search-pass]] to Done.
+
+## [2026-10-14] ticket | T-11550 TT Opus near-miss pass opened
+
+Opened [[tickets/T-11550-tt-opus-near-miss-pass]] (In Progress) on the T-11540 branch, rebased on main with autotweak's
+order stage (T-11200) and regdiff hints (T-11220): one Opus agent on the eight closest guarded TT drafts with all solvers.
+
+## [2026-10-14] build | T-11550 TT Opus pass: 5 matches
+
+One Opus agent with autotweak, order_search, regdiff and reasoning on the eight closest guarded TT drafts (about 45
+minutes, 277k tokens): matched `func_8013E850`, `func_8013C1FC`, `func_80140624`, `func_801330D8`, `func_80140920`;
+`func_80142350` 11 -> 2 lines; `func_80144A04` and `func_801392A0` unchanged. TT 211/303 (48.0%); grand total
+`5578/6958   1230932/2279368  54.0%`. Full rebuild 27/27; funcdiff MATCH for all five; prototype and global checks clean.
+Notes in [[matching-notes]] ("TT overlay, Opus pass with all solvers (T-11550)"), 8 rows in [[data/t0018-cases]].
+
+## [2026-10-14] ticket | T-11550 Done
+
+Inline review against CODING_STANDARDS.md: new fakematches (`vx`/`vy` frame locals, the `u8 temp` in the guarded
+`func_80142350` draft) carry `FAKE` with the ticket; guard removals checked by diff. No findings. Moved
+[[tickets/T-11550-tt-opus-near-miss-pass]] to Done.

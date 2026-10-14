@@ -311,8 +311,7 @@ void func_8013FF14(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_801400B0);
 
-/* T-11520 near miss: 9 instruction lines left besides branch offsets, all in the angle loop. The stack layout (n and i declared after the TtPoint14, so i's home is sp+0x4C) and the x/y table pointer order (both assignments on one line) now match. Left: the original keeps the 0x900 bound in s1, the strength-reduced angle + i in s0 and spills the counter i (v1) around the call, then compares with a nop delay slot; here i (priority 15.5, ties with angle + i and wins on bit order) takes s0, the sum s1 and n (5.5) is spilled. Tried: no n (0x900 not hoisted, li at), i from -2 to 18 or 0 to 20 with i * 0x80 (LFTR gives the same ranges), an explicit second induction variable, i initialised at function entry. */
-#ifdef NON_MATCHING
+/* T-11520/T-11550: matched once the case-0x40 tables are read as x[i]/y[i] in counted loops (i < 5, i < 4): uopt strength-reduces them to the same pointer walk; with i shared by those loops (likely a lower priority for i) the angle loop keeps 0x900 (n) in s1 and angle + i in s0 and spills i, as in the original. The stack layout needs n and i declared after the TtPoint14. */
 void func_80140624(void) {
     u16 mode;
     u8 *other;
@@ -345,22 +344,19 @@ void func_80140624(void) {
             if ((p->unk_366 & 0x1F) == 0x1F) {
                 func_80133AD0(0x500);
                 if (((u8 *) p)[0x106] == 0) {
-                    x = D_80155EC8; y = D_80155EDC;
-                    do {
-                        func_80134874(p->unk_14 - *x, *y + p->unk_16);
-                        func_80134874(*x + p->unk_14, *y + p->unk_16);
-                        y++;
-                        x++;
-                    } while (y != D_80155EF0);
+                    x = D_80155EC8;
+                    y = D_80155EDC;
+                    for (i = 0; i < 5; i++) {
+                        func_80134874(p->unk_14 - x[i], y[i] + p->unk_16);
+                        func_80134874(x[i] + p->unk_14, y[i] + p->unk_16);
+                    }
                 } else {
                     x = D_80155EF0;
                     y = D_80155F04;
-                    do {
-                        func_80134874(p->unk_14 - *x, *y + p->unk_16);
-                        func_80134874(*x + p->unk_14, *y + p->unk_16);
-                        y++;
-                        x++;
-                    } while (y != D_80155F14);
+                    for (i = 0; i < 4; i++) {
+                        func_80134874(p->unk_14 - x[i], y[i] + p->unk_16);
+                        func_80134874(x[i] + p->unk_14, y[i] + p->unk_16);
+                    }
                 }
             }
         } else if (p->unk_366 < 0x100) {
@@ -391,23 +387,19 @@ void func_80140624(void) {
     }
     p->unk_366++;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140624);
-#endif
 
-/* T-11510 near miss (about 40 differing instructions, all temp-register numbering and store scheduling; structure, frame, spill slots and every constant match): case 0x40 takes t9/t0 where the original loads 0x3EC into t3/t4 and interleaves the 0x210/0x212 updates (24 orders of the four statements tried, 10 min permuter: no gain); later cases follow by cascade. */
-#ifdef NON_MATCHING
+/* T-11540/T-11550: matched once case 0x52 reads +0x3EC/+0x3F0 back from memory for the /0x10000 stores (the vx/vy copies took a register and spilled one more word) and pt is declared after vy, which puts it at sp+56. */
 void func_80140920(void) {
     u8 *b;
     u8 *c;
     u8 *a;
     u16 mode;
     s32 t; /* FAKE: unused, needed for the frame size. T-11510 */
-    s32 vx;
-    s32 vy;
+    s32 vx; /* FAKE: unused, needed for the frame layout (pt at sp+56). T-11550 */
+    s32 vy; /* FAKE: unused, needed for the frame layout (pt at sp+56). T-11550 */
+    TtPoint14 pt;
     s16 x;
     s16 y;
-    TtPoint14 pt;
     c = D_80158A8C;
     mode = *(u16 *)(c + 8);
     b = D_80158A60;
@@ -440,9 +432,9 @@ void func_80140920(void) {
             c[0x327] = 0;
         }
         c[0x20E] = 0;
-        *(s32 *)(c + 0x3EC) += 0x8000;
-        *(s16 *)(c + 0x212) += 0x20;
         *(s16 *)(c + 0x210) += 0x20;
+        *(s16 *)(c + 0x212) += 0x20;
+        *(s32 *)(c + 0x3EC) += 0x8000;
         *(s16 *)(c + 0x2A6) = *(s32 *)(c + 0x3EC) / 0x10000;
         if (*(s16 *)(c + 0x212) >= 0x1000) {
             *(s16 *)(c + 8) = 0x50;
@@ -487,13 +479,11 @@ void func_80140920(void) {
         }
         c[0x20E] = 0;
         *(s32 *)(c + 0x3EC) += func_800A0140(D_80155F18) * 0x1C;
-        vx = *(s32 *)(c + 0x3EC);
         *(s32 *)(c + 0x3F0) += func_800A0070(D_80155F18) * 0x1C;
-        vy = *(s32 *)(c + 0x3F0);
-        *(s16 *)(c + 0x276) = vx / 0x10000;
-        *(s16 *)(c + 0x2A6) = vy / 0x10000;
-        y = *(s16 *)(c + 0x2A6) + *(s16 *)(c + 0x16);
-        x = *(s16 *)(c + 0x276) + *(s16 *)(c + 0x14);
+        *(s16 *)(c + 0x276) = *(s32 *)(c + 0x3EC) / 0x10000;
+        *(s16 *)(c + 0x2A6) = *(s32 *)(c + 0x3F0) / 0x10000;
+        x = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x276);
+        y = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x2A6);
         if (y >= 0x139 || y < -0x48 || x < -0xC8 || x >= 0xC9) {
             c[0x327] = 0;
             *(s16 *)(c + 8) = 0xA0;
@@ -509,9 +499,6 @@ void func_80140920(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140920);
-#endif
 
 void func_80140CBC(void) {
     switch (*(u16 *)(D_80158A8C + 0x30E)) {
