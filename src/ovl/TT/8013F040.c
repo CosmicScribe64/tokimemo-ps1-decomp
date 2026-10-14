@@ -311,8 +311,7 @@ void func_8013FF14(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_801400B0);
 
-/* T-11520 near miss: 9 instruction lines left besides branch offsets, all in the angle loop. The stack layout (n and i declared after the TtPoint14, so i's home is sp+0x4C) and the x/y table pointer order (both assignments on one line) now match. Left: the original keeps the 0x900 bound in s1, the strength-reduced angle + i in s0 and spills the counter i (v1) around the call, then compares with a nop delay slot; here i (priority 15.5, ties with angle + i and wins on bit order) takes s0, the sum s1 and n (5.5) is spilled. Tried: no n (0x900 not hoisted, li at), i from -2 to 18 or 0 to 20 with i * 0x80 (LFTR gives the same ranges), an explicit second induction variable, i initialised at function entry. */
-#ifdef NON_MATCHING
+/* T-11520/T-11550: matched once the case-0x40 tables are read as x[i]/y[i] in counted loops (i < 5, i < 4): uopt strength-reduces them to the same pointer walk; with i shared by those loops (likely a lower priority for i) the angle loop keeps 0x900 (n) in s1 and angle + i in s0 and spills i, as in the original. The stack layout needs n and i declared after the TtPoint14. */
 void func_80140624(void) {
     u16 mode;
     u8 *other;
@@ -345,22 +344,19 @@ void func_80140624(void) {
             if ((p->unk_366 & 0x1F) == 0x1F) {
                 func_80133AD0(0x500);
                 if (((u8 *) p)[0x106] == 0) {
-                    x = D_80155EC8; y = D_80155EDC;
-                    do {
-                        func_80134874(p->unk_14 - *x, *y + p->unk_16);
-                        func_80134874(*x + p->unk_14, *y + p->unk_16);
-                        y++;
-                        x++;
-                    } while (y != D_80155EF0);
+                    x = D_80155EC8;
+                    y = D_80155EDC;
+                    for (i = 0; i < 5; i++) {
+                        func_80134874(p->unk_14 - x[i], y[i] + p->unk_16);
+                        func_80134874(x[i] + p->unk_14, y[i] + p->unk_16);
+                    }
                 } else {
                     x = D_80155EF0;
                     y = D_80155F04;
-                    do {
-                        func_80134874(p->unk_14 - *x, *y + p->unk_16);
-                        func_80134874(*x + p->unk_14, *y + p->unk_16);
-                        y++;
-                        x++;
-                    } while (y != D_80155F14);
+                    for (i = 0; i < 4; i++) {
+                        func_80134874(p->unk_14 - x[i], y[i] + p->unk_16);
+                        func_80134874(x[i] + p->unk_14, y[i] + p->unk_16);
+                    }
                 }
             }
         } else if (p->unk_366 < 0x100) {
@@ -391,9 +387,6 @@ void func_80140624(void) {
     }
     p->unk_366++;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140624);
-#endif
 
 /* T-11540 near miss (25 differing rows, order_search): case 0x40 now matches (the 0x212 update before the 0x3EC update), x = 0x14 + 0x276 sum order and x before y in case 0x52. Left: pt sits 4 bytes lower in the frame (sp+52, original sp+56) and case 0x52 spills one more word (sw t1,80(sp)) with other temp numbering (vx/vy/x/y declaration orders tried: no change); the rest follows by cascade. */
 #ifdef NON_MATCHING
