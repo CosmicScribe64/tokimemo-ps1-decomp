@@ -534,7 +534,32 @@ void func_8013C510(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C580);
+void func_8013C580(void) {
+    u8 sel;
+    GameState *g; /* FAKE: g and the u8 copy of the selector only move it to $v1 (T-11120, permuter) */
+
+    if (func_80053F04() != 0) {
+        func_8006BD6C(1);
+        func_80053D10();
+        g = &D_800E6280;
+        sel = g->unk_1115;
+        if (sel == 1) {
+            func_800AE0B0("EXIST CARD!");
+            func_80042808();
+        } else if (sel == 0xF1) {
+            func_800AE0B0("FILE_SEL UNFORMAT FIND!");
+            func_80042908(0xC0);
+        } else if (sel == 0xFF) {
+            func_800AE0B0("NO CARD!");
+            func_8004284C();
+        }
+    } else if ((u32)D_800E6280.unk_1120 >= 0x201U) {
+        func_8006BD6C(1);
+        func_80053D10();
+        func_800AE0B0("NO COMUNICATION!");
+        func_8004284C();
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014B824);
 
