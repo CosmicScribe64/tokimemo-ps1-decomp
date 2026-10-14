@@ -212,7 +212,7 @@ void func_80138D94(void) {
     }
 }
 
-/* T-11510 near miss: structure matches; differences are the register numbers of the hoisted constants in the case-0 slot loop (the original ranks 8, the table pointer, 4, then the bound 18; here 18 comes first) and the delay-slot fill of the sltiu before the 0x4B test; about 60 listing rows. */
+/* T-11510 near miss: structure matches; differences are the register numbers of the hoisted constants in the case-0 slot loop (the original ranks 8, the table pointer, 4, then the bound 18; here 18 comes first) and the delay-slot fill of the sltiu before the 0x4B test; about 73 differing instructions (permuter 8 min: no gain). */
 #ifdef NON_MATCHING
 void func_80138E28(void) {
     u8 *c;
@@ -333,7 +333,7 @@ void func_8013923C(void) {
     work->step = 0x100U;
 }
 
-/* T-11510 near miss: structure matches (switch 0/0x40, nested 0/0x40/0x50 switch, shared tail); the only differences are register numbers: the shared tail value is in a0 in the original, v0 here, and the case-0 slot loop pointer and counter swap a0/v1; 25 listing rows. */
+/* T-11510 near miss: structure matches (switch 0/0x40, nested 0/0x40/0x50 switch, shared tail); the only differences are register numbers: the shared tail value is in a0 in the original, v0 here, and the case-0 slot loop pointer and counter swap a0/v1; 23 differing instructions (permuter 8 min: no gain). */
 #ifdef NON_MATCHING
 void func_801392A0(void) {
     u8 *c;

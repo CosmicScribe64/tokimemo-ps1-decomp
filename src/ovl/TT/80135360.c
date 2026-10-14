@@ -1,7 +1,93 @@
 #include "common.h"
 #include "ovl/TT.h"
 
+/* T-11510 near miss (about 45 differing instructions; frame, spill slots 0x60/0x9C, pt and every branch target match): the first clear loop pointer is s1 in the original (v0 here), temp numbering follows from it, and the two angle sums (idx * 0x733 + 0xC000 - 0x3998 and + 0x4000 - 0xACC8) fold their constants here while the original keeps the hoisted 0xC000/0x4000 and adds the constant separately. The unused s32 locals and pad[4] only place the frame (FAKE, original source unknown). */
+#ifdef NON_MATCHING
+void func_80135360(void) {
+    s32 pq1;
+    s32 pq2;
+    u8 *a;
+    u8 *c;
+    u8 *b;
+    u8 *p;
+    u8 *e;
+    s32 i;
+    s32 j;
+    s32 px1;
+    s32 px2;
+    s32 px3;
+    s16 pt[2];
+    s32 pad[4];
+
+    c = D_80158A8C;
+    a = D_80158A74;
+    b = D_80158A64;
+    if (c[0] != 0) {
+        for (i = 0, e = c; i < 0x18; i++, e += 0x14) {
+            e[0x42] = 0;
+        }
+        if (c[0x342] == 0 && func_801427A8() != 0) {
+            func_80133AD0(0x503);
+        }
+        if (c[0x344] == 0) {
+            for (i = 0; i != 8; i++) {
+                pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x258 + i * 2);
+                pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x288 + i * 2);
+                if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, (u8 *)pt, &D_80155B54[c[0xDE + i * 0x14] * 6] + 0x42) != 0) {
+                    func_80144094();
+                    *(s16 *)(a + 4) = 0x60;
+                    *(s16 *)(a + 10) = 0;
+                    *(s16 *)(a + 8) = 0;
+                    *(s16 *)(a + 6) = 0;
+                    a[15] = 0;
+                    a[14] = 0;
+                    a[13] = 0;
+                }
+                p = D_80158A80;
+                for (j = 0; j != 12; j++, p += 0x54) {
+                    if (p[0] != 0 && *(u16 *)(p + 4) == 0x40) {
+                    e = i * 0x14 + c;
+                    if (func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155B54[e[0xDE] * 6] + 0x42) != 0) {
+                        b[0x25] = b[0x25] + 1;
+                        if (b[0x24] != 0 && !(b[0x25] & 3)) {
+                            func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
+                        }
+                        *(u16 *)(p + 4) = 0x80;
+                        *(s16 *)(p + 10) = 0;
+                        *(s16 *)(p + 8) = 0;
+                        *(s16 *)(p + 6) = 0;
+                        p[15] = 0;
+                        p[14] = 0;
+                        p[13] = 0;
+                        if (c[0x343] != 0) {
+                            if (*(u16 *)(c + 6) == 1) {
+                                *(u16 *)(c + 0x3B8) += 1;
+                                if ((*(u16 *)(c + 0x3B8) & 7) == 7) {
+                                    func_80133E30(pt[0], pt[1], 0x18, 0xC00 - (e[0xDE] << 7), 0xA0);
+                                }
+                            }
+                            if (e[0xDE] != 0 && e[0xDE] < 0x10) {
+                                *(u16 *)(c + 0x3AA) = 0xC000;
+                                if (e[0xDE] >= 9) {
+                                    *(u16 *)(c + 0x3AA) = e[0xDE] * 0x733 + 0xC000 - 0x3998;
+                                }
+                            } else if (e[0xDE] >= 0x11) {
+                                *(u16 *)(c + 0x3AA) = 0x4000;
+                                if (e[0xDE] < 0x18) {
+                                    *(u16 *)(c + 0x3AA) = e[0xDE] * 0x733 + 0x4000 - 0xACC8;
+                                }
+                            }
+                        }
+                    }
+                    }
+                }
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_80135360);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_801356C8);
 
@@ -155,6 +241,7 @@ void func_80135FA8(void) {
 void func_80136244(void) {
     s32 pad; /* FAKE: unused home declared first keeps the frame layout, real source unknown. T-11500 */
     u8 *p;
+    u8 *e;
     u8 k;
     s16 v;
     u16 t;
