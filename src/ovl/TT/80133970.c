@@ -622,4 +622,60 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134D0C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134E20);
 
+/* NON_MATCHING: T-11560, 4 lines (registers only): the loop bound 0x80 and the chain constant 0xAB tie in priority and IDO numbers 0xAB first (s5/s6 swapped). The kind local for the inner A8..AA test splits that reload from the chain value (v0 as in the original). Tried: for/while/do loops, a kind local for the chain (bne operand order flips), a test-at-top loop (fixes the constants, adds a loop-head branch), autotweak 300 s, permuter 400 s. */
+#ifdef NON_MATCHING
+void func_80135148(void) {
+    u8 *q;
+    u8 *p;
+    u8 *buf;
+    u8 *v;
+    s32 i;
+    u16 kind;
+
+    buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    q = D_80158AB0;
+    p = D_80158AA0;
+    i = 0;
+    do {
+        if (*p != 0) {
+
+            if (*(u16 *)(p + 2) == 0xAB) {
+                func_80147A18(p + 0x14, p + 0x38, *(u16 *)(p + 0x10));
+            } else if (*(u16 *)(p + 2) == 0xAC) {
+                func_80134D0C(p);
+            } else if (*(u16 *)(p + 2) == 0xAD) {
+                func_80134E20(p);
+            } else {
+                v = *(u8 **)(buf + 4);
+                *(u8 **)(buf + 4) += 0x30;
+                *(s16 *)(q + 4) = *(s16 *)(p + 0x14);
+                *(s16 *)(q + 6) = *(s16 *)(p + 0x16);
+                *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+                *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 8;
+                v[0x29] = 0;
+                v[0x2A] = 1;
+                *(s16 *)(v + 0x10) = 0x10;
+                *(s16 *)(v + 0x12) = 0x10;
+                v[0x28] = p[0x3C];
+                kind = *(u16 *)(p + 2);
+                if (kind != 0xA8 && kind != 0xA9 && kind != 0xAA) {
+                    v[0xC] = p[0x56];
+                    v[0xD] = p[0x57] + 0x80;
+                } else {
+                    v[0xC] = p[0x56];
+                    v[0xD] = p[0x57];
+                }
+                *(u16 *)(v + 0x16) = *(u16 *)(p + 0x52);
+                *(u16 *)(v + 0xE) = *(u16 *)(p + 0x54);
+                v[0x2B] = 0;
+                v[0x2C] = 0;
+                func_80141C6C(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
+            }
+        }
+        i++;
+        p += 0x68;
+    } while (i != 0x80);
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80135148);
+#endif
