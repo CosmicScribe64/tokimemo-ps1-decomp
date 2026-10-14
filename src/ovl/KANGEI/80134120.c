@@ -400,7 +400,35 @@ void func_80135438(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801354AC);
+void func_801354AC(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        func_80062CD0(0x55DF);
+        break;
+    case 1:
+        func_80062CD0(0x5F03);
+        break;
+    case 2:
+        func_80062CD0(0x53C3);
+        break;
+    case 3:
+        func_80062CD0(0x5A71);
+        break;
+    case 4:
+        func_80062CD0(0x68AE);
+        break;
+    case 5:
+        func_80062CD0(0x61A6);
+        break;
+    case 6:
+        func_80062CD0(0x641C);
+        break;
+    default:
+        func_80062CD0(0x69BC);
+        break;
+    }
+    func_8004284C();
+}
 
 void func_80135570(void) {
     switch (D_800E6280.unk_F5F) {

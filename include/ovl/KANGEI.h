@@ -303,4 +303,6 @@ typedef struct KangeiDispatchTable80 {
     /* 0x00 */ void (*functions[32])(s32);
 } KangeiDispatchTable80; /* size 0x80; T-10030 */
 extern KangeiDispatchTable80 D_80139D30;
+void func_801354AC(void);
+
 #endif
