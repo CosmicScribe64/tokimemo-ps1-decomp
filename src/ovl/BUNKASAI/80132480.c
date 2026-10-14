@@ -1,7 +1,57 @@
 #include "common.h"
 #include "ovl/BUNKASAI.h"
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80132480", func_80132480);
+void func_80132480(void) {
+    BunkaDispatch8 *dispatch = (BunkaDispatch8 *)&D_80122EB8;
+    dispatch->unk_04 = 2;
+    switch (dispatch->unk_00) {
+    case 0:
+        if (D_800E6280.unk_03E == 0x61) {
+            func_80042908(0x30);
+            return;
+        }
+        func_80042908(0x2F);
+        return;
+    case 1:
+        func_80042908(0x31);
+        return;
+    case 2:
+        func_80042908(0x32);
+        return;
+    case 3:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80042908(0x33);
+            return;
+        case 0x60:
+            func_80042908(0x35);
+            return;
+        case 0x61:
+            func_80042908(0x36);
+            return;
+        }
+        break;
+    case 4:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80042908(0x37);
+            return;
+        case 0x60:
+            func_80042908(0x38);
+            return;
+        case 0x61:
+            func_80042908(0x39);
+            return;
+        }
+        break;
+    case 5:
+        func_80042908(0x3A);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80132480", func_801325F4);
 
