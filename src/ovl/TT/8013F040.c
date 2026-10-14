@@ -395,7 +395,7 @@ void func_80140624(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140624);
 #endif
 
-/* T-11510 near miss (about 40 differing instructions, all temp-register numbering and store scheduling; structure, frame, spill slots and every constant match): case 0x40 takes t9/t0 where the original loads 0x3EC into t3/t4 and interleaves the 0x210/0x212 updates (24 orders of the four statements tried, 10 min permuter: no gain); later cases follow by cascade. */
+/* T-11540 near miss (35 differing rows, order_search): case 0x40 now matches (the 0x212 update before the 0x3EC update). Left: pt sits 4 bytes lower in the frame (sp+52, original sp+56) and case 0x52 spills one more word (sw t1,80(sp)) with other temp numbering (vx/vy/x/y declaration orders tried: no change); the rest follows by cascade. */
 #ifdef NON_MATCHING
 void func_80140920(void) {
     u8 *b;
@@ -440,9 +440,9 @@ void func_80140920(void) {
             c[0x327] = 0;
         }
         c[0x20E] = 0;
-        *(s32 *)(c + 0x3EC) += 0x8000;
-        *(s16 *)(c + 0x212) += 0x20;
         *(s16 *)(c + 0x210) += 0x20;
+        *(s16 *)(c + 0x212) += 0x20;
+        *(s32 *)(c + 0x3EC) += 0x8000;
         *(s16 *)(c + 0x2A6) = *(s32 *)(c + 0x3EC) / 0x10000;
         if (*(s16 *)(c + 0x212) >= 0x1000) {
             *(s16 *)(c + 8) = 0x50;
