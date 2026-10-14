@@ -64,10 +64,14 @@ class FakeBackend:
     def __init__(self, root, drafts, scores=None, needs=None, verify_ok=True, headers_ok=True):
         self.root, self.drafts, self.scores = root, drafts, scores or {}
         self.needs, self.verify_ok, self.headers_ok = needs or {}, verify_ok, headers_ok
-        self.scored, self.seen_files, self.builds = [], [], []
+        self.scored, self.seen_files, self.builds, self.m2c_calls = [], [], [], []
 
-    def m2c(self, root, unit, func):
+    def m2c(self, root, unit, func, variant=B.VARIANTS[0]):
+        """A dict of drafts per function gives one per variant name (missing: m2c fails)."""
+        self.m2c_calls.append((func, variant.name))
         d = self.drafts[func]
+        if isinstance(d, dict):
+            d = d.get(variant.name, RuntimeError("m2c failed:\nno draft for %s" % variant.name))
         if isinstance(d, Exception):
             raise d
         return d
@@ -495,6 +499,141 @@ class Pipeline(Repo):
         self.assertEqual(lines[0], "0 targets (0 already processed)")
         rc, lines = self.run_main(be, ["--unit", "BB"])
         self.assertEqual(lines[0], "0 targets (0 already processed)")
+
+
+class Variants(Repo):
+    """m2c variant sweep and retry mode (T-11230)."""
+
+    def drafts(self):
+        return {"default": ("", body("func_80132100", "D_X = 1;")),
+                "no-andor": ("", body("func_80132100", "D_X = 2;")),
+                "reg-vars": ("", body("func_80132100", "D_X = 3;"))}
+
+    def state(self):
+        return B.load_state(os.path.join(self.out, "state.jsonl"))
+
+    def test_variant_list(self):
+        names = [v.name for v in B.VARIANTS]
+        self.assertEqual(names[0], "default")
+        self.assertEqual(B.VARIANTS[0].extra, ())
+        self.assertEqual(B.VARIANTS[0].opts, {})
+        self.assertEqual(len(set(names)), len(names))
+        self.assertEqual([v.name for v in B.variant_list(3)], names[:3])
+        self.assertEqual(B.variant_list(0), [B.VARIANTS[0]])
+        self.assertEqual(B.variant_list(99), list(B.VARIANTS))
+        for v in B.VARIANTS:
+            self.assertTrue(set(v.opts) <= {"context", "callee_args", "postinc"}, v)
+            self.assertTrue(all(a.startswith("--") or a == "saved" for a in v.extra), v)
+        self.assertEqual(B.parse_args([]).variants, 1)
+
+    def test_pick_best_lowest_score_first_on_tie(self):
+        cands = []
+        for name, score in (("a", 7), ("b", 3), ("c", 3), ("d", 9)):
+            c = B.Candidate(name, "", [], None)
+            c.best = score
+            cands.append(c)
+        self.assertEqual(B.pick_best(cands).variant, "b")
+        self.assertIsNone(B.pick_best([]))
+
+    def test_default_runs_one_variant(self):
+        be = FakeBackend(self.root, {"func_80132100": self.drafts()}, scores={"func_80132100": lambda t: 40})
+        rc, lines = self.run_main(be, targets=self.targets[1:])
+        self.assertEqual(be.m2c_calls, [("func_80132100", "default")])
+        self.assertIn("near AA:func_80132100 0x20 40", lines)
+        row = self.state()["AA:src/ovl/AA/80132000.c:func_80132100"]
+        self.assertEqual((row["variant"], row["tried"]), ("default", 1))
+        self.assertFalse(any(l.startswith("variant wins") for l in lines))
+
+    def test_sweep_keeps_best_and_recompiles_it(self):
+        scores = {"D_X = 1;": 40, "D_X = 2;": 35, "D_X = 3;": 50}
+        be = FakeBackend(self.root, {"func_80132100": self.drafts()},
+                         scores={"func_80132100": lambda t: next(v for k, v in scores.items() if k in t)})
+        rc, lines = self.run_main(be, ["--variants", "3"], targets=self.targets[1:])
+        self.assertEqual([v for _f, v in be.m2c_calls], ["default", "no-andor", "reg-vars"])
+        self.assertIn("near AA:func_80132100 0x20 35 [no-andor]", lines)
+        self.assertIn("D_X = 2;", be.seen_files[-1], "the winner is compiled again after a later variant")
+        self.assertEqual(self.read(), SRC)
+        row = self.state()["AA:src/ovl/AA/80132000.c:func_80132100"]
+        self.assertEqual((row["variant"], row["tried"], row["score"]), ("no-andor", 3, 35))
+        near = self.read(os.path.join(self.out, "near.txt")).splitlines()
+        self.assertEqual(near[0].split("\t")[5], "no-andor")
+        self.assertIn("m2c variant no-andor", self.read(row["draft"]))
+        self.assertIn("variant wins (match, near):", lines)
+        self.assertIn("  no-andor         0 1", lines)
+
+    def test_sweep_tie_keeps_first_and_zero_stops(self):
+        be = FakeBackend(self.root, {"func_80132100": self.drafts()}, scores={"func_80132100": lambda t: 0})
+        rc, lines = self.run_main(be, ["--variants", "3"], targets=self.targets[1:])
+        self.assertEqual([v for _f, v in be.m2c_calls], ["default"], "score 0 ends the sweep")
+        self.assertIn("MATCH AA:func_80132100 0x20 [default]", lines)
+        self.assertIn("D_X = 1;", self.read())
+
+    def test_repeated_m2c_output_is_not_compiled_again(self):
+        same = ("", body("func_80132100", "D_X = 1;"))
+        be = FakeBackend(self.root, {"func_80132100": {"default": same, "no-andor": same,
+                                                       "reg-vars": ("", body("func_80132100", "D_X = 3;"))}},
+                         scores={"func_80132100": lambda t: 40})
+        self.run_main(be, ["--variants", "3"], targets=self.targets[1:])
+        self.assertEqual(len(be.m2c_calls), 3)
+        self.assertEqual(len(be.seen_files), 3, "default, reg-vars, then the default winner again")
+        self.assertIn("D_X = 1;", be.seen_files[-1])
+
+    def test_failing_variants_are_skipped_first_failure_recorded(self):
+        drafts = {"no-andor": ("", body("func_80132100", "D_X = 2;"))}
+        be = FakeBackend(self.root, {"func_80132100": drafts}, scores={"func_80132100": lambda t: 8})
+        rc, lines = self.run_main(be, ["--variants", "3", "--keep-score", "5"], targets=self.targets[1:])
+        self.assertIn("near AA:func_80132100 0x20 8 [no-andor]", lines)
+        os.unlink(os.path.join(self.out, "state.jsonl"))
+        be = FakeBackend(self.root, {"func_80132100": {}})
+        rc, lines = self.run_main(be, ["--variants", "2"], targets=self.targets[1:])
+        self.assertIn("fail AA:func_80132100 0x20 m2c: no draft for default", lines)
+        self.assertEqual(self.read(), SRC)
+
+    def test_retry_keys(self):
+        rows = {"a": {"status": "near", "score": 4}, "b": {"status": "near", "score": 20},
+                "c": {"status": "fail", "score": None}, "d": {"status": "match", "score": 0}}
+        self.assertEqual(B.retry_keys(rows, set()), set())
+        self.assertEqual(B.retry_keys(rows, {"near"}), {"a", "b"})
+        self.assertEqual(B.retry_keys(rows, {"near", "fail"}, 10), {"a", "c"})
+        self.assertEqual(B.retry_keys(rows, {"fail"}, 10), {"c"})
+
+    def test_replace_state_row(self):
+        path = os.path.join(self.tmp.name, "s.jsonl")
+        self.write(path, '{"key": "a", "n": 1}\n{"key": "b", "n": 2}\n{"key": "a", "n": 3}\n')
+        B.replace_state_row(path, "a", {"key": "a", "n": 4})
+        self.assertEqual([json.loads(l) for l in self.read(path).splitlines()],
+                         [{"key": "b", "n": 2}, {"key": "a", "n": 4}])
+
+    def test_retry_reprocesses_and_replaces_lines(self):
+        be = FakeBackend(self.root, {"func_80132000": ("", body("func_80132000", "D_X = 1;")),
+                                     "func_80132100": ("", body("func_80132100", "D_X = 2;"))},
+                         scores={"func_80132000": lambda t: 50, "func_80132100": lambda t: 70})
+        self.run_main(be)
+        rc, lines = self.run_main(be)
+        self.assertEqual(lines[0], "0 targets (2 already processed)")
+        rc, lines = self.run_main(be, ["--retry", "near", "--max-score", "60"])
+        self.assertEqual(lines[:2], ["retrying 1 state entries (near)", "1 targets (1 already processed)"])
+        be.scores["func_80132000"] = lambda t: 0
+        rc, lines = self.run_main(be, ["--retry", "near,fail", "--max-score", "60"])
+        self.assertIn("MATCH AA:func_80132000 0x40", lines)
+        with open(os.path.join(self.out, "state.jsonl")) as fh:
+            keys = [json.loads(l)["key"] for l in fh]
+        self.assertEqual(len(keys), 2, "retried entries replace their lines")
+        self.assertEqual(self.state()["AA:src/ovl/AA/80132000.c:func_80132000"]["status"], "match")
+        rc, lines = self.run_main(be, ["--retry", "match"])
+        self.assertEqual(rc, 2)
+
+    def test_variant_wins_only_counts_sweeps(self):
+        rows = [{"status": "match", "variant": "void", "tried": 4},
+                {"status": "near", "variant": "default", "tried": 4},
+                {"status": "near", "variant": "void", "tried": 4},
+                {"status": "near", "variant": "default", "tried": 1},
+                {"status": "near", "variant": None, "tried": None, "score": 3},
+                {"status": "fail", "variant": None, "tried": 4}]
+        self.assertEqual(B.variant_wins(rows), ["variant wins (match, near):",
+                                                "  default          0 1",
+                                                "  void             1 1"])
+        self.assertEqual(B.variant_wins(rows[3:]), [])
 
 
 if __name__ == "__main__":

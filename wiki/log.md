@@ -13227,3 +13227,15 @@ Created [[tickets/T-11210-bulk-m2c-draft-failure-classes]]: fix the main bulk_m2
 ## [2026-10-14] build | T-11210 re-run of bulk_m2c failures
 
 Re-ran the 647 failed drafts with the fixed `tools/bulk_m2c.py`: 218 still fail (118 compile, 72 header declaration problems, 28 M2C_ERROR/LWL), matches 61 -> 94. `tools/permute.py` makes switch labels local in target.o (PC16 assertion). The run ends with `migrate_globals --apply` and check_headers; one `D_800E73A0` use rewritten by hand to `D_800E6280.unk_1120`. ninja all OK, globals OK, headers OK. Moved [[tickets/T-11210-bulk-m2c-draft-failure-classes]] to In Review.
+
+## [2026-10-14] ticket | T-11230 In Progress
+
+Created [[tickets/T-11230-m2c-variant-sweep]]: try several m2c option sets per target in `tools/bulk_m2c.py` and keep the best draft; retry mode for old near and fail entries.
+
+## [2026-10-14] build | T-11230 m2c variant sweep in bulk_m2c
+
+`tools/bulk_m2c.py`: `--variants N` takes the first N option sets of `VARIANTS` (m2c 708d2d2 and `tools/m2c.py` options, checked with `m2c --help` in the toolchain image). It compiles and scores each one and keeps the lowest score (ties keep the earlier variant, 0 ends the sweep). The winner is recorded in state.jsonl and near.txt, and the summary counts wins per variant. `--retry near,fail [--max-score S]` processes those entries again and replaces their state lines. Synthetic tests pass; [[decompile-workflow]] updated. Needs the real-build trial.
+
+## [2026-10-14] ticket | T-11230 In Review
+
+Moved [[tickets/T-11230-m2c-variant-sweep]] to In Review; needs the real-build trial and the code review.

@@ -4,13 +4,17 @@
 Usage (in Docker, repo root as cwd; --out is a scratch directory outside the checkout):
     TOKIMEMO_SCRATCH=/path/to/scratch tools/docker.sh python3 tools/bulk_m2c.py --out /scratch/bulk_m2c \\
         [--max-size 600] [--unit NAME] [--exclude TT] [--limit N] [--jobs N] [--keep-score 30] [--time 60]
+        [--variants N] [--retry near,fail [--max-score S]]
     python3 tools/bulk_m2c.py --out DIR --summary      # summary of the state file only, no work
 
 Targets: every `INCLUDE_ASM` function under --max-size bytes (splat `nonmatching` header of its .s)
 that is not already a guarded draft, smallest first. For each one:
 
 1. tools/m2c.py's run_m2c gives the draft with the usual context (headers, rodata, callee argument
-   counts, post-increment order).
+   counts, post-increment order). With --variants N (T-11230) the first N option sets of VARIANTS
+   (m2c and wrapper options) each give a draft; each goes through steps 2 and 3, and the one with
+   the lowest score is kept (a tie keeps the earlier variant, a score of 0 stops the sweep). If no
+   variant scores, the first failure is recorded. The winner is in state.jsonl and near.txt.
 2. Mechanical cleanup only: m2c's unknown type `?` becomes `s32` (declarations, casts, parameters),
    `//` comments become `/* */`, and a draft with an `M2C_*` placeholder is refused. Declarations
    m2c printed for symbols the headers lack are kept for the symbols the body uses (`static` and
@@ -31,13 +35,16 @@ that is not already a guarded draft, smallest first. For each one:
    else everything is reverted. Every other draft is reverted to INCLUDE_ASM and saved as
    <out>/drafts/<UNIT>/<func>.c with its score.
 
-The state file <out>/state.jsonl makes runs resumable: a target already in it is skipped. Jobs
+The state file <out>/state.jsonl makes runs resumable: a target already in it is skipped, except
+with --retry STATUSES (near, fail), which processes those entries again and replaces their lines;
+--max-score S limits the near ones to scores of at most S. Jobs
 work on disjoint C files; ninja, header writes and the final checks hold one lock (<out>/build.lock),
 so one build runs at a time. A draft left in src/ by a killed run is restored from <out>/inflight/
-at the next start. Output: one line per target, then MATCH count/bytes, failures by reason, and
-<out>/near.txt (near misses by score).
+at the next start. Output: one line per target, then MATCH count/bytes, failures by reason, wins per
+variant, and <out>/near.txt (near misses by score).
 """
 import argparse
+import collections
 import contextlib
 import fcntl
 import io
@@ -594,16 +601,55 @@ def source_fix(msg, body, decl_lines, func, original, headers):
 # Backend: the parts that need Docker (m2c, IDO, ninja); mocked in the tests
 # ---------------------------------------------------------------------------------------------
 
+class Variant(collections.namedtuple("Variant", "name extra opts")):
+    """One m2c option set: `extra` goes to m2c itself, `opts` to tools/m2c.py's run_m2c."""
+
+
+# The m2c option sets that --variants N takes the first N of, in this order (T-11230). The options
+# are those of m2c 708d2d2 (tools/Dockerfile) and of tools/m2c.py. Not used: --stack-structs (only
+# prints template structs, the body is the same), --no-casts (drops casts IDO needs), --valid-syntax
+# (M2C_* macros, which cleanup refuses), formatting options (no effect on the compiled code).
+VARIANTS = (
+    # tools/m2c.py's defaults: header context, rodata, callee argument counts, post-increment fix
+    Variant("default", (), {}),
+    # m2c --no-andor: nested ifs instead of && and ||
+    Variant("no-andor", ("--no-andor",), {}),
+    # m2c --reg-vars saved: one variable per callee-saved register instead of temps and phis
+    Variant("reg-vars", ("--reg-vars", "saved"), {}),
+    # m2c --void: the function returns void (a $v0 left by a call is not a return value)
+    Variant("void", ("--void",), {}),
+    # m2c --no-switches: if trees stay ifs (jump-table switches are still switches)
+    Variant("no-switches", ("--no-switches",), {}),
+    # tools/m2c.py --no-callee-args: m2c's own guess of the callees' argument counts
+    Variant("no-callee-args", (), {"callee_args": False}),
+    # tools/m2c.py --no-postinc: keep m2c's `D += 1; if (D ...)` order
+    Variant("no-postinc", (), {"postinc": False}),
+    # m2c --no-unk-inference: no type inference on unknown struct fields and globals
+    Variant("no-unk-inference", ("--no-unk-inference",), {}),
+    # tools/m2c.py --no-context: no header context, m2c guesses every type itself
+    Variant("no-context", (), {"context": False}),
+    # m2c --gotos-only: no control-flow structuring, labels and gotos in asm block order
+    Variant("gotos-only", ("--gotos-only",), {}),
+)
+
+
+def variant_list(n):
+    """The first n option sets of VARIANTS (at least one, at most all)."""
+    return list(VARIANTS[:max(1, min(n, len(VARIANTS)))])
+
+
 class Scorer(autotweak.BuildScorer):
     INSTRUCTION_TOLERANCE = 10 ** 6
 
 
 class Backend:
-    def m2c(self, root, unit, func):
-        """(declarations, body) of the m2c draft; raises LookupError/RuntimeError."""
+    def m2c(self, root, unit, func, variant=VARIANTS[0]):
+        """(declarations, body) of the m2c draft with the options of `variant`; raises
+        LookupError/RuntimeError."""
         import m2c
         with contextlib.redirect_stderr(io.StringIO()):
-            text = m2c.run_m2c(root, "%s:%s" % (unit, func), log=lambda _m: None)
+            text = m2c.run_m2c(root, "%s:%s" % (unit, func), extra=variant.extra, log=lambda _m: None,
+                               **variant.opts)
         return m2c.split_draft(text, func)
 
     def scorer(self, root, draft):
@@ -659,11 +705,43 @@ class Target:
         return (self.unit, self.src, self.func, self.size)
 
 
+class Candidate:
+    """A compiled draft of one variant: the body that compiled, its declarations, its scorer and the
+    best start text (the body or its inlined form) with that text's score."""
+
+    def __init__(self, variant, body, decl_lines, scorer):
+        self.variant, self.body, self.decl_lines, self.scorer = variant, body, decl_lines, scorer
+        self.cache, self.best, self.text = {}, None, None
+
+    def score(self, text):
+        if text not in self.cache:
+            self.cache[text] = self.scorer.score(text)
+        return self.cache[text]
+
+
+def pick_best(candidates):
+    """The candidate with the lowest score; on a tie the first one (the earlier variant)."""
+    best = None
+    for c in candidates:
+        if best is None or c.best < best.best:
+            best = c
+    return best
+
+
+def replace_state_row(path, key, row):
+    """Rewrite the state file `path` with every line of `key` dropped and `row` appended."""
+    keep = []
+    if os.path.exists(path):
+        with open(path) as fh:
+            keep = [l for l in fh if l.strip() and json.loads(l)["key"] != key]
+    write_atomic(path, "".join(keep) + json.dumps(row) + "\n")
+
+
 class Run:
     """Paths and options shared by the jobs."""
 
     def __init__(self, root, out, keep_score=30, time_budget=60.0, backend=None, climb=None, emit=print,
-                 order=True, regdiff=True):
+                 order=True, regdiff=True, variants=None, replace=()):
         self.root, self.out = root, out
         self.keep_score, self.time_budget = keep_score, time_budget
         self.backend = backend or Backend()
@@ -671,24 +749,34 @@ class Run:
         self.emit = emit
         self.order = order
         self.regdiff = regdiff
+        self.variants = list(variants or VARIANTS[:1])
+        self.replace = set(replace)        # state keys whose old lines a new record replaces (--retry)
         self.lock = os.path.join(out, "build.lock")
         self.state = os.path.join(out, "state.jsonl")
         self.inflight = os.path.join(out, "inflight")
 
-    def record(self, t, status, score=None, reason=None, draft=None):
+    def record(self, t, status, score=None, reason=None, draft=None, variant=None):
         row = {"key": t.key, "scope": t.scope, "src": t.src, "size": t.size, "status": status,
-               "score": score, "reason": reason, "draft": draft}
+               "score": score, "reason": reason, "draft": draft, "variant": variant,
+               "tried": len(self.variants)}
         with locked(self.state + ".lock"):
-            with open(self.state, "a") as fh:
-                fh.write(json.dumps(row) + "\n")
+            if t.key in self.replace:
+                replace_state_row(self.state, t.key, row)
+            else:
+                with open(self.state, "a") as fh:
+                    fh.write(json.dumps(row) + "\n")
         detail = {"match": "", "near": " %s" % score, "fail": " %s" % reason}[status]
+        if variant and len(self.variants) > 1:
+            detail += " [%s]" % variant
         self.emit("%s %s 0x%X%s" % (status.upper() if status == "match" else status, t.scope, t.size, detail))
         return row
 
-    def save_draft(self, t, text, score, note):
+    def save_draft(self, t, text, score, note, variant=None):
         d = os.path.join(self.out, "drafts", t.unit)
         os.makedirs(d, exist_ok=True)
         path = os.path.join(d, t.func + ".c")
+        if variant and len(self.variants) > 1:
+            note = ("%s m2c variant %s" % (note, variant)).strip()
         what = note if score is None else ("score %d %s" % (score, note)).strip()
         with open(path, "w") as fh:
             fh.write("/* %s %s (%s): %s */\n%s\n" % (TICKET, t.scope, t.src, what, text.strip("\n")))
@@ -704,20 +792,17 @@ class Run:
         original = read(path)
         if t.func not in include_asm_funcs(original):
             return self.record(t, "fail", reason="gone: no plain INCLUDE_ASM line")
-        try:
-            decls, body = self.backend.m2c(self.root, t.unit, t.func)
-        except (LookupError, RuntimeError, OSError, SystemExit) as exc:
-            return self.record(t, "fail", reason="m2c: %s" % first_error(str(exc)))
-        glob = collect_vars(header_text(self.root, t.unit) + "\n" + original)
-        body, known, problem = cleanup(decls, body, glob)
-        if problem:
-            return self.record(t, "fail", reason=problem, draft=self.save_draft(t, body, None, problem))
         os.makedirs(self.inflight, exist_ok=True)
         with open(self.inflight_path(t), "w") as fh:
             json.dump({"src": t.src, "text": original}, fh)
         matched = False
         try:
-            matched, row = self._solve(t, path, original, body, known)
+            best, failure = self._best_draft(t, path, original)
+            if best is None:
+                reason, body, note = failure
+                draft = self.save_draft(t, body, None, note) if body is not None else None
+                return self.record(t, "fail", reason=reason, draft=draft)
+            matched, row = self._solve(t, path, original, best)
             return row
         except Exception as exc:  # noqa: BLE001  (unattended: record and go on with the next target)
             return self.record(t, "fail", reason="error: %s" % first_error("%s: %s" % (type(exc).__name__, exc)))
@@ -725,6 +810,57 @@ class Run:
             if not matched and read(path) != original:
                 write_atomic(path, original)
             os.unlink(self.inflight_path(t))
+
+    def _best_draft(self, t, path, original):
+        """(best Candidate, None), or (None, (reason, body or None, note)) with the failure of the
+        first variant that failed when no variant gives a draft that scores (T-11230). A score of 0
+        ends the sweep. On return the C file holds the winner's guarded draft and its scorer is
+        current."""
+        glob = collect_vars(header_text(self.root, t.unit) + "\n" + original)
+        found, failure, last, seen = [], None, None, set()
+        for v in self.variants:
+            cand, fail = self._candidate(t, path, original, v, glob, seen)
+            if cand is None:
+                failure = failure or fail
+                continue
+            found.append(cand)
+            last = cand
+            if cand.best == 0:
+                break
+        best = pick_best(found)
+        if best is None:
+            return None, failure
+        if best is not last:
+            # a later variant's scorer set up the shared work directory: compile the winner again
+            write_atomic(path, insert_draft(original, t.func, best.body, best.decl_lines))
+            best.scorer = self.backend.scorer(self.root, autotweak.Draft(t.src, t.unit, t.func, best.body))
+        return best, None
+
+    def _candidate(self, t, path, original, variant, glob, seen):
+        """(Candidate, None) for one m2c variant, (None, None) when its m2c output repeats an earlier
+        variant's (`seen`), or (None, (reason, body or None, note))."""
+        try:
+            decls, body = self.backend.m2c(self.root, t.unit, t.func, variant)
+        except (LookupError, RuntimeError, OSError, SystemExit) as exc:
+            return None, ("m2c: %s" % first_error(str(exc)), None, None)
+        if (decls, body) in seen:
+            return None, None              # many options change nothing for a small function
+        seen.add((decls, body))
+        body, known, problem = cleanup(decls, body, glob)
+        if problem:
+            return None, (problem, body, problem)
+        decl_lines = sorted(known.values()) + forward_decls(
+            original, t.func, body, header_text(self.root, t.unit), known)
+        scorer, decl_lines, body = self._compile(t, path, original, body, decl_lines, known)
+        if scorer is None:
+            return None, (decl_lines, body, decl_lines)
+        cand = Candidate(variant.name, body, decl_lines, scorer)
+        start = [(cand.score(v), v) for v in dict.fromkeys([body, inline_temps(body)])]
+        start = sorted((s, v) for s, v in start if s is not None)
+        if not start:
+            return None, ("compile: draft does not score", body, "does not score")
+        cand.best, cand.text = start[0]
+        return cand, None
 
     def _compile(self, t, path, original, body, decl_lines, known):
         """(scorer, decl_lines, body) once the guarded draft compiles, or (None, reason, body)."""
@@ -745,29 +881,13 @@ class Run:
                 body, decl_lines = more
         return None, "compile: no fix after 12 attempts", body
 
-    def _solve(self, t, path, original, body, known):
-        decl_lines = sorted(known.values()) + forward_decls(
-            original, t.func, body, header_text(self.root, t.unit), known)
-        scorer, decl_lines, body = self._compile(t, path, original, body, decl_lines, known)
-        if scorer is None:
-            return False, self.record(t, "fail", reason=decl_lines, draft=self.save_draft(t, body, None, decl_lines))
-        cache = {}
-
-        def score(text):
-            if text not in cache:
-                cache[text] = scorer.score(text)
-            return cache[text]
+    def _solve(self, t, path, original, cand):
+        body, decl_lines, best, text, var = cand.body, cand.decl_lines, cand.best, cand.text, cand.variant
 
         def verify(text):
             with locked(self.lock):
-                return scorer.verify(text)
+                return cand.scorer.verify(text)
 
-        start = [(score(v), v) for v in dict.fromkeys([body, inline_temps(body)])]
-        start = sorted((s, v) for s, v in start if s is not None)
-        if not start:
-            return False, self.record(t, "fail", reason="compile: draft does not score",
-                                      draft=self.save_draft(t, body, None, "does not score"))
-        best, text = start[0]
         final = None
         if best == 0:
             final = text if verify(text) else None
@@ -779,7 +899,7 @@ class Run:
                 if self.regdiff else None
             if advise is not None:
                 extra["advise"] = advise
-            res = self.climb(text, score, verify, budget=self.time_budget, **extra)
+            res = self.climb(text, cand.score, verify, budget=self.time_budget, **extra)
             if res.matched and res.best == 0:
                 final = res.text
             elif res.best is not None and res.best < best:
@@ -788,10 +908,11 @@ class Run:
         if final is not None:
             reason = self._finish(t, path, original, final, decl_lines)
             if reason is None:
-                return True, self.record(t, "match", score=0)
-            return False, self.record(t, "fail", reason=reason, draft=self.save_draft(t, final, 0, reason))
+                return True, self.record(t, "match", score=0, variant=var)
+            return False, self.record(t, "fail", reason=reason, draft=self.save_draft(t, final, 0, reason, var),
+                                      variant=var)
         return False, self.record(t, "near", score=best, reason=note or None,
-                                  draft=self.save_draft(t, text, best, note))
+                                  draft=self.save_draft(t, text, best, note, var), variant=var)
 
     def _finish(self, t, path, original, final, decl_lines):
         """Write the verified match (guard -> plain C, declarations -> headers); None or a reason."""
@@ -888,13 +1009,41 @@ def group_by_file(targets):
     return list(groups.values())
 
 
-def run_group(root, out, keep_score, time_budget, items, order=True, regdiff=True):
+def retry_keys(rows, statuses, max_score=None):
+    """State keys to process again (--retry): rows whose status is in `statuses`; with `max_score`,
+    near rows only when their score is at most that."""
+    out = set()
+    for key, r in rows.items():
+        if r["status"] not in statuses:
+            continue
+        if r["status"] == "near" and max_score is not None and (r["score"] is None or r["score"] > max_score):
+            continue
+        out.add(key)
+    return out
+
+
+def run_group(root, out, keep_score, time_budget, items, order=True, regdiff=True, variants=1, replace=()):
     """Pool worker: one C file's targets, in order, with the real backend."""
     run = Run(root, out, keep_score, time_budget, emit=lambda s: print(s, flush=True), order=order,
-              regdiff=regdiff)
+              regdiff=regdiff, variants=variant_list(variants), replace=replace)
     for item in items:
         run.process(Target(*item))
     return len(items)
+
+
+def variant_wins(rows):
+    """Summary lines: per m2c variant, how many matches and near misses it gave as the best of a
+    sweep (rows of runs with --variants above 1 only), in VARIANTS order."""
+    wins = {}
+    for r in rows:
+        if r["status"] in ("match", "near") and r.get("variant") and (r.get("tried") or 1) > 1:
+            w = wins.setdefault(r["variant"], [0, 0])
+            w[0 if r["status"] == "match" else 1] += 1
+    if not wins:
+        return []
+    order = [v.name for v in VARIANTS]
+    keys = sorted(wins, key=lambda n: (order.index(n) if n in order else len(order), n))
+    return ["variant wins (match, near):"] + ["  %-16s %d %d" % (n, wins[n][0], wins[n][1]) for n in keys]
 
 
 def summary(out, emit=print):
@@ -908,11 +1057,14 @@ def summary(out, emit=print):
             fails[kind] = fails.get(kind, 0) + 1
     with open(os.path.join(out, "near.txt"), "w") as fh:
         for r in near:
-            fh.write("%d\t0x%X\t%s\t%s\t%s\n" % (r["score"], r["size"], r["scope"], r["src"], r["draft"]))
+            fh.write("%d\t0x%X\t%s\t%s\t%s\t%s\n" % (r["score"], r["size"], r["scope"], r["src"], r["draft"],
+                                                     r.get("variant") or "-"))
     emit("MATCH %d (0x%X bytes)  near %d  fail %d  (%d processed)" % (
         len(match), sum(r["size"] for r in match), len(near), sum(fails.values()), len(rows)))
     for kind, n in sorted(fails.items(), key=lambda kv: (-kv[1], kv[0])):
         emit("  fail %-12s %d" % (kind, n))
+    for line in variant_wins(rows):
+        emit(line)
     emit("near misses: %s" % os.path.join(out, "near.txt"))
     return len(match)
 
@@ -929,6 +1081,11 @@ def parse_args(argv):
     p.add_argument("--time", type=float, default=60, help="autotweak seconds per draft (default 60)")
     p.add_argument("--no-order", action="store_true", help="no statement-order stage in the climb (T-11200)")
     p.add_argument("--no-regdiff", action="store_true", help="no regdiff-guided edit order in the climb (T-11220)")
+    p.add_argument("--variants", type=int, default=1,
+                   help="m2c option sets to try per target, the first N of VARIANTS (default 1, max %d)"
+                   % len(VARIANTS))
+    p.add_argument("--retry", default="", help="comma-separated state statuses to process again (near, fail)")
+    p.add_argument("--max-score", type=int, help="with --retry: near entries only when scoring at most this")
     p.add_argument("--summary", action="store_true", help="print the summary of the state file and stop")
     p.add_argument("--root", default=".", help=argparse.SUPPRESS)
     return p.parse_args(argv)
@@ -948,8 +1105,16 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
     if args.summary:
         summary(out, emit)
         return 0
+    retry = {s for s in args.retry.split(",") if s}
+    if retry - {"near", "fail"}:
+        emit("bulk_m2c.py: --retry takes near and fail (got %s)" % args.retry)
+        return 2
     recover(root, out, emit)
     done = load_state(os.path.join(out, "state.jsonl"))
+    again = retry_keys(done, retry, args.max_score)
+    if retry:
+        emit("retrying %d state entries (%s)" % (len(again), ",".join(sorted(retry))))
+    done = {k: r for k, r in done.items() if k not in again}
     units = {u for u in args.unit.split(",") if u}
     exclude = {u for u in args.exclude.split(",") if u}
     if targets is None:
@@ -960,7 +1125,7 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
     emit("%d targets (%d already processed)" % (len(todo), len([t for t in targets if t.key in done])))
     if args.jobs <= 1 or backend is not None:
         run = Run(root, out, args.keep_score, args.time, backend, climb, emit, order=not args.no_order,
-                  regdiff=not args.no_regdiff)
+                  regdiff=not args.no_regdiff, variants=variant_list(args.variants), replace=again)
         for t in todo:
             run.process(t)
     else:
@@ -978,7 +1143,8 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
         with ProcessPoolExecutor(max_workers=args.jobs) as pool:
             futures = [pool.submit(run_group, root, out, args.keep_score, args.time,
                                    [t.as_tuple() for t in g], not args.no_order,
-                                   not args.no_regdiff) for g in group_by_file(todo)]
+                                   not args.no_regdiff, args.variants,
+                                   sorted(again & {t.key for t in g})) for g in group_by_file(todo)]
             for f in futures:
                 f.result()
     summary(out, emit)
