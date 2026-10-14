@@ -47,10 +47,18 @@ class Parse(unittest.TestCase):
 
     def test_errors(self):
         for bad in ("x;\n", "/* ORDER */\na;\nb;\n", "/* END ORDER */\n", "/* ORDER */\na;\n/* END ORDER */\n",
-                    "v = ORDER_SWAP(a, +);\n", "v = ORDER_SWAP(a, +, ORDER_SWAP(b, +, c));\n",
+                    "v = ORDER_SWAP(a, +);\n",
                     "v = ORDER_SWAP(a, +, b;\n"):
             with self.assertRaises(os_.MarkerError, msg=bad):
                 os_.Template(bad)
+
+    def test_nested_swaps(self):
+        t = os_.Template("v = ORDER_SWAP(*(ORDER_SWAP(p, +, i)), +, k);\n")
+        self.assertEqual(len(t.swaps), 2)
+        self.assertEqual(t.render(t.identity()), "v = *(p + i) + k;\n")
+        self.assertEqual(t.render(((), (1, 0))), "v = *(i + p) + k;\n")
+        self.assertEqual(t.render(((), (0, 1))), "v = k + *(p + i);\n")
+        self.assertEqual(t.render(((), (1, 1))), "v = k + *(i + p);\n")
 
     def test_split_args_respects_nesting(self):
         self.assertEqual(os_.split_args("f(a, b), +, x[1, 2]"), ["f(a, b)", "+", "x[1, 2]"])

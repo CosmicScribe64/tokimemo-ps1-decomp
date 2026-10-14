@@ -77,33 +77,35 @@ def split_args(text):
 
 
 def extract_swaps(text):
-    """Replace every ORDER_SWAP(A, op, B) by a placeholder. Returns (text, [(A, op, B)])."""
-    swaps, out, i = [], [], 0
+    """Replace every ORDER_SWAP(A, op, B) by a placeholder, innermost first, so A and B may hold other swaps
+    (as placeholders). Returns (text, [(A, op, B)]); an outer swap has a higher index than the swaps it holds."""
+    swaps = []
     while True:
-        j = text.find(SWAP_TOKEN, i)
-        if j < 0:
-            out.append(text[i:])
-            break
-        out.append(text[i:j])
-        k, depth = j + len(SWAP_TOKEN), 1
-        while k < len(text) and depth:
-            if text[k] == "(":
-                depth += 1
-            elif text[k] == ")":
-                depth -= 1
-            k += 1
-        if depth:
-            raise MarkerError("unbalanced ORDER_SWAP( at offset %d" % j)
-        inner = text[j + len(SWAP_TOKEN):k - 1]
-        if SWAP_TOKEN in inner:
-            raise MarkerError("nested ORDER_SWAP is not supported: %s" % inner)
+        found = None
+        start = text.find(SWAP_TOKEN)
+        while start >= 0:
+            k, depth = start + len(SWAP_TOKEN), 1
+            while k < len(text) and depth:
+                if text[k] == "(":
+                    depth += 1
+                elif text[k] == ")":
+                    depth -= 1
+                k += 1
+            if depth:
+                raise MarkerError("unbalanced ORDER_SWAP( at offset %d" % start)
+            inner = text[start + len(SWAP_TOKEN):k - 1]
+            if SWAP_TOKEN not in inner:
+                found = (start, k, inner)
+                break
+            start = text.find(SWAP_TOKEN, start + len(SWAP_TOKEN))
+        if found is None:
+            return text, swaps
+        start, k, inner = found
         args = split_args(inner)
         if len(args) != 3 or not all(args):
             raise MarkerError("ORDER_SWAP takes (A, op, B), got: ORDER_SWAP(%s)" % inner)
-        out.append(PLACEHOLDER % len(swaps))
+        text = text[:start] + PLACEHOLDER % len(swaps) + text[k:]
         swaps.append(tuple(args))
-        i = k
-    return "".join(out), swaps
 
 
 class Template:
@@ -181,7 +183,9 @@ class Template:
             else:
                 out.append(seg)
         text = "".join(out)
-        for i, (a, op, b) in enumerate(self.swaps):
+        # Outer swaps (higher index) first: their arguments hold the placeholders of the inner ones.
+        for i in reversed(range(len(self.swaps))):
+            a, op, b = self.swaps[i]
             text = text.replace(PLACEHOLDER % i, ("%s %s %s" % (b, op, a)) if bits[i] else ("%s %s %s" % (a, op, b)))
         return text
 
