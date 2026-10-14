@@ -72,7 +72,7 @@ void func_8013709C(void) {
 }
 
 void func_801370E4(void) {
-    switch (D_800E71DF) {
+    switch (D_800E6280.unk_F5F) {
     case 0:
         D_800CA160 = D_8013A6B4;
         D_800CA164 = D_8013A6E8;
