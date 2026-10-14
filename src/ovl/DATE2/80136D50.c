@@ -71,4 +71,64 @@ void func_8013709C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80136D50", func_801370E4);
+void func_801370E4(void) {
+    switch (D_800E71DF) {
+    case 0:
+        D_800CA160 = D_8013A6B4;
+        D_800CA164 = D_8013A6E8;
+        D_800CA168 = D_8013A71C;
+        return;
+    case 1:
+        D_800CA160 = D_8013A6C8;
+        D_800CA164 = D_8013A6FC;
+        D_800CA168 = D_8013A730;
+        return;
+    case 2:
+        D_800CA160 = D_8013A6BC;
+        D_800CA164 = D_8013A6F0;
+        D_800CA168 = D_8013A724;
+        return;
+    case 3:
+        D_800CA160 = D_8013A6C0;
+        D_800CA164 = D_8013A6F4;
+        D_800CA168 = D_8013A728;
+        return;
+    case 4:
+        D_800CA160 = D_8013A6D8;
+        D_800CA164 = D_8013A70C;
+        D_800CA168 = D_8013A740;
+        return;
+    case 5:
+        D_800CA160 = D_8013A6CC;
+        D_800CA164 = D_8013A700;
+        D_800CA168 = D_8013A734;
+        return;
+    case 6:
+        D_800CA160 = D_8013A6D0;
+        D_800CA164 = D_8013A704;
+        D_800CA168 = D_8013A738;
+        return;
+    case 7:
+        D_800CA160 = D_8013A6C4;
+        D_800CA164 = D_8013A6F8;
+        D_800CA168 = D_8013A72C;
+        return;
+    case 8:
+        D_800CA160 = D_8013A6B0;
+        D_800CA164 = D_8013A6E4;
+        D_800CA168 = D_8013A718;
+        return;
+    case 9:
+        D_800CA160 = D_8013A6D4;
+        D_800CA164 = D_8013A708;
+        D_800CA168 = D_8013A73C;
+        return;
+    case 10:
+        D_800CA160 = D_8013A6E0;
+        D_800CA164 = D_8013A714;
+        D_800CA168 = D_8013A748;
+        /* fallthrough */
+    default:
+        return;
+    }
+}

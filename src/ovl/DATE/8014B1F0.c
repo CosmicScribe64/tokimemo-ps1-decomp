@@ -241,7 +241,61 @@ void func_8014B1F0(void) {
     D_8015E200 = 0x8019B494;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014B1F0", func_8014C08C);
+void func_8014C08C(void) {
+    if ((D_800E7389 == 0) && (D_800E738A == 0)) {
+        func_80065F34(1);
+    }
+    func_80083808();
+    switch (D_80122CD4) {
+    case 0:
+        date_shiori_dispatch();
+        break;
+    case 1:
+        func_80154520();
+        break;
+    case 2:
+        func_801502B0();
+        break;
+    case 3:
+        func_80151734();
+        break;
+    case 4:
+        func_80158960();
+        break;
+    case 5:
+        func_80155530();
+        break;
+    case 6:
+        func_801568C0();
+        break;
+    case 7:
+        func_80153280();
+        break;
+    case 8:
+        func_8014D000();
+        break;
+    case 9:
+        func_80157B40();
+        break;
+    case 10:
+        func_80159770();
+        break;
+    case 11:
+        func_8015A3B0();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_8007EDF8();
+    func_800846C0();
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    func_80083A10();
+    func_80047560();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014B1F0", func_8014C20C);
 
