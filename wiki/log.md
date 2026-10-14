@@ -13317,3 +13317,8 @@ Notes in [[matching-notes]] ("TT overlay, Opus pass with all solvers (T-11550)")
 Inline review against CODING_STANDARDS.md: new fakematches (`vx`/`vy` frame locals, the `u8 temp` in the guarded
 `func_80142350` draft) carry `FAKE` with the ticket; guard removals checked by diff. No findings. Moved
 [[tickets/T-11550-tt-opus-near-miss-pass]] to Done.
+
+## [2026-10-14] ticket | T-11560 TT batch 6 opened
+
+Opened [[tickets/T-11560-tt-batch-6]] (In Progress), stacked on T-11550 (PR #16): `bulk_m2c.py --unit TT` over the
+remaining TT functions, then Opus on the closest drafts.
