@@ -636,5 +636,29 @@ class Variants(Repo):
         self.assertEqual(B.variant_wins(rows[3:]), [])
 
 
+class ScoreJobs(unittest.TestCase):
+    """Parallel candidate scoring (T-11250)."""
+
+    def test_candidate_prefetch_skips_cached_texts(self):
+        told = []
+
+        class Sc:
+            def score(self, text):
+                return len(text)
+
+            def prefetch(self, texts):
+                told.extend(texts)
+        c = B.Candidate("v", "body", [], Sc())
+        c.score("aa")
+        c.prefetch(["aa", "bbb", "c"])
+        self.assertEqual(told, ["bbb", "c"])
+
+    def test_flags(self):
+        a = B.parse_args([])
+        self.assertEqual((a.score_jobs, a.exact), (0, False))
+        a = B.parse_args(["--score-jobs", "3", "--exact"])
+        self.assertEqual((a.score_jobs, a.exact), (3, True))
+
+
 if __name__ == "__main__":
     unittest.main()

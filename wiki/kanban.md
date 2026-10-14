@@ -59,6 +59,7 @@ kanban-plugin: board
 
 ## In Review
 - [ ] [[tickets/T-11230-m2c-variant-sweep|T-11230 m2c variant sweep in bulk_m2c]]
+- [ ] [[tickets/T-11250-faster-candidate-scoring|T-11250 Faster candidate scoring for the solvers]]
 - [ ] [[tickets/T-11220-regdiff-guided-autotweak|T-11220 regdiff-guided edit ordering in autotweak]]
 - [ ] [[tickets/T-11210-bulk-m2c-draft-failure-classes|T-11210 bulk_m2c, fix the main draft failure classes]]
 - [ ] [[tickets/T-11200-order-search-in-solvers|T-11200 Statement-order search in the automatic solvers]]

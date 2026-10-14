@@ -13239,3 +13239,15 @@ Created [[tickets/T-11230-m2c-variant-sweep]]: try several m2c option sets per t
 ## [2026-10-14] ticket | T-11230 In Review
 
 Moved [[tickets/T-11230-m2c-variant-sweep]] to In Review; needs the real-build trial and the code review.
+
+## [2026-10-14] ticket | T-11250 In Progress
+
+Created [[tickets/T-11250-faster-candidate-scoring]]: the solvers scored 0.55 candidates/s.
+
+## [2026-10-14] build | T-11250 faster candidate scoring
+
+Measured 1.3 s per candidate, 1.0 s of it in `permute.strip_functions`. `tools/fastscore.py` caches that strip per draft and runs a thread pool; `tools/autotweak.py` (`--score-jobs`, `--exact`, `climb(prefetch=)`) and `tools/bulk_m2c.py` use it. Scores equal the legacy path on 68 of 68 candidates; end to end 0.6/s became 15/s. Tests in `tools/test_fastscore.py`.
+
+## [2026-10-14] ticket | T-11250 In Review
+
+Moved [[tickets/T-11250-faster-candidate-scoring]] to In Review; needs the code review.

@@ -48,6 +48,13 @@ first, the other suggested kinds next, then edits at that location, then the res
 dropped, so --cap and --time bound the order only. The output line ends with `regdiff: <hint>`
 for the best text. Without the traced uopt the search is the unguided one.
 
+Speed (T-11250, tools/fastscore.py): the base text of a candidate is the legacy one, but the other
+functions of the unit are stripped once per draft (the stripped text before and after the target
+definition is cached, keyed by the unstripped text around it) instead of once per candidate, and
+the texts a loop is about to score are compiled by --score-jobs threads (default cores - 2),
+about 25x more candidates per second. --exact scores one candidate at a time through
+permute.build_base as before (to compare scores).
+
 A score of 0 is checked like a permuter output (permute.verify_candidate: ninja object,
 funcdiff --resolve, unit sha1). Only then the guard block is replaced by the plain function
 (INCLUDE_RODATA lines and FAKE comments of the block are kept, the NON_MATCHING note is
@@ -1500,13 +1507,13 @@ class BuildScorer:
         kept to compare scores; the default path builds the same base text from a cached strip."""
         self.exact = exact
         self.jobs = 1 if exact else max(1, jobs)
-        self._workers = fastscore.Workers(self.jobs) if self.jobs > 1 else None
+        self._workers = fastscore.shared_workers(self.jobs) if self.jobs > 1 else None
         self._builder = None if exact else fastscore.BaseBuilder(self.permute, self.root, self.draft.func)
 
     def close(self):
+        """Drop the prefetched jobs that have not started (the worker threads are shared)."""
         if self._workers is not None:
-            self._workers.close()
-            self._workers = None
+            self._workers.cancel_pending()
 
     def _text(self, definition):
         text = rewrite_guard(self.original, self.draft.func, definition)
@@ -1564,7 +1571,7 @@ class BuildScorer:
     def prefetch(self, texts):
         """Queue the scores of `texts` (in the order the climb will ask for them) on the worker
         threads and drop the jobs of an earlier call that have not started."""
-        if self._workers is None:
+        if self._workers is None or self.exact:
             return
         self._workers.cancel_pending()
         for t in texts:

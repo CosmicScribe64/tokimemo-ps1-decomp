@@ -182,3 +182,17 @@ class Workers:
         with self.cv:
             self.closed = True
             self.cv.notify_all()
+
+
+_shared = {"workers": None}
+
+
+def shared_workers(n):
+    """One worker pool per process, sized to the largest request: the solvers create one scorer
+    per draft (bulk_m2c: several per target) and only one of them climbs at a time."""
+    w = _shared["workers"]
+    if w is None or len(w.threads) < n:
+        if w is not None:
+            w.close()
+        w = _shared["workers"] = Workers(n)
+    return w

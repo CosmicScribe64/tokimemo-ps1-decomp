@@ -32,7 +32,8 @@ that is not already a guarded draft, smallest first. For each one:
    regdiff-guided edit order (T-11220; --no-regdiff turns it off). A verified match replaces
    the guard with plain C; its extra declarations move to include/main_api.h (main-exe addresses)
    or include/ovl/<UNIT>.h (overlay addresses), then check_headers.py and the unit target must pass,
-   else everything is reverted. Every other draft is reverted to INCLUDE_ASM and saved as
+   else everything is reverted. The climb compiles --score-jobs candidates at once (T-11250,
+   tools/fastscore.py; --exact scores one at a time, as before). Every other draft is reverted to INCLUDE_ASM and saved as
    <out>/drafts/<UNIT>/<func>.c with its score.
 
 The state file <out>/state.jsonl makes runs resumable: a target already in it is skipped, except
@@ -643,6 +644,8 @@ class Scorer(autotweak.BuildScorer):
 
 
 class Backend:
+    score_jobs, exact = 1, False       # candidate scoring threads and the legacy switch (T-11250)
+
     def m2c(self, root, unit, func, variant=VARIANTS[0]):
         """(declarations, body) of the m2c draft with the options of `variant`; raises
         LookupError/RuntimeError."""
@@ -655,7 +658,9 @@ class Backend:
     def scorer(self, root, draft):
         """An object with score(text) -> int|None and verify(text) -> bool; raises on compile errors."""
         with contextlib.redirect_stdout(io.StringIO()):
-            return Scorer(root, draft)
+            scorer = Scorer(root, draft)
+        scorer.configure(jobs=self.score_jobs, exact=self.exact)
+        return scorer
 
     def migrate_globals(self, root):
         """Rewrite raw GameState globals in the matched C files (tools/migrate_globals.py --apply)."""
@@ -718,6 +723,10 @@ class Candidate:
             self.cache[text] = self.scorer.score(text)
         return self.cache[text]
 
+    def prefetch(self, texts):
+        """Let the scorer compile the texts the climb will ask for in parallel (T-11250)."""
+        self.scorer.prefetch([t for t in texts if t not in self.cache])
+
 
 def pick_best(candidates):
     """The candidate with the lowest score; on a tie the first one (the earlier variant)."""
@@ -741,8 +750,9 @@ class Run:
     """Paths and options shared by the jobs."""
 
     def __init__(self, root, out, keep_score=30, time_budget=60.0, backend=None, climb=None, emit=print,
-                 order=True, regdiff=True, variants=None, replace=()):
+                 order=True, regdiff=True, variants=None, replace=(), score_jobs=1):
         self.root, self.out = root, out
+        self.score_jobs = score_jobs     # scoring threads per climb (T-11250); 1 = one at a time
         self.keep_score, self.time_budget = keep_score, time_budget
         self.backend = backend or Backend()
         self.climb = climb or autotweak.climb
@@ -899,6 +909,9 @@ class Run:
                 if self.regdiff else None
             if advise is not None:
                 extra["advise"] = advise
+            if self.score_jobs > 1:
+                extra["prefetch"] = cand.prefetch
+                extra["order_opts"] = {"jobs": self.score_jobs}
             res = self.climb(text, cand.score, verify, budget=self.time_budget, **extra)
             if res.matched and res.best == 0:
                 final = res.text
@@ -1022,10 +1035,13 @@ def retry_keys(rows, statuses, max_score=None):
     return out
 
 
-def run_group(root, out, keep_score, time_budget, items, order=True, regdiff=True, variants=1, replace=()):
+def run_group(root, out, keep_score, time_budget, items, order=True, regdiff=True, variants=1, replace=(),
+              score_jobs=1, exact=False):
     """Pool worker: one C file's targets, in order, with the real backend."""
     run = Run(root, out, keep_score, time_budget, emit=lambda s: print(s, flush=True), order=order,
-              regdiff=regdiff, variants=variant_list(variants), replace=replace)
+              regdiff=regdiff, variants=variant_list(variants), replace=replace,
+              score_jobs=1 if exact else score_jobs)
+    run.backend.score_jobs, run.backend.exact = run.score_jobs, exact
     for item in items:
         run.process(Target(*item))
     return len(items)
@@ -1081,6 +1097,10 @@ def parse_args(argv):
     p.add_argument("--time", type=float, default=60, help="autotweak seconds per draft (default 60)")
     p.add_argument("--no-order", action="store_true", help="no statement-order stage in the climb (T-11200)")
     p.add_argument("--no-regdiff", action="store_true", help="no regdiff-guided edit order in the climb (T-11220)")
+    p.add_argument("--score-jobs", type=int, default=0,
+                   help="candidates compiled in parallel per climb (default: (cores - 2) / --jobs; T-11250)")
+    p.add_argument("--exact", action="store_true",
+                   help="legacy scoring: one candidate at a time through permute.build_base (T-11250)")
     p.add_argument("--variants", type=int, default=1,
                    help="m2c option sets to try per target, the first N of VARIANTS (default 1, max %d)"
                    % len(VARIANTS))
@@ -1123,9 +1143,14 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
         targets = [t for t in targets if t.unit not in exclude and (not units or t.unit in units)]
     todo = select(targets, args.max_size, set(done), args.limit)
     emit("%d targets (%d already processed)" % (len(todo), len([t for t in targets if t.key in done])))
+    # candidates scored in parallel inside one climb (T-11250); with --jobs the cores are shared
+    score_jobs = 1 if args.exact else args.score_jobs or max(1, autotweak.fastscore.default_jobs() // max(1, args.jobs))
     if args.jobs <= 1 or backend is not None:
         run = Run(root, out, args.keep_score, args.time, backend, climb, emit, order=not args.no_order,
-                  regdiff=not args.no_regdiff, variants=variant_list(args.variants), replace=again)
+                  regdiff=not args.no_regdiff, variants=variant_list(args.variants), replace=again,
+                  score_jobs=score_jobs if backend is None else 1)
+        if backend is None:
+            run.backend.score_jobs, run.backend.exact = score_jobs, args.exact
         for t in todo:
             run.process(t)
     else:
@@ -1144,7 +1169,8 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
             futures = [pool.submit(run_group, root, out, args.keep_score, args.time,
                                    [t.as_tuple() for t in g], not args.no_order,
                                    not args.no_regdiff, args.variants,
-                                   sorted(again & {t.key for t in g})) for g in group_by_file(todo)]
+                                   sorted(again & {t.key for t in g}), score_jobs, args.exact)
+                       for g in group_by_file(todo)]
             for f in futures:
                 f.result()
     summary(out, emit)
