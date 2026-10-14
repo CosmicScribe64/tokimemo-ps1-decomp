@@ -13074,6 +13074,9 @@ Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on
 ## [2026-10-13] ticket | T-11080 started
 Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 48 big functions in NAME_ENT, main 8006CB30, TAIIKU and DATE.
 
+## [2026-10-13] ticket | T-11100 started
+Opened [[tickets/T-11100-big-functions-gemini-33]] (In Progress) on [[kanban]]: 35 big functions (60,212 bytes) in `src/ovl/TAIIKU/80138950.c`, `src/main/8007C030.c`, `src/main/8006CB30.c`, and `src/main/800674B0.c`.
+
 ## [2026-10-13] ticket | T-11110 started
 Opened [[tickets/T-11110-small-functions-gemini-34]] (In Progress): 16 functions (4,800 bytes) in `src/ovl/EVENT/8010FE10.c`.
 
@@ -13112,3 +13115,5 @@ global checks clean. Idioms in [[matching-notes]] ("TT overlay, batch 3 (T-11510
 
 Inline review against CODING_STANDARDS.md: a wrong `int` return type on a file-local function declaration and four
 untagged pad locals fixed; a stale near-miss comment corrected. Moved [[tickets/T-11510-tt-batch-3]] to Done.
+## [2026-10-14] build | T-11100 fix-up of 800674B0 drafts
+`src/main/800674B0.c`: matched `func_80068938` (FAKE pointer view for the loop stores) and `func_80068EC0`; `func_80067870`, `func_800696DC`, `func_8006A2CC` put under `NON_MATCHING` with the `INCLUDE_ASM` fallback. `tools/docker.sh ninja` 27/27 OK, `check_headers.py` OK. [[tickets/T-11100-big-functions-gemini-33]] moved to In Review on [[kanban]].

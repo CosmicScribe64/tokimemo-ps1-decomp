@@ -55,7 +55,7 @@ kanban-plugin: board
 
 
 ## In Review
-
+- [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 
 
