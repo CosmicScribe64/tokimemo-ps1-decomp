@@ -254,10 +254,15 @@ s16 func_800688F0(s32 arg0, s32 arg1) {
     return ((v + arg1 + 1) / 7) * 16 - 0x30;
 }
 
+/* FAKE: the loop stores go through the pointer `gs` so uopt reloads D_800B3748 on every trip as the original does (named
+ * stores to D_800E6280 keep it in a register); `q` is the +0x800 base of the length/start words. T-11100 */
 void func_80068938(u8 arg0, u8 arg1, s32 arg2) {
     s32 idx;
-    s32 i;
     s32 n;
+    s32 i;
+    s32 m;
+    GameState *gs;
+    s32 *q;
 
     idx = (arg0 - 95) * 12 + arg1 - 4;
     if (idx < 35) {
@@ -265,12 +270,15 @@ void func_80068938(u8 arg0, u8 arg1, s32 arg2) {
         LoadSquare(0x3A0, 0x180, 0x20, 0x80, D_800B3748[idx + 1]);
         if (arg2 != 0) {
             memcpy(&D_800E6280.unk_044[0], &D_800E6280.unk_044[1], 0x40);
-            n = D_800B3748[idx + 1][0x800];
+            gs = &D_800E6280;
+            q = D_800B3748[idx + 1] + 0x800;
+            n = q[0];
+            m = q[1];
             D_800E6280.unk_044[1].unk_00[0] = n;
-            D_800E6280.unk_044[1].unk_20[0] = D_800B3748[idx + 1][0x801];
+            D_800E6280.unk_044[1].unk_20[0] = m;
             for (i = 0; i < n; i++) {
-                D_800E6280.unk_044[1].unk_00[i + 1] = D_800B3748[idx + 1][0x802 + i];
-                D_800E6280.unk_044[1].unk_20[i + 1] = D_800B3748[idx + 1][0x802 + n + i];
+                gs->unk_044[1].unk_00[i + 1] = D_800B3748[idx + 1][0x802 + i];
+                gs->unk_044[1].unk_20[i + 1] = D_800B3748[idx + 1][0x802 + n + i];
             }
         }
     }
