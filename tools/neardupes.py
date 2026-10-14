@@ -28,8 +28,11 @@ Usage (run inside Docker, from the repo root, after a build so asm/ exists):
   -v (list every skipped function with its reason).
 Run dupes.py first; this tool skips members that have a byte-identical matched twin.
 Jump-table functions (T-11150) take part as in dupes.py: the tables are part of the shape, and a copy
-into one is applied only with --check when its table is in its own function file (dupes.split_jtbl);
-the report lists them as "needs jtbl check".
+into one is applied only with --check when its table is in its own function file (dupes.split_held);
+the report lists them as "needs jtbl check". Functions with own rodata (T-11160) likewise: the data is
+part of the shape (exact, constants are not substituted in it), and a copy is applied only with --check
+when the data is in its own function file (dupes.split_held); the report lists them as "needs data
+check". Numbers inside C string literals are never substituted.
 Tests: tools/test_neardupes.py.
 """
 import argparse
@@ -103,6 +106,7 @@ class Lit:
 def find_literals(code):
     """Numeric literals of C code outside comments, as Lit objects."""
     skip = [(m.start(), m.end()) for m in COMMENT_RE.finditer(code)]
+    skip += [(m.start(), m.end()) for m in dupes.STRING_LIT_RE.finditer(code)]   # T-11160
     lits = []
     for m in LIT_RE.finditer(code):
         if any(a <= m.start() < b for a, b in skip):
@@ -327,6 +331,7 @@ def report(args, funcs, plans, skipped, stats, nosrc):
             e[0] += 1
             e[1] += f.n * 4
     dupes.jtbl_report(build_groups(funcs), plans)
+    dupes.data_report(build_groups(funcs), plans)
     print('not fingerprinted (unmatched): ' + ', '.join('%s %d fn/%dB' % (k, n, b) for k, (n, b) in sorted(bad.items())))
     ex = wide_extra(funcs)
     print('with load/store offsets and shifts masked as well, %d more unmatched functions (%d bytes) '
@@ -348,7 +353,7 @@ def report(args, funcs, plans, skipped, stats, nosrc):
 
 
 def apply_plans(args, root, plans):
-    plans, _held = dupes.split_jtbl(plans, args.check)
+    plans, _held = dupes.split_held(plans, args.check)
     kept = dupes.apply_all(root, plans, args.check, args.v,
                            describe=lambda p: '%s <- %s (%s, %d consts)' % (p['name'], p['src'], p['unit'], p['ndiff']))
     print('applied %d of %d (%d bytes)' % (len(kept), len(plans), sum(p['bytes'] for p in kept)))

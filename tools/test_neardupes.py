@@ -11,7 +11,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dupes  # noqa: E402
 import neardupes  # noqa: E402
-from test_dupes import Repo, insn, jtbl_func_asm  # noqa: E402
+from test_dupes import Repo, data_func_asm, insn, jtbl_func_asm  # noqa: E402
 
 
 def w(op, rs=0, rt=0, imm=0):
@@ -124,6 +124,20 @@ class FingerprintTests(unittest.TestCase):
         self.assertNotEqual(ka, dupes.parse_asm(c, 'alu')[0])
 
 
+    def test_data_twins_share_the_near_key_only_with_equal_data(self):
+        """T-11160: an immediate may differ, the function's own rodata may not."""
+        a, _ = data_func_asm('f', 0x80132000, 'D_80150100')
+        b, _ = data_func_asm('g', 0x80134560, 'D_80151230')
+        b = b.replace('0800E003', hexw(w(9, 0, 5, 7)), 1).replace('jr         $ra', 'addiu      $a1, $zero, 7', 1)
+        a = a.replace('0800E003', hexw(w(9, 0, 5, 3)), 1).replace('jr         $ra', 'addiu      $a1, $zero, 3', 1)
+        c, _ = data_func_asm('h', 0x80134560, 'D_80151230', data='    .asciz "abd"\n    .balign 4\n')
+        c = c.replace('0800E003', hexw(w(9, 0, 5, 7)), 1).replace('jr         $ra', 'addiu      $a1, $zero, 7', 1)
+        ka, _, bada = dupes.parse_asm(a, 'alu')
+        self.assertIsNone(bada)
+        self.assertEqual(ka, dupes.parse_asm(b, 'alu')[0])
+        self.assertNotEqual(dupes.parse_asm(a)[0], dupes.parse_asm(b)[0])
+        self.assertNotEqual(ka, dupes.parse_asm(c, 'alu')[0])
+
 class LiteralTests(unittest.TestCase):
     def sub(self, text, sv, tv, bits=16, count=1):
         s = [neardupes.Const(neardupes.OP_ADDIU if bits == 16 else neardupes.OP_LUI, sv, bits, [i]) for i in range(count)]
@@ -186,6 +200,11 @@ class LiteralTests(unittest.TestCase):
     def test_identifiers_comments_and_floats_untouched(self):
         t = self.sub('/* 5 */ D_80150005 = 5; x = 1.5;', 5, 6)[0]
         self.assertEqual(t, '/* 5 */ D_80150005 = 6; x = 1.5;')
+
+    def test_numbers_inside_string_literals_untouched(self):
+        """T-11160: the string is the function's own rodata, equal in both twins."""
+        t = self.sub('f("day 5", 5);', 5, 6)[0]
+        self.assertEqual(t, 'f("day 5", 6);')
 
     def test_32bit_constant(self):
         self.assertEqual(self.sub('v = 0x80100000;', 0x80100000, 0x80110040, 32)[0], 'v = 0x80110040;')
