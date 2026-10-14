@@ -388,19 +388,18 @@ void func_80140624(void) {
     p->unk_366++;
 }
 
-/* T-11540 near miss (25 differing rows, order_search): case 0x40 now matches (the 0x212 update before the 0x3EC update), x = 0x14 + 0x276 sum order and x before y in case 0x52. Left: pt sits 4 bytes lower in the frame (sp+52, original sp+56) and case 0x52 spills one more word (sw t1,80(sp)) with other temp numbering (vx/vy/x/y declaration orders tried: no change); the rest follows by cascade. */
-#ifdef NON_MATCHING
+/* T-11540/T-11550: matched once case 0x52 reads +0x3EC/+0x3F0 back from memory for the /0x10000 stores (the vx/vy copies took a register and spilled one more word) and pt is declared after vy, which puts it at sp+56. */
 void func_80140920(void) {
     u8 *b;
     u8 *c;
     u8 *a;
     u16 mode;
     s32 t; /* FAKE: unused, needed for the frame size. T-11510 */
-    s32 vx;
-    s32 vy;
+    s32 vx; /* FAKE: unused, needed for the frame layout (pt at sp+56). T-11550 */
+    s32 vy; /* FAKE: unused, needed for the frame layout (pt at sp+56). T-11550 */
+    TtPoint14 pt;
     s16 x;
     s16 y;
-    TtPoint14 pt;
     c = D_80158A8C;
     mode = *(u16 *)(c + 8);
     b = D_80158A60;
@@ -480,11 +479,9 @@ void func_80140920(void) {
         }
         c[0x20E] = 0;
         *(s32 *)(c + 0x3EC) += func_800A0140(D_80155F18) * 0x1C;
-        vx = *(s32 *)(c + 0x3EC);
         *(s32 *)(c + 0x3F0) += func_800A0070(D_80155F18) * 0x1C;
-        vy = *(s32 *)(c + 0x3F0);
-        *(s16 *)(c + 0x276) = vx / 0x10000;
-        *(s16 *)(c + 0x2A6) = vy / 0x10000;
+        *(s16 *)(c + 0x276) = *(s32 *)(c + 0x3EC) / 0x10000;
+        *(s16 *)(c + 0x2A6) = *(s32 *)(c + 0x3F0) / 0x10000;
         x = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x276);
         y = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x2A6);
         if (y >= 0x139 || y < -0x48 || x < -0xC8 || x >= 0xC9) {
@@ -502,9 +499,6 @@ void func_80140920(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140920);
-#endif
 
 void func_80140CBC(void) {
     switch (*(u16 *)(D_80158A8C + 0x30E)) {
