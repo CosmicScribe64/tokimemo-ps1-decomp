@@ -13138,3 +13138,9 @@ Matched 11 of 16 functions in `src/ovl/DATE/80132000.c` (3,444 linked bytes / 3,
 ## [2026-10-14] ticket | T-11140 Done
 
 Inline review against `CODING_STANDARDS.md` completed with no open findings; moved [[tickets/T-11140-small-functions-gemini-38]] to Done on [[kanban]] and [[index]].
+
+
+## [2026-10-14] ticket | T-11530 order_search tool opened
+
+Opened [[tickets/T-11530-order-search-tool]] (In Progress): a tool that enumerates statement orders and operand
+orders of a marked draft, because the TT batches kept finding matches by hand-searching those orders.
