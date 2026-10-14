@@ -622,7 +622,17 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
         for t in todo:
             run.process(t)
     else:
-        from concurrent.futures import ProcessPoolExecutor
+        # tools/queue.py shadows the stdlib queue that concurrent.futures needs (as in tools/permute.py)
+        here = os.path.dirname(os.path.abspath(__file__))
+        saved = sys.path[:]
+        sys.path[:] = [q for q in saved if os.path.abspath(q or '.') != here]
+        shadow = sys.modules.pop('queue', None)
+        try:
+            from concurrent.futures import ProcessPoolExecutor
+        finally:
+            sys.path[:] = saved
+            if shadow is not None and (getattr(shadow, '__file__', None) or '').startswith(here):
+                sys.modules['queue'] = shadow
         with ProcessPoolExecutor(max_workers=args.jobs) as pool:
             futures = [pool.submit(run_group, root, out, args.keep_score, args.time,
                                    [t.as_tuple() for t in g]) for g in group_by_file(todo)]
