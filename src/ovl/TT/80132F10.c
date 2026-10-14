@@ -72,7 +72,7 @@ void func_80133058(u8 *arg0, u16 arg1) {
     }
 }
 
-/* T-11000 near miss: stack slot of id matches (declared before t); beq operand order of the hoisted -1 (s3, v0), call-argument/store scheduling in the record init; about 45 listing rows. */
+/* T-11540 near miss (order_search): stack slot of id matches (declared before t); remaining: beq operand order of the hoisted -1 (s3, v0; ORDER_SWAP does not change it) and temp numbering of the record init (original loads a+0x22 into t9 before the u/v sums); 34 diff lines. */
 #ifdef NON_MATCHING
 void func_801330D8(void) {
     u8 *g;
@@ -107,8 +107,8 @@ void func_801330D8(void) {
         *(s32 *)(a + 0x20) = *(s16 *)(*(u8 **)(g + 8)) << 16;
         x = *(s16 *)(*(u8 **)(g + 8) + 2) << 16;
         *(s32 *)(a + 0x1C) = x;
-        *(s32 *)(a + 0x28) = 0;
         *(s32 *)(a + 0x24) = *(s32 *)g - x;
+        *(s32 *)(a + 0x28) = 0;
         *(s32 *)(a + 0x2C) = 0;
         *(s16 *)(a + 0x5E) = 0;
         a[0x60] = 0;
