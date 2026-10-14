@@ -395,7 +395,7 @@ void func_80140624(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140624);
 #endif
 
-/* T-11540 near miss (35 differing rows, order_search): case 0x40 now matches (the 0x212 update before the 0x3EC update). Left: pt sits 4 bytes lower in the frame (sp+52, original sp+56) and case 0x52 spills one more word (sw t1,80(sp)) with other temp numbering (vx/vy/x/y declaration orders tried: no change); the rest follows by cascade. */
+/* T-11540 near miss (25 differing rows, order_search): case 0x40 now matches (the 0x212 update before the 0x3EC update), x = 0x14 + 0x276 sum order and x before y in case 0x52. Left: pt sits 4 bytes lower in the frame (sp+52, original sp+56) and case 0x52 spills one more word (sw t1,80(sp)) with other temp numbering (vx/vy/x/y declaration orders tried: no change); the rest follows by cascade. */
 #ifdef NON_MATCHING
 void func_80140920(void) {
     u8 *b;
@@ -492,8 +492,8 @@ void func_80140920(void) {
         vy = *(s32 *)(c + 0x3F0);
         *(s16 *)(c + 0x276) = vx / 0x10000;
         *(s16 *)(c + 0x2A6) = vy / 0x10000;
-        y = *(s16 *)(c + 0x2A6) + *(s16 *)(c + 0x16);
-        x = *(s16 *)(c + 0x276) + *(s16 *)(c + 0x14);
+        x = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x276);
+        y = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x2A6);
         if (y >= 0x139 || y < -0x48 || x < -0xC8 || x >= 0xC9) {
             c[0x327] = 0;
             *(s16 *)(c + 8) = 0xA0;
