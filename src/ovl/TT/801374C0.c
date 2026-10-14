@@ -333,7 +333,7 @@ void func_8013923C(void) {
     work->step = 0x100U;
 }
 
-/* T-11510 near miss: structure matches (switch 0/0x40, nested 0/0x40/0x50 switch, shared tail); the only differences are register numbers: the shared tail value is in a0 in the original, v0 here, and the case-0 slot loop pointer and counter swap a0/v1; 23 differing instructions (permuter 8 min: no gain). */
+/* T-11520 near miss: 11 differing instructions, registers only. Writing the case-0 short arrays as *(s16 *)(c + 0x2A8 + i * 2) makes c + i * 2 one range with the 0x40 loops (priority 75.5), so it takes v1 and the slot pointer a0 as in the original. Left: the shared c[0x364] tail value (PRE'd load in the default case, the end of case 0, the 0xDC/0xFD tests and the 0xFD block) is a0 in the original and v0 here (nothing allocated before it holds v0 or v1 in its blocks), and the 0xFD loop preheader orders li v1,0x18 before move v0,a2 (the original fills the bne delay slot with the move). Tried: i = 0 before the 0xDC test, do/while and i < 0x18 forms of the 0xFD loop, (*p)++ tail. */
 #ifdef NON_MATCHING
 void func_801392A0(void) {
     u8 *c;
@@ -358,9 +358,9 @@ void func_801392A0(void) {
             ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
             ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
             c[0x310 + i] = 0;
-            ((s16 *)(c + 0x2A8))[i] = 8;
-            ((s16 *)(c + 0x248))[i] = 0;
-            ((s16 *)(c + 0x278))[i] = 0;
+            *(s16 *)(c + 0x2A8 + i * 2) = 8;
+            *(s16 *)(c + 0x248 + i * 2) = 0;
+            *(s16 *)(c + 0x278 + i * 2) = 0;
         }
         for (i = 0x13; i != 0x18; i++) {
             c[0x310 + i] = 0;
