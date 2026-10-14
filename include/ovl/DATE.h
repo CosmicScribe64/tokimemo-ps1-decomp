@@ -1530,3 +1530,9 @@ void func_80138220(void);
 void func_801384D4(void);
 
 #endif
+#ifndef OVL_DATE_T11140_H
+#define OVL_DATE_T11140_H
+void func_8013E7B0(void);
+void func_8013E980(void);
+void func_8013E9BC(void);
+#endif

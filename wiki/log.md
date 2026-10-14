@@ -13133,3 +13133,14 @@ Created [[tickets/T-11170-cheat-sheet-auto-tweaker]] and implemented `tools/auto
 
 ## [2026-10-14] ticket | T-11190 Bulk m2c pipeline
 Created [[tickets/T-11190-bulk-m2c-pipeline]] and implemented `tools/bulk_m2c.py`: m2c draft, mechanical cleanup, guarded single-function compile with cheap fixes, autotweak scoring and hill climb, verified matches written as plain C (declarations through `include/main_api.h` / `include/ovl/<UNIT>.h`, `check_headers.py` and unit target), everything else reverted and saved under `--out` with `near.txt`. Resumable state file, crash recovery, per-file jobs with one build lock. `tools/autotweak.py` gets `BuildScorer.INSTRUCTION_TOLERANCE`. Tests `tools/test_bulk_m2c.py` (mocked backend). Usage in [[decompile-workflow]]. Ticket In Review (real run pending in Docker).
+## [2026-10-14] ticket | T-11140 started
+
+Created [[tickets/T-11140-small-functions-gemini-38]] in In Progress and updated [[kanban]] and [[index]] for the 16 functions in `src/ovl/DATE/80132000.c`.
+
+## [2026-10-14] build | T-11140 match 11 DATE functions and guard 5 near misses
+
+Matched 11 of 16 functions in `src/ovl/DATE/80132000.c` (3,444 linked bytes / 3,652 list bytes): `func_80136214`, `func_80136FF0`, `func_80138220`, `func_801384D4`, `func_80139944`, `func_80139F3C`, `func_8013A0C0`, `func_8013C0A4`, `func_8013D468`, `func_8013DB6C`, and `func_80140B08`. Guarded the remaining 5 near misses under `#ifdef NON_MATCHING` (`func_8013D8B0` 1 diff line, `func_8013E9F8` 3 diff lines, `func_8013BEB8` 8 diff lines, `func_80137D1C` 9 diff lines, `func_80139834` 24 diff lines) and recorded them in [[data/t0018-cases]]. `tools/docker.sh ninja`, `build/headers.ok`, and `build/globals.ok` pass 27/27 OK; grand total 5416/6958 functions, 1160096/2279368 bytes (50.9%).
+
+## [2026-10-14] ticket | T-11140 Done
+
+Inline review against `CODING_STANDARDS.md` completed with no open findings; moved [[tickets/T-11140-small-functions-gemini-38]] to Done on [[kanban]] and [[index]].
