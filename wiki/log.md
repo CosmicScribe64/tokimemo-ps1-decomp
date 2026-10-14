@@ -13144,3 +13144,18 @@ Inline review against `CODING_STANDARDS.md` completed with no open findings; mov
 
 Opened [[tickets/T-11530-order-search-tool]] (In Progress): a tool that enumerates statement orders and operand
 orders of a marked draft, because the TT batches kept finding matches by hand-searching those orders.
+
+## [2026-10-14] build | T-11530 order_search.py added and validated
+
+`tools/order_search.py` permutes marked statement blocks (`/* ORDER */ ... /* END ORDER */`) and operand orders
+(`ORDER_SWAP(A, op, B)`), compiles every variant the way funcdiff does and scores it with resolved diff rows; the file
+is always written back without markers. Recovered the matched store order of `func_80147150` from the pre-T-11500
+order (24 variants, about 2 s) and the operand order of `func_80139770`. Two fixes during validation: plain threads
+instead of `concurrent.futures` (`tools/queue.py` shadows the standard `queue` module) and NON_MATCHING only for
+guarded functions, with `--resolve` as default. Synthetic tests `tools/test_order_search.py`, 10/10. Documented in
+[[decompile-workflow]].
+
+## [2026-10-14] ticket | T-11530 Done
+
+Inline review against CODING_STANDARDS.md: Python 3, Docker-run, synthetic tests, no game data; no findings.
+Moved [[tickets/T-11530-order-search-tool]] to Done.
