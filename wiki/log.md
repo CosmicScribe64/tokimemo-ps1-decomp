@@ -13095,3 +13095,8 @@ grand total `5398/6958   1149612/2279368  50.4%`. All 27 checksums OK; prototype
 
 Inline review against CODING_STANDARDS.md; one finding (a pad without `FAKE`) fixed. Moved
 [[tickets/T-11500-tt-batch-2]] to Done.
+
+## [2026-10-14] ticket | T-11510 TT batch 3 opened
+
+Opened [[tickets/T-11510-tt-batch-3]] (In Progress), stacked on T-11500 (PR #4). Opus on the four T-11500 near misses
+first, then a 14-function Sonnet list over untried TT functions.
