@@ -550,6 +550,89 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D73C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D988);
 
+/* T-11510 near miss (about 29 differing instructions): frame, spills, tile loop structure and OT links match; left are temp numbering of the u/v sums, the lui/sll order at entry, and the register ranking and store order of the constants in the POLY_G4 block (the original preloads 0xF0 first). FAKE: pad1/pad2 only reproduce the 0x78 frame, original source unknown. */
+#ifdef NON_MATCHING
+typedef struct TtTileMap {
+    /* 0x00 */ u8 *index;
+    /* 0x04 */ u8 *record;
+    /* 0x08 */ u8 *flags;
+} TtTileMap;
+
+void func_8013DE10(void) {
+    s32 pad1; /* FAKE: unused, with pad2 reproduces the 0x78 frame. T-11510 */
+    s32 pad2; /* FAKE: see pad1. T-11510 */
+    TtDrawBuffer80B8 *buffer;
+    TtRectPacket16 *q;
+    POLY_G4 *g;
+    DR_MODE *m;
+    u8 *c;
+    u8 *r;
+    s32 row;
+    s32 col;
+    s32 n;
+
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    c = D_80158A64;
+    for (row = 0; row != 0x80; row += 0x10) {
+        for (col = 0, n = row; col != 0x10; col++, n++) {
+            q = (TtRectPacket16 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
+            q->code = 0x7D;
+            q->tag.len = 3;
+            q->x = (col << 4) - 0x80;
+            q->y = row + 0x70;
+            r = ((TtTileMap *)*(u8 **)(c + 0x18))->record + ((TtTileMap *)*(u8 **)(c + 0x18))->index[n & 0x3FF] * 3;
+            q->u = (((TtTileMap *)*(u8 **)(c + 0x18))->flags[r[0]] & 0x80) + ((r[1] & 7) << 4);
+            q->v = ((((TtTileMap *)*(u8 **)(c + 0x18))->flags[r[0]] & 0x40) * 2) + ((r[1] >> 3) << 4);
+            q->clut = (((r[2] >> 4) + 0xF0) << 6) + (r[2] & 0xF);
+            q->tag.addr = buffer->ordering[13].addr;
+            buffer->ordering[13].addr = (u32)q;
+        }
+    }
+    m = buffer->cursor;
+    buffer->cursor++;
+    func_8009D294((s32)m, 0, 0, 0x18, 0);
+    ((TtOtTag *)m)->addr = buffer->ordering[13].addr;
+    buffer->ordering[13].addr = (u32)m;
+    m = buffer->cursor;
+    buffer->cursor++;
+    func_8009D294((s32)m, 0, 0, 0x18, 0);
+    ((TtOtTag *)m)->addr = buffer->ordering[15].addr;
+    buffer->ordering[15].addr = (u32)m;
+    g = (POLY_G4 *)buffer->cursor;
+    buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x24);
+    ((TtOtTag *)g)->len = 8;
+    g->code = 0x39;
+    g->y2 = 0xA8;
+    g->y3 = 0xA8;
+    g->x0 = -0x80;
+    g->x2 = -0x80;
+    g->x3 = 0x80;
+    g->y1 = 0;
+    g->x1 = 0x80;
+    g->y0 = 0;
+    g->g0 = 0x68;
+    g->b0 = 0xF0;
+    g->r0 = 0;
+    g->g1 = 0x68;
+    g->b1 = 0xF0;
+    g->r1 = 0;
+    g->b2 = 0xD8;
+    g->r2 = 0xB0;
+    g->g2 = 0xF0;
+    g->b3 = 0xD8;
+    g->r3 = 0xB0;
+    g->g3 = 0xF0;
+    ((TtOtTag *)g)->addr = buffer->ordering[15].addr;
+    buffer->ordering[15].addr = (u32)g;
+    m = buffer->cursor;
+    buffer->cursor++;
+    func_8009D294((s32)m, 0, 1, 0x18, 0);
+    ((TtOtTag *)m)->addr = buffer->ordering[15].addr;
+    buffer->ordering[15].addr = (u32)m;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013DE10);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013E1E8);

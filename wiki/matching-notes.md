@@ -4575,3 +4575,35 @@ untried TT functions (9 matched out of 17 attempted; 28 untouched). Ticket [[tic
   bytes `(x / 10) * 16 + x % 10` with plain `while (f(...) == 0) {}` polls match the CD seek (`func_80142DEC`); an
   `s32` definition without a return statement keeps the temps of `func_80144A04` where `void` shifts them by two.
 - Process: stage files by name; a `git add -A src` once swept a half-finished draft into a commit and broke the TT sha1.
+
+## TT overlay, batch 3 (T-11510)
+
+Opus pass on four T-11500 near misses (3 matched in about 41 minutes), then a Sonnet list of 14 untried functions
+(1 matched, 7 guarded near misses). Ticket [[tickets/T-11510-tt-batch-3]]. Over the two Opus passes, 6 of 9 near
+misses matched.
+
+- **Join blocks decide what stays in registers.** A `break` or `continue` that sends a path straight to the shared tail
+  keeps loaded values (shared expressions such as `+0x364`/`+0x368`) in registers; a separate join block reloads them
+  (`func_8013B6C8`, marked `FAKE` when the `break` is redundant).
+- **Saved-register priority and block counts.** uopt's priority is the saving divided by a compressed block count
+  D = floor((N-2)/4)+2 for a range over N blocks. Removing one empty loop block (`if (p[0] == 0) continue;` instead of a
+  nested `if`) took the counter of `func_80147644` from N=10 to 9, D from 4 to 3, priority 7.75 to 10.33, above the
+  hoisted constants (10), and gave the original's s3..s7 order.
+- **20-reference block split.** uopt ends a block after 20 variable references (`varreflimit`); reloads go at the start
+  of the next block, so putting two stores on one line can move a reload ahead of a temp (`func_80147644`, `FAKE`).
+- **Stores do not move above loads through another pointer** (possible alias): the source order of packet stores
+  against the `p` loads decides what fills a load delay slot (x, y, v, u in `func_80147644`).
+- **abs as an inline ternary.** `if (((v < 0) ? -v : v) >= 0x801)` gives `bgez; move; b; negu` with no extra local; an
+  `a = v; if (v < 0) a = -v;` local outranks other values (`func_80136244`).
+- **ugen temporaries.** t6..t9 are handed out in the order they were freed, so an extra global reload in a switch
+  default changes the numbering (`p` instead of `D_80158A8C` in `func_80136244`). A constant used twice in one block is a
+  ugen temp, not a uopt range, and takes the lowest free of v0, v1, a0... (`func_80144A04`, still open).
+- **Share the loop variable.** A tail loop with its own counter got other s-registers; reusing the `i` of the earlier
+  loops fixed `func_80139770`. To take the address of a function whose ANSI prototype would change K&R callers, use a
+  file-local non-prototype `extern void f();` and a `void (*fn)()` pointer.
+- **Keep an induction variable.** `x = col * 16 - 0x80` is strength-reduced and `col` disappears; `(col << 4) - 0x80`
+  keeps it (`func_8013DE10`).
+- **Operand order of sums sets temp numbering.** Trying operand orders of the u/v/clut sums took `func_8013DE10` from
+  178 to 58 rows; script the 2^n combinations.
+- Process: restrict scripted edits (`sed`) to one function's line range; a global substitution of `s32 i;` broke other
+  functions. Do not edit a C file while the permuter verifies through it.

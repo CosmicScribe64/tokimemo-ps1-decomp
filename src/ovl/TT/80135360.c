@@ -1,7 +1,93 @@
 #include "common.h"
 #include "ovl/TT.h"
 
+/* T-11510 near miss (about 45 differing instructions; frame, spill slots 0x60/0x9C, pt and every branch target match): the first clear loop pointer is s1 in the original (v0 here), temp numbering follows from it, and the two angle sums (idx * 0x733 + 0xC000 - 0x3998 and + 0x4000 - 0xACC8) fold their constants here while the original keeps the hoisted 0xC000/0x4000 and adds the constant separately. The unused s32 locals and pad[4] only place the frame (FAKE, original source unknown). */
+#ifdef NON_MATCHING
+void func_80135360(void) {
+    s32 pq1;
+    s32 pq2;
+    u8 *a;
+    u8 *c;
+    u8 *b;
+    u8 *p;
+    u8 *e;
+    s32 i;
+    s32 j;
+    s32 px1;
+    s32 px2;
+    s32 px3;
+    s16 pt[2];
+    s32 pad[4]; /* FAKE: unused, places the frame, spill slots and pt as in the original. T-11510 */
+
+    c = D_80158A8C;
+    a = D_80158A74;
+    b = D_80158A64;
+    if (c[0] != 0) {
+        for (i = 0, e = c; i < 0x18; i++, e += 0x14) {
+            e[0x42] = 0;
+        }
+        if (c[0x342] == 0 && func_801427A8() != 0) {
+            func_80133AD0(0x503);
+        }
+        if (c[0x344] == 0) {
+            for (i = 0; i != 8; i++) {
+                pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x258 + i * 2);
+                pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x288 + i * 2);
+                if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, (u8 *)pt, &D_80155B54[c[0xDE + i * 0x14] * 6] + 0x42) != 0) {
+                    func_80144094();
+                    *(s16 *)(a + 4) = 0x60;
+                    *(s16 *)(a + 10) = 0;
+                    *(s16 *)(a + 8) = 0;
+                    *(s16 *)(a + 6) = 0;
+                    a[15] = 0;
+                    a[14] = 0;
+                    a[13] = 0;
+                }
+                p = D_80158A80;
+                for (j = 0; j != 12; j++, p += 0x54) {
+                    if (p[0] != 0 && *(u16 *)(p + 4) == 0x40) {
+                    e = i * 0x14 + c;
+                    if (func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155B54[e[0xDE] * 6] + 0x42) != 0) {
+                        b[0x25] = b[0x25] + 1;
+                        if (b[0x24] != 0 && !(b[0x25] & 3)) {
+                            func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
+                        }
+                        *(u16 *)(p + 4) = 0x80;
+                        *(s16 *)(p + 10) = 0;
+                        *(s16 *)(p + 8) = 0;
+                        *(s16 *)(p + 6) = 0;
+                        p[15] = 0;
+                        p[14] = 0;
+                        p[13] = 0;
+                        if (c[0x343] != 0) {
+                            if (*(u16 *)(c + 6) == 1) {
+                                *(u16 *)(c + 0x3B8) += 1;
+                                if ((*(u16 *)(c + 0x3B8) & 7) == 7) {
+                                    func_80133E30(pt[0], pt[1], 0x18, 0xC00 - (e[0xDE] << 7), 0xA0);
+                                }
+                            }
+                            if (e[0xDE] != 0 && e[0xDE] < 0x10) {
+                                *(u16 *)(c + 0x3AA) = 0xC000;
+                                if (e[0xDE] >= 9) {
+                                    *(u16 *)(c + 0x3AA) = e[0xDE] * 0x733 + 0xC000 - 0x3998;
+                                }
+                            } else if (e[0xDE] >= 0x11) {
+                                *(u16 *)(c + 0x3AA) = 0x4000;
+                                if (e[0xDE] < 0x18) {
+                                    *(u16 *)(c + 0x3AA) = e[0xDE] * 0x733 + 0x4000 - 0xACC8;
+                                }
+                            }
+                        }
+                    }
+                    }
+                }
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_80135360);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_801356C8);
 
@@ -152,14 +238,12 @@ void func_80135FA8(void) {
     *(u16 *)(c + 0x364) += 1;
 }
 
-/* T-11500 near miss (41 listing rows, register naming only): structure, jump table and frame match; the raw u16 load of +0x3AA is $v1 and its s16 copy $v0 (original: raw $v0, copy $v1), which shifts the later temps, and the case-1 constants of the D_801579D4/D_80158A5C stores take t7/t6 instead of t6/t7. Permuter 300 s: best 665 of base 720 */
-#ifdef NON_MATCHING
 void func_80136244(void) {
     s32 pad; /* FAKE: unused home declared first keeps the frame layout, real source unknown. T-11500 */
     u8 *p;
+    u8 *e;
     u8 k;
     s16 v;
-    s32 a;
     u16 t;
     s16 b;
 
@@ -188,7 +272,7 @@ void func_80136244(void) {
         *(u8 **)(p + 0x230) = D_80155B90;
         break;
     default:
-        *(u8 **)(D_80158A8C + 0x230) = D_80155B6C;
+        *(u8 **)(p + 0x230) = D_80155B6C;
         break;
     }
     func_80142AF0(D_80150A14, 4);
@@ -222,19 +306,11 @@ void func_80136244(void) {
         *(u16 *)(p + 0x3AA) = 0x800;
     }
     v = *(u16 *)(p + 0x3AA);
-    a = v;
-    if (v < 0) {
-        a = -v;
-    }
-    if (a >= 0x801) {
-        t = *(u16 *)(p + 0x3AC) - v / 256 / 4;
+    if (((v < 0) ? -v : v) >= 0x801) {
+        *(u16 *)(p + 0x3AC) -= v / 256 / 4;
+        t = *(u16 *)(p + 0x3AC);
         b = t;
-        *(u16 *)(p + 0x3AC) = t;
-        a = b;
-        if (b < 0) {
-            a = -b;
-        }
-        if (a < 2) {
+        if (((b < 0) ? -b : b) < 2) {
             *(u16 *)(p + 0x3AC) = 0;
         } else if (b < 0x800) {
             *(u16 *)(p + 0x3AC) = t - 2;
@@ -245,9 +321,6 @@ void func_80136244(void) {
         func_80135848(*(u16 *)(p + 0x3AC));
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_80136244);
-#endif
 
 void func_801364EC(void) {
     u8 *q;

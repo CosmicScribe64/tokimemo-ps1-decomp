@@ -212,7 +212,107 @@ void func_80138D94(void) {
     }
 }
 
+/* T-11510 near miss: structure matches; differences are the register numbers of the hoisted constants in the case-0 slot loop (the original ranks 8, the table pointer, 4, then the bound 18; here 18 comes first) and the delay-slot fill of the sltiu before the 0x4B test; about 73 differing instructions (permuter 8 min: no gain). */
+#ifdef NON_MATCHING
+void func_80138E28(void) {
+    u8 *c;
+    u8 *s;
+    u8 *p;
+    u8 *e;
+    s16 *t;
+    s16 j;
+    s32 i;
+    s32 a;
+    u16 k;
+
+    k = *(u16 *)(D_80158A8C + 6);
+    c = D_80158A8C;
+    s = D_80158AB0;
+    switch (k) {
+    case 0:
+        *(u16 *)(c + 0x364) = 0;
+        *(u16 *)(c + 0x3D4) = 0;
+        for (i = 0x10; i != 0x12; i++) {
+            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
+            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 4;
+            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
+            c[0x310 + i] = 0;
+            ((s16 *)(c + 0x2A8))[i] = 8;
+            ((s16 *)(c + 0x248))[i] = 0;
+            ((s16 *)(c + 0x278))[i] = 0;
+        }
+        *(s16 *)(c + 6) = 0x40;
+        return;
+    case 0x40:
+        t = D_80152CFC;
+        e = D_80158A8C;
+        if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
+            func_80133AD0(0x501);
+            j = t[*(u16 *)(c + 0x3D4) + 4];
+            c[j + 0x310] = 1;
+            c[j * 0x14 + 0x40] = 0x80;
+            *(s16 *)(c + j * 2 + 0x248) = t[*(u16 *)(c + 0x3D4) + 1];
+            *(s16 *)(c + j * 2 + 0x278) = t[*(u16 *)(c + 0x3D4) + 2];
+            *(s16 *)(c + j * 2 + 0x2A8) = t[*(u16 *)(c + 0x3D4) + 3];
+            *(u16 *)(c + 0x3D4) += 5;
+        }
+        for (i = 0x10; i < 0x12; i++) {
+            func_80142AF0(D_80150950, i);
+        }
+        if (*(u16 *)(c + 0x364) == 0x4B) {
+            c[0x310] = 0;
+            func_80138B90(D_80150950);
+            c[0x52] = 1;
+            p = D_80158AA4 + 0x1900;
+            for (i = 0; i != 0x10; i++, p += 0x64) {
+                p[0] = 1;
+                p[1] = 0;
+                *(s16 *)(p + 0x44) = 0;
+                p[0x3B] = 0x80;
+                *(u8 **)(p + 0x48) = s;
+                p[0x4D] = 0;
+                p[0x4E] = 1;
+                p[0x50] = 0;
+                *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) - 8;
+                *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) - 8;
+                p[0x47] = (i & 1) * 0x10 + 0x40;
+                p[0x46] = 0xF0;
+                p[0x4F] = 0;
+                *(s16 *)(p + 0x3C) = 0x10;
+                *(s16 *)(p + 0x3E) = 0x10;
+                *(s16 *)(p + 0x40) = 0x12;
+                *(s16 *)(p + 0x42) = 0x3CD2;
+                p[0x4C] = 0;
+                *(s16 *)(p + 0x10) = 8;
+            }
+            *(u16 *)(c + 0x3D4) = 0;
+        }
+        if (*(u16 *)(c + 0x364) >= 0x4C) {
+            p = D_80158AA4 + 0x1900;
+            for (a = 0; a != 0x1000; a += 0x100, p += 0x64) {
+                *(s16 *)(p + 0x14) = ((u32)(*(u16 *)(c + 0x3D4) * func_800A0140(a)) >> 12) + *(s16 *)(c + 0x14) - 8;
+                *(s16 *)(p + 0x16) = ((u32)(*(u16 *)(c + 0x3D4) * func_800A0070(a)) >> 12) + *(s16 *)(c + 0x16) - 8;
+                p[0x4C] = D_80152D30[(*(u16 *)(c + 0x364) >> 2) & 3];
+            }
+            *(u16 *)(c + 0x3D4) += 4;
+        }
+        if (*(u16 *)(c + 0x364) >= 0x88) {
+            p = D_80158AA4 + 0x1900;
+            for (i = 0; i < 0x10; i++) {
+                p[i * 0x64] = 0;
+            }
+            *(s16 *)(c + 4) = 0x52;
+            *(s16 *)(c + 6) = 0;
+        }
+        *(u16 *)(c + 0x364) += 1;
+        return;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138E28);
+#endif
 
 void func_8013923C(void) {
     TtPhase3AE *work;
@@ -233,7 +333,115 @@ void func_8013923C(void) {
     work->step = 0x100U;
 }
 
+/* T-11510 near miss: structure matches (switch 0/0x40, nested 0/0x40/0x50 switch, shared tail); the only differences are register numbers: the shared tail value is in a0 in the original, v0 here, and the case-0 slot loop pointer and counter swap a0/v1; 23 differing instructions (permuter 8 min: no gain). */
+#ifdef NON_MATCHING
+void func_801392A0(void) {
+    u8 *c;
+    u8 *e;
+    s16 *t;
+    s16 j;
+    s32 i;
+    u16 k;
+    u16 m;
+
+    k = *(u16 *)(D_80158A8C + 6);
+    c = D_80158A8C;
+    switch (k) {
+    case 0:
+        func_80142774();
+        *(u16 *)(c + 0x364) = 0;
+        *(u16 *)(c + 0x3D4) = 0;
+        for (i = 0x10; i < 0x13; i++) {
+            ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
+            ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_05 = 4;
+            ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
+            ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
+            c[0x310 + i] = 0;
+            ((s16 *)(c + 0x2A8))[i] = 8;
+            ((s16 *)(c + 0x248))[i] = 0;
+            ((s16 *)(c + 0x278))[i] = 0;
+        }
+        for (i = 0x13; i != 0x18; i++) {
+            c[0x310 + i] = 0;
+        }
+        *(s16 *)(c + 6) = 0x40;
+        *(s16 *)(c + 8) = 0;
+        break;
+    case 0x40:
+        t = D_80152D34;
+        e = D_80158A8C;
+        if (t[*(u16 *)(e + 0x3D4)] != -1 && t[*(u16 *)(e + 0x3D4)] == *(u16 *)(e + 0x364)) {
+            func_80133AD0(0x501);
+            j = t[*(u16 *)(c + 0x3D4) + 4];
+            c[j + 0x310] = 1;
+            c[j * 0x14 + 0x40] = 0x80;
+            *(s16 *)(c + j * 2 + 0x248) = t[*(u16 *)(c + 0x3D4) + 1];
+            *(s16 *)(c + j * 2 + 0x278) = t[*(u16 *)(c + 0x3D4) + 2];
+            *(s16 *)(c + j * 2 + 0x2A8) = t[*(u16 *)(c + 0x3D4) + 3];
+            *(u16 *)(c + 0x3D4) += 5;
+        }
+        m = *(u16 *)(c + 8);
+        switch (m) {
+        case 0:
+            if (*(u16 *)(c + 0x364) == 0x78) {
+                func_80133AD0(0x505);
+                for (i = 0; i < 5; i++) {
+                    *(s32 *)(c + 0x3E4 + i * 4) = *(s16 *)(c + 0x27C + i * 2) << 16;
+                }
+                *(s32 *)(c + 0x3F8) = 0xFFFE0000;
+                *(s32 *)(c + 0x3FC) = 0x1000;
+                *(s16 *)(c + 0x3D6) = 0;
+                *(s16 *)(c + 8) = 0x40;
+            }
+            break;
+        case 0x40:
+            for (i = 0; i < 5; i++) {
+                *(s16 *)(c + 0x27C + i * 2) = *(s32 *)(c + 0x3E4 + i * 4) >> 16;
+                *(s32 *)(c + 0x3E4 + i * 4) += *(s32 *)(c + 0x3F8);
+            }
+            *(s16 *)(c + 0x24C) -= 1;
+            *(s16 *)(c + 0x252) += 1;
+            if (*(u16 *)(c + 0x3D6) == 1) {
+                *(u16 *)(c + 0x3D6) = 0;
+                *(s16 *)(c + 0x24E) -= 1;
+                *(s16 *)(c + 0x250) += 1;
+            } else {
+                *(u16 *)(c + 0x3D6) = 1;
+            }
+            *(s32 *)(c + 0x3F8) += *(s32 *)(c + 0x3FC);
+            if (*(s16 *)(c + 0x284) >= 0xB1) {
+                *(u16 *)(c + 8) = 0x50;
+            }
+            break;
+        case 0x50:
+            break;
+        }
+        for (i = 0x10; i < 0x13; i++) {
+            func_80142AF0(D_80150950, i);
+        }
+        if (*(u16 *)(c + 0x364) == 0xDC) {
+            c[0x311] = 0;
+        }
+        if (*(u16 *)(c + 0x364) == 0xFD) {
+            for (i = 0; i != 0x18; i++) {
+                c[0x310 + i] = 0;
+            }
+            *(s16 *)(c + 10) = 0;
+            *(s16 *)(c + 8) = 0;
+            *(s16 *)(c + 6) = 0;
+            c[15] = 0;
+            c[14] = 0;
+            c[13] = 0;
+            *(s16 *)(c + 4) = 0xA0;
+        }
+        break;
+    }
+    *(u16 *)(c + 0x364) += 1;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_801392A0);
+#endif
 
 void func_801396C4(void) {
     func_80138300();
@@ -254,6 +462,86 @@ void func_801396E4(void) {
     *(u16 *)(p + 0x366) += 1;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80139770);
+/* Non-prototype declaration for taking the address: the ANSI prototype of 80133970.c (s16/u16 parameters) would change the K&R calls in this file. T-11510 */
+extern void func_80134470();
+
+void func_80139770(void) {
+    void (*fn)();
+    u8 *c;
+    s32 i;
+
+    c = D_80158A8C;
+    if (*(u16 *)(c + 0x30E) == 1) {
+        fn = func_80133FB0;
+    } else {
+        fn = func_80134470;
+    }
+    if (*(u16 *)(D_80158A8C + 0x366) >= 0x30) {
+        func_80133AD0(0x50B);
+        switch (*(u16 *)(c + 0x3A4)) {
+        case 0:
+            if (c[0x52] == 1) {
+                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+                for (i = 0; i != 5; i++) {
+                    func_80133E30(*(s16 *)(c + 0x14) + D_80152D9C[i], *(s16 *)(c + 0x16) + D_80152DA8[i], 0x20, D_80152DB4[i], 0xA9);
+                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
+                    c[0x320 + i] = 1;
+                    ((s16 *)(c + 0x268))[i] = D_80152D9C[i];
+                    ((s16 *)(c + 0x298))[i] = D_80152DA8[i];
+                }
+                *(u16 *)(c + 0x3A4) = 1;
+                *(u16 *)(c + 0x366) = 0;
+            }
+            break;
+        case 1:
+            if (c[0x52] == 3) {
+                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+                for (i = 0; i != 5; i++) {
+                    func_80133E30(*(s16 *)(c + 0x14) + D_80152DC0[i], *(s16 *)(c + 0x16) + D_80152DCC[i], 0x20, D_80152DD8[i], 0xA9);
+                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
+                    c[0x320 + i] = 1;
+                    ((s16 *)(c + 0x268))[i] = D_80152DC0[i];
+                    ((s16 *)(c + 0x298))[i] = D_80152DCC[i];
+                }
+                *(u16 *)(c + 0x3A4) = 2;
+                *(u16 *)(c + 0x366) = 0;
+            }
+            break;
+        case 2:
+            if (c[0x52] == 5) {
+                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+                for (i = 0; i != 4; i++) {
+                    func_80133E30(*(s16 *)(c + 0x14) + D_80152DE4[i], *(s16 *)(c + 0x16) + D_80152DEC[i], 0x20, D_80152DF4[i], 0xA9);
+                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
+                    c[0x320 + i] = 1;
+                    ((s16 *)(c + 0x268))[i] = D_80152DE4[i];
+                    ((s16 *)(c + 0x298))[i] = D_80152DEC[i];
+                }
+                *(u16 *)(c + 0x3A4) = 3;
+                *(u16 *)(c + 0x366) = 0;
+            }
+            break;
+        case 3:
+            if (c[0x52] == 7) {
+                fn(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16), 0x100, 0x20, 0xAA);
+                for (i = 0; i != 5; i++) {
+                    func_80133E30(*(s16 *)(c + 0x14) + D_80152DFC[i], *(s16 *)(c + 0x16) + D_80152E08[i], 0x20, D_80152E14[i], 0xA9);
+                    ((TtSlot14 *)(c + 0x38))[0x10 + i].unk_08 = 0x80;
+                    c[0x320 + i] = 1;
+                    ((s16 *)(c + 0x268))[i] = D_80152DFC[i];
+                    ((s16 *)(c + 0x298))[i] = D_80152E08[i];
+                }
+                *(u16 *)(c + 0x3A4) = 0;
+                *(u16 *)(c + 0x366) = 0;
+            }
+            break;
+        }
+    } else {
+        *(u16 *)(c + 0x366) += 1;
+    }
+    for (i = 0x10; i != 0x15; i++) {
+        func_80142AF0(D_80152D7C, i);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80139B98);
