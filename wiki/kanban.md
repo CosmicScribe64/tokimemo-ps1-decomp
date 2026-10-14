@@ -72,6 +72,7 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-11520-tt-batch-4|T-11520 TT overlay batch 4]]
+- [ ] [[tickets/T-11530-order-search-tool|T-11530 Tooling: order_search.py]]
 - [ ] [[tickets/T-11510-tt-batch-3|T-11510 TT overlay batch 3]]
 - [ ] [[tickets/T-11500-tt-batch-2|T-11500 TT overlay batch 2]]
 

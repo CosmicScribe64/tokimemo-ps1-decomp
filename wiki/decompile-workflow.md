@@ -291,6 +291,30 @@ matched functions, so none was made.
 
 Reproduce the synthetic frame checks with `tools/docker.sh python3 tools/test_local_aggregate_frames.py`.
 
+## Statement and operand order search (T-11530)
+
+When a draft is right except for scheduling, delay-slot fill or t-register numbering, the cause is often the source
+order of independent statements or the operand order of a sum (TT batches T-11000..T-11520: packet stores x, y, h, w;
+one-line RECT fields; `x + call() / 64` vs `call() / 64 + x`). `tools/order_search.py` tries these systematically:
+
+1. Mark the draft in its C file. Lines between `/* ORDER */` and `/* END ORDER */` are permuted, each non-blank line
+   as one unit (statements written on one line move together, which matters to IDO); `ORDER_SWAP(A, op, B)` tries
+   `A op B` and `B op A`. Several blocks and swaps combine.
+2. `tools/docker.sh python3 tools/order_search.py func_X --unit TT -j 8`. Exhaustive up to `--max-exhaustive`
+   combinations (default 2000), else a hill-climb from the written order (`--budget` compiles, default 3000).
+   Each variant is compiled like funcdiff compiles the function (whole translation unit; NON_MATCHING only when the
+   function is a guarded draft) and scored by funcdiff's diff rows with relocations resolved (`--no-resolve` compares
+   names, which leaves a noise floor above 0 even for a match).
+3. The file is written back without markers: the best variant (`--dry-run`: the written order). This also happens on
+   an error or Ctrl-C, so markers never stay in the tree. A score of 0 is a candidate: confirm with `ninja` and
+   `funcdiff.py`.
+
+Validation: with the four stores of `func_80147150` scrambled to the pre-T-11500 order, all 24 orders compiled in
+about 2 s and the one scoring 0 was the matched source, byte for byte; the reversed sum in `func_80139770` was
+flipped back (score 4 -> 0). Keep blocks small: 7 units are 5,040 orders. Rebuild `asm/` after switching branches
+(`configure.py` + `ninja`), or a stale split makes every variant fail to compile, as with funcdiff. Tests:
+`tools/test_order_search.py` (synthetic).
+
 ## Resumable CPU permuter farm (T-9810)
 
 `tools/permuter_farm.py` collects existing near-miss C from `scratchpad/w*-*/`
