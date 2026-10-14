@@ -1527,3 +1527,9 @@ typedef struct DateFlags0F4 {
     /* 0x00 */ u32 rest : 11;
 } DateFlags0F4; /* size 0x04 */
 #endif
+#ifndef OVL_DATE_T11140_H
+#define OVL_DATE_T11140_H
+void func_8013E7B0(void);
+void func_8013E980(void);
+void func_8013E9BC(void);
+#endif

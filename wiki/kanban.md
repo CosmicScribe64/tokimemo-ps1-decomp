@@ -67,6 +67,7 @@ kanban-plugin: board
 
 ## Done
 
+- [ ] [[tickets/T-11140-small-functions-gemini-38|T-11140 Small functions (Gemini) 38]]
 - [ ] [[tickets/T-11090-ingest-english-patch-notes|T-11090 Ingest the English patch notes as a reference]]
 - [ ] [[tickets/T-11050-big-functions-sonnet-28|T-11050 Big functions (Sonnet) 28]]
 - [ ] [[tickets/T-11030-big-functions-sonnet-26|T-11030 Big functions (Sonnet) 26]]
