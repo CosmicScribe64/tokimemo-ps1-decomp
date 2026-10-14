@@ -217,8 +217,6 @@ void func_8013A63C(void) {
     D_801499A0.unk_00 += 1;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, twenty listing lines; five scheduling swaps. */
 void func_8013A6FC(void) {
     s16 next_x;
     s32 limit_y1;
@@ -301,8 +299,8 @@ void func_8013A6FC(void) {
             if (D_80149990.unk_00 == 1) {
                 ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0x90;
             } else {
-                ((DisplayActor44 *)D_8011ECD0)[96].unk_03 |= 1;
                 ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x90;
+                ((DisplayActor44 *)D_8011ECD0)[96].unk_03 |= 1;
             }
             ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = 0x10;
             D_8014994C += 1;
@@ -324,8 +322,8 @@ void func_8013A6FC(void) {
                         D_80149988.unk_00 = 0;
                         ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0xA4;
                         D_80149974.unk_00 = 0;
-                        D_8014994C += 1;
                         ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = -0x50;
+                        D_8014994C += 1;
                     }
                 }
             }
@@ -347,14 +345,14 @@ void func_8013A6FC(void) {
                 if (((DisplayActor44 *)D_8011ECD0)[96].unk_26 >= 0x21) {
                     ((DisplayActor44 *)D_8011ECD0)[96].unk_26 -= 2;
                 } else {
-                    D_8014994C += 1;
                     ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0x20;
+                    D_8014994C += 1;
                 }
             } else if (((DisplayActor44 *)D_8011ECD0)[96].unk_26 < 0x20) {
                 ((DisplayActor44 *)D_8011ECD0)[96].unk_26 += 2;
             } else {
-                D_8014994C += 1;
                 ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0x20;
+                D_8014994C += 1;
             }
             break;
         case 7:
@@ -379,9 +377,6 @@ void func_8013A6FC(void) {
         func_8013AE14();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A6FC);
-#endif
 
 void func_8013ACBC(void) {
     D_80149990.unk_00 = 0;
