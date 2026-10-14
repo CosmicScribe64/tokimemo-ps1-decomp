@@ -79,7 +79,40 @@ void func_801101B4(void) {
     D_801252E0 = 0x801E2000;
 }
 
+/* NON_MATCHING: T-11110, 24 lines: original keeps 6 in $a1 for multu $a0, $a1 (D_801252E4 * 6) and bne $a1, $t3 (D_800B0898 == 6) and puts D_801252E4 in $a0; IDO strength-reduces * 6 to shifts/subu and puts D_801252E4 in $v1. */
+#ifdef NON_MATCHING
+void func_80110234(void) {
+    u8 v;
+
+    func_80017E50();
+    D_80094730 += D_8012531C * (u8)D_801252E8;
+    D_80094734 = 0;
+    v = func_8002328C(D_800B1746);
+    D_80124344 = (((v & 0x7F) >= 2U) + ((v & 0x7F) >= 3U)) * ((D_801252E4 == 0) + 1) + D_801252E4 * 6 - (D_801252E4 == 2) * 3;
+    D_80124348 = 0;
+    *(s16 *)&D_80124358 = 0;
+    *(s16 *)&D_80124360 = 0;
+    D_8012434C = 0;
+    D_80124350 = 0;
+    D_8012437C = 0;
+    D_80124380 = 0;
+    D_80124370 = 0;
+    D_80124378 = 0;
+    *(s16 *)&D_80124364 = 0;
+    *(s16 *)&D_80124368 = 0;
+    if ((D_800B0898 == 6) && (D_800B0897 < 8)) {
+        D_80125328 = 1;
+    } else {
+        D_80125328 = 0;
+    }
+    func_80017E50();
+    func_80045B14();
+    D_80094868 = 0;
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80110234);
+#endif
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801103A0);
 
@@ -752,7 +785,49 @@ void func_8011552C(void) {
     func_80011DFC();
 }
 
+/* NON_MATCHING: T-11110, 1 line: original emits dead move $v0, $zero after sw $zero, D_800EECBC when D_800EECBC is allocated to $v0; adding return 0 moves D_800EECBC to $v1. */
+#ifdef NON_MATCHING
+void func_801155D4(void) {
+    /* FAKE: unused words reserve top frame slots so s32 msg sits at sp+0x28 in a 0x50 frame; T-11110 */
+    s32 pad[9];
+    s32 msg;
+
+    if (D_800EECBC == 0) {
+        if ((D_80125308 != 0) || (D_80125304 != 0)) {
+            msg = 0x42C9;
+            D_80125320 = 3;
+        } else {
+            msg = 0x42AE;
+            D_80125320 = 0;
+        }
+    }
+    if (D_800EECBC == 1) {
+        D_80094730 += 5;
+        if (D_80125308 != 0) {
+            msg = 0x42D2;
+            D_80125320 = 4;
+        } else {
+            msg = 0x42B7;
+            D_80125320 = 1;
+        }
+    }
+    if (D_800EECBC == 2) {
+        D_80094730 += 0xA;
+        msg = 0x42C0;
+        D_80125320 = 2;
+    }
+    func_800469F4(msg);
+    func_80115C18();
+    func_80114B0C();
+    if ((D_800B1746 == 8) && ((u8)D_80125320 == 3) && (D_800B0BCF != 0)) {
+        D_800EECBC = 1;
+    } else {
+        D_800EECBC = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801155D4);
+#endif
 
 void func_80115714(void) {
     func_80078970(D_800947C4, "ナイトパレード");
@@ -1840,7 +1915,32 @@ void func_80119688(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801196B8);
+s32 func_801196B8(void) {
+    /* FAKE: label stops cvt_pass entry strip so uopt puts 1 ($a0) first in bne; T-11110 */
+entry:;
+    if ((D_800B1746 == 1) && (*(u8 *)&D_80125320 == 3)) {
+        if (((u8)D_800B0E31 == 0) && ((D_800B0896 < 3) || (D_800B0896 >= 6))) {
+            D_80094730 += 1;
+            (&D_8012439C)[0] = (&D_8012439C)[1] = (&D_8012439C)[2] = 3;
+            (&D_8012438C)[0] = (&D_8012438C)[1] = (&D_8012438C)[2] = 3;
+            func_80114B0C();
+            func_8004A8EC(3);
+            func_80033E88();
+            return 0;
+        }
+        if ((u8)D_800B0E31 == 1) {
+            (&D_8012439C)[0] = (&D_8012439C)[1] = (&D_8012439C)[2] = 4;
+            (&D_8012438C)[0] = (&D_8012438C)[1] = (&D_8012438C)[2] = 4;
+            func_80114B0C();
+            func_8004A8EC(4);
+            func_80033E88();
+            return 0;
+        }
+    } else if ((D_800B1746 == 8) && (*(u8 *)&D_80125320 == 2) && (D_800B0BCE != 0)) {
+        D_80094730 += 3;
+    }
+    func_80011DFC();
+}
 
 void func_80119824(void) {
     if (D_800B1746 == 8 && (u32)(u8)D_80125320 == 3 && D_800B0BCF != 0) {
@@ -1857,7 +1957,39 @@ void func_80119824(void) {
     }
 }
 
+/* NON_MATCHING: T-11110, 1 line: bne $v1, $a0 vs bne $a0, $v1 on *(u8 *)&D_80125320 == 1 (D_80125320 is declared s8 in EVENT.h and loaded after first branch, so cvt_pass keeps CVT J<-L and uopt puts register-held constant 1 ($a0) first). */
+#ifdef NON_MATCHING
+void func_801198E8(void) {
+    s32 v2;
+    u8 v;
+
+    /* FAKE: label stops cvt_pass entry strip so uopt puts 1 ($a0) first in bne; T-11110 */
+entry:;
+    if ((D_800B1746 == 1) && (*(u8 *)&D_80125320 == 3)) {
+        if (((u8)D_800B0E31 == 0) && ((D_800B0896 < 3) || (D_800B0896 >= 6))) {
+            D_800B1AF6 += 0xD;
+        }
+        if ((u8)D_800B0E31 == 1) {
+            D_800B1AF6 += 0xD;
+        }
+    } else if ((D_800B1746 == 4) && (*(u8 *)&D_80125320 == 3) && (D_800B0AFF != 0)) {
+        D_800B1AF6 += 6;
+    } else if ((D_800B1746 == 7) && (*(u8 *)&D_80125320 == 1)) {
+        v = func_8002328C(7);
+        v2 = func_8002336C(7);
+        if ((v == 0x80) && (v2 == 0)) {
+            D_800B1AF6 += 0xA;
+        } else {
+            D_800B1AF6 += 0xB;
+        }
+    } else if ((D_800B1746 == 8) && (*(u8 *)&D_80125320 == 2) && (D_800B0BCE != 0)) {
+        D_800B1AF6 += 6;
+    }
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801198E8);
+#endif
 
 void func_80119A60(void) {
     if (D_800B1746 == 2) {
@@ -2191,7 +2323,31 @@ void func_8011AB94(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011AC18);
+s32 func_8011AC18(void) {
+    /* FAKE: unused word reserves top frame slot so EventTable2D6 tbl sits at sp+0x2C in a 0x308 frame; T-11110 */
+    s32 pad;
+    EventTable2D6 tbl;
+
+    tbl = D_80125504;
+    if (((D_800B0F2D == D_800B0F2C) && (D_801252E4 == 1)) || (D_800B0F2E == 0xFF)) {
+        D_800B1AF6 += 0x11;
+        return;
+    }
+    if (D_800B0F2E == D_800B0F2C) {
+        func_80078970(D_80094818, tbl.unk_00[D_800B0F2D]);
+    } else {
+        func_80078970(D_80094818, tbl.unk_00[(s32)D_800B0F2E]);
+    }
+    if (D_800B0F2F != 0xFF) {
+        D_80124384 = 3;
+        if (D_800B0F2F == D_800B0F2C) {
+            func_80078970(D_8009483C, tbl.unk_00[D_800B0F2D]);
+        } else {
+            func_80078970(D_8009483C, tbl.unk_00[(s32)D_800B0F2F]);
+        }
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011AD7C);
 
