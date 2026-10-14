@@ -78,7 +78,77 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/8014E440", func_8014FEF4);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/8014E440", func_80150244);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/8014E440", func_8015049C);
+void func_8015049C(void) {
+    s32 temp_v0;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        dec_bg_cd_read(0x4118, 1);
+        func_8004284C();
+        break;
+    case 1:
+        normal_date_bggirl_fadeout();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_80145844();
+            dec_bg_show_set(1, func_8005751C(1));
+            cd_read_sectors(0x13U, 0x801E8000, 0x4A52);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        normal_date_bggirl_fadein();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(7);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x56;
+                break;
+            case 2:
+                D_800CA148 = 0x58;
+                break;
+            case 3:
+                D_800CA148 = 0x5A;
+                break;
+            }
+            func_80150CC8();
+        }
+        break;
+    case 5:
+        normal_date_speak();
+        break;
+    case 6:
+        normal_date_girl_out();
+        break;
+    case 7:
+        D_800E6280.unk_F5F = 0xE;
+        func_8004284C();
+        break;
+    case 8:
+        normal_date_speak();
+        break;
+    case 9:
+        normal_date_bg_fadeout();
+        break;
+    case 10:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 11:
+        normal_date_speak();
+        break;
+    case 12:
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/8014E440", func_80150680);
 
