@@ -327,7 +327,71 @@ void func_8013B77C(void) {
     func_8013B994();
 }
 
+/* NON_MATCHING: T-11120, about 60 lines: the original loop (two coordinate pairs per 8-byte record, `a0 += 8`, end pointer in $a1) stays rolled; every form tried (index, pointer, do-while, nested j<2) gets unrolled or loses the pointer shape. Frame 0x48 in the original (sp+0x2C/0x30/0x34 spills), 0x40 here. */
+#ifdef NON_MATCHING
+void func_8013B994(void) {
+    s32 err;
+    s32 zero;
+    s32 i;
+    s32 x;
+    s32 y;
+    u8 saved;
+
+    err = 0;
+    zero = 0;
+    if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+        for (i = 0; i < 8; i++) {
+            x = ((s16 *)D_80125C10)[i * 4];
+            if (x >= 0x7D) {
+                err++;
+            }
+            if (x < -0x86) {
+                err++;
+            }
+            y = ((s16 *)D_80125C10)[i * 4 + 1];
+            if (y < -0x54) {
+                err++;
+            }
+            if (y >= 0x55) {
+                err++;
+            }
+            if (x == 0 && y == 0) {
+                zero++;
+            }
+            x = ((s16 *)D_80125C10)[i * 4 + 2];
+            if (x >= 0x7D) {
+                err++;
+            }
+            if (x < -0x86) {
+                err++;
+            }
+            y = ((s16 *)D_80125C10)[i * 4 + 3];
+            if (y < -0x54) {
+                err++;
+            }
+            if (y >= 0x55) {
+                err++;
+            }
+            if (x == 0 && y == 0) {
+                zero++;
+            }
+        }
+    }
+    func_800AE0B0("err %d \n", err);
+    func_800AE0B0("zero %d \n", zero);
+    if (zero >= 2) {
+        if (err != 0) {
+            saved = *(u8 *)&D_800E6280.unk_F6C;
+            *(u8 *)&D_800E6280.unk_F6C = 0;
+            func_8006509C();
+            func_80064FA4(0);
+            *(u8 *)&D_800E6280.unk_F6C = saved;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B994);
+#endif
 
 void func_8013BB10(void) {
     D_8014D0A8 = 0;
@@ -734,7 +798,42 @@ s32 func_8013C9F0(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4; the original also keeps the selector copy in a stack slot (sp+0x2C) across the calls, frame 0x38 */
+#ifdef NON_MATCHING
+void func_8013CEC8(void) {
+    s32 n;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    n = D_800E6280.unk_1093;
+    if (D_800E6280.unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = n / 7 * 0x1F - 0x82;
+        D_80120C96 = n % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[n] == 1) {
+        if (n + 1 == D_800E7D36) {
+            func_80044750(0x501);
+            func_80042940(3);
+            D_800E6280.unk_1118 = D_800E7D36;
+        } else {
+            D_800E7D36 = D_800E6280.unk_1093 + 1;
+            func_8004E58C();
+            func_80139CB4();
+            func_8004EA98();
+            func_8004EAD4(0);
+            func_8013B51C(n);
+        }
+    }
+    func_8013AF78(1);
+    func_8013B1D8();
+    func_80139C24();
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CEC8);
+#endif
 
 void func_8013D054(void) {
     u8 state;
@@ -797,7 +896,33 @@ void func_8013D054(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D2AC);
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4 (selector in $v1 plus a `move v0,v1` copy for the division and the D_800E7D15 index) */
+#ifdef NON_MATCHING
+void func_8013D4CC(void) {
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    if (D_800E6280.unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = (s8)D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
+        D_80120C96 = (s8)D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[D_800E6280.unk_1093] == 1) {
+        if (D_800E6280.unk_1093 + 1 == D_800E6280.unk_1118) {
+            func_80042940(0x24);
+        } else {
+            func_80042940(0x22);
+            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+        }
+    }
+    func_8013AF78(1);
+    func_8013B1D8();
+    func_80139C24();
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D4CC);
+#endif
 
 void func_8013D62C(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
@@ -1149,7 +1274,37 @@ void func_8013E3C8(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4; the original also keeps the copy in a stack slot (sp+0x2C) across the calls, frame 0x38 */
+#ifdef NON_MATCHING
+void func_8013E430(void) {
+    s32 n;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    n = D_800E6280.unk_1093;
+    if (D_800E6280.unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = n / 7 * 0x1F - 0x82;
+        D_80120C96 = n % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1)) {
+        func_80044750(0x501);
+        D_800E6280.unk_1118 = n + 1;
+        if ((u8)(&D_800E7D15)[n] != 0) {
+            func_8004284C();
+            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+        } else if (D_800E8BEE != 0) {
+            func_80042940(0xA8);
+        } else {
+            func_80042940(0xA9);
+        }
+    }
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E430);
+#endif
 
 void func_8013E59C(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
@@ -1384,7 +1539,40 @@ s32 func_8013F208(void) {
 }
 
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4 (selector in $v1 plus a `move v0,v1` copy for the division and the D_800E7D15 index) */
+#ifdef NON_MATCHING
+void func_8013F454(void) {
+    GameState *g;
+    s32 idx;
+
+    func_80142880();
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    g = &D_800E6280;
+    idx = g->unk_1093;
+    if (idx != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = idx / 7 * 0x1F - 0x82;
+        D_80120C96 = idx % 7 * 0x10 - 0xB;
+    }
+    if (D_800E6280.unk_F88 & 0x820) {
+        if (idx != -1) {
+            D_800E6280.unk_1118 = idx + 1;
+            if ((u8)(&D_800E7D15)[idx] != 0) {
+                func_8004284C();
+            } else if (func_80054694(D_800E6280.unk_1118) == 1) {
+                func_80044750(0x501);
+                func_80042940(0xC6);
+            } else {
+                func_80042908(4);
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F454);
+#endif
 
 void func_8013F5B0(void) {
     u8 buf[0x108]; /* FAKE: 8 bytes more than the neighbours give the original frame (0x140). T-9170 */
@@ -1521,20 +1709,15 @@ void func_8013FB08(void) {
 /* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4: the original indexes D_800E7D15 and divides a `move v0,v1` copy of the selector, here no copy and constants one register lower. */
 #ifdef NON_MATCHING
 void func_8013FB8C(void) {
-    GameState *g;
-    s32 idx;
-
     menu_check(0, D_8011ECF6, D_8011ECFA);
     D_800E6280.unk_F88 &= ~0x100;
     func_8004FC10(0);
-    g = &D_800E6280;
-    idx = g->unk_1093;
-    if (idx != -1) {
+    if (D_800E6280.unk_1093 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = (s8)D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
+        D_80120C96 = (s8)D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (idx != -1) && (u8)(&D_800E7D15)[idx] != 0) {
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[D_800E6280.unk_1093] != 0) {
         func_8004284C();
         func_80044750(0x501);
         D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
