@@ -682,5 +682,170 @@ class Main(Repo):
         self.assertNotIn("regdiff:", out)
 
 
+SHIFT, DECLSWAP = "(i << 2)", "u16 k;\n    s32 i;"
+
+
+def stripped_hiding_shift(text):
+    """Stripped scores that hide the match: the shift (an exact 0) scores 30, other edits 10."""
+    return 50 if text == FUNC else 30 if SHIFT in text else 10
+
+
+def exact_shift(text):
+    return 0 if SHIFT in text else 20
+
+
+class ExactScorer(FakeScorer):
+    """Stripped and full-unit scores that disagree (T-11270)."""
+
+    def __init__(self, stripped, exact, verify_ok=True, broken=False):
+        FakeScorer.__init__(self, [], verify_ok)
+        self.stripped, self.exact, self.broken, self.unit_calls = stripped, exact, broken, []
+
+    def score(self, text):
+        self.calls += 1
+        return self.stripped(text)
+
+    def exact_rescorer(self):
+        if self.broken:
+            raise SystemExit("order_search.py: no expected object")
+
+        def unit(text):
+            self.unit_calls.append(text)
+            return self.exact(text)
+        return A.ExactRescorer(unit)
+
+
+class ExactRescore(unittest.TestCase):
+    """T-11270: exact rescoring of the stripped climb's best candidates."""
+
+    def test_match_hidden_by_stripped_score_is_found(self):
+        verified = []
+
+        def verify(t):
+            verified.append(t)
+            return True
+        rescorer = A.ExactRescorer(exact_shift)
+        r = A.climb(FUNC, stripped_hiding_shift, verify, budget=60, order=False, rescore=rescorer.many)
+        self.assertTrue(r.matched)
+        self.assertTrue(r.via_exact)
+        self.assertIn(SHIFT, r.text)
+        self.assertEqual((r.base, r.best, r.exact_base, r.exact_best), (50, 0, 20, 0))
+        self.assertEqual(verified, [r.text], "only the exact 0 goes to verify")
+
+    def test_without_rescore_the_hidden_match_is_missed(self):
+        r = A.climb(FUNC, stripped_hiding_shift, lambda t: True, budget=60, order=False)
+        self.assertFalse(r.matched)
+        self.assertNotIn(SHIFT, r.text)
+        self.assertEqual(r.rescored, 0)
+
+    def test_threshold_and_top_choose_the_rescored(self):
+        rescorer = A.ExactRescorer(exact_shift)
+        r = A.climb(FUNC, stripped_hiding_shift, lambda t: True, budget=60, order=False,
+                    rescore=rescorer.many, exact_top=3, exact_threshold=0)
+        self.assertFalse(r.matched, "30 is above the threshold and below the top 3")
+        self.assertEqual(r.exact_best, 20)
+        r = A.climb(FUNC, stripped_hiding_shift, lambda t: True, budget=60, order=False,
+                    rescore=A.ExactRescorer(exact_shift).many, exact_top=0, exact_threshold=30)
+        self.assertTrue(r.matched)
+
+    def test_exact_zero_that_fails_verification_is_not_a_match(self):
+        r = A.climb(FUNC, stripped_hiding_shift, lambda t: False, budget=60, order=False,
+                    rescore=A.ExactRescorer(exact_shift).many)
+        self.assertFalse(r.matched)
+        self.assertNotIn(SHIFT, r.text)
+
+    def test_climb_accepts_by_exact_score(self):
+        def stripped(t):
+            return 1 if SHIFT in t else 2 if DECLSWAP in t else 5
+
+        def exact(t):
+            return 3 if DECLSWAP in t else 8 if SHIFT in t else 10
+        r = A.climb(FUNC, stripped, lambda t: True, budget=60, order=False, rescore=A.ExactRescorer(exact).many)
+        self.assertIn(DECLSWAP, r.text)
+        self.assertNotIn(SHIFT, r.text, "the stripped best is worse in the full unit")
+        self.assertEqual(r.path, ["declswap L1"])
+        self.assertEqual((r.exact_base, r.exact_best, r.best), (10, 3, 2))
+        self.assertFalse(r.matched)
+        plain = A.climb(FUNC, stripped, lambda t: True, budget=60, order=False)
+        self.assertIn(SHIFT, plain.text)
+
+    def test_rescorer_caches_by_text(self):
+        calls = []
+
+        def unit(t):
+            calls.append(t)
+            return len(t)
+        r = A.ExactRescorer(unit)
+        self.assertEqual(r.many(["ab", "c", "ab"]), [2, 1, 2])
+        self.assertEqual(r(" ab"), 3)
+        self.assertEqual(r.many(["c", "ab"]), [1, 2])
+        self.assertEqual(calls, ["ab", "c", " ab"])
+        self.assertEqual((r.compiled, r.hits), (3, 2))
+        workers = A.fastscore.Workers(2)
+        try:
+            p = A.ExactRescorer(unit, workers)
+            self.assertEqual(p.many(["xyz", "q", "xyz", "pq"]), [3, 1, 3, 2])
+        finally:
+            workers.close()
+
+    def test_climb_rescores_each_text_once(self):
+        scorer = ExactScorer(lambda t: 5 if t == FUNC else 4, lambda t: 9)
+        rescorer = scorer.exact_rescorer()
+        A.climb(FUNC, scorer.score, lambda t: True, budget=60, order=False, rescore=rescorer.many)
+        self.assertEqual(len(scorer.unit_calls), len(set(scorer.unit_calls)))
+        self.assertGreater(len(scorer.unit_calls), 1)
+
+    def test_pick_rescore(self):
+        cands = [(9, "a"), (1, "b"), (40, "c"), (3, "d"), (41, "e"), (1, "b")]
+        self.assertEqual(A.pick_rescore(cands, 2, 40), [(1, "b"), (3, "d"), (9, "a"), (40, "c")])
+        self.assertEqual(A.pick_rescore(cands, 1, 0), [(1, "b")])
+        self.assertEqual(A.pick_rescore([], 3, 40), [])
+
+    def test_order_stage_every(self):
+        self.assertEqual(A.order_stage(FUNC, lambda t: 1, lambda t: True, 10 ** 9, every=True), [])
+
+
+class ExactMain(Repo):
+    def run_main(self, argv, scorer):
+        out = io.StringIO()
+        rc = A.main(argv + ["--root", self.root], make_scorer=lambda root, d: scorer,
+                    out=lambda line: print(line, file=out))
+        return rc, out.getvalue()
+
+    def test_flags(self):
+        a = A.parse_args(["f"])
+        self.assertEqual((a.exact_top, a.exact_threshold, a.no_exact_rescore), (3, 40, False))
+        a = A.parse_args(["f", "--exact-top", "5", "--exact-threshold", "12", "--no-exact-rescore"])
+        self.assertEqual((a.exact_top, a.exact_threshold, a.no_exact_rescore), (5, 12, True))
+        self.assertFalse(A.parse_args(["f", "--exact"]).no_exact_rescore)
+
+    def test_match_found_by_exact_rescore_is_reported(self):
+        rc, out = self.run_main(["func_80132100", "--time", "60", "--no-order"],
+                                ExactScorer(stripped_hiding_shift, exact_shift))
+        self.assertIn("MATCH AA:func_80132100", out)
+        self.assertIn("(found by exact rescore)", out)
+        self.assertIn(SHIFT, self.read())
+
+    def test_no_exact_rescore_flag(self):
+        scorer = ExactScorer(stripped_hiding_shift, exact_shift)
+        rc, out = self.run_main(["func_80132100", "--time", "60", "--no-order", "--no-exact-rescore"], scorer)
+        self.assertNotIn("MATCH", out)
+        self.assertNotIn("exact", out)
+        self.assertEqual(scorer.unit_calls, [])
+        self.assertEqual(self.read(), SRC)
+
+    def test_near_miss_line_shows_exact_scores(self):
+        scorer = ExactScorer(lambda t: 7, lambda t: 11)
+        rc, out = self.run_main(["func_80132100", "--time", "60", "--no-order", "--exact-top", "1",
+                                 "--exact-threshold", "0"], scorer)
+        self.assertRegex(out, r"AA:func_80132100  7 -> 7 .* exact 11 -> 11 \(\d+ rescored\)")
+
+    def test_rescorer_setup_failure_falls_back(self):
+        scorer = ExactScorer(stripped_hiding_shift, exact_shift, broken=True)
+        rc, out = self.run_main(["func_80132100", "--time", "60", "--no-order"], scorer)
+        self.assertIn("NOTE AA:func_80132100  no exact rescoring: order_search.py: no expected object", out)
+        self.assertNotIn("MATCH", out)
+
+
 if __name__ == "__main__":
     unittest.main()

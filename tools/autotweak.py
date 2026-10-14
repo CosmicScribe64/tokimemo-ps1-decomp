@@ -55,6 +55,17 @@ the texts a loop is about to score are compiled by --score-jobs threads (default
 about 25x more candidates per second. --exact scores one candidate at a time through
 permute.build_base as before (to compare scores).
 
+Exact rescoring (T-11270): the stripped compile leaves out the other functions of the unit, so its
+score is not the build's (T-11260: sibling-call relocations, trailing nops, rodata layout), and a
+candidate that matches in the build can score above 0. After each stage of a step (single edits,
+pairs, order) the --exact-top best candidates (default 3) and every candidate scoring at most
+--exact-threshold (default 40) are compiled as the whole C file and scored like order_search.py's
+default path (funcdiff rows, relocations resolved), cached by text hash. An exact 0 goes to the
+check below; the step takes the rescored candidate with the lowest exact score when it beats the
+current best text's, so the climb follows the build's score while the stripped score ranks the
+rest. The line ends with `exact A -> B (N rescored)`, a match found only this way with `(found by
+exact rescore)`. --no-exact-rescore gives the stripped-only climb.
+
 A score of 0 is checked like a permuter output (permute.verify_candidate: ninja object,
 funcdiff --resolve, unit sha1). Only then the guard block is replaced by the plain function
 (INCLUDE_RODATA lines and FAKE comments of the block are kept, the NON_MATCHING note is
@@ -67,6 +78,7 @@ check is not a match: the search goes on for a variant that passes, and the line
 import argparse
 import contextlib
 import glob
+import hashlib
 import io
 import os
 import re
@@ -942,23 +954,25 @@ NO_SCORE = 10 ** 6   # order_search's score for a variant that does not compile
 
 
 def order_stage(text, score, verify, deadline, clock=time.monotonic, max_exhaustive=2000, budget=3000,
-                max_runs=2, max_swaps=2, jobs=1):
+                max_runs=2, max_swaps=2, jobs=1, every=False):
     """Search the statement orders of the best runs of `text` (and a few operand orders) with
     order_search.search (T-11530, in-process, one compile at a time), scored by `score`. A 0
     counts only when verify() accepts it. Returns (score, text, label) of the best variant that
-    differs from `text`, or None."""
+    differs from `text`, or None; with `every`, the list of all scored variants that differ from
+    `text`, best first (empty instead of None; T-11270 rescores several of them)."""
     import order_search
+    none = [] if every else None
     try:
         f = Func(text)
     except ValueError:
-        return None
+        return none
     runs, sites = pick_order(f, max_exhaustive, max_runs, max_swaps)
     if not runs:
-        return None
+        return none
     try:
         template = order_search.Template(mark_order(f, runs, sites))
     except order_search.MarkerError:
-        return None
+        return none
 
     def score_state(state):
         if clock() >= deadline:
@@ -973,13 +987,16 @@ def order_stage(text, score, verify, deadline, clock=time.monotonic, max_exhaust
 
     results = order_search.search(template, score_state, jobs=jobs, max_exhaustive=max_exhaustive,
                                   budget=budget, progress=lambda msg: None)
+    found = []
     for s, state in results:
         if s >= NO_SCORE:
             break
         variant = template.render(state)
         if variant != text:
-            return s, variant, "order[%s]" % template.describe(state)
-    return None
+            found.append((s, variant, "order[%s]" % template.describe(state)))
+            if not every:
+                break
+    return found if every else (found[0] if found else None)
 
 
 TRANSFORMS = (t_byteview, t_temp, t_swap, t_width, t_compound, t_lines, t_shift, t_emptytest,
@@ -1248,32 +1265,123 @@ def make_advisor(root, draft, uopt=None, regdiff=None):
 # ---------------------------------------------------------------------------------------------
 
 class Result:
-    def __init__(self, base, best, text, path, tried, matched=False, error=None, unverified=False, hint=None):
+    def __init__(self, base, best, text, path, tried, matched=False, error=None, unverified=False, hint=None,
+                 exact_base=None, exact_best=None, via_exact=False, rescored=0):
         self.base, self.best, self.text, self.path = base, best, text, path
         self.tried, self.matched, self.error = tried, matched, error
         self.unverified = unverified   # the draft scored 0 but failed verification
         self.hint = hint               # regdiff's Hint for the best text (T-11220), or None
+        # T-11270: full-unit scores of the start and the best text (None without exact rescoring),
+        # whether a match was found only by the exact rescore (its stripped score is above 0), and
+        # how many texts were rescored
+        self.exact_base, self.exact_best, self.via_exact, self.rescored = exact_base, exact_best, via_exact, rescored
+
+
+EXACT_TOP, EXACT_THRESHOLD = 3, 40   # T-11270 defaults: --exact-top, --exact-threshold
+
+
+class ExactRescorer:
+    """Full-unit scores of texts (T-11270), cached by text hash, compiled on `workers` when given.
+
+    `score_unit(text) -> int or None` is the expensive scorer (BuildScorer.score_unit); the climb
+    calls many() with the few texts it rescores per step."""
+
+    def __init__(self, score_unit, workers=None):
+        self.score_unit, self.workers = score_unit, workers
+        self.cache, self.lock = {}, threading.Lock()
+        self.compiled = self.hits = 0
+
+    @staticmethod
+    def key(text):
+        return hashlib.sha1(text.encode()).hexdigest()
+
+    def many(self, texts):
+        """[score or None] in the order of `texts`."""
+        out, todo = {}, []
+        for t in dict.fromkeys(texts):
+            with self.lock:
+                k = self.key(t)
+                if k in self.cache:
+                    out[t] = self.cache[k]
+                    self.hits += 1
+                    continue
+            todo.append(t)
+        jobs = [(t, self.workers.submit(self.score_unit, t)) for t in todo] if self.workers and len(todo) > 1 else []
+        for t, job in jobs:
+            job.done.wait()
+            if job.state == "done":       # a job that prefetch's cancel_pending dropped is compiled here
+                out[t] = job.result()
+        for t in todo:
+            if t not in out:
+                out[t] = self.score_unit(t)
+        with self.lock:
+            for t in todo:
+                self.cache[self.key(t)] = out[t]
+            self.compiled += len(todo)
+        return [out[t] for t in texts]
+
+    def __call__(self, text):
+        return self.many([text])[0]
+
+
+def pick_rescore(cands, top=EXACT_TOP, threshold=EXACT_THRESHOLD):
+    """The candidates to rescore (T-11270): the `top` best by stripped score and every one at or
+    under `threshold`. `cands` is [(stripped score, ..., text)]; returns them best first, the first
+    of equal texts kept."""
+    ranked = sorted(cands, key=lambda c: c[0])
+    top = max(0, top)
+    chosen = ranked[:top] + [c for c in ranked[top:] if c[0] <= threshold]
+    seen, out = set(), []
+    for c in chosen:
+        if c[-1] not in seen:
+            seen.add(c[-1])
+            out.append(c)
+    return out
 
 
 def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_seeds=8, pair_cap=200,
-          clock=time.monotonic, order=True, order_opts=None, advise=None, prefetch=None):
+          clock=time.monotonic, order=True, order_opts=None, advise=None, prefetch=None,
+          rescore=None, exact_top=EXACT_TOP, exact_threshold=EXACT_THRESHOLD):
     """Greedy hill climb over `variants`. score(text) -> int or None (does not compile);
     verify(text) -> bool is asked for every score of 0, and only a verified 0 is a match. When no
     single edit or pair improves, `order` runs order_stage (T-11200) once per best text, with
     `order_opts` (max_exhaustive, budget, max_runs, max_swaps). advise(text) -> Hint (T-11220,
     make_advisor) is asked for the start text and every new best text; its hint orders the single
-    edits and, when they stall, the pairs (rank_variants). Returns a Result."""
+    edits and, when they stall, the pairs (rank_variants). Returns a Result.
+
+    rescore (T-11270, ExactRescorer.many): [text] -> [full-unit score or None]. `score` still ranks
+    every candidate, but after each stage (single edits, pairs, order) the `exact_top` best and
+    every candidate scoring at most `exact_threshold` are rescored. An exact 0 goes to verify, and
+    the stage's step is the rescored candidate with the lowest exact score when that beats the
+    exact score of the current best text, so the climb follows the full-unit score. A verified
+    stripped 0 is a match as before."""
     deadline = clock() + budget
     base = score(text)
     if base is None:
         return Result(None, None, text, [], 0, error="draft does not compile")
-    if base == 0 and verify(text):
+    verified = {}
+
+    def checked(t):
+        if t not in verified:
+            verified[t] = verify(t)
+        return verified[t]
+
+    if base == 0 and checked(text):
         return Result(base, 0, text, [], 0, matched=True)
+    exact_on = rescore is not None
+    exact_base, rescored = None, 0
+    if exact_on:
+        exact_base, rescored = rescore([text])[0], 1
+        if exact_base == 0 and checked(text):
+            return Result(base, 0, text, [], 0, matched=True, exact_base=0, exact_best=0, via_exact=True,
+                          rescored=1)
     # A 0 that fails verification is not a match (T-11200): rank it just above 0, so that only a
     # verified 0 improves on it and the search goes on looking for one.
     best, best_text, path, tried = base or 1, text, [], 0
+    best_exact = (NO_SCORE if exact_base is None else exact_base or 1) if exact_on else None
     seen, order_done = {text}, set()
     hint, hint_text = None, None
+    via_exact = False
 
     count_lock = threading.Lock()   # the order stage may score from several threads (T-11250)
 
@@ -1286,12 +1394,36 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
 
     def evaluate(v):
         s = counted(v.text)
-        if s == 0 and not verify(v.text):
+        if s == 0 and not checked(v.text):
             return None
         return s
 
-    while best > 0 and clock() < deadline:
-        found, scored = None, []
+    def exact_step(cands, found, found_text):
+        """(exact score, labels, text, stripped score) of a stage's step, or None (T-11270).
+        cands: [(stripped score, labels, text)]; a verified stripped 0 (`found`) is the step."""
+        nonlocal rescored
+        if found is not None and found[0] == 0:
+            return 0, found[1], found_text, 0
+        pick = pick_rescore(cands, exact_top, exact_threshold)
+        if not pick:
+            return None
+        scores = rescore([c[2] for c in pick])
+        rescored += len(pick)
+        step = None
+        for (s, labels, t), e in zip(pick, scores):
+            if e is None or (e == 0 and not checked(t)):
+                continue
+            if e == 0:
+                return 0, labels, t, s
+            if e < best_exact and (step is None or e < step[0]):
+                step = (e, labels, t, s)
+        return step
+
+    def stalled():
+        return step is None if exact_on else found is None
+
+    while (best_exact if exact_on else best) > 0 and clock() < deadline:
+        found, found_text, scored, step = None, None, [], None
         if advise is not None:
             hint, hint_text = advise(best_text), best_text
         ranked = rank_variants([v for v in variants(best_text) if v.text not in seen], hint, best_text)[:cap]
@@ -1309,10 +1441,13 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
                 found_text = v.text
                 if s == 0:
                     break
-        if found is None:
+        if exact_on:
+            step = exact_step([(s, [v.label], v.text) for s, v in scored], found, found_text)
+        if stalled():
+            found = None
             scored.sort(key=lambda sv: sv[0])
             budget_left = pair_cap
-            pairs = {}
+            pairs, pair_scored = {}, []
             if prefetch is not None:    # the texts the loop below will score, in its order
                 planned, left = set(seen), pair_cap
                 for s1, v1 in scored[:pair_seeds]:
@@ -1334,6 +1469,8 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
                         continue
                     budget_left -= 1
                     s = evaluate(v2)
+                    if s is not None:
+                        pair_scored.append((s, [v1.label, v2.label], v2.text))
                     if s is not None and s < best and (found is None or s < found[0]):
                         found = (s, [v1.label, v2.label])
                         found_text = v2.text
@@ -1341,20 +1478,42 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
                             break
                 if found and found[0] == 0:
                     break
-        if found is None and order and best_text not in order_done and clock() < deadline:
+            if exact_on:
+                step = exact_step(pair_scored, found, found_text)
+        if stalled() and order and best_text not in order_done and clock() < deadline:
             order_done.add(best_text)
-            o = order_stage(best_text, counted, verify, deadline, clock, **(order_opts or {}))
-            if o is not None and o[0] < best:
-                found, found_text = (o[0], [o[2]]), o[1]
-        if found is None:
+            if exact_on:
+                o = order_stage(best_text, counted, checked, deadline, clock, every=True, **(order_opts or {}))
+                step = exact_step([(s, [label], t) for s, t, label in o], None, None)
+            else:
+                o = order_stage(best_text, counted, checked, deadline, clock, **(order_opts or {}))
+                if o is not None and o[0] < best:
+                    found, found_text = (o[0], [o[2]]), o[1]
+        if stalled():
             break
-        best, best_text = found[0], found_text
-        path += found[1]
+        if exact_on:
+            best_exact, labels, best_text, best = step
+            via_exact = best_exact == 0 and best > 0
+            path += labels
+            if best_exact == 0:
+                best = 0
+        else:
+            best, best_text = found[0], found_text
+            path += found[1]
     if advise is not None and best > 0 and hint_text != best_text:
         hint = advise(best_text)       # report the divergence that is left
-    unverified = base == 0 and best_text == text
-    return Result(base, 0 if unverified else best, best_text, path, tried, matched=best == 0,
-                  unverified=unverified, hint=hint)
+    if not exact_on:
+        unverified = base == 0 and best_text == text
+        return Result(base, 0 if unverified else best, best_text, path, tried, matched=best == 0,
+                      unverified=unverified, hint=hint)
+    unverified = (base == 0 or exact_base == 0) and best_text == text
+    matched = best_exact == 0
+    if unverified:
+        best_exact = 0
+    return Result(base, 0 if unverified or matched else best, best_text, path, tried, matched=matched,
+                  unverified=unverified, hint=hint, exact_base=exact_base,
+                  exact_best=None if best_exact >= NO_SCORE else best_exact, via_exact=via_exact,
+                  rescored=rescored)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -1579,13 +1738,46 @@ class BuildScorer:
             if t not in self._cache and (job is None or job.state == "cancelled"):
                 self._jobs[t] = self._workers.submit(self._score_fast, t)
 
+    def exact_rescorer(self):
+        """An ExactRescorer with the full translation-unit score (T-11270): the whole C file with
+        the guard replaced by the candidate (the other drafts stay INCLUDE_ASM, as in the build
+        after a match), compiled and scored like order_search's default path (funcdiff rows,
+        relocations resolved). Raises SystemExit/LookupError/OSError when it cannot be set up.
+        Uses relative tool paths, so the working directory must be the repository root."""
+        import funcloc
+        import order_search
+        from pathlib import Path
+        if os.path.abspath(os.getcwd()) != self.root:
+            raise OSError("exact rescoring needs the repository root as working directory")
+        c = funcloc.locate(self.draft.func, self.draft.src)
+        score_text = order_search.make_text_scorer(c, self.draft.func, resolve=True, non_matching=False,
+                                                   log=lambda msg: None)
+        work_root = Path(self.dir) / "unit"
+
+        def score_unit(definition):
+            # one directory per text and thread: the same text may be rescored by two climbs at once
+            work = work_root / ("%s-%x" % (ExactRescorer.key(definition)[:16], threading.get_ident()))
+            s = score_text(self._text(definition), work)
+            return None if s >= NO_SCORE else s
+
+        return ExactRescorer(score_unit, self._workers)
+
     def verify(self, definition):
-        meta = {"func": self.draft.func, "unit": self.draft.unit, "src": self.draft.src}
+        meta ={"func": self.draft.func, "unit": self.draft.unit, "src": self.draft.src}
         with self._verify_lock, tempfile.TemporaryDirectory(prefix="verify-", dir=self.dir) as cand:
             with open(os.path.join(cand, "source.c"), "w") as fh:
                 fh.write(definition + "\n")
             ok, _report = self.permute.verify_candidate(self.root, meta, cand)
         return ok
+
+
+def exact_note(res):
+    """`  exact A -> B (N rescored)` for a climb with exact rescoring (T-11270), else ''."""
+    if res.rescored == 0:
+        return ""
+    def show(v):
+        return "-" if v is None else str(v)
+    return "  exact %s -> %s (%d rescored)" % (show(res.exact_base), show(res.exact_best), res.rescored)
 
 
 def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
@@ -1600,11 +1792,19 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
     jobs = 1 if exact else getattr(args, "score_jobs", None) or fastscore.default_jobs()
     if hasattr(scorer, "configure"):
         scorer.configure(jobs=jobs, exact=exact)
+    rescore = None
+    if not getattr(args, "no_exact_rescore", False) and hasattr(scorer, "exact_rescorer"):
+        try:
+            rescore = scorer.exact_rescorer().many
+        except (SystemExit, LookupError, RuntimeError, OSError, ImportError) as exc:
+            out("NOTE %s  no exact rescoring: %s" % (draft.scope, (str(exc).strip().splitlines() or [type(exc).__name__])[-1][:120]))
     try:
         res = climb(draft.text, scorer.score, verify, budget=args.time, cap=args.cap, pair_cap=args.pair_cap,
                     order=not args.no_order, order_opts={"max_exhaustive": args.max_exhaustive,
                                                          "max_swaps": args.order_swaps, "jobs": jobs},
-                    advise=advise, prefetch=getattr(scorer, "prefetch", None) if jobs > 1 else None)
+                    advise=advise, prefetch=getattr(scorer, "prefetch", None) if jobs > 1 else None,
+                    rescore=rescore, exact_top=getattr(args, "exact_top", EXACT_TOP),
+                    exact_threshold=getattr(args, "exact_threshold", EXACT_THRESHOLD))
     finally:
         if hasattr(scorer, "close"):
             scorer.close()
@@ -1623,16 +1823,18 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
                 return res
             with open(path, "w") as fh:
                 fh.write(new)
-        out("MATCH %s  %d -> 0  [%s]%s%s" % (draft.scope, res.base, edits, " FAKE" if fakes else "",
-                                              " (dry run)" if args.dry_run else ""))
+        out("MATCH %s  %d -> 0  [%s]%s%s%s" % (draft.scope, res.base, edits, " FAKE" if fakes else "",
+                                                "  (found by exact rescore)" if res.via_exact else "",
+                                                " (dry run)" if args.dry_run else ""))
     else:
-        if res.best < res.base:
+        if res.text != draft.text:
             os.makedirs(os.path.join(root, WORK_ROOT, draft.unit, draft.func), exist_ok=True)
             with open(os.path.join(root, WORK_ROOT, draft.unit, draft.func, "best.c"), "w") as fh:
                 fh.write(res.text + "\n")
-        out("%s  %d -> %d  [%s]  %d tried%s%s" % (draft.scope, res.base, res.best, edits, res.tried,
-                                                   "  regdiff: %s" % res.hint.summary() if res.hint else "",
-                                                   "  (score 0 failed verification)" if res.unverified else ""))
+        out("%s  %d -> %d  [%s]  %d tried%s%s%s" % (draft.scope, res.base, res.best, edits, res.tried,
+                                                     exact_note(res),
+                                                     "  regdiff: %s" % res.hint.summary() if res.hint else "",
+                                                     "  (score 0 failed verification)" if res.unverified else ""))
     return res
 
 
@@ -1659,6 +1861,13 @@ def parse_args(argv):
                    help="candidates compiled in parallel (default: cores - 2; T-11250)")
     p.add_argument("--exact", action="store_true",
                    help="legacy scoring: one candidate at a time through permute.build_base (T-11250)")
+    p.add_argument("--exact-top", type=int, default=EXACT_TOP,
+                   help="candidates per step rescored with the full-unit compile (default %d; T-11270)" % EXACT_TOP)
+    p.add_argument("--exact-threshold", type=int, default=EXACT_THRESHOLD,
+                   help="also rescore every candidate whose stripped score is at most this (default %d)"
+                        % EXACT_THRESHOLD)
+    p.add_argument("--no-exact-rescore", action="store_true",
+                   help="rank and accept by the stripped score only, as before T-11270")
     p.add_argument("--root", default=".", help=argparse.SUPPRESS)
     args = p.parse_args(argv)
     if not args.all and not args.func:

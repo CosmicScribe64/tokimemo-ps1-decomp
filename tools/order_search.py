@@ -321,12 +321,16 @@ def compile_variant_fast(builder, c, text, work):
     return str(obj)
 
 
-def make_scorer(c, name, template, work_root, resolve=False, fast=False):
-    """score(state) -> diff rows against the original. fast: the approximate single-function compile
-    (compile_variant_fast); the default is the exact full-unit compile."""
+def make_text_scorer(c, name, resolve=False, fast=False, non_matching=None, log=print):
+    """score_text(text, work, label) -> diff rows of `name` in the C text `text` (the whole file of `c`)
+    against the original, 10**6 when it does not compile; `work` is the directory to compile in (one per
+    concurrent call). fast: the approximate single-function compile (compile_variant_fast); the default is
+    the exact full-unit compile. non_matching: define NON_MATCHING (default: when the function is a guarded
+    draft in c.src, as funcdiff does). tools/autotweak.py uses it for its exact rescoring (T-11270)."""
     import funcdiff
     import funcdiff_verify as proof
-    non_matching = proof.guarded(c.src, name)
+    if non_matching is None:
+        non_matching = proof.guarded(c.src, name)
     expected, problem = funcdiff.expected_object(c)
     if problem:
         raise SystemExit("order_search.py: %s" % problem)
@@ -340,22 +344,32 @@ def make_scorer(c, name, template, work_root, resolve=False, fast=False):
         import permute
         builder = fastscore.BaseBuilder(permute, os.getcwd(), name)
 
-    def score(state):
-        text = template.render(state)
-        # One directory per state: two states can render the same text (identical lines), and they compile
-        # in parallel.
-        work = work_root / hashlib.sha1(repr(state).encode()).hexdigest()[:16]
+    def score_text(text, work, label="variant"):
         try:
             obj = compile_variant_fast(builder, c, text, work) if fast else compile_variant(c, text, work, non_matching)
             got = get(obj, [name])[name]
         except (OSError, ValueError, SystemExit) as err:
-            print("order_search: variant failed to compile (%s): %s" % (template.describe(state), str(err).splitlines()[0]))
+            log("order_search: variant failed to compile (%s): %s" % (label, (str(err).splitlines() or [""])[0]))
             return 10 ** 6
         if got is None:
             return 10 ** 6
         if funcdiff.keys(got) == funcdiff.keys(want):
             return 0
         return len(funcdiff.diff_lines(want, got))
+
+    return score_text
+
+
+def make_scorer(c, name, template, work_root, resolve=False, fast=False):
+    """score(state) -> diff rows against the original. fast: the approximate single-function compile
+    (compile_variant_fast); the default is the exact full-unit compile."""
+    score_text = make_text_scorer(c, name, resolve, fast)
+
+    def score(state):
+        # One directory per state: two states can render the same text (identical lines), and they compile
+        # in parallel.
+        work = work_root / hashlib.sha1(repr(state).encode()).hexdigest()[:16]
+        return score_text(template.render(state), work, template.describe(state))
 
     return score
 

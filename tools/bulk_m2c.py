@@ -35,6 +35,14 @@ that is not already a guarded draft, smallest first. For each one:
    else everything is reverted. The climb compiles --score-jobs candidates at once (T-11250,
    tools/fastscore.py; --exact scores one at a time, as before). Every other draft is reverted to INCLUDE_ASM and saved as
    <out>/drafts/<UNIT>/<func>.c with its score.
+5. Exact rescoring (T-11270): the stripped single-function score differs from the build's (T-11260).
+   The --exact-top best start texts of all variants (default 3) and every one scoring at most
+   --exact-threshold (default 40) are also compiled as the whole C file and scored like
+   order_search.py (autotweak.BuildScorer.exact_rescorer, cached by text hash). The winner is the
+   lowest exact score (ties: lower stripped score, then the earlier variant), an exact 0 is verified
+   like a stripped 0 and ends the sweep, and the climb rescores the same way. The --keep-score gate
+   and the recorded score stay stripped; state.jsonl adds `exact`, a near line ends with `exact N`,
+   and a match found only this way says `(found by exact rescore)`. --no-exact-rescore turns it off.
 
 The state file <out>/state.jsonl makes runs resumable: a target already in it is skipped, except
 with --retry STATUSES (near, fail), which processes those entries again and replaces their lines;
@@ -718,6 +726,10 @@ class Candidate:
     def __init__(self, variant, body, decl_lines, scorer):
         self.variant, self.body, self.decl_lines, self.scorer = variant, body, decl_lines, scorer
         self.cache, self.best, self.text = {}, None, None
+        self.starts = []           # [(stripped score, start text)], best first
+        # T-11270: autotweak.ExactRescorer of this draft (None without exact rescoring) and the
+        # full-unit score of `text` once pick_exact chose it
+        self.rescorer, self.exact = None, None
 
     def score(self, text):
         if text not in self.cache:
@@ -727,6 +739,28 @@ class Candidate:
     def prefetch(self, texts):
         """Let the scorer compile the texts the climb will ask for in parallel (T-11250)."""
         self.scorer.prefetch([t for t in texts if t not in self.cache])
+
+
+def pick_exact(candidates, top=autotweak.EXACT_TOP, threshold=autotweak.EXACT_THRESHOLD):
+    """T-11270: rescore the `top` best start texts of all candidates by stripped score, and every one
+    at or under `threshold`, with the full-unit compile. The candidate whose start text has the lowest
+    exact score wins, a tie keeps the lower stripped score, then the earlier variant; its best, text
+    and exact are set to that start. None when no start text gets an exact score."""
+    cands = [(s, (i, t)) for i, c in enumerate(candidates) if c.rescorer is not None for s, t in c.starts]
+    by_cand = collections.defaultdict(list)
+    for s, (i, t) in autotweak.pick_rescore(cands, top, threshold):
+        by_cand[i].append((s, t))
+    win = None
+    for i, picked in sorted(by_cand.items()):
+        for (s, t), e in zip(picked, candidates[i].rescorer.many([t for _, t in picked])):
+            if e is not None and (win is None or (e, s, i) < win[:3]):
+                win = (e, s, i, t)
+    if win is None:
+        return None
+    e, s, i, t = win
+    best = candidates[i]
+    best.best, best.text, best.exact = s, t, e
+    return best
 
 
 def pick_best(candidates):
@@ -751,8 +785,11 @@ class Run:
     """Paths and options shared by the jobs."""
 
     def __init__(self, root, out, keep_score=30, time_budget=60.0, backend=None, climb=None, emit=print,
-                 order=True, regdiff=True, variants=None, replace=(), score_jobs=1):
+                 order=True, regdiff=True, variants=None, replace=(), score_jobs=1, exact_rescore=True,
+                 exact_top=autotweak.EXACT_TOP, exact_threshold=autotweak.EXACT_THRESHOLD):
         self.root, self.out = root, out
+        # T-11270: full-unit rescoring of the best start texts and inside the climb
+        self.exact_rescore, self.exact_top, self.exact_threshold = exact_rescore, exact_top, exact_threshold
         self.score_jobs = score_jobs     # scoring threads per climb (T-11250); 1 = one at a time
         self.keep_score, self.time_budget = keep_score, time_budget
         self.backend = backend or Backend()
@@ -766,10 +803,12 @@ class Run:
         self.state = os.path.join(out, "state.jsonl")
         self.inflight = os.path.join(out, "inflight")
 
-    def record(self, t, status, score=None, reason=None, draft=None, variant=None):
+    def record(self, t, status, score=None, reason=None, draft=None, variant=None, exact=None, via_exact=False):
         row = {"key": t.key, "scope": t.scope, "src": t.src, "size": t.size, "status": status,
                "score": score, "reason": reason, "draft": draft, "variant": variant,
                "tried": len(self.variants)}
+        if exact is not None:
+            row["exact"] = exact           # full-unit score of the saved text (T-11270)
         with locked(self.state + ".lock"):
             if t.key in self.replace:
                 replace_state_row(self.state, t.key, row)
@@ -777,6 +816,10 @@ class Run:
                 with open(self.state, "a") as fh:
                     fh.write(json.dumps(row) + "\n")
         detail = {"match": "", "near": " %s" % score, "fail": " %s" % reason}[status]
+        if exact is not None and status == "near":
+            detail += " exact %s" % exact
+        if via_exact:
+            detail += " (found by exact rescore)"
         if variant and len(self.variants) > 1:
             detail += " [%s]" % variant
         self.emit("%s %s 0x%X%s" % (status.upper() if status == "match" else status, t.scope, t.size, detail))
@@ -836,9 +879,12 @@ class Run:
                 continue
             found.append(cand)
             last = cand
-            if cand.best == 0:
+            if cand.best == 0 or self._exact_zero(cand):
                 break
-        best = pick_best(found)
+        best = None
+        if any(c.rescorer is not None for c in found) and not any(c.best == 0 for c in found):
+            best = pick_exact(found, self.exact_top, self.exact_threshold)
+        best = best or pick_best(found)
         if best is None:
             return None, failure
         if best is not last:
@@ -846,6 +892,12 @@ class Run:
             write_atomic(path, insert_draft(original, t.func, best.body, best.decl_lines))
             best.scorer = self.backend.scorer(self.root, autotweak.Draft(t.src, t.unit, t.func, best.body))
         return best, None
+
+    def _exact_zero(self, cand):
+        """Whether a start text of `cand` at or under --exact-threshold has a full-unit score of 0
+        (T-11270); that ends the variant sweep like a stripped 0. The scores stay in the cache."""
+        low = [t for s, t in cand.starts if s <= self.exact_threshold]
+        return cand.rescorer is not None and bool(low) and 0 in cand.rescorer.many(low)
 
     def _candidate(self, t, path, original, variant, glob, seen):
         """(Candidate, None) for one m2c variant, (None, None) when its m2c output repeats an earlier
@@ -870,7 +922,13 @@ class Run:
         start = sorted((s, v) for s, v in start if s is not None)
         if not start:
             return None, ("compile: draft does not score", body, "does not score")
+        cand.starts = start
         cand.best, cand.text = start[0]
+        if self.exact_rescore and hasattr(scorer, "exact_rescorer"):
+            try:
+                cand.rescorer = scorer.exact_rescorer()
+            except (SystemExit, LookupError, RuntimeError, OSError, ImportError):
+                cand.rescorer = None       # stripped scores only, as before T-11270
         return cand, None
 
     def _compile(self, t, path, original, body, decl_lines, known):
@@ -899,10 +957,11 @@ class Run:
             with locked(self.lock):
                 return cand.scorer.verify(text)
 
-        final = None
-        if best == 0:
+        final, exact, via_exact = None, cand.exact, False
+        if best == 0 or exact == 0:
             final = text if verify(text) else None
-        elif best < self.keep_score:
+            via_exact = final is not None and best > 0
+        if final is None and 0 < best < self.keep_score:
             # the climb runs autotweak's statement-order stage (T-11200) unless --no-order
             extra = {} if self.order else {"order": False}
             # regdiff orders the climb's edits when the traced uopt is there (T-11220)
@@ -913,20 +972,29 @@ class Run:
             if self.score_jobs > 1:
                 extra["prefetch"] = cand.prefetch
                 extra["order_opts"] = {"jobs": self.score_jobs}
+            if cand.rescorer is not None:
+                # the climb rescores its best candidates with the full-unit compile (T-11270)
+                extra.update(rescore=cand.rescorer.many, exact_top=self.exact_top,
+                             exact_threshold=self.exact_threshold)
             res = self.climb(text, cand.score, verify, budget=self.time_budget, **extra)
             if res.matched and res.best == 0:
-                final = res.text
+                final, via_exact = res.text, res.via_exact
+            elif cand.rescorer is not None:
+                # the climb follows the exact score: a new text may score higher stripped
+                if res.best is not None and res.text != text:
+                    best, text = res.best, res.text
+                exact = res.exact_best
             elif res.best is not None and res.best < best:
                 best, text = res.best, res.text
-        note = "score 0 but verification failed" if best == 0 and final is None else ""
+        note = "score 0 but verification failed" if (best == 0 or exact == 0) and final is None else ""
         if final is not None:
             reason = self._finish(t, path, original, final, decl_lines)
             if reason is None:
-                return True, self.record(t, "match", score=0, variant=var)
+                return True, self.record(t, "match", score=0, variant=var, via_exact=via_exact)
             return False, self.record(t, "fail", reason=reason, draft=self.save_draft(t, final, 0, reason, var),
                                       variant=var)
         return False, self.record(t, "near", score=best, reason=note or None,
-                                  draft=self.save_draft(t, text, best, note, var), variant=var)
+                                  draft=self.save_draft(t, text, best, note, var), variant=var, exact=exact)
 
     def _finish(self, t, path, original, final, decl_lines):
         """Write the verified match (guard -> plain C, declarations -> headers); None or a reason."""
@@ -1037,11 +1105,12 @@ def retry_keys(rows, statuses, max_score=None):
 
 
 def run_group(root, out, keep_score, time_budget, items, order=True, regdiff=True, variants=1, replace=(),
-              score_jobs=1, exact=False):
-    """Pool worker: one C file's targets, in order, with the real backend."""
+              score_jobs=1, exact=False, rescore_opts=None):
+    """Pool worker: one C file's targets, in order, with the real backend. rescore_opts: Run's
+    exact_rescore, exact_top and exact_threshold (T-11270)."""
     run = Run(root, out, keep_score, time_budget, emit=lambda s: print(s, flush=True), order=order,
               regdiff=regdiff, variants=variant_list(variants), replace=replace,
-              score_jobs=1 if exact else score_jobs)
+              score_jobs=1 if exact else score_jobs, **(rescore_opts or {}))
     run.backend.score_jobs, run.backend.exact = run.score_jobs, exact
     for item in items:
         run.process(Target(*item))
@@ -1102,6 +1171,14 @@ def parse_args(argv):
                    help="candidates compiled in parallel per climb (default: (cores - 2) / --jobs; T-11250)")
     p.add_argument("--exact", action="store_true",
                    help="legacy scoring: one candidate at a time through permute.build_base (T-11250)")
+    p.add_argument("--exact-top", type=int, default=autotweak.EXACT_TOP,
+                   help="start texts and climb candidates per step rescored with the full-unit compile "
+                        "(default %d; T-11270)" % autotweak.EXACT_TOP)
+    p.add_argument("--exact-threshold", type=int, default=autotweak.EXACT_THRESHOLD,
+                   help="also rescore every one whose stripped score is at most this (default %d)"
+                        % autotweak.EXACT_THRESHOLD)
+    p.add_argument("--no-exact-rescore", action="store_true",
+                   help="pick and climb by the stripped score only, as before T-11270")
     p.add_argument("--variants", type=int, default=1,
                    help="m2c option sets to try per target, the first N of VARIANTS (default 1, max %d)"
                    % len(VARIANTS))
@@ -1146,10 +1223,12 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
     emit("%d targets (%d already processed)" % (len(todo), len([t for t in targets if t.key in done])))
     # candidates scored in parallel inside one climb (T-11250); with --jobs the cores are shared
     score_jobs = 1 if args.exact else args.score_jobs or max(1, autotweak.fastscore.default_jobs() // max(1, args.jobs))
+    rescore_opts = {"exact_rescore": not args.no_exact_rescore, "exact_top": args.exact_top,
+                    "exact_threshold": args.exact_threshold}
     if args.jobs <= 1 or backend is not None:
         run = Run(root, out, args.keep_score, args.time, backend, climb, emit, order=not args.no_order,
                   regdiff=not args.no_regdiff, variants=variant_list(args.variants), replace=again,
-                  score_jobs=score_jobs if backend is None else 1)
+                  score_jobs=score_jobs if backend is None else 1, **rescore_opts)
         if backend is None:
             run.backend.score_jobs, run.backend.exact = score_jobs, args.exact
         for t in todo:
@@ -1170,7 +1249,7 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
             futures = [pool.submit(run_group, root, out, args.keep_score, args.time,
                                    [t.as_tuple() for t in g], not args.no_order,
                                    not args.no_regdiff, args.variants,
-                                   sorted(again & {t.key for t in g}), score_jobs, args.exact)
+                                   sorted(again & {t.key for t in g}), score_jobs, args.exact, rescore_opts)
                        for g in group_by_file(todo)]
             for f in futures:
                 f.result()

@@ -660,5 +660,91 @@ class ScoreJobs(unittest.TestCase):
         self.assertEqual((a.score_jobs, a.exact), (3, True))
 
 
+class ExactFakeScorer(FakeScorer):
+    """FakeScorer with a full-unit score that disagrees with the stripped one (T-11270)."""
+
+    def exact_rescorer(self):
+        exact = self.backend.exact.get(self.draft.func)
+
+        def unit(text):
+            self.backend.unit_calls.append(text)
+            return exact(text)
+        return autotweak.ExactRescorer(unit)
+
+
+class ExactFakeBackend(FakeBackend):
+    def __init__(self, root, drafts, exact, **kw):
+        FakeBackend.__init__(self, root, drafts, **kw)
+        self.exact, self.unit_calls = exact, []
+
+    def scorer(self, root, draft):
+        s = FakeBackend.scorer(self, root, draft)
+        return ExactFakeScorer(self, s.draft, s.text)
+
+
+class ExactRescore(Variants):
+    """T-11270: full-unit rescoring of the start texts and in the climb."""
+
+    def test_match_hidden_by_stripped_score_is_found(self):
+        be = ExactFakeBackend(self.root, {"func_80132100": self.drafts()}, {"func_80132100": lambda t: 0},
+                              scores={"func_80132100": lambda t: 12})
+        rc, lines = self.run_main(be, targets=self.targets[1:])
+        self.assertIn("MATCH AA:func_80132100 0x20 (found by exact rescore)", lines)
+        self.assertIn("void func_80132100(void) {\n    D_X = 1;\n}\n", self.read())
+
+    def test_without_rescore_it_stays_a_near_miss(self):
+        be = ExactFakeBackend(self.root, {"func_80132100": self.drafts()}, {"func_80132100": lambda t: 0},
+                              scores={"func_80132100": lambda t: 12})
+        rc, lines = self.run_main(be, ["--no-exact-rescore"], targets=self.targets[1:])
+        self.assertIn("near AA:func_80132100 0x20 12", lines)
+        self.assertEqual(be.unit_calls, [])
+        row = self.state()["AA:src/ovl/AA/80132000.c:func_80132100"]
+        self.assertNotIn("exact", row)
+
+    def test_variant_pick_uses_exact_scores(self):
+        stripped = {"D_X = 1;": 40, "D_X = 2;": 45, "D_X = 3;": 50}
+        exact = {"D_X = 1;": 30, "D_X = 2;": 5, "D_X = 3;": 9}
+        be = ExactFakeBackend(self.root, {"func_80132100": self.drafts()},
+                              {"func_80132100": lambda t: next(v for k, v in exact.items() if k in t)},
+                              scores={"func_80132100": lambda t: next(v for k, v in stripped.items() if k in t)})
+        rc, lines = self.run_main(be, ["--variants", "3", "--exact-top", "2", "--exact-threshold", "0"],
+                                  targets=self.targets[1:])
+        self.assertIn("near AA:func_80132100 0x20 45 exact 5 [no-andor]", lines)
+        self.assertEqual(sorted(be.unit_calls), sorted(set(be.unit_calls)), "each text rescored once")
+        self.assertFalse(any("D_X = 3;" in t for t in be.unit_calls), "only the top 2 are rescored")
+        row = self.state()["AA:src/ovl/AA/80132000.c:func_80132100"]
+        self.assertEqual((row["variant"], row["score"], row["exact"]), ("no-andor", 45, 5))
+
+    def test_exact_zero_ends_the_sweep(self):
+        exact = {"D_X = 1;": 30, "D_X = 2;": 0, "D_X = 3;": 9}
+        be = ExactFakeBackend(self.root, {"func_80132100": self.drafts()},
+                              {"func_80132100": lambda t: next(v for k, v in exact.items() if k in t)},
+                              scores={"func_80132100": lambda t: 20})
+        rc, lines = self.run_main(be, ["--variants", "3"], targets=self.targets[1:])
+        self.assertEqual([v for _f, v in be.m2c_calls], ["default", "no-andor"])
+        self.assertIn("MATCH AA:func_80132100 0x20 (found by exact rescore) [no-andor]", lines)
+
+    def test_climb_gets_the_rescorer_and_flags(self):
+        seen = {}
+
+        def climb(text, score, verify, budget=0, **kw):
+            seen.update(kw)
+            return autotweak.Result(score(text), score(text), text, [], 0, exact_base=14, exact_best=14,
+                                    rescored=1)
+        be = ExactFakeBackend(self.root, {"func_80132100": self.drafts()}, {"func_80132100": lambda t: 14},
+                              scores={"func_80132100": lambda t: 12})
+        rc, lines = self.run_main(be, ["--exact-top", "4", "--exact-threshold", "7"], climb=climb,
+                                  targets=self.targets[1:])
+        self.assertEqual((seen["exact_top"], seen["exact_threshold"]), (4, 7))
+        self.assertEqual(seen["rescore"](["void func_80132100(void) {\n}"]), [14])
+        self.assertIn("near AA:func_80132100 0x20 12 exact 14", lines)
+
+    def test_flags(self):
+        a = B.parse_args([])
+        self.assertEqual((a.exact_top, a.exact_threshold, a.no_exact_rescore), (3, 40, False))
+        a = B.parse_args(["--exact-top", "1", "--exact-threshold", "9", "--no-exact-rescore"])
+        self.assertEqual((a.exact_top, a.exact_threshold, a.no_exact_rescore), (1, 9, True))
+
+
 if __name__ == "__main__":
     unittest.main()

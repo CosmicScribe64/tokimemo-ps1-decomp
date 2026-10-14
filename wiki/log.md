@@ -13262,3 +13262,11 @@ Added `tools/typefix.py` (post-m2c type rewrites, autotweak type edits), hooks i
 ## [2026-10-14] ticket | T-11260 fast scoring for order_search, permute, farm
 
 [[tickets/T-11260-fast-scoring-order-search-permute]] (In Review). The stripped single-function compile of `tools/fastscore.py` gives different scores from order_search's full-unit compile (0 of 22 equal: sibling-call relocation names, trailing nops, rodata layout), so `tools/order_search.py --fast` is opt-in: stripped search, then exact rescoring of the best variants and the written order. Default path unchanged. About 2-3x candidates/s warm (4.0 to 13.2 and 5.5 to 11.2 with 8 threads). `tools/permute.py` and `tools/permuter_farm.py` have no scoring loop (one `build_base` per job, the permuter compiles). Tests in `tools/test_order_search.py`.
+
+## [2026-10-14] ticket | T-11270 created
+
+Created [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c]] (In Progress): autotweak and bulk_m2c rank by the stripped score, which T-11260 showed differs from the build's, so true matches can be missed.
+
+## [2026-10-14] ticket | T-11270 to In Review
+
+Exact rescoring in `tools/autotweak.py` (climb: top `--exact-top` 3 plus every candidate at or under `--exact-threshold` 40 per stage rescored with the full-unit compile, exact 0 verified, steps accepted by exact score, cache by text hash) and `tools/bulk_m2c.py` (variant/start pick, climb). Full-unit scorer reused from `tools/order_search.py` (`make_text_scorer`). `--no-exact-rescore` restores the stripped-only path. Tests with disagreeing mocked scorers in `tools/test_autotweak.py` and `tools/test_bulk_m2c.py`; [[decompile-workflow]] updated. Real-build measurement left to the orchestrator.
