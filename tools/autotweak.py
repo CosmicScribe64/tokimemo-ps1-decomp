@@ -21,6 +21,7 @@ wiki/register-cheatsheet.md to the one function body:
     temp       inline a single-use temporary, or introduce one (assignment
                right side, switch selector, left side of an if comparison)
     width      s16/u16/s32/u32 and u8/s8 of a local or parameter
+    order      swap two adjacent independent simple statements (T-11200)
 
 Scoring is the permuter's (tools/permute.py setup + upstream Compiler/Scorer): only the one
 function is compiled, through tools/cc.py, against the original bytes of its splat .s. The
@@ -28,12 +29,24 @@ search is a greedy hill climb: every single edit of the current best text is sco
 improvement is kept; when no single edit improves, pairs of edits (depth 2) are tried from the
 best-scoring single edits. --time bounds the search per function.
 
+When neither improves and the score is above 0, the order stage (T-11200, --no-order to skip)
+finds runs of 2..6 consecutive simple statements at one indent that are pairwise independent
+(conservative token check: a store through a pointer, member, index or global writes every name
+of its left side; a call only moves past statements on plain locals), marks the best one or two
+runs (most stores first) as `/* ORDER */` blocks and up to --order-swaps operand pairs of `+`,
+`==`, `!=` as ORDER_SWAP, and searches them with tools/order_search.py's search (diman8, T-11530)
+in-process, scored by the same compile. The variant count stays within --max-exhaustive as in
+order_search.py. The marked text exists only in memory; only rendered variants, which carry no
+marker, reach the scorer or a file.
+
 A score of 0 is checked like a permuter output (permute.verify_candidate: ninja object,
 funcdiff --resolve, unit sha1). Only then the guard block is replaced by the plain function
 (INCLUDE_RODATA lines and FAKE comments of the block are kept, the NON_MATCHING note is
 dropped) and `MATCH UNIT:func` is printed. Edits marked FAKE above carry an inline
 `/* FAKE: ... T-11170 */` comment. --dry-run reports without writing. The best non-matching
-text is saved as build/autotweak/<unit>/<func>/best.c.
+text is saved as build/autotweak/<unit>/<func>/best.c. A draft that scores 0 but fails the
+check is not a match: the search goes on for a variant that passes, and the line ends with
+`(score 0 failed verification)` when none does.
 """
 import argparse
 import contextlib
@@ -389,7 +402,9 @@ def t_byteview(f):
     return out
 
 
-def t_swap(f):
+def swap_sites(f):
+    """[(a0, a1, b0, b1, op)]: text spans of the two operands of every `+`, `==`, `!=` whose
+    operands can trade places without changing the parse."""
     out = []
     lo, hi = f.body_tokens()
     t = f.toks
@@ -408,6 +423,13 @@ def t_swap(f):
         a0, a1, b0, b1 = t[s].start, t[e - 1].end, t[e + 1].start, t[g - 1].end
         if f.text[a0:a1] == f.text[b0:b1]:
             continue
+        out.append((a0, a1, b0, b1, op))
+    return out
+
+
+def t_swap(f):
+    out = []
+    for a0, a1, b0, b1, op in swap_sites(f):
         text = f.text[:a0] + f.text[b0:b1] + f.text[a1:b0] + f.text[a0:a1] + f.text[b1:]
         out.append(Variant(text, "swap%s L%d" % (op, f.line_of(a0))))
     return out
@@ -680,8 +702,270 @@ def t_width(f):
     return out
 
 
+# ---------------------------------------------------------------------------------------------
+# Statement order (T-11200): which adjacent statements may trade places
+# ---------------------------------------------------------------------------------------------
+
+class Access:
+    """What one simple statement line reads and writes, by name (a conservative token check).
+
+    reads:  every variable name of the statement, and `*name` for each name whose memory it may
+            read (everything but the target of a plain store);
+    writes: the plain local or parameter it assigns (also each name next to `++`/`--`);
+    stores: {name: {left side}} for a store through a pointer, member, index or global
+            (`p->x = 0`, `a[i] = 0`, `D_X = 0`): a write to the memory of every name of its left
+            side. Another statement that reads `*name` depends on it; another store to the same
+            left side text does too, a store to another field of the same name does not.
+    call:   a function call (it may touch any memory);
+    memory: it touches anything but plain locals (globals, dereferences, members, indexing,
+            locals whose address is taken).
+    """
+
+    __slots__ = ("reads", "writes", "stores", "call", "memory")
+
+    def __init__(self, reads, writes, stores, call, memory):
+        self.reads, self.writes, self.stores, self.call, self.memory = reads, writes, stores, call, memory
+
+    @property
+    def store(self):
+        return bool(self.stores)
+
+
+def address_taken(f):
+    lo, hi = f.body_tokens()
+    t = f.toks
+    return {t[k + 1].text for k in range(lo, hi - 1)
+            if t[k].text == "&" and t[k + 1].kind == "id" and not binary_amp(t, k)}
+
+
+def _names(toks):
+    """Variable names among toks: no keywords, no types, no member names, no called names."""
+    out = set()
+    for k, tok in enumerate(toks):
+        if tok.kind != "id" or tok.text in KEYWORDS or tok.text in SCALAR_TYPES:
+            continue
+        if k > 0 and toks[k - 1].text in (".", "->"):
+            continue
+        if k + 1 < len(toks) and toks[k + 1].text == "(":
+            continue
+        out.add(tok.text)
+    return out
+
+
+def _is_call(toks):
+    """A named call `f(...)`, or `(...)(...)` (a call through a pointer; casts land here too)."""
+    for k in range(len(toks) - 1):
+        if toks[k + 1].text != "(":
+            continue
+        tok = toks[k]
+        if tok.kind == "id" and tok.text not in KEYWORDS and tok.text not in SCALAR_TYPES or tok.text == ")":
+            return True
+    return False
+
+
+def access(f, i, taken=None):
+    """Access of the simple statement on line i."""
+    taken = address_taken(f) if taken is None else taken
+    ml = f.mlines[i]
+    toks = tokenize(ml)
+    plain = {n for n, (_typ, _ptr, arr) in list(f.locals.items()) + list(f.params.items()) if not arr} - taken
+    names = _names(toks)
+    unary_star = any(tok.text == "*" and (k == 0 or toks[k - 1].kind == "op" and toks[k - 1].text not in (")", "]"))
+                     for k, tok in enumerate(toks))
+    memory = bool(names - plain) or unary_star or any(tok.text in (".", "->", "[") for tok in toks)
+    k = 0
+    while k < len(toks) and toks[k].text == "*":
+        k += 1
+    e = operand_end(toks, k)
+    writes, stores = set(), {}
+    deref = set(names)          # names whose memory the statement may read
+    if e is not None and e < len(toks) and toks[e].text in ASSIGN_OPS:
+        lhs, op = toks[:e], toks[e].text
+        rhs_names = _names(toks[e + 1:])
+        lhs_names = _names(lhs)
+        if len(lhs) == 1 and lhs[0].text in plain:
+            writes.add(lhs[0].text)
+            names = names if op != "=" or lhs[0].text in rhs_names else names - {lhs[0].text}
+            deref = set(names)
+        else:
+            text = re.sub(r"\s", "", ml[lhs[0].start:lhs[-1].end])
+            for n in lhs_names:
+                stores.setdefault(n, set()).add(text)
+            if op == "=":
+                deref = rhs_names
+    if any(tok.text in ("++", "--") for tok in toks):
+        writes |= names & plain
+        for n in names - plain:
+            stores.setdefault(n, set()).add(ml.strip())
+    reads = set(names) | {"*" + n for n in deref}
+    return Access(reads, writes, stores, _is_call(toks), memory)
+
+
+def independent(a, b):
+    """True when two statements (Access) may run in either order."""
+    if a.writes & (b.reads | b.writes) or b.writes & a.reads:
+        return False
+    for x, y in ((a, b), (b, a)):
+        for n, lvals in x.stores.items():
+            if "*" + n in y.reads or lvals & y.stores.get(n, set()):
+                return False
+    if a.call and b.call:
+        return False
+    if a.call:
+        return not b.memory
+    if b.call:
+        return not a.memory
+    return True
+
+
+def t_order(f):
+    out = []
+    taken = address_taken(f)
+    for i in range(f.stmt_line, f.end_line - 1):
+        if not (simple_statement(f, i) and simple_statement(f, i + 1) and f.indent(i) == f.indent(i + 1)):
+            continue
+        if not independent(access(f, i, taken), access(f, i + 1, taken)):
+            continue
+        lines = list(f.lines)
+        lines[i], lines[i + 1] = lines[i + 1], lines[i]
+        out.append(Variant("\n".join(lines), "order L%d" % i))
+    return out
+
+
+def order_runs(f, max_len=6):
+    """[(first line, last line)] of the runs of 2..max_len consecutive simple statements at one
+    indent that are pairwise independent (so every order of a run is legal)."""
+    taken = address_taken(f)
+    runs, cur, acc = [], [], {}
+
+    def close():
+        if len(cur) >= 2:
+            runs.append((cur[0], cur[-1]))
+
+    for i in range(f.stmt_line, f.end_line):
+        if not simple_statement(f, i):
+            close()
+            cur = []
+            continue
+        acc[i] = access(f, i, taken)
+        if cur and len(cur) < max_len and i == cur[-1] + 1 and f.indent(i) == f.indent(cur[0]) and \
+                all(independent(acc[j], acc[i]) for j in cur):
+            cur.append(i)
+            continue
+        close()
+        cur = [i]
+    close()
+    return runs
+
+
+def rank_runs(f, runs):
+    """Runs best first: more stores (packet and RECT fields, the T-11530 cases), then longer."""
+    taken = address_taken(f)
+
+    def key(run):
+        a, b = run
+        stores = sum(access(f, i, taken).store for i in range(a, b + 1))
+        return (-stores, -(b - a + 1), a)
+    return sorted(runs, key=key)
+
+
+def _factorial(n):
+    r = 1
+    for k in range(2, n + 1):
+        r *= k
+    return r
+
+
+def pick_order(f, max_exhaustive=2000, max_runs=2, max_swaps=2):
+    """(runs, swap sites) for the order stage: the best run, a second one while the variant count
+    stays within max_exhaustive, then up to max_swaps operand swaps (on one line each, nearest the
+    runs first) under the same cap. ([], []) when the function has no run."""
+    runs = rank_runs(f, order_runs(f))
+    if not runs:
+        return [], []
+    chosen = [runs[0]]
+    size = _factorial(runs[0][1] - runs[0][0] + 1)
+    for run in runs[1:]:
+        if len(chosen) >= max_runs:
+            break
+        n = _factorial(run[1] - run[0] + 1)
+        if size * n <= max_exhaustive:
+            chosen.append(run)
+            size *= n
+    sites, used = [], []
+    lines = [i for a, b in chosen for i in range(a, b + 1)]
+    for site in sorted(swap_sites(f), key=lambda s: (min(abs(f.line_of(s[0]) - i) for i in lines), s[0])):
+        if len(sites) >= max_swaps or size * 2 > max_exhaustive:
+            break
+        a0, _, _, b1, _ = site
+        if "\n" in f.text[a0:b1] or any(a0 < u1 and u0 < b1 for u0, u1 in used):
+            continue
+        sites.append(site)
+        used.append((a0, b1))
+        size *= 2
+    return chosen, sites
+
+
+def mark_order(f, runs, sites):
+    """The function text with order_search markers: `/* ORDER */ ... /* END ORDER */` around each
+    run and `ORDER_SWAP(A, op, B)` at each swap site. Only handed to order_search.Template, whose
+    render() removes every marker; it is never written to a file."""
+    text = splice(f.text, [(a0, b1, "ORDER_SWAP(%s, %s, %s)" % (f.text[a0:a1], op, f.text[b0:b1]))
+                           for a0, a1, b0, b1, op in sites])
+    lines = text.split("\n")
+    for a, b in sorted(runs, reverse=True):
+        ind = f.indent(a)
+        lines.insert(b + 1, ind + "/* END ORDER */")
+        lines.insert(a, ind + "/* ORDER */")
+    return "\n".join(lines)
+
+
+NO_SCORE = 10 ** 6   # order_search's score for a variant that does not compile
+
+
+def order_stage(text, score, verify, deadline, clock=time.monotonic, max_exhaustive=2000, budget=3000,
+                max_runs=2, max_swaps=2):
+    """Search the statement orders of the best runs of `text` (and a few operand orders) with
+    order_search.search (T-11530, in-process, one compile at a time), scored by `score`. A 0
+    counts only when verify() accepts it. Returns (score, text, label) of the best variant that
+    differs from `text`, or None."""
+    import order_search
+    try:
+        f = Func(text)
+    except ValueError:
+        return None
+    runs, sites = pick_order(f, max_exhaustive, max_runs, max_swaps)
+    if not runs:
+        return None
+    try:
+        template = order_search.Template(mark_order(f, runs, sites))
+    except order_search.MarkerError:
+        return None
+
+    def score_state(state):
+        if clock() >= deadline:
+            return NO_SCORE
+        variant = template.render(state)
+        if "/* ORDER */" in variant or order_search.SWAP_TOKEN in variant:
+            raise AssertionError("order_search left a marker in a variant")
+        s = score(variant)
+        if s is None or (s == 0 and not verify(variant)):
+            return NO_SCORE
+        return s
+
+    results = order_search.search(template, score_state, jobs=1, max_exhaustive=max_exhaustive,
+                                  budget=budget, progress=lambda msg: None)
+    for s, state in results:
+        if s >= NO_SCORE:
+            break
+        variant = template.render(state)
+        if variant != text:
+            return s, variant, "order[%s]" % template.describe(state)
+    return None
+
+
 TRANSFORMS = (t_byteview, t_temp, t_swap, t_width, t_compound, t_lines, t_shift, t_emptytest,
-              t_pad, t_declswap)
+              t_pad, t_declswap, t_order)
 
 
 def variants(text, cap=None):
@@ -712,29 +996,37 @@ def variants(text, cap=None):
 # ---------------------------------------------------------------------------------------------
 
 class Result:
-    def __init__(self, base, best, text, path, tried, matched=False, error=None):
+    def __init__(self, base, best, text, path, tried, matched=False, error=None, unverified=False):
         self.base, self.best, self.text, self.path = base, best, text, path
         self.tried, self.matched, self.error = tried, matched, error
+        self.unverified = unverified   # the draft scored 0 but failed verification
 
 
 def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_seeds=8, pair_cap=200,
-          clock=time.monotonic):
+          clock=time.monotonic, order=True, order_opts=None):
     """Greedy hill climb over `variants`. score(text) -> int or None (does not compile);
-    verify(text) -> bool is asked for every score of 0. Returns a Result."""
+    verify(text) -> bool is asked for every score of 0, and only a verified 0 is a match. When no
+    single edit or pair improves, `order` runs order_stage (T-11200) once per best text, with
+    `order_opts` (max_exhaustive, budget, max_runs, max_swaps). Returns a Result."""
     deadline = clock() + budget
     base = score(text)
     if base is None:
         return Result(None, None, text, [], 0, error="draft does not compile")
-    best, best_text, path, tried = base, text, [], 0
-    seen = {text}
-    if best == 0 and verify(text):
+    if base == 0 and verify(text):
         return Result(base, 0, text, [], 0, matched=True)
+    # A 0 that fails verification is not a match (T-11200): rank it just above 0, so that only a
+    # verified 0 improves on it and the search goes on looking for one.
+    best, best_text, path, tried = base or 1, text, [], 0
+    seen, order_done = {text}, set()
+
+    def counted(t):
+        nonlocal tried
+        seen.add(t)
+        tried += 1
+        return score(t)
 
     def evaluate(v):
-        nonlocal tried
-        seen.add(v.text)
-        tried += 1
-        s = score(v.text)
+        s = counted(v.text)
         if s == 0 and not verify(v.text):
             return None
         return s
@@ -771,11 +1063,18 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
                             break
                 if found and found[0] == 0:
                     break
+        if found is None and order and best_text not in order_done and clock() < deadline:
+            order_done.add(best_text)
+            o = order_stage(best_text, counted, verify, deadline, clock, **(order_opts or {}))
+            if o is not None and o[0] < best:
+                found, found_text = (o[0], [o[2]]), o[1]
         if found is None:
             break
         best, best_text = found[0], found_text
         path += found[1]
-    return Result(base, best, best_text, path, tried, matched=best == 0)
+    unverified = base == 0 and best_text == text
+    return Result(base, 0 if unverified else best, best_text, path, tried, matched=best == 0,
+                  unverified=unverified)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -956,7 +1255,9 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
         out("SKIP %s  setup: %s" % (draft.scope, str(exc).strip().splitlines()[-1][:120] if str(exc).strip() else type(exc).__name__))
         return None
     verify = (lambda text: True) if args.no_verify else scorer.verify
-    res = climb(draft.text, scorer.score, verify, budget=args.time, cap=args.cap, pair_cap=args.pair_cap)
+    res = climb(draft.text, scorer.score, verify, budget=args.time, cap=args.cap, pair_cap=args.pair_cap,
+                order=not args.no_order, order_opts={"max_exhaustive": args.max_exhaustive,
+                                                     "max_swaps": args.order_swaps})
     if res.error:
         out("SKIP %s  %s" % (draft.scope, res.error))
         return res
@@ -979,7 +1280,8 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
             os.makedirs(os.path.join(root, WORK_ROOT, draft.unit, draft.func), exist_ok=True)
             with open(os.path.join(root, WORK_ROOT, draft.unit, draft.func, "best.c"), "w") as fh:
                 fh.write(res.text + "\n")
-        out("%s  %d -> %d  [%s]  %d tried" % (draft.scope, res.base, res.best, edits, res.tried))
+        out("%s  %d -> %d  [%s]  %d tried%s" % (draft.scope, res.base, res.best, edits, res.tried,
+                                                 "  (score 0 failed verification)" if res.unverified else ""))
     return res
 
 
@@ -995,6 +1297,11 @@ def parse_args(argv):
     p.add_argument("--list", action="store_true", help="list drafts and their single-edit count; no compile")
     p.add_argument("--dry-run", action="store_true", help="do not write src/ on a match")
     p.add_argument("--no-verify", action="store_true", help="accept a score of 0 without the ninja check")
+    p.add_argument("--no-order", action="store_true", help="skip the statement-order stage (T-11200)")
+    p.add_argument("--max-exhaustive", type=int, default=2000,
+                   help="order stage: variants per search, as in order_search.py (default 2000)")
+    p.add_argument("--order-swaps", type=int, default=2,
+                   help="order stage: operand swaps (+, ==, !=) added to the blocks (default 2)")
     p.add_argument("--root", default=".", help=argparse.SUPPRESS)
     args = p.parse_args(argv)
     if not args.all and not args.func:

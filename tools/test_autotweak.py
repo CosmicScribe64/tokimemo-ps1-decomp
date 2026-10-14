@@ -7,6 +7,7 @@ import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import autotweak as A  # noqa: E402
@@ -262,6 +263,18 @@ class Search(unittest.TestCase):
         self.assertFalse(r.matched)
         self.assertEqual(r.best, 1)
 
+    def test_unverified_zero_draft_is_not_a_match(self):
+        r = A.climb(FUNC, lambda t: 0, lambda t: False, budget=60)
+        self.assertFalse(r.matched)
+        self.assertTrue(r.unverified)
+        self.assertEqual((r.base, r.best, r.text), (0, 0, FUNC))
+
+    def test_unverified_zero_draft_keeps_searching(self):
+        r = A.climb(FUNC, lambda t: 0, lambda t: "(i << 2)" in t, budget=60)
+        self.assertTrue(r.matched)
+        self.assertFalse(r.unverified)
+        self.assertIn("(i << 2)", r.text)
+
     def test_time_budget(self):
         ticks = iter(range(1000))
         s = FakeScorer(["never there"])
@@ -271,6 +284,142 @@ class Search(unittest.TestCase):
     def test_draft_that_does_not_compile(self):
         r = A.climb(FUNC, lambda t: None)
         self.assertEqual(r.error, "draft does not compile")
+
+
+def order_func(body, decls="    s32 a;\n    s32 b;\n    s32 v;\n    s32 *p;\n"):
+    return "void f(Q *q) {\n%s\n%s\n}" % (decls, "\n".join("    " + l for l in body))
+
+
+def pair_independent(first, second, decls=None):
+    f = A.Func(order_func([first, second]) if decls is None else order_func([first, second], decls))
+    i = f.stmt_line
+    return A.independent(A.access(f, i), A.access(f, i + 1))
+
+
+STORES = ["q->x = 0;", "q->y = a;", "q->h = 4;", "q->w = 8;"]
+
+
+class Order(unittest.TestCase):
+    def test_swap_allowed(self):
+        for first, second in (("q->x = 0;", "q->y = 1;"), ("a = 1;", "b = 2;"), ("a = g();", "b = 2;"),
+                              ("D_X = 1;", "a = 2;"), ("q->x = a;", "q->y = a;"), ("a = q->x;", "b = q->y;"),
+                              ("g(a);", "b = a + 1;")):
+            self.assertTrue(pair_independent(first, second), (first, second))
+            self.assertTrue(pair_independent(second, first), (second, first))
+
+    def test_swap_forbidden(self):
+        for first, second in (("a = 1;", "b = a;"),           # the second reads what the first writes
+                              ("b = a;", "a = 1;"),           # the second writes what the first reads
+                              ("a = 1;", "a = 2;"),           # both write a
+                              ("a += 1;", "b = a;"),
+                              ("a++;", "b = a;"),
+                              ("q->x = 0;", "a = q->y;"),     # store through q, then a read through q
+                              ("q->x = 0;", "q->x = 1;"),     # the same store twice
+                              ("D_X = 1;", "a = D_X;"),       # global store, then its read
+                              ("*p = 1;", "a = *p;"),
+                              ("p = q->next;", "a = p[1];"),
+                              ("g();", "h();"),               # two calls
+                              ("g();", "D_X = 1;"),           # a call and memory
+                              ("a = g();", "q->x = 1;"),
+                              ("a = 1;", "g(&a);")):          # address-taken local
+            self.assertFalse(pair_independent(first, second), (first, second))
+
+    def test_order_edit(self):
+        f = order_func(["a = 1;", "b = 2;", "if (a) {", "    v = 3;", "}", "v = a;"])
+        got = texts(f, "order")
+        self.assertEqual(got, [f.replace("a = 1;\n    b = 2;", "b = 2;\n    a = 1;")])
+
+    def test_order_edit_in_climb(self):
+        f = order_func(STORES)
+        want = ("q->y = a;\n    q->x = 0;", "q->w = 8;\n    q->h = 4;")
+        r = A.climb(f, lambda t: sum(w not in t for w in want), budget=60, order=False)
+        self.assertTrue(r.matched)
+        self.assertEqual([l.split()[0] for l in r.path], ["order", "order"])
+
+    def test_runs(self):
+        f = A.Func(order_func(["a = 1;", "b = 2;", "v = a;", "q->x = 0;", "if (v) {", "    a = 2;",
+                               "    b = 3;", "}"]))
+        s = f.stmt_line
+        self.assertEqual(A.order_runs(f), [(s, s + 1), (s + 2, s + 3), (s + 5, s + 6)])
+
+    def test_runs_are_capped_at_six(self):
+        f = A.Func(order_func(["q->f%d = %d;" % (k, k) for k in range(8)]))
+        s = f.stmt_line
+        self.assertEqual(A.order_runs(f), [(s, s + 5), (s + 6, s + 7)])
+
+    def test_store_runs_first_and_cap(self):
+        f = A.Func(order_func(["a = 1;", "b = 2;", "v = 3;", "g(a);", "q->x = 0;", "q->y = 1;", "g(a);",
+                               "D_X = a + 1;", "b = D_X == 2;"]))
+        s = f.stmt_line
+        runs, sites = A.pick_order(f)
+        self.assertEqual(runs, [(s + 4, s + 5), (s, s + 2)])
+        self.assertEqual([op for *_, op in sites], ["+", "=="])
+        runs, sites = A.pick_order(f, max_exhaustive=12)    # 2! * 3! = 12: no room for a swap
+        self.assertEqual((len(runs), sites), (2, []))
+        runs, sites = A.pick_order(f, max_exhaustive=4)     # the second run does not fit
+        self.assertEqual(runs, [(s + 4, s + 5)])
+        self.assertEqual(len(sites), 1)
+        self.assertEqual(A.pick_order(A.Func(order_func(["a = 1;", "b = a;"]))), ([], []))
+
+    def test_markers_inserted_and_removed(self):
+        import order_search
+        text = order_func(STORES + ["a = D_X + 1;"])
+        f = A.Func(text)
+        runs, sites = A.pick_order(f)
+        marked = A.mark_order(f, runs, sites)
+        self.assertIn("    /* ORDER */\n    q->x = 0;", marked)
+        # a = D_X + 1 writes a, which q->y = a reads: it stays outside the block
+        self.assertIn("    q->w = 8;\n    /* END ORDER */\n    a = ORDER_SWAP(D_X, +, 1);\n}", marked)
+        t = order_search.Template(marked)
+        self.assertEqual(t.render(t.identity()), text)
+        for state in t.all_states():
+            out = t.render(state)
+            self.assertNotIn("ORDER", out)
+        self.assertNotIn("ORDER", text)
+
+    def test_order_stage_calls_order_search(self):
+        import order_search
+        text = order_func(STORES)
+        want = "q->w = 8;\n    q->h = 4;\n    q->y = a;\n    q->x = 0;"
+        scored, verified = [], []
+
+        def score(t):
+            scored.append(t)
+            return 0 if want in t else 1
+
+        real = order_search.search
+        with mock.patch.object(order_search, "search", side_effect=real) as spy:
+            got = A.order_stage(text, score, lambda t: verified.append(t) or True, deadline=float("inf"))
+        spy.assert_called_once()
+        self.assertEqual(spy.call_args.kwargs["max_exhaustive"], 2000)
+        self.assertEqual(got[0], 0)
+        self.assertIn(want, got[1])
+        self.assertTrue(got[2].startswith("order[block 1 order 4,3,2,1"))
+        self.assertEqual(verified, [got[1]])
+        self.assertFalse(any("ORDER" in t for t in scored))
+
+    def test_order_stage_unverified_zero_and_deadline(self):
+        text = order_func(STORES)
+        got = A.order_stage(text, lambda t: 0 if t != text else 2, lambda t: False, deadline=float("inf"))
+        self.assertIsNone(got)
+        ticks = iter(range(100))
+        calls = []
+        got = A.order_stage(text, lambda t: calls.append(t) or 1, lambda t: True, deadline=3,
+                            clock=lambda: next(ticks))
+        self.assertLessEqual(len(calls), 3)
+
+    def test_climb_runs_order_stage_when_stalled(self):
+        text = order_func(STORES)
+        want = "q->w = 8;\n    q->h = 4;\n    q->y = a;\n    q->x = 0;"   # 6 adjacent swaps: beyond depth 2
+        score = lambda t: 0 if want in t else 1
+        self.assertFalse(A.climb(text, score, budget=60, order=False).matched)
+        r = A.climb(text, score, budget=60)
+        self.assertTrue(r.matched)
+        self.assertTrue(r.path[-1].startswith("order["))
+        self.assertIn(want, r.text)
+        r = A.climb(text, score, lambda t: False, budget=60)
+        self.assertFalse(r.matched)
+        self.assertEqual(r.best, 1)
 
 
 class Main(Repo):
@@ -296,6 +445,16 @@ class Main(Repo):
         self.assertEqual(self.read(), SRC)
         rc, out = self.run_main(["func_80132100", "--time", "1"], ["nothing like this"])
         self.assertEqual(out.split()[0], "AA:func_80132100")
+        self.assertEqual(self.read(), SRC)
+
+    def test_unverified_zero_is_reported(self):
+        out = io.StringIO()
+        scorer = FakeScorer([], verify_ok=False)
+        A.main(["func_80132100", "--time", "1", "--root", self.root], make_scorer=lambda root, d: scorer,
+               out=lambda line: print(line, file=out))
+        self.assertIn("0 -> 0", out.getvalue())
+        self.assertIn("(score 0 failed verification)", out.getvalue())
+        self.assertNotIn("MATCH", out.getvalue())
         self.assertEqual(self.read(), SRC)
 
     def test_list(self):

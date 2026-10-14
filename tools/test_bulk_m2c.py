@@ -270,6 +270,22 @@ class Pipeline(Repo):
         self.assertIn("near AA:func_80132100 0x20 2", lines)
         self.assertIn("2 ;", self.read(os.path.join(self.out, "drafts", "AA", "func_80132100.c")))
 
+    def test_order_stage_flag(self):
+        seen = []
+
+        def climb(text, score, verify, budget=0, **kw):
+            seen.append(kw)
+            return autotweak.Result(score(text), score(text), text, [], 0)
+        for extra, want in (([], {}), (["--no-order"], {"order": False})):
+            be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;"))},
+                             scores={"func_80132100": lambda t: 3})
+            seen.clear()
+            self.run_main(be, extra, climb=climb, targets=self.targets[1:])
+            self.assertEqual(seen, [want], extra)
+            os.unlink(os.path.join(self.out, "state.jsonl"))
+        self.assertTrue(B.parse_args(["--no-order"]).no_order)
+        self.assertFalse(B.parse_args([]).no_order)
+
     def test_inlined_variant_is_kept_when_it_scores_better(self):
         src = "void func_80132100(void) {\n    s32 temp_v0;\n\n    temp_v0 = D_X + 1;\n    g(temp_v0);\n}\n"
         be = FakeBackend(self.root, {"func_80132100": ("", src)},

@@ -23,7 +23,8 @@ that is not already a guarded draft, smallest first. For each one:
    declare an undefined symbol (m2c's declaration, else `extern s32 X;`), drop a declaration the
    headers already have with another type. Otherwise the reason is recorded.
 4. Score 0 is verified like a permuter output (ninja object, funcdiff --resolve, unit sha1). A score
-   under --keep-score goes to autotweak's hill climb for --time seconds. A verified match replaces
+   under --keep-score goes to autotweak's hill climb for --time seconds, including its
+   statement-order stage (T-11200; --no-order turns it off). A verified match replaces
    the guard with plain C; its extra declarations move to include/main_api.h (main-exe addresses)
    or include/ovl/<UNIT>.h (overlay addresses), then check_headers.py and the unit target must pass,
    else everything is reverted. Every other draft is reverted to INCLUDE_ASM and saved as
@@ -343,12 +344,14 @@ class Target:
 class Run:
     """Paths and options shared by the jobs."""
 
-    def __init__(self, root, out, keep_score=30, time_budget=60.0, backend=None, climb=None, emit=print):
+    def __init__(self, root, out, keep_score=30, time_budget=60.0, backend=None, climb=None, emit=print,
+                 order=True):
         self.root, self.out = root, out
         self.keep_score, self.time_budget = keep_score, time_budget
         self.backend = backend or Backend()
         self.climb = climb or autotweak.climb
         self.emit = emit
+        self.order = order
         self.lock = os.path.join(out, "build.lock")
         self.state = os.path.join(out, "state.jsonl")
         self.inflight = os.path.join(out, "inflight")
@@ -443,7 +446,9 @@ class Run:
         if best == 0:
             final = text if verify(text) else None
         elif best < self.keep_score:
-            res = self.climb(text, score, verify, budget=self.time_budget)
+            # the climb runs autotweak's statement-order stage (T-11200) unless --no-order
+            extra = {} if self.order else {"order": False}
+            res = self.climb(text, score, verify, budget=self.time_budget, **extra)
             if res.matched and res.best == 0:
                 final = res.text
             elif res.best is not None and res.best < best:
@@ -552,9 +557,9 @@ def group_by_file(targets):
     return list(groups.values())
 
 
-def run_group(root, out, keep_score, time_budget, items):
+def run_group(root, out, keep_score, time_budget, items, order=True):
     """Pool worker: one C file's targets, in order, with the real backend."""
-    run = Run(root, out, keep_score, time_budget, emit=lambda s: print(s, flush=True))
+    run = Run(root, out, keep_score, time_budget, emit=lambda s: print(s, flush=True), order=order)
     for item in items:
         run.process(Target(*item))
     return len(items)
@@ -590,6 +595,7 @@ def parse_args(argv):
     p.add_argument("--jobs", type=int, default=1, help="parallel jobs, one C file each (default 1)")
     p.add_argument("--keep-score", type=int, default=30, help="climb drafts scoring below this (default 30)")
     p.add_argument("--time", type=float, default=60, help="autotweak seconds per draft (default 60)")
+    p.add_argument("--no-order", action="store_true", help="no statement-order stage in the climb (T-11200)")
     p.add_argument("--summary", action="store_true", help="print the summary of the state file and stop")
     p.add_argument("--root", default=".", help=argparse.SUPPRESS)
     return p.parse_args(argv)
@@ -620,7 +626,7 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
     todo = select(targets, args.max_size, set(done), args.limit)
     emit("%d targets (%d already processed)" % (len(todo), len([t for t in targets if t.key in done])))
     if args.jobs <= 1 or backend is not None:
-        run = Run(root, out, args.keep_score, args.time, backend, climb, emit)
+        run = Run(root, out, args.keep_score, args.time, backend, climb, emit, order=not args.no_order)
         for t in todo:
             run.process(t)
     else:
@@ -637,7 +643,7 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
                 sys.modules['queue'] = shadow
         with ProcessPoolExecutor(max_workers=args.jobs) as pool:
             futures = [pool.submit(run_group, root, out, args.keep_score, args.time,
-                                   [t.as_tuple() for t in g]) for g in group_by_file(todo)]
+                                   [t.as_tuple() for t in g], not args.no_order) for g in group_by_file(todo)]
             for f in futures:
                 f.result()
     summary(out, emit)

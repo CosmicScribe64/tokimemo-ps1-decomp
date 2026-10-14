@@ -13188,3 +13188,19 @@ guarded functions, with `--resolve` as default. Synthetic tests `tools/test_orde
 
 Inline review against CODING_STANDARDS.md: Python 3, Docker-run, synthetic tests, no game data; no findings.
 Moved [[tickets/T-11530-order-search-tool]] to Done.
+
+## [2026-10-14] ticket | T-11200 In Progress
+
+Created [[tickets/T-11200-order-search-in-solvers]]: statement-order search inside autotweak and bulk_m2c, built on
+diman8's `tools/order_search.py` (T-11530), plus the climb fix for unverified scores of 0.
+
+## [2026-10-14] build | T-11200 order stage in autotweak and bulk_m2c
+
+`tools/autotweak.py`: new edit `order` (adjacent independent statements, conservative token check) and an order
+stage that marks the best statement runs and operand pairs and runs `order_search.search` in-process with the same
+scorer when the climb stalls above 0. `climb` no longer reports a match for a 0 that fails verification.
+`tools/bulk_m2c.py --no-order`. Synthetic tests pass; [[decompile-workflow]] updated.
+
+## [2026-10-14] ticket | T-11200 In Review
+
+Moved [[tickets/T-11200-order-search-in-solvers]] to In Review; needs the real-build check and the code review.
