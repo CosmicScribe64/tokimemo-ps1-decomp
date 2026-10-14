@@ -616,4 +616,29 @@ void func_8013DE10(void) {
     buffer->ordering[15].addr = (u32)m;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013E1E8);
+void func_8013E1E8(void) {
+    switch (D_80158A64[0x1C]) {
+    case 0:
+        func_8013D2E0();
+        return;
+    case 1:
+        func_8013D3C0();
+        return;
+    case 2:
+        func_8013D508();
+        return;
+    case 3:
+        func_8013D73C();
+        return;
+    case 0x10:
+    case 0x11:
+        func_8013D988();
+        return;
+    case 0x20:
+    case 0x21:
+        func_8013DE10();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
