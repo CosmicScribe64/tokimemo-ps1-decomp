@@ -2584,4 +2584,11 @@ extern u8 D_800B0F34;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern s32 D_800B3D30;
+extern s32 D_800B3D34;
+extern s32 D_800B3D38;
+extern s32 D_800B3D3C;
+extern u8 D_800B3D20;
+
 #endif /* MAIN_API_H */
