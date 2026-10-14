@@ -1,7 +1,7 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-/* T-11510 near miss: about 14 instruction lines left. Everything matches (layout with the goto reset block after the loop-back jump, the two ternary flag ORs) except the tail: the original keeps the first load of D_800E7D4C+1 after the store of 0 (no forwarding, so 'lbu; or; sb' instead of 'sb v0'); every cast, signed, struct and v-local form of the byte access forwarded the zero across the join. Also the lui $at in the delay slot of the first test. */
+/* T-11520 near miss: 2 instruction lines left. Storing the 0 through another symbol (FAKE, see the line) gives the original 'lbu; or; sb' for the first |= (every cast, signed, struct and local form of the same symbol let uopt forward the 0 into 'sb v0'). Left: the original puts the store's lui $at in the delay slot of the first test (bnez t9) and a nop after the second; here as1 fills the second test's delay slot with it. Tried: the && / nested if / goto forms of the condition, the e load in three places, permuter 240 s (no gain). */
 #ifdef NON_MATCHING
 void func_8013E850(void) {
     u8 *a;
@@ -96,7 +96,7 @@ tail:
     *(u8 *)&D_800E7D4C = a[0x45];
     e = D_80158A68;
     if (a[0x53] != 0 || a[0x52] == 0) {
-        ((u8 *)&D_800E7D4C)[1] = 0;
+        (&D_800E7D4E)[-1] = 0; /* FAKE: same byte as ((u8 *)&D_800E7D4C)[1] through another symbol, so uopt does not forward the 0 into the first |= (the original keeps lbu; or; sb). T-11520 */
         ((u8 *)&D_800E7D4C)[1] |= (a[0x43] != 0) ? 1 : 0;
         ((u8 *)&D_800E7D4C)[1] |= (a[0x49] != 0) ? 2 : 0;
     }
