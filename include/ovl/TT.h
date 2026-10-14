@@ -70,6 +70,11 @@ extern u8 D_80152CA4[];
 extern u8 D_80152CB0[];
 extern u8 D_80152CC4[];
 extern u8 D_80151A50[];
+extern s32 D_80155EC8[];
+extern s32 D_80155EDC[];
+extern s32 D_80155EF0[];
+extern s32 D_80155F04[];
+extern s32 D_80155F14[];
 typedef struct TtSlot14 {
     /* 0x00 */ u8 *unk_00;
     /* 0x04 */ u8 unk_04;

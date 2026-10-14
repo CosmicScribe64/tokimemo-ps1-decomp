@@ -311,7 +311,90 @@ void func_8013FF14(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_801400B0);
 
+/* T-11510 near miss: about 14 instruction lines left besides branch offsets. Angle loop: the original keeps the 0x900 bound in s1, the angle (strength-reduced a + i) in s0 and the counter i in v1 spilled around the call (home sp+0x4C, below the TtPoint14 at sp+0x54); here the counter takes s0, the angle s1 and the bound n is the spilled one. Also the addiu order of the x/y table pointers. */
+#ifdef NON_MATCHING
+void func_80140624(void) {
+    u16 mode;
+    u8 *other;
+    TtSceneView *p;
+    s32 *x;
+    s32 *y;
+    s32 angle;
+    s32 n;
+    s32 i;
+    TtPoint14 point;
+
+    mode = ((TtSceneView *) D_80158A8C)->unk_08;
+    other = D_80158A74;
+    p = (TtSceneView *) D_80158A8C;
+    switch (mode) {
+    case 0:
+        p->unk_366 = 0;
+        p->unk_08 = 0x10;
+        break;
+    case 0x10:
+        if (((TtSceneView *) D_80158A8C)->unk_366 >= 0x3C) {
+            p->unk_08 = 0x40;
+        }
+        break;
+    case 0x40:
+        if (p->unk_366 < 0x80) {
+            if (((TtSceneView *) other)->unk_16 < 0x78) {
+                p->unk_366 = 0x80;
+            }
+            if ((p->unk_366 & 0x1F) == 0x1F) {
+                func_80133AD0(0x500);
+                if (((u8 *) p)[0x106] == 0) {
+                    x = D_80155EC8;
+                    y = D_80155EDC;
+                    do {
+                        func_80134874(p->unk_14 - *x, *y + p->unk_16);
+                        func_80134874(*x + p->unk_14, *y + p->unk_16);
+                        y++;
+                        x++;
+                    } while (y != D_80155EF0);
+                } else {
+                    x = D_80155EF0;
+                    y = D_80155F04;
+                    do {
+                        func_80134874(p->unk_14 - *x, *y + p->unk_16);
+                        func_80134874(*x + p->unk_14, *y + p->unk_16);
+                        y++;
+                        x++;
+                    } while (y != D_80155F14);
+                }
+            }
+        } else if (p->unk_366 < 0x100) {
+            if ((p->unk_366 & 1) == 1) {
+                if ((p->unk_366 & 3) == 3) {
+                    func_80133AD0(0x50D);
+                }
+                func_80133E30(p->unk_14, p->unk_16 + 8, 0x30, ((p->unk_366 & 0x7F) << 6) - 0x400, 0xA1);
+            }
+        } else if ((p->unk_366 & 0x3F) == 0x3F) {
+            func_80133AD0(0x50B);
+            point.x = p->unk_14 << 16;
+            point.y = (p->unk_16 + 8) << 16;
+            angle = func_801320F0((s32) &point, (s32) (other + 0x14));
+            angle &= 0x7F;
+            for (i = -0x100, n = 0x900; i != n; i += 0x80) {
+                func_80133E30(p->unk_14, p->unk_16 + 8, 0x48, angle + i, 0xA0);
+            }
+        }
+        if (p->unk_366 >= 0x180) {
+            p->unk_08 = 0xA0;
+        }
+        break;
+    case 0xA0:
+        p->unk_06 = 1;
+        p->unk_08 = 0;
+        break;
+    }
+    p->unk_366++;
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140624);
+#endif
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_80140920);
 
