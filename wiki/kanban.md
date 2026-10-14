@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-11540-tt-order-search-pass|T-11540 TT order_search pass]]
 - [ ] [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180 Twin-guided matching (Gemini) 39]]
 - [ ] [[tickets/T-11120-small-functions-sonnet-36|T-11120 Small functions (Sonnet via Antigravity) 36]]
 - [ ] [[tickets/T-11130-big-functions-gemini-37|T-11130 Big functions (Gemini) 37]]
@@ -82,6 +81,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-11540-tt-order-search-pass|T-11540 TT order_search pass]]
 - [ ] [[tickets/T-11520-tt-batch-4|T-11520 TT overlay batch 4]]
 - [ ] [[tickets/T-11530-order-search-tool|T-11530 Tooling: order_search.py]]
 - [ ] [[tickets/T-11510-tt-batch-3|T-11510 TT overlay batch 3]]

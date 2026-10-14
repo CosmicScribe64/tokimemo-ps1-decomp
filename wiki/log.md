@@ -13284,3 +13284,17 @@ near misses that are down to scheduling or temp numbering. (Opened after the fir
 (written order best over 96 + 198 variants). TT 206/303 (44.7%); grand total `5426/6958   1171560/2279368  51.4%`;
 27/27. Tool fixes (tie keeps the written order, nested `ORDER_SWAP`) pushed to PR #11. See
 [[tickets/T-11540-tt-order-search-pass]].
+
+## [2026-10-14] build | T-11540 order_search pass over the guarded TT drafts
+
+A Sonnet agent ran `tools/order_search.py` over the guarded TT near misses (12 order-type symptoms first, a few of the
+register-allocation ones briefly). No further match; five drafts improved through store order (`func_8013C1FC` down to the
+buf+idx*4 `addu` operand order, `func_80140920`, `func_801330D8`, `func_8013B4A0`, `func_8013E498`). Top-level `+` swaps
+rarely matter (IDO canonicalizes); operand order inside address arithmetic and statement order do. Removed the stale
+NON_MATCHING draft of `func_8014CC04` (matched since T-9940). 27/27; prototype and global checks clean. Notes in
+[[matching-notes]] ("TT overlay, order_search pass (T-11540)").
+
+## [2026-10-14] ticket | T-11540 Done
+
+Inline review against CODING_STANDARDS.md: guard comments carry T-11540 and the lines left, no new fakematches, the stale
+draft removal changes no bytes. Moved [[tickets/T-11540-tt-order-search-pass]] to Done.

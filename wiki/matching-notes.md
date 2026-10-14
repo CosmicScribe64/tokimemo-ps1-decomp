@@ -4649,3 +4649,25 @@ Ticket [[tickets/T-11520-tt-batch-4]].
   real `case` labels.
 - Process: verify that a scripted body insertion actually applied (`git diff --stat`) before trusting a `funcdiff`
   MATCH, which otherwise compares the untouched asm.
+
+## TT overlay, order_search pass (T-11540)
+
+First use of `tools/order_search.py` (T-11530) over the 33 guarded TT drafts. Ticket [[tickets/T-11540-tt-order-search-pass]].
+
+- **Match: `func_8013DE10`.** Both u/v sums reversed and the flags lookup written `*(r[0] + flags)` instead of
+  `flags[r[0]]`: the operand order of the address addition set the ugen temps. Hand search in T-11520 had tried only the
+  outer sums.
+- **Statement order is where the tool pays off.** Store blocks reordered by the tool improved five drafts: `func_8013C1FC`
+  36 -> 4 diff lines (only the `addu` operand order of buf+idx*4 left), `func_80140920` 84 -> 50 (case 0x40 matches with
+  the 0x212 update before 0x3EC), `func_801330D8` 45 -> 34 (the `a+0x28` store after `a+0x24`), `func_8013B4A0` 22 -> 20
+  rows, `func_8013E498` 101 -> 99 rows.
+- **Top-level `+` operand swaps rarely change anything**: IDO canonicalizes most `x + y` orders. They mattered only where
+  the sum fed an address (`func_8013DE10`). `==` and `*` swaps tried here did not help. The `addu` operand order of
+  buf+idx*4 (`func_8013C1FC`, formerly `func_8014CC04` too) did not move with any swap or array form.
+- **Order-independent:** `func_8013E850` (condition shape), `func_80144A04` (ugen temp for a constant used twice),
+  `func_80138E28`, `func_801392A0`, `func_8013D2E0`, `func_8013D3C0` (r/g allocation reversed), `func_80140624`,
+  `func_80142570`, `func_801436BC`, `func_8013C8DC`: their remaining differences are register allocation, not order.
+- Marking rules that worked: only commutative operators and independent stores; never across a call or a load a store may
+  alias. The tool does not check dependencies; check `git diff` after each run.
+- Cleanup: `func_8014CC04` had a stale one-instruction NON_MATCHING draft (T-9380) above a typed version that has matched
+  since T-9940; the stale draft was removed.
