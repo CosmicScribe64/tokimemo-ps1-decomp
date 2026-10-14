@@ -13120,3 +13120,7 @@ untagged pad locals fixed; a stale near-miss comment corrected. Moved [[tickets/
 
 ## [2026-10-14] ticket | T-11150 Twin detection for jump-table functions
 Created [[tickets/T-11150-twin-detection-for-jump-table-functions]] and implemented it: `tools/dupes.py` and `tools/neardupes.py` fingerprint functions with `jtbl_` and `.L` relocations (label offsets from the function start, table words as relative offsets); jump-table plans are applied only with `--apply --check` when the target's table is in its own function file, the rest are listed as "needs jtbl check". Synthetic tests in `tools/test_dupes.py` and `tools/test_neardupes.py`. Section "Jump-table twins (T-11150)" in [[build-system]]. No real build in this environment; ticket moved to In Review on [[kanban]] pending the orchestrator's run.
+## [2026-10-14] lint | Register cheat sheet refresh
+Added 11 symptom rows to [[register-cheatsheet]] from FAKE comments and [[matching-notes]] entries since 2026-10-12 (T-10820..T-11510): scalar byte selector views, empty tests splitting live ranges, alias reloads through record views, compound assignment, join blocks, induction variables, line-based scheduling, sum operand order, frame homes, LSB-first bit-fields, the 20-reference block split.
+## [2026-10-14] ticket | T-11120 started
+Opened [[tickets/T-11120-small-functions-sonnet-36]] (In Progress): 16 functions (5,168 bytes) in `src/ovl/NAME_ENT/80139740.c`.

@@ -1,7 +1,7 @@
 ---
 type: guide
-updated: 2026-10-12
-sources: ["wiki/uopt-register-allocation.md", "wiki/register-allocation-wave7.md", "wiki/decompile-workflow.md", "tools/regdiff.py"]
+updated: 2026-10-14
+sources: ["wiki/matching-notes.md", "wiki/uopt-register-allocation.md", "wiki/register-allocation-wave7.md", "wiki/decompile-workflow.md", "tools/regdiff.py"]
 ---
 
 # Register cheat sheet
@@ -41,6 +41,17 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | narrow parameter kept in its home stack slot | Use an old-style K&R definition, and declare the promoted locals before any buffer. |
 | unsigned `% 240`-style chunk with one temporary too many (ENDING) | A dead test `if (x) {}` right before `r = x % 240;`. It's FAKE: mark it T-9410. |
 | loads in a different order or place than the original, with several `D_` names close together | They are probably one array or struct. Write the accesses through one base (`D_X[i]`, `(&D_X)[k]`). That fixed load order in SHOUGATU `func_8013507C` and EVENT `func_80104D48` (T-10610). |
+| switch on a global byte with an extra `cvt`/copy of the selector, or the selector in the wrong register across two tables | Read the selector through a scalar byte view: `u8 sel = *(u8 *)&D_X;` or switch on `((u8 *)&D_X)[0]` (T-10860, many matches). |
+| two live values share one register in the draft, the original keeps them apart (or the reverse) | An empty test `if (x) {}` or a dead compare local splits the live range (permuter finds these, T-10820/T-10850). Mark it FAKE. |
+| the original reloads a global after a store, the draft keeps it in a register | Store through a pointer or record view (`((Rec44 *)D_X)[96].f`, `gs->f`): uopt treats it as a possible alias and reloads. |
+| the draft forwards a stored value (`$t9` temp), the original reloads | Use a compound assignment (`D_X += 0x48;`) instead of recomputing from the source. Also: `v = call(); v += k;` keeps the call result first in `addu`. |
+| what stays in a register differs only around a `break`/`continue` | Join blocks decide it. Route the path straight to the shared tail (or add a redundant `break`) to match the original's block shape. |
+| loop counter gone (strength-reduced) or a tail loop gets other s-registers | Write `(col << 4) - 0x80` instead of `col * 16 - 0x80` to keep the induction variable; reuse the earlier loop's `i` for a tail loop. |
+| store order, delay-slot fill or `addiu` order differs, registers right | as1 schedules by source line: put the stores (or loop init and head) on one line, or permute independent store statements. |
+| temporaries swapped in a sum (`u`, `v`, `clut`) | Try the operand orders of the sum; they set the ugen temp numbering. |
+| frame size or local stack offsets differ | Arrays sit lowest in the locals area; scalars declared before an array go above it. Add unused locals ("homes") to reserve slots and mark them FAKE. |
+| bit test compiles as `sll 30; srl 31` in the original | Bit-fields are allocated from the least significant bit: `struct { u32 low : 1; u32 f : 1; u32 rest : 30; }`. |
+| reloads appear at a block start after about 20 references | uopt ends a block after 20 variable references (`varreflimit`). Split or join statements to move the boundary. |
 | constant or pointer in a1/a2/v1 in a small K&R function (TT, GEKO, TACO) | Known unsolved. Spend 10 minutes at most, then guard it and log the row. |
 
 ## Do not
