@@ -17,7 +17,7 @@ void func_80135360(void) {
     s32 px2;
     s32 px3;
     s16 pt[2];
-    s32 pad[4];
+    s32 pad[4]; /* FAKE: unused, places the frame, spill slots and pt as in the original. T-11510 */
 
     c = D_80158A8C;
     a = D_80158A74;

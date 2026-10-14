@@ -403,7 +403,7 @@ void func_80140920(void) {
     u8 *c;
     u8 *a;
     u16 mode;
-    s32 t;
+    s32 t; /* FAKE: unused, needed for the frame size. T-11510 */
     s32 vx;
     s32 vy;
     s16 x;

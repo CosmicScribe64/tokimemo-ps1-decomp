@@ -559,8 +559,8 @@ typedef struct TtTileMap {
 } TtTileMap;
 
 void func_8013DE10(void) {
-    s32 pad1;
-    s32 pad2;
+    s32 pad1; /* FAKE: unused, with pad2 reproduces the 0x78 frame. T-11510 */
+    s32 pad2; /* FAKE: see pad1. T-11510 */
     TtDrawBuffer80B8 *buffer;
     TtRectPacket16 *q;
     POLY_G4 *g;
