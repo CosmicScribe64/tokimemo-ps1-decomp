@@ -121,5 +121,8 @@ void func_8013731C(void);
 void func_8013785C(u32 arg0);
 void func_8013722C(void);
 void func_801372BC(void);
+void func_801364B4(void);
+void func_801364F0(void);
+void func_801363BC(void);
 
 #endif /* OVL_BUNKA_SD_H */
