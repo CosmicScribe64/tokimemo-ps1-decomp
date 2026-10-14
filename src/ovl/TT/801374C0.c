@@ -462,11 +462,11 @@ void func_801396E4(void) {
     *(u16 *)(p + 0x366) += 1;
 }
 
-/* K&R declaration for taking the address; func_80133FB0 is already implicitly int in this file. The ANSI prototype of 80133970.c would change other callers, T-11510. */
-extern int func_80134470();
+/* Non-prototype declaration for taking the address: the ANSI prototype of 80133970.c (s16/u16 parameters) would change the K&R calls in this file. T-11510 */
+extern void func_80134470();
 
 void func_80139770(void) {
-    int (*fn)();
+    void (*fn)();
     u8 *c;
     s32 i;
 
