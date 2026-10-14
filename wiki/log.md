@@ -13127,3 +13127,14 @@ Opened [[tickets/T-11120-small-functions-sonnet-36]] (In Progress): 16 functions
 
 ## [2026-10-14] ticket | T-11160 Twin detection for data-in-function functions
 Created [[tickets/T-11160-twin-detection-for-data-in-function-functions]] and implemented it: `tools/dupes.py` and `tools/neardupes.py` fingerprint functions with own rodata (island or appended `.rodata` blocks; data symbol positions and directives instead of names), allow verbatim string literals between such twins, and apply a copy only with `--apply --check` when all the target's data is in its own function file; others are listed as "NEEDS DATA CHECK". Synthetic tests only (no game data). In Review; the real-build run is left to the orchestrator. [[build-system]] updated.
+## [2026-10-14] ticket | T-11140 started
+
+Created [[tickets/T-11140-small-functions-gemini-38]] in In Progress and updated [[kanban]] and [[index]] for the 16 functions in `src/ovl/DATE/80132000.c`.
+
+## [2026-10-14] build | T-11140 match 11 DATE functions and guard 5 near misses
+
+Matched 11 of 16 functions in `src/ovl/DATE/80132000.c` (3,444 linked bytes / 3,652 list bytes): `func_80136214`, `func_80136FF0`, `func_80138220`, `func_801384D4`, `func_80139944`, `func_80139F3C`, `func_8013A0C0`, `func_8013C0A4`, `func_8013D468`, `func_8013DB6C`, and `func_80140B08`. Guarded the remaining 5 near misses under `#ifdef NON_MATCHING` (`func_8013D8B0` 1 diff line, `func_8013E9F8` 3 diff lines, `func_8013BEB8` 8 diff lines, `func_80137D1C` 9 diff lines, `func_80139834` 24 diff lines) and recorded them in [[data/t0018-cases]]. `tools/docker.sh ninja`, `build/headers.ok`, and `build/globals.ok` pass 27/27 OK; grand total 5416/6958 functions, 1160096/2279368 bytes (50.9%).
+
+## [2026-10-14] ticket | T-11140 Done
+
+Inline review against `CODING_STANDARDS.md` completed with no open findings; moved [[tickets/T-11140-small-functions-gemini-38]] to Done on [[kanban]] and [[index]].
