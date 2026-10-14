@@ -13117,3 +13117,9 @@ Inline review against CODING_STANDARDS.md: a wrong `int` return type on a file-l
 untagged pad locals fixed; a stale near-miss comment corrected. Moved [[tickets/T-11510-tt-batch-3]] to Done.
 ## [2026-10-14] build | T-11100 fix-up of 800674B0 drafts
 `src/main/800674B0.c`: matched `func_80068938` (FAKE pointer view for the loop stores) and `func_80068EC0`; `func_80067870`, `func_800696DC`, `func_8006A2CC` put under `NON_MATCHING` with the `INCLUDE_ASM` fallback. `tools/docker.sh ninja` 27/27 OK, `check_headers.py` OK. [[tickets/T-11100-big-functions-gemini-33]] moved to In Review on [[kanban]].
+
+
+## [2026-10-14] ticket | T-11520 TT batch 4 opened
+
+Opened [[tickets/T-11520-tt-batch-4]] (In Progress), stacked on T-11510 (PR #5). Opus on the five closest guarded near
+misses first, then Sonnet drafts of the 13 large untouched TT functions.
