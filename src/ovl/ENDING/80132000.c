@@ -55,7 +55,37 @@ void func_80132000(void) {
     D_8013C348 = 0x801F8174;
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80132000", func_80132334);
+void func_80132334(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_80133030();
+        return;
+    case 1:
+        func_80133540();
+        return;
+    case 2:
+        func_80133AD0();
+        return;
+    case 3:
+        func_80133F1C();
+        return;
+    case 4:
+        func_80135DD0();
+        return;
+    case 5:
+        func_80137340();
+        return;
+    case 6:
+        func_801399B4();
+        return;
+    case 7:
+        func_8013B760();
+        return;
+    default:
+        func_80132400();
+        return;
+    }
+}
 
 void func_80132400(void) {
     main_state_set(0xC2);

@@ -373,6 +373,19 @@ void func_8015A164(s32 arg0);
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80134450(void);
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8014488C(void);
+void func_80144998(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80136C00(void);
+void func_80136D00(void);
+void func_80136D78(void);
+void func_80136F4C(void);
+void func_80136E08(void);
+s32 func_80136C60(void);
+void func_80136CD8(void);
+
 #endif
 
 typedef struct TacoCam {
