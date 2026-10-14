@@ -10,6 +10,7 @@
 #include "main_api.h"
 extern u8 D_80156784;
 extern u8 D_80156780;
+extern u8 D_80156788[];
 extern u8 *D_80158A74;
 void func_80138300(void);
 typedef struct TtRec2 {
@@ -42,6 +43,9 @@ void func_8013BE9C(u8 *arg0);
 extern u8 *D_8015694C[];
 void func_80142AF0(void *arg0, s32 arg1);
 extern u8 D_80152C54[];
+extern u8 D_80152C68[];
+extern u8 D_80152C78[];
+extern u8 D_80152C88[];
 extern u8 D_80155AE4[]; /* T-11000 */
 extern u8 D_80155C58[];
 extern u8 D_80155E2C[];

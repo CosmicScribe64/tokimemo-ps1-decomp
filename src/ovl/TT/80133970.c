@@ -583,12 +583,13 @@ void func_80134ADC(TtActor68 *p) {
     p->unk_58++;
 }
 
-/* NON_MATCHING: T-11500, register shift from one missing constant: the n loop bound now gives li s2,0x80 as in the original, but the original also keeps an unused 0x40 in s3 (bit position between n and 0xAD, so it comes from the loop head or the unk_00 test) and the remaining constants in s4..s8; the 0xAB block also loads D_80158A60 into v1 early in the original (t1 here) */
+/* NON_MATCHING: T-11520, 34 differing instructions, one root cause. The g local for D_80158A60 (T-11520) gives the original's early lui/lw into v1 in the 0xAB block. Left: the original keeps an unused 0x40 in s3 (bit position between the n bound and 0xAD, so the loop head or the unk_00 test), which pushes 0xAD..0xAC to s4..s8 (fp) and the frame to 0x50; here they sit in s3..s7 with a 0x48 frame. Tried: i < n, i < 0x80 without n, permuter 300 s (it can add a hoisted -1 through '& 0xFFFFFFFFu' after 0xAB, never a 0x40 before 0xAD). */
 #ifdef NON_MATCHING
 void func_80134BBC(void) {
     TtActor68 *object;
     s32 i;
     s32 n;
+    u8 *g;
 
     object = (TtActor68 *)D_80158AA0;
     for (i = 0, n = 0x80; i != n; i++, object++) {
@@ -600,8 +601,9 @@ void func_80134BBC(void) {
             }
             func_80134924((u8 *)object);
             if (object->unk_02 == 0xAB) {
+                g = D_80158A60;
                 object->unk_3E = object->unk_41 / 12 + 0xF;
-                object->unk_3E += *(u16 *)(D_80158A60 + 0xA) & 1;
+                object->unk_3E += *(u16 *)(g + 0xA) & 1;
                 object->unk_41++;
                 if (object->unk_41 >= 0x31) {
                     object->unk_41 = 0x30;

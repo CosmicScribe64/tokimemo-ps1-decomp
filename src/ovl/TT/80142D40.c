@@ -58,7 +58,70 @@ u8 func_801430C4(void) {
     return D_80156784;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801430D4);
+void func_801430D4(void) {
+    RECT r;
+    s32 pad[2]; /* FAKE: unused home below r puts the RECT at sp+0x30 in the 56-byte frame. T-11520 */
+
+    func_80142DEC(0x80162000, 0xBECA, 0x54900);
+    func_80142D40((u8 *)0x80162000, 0, 0xF0);
+    func_80142D40((u8 *)0x80164000, 0x100, 0xF0);
+    func_80142DA8((void *)0x80166000, 0x280, 0);
+    func_80142DA8((void *)0x80168000, 0x280, 0x80);
+    func_80142DA8((void *)0x8016A000, 0x2A0, 0);
+    func_80142DA8((void *)0x8016C000, 0x2A0, 0x80);
+    func_80142DA8((void *)0x8016E000, 0x2C0, 0);
+    func_80142DA8((void *)0x80170000, 0x2C0, 0x80);
+    func_80142DA8((void *)0x80172000, 0x2E0, 0);
+    func_80142DA8((void *)0x80174000, 0x380, 0);
+    func_80142DA8((void *)0x80176000, 0x380, 0x80);
+    func_80142DA8((void *)0x80178000, 0, 0x100);
+    func_80142DA8((void *)0x8017A000, 0, 0x180);
+    func_80142DA8((void *)0x8017C000, 0x20, 0x100);
+    func_80142DA8((void *)0x8017E000, 0x20, 0x180);
+    func_80142DA8((void *)0x80180000, 0x40, 0x100);
+    func_80142DA8((void *)0x80182000, 0x40, 0x180);
+    func_80142DA8((void *)0x80184000, 0x60, 0x100);
+    func_80142DA8((void *)0x80186000, 0x60, 0x180);
+    func_80142DA8((void *)0x80188000, 0x80, 0x100);
+    func_80142DA8((void *)0x8018A000, 0x80, 0x180);
+    func_80142DA8((void *)0x8018C000, 0xA0, 0x100);
+    func_80142DA8((void *)0x8018E000, 0xA0, 0x180);
+    func_80142DA8((void *)0x80190000, 0xC0, 0x100);
+    func_80142DA8((void *)0x80192000, 0xC0, 0x180);
+    func_80142DA8((void *)0x80194000, 0xE0, 0x100);
+    func_80142DA8((void *)0x80196000, 0xE0, 0x180);
+    func_80142DA8((void *)0x80198000, 0x100, 0x100);
+    func_80142DA8((void *)0x8019A000, 0x100, 0x180);
+    func_80142DA8((void *)0x8019C000, 0x120, 0x100);
+    func_80142DA8((void *)0x8019E000, 0x120, 0x180);
+    func_80142DA8((void *)0x801A0000, 0x140, 0x100);
+    func_80142DA8((void *)0x801A2000, 0x140, 0x180);
+    func_80142DA8((void *)0x801A4000, 0x200, 0x100);
+    func_80142DA8((void *)0x801A6000, 0x200, 0x180);
+    func_80142DA8((void *)0x801A8000, 0x260, 0x100);
+    func_80142DA8((void *)0x801AA000, 0x260, 0x180);
+    func_80142DA8((void *)0x801AC000, 0x280, 0x100);
+    func_80142DA8((void *)0x801AE000, 0x280, 0x180);
+    func_80142DA8((void *)0x801B0000, 0x2A0, 0x100);
+    func_80142DA8((void *)0x801B2000, 0x240, 0x100);
+    func_80142DA8((void *)0x801B4000, 0x240, 0x180);
+    /* The four RECT fields on one line: IDO then stores h, w, y, x (line-based scheduling). T-11520 */
+    r.x = 0x3C0; r.y = 0x180; r.w = 0x18; r.h = 0x30;
+    func_8009C884(&r, (void *)0x801B6000);
+    r.x = 0x3C0; r.y = 0x1FF; r.w = 0x10; r.h = 1;
+    func_8009C884(&r, D_80156788);
+    func_8009C674(0);
+    func_80142DEC(0x80010000, 0xC08B, 0xE20);
+    func_80142DEC(0x80162000, 0xC06B, 0xFED0);
+    func_80142DEC(0x80012000, 0xD6D4, 0x2420);
+    func_80142DEC(0x8001C000, 0xD678, 0x69E4);
+    func_80142DEC(0x80172000, 0xD685, 0x27D60);
+    func_80142DEC(0x80016000, 0xC8A8, 0x2420);
+    func_80142DEC(0x8002E800, 0xC857, 0x69E4);
+    func_80142DEC(0x8019A000, 0xC85B, 0x27D60);
+    func_80142DEC(0x8001A000, 0xC067, 0xE20);
+    func_80142DEC(0x801C2000, 0xC032, 0x1A680);
+}
 
 void func_80143570(void) {
     *D_80158A74 = 0;

@@ -550,7 +550,7 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D73C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D988);
 
-/* T-11510 near miss (about 29 differing instructions): frame, spills, tile loop structure and OT links match; left are temp numbering of the u/v sums, the lui/sll order at entry, and the register ranking and store order of the constants in the POLY_G4 block (the original preloads 0xF0 first). FAKE: pad1/pad2 only reproduce the 0x78 frame, original source unknown. */
+/* T-11520 near miss: 7 differing instructions, ugen temporaries only (t6/t7 swapped from the u sum to the v sum: our two adds come out as shift + flags, the original's as flags + shift; every operand order of the u, v and clut sums is worse). Fixed in T-11520: the POLY_G4 block written as setPolyG4/setXY4/setRGB0..3 lines (len and code on one line, the eight coordinates on one line, one line per colour; as1 reorders the stores inside a line and ugen numbers the constants as the original), c loaded before buffer, and the tile index as (row + col) & 0x3FF without the n counter. FAKE: pad1/pad2 only reproduce the 0x78 frame, original source unknown. */
 #ifdef NON_MATCHING
 typedef struct TtTileMap {
     /* 0x00 */ u8 *index;
@@ -569,19 +569,18 @@ void func_8013DE10(void) {
     u8 *r;
     s32 row;
     s32 col;
-    s32 n;
 
-    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
     c = D_80158A64;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
     for (row = 0; row != 0x80; row += 0x10) {
-        for (col = 0, n = row; col != 0x10; col++, n++) {
+        for (col = 0; col != 0x10; col++) {
             q = (TtRectPacket16 *)buffer->cursor;
             buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
             q->code = 0x7D;
             q->tag.len = 3;
             q->x = (col << 4) - 0x80;
             q->y = row + 0x70;
-            r = ((TtTileMap *)*(u8 **)(c + 0x18))->record + ((TtTileMap *)*(u8 **)(c + 0x18))->index[n & 0x3FF] * 3;
+            r = ((TtTileMap *)*(u8 **)(c + 0x18))->record + ((TtTileMap *)*(u8 **)(c + 0x18))->index[(row + col) & 0x3FF] * 3;
             q->u = (((TtTileMap *)*(u8 **)(c + 0x18))->flags[r[0]] & 0x80) + ((r[1] & 7) << 4);
             q->v = ((((TtTileMap *)*(u8 **)(c + 0x18))->flags[r[0]] & 0x40) * 2) + ((r[1] >> 3) << 4);
             q->clut = (((r[2] >> 4) + 0xF0) << 6) + (r[2] & 0xF);
@@ -601,28 +600,12 @@ void func_8013DE10(void) {
     buffer->ordering[15].addr = (u32)m;
     g = (POLY_G4 *)buffer->cursor;
     buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x24);
-    ((TtOtTag *)g)->len = 8;
-    g->code = 0x39;
-    g->y2 = 0xA8;
-    g->y3 = 0xA8;
-    g->x0 = -0x80;
-    g->x2 = -0x80;
-    g->x3 = 0x80;
-    g->y1 = 0;
-    g->x1 = 0x80;
-    g->y0 = 0;
-    g->g0 = 0x68;
-    g->b0 = 0xF0;
-    g->r0 = 0;
-    g->g1 = 0x68;
-    g->b1 = 0xF0;
-    g->r1 = 0;
-    g->b2 = 0xD8;
-    g->r2 = 0xB0;
-    g->g2 = 0xF0;
-    g->b3 = 0xD8;
-    g->r3 = 0xB0;
-    g->g3 = 0xF0;
+    ((TtOtTag *)g)->len = 8; g->code = 0x39;
+    g->x0 = -0x80; g->y0 = 0; g->x1 = 0x80; g->y1 = 0; g->x2 = -0x80; g->y2 = 0xA8; g->x3 = 0x80; g->y3 = 0xA8;
+    g->r0 = 0; g->g0 = 0x68; g->b0 = 0xF0;
+    g->r1 = 0; g->g1 = 0x68; g->b1 = 0xF0;
+    g->r2 = 0xB0; g->g2 = 0xF0; g->b2 = 0xD8;
+    g->r3 = 0xB0; g->g3 = 0xF0; g->b3 = 0xD8;
     ((TtOtTag *)g)->addr = buffer->ordering[15].addr;
     buffer->ordering[15].addr = (u32)g;
     m = buffer->cursor;

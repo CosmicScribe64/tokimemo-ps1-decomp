@@ -4617,3 +4617,35 @@ NAME_ENT `src/ovl/NAME_ENT/80139740.c`. Six matches: `func_8013C934`, `func_8013
 - **Rolled constant-trip loop** (`func_8013C9F0`): the pointer form `for (p = D_800E7D11; p != &D_800E7D1F; p++)` is unrolled by four; the index form `for (i = 0; i < 14; i++) if (D_800E7D11[i + 4])` stays rolled like the original. The frame needed `s32 pad[3]` above the counter (FAKE).
 - **Blocked:** the selector-copy prologue shared by eight functions (`D_800E7313` in $v1 plus a `move v0,v1` copy, constants in $a0/$a1); see the rows in [[data/t0018-cases]].
 - Tool notes: the edit tool refuses a replacement whose target text appears twice in the file, even when the line range is unique (the three twin prologues here); include a unique neighbouring line. `permute.py --no-verify` lets the permuter run while the source is edited.
+
+## TT overlay, batch 4 (T-11520)
+
+Opus pass on the five closest near misses: no match, all closer (`func_8013E850` 14 -> 2 lines, `func_8013DE10`
+29 -> 7). Sonnet over the 13 large untouched functions: 2 matched (`func_80138300`, `func_801430D4`), 1 guarded.
+Ticket [[tickets/T-11520-tt-batch-4]].
+
+- **Stop store forwarding through another symbol.** Writing a byte through a different symbol base that reaches the same
+  address (`(&D_800E7D4E)[-1] = 0` for `((u8 *)&D_800E7D4C)[1]`) keeps uopt from forwarding the stored constant into a
+  later read-modify-write, giving the original `lbu; or; sb` (still `$at` relocations; a raw address uses a t-register).
+  `FAKE`.
+- **PsyQ macro-style packet lines.** Packet init written one macro per line (`setPolyG4`: len and code on one line, all
+  eight coordinates on one line, one line per colour) reproduces both the store order and the ugen constant registers;
+  one store per line gives the right order but other registers, one single line lets as1 reorder freely
+  (`func_8013DE10`). Same for RECT: `r.x = ...; r.y = ...; r.w = ...; r.h = ...;` on one line stores h, w, y, x
+  (`func_801430D4`).
+- **Same index expression joins live ranges.** `*(s16 *)(c + K + i * 2)` instead of `((s16 *)(c + K))[i]` makes
+  `c + i*2` one uopt range shared with other loops of the same form (`func_801392A0`).
+- **Local copy of a global.** `g = D_80158A60;` gets a uopt register loaded early; an inline global read gets a late ugen
+  temp (`func_80134BBC`). Globals loaded once and reused after stores through a `u8 *` are reloaded unless copied to a
+  local first.
+- **Pointer reuse instead of a second pointer.** An m2c `tempN = base + 0xNNN` later used in place of the base means
+  `s += 0xNNN` in the source; a second pointer local changes which values are callee-saved and the frame
+  (`func_80138300`).
+- **Operand order sets ugen temps.** `x + call() / 64` vs `call() / 64 + x` decides t7 vs t9 (`func_80138300`).
+- **Locals and pads.** Homes go top-down in declaration order; a FAKE pad must come after the variable that should keep
+  the higher offset (`RECT r; s32 pad[2];`, `func_801430D4`). Declaring a counter after a struct puts its spill home
+  below the struct (`func_80140624`); an unused declared scalar still moves spill slots.
+- **m2c's `default` can hide case labels.** Values handled after the jump table (0x81, 0xA0 in `func_801400B0`) must be
+  real `case` labels.
+- Process: verify that a scripted body insertion actually applied (`git diff --stat`) before trusting a `funcdiff`
+  MATCH, which otherwise compares the untouched asm.

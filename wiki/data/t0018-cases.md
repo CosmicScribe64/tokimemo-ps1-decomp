@@ -1891,3 +1891,17 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | DATE/80132000 | `func_80139834` | regorder | T-11140: guarded 24-line draft; `s32 pad; s16 prev;` matches the 0x2A(sp) stack slot and `beq v0,t8` branch order; uopt CSEs `unk_F5F` and `unk_110A` into `$t4`/`$t6` across the `else` branches instead of reloading into `$v0`. |
 | DATE/80132000 | `func_8013D8B0` | regorder | T-11140: guarded 1-line draft; `u16 one; one = 1;` matches row 4 (`bne a0,v0`) and row 26 (`bne a0,v1`), leaving only row 52 (`bne v1,a0` vs `bne a0,v1`) where `*(u8 *)&D_8015B68C` is in a CSE register `$v1` of complexity 0 against `cvt(one)`. |
 | DATE/80132000 | `func_8013E9F8` | regorder | T-11140: guarded 3-line draft; `s32 pad; s32 prev;` matches the 0x28(sp) slot and all 3 switch cases, leaving only `beq v0,v1` vs `beq v1,v0` at the 3 `prev != D_800E6280.unk_110A` checks where uopt hoists the `unk_110A` CSE into `$v1`. |
+| TT/8013F040 | `func_80140624` | regorder | T-11520: 9 lines (was ~14): stack order `point, n, i` and one-line `x = ...; y = ...;` fixed; counter i (priority 15.5) outranks the bound n (5.5), the original colours sum and bound first and spills i |
+| TT/8013E850 | `func_8013E850` | sched | T-11520: 2 lines (was ~14): FAKE store through `(&D_800E7D4E)[-1]` stops uopt forwarding the 0 into the `|=`; one `lui at` delay-slot fill left |
+| TT/801374C0 | `func_801392A0` | regorder | T-11520: 11 lines (was 23): `*(s16 *)(c + K + i * 2)` joins `c + i*2` into one range and fixes the slot pointers; `c[0x364]` tail value v0 vs a0 and preheader `li`/`move` order left |
+| TT/8013C6D0 | `func_8013DE10` | regorder | T-11520: 7 lines (was ~29): macro-style POLY_G4 lines, `c` before `buffer`, `(row + col) & 0x3FF`; t6/t7 swapped between the u and v sums |
+| TT/80133970 | `func_80134BBC` | phantom | T-11520: 34 lines, one cause: the unused `li s3,0x40` (frame 0x50, 0xAD..0xAC in s4..fp); a `g = D_80158A60` local fixed the early load; permuter 300 s no gain |
+| TT/801374C0 | `func_80139B98` | frame | T-11520: guarded, 28 lines: spill homes of the promoted `a`/`b` at sp+0x34/0x38 vs 0x38/0x3C (one extra home in the original); hoisted constant 1 in v0 instead of a2 |
+| TT/801374C0 | `func_80137C20` | other | T-11520: not kept (99 lines): IDO picks the i*0x20 row variable as the loop test where the original uses the i*4 one; hoisted-constant order |
+| TT/80141450 | `func_80141450` | regorder | T-11520: not kept (270 lines): u/v not register-allocated (original ra/t5), cu/cv stay in stack slots |
+| TT/80142D40 | `func_80143A44` | frame | T-11520: not kept (313 lines): the original has no saved registers and spills v, pl, pad around calls (frame 72 vs 56) |
+| TT/80142D40 | `func_801441BC` | regorder | T-11520: not kept (about 110 lines): constant 4 stays in a2 for the later `== 4` compares; h = `D_80158A6C` in a0 |
+| TT/80144D70 | `func_80144D70` | hoist | T-11520: not kept (about 226 lines): g and a loaded into a2/a3 at the head and `D_80158A60 + 0x10` hoisted in the original |
+| TT/80145E60 | `func_80146348` | regorder | T-11520: not kept (213 lines): head registers and spill order differ |
+| TT/80148DB0 | `func_8014A2B4` | regorder | T-11520: not kept (133 lines): frame matches (FAKE pad); hoisted globals in other registers (k t7, w a0, 1 in a3 in the original) |
+| TT/8013F040 | `func_801400B0` | regorder | T-11520: not kept (165 lines): pointer split (pl s1 vs s0) and constant hoist order; 0x81/0xA0 must be `case` labels; callee `func_801320F0` is defined `void` but returns the atan result |
