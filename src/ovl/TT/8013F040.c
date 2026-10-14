@@ -311,7 +311,7 @@ void func_8013FF14(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_801400B0);
 
-/* T-11510 near miss: about 14 instruction lines left besides branch offsets. Angle loop: the original keeps the 0x900 bound in s1, the angle (strength-reduced a + i) in s0 and the counter i in v1 spilled around the call (home sp+0x4C, below the TtPoint14 at sp+0x54); here the counter takes s0, the angle s1 and the bound n is the spilled one. Also the addiu order of the x/y table pointers. */
+/* T-11520 near miss: 9 instruction lines left besides branch offsets, all in the angle loop. The stack layout (n and i declared after the TtPoint14, so i's home is sp+0x4C) and the x/y table pointer order (both assignments on one line) now match. Left: the original keeps the 0x900 bound in s1, the strength-reduced angle + i in s0 and spills the counter i (v1) around the call, then compares with a nop delay slot; here i (priority 15.5, ties with angle + i and wins on bit order) takes s0, the sum s1 and n (5.5) is spilled. Tried: no n (0x900 not hoisted, li at), i from -2 to 18 or 0 to 20 with i * 0x80 (LFTR gives the same ranges), an explicit second induction variable, i initialised at function entry. */
 #ifdef NON_MATCHING
 void func_80140624(void) {
     u16 mode;
@@ -320,9 +320,9 @@ void func_80140624(void) {
     s32 *x;
     s32 *y;
     s32 angle;
+    TtPoint14 point;
     s32 n;
     s32 i;
-    TtPoint14 point;
 
     mode = ((TtSceneView *) D_80158A8C)->unk_08;
     other = D_80158A74;
@@ -345,8 +345,7 @@ void func_80140624(void) {
             if ((p->unk_366 & 0x1F) == 0x1F) {
                 func_80133AD0(0x500);
                 if (((u8 *) p)[0x106] == 0) {
-                    x = D_80155EC8;
-                    y = D_80155EDC;
+                    x = D_80155EC8; y = D_80155EDC;
                     do {
                         func_80134874(p->unk_14 - *x, *y + p->unk_16);
                         func_80134874(*x + p->unk_14, *y + p->unk_16);
