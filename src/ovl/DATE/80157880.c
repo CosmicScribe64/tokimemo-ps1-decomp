@@ -290,4 +290,8 @@ void func_801585F0(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80157880", func_80158664);
+void func_80158664(void) {
+    cd_read_sectors(0x3DU, 0x801B0000, 0x8B8C);
+    func_80157A90();
+    func_8004284C();
+}

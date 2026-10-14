@@ -311,4 +311,7 @@ void func_80159450(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801586A0", func_80159484);
+void func_80159484(void) {
+    D_800E71DF = 4;
+    func_8004284C();
+}

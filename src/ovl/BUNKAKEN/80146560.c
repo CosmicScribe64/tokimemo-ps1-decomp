@@ -1,7 +1,64 @@
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80146560", func_80146560);
+void func_80146560(void) {
+    switch (D_80122EB8) {                           /* switch 1 */
+    case 0:                                         /* switch 1 */
+        switch (D_800E62BE) {                       /* switch 2; irregular */
+        case 0x5F:                                  /* switch 2 */
+            func_80042908(0x56);
+            return;
+        case 0x60:                                  /* switch 2 */
+            func_80042908(0x57);
+            return;
+        case 0x61:                                  /* switch 2 */
+            func_80042908(0x58);
+            return;
+        default:                                    /* switch 2 */
+            func_80046500();
+            return;
+        }
+        break;
+    case 1:                                         /* switch 1 */
+        func_80042908(0x59);
+        return;
+    case 2:                                         /* switch 1 */
+        func_80042908(0x5A);
+        return;
+    case 3:                                         /* switch 1 */
+        switch (D_800E62BE) {                       /* switch 3; irregular */
+        case 0x5F:                                  /* switch 3 */
+            func_80042908(0x5B);
+            return;
+        case 0x60:                                  /* switch 3 */
+            func_80042908(0x5C);
+            return;
+        case 0x61:                                  /* switch 3 */
+            func_80042908(0x5D);
+            return;
+        }
+        break;
+    case 4:                                         /* switch 1 */
+        switch (D_800E62BE) {                       /* switch 4; irregular */
+        case 0x5F:                                  /* switch 4 */
+            func_80042908(0x5E);
+            return;
+        case 0x60:                                  /* switch 4 */
+            func_80042908(0x5F);
+            return;
+        case 0x61:                                  /* switch 4 */
+            func_80042908(0x60);
+            return;
+        }
+        break;
+    case 5:                                         /* switch 1 */
+        func_80042908(0x61);
+        return;
+    default:                                        /* switch 1 */
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80146560", func_80146700);
 

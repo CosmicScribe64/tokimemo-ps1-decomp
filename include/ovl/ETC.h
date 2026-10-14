@@ -1022,6 +1022,12 @@ extern s32 *D_801500C4;
 void func_8013FC64(s32 a, s32 b, s32 c, s32 d);
 void func_8013E524(s32 a, s32 b);
 extern s32 D_80150EA0;
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern s32 D_801509F4;
+extern s32 D_80150A0C;
+extern s32 D_80150A24;
+extern u8 D_801509D8;
+
 #endif /* OVL_ETC_H */
 extern u8 D_80150D20[];
 extern s32 D_801508BC[];

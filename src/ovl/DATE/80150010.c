@@ -327,4 +327,8 @@ void func_80151360(void) {
     D_801206DB &= 0xFF7F;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80151424);
+void func_80151424(void) {
+    cd_read_sectors(0x45U, 0x801B0000, 0x81FB);
+    func_80150200();
+    func_8004284C();
+}

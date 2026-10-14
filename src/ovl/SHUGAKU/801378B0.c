@@ -209,7 +209,22 @@ void func_801381BC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138290);
+void func_80138290(void) {
+    s32 temp;
+    temp = D_800CA2CC;
+    switch (temp) {                           /* irregular */
+    case 0:
+        func_800AE0F0(D_800CA23C, "京都");
+        break;
+    case 1:
+        func_800AE0F0(D_800CA23C, "沖縄");
+        break;
+    case 2:
+        func_800AE0F0(D_800CA23C, "北海道");
+        break;
+    }
+    func_8004284C();
+}
 
 void func_80138320(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -238,7 +253,45 @@ void func_801383C8(void) {
     D_800E6280.unk_1104.w += 1;
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/801378B0", func_80138400);
+void func_80138400(void) {
+    u8 temp;
+    func_801378B0();
+    temp = D_800CA2CC;
+    switch (temp) {                           /* irregular */
+    case 0:
+        func_80043914(D_8013C880, 0x11, 0, 0, 1);
+        break;
+    case 1:
+        func_80043914(D_8013C880, 0x11, 0, 0, 0);
+        break;
+    default:
+        func_80043914(D_8013C880, 0x11, 0, 0, 2);
+        break;
+    }
+    func_80048F64(0x60);
+    D_80120651 = 0xA;
+    D_80120652 = 1;
+    D_80120688 = 0x01000000;
+    D_80120653 = 0x84;
+    D_8012065C = (u8 *) D_8013C874;
+    D_80120660 = (u8 *) D_8013C878;
+    D_80120684 = (u8 *) D_8013C870;
+    D_80120664 = D_8013C87C;
+    D_80120666 = 0;
+    D_80120668 = 0;
+    D_80120656 = 1;
+    D_80120693 = 0x11;
+    D_80120676 = 0;
+    D_8012067A = -0x78;
+    if (D_800CA2CC == 0) {
+        D_8012067A = -0x88;
+    }
+    D_80120657 = 0x80;
+    D_80120655 = 1;
+    D_80120654 = 0;
+    func_80044750(0x501);
+    D_800E7384 += 1;
+}
 
 s16 func_801385A8(void) {
     if (D_80120676 < -0x1DF) {

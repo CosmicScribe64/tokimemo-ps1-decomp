@@ -103,4 +103,45 @@ void func_80141550(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80140C90", func_80141790);
+void func_80141790(void) {
+    switch (D_800F62CF) {
+    case 0:
+        func_80072734(0x5617);
+        break;
+    case 1:
+        func_80072734(0x5DA6);
+        break;
+    case 2:
+        func_80072734(0x52C0);
+        break;
+    case 3:
+        func_80072734(0x5941);
+        break;
+    case 4:
+        func_80072734(0x66CA);
+        break;
+    case 5:
+        func_80072734(0x6049);
+        break;
+    case 6:
+        func_80072734(0x6292);
+        break;
+    case 7:
+        func_80072734(0x5BB7);
+        break;
+    case 8:
+        func_80072734(0x50FE);
+        break;
+    case 9:
+        if (D_80148750 != 0) {
+            func_80072734(0x6508);
+        } else {
+            func_80072734(0x63A0);
+        }
+        break;
+    case 10:
+        func_80072734(0x677E);
+        break;
+    }
+    func_8004DE1C();
+}

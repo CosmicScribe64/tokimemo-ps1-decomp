@@ -218,4 +218,8 @@ void func_80137824(s32 arg0) {
     k_disp_start(set_kanji_string(-0x80, 0x30, 0, arg0, 0));
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801369D0", func_8013785C);
+void func_8013785C(u32 arg0) {
+    if (arg0 < (u32) D_800E7384) {
+        func_8004284C();
+    }
+}

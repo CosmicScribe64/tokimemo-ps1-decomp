@@ -15,6 +15,22 @@ void func_8013AA70(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/8013AA70", func_8013AAEC);
+void func_8013AAEC(void) {
+    s32 temp;
+    temp = D_800CA2CC;
+    switch (temp) {                           /* irregular */
+    case 0:
+        func_800AE0F0(D_800CA23C, "京都");
+        break;
+    case 1:
+        func_800AE0F0(D_800CA23C, "沖縄");
+        break;
+    case 2:
+        func_800AE0F0(D_800CA23C, "北海道");
+        break;
+    }
+    D_800CA2DC += D_800CA2F4 * (1 - D_800CA2EC);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/8013AA70", func_8013ABAC);

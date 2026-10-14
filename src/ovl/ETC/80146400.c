@@ -382,15 +382,115 @@ void func_80147630(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147650);
+void func_80147650(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_80146BC4();
+        return;
+    case 1:
+        func_8014716C();
+        return;
+    case 2:
+        func_80147414();
+        return;
+    case 3:
+        func_801474FC();
+        return;
+    case 4:
+        func_80147630();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801476DC);
+void func_801476DC(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_80146BC4();
+        return;
+    case 1:
+        func_801471F4();
+        return;
+    case 2:
+        func_80147414();
+        return;
+    case 3:
+        func_801474FC();
+        return;
+    case 4:
+        func_80147630();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147768);
+void func_80147768(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_80146BC4();
+        return;
+    case 1:
+        func_8014727C();
+        return;
+    case 2:
+        func_80147414();
+        return;
+    case 3:
+        func_801474FC();
+        return;
+    case 4:
+        func_80147630();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801477F4);
+void func_801477F4(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_80146BC4();
+        return;
+    case 1:
+        func_80147304();
+        return;
+    case 2:
+        func_80147414();
+        return;
+    case 3:
+        func_801474FC();
+        return;
+    case 4:
+        func_80147630();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_80147880);
+void func_80147880(void) {
+    switch (D_800E738A) {
+    case 0:
+        func_80146BC4();
+        return;
+    case 1:
+        func_8014738C();
+        return;
+    case 2:
+        func_80147414();
+        return;
+    case 3:
+        func_801474FC();
+        return;
+    case 4:
+        func_80147630();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_8014790C);
 

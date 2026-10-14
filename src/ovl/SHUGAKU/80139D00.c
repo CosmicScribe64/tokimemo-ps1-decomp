@@ -124,9 +124,49 @@ void func_8013A3B4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A42C);
+void func_8013A42C(void) {
+    u8 temp;
+    D_8013CB04 = 0;
+    temp = D_800CA2CC;
+    switch (temp) {                           /* irregular */
+    case 0:
+        func_8007ED84(0x4267);
+        func_800AE0F0(D_800CA19C, "土産屋");
+        break;
+    case 1:
+        func_8007ED84(0x4255);
+        func_800AE0F0(D_800CA19C, "浜辺");
+        break;
+    default:
+        func_8007ED84(0x427B);
+        func_800AE0F0(D_800CA19C, "クラーク像前");
+        break;
+    }
+    if (D_800CA2EC == 0) {
+        func_80085B3C(3, D_800CA2CC + 3);
+    }
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_8013A4F8);
+void func_8013A4F8(void) {
+    s32 temp;
+    temp = D_800CA2CC;
+    switch (temp) {                           /* irregular */
+    case 0:
+        func_8007ED84(0x4267);
+        func_800AE0F0(D_800CA19C, "土産屋");
+        break;
+    case 1:
+        func_8007ED84(0x4255);
+        func_800AE0F0(D_800CA19C, "浜辺");
+        break;
+    default:
+        func_8007ED84(0x427B);
+        func_800AE0F0(D_800CA19C, "クラーク像前");
+        break;
+    }
+    func_8004284C();
+}
 
 void func_8013A59C(void) {
     if (D_800CA2CC == 0) {

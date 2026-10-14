@@ -126,4 +126,45 @@ void func_80145EBC(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80145E40", func_801462A0);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80145E40", func_801463E4);
+void func_801463E4(void) {
+    switch (D_800E738A) {
+    case 0:
+        cd_read_sectors(1U, 0x801E8000, 0x4B7F);
+        func_8004284C();
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            func_8004E9F4(0);
+            func_8006612C((s32) "天の声");
+            func_8004E884(1);
+            func_80132514();
+            D_800E71DF = 8;
+            func_800847B8(8U);
+            func_800AE0F0(D_800CA188, "　");
+            D_800CA148 = 0;
+            D_800CA14C = 0;
+            D_800CA160 = (s32) D_80155E90;
+            D_800CA164 = (s32) D_80155E94;
+            D_800CA168 = (s32) D_80155E98;
+            func_8004284C();
+        }
+        break;
+    case 2:
+        func_80085A60();
+        break;
+    case 3:
+        func_8007E934();
+        break;
+    case 4:
+        if (D_800E71F4 == 1) {
+            func_80048EB8(0);
+            func_8006BD6C(0);
+            func_80057390(0);
+            main_state_set(0xD0);
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}

@@ -381,7 +381,36 @@ void func_8014A6D4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A7A4);
+void func_8014A7A4(void) {
+    switch (D_800E738D) {
+    case 0:
+        D_800E6377 = 1;
+        func_8004EAAC();
+        func_80050DFC(&D_800E6354);
+        func_80050E8C(&D_801509D8, 0, 0x1F);
+        D_800E738D += 1;
+        return;
+    case 1:
+        func_80051DBC();
+        return;
+    case 2:
+        func_8004EAAC();
+        func_80050C24(0, 3);
+        func_80050D78(&D_801509F4, &D_80150A0C, &D_80150A24, 3);
+        func_8004EAD4(3);
+        D_800E7313 = 0;
+        func_8004284C();
+        return;
+    case 3:
+        func_80051DBC();
+        return;
+    case 4:
+        func_8004284C();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A8A8);
 
