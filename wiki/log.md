@@ -13076,3 +13076,6 @@ Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 4
 
 ## [2026-10-13] ticket | T-11110 started
 Opened [[tickets/T-11110-small-functions-gemini-34]] (In Progress): 16 functions (4,800 bytes) in `src/ovl/EVENT/8010FE10.c`.
+
+## [2026-10-14] ticket | T-11120 started
+Opened [[tickets/T-11120-small-functions-sonnet-36]] (In Progress): 16 functions (5,168 bytes) in `src/ovl/NAME_ENT/80139740.c`.

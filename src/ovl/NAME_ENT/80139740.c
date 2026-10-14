@@ -596,7 +596,34 @@ void func_8013C8FC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C934);
+void func_8013C934(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8013C510();
+        break;
+    case 1:
+        func_8013C580();
+        break;
+    case 2:
+        func_8013C664();
+        break;
+    case 3:
+        func_8013C6CC();
+        break;
+    case 4:
+        func_8013C6FC();
+        break;
+    case 5:
+        func_8013C7C0();
+        break;
+    case 6:
+        func_8013C834();
+        break;
+    case 7:
+        func_8013C8FC();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C9F0);
 
