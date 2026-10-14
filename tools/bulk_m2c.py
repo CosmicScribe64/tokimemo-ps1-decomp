@@ -172,6 +172,8 @@ def cleanup(decls, body):
     bad = re.search(r"\bM2C_\w+", body)
     if bad:
         return body, {}, "m2c-error: %s" % bad.group(0)
+    # m2c's switch annotations (`/* switch 1 */`, `/* irregular */`) are not project comments
+    body = re.sub(r"[ \t]*/\* (?:switch \d+(?:; irregular)?|irregular) \*/", "", body)
     body = fix_unknown_types(fix_comments(body)).strip("\n") + "\n"
     names = set(re.findall(r"[A-Za-z_]\w*", autotweak.mask(body)))
     return body, {n: d for n, d in clean_decls(decls).items() if n in names}, None
