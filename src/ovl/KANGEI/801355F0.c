@@ -84,7 +84,7 @@ void func_80135B18(void) {
 }
 
 void func_80135B54(void) {
-    switch (D_800E71DF) {
+    switch (D_800E6280.unk_F5F) {
     case 0:
         func_80062CD0(0x5747);
         break;

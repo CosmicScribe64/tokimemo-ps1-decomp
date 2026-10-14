@@ -146,7 +146,7 @@ INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134724);
 void func_801349D4(void) {
     func_80132E74();
     func_80132E40();
-    switch (D_800E71DF) {
+    switch (D_800E6280.unk_F5F) {
     case 0:
         D_80139AD0 = (KObj *) D_80139A50;
         D_80139AD4 = D_80139A54;

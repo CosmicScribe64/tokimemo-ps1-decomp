@@ -2093,7 +2093,7 @@ void read_bustup_uniform(void) {
 }
 
 void read_bustup_swimsuit(void) {
-    switch (D_800E71DF) {
+    switch (D_800E6280.unk_F5F) {
     case 0:
         func_80062CD0(0x5666);
         break;
@@ -2119,9 +2119,9 @@ void read_bustup_swimsuit(void) {
         func_80062CD0(0x5C06);
         break;
     case 8:
-        if (D_800E62BE == 0x5F) {
+        if (D_800E6280.unk_03E == 0x5F) {
             func_80062CD0(0x50F3);
-        } else if (D_800E62BE == 0x60) {
+        } else if (D_800E6280.unk_03E == 0x60) {
             func_80062CD0(0x5120);
         } else {
             func_80062CD0(0x514D);
