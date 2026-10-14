@@ -3838,8 +3838,7 @@ void func_8014033C(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11020, 5 insns: hoisted constant 2 (s6) is compared as (var, s6) and the 4th call argument is andi a3,s6,0xff; the build gives (s6, var) and li a3,2. Twin of EVENT func_8011BE00 */
-#ifdef NON_MATCHING
+/* FAKE: s16 `two` holds the hoisted constant 2 in $s6 with reversed bne/xor operand order, and local u8 prototype for func_80043914 (load_palette) emits andi a3, s6, 0xff. T-11290 */
 s32 func_80140374(void) {
     s32 drift;
     s16 size_variant;
@@ -3849,6 +3848,8 @@ s32 func_80140374(void) {
     s32 random_span;
     s32 choice;
     GsWord *position;
+    s16 two;
+    s32 func_80043914(s32, u8, u8, u8, u8);
 
     if ((*(s32 *)D_8015B60C != 0x801E4000) || (((s32 *)D_8015B610)[0] != 0x801E8000) || (((s32 *)D_8015B610)[1] != 0x801EC000) ||
         (((s32 *)D_8015B61C)[0] != 0x801F0540) || (((s32 *)D_8015B61C)[1] != 0x801F0558) || (((s32 *)D_8015B61C)[2] != 0x801F0570) ||
@@ -3856,10 +3857,11 @@ s32 func_80140374(void) {
         D_800E6280.unk_110A -= 2;
         return 0;
     }
-    if (D_800CA2FC == 2) {
-        func_80043914(D_8015B62C, 0x12, 1, 2, 0);
+    two = 2;
+    if (two == D_800CA2FC) {
+        func_80043914(D_8015B62C, 0x12, 1, (s32)two, 0);
     } else {
-        func_80043914(D_8015B630, 0x12, 1, 2, 0);
+        func_80043914(D_8015B630, 0x12, 1, (s32)two, 0);
     }
     for (i = 0; i < 0x14; i++) {
         func_80048F64(i + 0x62);
@@ -3867,7 +3869,7 @@ s32 func_80140374(void) {
         ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_01 = 0xD;
         ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_02 = 1;
         ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_03 = 4;
-        if (D_800CA2FC == 2) {
+        if (two == D_800CA2FC) {
             ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_0C = (s32) D_8015B614;
             ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_10 = (s32) D_8015B61C;
             ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_34 = (s32) D_8015B60C;
@@ -3892,14 +3894,11 @@ s32 func_80140374(void) {
         drift = ((s32) (((((func_800AE0D0() % 2) * 2) - 1) * (random_span % 8)) + 8)) / divisor;
         position->h[1] = (s16) (((s16) position->h[1]) + drift);
         ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_28.h[1] = (s16) ((func_800AE0D0() % 160) - 0x78);
-        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_30 = (s32) (((D_800CA2FC != 2) << 15) + 0x8000) / divisor;
+        ((DateParticleView44 *) D_8011ECD0)[i + 98].unk_30 = (s32) (((two != D_800CA2FC) << 15) + 0x8000) / divisor;
     }
 
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80140374);
-#endif
 
 void func_80140788(void) {
     s16 i;
