@@ -13204,3 +13204,19 @@ scorer when the climb stalls above 0. `climb` no longer reports a match for a 0 
 ## [2026-10-14] ticket | T-11200 In Review
 
 Moved [[tickets/T-11200-order-search-in-solvers]] to In Review; needs the real-build check and the code review.
+
+## [2026-10-14] ticket | T-11220 regdiff-guided edit ordering in autotweak
+
+Created [[tickets/T-11220-regdiff-guided-autotweak]] and started it.
+
+## [2026-10-14] build | T-11220 regdiff guidance in autotweak and bulk_m2c
+
+`tools/autotweak.py`: with the traced uopt available, regdiff runs in-process on the start text and every new best
+text; its FIRST DIVERGENCE (hint class, named variables and lines) orders the edits through one table,
+`HINT_EDITS`, that follows [[register-cheatsheet]]. `--no-regdiff` turns it off; the output line ends with
+`regdiff: <hint>`. `tools/bulk_m2c.py` passes it to the climb (`--no-regdiff`). Synthetic tests pass;
+[[decompile-workflow]] updated. Needs the real-build comparison against `--no-regdiff`.
+
+## [2026-10-14] ticket | T-11220 In Review
+
+Moved [[tickets/T-11220-regdiff-guided-autotweak]] to In Review; needs the real-build check and the code review.

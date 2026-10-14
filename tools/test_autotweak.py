@@ -422,6 +422,205 @@ class Order(unittest.TestCase):
         self.assertEqual(r.best, 1)
 
 
+# Synthetic regdiff reports in the format of tools/regdiff.py report() (T-11220); not real code.
+TIE_REPORT = """regdiff func_80132000 [AA]  draft: build/autotweak/AA/func_80132000/regdiff.c
+  12 draft / 12 original instructions
+  2 instruction(s) differ in registers only
+  register map (draft -> original): $v0->$v1 x2, $v1->$v0 x2
+
+FIRST DIVERGENCE at draft insn 3
+  draft    addu v0,a0,a1
+  original addu v1,a0,a1
+  draft puts value computed by `addu v0,a0,a1` in $v0, the original in $v1 (result of `addu v0,a0,a1`).
+  draft range: bit 5, local i (lines 14,15)
+    priority 2 = 1 use(s) + 1 def(s) over 1 unit(s), loop weight 1, denominator 1; constrained, allocated 1st
+  the range that holds $v1 where the original puts the other one in the draft: bit 7, local k (lines 15)
+    priority 2 = 1 use(s) + 1 def(s), constrained, allocated 2nd, cheapest colour cost 0, got colour 2 ($v1)
+  hint: tie. Equal priority 2; bit 5 is coloured before bit 7, so it takes the lower colour.
+  [lookup 0.1s, traced compile 1.5s, analysis 0.1s]"""
+
+
+def report(*body):
+    return "regdiff f [AA]  draft: x.c\n  4 draft / 4 original instructions\n" + "\n".join(body) + \
+        "\n  [lookup 0.1s, traced compile 1.5s, analysis 0.1s]"
+
+
+class RegdiffHints(unittest.TestCase):
+    def test_tie_names_and_lines(self):
+        h = A.parse_regdiff(TIE_REPORT, first_line=11)
+        self.assertEqual(h.classes, ["tie"])
+        self.assertEqual(h.names, ["i", "k"])
+        self.assertEqual(h.lines, [3, 4])
+        self.assertEqual(h.summary(), "tie i,k L3,4")
+        self.assertEqual(h.kinds[:2], ["order", "inline"])
+
+    def test_classes(self):
+        div = "FIRST DIVERGENCE at draft insn 1"
+        cases = [
+            ("priority", "hint: bit 3 (priority 4) is coloured before bit 4 (priority 2) and takes the lower colour."),
+            ("priority", "hint: bit 3 (priority 4) outranks bit 4 (priority 2). The original needs bit 4 first."),
+            ("tie", "hint: equal priorities (2): the lower bit position is coloured first."),
+            ("extra-range", "hint: colours are tried lowest first, so an interfering range holds the colour(s)"),
+            ("missing-range", "hint: the draft took the lower colour 1 ($v0); in the original an interfering"),
+            ("ugen", "$t7 is not a uopt colour: ugen (or the assembler for a macro) picked it"),
+            ("ugen", "hint: the original's $t6 is not a uopt colour (ugen temporary): an expression shape"),
+        ]
+        for want, line in cases:
+            self.assertEqual(A.parse_regdiff(report(div, "  " + line)).classes, [want], line)
+
+    def test_secondary_classes_and_global_names(self):
+        h = A.parse_regdiff(report(
+            "FIRST DIVERGENCE at draft insn 1",
+            "  draft range: bit 2, global D_X/D_Y (lines 3)",
+            "  hint: bit 2 (priority 4) outranks bit 9 (priority 2). The original needs bit 9 first.",
+            "  not allocated in the draft: bit 4, local M12 (net zero)",
+            "  the original passes this value to the call at its insn 6 in $a0: uopt precolours"))
+        self.assertEqual(h.classes, ["priority", "argument", "unallocated"])
+        self.assertEqual(h.names, ["D_X", "D_Y"])       # M12 is regdiff's name for an unnamed local
+        self.assertEqual(A.parse_regdiff(report("  draft range: local v (lines 9)")).names, [],
+                         "names count only inside the FIRST DIVERGENCE block")
+
+    def test_structure_frame_operand_match_error(self):
+        frame = report("  STRUCTURE differs in 1 place(s); first at draft insn 0 / original insn 0:",
+                       "    - draft    addiu sp,sp,-24", "    + original addiu sp,sp,-32")
+        self.assertEqual(A.parse_regdiff(frame).classes, ["frame"])
+        shape = report("  STRUCTURE differs in 1 place(s); first at draft insn 2 / original insn 2:",
+                       "    - draft    sll v0,a0,2", "    + original addu v0,a0,a0")
+        self.assertEqual(A.parse_regdiff(shape).classes, ["structure"])
+        swap = report("  operand order: draft `addu v0,a0,a1` against original `addu v0,a1,a0` (same values)")
+        self.assertEqual(A.parse_regdiff(swap).classes, ["operand"])
+        self.assertEqual(A.parse_regdiff(report("  MATCH: identical instructions, no divergence.")).classes,
+                         ["match"])
+        err = A.parse_regdiff("regdiff: the draft does not compile:\nerror")
+        self.assertTrue(err.error)
+        self.assertEqual(err.summary(), "error")
+
+    def test_table_names_real_edit_kinds(self):
+        known = {"byteview", "swap", "join", "split", "compound", "expand", "emptytest", "pad", "declswap",
+                 "shift", "inline", "temp", "width", "order"}
+        produced = {A.edit_kind(v.label) for v in A.variants(FUNC)}
+        self.assertTrue(produced <= known, produced - known)
+        for cls, kinds in A.HINT_EDITS.items():
+            self.assertTrue(set(kinds) <= known, cls)
+        for cls, _pat in A.HINT_PATTERNS + A.SECONDARY_PATTERNS:
+            self.assertIn(cls, A.HINT_EDITS)
+        self.assertEqual(A.edit_kind("swap== L4"), "swap")
+        self.assertEqual(A.edit_kind("mul>shift L5"), "shift")
+        self.assertEqual(A.edit_kind("order[0:1,0]"), "order")
+
+
+class RegdiffOrdering(unittest.TestCase):
+    def test_without_hint_order_is_unchanged(self):
+        vs = A.variants(FUNC)
+        self.assertEqual(A.rank_variants(vs, None, FUNC), vs)
+        self.assertEqual(A.rank_variants(vs, A.Hint(error="boom"), FUNC), vs)
+
+    def test_kind_and_location_first_nothing_dropped(self):
+        vs = A.variants(FUNC)
+        hint = A.Hint(["ugen"], names=["k"])
+        got = A.rank_variants(vs, hint, FUNC)
+        self.assertEqual(sorted(v.label for v in got), sorted(v.label for v in vs))
+        self.assertIn(A.edit_kind(got[0].label), A.HINT_EDITS["ugen"])
+        self.assertIn("k", A.changed_lines(FUNC, got[0].text)[1])
+        groups = []
+        for v in got:
+            kind = A.edit_kind(v.label) in hint.kinds
+            touch = "k" in A.changed_lines(FUNC, v.text)[1]
+            groups.append((0 if touch else 1) if kind else (2 if touch else 3))
+        self.assertEqual(groups, sorted(groups))
+
+    def test_line_hint(self):
+        # line 5 of FUNC is `k = i * 4;`: an edit there comes first for a structure hint
+        got = A.rank_variants(A.variants(FUNC), A.Hint(["structure"], lines=[5]), FUNC)
+        touching = [v.label for v in got if 5 in A.changed_lines(FUNC, v.text)[0]]
+        self.assertTrue(touching)
+        self.assertIn(got[0].label, touching)
+
+    def test_climb_scores_suggested_edit_first_and_asks_on_improvement(self):
+        asked, scored, unguided = [], [], []
+
+        def advise(text):
+            asked.append(text)
+            return A.Hint(["ugen"], names=["k"])
+
+        def score(text):
+            scored.append(text)
+            return 0 if "s32 k;" in text else 1
+        r = A.climb(FUNC, score, budget=60, advise=advise)
+        self.assertTrue(r.matched)
+        self.assertEqual(asked, [FUNC])
+        self.assertIn("width k u16->s32", r.path)
+        A.climb(FUNC, lambda t: unguided.append(t) or (0 if "s32 k;" in t else 1), budget=60)
+        self.assertLess(len(scored), len(unguided))
+
+    def test_climb_reports_hint_of_the_final_text(self):
+        hints = {}
+
+        def advise(text):
+            hints[text] = A.Hint(["tie"], names=["i"])
+            return hints[text]
+        r = A.climb(FUNC, lambda t: 1 if "(i << 2)" in t else 2, budget=60, advise=advise, order=False)
+        self.assertEqual(r.best, 1)
+        self.assertIn(r.text, hints)
+        self.assertEqual(r.hint.summary(), "tie i")
+
+    def test_unguided_climb_is_unchanged_by_empty_hint(self):
+        a, b = [], []
+        A.climb(FUNC, lambda t: a.append(t) or 1, budget=60, order=False)
+        A.climb(FUNC, lambda t: b.append(t) or 1, budget=60, order=False, advise=lambda t: A.Hint())
+        self.assertEqual(a, b)
+
+
+class FakeRegdiff:
+    DEFAULT_UOPT = "/nonexistent/trace"
+
+    def __init__(self):
+        self.calls = []
+
+    def run(self, args, out=print):
+        with open(args.src) as fh:
+            text = fh.read()
+        self.calls.append((args, text))
+        line = text[:text.index("i = D_80140000")].count("\n") + 1
+        for l in TIE_REPORT.replace("(lines 14,15)", "(lines %d)" % line).split("\n"):
+            out(l)
+        return 1
+
+
+class RegdiffAdvisor(Repo):
+    def test_no_traced_uopt_means_no_advisor(self):
+        with mock.patch.dict(os.environ, {"REGDIFF_UOPT": os.path.join(self.root, "missing")}):
+            self.assertIsNone(A.regdiff_uopt())
+            self.assertIsNone(A.make_advisor(self.root, A.find_drafts(self.root)[0], regdiff=FakeRegdiff()))
+
+    def test_advisor_runs_regdiff_on_a_copy(self):
+        d = A.find_drafts(self.root)[0]
+        rd = FakeRegdiff()
+        advise = A.make_advisor(self.root, d, uopt="/scratch/trace", regdiff=rd)
+        variant = d.text.replace("i * 4", "(i << 2)")
+        h = advise(variant)
+        self.assertEqual(h.classes, ["tie"])
+        self.assertEqual(h.lines[0], 2, "file line -> line index in the function text")
+        args, text = rd.calls[0]
+        self.assertEqual((args.func, args.unit, args.uopt), ("func_80132100", "AA", "/scratch/trace"))
+        self.assertIn("(i << 2)", text)
+        self.assertNotIn("NON_MATCHING", text)
+        self.assertTrue(args.src.startswith(os.path.join(os.path.abspath(self.root), "build", "autotweak")))
+        self.assertEqual(self.read(), SRC, "src/ is not touched")
+        advise(variant)
+        self.assertEqual(len(rd.calls), 1, "cached per text")
+
+    def test_advisor_survives_regdiff_errors(self):
+        class Broken(FakeRegdiff):
+            def run(self, args, out=print):
+                raise OSError("no objdump")
+        advise = A.make_advisor(self.root, A.find_drafts(self.root)[0], uopt="/x", regdiff=Broken())
+        h = advise("void func_80132100(void) {\n}")
+        self.assertIn("no objdump", h.error)
+        self.assertEqual([v.label for v in A.rank_variants(A.variants(FUNC), h, FUNC)],
+                         [v.label for v in A.variants(FUNC)])
+
+
 class Main(Repo):
     def run_main(self, argv, wanted):
         out = io.StringIO()
@@ -460,6 +659,27 @@ class Main(Repo):
     def test_list(self):
         rc, out = self.run_main(["--list", "--all"], [])
         self.assertRegex(out, r"^AA:func_80132100  src/ovl/AA/80132000.c  \d+ edits\n$")
+
+    def test_regdiff_hint_in_output_and_flag(self):
+        made = []
+
+        def fake_advisor(root, draft):
+            made.append(draft.func)
+            return lambda text: A.Hint(["tie"], names=["i"], lines=[2])
+        with mock.patch.object(A, "make_advisor", fake_advisor):
+            rc, out = self.run_main(["func_80132100", "--time", "1"], ["nothing like this"])
+            self.assertIn("regdiff: tie i L2", out)
+            self.assertEqual(made, ["func_80132100"])
+            rc, out = self.run_main(["func_80132100", "--time", "1", "--no-regdiff"], ["nothing like this"])
+            self.assertNotIn("regdiff:", out)
+            self.assertEqual(made, ["func_80132100"])
+        self.assertTrue(A.parse_args(["f", "--no-regdiff"]).no_regdiff)
+        self.assertFalse(A.parse_args(["f"]).no_regdiff)
+
+    def test_without_traced_uopt_output_is_unguided(self):
+        with mock.patch.object(A, "regdiff_uopt", lambda: None):
+            rc, out = self.run_main(["func_80132100", "--time", "1"], ["nothing like this"])
+        self.assertNotIn("regdiff:", out)
 
 
 if __name__ == "__main__":
