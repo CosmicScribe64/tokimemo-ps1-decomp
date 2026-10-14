@@ -13076,3 +13076,7 @@ Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 4
 
 ## [2026-10-13] ticket | T-11110 started
 Opened [[tickets/T-11110-small-functions-gemini-34]] (In Progress): 16 functions (4,800 bytes) in `src/ovl/EVENT/8010FE10.c`.
+
+## [2026-10-14] ticket | Start T-11130 Big functions (Gemini) 37
+
+Created [[tickets/T-11130-big-functions-gemini-37]] (In Progress) on [[kanban]] for the 52 functions in `astra37-list.txt` (`src/ovl/TAIIKU/80138950.c`, `src/main/8007C030.c`, `src/main/8006CB30.c`, `src/ovl/NAME_ENT/80132000.c`, `src/ovl/TAIIKU/80133C80.c`).
