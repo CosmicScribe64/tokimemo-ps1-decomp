@@ -13124,3 +13124,7 @@ Created [[tickets/T-11150-twin-detection-for-jump-table-functions]] and implemen
 Added 11 symptom rows to [[register-cheatsheet]] from FAKE comments and [[matching-notes]] entries since 2026-10-12 (T-10820..T-11510): scalar byte selector views, empty tests splitting live ranges, alias reloads through record views, compound assignment, join blocks, induction variables, line-based scheduling, sum operand order, frame homes, LSB-first bit-fields, the 20-reference block split.
 ## [2026-10-14] ticket | T-11120 started
 Opened [[tickets/T-11120-small-functions-sonnet-36]] (In Progress): 16 functions (5,168 bytes) in `src/ovl/NAME_ENT/80139740.c`.
+
+## [2026-10-14] ticket | T-11180 started
+Opened [[tickets/T-11180-twin-guided-matching-gemini-39]] (In Progress) on [[kanban]]: twin-guided matching list 39 (24 matched-twin targets and 11 unmatched twin groups).
+

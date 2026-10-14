@@ -23,6 +23,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180 Twin-guided matching (Gemini) 39]]
 - [ ] [[tickets/T-11120-small-functions-sonnet-36|T-11120 Small functions (Sonnet via Antigravity) 36]]
 - [ ] [[tickets/T-11110-small-functions-gemini-34|T-11110 Small functions (Gemini) 34]]
 - [ ] [[tickets/T-11070-small-functions-gemini-30|T-11070 Small functions (Gemini) 30]]
