@@ -143,7 +143,52 @@ void func_8013454C(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_80134724);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80134120", func_801349D4);
+void func_801349D4(void) {
+    func_80132E74();
+    func_80132E40();
+    switch (D_800E71DF) {
+    case 0:
+        D_80139AD0 = (KObj *) D_80139A50;
+        D_80139AD4 = D_80139A54;
+        D_80139AD8 = D_80139A58;
+        return;
+    case 1:
+        D_80139AD0 = (KObj *) D_80139A64;
+        D_80139AD4 = D_80139A84;
+        D_80139AD8 = D_80139AA4;
+        return;
+    case 2:
+        D_80139AD0 = (KObj *) D_80139A5C;
+        D_80139AD4 = D_80139A7C;
+        D_80139AD8 = D_80139A9C;
+        return;
+    case 3:
+        D_80139AD0 = (KObj *) D_80139A60;
+        D_80139AD4 = D_80139A80;
+        D_80139AD8 = D_80139AA0;
+        return;
+    case 4:
+        D_80139AD0 = (KObj *) D_80139A70;
+        D_80139AD4 = D_80139A90;
+        D_80139AD8 = D_80139AB0;
+        return;
+    case 5:
+        D_80139AD0 = (KObj *) D_80139A68;
+        D_80139AD4 = D_80139A88;
+        D_80139AD8 = D_80139AA8;
+        return;
+    case 6:
+        D_80139AD0 = (KObj *) D_80139A6C;
+        D_80139AD4 = D_80139A8C;
+        D_80139AD8 = D_80139AAC;
+        return;
+    default:
+        D_80139AD0 = (KObj *) D_80139A78;
+        D_80139AD4 = D_80139A98;
+        D_80139AD8 = D_80139AB8;
+        return;
+    }
+}
 
 void func_80134BC4(void) {
     u32 selection;

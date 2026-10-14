@@ -1244,7 +1244,30 @@ void func_80137608(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137708);
+void func_80137708(void) {
+    u8 temp;
+    func_8006BA40();
+    func_80136688();
+    func_801372A0(0);
+    func_80137608(0);
+    if (D_800E7208 & 0x40) {
+        temp = D_8014CC70;
+        if (temp != 0) {
+            D_8014CC70 -= 1;
+        }
+    } else if (D_800E7208 & 0x20) {
+        D_8014CC70 += 1;
+        func_801372A0(0);
+        if ((u8) D_8014CC70 >= 3U) {
+            func_801377E8(0);
+            func_8004284C();
+        }
+    } else if (D_800E7208 & 0x800) {
+        func_801377E8(0);
+        func_8004284C();
+    }
+    func_80137AA0();
+}
 
 /* NON_MATCHING: T-11010, 40 differing lines, all register choice for the hi constant of the D_8014CC9x loads ($a0 in the draft, $v1 in the original); control flow, frame and stores match */
 #ifdef NON_MATCHING
@@ -1508,7 +1531,30 @@ void func_801385A8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138634);
+void func_80138634(void) {
+    u8 temp;
+    func_8006BA40();
+    func_80136688();
+    func_801372A0(1);
+    func_80137608(1);
+    if (D_800E7208 & 0x40) {
+        temp = D_8014CC70;
+        if (temp != 0) {
+            D_8014CC70 -= 1;
+        }
+    } else if (D_800E7208 & 0x20) {
+        D_8014CC70 += 1;
+        func_801372A0(1);
+        if ((u8) D_8014CC70 >= 3U) {
+            func_801377E8(1);
+            func_8004284C();
+        }
+    } else if (D_800E7208 & 0x800) {
+        func_801377E8(1);
+        func_8004284C();
+    }
+    func_80137AA0();
+}
 
 void func_80138714(void) {
     u8 *p;
