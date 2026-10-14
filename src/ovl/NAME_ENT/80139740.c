@@ -410,7 +410,47 @@ void func_8013BB24(void) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
 #endif
 
+/* NON_MATCHING: T-11120, 14 lines: the rect sits 4 bytes higher in the frame than in the original (sp+0x34, same frame size; any pad local grows the frame by 8) and the final D_800E62BA store has `li v1,0x80` before `lui at` */
+#ifdef NON_MATCHING
+void func_8013BE18(void) {
+    RECT rect;
+
+    *(u8 *)&D_800E6280.unk_3A += 4;
+    if (*(u8 *)&D_800E6280.unk_3A >= 0x80) {
+        *(u8 *)&D_800E6280.unk_3A = 0x80;
+    }
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004500C(0, 0);
+        cd_read_sectors(5, 0x801E0000, 0x9DBA);
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            cd_read_sectors(0x89, 0x80180000, 0x9CB5);
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            rect.x = 0x3E0;
+            rect.y = 0x100;
+            rect.h = 0x80;
+            rect.w = 0x20;
+            func_8009C884(&rect, (void *)0x801E0200);
+            func_80043914(0x801E0000, 0x18, 1, 2, 0);
+            D_800E6280.unk_110D = 3;
+            *(u8 *)&D_800E6280.unk_3A = 0x80;
+        }
+        break;
+    case 3:
+        func_8004284C();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BE18);
+#endif
 
 void func_8013BF74(void) {
     s32 i;
@@ -650,7 +690,47 @@ void func_8013C934(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C9F0);
+/* Falls through without a return statement. */
+s32 func_8013C9F0(void) {
+    s32 pad[3]; /* FAKE: unused words above count, the original frame has them (T-9020, T-11120) */
+    s32 count;
+    s32 i;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_80054140() == 2) {
+            func_800AE0B0("SEARCH_CARD");
+            D_800E6280.unk_110D++;
+        } else if (D_800E6280.unk_1104.u >= 0x201U) {
+            func_80056284();
+            func_80042908(1);
+            func_80053D10();
+        }
+        break;
+    case 2:
+        count = 0;
+        for (i = 0; i < 14; i++) {
+            if (D_800E7D11[i + 4] != 0) {
+                count++;
+            }
+        }
+        func_8004E58C();
+        if (D_800E8BEE != 0) {
+            func_8004284C();
+        } else if (count != 0) {
+            func_80042940(0x20);
+        } else {
+            func_80042940(0x40);
+        }
+        break;
+    case 3:
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
 
