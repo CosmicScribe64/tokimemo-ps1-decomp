@@ -838,7 +838,47 @@ void func_801159AC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801159D4);
+void func_801159D4(void) {
+    switch (D_80125318) {
+    case 0:
+        func_800469F4(0x4430);
+        break;
+    case 1:
+        func_800469F4(0x43E9);
+        break;
+    case 2:
+        func_800469F4(0x440E);
+        break;
+    case 3:
+        func_800469F4(0x4420);
+        break;
+    case 4:
+        func_800469F4(0x43F3);
+        break;
+    case 5:
+        func_800469F4(0x4405);
+        break;
+    case 6:
+        func_800469F4(0x4430);
+        break;
+    case 7:
+        func_800469F4(0x4417);
+        break;
+    case 8:
+        func_800469F4(0x43FC);
+        break;
+    case 9:
+        func_800469F4(0x4430);
+        break;
+    case 10:
+        func_800469F4(0x4428);
+        break;
+    case 11:
+        func_800469F4(0x4439);
+        break;
+    }
+    func_80011DFC();
+}
 
 void func_80115AD8(void) {
     func_800469F4(0x43D6);
@@ -1113,7 +1153,20 @@ s32 func_80116AA8(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116B94);
+void func_80116B94(void) {
+    EventStateView *g;
+
+    g = (EventStateView *)D_800B0860;
+    func_80011DFC();
+    g->unk_1296 += 0x16;
+    ((EventResultRow6 *)&D_8012439C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + D_8012531C * 3 + 30);
+    ((EventResultRow6 *)&D_8012439C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + D_8012531C * 3 + 31);
+    ((EventResultRow6 *)&D_8012439C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125260 + D_8012531C * 3 + 32);
+    ((EventResultRow6 *)&D_8012438C)->value[0] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + D_8012531C * 3 + 30);
+    ((EventResultRow6 *)&D_8012438C)->value[1] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + D_8012531C * 3 + 31);
+    ((EventResultRow6 *)&D_8012438C)->value[2] = (s16) *(g->unk_EE6 * 0x24 + (u8 *)D_80125264 + D_8012531C * 3 + 32);
+    func_80114B0C();
+}
 
 void func_80116CB4(void) {
     if (D_80125304 != 0) {
@@ -1460,7 +1513,28 @@ void func_80118848(void) {
     func_80011DFC();
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-11110, 8 lines: chained halfword store scheduling and $v0 vs $t6 for third chain */
+void func_80118868(void) {
+    if (D_800B1746 != 6) {
+        func_80011DFC();
+        D_800B1AF6 += 8;
+        return;
+    }
+    if (D_800B095E >= 0x96) {
+        D_80094730 += 3;
+        func_80011DFC();
+        D_800B1AF6 += 8;
+        return;
+    }
+    (&D_801243A4)[0] = (&D_8012439C)[2] = (&D_8012439C)[0] = (&D_8012439C)[3] = 2;
+    (&D_8012438C)[0] = (&D_8012438C)[1] = (&D_8012438C)[2] = 3;
+    (&D_80124394)[0] = (&D_80124394)[1] = (&D_80124394)[2] = 3;
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80118868);
+#endif
 
 void func_80118950(void) {
     if (D_801243B0 == 0x12) {
