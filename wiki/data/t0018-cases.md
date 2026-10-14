@@ -1913,3 +1913,11 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80142350 | `func_80142350` | regorder | T-11550: 2 lines (was 11): a FAKE `u8 temp` reload of `base[0x52]` takes a0 and moves the constant 1 to a1 (found by autotweak); TtButtons06 pointer v0 vs a2 left |
 | TT/80142D40 | `func_80144A04` | regorder | T-11550: unchanged, 3 lines: toy functions show a call result live in v0 pushes a twice-used constant to v1, so the original has v0 and v1 live in that block; no form tried reproduces it |
 | TT/801374C0 | `func_801392A0` | regorder | T-11550: unchanged, 11 lines: regdiff shows the original keeps the switch value (`lhu v0,6(t6)`) live from instruction 5 to 249, so the `c[0x364]` value lands in a0 |
+| TT/80148210 | `func_80148764` | regorder | T-11560: guarded, 9 lines: FAKE `volatile u8 *p` gives the original `p[5]` reload; v0/v1 swapped (the unconstrained global range is coloured before the constant 3) |
+| TT/80133970 | `func_80135148` | regorder | T-11560: guarded, 4 lines: loop bound 0x80 and chain constant 0xAB tie in priority and IDO numbers 0xAB first (s5/s6 swapped) |
+| TT/80148DB0 | `func_80149BB0` | regorder | T-11560: guarded, 5 lines: the original keeps `D_80158AA4` and `D_80158AA4 + 0x10CC` in one register (rebase between lh and sh); the draft uses two |
+| TT/80142D40 | `func_801437F0` | regorder | T-11560: not kept (29 lines): a counter loop gives the original `slti`; caller-saved registers shifted by two (v1/a0 held by an unknown range in the original) |
+| TT/80142D40 | `func_80144854` | promo | T-11560: not kept: a volatile global read gives the direct `lw s2`; the per-block ugen reloads (t8/t4/t9) are not reproduced |
+| TT/80135360 | `func_801356C8` | regorder | T-11560: not kept (about 70 lines): the original keeps the divisor 85 in fp (register divide with break checks); IDO keeps -0x400 there and divides by an immediate |
+| TT/80148DB0 | `func_801494D8` | frame | T-11560: not kept (about 75 lines): frame 0x50 vs 0x58, spill-slot order differs |
+| TT/80142350 | `func_80142350` | regorder | T-11560: still 2 lines: regdiff shows the original's pointer range interferes with v0..a1; in the draft it overlaps nothing |

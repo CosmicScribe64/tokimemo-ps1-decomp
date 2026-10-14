@@ -4693,3 +4693,27 @@ two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
 - A struct local's frame position can be fixed by declaration order alone (`pt` after `vy` in `func_80140920`).
 - Tools: regdiff's hints led to the `func_801330D8` and `func_80140920` fixes; autotweak found the `func_80142350`
   improvement; order_search was not needed for these (their misses were not order-dependent).
+
+## TT overlay, batch 6: bulk_m2c pipeline and Opus (T-11560)
+
+`tools/bulk_m2c.py --unit TT --exclude ""` (the default `--exclude` is TT) drafted the 65 remaining TT functions up to
+2,400 bytes: 1 match (`func_8013E1E8`), 62 drafts ranked by score. One Opus agent on the ten closest drafts plus
+`func_80142350`: 3 matched (`func_80148154`, `func_80142C70`, `func_80144CF0`), 3 guarded, 5 not kept. Ticket
+[[tickets/T-11560-tt-batch-6]].
+
+- **Where `i = 0` goes decides delay slots and priorities.** For a loop under an `if`: `for (i = 0, p = X, q = Y; ...)`
+  inside the `if` makes `move sN,zero` the first instruction of the fall-through block, which as1 puts in the `beqz` delay
+  slot (`func_80148154`); a `for (i = 0; ...)` head instead of `i = 0` before the `if` gave `i` its s-register ahead of
+  `base` (`func_80142C70`).
+- **Offset before index.** `*(T *)(base + OFF + i * k)` gives the `addu base, idx` operand order (`func_80142C70`).
+- **`slti` on a stepped value is an LFTR'd counter loop:** write `for (i = 0; i < 2; i++) { x = i * 5 + 5; }`;
+  `n = 5; while (n < 15)` gives `bne` (`func_801437F0`).
+- **Compare operand order:** a field load compared in an if-chain against constants held in registers gives
+  `bne const, val`; a local gives `bne val, const` (`func_80135148`).
+- **A later reload of the same field** becomes its own register range only through a separate local; `volatile` on a
+  pointer local reproduces a reload uopt would CSE (FAKE; `func_80148764`).
+- Two plain stores of the same constant share one register (`a[0x55] = 9; p[0x92] = 9;`); a chain assignment was worse
+  (`func_80144CF0`).
+- Tidy m2c leftovers in matches: `*(u8 *)((unsigned char *)D_80158A64 + (28))` is `D_80158A64[0x1C]` (`func_8013E1E8`).
+- Tools: regdiff named the priority problems (`func_80142C70`, `func_80135148`); autotweak (5 runs) and the permuter (1)
+  found nothing on these drafts; a quick ninja-one-object + `funcdiff --no-build` loop was the main workhorse.
