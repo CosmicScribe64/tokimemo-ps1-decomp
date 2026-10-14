@@ -4671,3 +4671,25 @@ First use of `tools/order_search.py` (T-11530) over the 33 guarded TT drafts. Ti
   alias. The tool does not check dependencies; check `git diff` after each run.
 - Cleanup: `func_8014CC04` had a stale one-instruction NON_MATCHING draft (T-9380) above a typed version that has matched
   since T-9940; the stale draft was removed.
+
+## TT overlay, Opus pass with all solvers (T-11550)
+
+One Opus agent on the eight closest guarded TT drafts with autotweak (order stage T-11200, regdiff hints T-11220),
+order_search, regdiff and a quick scratch loop (`cc.py` + `funcdiff --built`, about 5 s per try): 5 matched
+(`func_8013E850`, `func_8013C1FC`, `func_80140624`, `func_801330D8`, `func_80140920`), `func_80142350` 11 -> 2 lines,
+two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
+
+- **Delay-slot `lui $at` depends on the whole flow graph.** as1 can move a store's `lui $at` into the delay slot of an
+  earlier branch of the same if-chain, but only with the right control flow: restart/loop/reset gotos blocked it, two
+  nested `for (;;)` loops (break to the reset call, `goto tail` out) allowed it (`func_8013E850`). Found by deleting
+  statements one at a time: the placement changed only when the restart block was emptied.
+- **Typed indexing fixes `addu` operand order.** `&((TtDrawBuffer80B8 *)buf)->ordering[idx]` gives `addu buf, idx*4` where
+  every raw-pointer form gave the reverse (`func_8013C1FC`, like `func_8014CC04`).
+- **Pointer walks are often strength-reduced indexed loops.** A loop ending on `y != &next_table` was `for (i ...) x[i]`
+  in the source; writing it back changed the other loops' allocation through the shared `i` (`func_80140624`).
+- **Locals named for a reloaded expression change everything.** Named `t`, `x`, `vx`/`vy` copies changed `beq` operand
+  order, ugen temp numbering and spills; where the original reloads from memory or merges two reads, write the
+  expression inline (`func_801330D8`, `func_80140920`).
+- A struct local's frame position can be fixed by declaration order alone (`pt` after `vy` in `func_80140920`).
+- Tools: regdiff's hints led to the `func_801330D8` and `func_80140920` fixes; autotweak found the `func_80142350`
+  improvement; order_search was not needed for these (their misses were not order-dependent).

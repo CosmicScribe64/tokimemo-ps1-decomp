@@ -1905,3 +1905,11 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80145E60 | `func_80146348` | regorder | T-11520: not kept (213 lines): head registers and spill order differ |
 | TT/80148DB0 | `func_8014A2B4` | regorder | T-11520: not kept (133 lines): frame matches (FAKE pad); hoisted globals in other registers (k t7, w a0, 1 in a3 in the original) |
 | TT/8013F040 | `func_801400B0` | regorder | T-11520: not kept (165 lines): pointer split (pl s1 vs s0) and constant hoist order; 0x81/0xA0 must be `case` labels; callee `func_801320F0` is defined `void` but returns the atan result |
+| TT/8013E850 | `func_8013E850` | sched | T-11550: matched: the restart/loop/reset gotos written as two nested `for (;;)` loops; with that flow graph as1 puts the store's `lui $at` in the first test's delay slot |
+| TT/8013BD10 | `func_8013C1FC` | regorder | T-11550: matched: `&((TtDrawBuffer80B8 *)buf)->ordering[idx]` gives the original `addu buf, idx*4` operand order (as the typed `func_8014CC04`) |
+| TT/8013F040 | `func_80140624` | regorder | T-11550: matched: case-0x40 tables as `x[i]`/`y[i]` counted loops sharing `i`; the angle loop then keeps 0x900/angle+i in s1/s0 and spills i |
+| TT/80132F10 | `func_801330D8` | regorder | T-11550: matched: no `t`/`x` locals; the record's y read inline in both loop tests, `a+0x24` from the stored `a+0x1C` |
+| TT/8013F040 | `func_80140920` | frame | T-11550: matched: case 0x52 reloads +0x3EC/+0x3F0 for the `/0x10000` stores; `pt` declared after `vy` (FAKE vx/vy keep the frame) |
+| TT/80142350 | `func_80142350` | regorder | T-11550: 2 lines (was 11): a FAKE `u8 temp` reload of `base[0x52]` takes a0 and moves the constant 1 to a1 (found by autotweak); TtButtons06 pointer v0 vs a2 left |
+| TT/80142D40 | `func_80144A04` | regorder | T-11550: unchanged, 3 lines: toy functions show a call result live in v0 pushes a twice-used constant to v1, so the original has v0 and v1 live in that block; no form tried reproduces it |
+| TT/801374C0 | `func_801392A0` | regorder | T-11550: unchanged, 11 lines: regdiff shows the original keeps the switch value (`lhu v0,6(t6)`) live from instruction 5 to 249, so the `c[0x364]` value lands in a0 |

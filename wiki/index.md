@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-11550-tt-opus-near-miss-pass|T-11550]] TT Opus near-miss pass with all solvers (Done; 5 matches, TT 48.0%).
 - [[tickets/T-11540-tt-order-search-pass|T-11540]] TT order_search pass (Done; func_8013DE10 matched, five drafts improved, stale func_8014CC04 draft removed).
 - [[tickets/T-11260-fast-scoring-order-search-permute|T-11260]] Fast scoring for order_search/permute/farm (In Review; `order_search.py --fast` opt-in with exact rescoring, the stripped compile scores differently; permute/farm have no scoring loop).
 - [[tickets/T-11250-faster-candidate-scoring|T-11250]] Faster candidate scoring for the solvers (In Review; cached strip + parallel prefetch, `tools/fastscore.py`, about 25x).

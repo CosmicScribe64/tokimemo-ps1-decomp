@@ -13303,3 +13303,17 @@ draft removal changes no bytes. Moved [[tickets/T-11540-tt-order-search-pass]] t
 
 Opened [[tickets/T-11550-tt-opus-near-miss-pass]] (In Progress) on the T-11540 branch, rebased on main with autotweak's
 order stage (T-11200) and regdiff hints (T-11220): one Opus agent on the eight closest guarded TT drafts with all solvers.
+
+## [2026-10-14] build | T-11550 TT Opus pass: 5 matches
+
+One Opus agent with autotweak, order_search, regdiff and reasoning on the eight closest guarded TT drafts (about 45
+minutes, 277k tokens): matched `func_8013E850`, `func_8013C1FC`, `func_80140624`, `func_801330D8`, `func_80140920`;
+`func_80142350` 11 -> 2 lines; `func_80144A04` and `func_801392A0` unchanged. TT 211/303 (48.0%); grand total
+`5578/6958   1230932/2279368  54.0%`. Full rebuild 27/27; funcdiff MATCH for all five; prototype and global checks clean.
+Notes in [[matching-notes]] ("TT overlay, Opus pass with all solvers (T-11550)"), 8 rows in [[data/t0018-cases]].
+
+## [2026-10-14] ticket | T-11550 Done
+
+Inline review against CODING_STANDARDS.md: new fakematches (`vx`/`vy` frame locals, the `u8 temp` in the guarded
+`func_80142350` draft) carry `FAKE` with the ticket; guard removals checked by diff. No findings. Moved
+[[tickets/T-11550-tt-opus-near-miss-pass]] to Done.
