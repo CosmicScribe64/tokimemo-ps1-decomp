@@ -288,7 +288,83 @@ void func_8013CC24(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CC24);
 #endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CDC0);
+void func_8013CDC0(void) {
+    s32 pad; /* FAKE: unused home; the spill slots of t, s, g sit at sp+0x48/0x44/0x40 only with it. T-11500 */
+    u8 *t;
+    u8 *s;
+    u8 *g;
+    u8 *a;
+
+    a = D_80158A60;
+    t = D_80158A64;
+    s = D_80158A6C;
+    g = a + 0x10;
+    if (*(u16 *)(a + 0x14) & 0x1000) {
+        s[10] -= 1;
+        if ((s8)s[10] < 0) {
+            s[10] = 3;
+        }
+    } else if (*(u16 *)(g + 4) & 0x4000) {
+        s[10] += 1;
+        if (s[10] >= 4) {
+            s[10] = 0;
+        }
+    }
+    if (*(u16 *)(g + 4) & 0x8000) {
+        switch (s[10]) {
+        case 1:
+            a[0x43] = 0;
+            *(s16 *)(D_80158AA8 + 0x14E) = 0x19;
+            break;
+        case 2:
+            a[0x49] = 0;
+            *(s16 *)(D_80158AA8 + 0x162) = 0x15;
+            {
+                TtFrame80B8 *p1;
+
+                p1 = (TtFrame80B8 *)D_80158AB4;
+                func_8009F638(&p1[0].disp_rect, 0x140, 0, 0x140, 0xF0);
+                func_8009F638(&p1[1].disp_rect, 0, 0, 0x140, 0xF0);
+            }
+            break;
+        }
+    } else if (*(u16 *)(g + 4) & 0x2000) {
+        switch (s[10]) {
+        case 1:
+            a[0x43] = 1;
+            *(s16 *)(D_80158AA8 + 0x14E) = 0x18;
+            break;
+        case 2:
+            a[0x49] = 1;
+            *(s16 *)(D_80158AA8 + 0x162) = 0x16;
+            {
+                TtFrame80B8 *p2;
+
+                p2 = (TtFrame80B8 *)D_80158AB4;
+                func_8009F638(&p2[0].disp_rect, 0x160, 0, 0x100, 0xF0);
+                func_8009F638(&p2[1].disp_rect, 0x20, 0, 0x100, 0xF0);
+            }
+            break;
+        }
+    }
+    if (*(u16 *)(g + 4) & 0x820) {
+        switch (s[10]) {
+        case 0:
+            *(s16 *)(t + 2) = 0x50;
+            break;
+        case 3:
+            *(s16 *)(t + 6) = 0;
+            *(s16 *)(t + 4) = 0;
+            *(s16 *)(t + 2) = 0;
+            t[11] = 0;
+            t[10] = 0;
+            t[9] = 0;
+            *(u16 *)t = 1;
+            break;
+        }
+    }
+    func_8013C740();
+}
 
 void func_8013D060(void) {
     u8 *p = D_80158A64;

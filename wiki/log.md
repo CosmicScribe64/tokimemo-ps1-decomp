@@ -13076,3 +13076,22 @@ Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 4
 
 ## [2026-10-13] ticket | T-11110 started
 Opened [[tickets/T-11110-small-functions-gemini-34]] (In Progress): 16 functions (4,800 bytes) in `src/ovl/EVENT/8010FE10.c`.
+
+## [2026-10-13] ticket | T-11500 TT batch 2 opened
+
+Opened [[tickets/T-11500-tt-batch-2]] (In Progress) after PR #3 (T-11000) was merged. The maintainer confirmed TT is
+ours in issue #2. Plan: an Opus agent on the five closest T-11000 near misses first, then a Sonnet list over the
+untried unflagged TT functions.
+
+## [2026-10-14] build | T-11500 TT batch 2: 12 matches
+
+Opus pass on the five closest T-11000 near misses: 3 matched (`func_80134470`, `func_80147150`, `func_801349B0`).
+The uopt trace showed that a call's argument registers are forbidden for every value live in the call's block.
+Sonnet list over untried TT functions: 9 matched, 4 guarded near misses, 17 of 45 attempted. TT 199/303 (38.9%);
+grand total `5398/6958   1149612/2279368  50.4%`. All 27 checksums OK; prototype and global checks clean. Idioms in
+[[matching-notes]] ("TT overlay, batch 2 (T-11500)"), 14 rows in [[data/t0018-cases]].
+
+## [2026-10-14] ticket | T-11500 Done
+
+Inline review against CODING_STANDARDS.md; one finding (a pad without `FAKE`) fixed. Moved
+[[tickets/T-11500-tt-batch-2]] to Done.

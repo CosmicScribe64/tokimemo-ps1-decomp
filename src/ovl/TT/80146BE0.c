@@ -115,8 +115,6 @@ void func_80147074(void) {
     } while (i != (limit & 0xFF));
 }
 
-/* T-11000 near miss: instructions and registers match; scheduling differs in the packet setup (li 4 hoisted above the bnez in the original, lui at placed in the lh delay slot, unfilled bnez delay slot); about 8 real differences, the rest of the listing is a one-slot shift. */
-#ifdef NON_MATCHING
 void func_80147150(void) {
     TtDrawBuffer80B8 *buffer;
     TtSpritePacket20 *q;
@@ -133,8 +131,8 @@ void func_80147150(void) {
             buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
             q->tag.len = 4; q->code = 0x65;
             q->x = *(s16 *)(p + 0x22) - 8;
-            q->h = 0x10;
             q->y = *(s16 *)(p + 0x26) - 8;
+            q->h = 0x10;
             q->w = 0x10;
             q->u = p[0x44];
             q->v = p[0x45];
@@ -149,6 +147,3 @@ void func_80147150(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80146BE0", func_80147150);
-#endif

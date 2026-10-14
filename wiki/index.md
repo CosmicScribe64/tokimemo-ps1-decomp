@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-13
+updated: 2026-10-14
 ---
 
 # Wiki Index
@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-11500-tt-batch-2|T-11500]] TT batch 2 (Done; Opus near-miss pass + Sonnet list, 12 matches / 7,160 bytes, TT 38.9%).
 - [[tickets/T-11110-small-functions-gemini-34|T-11110]] Small functions (Gemini) 34 (In Progress).
 - [[tickets/T-11090-ingest-english-patch-notes|T-11090]] Ingest the English patch notes as a reference (Done; 50 symbols renamed, [[ref-english-patch]]).
 - [[tickets/T-11070-small-functions-gemini-30|T-11070]] Small functions (Gemini) 30 (In Progress).

@@ -129,4 +129,66 @@ void func_801475C8(void) {
     } while (count != (observed = i)); /* FAKE: copy keeps the counter's compare order (T-9780). */
 }
 
+/* T-11500 near miss (18 lines): constants and the counter get other s-registers (original: i=s3, 0x50=s4, 0x3C8B=s5, 3=s6, 0x75=s7; here 0x50=s3, 0x3C8B=s4, i=s5) and the first packet's lui at is scheduled later */
+#ifdef NON_MATCHING
+void func_80147644(void) {
+    TtDrawBuffer80B8 *buffer;
+    TtRectPacket16 *q;
+    u8 *big;
+    u8 *e;
+    u8 *p;
+    s32 i;
+
+    e = D_80158AB0;
+    p = D_80158A94;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0; i != 6; i++, p += 0x68) {
+        if (p[0] != 0) {
+            if (*(s16 *)(p + 0x52) < 0xB00) {
+                q = (TtRectPacket16 *)buffer->cursor;
+                buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
+                q->tag.len = 3; q->code = 0x75;
+                q->x = *(s16 *)(p + 0x14) - 4;
+                q->v = 0x50;
+                q->y = *(s16 *)(p + 0x16) - 3;
+                q->u = 0x58;
+                q->clut = 0x3C8B;
+                q->tag.addr = buffer->ordering[5].addr;
+                buffer->ordering[5].addr = (u32)q;
+            } else if (*(s16 *)(p + 0x52) >= 0xF01) {
+                q = (TtRectPacket16 *)buffer->cursor;
+                buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
+                q->tag.len = 3; q->code = 0x75;
+                q->x = *(s16 *)(p + 0x14) - 3;
+                q->v = 0x50;
+                q->y = *(s16 *)(p + 0x16) - 3;
+                q->u = 0x50;
+                q->clut = 0x3C8B;
+                q->tag.addr = buffer->ordering[5].addr;
+                buffer->ordering[5].addr = (u32)q;
+            }
+            big = (u8 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x30);
+            *(s16 *)(e + 4) = *(s16 *)(p + 0x14);
+            *(s16 *)(e + 6) = *(s16 *)(p + 0x16);
+            *(s16 *)e = *(s16 *)(e + 2) = *(s16 *)(p + 0x52);
+            *(s16 *)(big + 8) = *(s16 *)(e + 4) - 0x1F;
+            *(s16 *)(big + 10) = *(s16 *)(e + 6) - 0xF;
+            *(s16 *)(big + 16) = 0x40;
+            *(s16 *)(big + 18) = 0x20;
+            big[13] = 0x60;
+            big[12] = 0;
+            big[40] = 0;
+            big[41] = 0;
+            big[42] = 1;
+            *(s16 *)(big + 22) = 0xB;
+            *(u16 *)(big + 14) = 0x3C8B;
+            big[44] = 0;
+            big[43] = 1;
+            func_80141EBC((TtOtTag *)&buffer->ordering[5], big, e);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80147380", func_80147644);
+#endif

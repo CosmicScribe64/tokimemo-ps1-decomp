@@ -4545,3 +4545,33 @@ Ticket [[tickets/T-11050-big-functions-sonnet-28]]. Same four files as T-11030. 
 - EVENT `func_8011767C` needs local `s16[11]` initialisers copied from `D_80125330`/`D_80125348` (22-byte copies), which needs `data_island.py` for this object (it edits the splat yaml, so not done here).
 - DATE `func_8013C7D0`: operand swap of the `D_800CA2F8` compare and a 240 s permuter run leave the two `lui` in the wrong order. DATE `func_80140374` (420 s) and main `normal_date_three_select_init` (200 s, five statement orders of the four chains): permuter finds nothing, no order of the chains moves `0x10` into v0.
 - DATE `func_80132000`: the leading `nop` belongs to the padding before the function at `func_80132004` (called from `func_8013E9BC`); not portable.
+
+## TT overlay, batch 2 (T-11500)
+
+An Opus pass on the five closest T-11000 near misses (3 matched in about 32 minutes), then a Sonnet list over
+untried TT functions (9 matched out of 17 attempted; 28 untouched). Ticket [[tickets/T-11500-tt-batch-2]].
+
+- **A call ends a uopt basic block; its argument registers are forbidden block-wide.** `regsused` of a call block
+  includes the argument registers the call moves values into, and `updateforbidden` (IDO `uoptreg2.c`) forbids them for
+  every live range that touches the block. A value that should sit in a1 while the call takes two arguments must end
+  its live range in an earlier block: `if (c) { x++; } else { return; }` instead of nesting the call in the `if`
+  (`func_801349B0`); `goto` + label and `do {} while (0)` also split it, a label nothing jumps to does not. Probe: with
+  a 1-argument call the value took v0, with 3 arguments a3. Read `R9SAVE`/`R9UNIT`/`R9COST` in the regdiff trace
+  ([[uopt-register-allocation]]) to see which blocks a range touches.
+- **Compound assignment keeps the call result first.** `angle = call(); angle += k;` gives `addu d,v0,t`; a copy
+  `base = call(); angle = base + k` gives `addu d,t,v0` (`func_80134470`).
+- **Delay-slot filling follows the order of independent stores.** Permute the statement order of packet stores; one
+  line per store is fine. `func_80147150` and its twin `func_801336F8` need x, y, h, w (12 orders tried).
+- **Stage-machine handlers.** `k = *(u16 *)(D_80158A8C + 8); c = D_80158A8C; switch (k) { case 0: ... break; case 0x40:
+  ... break; } *(u16 *)(c + 0x364) += 1;` gives the `lw t6; lhu v0,8(t6); move s2,t6` head and the shared tail; an
+  if/else chain loads `s2` at once. Inside the 0x40 arm read the table through a fresh `e = D_80158A8C` (the original
+  reloads the global). Used by `func_8013B1C4`, `func_80135FA8`, `func_8013FBD0`.
+- **Rolled slot loops.** `for (i = 0x10; i != 0x13; i++)` over `((TtSlot14 *)(c + 0x38))[i].f` with some stores through
+  struct-array indexing stays rolled; an `n` bound in the for-init or a do/while with a constant bound is unrolled with a
+  `li t0,3` remainder.
+- **Twins.** `func_80141C6C`/`func_80141EBC` are copies of `func_80141A1C` with other packet constants; `func_80135FA8`
+  and `func_8013FBD0` are twins of `func_8013B1C4`; check `tools/neardupes.py` before drafting from scratch.
+- Smaller: a `u16` store of a switch case constant shares the compare register again (`func_8013B6C8`); BCD position
+  bytes `(x / 10) * 16 + x % 10` with plain `while (f(...) == 0) {}` polls match the CD seek (`func_80142DEC`); an
+  `s32` definition without a return statement keeps the temps of `func_80144A04` where `void` shifts them by two.
+- Process: stage files by name; a `git add -A src` once swept a half-finished draft into a commit and broke the TT sha1.
