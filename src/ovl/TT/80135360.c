@@ -152,14 +152,11 @@ void func_80135FA8(void) {
     *(u16 *)(c + 0x364) += 1;
 }
 
-/* T-11500 near miss (41 listing rows, register naming only): structure, jump table and frame match; the raw u16 load of +0x3AA is $v1 and its s16 copy $v0 (original: raw $v0, copy $v1), which shifts the later temps, and the case-1 constants of the D_801579D4/D_80158A5C stores take t7/t6 instead of t6/t7. Permuter 300 s: best 665 of base 720 */
-#ifdef NON_MATCHING
 void func_80136244(void) {
     s32 pad; /* FAKE: unused home declared first keeps the frame layout, real source unknown. T-11500 */
     u8 *p;
     u8 k;
     s16 v;
-    s32 a;
     u16 t;
     s16 b;
 
@@ -188,7 +185,7 @@ void func_80136244(void) {
         *(u8 **)(p + 0x230) = D_80155B90;
         break;
     default:
-        *(u8 **)(D_80158A8C + 0x230) = D_80155B6C;
+        *(u8 **)(p + 0x230) = D_80155B6C;
         break;
     }
     func_80142AF0(D_80150A14, 4);
@@ -222,19 +219,11 @@ void func_80136244(void) {
         *(u16 *)(p + 0x3AA) = 0x800;
     }
     v = *(u16 *)(p + 0x3AA);
-    a = v;
-    if (v < 0) {
-        a = -v;
-    }
-    if (a >= 0x801) {
-        t = *(u16 *)(p + 0x3AC) - v / 256 / 4;
+    if (((v < 0) ? -v : v) >= 0x801) {
+        *(u16 *)(p + 0x3AC) -= v / 256 / 4;
+        t = *(u16 *)(p + 0x3AC);
         b = t;
-        *(u16 *)(p + 0x3AC) = t;
-        a = b;
-        if (b < 0) {
-            a = -b;
-        }
-        if (a < 2) {
+        if (((b < 0) ? -b : b) < 2) {
             *(u16 *)(p + 0x3AC) = 0;
         } else if (b < 0x800) {
             *(u16 *)(p + 0x3AC) = t - 2;
@@ -245,9 +234,6 @@ void func_80136244(void) {
         func_80135848(*(u16 *)(p + 0x3AC));
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_80136244);
-#endif
 
 void func_801364EC(void) {
     u8 *q;
