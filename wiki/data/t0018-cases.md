@@ -1870,3 +1870,17 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80133970 | `func_80134E20` | regorder | T-11500: the original avoids v0/v1 (0xF0 in a0, arg0 in a3, buffer in t0); 176 rows; not kept |
 | TT/80135360 | `func_80135B5C` | other | T-11500: 6-trip slot loop with 4-unroll remainder; the original builds the base with `li a0,2; sll/addu/sll`, IDO folds it to `addiu v0,a1,40` in every loop form (as EN_NICHI `func_80132834`) |
 | TT/8013A3E0 | `func_8013AE3C` | regorder | T-11500: 7-case switch with `abs`; all but `p` match ($a1 in the original, $v1 here, as the original's v0/v1/a0 hold case-5 values); about 100 rows; not kept |
+| TT/8013A3E0 | `func_8013B6C8` | regorder | T-11510: matched (T-11500 row): direct `*(u16 *)(c + 0x368) >= 8` test (no local) joins the shared $v1 value; a FAKE `break` inside the `if` sends the skip path to the switch end without a reloading join block |
+| TT/80147380 | `func_80147644` | regorder | T-11510: matched (T-11500 row): `continue` removes one loop block (counter priority 31/4 -> 31/3, above the hoisted 0x50/0x3C8B); stores x, y, v, u; FAKE one-line `big[13]`/`big[12]` (20-reference block split) |
+| TT/80135360 | `func_80136244` | regorder | T-11510: matched (T-11500 row): inline ternary abs, `-=` store then reload, default case through `p` (temps freed in another order) |
+| TT/80142D40 | `func_80144A04` | regorder | T-11510: still 3 lines; the 9 used twice is a ugen temp taking the lowest free of v0/v1/a0, so the original has v0/v1 busy in that block for an unknown reason; return type and prototypes make no difference |
+| TT/801374C0 | `func_80138E28` | sched | T-11510: guarded (about 73 lines): hoisted-constant ranking in the case-0 slot loop (8, pointer, 4, bound) and delay-slot fill; permuter 8 min no gain |
+| TT/801374C0 | `func_801392A0` | regorder | T-11510: guarded (23 lines, registers only): shared tail value in a0 in the original, v0 here; case-0 loop pointers a0/v1 swapped |
+| TT/8013F040 | `func_80140624` | regorder | T-11510: guarded (about 14 lines): in the final loop the original spills the counter (v1) and keeps bound 0x900/angle in s1/s0; here the bound is spilled |
+| TT/8013F040 | `func_80140920` | sched | T-11510: guarded (about 42 lines): case 0x40 temps t9/t0 where the original has t3/t4; later cases follow |
+| TT/8013E850 | `func_8013E850` | promo | T-11510: guarded (about 14 lines): the original reloads `D_800E7D4C+1` (`lbu; or; sb`) after storing 0; IDO forwards the stored 0 across the join |
+| TT/8013C6D0 | `func_8013DE10` | sched | T-11510: guarded (about 29 lines): POLY_G4 constant ranking and store order (original preloads 0xF0 first); temp numbering of the u/v sums |
+| TT/80135360 | `func_80135360` | promo | T-11510: guarded (about 45 lines): the original does not fold `idx*0x733 + 0xC000 - 0x3998` (adds the hoisted 0xC000/0x4000 separately); first loop pointer s1, here v0 |
+| TT/80132F10 | `func_801333D4` | regorder | T-11510: not kept: switch version shares the case constant 2 but swaps s5=0x7A/s6=2; an if chain on a local fixes s5/s6 but loses the shared 2 |
+| TT/80142570 | `func_801427A8` | frame | T-11510: not kept: frame 0x98 vs 0x80, s-register allocation far off |
+| TT/8013C6D0 | `func_8013D988` | frame | T-11510: not kept: 0x538 frame with two 17x17 `s16` arrays not placed (about 375 rows) |

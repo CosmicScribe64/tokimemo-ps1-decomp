@@ -13100,3 +13100,15 @@ Inline review against CODING_STANDARDS.md; one finding (a pad without `FAKE`) fi
 
 Opened [[tickets/T-11510-tt-batch-3]] (In Progress), stacked on T-11500 (PR #4). Opus on the four T-11500 near misses
 first, then a 14-function Sonnet list over untried TT functions.
+
+## [2026-10-14] build | T-11510 TT batch 3: 4 matches
+
+Opus pass on the four T-11500 near misses: 3 matched (`func_8013B6C8`, `func_80147644`, `func_80136244`) through join-block,
+block-count priority and temp-order idioms. Sonnet list of 14 untried functions: 1 matched (`func_80139770`), 7 guarded
+near misses. TT 203/303 (41.6%); grand total `5414/6958   1164572/2279368  51.1%`. All 27 checksums OK; prototype and
+global checks clean. Idioms in [[matching-notes]] ("TT overlay, batch 3 (T-11510)"), 14 rows in [[data/t0018-cases]].
+
+## [2026-10-14] ticket | T-11510 Done
+
+Inline review against CODING_STANDARDS.md: a wrong `int` return type on a file-local function declaration and four
+untagged pad locals fixed; a stale near-miss comment corrected. Moved [[tickets/T-11510-tt-batch-3]] to Done.
