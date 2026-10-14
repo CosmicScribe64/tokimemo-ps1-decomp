@@ -610,6 +610,12 @@ class Backend:
         with contextlib.redirect_stdout(io.StringIO()):
             return Scorer(root, draft)
 
+    def migrate_globals(self, root):
+        """Rewrite raw GameState globals in the matched C files (tools/migrate_globals.py --apply)."""
+        p = subprocess.run([sys.executable, "tools/migrate_globals.py", "--apply"], cwd=root,
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        return p.returncode == 0, p.stdout
+
     def check_headers(self, root):
         p = subprocess.run([sys.executable, "tools/check_headers.py", "include", "src"], cwd=root,
                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -965,6 +971,16 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
             for f in futures:
                 f.result()
     summary(out, emit)
+    if len(load_state(os.path.join(out, "state.jsonl"))) and any(
+            r.get("status") == "match" for k, r in load_state(os.path.join(out, "state.jsonl")).items()
+            if k not in done or done[k].get("status") != "match"):
+        # matches keep raw GameState globals (D_800E6xxx...): migrate them so build/globals.ok holds
+        be = backend or Backend()
+        ok, msg = be.migrate_globals(root)
+        emit("migrate_globals --apply: %s" % ("ok" if ok else "FAILED " + first_error(msg)))
+        if ok:
+            ok, msg = be.check_headers(root)
+            emit("check_headers: %s" % ("ok" if ok else "FAILED " + first_error(msg)))
     return 0
 
 

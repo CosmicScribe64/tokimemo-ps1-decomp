@@ -86,6 +86,9 @@ class FakeBackend:
     def check_headers(self, root):
         return self.headers_ok, "" if self.headers_ok else "redeclaration of D_80140000"
 
+    def migrate_globals(self, root):
+        return True, ""
+
     def build_unit(self, root, unit):
         self.builds.append(unit)
         return True, ""
@@ -328,6 +331,25 @@ class Pipeline(Repo):
         self.assertIn("func_80132200);", text, "the other draft stays")
         self.assertIn("MATCH AA:func_80132100 0x20", lines)
         self.assertIn("MATCH 1 (0x20 bytes)  near 0  fail 0  (1 processed)", lines)
+
+    def test_matches_trigger_migrate_globals_once(self):
+        calls = []
+        be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;")),
+                                     "func_80132000": ("", body("func_80132000", "D_X = 1;"))},
+                         scores={"func_80132100": lambda t: 0, "func_80132000": lambda t: 5})
+        be.migrate_globals = lambda root: (calls.append(root) or (True, ""))
+        rc, lines = self.run_main(be)
+        self.assertEqual(calls, [self.root])
+        self.assertIn("migrate_globals --apply: ok", lines)
+        self.assertIn("check_headers: ok", lines)
+        rc, lines = self.run_main(be)               # nothing new matched: not called again
+        self.assertEqual(calls, [self.root])
+
+    def test_no_match_no_migrate_globals(self):
+        be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;"))},
+                         scores={"func_80132100": lambda t: 5})
+        be.migrate_globals = lambda root: self.fail("no match, no migration")
+        self.run_main(be, targets=self.targets[1:])
 
     def test_failed_verification_is_a_near_miss(self):
         be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;"))},

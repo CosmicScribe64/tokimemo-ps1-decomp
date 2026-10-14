@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-11210-bulk-m2c-draft-failure-classes|T-11210 bulk_m2c, fix the main draft failure classes]]
 - [ ] [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180 Twin-guided matching (Gemini) 39]]
 - [ ] [[tickets/T-11120-small-functions-sonnet-36|T-11120 Small functions (Sonnet via Antigravity) 36]]
 - [ ] [[tickets/T-11130-big-functions-gemini-37|T-11130 Big functions (Gemini) 37]]
@@ -59,6 +58,7 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-11210-bulk-m2c-draft-failure-classes|T-11210 bulk_m2c, fix the main draft failure classes]]
 - [ ] [[tickets/T-11200-order-search-in-solvers|T-11200 Statement-order search in the automatic solvers]]
 - [ ] [[tickets/T-11170-cheat-sheet-auto-tweaker|T-11170 Cheat-sheet auto-tweaker for near-miss drafts]]
 - [ ] [[tickets/T-11190-bulk-m2c-pipeline|T-11190 Bulk m2c and auto-solve pipeline for small functions]]
