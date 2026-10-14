@@ -13270,3 +13270,7 @@ Created [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c]] (In Progress): auto
 ## [2026-10-14] ticket | T-11270 to In Review
 
 Exact rescoring in `tools/autotweak.py` (climb: top `--exact-top` 3 plus every candidate at or under `--exact-threshold` 40 per stage rescored with the full-unit compile, exact 0 verified, steps accepted by exact score, cache by text hash) and `tools/bulk_m2c.py` (variant/start pick, climb). Full-unit scorer reused from `tools/order_search.py` (`make_text_scorer`). `--no-exact-rescore` restores the stripped-only path. Tests with disagreeing mocked scorers in `tools/test_autotweak.py` and `tools/test_bulk_m2c.py`; [[decompile-workflow]] updated. Real-build measurement left to the orchestrator.
+
+## [2026-10-14] ticket | T-11310 created
+
+Created [[tickets/T-11310-close-near-misses-sonnet-47]] (In Progress): near-miss list 47.
