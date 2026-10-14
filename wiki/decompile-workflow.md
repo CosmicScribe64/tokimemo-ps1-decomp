@@ -303,6 +303,19 @@ tools/docker.sh python3 tools/autotweak.py --list --all                     # ed
 
 Output is one line per function: `UNIT:func  base -> best  [edits]  N tried`, or `MATCH ...`. `--dry-run` reports a match without writing `src/`. The best non-matching text is saved as `build/autotweak/<unit>/<func>/best.c`. Tests: `python3 tools/test_autotweak.py`.
 
+## Bulk m2c over the small functions (T-11190)
+
+`tools/bulk_m2c.py` runs the steps above unattended over every plain `INCLUDE_ASM` function under `--max-size` bytes (default 600), smallest first, TT excluded by default. Per function: the m2c wrapper's draft; mechanical cleanup only (`?` to `s32`, `//` to `/* */`, a draft with an `M2C_*` placeholder is refused; m2c's declarations of symbols the headers lack are kept for the symbols the body uses; a variant with single-use `temp_*` locals inlined is scored too); the draft under `#ifdef NON_MATCHING` with `INCLUDE_ASM` in `#else`, compiled alone with autotweak's scorer. A compile error gets the cheap fixes (declare an undefined symbol, drop a declaration that clashes with a header), otherwise the reason is recorded. A score of 0 is verified like a permuter output; a score under `--keep-score` (default 30) goes to the [[register-cheatsheet]] hill climb of T-11170 for `--time` seconds. A verified match becomes plain C; its extra declarations go to `include/main_api.h` (main-exe address) or `include/ovl/<UNIT>.h` (overlay address), and `check_headers.py` plus the unit target must pass, else everything is reverted. Everything else goes back to `INCLUDE_ASM` and the best draft is saved outside the repo.
+
+```
+export TOKIMEMO_SCRATCH=$HOME/tokimemo-scratch          # mounted as /scratch by docker.sh
+tools/docker.sh python3 tools/bulk_m2c.py --out /scratch/bulk_m2c --unit GYOZI --limit 5   # try one unit first
+tools/docker.sh python3 tools/bulk_m2c.py --out /scratch/bulk_m2c --jobs 4                  # the full run, resumable
+tools/docker.sh python3 tools/bulk_m2c.py --out /scratch/bulk_m2c --summary                 # summary only
+```
+
+Output is one line per function (`MATCH UNIT:func 0x40`, `near UNIT:func 0x40 12`, `fail UNIT:func 0x40 compile: ...`), then MATCH count and bytes, failures by reason and `<out>/near.txt` (score, size, function, file, draft path; best first). `<out>/state.jsonl` records every processed function, so a second run continues where the first stopped (delete a line to retry one). `<out>/drafts/<UNIT>/<func>.c` holds each draft with its score. A run that is killed leaves its in-flight backups in `<out>/inflight/`; the next start restores those C files. Jobs work on disjoint C files; ninja, header writes and the final checks hold `<out>/build.lock`, so one build runs at a time. After a run, `ninja` (all 27 sha1) and `sync_protos.py --check-branch` as in "Before finishing"; matches that added declarations change shared headers. Tests: `python3 tools/test_bulk_m2c.py`.
+
 ## Resumable CPU permuter farm (T-9810)
 
 `tools/permuter_farm.py` collects existing near-miss C from `scratchpad/w*-*/`

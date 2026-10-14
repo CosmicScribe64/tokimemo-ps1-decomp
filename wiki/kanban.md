@@ -57,6 +57,7 @@ kanban-plugin: board
 
 ## In Review
 - [ ] [[tickets/T-11170-cheat-sheet-auto-tweaker|T-11170 Cheat-sheet auto-tweaker for near-miss drafts]]
+- [ ] [[tickets/T-11190-bulk-m2c-pipeline|T-11190 Bulk m2c and auto-solve pipeline for small functions]]
 - [ ] [[tickets/T-11150-twin-detection-for-jump-table-functions|T-11150 Twin detection for jump-table functions]]
 - [ ] [[tickets/T-11160-twin-detection-for-data-in-function-functions|T-11160 Twin detection for data-in-function functions]]
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]

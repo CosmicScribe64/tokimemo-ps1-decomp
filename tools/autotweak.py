@@ -895,6 +895,10 @@ def rewrite_guard(text, func, definition):
 class BuildScorer:
     """Scores a variant of one draft by compiling only that function (permute.py's pipeline)."""
 
+    # permute.setup refuses a draft whose instruction count is further than this from the target;
+    # tools/bulk_m2c.py raises it to score raw m2c drafts (T-11190)
+    INSTRUCTION_TOLERANCE = 4
+
     def __init__(self, root, draft):
         import permute
         self.permute, self.root, self.draft = permute, os.path.abspath(root), draft
@@ -905,7 +909,8 @@ class BuildScorer:
             self.original = fh.read()
         self._write(draft.text)
         with contextlib.redirect_stdout(io.StringIO()):
-            permute.setup(self.root, draft.func, src=self.scratch, out=self.dir, unit=draft.unit)
+            permute.setup(self.root, draft.func, src=self.scratch, out=self.dir, unit=draft.unit,
+                          instruction_tolerance=self.INSTRUCTION_TOLERANCE)
         permute.install_permuter_compat()
         from src.compiler import Compiler
         from src.scorer import Scorer
