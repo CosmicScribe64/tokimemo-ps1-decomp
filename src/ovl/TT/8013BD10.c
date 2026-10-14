@@ -234,7 +234,7 @@ void func_8013C0A8(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013C0A8);
 #endif
 
-/* NON_MATCHING: T-11000, ~18 lines: addu operand order buf+idx*4 (original addu t9,s2,t8; same blocker as func_8014CC04) and the nop/store scheduling after it */
+/* NON_MATCHING: T-11540, 2 lines: only the addu operand order buf+idx*4 (original addu t9,s2,t8, built t9,t8,s2; same blocker as func_8014CC04); store order fixed with order_search, operand swaps/array forms/u32 buf do not change it */
 #ifdef NON_MATCHING
 void func_8013C1FC(void) {
     u8 *q;
@@ -257,14 +257,14 @@ void func_8013C1FC(void) {
             v[0x2A] = 1;
             v[0x28] = p[0x3C];
             *(u16 *)(v + 0x16) = *(u16 *)(p + 0x52);
-            v[0x2C] = 0;
             *(u16 *)(v + 0xE) = *(u16 *)(p + 0x54);
+            v[0x2C] = 0;
             if (*(u16 *)(p + 4) < 0x90) {
                 *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
                 *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 8;
                 v[0xC] = p[0x56];
-                v[0x2B] = 0;
                 v[0xD] = p[0x57] + 0x80;
+                v[0x2B] = 0;
                 func_80141C6C(*(u16 *)(p + 0x10) * 4 + buf + 0x8008, v, q);
             } else {
                 s16 t = *(s16 *)(p + 0x62);
@@ -274,13 +274,13 @@ void func_8013C1FC(void) {
                 *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 0x1F;
                 *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 7;
                 v[0xC] = p[0x56];
+                v[0xD] = p[0x57];
                 v[0x2B] = 1;
                 *(s16 *)(v + 0x10) = 0x40;
                 *(s16 *)(v + 0x12) = 0x10;
                 *(u16 *)(v + 0x16) = 0xB;
                 *(u16 *)(v + 0xE) = 0x3C81;
                 v[0x28] = 0;
-                v[0xD] = p[0x57];
                 func_80141EBC(*(u16 *)(p + 0x10) * 4 + buf + 0x8008, v, q);
             }
         }
