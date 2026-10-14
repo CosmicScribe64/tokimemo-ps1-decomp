@@ -13298,3 +13298,8 @@ NON_MATCHING draft of `func_8014CC04` (matched since T-9940). 27/27; prototype a
 
 Inline review against CODING_STANDARDS.md: guard comments carry T-11540 and the lines left, no new fakematches, the stale
 draft removal changes no bytes. Moved [[tickets/T-11540-tt-order-search-pass]] to Done.
+
+## [2026-10-14] ticket | T-11550 TT Opus near-miss pass opened
+
+Opened [[tickets/T-11550-tt-opus-near-miss-pass]] (In Progress) on the T-11540 branch, rebased on main with autotweak's
+order stage (T-11200) and regdiff hints (T-11220): one Opus agent on the eight closest guarded TT drafts with all solvers.
