@@ -118,6 +118,9 @@ typedef struct BunkaDispatch8 {
 void func_801362EC(void);
 void func_801375D0(void);
 void func_80145530(void);
+void func_80137640(void);
+void func_8014E440(void);
+
 #endif
 
 /* T-10860: forward call within 80132000.c. */

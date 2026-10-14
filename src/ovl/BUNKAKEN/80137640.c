@@ -1,7 +1,68 @@
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80137640);
+void func_80137640(void) {
+    switch (D_80122EB8) {
+    case 0:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80042908(0x3B);
+            return;
+        case 0x60:
+            func_80042908(0x3C);
+            return;
+        case 0x61:
+            func_80042908(0x3D);
+            return;
+        default:
+            func_80046500();
+            return;
+        }
+        break;
+    case 1:
+        func_80042908(0x3E);
+        return;
+    case 2:
+        func_80042908(0x3F);
+        return;
+    case 3:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80042908(0x40);
+            return;
+        case 0x60:
+            func_80042908(0x41);
+            return;
+        case 0x61:
+            func_80042908(0x42);
+            return;
+        }
+        break;
+    case 4:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80042908(0x43);
+            return;
+        case 0x60:
+            func_80042908(0x44);
+            return;
+        case 0x61:
+            func_80042908(0x45);
+            return;
+        }
+        break;
+    case 5:
+        if (D_800E6280.unk_03E == 0x61) {
+            func_80042908(0x47);
+            return;
+        }
+        func_80042908(0x46);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80137804);
 

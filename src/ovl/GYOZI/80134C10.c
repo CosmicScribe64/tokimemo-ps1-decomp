@@ -65,4 +65,41 @@ void func_80134EA0(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134C10", func_80134EDC);
+void func_80134EDC(void) {
+    switch (D_800F62CF) {
+    case 0:
+        func_80072734(0x5671);
+        break;
+    case 1:
+        func_80072734(0x5D4C);
+        break;
+    case 2:
+        func_80072734(0x5266);
+        break;
+    case 3:
+        func_80072734(0x58E7);
+        break;
+    case 4:
+        func_80072734(0x6643);
+        break;
+    case 5:
+        func_80072734(0x6076);
+        break;
+    case 6:
+        func_80072734(0x620B);
+        break;
+    case 7:
+        func_80072734(0x5B30);
+        break;
+    case 8:
+        func_80072734(0x501D);
+        break;
+    case 9:
+        func_80072734(0x6481);
+        break;
+    case 10:
+        func_80072734(0x688C);
+        break;
+    }
+    func_8004DE1C();
+}

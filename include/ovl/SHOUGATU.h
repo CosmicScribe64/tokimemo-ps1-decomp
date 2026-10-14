@@ -760,4 +760,9 @@ typedef struct ShoCounter44 {
     /* 0x18 */ s16 unk_18;
     /* 0x1A */ u8 pad_1A[0x2A];
 } ShoCounter44; /* size 0x44 */
+void func_80138240(void);
+void func_80137FF0(void);
+void func_801385AC(void);
+void func_80132FCC(void);
+
 #endif

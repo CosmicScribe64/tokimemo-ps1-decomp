@@ -63,4 +63,41 @@ void func_80132F90(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80132D00", func_80132FCC);
+void func_80132FCC(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        func_80062CD0(0x571A);
+        break;
+    case 1:
+        func_80062CD0(0x5E22);
+        break;
+    case 2:
+        func_80062CD0(0x530F);
+        break;
+    case 3:
+        func_80062CD0(0x5990);
+        break;
+    case 4:
+        func_80062CD0(0x67A0);
+        break;
+    case 5:
+        func_80062CD0(0x614C);
+        break;
+    case 6:
+        func_80062CD0(0x630E);
+        break;
+    case 7:
+        func_80062CD0(0x5BD9);
+        break;
+    case 8:
+        func_80062CD0(0x50C6);
+        break;
+    case 9:
+        func_80062CD0(0x6584);
+        break;
+    case 10:
+        func_80062CD0(0x6A16);
+        break;
+    }
+    func_8004284C();
+}

@@ -1,7 +1,34 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80142820", func_80142820);
+void func_80142820(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_801428DC();
+        break;
+    case 1:
+        func_80142FE8();
+        break;
+    case 2:
+        func_80142AF0();
+        break;
+    case 3:
+        func_80142EC4();
+        break;
+    case 4:
+        func_80142EE4();
+        break;
+    case 5:
+        func_80142F0C();
+        break;
+    case 6:
+        func_80142F34();
+        break;
+    case 7:
+        func_80142DE0();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80142820", func_801428DC);
 

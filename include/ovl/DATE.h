@@ -1526,4 +1526,7 @@ typedef struct DateFlags0F4 {
     /* 0x00 */ u32 b20 : 1;
     /* 0x00 */ u32 rest : 11;
 } DateFlags0F4; /* size 0x04 */
+void func_80138220(void);
+void func_801384D4(void);
+
 #endif
