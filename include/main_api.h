@@ -1969,7 +1969,7 @@ void dec_bg_show_switch(s32 arg0);
 void dec_bg_show_set(s32 arg0, s32 arg1);
 void func_80057418(s32, s32);
 s32 dec_bg_cd_read(s32 arg0, s32 arg1);
-s32 func_8005742C();
+s32 func_8005742C(s32 arg0, s32 arg1);
 s32 func_8005751C();
 void func_80057640();
 s32 func_80057710(void);

@@ -578,7 +578,23 @@ def override_reason(texts, sym):
 def cdecl_key(decl):
     """A declaration without `extern`, comments and the spaces around `*`, `(void)` as `()`."""
     d = re.sub(r'^\s*extern\s+', '', norm_decl(decl))
-    return re.sub(r'\s*\*\s*', '*', d).rstrip(';').strip()
+    d = re.sub(r'\s*\*\s*', '*', d).rstrip(';').strip()
+    # parameter names do not change the type: `f(s32 a, u8 *p)` is `f(s32,u8*)` (T-11150)
+    m = re.match(r'^(.*?\w\s*\()([^()]*)\)$', d)
+    if m and m.group(2).strip():
+        parts = []
+        for p in m.group(2).split(','):
+            p = p.strip()
+            n = re.match(r'^(.*?[\w*])\s*\b([A-Za-z_]\w*)$', p)
+            if n and n.group(2) not in TYPE_WORDS and (n.group(1).endswith('*') or re.search(r'\s', p)):
+                p = n.group(1).strip()
+            parts.append(p)
+        d = m.group(1) + ','.join(parts) + ')'
+    return d
+
+
+TYPE_WORDS = {'void', 'char', 'short', 'int', 'long', 'signed', 'unsigned', 'float', 'double',
+              's8', 'u8', 's16', 'u16', 's32', 'u32', 's64', 'u64', 'f32', 'f64', 'const', 'volatile'}
 
 
 def find_definition(text, sym):
