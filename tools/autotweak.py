@@ -39,6 +39,15 @@ in-process, scored by the same compile. The variant count stays within --max-exh
 order_search.py. The marked text exists only in memory; only rendered variants, which carry no
 marker, reach the scorer or a file.
 
+When the traced uopt of tools/regdiff.py is available ($REGDIFF_UOPT or its default under
+/scratch, i.e. TOKIMEMO_SCRATCH set; T-11220, --no-regdiff to skip), regdiff runs in-process on
+the start text and on every new best text. Its FIRST DIVERGENCE gives a hint class (tie, priority,
+extra-range, missing-range, ugen, ...; HINT_EDITS maps each to cheat-sheet edits) and the named
+variables and lines. The climb then scores the suggested kinds that touch those names or lines
+first, the other suggested kinds next, then edits at that location, then the rest; nothing is
+dropped, so --cap and --time bound the order only. The output line ends with `regdiff: <hint>`
+for the best text. Without the traced uopt the search is the unguided one.
+
 A score of 0 is checked like a permuter output (permute.verify_candidate: ninja object,
 funcdiff --resolve, unit sha1). Only then the guard block is replaced by the plain function
 (INCLUDE_RODATA lines and FAKE comments of the block are kept, the NON_MATCHING note is
@@ -992,22 +1001,259 @@ def variants(text, cap=None):
 
 
 # ---------------------------------------------------------------------------------------------
+# regdiff guidance (T-11220): rank the edits by the first register divergence
+# ---------------------------------------------------------------------------------------------
+
+# Hint class -> edit kinds to try first, best first. Each row follows a row of the "Symptom ->
+# what to try" table in wiki/register-cheatsheet.md; extend both together.
+HINT_EDITS = {
+    # tie: equal priorities, numbered by first use -> reorder statements, drop or add a temporary
+    "tie": ("order", "inline", "temp", "join", "split", "swap", "declswap"),
+    # priority order: the wrong value wins -> one use more or less, temporary <-> repeated
+    # expression; the order edit stands in for moving a use into or out of a loop
+    "priority": ("inline", "temp", "compound", "expand", "emptytest", "order"),
+    # extra range in the draft (it holds a lower colour) -> remove a local or share the value
+    "extra-range": ("inline", "compound", "emptytest", "temp", "width"),
+    # missing range (the original keeps a value the draft recomputes) -> add a local
+    "missing-range": ("temp", "emptytest", "inline", "compound"),
+    # a value with uses that gets no register in the draft ("not allocated in the draft")
+    "unallocated": ("temp", "inline", "emptytest"),
+    # the original passes the value straight to a call: a copy or cast sits in between
+    "argument": ("inline", "temp", "width"),
+    # ugen temporaries t6..t9: operand order of sums, same-line grouping, parameter width
+    "ugen": ("swap", "join", "split", "width", "order", "shift", "compound", "expand", "byteview"),
+    # commutative operands exchanged, registers right
+    "operand": ("swap", "order"),
+    # other instructions: fix the shape first (step 1 of the cheat sheet's loop)
+    "structure": ("temp", "inline", "compound", "expand", "shift", "byteview", "emptytest", "width"),
+    # frame size or stack offsets differ: unused locals and declaration order
+    "frame": ("pad", "declswap", "width"),
+}
+
+# regdiff report text -> hint class; the first match in the FIRST DIVERGENCE block is the primary
+HINT_PATTERNS = (
+    ("tie", re.compile(r"hint: (?:tie\.|equal priorities)")),
+    ("priority", re.compile(r"hint: .* (?:is coloured before|outranks) ")),
+    ("extra-range", re.compile(r"hint: colours are tried lowest first")),
+    ("missing-range", re.compile(r"hint: the draft took the lower colour")),
+    ("ugen", re.compile(r"is not a uopt colour|no live range of the trace holds")),
+)
+SECONDARY_PATTERNS = (
+    ("argument", re.compile(r"the original passes this value to the call")),
+    ("unallocated", re.compile(r"^not allocated in the draft:")),
+)
+NAME_RE = re.compile(r"\b(?:local|parameter|global|return value) ([A-Za-z_][\w/]*)")
+LINES_RE = re.compile(r"\(lines ([\d,]+)\)")
+FALLBACK_NAME = re.compile(r"^[MPSR]\d+$")     # regdiff's class+offset name of an unnamed variable
+SP_RE = re.compile(r"\$?\bsp\b")
+
+
+class Hint:
+    """The first divergence of one regdiff report: classes (primary first), variable names, and
+    source lines as 0-based line indices of the function text."""
+
+    def __init__(self, classes=(), names=(), lines=(), error=None):
+        self.classes, self.names, self.lines, self.error = list(classes), list(names), list(lines), error
+
+    @property
+    def kinds(self):
+        out = []
+        for c in self.classes:
+            for k in HINT_EDITS.get(c, ()):
+                if k not in out:
+                    out.append(k)
+        return out
+
+    def summary(self):
+        """The terse form for the output line, e.g. `tie i,p L4,6`."""
+        if self.error:
+            return "error"
+        if not self.classes:
+            return "?"
+        parts = ["+".join(self.classes[:2])]
+        if self.names:
+            parts.append(",".join(self.names[:2]))
+        if self.lines:
+            parts.append("L" + ",".join(str(l) for l in self.lines[:2]))
+        return " ".join(parts)
+
+    def __repr__(self):
+        return "Hint(%s)" % self.summary()
+
+
+def parse_regdiff(text, first_line=1):
+    """The Hint of a regdiff report. first_line: the 1-based file line of the function's first
+    line in the file regdiff compiled (regdiff names file lines)."""
+    head = [l.strip() for l in text.split("\n")]
+    if any(l.startswith("MATCH:") for l in head):
+        return Hint(["match"])
+    errors = [l for l in head if l.startswith("regdiff: ")]
+    if errors:
+        return Hint(error=errors[0][len("regdiff: "):][:120])
+    classes = []
+    if any(l.startswith("STRUCTURE differs") for l in head):
+        shape = [l.split(None, 2)[-1] for l in head if l.startswith(("- draft", "+ original"))]
+        classes.append("frame" if any(SP_RE.search(l) for l in shape) else "structure")
+    elif any(l.startswith("constant differs") for l in head):
+        classes.append("structure")
+    div = next((i for i, l in enumerate(head) if l.startswith("FIRST DIVERGENCE")), None)
+    block = head[div:] if div is not None else []
+    for cls, pat in HINT_PATTERNS:
+        if any(pat.search(l) for l in block):
+            classes.append(cls)
+            break
+    for cls, pat in SECONDARY_PATTERNS:
+        if any(pat.search(l) for l in block):
+            classes.append(cls)
+    if any(l.startswith("operand order:") for l in head):
+        classes.append("operand")
+    names, nums = [], []
+    for l in block:
+        for m in NAME_RE.finditer(l):
+            for n in m.group(1).split("/"):
+                if n and not FALLBACK_NAME.match(n) and n not in names:
+                    names.append(n)
+        for m in LINES_RE.finditer(l):
+            for n in m.group(1).split(","):
+                k = int(n) - first_line
+                if k >= 0 and k not in nums:
+                    nums.append(k)
+    return Hint(classes, names, nums)
+
+
+def edit_kind(label):
+    """The kind of a variant label (`swap== L4` -> swap, `mul>shift L5` -> shift)."""
+    word = label.split()[0] if label else ""
+    if word.startswith("swap"):
+        return "swap"
+    if word in ("mul>shift", "shift>mul"):
+        return "shift"
+    return word.split("[")[0]
+
+
+def changed_lines(base, text):
+    """(line indices of base that the edit replaces, identifiers on the changed lines of both)."""
+    a, b = base.split("\n"), text.split("\n")
+    lo = 0
+    while lo < min(len(a), len(b)) and a[lo] == b[lo]:
+        lo += 1
+    ea, eb = len(a), len(b)
+    while ea > lo and eb > lo and a[ea - 1] == b[eb - 1]:
+        ea, eb = ea - 1, eb - 1
+    span = set(range(lo, ea)) if ea > lo else {lo - 1, lo}     # an insertion touches its neighbours
+    names = set(re.findall(r"[A-Za-z_]\w*", mask("\n".join(a[lo:ea] + b[lo:eb]))))
+    return span, names
+
+
+def rank_variants(vs, hint, base):
+    """`vs` ordered by `hint`: edits of a suggested kind that touch a named variable or line, then
+    the other edits of a suggested kind (both in HINT_EDITS order), then other edits that touch
+    the location, then the rest in their original order. Nothing is dropped."""
+    if hint is None or hint.error or not (hint.classes or hint.names or hint.lines):
+        return list(vs)
+    kinds = hint.kinds
+    want_lines, want_names = set(hint.lines), set(hint.names)
+
+    def key(item):
+        i, v = item
+        k = edit_kind(v.label)
+        span, names = changed_lines(base, v.text)
+        touch = bool(span & want_lines or names & want_names)
+        ki = kinds.index(k) if k in kinds else None
+        group = (0 if touch else 1) if ki is not None else (2 if touch else 3)
+        return (group, ki or 0, i)
+    return [v for _i, v in sorted(enumerate(vs), key=key)]
+
+
+def import_regdiff():
+    """tools/regdiff.py, imported with the standard library first on sys.path: tools/queue.py
+    shadows the stdlib queue (as in tools/permute.py and tools/bulk_m2c.py)."""
+    if "regdiff" in sys.modules:
+        return sys.modules["regdiff"]
+    here = os.path.dirname(os.path.abspath(__file__))
+    saved = sys.path[:]
+    sys.path[:] = [p for p in saved if os.path.abspath(p or ".") != here] + [here]
+    try:
+        import regdiff
+    finally:
+        sys.path[:] = saved
+    return regdiff
+
+
+def regdiff_uopt():
+    """The traced uopt regdiff would use ($REGDIFF_UOPT, else its default under /scratch, which
+    is TOKIMEMO_SCRATCH in Docker), or None when it or the MIPS binutils are missing."""
+    import shutil
+    uopt = os.environ.get("REGDIFF_UOPT") or import_regdiff().DEFAULT_UOPT
+    if not os.path.exists(uopt) or shutil.which("mips-linux-gnu-objdump") is None:
+        return None
+    return uopt
+
+
+def make_advisor(root, draft, uopt=None, regdiff=None):
+    """advise(text) -> Hint for a variant of `draft`: regdiff runs in-process on a copy of the
+    draft's source file (build/autotweak/<unit>/<func>/regdiff.c) with the variant in place of the
+    guard block. None when no traced uopt is available. Cached per text."""
+    uopt = uopt or regdiff_uopt()
+    if uopt is None:
+        return None
+    rd = regdiff or import_regdiff()
+    root = os.path.abspath(root)
+    work = os.path.join(root, WORK_ROOT, draft.unit, draft.func)
+    src = os.path.join(work, "regdiff.c")
+    with open(os.path.join(root, draft.src)) as fh:
+        original = fh.read()
+    cache = {}
+
+    def advise(text):
+        if text in cache:
+            return cache[text]
+        full = rewrite_guard(original, draft.func, text)
+        if full is None:
+            import permute
+            full = permute.replace_function(original, draft.func, text)
+        at = full.find(text.strip("\n"))
+        first_line = full.count("\n", 0, at) + 1 if at >= 0 else 1
+        os.makedirs(work, exist_ok=True)
+        with open(src, "w") as fh:
+            fh.write(full)
+        args = argparse.Namespace(func=draft.func, unit=draft.unit, src=src, uopt=uopt,
+                                  scratch=os.path.join(work, "regdiff"), verbose=False)
+        lines, cwd = [], os.getcwd()
+        try:
+            os.chdir(root)
+            with contextlib.redirect_stdout(io.StringIO()):
+                rd.run(args, out=lines.append)
+            hint = parse_regdiff("\n".join(lines), first_line)
+        except Exception as exc:  # noqa: BLE001  (guidance only: the climb goes on unguided)
+            hint = Hint(error="%s: %s" % (type(exc).__name__, exc))
+        finally:
+            os.chdir(cwd)
+        cache[text] = hint
+        return hint
+    return advise
+
+
+# ---------------------------------------------------------------------------------------------
 # Search
 # ---------------------------------------------------------------------------------------------
 
 class Result:
-    def __init__(self, base, best, text, path, tried, matched=False, error=None, unverified=False):
+    def __init__(self, base, best, text, path, tried, matched=False, error=None, unverified=False, hint=None):
         self.base, self.best, self.text, self.path = base, best, text, path
         self.tried, self.matched, self.error = tried, matched, error
         self.unverified = unverified   # the draft scored 0 but failed verification
+        self.hint = hint               # regdiff's Hint for the best text (T-11220), or None
 
 
 def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_seeds=8, pair_cap=200,
-          clock=time.monotonic, order=True, order_opts=None):
+          clock=time.monotonic, order=True, order_opts=None, advise=None):
     """Greedy hill climb over `variants`. score(text) -> int or None (does not compile);
     verify(text) -> bool is asked for every score of 0, and only a verified 0 is a match. When no
     single edit or pair improves, `order` runs order_stage (T-11200) once per best text, with
-    `order_opts` (max_exhaustive, budget, max_runs, max_swaps). Returns a Result."""
+    `order_opts` (max_exhaustive, budget, max_runs, max_swaps). advise(text) -> Hint (T-11220,
+    make_advisor) is asked for the start text and every new best text; its hint orders the single
+    edits and, when they stall, the pairs (rank_variants). Returns a Result."""
     deadline = clock() + budget
     base = score(text)
     if base is None:
@@ -1018,6 +1264,7 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
     # verified 0 improves on it and the search goes on looking for one.
     best, best_text, path, tried = base or 1, text, [], 0
     seen, order_done = {text}, set()
+    hint, hint_text = None, None
 
     def counted(t):
         nonlocal tried
@@ -1033,7 +1280,9 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
 
     while best > 0 and clock() < deadline:
         found, scored = None, []
-        for v in [v for v in variants(best_text) if v.text not in seen][:cap]:
+        if advise is not None:
+            hint, hint_text = advise(best_text), best_text
+        for v in rank_variants([v for v in variants(best_text) if v.text not in seen], hint, best_text)[:cap]:
             if clock() >= deadline:
                 break
             s = evaluate(v)
@@ -1049,7 +1298,7 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
             scored.sort(key=lambda sv: sv[0])
             budget_left = pair_cap
             for s1, v1 in scored[:pair_seeds]:
-                for v2 in variants(v1.text):
+                for v2 in rank_variants(variants(v1.text), hint, v1.text):
                     if budget_left <= 0 or clock() >= deadline:
                         break
                     if v2.text in seen:
@@ -1072,9 +1321,11 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
             break
         best, best_text = found[0], found_text
         path += found[1]
+    if advise is not None and best > 0 and hint_text != best_text:
+        hint = advise(best_text)       # report the divergence that is left
     unverified = base == 0 and best_text == text
     return Result(base, 0 if unverified else best, best_text, path, tried, matched=best == 0,
-                  unverified=unverified)
+                  unverified=unverified, hint=hint)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -1255,9 +1506,10 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
         out("SKIP %s  setup: %s" % (draft.scope, str(exc).strip().splitlines()[-1][:120] if str(exc).strip() else type(exc).__name__))
         return None
     verify = (lambda text: True) if args.no_verify else scorer.verify
+    advise = None if args.no_regdiff else make_advisor(root, draft)
     res = climb(draft.text, scorer.score, verify, budget=args.time, cap=args.cap, pair_cap=args.pair_cap,
                 order=not args.no_order, order_opts={"max_exhaustive": args.max_exhaustive,
-                                                     "max_swaps": args.order_swaps})
+                                                     "max_swaps": args.order_swaps}, advise=advise)
     if res.error:
         out("SKIP %s  %s" % (draft.scope, res.error))
         return res
@@ -1280,8 +1532,9 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
             os.makedirs(os.path.join(root, WORK_ROOT, draft.unit, draft.func), exist_ok=True)
             with open(os.path.join(root, WORK_ROOT, draft.unit, draft.func, "best.c"), "w") as fh:
                 fh.write(res.text + "\n")
-        out("%s  %d -> %d  [%s]  %d tried%s" % (draft.scope, res.base, res.best, edits, res.tried,
-                                                 "  (score 0 failed verification)" if res.unverified else ""))
+        out("%s  %d -> %d  [%s]  %d tried%s%s" % (draft.scope, res.base, res.best, edits, res.tried,
+                                                   "  regdiff: %s" % res.hint.summary() if res.hint else "",
+                                                   "  (score 0 failed verification)" if res.unverified else ""))
     return res
 
 
@@ -1298,6 +1551,8 @@ def parse_args(argv):
     p.add_argument("--dry-run", action="store_true", help="do not write src/ on a match")
     p.add_argument("--no-verify", action="store_true", help="accept a score of 0 without the ninja check")
     p.add_argument("--no-order", action="store_true", help="skip the statement-order stage (T-11200)")
+    p.add_argument("--no-regdiff", action="store_true",
+                   help="do not order the edits by regdiff's first divergence (T-11220)")
     p.add_argument("--max-exhaustive", type=int, default=2000,
                    help="order stage: variants per search, as in order_search.py (default 2000)")
     p.add_argument("--order-swaps", type=int, default=2,

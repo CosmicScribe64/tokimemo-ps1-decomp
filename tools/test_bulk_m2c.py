@@ -8,6 +8,7 @@ import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import autotweak  # noqa: E402
@@ -285,6 +286,27 @@ class Pipeline(Repo):
             os.unlink(os.path.join(self.out, "state.jsonl"))
         self.assertTrue(B.parse_args(["--no-order"]).no_order)
         self.assertFalse(B.parse_args([]).no_order)
+
+    def test_regdiff_advisor_passed_to_climb(self):
+        seen, made = [], []
+
+        def climb(text, score, verify, budget=0, **kw):
+            seen.append(sorted(kw))
+            return autotweak.Result(score(text), score(text), text, [], 0)
+
+        def advisor(root, draft):
+            made.append((draft.func, "#ifdef NON_MATCHING" in self.read()))
+            return lambda text: autotweak.Hint(["tie"])
+        for extra, want, uopt in (([], ["advise"], True), (["--no-regdiff"], [], True), ([], [], False)):
+            be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;"))},
+                             scores={"func_80132100": lambda t: 3})
+            seen.clear()
+            with mock.patch.object(autotweak, "make_advisor", advisor if uopt else lambda root, draft: None):
+                self.run_main(be, extra, climb=climb, targets=self.targets[1:])
+            self.assertEqual(seen, [want], extra)
+            os.unlink(os.path.join(self.out, "state.jsonl"))
+        self.assertEqual(made, [("func_80132100", True)], "made once, with the guarded draft in the file")
+        self.assertTrue(B.parse_args(["--no-regdiff"]).no_regdiff)
 
     def test_inlined_variant_is_kept_when_it_scores_better(self):
         src = "void func_80132100(void) {\n    s32 temp_v0;\n\n    temp_v0 = D_X + 1;\n    g(temp_v0);\n}\n"
