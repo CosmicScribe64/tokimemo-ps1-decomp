@@ -327,7 +327,71 @@ void func_8013B77C(void) {
     func_8013B994();
 }
 
+/* NON_MATCHING: T-11120, about 60 lines: the original loop (two coordinate pairs per 8-byte record, `a0 += 8`, end pointer in $a1) stays rolled; every form tried (index, pointer, do-while, nested j<2) gets unrolled or loses the pointer shape. Frame 0x48 in the original (sp+0x2C/0x30/0x34 spills), 0x40 here. */
+#ifdef NON_MATCHING
+void func_8013B994(void) {
+    s32 err;
+    s32 zero;
+    s32 i;
+    s32 x;
+    s32 y;
+    u8 saved;
+
+    err = 0;
+    zero = 0;
+    if (*(u8 *)&D_800E6280.unk_F6C == 2) {
+        for (i = 0; i < 8; i++) {
+            x = ((s16 *)D_80125C10)[i * 4];
+            if (x >= 0x7D) {
+                err++;
+            }
+            if (x < -0x86) {
+                err++;
+            }
+            y = ((s16 *)D_80125C10)[i * 4 + 1];
+            if (y < -0x54) {
+                err++;
+            }
+            if (y >= 0x55) {
+                err++;
+            }
+            if (x == 0 && y == 0) {
+                zero++;
+            }
+            x = ((s16 *)D_80125C10)[i * 4 + 2];
+            if (x >= 0x7D) {
+                err++;
+            }
+            if (x < -0x86) {
+                err++;
+            }
+            y = ((s16 *)D_80125C10)[i * 4 + 3];
+            if (y < -0x54) {
+                err++;
+            }
+            if (y >= 0x55) {
+                err++;
+            }
+            if (x == 0 && y == 0) {
+                zero++;
+            }
+        }
+    }
+    func_800AE0B0("err %d \n", err);
+    func_800AE0B0("zero %d \n", zero);
+    if (zero >= 2) {
+        if (err != 0) {
+            saved = *(u8 *)&D_800E6280.unk_F6C;
+            *(u8 *)&D_800E6280.unk_F6C = 0;
+            func_8006509C();
+            func_80064FA4(0);
+            *(u8 *)&D_800E6280.unk_F6C = saved;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013B994);
+#endif
 
 void func_8013BB10(void) {
     D_8014D0A8 = 0;
@@ -410,7 +474,47 @@ void func_8013BB24(void) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
 #endif
 
+/* NON_MATCHING: T-11120, 14 lines: the rect sits 4 bytes higher in the frame than in the original (sp+0x34, same frame size; any pad local grows the frame by 8) and the final D_800E62BA store has `li v1,0x80` before `lui at` */
+#ifdef NON_MATCHING
+void func_8013BE18(void) {
+    RECT rect;
+
+    *(u8 *)&D_800E6280.unk_3A += 4;
+    if (*(u8 *)&D_800E6280.unk_3A >= 0x80) {
+        *(u8 *)&D_800E6280.unk_3A = 0x80;
+    }
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004500C(0, 0);
+        cd_read_sectors(5, 0x801E0000, 0x9DBA);
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            cd_read_sectors(0x89, 0x80180000, 0x9CB5);
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            rect.x = 0x3E0;
+            rect.y = 0x100;
+            rect.h = 0x80;
+            rect.w = 0x20;
+            func_8009C884(&rect, (void *)0x801E0200);
+            func_80043914(0x801E0000, 0x18, 1, 2, 0);
+            D_800E6280.unk_110D = 3;
+            *(u8 *)&D_800E6280.unk_3A = 0x80;
+        }
+        break;
+    case 3:
+        func_8004284C();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BE18);
+#endif
 
 void func_8013BF74(void) {
     s32 i;
@@ -534,7 +638,32 @@ void func_8013C510(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C580);
+void func_8013C580(void) {
+    u8 sel;
+    GameState *g; /* FAKE: g and the u8 copy of the selector only move it to $v1 (T-11120, permuter) */
+
+    if (func_80053F04() != 0) {
+        func_8006BD6C(1);
+        func_80053D10();
+        g = &D_800E6280;
+        sel = g->unk_1115;
+        if (sel == 1) {
+            func_800AE0B0("EXIST CARD!");
+            func_80042808();
+        } else if (sel == 0xF1) {
+            func_800AE0B0("FILE_SEL UNFORMAT FIND!");
+            func_80042908(0xC0);
+        } else if (sel == 0xFF) {
+            func_800AE0B0("NO CARD!");
+            func_8004284C();
+        }
+    } else if ((u32)D_800E6280.unk_1120 >= 0x201U) {
+        func_8006BD6C(1);
+        func_80053D10();
+        func_800AE0B0("NO COMUNICATION!");
+        func_8004284C();
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014B824);
 
@@ -596,13 +725,115 @@ void func_8013C8FC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C934);
+void func_8013C934(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8013C510();
+        break;
+    case 1:
+        func_8013C580();
+        break;
+    case 2:
+        func_8013C664();
+        break;
+    case 3:
+        func_8013C6CC();
+        break;
+    case 4:
+        func_8013C6FC();
+        break;
+    case 5:
+        func_8013C7C0();
+        break;
+    case 6:
+        func_8013C834();
+        break;
+    case 7:
+        func_8013C8FC();
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013C9F0);
+/* Falls through without a return statement. */
+s32 func_8013C9F0(void) {
+    s32 pad[3]; /* FAKE: unused words above count, the original frame has them (T-9020, T-11120) */
+    s32 count;
+    s32 i;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_80053CE0();
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_80054140() == 2) {
+            func_800AE0B0("SEARCH_CARD");
+            D_800E6280.unk_110D++;
+        } else if (D_800E6280.unk_1104.u >= 0x201U) {
+            func_80056284();
+            func_80042908(1);
+            func_80053D10();
+        }
+        break;
+    case 2:
+        count = 0;
+        for (i = 0; i < 14; i++) {
+            if (D_800E7D11[i + 4] != 0) {
+                count++;
+            }
+        }
+        func_8004E58C();
+        if (D_800E8BEE != 0) {
+            func_8004284C();
+        } else if (count != 0) {
+            func_80042940(0x20);
+        } else {
+            func_80042940(0x40);
+        }
+        break;
+    case 3:
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4; the original also keeps the selector copy in a stack slot (sp+0x2C) across the calls, frame 0x38 */
+#ifdef NON_MATCHING
+void func_8013CEC8(void) {
+    s32 n;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    n = D_800E6280.unk_1093;
+    if (D_800E6280.unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = n / 7 * 0x1F - 0x82;
+        D_80120C96 = n % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[n] == 1) {
+        if (n + 1 == D_800E7D36) {
+            func_80044750(0x501);
+            func_80042940(3);
+            D_800E6280.unk_1118 = D_800E7D36;
+        } else {
+            D_800E7D36 = D_800E6280.unk_1093 + 1;
+            func_8004E58C();
+            func_80139CB4();
+            func_8004EA98();
+            func_8004EAD4(0);
+            func_8013B51C(n);
+        }
+    }
+    func_8013AF78(1);
+    func_8013B1D8();
+    func_80139C24();
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CEC8);
+#endif
 
 void func_8013D054(void) {
     u8 state;
@@ -665,7 +896,33 @@ void func_8013D054(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D2AC);
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4 (selector in $v1 plus a `move v0,v1` copy for the division and the D_800E7D15 index) */
+#ifdef NON_MATCHING
+void func_8013D4CC(void) {
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    if (D_800E6280.unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = (s8)D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
+        D_80120C96 = (s8)D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[D_800E6280.unk_1093] == 1) {
+        if (D_800E6280.unk_1093 + 1 == D_800E6280.unk_1118) {
+            func_80042940(0x24);
+        } else {
+            func_80042940(0x22);
+            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+        }
+    }
+    func_8013AF78(1);
+    func_8013B1D8();
+    func_80139C24();
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D4CC);
+#endif
 
 void func_8013D62C(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
@@ -783,7 +1040,28 @@ void func_8013DA40(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11120, 18 lines: the original keeps the selector in $v1 and divides a `move v0,v1` copy of it (-1 in $a1, 7 in $a0); here no copy, constants one register lower. Same prologue in six sibling functions. */
+#ifdef NON_MATCHING
+void func_8013DAC4(void) {
+    s8 *p;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    p = &D_800E6280.unk_1093;
+    if (*p != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
+        D_80120C96 = D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (*p != -1)) {
+        func_8004284C();
+        D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013DAC4);
+#endif
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80139740.rodata", D_8014BAA4);
 
@@ -996,7 +1274,37 @@ void func_8013E3C8(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4; the original also keeps the copy in a stack slot (sp+0x2C) across the calls, frame 0x38 */
+#ifdef NON_MATCHING
+void func_8013E430(void) {
+    s32 n;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    n = D_800E6280.unk_1093;
+    if (D_800E6280.unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = n / 7 * 0x1F - 0x82;
+        D_80120C96 = n % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1)) {
+        func_80044750(0x501);
+        D_800E6280.unk_1118 = n + 1;
+        if ((u8)(&D_800E7D15)[n] != 0) {
+            func_8004284C();
+            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+        } else if (D_800E8BEE != 0) {
+            func_80042940(0xA8);
+        } else {
+            func_80042940(0xA9);
+        }
+    }
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E430);
+#endif
 
 void func_8013E59C(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
@@ -1134,7 +1442,32 @@ void func_8013F058(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4: the original indexes D_800E7D15 and divides a `move v0,v1` copy of the selector, here no copy and constants one register lower. */
+#ifdef NON_MATCHING
+void func_8013F0DC(void) {
+    GameState *g;
+    s32 idx;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    g = &D_800E6280;
+    idx = g->unk_1093;
+    if (idx != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = idx / 7 * 0x1F - 0x82;
+        D_80120C96 = idx % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (idx != -1) && (u8)(&D_800E7D15)[idx] == 1) {
+        func_80044750(0x501);
+        func_8004284C();
+        D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+    }
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F0DC);
+#endif
 
 /* Falls through without a return statement. */
 /* Falls through without a return statement. */
@@ -1206,7 +1539,40 @@ s32 func_8013F208(void) {
 }
 
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4 (selector in $v1 plus a `move v0,v1` copy for the division and the D_800E7D15 index) */
+#ifdef NON_MATCHING
+void func_8013F454(void) {
+    GameState *g;
+    s32 idx;
+
+    func_80142880();
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    g = &D_800E6280;
+    idx = g->unk_1093;
+    if (idx != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = idx / 7 * 0x1F - 0x82;
+        D_80120C96 = idx % 7 * 0x10 - 0xB;
+    }
+    if (D_800E6280.unk_F88 & 0x820) {
+        if (idx != -1) {
+            D_800E6280.unk_1118 = idx + 1;
+            if ((u8)(&D_800E7D15)[idx] != 0) {
+                func_8004284C();
+            } else if (func_80054694(D_800E6280.unk_1118) == 1) {
+                func_80044750(0x501);
+                func_80042940(0xC6);
+            } else {
+                func_80042908(4);
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013F454);
+#endif
 
 void func_8013F5B0(void) {
     u8 buf[0x108]; /* FAKE: 8 bytes more than the neighbours give the original frame (0x140). T-9170 */
@@ -1340,7 +1706,27 @@ void func_8013FB08(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4: the original indexes D_800E7D15 and divides a `move v0,v1` copy of the selector, here no copy and constants one register lower. */
+#ifdef NON_MATCHING
+void func_8013FB8C(void) {
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    D_800E6280.unk_F88 &= ~0x100;
+    func_8004FC10(0);
+    if (D_800E6280.unk_1093 != -1) {
+        D_80120C6F |= 0x80;
+        D_80120C92 = (s8)D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
+        D_80120C96 = (s8)D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
+    }
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[D_800E6280.unk_1093] != 0) {
+        func_8004284C();
+        func_80044750(0x501);
+        D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+    }
+    func_80142880();
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013FB8C);
+#endif
 
 void func_8013FCBC(void) {
     s32 pad; /* FAKE: unused, declared before buf for its stack slot (T-3330) */
@@ -1577,9 +1963,70 @@ void func_80140044(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140430);
+/* Falls through without a return statement. */
+s32 func_80140430(void) {
+    u32 i;
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140574);
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        i = D_800E6280.unk_1118 - 1;
+        func_80046290(D_800B3A3C[i * 2], D_800B3A3C[i * 2 + 1], i % 13);
+        func_80044750(0x300);
+        func_800AE0B0("CALL XA");
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_800460EC() & 4) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 3:
+        func_80053D10();
+        if (D_800E8BEE != 0) {
+            func_80042908(2);
+            func_80042940(2);
+        } else {
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    }
+}
+
+/* Falls through without a return statement. */
+s32 func_80140574(void) {
+    u32 i;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        i = D_800E6280.unk_1118 - 1;
+        func_80046290(D_800B394C[i * 2], D_800B394C[i * 2 + 1], i % 13);
+        func_80044750(0x300);
+        func_800AE0B0("CALL XA");
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_800460EC() & 4) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 3:
+        func_80053D10();
+        func_80056284();
+        func_80042908(1);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
@@ -1905,7 +2352,43 @@ s32 func_801425C0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80142880);
+void func_80142880(void) {
+    s8 *sel; /* FAKE: the switch reads the selector through a pointer so the later read stays a separate range; permuter idiom, T-11120 */
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    sel = &D_800E6280.unk_1094;
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (*sel) {
+        case 0:
+            func_80142A3C();
+            func_80042940(0xC0);
+            func_800AE0B0("0");
+            break;
+        case 1:
+            func_80142A3C();
+            func_80042940(0xA0);
+            func_800AE0B0("1");
+            break;
+        case 2:
+            func_80142A3C();
+            func_80042940(0xE0);
+            func_800AE0B0("2");
+            break;
+        case 3:
+            func_80042940(0);
+            func_800AE0B0("3");
+            break;
+        }
+        func_800415B4(0, 0x40);
+        if (D_800E6280.unk_1094 >= 0) {
+            D_8014D0D4 = 1;
+        }
+    }
+    if (func_801429BC() != 0) {
+        func_800415B4(0, 0x40);
+    }
+}
 
 s32 func_801429BC(void) {
     if (D_800E6280.unk_F88 & 0x20) {
