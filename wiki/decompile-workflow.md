@@ -291,6 +291,18 @@ matched functions, so none was made.
 
 Reproduce the synthetic frame checks with `tools/docker.sh python3 tools/test_local_aggregate_frames.py`.
 
+## Cheat-sheet auto-tweaker (T-11170)
+
+`tools/autotweak.py` tries the C changes of [[register-cheatsheet]] on drafts under `#ifdef NON_MATCHING` instead of random rewrites. Each step scores every single edit of the current best text with the permuter's single-function compile (`permute.py` setup, `tools/cc.py`, upstream scorer) and keeps the best improvement; when none improves, it tries pairs of edits. Edits: byte view of a switch selector, operand order of `+`/`==`/`!=`, two statements on one line or split, `x = x + k` <-> `x += k`, empty test `if (v) {}` before a use, unused `s32` local, adjacent declaration swap, `* 2^n` <-> `<< n`, inline or introduce a temporary, width and signedness of a narrow local or parameter. A score of 0 is checked like a permuter output (ninja object, `funcdiff --resolve`, unit sha1). Only then is the guard block replaced by the plain function and `MATCH UNIT:func` printed. Byte views, empty tests and unused locals carry `/* FAKE: ... T-11170 */`.
+
+```
+tools/docker.sh python3 tools/autotweak.py GYOZI:func_8013506C --time 300   # one draft
+tools/docker.sh python3 tools/autotweak.py --all --exclude TT --time 120    # every draft
+tools/docker.sh python3 tools/autotweak.py --list --all                     # edit counts, no compile
+```
+
+Output is one line per function: `UNIT:func  base -> best  [edits]  N tried`, or `MATCH ...`. `--dry-run` reports a match without writing `src/`. The best non-matching text is saved as `build/autotweak/<unit>/<func>/best.c`. Tests: `python3 tools/test_autotweak.py`.
+
 ## Resumable CPU permuter farm (T-9810)
 
 `tools/permuter_farm.py` collects existing near-miss C from `scratchpad/w*-*/`
