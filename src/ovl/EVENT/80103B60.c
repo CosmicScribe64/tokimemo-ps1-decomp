@@ -456,4 +456,11 @@ void func_80105054(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/80103B60", func_8010507C);
+void func_8010507C(void) {
+    u8 temp;
+    temp = (u32) (func_8002328C(D_800B1746) & 0x7F);
+    if (temp >= 2U) {
+        D_80094714 += 3;
+    }
+    func_80011DFC();
+}

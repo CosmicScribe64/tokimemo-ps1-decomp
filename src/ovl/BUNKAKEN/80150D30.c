@@ -1,7 +1,55 @@
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80150D30", func_80150D30);
+void func_80150D30(void) {
+    switch (D_80122EB8) {                           /* switch 1 */
+    case 0:                                         /* switch 1 */
+        switch (D_800E62BE) {                       /* switch 2; irregular */
+        case 0x60:                                  /* switch 2 */
+            func_80042908(0x7B);
+            return;
+        case 0x61:                                  /* switch 2 */
+            func_80042908(0x7C);
+            return;
+        default:                                    /* switch 2 */
+            func_80046500();
+            return;
+        }
+        break;
+    case 1:                                         /* switch 1 */
+        func_80042908(0x7D);
+        return;
+    case 2:                                         /* switch 1 */
+        func_80042908(0x7E);
+        return;
+    case 3:                                         /* switch 1 */
+        switch (D_800E62BE) {                       /* switch 3; irregular */
+        case 0x60:                                  /* switch 3 */
+            func_80042908(0x7F);
+            return;
+        case 0x61:                                  /* switch 3 */
+            func_80042908(0x7E);
+            return;
+        }
+        break;
+    case 4:                                         /* switch 1 */
+        switch (D_800E62BE) {                       /* switch 4; irregular */
+        case 0x60:                                  /* switch 4 */
+            func_80042908(0x80);
+            return;
+        case 0x61:                                  /* switch 4 */
+            func_80042908(0x81);
+            return;
+        }
+        break;
+    case 5:                                         /* switch 1 */
+        func_80042908(0x82);
+        return;
+    default:                                        /* switch 1 */
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80150D30", func_80150E88);
 

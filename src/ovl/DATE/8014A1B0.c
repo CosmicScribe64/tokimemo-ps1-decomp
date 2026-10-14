@@ -182,4 +182,8 @@ void func_8014B194(void) {
     D_8015DE48 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014A1B0", func_8014B1C4);
+void func_8014B1C4(void) {
+    D_8015DE44 += 1;
+    D_8015DE4C = 0;
+    D_8015DE48 = 0;
+}

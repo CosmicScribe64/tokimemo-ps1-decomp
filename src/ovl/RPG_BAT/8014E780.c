@@ -508,4 +508,13 @@ void func_8014F6D4(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014E780", func_8014F730);
+void func_8014F730(s32 arg0) {
+    if (D_8015EE48 == 0) {
+        func_8014F524();
+    }
+    if (arg0 != 0) {
+        if ((D_8015EE44.unk_00 - 3) >= arg0) {
+            func_8014F524();
+        }
+    }
+}

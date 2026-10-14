@@ -1357,9 +1357,101 @@ void func_8013E71C(void) {
     D_8014D0A4 = 1;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E80C);
+void func_8013E80C(void) {
+    switch (D_800E738D) {
+    case 0:
+        func_80053CE0();
+        func_800AE0B0("NEW FILE %d \n", D_800E7398);
+        D_800E738D += 1;
+    default:
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            func_80053D10();
+            D_800E738D += 1;
+        } else if (D_800E7395 == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E73A0 >= 0x201U) || (D_800E7395 == 0xD0)) {
+            func_80053D10();
+            func_80042908(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            D_800E738D += 1;
+        } else {
+            D_800E7D14[D_800E7398] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 3:
+        if (func_80055AFC(0) == 1) {
+            func_8013E71C();
+            func_8013BB10();
+            D_800E738D += 1;
+        } else {
+            D_800E7D14[D_800E7398] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 4:
+        func_800AE0B0("%d file replay", D_800E7398);
+        func_80041878();
+        func_80042058();
+        func_8013B77C();
+        main_state_set(0x14);
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013E9FC);
+void func_8013E9FC(void) {
+    switch (D_800E738D) {
+    case 0:
+        func_80053CE0();
+        func_800AE0B0("NEW FILE %d \n", D_800E7398);
+        D_800E738D += 1;
+    default:
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            func_80053D10();
+            D_800E738D += 1;
+        } else if (D_800E7395 == 0xF0) {
+            func_80056284();
+            func_80042908(1);
+        } else if (((u32) D_800E73A0 >= 0x201U) || (D_800E7395 == 0xD0)) {
+            func_80053D10();
+            func_80042908(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            D_800E738D += 1;
+        } else {
+            D_800E7D14[D_800E7398] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 3:
+        if (func_80055AFC(0) == 1) {
+            func_8013E71C();
+            func_8013BB10();
+            D_800E738D += 1;
+        } else {
+            D_800E7D14[D_800E7398] = 0xFF;
+            func_80042908(0xFF);
+        }
+        break;
+    case 4:
+        func_800AE0B0("%d file replay", D_800E7398);
+        func_80041878();
+        func_80042058();
+        func_8013B77C();
+        main_state_set(0x14);
+        break;
+    }
+}
 
 void func_8013EBEC(void) {
     u8 state;

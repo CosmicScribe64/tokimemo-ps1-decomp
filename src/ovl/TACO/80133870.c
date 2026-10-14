@@ -43,7 +43,34 @@ s32 func_80133980(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133AF4);
+void func_80133AF4(void) {
+    switch (D_800E738D) {
+    case 0:
+        func_80044890(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
+        D_800E738D += 1;
+        return;
+    case 1:
+        if (func_80044C98() == 1) {
+            D_800E738D += 1;
+            return;
+        }
+    default:
+        return;
+    case 2:
+        func_80044890(1, 0xC54B, 0xC519, 0xC7BB, 0xC777, 0xC766);
+        D_800E738D += 1;
+        return;
+    case 3:
+        if (func_80044C98() == 1) {
+            D_800E738D += 1;
+            return;
+        }
+        break;
+    case 4:
+        func_8004284C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133C08);
 
@@ -135,4 +162,14 @@ void func_801347F4(s32 arg0) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_801347F4);
 #endif
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80134884);
+void func_80134884(void) {
+    func_800AE080((u8 *) D_8015E270, 0x140);
+    func_800AE080((u8 *) D_8015E3B0, 0x140);
+    func_800AE080((u8 *) D_8015E4F0, 0x140);
+    func_800AE080((u8 *) D_8015E630, 0x140);
+    func_800AE080((u8 *) D_8015E770, 0x140);
+    func_800AE080((u8 *) D_8015E8B0, 0x140);
+    func_800AE080((u8 *) D_8015E9F0, 0x140);
+    func_800AE080((u8 *) D_8015EB30, 0x140);
+    func_800AE080((u8 *) &D_8015EC70, 0x140);
+}

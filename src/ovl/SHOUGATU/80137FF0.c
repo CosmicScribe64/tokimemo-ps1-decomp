@@ -259,4 +259,9 @@ void func_80138ABC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0", func_80138AFC);
+void func_80138AFC(void) {
+    if (D_80144F10 == 0) {
+        D_80144E08 += 1;
+    }
+    func_8004284C();
+}

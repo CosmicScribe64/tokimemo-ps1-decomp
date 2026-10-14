@@ -1586,7 +1586,55 @@ s32 pre_syogatu_init(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu0);
+void pre_syogatu0(void) {
+    s32 temp_v0;
+
+    switch (D_800E738D) {
+    case 0:
+        k_sub_reset();
+        gnsx(&D_800E6354);
+        sndisp((s32) "ん？ 誰だろう）", 0, 0x1F);
+        D_800E738D += 1;
+    default:
+        break;
+    case 1:
+        xa_wait();
+        break;
+    case 2:
+        k_sub_reset();
+        gnsx("〒配達");
+        sndisp((s32) "年賀状でーす。", 0, 0xE);
+        k_sub_disp_start(1);
+        func_80052060(0x08000005, 0x03000009, -1, 0xE);
+        D_800E738D += 1;
+        break;
+    case 3:
+        func_8005215C();
+        break;
+    case 4:
+        temp_v0 = dec_bg_cd_read(0x4144, 1);
+        if (temp_v0 != -1) {
+            if ((temp_v0 == 0) || (temp_v0 == 1)) {
+                dec_bg_show_set(1, temp_v0);
+                set_dec_bri(0x80U);
+                D_800E738D = 6;
+            }
+        } else {
+            D_800E738D = 5;
+        }
+        break;
+    case 5:
+        if (cd_read_sync_status() & 1) {
+            dec_bg_show_set(1, func_8005751C(1));
+            set_dec_bri(0x80U);
+            D_800E738D += 1;
+        }
+        break;
+    case 6:
+        func_8004284C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu1);
 

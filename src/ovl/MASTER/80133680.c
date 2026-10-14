@@ -600,7 +600,42 @@ void func_801350A8(void) {
     func_80086424();
 }
 
-INCLUDE_ASM("asm/ovl/MASTER/nonmatchings/MASTER/80133680", func_801358C8);
+void func_801358C8(void) {
+    switch (D_800E738A) {
+    case 0:
+        cd_read_sectors(0xBU, 0x801E8000, 0xA9C5);
+        func_8004284C();
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            func_801336B4();
+            D_800CA160 = (s32) D_8013C4A0;
+            D_800CA164 = (s32) D_8013C4A4;
+            D_800CA168 = (s32) D_8013C4A8;
+            D_800CA148 = 0;
+            D_800CA14C = 0;
+            func_8004284C();
+        }
+        break;
+    case 2:
+        func_80085A60();
+        break;
+    case 3:
+        D_800CA148 = 5;
+        func_8004284C();
+        break;
+    case 4:
+        func_80085A60();
+        break;
+    case 5:
+        func_80042808();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80086424();
+}
 
 void func_801359F0(void) {
     s32 pad[2]; /* FAKE: keep the original 0x68-byte frame without

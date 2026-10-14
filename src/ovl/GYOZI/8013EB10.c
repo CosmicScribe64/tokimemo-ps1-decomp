@@ -305,7 +305,53 @@ void func_8013FD9C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013EB10", func_8013FE2C);
+void func_8013FE2C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    switch (D_800F62CF) {
+    case 0:
+        func_80051DD8(6, 0x80198000, 0xA2E3);
+        break;
+    case 1:
+        func_80051DD8(3, 0x80198000, 0xA2F6);
+        break;
+    case 2:
+        func_80051DD8(4, 0x80198000, 0xA2E9);
+        break;
+    case 3:
+        func_80051DD8(5, 0x80198000, 0xA2ED);
+        break;
+    case 4:
+        func_80051DD8(6, 0x80198000, 0xA309);
+        break;
+    case 5:
+        func_80051DD8(5, 0x80198000, 0xA2F9);
+        break;
+    case 6:
+        func_80051DD8(6, 0x80198000, 0xA2FE);
+        break;
+    case 7:
+        func_80051DD8(4, 0x80198000, 0xA2F2);
+        break;
+    case 8:
+        func_80051DD8(4, 0x80198000, 0xA2DF);
+        break;
+    case 9:
+        func_80051DD8(5, 0x80198000, 0xA304);
+        break;
+    case 10:
+        func_80051DD8(6, 0x80198000, 0xA316);
+        break;
+    case 11:
+    case 12:
+    case 13:
+        func_80051DD8(7, 0x80198000, 0xA30F);
+        break;
+    default:
+        func_80052060(arg0, arg1, arg2, arg3);
+        break;
+    }
+    func_8013ED84();
+    func_8004DE1C();
+}
 
 void func_8013FFD8(void) {
     D_800D9234 = (u8 *)&D_800D9250;

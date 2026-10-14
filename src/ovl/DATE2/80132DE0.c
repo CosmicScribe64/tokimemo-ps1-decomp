@@ -89,7 +89,30 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_801330D4);
 
 INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80133258);
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80133494);
+void func_80133494(void) {
+    s32 temp;
+    temp = D_8013A4C0;
+    switch (temp) {                           /* irregular */
+    case 0:
+        func_8007ED84(0x4350);
+        func_800AE0F0(D_800CA1DC, "観覧車");
+        break;
+    case 1:
+        if ((u8) D_800E62BE >= 0x61U) {
+            func_8007ED84(0x4359);
+            func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");
+        } else {
+            func_8007ED84(0x433E);
+            func_800AE0F0(D_800CA1DC, "ジェットコースター");
+        }
+        break;
+    case 2:
+        func_8007ED84(0x4347);
+        func_800AE0F0(D_800CA1DC, "ゴーストハウス");
+        break;
+    }
+    func_8004284C();
+}
 
 void func_8013357C(void) {
     func_80062CD0(0x6C8C);
@@ -156,7 +179,35 @@ void func_80133720(void) {
     func_80133258();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80133784);
+void func_80133784(void) {
+    s32 temp;
+    temp = D_8013A4C0;
+    switch (temp) {                           /* irregular */
+    case 0:
+        D_8013A430 = 1;
+        D_8013A438 = 1;
+        break;
+    case 1:
+        if ((u8) D_800E62BE >= 0x61U) {
+            D_8013A430 = 5;
+            D_8013A438 = 5;
+            D_8013A428 += 2;
+        } else {
+            D_8013A430 = 3;
+            D_8013A438 = 3;
+        }
+        break;
+    case 2:
+        D_8013A430 = 7;
+        D_8013A438 = 7;
+        if ((u8) D_800E62BE < 0x61U) {
+            D_8013A428 += 2;
+        }
+        break;
+    }
+    func_801338F8();
+    func_8004284C();
+}
 
 void func_80133884(void) {
     if (D_8013A4C0 == 2) {
@@ -337,4 +388,8 @@ void func_80136CEC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80136D14);
+void func_80136D14(void) {
+    func_800847B8((u8) D_800E71DF);
+    D_8013A428 = 0x15;
+    func_8004284C();
+}

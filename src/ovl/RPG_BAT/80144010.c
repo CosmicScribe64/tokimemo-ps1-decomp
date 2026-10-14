@@ -118,4 +118,9 @@ s32 func_801446F8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80144010", func_801447B8);
+s32 func_801447B8(void) {
+    if (D_8015EC1C == 1) {
+        return 1;
+    }
+    return 0;
+}

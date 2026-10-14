@@ -1824,7 +1824,13 @@ void func_80119008(void) {
     func_8004A764();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119074);
+void func_80119074(void) {
+    if ((D_800B0F32 == D_800B0F31) && (D_800B0F33 == D_800B0F31) && (D_800B0F34 == D_800B0F31) && ((u8) D_800B0895 >= 0x60U)) {
+        func_801190F0();
+        return;
+    }
+    func_80011DFC();
+}
 
 void func_801190F0(void) {
     func_80011DFC();
@@ -2261,7 +2267,55 @@ void func_8011A5EC(void) {
     func_8004A764();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011A62C);
+void func_8011A62C(void) {
+    switch (D_800B0F30) {
+    case 0:
+        func_8010BC54();
+        func_80015D28(0x17, 0x80198000, 0x9ED8);
+        break;
+    case 1:
+        func_8010C168();
+        func_80015D28(0x18, 0x80198000, 0x9F31);
+        break;
+    case 2:
+        func_8010C64C();
+        func_80015D28(0x15, 0x80198000, 0x9EEF);
+        break;
+    case 3:
+        func_8010CB30();
+        func_80015D28(0x16, 0x80198000, 0x9F04);
+        break;
+    case 4:
+        func_8010D014();
+        func_80015D28(0x16, 0x80198000, 0x9F8A);
+        break;
+    case 5:
+        func_8010D528();
+        func_80015D28(0x17, 0x80198000, 0x9F49);
+        break;
+    case 6:
+        func_8010DA3C();
+        func_80015D28(0x15, 0x80198000, 0x9F60);
+        break;
+    case 7:
+        func_8010DF50();
+        func_80015D28(0x17, 0x80198000, 0x9F1A);
+        break;
+    case 8:
+        func_8010E464();
+        func_80015D28(0x13, 0x80198000, 0x9EC5);
+        break;
+    case 9:
+        func_8010E948();
+        func_80015D28(0x15, 0x80198000, 0x9F75);
+        break;
+    default:
+        func_8010EE2C();
+        func_80015D28(0x16, 0x80198000, 0x9FA0);
+        break;
+    }
+    func_80011DFC();
+}
 
 void func_8011A7FC(void) {
     func_80015D28(2, 0x80197000, 0xA0E0);

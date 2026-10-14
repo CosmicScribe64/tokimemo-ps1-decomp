@@ -174,7 +174,53 @@ void func_800F9EEC(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800F9F24);
+void func_800F9F24(void) {
+    switch (D_800B1746) {
+    case 0:
+        func_80015D28(6, 0x80198000, 0xA191);
+        break;
+    case 1:
+        func_80015D28(3, 0x80198000, 0xA1A4);
+        break;
+    case 2:
+        func_80015D28(4, 0x80198000, 0xA197);
+        break;
+    case 3:
+        func_80015D28(5, 0x80198000, 0xA19B);
+        break;
+    case 4:
+        func_80015D28(6, 0x80198000, 0xA1B7);
+        break;
+    case 5:
+        func_80015D28(5, 0x80198000, 0xA1A7);
+        break;
+    case 6:
+        func_80015D28(6, 0x80198000, 0xA1AC);
+        break;
+    case 7:
+        func_80015D28(4, 0x80198000, 0xA1A0);
+        break;
+    case 8:
+        func_80015D28(4, 0x80198000, 0xA18D);
+        break;
+    case 9:
+        func_80015D28(5, 0x80198000, 0xA1B2);
+        break;
+    case 10:
+        func_80015D28(6, 0x80198000, 0xA1C4);
+        break;
+    case 11:
+    case 12:
+    case 13:
+        func_80015D28(7, 0x80198000, 0xA1BD);
+        break;
+    default:
+        func_80015FE0();
+        break;
+    }
+    func_800F6000();
+    func_80011DFC();
+}
 
 void func_800FA0D0(void) {
     s16 i;
@@ -670,4 +716,41 @@ void func_800FBAD0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FBAF8);
+void func_800FBAF8(void) {
+    switch (D_800B1746) {
+    case 0:
+        func_800335E0(0x5606);
+        break;
+    case 1:
+        func_800335E0(0x5D95);
+        break;
+    case 2:
+        func_800335E0(0x52AF);
+        break;
+    case 3:
+        func_800335E0(0x5930);
+        break;
+    case 4:
+        func_800335E0(0x668C);
+        break;
+    case 5:
+        func_800335E0(0x6038);
+        break;
+    case 6:
+        func_800335E0(0x6281);
+        break;
+    case 7:
+        func_800335E0(0x5BA6);
+        break;
+    case 8:
+        func_800335E0(0x50ED);
+        break;
+    case 9:
+        func_800335E0(0x6443);
+        break;
+    case 10:
+        func_800335E0(0x6821);
+        break;
+    }
+    func_80011DFC();
+}

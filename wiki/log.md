@@ -13127,6 +13127,12 @@ Opened [[tickets/T-11120-small-functions-sonnet-36]] (In Progress): 16 functions
 
 ## [2026-10-14] ticket | T-11160 Twin detection for data-in-function functions
 Created [[tickets/T-11160-twin-detection-for-data-in-function-functions]] and implemented it: `tools/dupes.py` and `tools/neardupes.py` fingerprint functions with own rodata (island or appended `.rodata` blocks; data symbol positions and directives instead of names), allow verbatim string literals between such twins, and apply a copy only with `--apply --check` when all the target's data is in its own function file; others are listed as "NEEDS DATA CHECK". Synthetic tests only (no game data). In Review; the real-build run is left to the orchestrator. [[build-system]] updated.
+
+## [2026-10-14] ticket | T-11170 Cheat-sheet auto-tweaker
+Created [[tickets/T-11170-cheat-sheet-auto-tweaker]] and implemented `tools/autotweak.py`: deterministic edits from [[register-cheatsheet]] (byte view, operand swap, line join/split, compound assignment, empty test, unused local, declaration swap, shift/multiply, temporaries, local width) on guarded `NON_MATCHING` drafts, scored with permute.py's single-function pipeline in a greedy hill climb; a verified score of 0 replaces the guard block and prints `MATCH`. Synthetic tests in `tools/test_autotweak.py` (scorer mocked). Usage in [[decompile-workflow]]. No real build here; ticket In Review on [[kanban]] pending the orchestrator's run.
+
+## [2026-10-14] ticket | T-11190 Bulk m2c pipeline
+Created [[tickets/T-11190-bulk-m2c-pipeline]] and implemented `tools/bulk_m2c.py`: m2c draft, mechanical cleanup, guarded single-function compile with cheap fixes, autotweak scoring and hill climb, verified matches written as plain C (declarations through `include/main_api.h` / `include/ovl/<UNIT>.h`, `check_headers.py` and unit target), everything else reverted and saved under `--out` with `near.txt`. Resumable state file, crash recovery, per-file jobs with one build lock. `tools/autotweak.py` gets `BuildScorer.INSTRUCTION_TOLERANCE`. Tests `tools/test_bulk_m2c.py` (mocked backend). Usage in [[decompile-workflow]]. Ticket In Review (real run pending in Docker).
 ## [2026-10-14] ticket | T-11140 started
 
 Created [[tickets/T-11140-small-functions-gemini-38]] in In Progress and updated [[kanban]] and [[index]] for the 16 functions in `src/ovl/DATE/80132000.c`.

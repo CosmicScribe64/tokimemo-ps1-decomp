@@ -178,4 +178,21 @@ void func_8013DA58(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/8013D470", func_8013DAA4);
+void func_8013DAA4(void) {
+    if (((u32) (D_800F5638 << 0x1D) >> 0x1F) == ((u32) D_800F5488 >> 0x1C)) {
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        return;
+    }
+    func_8004DE1C();
+}

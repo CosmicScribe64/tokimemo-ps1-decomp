@@ -101,4 +101,11 @@ void func_801325F4(void) {
     func_80082764(D_80122CDC, 1, 2);
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132000", func_80132670);
+void func_80132670(void) {
+    D_800CA134 = (u8 *) &D_8013A428;
+    D_800CA138 = (u8 *) &D_8013A42C;
+    D_800CA13C = D_8013A404;
+    D_800CA140 = D_8013A408;
+    D_800CA144 = D_8013A40C;
+    func_80082764(D_80122CDC, 1, 1);
+}

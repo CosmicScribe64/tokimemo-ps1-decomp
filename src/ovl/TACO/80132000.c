@@ -69,4 +69,10 @@ void func_80132000(void) {
     func_801446D8();
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80132000", func_801321A0);
+void func_801321A0(void) {
+    func_80058F9C(0x8018A000, 0, 0);
+    func_80058F9C(0x8018A000, 1, 0);
+    func_80058F9C(0x8018A000, 2, 0);
+    func_80058F9C(0x8018A000, 3, 0);
+    func_80058F9C(0x8018A000, 4, 0);
+}

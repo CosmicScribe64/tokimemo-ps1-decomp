@@ -77,4 +77,8 @@ void func_80136904(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80136270", func_801369AC);
+void func_801369AC(void) {
+    if (D_800E7384 == 0) {
+        D_80120652 = 5;
+    }
+}

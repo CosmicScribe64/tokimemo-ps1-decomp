@@ -283,7 +283,49 @@ void func_8013C2E4(void) {
     D_80145F1C = 0x8019B494;
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013C070", shougatu_stage_dispatch);
+void shougatu_stage_dispatch(void) {
+    func_80083808();
+    switch (D_800E7389) {
+    case 0:
+        func_8013D660();
+        break;
+    case 1:
+        func_8013DDD0();
+        break;
+    case 2:
+        func_8013E330();
+        break;
+    case 3:
+        func_8013F224();
+        break;
+    case 4:
+        func_801407C0();
+        break;
+    case 5:
+        func_80140DC0();
+        break;
+    case 6:
+        func_801419D0();
+        break;
+    case 7:
+        func_80142500();
+        break;
+    case 8:
+        func_801430A0();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_8007EDF8();
+    func_800846C0();
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    func_80083A10();
+    func_80047560();
+}
 
 void func_8013D2A8(void) {
     D_800CA134 = &D_80145F2C;
