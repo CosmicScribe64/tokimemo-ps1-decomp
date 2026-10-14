@@ -4545,3 +4545,14 @@ Ticket [[tickets/T-11050-big-functions-sonnet-28]]. Same four files as T-11030. 
 - EVENT `func_8011767C` needs local `s16[11]` initialisers copied from `D_80125330`/`D_80125348` (22-byte copies), which needs `data_island.py` for this object (it edits the splat yaml, so not done here).
 - DATE `func_8013C7D0`: operand swap of the `D_800CA2F8` compare and a 240 s permuter run leave the two `lui` in the wrong order. DATE `func_80140374` (420 s) and main `normal_date_three_select_init` (200 s, five statement orders of the four chains): permuter finds nothing, no order of the chains moves `0x10` into v0.
 - DATE `func_80132000`: the leading `nop` belongs to the padding before the function at `func_80132004` (called from `func_8013E9BC`); not portable.
+
+## T-11120: small functions (Sonnet via Antigravity) 36
+
+NAME_ENT `src/ovl/NAME_ENT/80139740.c`. Six matches: `func_8013C934`, `func_8013C580`, `func_80142880`, `func_80140430`, `func_80140574`, `func_8013C9F0`.
+
+- **Pointer read of a field splits a range** (`func_80142880`): `s8 *sel = &D_800E6280.unk_1094; switch (*sel)` while a later `D_800E6280.unk_1094 >= 0` stays a plain global read. Without it uopt joins both reads into one range in $v0 and the later read lands in $v0 instead of the ugen temporary $t8 (regdiff: "the original's $t8 is not a uopt colour"). The permuter found it (score 35 candidate).
+- **Selector in $v1 after a call** (`func_8013C580`): `GameState *g; u8 sel; g = &D_800E6280; sel = g->unk_1115;` together (neither alone helped); found by the permuter.
+- **Switch-temp copy** (`func_80140430`, `func_80140574`, `func_8013C9F0`): `s32` return type without a `return` gives `or v0,v1,zero`; the 8-byte table `D_800B394C`/`D_800B3A3C` is `s32[]` indexed `[i * 2]`, `[i * 2 + 1]` (declared with `sync_protos --add-global`).
+- **Rolled constant-trip loop** (`func_8013C9F0`): the pointer form `for (p = D_800E7D11; p != &D_800E7D1F; p++)` is unrolled by four; the index form `for (i = 0; i < 14; i++) if (D_800E7D11[i + 4])` stays rolled like the original. The frame needed `s32 pad[3]` above the counter (FAKE).
+- **Blocked:** the selector-copy prologue shared by eight functions (`D_800E7313` in $v1 plus a `move v0,v1` copy, constants in $a0/$a1); see the rows in [[data/t0018-cases]].
+- Tool notes: the edit tool refuses a replacement whose target text appears twice in the file, even when the line range is unique (the three twin prologues here); include a unique neighbouring line. `permute.py --no-verify` lets the permuter run while the source is edited.
