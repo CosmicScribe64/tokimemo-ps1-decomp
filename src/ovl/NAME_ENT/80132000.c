@@ -945,7 +945,36 @@ void func_80135BB4(void) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135BB4);
 #endif
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135E58);
+void func_80135E58(void) {
+
+    func_8004E58C();
+    if (D_8014CCC8 == 4) {
+        D_8014CCC8 = 0;
+    }
+    switch (D_8014CCC8) {
+    case 0:
+        func_801330E8((s32) D_8014CD10);
+        break;
+    case 1:
+        func_801332FC((s32) D_8014CD10);
+        break;
+    case 2:
+        func_80133510((s32) D_8014CD10);
+        break;
+    case 3:
+        func_801338DC(2);
+        break;
+    }
+    D_8014CC70 = 6;
+    D_801206AC = 0;
+    D_801206BA = 0;
+    D_801206BE = 0;
+    func_80046290(D_8014CC48, D_8014CC4C, 0);
+    func_80044750(0x300);
+    k_sub_reset_point_set();
+    func_80134B18();
+    func_8004284C();
+}
 
 /* NON_MATCHING: T-11010, 23 differing lines: same as func_80135BB4, D_8014CC70 is promoted into $v1 where the original keeps $v0 for it */
 #ifdef NON_MATCHING
