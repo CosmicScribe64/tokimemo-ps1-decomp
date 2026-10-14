@@ -517,12 +517,9 @@ void func_8013B4A0(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B4A0);
 #endif
 
-/* T-11500 near miss (13 lines): the original keeps the 0x368 value loaded for the >= 8 test in $v1 up to the final increments (skip path reloads only 0x364/0x366); here that load lands in $v0 and all three are reloaded */
-#ifdef NON_MATCHING
 void func_8013B6C8(void) {
     u8 *c;
     u16 k;
-    u16 w;
 
     k = *(u16 *)(D_80158A8C + 6);
     c = D_80158A8C;
@@ -566,8 +563,7 @@ void func_8013B6C8(void) {
             *(u16 *)(c + 0x364) = 0;
             func_80133FB0(*(s16 *)(c + 0x14), *(s16 *)(c + 0x16) + 0x38, 0x100, 0x20, 0xA8);
         }
-        w = *(u16 *)(c + 0x368);
-        if (w >= 8) {
+        if (*(u16 *)(c + 0x368) >= 8) {
             if (*(s16 *)(c + 0x2D8) >= 0 || *(s16 *)(c + 0x2DA) >= 0) {
                 func_80133AD0(0x50C);
             }
@@ -578,6 +574,9 @@ void func_8013B6C8(void) {
             if (*(s16 *)(c + 0x2DA) >= 0) {
                 func_80134768(*(s16 *)(c + 0x14) - 0x38, *(s16 *)(c + 0x16) + 0x10, 0x20, 0x400);
             }
+            /* FAKE: redundant break; the skip path then jumps straight to the switch end (no join block),
+               so the 0x368 load of the test stays in the $v1 range up to the increments. T-11510 */
+            break;
         }
         break;
     }
@@ -585,9 +584,6 @@ void func_8013B6C8(void) {
     *(u16 *)(c + 0x366) += 1;
     *(u16 *)(c + 0x368) += 1;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B6C8);
-#endif
 
 void func_8013B928(void) {
     u8 *c;
