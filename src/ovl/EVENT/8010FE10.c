@@ -1120,7 +1120,33 @@ void func_80116888(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80116940);
+void func_80116940(void) {
+    EventStateView *g;
+
+    g = (EventStateView *)D_800B0860;
+    if (D_800EECBC == 1) {
+        /* FAKE: evaluate cvt(D_800B1746) into $v0 before D_80094730 = 9; T-11110 */
+        if (D_800B1746 + 0) {
+        }
+        D_80094730 = 9;
+        if (D_800B1746 == 7) {
+            D_80094730 = 0xA;
+        } else if (D_800B1746 == 2 || D_800B1746 == 9) {
+            D_80094730 = 8;
+        } else if (D_800B1746 == 4 || D_800B1746 == 8 || D_800B1746 == 5 || D_800B1746 == 0xA) {
+            D_80094730 = 7;
+        }
+        D_800B1AF6 += 0x11;
+    } else if (D_800B1746 == 4 || D_800B1746 == 8 || D_800B1746 == 5 || D_800B1746 == 0xA) {
+        D_800B1AF6 += 5;
+    } else if (D_800B1746 == 9 && g->unk_5CA[0x3A] == 0) {
+        D_80094730 += 1;
+        D_800B1AF6 += 5;
+    } else if (D_800B1746 == 9 && g->unk_5CA[0x3A] != 0) {
+        D_800B1AF6 += 0x11;
+    }
+    func_80011DFC();
+}
 
 s32 func_80116AA8(void) {
     /* FAKE: unused word reserves top frame slot so s16 before sits at sp+0x2A; T-11110 */
@@ -1243,7 +1269,47 @@ void func_80116EF0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117004);
+void func_80117004(void) {
+    /* FAKE: (u32) casts give D_8012439C a CVT so uopt puts the register-held constant 3 first in bne; T-11110 */
+    switch (D_800B1746) {
+    case 0:
+    case 1:
+    case 7:
+        if ((u32)D_8012439C == 4) {
+            D_80094730 += 1;
+        } else if ((u32)D_8012439C == 2) {
+            D_80094730 += 2;
+        }
+        break;
+    case 2:
+    case 3:
+    case 8:
+    case 10:
+        if ((u32)D_8012439C == 4) {
+            D_80094730 += 1;
+        } else if ((u32)D_8012439C == 3) {
+            D_80094730 += 2;
+        }
+        break;
+    case 4:
+    case 6:
+    case 9:
+        if (((u32)D_8012439C == 3) && ((u32)D_8012439C == 2)) {
+            D_80094730 += 1;
+        } else if (((u32)D_8012439C == 3) && ((u32)D_8012439C == 3)) {
+            D_80094730 += 2;
+        }
+        break;
+    case 5:
+        if ((u32)D_8012439C == 3) {
+            D_80094730 += 1;
+        } else if ((u32)D_8012439C == 2) {
+            D_80094730 += 2;
+        }
+        break;
+    }
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117178);
 
