@@ -128,7 +128,7 @@ void func_8013A42C(void) {
     u8 temp;
     D_8013CB04 = 0;
     temp = D_800CA2CC;
-    switch (temp) {                           /* irregular */
+    switch (temp) {
     case 0:
         func_8007ED84(0x4267);
         func_800AE0F0(D_800CA19C, "土産屋");
@@ -151,7 +151,7 @@ void func_8013A42C(void) {
 void func_8013A4F8(void) {
     s32 temp;
     temp = D_800CA2CC;
-    switch (temp) {                           /* irregular */
+    switch (temp) {
     case 0:
         func_8007ED84(0x4267);
         func_800AE0F0(D_800CA19C, "土産屋");

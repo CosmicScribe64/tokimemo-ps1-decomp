@@ -1851,7 +1851,7 @@ void func_8013FDC8(void) {
 }
 
 void func_8013FE40(void) {
-    switch (D_800E6280.unk_110D) {                           /* irregular */
+    switch (D_800E6280.unk_110D) {
     case 0:
         if (func_80054704((s32) D_800E6280.unk_1118) == 1) {
             func_800AE0B0("DELETE OK");

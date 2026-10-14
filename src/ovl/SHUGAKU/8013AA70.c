@@ -18,7 +18,7 @@ void func_8013AA70(void) {
 void func_8013AAEC(void) {
     s32 temp;
     temp = D_800CA2CC;
-    switch (temp) {                           /* irregular */
+    switch (temp) {
     case 0:
         func_800AE0F0(D_800CA23C, "京都");
         break;

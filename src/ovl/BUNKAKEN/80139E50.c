@@ -2,50 +2,50 @@
 #include "ovl/BUNKAKEN.h"
 
 void func_80139E50(void) {
-    switch (D_80122EB8) {                           /* switch 1 */
-    case 0:                                         /* switch 1 */
+    switch (D_80122EB8) {
+    case 0:
         if (D_800E62BE == 0x61) {
             func_80042908(7);
             return;
         }
         func_80042908(6);
         return;
-    case 1:                                         /* switch 1 */
+    case 1:
         func_80042908(8);
         return;
-    case 2:                                         /* switch 1 */
+    case 2:
         func_80042908(9);
         return;
-    case 3:                                         /* switch 1 */
-        switch (D_800E62BE) {                       /* switch 2; irregular */
-        case 0x5F:                                  /* switch 2 */
+    case 3:
+        switch (D_800E62BE) {
+        case 0x5F:
             func_80042908(0xA);
             return;
-        case 0x60:                                  /* switch 2 */
+        case 0x60:
             func_80042908(0xC);
             return;
-        case 0x61:                                  /* switch 2 */
+        case 0x61:
             func_80042908(0xD);
             return;
         }
         break;
-    case 4:                                         /* switch 1 */
-        switch (D_800E62BE) {                       /* switch 3; irregular */
-        case 0x5F:                                  /* switch 3 */
+    case 4:
+        switch (D_800E62BE) {
+        case 0x5F:
             func_80042908(0xE);
             return;
-        case 0x60:                                  /* switch 3 */
+        case 0x60:
             func_80042908(0xF);
             return;
-        case 0x61:                                  /* switch 3 */
+        case 0x61:
             func_80042908(0x10);
             return;
         }
         break;
-    case 5:                                         /* switch 1 */
+    case 5:
         func_80042908(0x11);
         return;
-    default:                                        /* switch 1 */
+    default:
         func_80046500();
         return;
     }

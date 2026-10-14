@@ -85,7 +85,7 @@ void func_80137C3C(void) {
     func_80044750(0x23);
     func_80044750(0x24);
     func_80044750(0x2E);
-    switch (D_800CA2CC) {                           /* irregular */
+    switch (D_800CA2CC) {
     case 0:
         func_80044750(0x200);
         break;
@@ -212,7 +212,7 @@ void func_801381BC(void) {
 void func_80138290(void) {
     s32 temp;
     temp = D_800CA2CC;
-    switch (temp) {                           /* irregular */
+    switch (temp) {
     case 0:
         func_800AE0F0(D_800CA23C, "京都");
         break;
@@ -257,7 +257,7 @@ void func_80138400(void) {
     u8 temp;
     func_801378B0();
     temp = D_800CA2CC;
-    switch (temp) {                           /* irregular */
+    switch (temp) {
     case 0:
         func_80043914(D_8013C880, 0x11, 0, 0, 1);
         break;

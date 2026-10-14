@@ -92,7 +92,7 @@ INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132DE0", func_80133258);
 void func_80133494(void) {
     s32 temp;
     temp = D_8013A4C0;
-    switch (temp) {                           /* irregular */
+    switch (temp) {
     case 0:
         func_8007ED84(0x4350);
         func_800AE0F0(D_800CA1DC, "観覧車");
@@ -182,7 +182,7 @@ void func_80133720(void) {
 void func_80133784(void) {
     s32 temp;
     temp = D_8013A4C0;
-    switch (temp) {                           /* irregular */
+    switch (temp) {
     case 0:
         D_8013A430 = 1;
         D_8013A438 = 1;

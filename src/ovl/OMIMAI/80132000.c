@@ -2,7 +2,7 @@
 
 void func_80132000(void) {
     func_80083808();
-    switch (D_800E7389) {                           /* irregular */
+    switch (D_800E7389) {
     case 0:
         func_801322E4();
         break;
