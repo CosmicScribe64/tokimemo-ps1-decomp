@@ -58,6 +58,7 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-11240-typefix-bulk-m2c-autotweak|T-11240 Type-mismatch fixes for bulk_m2c and autotweak]]
 - [ ] [[tickets/T-11220-regdiff-guided-autotweak|T-11220 regdiff-guided edit ordering in autotweak]]
 - [ ] [[tickets/T-11210-bulk-m2c-draft-failure-classes|T-11210 bulk_m2c, fix the main draft failure classes]]
 - [ ] [[tickets/T-11200-order-search-in-solvers|T-11200 Statement-order search in the automatic solvers]]

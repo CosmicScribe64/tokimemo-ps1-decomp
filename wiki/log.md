@@ -13227,3 +13227,11 @@ Created [[tickets/T-11210-bulk-m2c-draft-failure-classes]]: fix the main bulk_m2
 ## [2026-10-14] build | T-11210 re-run of bulk_m2c failures
 
 Re-ran the 647 failed drafts with the fixed `tools/bulk_m2c.py`: 218 still fail (118 compile, 72 header declaration problems, 28 M2C_ERROR/LWL), matches 61 -> 94. `tools/permute.py` makes switch labels local in target.o (PC16 assertion). The run ends with `migrate_globals --apply` and check_headers; one `D_800E73A0` use rewritten by hand to `D_800E6280.unk_1120`. ninja all OK, globals OK, headers OK. Moved [[tickets/T-11210-bulk-m2c-draft-failure-classes]] to In Review.
+
+## [2026-10-14] ticket | T-11240 created
+
+Created [[tickets/T-11240-typefix-bulk-m2c-autotweak]] (In Progress): `tools/typefix.py` with post-m2c type rewrites and autotweak type edits.
+
+## [2026-10-14] ticket | T-11240 to In Review
+
+Added `tools/typefix.py` (post-m2c type rewrites, autotweak type edits), hooks in `tools/bulk_m2c.py` and `tools/autotweak.py`, `tools/test_typefix.py`, section in [[decompile-workflow]]. Bulk rerun and ninja left to the orchestrator (fast scorer).

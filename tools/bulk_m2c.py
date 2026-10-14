@@ -49,6 +49,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import autotweak  # noqa: E402
+import typefix  # noqa: E402
 
 TICKET = "T-11190"
 DECL_START = "/* bulk_m2c declarations (%s) */" % TICKET
@@ -173,7 +174,7 @@ def inline_temps(body):
 def cleanup(decls, body, glob=None):
     """(body, {name: decl}, problem): the mechanical cleanup of the module docstring. `glob` maps the
     variable names the headers and the C file declare to (base, stars, dims) for the selector rewrite."""
-    body = fix_memcpy(stack_arrays(body))
+    body = typefix.early(fix_memcpy(stack_arrays(body)))     # T-11240
     bad = re.search(r"\bM2C_\w+", body)
     if bad:
         return body, {}, "m2c-error: %s" % bad.group(0)
@@ -184,7 +185,7 @@ def cleanup(decls, body, glob=None):
     known = {n: d for n, d in clean_decls(decls).items() if n in names}
     types = dict(glob or {})
     collect_vars("\n".join(known.values()), types)
-    body = void_locals(fix_selectors(fix_pointer_calls(body), types))
+    body = typefix.late(void_locals(fix_selectors(fix_pointer_calls(body), types)), types)     # T-11240
     return body, known, None
 
 

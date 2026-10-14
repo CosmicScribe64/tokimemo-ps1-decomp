@@ -1881,3 +1881,12 @@ comparison restores a load removed by common-subexpression elimination.
 Keep the original signed `(rand() & 15) <= 0` spelling: equality changes
 `bgtz` to `bnez`. These are improvements to a structural draft, not a
 claim that the complete builder matches.
+
+## Type fixes for bulk_m2c and autotweak (T-11240)
+
+`tools/typefix.py` holds all of it; `bulk_m2c.py` calls `typefix.early` (before the M2C_* check) and `typefix.late` (after the T-11210 cleanup), and `autotweak.py` ends with `typefix.register`.
+
+Part A, post-m2c rewrites, from a small C expression parser with just enough typing: `*E` with an integer `E` becomes `*(T *)E` (T from an enclosing cast or the assigned value, else `s32`; an inner narrow load that serves as an address is read as a word); a call of an integer element or variable, such as `(&sp2C[0])[i](x)`, goes through an `s32 (*)()` cast; sums on a `void *` get a `(u8 *)` cast; trailing `M2C_ERROR(unset register $aN)` arguments are dropped (the asm passes whatever the register holds); `(unaligned T)` casts are stripped; a label before `}` gets `;`; `} else { default: }` and repeated `default:` are removed; stack arrays grow to the size of a block copy. The header-check failures after a verified match were alias conflicts: m2c names a renamed function by its old name and the header already declares the new one, so `rename_symbols` applies `config/obin_renames.txt` to the draft. M2C_LWL and a callee declared void whose result is read are not fixable here.
+
+Part B, autotweak edits (labels start with the kind): `cast` (add `(u8)/(s8)/(u16)/(s16)` to a read, `(u32)/(s32)` on a compare/shift/divide operand), `castdrop`, `castflip` (sign or width of an existing cast), `mask` (`x & 0xFF` <-> `(u8)x`, mask dropped), `view` (read a global through another type, `*(u16 *)&D_X`, `((u16 *)D_X)[i]`, types from `include/**/*.h`), `access` (type of an existing `*(T *)p`), `usuffix` (`U` on a compared constant), `decl` (other declared integer types). The scorer exposes no positions, so each applies to every candidate; the kinds are appended to the regdiff hint lists for structure, argument and ugen. Tests: `python3 tools/test_typefix.py`. The rerun of the failed drafts is pending (orchestrator, fast scorer).
+
