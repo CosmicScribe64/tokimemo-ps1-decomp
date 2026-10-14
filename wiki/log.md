@@ -13073,3 +13073,6 @@ Inline review against CODING_STANDARDS.md found nothing; ticket moved to Done on
 
 ## [2026-10-13] ticket | T-11080 started
 Opened [[tickets/T-11080-big-functions-opus-31]] (In Progress): astra list 31, 48 big functions in NAME_ENT, main 8006CB30, TAIIKU and DATE.
+
+## [2026-10-13] ticket | T-11110 started
+Opened [[tickets/T-11110-small-functions-gemini-34]] (In Progress): 16 functions (4,800 bytes) in `src/ovl/EVENT/8010FE10.c`.

@@ -2502,4 +2502,8 @@ u8 *strncat(u8 *dst, u8 *src, s32 count);
 #define MAIN_API_STRNCAT_T10860
 #endif
 
+extern s32 D_800EECC4;
+void func_80046600(void);
+void func_800464E8(void);
+
 #endif /* MAIN_API_H */

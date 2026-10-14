@@ -23,6 +23,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-11110-small-functions-gemini-34|T-11110 Small functions (Gemini) 34]]
 - [ ] [[tickets/T-11070-small-functions-gemini-30|T-11070 Small functions (Gemini) 30]]
 - [ ] [[tickets/T-11060-big-functions-gemini-29|T-11060 Big functions (Gemini) 29]]
 - [ ] [[tickets/T-11080-big-functions-opus-31|T-11080 Big functions (Opus via Antigravity) 31]]
