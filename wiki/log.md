@@ -13159,3 +13159,6 @@ the ticket). Moved [[tickets/T-11520-tt-batch-4]] to Done.
 ## [2026-10-14] ticket | Start T-11130 Big functions (Gemini) 37
 
 Created [[tickets/T-11130-big-functions-gemini-37]] (In Progress) on [[kanban]] for the 52 functions in `astra37-list.txt` (`src/ovl/TAIIKU/80138950.c`, `src/main/8007C030.c`, `src/main/8006CB30.c`, `src/ovl/NAME_ENT/80132000.c`, `src/ovl/TAIIKU/80133C80.c`).
+## [2026-10-14] ticket | T-11180 started
+Opened [[tickets/T-11180-twin-guided-matching-gemini-39]] (In Progress) on [[kanban]]: twin-guided matching list 39 (24 matched-twin targets and 11 unmatched twin groups).
+

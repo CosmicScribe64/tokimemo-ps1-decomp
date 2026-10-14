@@ -850,7 +850,31 @@ s32 func_8014E1A0(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E4A4);
+void func_8014E4A4(void) {
+    u8 v;
+
+    v = D_8015EDB4[16].unk2;
+    if (v < 0x28 || v >= 0x46) {
+        if (D_8015EDB4[16].unk3 >= 3) {
+            func_8014E5F8(v);
+            D_8015EDB4[16].unk2 += 1;
+            D_8015EDB4[16].unk3 = 0;
+            v = D_8015EDB4[16].unk2;
+        }
+    } else if (v >= 0x28 && v < 0x46) {
+        func_8014E5F8(v);
+        D_8015EDB4[16].unk2 += 1;
+        D_8015EDB4[16].unk3 = 0;
+        v = D_8015EDB4[16].unk2;
+    }
+    if (v >= 0x79 || D_8015EDB4[17].unk84[2] == 1) {
+        D_8015EDB4[16].unk2 = 0;
+        D_8015EDB4[16].unk3 = D_8015EDB4[16].unk2;
+        func_8014F044();
+    } else {
+        D_8015EDB4[16].unk3 += 1;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80149F90", func_8014E5F8);
 

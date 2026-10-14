@@ -223,6 +223,8 @@ extern s32 D_8014CCB4; /* Word selection and old-value snapshot. T-9770 */
 extern u8 D_8014CD04[]; /* Name-entry character buffer. T-10010. */
 extern s32 D_8014CC40; /* Word arguments to func_80046290. */
 extern s32 D_8014CC44;
+extern s32 D_8014CC48;
+extern s32 D_8014CC4C;
 #endif
 
 #ifndef OVL_NAME_ENT_T10860_H

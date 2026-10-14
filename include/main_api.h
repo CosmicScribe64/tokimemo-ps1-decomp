@@ -926,9 +926,23 @@ extern s32 D_800EB0A4;
 extern s8 D_800EB0AF;
 extern u8 D_800EC190[];
 extern s32 D_800EC2F8;
+extern s16 D_800EC2FC;
+extern s16 D_800EC2FE;
+extern s16 D_800EC300;
+extern s16 D_800EC302;
+extern s16 D_800EC304;
+extern s8 D_800EC306;
+extern s8 D_800EC307;
+extern s16 D_800EC308;
+extern s16 D_800EC30A;
 extern u8 D_800EC30C;
 extern u8 D_800EC30D;
 extern u8 D_800EC30E;
+extern s16 D_800EC310;
+extern s16 D_800EC312;
+extern s16 D_800EC314;
+extern s16 D_800EC316;
+extern s32 D_800EC318;
 #ifndef MAIN_API_OVERRIDE_D_800EECB0
 extern s32 D_800EECB0;
 #endif
