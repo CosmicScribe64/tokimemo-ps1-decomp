@@ -1,13 +1,14 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-/* NON_MATCHING: T-11000, 11 lines (registers only): constant 1 is in a0 and the TtButtons06 pointer in v0, the original has a1 and a2; v = base[0x52] after the store gives the andi */
+/* NON_MATCHING: T-11000/T-11550, 2 lines (registers only): the TtButtons06 pointer is v0, the original a2. T-11550 (autotweak): reading base[0x52] after the store through a u8 temp (FAKE) gives a temp range in a0, so the constant 1 moves to a1 as in the original (was 11 lines). Tried for the pointer: inline cast, computing it from D_80158A60, other placements, a second autotweak pass (no gain). */
 #ifdef NON_MATCHING
 void func_80142350(void) {
     u8 *base;
     u8 *s;
     TtButtons06 *buttons;
     u8 v;
+    u8 temp; /* FAKE: holds the reloaded base[0x52]; its range in a0 moves the constant 1 to a1. T-11550 */
 
     base = D_80158A60;
     s = D_80158A64;
@@ -25,7 +26,8 @@ void func_80142350(void) {
         v = base[0x52];
         if (v == 0xFF) {
             base[0x52] = 0;
-            v = base[0x52];
+            temp = base[0x52];
+            v = temp;
         }
         if (v != 0) {
             switch (v) {
