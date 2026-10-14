@@ -55,6 +55,7 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-11150-twin-detection-for-jump-table-functions|T-11150 Twin detection for jump-table functions]]
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 

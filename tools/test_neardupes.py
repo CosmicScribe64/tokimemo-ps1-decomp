@@ -11,7 +11,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dupes  # noqa: E402
 import neardupes  # noqa: E402
-from test_dupes import Repo, insn  # noqa: E402
+from test_dupes import Repo, insn, jtbl_func_asm  # noqa: E402
 
 
 def w(op, rs=0, rt=0, imm=0):
@@ -110,6 +110,18 @@ class FingerprintTests(unittest.TestCase):
     def test_addiu_pair_sign_extends(self):
         out = [(0, w(15, 0, 8, 0x8011)), (1, w(9, 8, 8, 0x8000))]
         self.assertEqual(neardupes.consts_of(out)[0].value, 0x80108000)
+
+
+    def test_jump_table_twins_share_the_near_key_only_with_equal_tables(self):
+        """T-11150: the guard constant may differ, the table (relative to the function) may not."""
+        a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000', slti=4)
+        b, _ = jtbl_func_asm('g', 0x80134560, 'jtbl_80151230', slti=5)
+        c, _ = jtbl_func_asm('h', 0x80134560, 'jtbl_80151230', slti=5, cases=(0x24, 0x20, 0x28, 0x20))
+        ka, _, bada = dupes.parse_asm(a, 'alu')
+        self.assertIsNone(bada)
+        self.assertEqual(ka, dupes.parse_asm(b, 'alu')[0])
+        self.assertNotEqual(dupes.parse_asm(a)[0], dupes.parse_asm(b)[0])
+        self.assertNotEqual(ka, dupes.parse_asm(c, 'alu')[0])
 
 
 class LiteralTests(unittest.TestCase):

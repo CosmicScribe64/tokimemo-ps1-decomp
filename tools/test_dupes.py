@@ -92,11 +92,152 @@ class FingerprintTests(unittest.TestCase):
         b = a.replace('0000C011', '0100C011')
         self.assertNotEqual(dupes.parse_asm(a)[0], dupes.parse_asm(b)[0])
 
-    def test_jump_table_and_data_are_excluded(self):
+    def test_jump_table_without_its_data_and_plain_data_are_excluded(self):
         a = func_asm('f', 'jtbl_80150000', 'D_80150004', 'func_80140000')
         self.assertIsNotNone(dupes.parse_asm(a)[2])
         b = func_asm('f', 'D_80150000', 'D_80150004', 'func_80140000') + '    .word 0x1234\n'
         self.assertIsNotNone(dupes.parse_asm(b)[2])
+
+
+def le(word):
+    return word.to_bytes(4, 'little').hex().upper()
+
+
+def jtbl_func_asm(name, base, jtbl, cases=(0x20, 0x24, 0x28, 0x20), slti=4, tail=True):
+    """A four-case switch at `base`: sltiu/beqz guard, %hi/%lo(jtbl) load, jr, a `j .L` to the end.
+    tail: append the table as rodata_pieces.py does (.late_rodata after its mark). Returns (asm, table)."""
+    def lab(off):
+        return '.L%08X' % (base + off)
+    out = 'nonmatching %s, 0x30\n\nglabel %s\n' % (name, name)
+    rows = [('%s' % le(0x2C810000 | slti), 'sltiu      $at, $a0, %d' % slti),
+            ('06002010', 'beqz       $at, %s' % lab(0x24)),
+            ('80700400', 'sll        $t6, $a0, 2'),
+            ('1580013C', 'lui        $at, %%hi(%s)' % jtbl),
+            ('21082E00', 'addu       $at, $at, $t6'),
+            ('A48A2E8C', 'lw         $t6, %%lo(%s)($at)' % jtbl),
+            ('0800C001', 'jr         $t6'),
+            ('00000000', ' nop'),
+            (le(0x08000000 | ((base + 0x28) >> 2) & 0x03FFFFFF), 'j          %s' % lab(0x28)),
+            ('00000000', ' nop'),
+            ('0800E003', 'jr         $ra'),
+            ('00000000', ' nop')]
+    for k, (word, text) in enumerate(rows):
+        if k * 4 in (0x20, 0x24, 0x28):
+            out += '%s:\n' % lab(k * 4)
+        out += insn(k * 4, base + k * 4, word, text)
+    out += 'endlabel %s\n' % name
+    table = 'dlabel %s\n' % jtbl + ''.join(
+        '    /* %X %08X %s */ .word %s\n' % (k * 4, 0x80150000 + k * 4, le(base + c), lab(c))
+        for k, c in enumerate(cases)) + 'enddlabel %s\n' % jtbl
+    if tail:
+        out += '\n%s\n.section .late_rodata\n\n%s' % (dupes.RODATA_MARK + ' (rodata_pieces.py)', table)
+    return out, table
+
+
+class JumpTableTests(unittest.TestCase):
+    """T-11150: twins with jump tables and local labels."""
+
+    def parse(self, text, tables=None):
+        info = {}
+        key, relocs, bad = dupes.parse_asm(text, info=info, tables=tables)
+        return key, relocs, bad, info
+
+    def test_twins_at_different_addresses_compare_equal(self):
+        a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000')
+        b, _ = jtbl_func_asm('g', 0x80134560, 'jtbl_80151230')
+        ka, ra, bada, ia = self.parse(a)
+        kb, rb, badb, ib = self.parse(b)
+        self.assertIsNone(bada)
+        self.assertIsNone(badb)
+        self.assertEqual(ka, kb)
+        self.assertEqual(ra, [])                       # tables and labels are not C symbols
+        self.assertEqual(ia['jtbls'], ['jtbl_80150000'])
+        self.assertEqual(ia['jtbl_own'], ['jtbl_80150000'])
+
+    def test_different_table_contents_differ(self):
+        a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000')
+        b, _ = jtbl_func_asm('g', 0x80134560, 'jtbl_80151230', cases=(0x24, 0x20, 0x28, 0x20))
+        self.assertNotEqual(self.parse(a)[0], self.parse(b)[0])
+        c, _ = jtbl_func_asm('g', 0x80134560, 'jtbl_80151230', cases=(0x20, 0x24, 0x28))
+        self.assertNotEqual(self.parse(a)[0], self.parse(c)[0])
+
+    def test_table_from_the_unit_data_files(self):
+        a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000')
+        b, table = jtbl_func_asm('g', 0x80134560, 'jtbl_80151230', tail=False)
+        self.assertEqual(self.parse(b)[2], 'jump table data not found')
+        kb, _, badb, ib = self.parse(b, dupes.jtbl_blocks(table))
+        self.assertIsNone(badb)
+        self.assertEqual(kb, self.parse(a)[0])
+        self.assertEqual(ib['jtbl_own'], [])
+
+    def test_table_padding_is_not_part_of_the_table(self):
+        _, table = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000')
+        padded = table.replace('enddlabel', '    .word 0x00000000\nenddlabel')
+        self.assertEqual(dupes.jtbl_blocks(padded), dupes.jtbl_blocks(table))
+        self.assertEqual(len(dupes.jtbl_blocks(table)['jtbl_80150000']), 4)
+
+    def test_table_target_outside_the_function_is_refused(self):
+        a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000', cases=(0x20, 0x24, 0x40, 0x20))
+        self.assertEqual(self.parse(a)[2], 'jump table targets outside the function')
+
+    def test_local_labels_compare_by_relative_offset(self):
+        a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000')
+        b, _ = jtbl_func_asm('g', 0x80134560, 'jtbl_80151230')
+        # the `j .L` words differ (absolute targets) and still compare equal: checked above; a jump
+        # to another relative offset with the same word bits does not
+        moved = b.replace('j          .L80134588', 'j          .L80134584')
+        self.assertNotEqual(self.parse(a)[0], self.parse(moved)[0])
+        self.assertIsNone(self.parse(moved)[2])
+
+    def test_string_rodata_after_the_mark_is_still_data(self):
+        a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000')
+        a += '.section .rodata\n\ndlabel D_80150100\n    .asciz "x"\nenddlabel D_80150100\n'
+        self.assertEqual(self.parse(a)[2], 'data in function')
+
+
+JT_SRC_C = 'void fsrc(s32 a) {\n    switch (a) {\n    case 0:\n        break;\n    }\n}\n'
+
+
+class JumpTablePlanTests(unittest.TestCase):
+    def repo(self, tgt_tail):
+        r = make_repo(JT_SRC_C, TGT_C)
+        self.addCleanup(r.close)
+        r.write('asm/ovl/AAA/matchings/AAA/fsrc.s', jtbl_func_asm('fsrc', 0x80132000, 'jtbl_80150000')[0])
+        tgt, table = jtbl_func_asm('ftgt', 0x80134560, 'jtbl_80151230', tail=tgt_tail)
+        r.write('asm/ovl/BBB/nonmatchings/BBB/ftgt.s', tgt)
+        r.write('asm/ovl/BBB/data/BBB.rodata.s', '.section .rodata\n\n' + table)
+        return r
+
+    def plans(self, r):
+        funcs = dupes.load_funcs(r.root)
+        return funcs, dupes.plan_all(r.root, funcs, {'aliases': dupes.load_aliases(r.root)})
+
+    def test_table_in_the_function_file_is_applied_only_with_check(self):
+        r = self.repo(True)
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual(len(plans), 1, skipped)
+        self.assertEqual(plans[0]['jtbl'], 'island')
+        self.assertIn('void ftgt(s32 a)', plans[0]['text'])
+        self.assertEqual(dupes.split_jtbl(plans, False), ([], plans))
+        self.assertEqual(dupes.split_jtbl(plans, True), (plans, []))
+        out = []
+        dupes.jtbl_report(dupes.group_funcs(funcs), plans, log=out.append)
+        self.assertIn('jump-table groups 1 (1 unmatched members); fillable 1 functions, 48 bytes', out[0])
+        self.assertTrue(out[1].startswith('NEEDS JTBL CHECK BBB/ftgt <- fsrc'))
+
+    def test_table_outside_the_c_object_is_never_applied(self):
+        r = self.repo(False)
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual(len(plans), 1, skipped)
+        self.assertEqual(plans[0]['jtbl'], 'outside')
+        self.assertEqual(dupes.split_jtbl(plans, True), ([], plans))
+
+    def test_plain_plans_are_not_held(self):
+        r = make_repo(SRC_C, TGT_C)
+        self.addCleanup(r.close)
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertIsNone(plans[0]['jtbl'])
+        self.assertEqual(dupes.split_jtbl(plans, False), (plans, []))
 
 
 def make_repo(src_c, tgt_c, tgt_hdr='', src_hdr=''):

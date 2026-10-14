@@ -27,6 +27,9 @@ Usage (run inside Docker, from the repo root, after a build so asm/ exists):
   options: --unit NAME (main or overlay name, repeatable), --func NAME, --lenient (as dupes.py),
   -v (list every skipped function with its reason).
 Run dupes.py first; this tool skips members that have a byte-identical matched twin.
+Jump-table functions (T-11150) take part as in dupes.py: the tables are part of the shape, and a copy
+into one is applied only with --check when its table is in its own function file (dupes.split_jtbl);
+the report lists them as "needs jtbl check".
 Tests: tools/test_neardupes.py.
 """
 import argparse
@@ -323,6 +326,7 @@ def report(args, funcs, plans, skipped, stats, nosrc):
             e = bad.setdefault(f.bad, [0, 0])
             e[0] += 1
             e[1] += f.n * 4
+    dupes.jtbl_report(build_groups(funcs), plans)
     print('not fingerprinted (unmatched): ' + ', '.join('%s %d fn/%dB' % (k, n, b) for k, (n, b) in sorted(bad.items())))
     ex = wide_extra(funcs)
     print('with load/store offsets and shifts masked as well, %d more unmatched functions (%d bytes) '
@@ -344,6 +348,7 @@ def report(args, funcs, plans, skipped, stats, nosrc):
 
 
 def apply_plans(args, root, plans):
+    plans, _held = dupes.split_jtbl(plans, args.check)
     kept = dupes.apply_all(root, plans, args.check, args.v,
                            describe=lambda p: '%s <- %s (%s, %d consts)' % (p['name'], p['src'], p['unit'], p['ndiff']))
     print('applied %d of %d (%d bytes)' % (len(kept), len(plans), sum(p['bytes'] for p in kept)))

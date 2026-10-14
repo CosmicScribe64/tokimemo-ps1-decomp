@@ -13117,3 +13117,6 @@ Inline review against CODING_STANDARDS.md: a wrong `int` return type on a file-l
 untagged pad locals fixed; a stale near-miss comment corrected. Moved [[tickets/T-11510-tt-batch-3]] to Done.
 ## [2026-10-14] build | T-11100 fix-up of 800674B0 drafts
 `src/main/800674B0.c`: matched `func_80068938` (FAKE pointer view for the loop stores) and `func_80068EC0`; `func_80067870`, `func_800696DC`, `func_8006A2CC` put under `NON_MATCHING` with the `INCLUDE_ASM` fallback. `tools/docker.sh ninja` 27/27 OK, `check_headers.py` OK. [[tickets/T-11100-big-functions-gemini-33]] moved to In Review on [[kanban]].
+
+## [2026-10-14] ticket | T-11150 Twin detection for jump-table functions
+Created [[tickets/T-11150-twin-detection-for-jump-table-functions]] and implemented it: `tools/dupes.py` and `tools/neardupes.py` fingerprint functions with `jtbl_` and `.L` relocations (label offsets from the function start, table words as relative offsets); jump-table plans are applied only with `--apply --check` when the target's table is in its own function file, the rest are listed as "needs jtbl check". Synthetic tests in `tools/test_dupes.py` and `tools/test_neardupes.py`. Section "Jump-table twins (T-11150)" in [[build-system]]. No real build in this environment; ticket moved to In Review on [[kanban]] pending the orchestrator's run.
