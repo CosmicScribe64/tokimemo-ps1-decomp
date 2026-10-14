@@ -312,6 +312,6 @@ void func_80159450(void) {
 }
 
 void func_80159484(void) {
-    D_800E71DF = 4;
+    D_800E6280.unk_F5F = 4;
     func_8004284C();
 }

@@ -2560,13 +2560,10 @@ void func_80046600(void);
 void func_800464E8(void);
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern s32 D_800E7384;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern s8 D_800E71DF;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u8 D_800E62BE;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 extern u8 D_800B0895;
@@ -2576,25 +2573,15 @@ extern u8 D_800B0F33;
 extern u8 D_800B0F34;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u8 D_800E738A;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u8 D_800E7389;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u8 D_800E738D;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern s8 D_800E6377;
-extern s8 D_800E7313;
-extern u8 D_800E6354;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u32 D_800E73A0;
-extern u8 D_800E7395;
-extern u8 D_800E7398;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u8 D_800E71F4;
 
 #endif /* MAIN_API_H */

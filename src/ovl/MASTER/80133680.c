@@ -601,7 +601,7 @@ void func_801350A8(void) {
 }
 
 void func_801358C8(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         cd_read_sectors(0xBU, 0x801E8000, 0xA9C5);
         func_8004284C();

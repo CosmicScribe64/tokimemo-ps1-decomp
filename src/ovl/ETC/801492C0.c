@@ -382,13 +382,13 @@ void func_8014A6D4(void) {
 }
 
 void func_8014A7A4(void) {
-    switch (D_800E738D) {
+    switch (D_800E6280.unk_110D) {
     case 0:
-        D_800E6377 = 1;
+        D_800E6280.unk_0F6.b[1] = 1;
         func_8004EAAC();
-        func_80050DFC(&D_800E6354);
+        func_80050DFC(&D_800E6280.unk_0D4[0]);
         func_80050E8C(&D_801509D8, 0, 0x1F);
-        D_800E738D += 1;
+        D_800E6280.unk_110D += 1;
         return;
     case 1:
         func_80051DBC();
@@ -398,7 +398,7 @@ void func_8014A7A4(void) {
         func_80050C24(0, 3);
         func_80050D78(&D_801509F4, &D_80150A0C, &D_80150A24, 3);
         func_8004EAD4(3);
-        D_800E7313 = 0;
+        D_800E6280.unk_1093 = 0;
         func_8004284C();
         return;
     case 3:

@@ -51,7 +51,7 @@ void func_80132000(void) {
 
 void func_801322D4(void) {
     func_80083808();
-    switch (D_800E7389) {
+    switch (D_800E6280.unk_1109) {
     case 0:
         func_80132550();
         break;

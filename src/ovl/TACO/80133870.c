@@ -44,25 +44,25 @@ s32 func_80133980(void) {
 }
 
 void func_80133AF4(void) {
-    switch (D_800E738D) {
+    switch (D_800E6280.unk_110D) {
     case 0:
         func_80044890(0, 0xC56D, 0xC54D, 0xD310, 0xD2C2, 0xD29D);
-        D_800E738D += 1;
+        D_800E6280.unk_110D += 1;
         return;
     case 1:
         if (func_80044C98() == 1) {
-            D_800E738D += 1;
+            D_800E6280.unk_110D += 1;
             return;
         }
     default:
         return;
     case 2:
         func_80044890(1, 0xC54B, 0xC519, 0xC7BB, 0xC777, 0xC766);
-        D_800E738D += 1;
+        D_800E6280.unk_110D += 1;
         return;
     case 3:
         if (func_80044C98() == 1) {
-            D_800E738D += 1;
+            D_800E6280.unk_110D += 1;
             return;
         }
         break;

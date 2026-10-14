@@ -4,7 +4,7 @@
 void func_80150D30(void) {
     switch (D_80122EB8) {
     case 0:
-        switch (D_800E62BE) {
+        switch (D_800E6280.unk_03E) {
         case 0x60:
             func_80042908(0x7B);
             return;
@@ -23,7 +23,7 @@ void func_80150D30(void) {
         func_80042908(0x7E);
         return;
     case 3:
-        switch (D_800E62BE) {
+        switch (D_800E6280.unk_03E) {
         case 0x60:
             func_80042908(0x7F);
             return;
@@ -33,7 +33,7 @@ void func_80150D30(void) {
         }
         break;
     case 4:
-        switch (D_800E62BE) {
+        switch (D_800E6280.unk_03E) {
         case 0x60:
             func_80042908(0x80);
             return;

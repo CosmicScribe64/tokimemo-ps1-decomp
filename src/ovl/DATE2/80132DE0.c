@@ -98,7 +98,7 @@ void func_80133494(void) {
         func_800AE0F0(D_800CA1DC, "観覧車");
         break;
     case 1:
-        if ((u8) D_800E62BE >= 0x61U) {
+        if ((u8) D_800E6280.unk_03E >= 0x61U) {
             func_8007ED84(0x4359);
             func_800AE0F0(D_800CA1DC, "絶叫マシーンビビール");
         } else {
@@ -188,7 +188,7 @@ void func_80133784(void) {
         D_8013A438 = 1;
         break;
     case 1:
-        if ((u8) D_800E62BE >= 0x61U) {
+        if ((u8) D_800E6280.unk_03E >= 0x61U) {
             D_8013A430 = 5;
             D_8013A438 = 5;
             D_8013A428 += 2;
@@ -200,7 +200,7 @@ void func_80133784(void) {
     case 2:
         D_8013A430 = 7;
         D_8013A438 = 7;
-        if ((u8) D_800E62BE < 0x61U) {
+        if ((u8) D_800E6280.unk_03E < 0x61U) {
             D_8013A428 += 2;
         }
         break;
@@ -389,7 +389,7 @@ void func_80136CEC(void) {
 }
 
 void func_80136D14(void) {
-    func_800847B8((u8) D_800E71DF);
+    func_800847B8((u8) *(s8 *)&D_800E6280.unk_F5F);
     D_8013A428 = 0x15;
     func_8004284C();
 }

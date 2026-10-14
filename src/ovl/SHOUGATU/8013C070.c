@@ -285,7 +285,7 @@ void func_8013C2E4(void) {
 
 void shougatu_stage_dispatch(void) {
     func_80083808();
-    switch (D_800E7389) {
+    switch (D_800E6280.unk_1109) {
     case 0:
         func_8013D660();
         break;

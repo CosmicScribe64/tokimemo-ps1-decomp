@@ -383,7 +383,7 @@ void func_80147630(void) {
 }
 
 void func_80147650(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80146BC4();
         return;
@@ -405,7 +405,7 @@ void func_80147650(void) {
 }
 
 void func_801476DC(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80146BC4();
         return;
@@ -427,7 +427,7 @@ void func_801476DC(void) {
 }
 
 void func_80147768(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80146BC4();
         return;
@@ -449,7 +449,7 @@ void func_80147768(void) {
 }
 
 void func_801477F4(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80146BC4();
         return;
@@ -471,7 +471,7 @@ void func_801477F4(void) {
 }
 
 void func_80147880(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         func_80146BC4();
         return;

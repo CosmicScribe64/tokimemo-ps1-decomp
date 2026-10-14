@@ -78,7 +78,7 @@ void func_80136904(void) {
 }
 
 void func_801369AC(void) {
-    if (D_800E7384 == 0) {
+    if (D_800E6280.unk_1104.w == 0) {
         D_80120652 = 5;
     }
 }

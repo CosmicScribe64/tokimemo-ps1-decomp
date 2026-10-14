@@ -219,7 +219,7 @@ void func_80137824(s32 arg0) {
 }
 
 void func_8013785C(u32 arg0) {
-    if (arg0 < (u32) D_800E7384) {
+    if (arg0 < (u32) D_800E6280.unk_1104.w) {
         func_8004284C();
     }
 }

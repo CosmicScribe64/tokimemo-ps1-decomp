@@ -22,7 +22,7 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_80150B7C);
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_80150F20);
 
 void func_80151064(void) {
-    switch (D_800E738A) {
+    switch (D_800E6280.unk_110A) {
     case 0:
         cd_read_sectors(1U, 0x801E8000, 0x4B7F);
         func_8004284C();
@@ -33,7 +33,7 @@ void func_80151064(void) {
             func_8006612C((s32) "天の声");
             func_8004E884(1);
             func_801323DC();
-            D_800E71DF = 8;
+            D_800E6280.unk_F5F = 8;
             func_800847B8(8U);
             func_800AE0F0(D_800CA188, "　");
             D_800CA148 = 0;
@@ -51,7 +51,7 @@ void func_80151064(void) {
         func_8007E934();
         break;
     case 4:
-        if (D_800E71F4 == 1) {
+        if (D_800E6280.unk_F74 == 1) {
             func_80048EB8(0);
             func_8006BD6C(0);
             func_80057390(0);
