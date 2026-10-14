@@ -65,9 +65,11 @@ import os
 import re
 import sys
 import tempfile
+import threading
 import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import fastscore  # noqa: E402
 
 TICKET = "T-11170"
 WORK_ROOT = os.path.join("build", "autotweak")
@@ -933,7 +935,7 @@ NO_SCORE = 10 ** 6   # order_search's score for a variant that does not compile
 
 
 def order_stage(text, score, verify, deadline, clock=time.monotonic, max_exhaustive=2000, budget=3000,
-                max_runs=2, max_swaps=2):
+                max_runs=2, max_swaps=2, jobs=1):
     """Search the statement orders of the best runs of `text` (and a few operand orders) with
     order_search.search (T-11530, in-process, one compile at a time), scored by `score`. A 0
     counts only when verify() accepts it. Returns (score, text, label) of the best variant that
@@ -962,7 +964,7 @@ def order_stage(text, score, verify, deadline, clock=time.monotonic, max_exhaust
             return NO_SCORE
         return s
 
-    results = order_search.search(template, score_state, jobs=1, max_exhaustive=max_exhaustive,
+    results = order_search.search(template, score_state, jobs=jobs, max_exhaustive=max_exhaustive,
                                   budget=budget, progress=lambda msg: None)
     for s, state in results:
         if s >= NO_SCORE:
@@ -1247,7 +1249,7 @@ class Result:
 
 
 def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_seeds=8, pair_cap=200,
-          clock=time.monotonic, order=True, order_opts=None, advise=None):
+          clock=time.monotonic, order=True, order_opts=None, advise=None, prefetch=None):
     """Greedy hill climb over `variants`. score(text) -> int or None (does not compile);
     verify(text) -> bool is asked for every score of 0, and only a verified 0 is a match. When no
     single edit or pair improves, `order` runs order_stage (T-11200) once per best text, with
@@ -1266,10 +1268,13 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
     seen, order_done = {text}, set()
     hint, hint_text = None, None
 
+    count_lock = threading.Lock()   # the order stage may score from several threads (T-11250)
+
     def counted(t):
         nonlocal tried
-        seen.add(t)
-        tried += 1
+        with count_lock:
+            seen.add(t)
+            tried += 1
         return score(t)
 
     def evaluate(v):
@@ -1282,7 +1287,10 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
         found, scored = None, []
         if advise is not None:
             hint, hint_text = advise(best_text), best_text
-        for v in rank_variants([v for v in variants(best_text) if v.text not in seen], hint, best_text)[:cap]:
+        ranked = rank_variants([v for v in variants(best_text) if v.text not in seen], hint, best_text)[:cap]
+        if prefetch is not None:
+            prefetch([v.text for v in ranked])
+        for v in ranked:
             if clock() >= deadline:
                 break
             s = evaluate(v)
@@ -1297,8 +1305,22 @@ def climb(text, score, verify=lambda text: True, budget=300.0, cap=300, pair_see
         if found is None:
             scored.sort(key=lambda sv: sv[0])
             budget_left = pair_cap
+            pairs = {}
+            if prefetch is not None:    # the texts the loop below will score, in its order
+                planned, left = set(seen), pair_cap
+                for s1, v1 in scored[:pair_seeds]:
+                    lst = []
+                    for v2 in rank_variants(variants(v1.text), hint, v1.text):
+                        if left <= 0:
+                            break
+                        if v2.text not in planned:
+                            planned.add(v2.text)
+                            left -= 1
+                            lst.append(v2)
+                    pairs[v1.text] = lst
+                prefetch([v2.text for lst in pairs.values() for v2 in lst])
             for s1, v1 in scored[:pair_seeds]:
-                for v2 in rank_variants(variants(v1.text), hint, v1.text):
+                for v2 in (pairs[v1.text] if prefetch is not None else rank_variants(variants(v1.text), hint, v1.text)):
                     if budget_left <= 0 or clock() >= deadline:
                         break
                     if v2.text in seen:
@@ -1457,6 +1479,9 @@ class BuildScorer:
         self.scratch = os.path.join(self.dir, "context.c")
         with open(os.path.join(self.root, draft.src)) as fh:
             self.original = fh.read()
+        self._exact_lock, self._score_lock, self._verify_lock = threading.Lock(), threading.Lock(), threading.Lock()
+        self._cache, self._jobs, self._workers, self._builder = {}, {}, None, None
+        self.exact, self.jobs = True, 1
         self._write(draft.text)
         with contextlib.redirect_stdout(io.StringIO()):
             permute.setup(self.root, draft.func, src=self.scratch, out=self.dir, unit=draft.unit,
@@ -1467,32 +1492,89 @@ class BuildScorer:
         self.compiler = Compiler(os.path.join(self.dir, "compile.sh"), show_errors=False, debug_mode=False)
         self.scorer = Scorer(os.path.join(self.dir, "target.o"), stack_differences=True, algorithm="difflib",
                              debug_mode=False, ign_branch_targets=False, objdump_command=None)
+        self.configure(jobs=1, exact=False)
 
-    def _write(self, definition):
+    def configure(self, jobs=1, exact=False):
+        """Scoring threads for prefetch/order search and the legacy switch (T-11250). exact: the
+        original path (rewrite the scratch file, permute.build_base, one candidate at a time),
+        kept to compare scores; the default path builds the same base text from a cached strip."""
+        self.exact = exact
+        self.jobs = 1 if exact else max(1, jobs)
+        self._workers = fastscore.Workers(self.jobs) if self.jobs > 1 else None
+        self._builder = None if exact else fastscore.BaseBuilder(self.permute, self.root, self.draft.func)
+
+    def close(self):
+        if self._workers is not None:
+            self._workers.close()
+            self._workers = None
+
+    def _text(self, definition):
         text = rewrite_guard(self.original, self.draft.func, definition)
         if text is None:
             text = self.permute.replace_function(self.original, self.draft.func, definition)
-        with open(self.scratch, "w") as fh:
-            fh.write(text)
+        return text
 
-    def score(self, definition):
-        self._write(definition)
-        try:
-            with contextlib.redirect_stdout(io.StringIO()):
-                base = self.permute.build_base(self.root, self.scratch, self.draft.func)
-        except SystemExit:
-            return None
+    def _write(self, definition):
+        with open(self.scratch, "w") as fh:
+            fh.write(self._text(definition))
+
+    def score_exact(self, definition):
+        """The original scoring path (one scratch file, one candidate at a time)."""
+        with self._exact_lock:
+            self._write(definition)
+            try:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    base = self.permute.build_base(self.root, self.scratch, self.draft.func)
+            except SystemExit:
+                return None
+            return self._compile_score(base)
+
+    def _compile_score(self, base):
         obj = self.compiler.compile(base, show_errors=False)
         if obj is None:
             return None
         try:
-            return self.scorer.score(obj)[0]
+            with self._score_lock:      # the permuter's Scorer reuses one SequenceMatcher
+                return self.scorer.score(obj)[0]
         finally:
             os.unlink(obj)
 
+    def _score_fast(self, definition):
+        text = self._text(definition)
+        try:
+            base = self._builder.build(text)
+        except SystemExit:
+            return None
+        s = self._compile_score(base)
+        self._cache[definition] = s
+        return s
+
+    def score(self, definition):
+        if self.exact or self._builder is None:
+            return self.score_exact(definition)
+        if definition in self._cache:
+            return self._cache[definition]
+        job = self._jobs.pop(definition, None)
+        if job is not None:
+            job.done.wait()
+            if job.state == "done":
+                return job.result()
+        return self._score_fast(definition)
+
+    def prefetch(self, texts):
+        """Queue the scores of `texts` (in the order the climb will ask for them) on the worker
+        threads and drop the jobs of an earlier call that have not started."""
+        if self._workers is None:
+            return
+        self._workers.cancel_pending()
+        for t in texts:
+            job = self._jobs.get(t)
+            if t not in self._cache and (job is None or job.state == "cancelled"):
+                self._jobs[t] = self._workers.submit(self._score_fast, t)
+
     def verify(self, definition):
         meta = {"func": self.draft.func, "unit": self.draft.unit, "src": self.draft.src}
-        with tempfile.TemporaryDirectory(prefix="verify-", dir=self.dir) as cand:
+        with self._verify_lock, tempfile.TemporaryDirectory(prefix="verify-", dir=self.dir) as cand:
             with open(os.path.join(cand, "source.c"), "w") as fh:
                 fh.write(definition + "\n")
             ok, _report = self.permute.verify_candidate(self.root, meta, cand)
@@ -1507,9 +1589,18 @@ def run_one(root, draft, args, make_scorer=BuildScorer, out=print):
         return None
     verify = (lambda text: True) if args.no_verify else scorer.verify
     advise = None if args.no_regdiff else make_advisor(root, draft)
-    res = climb(draft.text, scorer.score, verify, budget=args.time, cap=args.cap, pair_cap=args.pair_cap,
-                order=not args.no_order, order_opts={"max_exhaustive": args.max_exhaustive,
-                                                     "max_swaps": args.order_swaps}, advise=advise)
+    exact = getattr(args, "exact", False)
+    jobs = 1 if exact else getattr(args, "score_jobs", None) or fastscore.default_jobs()
+    if hasattr(scorer, "configure"):
+        scorer.configure(jobs=jobs, exact=exact)
+    try:
+        res = climb(draft.text, scorer.score, verify, budget=args.time, cap=args.cap, pair_cap=args.pair_cap,
+                    order=not args.no_order, order_opts={"max_exhaustive": args.max_exhaustive,
+                                                         "max_swaps": args.order_swaps, "jobs": jobs},
+                    advise=advise, prefetch=getattr(scorer, "prefetch", None) if jobs > 1 else None)
+    finally:
+        if hasattr(scorer, "close"):
+            scorer.close()
     if res.error:
         out("SKIP %s  %s" % (draft.scope, res.error))
         return res
@@ -1557,6 +1648,10 @@ def parse_args(argv):
                    help="order stage: variants per search, as in order_search.py (default 2000)")
     p.add_argument("--order-swaps", type=int, default=2,
                    help="order stage: operand swaps (+, ==, !=) added to the blocks (default 2)")
+    p.add_argument("--score-jobs", type=int, default=0,
+                   help="candidates compiled in parallel (default: cores - 2; T-11250)")
+    p.add_argument("--exact", action="store_true",
+                   help="legacy scoring: one candidate at a time through permute.build_base (T-11250)")
     p.add_argument("--root", default=".", help=argparse.SUPPRESS)
     args = p.parse_args(argv)
     if not args.all and not args.func:
