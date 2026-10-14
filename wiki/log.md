@@ -13276,3 +13276,11 @@ Exact rescoring in `tools/autotweak.py` (climb: top `--exact-top` 3 plus every c
 
 Opened [[tickets/T-11540-tt-order-search-pass]] (In Progress, stacked on T-11520): `tools/order_search.py` on the TT
 near misses that are down to scheduling or temp numbering. (Opened after the first runs had started.)
+
+## [2026-10-14] build | T-11540 func_8013DE10 matched with order_search
+
+`tools/order_search.py` matched TT `func_8013DE10` (984 bytes): both u/v sums reversed and the flags address written
+`*(r[0] + flags)`, found among 192 operand-order variants in about 4 s. `func_8013E850` showed no order dependence
+(written order best over 96 + 198 variants). TT 206/303 (44.7%); grand total `5426/6958   1171560/2279368  51.4%`;
+27/27. Tool fixes (tie keeps the written order, nested `ORDER_SWAP`) pushed to PR #11. See
+[[tickets/T-11540-tt-order-search-pass]].
