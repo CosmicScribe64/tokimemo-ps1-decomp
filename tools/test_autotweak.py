@@ -497,7 +497,7 @@ class RegdiffHints(unittest.TestCase):
 
     def test_table_names_real_edit_kinds(self):
         known = {"byteview", "swap", "join", "split", "compound", "expand", "emptytest", "pad", "declswap",
-                 "shift", "inline", "temp", "width", "order"}
+                 "shift", "inline", "temp", "width", "order"} | set(A.typefix.KINDS)  # T-11240
         produced = {A.edit_kind(v.label) for v in A.variants(FUNC)}
         self.assertTrue(produced <= known, produced - known)
         for cls, kinds in A.HINT_EDITS.items():

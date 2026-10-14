@@ -1693,5 +1693,9 @@ def main(argv=None, make_scorer=BuildScorer, out=print):
     return 0
 
 
+import typefix  # noqa: E402  (T-11240: type-mismatch edits join TRANSFORMS and HINT_EDITS)
+typefix.register(sys.modules[__name__])
+
+
 if __name__ == "__main__":
     sys.exit(main())

@@ -13251,3 +13251,10 @@ Measured 1.3 s per candidate, 1.0 s of it in `permute.strip_functions`. `tools/f
 ## [2026-10-14] ticket | T-11250 In Review
 
 Moved [[tickets/T-11250-faster-candidate-scoring]] to In Review; needs the code review.
+## [2026-10-14] ticket | T-11240 created
+
+Created [[tickets/T-11240-typefix-bulk-m2c-autotweak]] (In Progress): `tools/typefix.py` with post-m2c type rewrites and autotweak type edits.
+
+## [2026-10-14] ticket | T-11240 to In Review
+
+Added `tools/typefix.py` (post-m2c type rewrites, autotweak type edits), hooks in `tools/bulk_m2c.py` and `tools/autotweak.py`, `tools/test_typefix.py`, section in [[decompile-workflow]]. Bulk rerun and ninja left to the orchestrator (fast scorer).
