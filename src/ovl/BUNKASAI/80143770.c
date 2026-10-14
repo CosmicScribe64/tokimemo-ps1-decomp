@@ -4,7 +4,57 @@
 
 void func_80083440();
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80143770", func_80143770);
+void func_80143770(void) {
+    BunkaDispatch8 *dispatch = (BunkaDispatch8 *)&D_80122EB8;
+    dispatch->unk_04 = 7;
+    switch (dispatch->unk_00) {
+    case 0:
+        if (D_800E6280.unk_03E == 0x61) {
+            func_80042908(0x7B);
+            return;
+        }
+        func_80042908(0x7A);
+        return;
+    case 1:
+        func_80042908(0x7C);
+        return;
+    case 2:
+        func_80042908(0x7D);
+        return;
+    case 3:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80042908(0x7E);
+            return;
+        case 0x60:
+            func_80042908(0x80);
+            return;
+        case 0x61:
+            func_80042908(0x7D);
+            return;
+        }
+        break;
+    case 4:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            func_80042908(0x81);
+            return;
+        case 0x60:
+            func_80042908(0x82);
+            return;
+        case 0x61:
+            func_80042908(0x83);
+            return;
+        }
+        break;
+    case 5:
+        func_80042908(0x84);
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80143770", func_801438E4);
 
