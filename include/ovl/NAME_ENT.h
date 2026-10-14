@@ -425,3 +425,7 @@ extern u8 D_8014CC8F;
 
 /* T-11080 forward declarations. */
 void func_8013A9C8(void);
+
+/* T-11120 forward declarations. */
+void func_80142A3C(void);
+s32 func_801429BC(void);

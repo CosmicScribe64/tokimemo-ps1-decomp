@@ -2030,7 +2030,43 @@ s32 func_801425C0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80142880);
+void func_80142880(void) {
+    s8 *sel; /* FAKE: the switch reads the selector through a pointer so the later read stays a separate range; permuter idiom, T-11120 */
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(1);
+    sel = &D_800E6280.unk_1094;
+    if (D_800E6280.unk_F88 & 0x20) {
+        switch (*sel) {
+        case 0:
+            func_80142A3C();
+            func_80042940(0xC0);
+            func_800AE0B0("0");
+            break;
+        case 1:
+            func_80142A3C();
+            func_80042940(0xA0);
+            func_800AE0B0("1");
+            break;
+        case 2:
+            func_80142A3C();
+            func_80042940(0xE0);
+            func_800AE0B0("2");
+            break;
+        case 3:
+            func_80042940(0);
+            func_800AE0B0("3");
+            break;
+        }
+        func_800415B4(0, 0x40);
+        if (D_800E6280.unk_1094 >= 0) {
+            D_8014D0D4 = 1;
+        }
+    }
+    if (func_801429BC() != 0) {
+        func_800415B4(0, 0x40);
+    }
+}
 
 s32 func_801429BC(void) {
     if (D_800E6280.unk_F88 & 0x20) {
