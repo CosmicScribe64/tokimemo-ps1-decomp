@@ -39,6 +39,18 @@ part of the fingerprint as offsets from the function start, so twins need equiva
 into a jump-table function only builds when the compiler's table lands where the original's is:
 the target's tables must be in its own function file (`.late_rodata`, a rodata island). Such plans
 are applied only with --check; the others are listed as "needs jtbl check" and never applied.
+T-11160: functions with their own rodata take part too ("data in function" before). Own rodata is a
+symbol of the function's C object island (`<asm_path>/data/<name>.rodata.s`) or of the `.rodata`
+that rodata_pieces.py appended to the function file. A `%hi/%lo` of it is masked and kept as its
+position among the function's data symbols, and its directives (strings, words, floats, alignment;
+comments stripped, Shift-JIS strings escaped as asm.py does) join the fingerprint; a `.word` naming a
+local label is kept as the offset from the function start, a `.word` naming a symbol as a marker. So
+twins must have equal data. The source C may then hold string literals (they are copied verbatim:
+the data is equal). A copy only builds when the compiler's rodata lands where the original's is: the
+target's data must all be in its own function file and hold no relocated words. Such plans are
+applied only with --check; the others are listed as "needs data check" and never applied. Lines in
+the function text that are neither instructions nor labels still keep a function out
+("data in function text").
 Tests: tools/test_dupes.py.
 """
 import argparse
@@ -50,6 +62,7 @@ import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from asm import STRING_LINE, sjis_escape  # noqa: E402
 from sync_protos import is_main_symbol  # noqa: E402
 import srcscan  # noqa: E402
 
@@ -63,6 +76,9 @@ RODATA_MARK = '# T-1340 rodata'                                   # rodata_piece
 DLABEL_RE = re.compile(r'^\s*(?:dlabel|glabel)\s+(\S+)', re.M)
 JTBL_WORD_RE = re.compile(r'\.word\s+\.?L([0-9A-Fa-f]{8})\b')
 LABEL_ADDR_RE = re.compile(r'^\.?L([0-9A-Fa-f]{8})$')
+DATA_DIRECTIVES = {'.asciz', '.ascii', '.string', '.byte', '.half', '.short', '.hword', '.word', '.float',
+                   '.double', '.space', '.skip', '.align', '.balign'}
+ALIGN_DIRECTIVES = ('.align', '.balign')
 SKIP_LINE_RE = re.compile(r'^\s*($|glabel\b|endlabel\b|nonmatching\b|\.L\w+:|jlabel\b|dlabel\b|enddlabel\b|\.set\b|\.size\b|\.type\b|\.align\b|/\*(?!.*\*/\s*\S).*$)')
 BASIC_WORDS = set("""extern const volatile unsigned signed char short int long void struct union enum
 typedef static register s8 u8 s16 u16 s32 u32 size_t""".split())
@@ -84,6 +100,8 @@ class Func:
         self.n = 0                # instruction count
         self.jtbls = []           # jump tables the function uses, in order of first use (T-11150)
         self.jtbl_home = None     # 'island': all its tables are in its own function file, else 'outside'
+        self.datas = []           # own rodata symbols, in order of first use (T-11160)
+        self.data_home = None     # 'island': all in its own function file, 'pointers', or 'outside'
 
 
 ALU_IMM_OPS = {0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F}   # addi addiu slti sltiu andi ori xori lui
@@ -132,7 +150,62 @@ def jtbl_blocks(text):
     return out
 
 
-def parse_asm(text, imm=None, imm_out=None, info=None, tables=None):
+def data_blocks(text):
+    """({symbol: [directive line]}, [symbol in order], bad) of the non-table rodata blocks of splat
+    data text (T-11160). A line is the directive and its operands, comments stripped and strings
+    Shift-JIS escaped as asm.py does; alignment lines in front of a block belong to it. `.word`
+    operands are kept as written (parse_asm makes them position independent). bad is a reason
+    when a line is not a data directive, else None."""
+    out, order, cur, pending, bad = {}, [], None, [], None
+    for line in text.splitlines():
+        m = DLABEL_RE.match(line)
+        if m:
+            cur = None if m.group(1).startswith('jtbl') else m.group(1)
+            if cur:
+                out[cur] = pending
+                order.append(cur)
+            pending = []
+            continue
+        body = re.sub(r'/\*.*?\*/', '', STRING_LINE.sub(sjis_escape, line)).strip()
+        if not body or body.startswith(('enddlabel', '.section', '#')):
+            if body.startswith('enddlabel'):
+                cur = None
+            continue
+        if cur is None:
+            if body.split()[0] in ALIGN_DIRECTIVES:
+                pending.append(' '.join(body.split()))
+            continue
+        if body.split()[0] not in DATA_DIRECTIVES:
+            bad = bad or 'unparsed rodata in function'
+            continue
+        out[cur].append(' '.join(body.split()) if '"' not in body else body)
+    return out, order, bad
+
+
+def data_shape(lines, start, n):
+    """Position-independent form of one rodata block: `.word` of a local label inside the function
+    -> its offset from the function start, `.word` of a symbol -> a marker. Returns (shape, has
+    relocated words)."""
+    shape, ptr = [], False
+    for line in lines:
+        op, _sp, arg = line.partition(' ')
+        if op == '.word':
+            sm = SYM_RE.match(arg.strip())
+            if sm and not re.match(r'^\d', sm.group(1)):
+                add = int(sm.group(3), 0) * (1 if sm.group(2) == '+' else -1) if sm.group(2) else 0
+                lab = LABEL_ADDR_RE.match(sm.group(1))
+                off = int(lab.group(1), 16) + add - start if lab and sm.group(1).startswith('.') else None
+                if off is not None and 0 <= off < 4 * n:
+                    shape.append('.word L%+d' % off)
+                else:
+                    shape.append('.word R%+d' % add)
+                    ptr = True
+                continue
+        shape.append(line)
+    return tuple(shape), ptr
+
+
+def parse_asm(text, imm=None, imm_out=None, info=None, tables=None, rodata=None):
     """Return (key, relocs, bad) for the text of one split function file.
 
     imm=None is the exact fingerprint. imm='alu'/'wide' also masks immediates (see imm_mask);
@@ -140,7 +213,10 @@ def parse_asm(text, imm=None, imm_out=None, info=None, tables=None):
     info, when a dict, receives 'n' (instruction count), 'jtbls' (tables used, in order) and
     'jtbl_own' (the tables this file carries itself). tables: {jtbl name: [target address]} of the
     unit (jtbl_blocks), consulted for tables the file does not carry. Local labels and jump tables
-    are not in relocs: they name nothing the C writes.
+    are not in relocs: they name nothing the C writes. T-11160: rodata, the {symbol: [line]} of the
+    function's C object island (data_blocks), and the `.rodata` blocks of the file itself are its
+    own data; info also receives 'datas' (own data symbols, in order), 'data_own' (those the file
+    carries) and 'data_ptr' (a block holds relocated words). Own data is not in relocs either.
     """
     items = []
     relocs = []
@@ -148,17 +224,17 @@ def parse_asm(text, imm=None, imm_out=None, info=None, tables=None):
     nglabel = 0
     code, _sep, tail = text.partition(RODATA_MARK)
     own = jtbl_blocks(tail)
-    if any(not n.startswith('jtbl') for n in DLABEL_RE.findall(tail)):
-        bad = 'data in function'
+    odata, oorder, bad = data_blocks(tail)
     start = None
     jtbls = []
+    datas = []
     for line in code.splitlines():
         if re.match(r'^glabel\b', line):
             nglabel += 1
         m = INSN_RE.match(line)
         if not m:
             if line.strip() and not SKIP_LINE_RE.match(line):
-                bad = bad or 'data in function'
+                bad = bad or 'data in function text'
             continue
         if start is None:
             start = int(m.group(2), 16)
@@ -192,6 +268,11 @@ def parse_asm(text, imm=None, imm_out=None, info=None, tables=None):
                     jtbls.append(sym)
                 items.append((word & ~mask & 0xFFFFFFFF, '%s:T%d%+d' % (rel[0], jtbls.index(sym), add)))
                 continue
+            if sym in odata or (rodata and sym in rodata):   # T-11160: own data, its lines come below
+                if sym not in datas:
+                    datas.append(sym)
+                items.append((word & ~mask & 0xFFFFFFFF, '%s:D%d%+d' % (rel[0], datas.index(sym), add)))
+                continue
             if lab and sym.startswith('.'):      # local label: offset from the function start
                 items.append((word & ~mask & 0xFFFFFFFF, '%s:L%+d' % (rel[0], int(lab.group(1), 16) + add - start)))
                 continue
@@ -218,11 +299,21 @@ def parse_asm(text, imm=None, imm_out=None, info=None, tables=None):
         if any(o < 0 or o >= 4 * n for o in offs):
             bad = bad or 'jump table targets outside the function'
         items.append(('T', offs))
+    datas += [d for d in oorder if d not in datas]     # carried, named only by data or a comment
+    ptr = False
+    for sym in datas:
+        lines = odata[sym] if sym in odata else rodata[sym]
+        shape, p = data_shape(lines, start or 0, n)
+        ptr = ptr or p
+        items.append(('D', shape))
     key = hashlib.sha1(repr(items).encode()).hexdigest()
     if info is not None:
         info['n'] = n
         info['jtbls'] = jtbls
         info['jtbl_own'] = [t for t in jtbls if own.get(t)]
+        info['datas'] = datas
+        info['data_own'] = [d for d in datas if d in odata]
+        info['data_ptr'] = ptr
     return key, relocs, bad
 
 
@@ -244,6 +335,25 @@ def load_tables(root, paths, units=None):
     return out
 
 
+def island_path(unit, name):
+    """The rodata island file of a C subsegment (T-11160): `<asm_path>/data/<name>.rodata.s`."""
+    if unit == 'main':
+        return 'asm/data/main/%s.rodata.s' % name
+    return 'asm/ovl/%s/data/%s.rodata.s' % (unit, name)
+
+
+def load_islands(root, paths, units=None):
+    """{island path: {symbol: [line]}} of the rodata island files among `paths` (data_blocks)."""
+    out = {}
+    for rel in paths:
+        m = re.match(r'^asm/(?:ovl/(\w+)/)?data/.*\.rodata\.s$', rel)
+        if not m or (units and (m.group(1) or 'main') not in units):
+            continue
+        with open(os.path.join(root, rel), errors='replace') as fh:
+            out[rel] = data_blocks(fh.read())[0]
+    return out
+
+
 def load_funcs(root, units=None, near=False):
     """Fingerprint original asm, taking current matched state from its owning C source.
 
@@ -255,6 +365,7 @@ def load_funcs(root, units=None, near=False):
     paths = [os.path.relpath(p, root).replace(os.sep, '/')
              for p in sorted(glob.glob(os.path.join(root, 'asm/**/*.s'), recursive=True))]
     tables = load_tables(root, paths, units)
+    islands = load_islands(root, paths, units)
     for rel in paths:
         m = ASM_RE.match(rel)
         if not m:
@@ -283,15 +394,20 @@ def load_funcs(root, units=None, near=False):
             text = f.read()
         info = {}
         utab = tables.get(unit, {})
-        key, relocs, bad = parse_asm(text, info=info, tables=utab)
+        isl = islands.get(island_path(unit, m.group(3)))
+        key, relocs, bad = parse_asm(text, info=info, tables=utab, rodata=isl)
         fn = Func(name, unit, matched, rel, key, relocs, bad)
         fn.n = info.get('n', 0)
         fn.jtbls = info.get('jtbls', [])
         if fn.jtbls:
             fn.jtbl_home = 'island' if len(info['jtbl_own']) == len(fn.jtbls) else 'outside'
+        fn.datas = info.get('datas', [])
+        if fn.datas:
+            fn.data_home = ('pointers' if info['data_ptr'] else
+                            'island' if len(info['data_own']) == len(fn.datas) else 'outside')
         if near:      # T-3320: key becomes the immediate-masked fingerprint, exact keeps the old one
-            fn.key = parse_asm(text, 'alu', fn.imm_words, tables=utab)[0]
-            fn.wide = parse_asm(text, 'wide', tables=utab)[0]
+            fn.key = parse_asm(text, 'alu', fn.imm_words, tables=utab, rodata=isl)[0]
+            fn.wide = parse_asm(text, 'wide', tables=utab, rodata=isl)[0]
         copies[identity] = (preferred, fn)
     return [fn for _preferred, fn in copies.values()]
 
@@ -347,6 +463,14 @@ def target_headers(root, tfile, tgt, cache):
 
 def strip_comments(s):
     return re.sub(r'/\*.*?\*/', '', s, flags=re.S)
+
+
+STRING_LIT_RE = re.compile(r'"(?:[^"\\\n]|\\.)*"')
+
+
+def blank_strings(s):
+    """`s` with the contents of every C string literal removed (T-11160)."""
+    return STRING_LIT_RE.sub('""', s)
 
 
 def norm(s):
@@ -751,7 +875,9 @@ def plan_copy(root, src, tgt, cache):
     if in_conditional(stext, rng[0]):
         return None, 'source inside #if'
     body = stext[rng[0]:rng[1]]
-    if '"' in strip_comments(body) or re.search(r'\bstatic\b|#', strip_comments(body)):
+    # T-11160: string literals only when both have own rodata (equal by the fingerprint)
+    if ('"' in strip_comments(body) and not (src.datas and tgt.datas)) \
+            or re.search(r'\bstatic\b|#', blank_strings(strip_comments(body))):
         return None, 'source has string literal, static or preprocessor use'
     sheads = [read(root, h) for h in header_closure(root, sfile, cache)]
     thp = target_headers(root, tfile, tgt, cache)
@@ -767,7 +893,7 @@ def plan_copy(root, src, tgt, cache):
     if why:
         return None, why
     # symbols of the body: the text before the field rewrite, with the aggregate paths blanked
-    code = strip_comments(blank_spans(orig_body, gs_spans))
+    code = blank_strings(strip_comments(blank_spans(orig_body, gs_spans)))
     # every game symbol and every called name in the body must come from the relocations
     used = {}
     for ident in set(re.findall(r'\b[A-Za-z_]\w*\b', code)):
@@ -930,7 +1056,7 @@ def plan_copy(root, src, tgt, cache):
                 dest = 'include/ovl/%s.h' % tgt.unit
             decls.append((dest, proto))
     return dict(text=text, tgtfile=tfile, name=tgt.name, decls=decls, local=local, retype=retype,
-                src=src.name, jtbl=tgt.jtbl_home), None
+                src=src.name, jtbl=tgt.jtbl_home, data=tgt.data_home), None
 
 
 def add_local(text, local):
@@ -1120,12 +1246,19 @@ JTBL_WHY = {'island': 'its table is in its own function file: verify with --appl
             'outside': 'its table is outside the C object (no rodata island or an orphan chunk): not applied'}
 
 
-def split_jtbl(plans, check):
-    """(plans to apply, jump-table plans held back) (T-11150). A copy into a jump-table function
-    needs the build to confirm the compiler's table: 'island' plans go with --check, 'outside' never."""
+DATA_WHY = {'island': 'its rodata is in its own function file: verify with --apply --check',
+            'outside': 'some of its rodata is not in its own function file (an earlier function or '
+                       'the C object provides it): not applied',
+            'pointers': 'its rodata holds relocated words (pointers): not applied'}
+
+
+def split_held(plans, check):
+    """(plans to apply, plans held back) (T-11150, T-11160). A copy into a jump-table function or a
+    function with own rodata needs the build to confirm the compiler's rodata: 'island' plans go
+    with --check, the others never."""
     go, held = [], []
     for p in plans:
-        if p.get('jtbl') is None or (p['jtbl'] == 'island' and check):
+        if all(p.get(k) is None or (p[k] == 'island' and check) for k in ('jtbl', 'data')):
             go.append(p)
         else:
             held.append(p)
@@ -1143,6 +1276,21 @@ def jtbl_report(groups, plans, log=print):
            len(jp), sum(p['bytes'] for p in jp)))
     for p in sorted(jp, key=lambda p: (p['unit'], p['name'])):
         log('NEEDS JTBL CHECK %s/%s <- %s: %s' % (p['unit'], p['name'], p['src'], JTBL_WHY[p['jtbl']]))
+
+
+def data_report(groups, plans, log=print):
+    """Report line and "needs data check" list of the plans into functions with own rodata
+    (T-11160). groups: key -> members."""
+    dg = [m for m in groups.values() if any(f.datas for f in m)]
+    um = [f for m in dg for f in m if not f.matched]
+    dp = [p for p in plans if p.get('data')]
+    fill = [p for p in dp if p['data'] == 'island']
+    log('data-in-function groups %d (%d unmatched members, %d bytes); fillable %d functions, %d bytes '
+        '(applied only with --apply --check); needs data check %d functions, %d bytes'
+        % (len(dg), len(um), sum(f.n * 4 for f in um), len(fill), sum(p['bytes'] for p in fill),
+           len(dp), sum(p['bytes'] for p in dp)))
+    for p in sorted(dp, key=lambda p: (p['unit'], p['name'])):
+        log('NEEDS DATA CHECK %s/%s <- %s: %s' % (p['unit'], p['name'], p['src'], DATA_WHY[p['data']]))
 
 
 def apply_all(root, plans, check, verbose, log=print, describe=None):
@@ -1258,13 +1406,14 @@ def main(argv=None):
     print('functions %d (matched %d), groups with matched+unmatched %d, unmatched members %d: '
           'plans %d, skipped %d' % (len(funcs), nm, stats['groups'], stats['cand'], len(plans), len(skipped)))
     jtbl_report(group_funcs(funcs), plans)
+    data_report(group_funcs(funcs), plans)
     if a.v:
         for t, rs in skipped:
             print('SKIP %s/%s: %s' % (t.unit, t.name, '; '.join(rs[:2])))
     kept = []
     if a.apply:
         # repeated rounds: a copy can make a new source for another group member
-        go, _held = split_jtbl(plans, a.check)
+        go, _held = split_held(plans, a.check)
         kept = apply_all(root, go, a.check, a.v)
         print('applied %d of %d' % (len(kept), len(plans)))
     return 0

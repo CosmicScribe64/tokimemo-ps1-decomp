@@ -189,10 +189,171 @@ class JumpTableTests(unittest.TestCase):
         self.assertNotEqual(self.parse(a)[0], self.parse(moved)[0])
         self.assertIsNone(self.parse(moved)[2])
 
-    def test_string_rodata_after_the_mark_is_still_data(self):
+    def test_string_rodata_after_the_mark_is_part_of_the_shape(self):
         a, _ = jtbl_func_asm('f', 0x80132000, 'jtbl_80150000')
-        a += '.section .rodata\n\ndlabel D_80150100\n    .asciz "x"\nenddlabel D_80150100\n'
-        self.assertEqual(self.parse(a)[2], 'data in function')
+        b = a + '.section .rodata\n\ndlabel D_80150100\n    .asciz "x"\nenddlabel D_80150100\n'
+        kb, _, badb, ib = self.parse(b)
+        self.assertIsNone(badb)                        # T-11160: no longer "data in function"
+        self.assertEqual(ib['datas'], ['D_80150100'])
+        self.assertNotEqual(kb, self.parse(a)[0])
+
+
+def data_func_asm(name, base, sym, data='    .asciz "abc"\n    .balign 4\n', tail=True, callee='func_80140010'):
+    """`callee(&sym)`: lui/addiu of a string, jal, return. tail: append the string block as
+    rodata_pieces.py does (.rodata after its mark). Returns (asm, block)."""
+    out = 'nonmatching %s, 0x18\n\nglabel %s\n' % (name, name)
+    rows = [('1580043C', 'lui        $a0, %%hi(%s)' % sym),
+            ('A48A8424', 'addiu      $a0, $a0, %%lo(%s)' % sym),
+            ('9834050C', 'jal        %s' % callee),
+            ('00000000', ' nop'),
+            ('0800E003', 'jr         $ra'),
+            ('00000000', ' nop')]
+    for k, (word, text) in enumerate(rows):
+        out += insn(k * 4, base + k * 4, word, text)
+    out += 'endlabel %s\n' % name
+    block = 'dlabel %s\n' % sym + ''.join('    /* 0 80150100 */ %s\n' % l.strip() for l in data.splitlines()) \
+        + 'enddlabel %s\n' % sym
+    if tail:
+        out += '\n%s\n.section .rodata\n\n%s' % (dupes.RODATA_MARK + ' (rodata_pieces.py)', block)
+    return out, block
+
+
+class DataTests(unittest.TestCase):
+    """T-11160: twins with their own rodata."""
+
+    def parse(self, text, rodata=None):
+        info = {}
+        key, relocs, bad = dupes.parse_asm(text, info=info, rodata=rodata)
+        return key, relocs, bad, info
+
+    def test_twins_with_equal_strings_compare_equal(self):
+        a, _ = data_func_asm('f', 0x80132000, 'D_80150100')
+        b, _ = data_func_asm('g', 0x80134560, 'D_80151230', callee='func_80142222')
+        ka, ra, bada, ia = self.parse(a)
+        kb, rb, badb, ib = self.parse(b)
+        self.assertIsNone(bada)
+        self.assertEqual(ka, kb)
+        self.assertEqual([r[1] for r in ra], ['func_80140010'])     # own data is not a C symbol
+        self.assertEqual(ia['datas'], ['D_80150100'])
+        self.assertEqual(ia['data_own'], ['D_80150100'])
+        self.assertFalse(ia['data_ptr'])
+
+    def test_different_data_differs(self):
+        a, _ = data_func_asm('f', 0x80132000, 'D_80150100')
+        b, _ = data_func_asm('g', 0x80134560, 'D_80151230', data='    .asciz "abd"\n    .balign 4\n')
+        self.assertNotEqual(self.parse(a)[0], self.parse(b)[0])
+        c, _ = data_func_asm('g', 0x80134560, 'D_80151230', data='    .asciz "abc"\n')
+        self.assertNotEqual(self.parse(a)[0], self.parse(c)[0])
+
+    def test_data_from_the_island_file_and_shift_jis(self):
+        a, _ = data_func_asm('f', 0x80132000, 'D_80150100', data='    .asciz "あ"\n')
+        b, block = data_func_asm('g', 0x80134560, 'D_80151230', data='    .asciz "あ"\n', tail=False)
+        isl = dupes.data_blocks('.section .rodata\n\n' + block)[0]
+        kb, rb, badb, ib = self.parse(b, isl)
+        self.assertIsNone(badb)
+        self.assertEqual(kb, self.parse(a)[0])
+        self.assertEqual(ib['data_own'], [])
+        self.assertEqual(isl['D_80151230'], ['.asciz "\\202\\240"'])   # escaped as asm.py does
+        # without the island the symbol is an ordinary relocation
+        self.assertEqual([r[1] for r in self.parse(b)[1]], ['D_80151230', 'D_80151230', 'func_80140010'])
+
+    def test_words_naming_labels_and_symbols(self):
+        a, _ = data_func_asm('f', 0x80132000, 'D_80150100', data='    .word .L80132010\n')
+        b, _ = data_func_asm('g', 0x80134560, 'D_80151230', data='    .word .L80134570\n')
+        c, _ = data_func_asm('g', 0x80134560, 'D_80151230', data='    .word .L80134574\n')
+        self.assertEqual(self.parse(a)[0], self.parse(b)[0])
+        self.assertNotEqual(self.parse(a)[0], self.parse(c)[0])
+        self.assertFalse(self.parse(a)[3]['data_ptr'])
+        d, _ = data_func_asm('g', 0x80134560, 'D_80151230', data='    .word D_80150000\n')
+        self.assertTrue(self.parse(d)[3]['data_ptr'])
+
+    def test_unparsed_lines(self):
+        a, _ = data_func_asm('f', 0x80132000, 'D_80150100', data='    .quad 1\n')
+        self.assertEqual(self.parse(a)[2], 'unparsed rodata in function')
+        b, _ = data_func_asm('f', 0x80132000, 'D_80150100')
+        b = b.replace('endlabel f', '    .word 0x1234\nendlabel f')
+        self.assertEqual(self.parse(b)[2], 'data in function text')
+
+    def test_island_path(self):
+        self.assertEqual(dupes.island_path('main', '80041000'), 'asm/data/main/80041000.rodata.s')
+        self.assertEqual(dupes.island_path('BBB', 'BBB/80132000'), 'asm/ovl/BBB/data/BBB/80132000.rodata.s')
+
+
+DATA_SRC_C = 'void fsrc(void) {\n    func_80140010("abc"); /* "x" */\n}\n'
+DATA_HDR = 'void func_80140010(char *);\n'
+
+
+class DataPlanTests(unittest.TestCase):
+    def repo(self, tgt_tail=True, tgt_data='    .asciz "abc"\n    .balign 4\n', src_c=DATA_SRC_C):
+        r = make_repo(src_c, TGT_C, src_hdr=DATA_HDR)
+        self.addCleanup(r.close)
+        src, sblock = data_func_asm('fsrc', 0x80132000, 'D_80150100', tail=False)
+        r.write('asm/ovl/AAA/matchings/AAA/fsrc.s', src)
+        r.write('asm/ovl/AAA/data/AAA.rodata.s', '.section .rodata\n\n' + sblock)
+        tgt, tblock = data_func_asm('ftgt', 0x80134560, 'D_80151230', tail=tgt_tail, data=tgt_data,
+                                    callee='func_80142222')
+        r.write('asm/ovl/BBB/nonmatchings/BBB/ftgt.s', tgt)
+        r.write('asm/ovl/BBB/data/BBB.rodata.s', '.section .rodata\n\n' + tblock)
+        return r
+
+    def plans(self, r):
+        funcs = dupes.load_funcs(r.root)
+        return funcs, dupes.plan_all(r.root, funcs, {'aliases': dupes.load_aliases(r.root)})
+
+    def test_string_in_the_function_file_is_applied_only_with_check(self):
+        r = self.repo()
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual(len(plans), 1, skipped)
+        self.assertEqual(plans[0]['data'], 'island')
+        self.assertIn('func_80142222("abc");', plans[0]['text'])
+        self.assertIn('void ftgt(void)', plans[0]['text'])
+        self.assertEqual(dupes.split_held(plans, False), ([], plans))
+        self.assertEqual(dupes.split_held(plans, True), (plans, []))
+        out = []
+        dupes.data_report(dupes.group_funcs(funcs), plans, log=out.append)
+        self.assertIn('data-in-function groups 1 (1 unmatched members, 24 bytes); fillable 1 functions, '
+                      '24 bytes', out[0])
+        self.assertTrue(out[1].startswith('NEEDS DATA CHECK BBB/ftgt <- fsrc: its rodata is in its own'))
+
+    def test_data_outside_the_function_file_is_never_applied(self):
+        r = self.repo(tgt_tail=False)
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual(len(plans), 1, skipped)
+        self.assertEqual(plans[0]['data'], 'outside')
+        self.assertEqual(dupes.split_held(plans, True), ([], plans))
+
+    def test_different_string_is_no_twin(self):
+        r = self.repo(tgt_data='    .asciz "abd"\n    .balign 4\n')
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual((plans, stats['groups']), ([], 0))
+
+    def test_pointer_words_are_never_applied(self):
+        r = self.repo(tgt_data='    .word D_80150000\n')
+        src, sblock = data_func_asm('fsrc', 0x80132000, 'D_80150100', tail=False, data='    .word D_80150000\n')
+        r.write('asm/ovl/AAA/matchings/AAA/fsrc.s', src)
+        r.write('asm/ovl/AAA/data/AAA.rodata.s', '.section .rodata\n\n' + sblock)
+        r.write('src/ovl/AAA.c', '#include "common.h"\n#include "ovl/AAA.h"\n\n'
+                'void fsrc(void) {\n    func_80140010(0);\n}\n')
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual(len(plans), 1, skipped)
+        self.assertEqual(plans[0]['data'], 'pointers')
+        self.assertEqual(dupes.split_held(plans, True), ([], plans))
+
+    def test_source_string_without_own_data_is_still_refused(self):
+        r = self.repo()
+        r.write('asm/ovl/AAA/data/AAA.rodata.s', '')
+        r.write('asm/ovl/BBB/data/BBB.rodata.s', '')
+        r.write('asm/ovl/BBB/nonmatchings/BBB/ftgt.s', data_func_asm(
+            'ftgt', 0x80134560, 'D_80151230', tail=False, callee='func_80142222')[0])
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual(plans, [])
+        self.assertIn('string literal', skipped[0][1][0])
+
+    def test_static_and_preprocessor_use_are_still_refused(self):
+        r = self.repo(src_c='void fsrc(void) {\n    static char *s = "abc";\n    func_80140010(s);\n}\n')
+        funcs, (plans, skipped, stats) = self.plans(r)
+        self.assertEqual(plans, [])
+        self.assertIn('static', skipped[0][1][0])
 
 
 JT_SRC_C = 'void fsrc(s32 a) {\n    switch (a) {\n    case 0:\n        break;\n    }\n}\n'
@@ -218,8 +379,8 @@ class JumpTablePlanTests(unittest.TestCase):
         self.assertEqual(len(plans), 1, skipped)
         self.assertEqual(plans[0]['jtbl'], 'island')
         self.assertIn('void ftgt(s32 a)', plans[0]['text'])
-        self.assertEqual(dupes.split_jtbl(plans, False), ([], plans))
-        self.assertEqual(dupes.split_jtbl(plans, True), (plans, []))
+        self.assertEqual(dupes.split_held(plans, False), ([], plans))
+        self.assertEqual(dupes.split_held(plans, True), (plans, []))
         out = []
         dupes.jtbl_report(dupes.group_funcs(funcs), plans, log=out.append)
         self.assertIn('jump-table groups 1 (1 unmatched members); fillable 1 functions, 48 bytes', out[0])
@@ -230,14 +391,14 @@ class JumpTablePlanTests(unittest.TestCase):
         funcs, (plans, skipped, stats) = self.plans(r)
         self.assertEqual(len(plans), 1, skipped)
         self.assertEqual(plans[0]['jtbl'], 'outside')
-        self.assertEqual(dupes.split_jtbl(plans, True), ([], plans))
+        self.assertEqual(dupes.split_held(plans, True), ([], plans))
 
     def test_plain_plans_are_not_held(self):
         r = make_repo(SRC_C, TGT_C)
         self.addCleanup(r.close)
         funcs, (plans, skipped, stats) = self.plans(r)
         self.assertIsNone(plans[0]['jtbl'])
-        self.assertEqual(dupes.split_jtbl(plans, False), (plans, []))
+        self.assertEqual(dupes.split_held(plans, False), (plans, []))
 
 
 def make_repo(src_c, tgt_c, tgt_hdr='', src_hdr=''):
