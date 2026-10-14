@@ -169,7 +169,48 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801498C8);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149B20);
 
+/* NON_MATCHING: T-11560, 5 lines (registers only): the original keeps D_80158AA4 and the record pointer D_80158AA4 + 0x10CC in one register ($v1, lh 0xFC2 before the addiu, first s16 store at -0x118 from the new base); here they are two values ($t4, $v1). Plain offsets give no 0x10CC base at all (13 lines); the pointer bump between the first s32 store and its s16 copy gives this. Tried: a second pointer local, assignment inside the store address, a temp for the s16 (31 lines), autotweak 240 s. */
+#ifdef NON_MATCHING
+void func_80149BB0(void) {
+    u8 *p;
+    u8 *q;
+    u8 *c;
+    u8 *o;
+    s32 ang;
+
+    p = D_80158A64;
+    q = D_80158AB0 + 0x10;
+    c = D_80158A6C;
+    switch (*(u16 *)(p + 4)) {
+    case 0x40:
+        ang = *(u16 *)(c + 0x12);
+        *(s16 *)(q + 4) = -0x80 - func_800A0140(ang) / 32;
+        *(s16 *)q = *(s16 *)(q + 2) = 0x1000 - func_800A0070(ang) / 2;
+        *(s16 *)(q + 0x14) = func_800A0140(ang) / 32 + 0x80;
+        *(s16 *)(q + 0x10) = *(s16 *)(q + 0x12) = func_800A0070(ang) / 2 + 0x1000;
+        o = D_80158AA4;
+        *(s32 *)(o + 0xFC0) = (*(s16 *)(q + 0x14) - 0x6C) << 16;
+        *(s16 *)(o + 0xFB4) = *(s16 *)(o + 0xFC2);
+        o += 0x10CC; /* the original rebases here (records 40..43, stride 0x64). T-11560 */
+        *(s32 *)(o - 0xA8) = (*(s16 *)(q + 0x14) - 0x18) << 16;
+        *(s16 *)(o - 0xB4) = *(s16 *)(o - 0xA6);
+        *(s32 *)(o - 0x44) = (*(s16 *)(q + 4) - 0x60) << 16;
+        *(s16 *)(o - 0x50) = *(s16 *)(o - 0x42);
+        *(s32 *)(o + 0x20) = (*(s16 *)(q + 4) + 0x20) << 16;
+        *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+        *(u16 *)(c + 0x12) += 0x18;
+        if (*(u16 *)(c + 0x12) >= 0x800) {
+            *(s16 *)(p + 4) = 0xA0;
+        }
+        break;
+    case 0xA0:
+        func_80149B20();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149BB0);
+#endif
 
 void func_80149D64(void) {
     u8 *p;

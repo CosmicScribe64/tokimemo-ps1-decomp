@@ -79,4 +79,20 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_801427A8);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_80142AF0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_80142C70);
+void func_80142C70(void) {
+    s32 i;
+    u8 *base;
+
+    base = D_80158A8C;
+    if (base[0] != 0) {
+        for (i = 0; i != 0x18; i++) {
+            if (base[i + 0x310] != 0) {
+                *(s16 *)(base + 0x14) = *(s16 *)(base + 0x22) + *(s16 *)(base + 0x248 + i * 2);
+                *(s16 *)(base + 0x16) = *(s16 *)(base + 0x26) + *(s16 *)(base + 0x278 + i * 2);
+                func_80147A18(base + 0x14, base + 0x38 + i * 0x14, *(u16 *)(base + 0x2A8 + i * 2));
+            }
+        }
+        *(s16 *)(base + 0x14) = *(s16 *)(base + 0x22);
+        *(s16 *)(base + 0x16) = *(s16 *)(base + 0x26);
+    }
+}

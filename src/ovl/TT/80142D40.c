@@ -496,4 +496,19 @@ void func_80144CA8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144CF0);
+void func_80144CF0(void) {
+    u8 *a;
+    u8 *p;
+    s32 i;
+
+    a = D_80158A74;
+    p = D_80158A78;
+    *(u16 *)(D_80158A6C + 8) = 0x8CA0;
+    a[0x53] = 1;
+    a[0x55] = 9;
+    p[0x92] = 9;
+    for (i = 0; i != 3; i++) {
+        func_80147FD0(p);
+        p += 0xA4;
+    }
+}

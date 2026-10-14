@@ -13317,3 +13317,21 @@ Notes in [[matching-notes]] ("TT overlay, Opus pass with all solvers (T-11550)")
 Inline review against CODING_STANDARDS.md: new fakematches (`vx`/`vy` frame locals, the `u8 temp` in the guarded
 `func_80142350` draft) carry `FAKE` with the ticket; guard removals checked by diff. No findings. Moved
 [[tickets/T-11550-tt-opus-near-miss-pass]] to Done.
+
+## [2026-10-14] ticket | T-11560 TT batch 6 opened
+
+Opened [[tickets/T-11560-tt-batch-6]] (In Progress), stacked on T-11550 (PR #16): `bulk_m2c.py --unit TT` over the
+remaining TT functions, then Opus on the closest drafts.
+
+## [2026-10-15] build | T-11560 TT batch 6: 4 matches
+
+`bulk_m2c.py` over 65 TT functions: `func_8013E1E8` matched (draft tidied), 62 drafts ranked. Opus on the ten closest
+drafts and `func_80142350` (about 70 minutes, 294k tokens): matched `func_80148154`, `func_80142C70`, `func_80144CF0`;
+guarded `func_80148764` (9 lines), `func_80135148` (4), `func_80149BB0` (5). TT 215/303 (48.6%); grand total
+`5588/6958   1233252/2279368  54.1%`. 27/27; funcdiff MATCH for all four; prototype and global checks clean. Notes in
+[[matching-notes]] ("TT overlay, batch 6"), 8 rows in [[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11560 Done
+
+Inline review against CODING_STANDARDS.md: the one new trick (`volatile` pointer in a guarded draft) is marked FAKE with
+the ticket; m2c leftovers tidied in the bulk match. No findings. Moved [[tickets/T-11560-tt-batch-6]] to Done.
