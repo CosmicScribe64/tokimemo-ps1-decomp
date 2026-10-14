@@ -279,7 +279,134 @@ s32 get_g_name(u8 *arg0, s32 arg1) {
     return 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_p_name);
+void get_p_name(u8 *arg0, u32 arg1) {
+    switch (arg1) {
+    case 0:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0E4[0]);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0DC[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 1:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0D4[0]);
+            strcat(arg0, &D_800B3634);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3638);
+        return;
+    case 2:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0DC[0]);
+            strcat(arg0, &D_800B3634);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 3:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0E4[0]);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 4:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0DC[0]);
+            strcat(arg0, &D_800B3634);
+            return;
+        }
+        if ((get_g_zyotai_s((s32) arg1) & 0x7F) == 4) {
+            strcpy(arg0, &D_800E6280.unk_0D4[0]);
+            strcat(arg0, &D_800B3634);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 5:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0DC[0]);
+            strcat(arg0, &D_800B3638);
+            return;
+        }
+        if ((get_g_zyotai_s((s32) arg1) & 0x7F) == 4) {
+            strcpy(arg0, &D_800E6280.unk_0D4[0]);
+            strcat(arg0, &D_800B3638);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3638);
+        return;
+    case 6:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0E4[0]);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 7:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0DC[0]);
+            strcat(arg0, &D_800B3634);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 8:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0E4[0]);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0DC[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 9:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0D4[0]);
+            strcat(arg0, &D_800B3634);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3638);
+        return;
+    case 10:
+        if (get_g_zyotai_s((s32) arg1) & 0x80) {
+            strcpy(arg0, &D_800E6280.unk_0DC[0]);
+            strcat(arg0, &D_800B3638);
+            return;
+        }
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3638);
+        return;
+    case 13:
+        strcpy(arg0, &D_800E6280.unk_0DC[0]);
+        return;
+    case 11:
+        strcpy(arg0, &D_800E6280.unk_0DC[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 12:
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    case 15:
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strncat(arg0, &D_800E6280.unk_0DC[0], 6);
+        return;
+    default:
+        strcpy(arg0, &D_800E6280.unk_0D4[0]);
+        strcat(arg0, &D_800B3634);
+        return;
+    }
+}
 
 s32 get_g_zyotai_s(s32 arg0) {
     if (get_h_yuukou(arg0) < 0xA) {

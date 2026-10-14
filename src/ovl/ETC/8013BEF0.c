@@ -25,7 +25,36 @@ void func_8013BEF0(void) {
     D_8015003C = *(s16 *)0x8019DDF8;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013BF34);
+void func_8013BF34(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8013BFFC();
+        return;
+    case 1:
+        func_8013C330(2, 0);
+        return;
+    case 2:
+        func_8013C330(3, 1);
+        return;
+    case 3:
+        func_8013C330(4, 2);
+        return;
+    case 4:
+        func_8013C700();
+        return;
+    case 5:
+        func_8013C8EC();
+        return;
+    case 6:
+        func_8013CC74();
+        return;
+    case 7:
+        func_8013CCE4();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8013BEF0", func_8013BFFC);
 

@@ -71,6 +71,12 @@ typedef struct BunkakenGrid4 { /* size 0x40 */
 } BunkakenGrid4;
 extern BunkakenGrid4 D_801564E0;
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8013B4A0(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80139DEC(void);
+
 #endif
 
 #ifndef OVL_BUNKAKEN_T9960

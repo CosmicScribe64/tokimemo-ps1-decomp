@@ -91,4 +91,35 @@ extern u8 D_8013B7DC[];
 extern u8 *D_8013B7F0;
 extern u8 *D_8013B7F4;
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_801347CC(void);
+void func_80134800(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80135C3C(void);
+void func_80135C70(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8013540C(void);
+void func_80135440(void);
+s32 func_801354C8(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80133924(void);
+void func_80133CC4(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80137F8C(void);
+void func_80138898(u32 arg0);
+void func_8013838C(void);
+void func_801383CC(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80136EDC(void);
+void func_801371BC(void);
+void func_8013731C(void);
+void func_8013785C(u32 arg0);
+void func_8013722C(void);
+void func_801372BC(void);
+
 #endif /* OVL_BUNKA_SD_H */

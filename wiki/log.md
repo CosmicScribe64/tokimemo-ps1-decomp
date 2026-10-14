@@ -13220,3 +13220,10 @@ text; its FIRST DIVERGENCE (hint class, named variables and lines) orders the ed
 ## [2026-10-14] ticket | T-11220 In Review
 
 Moved [[tickets/T-11220-regdiff-guided-autotweak]] to In Review; needs the real-build check and the code review.
+## [2026-10-14] ticket | T-11210 In Progress
+
+Created [[tickets/T-11210-bulk-m2c-draft-failure-classes]]: fix the main bulk_m2c failure classes (redeclaration, selector on scalar, memcpy, PC16 relocation) in `tools/bulk_m2c.py` and `tools/permute.py`.
+
+## [2026-10-14] build | T-11210 re-run of bulk_m2c failures
+
+Re-ran the 647 failed drafts with the fixed `tools/bulk_m2c.py`: 218 still fail (118 compile, 72 header declaration problems, 28 M2C_ERROR/LWL), matches 61 -> 94. `tools/permute.py` makes switch labels local in target.o (PC16 assertion). The run ends with `migrate_globals --apply` and check_headers; one `D_800E73A0` use rewritten by hand to `D_800E6280.unk_1120`. ninja all OK, globals OK, headers OK. Moved [[tickets/T-11210-bulk-m2c-draft-failure-classes]] to In Review.

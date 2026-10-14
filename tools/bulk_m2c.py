@@ -94,6 +94,7 @@ def fix_unknown_types(text):
     """m2c's `?` (unknown type) as s32: at the start of a declaration, in a cast, in a parameter."""
     text = re.sub(r"^([ \t]*(?:extern[ \t]+|static[ \t]+)?)\?(?=[ \t*])", r"\1s32", text, flags=re.M)
     text = re.sub(r"\(\?([ \t]*\**)\)", r"(s32\1)", text)
+    text = re.sub(r"\(\?([ \t]*\()", r"(s32\1", text)
     text = re.sub(r"([(,][ \t]*)\?(?=[ \t]*[*\w),])", r"\1s32", text)
     return text
 
@@ -169,8 +170,10 @@ def inline_temps(body):
     return "\n".join(lines)
 
 
-def cleanup(decls, body):
-    """(body, {name: decl}, problem): the mechanical cleanup of the module docstring."""
+def cleanup(decls, body, glob=None):
+    """(body, {name: decl}, problem): the mechanical cleanup of the module docstring. `glob` maps the
+    variable names the headers and the C file declare to (base, stars, dims) for the selector rewrite."""
+    body = fix_memcpy(stack_arrays(body))
     bad = re.search(r"\bM2C_\w+", body)
     if bad:
         return body, {}, "m2c-error: %s" % bad.group(0)
@@ -178,7 +181,11 @@ def cleanup(decls, body):
     body = re.sub(r"[ \t]*/\* (?:switch \d+(?:; irregular)?|irregular) \*/", "", body)
     body = fix_unknown_types(fix_comments(body)).strip("\n") + "\n"
     names = set(re.findall(r"[A-Za-z_]\w*", autotweak.mask(body)))
-    return body, {n: d for n, d in clean_decls(decls).items() if n in names}, None
+    known = {n: d for n, d in clean_decls(decls).items() if n in names}
+    types = dict(glob or {})
+    collect_vars("\n".join(known.values()), types)
+    body = void_locals(fix_selectors(fix_pointer_calls(body), types))
+    return body, known, None
 
 
 # ---------------------------------------------------------------------------------------------
@@ -256,6 +263,259 @@ def read(path):
 
 
 # ---------------------------------------------------------------------------------------------
+# Typed rewrites of m2c output (T-11210)
+# ---------------------------------------------------------------------------------------------
+
+PRIMS = {"u8", "s8", "u16", "s16", "u32", "s32", "u64", "s64", "f32", "f64", "float", "double", "char",
+         "short", "int", "long", "void", "unsigned", "signed"}
+NARROW = {"void", "u8", "s8", "u16", "s16", "char", "short", "unsigned char", "signed char",
+          "unsigned short"}
+QUALS = {"extern", "static", "const", "volatile", "register"}
+UNK_RE = re.compile(r"(?<![\w.>])([A-Za-z_]\w*)((?:\[[^\[\]]*\])*)[ \t]*(\.|->)[ \t]*unk([0-9A-Fa-f]+)\b")
+VAR_RE = re.compile(r"^[ \t]*((?:[A-Za-z_]\w*[ \t]+)+?)(\**)[ \t]*([A-Za-z_]\w*)((?:\[[^\]]*\])*)[ \t]*(?:;|=[^=])")
+NOT_TYPES = {"return", "typedef", "goto", "else", "case", "default", "break", "continue", "sizeof", "do"}
+
+
+def split_args(text):
+    """Top-level comma-separated arguments of `text` (the inside of a call's parentheses)."""
+    out, depth, cur = [], 0, ""
+    for ch in text:
+        if ch in "([{":
+            depth += 1
+        elif ch in ")]}":
+            depth -= 1
+        if ch == "," and depth == 0:
+            out.append(cur.strip())
+            cur = ""
+        else:
+            cur += ch
+    out.append(cur.strip())
+    return out
+
+
+def balanced(text, open_at):
+    """Index just past the parenthesis group that opens at text[open_at]."""
+    depth = 0
+    for i in range(open_at, len(text)):
+        if text[i] == "(":
+            depth += 1
+        elif text[i] == ")":
+            depth -= 1
+            if depth == 0:
+                return i + 1
+    return -1
+
+
+def fix_memcpy(body):
+    """`M2C_MEMCPY_ALIGNED(dst, src, n)` -> a struct copy of n bytes through a block-scope typedef
+    (a whole-word struct of the right size, so IDO copies it word by word like m2c's memcpy)."""
+    sizes, pos = [], 0
+    while True:
+        at = body.find("M2C_MEMCPY_ALIGNED(", pos)
+        if at < 0:
+            break
+        op = at + len("M2C_MEMCPY_ALIGNED")
+        end = balanced(body, op)
+        args = split_args(body[op + 1:end - 1]) if end > 0 else []
+        try:
+            n = int(args[2], 0)
+        except (IndexError, ValueError):
+            pos = op
+            continue
+        if len(args) != 3 or n <= 0 or n % 4:
+            pos = op
+            continue
+        typ = "M2cBlock%X" % n
+        if n not in sizes:
+            sizes.append(n)
+        repl = "*(%s *)(%s) = *(%s *)(%s)" % (typ, args[0], typ, args[1])
+        body = body[:at] + repl + body[end:]
+        pos = at + len(repl)
+    if sizes:
+        lines = ["    typedef struct { s32 w[%d]; } M2cBlock%X; /* m2c memcpy of %d bytes */" % (n // 4, n, n)
+                 for n in sizes]
+        m = re.search(r"\{[ \t]*\n", body)
+        if m:
+            body = body[:m.end()] + "\n".join(lines) + "\n" + body[m.end():]
+    return body
+
+
+def stack_arrays(body):
+    """m2c's `? spXX;` locals (struct temporaries it could not type) become s32 word arrays that cover
+    every offset the body touches; the selector pass then turns their `.unkN` into casts."""
+    for m in list(re.finditer(r"^([ \t]*)\?[ \t]+(sp[0-9A-Fa-f]+);", body, re.M)):
+        name = m.group(2)
+        top = 4
+        for off in re.finditer(r"\(&%s\)[ \t]*\+[ \t]*\(?(-?\w+)\)?|\b%s\.unk([0-9A-Fa-f]+)" % (name, name), body):
+            try:
+                top = max(top, (int(off.group(1), 0) if off.group(1) else int(off.group(2), 16)) + 4)
+            except ValueError:
+                pass
+        for cp in re.finditer(r"M2C_MEMCPY_ALIGNED\(([^;]*)\)", body):
+            args = split_args(cp.group(1))
+            if len(args) == 3 and any(re.fullmatch(r"&%s(\[0\])?" % name, a.replace(" ", "")) for a in args[:2]):
+                try:
+                    top = max(top, int(args[2], 0))
+                except ValueError:
+                    pass
+        body = body.replace(m.group(0), "%ss32 %s[%d];" % (m.group(1), name, (top + 3) // 4), 1)
+    return body
+
+
+def parse_var(line):
+    """(name, (base, stars, dims)) of a variable declaration line, or None."""
+    if "(" in line.split(";")[0].split("=")[0]:
+        return None
+    m = VAR_RE.match(line)
+    if not m:
+        return None
+    words = [w for w in m.group(1).split() if w not in QUALS]
+    if not words or words[0] in NOT_TYPES:
+        return None
+    return m.group(3), (" ".join(words), len(m.group(2)), re.findall(r"\[[^\]]*\]", m.group(4)))
+
+
+def collect_vars(text, into=None):
+    """{name: (base, stars, dims)} from the declaration lines of `text`."""
+    into = {} if into is None else into
+    for line in text.splitlines():
+        got = parse_var(line)
+        if got:
+            into.setdefault(got[0], got[1])
+    return into
+
+
+def signature_vars(body):
+    """Parameters of the first function head of `body`."""
+    out = {}
+    m = re.search(r"\w+\(([^)]*)\)\s*\{", body)
+    if m and m.group(1).strip() not in ("", "void"):
+        for part in split_args(m.group(1)):
+            got = parse_var(part + ";")
+            if got:
+                out[got[0]] = got[1]
+    return out
+
+
+def is_prim(base):
+    return all(w in PRIMS for w in base.split())
+
+
+def field_type(base, stars):
+    """Access type for an object of (base, stars): narrow and void types widen to s32."""
+    if stars == 0 and base in NARROW:
+        return "s32"          # an unkN access has lost its width; a word is the commonest
+    return base + (" " + "*" * stars if stars else "")
+
+
+def fix_selectors(body, glob=None):
+    """`X.unkN` / `X->unkN` where the project's type of X is not an aggregate (a scalar, an array or
+    pointer of scalars, `void *`) -> `*(T *)((u8 *)&X + N)` (`X` itself for offset 0 of a scalar).
+    Variables of unknown or struct type are left alone."""
+    types = dict(glob or {})
+    types.update(collect_vars(body))
+    types.update(signature_vars(body))
+
+    def repl(m):
+        name, subs, op, hexoff = m.groups()
+        t = types.get(name)
+        if t is None:
+            return m.group(0)
+        base, stars, dims = t[0], t[1], list(t[2])
+        for _ in re.findall(r"\[", subs):
+            if dims:
+                dims.pop(0)
+            elif stars:
+                stars -= 1
+            else:
+                return m.group(0)
+        off = int(hexoff, 16)
+        ref = name + subs
+        if op == ".":
+            if not is_prim(base) or (stars and not dims):
+                return m.group(0)
+            if not dims and stars == 0 and off == 0:
+                return ref
+            typ = field_type(base, stars)
+            return "(*(%s *)((u8 *)&%s + %d))" % (typ, ref, off) if off else "(*(%s *)&%s)" % (typ, ref)
+        if dims:
+            if len(dims) > 1 or not is_prim(base):
+                return m.group(0)
+            typ = field_type(base, stars)
+        elif stars:
+            if not is_prim(base) and stars == 1:
+                return m.group(0)
+            typ = field_type(base, stars - 1)
+        elif is_prim(base):
+            typ = "s32"
+        else:
+            return m.group(0)
+        return "(*(%s *)((u8 *)%s + %d))" % (typ, ref, off) if off else "(*(%s *)%s)" % (typ, ref)
+
+    return UNK_RE.sub(repl, body)
+
+
+def fix_pointer_calls(body):
+    """m2c's `*(T (**)(args))(addr)(x)` (a call through a pointer read from memory) parses as a call
+    of a non-function; it becomes `(*(T (**)(args))(addr))(x)`."""
+    out, pos = [], 0
+    for m in re.finditer(r"\*\(((?:[\w ]+) \(\*\*\)\([^()]*\))\)\(", body):
+        if m.start() < pos:
+            continue
+        op = m.end() - 1
+        end = balanced(body, op)
+        if end > 0 and body[end:end + 1] == "(":
+            out.append(body[pos:m.start()] + "(" + body[m.start():end] + ")")
+            pos = end
+    return "".join(out) + body[pos:]
+
+
+def void_locals(body):
+    """`void *` locals that the body does arithmetic on become `u8 *` (m2c means byte arithmetic;
+    IDO refuses arithmetic on void *)."""
+    for m in list(re.finditer(r"^([ \t]+)void[ \t]*\*[ \t]*(\w+);", body, re.M)):
+        name = m.group(2)
+        rest = body.replace(m.group(0), "")
+        if re.search(r"\b%s\b[ \t]*(?:[-+]=|[-+][ \t(\w])|[-+][ \t]*\(?%s\b|\(u8 \*\)%s\b|\b%s\b[ \t]*\[" % ((name,) * 4), rest):
+            body = body.replace(m.group(0), "%su8 *%s;" % (m.group(1), name), 1)
+    return body
+
+
+def header_text(root, unit):
+    """Text of the headers a declaration for `unit` can come from (main_api.h, the overlay header)."""
+    out = []
+    for rel in ("include/main_api.h", "include/ovl/%s.h" % unit):
+        try:
+            out.append(read(os.path.join(root, rel)))
+        except OSError:
+            pass
+    return "\n".join(out)
+
+
+def signature_of(text, name, tail):
+    """(return type, parameter text) of `name` followed by `tail` (`;` prototype, `{` definition)."""
+    m = re.search(r"^[ \t]*(?:extern[ \t]+)?([A-Za-z_][\w \t]*?)([ \t]+|[ \t]*\*+[ \t]*)\b%s\s*\(([^)]*)\)\s*%s"
+                  % (re.escape(name), tail), text, re.M)
+    if not m:
+        return None
+    ret = re.sub(r"\s+", " ", m.group(1)).strip()
+    stars = m.group(2).count("*")
+    return (ret + " " + "*" * stars if stars else ret), re.sub(r"\s+", " ", m.group(3)).strip()
+
+
+def prototype_in(text, name):
+    return signature_of(text, name, ";")
+
+
+def definition_in(text, name):
+    """Like prototype_in for a definition; a K&R parameter list (names only) gives `()`."""
+    got = signature_of(text, name, r"(?:[^;{}]*;\s*)*\{")
+    if got and re.fullmatch(r"\w+(\s*,\s*\w+)*", got[1]) and got[1] != "void":
+        return got[0], ""
+    return got
+
+
+# ---------------------------------------------------------------------------------------------
 # Compile errors and their cheap fixes
 # ---------------------------------------------------------------------------------------------
 
@@ -273,10 +533,61 @@ def cheap_fix(msg, decl_lines, known):
     for name in re.findall(r"redeclaration of '(\w+)'", msg):
         new = [d for d in new if decl_name(d) != name]
     for name in re.findall(r"'(\w+)' undefined", msg):
-        if any(decl_name(d) == name for d in new):
-            continue
+        if any(decl_name(d) == name for d in new) or re.fullmatch(r"sp[0-9A-Fa-f]+", name):
+            continue                       # a stack slot is a local, see source_fix
         new.append(known.get(name) or "extern s32 %s;" % name)
     return new if new != list(decl_lines) else None
+
+
+def with_return_type(body, func, ret):
+    """`body` with the return type of the definition of `func` replaced by `ret`."""
+    return re.sub(r"^[A-Za-z_][\w \t*]*?([ \t*])(%s\s*\()" % re.escape(func),
+                  lambda m: ret + (" " if not ret.endswith("*") else "") + m.group(2), body, count=1, flags=re.M)
+
+
+def forward_decls(original, func, body, headers, have=()):
+    """Prototypes for functions the draft calls that the C file defines after `func`'s INCLUDE_ASM line
+    and no header declares: the implicit `int f()` at the call would clash with the definition."""
+    m = re.search(INCLUDE_ASM_TMPL % re.escape(func), original, re.M)
+    if not m:
+        return []
+    out, seen = [], set(have)
+    for name in dict.fromkeys(re.findall(r"\b([A-Za-z_]\w*)\s*\(", autotweak.mask(body))):
+        if name in seen or name == func or prototype_in(headers, name):
+            continue
+        sig = definition_in(original[m.end():], name)
+        if sig and not definition_in(original[:m.start()], name):
+            out.append("%s %s(%s);" % (sig[0], name, sig[1]))
+    return out
+
+
+def source_fix(msg, body, decl_lines, func, original, headers):
+    """(body, decl_lines) after a fix that needs the C file or the headers, or None.
+
+    Redeclaration of a function the draft calls before the file defines it: declare it as the
+    definition does (the implicit `int f()` clashes). Redeclaration of the draft's own function:
+    take the return type of the header prototype. Undefined `spXX`: a local word array."""
+    for name in re.findall(r"redeclaration of '(\w+)'", msg):
+        if any(decl_name(d) == name for d in decl_lines):
+            continue
+        if name == func:
+            proto = prototype_in(headers, name)
+            if proto:
+                new = with_return_type(body, func, proto[0])
+                if new != body:
+                    return new, decl_lines
+            continue
+        sig = definition_in(original, name) or prototype_in(headers, name)
+        if sig:
+            return body, list(decl_lines) + ["%s %s(%s);" % (sig[0], name, sig[1])]
+    for name in re.findall(r"'(sp[0-9A-Fa-f]+)' undefined", msg):
+        m = re.search(r"\{[ \t]*\n", body)
+        if m and not re.search(r"^[ \t]+\w[\w \t*]*\b%s\b[^;(]*;" % name, body, re.M):
+            decl = "    s32 %s[%d];\n" % (name, 16 if re.search(r"\b%s\[|&%s" % (name, name), body) else 1)
+            if decl.endswith("[1];\n"):
+                decl = "    s32 %s;\n" % name
+            return fix_selectors(body[:m.end()] + decl + body[m.end():]), decl_lines
+    return None
 
 
 # ---------------------------------------------------------------------------------------------
@@ -299,6 +610,12 @@ class Backend:
         """An object with score(text) -> int|None and verify(text) -> bool; raises on compile errors."""
         with contextlib.redirect_stdout(io.StringIO()):
             return Scorer(root, draft)
+
+    def migrate_globals(self, root):
+        """Rewrite raw GameState globals in the matched C files (tools/migrate_globals.py --apply)."""
+        p = subprocess.run([sys.executable, "tools/migrate_globals.py", "--apply"], cwd=root,
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        return p.returncode == 0, p.stdout
 
     def check_headers(self, root):
         p = subprocess.run([sys.executable, "tools/check_headers.py", "include", "src"], cwd=root,
@@ -391,7 +708,8 @@ class Run:
             decls, body = self.backend.m2c(self.root, t.unit, t.func)
         except (LookupError, RuntimeError, OSError, SystemExit) as exc:
             return self.record(t, "fail", reason="m2c: %s" % first_error(str(exc)))
-        body, known, problem = cleanup(decls, body)
+        glob = collect_vars(header_text(self.root, t.unit) + "\n" + original)
+        body, known, problem = cleanup(decls, body, glob)
         if problem:
             return self.record(t, "fail", reason=problem, draft=self.save_draft(t, body, None, problem))
         os.makedirs(self.inflight, exist_ok=True)
@@ -409,22 +727,28 @@ class Run:
             os.unlink(self.inflight_path(t))
 
     def _compile(self, t, path, original, body, decl_lines, known):
-        """(scorer, decl_lines) once the guarded draft compiles, or (None, reason)."""
-        for _attempt in range(4):
+        """(scorer, decl_lines, body) once the guarded draft compiles, or (None, reason, body)."""
+        for _attempt in range(12):
             text = insert_draft(original, t.func, body, decl_lines)
             write_atomic(path, text)
             try:
-                return self.backend.scorer(self.root, autotweak.Draft(t.src, t.unit, t.func, body)), decl_lines
+                return self.backend.scorer(self.root, autotweak.Draft(t.src, t.unit, t.func, body)), decl_lines, body
             except (RuntimeError, SystemExit, OSError, ImportError) as exc:
                 msg = str(exc)
                 fixed = cheap_fix(msg, decl_lines, known)
-                if fixed is None:
-                    return None, "compile: %s" % first_error(msg)
-                decl_lines = fixed
-        return None, "compile: no fix after 4 attempts"
+                if fixed is not None:
+                    decl_lines = fixed
+                    continue
+                more = source_fix(msg, body, decl_lines, t.func, original, header_text(self.root, t.unit))
+                if more is None:
+                    return None, "compile: %s" % first_error(msg), body
+                body, decl_lines = more
+        return None, "compile: no fix after 12 attempts", body
 
     def _solve(self, t, path, original, body, known):
-        scorer, decl_lines = self._compile(t, path, original, body, sorted(known.values()), known)
+        decl_lines = sorted(known.values()) + forward_decls(
+            original, t.func, body, header_text(self.root, t.unit), known)
+        scorer, decl_lines, body = self._compile(t, path, original, body, decl_lines, known)
         if scorer is None:
             return False, self.record(t, "fail", reason=decl_lines, draft=self.save_draft(t, body, None, decl_lines))
         cache = {}
@@ -658,6 +982,16 @@ def main(argv=None, backend=None, targets=None, climb=None, emit=print):
             for f in futures:
                 f.result()
     summary(out, emit)
+    if len(load_state(os.path.join(out, "state.jsonl"))) and any(
+            r.get("status") == "match" for k, r in load_state(os.path.join(out, "state.jsonl")).items()
+            if k not in done or done[k].get("status") != "match"):
+        # matches keep raw GameState globals (D_800E6xxx...): migrate them so build/globals.ok holds
+        be = backend or Backend()
+        ok, msg = be.migrate_globals(root)
+        emit("migrate_globals --apply: %s" % ("ok" if ok else "FAILED " + first_error(msg)))
+        if ok:
+            ok, msg = be.check_headers(root)
+            emit("check_headers: %s" % ("ok" if ok else "FAILED " + first_error(msg)))
     return 0
 
 

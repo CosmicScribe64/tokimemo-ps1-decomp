@@ -611,7 +611,60 @@ void func_8005D31C(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D448);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D56C);
+void func_8005D56C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 2U, "データロード中です", 0);
+        set_kanji_string(-0x80, 0x42, 2U, "しばらくお待ち下さい", 0);
+        k_sub_disp_start(2);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_8005448C() == 4) {
+            D_800E6280.unk_110D += 1;
+            func_80053D10();
+        } else if (((u32) D_800E6280.unk_1120 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 2:
+        if (func_80055A38(0) == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_80042940(0xE0);
+        }
+        break;
+    case 3:
+        k_sub_reset();
+        func_800696DC(0, 1);
+        set_kanji_string(-0x80, 0x32, 1U, "このデータの続きをプレイしますか？", 0);
+        set_kanji_string(-0x80, 0x42, 0U, D_800B3C70, 0);
+        set_kanji_string(-0x2C, 0x42, 1U, func_8006CA9C(), 0);
+        set_kanji_string(-0x80, 0x52, 0U, D_800B3C88, 0);
+        set_kanji_string(-0x2C, 0x52, 2U, func_8006CAE0(), 0);
+        k_sub_disp_start(0xB);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 4:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80044750(0x501);
+            D_800E6280.unk_110D += 1;
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            func_80042940(6);
+        }
+        break;
+    case 5:
+        if (func_80055AFC(0) == 1) {
+            func_8004284C();
+        } else {
+            func_80042940(0xE0);
+        }
+        break;
+    }
+    func_8005D1B0();
+}
 
 /* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original; the s32 return keeps the switch temporary copy in $v0. T-5010 */
 s32 func_8005D804(void) {

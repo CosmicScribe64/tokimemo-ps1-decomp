@@ -28,7 +28,132 @@ s32 func_801369D0(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801369D0", func_80136B3C);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801369D0", func_80136BFC);
+void func_80136BFC(void) {
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80134260();
+        func_80044750(0x7F);
+        break;
+    case 1:
+        func_801369D0();
+        break;
+    case 2:
+        func_80044750(0x200);
+        func_80136EDC();
+        break;
+    case 3:
+        func_80134418();
+        break;
+    case 4:
+        func_80138898(0x78U);
+        break;
+    case 5:
+        func_801344A8();
+        break;
+    case 6:
+        func_801371BC();
+        break;
+    case 7:
+        func_80134418();
+        break;
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+        func_801373D0();
+        break;
+    case 12:
+        func_80044750(0xC1);
+        func_8004284C();
+        break;
+    case 13:
+        func_801344A8();
+        break;
+    case 14:
+        func_8013731C();
+        break;
+    case 15:
+        func_8013785C(0x3C);
+        break;
+    case 16:
+        func_8013722C();
+        break;
+    case 17:
+        func_8013785C(0x3C);
+        break;
+    case 18:
+        func_80044750(0x201);
+        func_8004284C();
+        break;
+    case 19:
+        func_80134418();
+        break;
+    case 20:
+        func_8013785C(0x78);
+        break;
+    case 21:
+        func_801344A8();
+        break;
+    case 22:
+        func_8013785C(0x1E);
+        break;
+    case 23:
+        func_8013731C();
+        break;
+    case 24:
+        func_8013785C(0xF);
+        break;
+    case 25:
+        func_8013731C();
+        break;
+    case 26:
+        func_801372BC();
+        break;
+    case 27:
+        func_80134418();
+        break;
+    case 28:
+    case 29:
+    case 30:
+        func_801373D0();
+        break;
+    case 31:
+        func_80044750(0x202);
+        func_8004284C();
+        break;
+    case 32:
+        func_8013785C(0x78);
+        break;
+    case 33:
+    case 34:
+        func_801373D0();
+        break;
+    case 35:
+        func_80044750(0xC1);
+        func_80044750(0x500);
+        func_8004E9F4(1);
+        func_8004284C();
+        break;
+    case 36:
+        if ((u32) D_800E6280.unk_1104.u >= 0x1FU) {
+            func_8004284C();
+        }
+        break;
+    case 37:
+        func_801344A8();
+        break;
+    case 38:
+        func_80134314();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    D_800E6280.unk_1104.u += 1;
+}
 
 void func_80136EDC(void) {
     func_80136F3C();

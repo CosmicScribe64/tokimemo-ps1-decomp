@@ -1,7 +1,46 @@
 #include "common.h"
 #include "ovl/OLH.h"
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132000", func_80132000);
+void func_80132000(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0x0:
+        func_80132114();
+        break;
+    case 0x1:
+        func_80132294();
+        break;
+    case 0x2:
+        func_801323AC();
+        break;
+    case 0x10:
+        func_80132420();
+        break;
+    case 0x20:
+        func_80132FA0();
+        break;
+    case 0x30:
+        func_801364E0();
+        break;
+    case 0x40:
+        func_80133B80();
+        break;
+    case 0x50:
+        func_80134500();
+        break;
+    case 0x60:
+        func_80134F40();
+        break;
+    case 0x70:
+        func_80135AC0();
+        break;
+    }
+    func_8006BA40();
+    if (D_800E6280.unk_F88 & 0x800) {
+        main_state_set(0x34);
+    }
+    func_801323CC();
+    func_80066334();
+}
 
 INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80132000", func_80132114);
 

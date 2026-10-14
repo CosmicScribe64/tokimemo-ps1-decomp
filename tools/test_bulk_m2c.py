@@ -87,6 +87,9 @@ class FakeBackend:
     def check_headers(self, root):
         return self.headers_ok, "" if self.headers_ok else "redeclaration of D_80140000"
 
+    def migrate_globals(self, root):
+        return True, ""
+
     def build_unit(self, root, unit):
         self.builds.append(unit)
         return True, ""
@@ -182,6 +185,94 @@ class Cleanup(unittest.TestCase):
                          "Error: base.c, line 3: syntax error")
 
 
+class TypedRewrites(unittest.TestCase):
+    """T-11210: the m2c output that IDO refuses for type reasons."""
+
+    def test_memcpy_becomes_block_copy_with_scoped_typedef(self):
+        body = "void f(void) {\n    s32 x;\n\n    M2C_MEMCPY_ALIGNED(&D_801206D8, D_80120650, 0x44);\n}\n"
+        out, _k, problem = B.cleanup("", body)
+        self.assertIsNone(problem)
+        self.assertIn("typedef struct { s32 w[17]; } M2cBlock44;", out)
+        self.assertIn("*(M2cBlock44 *)(&D_801206D8) = *(M2cBlock44 *)(D_80120650);", out)
+        self.assertNotIn("M2C_", out)
+        # nested parentheses in an argument; a size that is no word multiple stays refused
+        out = B.fix_memcpy("void f(void) {\n    M2C_MEMCPY_ALIGNED(g(a, b) + 4, &x, 8);\n}\n")
+        self.assertIn("*(M2cBlock8 *)(g(a, b) + 4) = *(M2cBlock8 *)(&x);", out)
+        _b, _k, problem = B.cleanup("", "void f(void) {\n    M2C_MEMCPY_ALIGNED(a, b, 6);\n}\n")
+        self.assertEqual(problem, "m2c-error: M2C_MEMCPY_ALIGNED")
+
+    def test_stack_struct_becomes_word_array(self):
+        body = ("void f(void) {\n    ? sp38;\n\n    sp38.unk0 = 1;\n"
+                "    *(s32 *)((unsigned char *)(&sp38) + (12)) = 2;\n    g((s32) &sp38);\n}\n")
+        out, _k, _p = B.cleanup("", body)
+        self.assertIn("    s32 sp38[4];", out)
+        self.assertIn("(*(s32 *)&sp38) = 1;", out)
+        out = B.stack_arrays("void f(void) {\n    ? sp10;\n    M2C_MEMCPY_ALIGNED(&sp10, &D_8012B948, 0x40);\n}\n")
+        self.assertIn("s32 sp10[16];", out)
+
+    def test_selector_on_scalar_array_and_pointer(self):
+        glob = B.collect_vars("extern s32 D_80120000;\nextern u8 D_80120010[];\nextern s16 *D_80120020;\n"
+                              "extern Foo D_80120030;\nextern Foo *D_80120040;\n")
+        body = ("void f(s16 *a0, void *a1) {\n    D_80120000.unk0 = D_80120010->unk4;\n"
+                "    x = D_80120020->unk8 + D_80120030.unk4 + D_80120040->unk4 + a0->unk2 + a1->unk0;\n"
+                "    y = D_80120010[i].unkC;\n    z = D_80120000.unk8;\n}\n")
+        out = B.fix_selectors(body, glob)
+        self.assertIn("D_80120000 = (*(s32 *)((u8 *)D_80120010 + 4));", out)
+        self.assertIn("(*(s32 *)((u8 *)D_80120020 + 8))", out)      # s16 pointee widens to a word
+        self.assertIn("D_80120030.unk4 + D_80120040->unk4", out)   # structs stay
+        self.assertIn("(*(s32 *)((u8 *)a0 + 2))", out)
+        self.assertIn("(*(s32 *)a1)", out)
+        self.assertIn("y = (*(s32 *)((u8 *)&D_80120010[i] + 12));", out)
+        self.assertIn("z = (*(s32 *)((u8 *)&D_80120000 + 8));", out)
+        self.assertEqual(B.fix_selectors("void f(void) {\n    q->unk4 = 0;\n}\n", glob),
+                         "void f(void) {\n    q->unk4 = 0;\n}\n")                 # unknown type
+
+    def test_void_locals_with_arithmetic_become_byte_pointers(self):
+        body = "void f(void) {\n    void *p;\n    void *q;\n\n    p += 8;\n    q = p;\n}\n"
+        out = B.void_locals(body)
+        self.assertIn("    u8 *p;", out)
+        self.assertIn("    void *q;", out)
+
+    def test_source_fix_redeclaration_from_definition_and_header(self):
+        orig = "void g(void) {\n}\n"
+        msg = "cfe: Error: base.c, line 9: redeclaration of 'g'; previous declaration at line 4"
+        body, decls = B.source_fix(msg, "void f(void) {\n    g();\n}\n", [], "f", orig, "")
+        self.assertEqual(decls, ["void g(void);"])
+        self.assertIsNone(B.source_fix(msg, "x", [], "f", "", ""))
+        # the draft's own function takes the header's return type
+        msg = "cfe: Error: base.c, line 9: redeclaration of 'f'; previous declaration at line 4"
+        body, decls = B.source_fix(msg, "void f(void) {\n}\n", [], "f", "", "s32 f(void);\n")
+        self.assertEqual(body, "s32 f(void) {\n}\n")
+        body, _d = B.source_fix(msg, "void *f(s32 a) {\n}\n", [], "f", "", "u8 *f(s32 a);\n")
+        self.assertEqual(body, "u8 *f(s32 a) {\n}\n")
+
+    def test_forward_decls_only_for_functions_defined_later_and_missing_from_headers(self):
+        orig = ('void early(void) {\n}\nINCLUDE_ASM("a/b", f);\nvoid late(void) {\n}\n'
+                's32 later2(s32 a) {\n    return a;\n}\nvoid hdr(void) {\n}\n')
+        body = "void f(void) {\n    early();\n    late();\n    later2(1);\n    hdr();\n    ext();\n}\n"
+        self.assertEqual(B.forward_decls(orig, "f", body, "void hdr(void);\n"),
+                         ["void late(void);", "s32 later2(s32 a);"])
+
+    def test_unknown_type_in_function_pointer_cast_and_stack_slots_not_extern(self):
+        self.assertEqual(B.fix_unknown_types("(*(? (**)(s32))p)(1);"), "(*(s32 (**)(s32))p)(1);")
+        self.assertIsNone(B.cheap_fix("cfe: Error: base.c, line 9: 'sp18' undefined", [], {}))
+
+    def test_call_through_pointer_read_from_memory_is_parenthesised(self):
+        self.assertEqual(B.fix_pointer_calls("    *(s32 (**)(s32))((unsigned char *)(sp + (a * 4)) + (40))(0x80);\n"),
+                         "    (*(s32 (**)(s32))((unsigned char *)(sp + (a * 4)) + (40)))(0x80);\n")
+        self.assertEqual(B.fix_pointer_calls("    x = *(s32 (**)(s32))(p);\n"), "    x = *(s32 (**)(s32))(p);\n")
+
+    def test_knr_definition_gives_an_empty_prototype(self):
+        orig = "void vload(arg0)\ns32 arg0;\n{\n}\n"
+        self.assertEqual(B.definition_in(orig, "vload"), ("void", ""))
+        self.assertEqual(B.definition_in("void g(void) {\n}\n", "g"), ("void", "void"))
+
+    def test_source_fix_undefined_stack_slot(self):
+        msg = "cfe: Error: base.c, line 9: 'sp2C' undefined"
+        body, _d = B.source_fix(msg, "void f(void) {\n    h(&sp2C[0]);\n}\n", [], "f", "", "")
+        self.assertIn("    s32 sp2C[16];\n", body)
+
+
 class Placement(unittest.TestCase):
     def test_insert_and_drop(self):
         new = B.insert_draft(SRC, "func_80132100", body("func_80132100", "D = 1;"), ["extern s32 D;"])
@@ -241,6 +332,25 @@ class Pipeline(Repo):
         self.assertIn("func_80132200);", text, "the other draft stays")
         self.assertIn("MATCH AA:func_80132100 0x20", lines)
         self.assertIn("MATCH 1 (0x20 bytes)  near 0  fail 0  (1 processed)", lines)
+
+    def test_matches_trigger_migrate_globals_once(self):
+        calls = []
+        be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;")),
+                                     "func_80132000": ("", body("func_80132000", "D_X = 1;"))},
+                         scores={"func_80132100": lambda t: 0, "func_80132000": lambda t: 5})
+        be.migrate_globals = lambda root: (calls.append(root) or (True, ""))
+        rc, lines = self.run_main(be)
+        self.assertEqual(calls, [self.root])
+        self.assertIn("migrate_globals --apply: ok", lines)
+        self.assertIn("check_headers: ok", lines)
+        rc, lines = self.run_main(be)               # nothing new matched: not called again
+        self.assertEqual(calls, [self.root])
+
+    def test_no_match_no_migrate_globals(self):
+        be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;"))},
+                         scores={"func_80132100": lambda t: 5})
+        be.migrate_globals = lambda root: self.fail("no match, no migration")
+        self.run_main(be, targets=self.targets[1:])
 
     def test_failed_verification_is_a_near_miss(self):
         be = FakeBackend(self.root, {"func_80132100": ("", body("func_80132100", "D_X = 2;"))},

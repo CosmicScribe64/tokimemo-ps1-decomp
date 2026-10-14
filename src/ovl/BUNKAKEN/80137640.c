@@ -66,7 +66,107 @@ void func_80137640(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80137804);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80137A38);
+void func_80137A38(void) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8005742C(0x40EA, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E99C();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_80145844();
+            func_80057418(1, func_8005751C(1));
+            cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E884();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(4);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 6;
+                break;
+            case 2:
+                D_800CA148 = 7;
+                break;
+            case 3:
+                D_800CA148 = 8;
+                break;
+            }
+            func_80139DEC();
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        D_800CA148 = 1;
+        func_8007E99C();
+        break;
+    case 7:
+        func_80085A60();
+        break;
+    case 8:
+        temp_v0_2 = func_8008667C(4);
+        switch (temp_v0_2) {
+        case 0:
+        case 1:
+            D_800CA148 = 9;
+            break;
+        case 2:
+            D_800CA148 = 0xA;
+            break;
+        case 3:
+            D_800CA148 = 0xB;
+            break;
+        }
+        func_8007E884();
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        if (func_8008667C(4) == 3) {
+            func_8007E99C();
+        } else {
+            func_80042940(0xD);
+        }
+        break;
+    case 11:
+        func_8007E884();
+        break;
+    case 12:
+        func_80085A60();
+        break;
+    case 13:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 14:
+        func_8007E99C();
+        break;
+    case 15:
+        func_80085A60();
+        break;
+    case 16:
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80137CD8);
 
@@ -84,7 +184,90 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80139184);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80139364);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_8013954C);
+void func_8013954C(void) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8005742C(0x410F, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E99C();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_80145844();
+            func_80057418(1, func_8005751C(1));
+            cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E884();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(4);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x4C;
+                break;
+            case 2:
+            case 3:
+                D_800CA148 = 0x4E;
+                break;
+            }
+            func_80139DEC();
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        D_800CA148 = 1;
+        func_8007E99C();
+        break;
+    case 7:
+        func_80085A60();
+        break;
+    case 8:
+        temp_v0_2 = func_8008667C(4);
+        switch (temp_v0_2) {
+        case 0:
+        case 1:
+            D_800CA148 = 0x4D;
+            break;
+        case 2:
+        case 3:
+            D_800CA148 = 0x4F;
+            break;
+        }
+        func_8007E884();
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        func_8007E99C();
+        break;
+    case 11:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 12:
+        func_80085A60();
+        break;
+    case 13:
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80139780);
 

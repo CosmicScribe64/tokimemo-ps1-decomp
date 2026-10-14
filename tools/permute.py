@@ -269,10 +269,17 @@ def target_source(asm_text):
     return '.include "asmproc_prelude.inc"\n' + asm_text
 
 
+# The prelude's jlabel is global (asm-processor needs that), so the assembler keeps an R_MIPS_PC16
+# relocation on every branch to a switch-case label and the permuter's objdump parser asserts
+# (T-11210). target.o is only scored, so those labels are local here and the branches resolve.
+LOCAL_JLABEL = (".purgem jlabel\n.macro jlabel label, visibility=local\n    .\\visibility \\label\n"
+                "    \\label:\n.endm\n")
+
+
 def build_target(root, asm_path, out_obj):
     """Assemble the original function bytes like the build does and pad .text to 16."""
     with open(asm_path) as f:
-        text = target_source(f.read())
+        text = target_source(f.read()).replace("\n", "\n" + LOCAL_JLABEL, 1)
     with tempfile.NamedTemporaryFile("w", suffix=".s", dir=os.path.dirname(out_obj) or ".",
                                      delete=False) as t:
         t.write(text)

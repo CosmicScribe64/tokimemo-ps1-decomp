@@ -1,7 +1,38 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014ABD0);
+void func_8014ABD0(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_8014AE20();
+        break;
+    case 1:
+        func_8014B750();
+        break;
+    case 2:
+        func_8014B978();
+        break;
+    case 3:
+        func_8014BB94();
+        break;
+    case 4:
+        func_8014C018();
+        break;
+    case 5:
+        func_8014C250();
+        break;
+    case 6:
+        func_8014C2A4();
+        break;
+    }
+    func_8006BA40();
+    func_80064DEC();
+    func_80064F48();
+    func_80066334();
+    func_80066C08(0);
+    func_800578F4(1);
+    func_80067870();
+}
 
 void func_8014ACB4(void) {
     s32 temp_v0;
@@ -156,7 +187,38 @@ s32 func_8014B750(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B7A4);
+void func_8014B7A4(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_80050DFC(&D_800E6280.unk_0D4[0]);
+        func_80050E8C(&D_80150EFC, 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        func_80051DBC();
+        return;
+    case 2:
+        func_8004EAAC();
+        func_80050DFC(&D_800E6280.unk_0D4[0]);
+        func_80050E8C(&D_80150F38, 0, 0x1F);
+        D_800E6280.unk_110D += 1;
+        /* fallthrough */
+    case 3:
+        func_80051DBC();
+        return;
+    case 4:
+        func_8004EAAC();
+        func_80050C24(0, 3);
+        func_80050D78(&D_80150F58, &D_80150F6C, &D_80150F80, 3);
+        func_8004EAD4(3);
+        D_800E6280.unk_1093 = 0;
+        func_8004284C();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 s32 func_8014B8CC(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);

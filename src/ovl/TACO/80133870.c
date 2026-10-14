@@ -72,7 +72,75 @@ void func_80133AF4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133C08);
+void func_80133C08(void) {
+    s32 temp_a1;
+    s32 var_s0;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_800462C8(5U, 0x801B8000, 0xB473);
+        func_800462C8(3U, 0x801C0000, 0xB4BC);
+        func_800462C8(0x21U, 0x801C8000, 0xB57F);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+    case 2:
+    case 3:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+            return;
+        }
+    default:
+        return;
+    case 4:
+        func_80134450();
+        D_800E6280.unk_110D += 1;
+        return;
+    case 5:
+        func_800462C8(0x20U, 0x80180000, 0xB489);
+        func_800462C8(0x20U, 0x80190000, 0xB4D3);
+        func_800462C8(8U, 0x80170000, 0xB47E);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 6:
+    case 7:
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+            return;
+        }
+        break;
+    case 9:
+        func_80143730(0x80180000, 0x18);
+        func_80143730(0x80190000, 0x1A);
+        func_80143730(0x80170000, 0xA);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 10:
+        func_800462C8(0x14U, 0x80180000, 0xB4BF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 11:
+        if (cd_read_sync_status() & 1) {
+            D_800E6280.unk_110D += 1;
+            return;
+        }
+        break;
+    case 12:
+        func_8004435C(0x380U, 0x100U, 0x20U, 0x80U, 0x80180000);
+        func_8004435C(0x3A0U, 0x100U, 0x20U, 0x80U, 0x80182000);
+        func_8004435C(0x380U, 0x180U, 0x20U, 0x80U, 0x80184000);
+        func_8004435C(0x3A0U, 0x180U, 0x20U, 0x80U, 0x80186000);
+        var_s0 = 0;
+        do {
+            temp_a1 = var_s0 & 0xFF;
+            func_80043914(0x80188000, temp_a1, 1, 3, temp_a1);
+            var_s0 += 1;
+        } while (var_s0 != 0xF);
+        func_8004284C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80133870", func_80133E98);
 
