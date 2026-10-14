@@ -838,20 +838,18 @@ void func_8013DA40(void) {
 /* NON_MATCHING: T-11120, 18 lines: the original keeps the selector in $v1 and divides a `move v0,v1` copy of it (-1 in $a1, 7 in $a0); here no copy, constants one register lower. Same prologue in six sibling functions. */
 #ifdef NON_MATCHING
 void func_8013DAC4(void) {
-    GameState *g;
-    s32 idx;
+    s8 *p;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
     D_800E6280.unk_F88 &= ~0x100;
     func_8004FC10(0);
-    g = &D_800E6280;
-    idx = g->unk_1093;
-    if (idx != -1) {
+    p = &D_800E6280.unk_1093;
+    if (*p != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = idx / 7 * 0x1F - 0x82;
-        D_80120C96 = idx % 7 * 0x10 - 0xB;
+        D_80120C92 = D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
+        D_80120C96 = D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (idx != -1)) {
+    if ((D_800E6280.unk_F88 & 0x820) && (*p != -1)) {
         func_8004284C();
         D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
     }
@@ -1702,9 +1700,70 @@ void func_80140044(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140430);
+/* Falls through without a return statement. */
+s32 func_80140430(void) {
+    u32 i;
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80140574);
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        i = D_800E6280.unk_1118 - 1;
+        func_80046290(D_800B3A3C[i * 2], D_800B3A3C[i * 2 + 1], i % 13);
+        func_80044750(0x300);
+        func_800AE0B0("CALL XA");
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_800460EC() & 4) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 3:
+        func_80053D10();
+        if (D_800E8BEE != 0) {
+            func_80042908(2);
+            func_80042940(2);
+        } else {
+            func_80056284();
+            func_80042908(1);
+        }
+        break;
+    }
+}
+
+/* Falls through without a return statement. */
+s32 func_80140574(void) {
+    u32 i;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        i = D_800E6280.unk_1118 - 1;
+        func_80046290(D_800B394C[i * 2], D_800B394C[i * 2 + 1], i % 13);
+        func_80044750(0x300);
+        func_800AE0B0("CALL XA");
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (func_800460EC() & 4) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 2:
+        if (func_800460EC() & 2) {
+            D_800E6280.unk_110D++;
+        }
+        break;
+    case 3:
+        func_80053D10();
+        func_80056284();
+        func_80042908(1);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 

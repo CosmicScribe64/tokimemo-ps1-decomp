@@ -594,6 +594,8 @@ extern void *D_800B374C; /* image data passed to LoadSquare (func_800673B8) */
 extern u8 D_800B3750[][3];
 extern s32 D_800B37D4[];
 extern u8 *club_name_table[];
+extern s32 D_800B394C[];
+extern s32 D_800B3A3C[];
 extern s32 D_800B3B9C[];
 extern u8 D_800B3C6C;
 extern u8 D_800B3C70[];
