@@ -13079,3 +13079,6 @@ Opened [[tickets/T-11100-big-functions-gemini-33]] (In Progress) on [[kanban]]: 
 
 ## [2026-10-13] ticket | T-11110 started
 Opened [[tickets/T-11110-small-functions-gemini-34]] (In Progress): 16 functions (4,800 bytes) in `src/ovl/EVENT/8010FE10.c`.
+
+## [2026-10-14] build | T-11100 fix-up of 800674B0 drafts
+`src/main/800674B0.c`: matched `func_80068938` (FAKE pointer view for the loop stores) and `func_80068EC0`; `func_80067870`, `func_800696DC`, `func_8006A2CC` put under `NON_MATCHING` with the `INCLUDE_ASM` fallback. `tools/docker.sh ninja` 27/27 OK, `check_headers.py` OK. [[tickets/T-11100-big-functions-gemini-33]] moved to In Review on [[kanban]].

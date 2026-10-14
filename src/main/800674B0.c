@@ -95,6 +95,10 @@ void func_8006764C(s32 arg0) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800676AC);
 
+/* NON_MATCHING: T-11100, 142 words differ in registers (14 structural): the original loads D_800B5C08 into $a3 and
+ * passes it with `move a0,a3`, and keeps D_80125C54 in $a2 and the D_80125C5x values in other temporaries (T-0018 style
+ * global promotion); the draft gets $a0/$t* for them. */
+#ifdef NON_MATCHING
 void func_80067870(void) {
     s32 x1;
     s16 dx;
@@ -181,6 +185,9 @@ void func_80067870(void) {
         }
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067C28);
 
@@ -477,6 +484,11 @@ void data_save_load_class_init(void) {
     D_8012067A = -0x13;
 }
 
+/* NON_MATCHING: T-11100, 44 structural differences (603 against 602 instructions, frame 240 against 248): the original
+ * keeps the clear counter in $s0 and the loop index in another register, and addresses the NameMetricWork/
+ * NameRecordF00 slots through a different set of hoisted constants (lui a3 chain). Registers and frame do not follow
+ * from the draft's locals yet. */
+#ifdef NON_MATCHING
 void func_800696DC(s32 arg0, s32 arg1) {
     s32 i;
     s32 var_s0;
@@ -592,9 +604,17 @@ void func_800696DC(s32 arg0, s32 arg1) {
     }
     k_sub_disp_start(6);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800696DC);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
+/* NON_MATCHING: T-11100, ~115 differing words: the store triples (unk_18/unk_26/unk_2A of the next DisplayRecord44) are
+ * emitted in other orders in several branches (e.g. 26,18,2A or 2A,26,18 with the same constant registers), and the
+ * unk_03E/unk_03F byte loads come in the other order at the start of the switch tail. Reordering the C statements
+ * changes the constant registers instead; a record pointer local did not help. */
+#ifdef NON_MATCHING
 void func_8006A2CC(void) {
     s32 pad1;
     s32 var_v1;
@@ -882,6 +902,9 @@ void func_8006A2CC(void) {
     gnsx(&D_800E6280.unk_0D4[0]);
     sndisp(D_800B66A4[sp3C], 0, 0x1F);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A2CC);
+#endif
 
 s32 appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;

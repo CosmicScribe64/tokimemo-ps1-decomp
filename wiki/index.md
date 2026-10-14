@@ -19,7 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
-- [[tickets/T-11100-big-functions-gemini-33|T-11100]] Big functions (Gemini) 33 (In Progress).
+- [[tickets/T-11100-big-functions-gemini-33|T-11100]] Big functions (Gemini) 33 (In Review).
 - [[tickets/T-11110-small-functions-gemini-34|T-11110]] Small functions (Gemini) 34 (In Progress).
 - [[tickets/T-11090-ingest-english-patch-notes|T-11090]] Ingest the English patch notes as a reference (Done; 50 symbols renamed, [[ref-english-patch]]).
 - [[tickets/T-11070-small-functions-gemini-30|T-11070]] Small functions (Gemini) 30 (In Progress).
