@@ -1613,4 +1613,10 @@ extern s16 D_801243A2;
 extern s8 D_8012530C;
 void func_80011E8C();
 
-
+typedef struct EventTable2D6 {
+    /* 0x00 */ u8 unk_00[22][33];
+} EventTable2D6; /* size 0x2D6 */
+extern EventTable2D6 D_80125504;
+extern s16 D_8012434C;
+extern s16 D_80124350;
+void func_80115C18(void);

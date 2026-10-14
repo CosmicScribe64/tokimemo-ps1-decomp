@@ -20,6 +20,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-11100-big-functions-gemini-33|T-11100]] Big functions (Gemini) 33 (In Progress).
+- [[tickets/T-11110-small-functions-gemini-34|T-11110]] Small functions (Gemini) 34 (In Progress).
 - [[tickets/T-11090-ingest-english-patch-notes|T-11090]] Ingest the English patch notes as a reference (Done; 50 symbols renamed, [[ref-english-patch]]).
 - [[tickets/T-11070-small-functions-gemini-30|T-11070]] Small functions (Gemini) 30 (In Progress).
 - [[tickets/T-11060-big-functions-gemini-29|T-11060]] Big functions (Gemini) 29 (In Progress).

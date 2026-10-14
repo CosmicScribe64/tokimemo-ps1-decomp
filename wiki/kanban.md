@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
+- [ ] [[tickets/T-11110-small-functions-gemini-34|T-11110 Small functions (Gemini) 34]]
 - [ ] [[tickets/T-11070-small-functions-gemini-30|T-11070 Small functions (Gemini) 30]]
 - [ ] [[tickets/T-11060-big-functions-gemini-29|T-11060 Big functions (Gemini) 29]]
 - [ ] [[tickets/T-11080-big-functions-opus-31|T-11080 Big functions (Opus via Antigravity) 31]]
