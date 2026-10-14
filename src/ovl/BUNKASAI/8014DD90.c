@@ -57,7 +57,142 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014DF04);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014E2AC);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014E5EC);
+void func_8014E5EC(void) {
+    s32 temp_v0_2;
+    u32 temp_v0;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        dec_bg_cd_read(0x40F4, 1);
+        func_8004284C();
+        break;
+    case 1:
+        normal_date_bg_fadeout();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_8014338C();
+            dec_bg_show_set(1, func_8005751C(1));
+            func_8004284C();
+        }
+        break;
+    case 3:
+        normal_date_bg_fadein();
+        if (D_800E6280.unk_03E == 0x5F) {
+            D_800CA148 = 0x27;
+        } else {
+            D_800CA148 = 0x28;
+        }
+        break;
+    case 4:
+        normal_date_speak();
+        break;
+    case 5:
+        normal_date_bg_fadeout();
+        break;
+    case 6:
+        D_80122EB0 = (s32) D_800E6280.unk_1109;
+        D_80122EB4 = D_800E6280.unk_110A + 1;
+        main_state_set(0x80);
+        break;
+    case 7:
+        dec_bg_reset();
+        set_dec_bri(0);
+        dec_bg_cd_read(0x40F4, 1);
+        func_8004284C();
+        break;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            func_800866A0(0x622D);
+        }
+        break;
+    case 9:
+        dec_bg_show_set(1, func_8005751C(1));
+        func_8014338C();
+        D_80125CA0 = 0xC0;
+        addr_init_bustup();
+        D_800E6280.unk_F5F = 6;
+        func_80083474();
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        break;
+    case 10:
+        func_8007E884();
+        break;
+    case 11:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = (D_800E6280.unk_03E * 3) - 0x10B;
+                break;
+            case 2:
+                D_800CA148 = (D_800E6280.unk_03E * 3) - 0x10A;
+                break;
+            case 3:
+                D_800CA148 = (D_800E6280.unk_03E * 3) - 0x109;
+                break;
+            case 4:
+                D_800CA148 = 0x1B;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 12:
+        normal_date_speak();
+        break;
+    case 13:
+        if (func_8008667C(6) == 4) {
+            normal_date_girl_out();
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 14:
+        temp_v0_2 = func_8008667C(6);
+        switch (temp_v0_2) {
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            break;
+        case 2:
+            D_800CA148 = 2;
+            break;
+        case 3:
+            D_800CA148 = 3;
+            break;
+        }
+        func_8004284C();
+        break;
+    case 15:
+        normal_date_speak();
+        break;
+    case 16:
+        if (func_8008667C(6) == 4) {
+            func_8004284C();
+        } else {
+            normal_date_girl_out();
+        }
+        break;
+    case 17:
+        normal_date_bg_fadeout();
+        break;
+    case 18:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 19:
+        normal_date_speak();
+        break;
+    case 20:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_8014E9D0);
 
