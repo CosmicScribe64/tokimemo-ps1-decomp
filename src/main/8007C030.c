@@ -2092,7 +2092,50 @@ void read_bustup_uniform(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", read_bustup_swimsuit);
+void read_bustup_swimsuit(void) {
+    switch (D_800E71DF) {
+    case 0:
+        func_80062CD0(0x5666);
+        break;
+    case 1:
+        func_80062CD0(0x5E4F);
+        break;
+    case 2:
+        func_80062CD0(0x533C);
+        break;
+    case 3:
+        func_80062CD0(0x59BD);
+        break;
+    case 4:
+        func_80062CD0(0x67CD);
+        break;
+    case 5:
+        func_80062CD0(0x60C5);
+        break;
+    case 6:
+        func_80062CD0(0x633B);
+        break;
+    case 7:
+        func_80062CD0(0x5C06);
+        break;
+    case 8:
+        if (D_800E62BE == 0x5F) {
+            func_80062CD0(0x50F3);
+        } else if (D_800E62BE == 0x60) {
+            func_80062CD0(0x5120);
+        } else {
+            func_80062CD0(0x514D);
+        }
+        break;
+    case 9:
+        func_80062CD0(0x65B1);
+        break;
+    case 10:
+        func_80062CD0(0x6A43);
+        break;
+    }
+    func_8004284C();
+}
 
 void bustup_return(void) {
     read_bustup();
