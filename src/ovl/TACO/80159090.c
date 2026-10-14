@@ -1,7 +1,65 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80159090", func_80159090);
+void func_80159090(void) {
+    D_801604C0 += 1;
+    func_8015B59C();
+    if (((s32) D_801604C0 % 30) == 0) {
+        if (D_801604C4 < 4) {
+            if (func_8015CCC8(2) < 0xA) {
+                func_80159260();
+            }
+        } else if ((D_801604C4 < 6) && (func_8015CCC8(2) < 3)) {
+            func_80159260();
+        }
+    }
+    switch (D_801604C4) {
+    case 0:
+        func_80159878(D_801604C4);
+        func_8015A900();
+    default:
+        break;
+    case 1:
+    case 2:
+    case 3:
+        if (func_8015CCC8(3) == 0) {
+            func_80159878(D_801604C4);
+            func_8015A900();
+        }
+        break;
+    case 4:
+        if (func_8015CCC8(3) == 0) {
+            func_8015A900();
+        }
+        break;
+    case 5:
+        func_8015A900();
+        break;
+    case 6:
+        func_8015A900();
+        break;
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+        if (func_8015CE64() == 0) {
+            func_8015A164(D_801604C4 - 3);
+            func_8015A900();
+        }
+        break;
+    case 11:
+        if (func_8015CCC8(0xFF) == 0) {
+            func_8015A900();
+        }
+        break;
+    case 12:
+        if (func_8015CE64() == 0) {
+            func_8015ABF0();
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80159090", func_80159260);
 

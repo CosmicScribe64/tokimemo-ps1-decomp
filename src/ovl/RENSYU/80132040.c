@@ -20,7 +20,105 @@ INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132390);
 
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132A28);
 
-INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_80132F10);
+void func_80132F10(void) {
+    s32 var_s0;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+        case 6:
+            func_8005742C(0x417A, 1);
+            break;
+        case 7:
+            func_8005742C(0x4183, 1);
+            break;
+        case 8:
+            func_8005742C(0x419E, 1);
+            break;
+        case 9:
+            func_8005742C(0x4195, 1);
+            break;
+        case 10:
+            func_8005742C(0x418D, 1);
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+        func_8004284C();
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            func_80057418(1, func_8005751C(1));
+            switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+            case 6:
+                cd_read_sectors(0x1BU, 0x80197000, 0xB03E);
+                break;
+            case 7:
+                cd_read_sectors(0x1AU, 0x80197000, 0xAFE7);
+                break;
+            case 8:
+                cd_read_sectors(0x1BU, 0x80197000, 0xB01C);
+                break;
+            case 9:
+                cd_read_sectors(0x1BU, 0x80197000, 0xB001);
+                break;
+            case 10:
+                cd_read_sectors(0x1BU, 0x80197000, 0xAFCC);
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+            func_80065F34(1);
+            func_8004284C();
+        }
+        break;
+    case 2:
+        func_8007E81C();
+        break;
+    case 3:
+        func_8004E9F4(1);
+        func_8004E788(-0x80, 0x32, 0, (s32) "試合中", 0);
+        func_8004E884(1);
+        func_8004284C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            switch ((u16) D_800E6280.unk_0F4.h >> 0xC) {
+            case 6:
+                func_801340B0();
+                break;
+            case 7:
+                func_80133FB4();
+                break;
+            case 8:
+                func_8013405C();
+                break;
+            case 9:
+                func_80134008();
+                break;
+            case 10:
+                func_80133F60();
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+            var_s0 = 0;
+            do {
+                func_80043914(D_801343E0, (var_s0 + 0x10) & 0xFF, 1, 1, var_s0);
+                var_s0 += 1;
+            } while (var_s0 != 5);
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_80086424();
+}
 
 INCLUDE_ASM("asm/ovl/RENSYU/nonmatchings/RENSYU/80132040", func_8013325C);
 

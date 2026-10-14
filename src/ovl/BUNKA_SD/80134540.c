@@ -43,7 +43,42 @@ void func_801345BC(void) {
     func_801346D4();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80134540", func_801346D4);
+void func_801346D4(void) {
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80134260();
+        return;
+    case 1:
+        func_80134540();
+        return;
+    case 2:
+        func_801347CC();
+        return;
+    case 3:
+        func_80134418();
+        return;
+    case 4:
+        func_80134800();
+        return;
+    case 5:
+        func_80044750(0xC1);
+        func_8004E9F4(1);
+        func_8004284C();
+        return;
+    case 6:
+        func_80134850();
+        return;
+    case 7:
+        func_80134314();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_801347CC(void) {
     func_8004500C(1, 0x201);

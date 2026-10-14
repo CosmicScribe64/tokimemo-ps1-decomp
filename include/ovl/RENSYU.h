@@ -16,4 +16,11 @@ extern s16 D_801343DC;
 extern s32 D_801343E0;
 extern u8 D_801342D0;
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_801340B0(void);
+void func_80133FB4(void);
+void func_8013405C(void);
+void func_80134008(void);
+void func_80133F60(void);
+
 #endif /* OVL_RENSYU_H */

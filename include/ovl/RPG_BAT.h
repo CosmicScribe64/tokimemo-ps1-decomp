@@ -267,6 +267,16 @@ extern s32 D_8015EDF8;
 extern s32 D_8015EDB4;
 extern s32 D_8015EE4C;
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_801359FC(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8013673C(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80137204(void);
+void func_80137148(s32 arg0, s32 arg1);
+
 #endif
 extern u8 D_8015E9E0[];
 extern u8 D_8015EB70[];

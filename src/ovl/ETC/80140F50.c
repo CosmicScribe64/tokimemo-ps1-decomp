@@ -102,7 +102,58 @@ void func_80141700(void) {
     func_800578F4(2);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_8014175C);
+void func_8014175C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x78, 0x30, 0, (s32) "メモリーカードをチェックしています。", 0);
+        func_8004EAD4(1);
+        D_800E6280.unk_110D += 1;
+        func_80053CE0();
+        break;
+    case 1:
+        if (func_80053F04() != 0) {
+            if (D_800E6280.unk_1115 == 1) {
+                func_80053D10();
+                func_800AE0B0("EXIST_CARD!");
+                D_800E6280.unk_110D += 1;
+            } else if (D_800E6280.unk_1115 == 0xF1) {
+                func_80053D10();
+                func_800AE0B0("UNFORMAT CARD!");
+                func_80042940(0xA0);
+            } else if (D_800E6280.unk_1115 == 0xFF) {
+                func_80053D10();
+                func_800AE0B0("NO_CARD !");
+                func_80042940(0xFF);
+            }
+        } else if ((u32) D_800E6280.unk_1120 >= 0x201U) {
+            func_80053D10();
+            func_800AE0B0("NO COMUNICATION!");
+            func_80042940(0xFF);
+        }
+        break;
+    case 2:
+        func_80053CE0();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (func_80054140() == 2) {
+            D_800E6280.unk_110D += 1;
+            func_80053D10();
+        } else if ((u32) D_800E6280.unk_1120 >= 0x201U) {
+            func_80042940(0xFF);
+        }
+        break;
+    case 4:
+        if ((u8) D_800E8BEE != 0) {
+            func_8004284C();
+        } else {
+            func_80042940(0xF0);
+        }
+        break;
+    }
+    func_800578F4(2);
+}
 
 void func_80141980(void) {
     switch (D_800E6280.unk_110D) {

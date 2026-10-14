@@ -28,7 +28,97 @@ s32 func_80133540(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80133540", func_801336AC);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80133540", func_8013376C);
+void func_8013376C(void) {
+    func_80066C08(2);
+    func_80064F48();
+    func_80066334();
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80134260();
+        func_80044750(0x7F);
+        break;
+    case 1:
+        func_80133540();
+        break;
+    case 2:
+        func_80044750(0x200);
+        func_80133924();
+        break;
+    case 3:
+        func_80134418();
+        break;
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+        func_80133D54();
+        break;
+    case 12:
+        func_801344A8();
+        break;
+    case 13:
+        func_80044750(0x201);
+        func_80133CC4();
+        break;
+    case 14:
+        func_80134418();
+        break;
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+        func_80133D54();
+        break;
+    case 19:
+        func_80044750(0x202);
+        func_8004284C();
+        break;
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28:
+    case 29:
+    case 30:
+    case 31:
+    case 32:
+    case 33:
+    case 34:
+    case 35:
+    case 36:
+        func_80133D54();
+        break;
+    case 37:
+        func_80044750(0xC1);
+        func_80044750(0x500);
+        func_8004E9F4(1);
+        func_8004284C();
+        break;
+    case 38:
+        if ((u32) D_800E6280.unk_1104.u >= 0x1FU) {
+            func_8004284C();
+        }
+        break;
+    case 39:
+        func_801344A8();
+        break;
+    case 40:
+        func_80134314();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    D_800E6280.unk_1104.u += 1;
+}
 
 void func_80133924(void) {
     func_80133984();

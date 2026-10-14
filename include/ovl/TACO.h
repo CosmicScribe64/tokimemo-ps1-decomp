@@ -367,6 +367,12 @@ extern u8 D_8015EDE4;
 
 void func_8013F430(void);
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8015A164(s32 arg0);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80134450(void);
+
 #endif
 
 typedef struct TacoCam {
