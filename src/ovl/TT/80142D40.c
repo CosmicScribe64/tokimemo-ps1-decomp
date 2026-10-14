@@ -302,7 +302,7 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801441BC);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144854);
 
-/* T-11500 near miss (3 lines): the two stores of the constant 9 (sb 0x55 and sb 0x92 via D_80158A78) use $v0 here, the original holds 9 in $a0; everything else matches with the implicit-int (no return) definition */
+/* T-11500 near miss (3 lines): the two stores of the constant 9 (sb 0x55 and sb 0x92 via D_80158A78) use $v0 here, the original holds 9 in $a0. T-11510: the 9 is a ugen temp (used twice), which takes the lowest free of v0/v1/a0, so the original has v0/v1 busy in that block for an unknown reason; the return type makes no difference (void == s32). */
 #ifdef NON_MATCHING
 s32 func_80144A04(u8 *arg0) {
     u8 *p;
