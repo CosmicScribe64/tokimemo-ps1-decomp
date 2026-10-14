@@ -24,6 +24,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-11500-tt-batch-2|T-11500]] TT batch 2 (Done; Opus near-miss pass + Sonnet list, 12 matches / 7,160 bytes, TT 38.9%).
 - [[tickets/T-11100-big-functions-gemini-33|T-11100]] Big functions (Gemini) 33 (In Review).
 - [[tickets/T-11140-small-functions-gemini-38|T-11140]] Small functions (Gemini) 38 (Done; 11 matches / 3,444 linked bytes (3,652 list bytes), 5 guarded near misses).
+- [[tickets/T-11130-big-functions-gemini-37|T-11130]] Big functions (Gemini) 37 (In Progress).
 - [[tickets/T-11110-small-functions-gemini-34|T-11110]] Small functions (Gemini) 34 (In Progress).
 - [[tickets/T-11090-ingest-english-patch-notes|T-11090]] Ingest the English patch notes as a reference (Done; 50 symbols renamed, [[ref-english-patch]]).
 - [[tickets/T-11070-small-functions-gemini-30|T-11070]] Small functions (Gemini) 30 (In Progress).

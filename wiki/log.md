@@ -13156,3 +13156,6 @@ Opus pass on the five closest guarded near misses: none matched, all closer (`fu
 
 Inline review against CODING_STANDARDS.md: no findings (the new pad locals and the forwarding trick carry `FAKE` with
 the ticket). Moved [[tickets/T-11520-tt-batch-4]] to Done.
+## [2026-10-14] ticket | Start T-11130 Big functions (Gemini) 37
+
+Created [[tickets/T-11130-big-functions-gemini-37]] (In Progress) on [[kanban]] for the 52 functions in `astra37-list.txt` (`src/ovl/TAIIKU/80138950.c`, `src/main/8007C030.c`, `src/main/8006CB30.c`, `src/ovl/NAME_ENT/80132000.c`, `src/ovl/TAIIKU/80133C80.c`).

@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 - [ ] [[tickets/T-11120-small-functions-sonnet-36|T-11120 Small functions (Sonnet via Antigravity) 36]]
+- [ ] [[tickets/T-11130-big-functions-gemini-37|T-11130 Big functions (Gemini) 37]]
 - [ ] [[tickets/T-11110-small-functions-gemini-34|T-11110 Small functions (Gemini) 34]]
 - [ ] [[tickets/T-11070-small-functions-gemini-30|T-11070 Small functions (Gemini) 30]]
 - [ ] [[tickets/T-11060-big-functions-gemini-29|T-11060 Big functions (Gemini) 29]]
