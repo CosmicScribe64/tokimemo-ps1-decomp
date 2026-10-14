@@ -13123,3 +13123,16 @@ untagged pad locals fixed; a stale near-miss comment corrected. Moved [[tickets/
 
 Opened [[tickets/T-11520-tt-batch-4]] (In Progress), stacked on T-11510 (PR #5). Opus on the five closest guarded near
 misses first, then Sonnet drafts of the 13 large untouched TT functions.
+
+## [2026-10-14] build | T-11520 TT batch 4: 2 matches
+
+Opus pass on the five closest guarded near misses: none matched, all closer (`func_8013E850` 2 lines left,
+`func_8013DE10` 7). Sonnet over the 13 large untouched TT functions: `func_80138300` and `func_801430D4` matched,
+`func_80139B98` guarded (28 lines), the rest analysed and recorded. TT 205/303 (43.8%); grand total
+`5423/6958   1169276/2279368  51.3%`. All 27 checksums OK; prototype and global checks clean. Idioms in
+[[matching-notes]] ("TT overlay, batch 4 (T-11520)"), 14 rows in [[data/t0018-cases]].
+
+## [2026-10-14] ticket | T-11520 Done
+
+Inline review against CODING_STANDARDS.md: no findings (the new pad locals and the forwarding trick carry `FAKE` with
+the ticket). Moved [[tickets/T-11520-tt-batch-4]] to Done.
