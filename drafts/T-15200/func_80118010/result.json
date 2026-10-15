@@ -1,0 +1,10 @@
+{
+  "ticket": "T-15200",
+  "scope": "EVENT:func_80118010",
+  "score": 26,
+  "score_kind": "full-TU resolved diff rows",
+  "matching_claim": false,
+  "coverage_bytes_added": 0,
+  "source_base": "c5859bf5",
+  "body_sha256": "0761233975b4e125484cf01dafcbce6b051c534b615a1b161eee76b790d61f99"
+}

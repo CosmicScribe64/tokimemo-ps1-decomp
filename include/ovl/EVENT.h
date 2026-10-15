@@ -1519,7 +1519,13 @@ typedef struct EventStateView {
     /* 0x6C8 */ s8 unk_6C8;
     /* 0x6C9 */ s8 unk_6C9;
     /* 0x6CA */ s8 unk_6CA;
-    /* 0x6CB */ u8 pad_6CB[0x81B];
+    /* T-15200: selector-indexed bytes at D_800B0F35 and flag D_800B0F45.
+     * Twelve slots follow the existing Rec34 table extent; semantics unknown. */
+    /* 0x6CB */ u8 pad_6CB[0xA];
+    /* 0x6D5 */ u8 unk_6D5[12];
+    /* 0x6E1 */ u8 pad_6E1[4];
+    /* 0x6E5 */ u8 unk_6E5;
+    /* 0x6E6 */ u8 pad_6E6[0x800];
     /* 0xEE6 */ u8 unk_EE6;
     /* 0xEE7 */ u8 pad_EE7[0x150];
     /* 0x1037 */ u8 unk_1037;

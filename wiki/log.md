@@ -14693,3 +14693,23 @@ Two-axis review identified an EVENT callback still using a synthetic sp global a
 
 ## [2026-10-15] build | SHUGAKU pair and repaired draft checkpoint
 Two default linked proofs and affected checksum pass, adding 1,052 coverage bytes (1,056 literal span bytes). Total 1,445,668 / 2,279,368 bytes. Eight draft-tool tests and fifteen repair-archive hash audits pass. Completed unit archives through SHUGAKU and corrected type repairs are integrated without matching credit. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] ticket | Claim large EVENT reconstruction
+
+Created [[tickets/T-15200-event-large]] in isolated codex/event-large-15200 at c5859bf5. Read [[index]], coding standards, local setup, prior [[tickets/T-11600-w1-ovl-event-8010fe10]] and T-14300 evidence. Disc inputs hardlinked; production C untouched.
+
+## [2026-10-15] query | Recover EVENT dispatcher state and related handler shape
+
+[[tickets/T-15200-event-large]] records assembly-backed bitfield/date-assignment reconstruction and diagnostic reductions: dispatcher 3,174 archived rows to 1,930; related func_80118010 down to 26 rows. No matching claim. Reused EventStateView/Rec34, preserved original archives and all production C.
+
+## [2026-10-15] decision | Retain recovered EVENT fields and guarded close handler
+
+[[tickets/T-15200-event-large]] retains the large dispatcher separately and func_80118010 under NON_MATCHING. Added explicit state fields for selector table D_800B0F35 and flag D_800B0F45. Traced allocator isolates 13 register-only instruction differences; no new verified C coverage claimed.
+
+## [2026-10-15] decision | Pin all EVENT reconstructions for integration
+
+Parent requests immediate draft checkpoint with no further exploration. [[tickets/T-15200-event-large]] moves all nonmatching code to drafts/T-15200, restores production C exactly, preserves measured alternatives and useful compiler contexts, and retains only supported EVENT state field names in the header. EVENT checksum passed; verified coverage gain zero.
+
+## [2026-10-15] ticket | EVENT draft checkpoint awaits review
+
+[[tickets/T-15200-event-large]] moves In Review for parent integration. Useful nonmatching source, exact context snapshots, hashes, measured alternatives and serial replay scripts are committed separately from production C. Standards/spec review remains required before Done.
