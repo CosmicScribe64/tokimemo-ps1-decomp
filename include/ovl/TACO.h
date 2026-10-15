@@ -517,6 +517,12 @@ extern u8 D_8015FA50[];
 
 #ifndef OVL_TACO_MENU_RESOURCE_T10020
 #define OVL_TACO_MENU_RESOURCE_T10020
+extern s32 D_801603A0;
+extern s32 D_801603A4;
+extern u8 D_801603EC;
+extern u8 D_801603ED;
+void func_8015266C(u32 arg0);
+void func_80152764(s32 arg0);
 extern s16 *D_80160444;
 #endif
 

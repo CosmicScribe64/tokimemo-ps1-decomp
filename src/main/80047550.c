@@ -322,7 +322,32 @@ void func_8004902C(void) {
     D_800E6280.unk_03B = 0;
 }
 
+/* NON_MATCHING: T-11310, 6 rows: unk_03A loads into ugen temp $t6/$t7, the original loads it straight into $v1 (the sum register). */
+#ifdef NON_MATCHING
+void func_80049044(void) {
+    s32 v;
+
+    if ((s8)D_800E6280.unk_03B != 0) {
+        if ((s8)D_800E6280.unk_03B > 0) {
+            v = D_800E6280.unk_03A;
+            v += (s8)D_800E6280.unk_03B;
+            if (v >= 0x100) {
+                v = 0xFF;
+            }
+            D_800E6280.unk_03A = v;
+        } else if ((s8)D_800E6280.unk_03B < 0) {
+            v = D_800E6280.unk_03A;
+            v += (s8)D_800E6280.unk_03B;
+            if (v < 0) {
+                v = 0;
+            }
+            D_800E6280.unk_03A = v;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80047550", func_80049044);
+#endif
 
 void func_800490B4(u8 arg0) {
     D_800E6280.unk_03B = arg0;

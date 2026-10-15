@@ -519,7 +519,48 @@ void func_8013539C(void) {
     func_80042940(1);
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135450);
+s32 func_80135450() {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_801344E4();
+        return;
+    case 1:
+        func_80134804();
+        return;
+    case 2:
+        func_8013493C();
+        return;
+    case 3:
+        func_80134B6C();
+        return;
+    case 4:
+        func_80134C00();
+        return;
+    case 5:
+        func_80134D38();
+        return;
+    case 6:
+        func_80134DD0();
+        return;
+    case 7:
+        func_80134E64();
+        return;
+    case 8:
+        func_80134F9C();
+        return;
+    case 9:
+        func_80135034();
+        return;
+    case 10:
+        func_80135110();
+        return;
+    case 11:
+        func_8013539C();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013554C);
 
@@ -859,4 +900,60 @@ s32 func_801387E4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_8013884C);
+s32 func_8013884C() {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80136C30();
+        return;
+    case 1:
+        func_80137040();
+        return;
+    case 2:
+        func_801371FC();
+        return;
+    case 10:
+        func_801373C8();
+        return;
+    case 11:
+        func_801376A8();
+        return;
+    case 12:
+        func_80137864();
+        return;
+    case 20:
+        func_801378DC();
+        return;
+    case 21:
+        func_80137C1C();
+        return;
+    case 22:
+        func_80137E38();
+        return;
+    case 23:
+        func_80137FA0();
+        return;
+    case 30:
+        func_80138080();
+        return;
+    case 31:
+        func_801383C4();
+        return;
+    case 32:
+        func_801385F0();
+        return;
+    case 33:
+        func_80138708();
+        return;
+    case 34:
+        func_801387A8();
+        return;
+    case 35:
+        func_801387E4();
+        return;
+    case 40:
+        func_801386C8();
+        /* fallthrough */
+    default:
+        return;
+    }
+}

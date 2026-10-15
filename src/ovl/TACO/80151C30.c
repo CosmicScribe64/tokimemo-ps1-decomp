@@ -78,7 +78,7 @@ void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
 
     var_v0 = *arg1;
     if ((var_v0 < 0x1EU) || (var_v0 >= 0x23U)) {
-        if ((u8) *arg0 >= 3U) {
+        if (*arg0 >= 3U) {
             func_801523D0(arg2, arg3, (s32) var_v0);
             *arg1 += 1;
             *arg0 = 0;
@@ -108,7 +108,21 @@ void func_801522B0(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_801523D0);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_8015266C);
+void func_8015266C(u32 arg0) {
+    if (arg0 < D_8015EDB4[17].unk3) {
+        func_80152764((s32) D_8015EDB4[17].unk2);
+        D_8015EDB4[17].unk2 = D_8015EDB4[17].unk2 + 1;
+        D_8015EDB4[17].unk3 = 0U;
+    }
+    if (D_8015EDB4[17].unk2 >= 0x14U) {
+        D_8015EDB4[17].unk2 = 0U;
+        D_8015EDB4[17].unk3 = D_8015EDB4[17].unk2;
+        func_801472D4(0x23, 0, D_801603A0, D_801603A4, D_801603EC, D_801603ED);
+        func_801478F8(0x23, (s32) D_80160444);
+        return;
+    }
+    D_8015EDB4[17].unk3 = D_8015EDB4[17].unk3 + 1;
+}
 
 void func_80152764(s32 arg0) {
     if (arg0 < 5) {

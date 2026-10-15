@@ -84,4 +84,13 @@ void func_80136BD8(void) {
         func_8014EBA8();
     }
 }
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801368B0", func_80136CCC);
+void func_80136CCC(void) {
+    if (!(D_8015EDB4 & 1)) {
+        func_8013E810(0x2B, 0xFF, 1, 0);
+    } else {
+        func_8013E810(0x2B, 0xFF, 1, 1);
+    }
+    if (++D_8015EDB4 >= 0x3D) {
+        func_8014EBA8();
+    }
+}
