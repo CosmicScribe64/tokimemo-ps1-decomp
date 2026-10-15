@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-13700-name-ent-families|T-13700]] NAME_ENT family reconstruction (In Review; zero accepted bytes).
 - [[tickets/T-12903-option-small-handlers|T-12903]] Match small OPTION audio handlers (In Progress).
 - [[tickets/T-12902-small-draft-triage|T-12902]] Triage saved small OPTION and audio drafts (In Review; 264 linked bytes).
 - [[tickets/T-12901-small-option-main-first|T-12901]] Verify close OPTION and audio drafts (In Review; 2 matches / 548 linked bytes).
@@ -306,3 +307,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13200-event-family-transfer|T-13200]] GYOZI/SHOUGATU bounded event family transfer.
 
 - [[tickets/T-13201-event-selector-stores|T-13201]] Event selector direct-store family.
+
+- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
