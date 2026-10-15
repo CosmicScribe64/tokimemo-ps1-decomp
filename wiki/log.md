@@ -14435,3 +14435,6 @@ Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-famili
 ## [2026-10-15] build | GEKO dispatcher and shared indicator source form
 
 [[tickets/T-13901-geko-families]] adds two functions / 924 literal linked bytes with GEKO SHA1 OK. [[scenes-family-results]] records direct global updates and the established function-table source form.
+
+## [2026-10-15] build | GEKO triple verified and TACO evidence preserved
+[[tickets/T-12400-integrate-verified-matches]] integrated b234c5e5/1e2eb462: independent default literal proofs confirm GEKO80141374=416bytes,801351F8=328bytes,8013882C=596bytes (1340total). Affected GEKO SHA1, headers/globals and branch prototype checks pass. Standards inspection confirms ordinary cursor loop, aggregate callback table and dispatcher logic. Total5885/6958functions,1408876/2279368bytes (61.8%); remaining414620alignedbytes to80%. Evidence build/scratch/goal-geko-triple.log. TACO09074a2c preserves one/three-row near misses with zero new bytes; that completed chat replaced by Sol6.1medium MAIN-family chat T14200, excluding existing dialogue and uncertain8007C030ownership. Active larger DATE/EN_NICHI candidates remain uncounted.

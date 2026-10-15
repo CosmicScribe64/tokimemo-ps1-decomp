@@ -24,29 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
-- [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
-- [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
-- [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
-- [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
-- [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
-- [ ] [[tickets/T-13102-etc-exam-family|T-13102 Reconstruct ETC exam handlers]]
-- [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
@@ -93,18 +70,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
 
-
-
-
-
-
-
-## In Review
-
-- [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
-- [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
-- [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
-- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
 
 - [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
@@ -126,6 +91,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
 
 - [ ] [[tickets/T-13700-name-ent-families|T-13700 Reconstruct NAME_ENT families]]
+
+- [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
+
+- [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
+
+## In Review
 
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
