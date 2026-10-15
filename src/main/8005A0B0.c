@@ -1379,7 +1379,52 @@ s32 join_club_select(void) {
     }
 }
 
+#ifdef NON_MATCHING
+void join_club_message(void) {
+    u8 buf[0x40];
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        strcpy(buf, club_name_table[D_800E6280.unk_0F4.h >> 0xC]);
+        strcat(buf, "部に入部した。");
+        sndisp(buf, 0, 0xFF);
+        k_sub_disp_start(1);
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        xa_wait();
+        break;
+    case 2:
+        if ((D_800E6280.unk_0F4.h >> 0xC) >= 6) {
+            k_sub_reset();
+            gnsx("部長");
+            set_kanji_string(-0x56, 0x32, 0, "「毎月", 0);
+            set_kanji_string(-0x2C, 0x32, 1, "第３日曜日", 0);
+            set_kanji_string(0x1A, 0x32, 0, "は、", 0);
+            set_kanji_string(-0x48, 0x42, 0, "クラブの日なので、", 0);
+            set_kanji_string(-0x48, 0x52, 1, "休まない", 0);
+            set_kanji_string(-0x10, 0x52, 0, "ように。", 0);
+            func_80052060(0x0D000011, 0x0300001F, -1, 0xE);
+            D_800E6280.unk_110D++;
+        } else {
+            D_800E6280.unk_110D = 0xFF;
+        }
+        break;
+    case 3:
+        func_8005215C();
+        break;
+    case 4:
+        D_800E6280.unk_110D = 0xFF;
+        break;
+    case 0xFF:
+        func_8004284C();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_message);
+#endif
 
 void join_club_exit(void) {
     func_80048E78();
