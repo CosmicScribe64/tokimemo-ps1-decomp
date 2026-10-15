@@ -605,6 +605,9 @@ typedef struct {
 } GirlFlag4;
 
 extern u8 D_801486E4;
+extern s32 D_8012E660;
+extern s32 D_8012E664;
+extern s32 D_8012E6BC;
 extern s32 D_8012E678;
 extern s32 D_80148B60;
 extern s32 D_80148B64;
