@@ -22,6 +22,13 @@
 #include "common.h"
 #include "libgpu.h"
 
+/* T-12010: D_801255D0 is saved as a word and read as four bytes. */
+typedef union WordBytes4 {
+    u32 word;
+    u8 bytes[4];
+} WordBytes4;
+extern WordBytes4 D_801255D0;
+
 /* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
 typedef struct DialogueVoice8 {
     /* 0x00 */ s32 unk_00;

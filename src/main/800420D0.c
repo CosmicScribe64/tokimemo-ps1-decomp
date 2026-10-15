@@ -54,7 +54,7 @@ loop_1:
     goto loop_1;
 }
 
-/* NON_MATCHING: T-10510, 4 register lines: local id in a3 (original), v1 */
+/* NON_MATCHING: T-12010, 8 listing lines (4 substitutions): local id in a3 (original), v1 */
 #ifdef NON_MATCHING
 void func_800422C8(void) {
     s32 id;

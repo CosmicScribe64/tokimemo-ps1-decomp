@@ -1982,3 +1982,8 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/801410A0 | `func_801410A0` | regorder | T-11820: not kept (48 lines): both loops match (`i * 16` row index, `call * len`, if/else abs, s16 `spd = -spd`); the turn step keeps `(s16)+-spd` in v1 in the original |
 | TT/801374C0 | `func_80138808` | regorder | T-11820: not kept (145 lines): loop 3's base needs a second chain struct at `g + 0xEFC`; the original unrolls loop 3 but not loop 2 |
 | TT/801487D0 | `func_801487D0` | regorder | T-11820: not kept (103 lines): `func_801336F8` template with one extra local for the 0x48 frame; `ch - 0x20` masking and temp order differ |
+
+| main/800451D0 | `file_checksum_ok` | sched | T-12010: four listing lines remain (sltu/andi swap), unchanged after 385 autotweaks, 720 orders, manual loop/narrowing views and 300s permuter. Guard retained. |
+| main/800420D0 | `func_800422C8` | regorder | T-12010: traced uopt plus sixteen pointer/stored-value views leave eight listing lines, a3 versus v1. Guard retained; no new compiler rule demonstrated. |
+| main/80047550 | `load_tpage_buf_lock` | param homes | T-12010: signed branch and u32 index view leave 29 listing lines; unsigned-compare 19-line candidate rejected for changed semantics. Guard retained. |
+| main/800451D0 | `func_800460FC` | stack/zero stores | T-12010: readable retry/ring-index form leaves 17 listing lines in homes and zero-store register. FAKE retry-zero chain labeled; larger-buffer 13-line variant not retained. No compiler-pass change proposed. |

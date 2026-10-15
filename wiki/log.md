@@ -13525,3 +13525,11 @@ func_80049044 passes 112-byte linked comparison and main checksum via a local fi
 ## [2026-10-15] build | T-12010 mouse coordinate update matches
 
 func_80059938 passes linked verification (232 bytes) and main SHA1; its updated explicit-port caller remains a 216-byte match. Shared header rebuild passed 27/27 with headers/globals OK. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record the natural pointer-table slot idiom.
+
+## [2026-10-15] ticket | T-12010 deep pass ready for review
+
+All twelve assigned cx1 functions were attempted: four matched, four guarded near misses (4/8/29/17 listing lines), four larger scratch-only drafts. Recorded bounded permutation/type/stack experiments and rejected semantically different or unjustified-buffer candidates in [[tickets/T-12010-codex-cx1]], [[matching-notes]] and [[data/t0018-cases]]. Moved the ticket/card to In Review; one new guard has an explicit FAKE zero-chain note. Final configure/build and prototype validation running; independent code review remains required.
+
+## [2026-10-15] build | T-12010 final package verification
+
+Final Docker configure/ninja -j2 passes all 27 binary checksums, headers and globals. Branch prototype check passes with zero new and fifteen known disagreements. Current full-unit guarded diffs are 4/8/29/17 listing lines. `git diff --check` is clean and no inline assembly was added. Evidence in build/scratch/final-build.log, final-protos.log and final-guards.log; [[tickets/T-12010-codex-cx1]] remains In Review.
