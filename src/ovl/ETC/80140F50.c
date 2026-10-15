@@ -21,7 +21,50 @@ u8 *func_80140F94(void) {
     return D_80150124;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80140FD8);
+void func_80140FD8(void) {
+    GameState *g = &D_800E6280;
+    g->unk_1104.w += 1;
+    switch ((u8) g->unk_110A) {
+    case 0x0:
+        func_801413FC();
+        break;
+    case 0x1:
+        func_80141468();
+        break;
+    case 0x2:
+        func_801415A4();
+        break;
+    case 0x3:
+        func_80141700();
+        break;
+    case 0x4:
+        func_8014175C();
+        break;
+    case 0x5:
+        func_80141980();
+        break;
+    case 0x6:
+        func_80141BE8();
+        break;
+    case 0xA0:
+        func_80141154();
+        break;
+    case 0xF0:
+        func_80141E10();
+        break;
+    case 0xFD:
+        func_80142574();
+        break;
+    case 0xFE:
+        func_80142390();
+        break;
+    case 0xFF:
+        func_801421AC();
+        break;
+    }
+    func_801428EC();
+}
+
 
 void func_80141154(void) {
     u8 temp;
@@ -242,7 +285,81 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141ABC);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141BE8);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141E10);
+void func_80141E10(void) {
+    GameState *g = &D_800E6280;
+    switch (g->unk_110D) {
+    case 0:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "システムファイルがありません。", 0);
+        set_kanji_string(-0x78, 0x3E, 0, (s32) "（システムファイルがないと", 0);
+        set_kanji_string(-0x78, 0x4C, 0, (s32) "アルバムモードのセーブはできません）", 0);
+        k_sub_disp_start(3);
+        g->unk_110D += 1;
+        func_80053CE0();
+        break;
+    case 1:
+        if ((u32) g->unk_1104.u >= 0x41U) {
+            g->unk_110D += 1;
+        }
+        break;
+    case 2:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "システムファイルを作成し、", 0);
+        set_kanji_string(-0x78, 0x3E, 0, (s32) "アルバムモードをセーブしますか？", 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
+        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
+        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        k_sub_disp_start(6);
+        g->unk_110D += 1;
+        break;
+    case 3:
+        if (g->unk_F88 & 0x20) {
+            g->unk_110D += 1;
+        } else if (g->unk_F88 & 0x40) {
+            func_8004482C();
+            main_state_set(0xC4);
+        }
+        break;
+    case 4:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "システムファイルを作成しています。", 0);
+        set_kanji_string(-0x78, 0x3E, 0, (s32) "（アルバムモードのデータをセーブ後、", 0);
+        set_kanji_string(-0x78, 0x4C, 0, (s32) "ファイルセレクト画面にて、", 0);
+        set_kanji_string(-0x78, 0x5A, 0, (s32) "システムファイルを作り直してください）", 0);
+        k_sub_disp_start(5);
+        g->unk_110D += 1;
+        break;
+    case 5:
+        if (func_80054694(0) == 1) {
+            g->unk_110D += 1;
+        } else {
+            func_80042940(0xFE);
+        }
+        break;
+    case 6:
+        D_800E7D36 = g->unk_1118;
+        *D_800E7D14 = 1;
+        g->unk_1118 = 0;
+        func_80053CE0();
+        func_80054E6C();
+        g->unk_110D += 1;
+        break;
+    case 7:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            g->unk_110D += 1;
+        } else if (((u32) g->unk_1120 >= 0x201U) || (g->unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 8:
+        func_80042940(5);
+        break;
+    }
+    func_800578F4(2);
+}
 
 void func_801421AC(void) {
     u8 *state = &D_800E6280.unk_110D;
@@ -322,7 +439,80 @@ void func_80142390(void) {
     func_800578F4(2);
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80142574);
+void func_80142574(void) {
+    GameState *g = &D_800E6280;
+    switch (g->unk_110D) {
+    case 0:
+        k_sub_reset();
+        set_kanji_string(-0x78, 0x30, 0, (s32) "システムファイルが壊れています。", 0);
+        set_kanji_string(-0x78, 0x4C, 0, (s32) "システムファイルを作り直していいですか？", 0);
+        k_sub_disp_start(3);
+        g->unk_110D += 1;
+        break;
+    case 1:
+        if ((u32) g->unk_1104.u >= 0x41U) {
+            g->unk_110D += 1;
+        }
+        break;
+    case 2:
+        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
+        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
+        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        k_sub_disp_start(6);
+        g->unk_110D += 1;
+        break;
+    case 3:
+        if (g->unk_F88 & 0x20) {
+            k_sub_reset();
+            set_kanji_string(-0x78, 0x30, 0, (s32) "システムファイルを作成しています。", 0);
+            set_kanji_string(-0x78, 0x3E, 0, (s32) "（アルバムモードのデータをセーブ後、", 0);
+            set_kanji_string(-0x78, 0x4C, 0, (s32) "ファイルセレクト画面のシステムを", 0);
+            set_kanji_string(-0x78, 0x5A, 0, (s32) "クリックして、システムファイルを", 0);
+            set_kanji_string(-0x78, 0x68, 0, (s32) "作り直してください）", 0);
+            k_sub_disp_start(5);
+            g->unk_110D += 1;
+        } else if (g->unk_F88 & 0x40) {
+            func_8004482C();
+            main_state_set(0xC4);
+        }
+        break;
+    case 4:
+        if (func_80054704(0) == 1) {
+            g->unk_110D += 1;
+        } else {
+            func_80042940(0xFF);
+        }
+        break;
+    case 5:
+        if (func_80054694(0) == 1) {
+            g->unk_110D += 1;
+        } else {
+            func_80042940(0xFF);
+        }
+        break;
+    case 6:
+        D_800E7D36 = g->unk_1118;
+        *D_800E7D14 = 1;
+        g->unk_1118 = 0;
+        func_80054E6C();
+        g->unk_110D += 1;
+        break;
+    case 7:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            g->unk_110D += 1;
+        } else if (((u32) g->unk_1120 >= 0x201U) || (g->unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 8:
+        func_80042940(5);
+        break;
+    }
+    func_800578F4(2);
+}
 
 s32 func_801428EC(void) {
     s32 color;

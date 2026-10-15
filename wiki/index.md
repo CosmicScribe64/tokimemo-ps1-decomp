@@ -316,3 +316,6 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13203-event-particle-family|T-13203]] Particle initialization family experiment.
 
 - [[event-family-results]] GYOZI/SHOUGATU bounded family transfer:3 functions /3424 literal bytes, failed-probe ledger and review.
+- [[tickets/T-13103-etc-memory-card-family|T-13103]] ETC memory-card state family.
+
+- [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence.

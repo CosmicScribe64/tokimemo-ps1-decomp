@@ -14251,3 +14251,23 @@ After independent Standards/Spec review and resolved findings, [[tickets/T-13200
 
 ## [2026-10-15] lint | T-13200 scoped wiki consistency
 Four ticket frontmatters match exactly one Done card each; new tickets and [[event-family-results]] are indexed and cross-linked. Existing C preservation audit checks744 bodies against aa2b3158 with0 changes. All47 full-TU probe results, including44 nonzero/error outcomes, remain in ignored build/events13200.
+## [2026-10-15] ticket | Claim ETC memory-card state family
+Created [[tickets/T-13103-etc-memory-card-family]] after bounded exam-family tests. Rejected exam rendering forms stay in ignored scratch.
+
+## [2026-10-15] decision | ETC pointer form transfers to card states
+[[tickets/T-13103-etc-memory-card-family]]: 15/104/104 rows become zero with consistent GameState pointer; album loader variants remain nonmatching. Extend to related card initialization before closing the family.
+
+## [2026-10-15] ticket | 13100 ready for review
+[[tickets/T-13100-etc-families]] moved In Progress -> In Review. Combined checkpoint: eleven functions / 5900 literal linked bytes; final default proofs and ETC SHA1 pass. All 91 existing C bodies unchanged; headers/globals pass. Details in [[etc-family-results]]. Awaiting standards/spec review.
+
+## [2026-10-15] ticket | 13101 ready for review
+[[tickets/T-13101-etc-career-family]] moved In Progress -> In Review. Final combined proof retains all four accepted functions / 1132 bytes. Existing C body audit passes. No rejected career variants promoted. See [[etc-family-results]].
+
+## [2026-10-15] ticket | 13102 ready for review
+[[tickets/T-13102-etc-exam-family]] moved In Progress -> In Review. Accepted func_80146714: 176 literal linked bytes, default proof and ETC SHA1 pass. Remaining calculation/ranking/drawing probes rejected (310/192, 40, 336/338 rows). No experimental declarations retained. See [[etc-family-results]].
+
+## [2026-10-15] ticket | 13103 ready for review
+[[tickets/T-13103-etc-memory-card-family]] moved In Progress -> In Review. Accepted 80140FD8 (380), 80141E10 (924), held-out 80142574 (888): 2192 literal linked bytes with ETC SHA1 pass. Original C preserved; temporary main-header declaration and rejected album/init declarations removed. See [[etc-family-results]].
+
+## [2026-10-15] build | Combined ETC literal proof and preservation audit
+All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 681c93b6e57c885f86e074c885a8bf6c3cca2319; 91 existing C bodies are text-identical to aa2b3158. Headers/globals pass. [[etc-family-results]] records bounded positive/negative results and source census.
