@@ -13505,3 +13505,7 @@ included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-1
 board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
 merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
 (ported onto main, 27/27, TT 252/303).
+
+## [2026-10-15] ticket | Start cx9 BUNKA_SD matching pass
+
+Created [[tickets/T-12090-codex-cx9]] In Progress, with [[kanban]] and [[index]] entries. Read required guidance and historical evidence for all ten targets. Baseline Docker configure/ninja passes 27/27 SHA1, headers and globals. Prioritize verified bytes and larger related setup functions.
