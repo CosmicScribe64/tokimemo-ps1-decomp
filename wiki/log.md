@@ -14932,3 +14932,7 @@ T-11690). TT stays excluded (issue #2).
 ## [2026-10-15] ticket | T-11650 created
 
 Created [[tickets/T-11650-w1-ovl-name_ent-80132000]] (In Progress): wave 1 package w1-p09, NAME_ENT `src/ovl/NAME_ENT/80132000.c`.
+
+## [2026-10-15] ticket | T-11650 resumed in wave 2 (w2-r09)
+
+[[tickets/T-11650-w1-ovl-name_ent-80132000]] resumed under [[tickets/T-16200-matching-wave-2]] as package w2-r09. Merged branch w1-p09 (8 matched functions in `src/ovl/NAME_ENT/80132000.c`) onto the wave-2 base; NAME_ENT sha1 OK. Status stays In Progress.
