@@ -14080,3 +14080,12 @@ Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (13
 ## [2026-10-15] build | Third verified match and shared-header validation
 
 [[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.
+
+## [2026-10-15] setup | T-13200 isolated event matching lane
+Created codex/events-13200 at aa2b3158 and copied ignored inputs from integration read-only. Claimed only GYOZI/SHOUGATU source. Read [[bunka-family-results]], [[matching-breakthroughs]], [[broad-coverage-results]] and coding standards; work tracked in [[tickets/T-13200-event-family-transfer]].
+
+## [2026-10-15] ticket | T-13201 direct case-store family
+[[tickets/T-13201-event-selector-stores]] records first bounded result: SHOUGATU 8013BDE0 base215 -> direct stores0 full-TU difference rows. Awaiting literal link and overlay SHA1; no bytes counted yet.
+
+## [2026-10-15] build | T-13201 first literal event match
+SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passes. Two GYOZI selector siblings remain failed probes (best33/24 rows); their unchanged-ASM default proofs add no coverage. See [[tickets/T-13201-event-selector-stores]].

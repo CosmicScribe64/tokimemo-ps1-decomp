@@ -293,3 +293,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13001-master-layout-pilot|T-13001]] Recover MASTER layouts and verify pilot matches (Done).
 
 - [[master-types-pilot]] — T-13000/T-13001: three MASTER typed-table matches, 3,648 literal bytes and evidence limits.
+
+- [[tickets/T-13200-event-family-transfer|T-13200]] GYOZI/SHOUGATU bounded event family transfer.
+
+- [[tickets/T-13201-event-selector-stores|T-13201]] Event selector direct-store family.

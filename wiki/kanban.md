@@ -23,6 +23,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
+
+- [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 - [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
 
