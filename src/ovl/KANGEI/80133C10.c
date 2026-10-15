@@ -106,4 +106,19 @@ void func_80133FF4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80133C10", func_80134084);
+void func_80134084(void) {
+    RECT rect;
+
+    dec_bg_reset();
+    rect.x = 0x140;
+    rect.y = 0x100;
+    rect.w = 0x140;
+    rect.h = 0xF8;
+    func_8009C7F8(&rect, 8, 0, 0);
+    rect.x = 0x2C0;
+    rect.y = 0;
+    func_8009C7F8(&rect, 8, 0, 0);
+    bg_read_sub2(0x428D);
+    func_8004284C();
+    func_800AE0F0(D_800CA19C, "合宿所");
+}
