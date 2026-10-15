@@ -13513,3 +13513,6 @@ removed the remaining TT packages from wave 1, and handed over seven TT function
 `tt-wave1-handoff`. Took it over in [[tickets/T-11830-tt-wave1-handoff]]: verified (clean rebuild 27/27, funcdiff MATCH
 for all seven, prototype and global checks clean), retagged the T-11660/T-11680 comments to T-11830. TT 252/303 (65.3%);
 grand total `5740/6958   1293292/2279368  56.7%`.
+
+## [2026-10-15] ticket | Integrate verified matching work on main
+Created [[tickets/T-12400-integrate-verified-matches]] after explicit user authorization to merge PR #33 and push the current verified matches directly to main, without draft PRs. An isolated integration checkout starts from 1668c560; original main and active workers remain untouched. PR #33 independently passed all27 checksums and seven literal proofs (5216 bytes); GitHub merge1668c560 confirmed.
