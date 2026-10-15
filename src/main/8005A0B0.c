@@ -1323,7 +1323,74 @@ void func_8005F6E4(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F730);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005FA20);
+void func_8005FA20(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+    } else if (D_800E6280.unk_F88 & 0x20) {
+        switch (*(u8 *)&D_800E6280.unk_1094) {
+        case 0:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "カーソルの移動速度を", 0);
+            if ((D_800E7D2C != 0) || (D_800E6280.unk_53C[8] != 0)) {
+                set_kanji_string(-0x80, 0x42, 0, "超遅くしました", 0);
+            } else {
+                set_kanji_string(-0x80, 0x42, 0, "遅くしました", 0);
+            }
+            D_800E6280.unk_F6F = 1;
+            D_800E6280.unk_F74 = 0xFF;
+            func_8004284C();
+            break;
+        case 1:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "カーソルの移動速度を", 0);
+            if ((D_800E7D2C != 0) || (D_800E6280.unk_53C[8] != 0)) {
+                set_kanji_string(-0x80, 0x42, 0, "ちょろっと遅くしました", 0);
+            } else {
+                set_kanji_string(-0x80, 0x42, 0, "少し遅くしました", 0);
+            }
+            D_800E6280.unk_F6F = 2;
+            D_800E6280.unk_F74 = 0xFF;
+            func_8004284C();
+            break;
+        case 2:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "カーソルの移動速度を", 0);
+            set_kanji_string(-0x80, 0x42, 0, "ふつうにしました", 0);
+            D_800E6280.unk_F6F = 3;
+            D_800E6280.unk_F74 = 0xFF;
+            func_8004284C();
+            break;
+        case 3:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "カーソルの移動速度を", 0);
+            if ((D_800E7D2C != 0) || (D_800E6280.unk_53C[8] != 0)) {
+                set_kanji_string(-0x80, 0x42, 0, "ちょろっと速くしました", 0);
+            } else {
+                set_kanji_string(-0x80, 0x42, 0, "少し速くしました", 0);
+            }
+            D_800E6280.unk_F6F = 4;
+            D_800E6280.unk_F74 = 0xFF;
+            func_8004284C();
+            break;
+        case 4:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "カーソルの移動速度を", 0);
+            if ((D_800E7D2C != 0) || (D_800E6280.unk_53C[8] != 0)) {
+                set_kanji_string(-0x80, 0x42, 0, "超速くしました", 0);
+            } else {
+                set_kanji_string(-0x80, 0x42, 0, "速くしました", 0);
+            }
+            D_800E6280.unk_F6F = 6;
+            D_800E6280.unk_F74 = 0xFF;
+            func_8004284C();
+            break;
+        }
+    }
+}
 
 void func_8005FDA0(void) {
     k_disp_inc();
