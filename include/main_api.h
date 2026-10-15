@@ -1962,7 +1962,7 @@ void func_80053D10(void);
 s32 func_80053F04(void);
 s32 func_80054140(void);
 u8 func_80054284(void);
-void func_800552DC(s32 arg0);
+s32 func_800552DC(s32 arg0);
 void func_80053EFC();
 s32 func_80054388();
 u8 func_8005448C(void);
