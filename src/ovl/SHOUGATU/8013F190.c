@@ -75,7 +75,22 @@ s32 func_8013F3C0(void) {
 
 INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8013F494);
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8013F9C4);
+void func_8013F9C4(void) {
+    s32 temp = D_80145FE4;
+
+    if (temp != 0 && temp != 7 && temp != 9) {
+        D_801206DB |= 0x80;
+    }
+    if (temp != 0 && temp != 7 && temp != 9) {
+        D_8012071F |= 0x80;
+    }
+    if (temp != 0 && temp != 7 && temp != 9) {
+        ((u8 *)&D_80120760)[3] |= 0x80;
+    }
+    D_801207A7 |= 0x80;
+    D_80146164 = 1;
+    func_8004284C();
+}
 
 void func_8013FA80(void) {
     s16 a[4];
