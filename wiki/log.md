@@ -13509,3 +13509,7 @@ merged). The seven TT matches that p10 and p12 made and the PRs lack went to dim
 ## [2026-10-15] ticket | Start cx2 TAIIKU matching pass
 
 Created [[tickets/T-12020-codex-cx2]] In Progress for src/ovl/TAIIKU/80133C80.c. Baseline Docker configure/build: 27/27 SHA1, headers OK, globals OK. Reviewed prior matching evidence.
+
+## [2026-10-15] build | Match TAIIKU random actor table assignment
+
+[[tickets/T-12020-codex-cx2]]: src/ovl/TAIIKU/80133C80.c func_80135DF8 matches 324 linked bytes and TAIIKU.bin SHA1 passes. Typed table assignment and nested actor indexing need no fakematch. Initial counter/hoist/decrement grids did not improve existing guarded drafts.

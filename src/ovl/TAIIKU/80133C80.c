@@ -367,7 +367,28 @@ s32 func_80135D24(void) {
     return table.value[row][random % 10];
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135DF8);
+void func_80135DF8(void) {
+    s32 index;
+    s32 row;
+    s32 column;
+    s32 skip;
+    TaiRandomTable table;
+
+    table = D_8014964C;
+    index = 0;
+    for (row = 0; row < 10; row++) {
+        skip = func_800AE0D0() % 3;
+        for (column = 0; column < 3; column++) {
+            if (skip != column) {
+                ((DisplayActor44 *)D_8011ECD0)[row * 3 + column + 46].unk_16 = table.value[D_801491EC][index];
+                index++;
+                if (index >= 10) {
+                    index = 0;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
 
