@@ -13918,3 +13918,6 @@ Recorded candidate evidence and rejected variants in [[bunka-family-results]]. F
 
 ## [2026-10-15] build | Two additional family matches and control audit
 [[tickets/T-12701-bunkaken-address-family]] adds func_80138A08 and func_8013A8CC, 2,004 linked bytes, with BUNKAKEN SHA1 OK. Historical candidates already C in the baseline are excluded from gains. Branch total: ten functions / 12,928 bytes. Both review axes pass the earlier eight-function checkpoint; new pair awaits review. [[tickets/T-12702-bunkasai-family]] completes its bounded follow-up with two verified matches / 2,520 bytes and retained negatives.
+
+## [2026-10-15] build | Fresh family transfer adds three handlers
+[[tickets/T-12701-bunkaken-address-family]] adds 2,164 verified bytes in BUNKAKEN 8014E440.c using the established aggregate-pointer/bitfield/ordering forms. Literal proof and overlay SHA1 pass. Both review axes passed prior ten-function checkpoint; final checks there show 5,817/6,958 functions and 1,358,452/2,279,368 bytes with zero new prototype disagreements (15 known). Current new total: thirteen functions / 15,092 bytes.
