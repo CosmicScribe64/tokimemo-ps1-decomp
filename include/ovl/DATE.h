@@ -1153,6 +1153,8 @@ extern s16 D_8015B640;
 extern u8 *D_8015B644;
 void func_80150BCC(void);
 void func_80150ED4(void);
+void func_8015114C(void);
+void func_8015116C(void);
 void func_801511B4(void);
 void func_80151360(void);
 void func_801502B0(void);

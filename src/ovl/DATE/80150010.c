@@ -271,7 +271,34 @@ void func_80150E9C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150ED4);
+typedef struct {
+    void (*f[39])();
+} FnTbl39; /* size 0x9C */
+
+extern FnTbl39 D_8015EB88;
+
+void func_80150ED4(void) {
+    GameState *g = &D_800E6280; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl39 tbl;
+
+    tbl = D_8015EB88;
+    if (((g->unk_03E == 0x5F && g->unk_03F == 7 && g->unk_040 == 0x17) ||
+         (g->unk_03E == 0x60 && g->unk_03F == 7 && g->unk_040 == 0x1C) ||
+         (g->unk_03E == 0x61 && g->unk_03F == 7 && g->unk_040 == 0x1B)) &&
+        D_800B593C == 0x80 && D_80122D04 == 0 && g->unk_110A >= 0x1A) {
+        func_8006B900();
+    }
+
+    tbl.f[g->unk_110A](0x80);
+    if (g->unk_110A >= 0xD && g->unk_110A < 0x10) {
+        if (g->unk_10F8 % 180 == 0) {
+            func_8015114C();
+        }
+        if (g->unk_10F8 % 180 == 0x5A) {
+            func_8015116C();
+        }
+    }
+}
 
 void func_80151064(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x8179);
