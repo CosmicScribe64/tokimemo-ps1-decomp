@@ -14562,3 +14562,7 @@ Finished the already-running final repair pass and stopped without starting new 
 ## [2026-10-15] ticket | Resume to compile every remaining draft
 
 The user superseded the stopping request and asked to get all drafts compiling. Reopened work with an exact 77-scope manifest carrying all context paths and complete diagnostics. Disjoint assignment: T-16000 MAIN13, T-15700 TACO17/TAIIKU11, T-15800 six-unit batch23, T-15900 mixed-overlay batch13. Initial artifacts remain immutable; no stub bodies are permitted.
+
+## [2026-10-15] build | T15900 thirteen compiling source alternatives
+
+All thirteen reserved mixed-overlay scopes now compile through default full-TU IDO5.3, replayed with exact score assertions. Saved bodies, declarations, complete and preprocessed contexts, full compiler output, hashes and provenance under `drafts/T-14500/repairs/t15900`. Existing production EVENT17D80 is reused; no new matching-byte claim. Original attempts remain immutable. Updated [[exhaustive-drafts]] and [[tickets/T-15900-remaining-draft-compile-repairs]]. Remaining77 completion still awaits the disjoint batches.

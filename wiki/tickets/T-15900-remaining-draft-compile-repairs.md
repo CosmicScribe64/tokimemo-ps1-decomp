@@ -31,3 +31,9 @@ Repair the thirteen reserved remaining scopes as genuine reconstructed C, reusin
 ## Acceptance criteria
 
 Every selected alternative compiles through the default full-TU IDO path. Literal matching is a separate gate. Initial and prior repair artifacts remain immutable.
+
+## Result
+
+All thirteen scopes compile and score through the default full-TU IDO5.3 path. Evidence is in `drafts/T-14500/repairs/t15900/catalog.jsonl`, including complete source, preprocessed context, compiler diagnostics and per-scope provenance. `tools/replay_t15900.py` recompiled all thirteen and asserted each score. EVENT17D80 reuses already verified production C; its zero score adds no new production bytes. The other twelve scores are nonzero. Residual reconstruction flags remain a separate quality gate.
+
+The original frozen census and automatic alternatives are unchanged. Awaiting coding-standards review.

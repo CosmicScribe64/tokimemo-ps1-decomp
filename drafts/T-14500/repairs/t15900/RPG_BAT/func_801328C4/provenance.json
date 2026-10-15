@@ -1,0 +1,7 @@
+{
+  "scope": "RPG_BAT:func_801328C4",
+  "original": "drafts/T-14500/RPG_BAT/func_801328C4",
+  "notes": "Use implicit-int ABI established by earlier unprototyped calls. Preserve real16word local copy and no manufactured return.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

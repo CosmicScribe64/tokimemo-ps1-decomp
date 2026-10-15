@@ -1,0 +1,18 @@
+{
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/80157AE0.c",
+  "func": "func_80159B40",
+  "scope": "RPG_BAT:func_80159B40",
+  "size": 516,
+  "status": "scored",
+  "score": 148,
+  "body_hash": "a1d35c5623dcf4146fe670e3fd93ae5cfa1ad33a70bece9dfefbb953d3170b92",
+  "context_hash": "321848a18db6f9eaa583dea436c666f2aa2e7389e968668b30f7a1daf63a33b3",
+  "repair_path": "drafts/T-14500/repairs/t15900/RPG_BAT/func_80159B40",
+  "ticket": "T-15900",
+  "repair_notes": "Recover stack0x78 indexed load as existing fourword array. Use implicit-int ABI established by earlier unprototyped call; no manufactured return.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "63014197e8ee0f4227ab3ce0c47d2176999bd827c60ef14d84266bf361b81168"
+}

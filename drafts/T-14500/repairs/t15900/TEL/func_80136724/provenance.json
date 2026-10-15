@@ -1,0 +1,7 @@
+{
+  "scope": "TEL:func_80136724",
+  "original": "drafts/T-14500/TEL/func_80136724",
+  "notes": "Recover func80053418 outputs as16byte and16halfword arrays from callee; stack0x44 packed word is GsWord with byte/halfword accesses; stack0x78 textbuffer extends to0x17C based on observed next local.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

@@ -1,0 +1,18 @@
+{
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/8013B510.c",
+  "func": "func_8013B510",
+  "scope": "BUNKAKEN:func_8013B510",
+  "size": 2164,
+  "status": "scored",
+  "score": 297,
+  "body_hash": "01488f1da0e2d041a0de921e804d60fb44415a3cd51a7197fe95c970a96cca29",
+  "context_hash": "7543f7bf75116463f17c1e2d521d775f34a4bf14187bbf2f07eeae2e06d966f0",
+  "repair_path": "drafts/T-14500/repairs/t15900/BUNKAKEN/func_8013B510",
+  "ticket": "T-15900",
+  "repair_notes": "Treat D_80155ED0 as callback-pointer table; remove duplicated outer default at case4 fallthrough; explicit terminal default remains.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "436b0ce79502c4e2bcde9cf985574083c157de2f69c9b65cccaf04a0a6e7ea29"
+}

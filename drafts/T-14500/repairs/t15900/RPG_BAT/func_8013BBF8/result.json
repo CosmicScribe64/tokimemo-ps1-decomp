@@ -1,0 +1,18 @@
+{
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/8013B5B0.c",
+  "func": "func_8013BBF8",
+  "scope": "RPG_BAT:func_8013BBF8",
+  "size": 688,
+  "status": "scored",
+  "score": 224,
+  "body_hash": "e2c99977164e02dc21856f4f05389beb90cb02e377146326870b65aa715decf2",
+  "context_hash": "75c5afa6911b8a037521e19c1a8b531835952f66912a467ea8ea9985bfc53930",
+  "repair_path": "drafts/T-14500/repairs/t15900/RPG_BAT/func_8013BBF8",
+  "ticket": "T-15900",
+  "repair_notes": "Empty else arm contained case labels outside a switch from m2c restructuring; remove those unreachable labels, preserving empty else behavior. Recover stack0x58/0x30 accesses as existing10word arrays.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "d40f9695ae300fc1558e2a49c8815d7d9baf97538562a5af210107253d12e75a"
+}

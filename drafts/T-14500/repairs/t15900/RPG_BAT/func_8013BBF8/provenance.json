@@ -1,0 +1,7 @@
+{
+  "scope": "RPG_BAT:func_8013BBF8",
+  "original": "drafts/T-14500/RPG_BAT/func_8013BBF8",
+  "notes": "Empty else arm contained case labels outside a switch from m2c restructuring; remove those unreachable labels, preserving empty else behavior. Recover stack0x58/0x30 accesses as existing10word arrays.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

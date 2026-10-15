@@ -1,0 +1,7 @@
+{
+  "scope": "DATE2:func_801395C8",
+  "original": "drafts/T-14500/DATE2/func_801395C8",
+  "notes": "Reconstruct stack0x60 as81 strings of31bytes, based on observed0x51 fill bound and31byte stride; dereference four globals as pointer tables; preserve original integer alias declarations.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

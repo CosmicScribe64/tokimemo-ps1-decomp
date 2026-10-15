@@ -1,0 +1,7 @@
+{
+  "scope": "RPG_BAT:func_80159B40",
+  "original": "drafts/T-14500/RPG_BAT/func_80159B40",
+  "notes": "Recover stack0x78 indexed load as existing fourword array. Use implicit-int ABI established by earlier unprototyped call; no manufactured return.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

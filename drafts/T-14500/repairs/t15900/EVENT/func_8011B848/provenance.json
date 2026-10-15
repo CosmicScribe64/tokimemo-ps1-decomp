@@ -1,0 +1,7 @@
+{
+  "scope": "EVENT:func_8011B848",
+  "original": "drafts/T-14500/EVENT/func_8011B848",
+  "notes": "Represent absolute assembler mask D_7FFF as0x7FFF; subtraction of address+1 becomes integer0x8000.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

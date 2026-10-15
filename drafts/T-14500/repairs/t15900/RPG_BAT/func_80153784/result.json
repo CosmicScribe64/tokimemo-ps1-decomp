@@ -1,0 +1,18 @@
+{
+  "unit": "RPG_BAT",
+  "src": "src/ovl/RPG_BAT/801525B0.c",
+  "func": "func_80153784",
+  "scope": "RPG_BAT:func_80153784",
+  "size": 732,
+  "status": "scored",
+  "score": 194,
+  "body_hash": "aef4a4ff730508d4f661243b79a39e9e4c230ee4da9099a91712061b9f14b049",
+  "context_hash": "e9c81fdb890e0642aad8cfd99f56697bd00910f65ea2ce00b4656bc99ce425e1",
+  "repair_path": "drafts/T-14500/repairs/t15900/RPG_BAT/func_80153784",
+  "ticket": "T-15900",
+  "repair_notes": "State callback has no return consumer in current TU; use void and discard incidental register return, preserving all call sideeffects. Existing callee func_80153A60 is void.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "28fb4b98ba4350ae6fe861a86997da598efb8dde1ab912609a1ae59bc242b8e0"
+}

@@ -1,0 +1,7 @@
+{
+  "scope": "EVENT:func_80117D80",
+  "original": "drafts/T-14500/EVENT/func_80117D80",
+  "notes": "Reuse verified production body from integration9cf54649433415bd866602b277037b53bedb79a9; render new EventStateView0xFE halfword as explicit offset load against frozen headers. Existing FAKE scheduling annotation retained from production.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

@@ -1,0 +1,18 @@
+{
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80137D50.c",
+  "func": "func_801395C8",
+  "scope": "DATE2:func_801395C8",
+  "size": 2644,
+  "status": "scored",
+  "score": 690,
+  "body_hash": "5548ccce0fe0a75b99f9f6f6a9ca6022e3f24bdadd10b58b5b15a5a6a91fbcb1",
+  "context_hash": "836f695610062b0ce5bffe0b96ce324c01a022786adfc76c0407622b8bfa983a",
+  "repair_path": "drafts/T-14500/repairs/t15900/DATE2/func_801395C8",
+  "ticket": "T-15900",
+  "repair_notes": "Reconstruct stack0x60 as81 strings of31bytes, based on observed0x51 fill bound and31byte stride; dereference four globals as pointer tables; preserve original integer alias declarations.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "0dda26bad74a79314b4b9768851c392a14f1838e33f5c4097016a3f4050b88a5"
+}

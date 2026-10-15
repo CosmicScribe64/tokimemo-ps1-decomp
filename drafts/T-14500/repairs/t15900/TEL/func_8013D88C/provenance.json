@@ -1,0 +1,7 @@
+{
+  "scope": "TEL:func_8013D88C",
+  "original": "drafts/T-14500/TEL/func_8013D88C",
+  "notes": "Give empty labels null statements; separate consecutive unary negations. Recover four12halfword menu arrays at0x78/90/A8/C0 with explicit element aliases for other stack offsets; byte arithmetic uses byte casts.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}
