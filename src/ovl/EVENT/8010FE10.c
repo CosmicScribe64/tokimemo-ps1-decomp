@@ -700,7 +700,6 @@ void func_80114784(void) {
     func_80011DFC();
 }
 
-#ifdef NON_MATCHING
 void func_80114948(void) {
     EventStateView *g;
     s32 temp;
@@ -729,9 +728,6 @@ void func_80114948(void) {
     func_800469F4(0x44C4);
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114948);
-#endif
 
 /* NON_MATCHING: T-10330, T-11600, 4 differing lines: base registers of D_80124394/D_8012439C swapped (t1/t2). regdiff: both
  * hoisted addresses have priority 2.5 and D_8012439C, used first by `v = *r`, is coloured first; v = *p = *r, *p = *r; v = *p,
