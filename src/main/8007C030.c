@@ -1870,7 +1870,30 @@ void func_80083440(u8 arg0) {
     func_800634FC(arg0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083474);
+s32 func_80083474(void) {
+    u8 var_v1;
+
+    if ((((s32 *)D_800CA120)[0] != 0x801820AC || ((s32 *)D_800CA120)[1] != 0x801860AC ||
+         ((s32 *)D_800CA120)[2] != 0x8018A0AC || ((s32 *)D_800CA120)[3] != 0x8018E0AC ||
+         ((s32 *)D_800CA120)[4] != 0x801920AC || ((s32 *)D_800CA128)[0] != 0x8018005C ||
+         ((s32 *)D_800CA128)[1] != 0x80180070 || *(s32 *)D_800CA124 != 0x80180000) &&
+        D_800E6280.unk_1108 >= 0x50 && D_800E6280.unk_1108 < 0x70) {
+        D_800E6280.unk_110A -= 3;
+        func_8004284C();
+        return 0;
+    }
+    if (D_800E6280.unk_1108 >= 0x50 && D_800E6280.unk_1108 < 0x70 && file_checksum_ok(0x2D, 0x80180000) == 0) {
+        func_8004284C();
+        D_800E6280.unk_110A -= 3;
+        return 0;
+    }
+    var_v1 = get_g_zyotai_h((s32) D_800E6280.unk_F5F) & 0x7F;
+    if ((u8) D_800E6280.unk_F5F >= 0xCU) {
+        var_v1 = 0;
+    }
+    func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    func_8004284C();
+}
 
 void func_80083628(void) {
     u8 var_v1;
