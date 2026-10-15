@@ -693,3 +693,11 @@ typedef struct TtRow6 {
     /* 0x02 */ u8 unk_02[4];
 } TtRow6; /* size 0x6 */
 #endif
+
+#ifndef OVL_TT_T11840_8014A2B4
+#define OVL_TT_T11840_8014A2B4
+/* Pointer table stored at D_80158A64 + 0x18 by func_8014A2B4. T-11840 */
+extern u8 *D_8015676C[];
+/* Defined after its caller func_8014A2B4 in 80148DB0.c. T-11840 */
+void func_8014A7E0(void);
+#endif
