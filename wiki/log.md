@@ -14530,3 +14530,15 @@ The usable-draft target includes guarded drafts that no longer compile in the cu
 ## [2026-10-15] query | Exhaustive census checkpoint 678 of 1066
 
 [[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 28, 'failed': 88, 'scored': 562}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.
+
+## [2026-10-15] ticket | Reserve nine unaligned aggregate-copy failures
+
+The DATE repair lane accepted the nine unaligned-copy scopes under T-15100. drafts/T-14500/unaligned-repair-reservation.json excludes them from automatic retry, preserving initial attempts and avoiding duplicate compiler work. Final completeness auditing will distinguish compilation from residual synthetic-stack/placeholder expressions.
+
+## [2026-10-15] ingest | Fifteen independent type-repair alternatives
+
+Ingested the exact type-repair archive through 1d0069fa. Both compiler-coverage and quality ledgers read its catalog.json alongside DATE catalog.jsonl, preserving all initial attempts. The quality audit separately flags placeholders, synthesized stack locals, scaled address arithmetic in either operand order, and generated copy layouts requiring review. Compilation alone is not reported as usable reconstruction.
+
+## [2026-10-15] lint | Separate draft compilation from reconstruction quality
+
+Added the independent quality audit and three synthetic checks for placeholder masking, byte-view arithmetic, and preference for a reconstruction-clear alternative without changing initial outcomes. Eight census/repair checks also pass. Imported the fifteen context-qualified type alternatives through 1d0069fa; the final quality ledger will retain unresolved synthetic expressions explicitly.
