@@ -2068,7 +2068,7 @@ s32 func_8005E0E0();
 void join_club(void);
 void join_club_init(void);
 s32 join_club_select(void);
-void join_club_message(void);
+s32 join_club_message(void);
 void join_club_exit(void);
 s32 func_80060B24();
 void func_80060B78(void);

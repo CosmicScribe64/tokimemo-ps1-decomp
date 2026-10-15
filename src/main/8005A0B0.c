@@ -1680,12 +1680,12 @@ s32 join_club_select(void) {
     }
 }
 
-/* NON_MATCHING: T-11310, 2 rows: the switch index sits in $v0, the original keeps it in $v1 and copies it to $v0 (move v0,v1 in the bnez delay slot). */
-#ifdef NON_MATCHING
-void join_club_message(void) {
+/* FAKE: scalar-byte selector view keeps the switch index in v1; s32 fall-through
+ * preserves its v0 copy. T-12030. */
+s32 join_club_message(void) {
     u8 buf[0x44];
 
-    switch (D_800E6280.unk_110D) {
+    switch (*(u8 *)&D_800E6280.unk_110D) {
     case 0:
         k_sub_reset();
         strcpy(buf, club_name_table[D_800E6280.unk_0F4.h >> 0xC]);
@@ -1724,9 +1724,6 @@ void join_club_message(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", join_club_message);
-#endif
 
 void join_club_exit(void) {
     func_80048E78();

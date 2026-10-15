@@ -13509,3 +13509,7 @@ merged). The seven TT matches that p10 and p12 made and the PRs lack went to dim
 ## [2026-10-15] setup | T-12030 cx3 baseline and claim
 
 Read workflow, standards and register cheat sheet. Docker configure and ninja verified 27/27 SHA1 targets. Claimed [[tickets/T-12030-codex-cx3]]; owned source is src/main/8005A0B0.c.
+
+## [2026-10-15] build | T-12030 join_club_message matched
+
+[[tickets/T-12030-codex-cx3]]: src/main/8005A0B0.c now has active C for join_club_message. Verified 544 literal linked bytes and main SHA1. Header uses s32; selector-view fakematch is explicitly marked. Global and header checks pass during rebuild.
