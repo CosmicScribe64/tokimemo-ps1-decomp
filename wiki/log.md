@@ -14129,3 +14129,15 @@ Checked T-12900 through T-12903 status/card agreement and ticket links. The firs
 
 ## [2026-10-15] ticket | Root TACO control-flow probe
 [[tickets/T-13400-taco-control-flow]] opened for a bounded full-TU experiment on func_80132FE8 while other family lanes continue. Previous goal turn made authoritative progress by publishing61.2%; current checks confirm active worker processes and no new committed matches yet. Baseline source remains assembly.
+
+## [2026-10-15] query | cx10 reconstructs largest DATE state machine
+
+[[tickets/T-12100-codex-cx10]] revisits the 4,044-byte 47958 handler following bytes-first steering. Natural indexed loops restore most original register choices; a typed GameState pointer improves callback state preservation. Exact matching remains blocked by fade conversion and callback/timer scheduling, and the assembly fallback stays active. Scratch evidence recorded in ticket.
+
+## [2026-10-15] query | cx10 narrows largest DATE handler to four rows
+
+[[tickets/T-12100-codex-cx10]] records exact1,010-instruction alignment for47958 after natural indexed loops, control-flow reconstruction and callback statement grouping. Four fade register rows remain; frame-only local and undefined return shaping require FAKE labels if retained. Production fallback remains active; no additional coverage claimed.
+
+## [2026-10-15] build | cx10 matches 740-byte DATE scene initializer
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014D298 after exact production linked-byte and DATE checksum proof. Existing DateParticleView44 recovers the three68-byte copies; natural local declaration order recovers the stack address. No dummy padding retained. Package total5,628 bytes; evidence build/scratch/d298-final.log and d298-build.log.
