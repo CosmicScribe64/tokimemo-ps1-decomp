@@ -424,7 +424,74 @@ void func_80136D60(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/80134D20", func_80136EE4);
+void func_80136EE4(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x734C);
+        func_80134DE0();
+        break;
+    case 1:
+        if (!D_800E6280.unk_1BC[1].unk_0C.f.b14) {
+            cd_read_sectors(0x85U, 0x801A0000, 0x7605);
+            func_80134EF0();
+        } else {
+            cd_read_sectors(0x8DU, 0x801A0000, 0x768A);
+            func_80135BB0();
+        }
+        break;
+    case 2:
+        cd_read_sectors(0x7DU, 0x801A0000, 0x73D9);
+        func_80135000();
+        break;
+    case 3:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x74E3);
+        func_80135110();
+        break;
+    case 4:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x7974);
+        func_80135220();
+        break;
+    case 5:
+        cd_read_sectors(0x96U, 0x801A0000, 0x7717);
+        func_80135330();
+        break;
+    case 6:
+        if (!(D_800E6280.unk_53C[6] & 1)) {
+            cd_read_sectors(0x9DU, 0x801A0000, 0x77AD);
+            func_80135440();
+        } else {
+            cd_read_sectors(0x9DU, 0x801A0000, 0x784A);
+            func_80135CC0();
+        }
+        break;
+    case 7:
+        cd_read_sectors(0x95U, 0x801A0000, 0x7570);
+        func_80135550();
+        break;
+    case 8:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x72BF);
+        func_80135660();
+        break;
+    case 9:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x78E7);
+        func_80135770();
+        break;
+    case 10:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x7A01);
+        func_80135880();
+        break;
+    case 11:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x7A8E);
+        func_80135990();
+        break;
+    default:
+        cd_read_sectors(0x8DU, 0x801A0000, 0x7456);
+        func_80135AA0();
+        break;
+    }
+    func_8004284C();
+}
+
 
 void func_80137128(void) {
     cd_read_sectors(0x3D, 0x80180000, 0x7B1B);

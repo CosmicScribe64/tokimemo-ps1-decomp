@@ -14277,3 +14277,11 @@ All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 68
 
 ## [2026-10-15] build | Card-state batch verified at 61.6 percent
 [[tickets/T-12400-integrate-verified-matches]]: ETCaa1c51ec adds4functions/2368bytes; event178f61b1 fixes include guards and canonical main declaration without changing matched bytes. All27 checksums, header/global checks and prototype audit pass (0new/15known). Total5874/6958functions,1404124/2279368bytes (61.6%); remaining419372alignedbytes for80%. Evidence build/scratch/goal-card-states.log. Build-dependency experiment remains unintegrated pending file-addition correctness fixes; observed ETC-header rebuild reduction443to13compiles is not a game-byte gain.
+
+## [2026-10-15] ticket | T-14000 ENDING and EN_NICHI families
+
+Created [[tickets/T-14000-ending-en-nichi-families]] in In Progress after reading [[index]], [[decompile-workflow]], [[matching-notes]], CODING_STANDARDS.md and AGENTS.local.md. Isolated worktree codex/ending-14000 owns ENDING and EN_NICHI only.
+
+## [2026-10-15] build | ENDING asset dispatcher verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/ENDING/80134D20.c func_80136EE4: 580 linked bytes MATCH, ENDING SHA1 OK. Existing CharFlags b14 fixes the raw-mask instruction mismatch. Rejected scene and EN_NICHI dispatcher candidates remain ASM; diagnostics in scratchpad/t14000.

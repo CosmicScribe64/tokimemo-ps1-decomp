@@ -319,3 +319,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13103-etc-memory-card-family|T-13103]] ETC memory-card state family.
 
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence.
+
+- [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
