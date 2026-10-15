@@ -1535,97 +1535,65 @@ void func_80137708(void) {
     func_80137AA0();
 }
 
-/* NON_MATCHING: T-11010, 40 differing lines, all register choice for the hi constant of the D_8014CC9x loads ($a0 in the draft, $v1 in the original); control flow, frame and stores match */
-#ifdef NON_MATCHING
 void func_801377E8(arg0)
 s32 arg0;
 {
     s32 a;
-    u8 b;
 
     if (arg0 != 0) {
         if (D_8014CC9C == 0xFF) {
             D_8014CC9C = func_800AE0D0() % 12;
         }
-        b = D_8014CCA0;
-        if (b == 0xFF) {
-            b = func_800AE0D0() % 31;
+        if (D_8014CCA0 == 0xFF) {
+            D_8014CCA0 = func_800AE0D0() % 31;
         }
         if (D_8014CCA4 == 0xFF) {
-            D_8014CCA0 = b;
             D_8014CCA4 = func_800AE0D0() % 3;
-            b = D_8014CCA0;
         }
         a = D_8014CC9C + 1;
-        if (a == 2) {
-            if (b + 1 >= 0x1D) {
-                b = 0x1B;
-            }
+        if (a == 2 && D_8014CCA0 + 1 >= 0x1D) {
+            D_8014CCA0 = 0x1B;
         }
-        if (a == 4) {
-            if (b + 1 >= 0x1F) {
-                b = 0x1D;
-            }
+        if (a == 4 && D_8014CCA0 + 1 >= 0x1F) {
+            D_8014CCA0 = 0x1D;
         }
-        if (a == 6) {
-            if (b + 1 >= 0x1F) {
-                b = 0x1D;
-            }
+        if (a == 6 && D_8014CCA0 + 1 >= 0x1F) {
+            D_8014CCA0 = 0x1D;
         }
-        if (a == 9 && b + 1 >= 0x1F) {
-            b = 0x1D;
+        if (a == 9 && D_8014CCA0 + 1 >= 0x1F) {
+            D_8014CCA0 = 0x1D;
         }
-        D_8014CCA0 = b;
-        if (a == 0xB) {
-            D_8014CCA0 = b;
-            if (b + 1 >= 0x1F) {
-                D_8014CCA0 = 0x1D;
-            }
+        if (a == 0xB && D_8014CCA0 + 1 >= 0x1F) {
+            D_8014CCA0 = 0x1D;
         }
     } else {
         if (D_8014CC90 == 0xFF) {
             D_8014CC90 = func_800AE0D0() % 12;
         }
-        b = D_8014CC94;
-        if (b == 0xFF) {
-            b = func_800AE0D0() % 31;
+        if (D_8014CC94 == 0xFF) {
+            D_8014CC94 = func_800AE0D0() % 31;
         }
         if (D_8014CC98 == 0xFF) {
-            D_8014CC94 = b;
             D_8014CC98 = func_800AE0D0() % 3;
-            b = D_8014CC94;
         }
         a = D_8014CC90 + 1;
-        if (a == 2) {
-            if (b + 1 >= 0x1D) {
-                b = 0x1B;
-            }
+        if (a == 2 && D_8014CC94 + 1 >= 0x1D) {
+            D_8014CC94 = 0x1B;
         }
-        if (a == 4) {
-            if (b + 1 >= 0x1F) {
-                b = 0x1D;
-            }
+        if (a == 4 && D_8014CC94 + 1 >= 0x1F) {
+            D_8014CC94 = 0x1D;
         }
-        if (a == 6) {
-            if (b + 1 >= 0x1F) {
-                b = 0x1D;
-            }
+        if (a == 6 && D_8014CC94 + 1 >= 0x1F) {
+            D_8014CC94 = 0x1D;
         }
-        if (a == 9 && b + 1 >= 0x1F) {
-            b = 0x1D;
+        if (a == 9 && D_8014CC94 + 1 >= 0x1F) {
+            D_8014CC94 = 0x1D;
         }
-        D_8014CC94 = b;
-        if (a == 0xB) {
-            D_8014CC94 = b;
-            if (b + 1 >= 0x1F) {
-                D_8014CC94 = 0x1D;
-            }
+        if (a == 0xB && D_8014CC94 + 1 >= 0x1F) {
+            D_8014CC94 = 0x1D;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801377E8);
-#endif
 
 void func_80137AA0(void) {
     s32 i;
