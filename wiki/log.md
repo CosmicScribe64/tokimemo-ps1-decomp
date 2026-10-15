@@ -14928,3 +14928,7 @@ Opened [[tickets/T-16200-matching-wave-2]] (In Progress) on integration branch `
 (5,945/6,958, 63.7%). Fresh inventory over the T-14500 census: 882 non-TT functions / 739,240 bytes in 128 file-disjoint
 packages; wave 2 runs the top 24 (T-16210..T-16440) plus the four unmerged wave-1 packages (T-11640, T-11650, T-11670,
 T-11690). TT stays excluded (issue #2).
+
+## [2026-10-15] ticket | T-11640 created
+
+Created [[tickets/T-11640-w1-ovl-taiiku-80138950]] (In Progress) in worktree w1-p08: wave 1 package for src/ovl/TAIIKU/80138950.c.
