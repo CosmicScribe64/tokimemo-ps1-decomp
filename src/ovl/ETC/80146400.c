@@ -376,7 +376,35 @@ void func_80147414(void) {
     k_disp_inc();
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80146400", func_801474FC);
+void func_801474FC(void) {
+    if (D_800E6280.unk_110D == 0) {
+        k_reset(1);
+        gnsx(D_800E6280.unk_0D4);
+        switch (D_801230E0[D_800E6280.unk_041]) {
+        case 0:
+            sndisp("もうだめだー。）", 0, 0x1F);
+            break;
+        case 1:
+            sndisp("ちょっとだめだな。）", 0, 0x1F);
+            break;
+        case 2:
+            sndisp("まあまあのできだな。）", 0, 0x1F);
+            break;
+        case 3:
+            sndisp("いいできだ。）", 0, 0x1F);
+            break;
+        case 4:
+            sndisp("バッチリだ。）", 0, 0x1F);
+            break;
+        }
+        D_800E6280.unk_110D += 1;
+    } else {
+        k_disp_inc();
+        if (check_end_k() != 0) {
+            func_8004284C();
+        }
+    }
+}
 
 void func_80147630(void) {
     func_80042808();
