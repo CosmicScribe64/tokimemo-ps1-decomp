@@ -1997,24 +1997,24 @@ void func_80119824(void) {
     }
 }
 
-/* NON_MATCHING: T-11110, 1 line: bne $v1, $a0 vs bne $a0, $v1 on *(u8 *)&D_80125320 == 1 (D_80125320 is declared s8 in EVENT.h and loaded after first branch, so cvt_pass keeps CVT J<-L and uopt puts register-held constant 1 ($a0) first). */
-#ifdef NON_MATCHING
 void func_801198E8(void) {
     s32 v2;
     u8 v;
 
+    /* FAKE: dead load before the first label lets cvt_pass strip the CVT of D_80125320, so it goes first in bne; T-11600 */
+    v = D_80125320;
     /* FAKE: label stops cvt_pass entry strip so uopt puts 1 ($a0) first in bne; T-11110 */
 entry:;
-    if ((D_800B1746 == 1) && (*(u8 *)&D_80125320 == 3)) {
+    if ((D_800B1746 == 1) && (D_80125320 == 3)) {
         if (((u8)D_800B0E31 == 0) && ((D_800B0896 < 3) || (D_800B0896 >= 6))) {
             D_800B1AF6 += 0xD;
         }
         if ((u8)D_800B0E31 == 1) {
             D_800B1AF6 += 0xD;
         }
-    } else if ((D_800B1746 == 4) && (*(u8 *)&D_80125320 == 3) && (D_800B0AFF != 0)) {
+    } else if ((D_800B1746 == 4) && (D_80125320 == 3) && (D_800B0AFF != 0)) {
         D_800B1AF6 += 6;
-    } else if ((D_800B1746 == 7) && (*(u8 *)&D_80125320 == 1)) {
+    } else if ((D_800B1746 == 7) && (D_80125320 == 1)) {
         v = func_8002328C(7);
         v2 = func_8002336C(7);
         if ((v == 0x80) && (v2 == 0)) {
@@ -2022,14 +2022,11 @@ entry:;
         } else {
             D_800B1AF6 += 0xB;
         }
-    } else if ((D_800B1746 == 8) && (*(u8 *)&D_80125320 == 2) && (D_800B0BCE != 0)) {
+    } else if ((D_800B1746 == 8) && (D_80125320 == 2) && (D_800B0BCE != 0)) {
         D_800B1AF6 += 6;
     }
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801198E8);
-#endif
 
 void func_80119A60(void) {
     if (D_800B1746 == 2) {

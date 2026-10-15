@@ -1088,7 +1088,7 @@ void func_800335E0();
 void func_800201FC();
 extern u8 D_801243B4;
 extern u8 D_801252E4;
-extern s8 D_80125320;
+extern u8 D_80125320;
 extern u8 D_80125324;
 extern u8 D_801252F4;
 extern u8 D_801252F8;
