@@ -14474,3 +14474,7 @@ Created [[tickets/T-14400-option-menu-families]] on codex/option-14400 from orig
 ## [2026-10-15] build | Verify first OPTION settings pair
 
 [[tickets/T-14400-option-menu-families]] adds 2148 default C bytes in src/ovl/OPTION/8013A550.c. Full-TU literal proofs and OPTION SHA1 pass; recovered packed views and consistent GameState pointer described in [[matching-notes]]. All prior C preserved; no FAKE workaround or compiler change.
+
+## [2026-10-15] build | Verify OPTION character settings
+
+[[tickets/T-14400-option-menu-families]] adds func_8013B568 (2320 literal linked bytes), cumulative 4468. OPTION SHA1 passes. Packed character fields and direct switch stores compile exactly in both direct and pointer forms. Fourth sibling remains scratch-only; existing C stays unchanged.
