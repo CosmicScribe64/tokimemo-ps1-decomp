@@ -1,6 +1,7 @@
 #include "common.h"
 #include "ovl/TACO.h"
 
+
 void func_8015ABF0(void) {
     s32 i;
 
@@ -278,7 +279,88 @@ void func_8015C208(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015C2CC);
+/* FAKE: byte-offset views preserve actor reloads; explicit case 0 preserves
+ * the original table range. Keep the case-13 call/load on one source line
+ * for the original load scheduling. T-12070. */
+void func_8015C2CC(s32 arg0) {
+    u8 var_a0;
+    if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 3)) != 0) {
+        switch (*(u8 *)((u8 *)&D_8015EDB4[arg0] + 134)) {
+        case 11:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) += 1;
+            if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) >= 6) {
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) = 0;
+                func_8015BD30(arg0, D_801606AC);
+                func_8015BD30(arg0, D_801606C4);
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 130)) += 1;
+            }
+        case 0:
+        default:
+block_28:
+            break;
+        case 12:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) += 1;
+            if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) >= 6) {
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) = 0;
+                if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 3)) == 1) {
+                    func_8015BD30(arg0, D_80160858);
+                } else {
+                    func_8015BD30(arg0, D_80160858);
+                }
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 130)) = (s16) ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 130)) + 1);
+                goto block_28;
+            }
+            break;
+        case 13:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) += 1;
+            if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) >= 6) {
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) = 0;
+                var_a0 = (*(u8 *)((u8 *)&D_8015EDB4[arg0] + 3));
+                if (var_a0 == 1) {
+                    func_8015BD30(arg0, D_8016090C);                     var_a0 = (*(u8 *)((u8 *)&D_8015EDB4[arg0] + 3));
+                }
+                if (var_a0 == 2) {
+                    func_8015BD30(arg0, D_8016090C);                 }
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 130)) += 1;
+                goto block_28;
+            }
+            break;
+        case 14:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) += 1;
+            if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) >= 6) {
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) = 0;
+                if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 3)) == 1) {
+                    func_8015BD30(arg0, D_80160A60);
+                }
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 130)) += 1;
+                goto block_28;
+            }
+            break;
+        case 15:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) += 1;
+            if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) >= 6) {
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) = 0;
+                if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 3)) == 1) {
+                    func_8015BF70(arg0);
+                }
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 130)) += 1;
+                goto block_28;
+            }
+            break;
+        case 16:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) += 1;
+            if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) >= 6) {
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 114)) = 0;
+                if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 3)) == 1) {
+                    func_8015BF70(arg0);
+                }
+                (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 130)) += 1;
+                goto block_28;
+            }
+            break;
+        }
+    }
+}
 
 void func_8015C698(void) {
     s32 i;

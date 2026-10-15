@@ -13886,3 +13886,7 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 ## [2026-10-15] ticket | T-12300 reviewed handoff with 4920 verified bytes
 
 [[tickets/T-12300-large-unclaimed-byte-matches]] moves to In Review, synchronized with board/index. Four functions add 4,920 literal linked bytes; final progress 5,737/6,958 functions and 1,293,004/2,279,368 bytes (56.7%). Review's unreachable break removed; fresh rebuilt literal proof and all 27 built-binary SHA1s pass. Header/global checks pass; prototypes 0 new / 15 known. Requirements review has no substantive findings; standards follow-up resolved its sole finding. Guarded 2,232-byte timer target contributes zero bytes. All work committed locally, no integration or push. Checkout returning from temporary sandbox staging to its original managed path for persistent chat attachment.
+
+## [2026-10-15] build | cx7 C2CC exact match and byte-first continuation
+
+[[tickets/T-12070-codex-cx7]]: C2CC matches 972 linked bytes with TACO SHA1 pass; cumulative three functions / 4,252 bytes. Recorded unsigned-selector, jump-table and source-line scheduling evidence in [[matching-notes]]. User steering prioritizes longer passes on largest remaining owned functions: ACCC 1,260 bytes, BD30 576 bytes. No larger beyond-list target remains in this object.
