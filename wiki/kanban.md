@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 
@@ -58,6 +59,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+
+- [ ] [[tickets/T-14700-reserved-type-repairs|T-14700 Repair fifteen reserved aggregate and callback drafts]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 

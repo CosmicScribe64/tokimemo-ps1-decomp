@@ -14482,3 +14482,11 @@ Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45
 
 ## [2026-10-15] setup | Authorized disk cleanup preserves matching work
 User authorized cleanup after disk audit found2.9GiB free99%,39GB in matching worktrees,31.17GiB in their disc directories. Compared both track files byte-for-byte against the original project disc, then atomically replaced44identical copies across22finished worktrees with hard links to the original files. No source, commit, scratch draft, original data or active worktree input removed. Docker builder prune reclaimed2.174GB oldcache plus4.665GB additional unusedcache; installed toolchain images retained. Final df reports18GiB free92%, approximately15GiB more available. Future worktree setup must reuse immutable inputs (same-filesystem hard links or explicit read-only Docker mounts), not create independent disc copies. Cleanup script: /private/tmp/tokimemo-dedup-disc.sh. [[tickets/T-12400-integrate-verified-matches]] retains pending verified EN_NICHI/EVENT integration; no extra coding was undertaken during cleanup.
+
+## [2026-10-15] setup | T-14700 reserved type repairs
+
+Created isolated codex/type-repair-14700 from 48362009. Archived fifteen immutable attempts; hard-linked immutable inputs; generated ASM remains private. See [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] build | T-14700 fifteen compiling reserved drafts
+
+Recovered actual byte/halfword/word aggregates and callback tables in draft-only archives; all fifteen compile with default full-TU IDO and have nonzero resolved scores. Production C/header closure unchanged. Full diagnostics and provenance in drafts/T-14500/repairs/types/. Ticket moved to In Review: [[tickets/T-14700-reserved-type-repairs]].
