@@ -320,7 +320,86 @@ void func_8013ADC0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013AE3C);
+void func_8013AE3C(void) {
+    u8 *p = D_80158A8C;
+    s32 i;
+    s32 x;
+
+    switch (*(u16 *)(p + 6)) {
+    case 0:
+        *(s32 *)(p + 0x20) = func_800A0070(*(s32 *)(p + 0x3E4)) * 0x500;
+        *(s32 *)(p + 0x24) = 0x400000;
+        *(s32 *)(p + 0x3E4) += 8;
+        if (*(s32 *)(p + 0x3E4) >= 0x2000) {
+            *(s32 *)(p + 0x3E4) = 0;
+            *(s16 *)(p + 6) = 1;
+        }
+        break;
+    case 1:
+        *(s32 *)(p + 0x24) -= 0x8000;
+        if (*(s32 *)(p + 0x24) <= 0x300000) {
+            *(s32 *)(p + 0x24) = 0x300000;
+            *(s16 *)(p + 6) = 2;
+        }
+        break;
+    case 2:
+        *(s32 *)(p + 0x20) = func_800A0070(*(s32 *)(p + 0x3E4)) * 0x500;
+        *(s32 *)(p + 0x24) = 0x300000;
+        *(s32 *)(p + 0x3E4) += 0x10;
+        if (*(s32 *)(p + 0x3E4) >= 0x2000) {
+            *(s32 *)(p + 0x3E4) = 0;
+            *(s16 *)(p + 6) = 3;
+        }
+        break;
+    case 3:
+        *(s32 *)(p + 0x24) += 0x8000;
+        if (*(s32 *)(p + 0x24) >= 0x400000) {
+            *(s32 *)(p + 0x24) = 0x400000;
+            *(s16 *)(p + 6) = 0;
+        }
+        break;
+    case 4:
+        if (*(s32 *)(D_80158A8C + 0x24) < 0x400000) {
+            *(s32 *)(p + 0x24) += 0x8000;
+        } else {
+            *(s32 *)(p + 0x24) = 0x400000;
+            *(s16 *)(p + 6) = 5;
+        }
+        break;
+    case 5:
+        x = *(s32 *)(D_80158A8C + 0x20);
+        if ((x < 0 ? -x : x) < 0x10000) {
+            *(s32 *)(p + 0x20) = 0;
+            *(s16 *)(p + 6) = 6;
+        } else if (x < 0) {
+            *(s32 *)(p + 0x20) += 0x10000;
+        } else {
+            *(s32 *)(p + 0x20) -= 0x10000;
+        }
+        break;
+    case 6:
+        func_80133AD0(0x50A, p); /* FAKE: p as an extra argument keeps it in a1, as in the original. T-11800 */
+        *(s16 *)(p + 0x30E) = 1;
+        *(s16 *)(p + 6) = 0;
+        D_8014ED50 = 0x3ED0;
+        *(u8 **)(p + 0x218) = D_80155C78;
+        /* four slots, fully unrolled by IDO; the s8 flag store shares the constant 1 with the +0x30E store */
+        for (i = 0; i < 4; i++) {
+            if (p[0x311 + i * 2] != 0) {
+                *(s8 *)(p + 0x343 + i) = 1;
+                *(s16 *)(p + 0x2D8 + i * 2) = -1;
+            }
+        }
+        *(s32 *)(p + 0x3E4) = 0;
+        *(s16 *)(p + 0x364) = 0x80;
+        break;
+    }
+    if (*(s16 *)(p + 0x30C) < 0) {
+        *(u8 **)(p + 0x218) = 0;
+        *(s16 *)(p + 0x30C) = 0xA0;
+        *(s16 *)(p + 6) = 4;
+    }
+}
 
 void func_8013B0E0(void) {
     u8 *p = D_80158A8C;
