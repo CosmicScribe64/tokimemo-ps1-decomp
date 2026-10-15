@@ -1,0 +1,13 @@
+python3 failed:
+ ----------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4672: Incompatible pointer type assignment
+                     temp_v0_2 = &D_8014D060 + var_a0;
+ ------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4676: Incompatible pointer type assignment
+                     temp_v0_3 = &D_8014D060 + var_a0;
+ ------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4680: Incompatible pointer type assignment
+                     temp_v0_4 = &D_8014D060 + var_a0;
+ ------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820/work -o drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820/work/guarded.o /tmp/asm_processoricdw85mf/preprocessed_db055715657541b29175d33cd5b194d3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs9q5stcw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820/work/guarded.o drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80141820/work/guarded.o.sjis.c

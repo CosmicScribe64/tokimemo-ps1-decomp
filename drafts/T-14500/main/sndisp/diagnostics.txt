@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: check_set_k 1, strncpy 3

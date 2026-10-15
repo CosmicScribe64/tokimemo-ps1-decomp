@@ -14786,3 +14786,15 @@ Promoted 1 ordinary C functions / 976 inventory coverage bytes for ETC; default 
 
 ## [2026-10-15] ingest | Preserve outstanding local draft snapshots
 Read-only worktree inspection found older ENDING and wave source edits plus external tooling research not yet committed to main. Preserved their base commits, source patches, complete modified C/headers and research notes under drafts/preserved-worktrees-2026-10-15, explicitly unverified and excluded from coverage. Original worktrees untouched. Active workers are checkpointing their own source/context archives separately. See [[tickets/T-12600-byte-coverage-families]].
+
+## [2026-10-15] ingest | Nine unaligned-copy reconstruction alternatives
+
+Ingested the separate repairs-unaligned archive from ffac0f04, preserving all original scopes. All nine alternatives compile with nonzero full-TU scores; no new match is claimed. The catalog join supports sibling repair archives and their archive_path schema in addition to repair_path/path.
+
+## [2026-10-15] query | Exhaustive census checkpoint 1066 of 1066
+
+[[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 29, 'failed': 129, 'scored': 908}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.
+
+## [2026-10-15] build | Publish all initial draft work and current repairs
+
+At the user request, checkpoint all 1,066 initial scopes, current complete repair alternatives, source/header contexts, provenance, quality tools and compact snapshot ledgers for integration onto main. The serial repair remains active. Quality counts: {'compiling-audit-clear': 843, 'uncompilable': 84, 'compiling-review-needed': 139}. The all-usable target is explicitly incomplete; no absent initial scope and no new production match claim.

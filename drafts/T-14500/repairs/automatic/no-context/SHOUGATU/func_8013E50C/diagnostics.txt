@@ -1,0 +1,26 @@
+python3 failed:
+ -------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c, line 3224: Incompatible pointer type assignment
+     temp_a0 = &D_800E6280 + (D_800E71DF * 0x38);
+ ------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c, line 3238: Incompatible pointer type assignment
+     temp_a0_2 = &D_800E6280 + (D_800E71DF * 0x38);
+ --------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c, line 3239: 'sp' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_a0_2 + (446)) = (s16) (*(s16 *)((unsigned char *)temp_a0_2 + (446)) + *(s16 *)((unsigned char *)(sp + var_v0) + (48)));
+ ------------------------------------------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.o /tmp/asm_processoruafycg31/preprocessed_4fa0c3ccab274336ae073e75bd61db88.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib229igoeh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c, line 3213: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp30) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_801460DC) + (12));
+ -------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c, line 3225: Incompatible pointer type assignment
+     temp_a0 = &D_800E6280 + (D_800E71DF * 0x38);
+ ------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c, line 3239: Incompatible pointer type assignment
+     temp_a0_2 = &D_800E6280 + (D_800E71DF * 0x38);
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.o /tmp/asm_processoruwgqnsj9/preprocessed_f002b493ddb24ab396a0fc807a9cab22.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtyzh0_hs/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_8013E50C/work/guarded.c

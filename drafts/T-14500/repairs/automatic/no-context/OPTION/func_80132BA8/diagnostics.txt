@@ -1,0 +1,78 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2656: 'sp40' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp40, sp50, 0, "\203\175\203\105\203\130\220\335\222\350", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2656: 'sp50' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp40, sp50, 0, "\203\175\203\105\203\130\220\335\222\350", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2657: 'sp42' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp42, sp52, 0, "\203\201\203\152\203\205\201\133\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorpnz3m9kr/preprocessed_9f84806152e549d889045009284b0568.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliblnz77t85/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2660: 'sp52' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp42, sp52, 0, "\203\201\203\152\203\205\201\133\203\202\201\133\203\150", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2661: 'sp44' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp44, sp54, 0, "\203\112\201\133\x83\\\203\213\221\254\223\170", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2661: 'sp54' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp44, sp54, 0, "\203\112\201\133\x83\\\203\213\221\254\223\170", 0);
+ -------------------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorzow3o9fo/preprocessed_87a7181d40b44cb49861dba824c796e2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqn1xc58u/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2665: 'sp46' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp46, sp56, 0, "\211\271\220\272\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2665: 'sp56' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp46, sp56, 0, "\211\271\220\272\203\202\201\133\203\150", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2666: 'sp48' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp48, sp58, 0, "\202\250\202\334\202\257", 0);
+ -------------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorz9bsq4y5/preprocessed_0cbeebdeed5245fd9f11238dbfc484e7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0ziw1cc5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2669: 'sp58' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp48, sp58, 0, "\202\250\202\334\202\257", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2670: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2670: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorvgnej2gc/preprocessed_cceb06ec9d9b427f938b493c7fe38870.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyr9shy2y/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2665: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ --------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2667: 'sp3E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp3E, sp4E, 0, "\203\101\203\103\203\122\203\223\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2667: 'sp4E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp3E, sp4E, 0, "\203\101\203\103\203\122\203\223\203\202\201\133\203\150", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorj1zx_dk3/preprocessed_5aaff275dcfc432da52125c045937adc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby989kfdo/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2624: Incompatible function return type for this function.
+ void func_80132BA8(void) {
+ ------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2667: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ -------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2667: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ --------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processor265xu0pc/preprocessed_4e88e4c362e24d48ab17c50ea42cc967.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliba8owq6g8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132BA8/work/guarded.o.sjis.c

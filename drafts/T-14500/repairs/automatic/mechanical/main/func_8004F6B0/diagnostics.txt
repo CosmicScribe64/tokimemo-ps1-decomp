@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_80042A00 0, func_8009AC20 0, func_800AD950 1
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.c, line 58: 'D_800E6280' undefined; reoccurrences will not be reported.
+     func_80097D90((s32) D_800E6280.unk_000, (s32) D_800E6282, (s32) D_800E6284, 0, 0);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work -o drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.o /tmp/asm_processorsbo1fjvt/preprocessed_d87c256aac4e4bf894417d95a4f8927a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2jiooeyc/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.c, line 59: Selector requires struct/union as left hand side
+     func_80097D90((s32) D_800E6280.unk_000, (s32) D_800E6282, (s32) D_800E6284, 0, 0);
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work -o drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.o /tmp/asm_processorfhhnv09k/preprocessed_7de20faa031443a8b983b8bd18aa95b5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibb3kxfzey/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/main/func_8004F6B0/work/guarded.c

@@ -1,0 +1,50 @@
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3400: redeclaration of 'func_800BCDF0'; previous declaration at line 2323 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c'
+ s32 func_800BCDF0();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3400: Incompatible function return type for this function.
+ s32 func_800BCDF0();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3403: 'sp34' undefined; reoccurrences will not be reported.
+     *(M2cBlock90 *)(&sp34[0]) = *(M2cBlock90 *)(&D_80147C6C);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processor_wldxvfc/preprocessed_2e2a42f844554242a168b6e79a510f94.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3gspzbw3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3399: redeclaration of 'func_8004EE18'; previous declaration at line 1720 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c'
+ s32 func_8004EE18();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3399: Incompatible function return type for this function.
+ s32 func_8004EE18();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3402: 'sp34' undefined; reoccurrences will not be reported.
+     *(M2cBlock90 *)(&sp34[0]) = *(M2cBlock90 *)(&D_80147C6C);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processoretc2lnku/preprocessed_d3ddf2eba92f44638e9ab31de95e0c58.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqvwor09s/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3394: redeclaration of 'D_80147AE0'; previous declaration at line 2943 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c'
+ extern s32 D_80147AE0;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3395: redeclaration of 'D_80147AE4'; previous declaration at line 2944 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c'
+ extern s32 D_80147AE4;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3401: 'sp34' undefined; reoccurrences will not be reported.
+     *(M2cBlock90 *)(&sp34[0]) = *(M2cBlock90 *)(&D_80147C6C);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processorbl26e0z5/preprocessed_3851b6a3ef134e4b9c5267e73e165821.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwq3vn2n7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3399: 'sp34' undefined; reoccurrences will not be reported.
+     *(M2cBlock90 *)(&sp34[0]) = *(M2cBlock90 *)(&D_80147C6C);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processor0wl9j2ie/preprocessed_960499be91244407863ac40405ec75fc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibifpyd91n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c, line 3401: Non-function name referenced in function call.
+     (&sp34[0])[D_800F647A]();
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o /tmp/asm_processorpq4nkgkl/preprocessed_f7fe9c1e7fa24a9dae34d7886caf85b0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvffq0jnv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774/work/guarded.o.sjis.c

@@ -1,0 +1,71 @@
+python3 failed:
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2607: redeclaration of 'func_80133330'; previous declaration at line 2583 in file 'drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c'
+ void func_80133330(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2607: Incompatible function return type for this function.
+ void func_80133330(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2615: 'sp2C' undefined; reoccurrences will not be reported.
+         func_801325A0((s16 (*)[]) &sp2C[0]);
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o /tmp/asm_processor6_nx7sjm/preprocessed_4ad93ea32989460ea7342a7af4052ab8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2ta9vha0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c
+python3 failed:
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2607: redeclaration of 'func_80133330'; previous declaration at line 2583 in file 'drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c'
+ void func_80133330(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2607: Incompatible function return type for this function.
+ void func_80133330(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2618: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o /tmp/asm_processorkl7w7y58/preprocessed_4f07f097f9924628b67151e3b0bd20d4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkthf0hlu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2606: redeclaration of 'main_state_set'; previous declaration at line 1580 in file 'drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c'
+ s32 main_state_set();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2606: Incompatible function return type for this function.
+ s32 main_state_set();
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2618: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o /tmp/asm_processorfh3ji4pm/preprocessed_651893aa65cc4fa5a1c05a4cf3015666.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibb97x0n61/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2605: redeclaration of 'func_801325A0'; previous declaration at line 2529 in file 'drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c'
+ s32 func_801325A0();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2605: Incompatible function return type for this function.
+ s32 func_801325A0();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2617: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o /tmp/asm_processorwfgj5q8j/preprocessed_3e672bcffc2341a8b15c1ac6b360b1d2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibja3glzq7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2604: redeclaration of 'func_8004FC10'; previous declaration at line 1725 in file 'drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c'
+ s32 func_8004FC10();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2604: Incompatible function return type for this function.
+ s32 func_8004FC10();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2616: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o /tmp/asm_processor37spr24d/preprocessed_ad9778cff7ff4bc0909cd3a996e86650.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib1yacog3b/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c, line 2615: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o /tmp/asm_processor4qp9w_90/preprocessed_a7db0342427645e29891bb04ecd02fb2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyo87bpwj/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-context/OPTION/func_80133330/work/guarded.c

@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: func_8006CD14 0, func_8006D7EC 0, func_80070ECC 0, schdeule_girls_param 0, schedule_girls_gakko 0

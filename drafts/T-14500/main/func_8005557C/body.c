@@ -1,0 +1,195 @@
+void func_8005557C(s32 arg0) {
+    typedef struct { s32 w[30]; } M2cBlock78; /* m2c memcpy of 120 bytes */
+    typedef struct { s32 w[13]; } M2cBlock34; /* m2c memcpy of 52 bytes */
+    void *sp2C;
+    void *sp28;
+    s32 *var_t4;
+    s32 *var_t8;
+    s32 *var_t8_2;
+    s32 *var_v0;
+    s32 *var_v0_4;
+    s32 temp_at;
+    s32 temp_at_2;
+    s32 temp_at_5;
+    s32 temp_t1_2;
+    GameState *var_v1_2;
+    GameState *var_v1_5;
+    GameState *var_v1_6;
+    GameState *var_v1_7;
+    GameState *var_v1_8;
+    s32 *var_v0_2;
+    s32 *var_v0_3;
+    s32 *var_v1_3;
+    s32 *var_v1_4;
+    s32 temp_at_3;
+    s32 temp_at_4;
+    s32 temp_v1;
+    s32 var_a1;
+    s32 var_v1_10;
+    u8 temp_t0;
+    u8 temp_t3;
+    u8 temp_t4;
+    u8 temp_t6;
+    u8 temp_t7;
+    u8 temp_t9;
+    u8 *temp_a2;
+    u8 *temp_a3;
+    u8 *temp_t1;
+    u8 *temp_t8;
+    u8 *var_a0;
+    u8 *var_a0_2;
+    u8 *var_a0_3;
+    u8 *var_a0_4;
+    u8 *var_a0_5;
+    u8 *var_t1;
+    u8 *var_t5;
+    u8 *var_t7;
+    u8 *var_v0_5;
+    u8 *var_v1;
+    u8 *var_v1_9;
+
+    temp_a2 = (arg0 * 0xF00) + D_80123120;
+    *(u8 *)((unsigned char *)temp_a2 + (516)) = (u8) D_800E62BD;
+    *(u8 *)((unsigned char *)temp_a2 + (517)) = (u8) D_800E62BE;
+    *(u8 *)((unsigned char *)temp_a2 + (518)) = (u8) D_800E62BF;
+    *(u8 *)((unsigned char *)temp_a2 + (519)) = (u8) D_800E62C0;
+    *(u8 *)((unsigned char *)temp_a2 + (520)) = (u8) D_800E62C1;
+    var_t4 = &D_800E62C4;
+    var_t7 = temp_a2;
+    *(u16 *)((unsigned char *)temp_a2 + (522)) = (u16) D_800E62C2;
+    do {
+        temp_at = (*(s32 *)var_t4);
+        var_t4 += 0xC;
+        *(s32 *)((unsigned char *)var_t7 + (524)) = temp_at;
+        var_t7 += 0xC;
+        *(s32 *)((unsigned char *)var_t7 + (516)) = *(s32 *)((unsigned char *)var_t4 + (-8));
+        *(s32 *)((unsigned char *)var_t7 + (520)) = *(s32 *)((unsigned char *)var_t4 + (-4));
+    } while (var_t4 != (&D_800E62C4 + 0x3C));
+    var_t8 = &D_800E6304;
+    *(s32 *)((unsigned char *)var_t7 + (524)) = (*(s32 *)var_t4);
+    var_t1 = temp_a2;
+    do {
+        temp_at_2 = (*(s32 *)var_t8);
+        var_t8 += 0xC;
+        *(s32 *)((unsigned char *)var_t1 + (588)) = temp_at_2;
+        var_t1 += 0xC;
+        *(s32 *)((unsigned char *)var_t1 + (580)) = *(s32 *)((unsigned char *)var_t8 + (-8));
+        *(s32 *)((unsigned char *)var_t1 + (584)) = *(s32 *)((unsigned char *)var_t8 + (-4));
+    } while (var_t8 != (&D_800E6304 + 0x3C));
+    *(s32 *)((unsigned char *)var_t1 + (588)) = (*(s32 *)var_t8);
+    *(M2cBlock78 *)(temp_a2 + 0x28C) = *(M2cBlock78 *)(&D_800E6344);
+    temp_a3 = (arg0 * 0xF00) + D_80123120;
+    var_v0 = &D_800E643C;
+    var_v1 = temp_a3 + 0x308;
+    *(s32 *)((unsigned char *)(temp_a2 + 0x78) + (652)) = (s32) *(s32 *)((unsigned char *)(&D_800E6344) + (120));
+    do {
+        *(M2cBlock34 *)(var_v1) = *(M2cBlock34 *)(var_v0);
+        temp_t1 = var_v1 + 0x30;
+        temp_t8 = var_v0 + 0x30;
+        var_v0 += 0x38;
+        var_v1 += 0x38;
+        *(s32 *)((unsigned char *)temp_t1 + (4)) = (s32) *(s32 *)((unsigned char *)temp_t8 + (4));
+    } while ((u32) var_v0 < (u32) &D_800E67BC);
+    var_v1_2 = &D_800E6280;
+    var_a0 = temp_a3;
+    do {
+        temp_t3 = var_v1_2->unk_53C[0];
+        var_v1_2 += 1;
+        var_a0 += 1;
+        *(u8 *)((unsigned char *)var_a0 + (1671)) = temp_t3;
+    } while ((u32) var_v1_2 < (u32) &D_800E6290);
+    var_v0_2 = &D_800E67CC;
+    var_v1_3 = temp_a3 + 0x698;
+    do {
+        temp_at_3 = *var_v0_2;
+        var_v0_2 += 4;
+        *var_v1_3 = temp_at_3;
+        var_v1_3 += 4;
+    } while ((u32) var_v0_2 < (u32) &D_800E67EC);
+    var_v0_3 = &D_800E68EC;
+    var_v1_4 = temp_a3 + 0x6B8;
+    do {
+        temp_at_4 = *var_v0_3;
+        var_v0_3 += 4;
+        *var_v1_4 = temp_at_4;
+        var_v1_4 += 4;
+    } while ((u32) var_v0_3 < (u32) &D_800E691C);
+    sp2C = temp_a2;
+    sp28 = temp_a3;
+    D_800E68EB = get_k_speed();
+    var_t8_2 = &D_800E67EC;
+    var_t5 = temp_a2;
+    D_800E68EA = D_800B6708;
+    do {
+        temp_at_5 = (*(s32 *)var_t8_2);
+        var_t8_2 += 0xC;
+        *(s32 *)((unsigned char *)var_t5 + (1768)) = temp_at_5;
+        var_t5 += 0xC;
+        *(s32 *)((unsigned char *)var_t5 + (1760)) = *(s32 *)((unsigned char *)var_t8_2 + (-8));
+        *(s32 *)((unsigned char *)var_t5 + (1764)) = *(s32 *)((unsigned char *)var_t8_2 + (-4));
+    } while (var_t8_2 != (&D_800E67EC + 0xFC));
+    *(s32 *)((unsigned char *)var_t5 + (1768)) = (*(s32 *)var_t8_2);
+    var_v1_5 = &D_800E6280;
+    var_a0_2 = temp_a3;
+    do {
+        temp_t6 = var_v1_5->unk_728[0];
+        var_v1_5 += 1;
+        var_a0_2 += 1;
+        *(u8 *)((unsigned char *)var_a0_2 + (2023)) = temp_t6;
+    } while ((u32) var_v1_5 < (u32) &D_800E6284);
+    var_v1_6 = &D_800E6280;
+    var_a0_3 = temp_a3;
+    do {
+        temp_t7 = var_v1_6->unk_72C[0];
+        var_v1_6 += 1;
+        var_a0_3 += 1;
+        *(u8 *)((unsigned char *)var_a0_3 + (2027)) = temp_t7;
+    } while ((u32) var_v1_6 < (u32) &D_800E6290);
+    var_v1_7 = &D_800E6280;
+    var_a0_4 = temp_a3;
+    do {
+        temp_t4 = var_v1_7->unk_73C[0];
+        var_v1_7 += 1;
+        var_a0_4 += 1;
+        *(u8 *)((unsigned char *)var_a0_4 + (2043)) = temp_t4;
+    } while ((u32) var_v1_7 < (u32) &D_800E6290);
+    var_v1_8 = &D_800E6280;
+    var_a0_5 = temp_a3;
+    do {
+        temp_t9 = var_v1_8->unk_74C[0];
+        var_v1_8 += 1;
+        var_a0_5 += 1;
+        *(u8 *)((unsigned char *)var_a0_5 + (2059)) = temp_t9;
+    } while ((u32) var_v1_8 < (u32) &D_800E6290);
+    var_v0_4 = &D_800E69DE;
+    var_v1_9 = temp_a3 + 0x81C;
+    do {
+        temp_t1_2 = *(s32 *)((unsigned char *)var_v0_4 + (4));
+        (*(s32 *)var_v1_9) = (*(s32 *)var_v0_4);
+        var_v0_4 += 8;
+        *(s32 *)((unsigned char *)var_v1_9 + (4)) = temp_t1_2;
+        var_v1_9 += 8;
+    } while ((u32) var_v0_4 < (u32) &D_800E71DE);
+    *(u8 *)((unsigned char *)temp_a2 + (4124)) = (u8) D_800E71EC;
+    *(u8 *)((unsigned char *)temp_a2 + (4125)) = (u8) D_800E71ED;
+    *(u8 *)((unsigned char *)temp_a2 + (4126)) = (u8) D_800E7312;
+    *(u8 *)((unsigned char *)temp_a2 + (4127)) = (u8) D_800E71EE;
+    *(u8 *)((unsigned char *)temp_a2 + (4128)) = (u8) D_800E62BC;
+    *(s32 *)((unsigned char *)temp_a2 + (4132)) = (s32) D_800E71E8;
+    *(u8 *)((unsigned char *)temp_a2 + (4136)) = (u8) D_800E71EF;
+    *(u8 *)((unsigned char *)temp_a2 + (4137)) = (u8) D_800E71F0;
+    *(u8 *)((unsigned char *)temp_a2 + (4138)) = (u8) D_800E71F3;
+    *(u8 *)((unsigned char *)temp_a2 + (4139)) = (u8) D_800E71F5;
+    var_v0_5 = temp_a2 + 0x204;
+    var_v1_10 = 0;
+    var_a1 = 4;
+    *(s32 *)((unsigned char *)temp_a2 + (4140)) = (s32) D_800E71E4;
+    do {
+        temp_t0 = *(u8 *)((unsigned char *)var_v0_5 + (3));
+        var_a1 += 4;
+        temp_v1 = var_v1_10 + (*(s32 *)var_v0_5) + *(u8 *)((unsigned char *)var_v0_5 + (1)) + *(u8 *)((unsigned char *)var_v0_5 + (2));
+        var_v0_5 += 4;
+        var_v1_10 = temp_v1 + temp_t0;
+    } while (var_a1 != 0xF00);
+    *(s32 *)((unsigned char *)temp_a2 + (512)) = var_v1_10;
+}

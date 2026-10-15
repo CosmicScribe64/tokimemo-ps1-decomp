@@ -1,0 +1,35 @@
+{
+  "initial_total": 1066,
+  "initial_statuses": {
+    "candidate-zero": 29,
+    "scored": 908,
+    "failed": 129
+  },
+  "initial_absent": 0,
+  "manual_repaired": 33,
+  "automatic_completed": 136,
+  "automatic_statuses": {
+    "failed": 122,
+    "scored": 13,
+    "candidate-zero": 1
+  },
+  "quality": {
+    "total": 1066,
+    "statuses": {
+      "compiling-audit-clear": 843,
+      "uncompilable": 84,
+      "compiling-review-needed": 139
+    },
+    "flag_counts": {
+      "synthesized-stack-local": 188,
+      "inferred-copy-layout": 81,
+      "stack-address-arithmetic": 118,
+      "gamestate-address-arithmetic": 141,
+      "m2c-placeholder": 17,
+      "missing-context": 10
+    },
+    "qualification": "Audit-clear means no listed residual pattern; semantic equivalence is unproven."
+  },
+  "remaining_target": "Every remaining function needs reconstructed C; compilation alone is insufficient.",
+  "execution": "Serial repair remains active; this is a durable publishing checkpoint, not a completion claim."
+}

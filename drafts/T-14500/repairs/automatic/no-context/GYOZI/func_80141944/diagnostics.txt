@@ -1,0 +1,24 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c, line 3550: redeclaration of 'D_8012B8C7'; previous declaration at line 2772 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c'
+ extern u8 D_8012B8C7;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c, line 3551: redeclaration of 'D_801317EB'; previous declaration at line 2700 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c'
+ extern u8 D_801317EB;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c, line 3562: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlock68 *)(&sp2C[0]) = *(M2cBlock68 *)(&D_80148880);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.o /tmp/asm_processor7k1ecws9/preprocessed_5efc6d8bb34e498d8ff6cb13342ae8e2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfq62bcgh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c, line 3560: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlock68 *)(&sp2C[0]) = *(M2cBlock68 *)(&D_80148880);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.o /tmp/asm_processor60ywrxso/preprocessed_b702f3732cf34f1187490916b388beac.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby094hmg6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c, line 3562: Non-function name referenced in function call.
+     var_v0 = (&sp2C[0])[D_800F647A](0x80);
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.o /tmp/asm_processorvsre1l72/preprocessed_baf828fec8d640bebb60dae0bd829f03.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibp9oytyop/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80141944/work/guarded.c
