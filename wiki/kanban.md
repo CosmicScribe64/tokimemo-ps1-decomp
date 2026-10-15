@@ -24,6 +24,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
+
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 

@@ -14482,3 +14482,19 @@ Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45
 
 ## [2026-10-15] setup | Authorized disk cleanup preserves matching work
 User authorized cleanup after disk audit found2.9GiB free99%,39GB in matching worktrees,31.17GiB in their disc directories. Compared both track files byte-for-byte against the original project disc, then atomically replaced44identical copies across22finished worktrees with hard links to the original files. No source, commit, scratch draft, original data or active worktree input removed. Docker builder prune reclaimed2.174GB oldcache plus4.665GB additional unusedcache; installed toolchain images retained. Final df reports18GiB free92%, approximately15GiB more available. Future worktree setup must reuse immutable inputs (same-filesystem hard links or explicit read-only Docker mounts), not create independent disc copies. Cleanup script: /private/tmp/tokimemo-dedup-disc.sh. [[tickets/T-12400-integrate-verified-matches]] retains pending verified EN_NICHI/EVENT integration; no extra coding was undertaken during cleanup.
+
+## [2026-10-15] setup | Exhaustive remaining-function draft census
+
+Created [[tickets/T-14500-exhaustive-drafts]] and an isolated branch from 48362009. Shared immutable inputs with hard links. The census includes guarded drafts and all units, with serial bounded full-TU scoring and retained context; unverified C stays under drafts/T-14500/.
+
+## [2026-10-15] query | Freeze exhaustive game-function census
+
+[[exhaustive-drafts]] records 1,066 remaining functions / 866,424 progress bytes at 48362009, including 125 guards. Serial bounded run started after three smoke scores. Historical scores lack full current context and remain provenance only; no verified-byte gain claimed.
+
+## [2026-10-15] ingest | Preserve reproducible draft context
+
+[[exhaustive-drafts]] now has full source/header snapshots, compiler/tool/header hashes and 180 historical broad/family attempt records. First 45 entries yielded 18 full-TU zero candidates, 19 nonzero scores and eight retained failures; these are draft outcomes, not verified gains. A separate proof checkout preserves frozen scoring context.
+
+## [2026-10-15] lint | Check exhaustive-census failure handling
+
+Three synthetic Docker tests passed: guarded/TT inclusion, duplicate-scope rejection, and durable generation-failure recording with unchanged production source. Compiler repair now considers only the latest compile diagnostic while retaining all prior diagnostics, preventing stale errors from reintroducing removed declarations. Complete compiler failures remain explicit outcomes in [[exhaustive-drafts]].
