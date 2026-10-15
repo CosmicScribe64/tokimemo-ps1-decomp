@@ -14783,3 +14783,6 @@ At the user's request to publish drafts before usage runs low, retained root T15
 ## [2026-10-15] build | T-14501 ETC verified draft batch
 
 Promoted 1 ordinary C functions / 976 inventory coverage bytes for ETC; default linked literal proof compared 976 bytes and overlay SHA1 passes. Header/global/prototype checks pass. No raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] ingest | Preserve outstanding local draft snapshots
+Read-only worktree inspection found older ENDING and wave source edits plus external tooling research not yet committed to main. Preserved their base commits, source patches, complete modified C/headers and research notes under drafts/preserved-worktrees-2026-10-15, explicitly unverified and excluded from coverage. Original worktrees untouched. Active workers are checkpointing their own source/context archives separately. See [[tickets/T-12600-byte-coverage-families]].

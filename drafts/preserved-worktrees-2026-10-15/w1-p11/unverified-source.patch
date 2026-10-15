@@ -1,0 +1,53 @@
+diff --git a/src/main/8006CB30.c b/src/main/8006CB30.c
+index 607c6c28..1416e4f9 100644
+--- a/src/main/8006CB30.c
++++ b/src/main/8006CB30.c
+@@ -177,7 +177,48 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
+     }
+ }
+ 
++#ifdef NON_MATCHING
++void func_8006D6E0(void) {
++    GameState *gs;
++    s32 n;
++    s32 i;
++    u32 idx;
++    u8 c;
++
++    gs = &D_800E6280;
++    n = D_800E6280.unk_041;
++    for (i = 0; i < 32; i++) {
++        if (D_800E6280.unk_69C[i].unk_00 == 0xFB) {
++            if (n == 0) {
++                gs->unk_71C = i;
++                if (D_800E6280.unk_69C[i - 1].unk_00 != 0x25) {
++                    D_800E6280.unk_71C--;
++                    if (D_800E6280.unk_69C[i - 2].unk_00 != 0x25) {
++                        D_800E6280.unk_71C--;
++                    }
++                }
++                break;
++            }
++            n--;
++        }
++    }
++    idx = D_800E6280.unk_71C;
++    if (idx != 0) {
++        idx--;
++    }
++    D_800E6280.unk_71C = idx;
++    for (i = idx; i < 32; i++) {
++        if (0x25 == (c = D_800E6280.unk_69C[i].unk_00)) {
++            c = D_800E6280.unk_69C[i].unk_00 = 0;
++        }
++        if (0xFF == c) {
++            break;
++        }
++    }
++}
++#else
+ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
++#endif
+ 
+ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
+ 

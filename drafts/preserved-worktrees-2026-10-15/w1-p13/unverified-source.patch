@@ -1,0 +1,51 @@
+diff --git a/src/main/800674B0.c b/src/main/800674B0.c
+index 44fc3fc9..b28689fc 100644
+--- a/src/main/800674B0.c
++++ b/src/main/800674B0.c
+@@ -1089,7 +1089,46 @@ void func_8006B900(void) {
+ 
+ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
+ 
++/* NON_MATCHING: T-11690, 17 differing lines; the original loads D_800B6708 once into $v0 in the dispatch block
++ * (arg0 reloaded into $v1), IDO loads it at the top of each arm; a local copy is sunk into the arms the same way. */
++#ifdef NON_MATCHING
++void func_8006BC28(s32 arg0) {
++    s16 sp2E;
++    s16 sp2C;
++
++    sp2E = D_8011ECD0[0].unk_26;
++    sp2C = D_8011ECD0[0].unk_2A;
++    func_80048F64(0);
++    D_8011ECD0[0].unk_01 = 1;
++    D_8011ECD0[0].unk_02 = 0x40;
++    D_8011ECD0[0].unk_38 = 0;
++    D_8011ECD0[0].unk_03 = 0x84;
++    D_8011ECD0[0].unk_0C = sprite_frame_table;
++    D_8011ECD0[0].unk_10 = D_800C9A14;
++    D_8011ECD0[0].unk_34 = D_800C9730;
++    D_8011ECD0[0].unk_14 = D_800C9A54;
++    D_8011ECD0[0].unk_04 = 8;
++    D_8011ECD0[0].unk_05 = 1;
++    D_8011ECD0[0].unk_16 = 0;
++    switch (arg0) {
++    case 0:
++    default:
++        if (D_800B6708 == 0 || (s32)D_800B6708 < 0x9B || (D_8011ECD0[0].unk_18 = D_800B6708, (s32)D_800B6708 >= 0xAE)) {
++            D_8011ECD0[0].unk_18 = 0;
++        }
++        break;
++    case 1:
++        if (D_800B6708 == 0 || (s32)D_800B6708 < 0x9B || (D_8011ECD0[0].unk_18 = D_800B6708, (s32)D_800B6708 >= 0xAE)) {
++            D_8011ECD0[0].unk_18 = 0;
++        }
++        break;
++    }
++    D_8011ECD0[0].unk_26 = sp2E;
++    D_8011ECD0[0].unk_2A = sp2C;
++}
++#else
+ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BC28);
++#endif
+ 
+ void func_8006BD6C(s32 arg0) {
+     if (arg0 == 1) {
