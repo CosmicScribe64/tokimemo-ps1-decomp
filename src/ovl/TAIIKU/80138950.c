@@ -183,13 +183,57 @@ void func_80139DDC(void) {
     srn_vram_set(0, 5, 0x580, 0xF0);
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139E34);
-
 typedef struct {
     u32 low : 1;
     u32 f : 1;
     u32 rest : 30;
 } TaiikuBit1;
+
+void func_80139E34(void) {
+    s32 i;
+    s32 j;
+    DisplayActor44 *p;
+    TaiikuS11 tbl;
+
+    tbl = D_80149EE8;
+    j = 0;
+    p = (DisplayActor44 *)D_8011ECD0;
+    for (i = 0; i < 12; i++) {
+        func_80048F64(i + 0x60);
+        p[96].unk_38 = 0x01000000;
+        p[96].unk_07 = 0x80;
+        p[96].unk_0C = (u8 *)D_80149FE0;
+        p[96].unk_10 = (u8 *)D_8014A018;
+        p[96].unk_34 = (u8 *)D_80149DA4;
+        p[96].unk_14 = D_8014A050;
+        p[96].unk_05 = 0x80;
+        p[96].unk_1A = 0x1000;
+        p[96].unk_1C = 0x1000;
+        p[96].unk_06 = 2;
+        p[96].unk_02 = 1;
+        if (i == 11) {
+            p[96].unk_26 = 0;
+            p[96].unk_2A = 0;
+            p[96].unk_01 = 2;
+            p[96].unk_03 = 0xA4;
+        } else {
+            if (((TaiikuBit1 *)&D_800E6280.unk_1BC[i].unk_0C)->f == 1) {
+                p[96].unk_26 = tbl.v[j];
+                p[96].unk_03 = 0xA4;
+                j++;
+            } else {
+                p[96].unk_26 = 0xC8;
+                p[96].unk_03 = 0;
+            }
+            p[96].unk_2A = 0x28;
+            p[96].unk_01 = 3;
+        }
+        p[96].unk_16 = i;
+        p++;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[0].unk_26 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[0].unk_2A = 0;
+}
 
 /* NON_MATCHING: T-11640, 33 differing lines, registers only: every opcode, the frame and the loops match
  * (the second loop is one 11-trip loop; IDO peels i = 0 and unrolls the rest by 2 like the original).

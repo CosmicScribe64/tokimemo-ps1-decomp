@@ -554,6 +554,8 @@ typedef struct {
 typedef struct {
     s16 v[11];
 } TaiikuS11; /* size 0x16 */
+extern TaiikuS11 D_80149EE8;
+extern s32 D_80149DA4[];
 extern TaiikuU11 D_80149F50;
 extern TaiikuS11 D_80149F68;
 extern s32 D_80149960;
