@@ -297,7 +297,29 @@ void func_8015118C(void) {
 
 extern FnTbl40 D_8015EC24;
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_801511B4);
+/* D_80121FD4 is record 57 of the Rec24 table and D_801206D8 record 98 of the D_8011ECD0 display
+ * records; the chain assignment keeps the loaded byte in one register for all four stores. */
+void func_801511B4(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl40 tbl;
+
+    tbl = D_8015EC24;
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_80122D04 != 0) {
+        ((DisplayRecord44 *)D_8011ECD0)[98].unk_03 |= 0x80;
+        if (D_800E6280.unk_10F8 % 40 < 20) {
+            D_801217D0[57].unk_00 &= 0x7FFFFFFF;
+        } else {
+            D_801217D0[57].unk_00 |= 0x80000000;
+        }
+        D_801217D0[57].unk_14 = D_801217D0[57].unk_15 = D_801217D0[57].unk_16 =
+            ((DisplayRecord44 *)D_8011ECD0)[98].unk_07 = D_800B593C;
+        return;
+    }
+    ((DisplayRecord44 *)D_8011ECD0)[98].unk_03 &= 0xFF7F;
+    D_801217D0[57].unk_00 |= 0x80000000;
+}
 
 void func_80151300(void) {
     func_80044750(0x502);
