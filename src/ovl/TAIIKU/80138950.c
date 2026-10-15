@@ -724,8 +724,6 @@ s32 func_8013CEF8(void) {
     return 0;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11640, 16 differing lines (8 rows): the original loads the clamp constant 0x10001 (lui/ori a2) in the block of the add, before the first clamp branch, which puts the sh of D_80149968.unk_0A ahead of the lw of D_80149968.unk_04; IDO loads it at the join after 'if (x < 0) x = 0', so the sh moves into the bgez delay slot (statement order, ternary clamps tried) */
 void func_8013CF88(void) {
     if (D_80149990.unk_00 != 0 && D_8014994C == 4 && D_80149950 == 4) {
         D_80149968.unk_10 = 0;
@@ -778,9 +776,6 @@ void func_8013CF88(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013CF88);
-#endif
 
 void func_8013D114(void) {
     s32 tmp;
