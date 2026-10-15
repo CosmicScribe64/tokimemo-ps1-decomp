@@ -974,7 +974,7 @@ void func_8006B640(void) {
 }
 
 void club_list_menu(void) {
-    s32 pad[2];
+    s32 pad[2]; /* FAKE: reproduces the original's 8-byte gap above `first`; real locals unknown. T-11690 */
     s32 first;
     s32 i;
     s16 x[12];
