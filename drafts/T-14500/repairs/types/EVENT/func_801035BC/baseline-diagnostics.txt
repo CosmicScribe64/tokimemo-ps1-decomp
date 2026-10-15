@@ -1,0 +1,13 @@
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-14500/repairs/types/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4402: This expression is not an lvalue.
+     *(void (**)())((unsigned char *)(&sp28) + (168)) = (void (*)()) D_801228E0.f[0x2A].unk0;
+ --------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4403: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp28 + 0xA8) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_801228E0.f[0x2A]) + (4));
+ -------------------------------^
+cfe: Warning 712: drafts/T-14500/repairs/types/EVENT/func_801035BC/work/guarded.o.sjis.c, line 4406: illegal combination of pointer and integer
+     if (func_8004C984 == *(s32 *)((unsigned char *)(sp + (D_800B1AF6 * 4)) + (40))) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/EVENT/func_801035BC/work -o drafts/T-14500/repairs/types/EVENT/func_801035BC/work/guarded.o /tmp/asm_processornpimcx_z/preprocessed_d11c1417813f4b9880abcc4482393f30.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibk8_9q8up/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/EVENT/func_801035BC/work/guarded.o drafts/T-14500/repairs/types/EVENT/func_801035BC/work/guarded.o.sjis.c

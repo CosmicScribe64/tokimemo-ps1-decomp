@@ -1,0 +1,39 @@
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 3902: Incompatible pointer type assignment
+     D_800CA134 = &D_80145060;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 3903: Incompatible pointer type assignment
+     D_800CA138 = &D_80145064;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 3910: Incompatible pointer type assignment
+     D_800CA134 = &D_80145060;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 3911: Incompatible pointer type assignment
+     D_800CA138 = &D_80145064;
+ ---------------^
+cfe: Error: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 3936: 'sp30' undefined; reoccurrences will not be reported.
+     sp30[0].unk0 = D_801451EC;
+ ----^
+cfe: Error: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 3938: 'sp28' undefined; reoccurrences will not be reported.
+     sp28[0].unk0 = D_801451F4;
+ ----^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 4427: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 4428: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 4435: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 4436: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 4443: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c, line 4444: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/GEKO/func_80136C20/work -o drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.o /tmp/asm_processory5ahzslt/preprocessed_93953da4afa14f47a249dfb609f65687.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqo9rk78n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.o drafts/T-14500/repairs/types/GEKO/func_80136C20/work/guarded.c
+

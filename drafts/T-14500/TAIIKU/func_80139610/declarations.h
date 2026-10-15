@@ -1,0 +1,10 @@
+extern s16 D_800E643E;
+extern s32 D_800E62B8;
+extern s32 D_800E6558;
+extern s8 D_800E62BA;
+extern u8 D_800E738A;
+extern u8 D_801499D5;
+void func_8013FEF0(void);
+void func_80140338(void);
+void func_8014038C(void);
+void func_80140414(void);

@@ -1,0 +1,6 @@
+python3 failed:
+cfe: Error: drafts/T-14500/VALEN/func_80132D0C/work/guarded.o.sjis.c, line 2766: 'jtbl_8013437C' undefined; reoccurrences will not be reported.
+         switch (*(&jtbl_8013437C + temp_t3)) {
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/VALEN/func_80132D0C/work -o drafts/T-14500/VALEN/func_80132D0C/work/guarded.o /tmp/asm_processorwkz3523_/preprocessed_7e069b40829c4a6a8c02d9dd8113d0d4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs6ypo31u/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/VALEN/func_80132D0C/work/guarded.o drafts/T-14500/VALEN/func_80132D0C/work/guarded.o.sjis.c

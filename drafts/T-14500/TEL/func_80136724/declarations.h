@@ -1,0 +1,14 @@
+extern s16 D_800E6392;
+extern s16 D_800E6396;
+extern s16 D_800E639A;
+extern s16 D_800E639E;
+extern s32 D_800E7208;
+extern s32 D_800E7378;
+extern s8 D_800E7313;
+extern u32 D_800E7384;
+extern u8 D_800E62BF;
+extern u8 D_800E6354;
+extern u8 D_800E71DF;
+extern u8 D_800E738D;
+s32 func_800AE100();
+extern s32 sp;

@@ -1,0 +1,45 @@
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2750: '&' before array or function; ignored
+     *(M2cBlock34 *)(&spA4) = *(M2cBlock34 *)(&D_80155F9C);
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2751: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&spA4 + 0x30) + (4)) = (u16) *(u16 *)((unsigned char *)(&D_80155F9C + 0x30) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2752: '&' before array or function; ignored
+     *(M2cBlock40 *)(&sp60) = *(M2cBlock40 *)(&D_80155FD4);
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2753: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp60 + 0x3C) + (4)) = (u16) *(u16 *)((unsigned char *)(&D_80155FD4 + 0x3C) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2754: '&' before array or function; ignored
+     *(M2cBlock40 *)(&sp1C) = *(M2cBlock40 *)(&D_80156018);
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2755: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp1C + 0x3C) + (4)) = (u16) *(u16 *)((unsigned char *)(&D_80156018 + 0x3C) + (4));
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2761: 'spDA' undefined; reoccurrences will not be reported.
+             var_v0 = spDA;
+ ---------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2764: '&' before array or function; ignored
+             var_v0 = *(&spA4 + D_80122EB8);
+ -----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2767: '&' before array or function; ignored
+             var_v0 = *(&sp60 + D_80122EB8);
+ -----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2770: '&' before array or function; ignored
+             var_v0 = *(&sp1C + D_80122EB8);
+ -----------------------^
+cfe: Error: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2781: 'spDA' undefined; reoccurrences will not be reported.
+             var_v0_2 = spDA;
+ -----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2784: '&' before array or function; ignored
+             var_v0_2 = *(&spA4 + (D_80122EBC * 6) + D_80122EB8);
+ -------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2787: '&' before array or function; ignored
+             var_v0_2 = *(&sp60 + (D_80122EBC * 6) + D_80122EB8);
+ -------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c, line 2790: '&' before array or function; ignored
+             var_v0_2 = *(&sp1C + (D_80122EBC * 6) + D_80122EB8);
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work -o drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.o /tmp/asm_processorlc6idswy/preprocessed_f302d16c87b840c28ce68fd759adb19e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibue6n8mjd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.o drafts/T-14500/repairs/types/BUNKAKEN/func_80145550/work/guarded.c
+

@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80135480 0, func_801356E0 0, func_80135778 0, func_801407C0 0, func_80140810 0
+python3 failed:
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80133CFC/work/guarded.c, line 3347: '&' before array or function; ignored
+         var_v0_5 = &sp4C;
+ -------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80133CFC/work/guarded.c, line 3349: 'sp48' undefined; reoccurrences will not be reported.
+         D_801492F8[1] = sp48;
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80133CFC/work -o drafts/T-14500/TAIIKU/func_80133CFC/work/guarded.o /tmp/asm_processor1autd5ew/preprocessed_1f968f98ad5240e7bb5f654521cd04b8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2ae7mxcp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80133CFC/work/guarded.o drafts/T-14500/TAIIKU/func_80133CFC/work/guarded.c

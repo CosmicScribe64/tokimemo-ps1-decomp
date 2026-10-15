@@ -1,0 +1,13 @@
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c, line 3495: '&' before array or function; ignored
+     *(u8 *)((unsigned char *)(&sp30) + (20)) = (u8) *(u8 *)((unsigned char *)(&D_80147C3C) + (20));
+ ------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c, line 3506: '&' before array or function; ignored
+         sp48 = (*(&sp30 + D_801476E0) & 0x1F) | (sp48 & 0xFFE0);
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c, line 3519: Bad type name for cast operator
+         func_8006B5BC((GsWord) (s32) sp48);
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/GEKO/func_80143F48/work -o drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.o /tmp/asm_processorfw_9ma94/preprocessed_a7f2415cac15456a84800e5735ec1dd5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9vh063xv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.o drafts/T-14500/repairs/types/GEKO/func_80143F48/work/guarded.c

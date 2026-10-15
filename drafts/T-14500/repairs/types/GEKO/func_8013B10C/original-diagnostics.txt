@@ -1,0 +1,31 @@
+python3 failed:
+cfe: Error: drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3347: redeclaration of 'func_8013B10C'; previous declaration at line 3332 in file 'drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c'
+ void func_8013B10C(void) {
+ -----^
+cfe: Error: drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3347: Incompatible function return type for this function.
+ void func_8013B10C(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3350: 'sp28' undefined; reoccurrences will not be reported.
+     *(M2cBlockA8 *)(&sp28[0]) = *(M2cBlockA8 *)(&D_80146630);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GEKO/func_8013B10C/work -o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o /tmp/asm_processorsfutx19x/preprocessed_b37a64617d684372b85493db6101dd65.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4qr_n5_4/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3347: redeclaration of 'func_8013B10C'; previous declaration at line 3332 in file 'drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c'
+ void func_8013B10C(void) {
+ -----^
+cfe: Error: drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3347: Incompatible function return type for this function.
+ void func_8013B10C(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3352: Non-function name referenced in function call.
+     (&sp28[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GEKO/func_8013B10C/work -o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o /tmp/asm_processormyzg5fsh/preprocessed_cd1b879c9a3b48549d8951fc3c0cae93.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibi3of52ob/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return
+python3 failed:
+cfe: Error: drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3352: Non-function name referenced in function call.
+     (&sp28[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GEKO/func_8013B10C/work -o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o /tmp/asm_processorrxjovxet/preprocessed_c7f2eb58040b4bdfaa42a6e303aae231.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibght9ge0q/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o drafts/T-14500/GEKO/func_8013B10C/work/guarded.o.sjis.c

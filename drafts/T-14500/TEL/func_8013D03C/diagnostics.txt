@@ -1,0 +1,13 @@
+python3 failed:
+ ------------------^
+cfe: Warning 681: drafts/T-14500/TEL/func_8013D03C/work/guarded.o.sjis.c, line 2831: '&' before array or function; ignored
+     func_800AE100(&spAC, "\223\372");
+ ------------------^
+cfe: Warning 681: drafts/T-14500/TEL/func_8013D03C/work/guarded.o.sjis.c, line 2832: '&' before array or function; ignored
+     set_kanji_string(-0x58, -0x4E, 3, (s32) &spAC, 0);
+ --------------------------------------------^
+cfe: Error: drafts/T-14500/TEL/func_8013D03C/work/guarded.o.sjis.c, line 2844: 'sp58' undefined; reoccurrences will not be reported.
+     *(M2cBlock40 *)(&sp58[0]) = *(M2cBlock40 *)(&D_80146FD0);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TEL/func_8013D03C/work -o drafts/T-14500/TEL/func_8013D03C/work/guarded.o /tmp/asm_processorvba_cwt5/preprocessed_ad04d956326142d8aec246bd236c261d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhcphblc8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TEL/func_8013D03C/work/guarded.o drafts/T-14500/TEL/func_8013D03C/work/guarded.o.sjis.c

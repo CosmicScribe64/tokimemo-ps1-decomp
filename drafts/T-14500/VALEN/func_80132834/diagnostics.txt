@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_8013387C 0
+python3 failed:
+cfe: Error: drafts/T-14500/VALEN/func_80132834/work/guarded.o.sjis.c, line 2813: 'sp5C' undefined; reoccurrences will not be reported.
+         if (((((u32) (D_800E6280.unk_1BC[var_s1_2].unk_0C.w << 0x1E) >> 0x1F) != 0) || ((var_s1_2 == 9) && (D_80134544 == 1))) && ((get_h_yuukou(var_s1_2, (s16 (*)[]) &sp5C[0], 9) >= 0x32U) || ((D_80134544 == 1) && (var_s1_2 == 9)))) {
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/VALEN/func_80132834/work/guarded.o.sjis.c, line 2831: 'sp5C' undefined; reoccurrences will not be reported.
+                 *temp_t6 = (&sp5C[0])[temp_hi];
+ -----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/VALEN/func_80132834/work -o drafts/T-14500/VALEN/func_80132834/work/guarded.o /tmp/asm_processordr4t3ri1/preprocessed_594961f538d74a678ab3a3fd35de3dd0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrxbdje5f/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/VALEN/func_80132834/work/guarded.o drafts/T-14500/VALEN/func_80132834/work/guarded.o.sjis.c

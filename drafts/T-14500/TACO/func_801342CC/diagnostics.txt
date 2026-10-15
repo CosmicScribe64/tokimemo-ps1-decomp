@@ -1,0 +1,10 @@
+python3 failed:
+cfe: Error: drafts/T-14500/TACO/func_801342CC/work/guarded.c, line 3549: redeclaration of 'func_801342CC'; previous declaration at line 3447 in file 'drafts/T-14500/TACO/func_801342CC/work/guarded.c'
+ void func_801342CC(void) {
+ -----^
+cfe: Error: drafts/T-14500/TACO/func_801342CC/work/guarded.c, line 3549: Incompatible function return type for this function.
+ void func_801342CC(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_801342CC/work -o drafts/T-14500/TACO/func_801342CC/work/guarded.o /tmp/asm_processor8zylv_ex/preprocessed_85122ff6a695494b84f2a6848510da34.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdol5os5o/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_801342CC/work/guarded.o drafts/T-14500/TACO/func_801342CC/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

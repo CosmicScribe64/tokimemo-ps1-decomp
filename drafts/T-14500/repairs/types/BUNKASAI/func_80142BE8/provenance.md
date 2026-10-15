@@ -1,0 +1,2 @@
+
+Copies are 6 bytes and three 78-byte matrices. Indexed lbu accesses give six columns and thirteen rows. D_800E62B8 pointer plus 0x1BE is GameState character[1].unk_02; loop adds four records three times (characters 1..12). Replaced malformed scalar cursor with these actual fields. GsRec0FC is the existing signed halfword-pair view at +0xFC. Default uninitialized byte behavior retained only in default arm.

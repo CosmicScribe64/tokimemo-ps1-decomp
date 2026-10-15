@@ -1,0 +1,10 @@
+python3 failed:
+cfe: Error: drafts/T-14500/TAIIKU/func_80148370/work/guarded.c, line 3622: redeclaration of 'func_80148370'; previous declaration at line 3289 in file 'drafts/T-14500/TAIIKU/func_80148370/work/guarded.c'
+ void func_80148370(void) {
+ -----^
+cfe: Error: drafts/T-14500/TAIIKU/func_80148370/work/guarded.c, line 3622: Incompatible function return type for this function.
+ void func_80148370(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80148370/work -o drafts/T-14500/TAIIKU/func_80148370/work/guarded.o /tmp/asm_processorwcp6fnzs/preprocessed_e60a8ce11b1e4864861f508dd5a195a9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyea_e_bx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80148370/work/guarded.o drafts/T-14500/TAIIKU/func_80148370/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

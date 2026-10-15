@@ -1,0 +1,71 @@
+extern ? D_8011EF34;
+extern s16 D_801207BC;
+extern s16 D_80120800;
+extern s8 D_80120871;
+extern s8 D_80120872;
+extern s16 D_80120886;
+extern u8 D_8014A3D9;
+extern u8 D_8014A3DA;
+extern u8 D_8014A3DB;
+extern ? D_8014A528;
+
+void func_80148370(void) {
+    s16 var_a0;
+    s32 temp_lo;
+    u8 *var_a1;
+    u8 *var_v0;
+    u8 *var_v0_2;
+
+    func_80048E78();
+    var_v0 = D_8011ECD0;
+    do {
+        var_v0 += 0x44;
+        *(s32 *)((unsigned char *)var_v0 + (6516)) = 0x01000000;
+        *(s8 *)((unsigned char *)var_v0 + (6467)) = 0x80;
+        *(s8 *)((unsigned char *)var_v0 + (6462)) = 0x40;
+        *(s8 *)((unsigned char *)var_v0 + (6463)) = 0xA4;
+        *(s32 *)((unsigned char *)var_v0 + (6472)) = (s32) D_80149FD8;
+        *(s32 *)((unsigned char *)var_v0 + (6476)) = (s32) D_8014A010;
+        *(? **)((unsigned char *)var_v0 + (6512)) = &D_8014A528;
+        *(s16 *)((unsigned char *)var_v0 + (6480)) = (s16) D_8014A048;
+        *(s8 *)((unsigned char *)var_v0 + (6464)) = 0;
+        *(s8 *)((unsigned char *)var_v0 + (6465)) = 0x80;
+        *(s16 *)((unsigned char *)var_v0 + (6486)) = 0x1000;
+        *(s16 *)((unsigned char *)var_v0 + (6488)) = 0x1000;
+        *(s8 *)((unsigned char *)var_v0 + (6466)) = 2;
+    } while ((u32) var_v0 < (u32) &D_8011EF34);
+    var_a1 = D_8014A3D8;
+    var_v0_2 = D_8011ECD0;
+    var_a0 = -0x70;
+    do {
+        *(s16 *)((unsigned char *)var_v0_2 + (6566)) = var_a0;
+        temp_lo = *var_a1 * 5;
+        var_a0 += 0x30;
+        var_v0_2 += 0x44;
+        var_a1 += 1;
+        *(s8 *)((unsigned char *)var_v0_2 + (6461)) = 3;
+        *(s16 *)((unsigned char *)var_v0_2 + (6502)) = -8;
+        *(s16 *)((unsigned char *)var_v0_2 + (6484)) = (s16) (temp_lo + 0x1D);
+    } while (var_a0 < 0x50);
+    D_80120761 = 3;
+    D_80120778 = (*D_8014A3D8 * 5) + 0xD;
+    D_80120786 = D_80120676;
+    D_8012078A = D_8012067A;
+    D_801207A5 = 3;
+    D_801207BC = (D_8014A3D9 * 5) + 0xD;
+    D_801207CA = D_801206BA;
+    D_801207CE = D_801206BE;
+    D_801207E9 = 3;
+    D_80120800 = (D_8014A3DA * 5) + 0xD;
+    D_8012080E = D_801206FE;
+    D_80120812 = D_80120702;
+    D_8012082D = 3;
+    D_80120844 = (D_8014A3DB * 5) + 0xD;
+    D_80120852 = D_80120742;
+    D_80120856 = D_80120746;
+    D_80120871 = 3;
+    D_80120886 = 9;
+    D_80120896 = 0xC0;
+    D_8012089A = -0x20;
+    D_80120872 = 1;
+}

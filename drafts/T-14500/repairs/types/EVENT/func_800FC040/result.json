@@ -1,0 +1,22 @@
+{
+  "scope": "EVENT:func_800FC040",
+  "unit": "EVENT",
+  "func": "func_800FC040",
+  "src": "src/ovl/EVENT/800FBBF0.c",
+  "size": 324,
+  "status": "scored",
+  "score": 55,
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "ticket": "T-14700",
+  "production_changed": false,
+  "literal_verified": false,
+  "affected_sha1_verified": false,
+  "compile_verified": true,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
+  "remaining_blockers": [
+    "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
+  ],
+  "body.c_sha256": "bdc56f31e847c306ba5d982f7a5e5cee258844c1f696b8119a45d5b3a8684ff6",
+  "declarations.h_sha256": "cd4f3ab29a3a46b81bcfaf336be70d65a385f48a200358357c18c3102a79e248",
+  "context.c_sha256": "51692714a70c301adf6e95cdf999f45a08fd017838ae6d2969d28ab396a4ad82"
+}

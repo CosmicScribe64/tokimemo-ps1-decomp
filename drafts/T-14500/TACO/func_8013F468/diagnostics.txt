@@ -1,0 +1,40 @@
+m2c.py: argument counts from the callees' asm: func_8009ED74 2, func_8009F040 1, func_800A1100 1, func_800AB170 4
+python3 failed:
+ ------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3508: 'sp92' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_v0 + (26)) = sp92;
+ ------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3509: 'sp94' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_v0 + (32)) = sp94;
+ ------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3510: 'sp96' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_v0 + (34)) = sp96;
+ ------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8013F468/work -o drafts/T-14500/TACO/func_8013F468/work/guarded.o /tmp/asm_processorzv1xzpe7/preprocessed_d7c59025b50a43248bb444f2b80cc432.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4466z95j/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8013F468/work/guarded.o drafts/T-14500/TACO/func_8013F468/work/guarded.c
+python3 failed:
+ ------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3508: 'sp8C' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_v0 + (16)) = sp8C;
+ ------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3509: 'sp8E' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_v0 + (18)) = sp8E;
+ ------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3510: 'sp90' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_v0 + (24)) = sp90;
+ ------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8013F468/work -o drafts/T-14500/TACO/func_8013F468/work/guarded.o /tmp/asm_processor85lnkn50/preprocessed_a08569ded52449a48f28d5e62b3a667c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxv37pm1l/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8013F468/work/guarded.o drafts/T-14500/TACO/func_8013F468/work/guarded.c
+python3 failed:
+ ---------------^
+cfe: Warning 681: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3483: '&' before array or function; ignored
+         func_800AB170((s32) &sp98, (s32) var_s2, (s32) &sp6C, (s32) &sp68);
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3483: '&' before array or function; ignored
+         func_800AB170((s32) &sp98, (s32) var_s2, (s32) &sp6C, (s32) &sp68);
+ --------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013F468/work/guarded.c, line 3510: 'sp8A' undefined; reoccurrences will not be reported.
+     *(s16 *)((unsigned char *)temp_v0 + (10)) = sp8A;
+ ------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8013F468/work -o drafts/T-14500/TACO/func_8013F468/work/guarded.o /tmp/asm_processorklutg2er/preprocessed_367799c7c4fa41c28307b7b55079ae48.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxm40phvf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8013F468/work/guarded.o drafts/T-14500/TACO/func_8013F468/work/guarded.c
