@@ -59,6 +59,8 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
+
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
