@@ -1,0 +1,13 @@
+{
+  "scope": "SHOUGATU:func_80137144",
+  "variant": "canonical",
+  "score": 0,
+  "status": "diagnostic-zero",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/SHOUGATU/func_80137144",
+  "archive_path": "drafts/T-15600/attempts/SHOUGATU/func_80137144/canonical",
+  "body_sha256": "63f03fb4f870986ac9b52bd5869fd36d3aa5412dd78164254a8487b43a379b8e",
+  "context_sha256": "8e08d3edd3c06bb82ed50bf529832880f72924e13796d02455c4f9e7a30a041e"
+}

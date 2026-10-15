@@ -1,0 +1,13 @@
+{
+  "scope": "RPG_BAT:func_80155A70",
+  "variant": "nested-conditions",
+  "score": 9,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RPG_BAT/func_80155A70",
+  "archive_path": "drafts/T-15600/attempts/RPG_BAT/func_80155A70/nested-conditions",
+  "body_sha256": "b00b1f46ddc0f35c34316f529cb4d702a78a6d8732e41d8f6ad6ed38a944bbfa",
+  "context_sha256": "3217e3a758160fdabdd2f5a2a3283ce5487ebe9f075fdb0c093a9616f160e3d1"
+}

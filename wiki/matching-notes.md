@@ -5256,3 +5256,8 @@ BUNKASAI `func_801438E4` (852 inventory coverage and default linked literal byte
 
 ## T-15400: mixed Shift-JIS escape in generated Unicode strings
 BUNKASAI func_801431D4 had a two-row resolved difference entirely in one label relocation. The generated mixed Unicode/escaped string emitted literal ASCII x83 in place of Shift-JIS byte 0x83. Writing the actual label as ordinary Unicode パソコン占い produces the original bytes through the existing conversion pipeline. Canonical GameState access alone did not solve it. Default literal proof and overlay checksum confirm the 440-byte function. Preserve initial drafts and inspect actual emitted bytes before changing control flow for string-only differences.
+
+
+### T-15600: packed record load and old-counter branch timing
+
+[[tickets/T-15600-fresh-near-matches]] accepts RENSYU func_801320E0 (688 literal linked bytes) and SHOUGATU func_80137144 (568), with both overlay SHA1 checks. RENSYU's word inference at D_800E68EE has wrong width/scaling; actual target lhu accesses bytes +2/+3 of the existing four-byte GameState.unk_66C record. SHOUGATU compares the old counter then increments, faithfully represented by `counter++ >= 0x401U`; the automatic postincrement rewrite had moved the comparison to the new value. These are genuine storage and control-flow corrections. RPG_BAT80155A70 remains a single delay-slot NOP gap, archived without artificial shaping.

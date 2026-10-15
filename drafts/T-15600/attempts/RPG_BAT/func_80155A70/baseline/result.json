@@ -1,0 +1,13 @@
+{
+  "scope": "RPG_BAT:func_80155A70",
+  "variant": "baseline",
+  "score": 9,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RPG_BAT/func_80155A70",
+  "archive_path": "drafts/T-15600/attempts/RPG_BAT/func_80155A70/baseline",
+  "body_sha256": "36af57db89840e09dabd1bf515350282d066715efca76eeff8eaa27978717059",
+  "context_sha256": "b636340c6942c3932e3e1c8d1a2a42efd7a6febb6f75a7f4eaf388eada36b05b"
+}

@@ -1,0 +1,14 @@
+-@row 32 3c03800e  ; lui v1,0x0
++@row 32 3c02800e  ; lui v0,0x0
+-@row 37 8c637380  ; lw v1,0(v1)
++@row 37 8c427380  ; lw v0,4352(v0)
+-@row 39 2c620401  ; sltiu v0,v1,1025
++@row 39 24420001  ; addiu v0,v0,1
+-@row 40 38420001  ; xori v0,v0,0x1
++@row 40 ac227380  ; sw v0,4352(at)
+-@row 41 24630001  ; addiu v1,v1,1
++@row 41 2c410401  ; sltiu at,v0,1025
+-@row 42 1040004f  ; beqz v0,39c <.L80137314+0x18>
++@row 42 1420004f  ; bnez at,39c <func_80137144+0x1e8>
+-@row 43 ac237380  ; sw v1,0(at)
++@row 43 00000000  ; nop

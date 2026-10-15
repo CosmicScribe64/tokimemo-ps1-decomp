@@ -14801,3 +14801,14 @@ At the user request, checkpoint all 1,066 initial scopes, current complete repai
 
 ## [2026-10-15] build | Publish complete initial draft census checkpoint
 User requested all work including drafts on main before usage runs low. Integrated all 1,066 initial outcomes, current automatic attempts, all 33 manual repair alternatives, root experiment contexts and older worktree/research snapshots. Quality snapshot: 843 compiling pattern-audit-clear, 139 compiling review-needed, 84 without compiling alternatives, zero absent initial scopes; audit-clear is not semantic proof. Fifteen tooling tests pass. Scheduler188 bytes passes all27 checksums and literal proof; ETC976 bytes passes affected checksum, guards and literal proof. Verified total 1,450,936 / 2,279,368 bytes (63.7%). Remaining80% gap372,560 bytes. Active workers are packaging final remaining archives. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14500-exhaustive-drafts]].
+## [2026-10-15] ticket | Inspect fresh RENSYU and RPG near matches
+
+Started [[tickets/T-15600-fresh-near-matches]]. Read wiki evidence and initial census drafts; RENSYU's inferred word at GameState+0x66E is an existing canonical record byte at stride four. No prior target-specific experiments found; old rodata build restriction is obsolete. Preserve all previous matches and archived attempts.
+
+## [2026-10-15] build | Verify fresh RENSYU and SHOUGATU matches
+
+[[tickets/T-15600-fresh-near-matches]]: two default linked-byte matches / 1,256 bytes, RENSYU and SHOUGATU SHA1 OK, headers/globals OK, prototype0new/15known. Packed record halfword and original postincrement timing explain the gains; [[matching-notes]] updated. RPG's remaining nine-row NOP gap and all attempted C/context/provenance are archived in drafts/T-15600. Original attempts and previous matching C preserved. Ticket moved In Review; no further experiments under the user's usage-budget instruction.
+
+## [2026-10-15] lint | Normalize archived context EOF whitespace
+
+[[tickets/T-15600-fresh-near-matches]] archived source contexts drop surplus EOF blank lines; updated archive hashes retain original compiled-context hashes separately. Full preprocessed inputs and production code are unchanged. Diff whitespace check passes; no new experiments.
