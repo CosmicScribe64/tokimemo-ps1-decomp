@@ -648,8 +648,9 @@ INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114784);
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114948);
 
-/* NON_MATCHING: T-10330, 5 lines: base registers of D_80124394/D_8012439C swapped (t1/t2) and the operand order of the sel bne. T-10400
- * (tools/regdiff.py): both hoisted addresses have priority 2.5 and the lower bit, D_8012439C, is coloured first. */
+/* NON_MATCHING: T-10330, T-11600, 4 differing lines: base registers of D_80124394/D_8012439C swapped (t1/t2). regdiff: both
+ * hoisted addresses have priority 2.5 and D_8012439C, used first by `v = *r`, is coloured first; v = *p = *r, *p = *r; v = *p,
+ * array views and statement orders did not reverse it. The u8 copy of D_800B0F2C fixed the bne order (autotweak). */
 #ifdef NON_MATCHING
 void func_80114B0C(void) {
     u8 sel;
@@ -658,6 +659,7 @@ void func_80114B0C(void) {
     s16 *r;
     s16 *q;
     s16 v;
+    u8 temp;
 
     sel = D_800B0F35[D_800B1746];
     for (i = 0; i < 3; i++) {
@@ -671,7 +673,8 @@ void func_80114B0C(void) {
         if (*p == 4) {
             *p = 3;
         }
-        if (D_800B0F2C == sel) {
+        temp = D_800B0F2C;
+        if (temp == sel) {
             *p = 3;
         }
         *q = v - 1;
