@@ -340,3 +340,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (In Review).
 - [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).
 - [[tickets/T-14300-event-families|T-14300]] Remaining EVENT family reconstruction (In Progress).
+- [[tickets/T-14200-main-source-families|T-14200]] MAIN source-family recovery (In Progress).
+- [[main-family-results]] - T-14200 MAIN verified checkpoints and rejected focused probes.

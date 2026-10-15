@@ -14488,3 +14488,12 @@ User authorized cleanup after disk audit found2.9GiB free99%,39GB in matching wo
 
 ## [2026-10-15] decision | Exhaustive remaining-function drafts requested
 User explicitly requests drafting every remaining game function to find additional direct matches. Assigned Sol6.1medium T14500 exhaustive isolated generation/scoring/catalog work from48362009, retaining contexts and classifying every failure rather than silently skipping. Reuse existing drafts where context-valid; no randommutation firstpass. Unverified C must not replace production assembly or count toward80%. Existing semantic-family workers retain scopes and root coordinates any overlappingwins. Share immutablediscinputs; no independent imagecopies aftercleanup. [[tickets/T-12600-byte-coverage-families]] records the retained-source census; newinventory must use current code, not stale1072total.
+
+## [2026-10-15] ticket | T-14200 MAIN family pass
+Created isolated codex/main-14200 from 0f117230; original checkout read only. Read [[matching-breakthroughs]], [[bunka-family-results]], [[etc-family-results]] and standards; excluded two reserved MAIN files. Claimed [[tickets/T-14200-main-source-families]] before probes.
+
+## [2026-10-15] build | T-14200 initializer 676-byte checkpoint
+[[main-family-results]] records default full-TU literal MATCH for func_800412E0 and MAIN SHA1 OK. Canonical state views close the prior initializer near miss; original 0xFFF0 mask retained. Rejected appointment/parameter source forms and temporary headers removed. [[tickets/T-14200-main-source-families]] remains In Progress.
+
+## [2026-10-15] build | T-14200 character initializer 796-byte checkpoint
+[[main-family-results]] records func_80041C2C: consistent GameState pointer and existing flag members give default literal MATCH; MAIN SHA1 OK, earlier initializer reverified. No new header layout or FAKE. [[tickets/T-14200-main-source-families]] continues at 1472 verified bytes.
