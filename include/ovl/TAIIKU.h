@@ -758,6 +758,12 @@ extern TaiikuW5 D_80149E7C;
 void func_80139AB0(void);
 void func_80139DDC(void);
 void func_80139E34(void);
+void func_8013FEF0(void);
+void func_801400D8(void);
+void func_80140338(void);
+void func_8014038C(void);
+void func_80140414(void);
+void func_8013384C(); /* K&R definition in 80132BD0.c (u8 second parameter) */
 typedef struct {
     /* 0x00 */ s16 v[16];
 } TaiikuH16; /* size 0x20 */

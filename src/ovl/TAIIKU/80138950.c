@@ -238,7 +238,96 @@ void func_80139550(void) {
     func_80042808();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139610);
+void func_80139610(void) {
+    s32 pad; /* FAKE: T-11640, unused local; its slot puts the spills of the case 3 loop where the original has them */
+    s32 i;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        if (D_80149954 < 0x80) {
+            func_80048E78();
+            D_80149954 = 0;
+            Fade_Out_Init();
+            D_800E6280.unk_03A = 0;
+            func_8004284C();
+        }
+        func_8013FEF0();
+        func_8013DDB8();
+        func_8013D788();
+        break;
+    case 1:
+        func_801400D8();
+        func_80086350();
+        func_80133258();
+        func_8004284C();
+        break;
+    case 2:
+        if (func_80086370() != 0) {
+            if (D_801499D4[0] == 0 || D_801499D4[1] == 0) {
+                func_80044750(0x205);
+            } else {
+                func_80044750(0x206);
+            }
+            func_80085ED0();
+            func_8004284C();
+        }
+        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        break;
+    case 3:
+        if (func_80085EEC() >= 0x5B) {
+            for (i = 0; i < 4; i++) {
+                if (D_801499D4[i] == 0) {
+                    func_8013384C(D_80149940, (u8) i);
+                }
+            }
+            func_80140338();
+            func_8014038C();
+            D_801499D8 = 0;
+            func_80085ED0();
+            func_8004284C();
+        }
+        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        break;
+    case 4:
+        D_801499D8++;
+        func_80140414();
+        if (func_80085EEC() >= 0xB5) {
+            func_80085ED0();
+            func_8004284C();
+        }
+        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        break;
+    case 5:
+        if (func_80085EEC() >= 0xF1) {
+            Fade_Out_Init();
+            func_8004284C();
+        }
+        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        break;
+    case 6:
+        if (Fade_Out_Main() != 0) {
+            if (D_801499D4[0] == 0) {
+                for (i = 0; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 4;
+                }
+                D_800E6280.unk_1BC[D_80149940].unk_02 += 2;
+                D_800E6280.unk_1BC[D_80149940].unk_06 += 10;
+            } else if (D_801499D4[1] == 0) {
+                for (i = 0; i < 13; i++) {
+                    D_800E6280.unk_1BC[i].unk_02 += 2;
+                }
+                D_800E6280.unk_1BC[D_80149940].unk_02 += 1;
+                D_800E6280.unk_1BC[D_80149940].unk_06 += 5;
+            }
+            func_80042808();
+        }
+        func_80085F0C(0, 0xF, 0, 0xF0, 0xC0);
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_80139A20(void) {
     if ((func_8008667C(6) < 2) && (((u32) (D_800E6280.unk_1BC[6].unk_0C.w << 0x1E) >> 0x1F) == 1) && (D_80149940 == 6) && (D_800E6280.unk_56C[45] == 0)) {
