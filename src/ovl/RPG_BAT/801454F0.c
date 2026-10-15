@@ -1,9 +1,9 @@
+#define RPG_BAT_OVERRIDE_func_8013E97C /* implicit int view: the call's $v0 moves the D_8015EDB8 counters to $v1 */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-/* NON_MATCHING: T-16210, 20 differing lines; the two D_8015EDB8 counters (cases 7 and 16) get $v0, the original
- * $v1 (regdiff: an interfering range holds $v0 there in the original; s32 return, temporaries, struct views tried). */
-#ifdef NON_MATCHING
+s32 func_8013E97C();
+
 void func_801454F0(void) {
     if (D_8015EDF0 == 0x40000000) {
         switch (D_8015EDAC) {
@@ -187,6 +187,3 @@ void func_801454F0(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801454F0", func_801454F0);
-#endif
