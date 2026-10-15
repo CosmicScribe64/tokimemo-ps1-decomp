@@ -13900,3 +13900,19 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] build | Verified matches published to main
 [[tickets/T-12400-integrate-verified-matches]]: direct non-force push succeeded, advancing remote main from 1668c560 to 8f78e5e5. All verified matching checkpoints collected for this batch are published; active experiments remain in worker worktrees.
+
+## [2026-10-15] ticket | T-13000 / T-13001 types and MASTER pilot
+
+Created isolated worktree at origin/main 95c3fc9f; read [[data-types]], [[game-state]], [[broad-coverage-results]] and coding standards. Claimed MASTER only; compile concurrency one. Tickets [[tickets/T-13000-types-globals]] and [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] build | MASTER typed-copy pilot
+
+Baseline MASTER checksum passed. type_recovery identified three 0x1A-byte copies; original indexed lh confirms MasterHalfwords13 at D_8013C7E8/C804/C820. Full-TU pilot func_80139910 matched 952 literal linked bytes after local declaration ordering and the existing sibling scalar byte-view idiom; others still under test. No shared headers changed. [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] build | Three MASTER typed-table matches
+
+[[master-types-pilot]] records 952 + 1,388 + 1,308 = 3,648 literal linked bytes in three handlers. Existing table and sprite views recovered; artificial selector/stack idioms labelled FAKE. Event-log helper experiment rejected and INCLUDE_ASM restored. Updated [[data-types]]. No shared headers changed.
+
+## [2026-10-15] ticket | T-13000 and T-13001 ready for review
+
+Moved both tickets to In Review with matching board cards. MASTER checksum and all three literal-byte checks pass. No shared declarations changed; no full-game rebuild claimed. [[tickets/T-13000-types-globals]], [[tickets/T-13001-master-layout-pilot]].

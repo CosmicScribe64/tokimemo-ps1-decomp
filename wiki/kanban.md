@@ -26,6 +26,8 @@ kanban-plugin: board
 
 
 
+
+
 - [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 
@@ -66,6 +68,9 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-13001-master-layout-pilot|T-13001 Recover MASTER layouts and verify pilot matches]]
+- [ ] [[tickets/T-13000-types-globals|T-13000 Recover evidence-backed types and globals]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
