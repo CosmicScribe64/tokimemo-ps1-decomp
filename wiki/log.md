@@ -14230,3 +14230,6 @@ Created codex/largest-dialogue from integration 2cb6a11c for [[tickets/T-12500-l
 
 ## [2026-10-15] build | Six further matches verified at 61.5 percent
 [[tickets/T-12400-integrate-verified-matches]]: ETCb5adaff4 and event63d90035 add6functions/3900progressbytes beyond5ccb8765. Current verified total5870/6958functions,1401756/2279368bytes (61.5%); remaining421740alignedbytes to80%. Both combined rebuilds pass all27binarychecksums, header/global checks and branch prototypes0new/15known. Logs build/scratch/goal-etc-career.log and goal-event-pair.log. Diagnostic-only RPG/dialogue/TACO handoffs carry no coverage claims. New Solmedium lanes and safe incremental-build investigation continue.
+
+## [2026-10-15] query | Remaining-byte inventory refines family priority
+[[tickets/T-12600-byte-coverage-families]]: fresh generated-assembly/source census reproduces877612remaining bytes/1088functions. Top200sum387848bytes, below421740goal gap; family-wide source/type fixes remain necessary. Sent bounded family prioritization to active TAIIKU and NAME_ENT workers. No new matching claim; active chat handles were directly revalidated.
