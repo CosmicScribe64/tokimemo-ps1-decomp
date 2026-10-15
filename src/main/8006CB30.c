@@ -219,7 +219,30 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 
+#ifdef NON_MATCHING
+s32 func_8006EA40(void) {
+    s32 count;
+    s32 i;
+    u8 rank[20];
+    s16 points[16];
+
+    func_80053418(rank, points);
+    count = 0;
+    for (i = 0; i != 11; i++) {
+        if (D_800E6280.unk_1BC[i].unk_0C.f.b1 && points[i] >= 0x1F5) {
+            count++;
+        }
+    }
+    if (D_800E6280.unk_03E == 0x62 && D_800E6280.unk_03F == 2 && D_800E6280.unk_040 == 0xF && count >= 2 &&
+        D_800E6280.unk_1BC[11].unk_0C.f.f9 >= 4 && D_800E6280.unk_56C[0x4C] != 0 && D_800E6280.unk_56C[0x4E] != 0 &&
+        !((u32)(D_800E6280.unk_54C[0].w << 2) >> 31) && (rand() & 0xF) < 5) {
+        return 1;
+    }
+    return 0;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EA40);
+#endif
 
 /* NON_MATCHING: T-10880, four flag-word register substitutions. */
 #ifdef NON_MATCHING
