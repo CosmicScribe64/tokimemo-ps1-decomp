@@ -1401,8 +1401,6 @@ void func_80137CF4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-10510, 9 lines: constant 0x14 shared in a1 (call argument and sw) in the original, ugen temp t9 in IDO */
-#ifdef NON_MATCHING
 void func_80137D1C(void) {
     u8 v;
 
@@ -1415,17 +1413,17 @@ void func_80137D1C(void) {
         v = 1;
     }
     D_800CA148 += v * 2;
-    D_800CA2FC = v;
-    if ((D_800E6280.unk_75E - 1)[D_800E6280.unk_F5E].unk_02 == 1) {
+    /* FAKE: the store and the if on one source line; as1 schedules by line and then places
+       the D_800CA2FC store after the record address as the original does. T-11580 */
+    D_800CA2FC = v; if ((D_800E6280.unk_75E - 1)[D_800E6280.unk_F5E].unk_02 == 1) {
         D_800E6280.unk_F5E -= 1;
     }
-    D_80122D08 = 0x14;
-    func_80085B3C(0, 0x14);
+    /* FAKE: an element view of the scalar makes uopt forward the stored 0x14 to the argument,
+       so one `li a1,20` serves the store and the call as in the original. T-11580 */
+    (&D_80122D08)[0] = 0x14;
+    func_80085B3C(0, (&D_80122D08)[0]);
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137D1C);
-#endif
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80137DF4);
 
