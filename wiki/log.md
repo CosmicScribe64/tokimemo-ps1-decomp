@@ -13541,3 +13541,11 @@ Corrected [[tickets/T-12090-codex-cx9]]: func_80133204 exact linked span is828 b
 ## [2026-10-15] build | T-12090 state-machine idiom transferred
 
 BUNKA_SD:func_801388D0 matches268 bytes after three evidence-based repairs from neighboring C: live s32 result, byte compound increment, and correct zero-argument call. Exact linked and overlay SHA1/header/global checks pass. Cumulative4172 text bytes; [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] decision | T-12090 bounded pass complete
+
+All ten targets attempted, six exact matches totaling4172 text bytes plus124 table bytes. Retained two measured guards, left two broad misses as assembly, and recorded reusable control-flow/type/scheduling fixes in [[matching-notes]] and [[data/t0018-cases]]. Fresh full-package verification is starting; [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] ticket | cx9 ready for independent review
+
+Moved [[tickets/T-12090-codex-cx9]] and its kanban card to In Review. Six exact matches contribute 4172 linked text bytes plus 124 jump-table bytes. Fresh Docker configure/ninja passes 27/27 SHA1 checks and headers/globals; prototype branch audit reports zero new disagreements and 15 known. All ten targets attempted, two measured guards retained and two broader drafts left as assembly. See [[matching-notes]] and [[data/t0018-cases]] for reusable control-flow and scheduling findings.

@@ -1982,3 +1982,7 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/801410A0 | `func_801410A0` | regorder | T-11820: not kept (48 lines): both loops match (`i * 16` row index, `call * len`, if/else abs, s16 `spd = -spd`); the turn step keeps `(s16)+-spd` in v1 in the original |
 | TT/801374C0 | `func_80138808` | regorder | T-11820: not kept (145 lines): loop 3's base needs a second chain struct at `g + 0xEFC`; the original unrolls loop 3 but not loop 2 |
 | TT/801487D0 | `func_801487D0` | regorder | T-11820: not kept (103 lines): `func_801336F8` template with one extra local for the 0x48 frame; `ch - 0x20` masking and temp order differ |
+
+| BUNKA_SD/801388D0 | `func_80139290` | regorder | T-12090: repaired typed control flow reaches87 rows; regdiff377/378 instructions, missing v1-to-a1 switch copy lets character byte take a1 instead of t0 and shifts mask values. Natural/explicit copy and width probes fail; not retained. |
+| BUNKA_SD/801388D0 | `func_8013987C` | regorder | T-12090: fresh full-TU guard14 rows; pointer setup and byte-result copy remain instead of target clear-zero range. Historical gap retained. |
+| BUNKA_SD/80134260 | `func_80134418` | regorder | T-12090: fresh full-TU guard26 rows; base/selector registers and shared0x80 constant remain. Historical gap retained. |
