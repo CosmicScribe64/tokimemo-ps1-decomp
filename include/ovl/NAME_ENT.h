@@ -142,6 +142,7 @@ extern s32 D_8014D0E8;
 extern s32 D_8014D0EC;
 extern s32 D_8014D0F0;
 void func_8013B59C(void);
+void func_8013664C(s32 arg0);
 
 extern u8 D_8014D014[]; /* u8 (u, v) pairs, one per decimal digit */
 extern u8 D_8014D070[];
