@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/TAIIKU.h"
+#include "psx_types.h"
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149940);
@@ -1300,7 +1301,90 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D2B4);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D788);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013D9B4);
+/* FAKE: T-11640, the (u8) narrowing of v before "+ 8" changes no stored value (the fields are u8) but
+ * reproduces the original's ugen temporaries; perhaps a u8 texture-coordinate macro in the real source. */
+void func_8013D9B4(void) {
+    s16 dx;
+    s16 dy;
+    s32 i;
+    s32 row;
+    POLY_FT4 *p;
+
+    dx = D_800E6280.unk_014[D_8011ECA0];
+    dy = D_800E6280.unk_018[D_8011ECA0];
+    for (i = 0; i < 80; i++) {
+        p = func_800490F0(0x28, D_8011ECA0);
+        func_8009F040(p);
+        func_8009EF84(p, 0);
+        func_8009EFB0(p, 0);
+        row = i >> 2;
+        switch (row) {
+        case 0:
+            p->r0 = 0x68;
+            p->g0 = 0x68;
+            p->b0 = 0x68;
+            p->u0 = 0;
+            p->v0 = (D_80149966 >> 3) + row * 8;
+            p->u1 = 0x40;
+            p->v1 = (D_80149966 >> 3) + row * 8;
+            p->u2 = 0;
+            p->v2 = (u8) ((D_80149966 >> 3) + row * 8) + 8;
+            p->u3 = 0x40;
+            p->v3 = (u8) ((D_80149966 >> 3) + row * 8) + 8;
+            break;
+        case 1:
+            p->r0 = 0x70;
+            p->g0 = 0x70;
+            p->b0 = 0x70;
+            p->u0 = 0;
+            p->v0 = (D_80149966 >> 2) + row * 8;
+            p->u1 = 0x40;
+            p->v1 = (D_80149966 >> 2) + row * 8;
+            p->u2 = 0;
+            p->v2 = (u8) ((D_80149966 >> 2) + row * 8) + 8;
+            p->u3 = 0x40;
+            p->v3 = (u8) ((D_80149966 >> 2) + row * 8) + 8;
+            break;
+        case 2:
+            p->r0 = 0x78;
+            p->g0 = 0x78;
+            p->b0 = 0x78;
+            p->u0 = 0;
+            p->v0 = (D_80149966 >> 1) + row * 8;
+            p->u1 = 0x40;
+            p->v1 = (D_80149966 >> 1) + row * 8;
+            p->u2 = 0;
+            p->v2 = (u8) ((D_80149966 >> 1) + row * 8) + 8;
+            p->u3 = 0x40;
+            p->v3 = (u8) ((D_80149966 >> 1) + row * 8) + 8;
+            break;
+        default:
+            p->r0 = 0x80;
+            p->g0 = 0x80;
+            p->b0 = 0x80;
+            p->u0 = 0;
+            p->v0 = D_80149966 + row * 8;
+            p->u1 = 0x40;
+            p->v1 = D_80149966 + row * 8;
+            p->u2 = 0;
+            p->v2 = (u8) (D_80149966 + row * 8) + 8;
+            p->u3 = 0x40;
+            p->v3 = (u8) (D_80149966 + row * 8) + 8;
+            break;
+        }
+        p->x0 = D_80149B24[i] + dx;
+        p->y0 = D_801499E4[i] + dy;
+        p->x1 = D_80149BC4[i] + dx;
+        p->y1 = D_801499E4[i] + dy;
+        p->x2 = D_80149C64[i] + dx;
+        p->y2 = D_80149A84[i] + dy;
+        p->x3 = D_80149D04[i] + dx;
+        p->y3 = D_80149A84[i] + dy;
+        p->tpage = func_8009ECB0(1, 0, 0x300, 0);
+        p->clut = func_8009ED74(0, 0x1F0);
+        func_8009EED0(&D_800E8CA0[D_8011ECA0 * 0x400 + 0x3EC], p);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013DDB8);
 

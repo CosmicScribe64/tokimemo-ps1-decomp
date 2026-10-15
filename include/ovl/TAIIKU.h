@@ -170,7 +170,7 @@ extern u8 D_8014A4F4;
 extern u8 D_8014A1FC;
 void func_80146B8C(void);
 void func_801488F0(s16 *);
-void func_8013D9B4(s32, u8);
+void func_8013D9B4(void);
 extern s16 D_80149204;
 extern s32 D_801491E4;
 extern u8 D_801491E0[4];
@@ -755,6 +755,14 @@ typedef struct {
 extern TaiikuW2 D_80149E2C;
 extern TaiikuW18 D_80149E34;
 extern TaiikuW5 D_80149E7C;
+extern s16 D_80149966;
+/* Track grid tables filled by func_80139AB0 (80 entries each). */
+extern s16 D_801499E4[];
+extern s16 D_80149A84[];
+extern s16 D_80149B24[];
+extern s16 D_80149BC4[];
+extern s16 D_80149C64[];
+extern s16 D_80149D04[];
 void func_80139AB0(void);
 void func_80139DDC(void);
 void func_80139E34(void);
