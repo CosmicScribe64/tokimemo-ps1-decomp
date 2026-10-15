@@ -353,7 +353,43 @@ INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/80133540.rodata", D_8013A95C);
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/80133540.rodata", D_8013A968);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80133540", func_80133FA4);
+void func_80133FA4(void) {
+    s32 i;
+    s32 off;
+    u8 *p;
+
+    if (D_800E6280.unk_1100 == 1) {
+        D_800E6280.unk_1100 += 1;
+        set_kanji_string(-0x56, 0x40, 0, "「", 0);
+        for (i = D_8013C6C8; i < 0x64; i++) {
+            off = i * 4;
+            set_kanji_string(-0x48, (s16)(((i - D_8013C6C8) * 0x10) + 0x40), 0,
+                             *(s32 *)(D_8013C6CC + off) + 1, 0);
+            if (**(u8 **)(D_8013C6CC + off) == 0x67) {
+                if (D_800E6280.unk_110A == 0x23) {
+                    set_kanji_string(-0x80, 0x70, 0, "奉行", 0);
+                    set_kanji_string(-0x56, 0x80, 0, "「おのれー・・・。", 0);
+                }
+                if (!(D_800E6280.unk_F80 & 0x20)) {
+                    /* FAKE: two statements load the table before the index; unk_110C is read
+                     * as u8 here (lbu), as in func_80132708. T-11430 */
+                    p = D_8013C6D0;
+                    p += *(u8 *)&D_800E6280.unk_110C * 4;
+                    func_80046290(*(s32 *)p, *(s32 *)(p + 4), D_800E6280.unk_F5F);
+                    func_80044750(0x300);
+                }
+                *(u8 *)&D_800E6280.unk_110C += 2;
+                D_8013C6C8 = i + 1;
+                i = 0x64;
+            }
+        }
+    }
+    if (func_800460EC() == 2 && check_end_k() != 0) {
+        D_800E6280.unk_1100 = 0;
+    }
+    check_k_scroll();
+    k_disp_inc();
+}
 
 void func_801341A0(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
