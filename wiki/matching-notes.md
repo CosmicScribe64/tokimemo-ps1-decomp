@@ -5172,3 +5172,25 @@ In BUNKAKEN/8013BFE0, func_8013C0AC, func_8013C634 and func_8013CA6C match after
 `func_8015C2CC` adds 972 linked bytes in T-12070. As with C718, a direct unsigned selector load is significant. Explicit case 0 preserves the original jump-table range 0–16; otherwise IDO narrows it to 11–16. The final two load ordering differences disappear when the case-13 call and following flag load share a source line. Byte views, case boundary and line grouping are FAKE-labeled; TACO SHA1 and default literal linked funcdiff pass.
 
 T-12070 handoff: three matches total 4,252 linked bytes. Existing guards remeasured unchanged at B1B8 16 rows, C0A0 9, BF70 32. ACCC 411, BD30 128 and CE64 73 remain scratch-only; user priority shifted to the separate 8,672-byte dialogue target before further small-function passes. Clean configure/ninja passes all 27 checksums, headers/globals; branch prototype audit reports 0 new / 15 known disagreements.
+
+## T-12900 small OPTION and main audio pass
+
+OPTION func_80137E38's word-pair table needs ordinary word-array indexing:
+`((s32 *)*e)[D_801230D0 * 2 + 1]` and the following word. Byte-offset
+expressions compute the same addresses but number the load/shift temporaries
+differently. This resolves the guarded 360-byte handler without a FAKE form.
+
+Main func_8007A868 (188 bytes) needs consistent Work80125D10 member accesses
+to preserve the early flag loads. Put the independent unk_08 assignment after
+the four flag-mask updates; uopt retains the original merged stores and load
+scheduling. No dummy local or source-line scheduling trick is needed.
+
+Main func_80079F00 (264 bytes) calls func_8008BFB0 with signed-halfword second
+and third arguments. Preserve other files' old-style declaration with a scoped
+MAIN_API_OVERRIDE guard. Pass the aggregate halfword directly; explicit s32
+casts generate different conversion chains. Assign unk_1C from unk_1E before
+the flag-word update to retain the original high-immediate scheduling.
+
+All three have full-TU funcdiff --resolve literal linked-byte proof; the
+affected main/OPTION binary SHA1 checks pass. See
+[[tickets/T-12901-small-option-main-first]] and [[tickets/T-12902-small-draft-triage]].

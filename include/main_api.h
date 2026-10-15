@@ -2438,7 +2438,9 @@ void func_8008BE34();
 void func_8008BE54();
 void func_8008BEBC();
 void func_8008BEE0();
+#ifndef MAIN_API_OVERRIDE_func_8008BFB0
 void func_8008BFB0();
+#endif
 s32 func_8008C1B0();
 s32 func_8008C620();
 #ifndef MAIN_API_OVERRIDE_SsVabTransCompleted

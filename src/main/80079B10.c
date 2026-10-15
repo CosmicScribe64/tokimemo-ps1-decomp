@@ -1,3 +1,4 @@
+#define MAIN_API_OVERRIDE_func_8008BFB0 /* original narrows both volume arguments; T-12902 */
 /* main_api.h overrides (T-3340, tools/sync_protos.py): the views this file was matched with. */
 #define MAIN_API_OVERRIDE_func_8007B3DC /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
 #define MAIN_API_OVERRIDE_func_8007B460 /* implicit declaration, as matched; main_api.h has a prototype with narrow parameters */
@@ -5,6 +6,8 @@
 
 #include "common.h"
 #include "game.h"
+
+void func_8008BFB0(s32, s16, s16);
 
 void func_80079B10(u16 arg0) {
     func_8007B5EC(arg0);
@@ -59,7 +62,24 @@ void func_80079E9C(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80079B10", func_80079F00);
+void func_80079F00(void) {
+    if (func_800460EC() & 4) {
+        D_80125D10.unk_04 &= ~0x200;
+        if (D_80125D10.unk_10 != 0) {
+            func_8007A98C(0x74);
+            func_8007A868();
+            if (!(D_80125D10.unk_00 & 0x4000)) {
+                func_8007A924(D_80125D10.unk_08);
+            }
+        } else if (!(D_80125D10.unk_00 & 0x4000)) {
+            D_80125D10.unk_1C = D_80125D10.unk_1E;
+            D_80125D10.unk_00 = (D_80125D10.unk_00 | 0x400) & 0xFFEFFFFF;
+            func_8008B750(0x7F, 0x7F);
+            func_8008BFB0(0, D_80125D10.unk_1C, D_80125D10.unk_1C);
+            func_8008BEE0(0, 0, 1);
+        }
+    }
+}
 
 void func_8007A008(void) {
     s32 v;
