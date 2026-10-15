@@ -13355,3 +13355,7 @@ Matched ENDING func_8013BE64, RPG_BAT func_80136CCC, main func_8005FA20. Guarded
 ## [2026-10-15] ticket | T-11610 created
 
 Created [[tickets/T-11610-w1-main-80042540]] (In Progress): wave 1 package w1-p05, main `src/main/80042540.c` and `src/main/80058D20.c`.
+
+## [2026-10-15] ticket | T-11610 to In Review
+
+[[tickets/T-11610-w1-main-80042540]]: 7 of 10 matched (`func_80042808`, `func_8004284C`, `func_80042908`, `func_80042940` with the aliased-zero trick; `initModelingData_init`, `func_80058F9C` as the PsyQ TMD walk; `func_80042540`). `func_800590CC` guarded at 22 lines; `func_800591D8`, `func_8005938C` back to asm with rows in [[data/t0018-cases]]. Notes in [[matching-notes]].
