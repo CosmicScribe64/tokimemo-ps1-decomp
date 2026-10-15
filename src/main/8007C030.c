@@ -2424,7 +2424,49 @@ void func_80084E6C(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80084E90);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_800850D4);
+s32 func_800850D4(arg0, arg1, arg2, arg3)
+    s32 arg0;
+    s32 arg1;
+    s32 arg2;
+    s16 arg3;
+{
+    s16 i;
+    DisplayActor44 *p;
+
+    if (arg0 == 0) {
+        func_80048F64(0x60);
+        func_80048F64(0x61);
+        return 0;
+    }
+    for (i = 0; i < 2; i++) {
+        func_80048F64(i + 0x60);
+        p = &((DisplayActor44 *)D_8011ECD0)[i + 96];
+        p->unk_01 = 0xA;
+        p->unk_02 = 0;
+        p->unk_38 = 0x41000000;
+        p->unk_03 = 4;
+        p->unk_0C = (u8 *)arg0;
+        p->unk_10 = (u8 *)arg1;
+        p->unk_34 = (u8 *)arg2;
+        p->unk_16 = 0;
+        p->unk_18 = 0;
+        p->unk_06 = 2;
+        p->unk_43 = 0x11;
+        p->unk_26 = -0xA0;
+        p->unk_2A = -0x78;
+        p->unk_07 = 0;
+        p->unk_05 = 0;
+        p->unk_04 = 0;
+        p->unk_14 = arg3;
+    }
+    D_8011ECD0[96 * 0x44 + 2] = 4;
+    if (arg3 >= 2) {
+        D_800CA360 = 0;
+        *(s16 *)&D_8011ECD0[96 * 0x44 + 0x16] = 2;
+    } else {
+        D_8011ECD0[96 * 0x44 + 3] = 0;
+    }
+}
 
 void func_80085234(arg0)
     u8 arg0;
