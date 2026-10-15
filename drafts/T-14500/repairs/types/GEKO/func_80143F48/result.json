@@ -1,0 +1,24 @@
+{
+  "func": "func_80143F48",
+  "guarded": false,
+  "scope": "GEKO:func_80143F48",
+  "score": 169,
+  "size": 592,
+  "source_hash": "f8be9e80299986b8534fb0f43e30c4d9a50927083fb46e5d52ad6660a607adfd",
+  "src": "src/ovl/GEKO/80142760.c",
+  "status": "scored",
+  "unit": "GEKO",
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "ticket": "T-14700",
+  "production_changed": false,
+  "body.c_sha256": "7e7151a7cf36c0cac6e561d82d03088fe2c0ac95a8fbcde3ab53706b5ddd2b61",
+  "declarations.h_sha256": "ae15e70e60e2f3d6ce5c2adfb973284f2ee8f1f77afa1bd808b43577bdaa0380",
+  "context.c_sha256": "d337e632edf88ecfcd115ac753a63fda78c7c3272547a14a9c3e889aacdfedf1",
+  "literal_verified": false,
+  "affected_sha1_verified": false,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
+  "compile_verified": true,
+  "remaining_blockers": [
+    "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
+  ]
+}

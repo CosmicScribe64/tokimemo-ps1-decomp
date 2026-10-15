@@ -1,0 +1,24 @@
+{
+  "func": "func_8010AE7C",
+  "guarded": false,
+  "scope": "EVENT:func_8010AE7C",
+  "score": 22,
+  "size": 196,
+  "source_hash": "b100459adc244e2e29f7dfb454674c8f5b698ea8a02ba9cd40ea778b06b63fe7",
+  "src": "src/ovl/EVENT/8010A210.c",
+  "status": "scored",
+  "unit": "EVENT",
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "ticket": "T-14700",
+  "production_changed": false,
+  "body.c_sha256": "05260cffaa7a3c6877d0b169c2b659b752ad2f7ea91d35cbdac3111c94d5b903",
+  "declarations.h_sha256": "54c384cd33eb3b1ce8d04284212a2c26981aa34fd99f6b0215cc8f56089542d8",
+  "context.c_sha256": "40e50ffd4c38af214bf53621d49781d9a1862bf8ef0f5cb20c59a7e0a8c18960",
+  "literal_verified": false,
+  "affected_sha1_verified": false,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
+  "compile_verified": true,
+  "remaining_blockers": [
+    "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
+  ]
+}
