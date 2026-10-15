@@ -13737,3 +13737,26 @@ BUNKA_SD:func_80132428 matches exact linked text (448 bytes) with overlay SHA1, 
 ## [2026-10-15] build | T-12090 name text builder matched
 
 BUNKA_SD:func_80132FF0 has532 exact linked text bytes and a passing overlay checksum, headers and globals. Restored the fifth jump-table case. Explicit FAKE documents the inferred buffer capacity. Cumulative980 text bytes; see [[tickets/T-12090-codex-cx9]].
+## [2026-10-15] setup | cx10 DATE package baseline verified
+
+Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build passed 27/27 checksums plus headers/globals. Prioritize larger movie/effect functions and legitimate data ownership repair; native AS1 research is diagnostic only. Baseline evidence: build/scratch/baseline.log. Board and index updated.
+
+## [2026-10-15] build | cx10 matches 2,068-byte DATE movie handler
+
+[[tickets/T-12100-codex-cx10]] matched func_801489D0 with exact production linked bytes and DATE SHA1. The owned data range 8015CF80..8015CFD0 is now a data island; four recovered coordinate/velocity arrays are defined in the C object. This resolves the previously scope-blocked shared-LUI initialization residual without a fakematch. Evidence: build/scratch/489d0-final.log, 489d0-build.log and island-build.log.
+
+## [2026-10-15] build | cx10 matches 2,000-byte DATE colour animation
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014E3E8 after literal linked-byte equality and DATE SHA1. A correctly typed initialized colour table and remainder expressions recover data and stack layout naturally. Normalized relocation diagnostics cannot resolve the anonymous local initializer, so the existing exact verifier was invoked directly on a frozen production object with stable source hashes. Evidence: build/scratch/e3e8-literal.log and e3e8-build.log. Package total: 4,068 bytes in two matches.
+
+## [2026-10-15] decision | cx10 bounds movie handler reconstruction
+
+[[tickets/T-12100-codex-cx10]] repaired the malformed 4718C seed sufficiently to compile with real record views. Variable unification reduces stack use but control flow remains hundreds of rows away; fallback restored and typed candidate saved in ignored scratch. Continue the other assigned large handlers before spending further time on this draft.
+
+## [2026-10-15] decision | cx10 finishes bounded large movie seed attempts
+
+[[tickets/T-12100-codex-cx10]] tested record, rectangle and scalar-lifetime repairs on the 4 KB 47958 and 462B0 seeds. Both remain substantial reconstructions, so production fallbacks and prototypes are restored; ignored scratch retains the repaired candidates and evidence. Continue adjacent draw/effect functions for verified byte gains.
+
+## [2026-10-15] build | cx10 matches 820-byte DATE startup handler
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014A4DC: real pointer-array ownership, corrected buffer iteration and source statement grouping recover exact bytes. DATE SHA1, linked-byte proof and globals pass; package total 4,888 bytes. EF1C packet experiments remain distant and were restored. Evidence: build/scratch/a4dc-final.log and a4dc-build.log.

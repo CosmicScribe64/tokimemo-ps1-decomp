@@ -68,7 +68,6 @@ INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E318);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E31C);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E3C4);
 INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E460);
-INCLUDE_RODATA("asm/ovl/DATE/data/DATE/8014CC40.data", D_8015E510);
 
 typedef struct {
     void (*f[43])();
@@ -519,7 +518,68 @@ s32 func_8014E38C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014E3E8);
+void func_8014E3E8(void) {
+    s32 *pair;
+    s32 colors[4][2] = {
+        { 0xFF8080, 0xFF0000 },
+        { 0x8040FF, 0xC000FF },
+        { 0xFFFF80, 0xFFFF00 },
+        { 0xFFFFFF, 0xC0C0C0 }
+    };
+
+    if (((u32) D_800E6280.unk_10F8 % 120U) == 0) {
+        D_8015E310 += 1;
+    }
+    if (D_8015E310 >= 3) {
+        D_8015E310 = 0;
+    }
+    if (((u32) D_800E6280.unk_10F8 % 100U) == 0) {
+        D_8015E314 += 1;
+    }
+    if (D_8015E314 >= 4) {
+        D_8015E314 = 0;
+    }
+    if (((u32) D_800E6280.unk_10F8 % 36U) < 0xCU) {
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA0, -0xA0, 0xB4, -0xA0, 0x6E, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA5, -0xA0, 0xC3, -0xA0, 0x64, 0x28, 0x46, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xAA, -0xA0, 0xB4, -0xA0, 0x41, 0x28, 0x32, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA0, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x7D, 0x28, pair[0], pair[1], 9, 1);
+    } else if (((u32) D_800E6280.unk_10F8 % 36U) < 0x18U) {
+        pair = colors[D_8015E314];
+        func_8014EF1C(0x9B, -0xA0, 0xAF, -0xA0, 0x69, 0x28, 0x82, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0x9B, -0xA0, 0xC3, -0x96, 0x5A, 0x28, 0x3C, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0xA5, -0xA0, 0xAF, -0xA0, 0x3C, 0x28, 0x2D, 0x28, pair[0], pair[1], 9, 1);
+        pair = colors[D_8015E314];
+        func_8014EF1C(0x96, -0xA0, 0xA0, -0xA0, 0x64, 0x28, 0x73, 0x28, pair[0], pair[1], 9, 1);
+    }
+    func_800494BC(0, 0, 9, 3, 0);
+    if (((u32) D_800E6280.unk_10F8 % 30U) < 0xAU) {
+        pair = colors[D_8015E310];
+        func_8014EF1C(0x1E, -0xA0, 0x64, -0xA0, -0x140, 0x28, -0xFA, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0xA, -0xA0, 0x19, -0xA0, -0xDC, 0x28, -0xBE, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0, -0xA0, 0x14, -0xA0, -0xB4, 0x28, -0x82, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0x19, -0xA0, 0x28, -0xA0, -0x12C, 0x28, -0x118, 0x28, pair[0], pair[1], 0xD, 1);
+    } else if (((u32) D_800E6280.unk_10F8 % 30U) < 0x14U) {
+        pair = colors[D_8015E310];
+        func_8014EF1C(0x14, -0xA0, 0x5A, -0xA0, -0x154, 0x28, -0x10E, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0xA, -0xA0, 0x1E, -0xA0, -0xF0, 0x28, -0xD2, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0, -0xA0, 0xF, -0xA0, -0xC8, 0x28, -0x96, 0x28, pair[0], pair[1], 0xD, 1);
+        pair = colors[D_8015E310];
+        func_8014EF1C(0xF, -0xA0, 0x19, -0xA0, -0x136, 0x28, -0x122, 0x28, pair[0], pair[1], 0xD, 1);
+    }
+    func_800494BC(0, 0, 0xD, 3, 0);
+}
 
 void func_8014EBB8(void) {
     s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
