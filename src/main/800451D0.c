@@ -177,11 +177,13 @@ u8 *arg1;
         var_a3 = arg1 + 1;
         do
         {
+            /* ORDER */
             var_v1 += 2;
-            var_v0 += (*var_a0) + (*var_a3);
+            var_v0 += ORDER_SWAP((*var_a0), +, (*var_a3));
             temp_t0 = var_v0 & 0xFFFF;
             var_a0 += 2;
             var_a3 += 2;
+            /* END ORDER */
             var_v0 = temp_t0;
         }
         while (var_v1 < ((arg0 << 0xB) - 4));
