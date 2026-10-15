@@ -13897,3 +13897,6 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] build | Combined matching integration verified
 [[tickets/T-12400-integrate-verified-matches]] integrates completed worker and acceleration/large-function chat commits. All 27 binary checksums, headers, globals and prototype checks pass (0 new/15 known); 55 permuter tests pass. Coverage rises by 67 functions and 52,232 bytes to 59.0%. Reconciled duplicate cx7 index/kanban entries; integration moved to In Review. User authorized direct push to main without a PR.
+
+## [2026-10-15] build | Verified matches published to main
+[[tickets/T-12400-integrate-verified-matches]]: direct non-force push succeeded, advancing remote main from 1668c560 to 8f78e5e5. All verified matching checkpoints collected for this batch are published; active experiments remain in worker worktrees.
