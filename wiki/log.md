@@ -14506,3 +14506,19 @@ Several exhaustive drafts fail only because m2c infers void after an earlier unp
 ## [2026-10-15] ticket | Reserve DATE draft failures for type repair
 
 Nine failed DATE targets from the completed unit are reserved in drafts/T-14500/date-repair-reservation.json for the independent repair lane. Their initial attempts remain immutable; alternate bodies must retain declarations and full context. The census continues independently, and its later mechanical retry excludes these scopes. See [[tickets/T-14500-exhaustive-drafts]].
+
+## [2026-10-15] ingest | DATE source/type repair alternatives
+
+Ingested exact repair artifacts from commit 1308ed4a as separate alternatives under drafts/T-14500/repairs/. All nine reserved DATE failures now compile and have nonzero full-TU scores; the initial census outcomes remain unchanged. Final best-catalog aggregation includes these context-qualified alternatives. No production source or matching-byte gain is claimed.
+
+## [2026-10-15] lint | Bound and preserve post-census repairs
+
+The automatic repair runner keeps initial artifacts immutable, excludes 24 externally reserved scopes, and will try current mechanical repairs plus bounded context/type-inference fallbacks only after the complete default census. Seven synthetic tests pass. OPTION exposed more than twelve missing stack locals; independent existing source fixes from one compiler diagnostic are now batched before the next compile, within the same bounded attempt budget.
+
+## [2026-10-15] query | Exhaustive census checkpoint 487 of 1066
+
+[[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 24, 'failed': 65, 'scored': 398}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.
+
+## [2026-10-15] build | Harden resumable draft evidence
+
+Per-target artifacts now use atomic replacement, source failures retain body/context hashes, and the harness accepts an explicit archive path. The complete census remains serial; seven synthetic Docker checks continue to pass. Completed source/context batches remain immutable while repairs write separate alternatives.
