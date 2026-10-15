@@ -4997,3 +4997,32 @@ Ticket [[tickets/T-11580-w1-ovl-date-80132000]]. 11 matched (5,016 bytes): from 
 - Tools: a side-by-side wrapper around `funcdiff.diff_lines` and a variant runner (one funcdiff per variant, about
   3 s) did most of the work; a full-unit draft whose instructions match but whose address differs (other drafts
   change the layout) is a candidate match, confirm it with the guard removed. autotweak (3 runs) found nothing.
+
+## TT overlay, batch 7 (T-11800)
+
+bulk_m2c rerun (no match, 52 drafts ranked), then two Opus passes. Pass 1 on the guarded drafts: 3 matched
+(`func_80142350`, `func_80149BB0`, `func_80145370`), two closer. Pass 2 on the best pipeline drafts: 7 matched
+(`func_8014CFEC`, `func_80149400`, `func_801491F0` and its twin `func_8014ACEC`, `func_8013AE3C`, `func_80138B90`,
+`func_80132198`). Stayed off the wave-1 TT files. Ticket [[tickets/T-11800-tt-batch-7]].
+
+- **Empty `if (x) {}` (FAKE) is a priority lever.** It adds a use and stretches the live range without code. Placement
+  decides the effect: in a `default` case before the calls it lowers a range's priority (more blocks), so it is coloured
+  later (`func_80142350`); next to the existing uses it raises it (`func_8013B4A0`). `if ((s32)p != BOUND) {}` on another
+  variable gives a loop bound a saved register without raising the counter (`func_801491F0`/`func_8014ACEC`).
+- **Reserving a register in a loop:** a local assigned before the loop and tested by an empty `if` inside it holds a
+  register there (`func_80145370`, phantom a0/a1).
+- **Odd rebases from record walks.** `D + 0x10CC` came from walking fixed-stride records (`o = base + first; ...;
+  o += stride` repeated), which uopt folds (`func_80149BB0`). Typed record indexing `((TtAnim14 *)(p + 0x38))[i].f`
+  folds unrolled copies into offsets where a pointer IV or `p + i * k` does not (`func_80138B90`).
+- **Loads and reloads.** `*(s32 *)&G` stops uopt reusing an earlier load of a global pointer (FAKE; `u16 **` views and
+  `volatile` did not work; `func_80149400`). A pointer walk avoids reloading a global base after aliasing stores.
+- **Call arguments as register holders.** A pointer the original keeps in a1 across a call can be passed as an extra
+  argument of an unprototyped callee (FAKE; `func_8013AE3C`).
+- **Store pairs in the wrong order with the right registers:** put both on one line (setUV0 style; `func_8014CFEC`).
+- **Constants vs locals in the preheader:** locals are scheduled before hoisted constants, so an `n = 8` local cannot
+  reproduce an original where 8 comes last; an expression used twice (`i + 0x2B`) becomes a CSE temp coloured before the
+  locals (`func_80132198`).
+- **Fully unrolled short loops:** IDO unrolls a 4-trip flag loop completely and hoists its constants (`func_8013AE3C`).
+- Tools: `regdiff -v` (allocation order, priorities, constrained/unconstrained) found most levers; order_search fixed
+  `func_80148E7C`'s store order; autotweak's line join finds one-line store pairs. A body-splice + `funcdiff --resolve`
+  loop ran at about 4 s per try.

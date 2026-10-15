@@ -19,7 +19,53 @@ void func_80132130(void) {
     *(s16 *)(p + 0x10) = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132130", func_80132198);
+void func_80132198(u8 arg0, u8 arg1, u8 arg2) {
+    u8 *q;
+    u8 *r;
+    s32 i;
+    u8 c; /* set by the switch for every i; IDO still loads and stores its stack home */
+
+    q = D_80158A60;
+    r = D_80158AA8;
+    for (i = 0; i != 3; i++) {
+        switch (i) {
+        case 0:
+            c = arg0;
+            break;
+        case 1:
+            c = arg1;
+            break;
+        case 2:
+            c = arg2;
+            break;
+        }
+        *(s16 *)(r + 0xA) = -0x4C;
+        *(s16 *)(r + 0xC) = i * 0x10 + 0x78;
+        *(s16 *)(r + 0xE) = i + 0xE;
+        r[2] = c;
+        r[0] = 1;
+        *(s16 *)(r + 6) = 8;
+        *(s16 *)(r + 0x10) = 0;
+        *(s16 *)(r + 0x1E) = -0x1C;
+        *(s16 *)(r + 0x20) = i * 0x10 + 0x78;
+        *(s16 *)(r + 0x22) = i + 0x28;
+        r[0x16] = c;
+        r[0x14] = 1;
+        *(s16 *)(r + 0x1A) = 8;
+        *(s16 *)(r + 0x24) = 0;
+        r += 0x28;
+        func_80148584(*(u16 *)(q + i * 6 + 0x30), i + 0x28);
+        func_801486D8((s32)(q + i * 6 + 0x32), i + 0x2B);
+        *(s16 *)(r + 0xA) = 0x34;
+        *(s16 *)(r + 0xC) = i * 0x10 + 0x78;
+        *(s16 *)(r + 0xE) = i + 0x2B;
+        r[2] = c;
+        r[0] = 1;
+        *(s16 *)(r + 6) = 8;
+        *(s16 *)(r + 0x10) = 0;
+        r += 0x14;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132130", func_8013230C);
 

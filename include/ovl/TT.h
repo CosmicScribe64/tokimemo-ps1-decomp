@@ -441,6 +441,8 @@ extern TtCollision6 D_80155C64[];
 
 /* Halfword masks indexed by the byte phase at work+0x21, T-9720. */
 extern u16 D_80155DD0[];
+/* Halfword button masks indexed by the phase at work+0x21 (func_80149400). T-11800 */
+extern u16 D_80156C90[];
 
 #ifndef OVL_TT_T9720_COORDINATES
 #define OVL_TT_T9720_COORDINATES
@@ -490,7 +492,7 @@ typedef struct TtActor78 {
     /* 0x44 */ u16 unk_44;
     /* 0x46 */ u8 unk_46;
     /* 0x47 */ u8 unk_47;
-    /* 0x48 */ u8 pad_48[4];
+    /* 0x48 */ s32 unk_48;
     /* 0x4C */ u8 unk_4C;
     /* 0x4D */ u8 unk_4D;
     /* 0x4E */ u8 unk_4E;
@@ -619,3 +621,22 @@ extern u8 D_8014ED60[]; /* T-11000 */
 extern u8 D_80151AF0[];
 extern u8 D_80152E20[];
 extern u8 D_80154590[];
+
+#ifndef OVL_TT_T11800_ANIM14
+#define OVL_TT_T11800_ANIM14
+/* Animation records of the D_80158A8C work, 0x14 bytes from work+0x38 (func_80138B90). T-11800. */
+typedef struct TtAnim14 {
+    /* 0x00 */ u8 *frames;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 pad_07;
+    /* 0x08 */ u8 unk_08;
+    /* 0x09 */ u8 unk_09;
+    /* 0x0A */ u8 pad_0A;
+    /* 0x0B */ u8 unk_0B;
+    /* 0x0C */ u8 pad_0C[4];
+    /* 0x10 */ u8 unk_10;
+    /* 0x11 */ u8 pad_11[3];
+} TtAnim14; /* size 0x14 */
+#endif

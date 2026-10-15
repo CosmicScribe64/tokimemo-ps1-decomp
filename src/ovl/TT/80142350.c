@@ -1,8 +1,7 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-/* NON_MATCHING: T-11000/T-11550, 2 lines (registers only): the TtButtons06 pointer is v0, the original a2. T-11550 (autotweak): reading base[0x52] after the store through a u8 temp (FAKE) gives a temp range in a0, so the constant 1 moves to a1 as in the original (was 11 lines). Tried for the pointer: inline cast, computing it from D_80158A60, other placements, a second autotweak pass (no gain). */
-#ifdef NON_MATCHING
+/* T-11800: matched. T-11550 temp (FAKE) moves the constant 1 to a1; an empty if (buttons) {} in a default case (FAKE) keeps the TtButtons06 pointer live through the case dispatch, so it is coloured after the constant 1 and takes a2 as in the original. */
 void func_80142350(void) {
     u8 *base;
     u8 *s;
@@ -51,6 +50,10 @@ void func_80142350(void) {
                 func_8014304C(0x8002E800, 0xC8C1, 0x69E4);
                 func_8014304C(0x8019A000, 0xC8C6, 0x27D60);
                 break;
+            default:
+                if (buttons) { /* FAKE: an empty test in a default case keeps buttons live through the case dispatch (before the calls), so it is coloured after the constant 1 and takes $a2. T-11800 */
+                }
+                break;
             }
             func_8014304C(0x8001A000, 0xBFD1, 0xE20);
             func_8014304C(0x801C2000, 0xBF9C, 0x1A680);
@@ -62,6 +65,3 @@ void func_80142350(void) {
         *(u16 *)s = 1;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142350", func_80142350);
-#endif

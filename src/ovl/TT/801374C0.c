@@ -277,7 +277,35 @@ void func_80138300(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138808);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138B90);
+void func_80138B90(void) {
+    u8 *p;
+    s32 i;
+
+    p = D_80158A8C;
+    /* IDO unrolls this by two after peeling i = 2; the typed record index folds the second copy into offsets */
+    for (i = 2; i < 7; i++) {
+        ((TtAnim14 *)(p + 0x38))[i].frames = D_80151A50;
+        ((TtAnim14 *)(p + 0x38))[i].unk_04 = 0;
+        ((TtAnim14 *)(p + 0x38))[i].unk_05 = 6;
+        if (i == 6) {
+            ((TtAnim14 *)(p + 0x38))[i].unk_06 = 0x14;
+        } else {
+            ((TtAnim14 *)(p + 0x38))[i].unk_06 = 0x1F;
+        }
+        ((TtAnim14 *)(p + 0x38))[i].unk_08 = 0x60;
+        ((TtAnim14 *)(p + 0x38))[i].unk_09 = 0;
+        ((TtAnim14 *)(p + 0x38))[i].unk_0B = 0xF;
+        ((TtAnim14 *)(p + 0x38))[i].unk_10 = 0;
+        p[0x310 + i] = 1;
+        *(s16 *)(p + 0x2A8 + i * 2) = 9;
+        if (i == 6) {
+            *(s16 *)(p + 0x248 + i * 2) = 0;
+        } else {
+            *(s16 *)(p + 0x248 + i * 2) = i * 16 - 0x38;
+        }
+        *(s16 *)(p + 0x278 + i * 2) = D_80152C40[i - 2];
+    }
+}
 
 void func_80138D10(void) {
     switch (*(u16 *)(D_80158A8C + 0x30E)) {

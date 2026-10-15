@@ -28,7 +28,7 @@ void func_80148DE4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, shape matches; the hoisted loop constants 0x40/0x20 sit in t0/t1 where the original has t1/t0 and one li/sh pair in the hit branch is ordered differently, about 10 lines */
+/* NON_MATCHING: T-10720/T-11800, 7 lines (registers only): the hoisted loop constants 0x40/0x20 sit in t0/t1 where the original has t1/t0 (unconstrained ranges coloured in bit order; 0x40 is created first). T-11800 (order_search): writing the hit-branch stores as 0x20, 0x1C, 0x44, then p[0x64] fixes the li/sh order (was 11 lines). Tried: do/while loops, for (i = 0, p = ...) heads. */
 void func_80148E7C(arg0, arg1)
 u8 *arg0;
 s32 arg1;
@@ -61,8 +61,8 @@ s32 arg1;
                     }
                     if (dx < 0x20) {
                         *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
-                        *(s16 *)(arg0 + 0x44) = i;
                         *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
+                        *(s16 *)(arg0 + 0x44) = i;
                         p[0x64] = 1;
                         break;
                     }
@@ -88,8 +88,8 @@ s32 arg1;
                     }
                     if (dx < 0x20) {
                         *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
-                        *(s16 *)(arg0 + 0x44) = i;
                         *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
+                        *(s16 *)(arg0 + 0x44) = i;
                         p[0x64] = 1;
                         break;
                     }
@@ -157,9 +157,61 @@ void func_80149108(void) {
     } while (index != 8);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801491F0);
+void func_801491F0(void) {
+    DR_MODE *m;
+    TtDrawBuffer80B8 *buffer;
+    TtSpritePacket20 *q;
+    s32 i;
+    u8 *p;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149400);
+    p = D_80158A88;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0; i != 8; i++) {
+        if (p[0] != 0) {
+            q = (TtSpritePacket20 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
+            q->tag.len = 4; q->code = 0x65; /* one line (setlen/setcode macro style) */
+            q->x = *(s16 *)(p + 0x14) - 8;
+            q->y = *(s16 *)(p + 0x16) - 8;
+            q->h = 0x10;
+            q->w = 0x10;
+            q->u = p[0x42];
+            q->v = p[0x43];
+            q->clut = *(u16 *)(p + 0x40);
+            q->tag.addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)q;
+            m = buffer->cursor;
+            buffer->cursor++;
+            func_8009D294((s32)m, 0, 0, *(u16 *)(p + 0x3E), 0);
+            ((TtOtTag *)m)->addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)m;
+        }
+        if ((s32)p != 8) {} /* FAKE: a second use of the bound gives it a saved register ahead of i. T-11800 */
+        p += 0x58;
+    }
+}
+
+void func_80149400(void) {
+    s32 pad; /* FAKE: moves the spill slot of p to sp+0x28. T-11800 */
+    u8 *p;
+
+    p = D_80158A64;
+    if ((*(u16 *)(D_80158A60 + 0x14) & D_80156C90[p[0x21]]) == D_80156C90[p[0x21]]) {
+        p[0x20] = 0x10;
+        if (++p[0x21] == 6) {
+            func_80133AD0(0x607);
+            p[0x21] = 0;
+            p[0x24] = 1;
+            p[0x25] = 0;
+            D_80158AA8[0x78] = 1;
+        }
+    } else if (*(u16 *)(*(s32 *)&D_80158A60 + 0x14) != 0) { /* FAKE: the s32 view stops uopt reusing the first read. T-11800 */
+        p[0x21] = 0;
+    }
+    if (--p[0x20] == 0) {
+        p[0x21] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801494D8);
 
@@ -169,8 +221,7 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801498C8);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149B20);
 
-/* NON_MATCHING: T-11560, 5 lines (registers only): the original keeps D_80158AA4 and the record pointer D_80158AA4 + 0x10CC in one register ($v1, lh 0xFC2 before the addiu, first s16 store at -0x118 from the new base); here they are two values ($t4, $v1). Plain offsets give no 0x10CC base at all (13 lines); the pointer bump between the first s32 store and its s16 copy gives this. Tried: a second pointer local, assignment inside the store address, a temp for the s16 (31 lines), autotweak 240 s. */
-#ifdef NON_MATCHING
+/* T-11800: matched by walking the four 0x64-byte records (D_80158AA4 + 0xFA0, then o += 0x64 three times); uopt folds the walk into the original D_80158AA4 + 0x10CC rebase. */
 void func_80149BB0(void) {
     u8 *p;
     u8 *q;
@@ -188,14 +239,16 @@ void func_80149BB0(void) {
         *(s16 *)q = *(s16 *)(q + 2) = 0x1000 - func_800A0070(ang) / 2;
         *(s16 *)(q + 0x14) = func_800A0140(ang) / 32 + 0x80;
         *(s16 *)(q + 0x10) = *(s16 *)(q + 0x12) = func_800A0070(ang) / 2 + 0x1000;
-        o = D_80158AA4;
-        *(s32 *)(o + 0xFC0) = (*(s16 *)(q + 0x14) - 0x6C) << 16;
-        *(s16 *)(o + 0xFB4) = *(s16 *)(o + 0xFC2);
-        o += 0x10CC; /* the original rebases here (records 40..43, stride 0x64). T-11560 */
-        *(s32 *)(o - 0xA8) = (*(s16 *)(q + 0x14) - 0x18) << 16;
-        *(s16 *)(o - 0xB4) = *(s16 *)(o - 0xA6);
-        *(s32 *)(o - 0x44) = (*(s16 *)(q + 4) - 0x60) << 16;
-        *(s16 *)(o - 0x50) = *(s16 *)(o - 0x42);
+        o = D_80158AA4 + 0xFA0;
+        *(s32 *)(o + 0x20) = (*(s16 *)(q + 0x14) - 0x6C) << 16;
+        *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+        o += 0x64;
+        *(s32 *)(o + 0x20) = (*(s16 *)(q + 0x14) - 0x18) << 16;
+        *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+        o += 0x64;
+        *(s32 *)(o + 0x20) = (*(s16 *)(q + 4) - 0x60) << 16;
+        *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+        o += 0x64;
         *(s32 *)(o + 0x20) = (*(s16 *)(q + 4) + 0x20) << 16;
         *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
         *(u16 *)(c + 0x12) += 0x18;
@@ -208,9 +261,6 @@ void func_80149BB0(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149BB0);
-#endif
 
 void func_80149D64(void) {
     u8 *p;
@@ -526,4 +576,36 @@ void func_8014AB48(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014ACEC);
+void func_8014ACEC(void) {
+    DR_MODE *m;
+    TtDrawBuffer80B8 *buffer;
+    TtSpritePacket20 *q;
+    s32 i;
+    u8 *p;
+
+    p = D_80158A80;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0; i != 12; i++) {
+        if (p[0] != 0) {
+            q = (TtSpritePacket20 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
+            q->tag.len = 4; q->code = 0x65; /* one line (setlen/setcode macro style) */
+            q->x = *(s16 *)(p + 0x22) - 8;
+            q->y = *(s16 *)(p + 0x26) - 8;
+            q->h = 0x10;
+            q->w = 0x10;
+            q->u = p[0x42];
+            q->v = p[0x43];
+            q->clut = *(u16 *)(p + 0x40);
+            q->tag.addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)q;
+            m = buffer->cursor;
+            buffer->cursor++;
+            func_8009D294((s32)m, 0, 0, *(u16 *)(p + 0x3E), 0);
+            ((TtOtTag *)m)->addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)m;
+        }
+        if ((s32)p != 12) {} /* FAKE: a second use of the bound gives it a saved register ahead of i. T-11800 */
+        p += 0x54;
+    }
+}
