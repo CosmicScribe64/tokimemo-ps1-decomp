@@ -5078,3 +5078,7 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## Role-aware twin constants (T-12210)
+
+BUNKASAI func_8014FFE4 and func_8015052C match from func_801456E0 and func_80145C28; BUNKAKEN func_801386C0 matches from func_801475CC. The near-copy tool rejected excess literal occurrences because character ID 7/6 also appears as `case 7:`/`case 6:`. Instruction correspondence maps only runtime character IDs (7 -> 6 or 6 -> 4); state labels remain unchanged. Script/sector constants map separately. All three pass literal linked verification (592 + 920 + 840 bytes) and both unit SHA1s; no FAKE changes. See [[matching-breakthroughs]] and [[tickets/T-12210-matching-bottleneck-research]].

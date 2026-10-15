@@ -1,12 +1,12 @@
 ---
 type: concept
 updated: 2026-10-15
-sources: ["tools/permute.py", "tools/bench_strip.py", "wiki/tickets/T-12100-acceleration-audit.md"]
+sources: ["tools/permute.py", "tools/bench_strip.py", "wiki/tickets/T-12200-acceleration-audit.md"]
 ---
 
 # Matching acceleration audit
 
-Snapshot at base `7a65b3d8`; active cx worklists inspected read-only on 2026-10-15. No TT work or modifications to existing worktrees. See [[tickets/T-12100-acceleration-audit]].
+Snapshot at base `7a65b3d8`; active cx worklists inspected read-only on 2026-10-15. No TT work or modifications to existing worktrees. See [[tickets/T-12200-acceleration-audit]].
 
 ## Measured implementation
 

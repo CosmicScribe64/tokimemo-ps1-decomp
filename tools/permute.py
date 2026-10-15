@@ -234,7 +234,7 @@ def strip_functions(pre, func):
     """Strip other ANSI and K&R bodies, preserving the target text/line layout."""
     edits = []
     seen = set()
-    # T-12100: inspect each signature at its known offset instead of searching
+    # T-12200: inspect each signature at its known offset instead of searching
     # the entire translation unit once for every prototype in the shared headers.
     for prefix in SIGNATURE_PREFIX.finditer(pre):
         name = prefix.group(1)

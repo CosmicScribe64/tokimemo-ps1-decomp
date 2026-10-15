@@ -13525,3 +13525,19 @@ Moved [[tickets/T-12100-acceleration-audit]] to In Review. Added [[acceleration-
 ## [2026-10-15] ticket | T-12100 reviews complete
 
 Separate code-review skill standards and requirements reviews of 7a65b3d8...87e7889d returned no findings. Both confirmed scope and equivalence logic and the limits of timing claims. Recorded reviews in [[tickets/T-12100-acceleration-audit]] and moved the ticket/card/index to Done. No merge, push, game-source edit, or other-worker change performed.
+
+## [2026-10-15] ticket | Correct acceleration ticket collision and start matching research
+
+Read-only inspection of the external run's status revealed T-12100 is reserved for cx10. Renamed this branch's acceleration ticket to [[tickets/T-12200-acceleration-audit]] and updated current references; previous log entries and commit messages remain historical. Opened [[tickets/T-12210-matching-bottleneck-research]] for the user's clarified priority: high-impact matching research, with remaining-byte and repeated-blocker measurements plus a concrete experiment.
+
+## [2026-10-15] query | T-12210 baseline and exhausted exact reuse
+
+Census at 7a65b3d8 reports 5,733/6,958 functions and 1,288,084/2,279,368 progress bytes in C (56.5%). Queue: 1,225 remaining, 424 heuristically blocked, 801 unblocked; only 134 have guarded drafts in src (external drafts not yet counted). Exact duplicate report yields two plans, eight skips; near-duplicate report yields zero immediately fillable and five skipped. Tests of register-relaxed family discovery follow. Copied generated asm into this worktree; all analysis in one-CPU Docker. Reports in build/acceleration/.
+
+## [2026-10-15] build | T-12210 two family-guided matches
+
+[[tickets/T-12210-matching-bottleneck-research]]: two BUNKASAI matches in src/ovl/BUNKASAI/8014DD90.c, 1,512 literal linked bytes; BUNKASAI SHA1 passes. Distinguishing character-ID constants from switch labels resolved automatic near-copy rejection. Register-only fingerprint relaxation found no new whole-function families beyond existing duplicate leads. Upstream m2c documentation confirms multi-function/stack-template inference; upstream permuter documentation positions it as end-stage register-allocation work, not a solution for structural differences. Research synthesis follows.
+
+## [2026-10-15] ticket | T-12210 matching research in review
+
+Added [[matching-breakthroughs]], including three verified matches / 2,352 linked bytes and the finding that the default under-600-byte bulk selection covers only 21.8% of remaining progress bytes. 600–1,999-byte targets hold 59.2%. Documented heuristic false positives, draft-provenance limitations, bounded negative register-relaxation result, and upstream primary references. [[tickets/T-12210-matching-bottleneck-research]] moved to In Review; affected unit SHA1s and header/global/prototype guards pass. Historical T-12100 log links predate the collision correction; current acceleration ticket is [[tickets/T-12200-acceleration-audit]].

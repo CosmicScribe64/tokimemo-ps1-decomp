@@ -1,5 +1,5 @@
 ---
-id: T-12100
+id: T-12200
 title: Measure and reduce matching setup overhead
 status: Done
 assignee: Codex acceleration investigation
