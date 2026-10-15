@@ -279,7 +279,64 @@ void func_80139FE4(void) {
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139FE4);
 #endif
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013A314);
+void func_8013A314(void) {
+    s32 i;
+    TaiikuH16 x;
+    TaiikuH16 y;
+    TaiikuB16 frame;
+
+    x = D_80149F00;
+    y = D_80149F20;
+    frame = D_80149F40;
+    func_80048E78();
+    for (i = 0; i < 16; i++) {
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_38 = 0x1000000;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_07 = 0x80;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_0C = (u8 *)D_80149FDC;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_10 = (u8 *)D_8014A014;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_34 = D_80149DAC;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_14 = D_8014A04C;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_1A = 0x1000;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_1C = 0x1000;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_02 = 0x40;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_03 = 0x84;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_01 = frame.v[i] + 0xF0;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_26 = x.v[i];
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_2A = y.v[i];
+    }
+    ((TaiikuActor44 *)D_8011ECD0)[96].unk_18 = 0;
+    ((TaiikuActor44 *)D_8011ECD0)[96].unk_01 = 3;
+    ((TaiikuActor44 *)D_8011ECD0)[97].unk_18 = D_80149940 * 6 + 6;
+    ((TaiikuActor44 *)D_8011ECD0)[97].unk_01 = 3;
+    ((TaiikuActor44 *)D_8011ECD0)[98].unk_18 = 0x82;
+    ((TaiikuActor44 *)D_8011ECD0)[98].unk_07 = 0x68;
+    ((TaiikuActor44 *)D_8011ECD0)[98].unk_38 |= 0x40000000;
+    ((TaiikuActor44 *)D_8011ECD0)[99].unk_18 = 0x83;
+    ((TaiikuActor44 *)D_8011ECD0)[99].unk_07 = 0x68;
+    ((TaiikuActor44 *)D_8011ECD0)[99].unk_38 |= 0x40000000;
+    ((TaiikuActor44 *)D_8011ECD0)[100].unk_18 = 0x94;
+    ((TaiikuActor44 *)D_8011ECD0)[101].unk_01 = 1;
+    ((TaiikuActor44 *)D_8011ECD0)[101].unk_03 = 4;
+    ((TaiikuActor44 *)D_8011ECD0)[101].unk_18 = 0x84;
+    ((TaiikuActor44 *)D_8011ECD0)[102].unk_18 = 0x85;
+    ((TaiikuActor44 *)D_8011ECD0)[102].unk_03 = 4;
+    ((TaiikuActor44 *)D_8011ECD0)[103].unk_18 = 0x81;
+    ((TaiikuActor44 *)D_8011ECD0)[103].unk_07 = 0x68;
+    ((TaiikuActor44 *)D_8011ECD0)[103].unk_38 |= 0x40000000;
+    ((TaiikuActor44 *)D_8011ECD0)[104].unk_18 = 0x8C;
+    ((TaiikuActor44 *)D_8011ECD0)[104].unk_03 |= 1;
+    for (i = 0; i < 3; i++) {
+        ((TaiikuActor44 *)D_8011ECD0)[105 + i].unk_18 = 0x86;
+        ((TaiikuActor44 *)D_8011ECD0)[105 + i].unk_03 |= 1;
+        ((TaiikuActor44 *)D_8011ECD0)[105 + i].unk_43 = i + 0x1C;
+    }
+    ((TaiikuActor44 *)D_8011ECD0)[108].unk_18 = 0x92;
+    for (i = 0; i < 3; i++) {
+        ((TaiikuActor44 *)D_8011ECD0)[109 + i].unk_18 = 0x93;
+        ((TaiikuActor44 *)D_8011ECD0)[109 + i].unk_43 = i + 0x1C;
+    }
+}
 
 void func_8013A63C(void) {
     if (Vblnk_Timer() >= 2) {

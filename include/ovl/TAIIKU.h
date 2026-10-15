@@ -741,4 +741,15 @@ extern TaiikuI3 D_80149F80; /* speed added to each position, copied to the stack
 extern u16 D_801499C4[];
 extern u8 D_801499CC[];
 extern u8 D_80149DF4[];
+extern u8 D_80149DAC[];
+typedef struct {
+    /* 0x00 */ s16 v[16];
+} TaiikuH16; /* size 0x20 */
+typedef struct {
+    /* 0x00 */ u8 v[16];
+} TaiikuB16; /* size 0x10 */
+/* Scene tables of func_8013A314, copied to the stack: x, y and frame of records 96..111. */
+extern TaiikuH16 D_80149F00;
+extern TaiikuH16 D_80149F20;
+extern TaiikuB16 D_80149F40;
 #endif
