@@ -134,7 +134,58 @@ void func_8014B198(u8 *arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014B274);
+void func_8014B274(u8 arg0) {
+    s32 i;
+    u8 *p;
+    u8 *src;
+    s32 ang;
+    s32 c;
+
+    src = D_80158A74;
+    p = D_80158A98;
+    i = 0;
+    do {
+        p = func_8014AF00(p, p + 0x1E00);
+        if (p == 0) {
+            return;
+        }
+        p[0x50] = i;
+        if (arg0 != 0) {
+            *(s32 *)(p + 0x20) = (i * 16 + 0x30) << 16;
+        } else {
+            *(s32 *)(p + 0x20) = (-0x30 - i * 16) << 16;
+        }
+        *(s32 *)(p + 0x24) = -0x10;
+        ang = func_801320F0(p + 0x14, src + 0x14);
+        if (i == 1) {
+            func_8014AFB8(p, 0x42, 6);
+        } else {
+            func_8014AFB8(p, 0x41, 5);
+            if (arg0 != 0) {
+                ang += (i == 0) ? 0x60 : -0x60;
+            } else {
+                ang -= (i == 0) ? 0x60 : -0x60;
+            }
+        }
+        *(s32 *)(p + 0x28) = func_800A0140(ang) << 5;
+        c = func_800A0070(ang);
+        i += 1;
+        p += 0x78;
+        *(s32 *)(p - 0x4C) = c << 5;
+        p[-0x15] = arg0;
+        *(s16 *)(p - 0x1A) = 0;
+        p[-0x18] = 0;
+        *(s16 *)(p - 0x74) = 0x40;
+        *(s16 *)(p - 0x6E) = 0;
+        *(s16 *)(p - 0x70) = 0;
+        *(s16 *)(p - 0x72) = 0;
+        p[-0x69] = 0;
+        p[-0x6A] = 0;
+        p[-0x6B] = 0;
+        *(s16 *)(p - 0x64) = *(s16 *)(p - 0x56);
+        *(s16 *)(p - 0x62) = *(s16 *)(p - 0x52);
+    } while (i != 3);
+}
 
 void func_8014B414(u8 *arg0) {
     if (D_80158A6C[0xB] != 0 && (u32)*(u16 *)(arg0 + 0x5E) >= 0x19) {
