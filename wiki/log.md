@@ -14514,3 +14514,7 @@ Promoted 2 ordinary C functions / 1,052 bytes for SHUGAKU after default linked l
 ## [2026-10-15] decision | Distinguish draft coverage gains from literal proof spans
 
 Clarified [[tickets/T-14501-remaining-draft-proof]] byte accounting: frozen inventory coverage sizes can exclude alignment included by funcdiff's linked comparison. SHUGAKU contributes 1,052 coverage bytes while its two proofs compare 1,056 linked bytes. The cumulative 28-function gain is 18,056 inventory coverage bytes; all literal match proofs remain valid. Future batches record both measures separately.
+
+## [2026-10-15] ticket | T-15000 KANGEI near-match investigation
+
+Claimed [[tickets/T-15000-kangei-near-match]] for bounded type/aggregate investigation of KANGEI func_80135CE0, whose T-14500 draft has score 6 over 432 inventory bytes. Incoming zero candidates keep priority; the frozen census context is unchanged. [[kanban]] and [[index]] updated.

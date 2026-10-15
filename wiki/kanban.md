@@ -24,6 +24,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
+
+
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 
