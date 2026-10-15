@@ -219,7 +219,32 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149704);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801498C8);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149B20);
+void func_80149B20(void) {
+    u8 *q;
+    u8 *o;
+
+    q = D_80158AB0 + 0x10;
+    *(s16 *)(q + 4) = 0;
+    *(s16 *)q = *(s16 *)(q + 2) = 0x1000;
+    *(s16 *)(q + 0x14) = 0;
+    *(s16 *)(q + 0x10) = *(s16 *)(q + 0x12) = 0x1000;
+    o = D_80158AA4 + 0xFA0;
+    *(s32 *)(o + 0x20) = 0xFF940000;
+    o[0x4F] = 0;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+    o += 0x64;
+    *(s32 *)(o + 0x20) = 0xFFE80000;
+    o[0x4F] = 0;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+    o += 0x64;
+    *(s32 *)(o + 0x20) = 0xFFA00000;
+    o[0x4F] = 0;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+    o += 0x64;
+    *(s32 *)(o + 0x20) = 0x200000;
+    o[0x4F] = 0;
+    *(s16 *)(o + 0x14) = *(s16 *)(o + 0x22);
+}
 
 /* T-11800: matched by walking the four 0x64-byte records (D_80158AA4 + 0xFA0, then o += 0x64 three times); uopt folds the walk into the original D_80158AA4 + 0x10CC rebase. */
 void func_80149BB0(void) {
