@@ -2145,13 +2145,11 @@ void func_8013938C(void) {
     func_8004284C();
 }
 
-#ifdef NON_MATCHING
 void func_801393DC(void) {
     /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
        (same idiom as func_80139944). T-11580 */
     GameState *g = &D_800E6280;
     s32 choice_offset;
-    s16 temp_t0;
 
     if (D_80122CDC != 0) {
         if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x11] & 1)) {
@@ -2170,16 +2168,14 @@ void func_801393DC(void) {
         D_800CA21C[1] = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset + 1);
         D_800CA21C[2] = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset + 2);
     }
-    temp_t0 = D_800CA148 + (D_800CA2FC * 2);
-    D_800CA148 = temp_t0;
-    if ((D_800E6280.unk_F5F == 7) && ((u8) D_800CA2FC >= 2)) {
-        D_800CA148 = temp_t0 + 3;
+    D_800CA148 += D_800CA2FC * 2;
+    /* FAKE: the byte view keeps uopt from CSEing the two D_800CA2FC reads, so ugen reuses
+       its own load as the original does. T-11580 */
+    if ((D_800E6280.unk_F5F == 7) && (*(u8 *)&D_800CA2FC >= 2)) {
+        D_800CA148 += 3;
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801393DC);
-#endif
 
 void func_801395B4(void) {
     u8 g;
