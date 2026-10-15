@@ -13900,3 +13900,23 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] build | Verified matches published to main
 [[tickets/T-12400-integrate-verified-matches]]: direct non-force push succeeded, advancing remote main from 1668c560 to 8f78e5e5. All verified matching checkpoints collected for this batch are published; active experiments remain in worker worktrees.
+
+## [2026-10-15] ticket | T-12800 isolated matching batch
+
+Created [[tickets/T-12800-large-event-tel]] and children [[tickets/T-12801-event]], [[tickets/T-12802-tel]], [[tickets/T-12803-main]] from origin/main 95c3fc9f. Read historical EVENT/TEL findings; copied ignored build inputs into isolated worktree.
+
+## [2026-10-15] query | Main residuals verified
+
+[[tickets/T-12803-main]] confirms the documented full-TU register-only residuals. Two explicit word-view hypotheses rejected; large func_8007132C requires structured aggregate reconstruction before scoring.
+
+## [2026-10-15] query | Calendar allocation hypothesis improves residual
+
+[[tickets/T-12803-main]]: month-first explicit locals fix the register tie, leaving frame size and two comparison operand reversals. No match claimed.
+
+## [2026-10-15] build | Calendar judge linked match
+
+[[tickets/T-12803-main]]: date_sasoi_judge matches 644 linked bytes. Explicit constant in existing local resolves final operand reversals; FAKE-marked source activated for production verification.
+
+## [2026-10-15] build | Production calendar match verified
+
+[[tickets/T-12803-main]]: default full-TU linked proof passes for 644 bytes; build/SLPM_86.053.bin SHA1 OK. Separate standards/spec reviews found no source issues.

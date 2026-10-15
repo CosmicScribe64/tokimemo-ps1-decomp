@@ -807,8 +807,6 @@ s32 special_event_select(char *arg0, char *arg1) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", geko_judge);
 
-/* NON_MATCHING: T-11030, register-only (10 insns): unk_040 and unk_03F swap v0/v1 (tie of two 1.333 ranges; original colours 03F first). Frame and loop match. */
-#ifdef NON_MATCHING
 s32 date_sasoi_judge(s8 *arg0) {
     s32 i;
     s32 idx;
@@ -820,16 +818,21 @@ s32 date_sasoi_judge(s8 *arg0) {
     if (((u32)(D_800E6280.unk_54C[0].w << 2) >> 31) == 1) {
         return 0;
     }
-    if (((u32)(D_800E6280.unk_040 + 6) / 7 == 2) && ((u32)(D_800E6280.unk_0F4.h >> 12) < 0xB)) {
+    /* FAKE: reuse loop locals for the calendar values and comparison constant
+     * to preserve register priority, branch operands and stack homes. T-12803. */
+    n = 12;
+    i = D_800E6280.unk_03F;
+    idx = D_800E6280.unk_040;
+    if (((u32)(idx + 6) / 7 == 2) && ((u32)(D_800E6280.unk_0F4.h >> 12) < 0xB)) {
         return 0;
     }
-    if ((D_800E6280.unk_03F == 0xC) && (D_800E6280.unk_040 == 0x11)) {
+    if ((n == i) && (idx == 0x11)) {
         return 0;
     }
-    if ((D_800E6280.unk_03F == 0xC) && (D_800E6280.unk_040 == 0x18)) {
+    if ((n == i) && (idx == 0x18)) {
         return 0;
     }
-    if ((D_800E6280.unk_03E == 0x62) && (D_800E6280.unk_03F >= 2)) {
+    if ((D_800E6280.unk_03E == 0x62) && ((u32)i >= 2)) {
         return 0;
     }
     n = (u32)D_800E7D10 % 11;
@@ -846,9 +849,6 @@ s32 date_sasoi_judge(s8 *arg0) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", date_sasoi_judge);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
 
