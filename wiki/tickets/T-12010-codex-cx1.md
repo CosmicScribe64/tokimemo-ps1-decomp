@@ -38,3 +38,7 @@ file_checksum_ok: 4 listing lines, sltu/andi scheduling swap. Autotweak (385 var
 ### func_80042134 matched (404 bytes)
 
 Migrated the saved main-loop draft to GameState fields and used a local GameState pointer only for the loop-tail selector load. This reproduces the original s2 base saved at entry. Declared later helpers func_800422C8 and func_80042418 once in main_api.h to prevent implicit-return-type conflicts. Plain C linked funcdiff MATCH (404 bytes), main SHA1 OK; all-overlay rebuild in progress due to header update. No FAKE. Evidence build/scratch/42134-match.diff and 42134-build.log.
+
+### func_80049044 matched (112 bytes)
+
+A five-minute permuter run improved its stripped score from 90 to 50 using a u8 pointer to the brightness field. Full-unit variants show the simple initialized pointer (with both loads and stores through it) is actually exact. The original six-word ugen mismatch disappears. Plain C linked funcdiff MATCH (112 bytes), main SHA1 and globals OK; headers unchanged since the preceding 27/27 build. No FAKE: the pointer is an ordinary field view, with no alias offset or dead statement. Evidence build/scratch/49044-pointer.log and 49044-match.diff.
