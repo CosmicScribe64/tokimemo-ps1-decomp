@@ -301,7 +301,26 @@ void func_80152948(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80151460", func_80152980);
+void func_80152980(void) {
+    s32 idx;
+    DateDispatch80152980 tbl;
+    tbl = D_8015EF34;
+    if (D_800E6280.unk_110A >= 0x10 && D_800E6280.unk_110A < 0x13) {
+        func_8014C9A8();
+    }
+    if (D_80122D04 == 0 && D_800B593C == 0x80) {
+        func_8006B900();
+    }
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+    if (D_800E6280.unk_110A >= 0xF && D_800E6280.unk_110A < 0x14) {
+        D_801206DB |= 0x80;
+        D_801206DF = D_800B593C;
+    }
+    if (D_800E6280.unk_110A >= 0x14) {
+        D_801206DB &= ~0x80;
+    }
+}
 
 void func_80152AA8(void) {
     cd_read_sectors(0x45, 0x801B0000, 0x833C);

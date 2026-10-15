@@ -14395,3 +14395,6 @@ Created [[tickets/T-14100-date-near-matches]] from the verified [[tickets/T-1210
 
 ## [2026-10-15] build | DATE conditional dispatchers verified
 [[tickets/T-12400-integrate-verified-matches]] integrated e8556ca4 from [[tickets/T-14100-date-near-matches]]. Default linked proofs independently confirm8015A288=160bytes and80154004=180bytes; affected DATE SHA1, headers/globals and branch prototype check pass. Standards inspection confirms ordinary aggregate function tables and separate mutable-selector conditions, no FAKE required. Duplicate build-tool ancestry had no tooling changes; restored completed T13500 metadata after wiki union. Total5880/6958functions,1406764/2279368bytes (61.7%); remaining416732alignedbytes for80%. Evidence build/scratch/goal-date-dispatch.log. Workers continue toward larger family opportunities.
+## [2026-10-15] build | DATE flag-aware dispatch matched
+
+[[tickets/T-14100-date-near-matches]] adds func_80152980 in src/ovl/DATE/80151460.c: 296 literal linked bytes, default-build DATE SHA1 OK. Natural bit clearing preserves FF7F immediate. New package total 636 bytes. func_80158338 remains scratch-only after a 16-row comparison.
