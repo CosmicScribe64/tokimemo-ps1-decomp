@@ -186,8 +186,6 @@ void func_8013C048(TtMover *arg0) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, saved-register order of the loop constants and D_80158A6C ($s2/$s4 swap) plus one scheduling nop, 28 lines */
 void func_8013C0A8(void) {
     s32 i;
     u8 *q;
@@ -195,44 +193,39 @@ void func_8013C0A8(void) {
 
     q = D_80158A6C;
     p = D_80158A90;
-    i = 0;
-    do {
-        if (*p != 0) {
-            switch (*(u16 *)(p + 4)) {
-            case 0x40:
-                break;
-            case 0x90:
-                *(u16 *)(p + 98) = *(u16 *)(p + 98) + 0x80;
-                if (*(u16 *)(p + 98) > 0x1000) {
-                    *(u16 *)(p + 98) = 0x1000;
-                    *(u16 *)(p + 4) = 0x91;
-                }
-                break;
-            case 0x91:
-                *(u16 *)(p + 90) = 0x3C;
-                *(u16 *)(p + 4) = 0x92;
-                *(s32 *)(p + 44) = *(s32 *)q;
-                break;
-            case 0x92:
-                *(u16 *)(p + 90) = *(u16 *)(p + 90) - 1;
-                *(s32 *)(p + 44) = *(s32 *)q;
-                if (*(u16 *)(p + 90) == 0) {
-                    *p = 0;
-                }
-                break;
-            }
-            func_8013C048(p);
-            if (*(u16 *)(p + 4) < 0x90) {
-                func_80132000(p + 0x38, p + 0x56, p + 0x57);
-            }
+    for (i = 0; i < 0x20; i++, p += 0x6C) {
+        if (*p == 0) {
+            continue;
         }
-        i++;
-        p += 0x6C;
-    } while (i != 0x20);
+        switch (*(u16 *)(p + 4)) {
+        case 0x40:
+            break;
+        case 0x90:
+            *(u16 *)(p + 98) = *(u16 *)(p + 98) + 0x80;
+            if (*(u16 *)(p + 98) > 0x1000) {
+                *(u16 *)(p + 98) = 0x1000;
+                *(u16 *)(p + 4) = 0x91;
+            }
+            break;
+        case 0x91:
+            *(s32 *)(p + 44) = *(s32 *)q;
+            *(u16 *)(p + 90) = 0x3C;
+            *(u16 *)(p + 4) = 0x92;
+            break;
+        case 0x92:
+            *(s32 *)(p + 44) = *(s32 *)q;
+            *(u16 *)(p + 90) = *(u16 *)(p + 90) - 1;
+            if (*(u16 *)(p + 90) == 0) {
+                *p = 0;
+            }
+            break;
+        }
+        func_8013C048(p);
+        if (*(u16 *)(p + 4) < 0x90) {
+            func_80132000(p + 0x38, p + 0x56, p + 0x57);
+        }
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013BD10", func_8013C0A8);
-#endif
 
 /* T-11540/T-11550: matched by passing the ordering-table entry as &((TtDrawBuffer80B8 *)buf)->ordering[idx] (as in func_8014CC04): the typed index gives the original addu buf, idx*4 operand order. */
 void func_8013C1FC(void) {
