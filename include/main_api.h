@@ -22,6 +22,9 @@
 #include "common.h"
 #include "libgpu.h"
 
+/* T-12040: halfword tested by the RPG battle command dispatcher. */
+extern s16 D_80121428;
+
 /* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
 typedef struct DialogueVoice8 {
     /* 0x00 */ s32 unk_00;

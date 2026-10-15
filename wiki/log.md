@@ -13521,3 +13521,7 @@ Corrected the saved draft's stale counter local to current aggregate reads. Plai
 ## [2026-10-15] build | RPG_BAT func_8014E300 matched
 
 A shared coordinate/displacement aggregate preserves the original load/store order. Linked funcdiff692 bytes and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/4E300-match.diff and 4E300-build.log.
+
+## [2026-10-15] build | RPG_BAT func_801321D0 matched
+
+Restored the dispatcher selector reload after its optional call and declared its shared halfword/helper dependencies. Plain C linked MATCH376, full rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/321D0-match.diff and 321D0-build.log.

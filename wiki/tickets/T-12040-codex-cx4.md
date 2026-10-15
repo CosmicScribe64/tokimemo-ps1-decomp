@@ -38,3 +38,7 @@ Initial full-file measurements: 5A74417,4E30010,3415C22,3457022,5A8B427,32EE041;
 ### func_8014E300 matched (692 bytes)
 
 The first position/displacement store pair needed an aggregate view of the shared EC28..EC57 work range. A local RpgMotion30 pointer makes both loads and stores use that range, preventing as1 from hoisting the second coordinate load ahead of the first displacement store. Source-only or destination-only views and line joining leave ten rows. Plain C matches692 linked bytes; full header rebuild27/27, headers/globals OK. No FAKE. Evidence build/scratch/third-variants.log, 4E300-match.diff and 4E300-build.log.
+
+### func_801321D0 matched (376 linked bytes)
+
+The saved draft preserved the dispatcher selector across a side-effecting call and reconstructed a temporary range-test goto. A direct condition followed by switch(D_8015EDAC) reproduces the original reload and table dispatch. Added the missing shared halfword declaration and later helper prototypes. Plain C linked MATCH376; full rebuild27/27, headers/globals OK. No FAKE. Evidence build/scratch/321D0-match.diff and 321D0-build.log.

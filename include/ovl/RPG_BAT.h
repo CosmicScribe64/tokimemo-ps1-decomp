@@ -496,6 +496,13 @@ extern s32 D_8015EEC8;
 s32 func_8014E994(void);
 #endif
 
+
+#ifndef OVL_RPG_BAT_T12040
+#define OVL_RPG_BAT_T12040
+void func_80132CE4(void);
+void func_80132DE8(void);
+void func_80132EE0(void);
+
 /* T-12040: position and displacement share the EC28..EC57 work range. */
 typedef struct RpgMotion30 {
     /* 0x00 */ s32 x;
@@ -504,3 +511,5 @@ typedef struct RpgMotion30 {
     /* 0x28 */ s32 dx;
     /* 0x2C */ s32 dy;
 } RpgMotion30; /* size 0x30 */
+
+#endif
