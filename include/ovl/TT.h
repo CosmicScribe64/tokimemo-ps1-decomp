@@ -122,6 +122,11 @@ extern u8 D_80158AC0[];
 extern u8 D_80150A14[];
 extern u8 D_80150A30[];
 extern u8 D_80155B6C[];
+extern u8 D_80150968[]; /* T-11810 */
+extern u8 D_80150970[]; /* T-11810 */
+extern u8 D_80155B5A[]; /* T-11810 */
+extern u8 D_80155B60[]; /* T-11810 */
+extern u8 D_80155B66[]; /* T-11810 */
 extern u8 D_80155B72[];
 extern u8 D_80155B78[];
 extern u8 D_80155B7E[];
