@@ -13561,3 +13561,11 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | cx3 matches load-menu initializer
 
 [[tickets/T-12030-codex-cx3]] matched func_8005CF6C (520 linked bytes, main SHA1/header/global checks pass). Natural typed coordinate arrays and the established work aggregate also reproduce this menu twin. Evidence: build/scratch/cf6c-final.log and cf6c-build.log.
+
+## [2026-10-15] decision | cx3 card-action candidate restored
+
+[[tickets/T-12030-codex-cx3]] restored func_8005CA94 to assembly after typed aggregate recovery, controlled result/view trials and a 363-candidate search left 57 differing rows. Register tracing identifies structural narrowing and ugen-temporary differences. Evidence remains in build/scratch/ca94-*.log.
+
+## [2026-10-15] build | cx3 matches card status handler
+
+[[tickets/T-12030-codex-cx3]] matched func_8005BE8C (704 literal bytes, main SHA1/header/global checks pass). Full-file and production rescoring of an earlier permutation reveals a match despite its nonzero stripped score. A natural status-byte pointer fixes the final three instruction rows. Evidence: build/scratch/be-clean-final.log and be-clean-build.log.

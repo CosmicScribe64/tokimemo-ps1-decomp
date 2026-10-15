@@ -541,19 +541,20 @@ void func_8005BCEC(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-12030, 3 differing instruction rows; final byte load uses t9 instead of v0. */
-#ifdef NON_MATCHING
 s32 func_8005BE8C(void) {
+    u8 *status;
+
+    status = &D_800E6280.unk_1115;
     switch (D_800E6280.unk_110D) {
     case 0:
         if (func_80053F04() != 0) {
-            if (D_800E6280.unk_1115 == 1) {
+            if (*status == 1) {
                 func_80053D10();
                 D_800E6280.unk_110D++;
-            } else if (D_800E6280.unk_1115 == 0xF1) {
+            } else if (*status == 0xF1) {
                 func_80053D10();
                 func_80042940(0xA0);
-            } else if (D_800E6280.unk_1115 == 0xFF) {
+            } else if (*status == 0xFF) {
                 func_80053D10();
                 func_80042940(0xFF);
             }
@@ -599,7 +600,7 @@ s32 func_8005BE8C(void) {
             k_disp_start(4);
             func_8004284C();
             func_80053D10();
-        } else if (((u32)D_800E6280.unk_1120 > 0x200) || (D_800E6280.unk_1115 == 0xF0)) {
+        } else if (((u32)D_800E6280.unk_1120 > 0x200) || (*status == 0xF0)) {
             func_80053D10();
             func_80042940(0xFF);
         }
@@ -607,9 +608,6 @@ s32 func_8005BE8C(void) {
     }
     k_disp_inc();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BE8C);
-#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005C14C);
 
