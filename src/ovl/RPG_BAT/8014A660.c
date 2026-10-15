@@ -130,7 +130,6 @@ void func_8014A660(void) {
             func_8014ADD0(0x40, 0xA2);
             return;
         }
-        break;
     case 8:
         func_8014EBA8();
         return;
