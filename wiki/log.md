@@ -13464,3 +13464,17 @@ squashed with its fix; stale proto_known entry removed. Moved [[tickets/T-11800-
 
 Opened [[tickets/T-11810-tt-batch-8]] (In Progress), stacked on T-11800 (PR #30): Opus pass A on untried bulk_m2c TT drafts
 now; pass B and the wrap-up later. Stays off the wave-1 TT files; no answer on issue #2 yet.
+
+## [2026-10-15] build | T-11810 TT batch 8: 7 matches
+
+Opus pass A on eleven untried bulk_m2c TT drafts: 7 matched (`func_80149B20`, `func_801369F4`, `func_8013EC64`,
+`func_80149EA0`, `func_8013F9E0`, `func_80135870`, `func_8013C41C`), `func_8013A0DC` guarded. Opus pass B on the closest
+guarded drafts: no match; found when IDO 5.3 lets a call-argument constant share a hoisted register (same type, same
+block). TT 242/303 (59.1%); grand total `5730/6958   1286396/2279368  56.4%`. 27/27; funcdiff MATCH for all seven;
+prototype and global checks clean. Marked the stale `func_80084D3C(0x38U)` note in [[matching-notes]] superseded. Notes
+in [[matching-notes]] ("TT overlay, batch 8"), rows in [[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11810 Done
+
+Inline review against CODING_STANDARDS.md: header declarations moved to their own guarded block; all fakematches carry
+FAKE with the ticket. Moved [[tickets/T-11810-tt-batch-8]] to Done.

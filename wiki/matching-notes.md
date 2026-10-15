@@ -1407,7 +1407,7 @@ Unsolved shapes (rows in [[data/t0018-cases]]):
 - **A selector that must stay in `$v0` and compare unsigned** (BUNKA_SD `func_80134B88`, 17 cases on the GameState word): `switch ((u32)D_800E6280.unk_1104.w)`. `.u` puts the selector in `$v1` with a copy, `.w` alone compares signed (`slti`).
 - **A promoted global is written as plain global statements, not a local** (main `func_800623E4`): `D_801230D0 = 0` and `D_801230D0 = 1` in the switch arms, then `if (D_801230D0 != 0)`. A local `v` copied from the global and stored back gives `lui a0; lw v1,0(a0)` and a different register.
 - **Two stores of one constant through one register are an array chain** (DATE `func_8014D818`, GEKO `func_80141514`): `D_80120650[4] = D_80120650[0x48] = 8;` where the original has `li v0,8; sb v0,..; ...; sb v0,..` around other statements. `D_80120654` and `D_80120698` are elements 4 and 0x48 of the 0x44-byte table.
-- **A constant shared between an index multiply and a call argument** (DATE2 `func_8013775C`): `func_80084D3C(0x38U)` takes the unsigned `0x38` register of the `u8 * 0x38` record index (marked FAKE).
+- **A constant shared between an index multiply and a call argument** (DATE2 `func_8013775C`): `func_80084D3C(0x38U)` takes the unsigned `0x38` register of the `u8 * 0x38` record index (marked FAKE). *Superseded (T-11810): since T-9210 the source calls `func_80084D3C()` with no argument (the callee takes none); the register was a leftover. The rules for real argument sharing are in "TT overlay, batch 8 (T-11810)".*
 - **GameState arrays give one `lui at` per store** (ETC `func_801408F0`, 50 stores of 0 and -1): `D_800E6280.unk_1228[i] = 0;` with the index worked out from the address matches where separate symbols would be needed. (`unk_1228[0]` is `D_800E74A8`.)
 - **Load hoisting across byte read-modify-writes is stopped by a single array symbol** (OPTION `func_801371FC`, `func_80135C0C`, family of 5): the `s16` pair `D_80120912/D_80120914` and the four flag bytes `D_8012093F + k * 0x44` are one object. `extern s16 D_80120912[]` with `D_80120912[0]`, `D_80120912[1]` and `((u8 *)D_80120912)[0x2D + i * 0x44] &= ~0x80` (loop body on the `for` line, FAKE comment as in T-7020) matches; separate symbols are hoisted (`lh` before the flag stores). `func_80133AD8` and `func_80136A50` use a rolled 3-trip loop `for (i = 0; i < 3; i++) D_8011ECD0[0x1C6F + i * 0x44] &= ~0x80;`. The `s32` signed `* 9 / 8` pair stores 912 first and 914 second with no temp variable (a temp shifts the first branch to `$a0/$a1`).
 - **Function-pointer tables of 16 and 44 entries** (ENDING `func_80133030`, DATE `func_8014ECF0`) follow the T-3330 idiom unchanged. MASTER `func_80139810` (13-word data table, switch on a `u8`, selector `$v1`) needs two unused locals declared before the table to reach the original frame 0x68 (FAKE).
@@ -5026,3 +5026,33 @@ bulk_m2c rerun (no match, 52 drafts ranked), then two Opus passes. Pass 1 on the
 - Tools: `regdiff -v` (allocation order, priorities, constrained/unconstrained) found most levers; order_search fixed
   `func_80148E7C`'s store order; autotweak's line join finds one-line store pairs. A body-splice + `funcdiff --resolve`
   loop ran at about 4 s per try.
+
+## TT overlay, batch 8 (T-11810)
+
+Opus pass A on eleven untried bulk_m2c drafts: 7 matched (`func_80149B20`, `func_801369F4`, `func_8013EC64`,
+`func_80149EA0`, `func_8013F9E0`, `func_80135870`, `func_8013C41C`), `func_8013A0DC` guarded at 16 lines. Opus pass B on the
+closest guarded drafts: no match, but the rules below. Ticket [[tickets/T-11810-tt-batch-8]].
+
+- **Call-argument constants share a register only under two conditions** (scratch compiles with the build's IDO 5.3):
+  (1) the same constant type: under `-cckr` a constant compared with, stored to or used as a case of a u8/u16 value is
+  unsigned, so the argument must be `NU`, `(u16)N`, or go to an unsigned or unprototyped parameter (an `s32` argument
+  never joins; in `s32` contexts a plain literal does); (2) another use in the call's own basic block. A use in an earlier
+  block, a nested `if` or a switch dispatch never joins, so an original that reuses a dispatch constant in a later block
+  (`func_8013A0DC`) is not reproducible. After joining, the temp is precoloured to aN only if aN is free over its whole
+  range, else `move aN,temp`. When an argument register seems to reuse a constant, first check whether the callee takes
+  arguments at all (`func_80142774` and `func_80084D3C` take none).
+- **Store forwarding of a u8 field:** `p[k] = X; switch (p[k]) { ... p[k] = 0; ... } use(p[k]);` gives the original
+  `andi vN,zero,0xff` / `andi vN,tX,0xff` copies (`func_8013C41C`).
+- **Inline ABS without temporaries** keeps a large constant in one register used in both arms (`func_80149EA0`).
+- **Stack layout:** in a function that keeps locals on the stack, every declared local gets a slot in declaration order
+  (first declared = highest address), register-allocated ones too; a FAKE pad array then places the frame
+  (`func_8013F040`).
+- An empty `if (x) {}` as the last statement before a `break` can emit a real `beqz`; put it before an existing statement.
+- A local assigned the same constant in two places is not propagated; it becomes a real high-priority range (not a useful
+  lever).
+- `cc -S` (ugen output before as1) explains delay-slot and preheader order: PRE insertions go at the end of their block,
+  loop-invariant `li`/`la` after the init moves, and as1 then hoists the `lui` (`func_8013B4A0`).
+- IDO 5.3 propagates every zero form tried (`0U`, `(u8)0`, `x * 0`, chains, zero locals) into `$zero`, so originals that
+  chain zero stores through a register that later holds another variable stay open (`func_80147FD0`, `func_8014C5F8`).
+- Earlier record-walk and twin idioms (T-11800) matched three functions here on the first try; typed record indexing
+  (`TtAnim14`) cleared the T-10030 blocker of `func_8013F9E0`.
