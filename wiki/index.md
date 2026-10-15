@@ -299,3 +299,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13101-etc-career-family|T-13101]] ETC career state handlers.
 
 - [[tickets/T-13102-etc-exam-family|T-13102]] ETC exam handlers.
+
+- [[tickets/T-13103-etc-memory-card-family|T-13103]] ETC memory-card state family.
+
+- [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence.

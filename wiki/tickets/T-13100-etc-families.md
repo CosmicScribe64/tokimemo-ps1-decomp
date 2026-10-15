@@ -1,7 +1,7 @@
 ---
 id: T-13100
 title: Transfer source-family evidence to ETC
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -25,3 +25,5 @@ Original checkout is read only. One compiler initially, existing Docker image on
 2026-10-15 checkpoint: 8014ABD0.c adds func_8014B1B4 (1436), func_8014BC00 (480), func_8014C06C (484): 2400 literal linked bytes, default build, ETC SHA1 OK. Proof: build/etc13100/family1-proof.log and family1-build.log. First direct score 4 -> consistent GameState pointer 0; both held-out siblings direct 0. Pointer-table declarations model lw with scaled indices. No existing C changed.
 
 Career checkpoint [[tickets/T-13101-etc-career-family]] adds 1132 bytes; cumulative seven functions / 3532 literal linked bytes, ETC SHA1 OK.
+
+2026-10-15: Combined checkpoint: eleven functions / 5900 literal linked bytes; final default proofs and ETC SHA1 pass. All 91 existing C bodies unchanged; headers/globals pass. Details in [[etc-family-results]]. Awaiting standards/spec review.

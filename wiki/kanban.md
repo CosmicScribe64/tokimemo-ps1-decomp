@@ -23,9 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-13102-etc-exam-family|T-13102 Reconstruct ETC exam handlers]]
-- [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
-- [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 - [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
 
@@ -84,6 +81,10 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-13103-etc-memory-card-family|T-13103 Reconstruct ETC memory-card state handlers]]
+- [ ] [[tickets/T-13102-etc-exam-family|T-13102 Reconstruct ETC exam handlers]]
+- [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
+- [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
 
 - [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 
