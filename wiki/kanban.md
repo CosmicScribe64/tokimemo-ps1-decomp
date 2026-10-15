@@ -32,6 +32,9 @@ kanban-plugin: board
 
 
 
+- [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
+
+
 
 - [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
@@ -73,6 +76,8 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]

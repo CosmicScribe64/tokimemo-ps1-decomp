@@ -13968,3 +13968,18 @@ Independent Standards and Spec reviews pass all twenty-one accepted functions / 
 
 ## [2026-10-15] build | Adjacent BUNKAKEN call convention seed
 [[tickets/T-12701-bunkaken-address-family]] adds func_8013EC98, 780 verified linked bytes, using the existing K&R declaration override mechanism. BUNKAKEN SHA1 passes. The override is translation-unit-local and documented; shared main prototypes are unchanged. Cumulative branch gain: twenty-two functions / 23,184 bytes.
+## [2026-10-15] ticket | Claim small OPTION and main audio matching
+
+Created [[tickets/T-12900-small-option-main]] and [[tickets/T-12901-small-option-main-first]] before experiments. Isolated branch codex/small-option-main starts at 95c3fc9f; original checkout remains read-only. Read cx6/cx8 leads and project standards; reused Docker image and copied ignored disc inputs.
+
+## [2026-10-15] build | OPTION handler exact candidate
+
+[[tickets/T-12901-small-option-main-first]]: full-unit scoring found zero differing rows for func_80137E38 with word-array indexing of the pair table; enabled its C for literal verification. Nine bounded variants tried. Aggregate field accesses reduce func_8007A868 from 62 to 20 diff rows; retained behind its existing NON_MATCHING guard pending further work.
+
+## [2026-10-15] build | Main reset exact candidate
+
+[[tickets/T-12901-small-option-main-first]]: moving the independent unk_08 assignment after the four flag-mask updates gives zero full-unit diff rows for func_8007A868. Enabled ordinary C using the existing Work80125D10 aggregate; no shared header change or artificial source form needed. OPTION literal proof already confirms 360 bytes.
+
+## [2026-10-15] build | Two verified small-function matches
+
+[[tickets/T-12901-small-option-main-first]] moves to In Review. Docker funcdiff --resolve proves default C linked bytes for OPTION func_80137E38 (360) and main func_8007A868 (188), total 548. Docker ninja -j1 passes both build/ovl/OPTION.ok and build/SLPM_86.053.ok. No shared-header changes.
