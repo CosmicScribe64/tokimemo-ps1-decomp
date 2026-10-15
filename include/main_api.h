@@ -1794,7 +1794,7 @@ void func_80044890(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 s32 func_80044C98(void);
 s32 func_80044E8C(void);
 s32 func_8004500C();
-void func_800450F4(s32 arg0, s32 arg1);
+s32 func_800450F4(s32 arg0, s32 arg1);
 s32 func_800451D0();
 void func_800452C4(void);
 void func_80045414(s32 arg0, s32 arg1, u8 *arg2);
