@@ -32,10 +32,11 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
 
+- [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
+
 - [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
 
 - [ ] [[tickets/T-13902-date2-families|T-13902 DATE2 bounded family reconstruction]]
-- [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
 
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
