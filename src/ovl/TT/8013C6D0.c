@@ -555,7 +555,48 @@ void func_8013D508(void) {
     buffer->ordering[13].addr = (u32)m;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D73C);
+void func_8013D73C(void) {
+    TtDrawBuffer80B8 *buffer;
+    TtRectPacket16 *q;
+    DR_MODE *m;
+    u8 *c;
+    u8 *r;
+    s32 row;
+    s32 col;
+    s16 scroll;
+    TtTileMap *tm;
+    TtCmdStream *st;
+
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    st = (TtCmdStream *)D_80158A70;
+    scroll = 0x300 - st->time;
+    c = D_80158A64;
+    for (row = 0; row != 0x100; row += 0x10) {
+        for (col = 0; col != 0x10; col++) {
+            q = (TtRectPacket16 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x10);
+            q->code = 0x7C;
+            q->tag.len = 3;
+            q->r = c[0x1D];
+            q->g = c[0x1E];
+            q->b = c[0x1F];
+            q->y = row - (scroll & 0xF);
+            q->x = (col << 4) - 0x80;
+            tm = *(TtTileMap **)(c + 0x18);
+            r = tm->record + tm->index[(row + col + (scroll & ~0xF)) & 0x3FF] * 3;
+            q->u = (r[1] & 7) << 4;
+            q->v = (r[0] << 7) + ((r[1] >> 3) << 4);
+            q->clut = (((r[2] >> 4) + 0xF0) << 6) + (r[2] & 0xF);
+            q->tag.addr = buffer->ordering[13].addr;
+            buffer->ordering[13].addr = (u32)q;
+        }
+    }
+    m = buffer->cursor;
+    buffer->cursor++;
+    func_8009D294((s32)m, 0, 0, 0xE, 0);
+    ((TtOtTag *)m)->addr = buffer->ordering[13].addr;
+    buffer->ordering[13].addr = (u32)m;
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D988);
 
