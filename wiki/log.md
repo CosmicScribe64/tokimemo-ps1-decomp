@@ -13688,3 +13688,22 @@ Final configure/ninja and explicit verification-stamp rebuild passed all27 binar
 ## [2026-10-15] lint | T-12040 trailing blank line cleanup
 
 Independent branch review found an extra blank line at the end of src/ovl/RPG_BAT/801321D0.c. Removed only that trailing blank line; no substantive source change. Full branch whitespace verification follows before committing the cleanup for [[tickets/T-12040-codex-cx4]].
+## [2026-10-15] ticket | Start cx5 matching pass
+
+Created [[tickets/T-12050-codex-cx5]] In Progress with [[kanban]] and [[index]] entries. Read workflow and prior matching evidence for all fourteen functions; Docker configure plus ninja -j2 baseline passes 27/27 SHA1, headers OK and globals OK. Ownership is src/main/8004F870.c plus permitted headers/config/wiki.
+
+## [2026-10-15] build | T-12050 menu bar display matches
+
+main:menu_bar_show is plain C with a 208-byte exact linked MATCH and main executable SHA1 OK. Canonical selection and interleaved record views close the prior register-only miss. No new FAKE. Details in [[tickets/T-12050-codex-cx5]].
+
+## [2026-10-15] decision | T-12050 prioritize larger functions
+
+Completed first comparisons for all fourteen listed functions and recorded corrected draft scores in [[tickets/T-12050-codex-cx5]]. Following user steering, prioritize verified byte gains through the larger state-machine and score-building routines. A narrowing introduced by automated experimentation changes comparison semantics and was rejected despite its better score.
+
+## [2026-10-15] decision | T-12050 bounded deep pass complete
+
+All fourteen cx5 targets attempted, with 208 verified matched bytes. Retained three measured guards and removed the broad inherited menu_set guard. Larger state-machine and threshold routines need loop/lifetime evidence; semantic-breaking narrow comparisons were rejected. Recorded exact scores and reusable blockers in [[matching-notes]], [[data/t0018-cases]] and [[tickets/T-12050-codex-cx5]]. Fresh full verification is running.
+
+## [2026-10-15] ticket | T-12050 ready for review
+
+Moved [[tickets/T-12050-codex-cx5]] and [[kanban]] to In Review, refreshed [[index]]. Fresh configure/ninja passes 27/27 SHA1, headers and globals; prototype branch check has zero new disagreements. Linked menu_bar_show matches 208 bytes. Ticket/card status and retained guard counts checked; independent standards review remains pending.
