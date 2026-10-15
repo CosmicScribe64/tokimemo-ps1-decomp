@@ -1379,9 +1379,10 @@ s32 join_club_select(void) {
     }
 }
 
+/* NON_MATCHING: T-11310, 2 rows: the switch index sits in $v0, the original keeps it in $v1 and copies it to $v0 (move v0,v1 in the bnez delay slot). */
 #ifdef NON_MATCHING
 void join_club_message(void) {
-    u8 buf[0x40];
+    u8 buf[0x44];
 
     switch (D_800E6280.unk_110D) {
     case 0:

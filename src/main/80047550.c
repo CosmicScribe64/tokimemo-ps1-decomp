@@ -322,6 +322,7 @@ void func_8004902C(void) {
     D_800E6280.unk_03B = 0;
 }
 
+/* NON_MATCHING: T-11310, 6 rows: unk_03A loads into ugen temp $t6/$t7, the original loads it straight into $v1 (the sum register). */
 #ifdef NON_MATCHING
 void func_80049044(void) {
     s32 v;

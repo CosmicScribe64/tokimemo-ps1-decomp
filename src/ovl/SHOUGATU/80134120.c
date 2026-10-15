@@ -188,6 +188,7 @@ void func_801347B4(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11310, 3 rows: the unk_F5F reload after get_g_zyotai_s goes to ugen temp $t7, the original allocates $a0. */
 #ifdef NON_MATCHING
 void func_801347E0(void) {
     u32 state;
