@@ -1179,4 +1179,19 @@ s32 func_801428EC(void);
 void func_80140FD8(void);
 void func_80141E10(void);
 void func_80142574(void);
+/* T-14501: scene dispatcher globals and later-defined helpers. */
+extern s32 D_8014E0C0;
+extern s32 D_80150080;
+extern s32 D_801500D8;
+void func_8013DEA0(s32 arg0);
+void func_8013ECDC(void);
+void func_8013EDF8(void);
+void func_8013E364(void);
+void func_8013F498(void);
+void func_8013D264(void);
+void func_8013D2C0(void);
+void func_8013EE28(void);
+void func_8013EEFC(void);
+s32 func_8013C330(s32 arg0, s32 arg1);
+
 #endif

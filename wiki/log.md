@@ -14780,3 +14780,6 @@ The main `_schedule_init` candidate passes 188 literal bytes / 188 inventory cov
 
 ## [2026-10-15] ingest | Preserve root reconstruction alternatives
 At the user's request to publish drafts before usage runs low, retained root T15400 canonical/nonmatching and Unicode/matching translation units, T15500 matching candidate, diffs, reproduction scripts and baseline notes under drafts/T-15400 and drafts/T-15500. No binaries or generated assembly included. See [[tickets/T-15400-bunkasai-label-draft]] and [[tickets/T-15500-bunkasai-character-flags]].
+## [2026-10-15] build | T-14501 ETC verified draft batch
+
+Promoted 1 ordinary C functions / 976 inventory coverage bytes for ETC; default linked literal proof compared 976 bytes and overlay SHA1 passes. Header/global/prototype checks pass. No raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
