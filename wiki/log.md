@@ -13374,3 +13374,7 @@ Created [[tickets/T-11610-w1-main-80042540]] (In Progress): wave 1 package w1-p0
 ## [2026-10-15] ticket | T-11610 Done
 
 [[tickets/T-11610-w1-main-80042540]]: code review against `CODING_STANDARDS.md` done, one finding fixed (FAKE mark on the `D_80122640` byte-offset reach in `func_80058F9C`). 7 functions matched (`func_80042808`, `func_8004284C`, `func_80042908`, `func_80042940`, `initModelingData_init`, `func_80058F9C`, `func_80042540`); `func_800590CC` guarded at 22 lines; `func_800591D8`, `func_8005938C` stay `INCLUDE_ASM`.
+
+## [2026-10-15] ticket | T-11650 created
+
+Created [[tickets/T-11650-w1-ovl-name_ent-80132000]] (In Progress): wave 1 package w1-p09, NAME_ENT `src/ovl/NAME_ENT/80132000.c`.

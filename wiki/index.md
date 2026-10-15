@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-11650-w1-ovl-name_ent-80132000|T-11650]] Wave 1 package w1-p09: NAME_ENT 80132000.c work list (In Progress).
 - [[tickets/T-11600-w1-ovl-event-8010fe10|T-11600]] Wave 1 package w1-p04: EVENT 8010FE10.c work list (Done; 10 of 12 matched, 3,676 bytes).
 - [[tickets/T-11610-w1-main-80042540|T-11610]] Wave 1 package w1-p05: main 80042540.c and 80058D20.c (Done; 7 of 10 matched, 80042540.c all C).
 - [[tickets/T-11560-tt-batch-6|T-11560]] TT batch 6: bulk_m2c over TT, then Opus on the closest drafts (Done; 4 matches, TT 48.6%).
