@@ -14498,3 +14498,7 @@ Promoted 1 ordinary C functions / 908 bytes for BUNKA_SD after default linked li
 ## [2026-10-15] build | T-14501 DATE verified draft batch
 
 Promoted 2 ordinary C functions / 1,088 bytes for DATE after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | T-14501 KANGEI verified draft batch
+
+Promoted 3 ordinary C functions / 1,328 bytes for KANGEI after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
