@@ -1887,7 +1887,23 @@ s32 func_800836A0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083808);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083A10);
+void func_80083A10(void) {
+    if (D_80122CF8 != 0) {
+        func_800578F4(1);
+    }
+    if (D_80122D2C == 0 && D_80122D04 == 0 && (D_800E6280.unk_F80 & 0xF000F000)) {
+        D_8011ECD0[3] |= 0x80;
+    }
+    if (D_80122D04 != 0 || D_80122D2C != 0) {
+        D_8011ECD0[3] &= 0x7F;
+    }
+    if (D_80122D30 == 1) {
+        D_8011ECD0[3] |= 0x80;
+    }
+    if (D_8011ECD0[3] & 0x80) {
+        func_8006BA40();
+    }
+}
 
 void hizuke_hide(void) {
     hizuke_disp_switch(0);
