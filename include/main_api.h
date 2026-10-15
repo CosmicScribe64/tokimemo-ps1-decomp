@@ -2329,7 +2329,7 @@ void func_80083418(void);
 void func_80083440(u8 arg0);
 #endif
 s32 func_80083474(void);
-void func_80083808();
+s32 func_80083808();
 void func_80083A10();
 void func_80083B24();
 void read_bustup();

@@ -1937,11 +1937,9 @@ s32 func_800836A0(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11590, 18 differing lines (9 instructions): the code is right except that the
- * original also loads the ~0x80 mask into v0 (li v0,-129, twice, never read: ugen uses andi 0xFF7F),
- * which shifts the branch targets; a mask local (KANGEI func_80137544) does not bring it back here */
-#ifdef NON_MATCHING
-void func_80083808(void) {
+/* s32 without a return value: the ~0x80 mask is then loaded into v0 (li v0,-129) as in the
+ * original, although the byte clears use andi 0xFF7F. T-11590 */
+s32 func_80083808(void) {
     if (D_80122CF4 != 0) {
         D_8011ECD0[0x83F] |= 0x80;
         D_8011ECD0[0x7FB] |= 0x80;
@@ -1976,9 +1974,6 @@ void func_80083808(void) {
         D_801217D0[1].unk_00 |= 0x80000000;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083808);
-#endif
 
 void func_80083A10(void) {
     if (D_80122CF8 != 0) {
