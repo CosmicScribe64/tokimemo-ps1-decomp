@@ -14714,3 +14714,9 @@ Claimed [[tickets/T-15000-kangei-near-match]] for bounded type/aggregate investi
 ## [2026-10-15] build | T-15000 KANGEI duplicated-branch-store match
 
 Promoted KANGEI func_80135CE0: 432 inventory coverage bytes and 432 default linked literal bytes. Replaced m2c's shared-store goto with ordinary if/else-if branches, each with its own final byte store. KANGEI SHA1 and header/global/prototype guards pass; no FAKE or header changes. [[tickets/T-15000-kangei-near-match]] moves to In Review, with [[kanban]], [[index]], and [[matching-notes]] updated.
+
+## [2026-10-15] build | RPG motion and KANGEI branches
+RPG motion aggregate reconstruction passes all 27 integrated binary checksums and default literal proof. KANGEI ordinary branch reconstruction adds another candidate checked in the integration worktree. Dedicated EVENT large-function chat started on Sol 6.1 medium, using isolated source and shared immutable disc inputs. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-14900-rpg-near-matches]] and [[tickets/T-15000-kangei-near-match]].
+
+## [2026-10-15] build | Motion and branch publication validation
+Final KANGEI default literal proof and checksum pass. Combined total is 1,447,220 / 2,279,368 game-code bytes (63.5%); 376,276 remain to the 80% threshold. See [[tickets/T-12600-byte-coverage-families]].

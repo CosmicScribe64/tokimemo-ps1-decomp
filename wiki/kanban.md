@@ -24,14 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-
-
-
-- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
-
-
-- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
-
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
@@ -63,13 +55,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
-- [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
-- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
-
-- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
-
-- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -97,6 +82,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
+- [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
+
 - [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
 
 - [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
@@ -112,6 +99,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
 
 - [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
+
+- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
 
 - [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
 
