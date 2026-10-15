@@ -109,4 +109,13 @@ INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_801428EC);
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_80142A8C);
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_80142C14);
+void func_80142C14(void) {
+    s16 i;
+
+    for (i = 0; i < 3; i++) {
+        if (((GyoziInitSprite44 *)D_80129F40)[i + 0x62].unk_18 == 0xE
+            && ((GyoziInitSprite44 *)D_80129F40)[i + 0x62].unk_08 == 9) {
+            ((GyoziInitSprite44 *)D_80129F40)[i + 0x62].unk_16 = func_800BCE40() % 3;
+        }
+    }
+}
