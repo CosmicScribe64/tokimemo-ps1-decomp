@@ -23,10 +23,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-12903-option-small-handlers|T-12903 Match small OPTION audio handlers]]
 
 
-- [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
 
 
 
@@ -71,9 +69,7 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 
-- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
@@ -108,6 +104,11 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
+- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
+- [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
+- [ ] [[tickets/T-12903-option-small-handlers|T-12903 Match small OPTION audio handlers]]
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
 - [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
 - [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]

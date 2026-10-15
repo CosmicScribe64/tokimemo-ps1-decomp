@@ -13932,3 +13932,27 @@ Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (13
 ## [2026-10-15] build | Third verified match and shared-header validation
 
 [[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.
+
+## [2026-10-15] build | All 27 binary checks pass
+
+[[tickets/T-12900-small-option-main]]: Docker ninja -j1 completes 27/27 SHA1 checks after the API guard, with headers/globals checks passing. Standards review requests source-local matching comments and a split first checkpoint; added the comments and split unpublished history without changing the final tree. Replacements: 7cb341f6 (OPTION 360), f1744de9 (main reset 188), 41d7a47e (main resume 264); these supersede 6aa2f091/cbe7698f for integration. Spec review reports no implementation or scope findings; final cleanliness and review validation are next.
+
+## [2026-10-15] ticket | Close T-12900 after review
+
+[[tickets/T-12900-small-option-main]] moves from In Progress to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12901 after review
+
+[[tickets/T-12901-small-option-main-first]] moves from In Review to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12902 after review
+
+[[tickets/T-12902-small-draft-triage]] moves from In Review to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12903 after review
+
+[[tickets/T-12903-option-small-handlers]] moves from In Progress to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] lint | Small-match handoff consistency
+
+Checked T-12900 through T-12903 status/card agreement and ticket links. The first two matches (548 bytes) plus the resume handler (264) total 812; no negative experiment contributes coverage. Source comments are committed, old checkpoint hashes are documented as superseded, and scratch files moved under ignored build/t12900/.
