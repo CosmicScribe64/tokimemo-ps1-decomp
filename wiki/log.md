@@ -13363,3 +13363,7 @@ Created [[tickets/T-11600-w1-ovl-event-8010fe10]] (In Progress) in worktree w1-p
 ## [2026-10-15] ticket | T-11600 Done
 
 [[tickets/T-11600-w1-ovl-event-8010fe10]]: code review against CODING_STANDARDS.md, no findings; 10 of 12 functions matched (3,676 bytes), `func_80114B0C` and `func_80118868` stay guarded. EVENT.bin sha1, globals, headers and `sync_protos --check-branch` OK in the worktree.
+
+## [2026-10-15] ticket | T-11640 created
+
+Created [[tickets/T-11640-w1-ovl-taiiku-80138950]] (In Progress) in worktree w1-p08: wave 1 package for src/ovl/TAIIKU/80138950.c.
