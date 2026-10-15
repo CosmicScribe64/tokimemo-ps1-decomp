@@ -56,7 +56,6 @@ kanban-plugin: board
 
 ## In Review
 
-
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
@@ -101,8 +100,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
 
-- [ ] [[tickets/T-14700-reserved-type-repairs|T-14700 Repair fifteen reserved aggregate and callback drafts]]
-
 ## In Review
 
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
@@ -121,8 +118,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
-
-- [ ] [[tickets/T-14700-reserved-type-repairs|T-14700 Repair fifteen reserved aggregate and callback drafts]]
 
 - [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
 
@@ -187,6 +182,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-13902-date2-families|T-13902 DATE2 bounded family reconstruction]]
 
 - [ ] [[tickets/T-12210-matching-bottleneck-research|T-12210 Identify and test high-leverage matching breakthroughs]]
+
+- [ ] [[tickets/T-14700-reserved-type-repairs|T-14700 Repair fifteen reserved aggregate and callback drafts]]
 
 ## Done
 
