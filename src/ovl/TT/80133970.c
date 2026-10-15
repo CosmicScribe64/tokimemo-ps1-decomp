@@ -618,7 +618,7 @@ void func_80134BBC(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134BBC);
 #endif
 
-/* NON_MATCHING: T-11620, 30 differing lines (registers only, plus the li of 0x3D94, which the original loads before the u test): the original has v in v0, buf in v1, q in a2 and copies p to a3; here buf a3, v v1, q v0, p copy a2. Tried: statement order of the head (order_search), v + 0x30 store, inline D_80158AB0 (reloads), stores in both arms, ternary, K&R definition, autotweak 120 s. */
+/* NON_MATCHING: T-11620, 17 differing lines (scheduling only): passing q as the unused third argument of func_80141EBC (as its other callers do) gives every register. Left: the original loads 0x3D94 into t3 before the u test (a uopt range, next colour after t2) and so places move a3,a0 earlier; here li t3 is a ugen temp after the join. Tried: a clut local, a ternary, comma and one-line forms, stores in both arms, join-store order (order_search), autotweak 150 s. */
 #ifdef NON_MATCHING
 void func_80134D0C(u8 *p) {
     u8 *buf;
@@ -651,7 +651,7 @@ void func_80134D0C(u8 *p) {
     *(u16 *)(v + 0xE) = 0x3D94;
     v[0x2B] = 0;
     v[0x2C] = 1;
-    func_80141EBC(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v);
+    func_80141EBC(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
 }
 #else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134D0C);
