@@ -14901,3 +14901,7 @@ Completed all77 final compiler repairs across T15700–T16000. Joined ledgers co
 ## [2026-10-15] ticket | Final compilation archive validation
 
 T15900 moves In Review following completed13/13 compilation; ticket and board now agree. Final validation: no pending build work, prototype branch check passes (zero new/15 known), all13 draft-tool tests pass, recorded final repair hashes pass, all1066 scopes have scored compiler outcomes. Production C/headers remain unchanged from c21bb523. The additional diagnostic zero in the joined catalog is EVENT17D80 reusing already verified production C, not an unpromoted new match. See [[stopping-point-2026-10-15]].
+
+## [2026-10-15] ticket | Review 165 flagged compiling drafts
+
+User requested Sol6.1 medium pass. Froze165 selected review-needed scopes and assigned disjoint batches under [[tickets/T-16100-flagged-draft-pass]]. Preserve original alternatives, repair supported issues, retain explicit unresolved findings, and compile changed full contexts. No automated matching restart.
