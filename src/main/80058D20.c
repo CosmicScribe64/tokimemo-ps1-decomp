@@ -80,33 +80,31 @@ void initModelingData_init(u32 *arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
-s32 func_80058F9C(u8 *arg0, s32 arg1, u32 arg2) {
-    u8 *q;
-    u32 limit;
-    u8 *p;
+/* Same TMD walk as initModelingData_init for one object slot (count clamped
+ * to 15). The repeated slot address, not a local, gives the original's shared
+ * spill slot (as in TAIIKU func_80140738); `&D_80122640[arg1 * 4]` costs one
+ * more ugen temporary. T-11610 */
+s32 func_80058F9C(u32 *arg0, s32 arg1, u32 arg2) {
+    u32 *dop;
+    u32 n;
 
-    p = (u8 *)arg0 + 4;
-    func_8009B3C0((s32)p);
-    q = p + 4;
-    limit = *(u32 *)q;
-    if (limit >= 0x11) {
-        limit = 0xF;
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    n = *dop;
+    if (n > 16) {
+        n = 15;
     }
-    q += 4;
-    if (arg2 < limit) {
-        p = (u8 *)D_80122640 + arg1 * 0x10;
-        func_8009B430((s32)q, (u8 *)p, arg2);
-        *(TaiikuBig **)(p + 4) = &D_801227A0[arg1];
-        *(s32 *)p = 0;
+    dop++;
+    if (arg2 < n) {
+        func_8009B430((s32)dop, (u8 *)D_80122640 + arg1 * 0x10, arg2);
+        *(u32 *)((u8 *)D_80122640 + arg1 * 0x10 + 4) = (u32)&D_801227A0[arg1];
+        *(u32 *)((u8 *)D_80122640 + arg1 * 0x10) = 0;
         return 1;
     }
     return -1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058F9C);
-#endif
 
 void func_80059048(void) {
     s32 i;
