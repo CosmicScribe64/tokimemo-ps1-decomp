@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-11590-w1-main-8007c030|T-11590]] Wave 1 package w1-p03: main 8007C030.c work list (In Progress).
 - [[tickets/T-11560-tt-batch-6|T-11560]] TT batch 6: bulk_m2c over TT, then Opus on the closest drafts (Done; 4 matches, TT 48.6%).
 - [[tickets/T-11550-tt-opus-near-miss-pass|T-11550]] TT Opus near-miss pass with all solvers (Done; 5 matches, TT 48.0%).
 - [[tickets/T-11540-tt-order-search-pass|T-11540]] TT order_search pass (Done; func_8013DE10 matched, five drafts improved, stale func_8014CC04 draft removed).
