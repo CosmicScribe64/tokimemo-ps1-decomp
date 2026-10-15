@@ -458,7 +458,18 @@ void func_800FAE6C(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800F9680", func_800FAF7C);
+void func_800FAF7C(void) {
+    D_80120678 = D_801202D8;
+    D_8012067C = D_801202F8;
+    D_80120680 = D_80120318;
+    func_80012D64(D_80120C34, 0x11, 1, 2, 0);
+    func_8004C46C(D_80120C38, D_80120C3C, D_80120C40, D_80120C44, D_80120C48, D_80120C4C);
+    func_8004C6B0(D_80120C28, D_80120C2C, D_80120C24, D_80120C30);
+    D_800B0A04[0].unk_02 += 2;
+    D_800B0A04[0].unk_0A -= 0x1C;
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_800FB078(void) {
     D_80120678 = D_801202DC;
