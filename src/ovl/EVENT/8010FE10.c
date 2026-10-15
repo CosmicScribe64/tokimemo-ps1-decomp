@@ -1824,7 +1824,9 @@ void func_80118848(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-11110, 8 lines: chained halfword store scheduling and $v0 vs $t6 for third chain */
+/* NON_MATCHING: T-11110, T-11600, 8 lines: chained halfword store scheduling and $v0 vs $t6 for third chain (regdiff: the
+   original's third 3 is a uopt colour, the draft's a ugen temporary); separate stores, chain orders, one-line chains and an
+   s16/s32/u8 local for the constant did not reach it. */
 void func_80118868(void) {
     if (D_800B1746 != 6) {
         func_80011DFC();
