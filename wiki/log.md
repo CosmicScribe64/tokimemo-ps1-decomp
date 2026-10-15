@@ -14329,3 +14329,6 @@ Created [[tickets/T-13701-name-ent-record-types]] for semantic reconstruction of
 ## [2026-10-15] ingest | NAME_ENT record and actor layout evidence
 
 [[tickets/T-13701-name-ent-record-types]] moves to In Review. [[name-ent-family-results]] records existing aggregate views for39F30, fixed actor mapping and a complete compiling typed draft (769 exact rows; bounded actor-end variant746). Zero accepted bytes, no production source/header edits.
+
+## [2026-10-15] build | Incremental dependency optimization integrated
+[[tickets/T-12400-integrate-verified-matches]] independently validated [[tickets/T-13500-incremental-build-dependencies]] on the combined tree: all 11 dependency regressions, all 27 binary checksums, header/global checks, and branch prototype audit pass; final Ninja invocation is a no-op. Evidence: build/scratch/goal-incremental-build.log. Game coverage remains 1404124/2279368 bytes (61.6%), 5874 functions; tooling is not counted as matched bytes. Integrated final ETC completion records and NAME_ENT type research (zero new bytes); reconciled ticket cards against frontmatter. A fresh Sol6.1medium worker owns ENDING/EN_NICHI under T14000, while GEKO/DATE2 chat owns T13900.
