@@ -187,4 +187,21 @@ void func_8013BDD8(s16 arg0) {
     k_disp_start(set_kanji_string((s16) (-func_800AE0E0(p) * 7 / 2), 0x50, 0, p, 0));
 }
 
+#ifdef NON_MATCHING
+void func_8013BE64(void) {
+    if (D_800E6280.unk_1104.w == 0) {
+        D_80120652 = 5;
+    }
+    if ((D_80120668 == 2) && (D_80120658 == 4)) {
+        D_80120652 = 1;
+        D_80120668 = 0;
+        D_80120658 = 0;
+        D_80120666 = 1;
+    }
+    if ((u32)++D_800E6280.unk_1104.w >= 0xB5U) {
+        func_8004284C();
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/8013B6A0", func_8013BE64);
+#endif
