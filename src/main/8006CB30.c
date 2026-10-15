@@ -224,6 +224,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 s32 func_8006EA40(void) {
     s32 count;
     s32 i;
+    /* FAKE: the helper writes 16 bytes; four extra bytes reproduce the original frame and buffer slots. T-11670. */
     u8 rank[20];
     s16 points[16];
 
