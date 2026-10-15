@@ -27,3 +27,6 @@ Header/global guards pass; prototype guard: 0 new / 15 known disagreements, bran
 
 ### Character initializer checkpoint
 func_80041C2C: 796 default linked bytes, MAIN SHA1, headers/globals pass; prior 676-byte initializer reverified. Existing GameState pointer and CharFlags suffice; no new type layout. Cumulative 1472 bytes. Evidence in [[main-family-results]].
+
+### Review corrections
+Initial standards/spec reviews identified an unguarded prototype, unexplained strncpy casts and match-directed literal masks. Header guard fixed, casts removed, final source uses actual GsDateBits/CharFlags.f20 fields. Both literal functions and MAIN SHA1 reverified (bitfield-proof.log, bitfield-build.log). Re-review pending. No initializer FAKE remains.

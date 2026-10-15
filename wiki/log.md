@@ -14423,3 +14423,6 @@ Created isolated codex/main-14200 from 0f117230; original checkout read only. Re
 
 ## [2026-10-15] build | T-14200 character initializer 796-byte checkpoint
 [[main-family-results]] records func_80041C2C: consistent GameState pointer and existing flag members give default literal MATCH; MAIN SHA1 OK, earlier initializer reverified. No new header layout or FAKE. [[tickets/T-14200-main-source-families]] continues at 1472 verified bytes.
+
+## [2026-10-15] build | T-14200 resolve initializer review findings
+[[main-family-results]] and [[game-state]] record actual packed birthday/date and character-nibble fields replacing the first checkpoint's masks. Prototype moved inside its guard and pointer casts removed. Both default literal functions and MAIN SHA1 pass. Initial review findings addressed; final re-review pending in [[tickets/T-14200-main-source-families]].

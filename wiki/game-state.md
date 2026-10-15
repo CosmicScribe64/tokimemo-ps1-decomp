@@ -114,3 +114,7 @@ A "symbol-direct" access (`lui %hi(D_X); lbu %lo(D_X)`) is therefore no evidence
 - The unknown arrays `unk_120`, `unk_183C` and the record counts of `GsRecF90`, `GsRec142C`.
 - The bit-field words (`Rec38.unk_0C`, `unk_10`, `unk_54C`, `unk_66C`, `unk_F68`) as bit-field structs, once one layout reproduces every user.
 - For the Godot port: the save routine `func_8005557C` copies `unk_03D..unk_042`, `unk_044` (2 x 0x3C), `unk_0C4` (0x78), the 16 `Rec38` records, `unk_53C`, `unk_54C`, `unk_56C`, `unk_668..`, `unk_69C`, `unk_728..unk_74C`, `unk_75E` (0x800 bytes) and a dozen bytes of `0xF6C..0xF75`, `unk_1092`, `unk_03C`, then sums 0xF00 bytes of the buffer as a checksum: the persistent part of the state.
+
+## T-14200 packed initialization views
+
+The birthday word at +0x0F8 and Rec38 +0x10 expose month in bits 0..3 and day in bits 4..8 through GsDateBits. The existing +0x0F8 scalar remains canonical for old users; initialization takes an explicit typed view of its address. GsWord gains the same-size date union view. CharFlags bits 20..23 form f20, initialized to 11 for each character; its semantics remain unknown. These layouts reproduce the original byte/halfword stores without hand-written wide masks. See [[main-family-results]] and [[tickets/T-14200-main-source-families]].
