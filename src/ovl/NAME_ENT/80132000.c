@@ -759,7 +759,7 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135650);
 /* NON_MATCHING: T-11010, 23 differing lines: D_8014CC70 takes $v1 where the original has $v0 (equal priority with the unk_F88 selector, regdiff: first-use order), constant 2 then moves with it */
 #ifdef NON_MATCHING
 void func_801357F4(void) {
-    u8 cur;
+    s32 btn;
 
     func_8006BA40();
     func_80133D94();
@@ -771,14 +771,14 @@ void func_801357F4(void) {
         func_801341A8();
     }
     func_80135650();
-    if (D_800E6280.unk_F88 & 0x40) {
-        cur = D_8014CC70;
-        if (cur == 0xC) {
+    btn = D_800E6280.unk_F88;
+    if (btn & 0x40) {
+        if (D_8014CC70 == 0xC) {
             D_8014CC70 = 2;
-        } else if (cur != 0) {
-            D_8014CC70 = cur - 1;
+        } else if (D_8014CC70 != 0) {
+            D_8014CC70--;
         }
-    } else if (D_800E6280.unk_F88 & 0x20) {
+    } else if (btn & 0x20) {
         if (D_8014CC70 < 3 && D_8014CCC0 >= 0 && D_8014CCC4 >= 0) {
             func_80134248(0);
             func_80134B18();
@@ -823,7 +823,7 @@ void func_801357F4(void) {
             func_80044750(0x501);
             func_8004284C();
         }
-    } else if (D_800E6280.unk_F88 & 0x800) {
+    } else if (btn & 0x800) {
         func_80134B94(0);
         func_80134B18();
         func_80044750(0x501);
