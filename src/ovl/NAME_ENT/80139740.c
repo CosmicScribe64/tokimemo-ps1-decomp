@@ -1534,26 +1534,29 @@ void func_8013F058(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4: the original indexes D_800E7D15 and divides a `move v0,v1` copy of the selector, here no copy and constants one register lower. */
+/* NON_MATCHING: T-11370, 18 rows off. The `++idx` keeps the selector copy (`move` in the first delay slot, spill at
+ * sp+0x2C), but IDO gives the loaded selector $v0 and the copy $v1 where the original has them the other way round,
+ * and the increment lands in the copy's register instead of a temporary. */
 #ifdef NON_MATCHING
 void func_8013F0DC(void) {
-    GameState *g;
+    s32 sel;
+    s32 pad; /* FAKE: third local slot for the 0x38 frame (T-11370) */
     s32 idx;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
     D_800E6280.unk_F88 &= ~0x100;
     func_8004FC10(0);
-    g = &D_800E6280;
-    idx = g->unk_1093;
-    if (idx != -1) {
+    sel = D_800E6280.unk_1093;
+    idx = sel;
+    if (sel != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (idx != -1) && (u8)(&D_800E7D15)[idx] == 1) {
+    if ((D_800E6280.unk_F88 & 0x820) && (sel != -1) && (u8)(&D_800E7D15)[idx] == 1) {
         func_80044750(0x501);
         func_8004284C();
-        D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
+        D_800E6280.unk_1118 = ++idx;
     }
     func_80142880();
 }
