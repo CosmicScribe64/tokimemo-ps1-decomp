@@ -1921,3 +1921,13 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80135360 | `func_801356C8` | regorder | T-11560: not kept (about 70 lines): the original keeps the divisor 85 in fp (register divide with break checks); IDO keeps -0x400 there and divides by an immediate |
 | TT/80148DB0 | `func_801494D8` | frame | T-11560: not kept (about 75 lines): frame 0x50 vs 0x58, spill-slot order differs |
 | TT/80142350 | `func_80142350` | regorder | T-11560: still 2 lines: regdiff shows the original's pointer range interferes with v0..a1; in the draft it overlaps nothing |
+| NAME_ENT/80139740 | `func_8013DAC4` | selector copy | T-11570: plain `idx = global` draft, 27 lines; IDO copy-propagates `idx` into the s8 global. With uopt global copy propagation off (experiment) 4 lines left, the constant-first compares (`beq a1,v1`) |
+| NAME_ENT/80139740 | `func_8013F454` | selector copy | T-11570: same as `func_8013DAC4`; 23 lines, 4 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013FB8C` | selector copy | T-11570: same as `func_8013DAC4`; 27 lines, 4 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013D4CC` | selector copy | T-11570: same as `func_8013DAC4`; 33 lines, 10 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013E430` | selector copy | T-11570: same as `func_8013DAC4`; 28 lines, 8 with copy propagation off (compares plus frame 0x30 vs 0x38) |
+| NAME_ENT/80139740 | `func_8013F0DC` | selector copy | T-11570: same as `func_8013DAC4`; T-11370 draft kept (18 lines); the plain `idx` form is 34 lines, 8 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013CEC8` | selector copy | T-11570: same as `func_8013DAC4`; plain `n` draft 42 lines (dropped, commit 64965d57), 14 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013BE18` | frame slot | T-11570: 10 lines, RECT at sp+0x38 vs sp+0x34 in a 0x40 frame; IDO keeps 8 spare bytes below the locals, so no declaration gives the original slot |
+| NAME_ENT/80139740 | `func_80140B20` | regorder | T-11570: in-place u8-view form, 15 lines: the original keeps the chain value in `$v0` (`andi v0,t6,0xff`), IDO stores `$t6`; zcopy off does not change it |
+| NAME_ENT/80139740 | `func_8013BB24` | schedule | T-11570: 28 lines, seven `lui a0,string` / `lui at,store` pairs in the other order; one-line pairs, assignment-in-argument and comma forms fail |

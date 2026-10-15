@@ -4717,3 +4717,49 @@ two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
 - Tidy m2c leftovers in matches: `*(u8 *)((unsigned char *)D_80158A64 + (28))` is `D_80158A64[0x1C]` (`func_8013E1E8`).
 - Tools: regdiff named the priority problems (`func_80142C70`, `func_80135148`); autotweak (5 runs) and the permuter (1)
   found nothing on these drafts; a quick ninja-one-object + `funcdiff --no-build` loop was the main workhorse.
+
+## NAME_ENT 80139740 wave 1 package w1-p01 (T-11570)
+
+Twelve guarded NAME_ENT drafts, all previously tried; no match. Ticket [[tickets/T-11570-w1-ovl-name_ent-80139740]].
+
+- **Selector-copy family is a copy-propagation gap, not a C form.** `func_8013D4CC`, `func_8013DAC4`, `func_8013E430`,
+  `func_8013F0DC`, `func_8013F454`, `func_8013FB8C`, `func_8013CEC8` load the s8 selector `GameState.unk_1093` into
+  `$v1`, compare it constant-first (`beq a1,v1`) and divide/index a copy (`move v0,v1`). The plain source
+  `idx = D_800E6280.unk_1093; if (D_800E6280.unk_1093 != -1) { ... idx / 7 ... idx % 7 ... }` is right: with uopt's
+  global copy propagation off for the procedure (`OPTN 405 0`, the `-zcopy:0` switch `tools/cvt_pass.py` already sets
+  for unsigned-global switch temporaries; tested by a temporary local edit of the pass, not committed) the drafts come
+  to 4 lines (`DAC4`, `F454`, `FB8C`: only the two compare operand orders), 8 (`F0DC`, `E430`: plus the frame), 10
+  (`D4CC`) and 14 (`CEC8`). IDO's default propagation folds `idx` into the global and gives the global `$v0`. No C form
+  tried keeps the copy with the right registers: `u32 idx` keeps it and gets every register right but divides with
+  `divu`; `(s32)idx` lets uopt see through the conversion again; casts, `*p` views, aliasing stores and constant-address
+  stores do not help. The constant-first compare also fits a widening `CVT` after narrow *signed* global loads (the
+  original has `lh` globals constant-first 40:8, see "K&R promotion rules (T-7000)"): a crude experiment inserting
+  `CVT J<-L` after them turned the compares constant-first. Follow-up for the toolchain owners: decide whether the
+  original's narrow signed global loads carried a widening (and whether a local copy of a global is never propagated),
+  then extend `tools/cvt_pass.py` and re-verify every matched function. Only 7 unmatched functions show the exact
+  `lb v1; ... or v0,v1,zero` shape (the 6 above plus OPTION 80132000 `func_80134110`), none matched.
+- **IDO frame rule with locals** (measured on `func_8013BE18`): locals are placed from the frame top in declaration
+  order (first declared highest) and the frame keeps 8 spare bytes below them (`raw frame = end of saves + 8 +
+  locals`, 8-aligned; no locals, no spare). A 5-argument call puts the saves at 0x18..0x1F, so the locals start at
+  0x20 and an 8-byte RECT lands at raw 0x28 (sp+0x38 after the frame pass). The original has it at sp+0x34 in the same
+  0x40 frame, which this rule cannot give: any extra local (s32/s16/u8 pad, 12-byte struct, `s16[6]`, block scope)
+  grows the frame by 8. The draft's other difference (`li v1,0x80` before `lui at`) was the order of the two case-2
+  stores (`unk_03A = 0x80` first); it is now frame-only (10 lines).
+- **`D_800E6280.unk_3A` is not a GameState field.** It belongs to `Work80125D10`; under `-cckr` IDO accepts a member
+  of any struct with warning 749 and uses its offset, so older drafts compiled by accident. The GameState byte at
+  +0x3A is `unk_03A` (`u8`). For `func_80140B20` the u8 view `*(u8 *)&D_800E6280.unk_03A` (15 lines) beats the plain
+  field (25: the global moves from `$a0` to `$v0`). The in-place form (`G -= 2; chain = G; if (G < 0x80) f(G);`)
+  gives both stores of the global like the original; the original's extra `andi v0,t6,0xff` chain value stays out of
+  reach (separate stores, locals, masks, zcopy off all fold it).
+- **printf pairs (`func_8013BB24`)**: writing `D_8014D0B0 = speed; func_800AE0B0("kanji_speed...", speed);` on one
+  source line fixed that pair's `addiu a0`/`sb` order (as1 schedules by line); the other seven pairs (`lui a0,string`
+  before `lui at,store` in the original) do not move with one-line pairs, assignment-in-argument (goes through `$v0`)
+  or comma forms. 28 lines.
+- **`func_8013A9C8` draft dropped** (232 lines; still in commit 64965d57): the else branch needs `GameState.unk_1117`
+  in a uopt register (`lbu a0`), `rec` in `$t0`, the walker in `$a2`; writing the 0xF00 multiply as shifts puts the
+  global in a register and hoists `lui`/`i = 0` above the branch like the original, but ugen's multiply expansion
+  (one reused temporary) shows the original wrote a plain multiply. `func_8013CEC8` (42 lines) dropped too; its
+  natural `n` draft is in the same commit.
+- Tools: regdiff (the traced uopt was in the scratch directory) named the priorities; autotweak found nothing on
+  `func_8013DAC4`/`func_8013BB24`; a small local loop (variant file -> guarded block -> `funcdiff --resolve`) did most
+  of the work.
