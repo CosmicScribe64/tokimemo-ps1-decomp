@@ -4717,3 +4717,37 @@ two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
 - Tidy m2c leftovers in matches: `*(u8 *)((unsigned char *)D_80158A64 + (28))` is `D_80158A64[0x1C]` (`func_8013E1E8`).
 - Tools: regdiff named the priority problems (`func_80142C70`, `func_80135148`); autotweak (5 runs) and the permuter (1)
   found nothing on these drafts; a quick ninja-one-object + `funcdiff --no-build` loop was the main workhorse.
+
+## TT `8013C6D0.c`, wave 1 package w1-p07 (T-11630)
+
+Eight functions of `src/ovl/TT/8013C6D0.c`; 6 matched (`func_8013C8DC`, `func_8013CC24`, `func_8013D508`,
+`func_8013D73C`, `func_8013D150`, `func_8013D3C0`), `func_8013D2E0` guarded (registers only), `func_8013D988` not kept
+(66 rows; draft in [[tickets/T-11630-w1-ovl-tt-8013c6d0]]).
+
+- **Draw pool records are `TtPoolDraw14`, filled by indexed loops.** `func_8013C8DC` and `func_8013CC24` write
+  `D_80158AA8` records; with `TtPoolDraw14 *p` and `for (i = 0; i < 3; i++, p++) { ... p->text = D_80155D50[i]; }`
+  IDO strength-reduces `i` into the table pointer and compares it with `&D_80155D50[3]` (the `lui/addiu D_80155D56`
+  pair). A four-iteration loop is unrolled completely (`func_8013CC24`; the dead `addiu v0,v0,0x50` after it is the
+  pointer step). The byte-pointer drafts of T-11000 could not get this.
+- **A loop counter that unrolling removes still has a frame slot.** `func_8013CC24` needs `u8 *q; s32 i; TtPoolDraw14 *p;`
+  in that order (q at 0x34, hole at 0x30, p at 0x2C); no FAKE pad.
+- **Real locals instead of FAKE pads.** `func_8013D508` (sibling of `func_8013DE10`) got its frame from a used `tm`
+  (tile map pointer) and `st` (`TtCmdStream *`) local; each declared local takes a slot even when it lives in a
+  register. (In `func_8013DE10` itself a used `tm` changes the code, so its pads stay.)
+- **Read a just-stored field back through the pointer instead of keeping a local.** `func_8013D150`: without the
+  `target` local (`if (q[1] < 0x8000) q[1] = 0x8000;` and so on) uopt keeps q[1] in v0, the two `0x30000` stores stay
+  separate constants and the ugen temporaries line up. `cur = (diff < 0) ? -diff : diff;` gives the original
+  `bgez; move; b; negu` abs.
+- **Comma expressions for packet macros.** `((TtOtTag *)v)->len = 3, v->code = 0x61;` and `v->w = 0x100, v->h = 0xE8;`
+  (the libgpu `setTile`/`setWH` shape, one source line) give the original store order where separate statements do
+  not; the same for `setXY4`/`setUV4`-style lines in `func_8013D988`. This replaces the T-10850 same-line FAKE.
+- **uopt colours unconstrained ranges in first-reference order.** `func_8013D3C0` wants g in a1 and r in a2: a dead
+  `g = 0;` before the red channel numbers g first (FAKE, T-11630). Declaration order does not change it.
+- **Struct field vs. pointer arithmetic changes operand order.** In `func_8013D988`, `(j - 8) * (0x8800 - c->unk_34)`
+  through a struct field evaluates `j - 8` first as in the original; `*(s16 *)(c + 0x34)` (one tree level deeper) puts
+  the load first, whatever the source order. Also there: `x += (s16)(rsin(...) / zoom)` on both arrays, s16 coordinate
+  locals computed `x0, y0, x1, y1, ...` before a one-line store, `len = 9, code = 0x2D` order for the 9/45 constants.
+- Still open: `func_8013D2E0` (original leaves a0 unused; an unused parameter only adds a home store) and
+  `func_8013D988` (the original gives `hi` the register that IDO gives the constant 3). Rows in [[data/t0018-cases]].
+- Tools: a local objdump side-by-side of the guarded draft was faster than funcdiff for structural work; autotweak
+  (2 runs on `func_8013D988`) found nothing; regdiff named the bit-order cause in `func_8013D3C0`.

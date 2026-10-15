@@ -1921,3 +1921,5 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80135360 | `func_801356C8` | regorder | T-11560: not kept (about 70 lines): the original keeps the divisor 85 in fp (register divide with break checks); IDO keeps -0x400 there and divides by an immediate |
 | TT/80148DB0 | `func_801494D8` | frame | T-11560: not kept (about 75 lines): frame 0x50 vs 0x58, spill-slot order differs |
 | TT/80142350 | `func_80142350` | regorder | T-11560: still 2 lines: regdiff shows the original's pointer range interferes with v0..a1; in the draft it overlaps nothing |
+| TT/8013C6D0 | `func_8013D2E0` | regorder | T-11630: comma-expression stores fix the order; still 20 register lines: the original leaves a0 unused (v in a1, base a2, tag a3); unused ANSI or K&R parameter only adds a home store |
+| TT/8013C6D0 | `func_8013D988` | regorder | T-11630: not kept (66 rows, draft in the ticket): frame and loop 1 match; in loop 2 the original keeps the hoisted `scroll & ~0xF` in s2 and multiplies by 3 with shifts, IDO gives the constant 3 a register instead |

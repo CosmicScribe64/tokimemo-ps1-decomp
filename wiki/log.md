@@ -13355,3 +13355,7 @@ Matched ENDING func_8013BE64, RPG_BAT func_80136CCC, main func_8005FA20. Guarded
 ## [2026-10-15] ticket | T-11630 opened
 
 Created [[tickets/T-11630-w1-ovl-tt-8013c6d0]] (In Progress): wave 1 package w1-p07, eight functions of `src/ovl/TT/8013C6D0.c`.
+
+## [2026-10-15] ticket | T-11630 to In Review
+
+[[tickets/T-11630-w1-ovl-tt-8013c6d0]]: 6 of 8 functions of `src/ovl/TT/8013C6D0.c` matched (`func_8013C8DC`, `func_8013CC24`, `func_8013D508`, `func_8013D73C`, `func_8013D150`, `func_8013D3C0` with one FAKE dead store); `func_8013D2E0` guarded at 20 register lines; `func_8013D988` back to INCLUDE_ASM (66 rows, draft kept in the ticket). Idioms in [[matching-notes]] (T-11630), 2 rows in [[data/t0018-cases]].
