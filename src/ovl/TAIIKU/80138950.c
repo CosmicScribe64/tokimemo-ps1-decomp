@@ -626,7 +626,44 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B78C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B94C);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BB3C);
+/* FAKE: T-11640, same views as func_8013C33C (counter and flag reloaded per block). */
+void func_8013BB3C(void) {
+    s32 tmp;
+
+    if (D_80149968.unk_10 == 0 && D_801499B2 != 2) {
+        func_80044750(0x802);
+        D_801499B2 = 2;
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    if (((u16 *)&D_801499A0)[1] > 600) {
+        ((u16 *)&D_801499A0)[1] = 0x1F;
+    }
+    func_8013C5C8(0x1C000);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 4)) {
+        func_8013C4E4(0x12000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
+        ((s16 *)&tmp)[0] = 0;
+        ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+        tmp += D_80149968.unk_0C * 80;
+        D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 30 == 0 && ((u16 *)&D_801499A0)[1] >= 60) {
+        if (D_801499B2 == 0) {
+            D_801499B2 = 1;
+            func_80044750(0x800);
+            ((u16 *)&D_801499A0)[1]++;
+        } else if (*(u16 *)&D_801499B2 == 1) {
+            D_801499B2 = 0;
+            func_80044750(0x801);
+            ((u16 *)&D_801499A0)[1]++;
+        } else {
+            D_801499B2 = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BCEC);
 
