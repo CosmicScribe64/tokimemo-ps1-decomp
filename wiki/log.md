@@ -13355,3 +13355,7 @@ Matched ENDING func_8013BE64, RPG_BAT func_80136CCC, main func_8005FA20. Guarded
 ## [2026-10-15] ticket | T-11580 created
 
 Created [[tickets/T-11580-w1-ovl-date-80132000]] (In Progress): wave 1 package w1-p02, 12 DATE functions in src/ovl/DATE/80132000.c, worktree w1-p02.
+
+## [2026-10-15] ticket | T-11580 to In Review
+
+[[tickets/T-11580-w1-ovl-date-80132000]]: 11 DATE matches (func_80137D1C, func_8013D8B0, func_801366A4, func_80136B70 and seven place handlers of the same table-reader shape), four guarded drafts, two drafts improved. Notes in [[matching-notes]] (T-11580), rows in [[data/t0018-cases]].
