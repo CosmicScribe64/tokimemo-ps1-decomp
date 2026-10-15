@@ -13933,3 +13933,38 @@ Corrected [[tickets/T-12090-codex-cx9]]: func_80133204 exact linked span is828 b
 ## [2026-10-15] build | T-12090 state-machine idiom transferred
 
 BUNKA_SD:func_801388D0 matches268 bytes after three evidence-based repairs from neighboring C: live s32 result, byte compound increment, and correct zero-argument call. Exact linked and overlay SHA1/header/global checks pass. Cumulative4172 text bytes; [[tickets/T-12090-codex-cx9]].
+## [2026-10-15] ticket | BUNKAKEN/BUNKASAI isolated family work
+Created [[tickets/T-12700-bunka-families]] from 95c3fc9f and inspected prior family evidence. Original checkout remains read-only; experiments and ignored inputs reside in bunka-12700 worktree. Two compiler workers maximum.
+
+## [2026-10-15] ticket | Independent family assignments
+Created [[tickets/T-12701-bunkaken-address-family]] and [[tickets/T-12702-bunkasai-family]] in In Progress, with disjoint source ownership. Prior exact diffs isolate aggregate address allocation in the BUNKAKEN bitfield stores; matched siblings use a local GameState pointer, which remains a candidate rather than a claimed fix.
+
+## [2026-10-15] query | BUNKAKEN aggregate address form and BUNKASAI reload
+Recorded candidate evidence and rejected variants in [[bunka-family-results]]. Full local GameState pointer form scores zero on five BUNKAKEN handlers; one BUNKASAI candidate scores zero after reloading state across calls. Linked verification remains the acceptance gate.
+
+## [2026-10-15] build | Seven BUNKA handlers verified
+[[tickets/T-12701-bunkaken-address-family]] adds five functions / 6,544 bytes (commit fdcac574); [[tickets/T-12702-bunkasai-family]] adds two / 2,520. Each function passes literal linked-byte verification and both affected overlay SHA1 checks pass in Docker. [[bunka-family-results]] records the mechanisms and failures. Review remains pending.
+
+## [2026-10-15] build | Continuation flag ordering transfers to BUNKAKEN
+[[tickets/T-12701-bunkaken-address-family]] adds func_80141B80, 1,860 literal verified bytes with BUNKAKEN SHA1 OK. Existing BunkakenModeFlags stores precede continuation copies in matched siblings; applying that order finishes the prior 134-row miss. Total this branch: 8 functions / 10,924 bytes. Checkpoint Spec review of the first seven functions found no issues.
+
+## [2026-10-15] build | Two additional family matches and control audit
+[[tickets/T-12701-bunkaken-address-family]] adds func_80138A08 and func_8013A8CC, 2,004 linked bytes, with BUNKAKEN SHA1 OK. Historical candidates already C in the baseline are excluded from gains. Branch total: ten functions / 12,928 bytes. Both review axes pass the earlier eight-function checkpoint; new pair awaits review. [[tickets/T-12702-bunkasai-family]] completes its bounded follow-up with two verified matches / 2,520 bytes and retained negatives.
+
+## [2026-10-15] build | Fresh family transfer adds three handlers
+[[tickets/T-12701-bunkaken-address-family]] adds 2,164 verified bytes in BUNKAKEN 8014E440.c using the established aggregate-pointer/bitfield/ordering forms. Literal proof and overlay SHA1 pass. Both review axes passed prior ten-function checkpoint; final checks there show 5,817/6,958 functions and 1,358,452/2,279,368 bytes with zero new prototype disagreements (15 known). Current new total: thirteen functions / 15,092 bytes.
+
+## [2026-10-15] decision | Expand only the successful source family
+BUNKAKEN fresh probes in 8014E440.c have reached zero full-TU differences for all eight further adjacent handlers after the first three verified matches. Linked proof remains required. This evidence justifies a bounded analogous BUNKASAI probe under T-12703, rather than a repeated default sweep. Two compiler workers maximum; each lane stops after two distant misses.
+
+## [2026-10-15] build | Complete the 8014E440 handler family
+[[tickets/T-12701-bunkaken-address-family]] adds eight literal-verified functions / 7,312 bytes, BUNKAKEN SHA1 OK. All eleven previously remaining functions in that file are now C using the same source reconstruction. Branch cumulative gain: twenty-one functions / 22,404 bytes. One adjacent-family held-out probe is next; no unrelated overlays claimed.
+
+## [2026-10-15] ticket | BUNKASAI held-out family transfer
+Created [[tickets/T-12703-bunkasai-heldout-family]] in In Progress for the bounded 8014DD90.c test justified by BUNKAKEN transfer results. Existing BunkasaiModeFlags and direct source evidence govern candidates; old matched source is preserved.
+
+## [2026-10-15] query | Review checkpoint through bad8fc7b
+Independent Standards and Spec reviews pass all twenty-one accepted functions / 22,404 bytes. No fake matches or scope violations found. [[tickets/T-12700-bunka-families]] records the review boundary; subsequent candidates still require their own proof and review.
+
+## [2026-10-15] build | Adjacent BUNKAKEN call convention seed
+[[tickets/T-12701-bunkaken-address-family]] adds func_8013EC98, 780 verified linked bytes, using the existing K&R declaration override mechanism. BUNKAKEN SHA1 passes. The override is translation-unit-local and documented; shared main prototypes are unchanged. Cumulative branch gain: twenty-two functions / 23,184 bytes.
