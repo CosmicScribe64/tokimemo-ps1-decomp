@@ -679,3 +679,14 @@ extern TaiikuS11 D_80149558;
 
 /* Eleven animation limits copied by func_80136BB4. T-12020. */
 extern TaiikuU11 D_801497DC;
+
+#ifndef OVL_TAIIKU_T13600_DECLS
+#define OVL_TAIIKU_T13600_DECLS
+/* T-13600: scene dispatcher and helpers defined later in 80138950.c. */
+void func_80139330(void);
+void func_8013A63C(void);
+void func_8013A6FC(void);
+void func_8013CCFC(void);
+void func_8013B0AC(void);
+void func_8013F35C(void);
+#endif
