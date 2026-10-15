@@ -13513,3 +13513,7 @@ Read the cx4 wiki and workflow/standards, reviewed prior matching notes and comp
 ## [2026-10-15] build | cx4 baseline verified
 
 Docker configure/ninja -j2 passes 27/27 SHA1 checks, headers and globals. Baseline evidence: build/scratch/baseline.log; matching can begin under [[tickets/T-12040-codex-cx4]].
+
+## [2026-10-15] build | RPG_BAT func_80132EE0 matched
+
+Corrected the saved draft's stale counter local to current aggregate reads. Plain C passes linked funcdiff256 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32EE0-match.diff and 32EE0-build.log.

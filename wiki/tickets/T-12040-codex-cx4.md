@@ -28,3 +28,9 @@ Docker only, ninja -j2 while workers share resources. Traced uopt copied by orch
 Independent review required before Done.
 
 Baseline completed: Docker configure/ninja -j2 passes all 27 binary checksums, headers and globals (build/scratch/baseline.log).
+
+### func_80132EE0 matched (256 bytes)
+
+The saved m2c draft retained an initial counter local across calls, creating a stack spill and stale-value behavior. Replaced those uses with the current shared D_8015EDB0.unk_04 field, matching the neighboring movement helpers. Linked funcdiff MATCH256 and RPG_BAT SHA1/globals OK. No FAKE. Evidence build/scratch/32EE0-match.diff and 32EE0-build.log.
+
+Initial full-file measurements: 5A74417,4E30010,3415C22,3457022,5A8B427,32EE041; other saved drafts require missing declarations or current aggregate members before scoring. Literal diff rows supersede older ticket counts.

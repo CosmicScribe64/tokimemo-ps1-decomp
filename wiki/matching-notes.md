@@ -5078,3 +5078,7 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## T-12040 Codex cx4 RPG battle helpers
+
+func_80132EE0 matches256 bytes after replacing a saved m2c local with direct reads of D_8015EDB0.unk_04. The original reloads the counter after calls; the saved draft incorrectly preserved its entry value, adding a spill and changing behavior. Current aggregate and scalar views both score zero, but the aggregate agrees with neighboring helpers. Linked bytes and overlay checksum verified; see [[tickets/T-12040-codex-cx4]].
