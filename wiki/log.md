@@ -13939,3 +13939,6 @@ Independent Standards and Spec reviews pass all twenty-one accepted functions / 
 
 ## [2026-10-15] build | Complete adjacent BUNKAKEN scene handlers
 [[tickets/T-12701-bunkaken-address-family]] adds eight functions / 6,112 linked bytes and passes BUNKAKEN SHA1. 8013EB30.c now contains only C; prior matched bodies are preserved. BUNKAKEN cumulative gain: twenty-eight functions / 26,776 bytes.
+
+## [2026-10-15] build | Four BUNKASAI held-out matches
+[[tickets/T-12703-bunkasai-heldout-family]] moves to In Review after four literal matches / 4,016 bytes, BUNKASAI SHA1 OK and headers OK. Existing typed byte stores and ordinary switch structure complete 8014DD90.c without changing prior C. Branch total: thirty-four functions / 33,312 bytes.
