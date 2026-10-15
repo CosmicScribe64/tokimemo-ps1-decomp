@@ -39,3 +39,7 @@ Source census after this pass: ETC 349/394 functions, 70936/107284 bytes (66.1%,
 ## Review and final gates
 
 Repository code-review skill, aa2b3158...aa1c51ec: GPT-6.1 Sol medium standards and spec reviews both pass without findings. The spec review documentation observation was resolved by recording the completed prototype guard in all four tickets: **0 new / 15 known disagreements**, branch check OK. Tickets moved to Done after both review axes and guards passed. No production edits followed review. Final branch is codex/etc-13100, ready for integration; no push or PR.
+
+## T-14800 album dispatch follow-up
+
+[[tickets/T-14800-etc-801447b0]] accepts func_801447B0 (648 literal linked bytes). The census direct-field draft had only a final case-4 status-byte register difference (t9 versus v0, six diagnostic rows). Using the existing GameState through one consistent local pointer across state/status/counter fields yields zero full-TU diagnostic rows, then passes explicit default linked-byte proof and the ETC SHA1. This is a focused transfer from the confirmed pointer family above; no broader sweep was needed. Original census source remains archived unchanged.

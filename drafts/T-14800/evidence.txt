@@ -1,0 +1,18 @@
+T-14800 ETC func_801447B0
+Parent source/header equivalent to integration 3aaa8c01.
+Direct full-TU diagnostic rows: 6; consistent GameState pointer: 0.
+
+-@row 144 3c02800e  ; lui v0,0x0
++@row 144 3c19800e  ; lui t9,0x0
+-@row 148 90427395  ; lbu v0,0(v0)
++@row 148 93397395  ; lbu t9,0(t9)
+-@row 150 14410005  ; bne v0,at,17e0 <.L8014498C+0x94>
++@row 150 17210005  ; bne t9,at,17e0 <func_801447B0+0x270>
+
+ETC:func_801447B0: compared default build
+note: ignored 1 stale asm file(s) of functions that changed between C and INCLUDE_ASM (e.g. asm/ovl/ETC/nonmatchings/ETC/80143240/func_801447B0.s); `rm` them or rebuild asm/ to clean up
+ETC:func_801447B0: MATCH (linked function bytes equal target (648 bytes))
+
+[1/2] OBJCOPY build/ovl/ETC.bin
+[2/2] SHA1 CHECK build/ovl/ETC.bin
+build/ovl/ETC.bin: OK

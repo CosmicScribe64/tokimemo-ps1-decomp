@@ -271,7 +271,68 @@ void func_80144768(void) {
         main_state_set(0x11);
     }
 }
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801447B0);
+
+void func_801447B0(void) {
+    GameState *gs = &D_800E6280;
+
+    switch (gs->unk_110D) {
+    case 0:
+        if (func_80053F04() != 0) {
+            if (gs->unk_1115 == 1) {
+                func_80053D10();
+                gs->unk_110D += 1;
+            } else if (gs->unk_1115 == 0xF1) {
+                func_80053D10();
+                func_80042940(0xA0);
+            } else if (gs->unk_1115 == 0xFF) {
+                func_80053D10();
+                func_80042940(0xFF);
+            }
+        } else if ((u32) gs->unk_1120 >= 0x201U) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 1:
+        func_80053CE0();
+        gs->unk_110D += 1;
+        break;
+    case 2:
+        if (func_80054140() == 2) {
+            gs->unk_110D += 1;
+        } else if ((u32) gs->unk_1120 >= 0x201U) {
+            func_80042940(0xFF);
+        }
+        break;
+    case 3:
+        if ((u8) D_800E8BEE != 0) {
+            func_80053D10();
+            func_80053CE0();
+            gs->unk_110D += 1;
+        } else {
+            func_80053D10();
+            func_8004E58C();
+            set_kanji_string(-0x80, 0x32, 0, (s32) "セーブするアルバムを選んでください", 0);
+            k_disp_start(1);
+            func_8004284C();
+        }
+        break;
+    case 4:
+        if (func_80054284() == 3) {
+            func_800552DC();
+            func_8004E58C();
+            set_kanji_string(-0x80, 0x32, 0, (s32) "セーブするアルバムを選んでください", 0);
+            k_disp_start(1);
+            func_8004284C();
+            func_80053D10();
+        } else if (((u32) gs->unk_1120 >= 0x201U) || (gs->unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    }
+    k_disp_inc();
+}
 
 s32 func_80144A38(void) {
     switch (D_800E6280.unk_110A) {

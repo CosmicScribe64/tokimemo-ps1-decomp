@@ -14657,3 +14657,10 @@ The automatic repair runner keeps initial artifacts immutable, excludes 24 exter
 ## [2026-10-15] build | Harden resumable draft evidence
 
 Per-target artifacts now use atomic replacement, source failures retain body/context hashes, and the harness accepts an explicit archive path. The complete census remains serial; seven synthetic Docker checks continue to pass. Completed source/context batches remain immutable while repairs write separate alternatives.
+## [2026-10-15] ticket | Inspect ETC six-row album dispatcher near-match
+
+Started [[tickets/T-14800-etc-801447b0]]. Read [[etc-family-results]] and [[tickets/T-13100-etc-families]]; no retained target-specific historical probe was located. ETC source/header are identical to integration 3aaa8c01. Preserve original census attempt and test structural hypotheses in scratch.
+
+## [2026-10-15] build | Match ETC album dispatcher through consistent aggregate pointer
+
+[[tickets/T-14800-etc-801447b0]]: func_801447B0 adds 648 default-build literal linked bytes; ETC SHA1 passes. Direct-field six-row difference is a final status-byte register allocation; consistent existing GameState pointer yields diagnostic zero and verified bytes. [[etc-family-results]] records the structural transfer. Original attempts and prior C are unchanged; ticket moved to In Review for independent review.

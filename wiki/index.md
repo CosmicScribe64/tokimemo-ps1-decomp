@@ -351,3 +351,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[exhaustive-drafts]] — T-14500 exhaustive game-function drafts and scoring census (In Progress).
 - [[tickets/T-14400-option-menu-families|T-14400]] OPTION menu/state family matching (Done; 6 functions / 5868 literal verified bytes).
 - [[tickets/T-14600-date-draft-repairs|T-14600]] Repair nine DATE draft failures (In Review; all nine compile, no zero comparisons).
+- [[tickets/T-14800-etc-801447b0|T-14800]] ETC func_801447B0: 648 literal linked bytes, ETC SHA1 passes (In Review).
