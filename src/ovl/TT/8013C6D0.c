@@ -200,82 +200,57 @@ void func_8013CB58(void) {
     }
 }
 
-/* NON_MATCHING: T-11000, about 60 lines: constants -0x50/0x60 get a2 (q lands in a3 instead of a2) in the original, after the 0x34/0x2C spill; frame matches with the FAKE pad */
-#ifdef NON_MATCHING
 void func_8013CC24(void) {
     u8 *q;
-    s32 pad; /* FAKE: unused slot keeps the frame layout, real source unknown. T-11000 */
-    u8 *a;
-    u8 *b;
-    u8 *c;
+    s32 i;
+    TtPoolDraw14 *p;
 
     q = D_80158A60;
-    a = D_80158AA8;
+    p = (TtPoolDraw14 *)D_80158AA8;
     D_80158A6C[0xA] = 0;
     func_8013C6D0();
-    a[0] = 1;
-    *(s16 *)(a + 0xA) = -0x18;
-    *(s16 *)(a + 0xC) = 0x30;
-    *(s16 *)(a + 0xE) = 4;
-    a[2] = 0xF;
-    *(s16 *)(a + 6) = 0;
-    *(s16 *)(a + 0x10) = 0;
-    a[0x14] = 1;
-    *(s16 *)(a + 0x1E) = -0x50;
-    *(s16 *)(a + 0x20) = 0x60;
-    *(s16 *)(a + 0x34) = 0x70;
-    *(s16 *)(a + 0x32) = -0x50;
-    a[0x28] = 1;
-    a[0x16] = 0xF;
-    *(s16 *)(a + 0x1A) = 0;
-    *(s16 *)(a + 0x24) = 0;
-    *(u16 *)(a + 0x22) = D_80155D58;
-    *(s16 *)(a + 0x48) = 0x80;
-    *(s16 *)(a + 0x46) = -0x50;
-    a[0x3C] = 1;
-    *(s16 *)(a + 0x38) = 0;
-    *(s16 *)(a + 0x2E) = 0;
-    a[0x2A] = 0xF;
-    *(u16 *)(a + 0x36) = D_80155D5A;
-    *(s16 *)(a + 0x5C) = 0x90;
-    *(s16 *)(a + 0x5A) = -0x50;
-    a[0x50] = 1;
-    *(s16 *)(a + 0x4C) = 0;
-    *(s16 *)(a + 0x42) = 0;
-    a[0x3E] = 0xF;
-    *(u16 *)(a + 0x4A) = D_80155D5C;
-    *(s16 *)(a + 0x60) = 0;
-    *(s16 *)(a + 0x56) = 0;
-    a[0x52] = 0xF;
-    *(u16 *)(a + 0x5E) = D_80155D5E;
-    b = D_80158AA8 + 0x140;
-    D_80158AA8[0x140] = 1;
-    *(s16 *)(b + 0xA) = 0x20;
-    *(s16 *)(b + 0xC) = 0x70;
-    b[2] = 0xF;
-    *(s16 *)(b + 6) = 0;
-    *(s16 *)(b + 0x10) = 0;
-    if (q[0x43] != 0) {
-        *(s16 *)(b + 0xE) = 0x18;
-    } else {
-        *(s16 *)(b + 0xE) = 0x19;
+    p->unk_00 = 1;
+    p->x = -0x18;
+    p->y = 0x30;
+    p->text = 4;
+    p->unk_02 = 0xF;
+    p->flags = 0;
+    p->ot = 0;
+    p++;
+    for (i = 0; i < 4; i++, p++) {
+        p->unk_00 = 1;
+        p->x = -0x50;
+        p->y = i * 16 + 0x60;
+        p->text = D_80155D50[i + 4];
+        p->unk_02 = 0xF;
+        p->flags = 0;
+        p->ot = 0;
     }
-    b[0x14] = 1;
-    *(s16 *)(b + 0x1E) = 0x20;
-    *(s16 *)(b + 0x20) = 0x80;
-    b[0x16] = 0xF;
-    *(s16 *)(b + 0x1A) = 0;
-    *(s16 *)(b + 0x24) = 0;
-    c = b + 0x14;
-    if (q[0x49] != 0) {
-        *(s16 *)(c + 0xE) = 0x16;
+    p = (TtPoolDraw14 *)D_80158AA8 + 16;
+    p->unk_00 = 1;
+    p->x = 0x20;
+    p->y = 0x70;
+    p->unk_02 = 0xF;
+    p->flags = 0;
+    p->ot = 0;
+    if (q[0x43] != 0) {
+        p->text = 0x18;
     } else {
-        *(s16 *)(c + 0xE) = 0x15;
+        p->text = 0x19;
+    }
+    p[1].unk_00 = 1;
+    p[1].x = 0x20;
+    p[1].y = 0x80;
+    p[1].unk_02 = 0xF;
+    p[1].flags = 0;
+    p[1].ot = 0;
+    p++;
+    if (q[0x49] != 0) {
+        p->text = 0x16;
+    } else {
+        p->text = 0x15;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013CC24);
-#endif
 
 void func_8013CDC0(void) {
     s32 pad; /* FAKE: unused home; the spill slots of t, s, g sit at sp+0x48/0x44/0x40 only with it. T-11500 */
