@@ -819,22 +819,17 @@ void normal_date_girl_out_init(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
 
-/* NON_MATCHING: T-10510, 8 lines (wave 12): load order of D_8011F4CB and 0x80000000 constant in a2 (original) vs a1 */
-#ifdef NON_MATCHING
 s32 normal_date_girl_suddenout(void) {
-    D_8011F50F &= 0xFF7F;
-    D_8011F4CB &= 0xFF7F;
+    D_8011ECD0[0x83F] &= ~0x80;
+    D_8011ECD0[0x7FB] &= ~0x80;
     D_801217D0[0].unk_00 |= 0x80000000;
     D_801217D0[1].unk_00 |= 0x80000000;
-    ((u8 *)&D_801217E5)[0] = ((u8 *)&D_801217E4)[0] = ((u8 *)&D_801217E6)[0] = 0x80;
-    ((u8 *)&D_80121809)[0] = ((u8 *)&D_80121808)[0] = ((u8 *)&D_8012180A)[0] = 0x80;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
     D_80122CF4 = 0;
     D_80122CF8 = 1;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenout);
-#endif
 
 s32 normal_date_bg_fadein(void) {
     D_80122CF8 = 1;
