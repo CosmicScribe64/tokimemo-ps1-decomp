@@ -14754,3 +14754,10 @@ Ingested the exact type-repair archive through 1d0069fa. Both compiler-coverage 
 ## [2026-10-15] lint | Separate draft compilation from reconstruction quality
 
 Added the independent quality audit and three synthetic checks for placeholder masking, byte-view arithmetic, and preference for a reconstruction-clear alternative without changing initial outcomes. Eight census/repair checks also pass. Imported the fifteen context-qualified type alternatives through 1d0069fa; the final quality ledger will retain unresolved synthetic expressions explicitly.
+## [2026-10-15] ticket | Reserve unaligned aggregate-copy repair lane
+
+Created [[tickets/T-15100-unaligned-draft-repairs]] and notified the census generator to reserve the nine listed scopes. Read original m2c and target copy tails. Genuine sizes include 35-byte fortune table, three-byte flag table, and byte-string initializers; preserve original attempts and reconstruct typed alternatives without ASM edits.
+
+## [2026-10-15] build | Compile nine genuine unaligned-copy alternatives
+
+[[tickets/T-15100-unaligned-draft-repairs]] moves to In Review. All nine full-TU C alternatives compile and compare serially in Docker, spanning 17,408 target code bytes; scores 69..1667, no zeros and no matching-coverage claim. Copies recover genuine byte extents, string initializers and GEKO stack aliases. ENDING uses existing integer dialogue_render ABI evidence only in archived context. Complete separate catalog/provenance in drafts/T-14500/repairs-unaligned; initial attempts and production sources untouched.

@@ -1,0 +1,26 @@
+{
+  "draft_hash": "c17609403ca72df6eb5957b3f20a25e64b57860c12fa3ba24cd4a69d2d44cd97",
+  "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+  "func": "func_80133B44",
+  "guarded": false,
+  "harness_hash": "cbf40cd669e0c44bcb1cb19323f5d31d23204f47dc9bd7013854767313559da1",
+  "scope": "SHOUGATU:func_80133B44",
+  "score": 92,
+  "seconds": 2.31,
+  "size": 408,
+  "source_hash": "03ad5ee773fcf88d81d7788df430329276b7cf8688d04d0b9a23fc4785d1c994",
+  "src": "src/ovl/SHOUGATU/801330C0.c",
+  "status": "scored",
+  "unit": "SHOUGATU",
+  "variant": "unaligned-aggregate-repair",
+  "ticket": "T-15100",
+  "compile_attempts": 1,
+  "notes": [
+    "Three copied flag bytes; sp41 is the second byte of the same aggregate."
+  ],
+  "matching_claim": false,
+  "archive_path": "drafts/T-14500/repairs-unaligned/SHOUGATU/func_80133B44",
+  "context_sha256": "ed3930240962f412e0e0211035db37836918e25e5ec5abf833a123a3490db3f6",
+  "residual_class": "nonmatching instruction, control-flow, stack-layout or inferred-type differences",
+  "body_sha256": "3d04770b124c7ec8db87ef0bf854e0c8e45585f09cf4f2d91101bbeb174d1746"
+}

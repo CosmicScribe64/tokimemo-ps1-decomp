@@ -1,0 +1,21 @@
+{
+  "source_base": "3d581b25",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/KANGEI/func_8013769C",
+  "original_result": {
+    "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+    "func": "func_8013769C",
+    "guarded": false,
+    "harness_hash": "859d741c6852fd410aa17412714445b1d60a797710be4f1c28cd18673ddbcbd4",
+    "reason": "m2c-error: M2C_LWL",
+    "scope": "KANGEI:func_8013769C",
+    "score": null,
+    "seconds": 0.505,
+    "size": 1256,
+    "source_hash": "f4a020529d28572f403dc7ebfa4be38630b0443d2051ccb6b509c1c602821d8d",
+    "src": "src/ovl/KANGEI/80135F10.c",
+    "status": "failed",
+    "unit": "KANGEI",
+    "variant": "default"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "draft_hash": "e10403d753c2584fde544abb5590828c67a479d5f4b56e942251607f4ae70315",
+  "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+  "func": "func_801350F8",
+  "guarded": false,
+  "harness_hash": "cbf40cd669e0c44bcb1cb19323f5d31d23204f47dc9bd7013854767313559da1",
+  "scope": "SHOUGATU:func_801350F8",
+  "score": 995,
+  "seconds": 1.094,
+  "size": 2308,
+  "source_hash": "5dd841b930e08ec9fcd09b901d1a50c32f866a0d704775c98dd65603cfb4c94d",
+  "src": "src/ovl/SHOUGATU/80134890.c",
+  "status": "scored",
+  "unit": "SHOUGATU",
+  "variant": "unaligned-aggregate-repair",
+  "ticket": "T-15100",
+  "compile_attempts": 1,
+  "notes": [
+    "Three automatic strings and genuine seven-by-five-byte fortune table."
+  ],
+  "matching_claim": false,
+  "archive_path": "drafts/T-14500/repairs-unaligned/SHOUGATU/func_801350F8",
+  "context_sha256": "744e7964d3fd37d375f5a454711d68ea28c23d41d90349c03e88229ed2ad72e0",
+  "residual_class": "nonmatching instruction, control-flow, stack-layout or inferred-type differences",
+  "body_sha256": "491aa0318d45433cb6d1e280c8a3f196a8100e1cefc0226a4166dd9f7fe6ea5b"
+}

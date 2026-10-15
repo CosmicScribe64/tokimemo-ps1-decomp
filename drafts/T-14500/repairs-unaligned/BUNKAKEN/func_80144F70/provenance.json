@@ -1,0 +1,19 @@
+{
+  "source_base": "3d581b25",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/BUNKAKEN/func_80144F70",
+  "original_result": {
+    "func": "func_80144F70",
+    "guarded": false,
+    "reason": "m2c-error: M2C_LWL",
+    "scope": "BUNKAKEN:func_80144F70",
+    "score": null,
+    "seconds": 1.5,
+    "size": 1424,
+    "source_hash": "665dff323225014b8e7e4dd4a960af4b2c6daecc7fa04662e928e85c722faa0f",
+    "src": "src/ovl/BUNKAKEN/80144F70.c",
+    "status": "failed",
+    "unit": "BUNKAKEN",
+    "variant": "default"
+  }
+}

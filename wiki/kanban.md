@@ -39,6 +39,8 @@ kanban-plugin: board
 
 
 
+- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
+
 
 
 
@@ -67,6 +69,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
+- [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
+- [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
+- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 

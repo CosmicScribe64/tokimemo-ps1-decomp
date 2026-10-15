@@ -1,0 +1,10 @@
+Final serial Docker IDO 5.3 full-TU comparisons; all remain NON_MATCHING.
+BUNKAKEN:func_80144F70: compile OK, 426 diagnostic rows
+BUNKASAI:func_80142700: compile OK, 336 diagnostic rows
+ENDING:func_8013A2E8: compile OK, 1667 diagnostic rows
+GEKO:func_80142C9C: compile OK, 1122 diagnostic rows
+GYOZI:func_801368B8: compile OK, 701 diagnostic rows
+KANGEI:func_8013769C: compile OK, 142 diagnostic rows
+SHOUGATU:func_80133B44: compile OK, 92 diagnostic rows
+SHOUGATU:func_801350F8: compile OK, 995 diagnostic rows
+SHOUGATU:func_801359FC: compile OK, 69 diagnostic rows

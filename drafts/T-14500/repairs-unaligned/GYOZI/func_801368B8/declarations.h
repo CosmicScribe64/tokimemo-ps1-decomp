@@ -1,0 +1,18 @@
+extern s16 D_8012B8EE;
+extern s16 D_8012B90C;
+extern s16 D_8012B9A2;
+extern s16 D_8012B9A4;
+extern s32 D_800F62F8;
+extern s32 D_8012B8E4;
+extern s32 D_8012B8F0;
+extern s32 D_8012E674;
+extern s32 D_8012E680;
+extern s8 D_8012B906;
+extern s8 D_8012B98E;
+extern u8 D_800F53DC;
+extern u8 D_800F647D;
+extern u8 D_80129FCB;
+extern u8 D_8012B98F;
+s32 func_8005AE00();
+s32 func_800BCEA0();
+void func_80137188(void);
