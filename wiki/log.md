@@ -13900,3 +13900,12 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] build | Verified matches published to main
 [[tickets/T-12400-integrate-verified-matches]]: direct non-force push succeeded, advancing remote main from 1668c560 to 8f78e5e5. All verified matching checkpoints collected for this batch are published; active experiments remain in worker worktrees.
+
+## [2026-10-15] ticket | BUNKAKEN/BUNKASAI isolated family work
+Created [[tickets/T-12700-bunka-families]] from 95c3fc9f and inspected prior family evidence. Original checkout remains read-only; experiments and ignored inputs reside in bunka-12700 worktree. Two compiler workers maximum.
+
+## [2026-10-15] ticket | Independent family assignments
+Created [[tickets/T-12701-bunkaken-address-family]] and [[tickets/T-12702-bunkasai-family]] in In Progress, with disjoint source ownership. Prior exact diffs isolate aggregate address allocation in the BUNKAKEN bitfield stores; matched siblings use a local GameState pointer, which remains a candidate rather than a claimed fix.
+
+## [2026-10-15] query | BUNKAKEN aggregate address form and BUNKASAI reload
+Recorded candidate evidence and rejected variants in [[bunka-family-results]]. Full local GameState pointer form scores zero on five BUNKAKEN handlers; one BUNKASAI candidate scores zero after reloading state across calls. Linked verification remains the acceptance gate.

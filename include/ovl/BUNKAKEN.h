@@ -80,6 +80,9 @@ void func_80139DEC(void);
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80143D68(void);
 
+/* T-12701: forward declaration for the scene handlers. */
+void func_80142864(void);
+
 #endif
 
 #ifndef OVL_BUNKAKEN_T9960
