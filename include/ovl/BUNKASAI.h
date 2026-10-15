@@ -81,6 +81,12 @@ typedef struct BunkSelectWords {
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80136230(void);
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80146F38(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8013C3C4(void);
+
 #endif
 
 #ifndef OVL_BUNKASAI_MODE_T9740
