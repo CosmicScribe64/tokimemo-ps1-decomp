@@ -13847,3 +13847,42 @@ Remaining sweep completed: 89 targets / 85,100 bytes, one verified pipeline matc
 ## [2026-10-15] ticket | T-12230 broad sweep reviewed and complete
 
 Standards and requirements reviews of 6d1e9cf2...70307e64 both passed with no actionable findings. [[tickets/T-12230-broad-coverage-sweep]] moved to Done; index and board synchronized. [[broad-coverage-results]] records 190 attempts, five literal matches / 5,036 bytes, and the negative result for blind expansion/variants. Changes remain committed locally, unmerged and unpushed.
+## [2026-10-15] setup | T-12300 isolated byte-focused matching
+
+Created isolated checkout at baseline 7a65b3d8 and [[tickets/T-12300-large-unclaimed-byte-matches]]. Read existing ownership, workflow and external research. The acceleration chat now owns its broad T-12230 cohort objects as well as its earlier matches; exclude these before selecting C files. Checkout moved to /private/tmp/tokimemo-large-bytes for sandbox write access. No source edits yet.
+
+## [2026-10-15] decision | T-12300 claim remaining substantial objects
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] owns RPG_BAT/80145CC0, RPG_BAT/8014ADD0, RPG_BAT/8014A660 and BUNKAKEN/8013BFE0. Census excludes current acceleration manifest and known worktree objects. Additional ticket inspection excludes RPG_BAT/80137280 (T-9960). Focus on the 2,232-byte target and related 1–1.4 KB handlers.
+
+## [2026-10-15] build | T-12300 baseline verified
+
+All 27 baseline binaries passed SHA1 in Docker (build/large-bytes/setup.log), with header/global checks. The bulk tool requires scratch outside the checkout; corrected the output mount to /results before any matching attempts.
+
+## [2026-10-15] build | T-12300 first drafts and parallel source work
+
+Eight substantial drafts produced no immediate match; full-unit scores 103–501 rows retained in [[tickets/T-12300-large-unclaimed-byte-matches]]. User requested subagents; assigned disjoint owned source files, two compiler slots total, and a third source-reasoning task. Existing aggregate normalization and switch/counter reconstruction are the next experiments.
+
+## [2026-10-15] build | T-12300 draft declaration prerequisites
+
+Full-file probes exposed two missing overlay declarations: existing void BUNKAKEN func_8013CEC0 and RPG_BAT word D_8015EE18 (definition in src/ovl/RPG_BAT/8014E780.c). Added their canonical overlay declarations for source probes; final validation will include all 27 binaries. No main API edits.
+
+## [2026-10-15] build | T-12300 verified 3604-byte BUNKAKEN family
+
+[[tickets/T-12300-large-unclaimed-byte-matches]]: three related 1–1.4 KB handlers pass literal linked-byte proof and whole BUNKAKEN SHA1. [[matching-notes]] records consistent GameState pointer and CharFlags bit2 idioms. Existing C preserved; no FAKE added. Compiler slot transferred to the RPG effects/UI worker.
+
+## [2026-10-15] build | T-12300 retain structurally recovered RPG target
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] records the 2,232-byte func_80145CC0 guarded draft: zero byte gain, 557/557 compared instructions, 58 register-only positions remaining after bounded source experiments. Default RPG_BAT SHA1 and header/global checks pass. Raw experiment evidence retained in ignored scratch; no compiler changes or dummy source workarounds.
+
+## [2026-10-15] build | T-12300 verified 1316-byte RPG effect handler
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] reaches 4,920 verified bytes / four functions. RPG_BAT func_8014A660 passes literal linked proof and unit SHA1 with explicit nested cases and a documented FAKE scalar pointer view. [[matching-notes]] records both the success and failed transfer to the larger guarded timer handler. Final full-game checks and review follow.
+
+## [2026-10-15] lint | T-12300 independent standards and requirements review
+
+Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive issue; standards found one unreachable break after an all-return nested switch in RPG_BAT func_8014A660. Removed it and scheduled fresh literal/unit validation. Refreshed stale ownership-plan wording in [[tickets/T-12300-large-unclaimed-byte-matches]]. Final In Review handoff and full-check evidence remain pending validation.
+
+## [2026-10-15] ticket | T-12300 reviewed handoff with 4920 verified bytes
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] moves to In Review, synchronized with board/index. Four functions add 4,920 literal linked bytes; final progress 5,737/6,958 functions and 1,293,004/2,279,368 bytes (56.7%). Review's unreachable break removed; fresh rebuilt literal proof and all 27 built-binary SHA1s pass. Header/global checks pass; prototypes 0 new / 15 known. Requirements review has no substantive findings; standards follow-up resolved its sole finding. Guarded 2,232-byte timer target contributes zero bytes. All work committed locally, no integration or push. Checkout returning from temporary sandbox staging to its original managed path for persistent chat attachment.

@@ -2009,3 +2009,4 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 
 | 8004F870 | `func_8005215C` | regorder | T-12050: regdiff reports field-load lifetime and frame differences; disjoint temporary reuse reaches 219 listing rows, empty-test FAKE 195; not retained. |
 | 8004F870 | `get_h_tokimeki` | other | T-12050: regdiff confirms structural loop/hoisting gap (535 versus 400 instructions initially); indexed flag stores reduce 817 to 637 rows; not retained. |
+| RPG_BAT/80145CC0 | `func_80145CC0` | regorder | T-12300: guarded 557/557-instruction reconstruction; timer D_8015EDE0 allocated v0 instead of v1 at 58 positions. Traced priority 0.6667, no competing v1 range. s32 fallthrough/bare returns, local pointer, empty tests, postfix and boolean compare variants do not solve. Full evidence build/large-bytes/rpg-large/handoff.txt; 0 gained bytes. |

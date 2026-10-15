@@ -142,3 +142,11 @@ void func_80152618(void);
 /* T-11390: forward calls within 80143DD0.c. */
 void func_80144D38(void);
 void func_80144E9C(void);
+
+#ifndef OVL_BUNKAKEN_T12300_DECLS
+#define OVL_BUNKAKEN_T12300_DECLS
+/* T-12300: scene handlers call the existing definition in 8013BFE0.c. */
+extern u8 D_80155F50;
+
+void func_8013CEC0(void);
+#endif

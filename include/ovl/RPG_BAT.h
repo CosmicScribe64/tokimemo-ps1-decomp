@@ -525,3 +525,20 @@ typedef struct RpgMotion30 {
 } RpgMotion30; /* size 0x30 */
 
 #endif
+
+#ifndef OVL_RPG_BAT_T12300_DECLS
+#define OVL_RPG_BAT_T12300_DECLS
+/* T-12300: word flag defined in 8014E780.c and read by 80145CC0.c. */
+extern s32 D_8015EE18;
+/* T-12300: word counters cleared by func_8014A660 (sw accesses). */
+extern s32 D_8015EC7C;
+extern s32 D_8015EC80;
+extern s32 D_8015ECEC;
+extern s32 D_8015ECF0;
+extern s32 D_8015ECF4;
+extern s32 D_8015ECF8;
+/* Existing guarded definitions later in 8014A660.c. */
+void func_8014AB84(s32 arg0, s32 arg1, s32 arg2);
+void func_8014AC74(void);
+
+#endif
