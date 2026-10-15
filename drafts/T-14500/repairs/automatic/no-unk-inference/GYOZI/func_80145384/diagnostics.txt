@@ -1,0 +1,19 @@
+m2c.py: argument counts from the callees' asm: func_80145520 0
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3500: 'sp28' undefined; reoccurrences will not be reported.
+     *(M2cBlockBC *)(&sp28[0]) = *(M2cBlockBC *)(&D_8014901C);
+ ---------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3517: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o /tmp/asm_processorhnncaw4d/preprocessed_e4a2a44132284049bd887df564213ce4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibw1fcequk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3502: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800F647A](0x3C);
+ -----------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3518: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work -o drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o /tmp/asm_processormdkeelkv/preprocessed_0b963dda82eb40c7addbd6db07c32963.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliblblolelr/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_80145384/work/guarded.o.sjis.c

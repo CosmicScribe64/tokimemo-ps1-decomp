@@ -1,0 +1,32 @@
+m2c.py: argument counts from the callees' asm: func_8004FC10 1, func_801325A0 1, main_state_set 1
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c, line 2596: redeclaration of 'func_80133330'; previous declaration at line 2583 in file 'drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c'
+ void func_80133330(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c, line 2596: Incompatible function return type for this function.
+ void func_80133330(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c, line 2604: 'sp2C' undefined; reoccurrences will not be reported.
+         func_801325A0((s32) &sp2C[0]);
+ -----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.o /tmp/asm_processor66n025ub/preprocessed_0ca6457a6b2d4edc8c2fbd5a63874585.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibl53nxcy5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c, line 2596: redeclaration of 'func_80133330'; previous declaration at line 2583 in file 'drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c'
+ void func_80133330(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c, line 2596: Incompatible function return type for this function.
+ void func_80133330(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c, line 2607: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.o /tmp/asm_processor528k5nid/preprocessed_d4d51b5df36a4fd4abbf3e9ba3d286e2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibh_ioe_0p/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c, line 2607: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.o /tmp/asm_processorlz5u_dko/preprocessed_fef257fe2646469396d1e2c720574424.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs186u8ly/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133330/work/guarded.c

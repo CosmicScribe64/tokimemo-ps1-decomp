@@ -1,0 +1,41 @@
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2797: redeclaration of 'func_8008BFB0'; previous declaration at line 2616 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c'
+ s32 func_8008BFB0();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2797: Incompatible function return type for this function.
+ s32 func_8008BFB0();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2801: Unacceptable operand of &.
+     if ((D_80125D10 & 0x4400) && (temp_t9 = (D_80125D44 + D_80125D48) & 0xFFFF, D_80125D44 = temp_t9, ((temp_t9 & 0xFF00) != 0))) {
+ ---------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o /tmp/asm_processorra9xan0f/preprocessed_74fbd409f25a492491133d104285e75d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibf4yhhwf3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c
+python3 failed:
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2796: redeclaration of 'func_8007A5BC'; previous declaration at line 2050 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c'
+ s32 func_8007A5BC();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2796: Incompatible function return type for this function.
+ s32 func_8007A5BC();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2800: Unacceptable operand of &.
+     if ((D_80125D10 & 0x4400) && (temp_t9 = (D_80125D44 + D_80125D48) & 0xFFFF, D_80125D44 = temp_t9, ((temp_t9 & 0xFF00) != 0))) {
+ ---------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o /tmp/asm_processorvhsxsydb/preprocessed_f2b7043309cf46719ab7fd83e8e2029d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib30h65ng5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2792: redeclaration of 'D_80125D10'; previous declaration at line 1458 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c'
+ extern s32 D_80125D10;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2799: Unacceptable operand of &.
+     if ((D_80125D10 & 0x4400) && (temp_t9 = (D_80125D44 + D_80125D48) & 0xFFFF, D_80125D44 = temp_t9, ((temp_t9 & 0xFF00) != 0))) {
+ ---------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o /tmp/asm_processor31429694/preprocessed_0018d6d050a64c52b345d60361e668d4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibl4un48xf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c, line 2798: Unacceptable operand of &.
+     if ((D_80125D10 & 0x4400) && (temp_t9 = (D_80125D44 + D_80125D48) & 0xFFFF, D_80125D44 = temp_t9, ((temp_t9 & 0xFF00) != 0))) {
+ ---------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o /tmp/asm_processor__42c9cl/preprocessed_5460cb57aeea408587e91418e174757e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwm7e5lau/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_8007A50C/work/guarded.c

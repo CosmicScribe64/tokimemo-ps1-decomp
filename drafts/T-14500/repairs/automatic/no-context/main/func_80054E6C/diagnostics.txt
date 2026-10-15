@@ -1,0 +1,13 @@
+python3 failed:
+ -----------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80054E6C/work/guarded.c, line 3103: Incompatible pointer type assignment
+     var_v1 = (temp_t6 * 4) + &D_800E7D10;
+ -----------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80054E6C/work/guarded.c, line 3110: Incompatible pointer type assignment
+     var_v0_2 = &D_800E6280;
+ -------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80054E6C/work/guarded.c, line 3111: Incompatible pointer type assignment
+     var_v1_2 = (temp_t6 * 0x10) + &D_800E7D10;
+ -------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80054E6C/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80054E6C/work/guarded.o /tmp/asm_processord38ng3hw/preprocessed_763b9c071db444e9b7504d17b65b7438.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibiql4n7q_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80054E6C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80054E6C/work/guarded.c

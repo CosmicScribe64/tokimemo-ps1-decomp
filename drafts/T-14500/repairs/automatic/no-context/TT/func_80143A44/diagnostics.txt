@@ -1,0 +1,22 @@
+python3 failed:
+ -------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c, line 3459: redeclaration of 'D_80158A80'; previous declaration at line 2538 in file 'drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c'
+ extern void *D_80158A80;
+ -------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c, line 3460: redeclaration of 'D_80158A84'; previous declaration at line 2420 in file 'drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c'
+ extern void *D_80158A84;
+ -------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c, line 3461: redeclaration of 'D_80158A88'; previous declaration at line 2539 in file 'drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c'
+ extern void *D_80158A88;
+ -------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work -o drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.o /tmp/asm_processorxtzo9q7y/preprocessed_1a597d1c0bbd4758858e7841f8ccc118.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhgg3k1wa/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c, line 3457: redeclaration of 'D_80158A60'; previous declaration at line 2425 in file 'drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c'
+ extern void *D_80158A60;
+ -------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c, line 3458: redeclaration of 'D_80158A74'; previous declaration at line 2404 in file 'drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c'
+ extern void *D_80158A74;
+ -------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work -o drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.o /tmp/asm_processormsl8o680/preprocessed_7227744f76244d309b4556b83615a248.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhnkufvz5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TT/func_80143A44/work/guarded.c

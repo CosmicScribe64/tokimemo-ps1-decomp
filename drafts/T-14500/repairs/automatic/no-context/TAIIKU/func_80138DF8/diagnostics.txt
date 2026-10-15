@@ -1,0 +1,26 @@
+python3 failed:
+ -------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c, line 3370: '&' before array or function; ignored
+             var_s1 = &D_8011ECD0;
+ ---------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c, line 3409: '&' before array or function; ignored
+             var_v1 = &D_8014A070;
+ ---------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c, line 3417: 'sp' undefined; reoccurrences will not be reported.
+             func_80044890(0, 0xBF98, 0xBF79, (&sp70[0])[D_80149940], *(s32 *)((unsigned char *)(sp + (D_80149940 * 4)) + (68)), 0xD6B7);
+ ------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.o /tmp/asm_processor3algh_g1/preprocessed_70804429f738496c881da28362403e14.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrk7hdr_u/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c
+python3 failed:
+ -------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c, line 3371: Incompatible pointer type assignment
+             var_s1 = &D_8011ECD0;
+ -------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c, line 3371: '&' before array or function; ignored
+             var_s1 = &D_8011ECD0;
+ ---------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c, line 3410: '&' before array or function; ignored
+             var_v1 = &D_8014A070;
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.o /tmp/asm_processornsypfcub/preprocessed_432f4008c7154e4a8b30b273f36cf9ed.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibud57yqpl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8/work/guarded.c

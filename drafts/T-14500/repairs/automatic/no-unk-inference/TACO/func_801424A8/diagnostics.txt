@@ -1,0 +1,53 @@
+m2c.py: argument counts from the callees' asm: func_8009ED74 2, func_8009F040 1, func_800A1100 1, func_800AB170 4
+python3 failed:
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3569: 'sp9A' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (26)) = sp9A;
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3570: 'sp9C' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (32)) = sp9C;
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3571: 'sp9E' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (34)) = sp9E;
+ ----------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o /tmp/asm_processor94x9s81x/preprocessed_f05f16211d794ab1b190f98b0b732f09.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgsvrkgkx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ -------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3558: Incompatible pointer type assignment
+             temp_v1 = temp_s1 + &sp6C;
+ --------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3568: 'sp92' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (10)) = sp92;
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3569: 'sp94' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (16)) = sp94;
+ ----------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o /tmp/asm_processor90mhd2z_/preprocessed_a8c9e05a31914617a2f708d0b2dec19f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibe_wcfa1t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ --------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3548: 'sp98' undefined; reoccurrences will not be reported.
+     if ((sp98 >= -0x2C0) && (sp90 < 0x2C1)) {
+ ---------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3550: 'sp96' undefined; reoccurrences will not be reported.
+         if ((sp96 >= (temp_v0_2 - 0x200)) && ((temp_v0_2 + 0x200) >= sp9E)) {
+ -------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3560: Incompatible pointer type assignment
+             temp_v1 = temp_s1 + &sp6C;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o /tmp/asm_processor91aasult/preprocessed_18cf849db2544634bb7eb1ac4c86107f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3m3z80v2/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ ---------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3538: '&' before array or function; ignored
+         func_800AB170((s32) &spA0, (s32) var_s2, (s32) &sp7C, (s32) &sp78);
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3538: '&' before array or function; ignored
+         func_800AB170((s32) &spA0, (s32) var_s2, (s32) &sp7C, (s32) &sp78);
+ --------------------------------------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c, line 3562: Incompatible pointer type assignment
+             temp_v1 = temp_s1 + &sp6C;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o /tmp/asm_processori5yu5xcu/preprocessed_a9d3f924660a4dc8a7550a4edeab7bde.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzh_zrw3l/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8/work/guarded.c

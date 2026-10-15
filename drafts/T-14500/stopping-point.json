@@ -1,0 +1,43 @@
+{
+  "initial_scopes": 1066,
+  "initial_bytes": 866424,
+  "initial_outcomes": {
+    "candidate-zero": 29,
+    "scored": 908,
+    "failed": 129
+  },
+  "automatic_attempts": 257,
+  "manual_repairs": 33,
+  "repaired_initial_failures": 52,
+  "compiler_coverage": {
+    "total": 1066,
+    "statuses": {
+      "candidate-zero": 30,
+      "failed": 77,
+      "scored": 959
+    },
+    "reserved": 33,
+    "repaired": 52,
+    "absent": 0
+  },
+  "quality": {
+    "total": 1066,
+    "statuses": {
+      "compiling-audit-clear": 849,
+      "uncompilable": 77,
+      "compiling-review-needed": 140
+    },
+    "flag_counts": {
+      "synthesized-stack-local": 184,
+      "inferred-copy-layout": 81,
+      "stack-address-arithmetic": 118,
+      "gamestate-address-arithmetic": 141,
+      "m2c-placeholder": 7,
+      "missing-context": 3
+    },
+    "qualification": "Audit-clear means no listed residual pattern; semantic equivalence is unproven."
+  },
+  "stopped": true,
+  "remaining": "77 scopes lack compiling alternatives; 140 additional compiling scopes retain reconstruction-review flags. Audit-clear does not prove semantics.",
+  "matching_claim": "No production matching claim follows from draft counts or scores."
+}

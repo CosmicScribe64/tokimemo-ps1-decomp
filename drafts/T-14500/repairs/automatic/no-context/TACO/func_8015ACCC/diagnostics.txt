@@ -1,0 +1,39 @@
+python3 failed:
+ --------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3559: Incompatible pointer type assignment
+     temp_v1 = temp_s5 + D_8015EDB4;
+ ------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3564: redeclaration of 'func_8015B2AC'; previous declaration at line 3443 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c'
+ void func_8015B2AC(s32 arg0, s16 *arg1) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3564: Incompatible function return type for this function.
+ void func_8015B2AC(s32 arg0, s16 *arg1) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.o /tmp/asm_processor8k1yzn_o/preprocessed_86b48b1e22314491bc9cbfa987efe431.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibucd_898b/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c
+python3 failed:
+ --------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3558: Incompatible pointer type assignment
+     temp_v1 = temp_s5 + D_8015EDB4;
+ ------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3563: redeclaration of 'func_8015B2AC'; previous declaration at line 3522 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c'
+ void func_8015B2AC(s32 arg0, s16 *arg1) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3563: Incompatible function return type for this function.
+ void func_8015B2AC(s32 arg0, s16 *arg1) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.o /tmp/asm_processorw4_ltk79/preprocessed_25fec1f2f0e64754bb4e0f20ea1781cf.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibl53l_1ih/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c
+python3 failed:
+ -------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3527: '&' before array or function; ignored
+                 *(void **)((unsigned char *)temp_s4 + (4)) = (void *) ((var_s0_2 * 0x50) + &D_80127480);
+ -------------------------------------------------------------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3552: Incompatible pointer type assignment
+     temp_v0_3 = (arg0 * 2) + &D_80161EA4;
+ --------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c, line 3559: Incompatible pointer type assignment
+     temp_v1 = temp_s5 + D_8015EDB4;
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.o /tmp/asm_processorqxr_2l97/preprocessed_065c06abc2cf41e49b3385fc3e56c170.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfc9zbvhx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC/work/guarded.c

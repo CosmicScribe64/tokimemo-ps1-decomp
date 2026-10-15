@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8015CF30 2
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650/work/guarded.c, line 3593: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp54) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650/work/guarded.c, line 3597: '&' before array or function; ignored
+     func_8015CF30(temp_lo, (s32) &sp54);
+ ---------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650/work/guarded.c, line 3598: '&' before array or function; ignored
+     func_800A0ECC(&sp54, &sp7C, &sp74);
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650/work/guarded.o /tmp/asm_processor1eturkfi/preprocessed_83117d486eb347aaad69357c984e2a91.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibovcyne1c/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650/work/guarded.c

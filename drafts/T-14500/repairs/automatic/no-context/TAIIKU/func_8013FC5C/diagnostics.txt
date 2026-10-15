@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C/work/guarded.c, line 3895: '&' before array or function; ignored
+                 (&D_801499D4)[var_v1] = var_s2 + 1;
+ -----------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C/work/guarded.c, line 3898: '&' before array or function; ignored
+         if (((func_8013FB14(temp_s1, &sp64) == 1) || (func_8013FB14(temp_s1) == 2) || (func_8013FB14(temp_s1) == 4) || (func_8013FB14(temp_s1) == 5)) && !(func_800AE0D0() & 0xFFF)) {
+ -------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C/work/guarded.c, line 3904: Incompatible pointer type assignment
+             temp_v0_2 = &D_801499C4 + (var_s2 * 2);
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C/work -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C/work/guarded.o /tmp/asm_processorw6vjp79x/preprocessed_3074cbe325914a86824f623c30d1a86f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6kqqu6bw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C/work/guarded.c

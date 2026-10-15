@@ -1,0 +1,11 @@
+extern s32 D_800B3454;
+extern s32 D_800B346C;
+extern s32 D_800B3470;
+extern s32 D_800B3474;
+extern s32 D_800B3478;
+extern s32 D_800B347C;
+extern s32 D_800E71E4;
+extern s8 D_800E7313;
+extern u8 D_800E62BE;
+extern u8 D_800E62BF;
+extern u8 D_800E71E5;

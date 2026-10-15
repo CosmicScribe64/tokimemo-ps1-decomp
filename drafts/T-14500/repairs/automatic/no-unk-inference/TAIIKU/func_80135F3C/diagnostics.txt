@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8008647C 0
+python3 failed:
+ -------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C/work/guarded.c, line 3611: '&' before array or function; ignored
+     D_801209C3 = *(&sp68 + ((temp_v1_2 >> 3) * 8) + (temp_v1_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C/work/guarded.c, line 3613: '&' before array or function; ignored
+     D_80120A07 = *(&sp68 + ((temp_a0_2 >> 3) * 8) + (temp_a0_2 & 7));
+ -------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C/work/guarded.c, line 3615: '&' before array or function; ignored
+     D_80120A4B = *(&sp68 + ((temp_a1 >> 3) * 8) + (temp_a1 & 7));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C/work/guarded.o /tmp/asm_processortpk506uc/preprocessed_f5ba7d0dcf8740e18bf5554ea00ea17f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtv2o5imp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C/work/guarded.c

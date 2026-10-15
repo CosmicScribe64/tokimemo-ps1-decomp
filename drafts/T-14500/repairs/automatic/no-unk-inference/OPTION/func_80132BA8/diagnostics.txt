@@ -1,0 +1,79 @@
+m2c.py: argument counts from the callees' asm: func_801325A0 1, text_set_advance 1
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2639: 'sp58' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp48, sp58, 0, (s32) "\202\250\202\334\202\257", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2640: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2640: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processor2f59wd7w/preprocessed_d61beff88ff54c6e9d53344f4ba9372b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibv2k19vhu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2641: 'sp46' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp46, sp56, 0, (s32) "\211\271\220\272\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2641: 'sp56' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp46, sp56, 0, (s32) "\211\271\220\272\203\202\201\133\203\150", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2642: 'sp48' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp48, sp58, 0, (s32) "\202\250\202\334\202\257", 0);
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processor0gtyw6zj/preprocessed_679a0a36492c4ae4ba9f2b9169adf563.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkx6763b7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2642: 'sp52' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp42, sp52, 0, (s32) "\203\201\203\152\203\205\201\133\203\202\201\133\203\150", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2643: 'sp44' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp44, sp54, 0, (s32) "\203\112\201\133\x83\\\203\213\221\254\223\170", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2643: 'sp54' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp44, sp54, 0, (s32) "\203\112\201\133\x83\\\203\213\221\254\223\170", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processora3c3rk8w/preprocessed_6572f5be3d0b414e80bee53a17a18cf0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzdrdw8_v/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2644: 'sp40' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp40, sp50, 0, (s32) "\203\175\203\105\203\130\220\335\222\350", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2644: 'sp50' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp40, sp50, 0, (s32) "\203\175\203\105\203\130\220\335\222\350", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2645: 'sp42' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp42, sp52, 0, (s32) "\203\201\203\152\203\205\201\133\203\202\201\133\203\150", 0);
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorv5fg7scy/preprocessed_092b5c28e6c64dd58b9dca95cfce9356.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib3pwkpjo3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2644: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ --------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: 'sp3E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp3E, sp4E, 0, (s32) "\203\101\203\103\203\122\203\223\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: 'sp4E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp3E, sp4E, 0, (s32) "\203\101\203\103\203\122\203\223\203\202\201\133\203\150", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorjc1g0ya9/preprocessed_28a135e9654a440d8496710cbef82f4c.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib930tv8yc/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2603: Incompatible function return type for this function.
+ void func_80132BA8(void) {
+ ------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ -------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ --------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processornxttfnjg/preprocessed_3eb45fb401bd4dbbb0eaf204f838d730.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjpafyp06/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132BA8/work/guarded.o.sjis.c

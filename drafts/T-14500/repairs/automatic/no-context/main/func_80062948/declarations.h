@@ -1,0 +1,11 @@
+extern s32 D_800E7378;
+extern s32 D_801227A0;
+extern s32 D_801227A4;
+extern s32 D_801230D0;
+extern s32 D_80125C60;
+s32 MulMatrix();
+s32 RotMatrix();
+s32 ScaleMatrix();
+s32 abs();
+s32 func_800A0140();
+s32 rsin();

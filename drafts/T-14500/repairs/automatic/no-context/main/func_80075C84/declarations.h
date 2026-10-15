@@ -1,0 +1,16 @@
+extern s16 D_800E639E;
+extern s16 D_8011ECF6;
+extern s16 D_8011ECFA;
+extern s32 D_800B6990;
+extern s32 D_800E7208;
+extern s32 D_801230D0;
+extern s8 D_800E71DF;
+extern s8 D_800E7313;
+extern s8 D_800E738D;
+extern u16 D_800E6376;
+extern u8 D_800B3778;
+extern u8 D_800B6998;
+s32 func_80042908();
+s32 func_80042940();
+s32 func_80044750();
+s32 rand();

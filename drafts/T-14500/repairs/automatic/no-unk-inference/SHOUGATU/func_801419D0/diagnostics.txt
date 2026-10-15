@@ -1,0 +1,13 @@
+m2c.py: argument counts from the callees' asm: func_80141D20 0
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o.sjis.c, line 3407: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockA0 *)(&sp2C[0]) = *(M2cBlockA0 *)(&D_80146804);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work -o drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o /tmp/asm_processorx1qjdw8a/preprocessed_7c2410f488f34e49a6e82641f2b3c6e7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxh8581ti/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o.sjis.c, line 3409: Non-function name referenced in function call.
+     (&sp2C[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work -o drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o /tmp/asm_processori5keytkd/preprocessed_50daf57890ff409e8c149a50a8b5cd4e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliba3p_ojuf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801419D0/work/guarded.o.sjis.c

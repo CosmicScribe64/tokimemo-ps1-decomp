@@ -14554,3 +14554,7 @@ Ingested the separate repairs-unaligned archive from ffac0f04, preserving all or
 ## [2026-10-15] build | Publish all initial draft work and current repairs
 
 At the user request, checkpoint all 1,066 initial scopes, current complete repair alternatives, source/header contexts, provenance, quality tools and compact snapshot ledgers for integration onto main. The serial repair remains active. Quality counts: {'compiling-audit-clear': 843, 'uncompilable': 84, 'compiling-review-needed': 139}. The all-usable target is explicitly incomplete; no absent initial scope and no new production match claim.
+
+## [2026-10-15] decision | Stop exhaustive drafting at the user-requested checkpoint
+
+Finished the already-running final repair pass and stopped without starting new work. All 1,066 initial scopes have outcomes. Across 257 automatic attempts and 33 manual reconstructions, 52 original failures now compile; 77 still do not. Quality ledger: 849 compiling/audit-clear, 140 compiling/review-needed, 77 uncompilable. Original artifacts remain immutable. [[exhaustive-drafts]] records remaining gaps and restart commands; the all-usable target is not marked complete.

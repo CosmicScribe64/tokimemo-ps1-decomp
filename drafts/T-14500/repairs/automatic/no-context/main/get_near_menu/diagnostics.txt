@@ -1,0 +1,26 @@
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c, line 2925: 'sp' undefined; reoccurrences will not be reported.
+                 temp_v1_6 = *(s16 *)((unsigned char *)(sp + (var_s2 * 2)) + (136));
+ -------------------------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c, line 2927: Incompatible pointer type assignment
+                     if ((arg0 == 0) && (temp_v0_2 = &D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_5, (*(s16 *)((unsigned char *)var_s0_5 + (3986)) == *(s16 *)((unsigned char *)temp_v0_2 + (3986))))) {
+ --------------------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c, line 2935: Incompatible pointer type assignment
+                     } else if ((arg0 == 1) && (temp_v0_3 = &D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_5, (*(s16 *)((unsigned char *)var_s0_5 + (3984)) == *(s16 *)((unsigned char *)temp_v0_3 + (3984))))) {
+ ---------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work -o drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o /tmp/asm_processors4lvlb9s/preprocessed_9cc4a373ac6e4d4fb4191fa8dba50a2b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn7_1vgie/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c
+python3 failed:
+ ------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c, line 2923: Incompatible pointer type assignment
+         var_s0_5 = temp_s1_5 + &D_800E6280;
+ -----------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c, line 2928: Incompatible pointer type assignment
+                     if ((arg0 == 0) && (temp_v0_2 = &D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_5, (*(s16 *)((unsigned char *)var_s0_5 + (3986)) == *(s16 *)((unsigned char *)temp_v0_2 + (3986))))) {
+ --------------------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c, line 2936: Incompatible pointer type assignment
+                     } else if ((arg0 == 1) && (temp_v0_3 = &D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_5, (*(s16 *)((unsigned char *)var_s0_5 + (3984)) == *(s16 *)((unsigned char *)temp_v0_3 + (3984))))) {
+ ---------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work -o drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o /tmp/asm_processor2cqoekya/preprocessed_ae2491ea6fe34cd89136228de4c28063.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkvvhhy85/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/get_near_menu/work/guarded.o.sjis.c

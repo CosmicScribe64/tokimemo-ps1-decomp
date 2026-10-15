@@ -1,0 +1,13 @@
+python3 failed:
+ -------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718/work/guarded.c, line 2709: Unacceptable operand of == or !=
+         } while (var_v0 != &D_8012071C);
+ ------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718/work/guarded.c, line 2710: '&' before array or function; ignored
+         menu_set(1, 3, &sp74, &sp68, &sp5C, &sp50);
+ -------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718/work/guarded.c, line 2710: '&' before array or function; ignored
+         menu_set(1, 3, &sp74, &sp68, &sp5C, &sp50);
+ --------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718/work -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718/work/guarded.o /tmp/asm_processor4v12m529/preprocessed_79509e962244458aab85b98acaff5503.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhypr4f85/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80133718/work/guarded.c

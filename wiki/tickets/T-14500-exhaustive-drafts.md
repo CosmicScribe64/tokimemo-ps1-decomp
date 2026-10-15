@@ -25,3 +25,7 @@ Inventory every configured game INCLUDE_ASM, retain guarded drafts, generate mis
 ## Publishing checkpoint
 
 All 1,066 default attempts are complete (29 zero candidates, 908 other scores, 129 explicit failures). Initial artifacts are immutable; 33 independent source/type repairs and completed automatic alternatives are joined separately. The final target remains usable reconstructed C for every remaining function. This ticket stays In Progress while compiler failures and residual synthetic-expression flags remain. A live serial repair pass continues through bounded fallbacks; no unverified draft entered production.
+
+## User-requested stopping point
+
+Stopped after the existing final no-unknown-inference pass, with all 1,066 initial scopes accounted for and 257 automatic attempts preserved. Fifty-two initial failures are now compiling alternatives (33 manual plus 19 automatic). Final quality: 849 compiling/pattern-audit-clear, 140 compiling/review-needed, 77 uncompilable; no absent scope. Ticket remains In Progress because usable reconstruction for every function is incomplete. See [[exhaustive-drafts]] for restart commands and exact residual ledgers. No compiler work remains running.

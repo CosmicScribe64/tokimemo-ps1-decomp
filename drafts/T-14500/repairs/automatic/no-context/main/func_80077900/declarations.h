@@ -1,0 +1,15 @@
+extern s16 D_80120666;
+extern s32 D_800E6280;
+extern s8 D_800E69DD;
+extern u16 D_800E62C2;
+extern u16 D_800E6374;
+extern u32 D_800E7384;
+extern u8 D_800E62C1;
+extern u8 D_800E699C;
+s32 func_80044750();
+s32 func_80048F64();
+s32 func_80072B5C();
+s32 main_state_set();
+s32 parameter_show_init();
+s32 parameter_up_down();
+s8 func_80053564();

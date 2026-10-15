@@ -1,0 +1,13 @@
+python3 failed:
+ ------------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC/work/guarded.c, line 3590: Unacceptable operand of == or !=
+         if (temp_s2 == &D_801274D0) {
+ --------------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC/work/guarded.c, line 3599: Unacceptable operand of == or !=
+         if (temp_s2 == &D_80127520) {
+ --------------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC/work/guarded.c, line 3608: Unacceptable operand of == or !=
+         if (temp_s2 == &D_80127570) {
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC/work/guarded.o /tmp/asm_processorc7ptv_l0/preprocessed_5744e5db71f7474f9531661d64d1fee0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcxahbhhd/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC/work/guarded.c
