@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_8004A414 6
+python3 failed:
+cfe: Warning 681: drafts/T-14500/SHOUGATU/func_80138240/work/guarded.o.sjis.c, line 3426: '&' before array or function; ignored
+     *(M2cBlock94 *)(&sp30) = *(M2cBlock94 *)(&D_80144FB4);
+ --------------------^
+cfe: Error: drafts/T-14500/SHOUGATU/func_80138240/work/guarded.o.sjis.c, line 3434: 'sp' undefined; reoccurrences will not be reported.
+     (*(s32 (**)())((unsigned char *)(sp + (temp_v0 * 4)) + (48)))();
+ -------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/SHOUGATU/func_80138240/work -o drafts/T-14500/SHOUGATU/func_80138240/work/guarded.o /tmp/asm_processorn_9jyufn/preprocessed_9fa2a98cb3334613b399f47247295054.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9laapwc3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/SHOUGATU/func_80138240/work/guarded.o drafts/T-14500/SHOUGATU/func_80138240/work/guarded.o.sjis.c

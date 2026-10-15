@@ -19,7 +19,7 @@ See [[tickets/T-14500-exhaustive-drafts]] and [[broad-coverage-results]].
 
 ## Census execution
 
-Checkpoint: **487/1,066 default attempts**; 422 compiled/scored drafts, 65 failures, 0 timeouts. 24 zero candidates are diagnostic scores, separate from production proof records. Initial outcomes remain immutable; externally owned type repairs and automatic retries use separate directories.
+Checkpoint: **678/1,066 default attempts**; 590 compiled/scored drafts, 88 failures, 0 timeouts. 28 zero candidates are diagnostic scores, separate from production proof records. Initial outcomes remain immutable; externally owned type repairs and automatic retries use separate directories.
 
 | Unit | Completed / total | Zero candidates | Failed / timeout |
 |---|---:|---:|---:|
@@ -41,10 +41,10 @@ Checkpoint: **487/1,066 default attempts**; 422 compiled/scored drafts, 65 failu
 | OMIMAI | 3 / 3 | 0 | 0 |
 | OPTION | 44 / 44 | 0 | 5 |
 | RENSYU | 7 / 7 | 0 | 0 |
-| RPG_BAT | 20 / 83 | 0 | 2 |
-| SHOUGATU | 0 / 39 | 0 | 0 |
-| SHUGAKU | 0 / 28 | 0 | 0 |
-| TACO | 0 / 126 | 0 | 0 |
+| RPG_BAT | 83 / 83 | 2 | 6 |
+| SHOUGATU | 39 / 39 | 0 | 9 |
+| SHUGAKU | 28 / 28 | 2 | 3 |
+| TACO | 61 / 126 | 0 | 7 |
 | TAIIKU | 0 / 81 | 0 | 0 |
 | TEL | 0 / 5 | 0 | 0 |
 | TT | 0 / 51 | 0 | 0 |
