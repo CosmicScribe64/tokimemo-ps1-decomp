@@ -441,6 +441,8 @@ extern TtCollision6 D_80155C64[];
 
 /* Halfword masks indexed by the byte phase at work+0x21, T-9720. */
 extern u16 D_80155DD0[];
+/* Halfword button masks indexed by the phase at work+0x21 (func_80149400). T-11800 */
+extern u16 D_80156C90[];
 
 #ifndef OVL_TT_T9720_COORDINATES
 #define OVL_TT_T9720_COORDINATES

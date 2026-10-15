@@ -159,7 +159,27 @@ void func_80149108(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801491F0);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149400);
+void func_80149400(void) {
+    s32 pad; /* FAKE: moves the spill slot of p to sp+0x28. T-11800 */
+    u8 *p;
+
+    p = D_80158A64;
+    if ((*(u16 *)(D_80158A60 + 0x14) & D_80156C90[p[0x21]]) == D_80156C90[p[0x21]]) {
+        p[0x20] = 0x10;
+        if (++p[0x21] == 6) {
+            func_80133AD0(0x607);
+            p[0x21] = 0;
+            p[0x24] = 1;
+            p[0x25] = 0;
+            D_80158AA8[0x78] = 1;
+        }
+    } else if (*(u16 *)(*(s32 *)&D_80158A60 + 0x14) != 0) { /* FAKE: the s32 view stops uopt reusing the first read. T-11800 */
+        p[0x21] = 0;
+    }
+    if (--p[0x20] == 0) {
+        p[0x21] = 0;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801494D8);
 
