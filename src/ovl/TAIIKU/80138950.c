@@ -590,7 +590,47 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BEF8);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C0E4);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C33C);
+/* FAKE: T-11640. The original reloads the counter D_801499A0.unk_02 and the flag D_801499B2 in
+ * every block where IDO keeps them in a register: the counter is read through a u16 view of
+ * D_801499A0, the flag is declared volatile and its second test reads it through a plain u16
+ * view (all-volatile reads change the delay-slot fill). Real source unknown. */
+void func_8013C33C(void) {
+    s32 tmp;
+
+    if (D_80149968.unk_10 == 0 && D_801499B2 != 2) {
+        D_801499B2 = 2;
+        ((u16 *)&D_801499A0)[1] = 0;
+        func_80044750(0x802);
+    }
+    if (((u16 *)&D_801499A0)[1] > 600) {
+        ((u16 *)&D_801499A0)[1] = 0;
+    }
+    func_8013C5C8(0x18800);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 4)) {
+        func_8013C4E4(0x10000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xC)) {
+        ((s16 *)&tmp)[0] = 0;
+        ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+        tmp += D_80149968.unk_0C * 80;
+        D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && ((u16 *)&D_801499A0)[1] % 30 == 0 && ((u16 *)&D_801499A0)[1] >= 60) {
+        if (D_801499B2 == 0) {
+            D_801499B2 = 1;
+            func_80044750(0x800);
+            ((u16 *)&D_801499A0)[1]++;
+        } else if (*(u16 *)&D_801499B2 == 1) {
+            D_801499B2 = 0;
+            func_80044750(0x801);
+            ((u16 *)&D_801499A0)[1]++;
+        } else {
+            D_801499B2 = 0;
+        }
+    }
+}
 
 void func_8013C4E4(s32 arg0) {
     s32 var_a0;
