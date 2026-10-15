@@ -196,3 +196,9 @@ in the shared Docker environment took 8.981 seconds for the source touch and
 work. Baseline timing was not measured. Baseline and updated full builds each
 passed all 27 binary SHA1 checks, and the following Ninja invocation was a no-op.
 This change adds no matched bytes.
+
+Final review validation: 11 dependency integration tests, 17 existing compiler
+tests and 131 header/prototype/padding/rodata/layout tests passed (159 total).
+Standards and spec reviews cleared the membership fixes; the spec reviewer
+independently reran the 11 integration tests. The final full build again passed
+27/27 SHA1 checks and the subsequent build was a no-op.

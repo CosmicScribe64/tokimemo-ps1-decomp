@@ -86,7 +86,6 @@ kanban-plugin: board
 
 
 ## In Review
-- [ ] [[tickets/T-13500-incremental-build-dependencies|T-13500 Incremental build dependencies]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
 - [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
@@ -127,6 +126,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-13500-incremental-build-dependencies|T-13500 Incremental build dependencies]]
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 - [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]

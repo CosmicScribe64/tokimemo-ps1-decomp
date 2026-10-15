@@ -1,7 +1,7 @@
 ---
 id: T-13500
 title: Track compiler header dependencies for incremental builds
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -17,7 +17,7 @@ Make source and header integrations rebuild only affected consumers while retain
 - [x] Actual compiler includes tracked, including nested/conditional includes and missing headers.
 - [x] Source, shared header, overlay header, ASM/rodata and no-op rebuilds tested with Ninja.
 - [x] Header validation still runs before compiles and blocks failures.
-- [ ] Full 27 binary checks, baseline rebuild counts and standards review recorded.
+- [x] Full 27 binary checks, baseline rebuild counts and standards review recorded.
 
 ## Notes
 
@@ -32,3 +32,7 @@ Isolated branch codex/build-deps-13500 at origin/main 5ccb8765. Own configure.py
 - Implementation ready for standards/spec review against 5ccb8765; no production C/header or toolchain/matching-pass changes. See [[build-system]] for the dependency contract and test scope.
 
 - Review fixes: path membership inventory now conservatively invalidates all C on file additions/removals (ordinary edits stay selective); missing watched directories have phony producers. Configure restat and co-output recovery avoid stale/no-op regeneration. New regressions cover higher-priority source-local/nested shadows, removed directories, missing inventory and unchanged-inventory regeneration. 131 related checker/prototype/padding/rodata/layout tests pass.
+
+- Final verification after the membership fixes: all 27 binary SHA1 checks passed again. One configure regeneration followed the last configure.py edit; subsequent Ninja build is a no-op. Final touch counts remain source 1/6, main_api.h 442/525, ETC.h 13/18 (compiles/tasks).
+- Code review against CODING_STANDARDS.md and the task spec completed in two independent GPT-6.1 Sol medium review agents. Initial findings (new include shadows and removed directory inputs) resolved in e0f0317b; both follow-up reviews report no remaining findings. Spec reviewer independently ran all 11 integration tests with the checkout mounted read-only: pass. No standards violations or scope creep. Total direct validation: 11 integration + 17 cc + 131 surrounding tests = 159 passing tests.
+- Ready for root integration on codex/build-deps-13500. Original checkout untouched, no push/PR, no production game source/header changes, no new matched bytes. Add/remove membership intentionally rebuilds all C for correctness; ordinary edits retain selective invalidation.
