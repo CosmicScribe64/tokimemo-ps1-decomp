@@ -709,3 +709,11 @@ extern u8 D_801567B0[];
 /* Defined after its caller func_801441BC in 80142D40.c. T-11840 */
 void func_80144CA8(void);
 #endif
+
+#ifndef OVL_TT_T11840_80137C20
+#define OVL_TT_T11840_80137C20
+/* Per-record animation bytes and the update script installed by func_80137C20. T-11840 */
+extern u8 D_80152C4C[];
+extern u8 D_80152C50[];
+extern u8 D_80155C5E[];
+#endif
