@@ -14414,3 +14414,9 @@ Review of [[tickets/T-14000-ending-en-nichi-families]] identifies func_801333B0'
 
 ## [2026-10-15] build | DATE and EN_NICHI gain verified at 61.8 percent
 [[tickets/T-12400-integrate-verified-matches]] integrated6e23f2c0 and4f1ca7a6 plus3860fddf annotation fix. Independent default literal proof confirms DATE80152980=296bytes and EN_NICHI801333B0=476bytes, with affected binary SHA1s, headers/globals and branch prototype checks passing. Standards inspection required an explicit FAKE label for the unconfirmed s32-without-return lifetime choice; final annotated source reverified. Total5882/6958functions,1407536/2279368bytes (61.8%); remaining415960alignedbytes to80%. Evidence build/scratch/goal-date-52980.log, goal-en-nichi.log and goal-en-nichi-final.log. DATE worker now reconstructs3192-byte dispatch aggregate family; other active workers continue distinct scopes.
+
+## [2026-10-15] ticket | T-14200 MAIN family pass
+Created isolated codex/main-14200 from 0f117230; original checkout read only. Read [[matching-breakthroughs]], [[bunka-family-results]], [[etc-family-results]] and standards; excluded two reserved MAIN files. Claimed [[tickets/T-14200-main-source-families]] before probes.
+
+## [2026-10-15] build | T-14200 initializer 676-byte checkpoint
+[[main-family-results]] records default full-TU literal MATCH for func_800412E0 and MAIN SHA1 OK. Canonical state views close the prior initializer near miss; original 0xFFF0 mask retained. Rejected appointment/parameter source forms and temporary headers removed. [[tickets/T-14200-main-source-families]] remains In Progress.

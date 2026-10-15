@@ -335,3 +335,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Compiler include dependencies reused for DATE experiments.
 - [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
 - [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
+- [[tickets/T-14200-main-source-families|T-14200]] MAIN source-family recovery (In Progress).
+- [[main-family-results]] - T-14200 MAIN verified checkpoints and rejected focused probes.

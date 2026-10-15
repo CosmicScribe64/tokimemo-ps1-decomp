@@ -2744,3 +2744,6 @@ void func_80060504(void);
 void func_80060150(void);
 
 #endif /* MAIN_API_H */
+
+/* T-14200: canonical declaration of the existing MAIN definition. */
+void func_80041840(void);

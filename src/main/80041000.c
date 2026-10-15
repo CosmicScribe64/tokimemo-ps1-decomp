@@ -109,7 +109,69 @@ void func_80041168(s32 arg0) {
     func_8009C674(0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800412E0);
+void func_800412E0(s32 arg0) {
+    func_8009C210(0);
+    if (arg0 != 0) {
+        func_80041168(0xFF);
+        bzero(&D_800E6280, 0x1A8C);
+    }
+    D_800E6280.unk_000 = 0x140;
+    D_800E6280.unk_002 = 0xF0;
+    D_800E6280.unk_004 = 0;
+    D_800E6280.unk_036 = 0;
+    D_800E6280.unk_037 = 0;
+    D_800E6280.unk_038 = 0;
+    D_800E6280.unk_014[0] = 0xA0;
+    D_800E6280.unk_014[1] = 0xA0;
+    D_800E6280.unk_018[0] = 0x168;
+    D_800E6280.unk_018[1] = 0x78;
+    D_800E6280.unk_10F8 = 0;
+    D_800E6280.unk_10FC = 0;
+    D_800E6280.unk_1100 = 0;
+    D_800E6280.unk_1104.w = 0;
+    D_800E6280.unk_1108 = 0x10;
+    D_800E6280.unk_1109 = 0;
+    D_800E6280.unk_110A = 0;
+    D_800E6280.unk_F88 = 0;
+    D_800E6280.unk_F84 = 0;
+    D_800E6280.unk_F80 = 0;
+    D_800E6280.unk_1110 = 0;
+    D_800E6280.unk_110F = 0;
+    D_800E6280.unk_10F0 = 0x106;
+    /* Word initialization overlaps the byte selectors read by the menus. */
+    *(s32 *)&D_800E6280.unk_1095[3] = 0x9F;
+    func_8004902C();
+    D_800E6280.unk_039 = 0;
+    D_800E6280.unk_1113 = 0;
+    D_800E6280.unk_1114 = 0;
+    D_800E6280.unk_034 = 1;
+    tpage_buf_clear();
+    search_tpage(0x7FFF, 0, 0);
+    D_800E6280.unk_10E8 = 1;
+    func_80041584();
+    func_80048EB8(0);
+    dec_bg_reset();
+    func_8004482C();
+    menu_bar_color(0x10, 0, 0, 8);
+    func_80041840();
+    strncpy((s32) D_800E6280.unk_0C4, (s32) "ときめき", 0x10);
+    strncpy((s32) D_800E6280.unk_0D4, (s32) "アルバ", 8);
+    strncpy((s32) D_800E6280.unk_0DC, (s32) "ム作成", 8);
+    strncpy((s32) D_800E6280.unk_0E4, (s32) "後未セーブ", 0x10);
+    /* The flag word is updated through byte and halfword views. T-14200. */
+    *(u8 *)&D_800E6280.unk_0F8 = (*(u8 *)&D_800E6280.unk_0F8 & 0xFFF0) | 1;
+    *(u16 *)&D_800E6280.unk_0F8 = (*(u16 *)&D_800E6280.unk_0F8 & 0xFE0F) | 0x10;
+    func_8006BC28(0);
+    func_8006BD6C(0);
+    func_8006C848(1);
+    func_8006C848(0);
+    func_80041878();
+    func_80054C4C();
+    bzero(D_80122DD0, 0x100);
+    bzero(&D_80122CD0, 0x100);
+    bzero(&D_801230D0, 0x40);
+    func_80042058();
+}
 
 void func_80041584(void) {
     func_800415B4(0, 0x40);
