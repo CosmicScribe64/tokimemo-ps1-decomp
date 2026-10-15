@@ -3471,7 +3471,7 @@ s32 func_8013D468(void) {
 
 /* NON_MATCHING: T-11020, register-only (39 insns): constant 8 in a3 (compares) + a2 (call arg) instead of one a2, n in v0 vs v1; first branch matches */
 #ifdef NON_MATCHING
-void func_8013D5FC(void) {
+s32 func_8013D5FC(void) {
     GameState *g;
     u8 n;
 
@@ -3485,6 +3485,7 @@ void func_8013D5FC(void) {
         D_800CA224[0] = D_800CA224[1] = D_800CA224[2] = 3;
         D_800CA148 += 2;
         g->unk_110A += 0xD;
+        return 0;
     } else {
         if ((g->unk_F5F == 8) && (*(u8 *)&D_8015B68C == 3) && (g->unk_1BC[8].unk_14[0x18] != 0)) {
             n = g->unk_110D;
@@ -3503,7 +3504,7 @@ void func_8013D5FC(void) {
         if (n >= 0xBU) {
             g->unk_110D = 0xA;
         }
-        func_80085A60(g->unk_F5F, *(u8 *)&D_8015B68C, 8);
+        func_80085A60(g->unk_F5F, *(u8 *)&D_8015B68C, 8U);
         if ((g->unk_F5F == 8) && (*(u8 *)&D_8015B68C == 3) && (g->unk_1BC[8].unk_14[0x18] == 0) && (D_800CA14C == 3)) {
             func_80044750(0x74);
             func_8004E9F4(1);
