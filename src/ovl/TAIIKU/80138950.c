@@ -828,7 +828,50 @@ void func_8013CCFC(void) {
     func_8013D2B4();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013CD34);
+void func_8013CD34(void) {
+    s32 unused; /* FAKE: T-11640, reserves the original's frame slot above a0 (no use in the code) */
+    s32 a0;
+    s32 sp44;
+    s32 sp40;
+    s32 sp3C;
+    s32 sp38;
+
+    if (D_80149990.unk_00 != 0) {
+        D_80149968.unk_00 = 0;
+        D_80149968.unk_04 = 0;
+    } else if (func_8013CEF8() != 0 && (D_800E6280.unk_F88 & 0x20)) {
+        if (D_80149968.unk_10 < 0) {
+            D_80149968.unk_10 = 0;
+        }
+        a0 = -(((((s16) D_80149968.unk_1C[0] >> 3) - D_80120676) << 10) >> 6);
+        if (D_80122EC4 % 3 != 0) {
+            a0 = -(((((s16) D_80149968.unk_1C[0] >> 3) - D_80120676) << 10) >> 6) - 0x200;
+        }
+        sp44 = 0;
+        sp40 = 0x10000;
+        Rot_2D(a0, &sp44, &sp40, &sp3C, &sp38);
+        D_80149990.unk_04 = sp3C;
+        D_80149990.unk_08 = sp38;
+        D_80149968.unk_08 = 0;
+    } else if (D_80149968.unk_08 > 10) {
+        D_80149968.unk_08 = 0;
+        if (D_801499A0.unk_0C <= 0 && (u16) D_801499B0[0].unk0 == 0) {
+            D_80149990.unk_08 -= 0x4000;
+            if (D_80149968.unk_0C > 0) {
+                D_80149990.unk_04 -= 0x4000;
+            } else if (D_80149968.unk_0C < 0) {
+                D_80149990.unk_04 += 0x4000;
+            }
+        } else {
+            D_80149990.unk_04 = 0;
+            D_80149990.unk_08 = 0;
+        }
+    }
+    if (D_80149990.unk_00 == 0) {
+        D_80149968.unk_00 = D_80149990.unk_04 + D_801499A0.unk_08;
+        D_80149968.unk_04 = D_80149990.unk_08 + D_801499A0.unk_0C;
+    }
+}
 
 s32 func_8013CEF8(void) {
     s32 dx;
