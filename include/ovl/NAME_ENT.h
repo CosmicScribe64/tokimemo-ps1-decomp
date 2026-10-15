@@ -444,11 +444,7 @@ extern s32 D_8014CC3C;
 
 #ifndef OVL_NAME_ENT_T11010_E_H
 #define OVL_NAME_ENT_T11010_E_H
-extern u8 D_8014CC7A; /* loop bounds: addresses inside D_8014CC74 / D_8014CC7C / D_8014CC84 */
-extern u8 D_8014CC82;
-extern u8 D_8014CC8E;
-extern u8 D_8014CC7B;
-extern u8 D_8014CC83;
+extern u8 D_8014CC8E; /* loop bound and terminator: labels inside D_8014CC84, the original addresses them by name */
 extern u8 D_8014CC8F;
 #endif
 

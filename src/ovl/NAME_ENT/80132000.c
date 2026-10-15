@@ -1,6 +1,89 @@
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 #include "game.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC30);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC38);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC3C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC40);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC44);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC48);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC4C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC50);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC54);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC58);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC5C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC60);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC64);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC70);
+u8 D_8014CC74[8] = { 0 };
+u8 D_8014CC7C[8] = { 0 };
+u8 D_8014CC84[12] = { 0 };
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC90);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC94);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC98);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC9C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCA0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCA4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCAC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCB0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCB4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCB8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCBC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCC0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCC4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCC8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCCC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCD0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CCE4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD04);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD10);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD28);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD2C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD30);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD34);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD38);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD3C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD40);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD44);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD48);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD4C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD50);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD54);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD58);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD5C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD60);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD64);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD68);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD6C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD70);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD74);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD78);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD7C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD80);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD84);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD88);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD8C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD90);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD94);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD98);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CD9C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CDA0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CDA4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CDA8);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CDAC);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CDB0);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CE64);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CE68);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CE6C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CEE4);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CF5C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D010);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D014);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D028);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D03C);
+INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014D04C);
 
 void func_80132000(s32 arg0) {
     s32 rem;
@@ -832,7 +915,7 @@ void func_80134F6C(void) {
     }
 }
 
-/* NON_MATCHING: T-11010, T-11650, 16 differing lines: the stores to D_8014CC82/D_8014CC7A need the shared lui $at of a variable defined in this file (data island), three loop pointer setups scheduled after the lui/addiu pair (as1 order), the constant 2 stored to D_8014D0A4 comes from $t6 where the original has $v0 */
+/* NON_MATCHING: T-11010, T-11650, 4 differing lines: the constant 2 stored to D_8014D0A4 comes from $t6 where the original has $v0 */
 #ifdef NON_MATCHING
 void func_80135168(void) {
     u8 *p;
@@ -849,26 +932,22 @@ void func_80135168(void) {
             D_8014CCA0 = (u8) D_8014D09C % 31;
             D_8014CCA4 = (u8) D_8014D0A0 & 3;
         } else {
-            p = D_8014CC74;
-            do {
+            for (p = D_8014CC74; p < &D_8014CC74[6]; p += 2) {
                 func_800AE0F0(p, D_800B3644);
-                p += 2;
-            } while (p < &D_8014CC7A);
-            p = D_8014CC7C;
-            do {
+            }
+            for (p = D_8014CC7C; p < &D_8014CC7C[6]; p += 2) {
                 func_800AE0F0(p, D_800B3644);
-                p += 2;
-            } while (p < &D_8014CC82);
-            p = D_8014CC84;
-            do {
+            }
+            /* FAKE: initialisation on the do line gives the original as1 order of the two addiu. T-11650 */
+            p = D_8014CC84; do {
                 func_800AE0F0(p, D_800B3644);
                 p += 2;
             } while (p != &D_8014CC8E);
             D_8014CC8E = 0;
-            D_8014CC83 = 0;
-            D_8014CC82 = 0;
-            D_8014CC7B = 0;
-            D_8014CC7A = 0;
+            D_8014CC7C[7] = 0;
+            D_8014CC7C[6] = 0;
+            D_8014CC74[7] = 0;
+            D_8014CC74[6] = 0;
             D_8014CC90 = 0xFF;
             D_8014CC94 = 0xFF;
             D_8014CC98 = 0xFF;
