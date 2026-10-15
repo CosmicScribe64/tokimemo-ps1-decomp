@@ -863,9 +863,8 @@ s32 normal_date_bg_fadein(void) {
     }
 }
 
-/* NON_MATCHING: T-11590, 10 differing lines; the Rec24 r = g = b chains and the D_8011ECD0 bytes fix the order and the base register, left: the original keeps x in a0 and stores the chain values through a copy (move v0,a0) and a second andi v0,a0,0xff; IDO stores x itself from v0 */
-#ifdef NON_MATCHING
-void normal_date_bggirl_fadein(void) {
+/* s32 without a return value: the last chain value is then kept in v0 (andi v0,a0,0xff). T-11590 */
+s32 normal_date_bggirl_fadein(void) {
     u8 x;
 
     D_8011ECD0[0x83F] |= 0x80;
@@ -878,9 +877,6 @@ void normal_date_bggirl_fadein(void) {
     D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = x;
     D_80122CF4 = 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadein);
-#endif
 
 void normal_date_bg_fadeout(void) {
     D_80122CF8 = 1;
@@ -895,9 +891,8 @@ void normal_date_bg_fadeout(void) {
     }
 }
 
-/* NON_MATCHING: T-11590, 10 differing lines; the first block matches, the tail after the call has the normal_date_bggirl_fadein residue (x in a0, chain values through move v0,a0 and andi v0,a0,0xff) */
-#ifdef NON_MATCHING
-void normal_date_bggirl_fadeout(void) {
+/* s32 without a return value, as normal_date_bggirl_fadein. T-11590 */
+s32 normal_date_bggirl_fadeout(void) {
     u8 x;
 
     if (D_800B593C < 8) {
@@ -916,9 +911,6 @@ void normal_date_bggirl_fadeout(void) {
     D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = x;
     D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = x;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadeout);
-#endif
 
 void normal_date_move_place(void) {
     switch (D_800E6280.unk_1104.u) {
