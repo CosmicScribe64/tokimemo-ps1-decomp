@@ -485,8 +485,8 @@ void func_80135034(void) {
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135110);
 
 void func_801352FC(void) {
-    if ((D_800E71F3 != 0) && ((u32) ((D_800E6280.unk_10F8 / (u8) D_800E71F3) & 3) < 2U)) {
-        if ((u32) ((u32) D_800E6280.unk_10F8 % (u8) D_800E71F3) < 2U) {
+    if ((*(u8 *)&D_800E6280.unk_F73 != 0) && ((u32) ((D_800E6280.unk_10F8 / *(u8 *)&D_800E6280.unk_F73) & 3) < 2U)) {
+        if ((u32) ((u32) D_800E6280.unk_10F8 % *(u8 *)&D_800E6280.unk_F73) < 2U) {
             if (D_800E6280.unk_F75 == 0) {
                 D_80120BB8 = 0x78;
                 return;

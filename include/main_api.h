@@ -2641,7 +2641,6 @@ extern u8 D_800B3638;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 extern s16 D_80120BB8;
-extern u8 D_800E71F3;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
@@ -2654,7 +2653,6 @@ extern u8 D_800E71F3;
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
-extern u32 D_800E73A0;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
