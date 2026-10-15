@@ -33,3 +33,7 @@ Canonical GameState selector/timer access and six missing overlay forward declar
 ### func_80132FF0: MATCH, 532 text bytes
 
 Restored explicit case4/default from the five-entry jump table; canonical player-name arrays and strcat declaration replace old draft aliases. Full linked text MATCH and BUNKA_SD SHA1 pass, with headers/globals OK. FAKE: 24-byte name-buffer capacity was chosen to reproduce observed stack homes; the original source capacity is unknown. Worklist552 includes20-byte jump table. Cumulative980 matched text bytes plus84 table bytes. Added overlay prototypes and typed display-data declarations used by ongoing larger-family reconstruction.
+
+### func_80132940: MATCH, 1144 text bytes
+
+Reused the palette/setup loop index, restored case4/default from the five-entry jump table, and represented the intermediate frame number as u16 before subtracting2 into the record halfword. The narrow unsigned temporary preserves the original arithmetic/update order without extra instructions. Cleaned raw offsets to DisplayActor44 and canonical calls. No FAKE. Exact production linked comparison and BUNKA_SD checksum pass, with headers/globals OK. Cumulative2124 text bytes plus104 table bytes.

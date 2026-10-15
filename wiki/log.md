@@ -13517,3 +13517,7 @@ BUNKA_SD:func_80132428 matches exact linked text (448 bytes) with overlay SHA1, 
 ## [2026-10-15] build | T-12090 name text builder matched
 
 BUNKA_SD:func_80132FF0 has532 exact linked text bytes and a passing overlay checksum, headers and globals. Restored the fifth jump-table case. Explicit FAKE documents the inferred buffer capacity. Cumulative980 text bytes; see [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] build | T-12090 large display setup matched
+
+BUNKA_SD:func_80132940 matches1144 linked text bytes and its overlay checksum. Typed records, a reused loop counter, explicit fifth switch case and unsigned16-bit frame intermediate resolve the setup family. No FAKE. Cumulative2124 verified code bytes; [[tickets/T-12090-codex-cx9]] records evidence.
