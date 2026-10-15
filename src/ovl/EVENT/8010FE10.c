@@ -671,7 +671,6 @@ void func_801146B4(void) {
     func_80011DFC();
 }
 
-#ifdef NON_MATCHING
 void func_80114784(void) {
     EventStateView *g;
     s32 temp;
@@ -700,9 +699,6 @@ void func_80114784(void) {
     func_800469F4(0x44D8);
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114784);
-#endif
 
 #ifdef NON_MATCHING
 void func_80114948(void) {
