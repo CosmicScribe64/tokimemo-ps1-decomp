@@ -14842,3 +14842,18 @@ Parent requests immediate draft checkpoint with no further exploration. [[ticket
 
 ## [2026-10-15] ingest | Draft archive navigation and final worker handoffs
 Added drafts/README.md describing the complete initial census, repair/quality limits, focused reconstruction archives and preserved older worktrees. Integrated final proof-lane helpers/TACO draft and EVENT reconstructions. RENSYU688 and SHOUGATU568 default literal proofs and affected checksum/guards pass; verified total is 1,452,192 / 2,279,368 bytes (63.7%). EVENT header consumer validation is recorded separately in build/scratch/goal-event-archive.log. Remaining automatic pass will receive a final source-only checkpoint. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14500-exhaustive-drafts]].
+## [2026-10-15] decision | Preserve bounded TAIIKU follow-up evidence during disk audit
+
+[[tickets/T-13600-taiiku-families]] records39610's sixteen-line residual after canonical stat-loop reconstruction,34F98's copied-table mismatch, and3D788's unsuccessful calling-convention test. No new source or ABI changes are accepted; cumulative gain remains1,496 literal-verified bytes. Root's disk audit limits further large outputs/full builds while the committed wins await independent review.
+
+## [2026-10-15] build | T-13600 bounded resource dispatcher and table helper
+
+[[tickets/T-13600-taiiku-families]] records45640's12/4-word resource tables, canonical two-argument resource API, and61-line stack residual;44464's four-halfword table draft remains197 lines. No new production source or shared declarations, no additional verified bytes. Root's disk cleanup allowed resuming small one-compiler Docker comparisons.
+
+## [2026-10-15] build | T-13600 fresh timing and animation helper evidence
+
+[[tickets/T-13600-taiiku-families]] recordsBCEC's collapsed second coordinate and115-line residual, plus43DD0's matching-sibling direct-store improvement109 to36 lines. No production source is accepted and no further verified bytes claimed. New drivers and diffs are preserved in build/taiiku13600 for the exhaustive draft catalog.
+
+## [2026-10-15] decision | T-13600 isolate donor reset ordering
+
+[[tickets/T-13600-taiiku-families]] records43DD0's20-line residual after applying only the matched44B40 per-branch reset form. All twelve previously unmentioned candidates have now received inspection or bounded tests; the larger84-function baseline remains open and the exhaustive catalog can guide the next family. No new verified bytes.
