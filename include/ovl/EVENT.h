@@ -1528,6 +1528,13 @@ typedef struct EventStateView {
     /* 0x1296 */ u8 unk_1296;
     /* 0x1297 */ u8 pad_1297;
 } EventStateView; /* minimum size 0x1298 */
+
+/* Bit 1 of Rec34.unk_0C is tested with a word shift/sign test (T-14300). */
+typedef struct EventRecordFlags {
+    /* 0x00 */ u32 lo : 1;
+    /* 0x00 */ u32 bit1 : 1;
+    /* 0x00 */ u32 hi : 30;
+} EventRecordFlags; /* size 0x04 */
 #endif
 
 #ifndef OVL_EVENT_MOVIE_STATE_T10830_H

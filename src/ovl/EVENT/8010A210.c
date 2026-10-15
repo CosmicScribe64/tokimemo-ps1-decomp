@@ -200,7 +200,47 @@ void func_8010A7E0(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010A210", func_8010A91C);
+void func_8010A91C(void) {
+    s16 var_v0;
+    EventStateView *g;
+
+    D_800B1746 = 0xB;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_80078970(D_80094748, D_800B0929);
+    func_8004CDDC();
+    D_80120678 = D_80120628;
+    D_8012067C = D_80120648;
+    D_80120680 = *(s32 *)&D_80120668;
+    if (D_800EECB0 == 1) {
+        D_800B096E -= 5;
+        g = (EventStateView *)D_800B0860;
+        for (var_v0 = 0; var_v0 < 0xA; var_v0++) {
+            if (((EventRecordFlags *)&g->unk_1A4[var_v0].unk_0C)->bit1) {
+                g->unk_1A4[var_v0].unk_02 -= 1;
+            }
+        }
+        func_8004C250();
+    }
+    func_80011DFC();
+}
+
 
 void func_8010AAAC(void) {
     D_80120678 = D_8012062C;

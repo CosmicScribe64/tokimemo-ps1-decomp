@@ -14460,3 +14460,7 @@ Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45
 ## [2026-10-15] build | EVENT medal-game handler adds 480 bytes
 
 [[tickets/T-14300-event-families]] adds func_801166A8 in src/ovl/EVENT/8010FE10.c. Direct compound updates plus one marked FAKE entry assignment match. Combined seven-function default literal proof, EVENT SHA1 and declaration/aggregate/prototype guards pass. Cumulative gain: seven / 3,684 bytes. Rejected particle draft restored before literal proof; normalized equality alone was not counted.
+
+## [2026-10-15] build | EVENT typed record loop adds 400 bytes
+
+[[tickets/T-14300-event-families]] adds func_8010A91C through the observed Rec34 bit1 view and an ordinary for loop, superseding its earlier two-row negative. Combined eight-function default literal proof and EVENT SHA1 pass; header/global/prototype checks pass, zero new and 12 known disagreements. Cumulative accepted gain: eight functions / 4,084 bytes. Existing-body audit preserves both touched files' baseline C. Scope complete and moved In Review for independent review.
