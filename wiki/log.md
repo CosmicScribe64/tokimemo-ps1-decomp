@@ -14857,3 +14857,6 @@ Added drafts/README.md describing the complete initial census, repair/quality li
 ## [2026-10-15] decision | T-13600 isolate donor reset ordering
 
 [[tickets/T-13600-taiiku-families]] records43DD0's20-line residual after applying only the matched44B40 per-branch reset form. All twelve previously unmentioned candidates have now received inspection or bounded tests; the larger84-function baseline remains open and the exhaustive catalog can guide the next family. No new verified bytes.
+## [2026-10-15] build | Verify pinned EVENT draft checkpoint
+
+[[tickets/T-15200-event-large]]: default ASM fallback linked proofs pass (6,848 / 680 bytes); EVENT checksum, header/global guards and prototype branch guard pass (zero new, 15 known). Preferred nonmatching contexts rescore to 1,930 / 26 rows. Host Git confirms production C unchanged; no new matching coverage. Saved proof metadata in drafts/T-15200/verification.json.
