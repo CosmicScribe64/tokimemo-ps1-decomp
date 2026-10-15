@@ -166,14 +166,17 @@ void func_801399C0(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/801389A0", func_80139A30);
 
-/* NON_MATCHING: T-10510, u16 local loaded via a copy, 49 vs 48 insns, registers shifted */
+/* NON_MATCHING: T-11340, same 50 instructions and block shape, registers differ: IDO colours
+ * v first ($v0) where the original gives the GameState word $v0, t $v1 and v $a3; g lands in
+ * $a3 instead of $t2, and the second store sits before the argument loads. Needs the volatile
+ * D_8013D3B8 declaration: it keeps both stores and loads lhu straight into v. */
 #ifdef NON_MATCHING
 void func_80139E3C(arg0)
     s32 arg0;
 {
     u16 v;
     s32 *t;
-    s32 *p;
+    u8 g;
 
     if (arg0 > 0) {
         D_8013D3B8 = arg0;
@@ -188,12 +191,13 @@ void func_80139E3C(arg0)
     if ((D_800E6280.unk_F80 & 1) && (v != 0)) {
         v--;
     }
-    t = D_8013D360[D_800E6280.unk_F5F & 0xF];
+    g = D_800E6280.unk_F5F;
+    t = D_8013D360[g & 0xF];
     D_8013D3B8 = v;
     if (t != 0) {
-        p = t + v * 2;
+        t += v * 2;
         D_8013D3B8 = v;
-        func_80046290(p[0], p[1], D_800E6280.unk_F5F);
+        func_80046290(t[0], t[1], g);
     }
     func_80044750(0x300);
 }
