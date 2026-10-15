@@ -400,7 +400,7 @@ void func_8013BB10(void) {
 void func_8013BB1C(void) {
 }
 
-/* NON_MATCHING: T-11010, only instruction order differs: seven pairs of 'lui a0,string' / 'lui at,store' swapped and the kanji_speed store placed before the string address, 16 swaps */
+/* NON_MATCHING: T-11570, 28 rows (14 swaps): seven pairs of 'lui a0,string' / 'lui at,store' swapped; writing the kanji_speed store and its printf on one line fixed that pair (T-11010 had 16 swaps) */
 #ifdef NON_MATCHING
 void func_8013BB24(void) {
     u8 speed;
@@ -417,8 +417,7 @@ void func_8013BB24(void) {
             func_800AE0B0("option setting!");
             D_8014D0AC = D_800E6280.unk_1124;
             speed = get_k_speed();
-            D_8014D0B0 = speed;
-            func_800AE0B0("kanji_speed%d \n", speed);
+            D_8014D0B0 = speed; func_800AE0B0("kanji_speed%d \n", speed);
             D_8014D0B4 = *(u8 *)&D_800E6280.unk_F6C;
             func_800AE0B0("icon_mode %d \n", *(u8 *)&D_800E6280.unk_F6C);
             D_8014D0B8 = *(u8 *)&D_800E6280.unk_1092;
@@ -479,9 +478,9 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
 void func_8013BE18(void) {
     RECT rect;
 
-    *(u8 *)&D_800E6280.unk_3A += 4;
-    if (*(u8 *)&D_800E6280.unk_3A >= 0x80) {
-        *(u8 *)&D_800E6280.unk_3A = 0x80;
+    D_800E6280.unk_03A += 4;
+    if (D_800E6280.unk_03A >= 0x80) {
+        D_800E6280.unk_03A = 0x80;
     }
     switch (D_800E6280.unk_110D) {
     case 0:
@@ -504,7 +503,7 @@ void func_8013BE18(void) {
             func_8009C884(&rect, (void *)0x801E0200);
             func_80043914(0x801E0000, 0x18, 1, 2, 0);
             D_800E6280.unk_110D = 3;
-            *(u8 *)&D_800E6280.unk_3A = 0x80;
+            D_800E6280.unk_03A = 0x80;
         }
         break;
     case 3:
@@ -2128,11 +2127,11 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 /* NON_MATCHING: T-11570, 15 lines: the in-place global form gives a0/t6 and both stores of the global like the original; the six fade stores use t6 where the original has one more `andi v0,t6,0xff` copy (T-10710: locals, casts, masks and an empty test all fold it) */
 #ifdef NON_MATCHING
 void func_80140B20(void) {
-    if (*(u8 *)&D_800E6280.unk_3A >= 3) {
-        *(u8 *)&D_800E6280.unk_3A -= 2;
-        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = *(u8 *)&D_800E6280.unk_3A;
-        if (*(u8 *)&D_800E6280.unk_3A < 0x80) {
-            func_80057390(*(u8 *)&D_800E6280.unk_3A);
+    if (D_800E6280.unk_03A >= 3) {
+        D_800E6280.unk_03A -= 2;
+        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = D_800E6280.unk_03A;
+        if (D_800E6280.unk_03A < 0x80) {
+            func_80057390(D_800E6280.unk_03A);
         }
     }
 }
