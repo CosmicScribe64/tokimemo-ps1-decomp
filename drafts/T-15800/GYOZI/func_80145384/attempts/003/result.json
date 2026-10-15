@@ -1,0 +1,27 @@
+{
+  "scope": "GYOZI:func_80145384",
+  "unit": "GYOZI",
+  "func": "func_80145384",
+  "src": "src/ovl/GYOZI/80143AD0.c",
+  "size": 372,
+  "path": "drafts/T-15800/GYOZI/func_80145384",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 3,
+  "provenance": "drafts/T-15800/GYOZI/func_80145384/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Error: /work/drafts/T-15800/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3518: Reference of an expression of void type or an incomplete type.",
+  "hashes": {
+    "body.c": "5a0165744b0fc28dd6237a4a2065ecee6deba001ecd34196d16f9551f90dd165",
+    "declarations.h": "bff8c122967e4f4e3957ca36ed6bfd71ea90640e9d415ad58e3f7b1663f5dde0",
+    "context.c": "6f3fe9f71366bc6fc45dbcda277e00d2e75199f937ffb73f8f860b8fc6fe6d89"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/GYOZI.h": "eb21d305c3df32ff5b256e2307fbfe175527faa0ad1de3292d6beaf82cc059af"
+  },
+  "seconds": 0.35
+}

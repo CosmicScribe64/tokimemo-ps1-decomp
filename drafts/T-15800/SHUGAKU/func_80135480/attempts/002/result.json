@@ -1,0 +1,29 @@
+{
+  "scope": "SHUGAKU:func_80135480",
+  "unit": "SHUGAKU",
+  "func": "func_80135480",
+  "src": "src/ovl/SHUGAKU/80135430.c",
+  "size": 340,
+  "path": "drafts/T-15800/SHUGAKU/func_80135480",
+  "status": "compiled",
+  "score": null,
+  "compile_attempts": 2,
+  "provenance": "drafts/T-15800/SHUGAKU/func_80135480/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "compiled_instruction_count": 86,
+  "score_note": "[Errno 2] No such file or directory: 'disc/files/CDROM/EXEDIR/SHUGAKU.EXN'",
+  "hashes": {
+    "body.c": "eec864cecf53cd158eb3160fccb6383ea7f6ba29830ae0bcedfd5b031e9b8e03",
+    "declarations.h": "b5329f3395e15fccebe9ffbb51553be76c51e2edbf61f02e37541e15d8a895c6",
+    "context.c": "e0c534a340f726157611d2eba0cefecc41006d68e9e203a8de6e27ae8c4dd3c2"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/SHUGAKU.h": "85840b5e30e42c571e401057ab503b819c2c76e79aab8f9ba9e393059d1857ba"
+  },
+  "seconds": 0.545
+}

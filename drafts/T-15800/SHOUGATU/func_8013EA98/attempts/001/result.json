@@ -1,0 +1,27 @@
+{
+  "scope": "SHOUGATU:func_8013EA98",
+  "unit": "SHOUGATU",
+  "func": "func_8013EA98",
+  "src": "src/ovl/SHOUGATU/8013E330.c",
+  "size": 920,
+  "path": "drafts/T-15800/SHOUGATU/func_8013EA98",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 1,
+  "provenance": "drafts/T-15800/SHOUGATU/func_8013EA98/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013EA98/work/guarded.c, line 3216: '&' before array or function; ignored",
+  "hashes": {
+    "body.c": "99c0474b3a85deaf26e12304451c9c93a6fe0d00cfdd78fd69028598074b316c",
+    "declarations.h": "3596f935eacf5c55ea3a121bb43035251c339db072ec8390da82e32b3405d503",
+    "context.c": "4db47acdeedca65917d06c7364b5fc8aef3e19493184d036eb23a1f00d699754"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/SHOUGATU.h": "d02ec8b64a22d427a9812948ed7c23a60ef624d461388dba4e64ee5ec864afeb"
+  },
+  "seconds": 0.321
+}

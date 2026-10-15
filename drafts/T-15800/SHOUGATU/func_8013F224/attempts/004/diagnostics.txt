@@ -1,0 +1,15 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c', '/work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o', 'ido', '5.3']
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c, line 3423: 'func_80140314' undefined; reoccurrences will not be reported.
+             var_v0 = ((s32 (*)()) func_80140314)();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHOUGATU/func_8013F224/work -o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o /tmp/asm_processorunjh3jcq/preprocessed_5ac735edb3954404bd9db987f108c905.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibimb3tcd3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c
+
+command failed: ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c', '/work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o', 'ido', '5.3']
+
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c, line 3423: 'func_80140314' undefined; reoccurrences will not be reported.
+             var_v0 = ((s32 (*)()) func_80140314)();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHOUGATU/func_8013F224/work -o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o /tmp/asm_processorunjh3jcq/preprocessed_5ac735edb3954404bd9db987f108c905.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibimb3tcd3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c
+

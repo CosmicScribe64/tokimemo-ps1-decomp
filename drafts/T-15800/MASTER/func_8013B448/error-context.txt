@@ -1,0 +1,14 @@
+3379:         D_800E6280.unk_75E[D_800E71DE].unk_03 = 1;
+3380:         break;
+3381:     case 3:
+3382:         var_t6 = &D_800E6280 + (D_800E71DE * 8);
+3383: block_29:
+3384:         *(s8 *)((unsigned char *)var_t6 + (1889)) = 1;
+3385:         break;
+3418:         D_800E6280.unk_75E[D_800E71DE].unk_03 = 1;
+3419:         break;
+3420:     case 12:
+3421:         var_t6 = &D_800E6280 + (D_800E71DE * 8);
+3422:         goto block_29;
+3423:     }
+3424:     temp_t8 = (D_800E71DE + 1) & 0xFF;

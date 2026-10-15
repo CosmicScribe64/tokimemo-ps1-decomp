@@ -1,0 +1,22 @@
+void func_8013C774(void) {
+    typedef struct { s32 (*f[36])(); } T15800Callbacks;
+    T15800Callbacks callbacks;
+        callbacks = *(T15800Callbacks *)&D_80147C6C;
+    callbacks.f[D_800F647A]();
+    if (D_800F62F0 & 0x100) {
+        if (((u8) D_800F53DF >= 6U) && ((u8) D_800F53DF < 9U)) {
+            func_8004EE18(D_80147AE0, 0x11, 1, 0, 0);
+        } else {
+            func_8004EE18(D_80147AE4, 0x11, 1, 0, 0);
+        }
+        func_800BCDF0("S\n");
+    }
+    if (D_800F62F0 & 0x800) {
+        if (((u8) D_800F53DF >= 6U) && ((u8) D_800F53DF < 9U)) {
+            func_8004EE18(D_80147AE0, 0x11, 1, 2, 0);
+        } else {
+            func_8004EE18(D_80147AE4, 0x11, 1, 2, 0);
+        }
+        func_800BCDF0("T\n");
+    }
+}

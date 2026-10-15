@@ -1,0 +1,34 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132384",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/OPTION/func_80132384",
+      "reason": "Error: guarded.c, line 2499: Syntax Error",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/OPTION/func_80132384",
+      "reason": "Error: guarded.c, line 2499: Syntax Error",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/OPTION/func_80132384",
+      "reason": "Error: guarded.c, line 2501: Syntax Error",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/OPTION/func_80132384",
+      "reason": "Error: guarded.c, line 2499: Syntax Error",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/OPTION/80132000.c",
+  "repairs": [
+    "coordinate helper func_801325A0 fills four arrays of eight s16 values; recover real 64-byte local and indexing"
+  ]
+}

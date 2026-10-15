@@ -1,0 +1,14 @@
+3325: } Word4;
+3326: extern Word4 D_80148970;
+3327: void func_80143110(void) {
+3328:     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+3329:     func_8004DE1C();
+3330: }
+3331: extern s16 D_8012B8C8;
+3338: void func_80143160(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+3339:     s16 temp_v0;
+3340:     if (D_800F647A == 0) {
+3341:         D_80148970 = *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08;
+3342:         D_800F53A0.girl[D_800F62CF].unk_0A = 0x32;
+3343:     }
+3344:     switch (D_800F62CF) {

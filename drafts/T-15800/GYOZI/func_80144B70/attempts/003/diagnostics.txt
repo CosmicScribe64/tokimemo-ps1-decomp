@@ -1,0 +1,45 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.c', '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o', 'ido', '5.3']
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3494: redeclaration of 'func_80144B70'; previous declaration at line 3445 in file '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c'
+ void func_80144B70(void) {
+ -----^
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3494: Incompatible function return type for this function.
+ void func_80144B70(void) {
+ ------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3573: Incompatible pointer type assignment
+             temp_s0_2 = &D_8012CA40 + (var_s2_2 * 0x24);
+ ----------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3579: Incompatible pointer type assignment
+             temp_s5 = temp_v0_3 + &D_80148BF0;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3580: Incompatible pointer type assignment
+             temp_s1 = temp_v0_3 + &D_80148CB8;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3581: Incompatible pointer type assignment
+             temp_s3 = temp_v0_3 + &D_80148D80;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/GYOZI/func_80144B70/work -o /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o /tmp/asm_processore57vrc87/preprocessed_f0ecf341d4444c0fabd744198bf514a1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibukf1na_6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c
+
+command failed: ['python3', 'tools/cc.py', '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.c', '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o', 'ido', '5.3']
+
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3494: redeclaration of 'func_80144B70'; previous declaration at line 3445 in file '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c'
+ void func_80144B70(void) {
+ -----^
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3494: Incompatible function return type for this function.
+ void func_80144B70(void) {
+ ------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3573: Incompatible pointer type assignment
+             temp_s0_2 = &D_8012CA40 + (var_s2_2 * 0x24);
+ ----------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3579: Incompatible pointer type assignment
+             temp_s5 = temp_v0_3 + &D_80148BF0;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3580: Incompatible pointer type assignment
+             temp_s1 = temp_v0_3 + &D_80148CB8;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3581: Incompatible pointer type assignment
+             temp_s3 = temp_v0_3 + &D_80148D80;
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/GYOZI/func_80144B70/work -o /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o /tmp/asm_processore57vrc87/preprocessed_f0ecf341d4444c0fabd744198bf514a1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibukf1na_6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c
+

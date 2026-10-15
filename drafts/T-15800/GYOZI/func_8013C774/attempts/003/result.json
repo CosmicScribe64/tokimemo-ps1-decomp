@@ -1,0 +1,28 @@
+{
+  "scope": "GYOZI:func_8013C774",
+  "unit": "GYOZI",
+  "func": "func_8013C774",
+  "src": "src/ovl/GYOZI/8013C3B0.c",
+  "size": 364,
+  "path": "drafts/T-15800/GYOZI/func_8013C774",
+  "status": "compiled",
+  "score": null,
+  "compile_attempts": 3,
+  "provenance": "drafts/T-15800/GYOZI/func_8013C774/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "compiled_instruction_count": 89,
+  "score_note": "[Errno 2] No such file or directory: 'disc/files/CDROM/EXEDIR/GYOZI.EXN'",
+  "hashes": {
+    "body.c": "cdce9ecc310263888a2e3ce8887f3e3f2702653f53ef8ae35b0b31b2b1c95690",
+    "declarations.h": "432c26062a3bb345f1f56af8e83f991600ee5bfdf4abf69e2ada7746919e12b3",
+    "context.c": "531a5786bdaa4ebe52f5049cf5d2b40b153e6705237492aaeea7ace8691d23d8"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/GYOZI.h": "eb21d305c3df32ff5b256e2307fbfe175527faa0ad1de3292d6beaf82cc059af"
+  },
+  "seconds": 0.661
+}

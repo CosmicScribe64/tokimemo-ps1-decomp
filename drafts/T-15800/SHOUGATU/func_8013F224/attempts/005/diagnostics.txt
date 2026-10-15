@@ -1,0 +1,5 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c', '/work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o', 'ido', '5.3']
+cfe: Warning 689: /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c, line 3669: Unacceptable operand of == or !=
+     if (normal_date_bg_fadein == tbl.f[j] || normal_date_bg_fadeout == tbl.f[j]) {
+ ------------------------------^
+

@@ -14886,3 +14886,10 @@ Started [[tickets/T-15700-taco-taiiku-draft-repairs]], 28 scopes (17/11). Inspec
 ## [2026-10-15] build | Publish 41 final compilation repairs
 
 Integrated T15700 (28) and T15900 (13), plus final257 automatic-attempt census and source-only checkpoint metadata. Published main f600eae0. No production C/header changes from c21bb523 and no new matching-byte claims. Prepared tools/refresh_draft_ledgers.py to join complete final catalogs without launching more generation. T15800 and T16000 continue the remaining compilation repairs; [[exhaustive-drafts]] and [[stopping-point-2026-10-15]] distinguish the earlier 77-failure checkpoint.
+## [2026-10-15] ticket | T-15800 compile every assigned failed overlay draft
+
+The user renewed the stopping condition to seek compiling C for every remaining draft. Claimed 23 nonreserved failed scopes in GYOZI, OPTION, SHOUGATU, SHUGAKU, MASTER and NAME_ENT under [[tickets/T-15800-compile-remaining-overlay-drafts]]. Use frozen source/header snapshots and serial Docker compilation; original archives and production C remain unchanged. [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15800 all 23 assigned alternatives compile
+
+Completed serial full-TU Docker compilation for all 23 assigned scopes across GYOZI, OPTION, SHOUGATU, SHUGAKU, MASTER and NAME_ENT. Typed callback/coordinate/threshold arrays, concrete byte/word views, existing return views and callee-derived argument corrections remove compile blockers. Saved complete final/preprocessed C contexts, all attempt diagnostics, scores, hashes and provenance under drafts/T-15800; archive audit passes 23/23. No target stubs/ASM fallback counted and no production source changed. [[tickets/T-15800-compile-remaining-overlay-drafts]] moves to In Review; [[kanban]] and [[index]] updated.

@@ -1,0 +1,26 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.c', '/work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 3703: '&' before array or function; ignored
+     func_800AE0A0(D_8014D070, &D_800E6280.unk_0D4, 8);
+ ------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 3704: '&' before array or function; ignored
+     func_800AE0A0(D_8014D078, &D_800E6280.unk_0DC, 8);
+ ------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 3705: '&' before array or function; ignored
+     func_800AE0A0(D_8014D080, &D_800E6280.unk_0E4, 0xC);
+ ------------------------------^
+cfe: Warning 689: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4545: Unacceptable operand of == or !=
+         } while (var_v0 != D_8014D070);
+ ------------------------^
+cfe: Warning 709: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4646: Incompatible pointer type assignment
+                     temp_v0 = &D_8014D060 + var_a0;
+ ----------------------------^
+cfe: Warning 709: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4650: Incompatible pointer type assignment
+                     temp_v0_2 = &D_8014D060 + var_a0;
+ ------------------------------^
+cfe: Warning 709: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4654: Incompatible pointer type assignment
+                     temp_v0_3 = &D_8014D060 + var_a0;
+ ------------------------------^
+cfe: Warning 709: /work/drafts/T-15800/NAME_ENT/func_80141820/work/guarded.o.sjis.c, line 4658: Incompatible pointer type assignment
+                     temp_v0_4 = &D_8014D060 + var_a0;
+ ------------------------------^
+

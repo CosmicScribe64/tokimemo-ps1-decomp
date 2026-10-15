@@ -1,0 +1,14 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHOUGATU/func_8013E50C/work/guarded.c', '/work/drafts/T-15800/SHOUGATU/func_8013E50C/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013E50C/work/guarded.c, line 3197: '&' before array or function; ignored
+     (*(s32 *)&sp30) = (s32) D_801460DC;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013E50C/work/guarded.c, line 3198: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp30) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_801460DC) + (8));
+ -------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013E50C/work/guarded.c, line 3199: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp30) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_801460DC) + (4));
+ -------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/SHOUGATU/func_8013E50C/work/guarded.c, line 3200: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp30) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_801460DC) + (12));
+ -------------------------------^
+

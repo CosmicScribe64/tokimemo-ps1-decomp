@@ -1,0 +1,27 @@
+{
+  "scope": "OPTION:func_80133010",
+  "unit": "OPTION",
+  "func": "func_80133010",
+  "src": "src/ovl/OPTION/80132000.c",
+  "size": 800,
+  "path": "drafts/T-15800/OPTION/func_80133010",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 2,
+  "provenance": "drafts/T-15800/OPTION/func_80133010/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Error: /work/drafts/T-15800/OPTION/func_80133010/work/guarded.c, line 2655: Reference of an expression of void type or an incomplete type.",
+  "hashes": {
+    "body.c": "6909075b34cf332b9ed54396d235779e6f11f0ae77f7ab207169ab03b4e7579c",
+    "declarations.h": "52698903f36be2ab6955d6352696e93427f0fc4dd74981d0b3d8f4950bff9f48",
+    "context.c": "5e2b16557ff5eb8101e484eb2d8f94ddbe0472f28bce2e58b6cb45d20a97db50"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/OPTION.h": "343eec24df5ff6a4cffee75f00ebd5d58d166c7368c4f1eaa91ac03b895fb479"
+  },
+  "seconds": 0.345
+}

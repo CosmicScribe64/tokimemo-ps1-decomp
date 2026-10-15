@@ -1,0 +1,14 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.c', '/work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o', 'ido', '5.3']
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3573: Incompatible pointer type assignment
+             temp_s0_2 = &D_8012CA40 + (var_s2_2 * 0x24);
+ ----------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3579: Incompatible pointer type assignment
+             temp_s5 = temp_v0_3 + &D_80148BF0;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3580: Incompatible pointer type assignment
+             temp_s1 = temp_v0_3 + &D_80148CB8;
+ --------------------^
+cfe: Warning 709: /work/drafts/T-15800/GYOZI/func_80144B70/work/guarded.o.sjis.c, line 3581: Incompatible pointer type assignment
+             temp_s3 = temp_v0_3 + &D_80148D80;
+ --------------------^
+

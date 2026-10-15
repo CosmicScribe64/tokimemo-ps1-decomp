@@ -1,0 +1,28 @@
+{
+  "scope": "MASTER:func_8013B448",
+  "unit": "MASTER",
+  "func": "func_8013B448",
+  "src": "src/ovl/MASTER/80139000.c",
+  "size": 956,
+  "path": "drafts/T-15800/MASTER/func_8013B448",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 2,
+  "provenance": "drafts/T-15800/MASTER/func_8013B448/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Error: /work/drafts/T-15800/MASTER/func_8013B448/work/guarded.o.sjis.c, line 3346: Incompatible function return type for this function.",
+  "hashes": {
+    "body.c": "b1023f11cfb24e92f9c6d8891a20197bcb104fd594450094d172d76ed1be85be",
+    "declarations.h": "19db75973578a897cfbfa3fa5a513f5e5cf63f75fe084dbf63681e6098ea8096",
+    "context.c": "7b27d8aef15aaf959974341f551ca4ae5f2b0a4262bf43af70f2ec6613545e3a"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/MASTER.h": "15fd65b6e016841ad28ae7879bea14d918045b6791b69ef09b70c3aa76f577ad"
+  },
+  "seconds": 0.338
+}

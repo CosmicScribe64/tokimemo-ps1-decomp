@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c, line 3399: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800E738A](0x80);
+ -----------------------------------^
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c, line 3432: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80140698();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHOUGATU/func_8013F224/work -o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o /tmp/asm_processorsmsvc1sp/preprocessed_95a6fc013b1b4105bf1a9ca78be606d6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibd7ocgfn9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.o /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c

@@ -30,6 +30,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
 
 
+
+
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 
@@ -72,6 +74,14 @@ kanban-plugin: board
 - [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
 - [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
 - [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
+
+- [ ] [[tickets/T-15800-compile-remaining-overlay-drafts|T-15800 Compile remaining assigned overlay drafts]]
+
+- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
+
+- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
+
+- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 

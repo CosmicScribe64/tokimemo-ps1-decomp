@@ -1,0 +1,8 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.c', '/work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o', 'ido', '5.3']
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3177: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3181: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+

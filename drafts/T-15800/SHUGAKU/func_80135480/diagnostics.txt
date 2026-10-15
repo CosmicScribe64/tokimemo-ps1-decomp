@@ -1,0 +1,11 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHUGAKU/func_80135480/work/guarded.c', '/work/drafts/T-15800/SHUGAKU/func_80135480/work/guarded.o', 'ido', '5.3']
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80135480/work/guarded.c, line 3113: illegal combination of pointer and integer
+     if (&D_80085368 == var_v0) {
+ --------------------^
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80135480/work/guarded.c, line 3116: illegal combination of pointer and integer
+     if (((func_800853FC == var_v0) || (func_80135A80 == var_v0)) && ((u8) D_800B593C < 8U)) {
+ ------------------------^
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80135480/work/guarded.c, line 3116: illegal combination of pointer and integer
+     if (((func_800853FC == var_v0) || (func_80135A80 == var_v0)) && ((u8) D_800B593C < 8U)) {
+ -----------------------------------------------------^
+

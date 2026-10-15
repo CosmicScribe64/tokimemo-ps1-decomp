@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3502: Non-function name referenced in function call.
+     var_v0 = (&sp28[0])[D_800F647A](0x3C);
+ -----------------------------------^
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80145384/work/guarded.o.sjis.c, line 3518: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80145520();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/GYOZI/func_80145384/work -o /work/drafts/T-15800/GYOZI/func_80145384/work/guarded.o /tmp/asm_processoruhgl9g9r/preprocessed_4a14c28454e846aea25e8ca0615918f0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolib_09o5yek/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/GYOZI/func_80145384/work/guarded.o /work/drafts/T-15800/GYOZI/func_80145384/work/guarded.o.sjis.c

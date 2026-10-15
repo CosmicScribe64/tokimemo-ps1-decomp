@@ -1,0 +1,28 @@
+3213:     *(s32 *)((unsigned char *)(&sp40[0]) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8014610C) + (4));
+3214:     *(s32 *)((unsigned char *)(&sp40[0]) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8014610C) + (8));
+3215:     *(u16 *)((unsigned char *)(&sp40[0]) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_8014610C) + (12));
+3216:     (*(s32 *)&sp30) = (s32) D_8014611C;
+3217:     *(s32 *)((unsigned char *)(&sp30) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (8));
+3218:     var_a0 = 0;
+3219:     var_v0 = 0;
+3214:     *(s32 *)((unsigned char *)(&sp40[0]) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8014610C) + (8));
+3215:     *(u16 *)((unsigned char *)(&sp40[0]) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_8014610C) + (12));
+3216:     (*(s32 *)&sp30) = (s32) D_8014611C;
+3217:     *(s32 *)((unsigned char *)(&sp30) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (8));
+3218:     var_a0 = 0;
+3219:     var_v0 = 0;
+3220:     *(s32 *)((unsigned char *)(&sp30) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (4));
+3217:     *(s32 *)((unsigned char *)(&sp30) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (8));
+3218:     var_a0 = 0;
+3219:     var_v0 = 0;
+3220:     *(s32 *)((unsigned char *)(&sp30) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (4));
+3221:     *(u16 *)((unsigned char *)(&sp30) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_8014611C) + (12));
+3222:     do {
+3223:         temp_v0 = var_v0 + 1;
+3218:     var_a0 = 0;
+3219:     var_v0 = 0;
+3220:     *(s32 *)((unsigned char *)(&sp30) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8014611C) + (4));
+3221:     *(u16 *)((unsigned char *)(&sp30) + (12)) = (u16) *(u16 *)((unsigned char *)(&D_8014611C) + (12));
+3222:     do {
+3223:         temp_v0 = var_v0 + 1;
+3224:         var_a0 += ((u32) (D_800E6280.unk_1BC[var_v0].unk_0C.w << 0x1E) >> 0x1F) != 0;
