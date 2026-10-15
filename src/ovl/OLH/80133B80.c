@@ -207,4 +207,22 @@ s32 func_80134324(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/OLH/nonmatchings/OLH/80133B80", func_801343F4);
+s32 func_801343F4(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004EAAC();
+        func_8004E788(-0x88, -0x40, 1, D_8013B758, 0);
+        func_8004E788(-0x88, -0x30, 0xF, "　ゲームをクリアするのに、特に必要はあ", 0);
+        func_8004E788(-0x88, -0x20, 0xF, "りません。", 0);
+        func_8004E788(-0x88, -0x10, 0xF, "　究極のパラメータを狙う場合以外必要な", 0);
+        func_8004E788(-0x88, 0, 0xF, "いかも…？", 0);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        func_80052000();
+        break;
+    case 2:
+        func_80042940(0);
+        break;
+    }
+}
