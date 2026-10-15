@@ -69,8 +69,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-13001-master-layout-pilot|T-13001 Recover MASTER layouts and verify pilot matches]]
-- [ ] [[tickets/T-13000-types-globals|T-13000 Recover evidence-backed types and globals]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
@@ -105,6 +103,9 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-13001-master-layout-pilot|T-13001 Recover MASTER layouts and verify pilot matches]]
+- [ ] [[tickets/T-13000-types-globals|T-13000 Recover evidence-backed types and globals]]
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
 - [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
 - [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]

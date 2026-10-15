@@ -37,4 +37,4 @@ func_8013B804 was also tried using existing GameState event records. Plain switc
 
 ## Verification
 
-Evidence in ignored build/: pilot-proof.txt (funcdiff --resolve literal linked bytes), pilot-check.log (MASTER SHA1), pilot-v1/v2/v3 comparisons and type-master.txt. Header/global/prototype audit results are recorded in the ticket. Shared headers were unchanged, so a full 27-binary rebuild is not required for this pilot. One Docker CPU and one compile job were used. No host dependencies installed, no assembly patching, no push or PR.
+Evidence in ignored build/: pilot-proof.txt (funcdiff --resolve literal linked bytes), pilot-check.log (MASTER SHA1), pilot-v1/v2/v3 comparisons and type-master.txt. check_headers and migrate_globals --check pass; sync_protos --check-branch reports zero new disagreements / 15 known after copying the complete generated assembly inventory read-only from integration. Shared headers were unchanged, so a full 27-binary rebuild is not required for this pilot. One Docker CPU and one compile job were used. No host dependencies installed, no assembly patching, no push or PR.

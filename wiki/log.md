@@ -13916,3 +13916,11 @@ Baseline MASTER checksum passed. type_recovery identified three 0x1A-byte copies
 ## [2026-10-15] ticket | T-13000 and T-13001 ready for review
 
 Moved both tickets to In Review with matching board cards. MASTER checksum and all three literal-byte checks pass. No shared declarations changed; no full-game rebuild claimed. [[tickets/T-13000-types-globals]], [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] lint | Complete declaration audit for MASTER pilot
+
+Reused generated assembly from all integration address spaces, preserving local MASTER assembly. Header/global checks pass; prototype branch audit reports zero new disagreements / 15 known. This replaces the initial MASTER-only 12-known audit count. [[master-types-pilot]].
+
+## [2026-10-15] ticket | T-13000 / T-13001 reviewed and Done
+
+Independent standards and spec reviews found no code or scope issues against 95c3fc9f..f17ceea9. The requested explicit prototype-audit record is now included; no unresolved findings. Moved [[tickets/T-13000-types-globals]] and [[tickets/T-13001-master-layout-pilot]] to Done and synchronized board/index. Three matches / 3,648 literal bytes; MASTER checksum and declaration audits pass. Full 27-binary integration gate remains for root.

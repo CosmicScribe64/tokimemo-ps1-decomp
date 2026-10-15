@@ -267,8 +267,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[broad-coverage-results]] - T-12230: 190-target ledger, five verified wins, and limits of broad zero-search matching.
 - [[tickets/T-12300-large-unclaimed-byte-matches|T-12300]] Substantial unclaimed byte matches (In Review; 4,920 verified bytes, four functions).
 
-- [[tickets/T-13000-types-globals|T-13000]] Recover evidence-backed types and globals (In Review).
+- [[tickets/T-13000-types-globals|T-13000]] Recover evidence-backed types and globals (Done).
 
-- [[tickets/T-13001-master-layout-pilot|T-13001]] Recover MASTER layouts and verify pilot matches (In Review).
+- [[tickets/T-13001-master-layout-pilot|T-13001]] Recover MASTER layouts and verify pilot matches (Done).
 
 - [[master-types-pilot]] — T-13000/T-13001: three MASTER typed-table matches, 3,648 literal bytes and evidence limits.
