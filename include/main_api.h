@@ -1411,11 +1411,13 @@ extern s32 D_8012127C;
 extern s8 D_801212CB;
 extern s8 D_80121311;
 extern u8 D_80121313;
+extern u8 D_80121316;
 #ifndef MAIN_API_OVERRIDE_D_80121317
 extern s8 D_80121317;
 #endif
 extern s16 D_80121328;
 extern s8 D_80121353;
+extern u8 D_8012135A;
 extern u8 D_80121357;
 extern s16 D_8012136C;
 extern s8 D_80121397;

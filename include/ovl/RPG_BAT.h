@@ -254,6 +254,8 @@ void func_8014F88C();
 void func_8014FDBC();
 void func_80151C10();
 s32 func_80155A70();
+s32 func_8013B2F0(void);
+void func_8013B534(void);
 void func_8015675C();
 void func_801568A4();
 void func_80159E28();
