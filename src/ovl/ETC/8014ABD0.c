@@ -174,7 +174,169 @@ s32 func_8014B0D0(void) {
     return var_s7;
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014B1B4);
+void func_8014B1B4(void) {
+    GameState *g = &D_800E6280;
+    s32 sp28;
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    switch (g->unk_110D) {
+    case 0x0:
+        temp_v0 = func_8014AF28();
+        if (temp_v0 == 7) {
+            g->unk_110D = 0x10;
+            return;
+        }
+        if (temp_v0 == 0) {
+            g->unk_110D = 0x20;
+            return;
+        }
+        g->unk_110D = 0x30;
+        return;
+    case 0x10:
+        k_sub_reset();
+        gnsx(g->unk_0D4);
+        sndisp(&D_80151674, 0, 0xF);
+        g->unk_110D += 1;
+        return;
+    case 0x11:
+        xa_wait();
+        return;
+    case 0x12:
+        func_80042808();
+        return;
+    case 0x20:
+        k_sub_reset();
+        gnsx(g->unk_0D4);
+        sndisp(&D_801516F0, 0, 0xF);
+        g->unk_110D += 1;
+        return;
+    case 0x21:
+        xa_wait();
+        return;
+    case 0x22:
+        g->unk_110D = 0x40;
+        return;
+    case 0x30:
+        k_sub_reset();
+        gnsx(g->unk_0D4);
+        sndisp(&D_801516BC, 0, 0xF);
+        g->unk_110D += 1;
+        return;
+    case 0x31:
+        xa_wait();
+        return;
+    case 0x32:
+        k_sub_reset();
+        if (D_8015186C == 0) {
+            g->unk_110D += 2;
+        } else if (D_8015186C == 1) {
+            gnsx(g->unk_0D4);
+            sndisp(&D_80151738, 0, 0xF);
+            g->unk_110D += 1;
+        } else if (D_8015186C == 2) {
+            gnsx(g->unk_0D4);
+            sndisp(&D_80151758, 0, 0xF);
+            g->unk_110D += 1;
+        } else {
+            gnsx(g->unk_0D4);
+            sndisp(&D_80151778, 0, 0xF);
+            g->unk_110D += 1;
+        }
+        get_k_work(3)[4] = 1;
+        return;
+    case 0x33:
+        xa_wait();
+        return;
+    case 0x34:
+        k_sub_reset();
+        if (D_80151870 == 0) {
+            g->unk_110D += 2;
+        } else if (D_80151870 == 1) {
+            gnsx(g->unk_0D4);
+            sndisp(&D_801517B4, 0, 0xF);
+            g->unk_110D += 1;
+        } else if (D_80151870 == 2) {
+            gnsx(g->unk_0D4);
+            sndisp(&D_801517D4, 0, 0xF);
+            g->unk_110D += 1;
+        } else {
+            gnsx(g->unk_0D4);
+            sndisp(&D_80151794, 0, 0xF);
+            g->unk_110D += 1;
+        }
+        get_k_work(3)[4] = 1;
+        return;
+    case 0x35:
+        xa_wait();
+        return;
+    case 0x36:
+        k_sub_reset();
+        if (D_80151874 != 0) {
+            gnsx(g->unk_0D4);
+            sndisp(&D_801517F4, 0, 0xF);
+            get_k_work(3)[4] = 1;
+            g->unk_110D += 1;
+            return;
+        }
+        g->unk_110D += 2;
+        return;
+    case 0x37:
+        xa_wait();
+        return;
+    case 0x38:
+        k_sub_reset();
+        if (D_80151878 != 0) {
+            gnsx(g->unk_0D4);
+            sndisp(&D_80151810, 0, 0xF);
+            get_k_work(3)[4] = 1;
+            g->unk_110D += 1;
+            return;
+        }
+        g->unk_110D += 2;
+        return;
+    case 0x39:
+        xa_wait();
+        return;
+    case 0x3A:
+        g->unk_110D = 0x40;
+        return;
+    case 0x40:
+        temp_v0_2 = func_8014B0D0();
+        sp28 = temp_v0_2;
+        if (temp_v0_2 == 0) {
+            g->unk_110D = 0x50;
+            return;
+        }
+        k_sub_reset();
+        gnsx(g->unk_0D4);
+        g->unk_F5F = (s8) sp28;
+        sndisp(&D_80151844, 0, 0xF);
+        g->unk_110D += 1;
+        return;
+    case 0x41:
+        xa_wait();
+        return;
+    case 0x42:
+        g->unk_110D = 0x50;
+        return;
+    case 0x50:
+        k_sub_reset();
+        gnsx(g->unk_0D4);
+        sndisp(&D_8015182C, 0, 0xF);
+        g->unk_110D += 1;
+        return;
+    case 0x51:
+        xa_wait();
+        return;
+    case 0x52:
+        func_80042808();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+
 
 s32 func_8014B750(void) {
     switch (D_800E6280.unk_110A) {
@@ -312,7 +474,54 @@ s32 func_8014BB94(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014BC00);
+void func_8014BC00(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp((u8 *) &D_80150F58, 0, 0xF);
+        D_800E6280.unk_0F6.b[1] = 0;
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(&D_80151398, 0, 0x1F);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 3:
+        xa_wait();
+        return;
+    case 4:
+        k_sub_reset();
+        gnsx((u8 *)"先生");
+        sndisp(D_801514A4[func_8014BDE0() & 3], 0, 0xE);
+        func_80052060((s32) &D_801514B4, (s32) &D_801514D4, func_8014BDE0() & 3, 0xE);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 5:
+        func_8005215C();
+        return;
+    case 6:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_80151664[func_8014BDE0() & 3], 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 7:
+        xa_wait();
+        return;
+    case 8:
+        func_80042908(6);
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+
 
 s32 func_8014BDE0(void) {
     s32 pad; /* FAKE: unused local, makes the frame 0x38 and puts the spill at sp+0x2C as in the original; real source unknown. T-4010 */
@@ -407,7 +616,54 @@ s32 func_8014C018(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/8014ABD0", func_8014C06C);
+void func_8014C06C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp((u8 *) &D_80150F6C, 0, 0xF);
+        D_800E6280.unk_0F6.b[1] = 1;
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(&D_80151398, 0, 0x1F);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 3:
+        xa_wait();
+        return;
+    case 4:
+        k_sub_reset();
+        gnsx((u8 *)"先生");
+        sndisp(D_801515E4[func_8014BE98() & 3], 0, 0xE);
+        func_80052060((s32) &D_801515F4, (s32) &D_80151614, func_8014BE98() & 3, 0xE);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 5:
+        func_8005215C();
+        return;
+    case 6:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_80151664[func_8014BE98() & 3], 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 7:
+        xa_wait();
+        return;
+    case 8:
+        func_80042908(6);
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+
 
 s32 func_8014C250(void) {
     switch (D_800E6280.unk_110A) {

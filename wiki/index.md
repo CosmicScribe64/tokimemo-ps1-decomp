@@ -293,3 +293,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13001-master-layout-pilot|T-13001]] Recover MASTER layouts and verify pilot matches (Done).
 
 - [[master-types-pilot]] — T-13000/T-13001: three MASTER typed-table matches, 3,648 literal bytes and evidence limits.
+
+- [[tickets/T-13100-etc-families|T-13100]] ETC source-family transfer, isolated worktree.
+
+- [[tickets/T-13101-etc-career-family|T-13101]] ETC career state handlers.
