@@ -6,6 +6,7 @@
 #define MAIN_API_OVERRIDE_D_80120721 /* matched as u8 (main_api.h: s8) */
 
 #include "common.h"
+#include "psx_types.h"
 #include "main_api.h"
 s32 func_80142028(void);
 void func_801460D8(void);
@@ -142,6 +143,7 @@ extern s32 D_8014D0EC;
 extern s32 D_8014D0F0;
 void func_8013B59C(void);
 
+extern u8 D_8014D014[]; /* u8 (u, v) pairs, one per decimal digit */
 extern u8 D_8014D070[];
 extern u8 D_8014D078[];
 extern u8 D_8014D080[];

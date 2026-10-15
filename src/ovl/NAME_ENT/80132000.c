@@ -1672,7 +1672,39 @@ void func_80137B84(s32 arg0, s32 arg1, s32 arg2) {
     func_8009EED0((D_8011ECA0 << 10) + 8 + D_800E8CA0, p);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80137CA0);
+void func_80137CA0(s32 arg0, s32 arg1, s32 arg2) {
+    SPRT *sprite;
+    u8 *uv;
+
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    sprite->r0 = D_800E6280.unk_03A;
+    sprite->g0 = D_800E6280.unk_03A;
+    sprite->b0 = D_800E6280.unk_03A;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + arg1 - 8;
+    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+    uv = &D_8014D014[arg0 / 10 * 2];
+    sprite->u0 = uv[0];
+    sprite->v0 = uv[1];
+    setWH(sprite, 8, 0x10);
+    sprite->clut = func_8009ED74(0x10, 0x1F0);
+    AddPrim((D_8011ECA0 << 10) + 8 + D_800E8CA0, (s32)sprite);
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    SetSemiTrans(sprite, 0);
+    sprite->r0 = D_800E6280.unk_03A;
+    sprite->g0 = D_800E6280.unk_03A;
+    sprite->b0 = D_800E6280.unk_03A;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + arg1;
+    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + arg2;
+    uv = &D_8014D014[arg0 % 10 * 2];
+    sprite->u0 = uv[0];
+    sprite->v0 = uv[1];
+    setWH(sprite, 8, 0x10);
+    sprite->clut = func_8009ED74(0x10, 0x1F0);
+    AddPrim((D_8011ECA0 << 10) + 8 + D_800E8CA0, (s32)sprite);
+}
 
 void func_80137EE4(void) {
     u8 *p;
