@@ -74,3 +74,11 @@ Failed helper probes46A60/47928 retain14/65 lines respectively; those bodies rem
 Default ninja: TAIIKU SHA1 OK, headers/globals pass. Literal proof: build/taiiku13600/second-proof.log; build log: second-build.log. Cumulative gain: **3 functions /1,496 verified linked bytes**. Independent review remains pending.
 
 Further bounded scratch results: the complete-type state twins3BB3C/3C33C remain141/139 lines after fixed-point union and canonical fields; race initializer44E54 remains139 after actor views and explicit resource snapshots. Fresh32BD0/34F98 inspection finds substantial copied-table/unrolled-stat reconstruction, so neither is treated as a simple dispatcher. These candidates remain assembly-backed. Larger sibling39610's natural thirteen-character stat-loop source is under test.
+
+### Bounded follow-up and disk checkpoint
+
+The larger scene sibling39610 confirms the thirteen-character GameState stat-loop family. Canonical fields and ordinary loops give68 lines; placing the zero initialization inside its threshold branch gives16, with the target64-byte frame and stat loops matching. Remaining differences are the D499D4 pointer register and associated spill/reload order. Indexed, reordered and return-type variants give16-28 lines. No register-only workaround is accepted, and this candidate remains assembly-backed.
+
+The fresh34F98 scene reconstructs an eleven-word local table and thirteen-character stat loops, but remains254 lines, dominated by table homes and pointer lifetimes. The smaller3D788 stat-threshold helper remains175 lines after a natural condition rewrite; using an existing fixed-point union pointer gives171. Testing an old-style callee declaration removes an unnecessary byte-argument mask but does not solve the function. No ABI/header changes are retained from that test. These bounded failures are saved in ignored build/taiiku13600; they do not establish exhaustion of the remaining queue.
+
+At the disk checkpoint, root reports only2.9 GiB free. No further full builds or bulky outputs are planned while it investigates. All accepted source is committed; cumulative literal-verified gain remains **3 functions /1,496 bytes**. The completed RPG checkout contains about913 MiB of copied ignored disc/asm inputs, and TAIIKU contains about914 MiB. Diagnostic scripts are preserved without duplicating game data.

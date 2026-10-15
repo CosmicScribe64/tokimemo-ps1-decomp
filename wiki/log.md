@@ -14194,3 +14194,7 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 ## [2026-10-15] build | T-13600 verify actor-field scene dispatcher
 
 [[tickets/T-13600-taiiku-families]] adds func_80139330 (544 literal linked bytes), with TAIIKU SHA1 and headers/globals passing. Existing DisplayActor44 coordinate fields fix the target load/store ordering. Canonical overlay prototypes preserve all existing output; source bodies remain untouched. Cumulative gain3 functions/1,496 bytes.
+
+## [2026-10-15] decision | Preserve bounded TAIIKU follow-up evidence during disk audit
+
+[[tickets/T-13600-taiiku-families]] records39610's sixteen-line residual after canonical stat-loop reconstruction,34F98's copied-table mismatch, and3D788's unsuccessful calling-convention test. No new source or ABI changes are accepted; cumulative gain remains1,496 literal-verified bytes. Root's disk audit limits further large outputs/full builds while the committed wins await independent review.
