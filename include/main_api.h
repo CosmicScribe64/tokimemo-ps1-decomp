@@ -2190,6 +2190,10 @@ void func_8006C848(s32 arg0);
 u8 *func_8006CA9C(void);
 u8 *func_8006CAE0(void);
 void _schedule_init(void);
+/* T-14501: _schedule_init callees defined later in 8006CB30.c. */
+void func_8006CD14(void);
+void schdeule_girls_param(void);
+void func_80070ECC(void);
 void last_date_spot_timer_dec(void);
 void restore_bgm(void);
 s32 func_8006CDD4(void);

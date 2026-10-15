@@ -14534,3 +14534,11 @@ Promoted BUNKASAI func_801438E4: 852 inventory coverage bytes and 852 default li
 ## [2026-10-15] build | T-15300 BUNKAKEN label encoding match
 
 Promoted BUNKAKEN func_80145844: 440 inventory coverage bytes and 440 literal default linked bytes. Restoring the ordinary Unicode label fixes an unsupported mixed hex-escape spelling in IDO K&R mode, following root's BUNKASAI finding. BUNKAKEN SHA1 and header/global/prototype guards pass. No FAKE/header changes or existing C edits. TACO's bounded structural probe is retained locally and paused for incoming exact candidates; see [[tickets/T-15300-fresh-structural-near-matches]].
+
+## [2026-10-15] build | T-14501 main verified draft batch
+
+Promoted 1 ordinary C functions / 188 inventory coverage bytes for main; default linked literal proof compared 188 bytes and overlay SHA1 passes. Header/global/prototype checks pass. No raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | All first-pass zero candidates have literal proof
+
+The main `_schedule_init` candidate passes 188 literal bytes / 188 inventory coverage bytes. Its three void forward declarations were centralized from existing definitions into main_api.h; all 27 binary SHA1 checks and header/global/prototype guards pass. This completes the 29 first-pass zero candidates, totaling 18,244 inventory coverage bytes across eight units; near/encoding repairs are separate. [[tickets/T-14501-remaining-draft-proof]] records the proof and accounting. The generation lane retains ownership of retry archives.
