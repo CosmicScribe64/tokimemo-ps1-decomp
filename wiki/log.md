@@ -14221,3 +14221,6 @@ Created codex/largest-dialogue from integration 2cb6a11c for [[tickets/T-12500-l
 ## [2026-10-15] ticket | Largest dialogue diagnostic handoff
 
 [[tickets/T-12500-largest-dialogue]] moves to In Review with board/index synchronized. Zero new bytes; inherited 16-row guard and production source unchanged. Native AS1 diagnostic fidelity is established; 128 fine line layouts and two bounded combined searches (215 + 44 full-TU evaluations) do not improve it. [[matching-notes]] preserves the measured blocker and reproduction paths. Final configure/rebuild passes 526 tasks, 27/27 checksums, headers/globals; prototypes 0 new / 15 known; fresh guard diff remains 16 rows. No compiler change or assembly patching.
+
+## [2026-10-15] decision | Replace exhausted dialogue pass with NAME_ENT family work
+[[tickets/T-12600-byte-coverage-families]]: largest-function worker completed diagnostic-only b1d78a41 after calibrated AS1 tracing and bounded source searches; dialogue_speak_part remains16rows/0newbytes. Evidence retained under [[tickets/T-12500-largest-dialogue]]. New replacement agent uses user-requested Sol6.1medium, isolated NAME_ENT scope and T13700 series. Avoid repeating exhausted T11570 selector-copy hypotheses; prioritize coherent type/control-flow families. DATE, ETC, GYOZI/SHOUGATU, TAIIKU and build-dependency work remain active.
