@@ -24,9 +24,9 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
-
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
+
+
 
 
 
@@ -94,6 +94,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
+- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
+
 - [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 
 - [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
@@ -134,7 +136,20 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
@@ -213,6 +228,33 @@ kanban-plugin: board
 - [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 
 - [ ] [[tickets/T-12210-matching-bottleneck-research|T-12210 Identify and test high-leverage matching breakthroughs]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
