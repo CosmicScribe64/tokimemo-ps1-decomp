@@ -1380,7 +1380,33 @@ void func_80117004(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117178);
+/* The record index is read through the EventStateView field (D_800B1746 is its unk_EE6): an indirect load, so
+ * IDO reloads it after the compare chain instead of keeping D_800B1746 in a register, as the original does. */
+void func_80117178(void) {
+    if (D_800B0895 == 0x5F) {
+        if ((D_800B1746 == 2) || (D_800B1746 == 8) || (D_800B1746 == 0xA)) {
+            D_80094730 = 1;
+        }
+        *(s16 *)(D_800B0860 + ((EventStateView *)D_800B0860)->unk_EE6 * 0x34 + 0x1A6) += 1;
+        func_80011DFC();
+    } else if (D_800B0895 == 0x60) {
+        if ((D_800B1746 == 2) || (D_800B1746 == 8) || (D_800B1746 == 0xA)) {
+            D_80094730 = 4;
+        } else {
+            D_80094730 = 6;
+        }
+        func_80011EC4(0x14);
+    } else {
+        if ((D_800B1746 == 2) || (D_800B1746 == 8) || (D_800B1746 == 0xA)) {
+            D_80094730 = 9;
+        } else {
+            D_80094730 = 0xB;
+        }
+        *(s16 *)(D_800B0860 + ((EventStateView *)D_800B0860)->unk_EE6 * 0x34 + 0x1A6) += 1;
+        func_80011EC4(0x1F);
+    }
+    func_8004C250();
+}
 
 void func_801172E4(void) {
     func_80011EC4(0x32);
