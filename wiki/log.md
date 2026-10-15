@@ -14517,3 +14517,9 @@ T14500 frozen48362009census:1066remainingfunctions/866424bytes,including125guard
 ## [2026-10-15] build | EVENT interaction adds 656 bytes
 
 [[tickets/T-14300-event-families]] matches func_80117D80 in src/ovl/EVENT/8010FE10.c using ordinary conditions, the observed signed EventStateView field at offset 0xFE, and one explicitly marked FAKE discarded entry assignment for operand order. Default literal proof, EVENT SHA1, header/global/prototype guards pass. Cumulative gain: six functions / 3,204 literal linked bytes. Shop and medal probes remain ignored scratch.
+
+## [2026-10-15] build | EVENT interaction reaches 62.3 percent
+[[tickets/T-12400-integrate-verified-matches]] integratedb78c6775: independent defaultliteralproof confirms80117D80=656bytes, EVENT SHA1, headers/globals and branch prototype checks pass. Standards inspection confirms signedhalfword+0xFE splits existingpadding withoutlayoutshift; explicitlyFAKE-labelled discardedassignment tracks branchoperand workaround. Total5898/6958functions,1419540/2279368bytes (62.3%); remaining403956alignedbytes to80%. Evidence build/scratch/goal-event-17d80.log.
+
+## [2026-10-15] decision | Separate exhaustive generation and proof lanes
+T14500 census resumed beyondBUNKAKEN intoBUNKASAI (about44/1066); first12zero-scorecandidates/8384bytes have affectedchecksum passing but remain pendingcomplete literalproof. Assigned Sol6.1medium proofworker in/private/tmp/t14500-proof to validate/commit batches while generation continues frozencontext uninterrupted. Sharedimmutableinputs retained; proofgeneratedASM private to avoid sharedmutations. No candidatebytes added tocoverageuntilproof and integration. [[tickets/T-12600-byte-coverage-families]] remains80%coordination.
