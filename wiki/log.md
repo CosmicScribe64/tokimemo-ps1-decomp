@@ -14482,3 +14482,11 @@ Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45
 
 ## [2026-10-15] setup | Authorized disk cleanup preserves matching work
 User authorized cleanup after disk audit found2.9GiB free99%,39GB in matching worktrees,31.17GiB in their disc directories. Compared both track files byte-for-byte against the original project disc, then atomically replaced44identical copies across22finished worktrees with hard links to the original files. No source, commit, scratch draft, original data or active worktree input removed. Docker builder prune reclaimed2.174GB oldcache plus4.665GB additional unusedcache; installed toolchain images retained. Final df reports18GiB free92%, approximately15GiB more available. Future worktree setup must reuse immutable inputs (same-filesystem hard links or explicit read-only Docker mounts), not create independent disc copies. Cleanup script: /private/tmp/tokimemo-dedup-disc.sh. [[tickets/T-12400-integrate-verified-matches]] retains pending verified EN_NICHI/EVENT integration; no extra coding was undertaken during cleanup.
+
+## [2026-10-15] ticket | Reserve nine DATE census repair failures
+
+Created [[tickets/T-14600-date-draft-repairs]] at frozen base 48362009. Preserve initial T-14500 attempts and retain repaired alternatives separately. Read T-14100 callback table evidence; no historical draft constitutes a verified match.
+
+## [2026-10-15] build | Compile all nine repaired DATE census drafts
+
+[[tickets/T-14600-date-draft-repairs]] now In Review. All nine alternatives compile serially in Docker; diagnostic differences range from 12 to 628 rows, no zero candidates and no matching-coverage claim. T-14100 real callback-table types were reused for 449D4/44E20. Alternatives, full preprocessed contexts, provenance and comparison records are in drafts/T-14500/repairs. Initial census attempts remain immutable; production C and shared generated assembly are unchanged.

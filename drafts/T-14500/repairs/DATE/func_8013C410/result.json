@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_8013C410",
+  "status": "scored",
+  "score": 114,
+  "note": "Recover 11x21 byte aggregate from 228-byte copy plus unaligned three-byte tail.",
+  "body_sha256": "c6866cfbc4a111e19369a8c56eb586dd72434732951dbbbfecb6c985893b7fa6",
+  "context_sha256": "8000fe3f4115802bcd22f4cefd0ed44ed368897c943d1f1ef68dd7f16920a23f",
+  "residual_class": "instruction, control-flow or register allocation differences",
+  "matching_claim": false
+}

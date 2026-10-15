@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_80155004",
+  "status": "scored",
+  "score": 66,
+  "note": "Recover genuine 53-callback table instead of undersized integer buffer.",
+  "body_sha256": "954be907229fbe942fa1770dd21830a78a5ed319d36f3628fa396e4b0893e907",
+  "context_sha256": "be6e8c8a54b6780a35f4ef525435c663b4f9eb5de04c8d3127381f23e6c6756d",
+  "residual_class": "instruction, control-flow or register allocation differences",
+  "matching_claim": false
+}
