@@ -298,4 +298,24 @@ void func_801332D8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80132000", func_80133348);
+void func_80133348(void) {
+    u16 v;
+    u8 c; /* FAKE: copy of D_800CA2CC, gives the original's bne operand order; real source unknown. T-11440 */
+
+    v = get_g_zyotai_s(D_800E6280.unk_75D);
+    if (D_800E6280.unk_721 == 5 && D_800E6280.unk_75D == 2 && (c = D_800CA2CC) == 2) {
+        D_800B593C = 0;
+        func_80042908(8);
+        return;
+    }
+    /* FAKE: the byte view of unk_75D below gives the original's bne operand order; real source unknown. T-11440 */
+    if (D_800E6280.unk_721 == 3 && *(u8 *) &D_800E6280.unk_75D == 5 && (v & 0x7F) < 2) {
+        func_80042908(0xB);
+        return;
+    }
+    if (D_800E6280.unk_721 == 4 && *(u8 *) &D_800E6280.unk_75D == 4 && (v & 0x7F) < 2) {
+        func_80042908(0xA);
+        return;
+    }
+    func_8004284C();
+}
