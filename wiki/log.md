@@ -13545,3 +13545,19 @@ Added [[matching-breakthroughs]], including three verified matches / 2,352 linke
 ## [2026-10-15] ticket | T-12210 research and matching review complete
 
 Standards and requirements reviews of 47bdf34e...9f34527f passed with no findings. [[tickets/T-12210-matching-bottleneck-research]] moved to Done; [[matching-breakthroughs]] documents three verified matches and evidence-ranked follow-ups, not a claim that the larger matching problem is solved. Final progress measurement is in build/acceleration/progress-after.txt. The branch remains isolated and unmerged.
+
+## [2026-10-15] ticket | T-12220 continue with medium handler families
+
+User requested continued matching research. Opened [[tickets/T-12220-scene-handler-family-experiment]] to compare fresh m2c output with family-guided reconstruction in BUNKASAI objects outside cx ownership. Read active run status read-only; preserve its work. Prior census and experiment rationale are in [[matching-breakthroughs]].
+
+## [2026-10-15] decision | T-12220 zero-search medium cohort
+
+Fresh normalized m2c drafts for both seed handlers scored zero, so a special family-guided rewrite would not explain these outcomes. [[tickets/T-12220-scene-handler-family-experiment]] now tests a frozen 24-target medium-function cohort through existing bulk_m2c with no hill-climb budget. Preserve precise distinction between full-unit zero score and final linked verification.
+
+## [2026-10-15] build | T-12220 seed matches and cohort underway
+
+BUNKASAI func_80150234 and func_80145930 both pass literal linked equality at 760 bytes each and the BUNKASAI SHA1. The frozen 24-target medium cohort is running in one-CPU Docker with --time 0, one m2c variant, no order/regdiff search. First three pipeline records are verified matches; final counts and post-migration verification pending. State and frozen target list are outside the worktree at /private/tmp/tokimemo-family-out/.
+
+## [2026-10-15] build | T-12220 twenty verified medium-function matches
+
+[[tickets/T-12220-scene-handler-family-experiment]]: 16/24 direct cohort wins in 260.18 seconds, two seed wins, and two paired CharFlags bitfield fixes; 20 functions / 16,272 literal linked bytes total. Both unit checksums pass. [[matching-breakthroughs]] preserves the cohort, negative results, timing boundaries and limited transfer claim. Header/global/prototype guards pass; no full-game build. Ticket moved to In Review for standards and requirements review.

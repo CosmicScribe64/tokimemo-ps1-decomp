@@ -252,3 +252,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[acceleration-audit]] - T-12200 measured stripping speedup, validation limits, queue/reuse priorities, and CPU allocation.
 - [[tickets/T-12210-matching-bottleneck-research|T-12210]] Remaining-byte census and experiments for matching breakthroughs (Done; 3 matches, 2352 linked bytes).
 - [[matching-breakthroughs]] - T-12210 remaining-byte census, three verified family matches, negative retrieval experiment, and research priorities.
+- [[tickets/T-12220-scene-handler-family-experiment|T-12220]] Medium scene-handler reconstruction and held-out sibling tests (In Progress).

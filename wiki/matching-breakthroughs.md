@@ -75,3 +75,44 @@ The acceptance metric for each research lane should be **new literal-verified by
 ## Reproduction artifacts
 
 Ignored local evidence under `build/acceleration/`: `progress.txt`, `queue-summary.txt`, `census.json`, `baseline-metrics.txt`, `dupes.txt`, `neardupes.txt`, `relaxed-twins.json`, `twin-plan.txt`, `twin-plan3.txt`, `twin-proof.txt`, `twin3-proof.txt`, and unit build logs. Scratch census and family scripts reside there too. Run the checked-in tools with `progress.py`, `queue.py --summary`, `dupes.py -v`, and `neardupes.py -v` for fresh inventories; counts will change after these three matches and other integrations. See [[tickets/T-12210-matching-bottleneck-research]].
+
+## Executed medium-function experiment (T-12220)
+
+Baseline f1010b54: 5,736/6,958 functions, 1,290,436/2,279,368 game bytes. Two fresh m2c seed drafts (BUNKASAI func_80150234 and func_80145930, 760 bytes each) matched after existing GameState name normalization. No family reconstruction was needed for these seeds.
+
+The frozen cohort took the first 12 remaining names alphabetically in each of BUNKAKEN and BUNKASAI, restricted to 600–1,999 bytes, excluding the two seeds. Existing bulk_m2c ran one default variant with --time 0 --score-jobs 1 --jobs 1 --no-order --no-regdiff under a one-CPU, 1 GiB Docker cap. It matched 16/24, 13,228 linked bytes, in 260.18 seconds including its per-target gates and final migration/header check. This duration excludes setup, seed work, later revalidation, documentation and review. It is not end-to-end throughput or a comparison against small functions.
+
+Two remaining handlers shared a 14-row exact mismatch: byte OR stores reused the address register, whereas the target used a separate byte-load destination. Replacing `.unk_0C.b[1] |= 0x10/0x20` with the existing `.unk_0C.f.b12/b13 = 1` representation reduced both full-unit scores from 14 to zero. Both then passed literal linked-byte verification. This applies an already documented CharFlags compiler idiom (include/main_api.h, T-9020); it does not discover a new compiler rule. Two related examples are insufficient to claim broad transfer or three held-out successes.
+
+Total: **20 functions / 16,272 literal linked bytes**, comprising two seeds, 16 initial cohort wins, and two bitfield fixes. Six cohort targets remain assembly; scratch drafts are retained outside source. No tool implementation or global default was changed. Both affected overlay SHA1 checks pass; check_headers, migrate_globals --check, and sync_protos --check-branch pass (0 new disagreements, 15 known). Full-game checksum build was not run. Final progress: 5,756/6,958 functions and 1,306,708/2,279,368 game bytes (57.3%).
+
+| Cohort function | Bytes | Outcome |
+|---|---:|---|
+| BUNKASAI:func_80134A90 | 616 | direct match |
+| BUNKAKEN:func_8013AF00 | 624 | direct match |
+| BUNKASAI:func_80138EF8 | 704 | direct match |
+| BUNKAKEN:func_80138EB8 | 716 | direct match |
+| BUNKAKEN:func_80137CD8 | 736 | direct match |
+| BUNKASAI:func_801325F4 | 736 | bitfield fix matched |
+| BUNKASAI:func_801347A8 | 744 | direct match |
+| BUNKAKEN:func_80139780 | 748 | direct match |
+| BUNKASAI:func_80138BE4 | 788 | bitfield fix matched |
+| BUNKAKEN:func_8013A8CC | 804 | remaining; exact score 78 |
+| BUNKASAI:func_80135914 | 824 | direct match |
+| BUNKASAI:func_8013A614 | 840 | direct match |
+| BUNKASAI:func_801391B8 | 844 | direct match |
+| BUNKAKEN:func_80138340 | 896 | direct match |
+| BUNKAKEN:func_80139A6C | 896 | direct match |
+| BUNKAKEN:func_80137FB8 | 904 | direct match |
+| BUNKASAI:func_80135554 | 960 | direct match |
+| BUNKASAI:func_80139504 | 1052 | direct match |
+| BUNKAKEN:func_8013C634 | 1080 | remaining; exact score 124 |
+| BUNKAKEN:func_8013CA6C | 1108 | remaining; exact score 119 |
+| BUNKASAI:func_80139920 | 1124 | direct match |
+| BUNKAKEN:func_80138A08 | 1200 | remaining; exact score 104 |
+| BUNKAKEN:func_8013C0AC | 1416 | remaining; exact score 130 |
+| BUNKASAI:func_80135C4C | 1508 | remaining; exact score 276 |
+
+The practical next step is a bounded sweep of unclaimed 600–1,999-byte functions using existing drafts and exact rescoring, followed by grouping near misses by known type/code-generation patterns. Keep a small-function control sample and include failed attempts, setup and review in the timing before claiming a general speedup. This selected pair of related overlays supports changing target selection; it does not establish a game-wide 67% success rate. Do not start with an unbounded random-mutation farm.
+
+Evidence: build/family/final-proof.txt (18 functions), pair-proof.txt (two fixes), final-build.log and pair-build.log (unit checksums), progress-final.txt. Cohort and attempt records: /private/tmp/tokimemo-family-out/cohort.json and state.jsonl; run.log records elapsed time. Scratch scripts in build/family/ are local and ignored. The table above preserves the complete cohort and outcomes in versioned documentation.
