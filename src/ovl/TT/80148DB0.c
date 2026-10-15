@@ -540,7 +540,196 @@ void func_8014A198(void) {
     *(u16 *)(p + 0x5A) += 0x40;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-11840, 28 lines (registers only, case 7): the original's ugen emits the constants 0x180, 0x1A, 0x3D04
+ * and 2 first in the block (t2..t5, then 0x100000 in t6), this draft at their stores (t5..t8 after 0x100000 in t2); the
+ * stores themselves are in the original's order. Not uopt colours (those would leave t2..t5 out of every ugen rotation).
+ * Tried: autotweak 300 s, an empty if at every line of case 7, store orders, u16 stores, constant locals. */
+void func_8014A2B4(void) {
+    u8 *s;
+    u8 *e;
+    u8 *g;
+    s32 pad1; /* FAKE: stack slot of the original frame. T-11840 */
+    u8 *w;
+    u8 *y;
+    u8 *p;
+    u8 *f;
+    s32 pad3; /* FAKE: stack slot of the original frame. T-11840 */
+    u32 k; /* one unsigned local for both selectors: $v1 in cases 2 and 9, compare constant 1 shared. T-11840 */
+
+    s = D_80158A64;
+    p = D_80158AA4 + 0xC80;
+    g = D_80158A60;
+    w = D_80158A6C;
+    e = D_80158A74;
+    y = D_80158AB0;
+    switch (*(u16 *)(s + 2)) {
+    case 0:
+        if (*(u16 *)(D_80158A60 + 0xA4) != 0) {
+            func_8014304C(0x80016000, 0xC812, 0x2420);
+            func_8014304C(0x8002E800, 0xC7C1, 0x69E4);
+            func_8014304C(0x8019A000, 0xC7C5, 0x27D60);
+            func_8014304C(0x8001A000, 0xBFD1, 0xE20);
+            func_8014304C(0x801C2000, 0xBF9C, 0x1A680);
+        }
+        *(u16 *)(s + 2) = 1;
+        break;
+    case 1:
+        func_80044750(0x22);
+        func_80044750(0x2F);
+        func_80044750(0x205);
+        func_8014CBD0();
+        func_80148210();
+        func_80143570();
+        func_8014A7E0();
+        func_80146BE0();
+        func_80148DB0();
+        func_80147CE0();
+        func_8014AF3C();
+        func_80132F4C();
+        func_80133B70();
+        func_8013BD4C();
+        func_801473BC();
+        func_801426F0();
+        s[0x11] = 0;
+        s[0x24] = 0;
+        *(u8 ***)(s + 0x18) = D_8015676C;
+        s[0x1C] = 0x20;
+        func_80149704();
+        func_801498C8();
+        func_80149D64();
+        *(s16 *)(w + 0x10) = 0;
+        w[0xA] = 0;
+        *(u16 *)(s + 0x26) = 0;
+        *(u16 *)(s + 2) += 1;
+        *(s16 *)(s + 4) = 0x40;
+        break;
+    case 2:
+        if (*(u16 *)(D_80158A60 + 0xA4) != 0) {
+            k = func_800460DC();
+            if ((s32)((k - func_801430C4() + 0x100) & 0xFF) >= 5) {
+                func_80044750(0x12);
+                *(u16 *)(s + 2) += 1;
+            }
+        } else {
+            *(u16 *)(s + 2) = 4;
+        }
+        func_80149E44();
+        func_80149BB0();
+        break;
+    case 3:
+        if (*(u16 *)(D_80158A60 + 0xA4) != 0) {
+            *(u16 *)(g + 0xA4) = 0;
+            if (func_80044F94(1) != 0) {
+                *(u16 *)(s + 2) += 1;
+            }
+        }
+        func_80149E44();
+        func_80149BB0();
+        break;
+    case 4:
+        if (*(u16 *)(D_80158A64 + 0x26) >= 0x708) {
+            s[0x24] = 0;
+            s[0x22] = 1;
+            g[0x52] = 0xFF;
+            *(u8 **)(g + 0x4C) = D_80150A50;
+            *(s16 *)s = 2;
+            s[9] = 0;
+            s[0xA] = 0;
+            s[0xB] = 0;
+            *(u16 *)(s + 2) = 0;
+            *(s16 *)(s + 4) = 0;
+            *(s16 *)(s + 6) = 0;
+        }
+        func_80149E44();
+        func_80149BB0();
+        func_801494D8();
+        *(u16 *)(s + 0x26) += 1;
+        break;
+    case 5:
+        f = D_80158AA8 + w[0xA] * 0x14;
+        *f = *(u16 *)(g + 8) & 1;
+        if (w[0xA] == 0) {
+            func_80149EA0();
+        } else {
+            if (*(u16 *)(w + 0x10) >= 0x1E) {
+                *(u16 *)(w + 0x10) = 0;
+                *(u16 *)(s + 2) = 9;
+            }
+            *(u16 *)(w + 0x10) += 1;
+        }
+        break;
+    case 6:
+        func_8014A000();
+        break;
+    case 7:
+        *e = 0;
+        *(s32 *)(p + 0x20) = 0x100000;
+        *(s32 *)(p + 0x24) = 0x6C0000;
+        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x22);
+        *(s16 *)(p + 0x52) = 0;
+        *(s16 *)(p + 0x5A) = 0x180;
+        p[0] = 1;
+        p[1] = 0;
+        *(s16 *)(p + 0x44) = 0;
+        p[0x3B] = 0x80;
+        p[0x4D] = 0;
+        p[0x4E] = 1;
+        p[0x50] = 0;
+        p[0x46] = 0x80;
+        p[0x47] = 0;
+        p[0x4F] = 1;
+        *(s16 *)(p + 0x3C) = 0x80;
+        *(s16 *)(p + 0x3E) = 0x80;
+        *(s16 *)(p + 0x40) = 0x1A;
+        *(s16 *)(p + 0x42) = 0x3D04;
+        p[0x4C] = 0;
+        *(s16 *)(p + 0x10) = 2;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0;
+        *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+        *(s16 *)(y + 4) = *(s16 *)(p + 0x14);
+        *(s16 *)(y + 6) = *(s16 *)(p + 0x16);
+        *(s16 *)(y + 2) = 0x1000;
+        *(s16 *)y = *(s16 *)(y + 2);
+        *(u8 **)(p + 0x48) = y;
+        func_80133AD0(0x614);
+        *(u16 *)(s + 2) += 1;
+        break;
+    case 8:
+        func_8014A198();
+        break;
+    case 9:
+        k = D_80158A6C[0xA];
+        switch (k) {
+        case 0:
+            *(s16 *)s = 2;
+            break;
+        case 1:
+            *(s16 *)s = 7;
+            break;
+        case 2:
+            *(s16 *)s = 3;
+            break;
+        case 3:
+            *(s16 *)s = 8;
+            break;
+        }
+        s[9] = 1;
+        break;
+    }
+    if (s[9] != 0) {
+        *(s16 *)(s + 6) = 0;
+        *(s16 *)(s + 4) = 0;
+        *(u16 *)(s + 2) = 0;
+        s[0xB] = 0;
+        s[0xA] = 0;
+        s[9] = 0;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014A2B4);
+#endif
 
 void func_8014A7E0(void) {
     s32 i;
