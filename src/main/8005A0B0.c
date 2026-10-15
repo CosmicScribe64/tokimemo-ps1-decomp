@@ -736,7 +736,39 @@ void func_8005D31C(void) {
     func_8005D1B0();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D448);
+s32 func_8005D448(void) {
+    /* FAKE: two-word local reserves the observed sp+0x2C spill home. T-12030. */
+    s32 stack_home[2];
+    s32 selection;
+
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    selection = D_800E6280.unk_1094 + 1;
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x20) {
+        if (D_800E7D14[selection] != 0) {
+            if (selection == (u8) D_800E6280.unk_1118) {
+                func_80053CE0();
+                func_8004284C();
+            } else {
+                D_800E6280.unk_1118 = (s8) selection;
+                if ((u8) D_800E8BEE != 0) {
+                    D_800E7D36 = (u8) D_800E6280.unk_1118;
+                    func_800696DC(0, 1);
+                } else {
+                    func_80042940(0xB0);
+                }
+            }
+        }
+    } else if (D_800E6280.unk_F88 & 0x40) {
+        func_8005C4CC(1);
+        func_80042908(0);
+        func_80042940(2);
+    }
+    k_disp_inc();
+    func_8005D1B0();
+}
 
 void func_8005D56C(void) {
     switch (D_800E6280.unk_110D) {

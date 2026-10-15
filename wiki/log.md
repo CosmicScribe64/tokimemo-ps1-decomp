@@ -13517,3 +13517,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | T-12030 guarded status-handler diagnosis
 
 [[tickets/T-12030-codex-cx3]]: func_8005BE8C now compiles as guarded s32 C and remains three differing instruction rows. Traced uopt identifies a temporary allocation discrepancy; scalar view, local reuse, autotweak and bounded permutation found no verified match. Default assembly remains active.
+
+## [2026-10-15] build | T-12030 menu selection handler matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005D448 is active C with 292 exact linked bytes and passing main SHA1, headers and globals. Reused the pre-call menu index and documented its stack-home padding fakematch.

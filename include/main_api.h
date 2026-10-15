@@ -2062,6 +2062,7 @@ void func_8005B908();
 void func_8005BD20();
 void func_8005C4CC(s32 arg0);
 void func_8005D174(void);
+s32 func_8005D448(void);
 void func_8005D1B0();
 void func_8005D9B4();
 s32 func_8005E0E0();
