@@ -14942,3 +14942,10 @@ functions from the T-14500 census drafts, owned files `src/ovl/RPG_BAT/801454F0.
 [[matching-notes]]: callers of `func_8013E7C0`/`func_8013E97C` saw an implicit int declaration (counter in `$v1`
 after the call); `include/ovl/RPG_BAT.h` gets an `RPG_BAT_OVERRIDE_<name>` guard for them. Owned files
 `src/ovl/RPG_BAT/801454F0.c`, `80155A70.c`, `80156870.c`, `8013AD50.c` hold no asm any more.
+
+## [2026-10-15] ticket | T-16210 Done
+
+[[tickets/T-16210-w2-rpg_bat-801454f0]] reviewed against `CODING_STANDARDS.md` and moved to Done: 5 of 5 RPG_BAT
+functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `CODING_STANDARDS.md` now describes the
+`<NAME>_OVERRIDE_<symbol>` guard for overlay-local symbols that the package introduced (`RPG_BAT_OVERRIDE_func_8013E7C0`,
+`RPG_BAT_OVERRIDE_func_8013E97C`). Follow-up: teach `tools/sync_protos.py` and `tools/check_headers.py` this form.
