@@ -13338,3 +13338,10 @@ the ticket; m2c leftovers tidied in the bulk match. No findings. Moved [[tickets
 ## [2026-10-14] ticket | T-11320 to In Progress
 
 [[tickets/T-11320-close-near-misses-sonnet-48]] started in worktree s48.
+## [2026-10-14] ticket | T-11300 to In Progress
+
+Started [[tickets/T-11300-close-near-misses-sonnet-46]] in worktree s46.
+
+## [2026-10-14] ticket | T-11300 to In Review
+
+[[tickets/T-11300-close-near-misses-sonnet-46]]: 2 matches (EN_NICHI func_80137C58, TACO func_80146D60); TACO func_801471D0 down to 4 lines. funcdiff false `lui` diff from HI16/LO16 pairing noted in the ticket.

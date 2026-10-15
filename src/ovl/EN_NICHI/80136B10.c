@@ -49,15 +49,17 @@ INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80136DEC);
 
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_8013735C);
 
-/* NON_MATCHING: T-9380, bne operand order only: the original puts the hoisted constants (s7 = 1, s6 = 2) first in both `v == k` branches, IDO the variable */
-#ifdef NON_MATCHING
+/* FAKE: the u8 locals `one` and `two` put the hoisted constants first in both bne compares (T-9410 idiom), T-11300 */
 void func_80137C58(void) {
     s32 i;
     u8 *p;
     u8 *r;
-    s32 d;
     u8 v;
+    u8 one;
+    u8 two;
 
+    one = 1;
+    two = 2;
     D_80139C58 = D_80139C58 + 4;
     if (D_80139C58 >= 0x71) {
         D_80139C58 = 0;
@@ -65,7 +67,7 @@ void func_80137C58(void) {
     func_80137E2C();
     for (i = 0, p = D_80139C34; i < 5; i++, p++) {
         v = *p;
-        if (v == 1) {
+        if (one == v) {
             r = D_8011ECD0 + i * 0x44;
             *(s16 *)(r + 0x1A22) -= D_80139C3C[i] * 8;
             *(s16 *)(r + 0x1A24) -= D_80139C3C[i] * 8;
@@ -87,7 +89,7 @@ void func_80137C58(void) {
                 v = 2;
             }
         }
-        if (v == 2) {
+        if (two == v) {
             D_80139C44[i] += 1;
             if (D_80139C44[i] >= 0x3D) {
                 D_8011ECD0[i * 0x44 + 0x1A0B] = 0;
@@ -96,9 +98,6 @@ void func_80137C58(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10", func_80137C58);
-#endif
 
 /* FAKE: the empty do-while after the load of D_80139C58 puts the load and its uses in the original's registers (a2, v0); found with the permuter, T-9380 */
 void func_80137E2C(void) {
