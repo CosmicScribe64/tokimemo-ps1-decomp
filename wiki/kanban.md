@@ -84,6 +84,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-11810-tt-batch-8|T-11810 TT batch 8]]
 - [ ] [[tickets/T-11800-tt-batch-7|T-11800 TT batch 7]]
 - [ ] [[tickets/T-11600-w1-ovl-event-8010fe10|T-11600 Wave 1 package w1-p04]]
 - [ ] [[tickets/T-11610-w1-main-80042540|T-11610 Wave 1 package w1-p05]]

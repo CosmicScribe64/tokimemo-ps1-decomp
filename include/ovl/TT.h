@@ -36,6 +36,9 @@ extern u8 *D_80158A60;
 extern u8 *D_80158AB4;
 void func_8013E320(void);
 extern s32 D_8014E34C;
+extern s32 D_8014E350; /* T-11810 */
+extern s32 D_8014E354; /* T-11810 */
+extern u8 D_80155B10[]; /* T-11810 */
 
 extern u8 *D_80158A64;
 extern s32 *D_80158A70;
@@ -49,6 +52,7 @@ extern u8 D_80152C88[];
 extern u8 D_80155AE4[]; /* T-11000 */
 extern u8 D_80155C58[];
 extern u8 D_80155E2C[];
+extern u8 D_80155E48[]; /* T-11810 */
 extern u8 D_80155D2C[];
 void func_8013B6C8(void);
 void func_8013B928(void);
@@ -121,6 +125,11 @@ extern u8 D_80158AC0[];
 extern u8 D_80150A14[];
 extern u8 D_80150A30[];
 extern u8 D_80155B6C[];
+extern u8 D_80150968[]; /* T-11810 */
+extern u8 D_80150970[]; /* T-11810 */
+extern u8 D_80155B5A[]; /* T-11810 */
+extern u8 D_80155B60[]; /* T-11810 */
+extern u8 D_80155B66[]; /* T-11810 */
 extern u8 D_80155B72[];
 extern u8 D_80155B78[];
 extern u8 D_80155B7E[];
@@ -639,4 +648,21 @@ typedef struct TtAnim14 {
     /* 0x10 */ u8 unk_10;
     /* 0x11 */ u8 pad_11[3];
 } TtAnim14; /* size 0x14 */
+#endif
+
+#ifndef OVL_TT_T11810_SCENE_TABLES
+#define OVL_TT_T11810_SCENE_TABLES
+/* Scene tables and update handlers installed by func_801369F4. T-11810 */
+extern u8 D_80151A80[];
+extern u8 D_80151AC8[];
+extern u8 D_80154520[];
+extern u8 D_80154564[];
+extern u8 D_80155D60[];
+extern u8 D_80155D9C[];
+extern u8 D_801564E0[];
+extern u8 D_80156534[];
+void func_80139B98(void);
+void func_801365C4(s32 arg0);
+void func_8013BB28(s32 arg0);
+void func_80140D84(void);
 #endif

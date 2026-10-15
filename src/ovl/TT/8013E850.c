@@ -120,7 +120,29 @@ void func_8013EC1C(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013E850", func_8013EC64);
+void func_8013EC64(void) {
+    s32 pad; /* FAKE: moves the spill slot of p to sp+0x28. T-11810 */
+    u8 *p;
+
+    p = D_80158A64;
+    if ((*(u16 *)(D_80158A60 + 0x14) & D_80155DD0[p[0x21]]) == D_80155DD0[p[0x21]]) {
+        p[0x20] = 0x10;
+        if (++p[0x21] == 10) {
+            if (*(u16 *)p == 2 && *(u16 *)(p + 2) >= 0x50) {
+                func_80133AD0(0x80A);
+            } else {
+                func_80133AD0(0x70A);
+            }
+            p[0x21] = 0;
+            func_80144CF0();
+        }
+    } else if (*(u16 *)(*(s32 *)&D_80158A60 + 0x14) != 0) { /* FAKE: the s32 view stops uopt reusing the first read. T-11810 */
+        p[0x21] = 0;
+    }
+    if (--p[0x20] == 0) {
+        p[0x21] = 0;
+    }
+}
 
 void func_8013ED70(void) {
     u8 *a;
