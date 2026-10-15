@@ -9,6 +9,14 @@
 
 s32 set_kanji_string();
 
+/* T-12090: dispatcher and its later definitions in 80132000.c. */
+void func_80132428(void);
+void func_801325E8(void);
+void func_8013261C(void);
+void func_801327E4(void);
+void func_80132DB8(u32 arg0);
+void func_80132DFC(void);
+
 /* BUNKA_SD functions called across the overlay. */
 void func_80132940(void);
 void func_80134938(void);

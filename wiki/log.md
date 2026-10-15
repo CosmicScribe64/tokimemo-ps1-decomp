@@ -13509,3 +13509,7 @@ merged). The seven TT matches that p10 and p12 made and the PRs lack went to dim
 ## [2026-10-15] ticket | Start cx9 BUNKA_SD matching pass
 
 Created [[tickets/T-12090-codex-cx9]] In Progress, with [[kanban]] and [[index]] entries. Read required guidance and historical evidence for all ten targets. Baseline Docker configure/ninja passes 27/27 SHA1, headers and globals. Prioritize verified bytes and larger related setup functions.
+
+## [2026-10-15] build | T-12090 dispatcher matched
+
+BUNKA_SD:func_80132428 matches exact linked text (448 bytes) with overlay SHA1, headers and globals OK. Canonical global fields and missing forward declarations resolve prior full-file failure. Plain C, no FAKE. Details in [[tickets/T-12090-codex-cx9]].
