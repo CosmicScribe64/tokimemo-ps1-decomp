@@ -34,3 +34,7 @@ The original two stores share one lui $at. All code references to the pointer pa
 ### Initial near-miss experiments
 
 file_checksum_ok: 4 listing lines, sltu/andi scheduling swap. Autotweak (385 variants), all 720 loop statement permutations and 42 manual source-line/mask variants unchanged. func_80049044: 12 listing lines (six word substitutions), ugen loads into t6/t7 instead of v1; 255 autotweak candidates unchanged. Traced uopt reused from the orchestrator-provided existing binary at build/scratch/r9-uopt/variants/trace; regdiff confirms ugen expression temporary rather than uopt allocation.
+
+### func_80042134 matched (404 bytes)
+
+Migrated the saved main-loop draft to GameState fields and used a local GameState pointer only for the loop-tail selector load. This reproduces the original s2 base saved at entry. Declared later helpers func_800422C8 and func_80042418 once in main_api.h to prevent implicit-return-type conflicts. Plain C linked funcdiff MATCH (404 bytes), main SHA1 OK; all-overlay rebuild in progress due to header update. No FAKE. Evidence build/scratch/42134-match.diff and 42134-build.log.

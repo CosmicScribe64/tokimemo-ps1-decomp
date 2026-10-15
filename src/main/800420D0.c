@@ -10,7 +10,49 @@ void func_800420D0(void) {
     func_80042134();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/800420D0", func_80042134);
+void func_80042134(void) {
+    GameState *g = &D_800E6280;
+    ResetCallback();
+    func_80087730();
+    printf("TOKIMEKI MEMORIAL : PSX\n");
+    func_80042418();
+    func_8009C210(0);
+    func_8004111C();
+loop_1:
+    func_8007B844();
+    func_800452C4();
+    func_80041000();
+    func_800412E0(1);
+    if (D_800E6280.unk_110F != 0) {
+        goto loop_1;
+    }
+    do {
+        func_800422C8();
+        if (D_800E6280.unk_1110 == 0) {
+            func_80042540();
+        } else {
+            func_80043504();
+        }
+        D_800E6280.unk_10F8 += 1;
+        if (D_800B3220 != 0) {
+            func_80059A20();
+            if ((D_800E6280.unk_F80 & 0xC0000) == 0xC0000) {
+                func_8004F6B0();
+            }
+            if (D_800E6280.unk_F88 & 0xA0000) {
+                func_8004AD60(1);
+            }
+        }
+        if (D_800E6280.unk_110F == 0) {
+            func_80043510(1);
+            func_800455C4();
+            if (D_800E6280.unk_034 != 0) {
+                func_80079B34();
+            }
+        }
+    } while (g->unk_110F == 0);
+    goto loop_1;
+}
 
 /* NON_MATCHING: T-10510, 4 register lines: local id in a3 (original), v1 */
 #ifdef NON_MATCHING

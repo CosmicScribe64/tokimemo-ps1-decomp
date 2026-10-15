@@ -13513,3 +13513,7 @@ Created [[tickets/T-12010-codex-cx1]] for twelve assigned main helpers. Read sta
 ## [2026-10-15] build | T-12010 InitMouse matches through data ownership
 
 [[tickets/T-12010-codex-cx1]] records evidence for the mouse object data range, generated island, and C-defined pointer pair. InitMouse passes literal linked funcdiff (16 bytes); configure/ninja passes 27/27 SHA1 with headers/globals OK. [[matching-notes]] updated. Checksum scheduling and brightness register attempts remain unmatched.
+
+## [2026-10-15] build | T-12010 main entry loop matches
+
+func_80042134 in src/main/800420D0.c passes literal linked funcdiff (404 bytes) and main SHA1 after promotion to plain C. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record the loop-tail GameState pointer and forward prototypes. Full overlay rebuild follows the shared header change.

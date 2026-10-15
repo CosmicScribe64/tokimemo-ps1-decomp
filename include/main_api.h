@@ -1765,6 +1765,8 @@ void func_80041C2C(void);
 void func_80041F48(void);
 void func_80042058(void);
 void func_80042134();
+void func_800422C8(void);
+void func_80042418(void);
 void func_80042458(void);
 void func_80042488(void);
 s32 func_80042808(void);

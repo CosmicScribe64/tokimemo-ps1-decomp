@@ -5082,3 +5082,5 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 ## T-12010 Codex cx1 main helpers
 
 InitMouse now matches 16 linked bytes. The historical missing-range blocker was configuration, not an unknown C idiom: every reference to the two pointer slots belongs to 80059710, and the contiguous mouse state ends at 800E36EC with padding to 800E36F0. An explicit owned-data range and generated island let the two-word zero-initialized pointer array be defined in C, which shares the original lui $at. Other mouse data stays as generated INCLUDE_RODATA. Full configure/build passes 27/27, headers and globals OK. See [[tickets/T-12010-codex-cx1]].
+
+The main entry loop func_80042134 matches 404 bytes using GameState *g = &D_800E6280 only for the final g->unk_110F loop condition. Keep earlier accesses direct: the original holds this base in s2 across the whole loop but still uses direct addresses for earlier selector reads. Its two later-defined void helpers need shared prototypes.
