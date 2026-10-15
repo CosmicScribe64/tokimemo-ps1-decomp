@@ -23,6 +23,11 @@ typedef struct {
 } DateDispatch80154004; /* size 0xA8 */
 extern DateDispatch80154004 D_8015F434;
 
+typedef struct {
+    void (*f[48])();
+} DateDispatch80152980; /* size 0xC0 */
+extern DateDispatch80152980 D_8015EF34;
+
 extern s16 D_8015D084;
 extern s16 D_8015D088;
 void func_80145AA0(void);

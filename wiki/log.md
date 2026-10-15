@@ -13555,3 +13555,7 @@ Created [[tickets/T-14100-date-near-matches]] from the verified [[tickets/T-1210
 ## [2026-10-15] build | Two DATE dispatch handlers verified
 
 [[tickets/T-14100-date-near-matches]] adds 340 verified bytes: src/ovl/DATE/8015A190.c func_8015A288 and src/ovl/DATE/80152FC0.c func_80154004. Full-TU default literal bytes match and production DATE SHA1 passes. New table declarations live in include/ovl/DATE.h. Four bounded scoped-width probes failed for 47958; original guard restored. [[matching-notes]] records the callback/selector reload rule.
+
+## [2026-10-15] build | DATE flag-aware dispatch matched
+
+[[tickets/T-14100-date-near-matches]] adds func_80152980 in src/ovl/DATE/80151460.c: 296 literal linked bytes, default-build DATE SHA1 OK. Natural bit clearing preserves FF7F immediate. New package total 636 bytes. func_80158338 remains scratch-only after a 16-row comparison.
