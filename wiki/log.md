@@ -13359,3 +13359,7 @@ Created [[tickets/T-11630-w1-ovl-tt-8013c6d0]] (In Progress): wave 1 package w1-
 ## [2026-10-15] ticket | T-11630 to In Review
 
 [[tickets/T-11630-w1-ovl-tt-8013c6d0]]: 6 of 8 functions of `src/ovl/TT/8013C6D0.c` matched (`func_8013C8DC`, `func_8013CC24`, `func_8013D508`, `func_8013D73C`, `func_8013D150`, `func_8013D3C0` with one FAKE dead store); `func_8013D2E0` guarded at 20 register lines; `func_8013D988` back to INCLUDE_ASM (66 rows, draft kept in the ticket). Idioms in [[matching-notes]] (T-11630), 2 rows in [[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11630 Done
+
+[[tickets/T-11630-w1-ovl-tt-8013c6d0]]: review against `CODING_STANDARDS.md` found two comment issues in `src/ovl/TT/8013C6D0.c` (missing ticket id on the `func_8013CA0C` FAKE pad, stale "used only here" on `TtTileMap`), both fixed; TT.bin sha1 OK. 6 functions matched (2,596 bytes), one guarded, one back to INCLUDE_ASM. Ticket Done.
