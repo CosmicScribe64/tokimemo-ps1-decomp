@@ -1928,7 +1928,48 @@ s32 func_800836A0(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11590, 18 differing lines (9 instructions): the code is right except that the
+ * original also loads the ~0x80 mask into v0 (li v0,-129, twice, never read: ugen uses andi 0xFF7F),
+ * which shifts the branch targets; a mask local (KANGEI func_80137544) does not bring it back here */
+#ifdef NON_MATCHING
+void func_80083808(void) {
+    if (D_80122CF4 != 0) {
+        D_8011ECD0[0x83F] |= 0x80;
+        D_8011ECD0[0x7FB] |= 0x80;
+        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+        func_80063668();
+        if (D_80122D20 != 0) {
+            D_801217D0[0].unk_0F = 0;
+        }
+        if (D_800E6280.unk_10F8 % 240 == 0) {
+            bustup_wink();
+        }
+    } else if (D_80122D04 != 0) {
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+        if (D_80122D10 == 1) {
+            if (D_800E6280.unk_10F8 % 240 == 0) {
+                func_80067DFC();
+            }
+        } else if (D_80122D10 == 0) {
+            func_80067C28();
+        }
+        if (D_800E6280.unk_10F8 % 240 == 0 && D_80122D0C == 0) {
+            func_80067DD4();
+        }
+    } else {
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083808);
+#endif
 
 void func_80083A10(void) {
     if (D_80122CF8 != 0) {

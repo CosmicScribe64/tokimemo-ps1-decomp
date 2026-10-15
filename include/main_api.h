@@ -2094,6 +2094,7 @@ void func_80062DBC();
 void func_800634FC(); /* unprototyped: callers pass an argument, the definition ignores it */
 void func_80063520(u32 arg0);
 void func_80063668();
+void bustup_wink(void);
 void func_80063930(s32);
 void parameter_disp_switch();
 void parameter_show_init(void);
@@ -2130,6 +2131,7 @@ void func_800674B0(void);
 void func_8006764C(s32 arg0);
 void func_800676AC();
 void func_80067870(void);
+void func_80067C28(void);
 s32 func_80067DD4(void);
 void func_80067E34(void);
 void func_80067F04(void);
