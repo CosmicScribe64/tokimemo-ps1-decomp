@@ -657,7 +657,59 @@ void func_80134D0C(u8 *p) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134D0C);
 #endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134E20);
+/* Tile packets written one PsyQ macro per line (setXY0, setRGB0, setWH); the line order sets the schedule. q is loaded before the test because it is the third argument of func_80141C6C (T-11620). */
+void func_80134E20(u8 *p) {
+    u8 *buf;
+    u8 *v;
+    u8 *q;
+    u8 *t;
+
+    buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    q = D_80158AB0;
+    if (*(u16 *)(p + 4) == 0x20) {
+        v = *(u8 **)(buf + 4);
+        *(u8 **)(buf + 4) += 0x30;
+        *(s16 *)(q + 8) = *(s16 *)(p + 0x14);
+        *(s16 *)(q + 0xA) = *(s16 *)(p + 0x16);
+        *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+        *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 8;
+        v[0x29] = 0;
+        v[0x2A] = 1;
+        v[0x28] = 0;
+        *(u16 *)(v + 0x16) = 0xA;
+        v[0xC] = 0x90;
+        v[0xD] = 0xF0;
+        *(u16 *)(v + 0xE) = 0x3E56;
+        v[0x2B] = 0;
+        v[0x2C] = 0;
+        func_80141C6C(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
+        return;
+    }
+    t = *(u8 **)(buf + 4);
+    *(u8 **)(buf + 4) += 0x10;
+    ((TtOtTag *)t)->len = 3; t[7] = 0x61;
+    *(s16 *)(t + 8) = *(s16 *)(p + 0x14) - 1; *(s16 *)(t + 0xA) = *(s16 *)(p + 0x16);
+    t[4] = 0xF0; t[5] = 0xE0; t[6] = 0xF0;
+    *(s16 *)(t + 0xC) = 2; *(u16 *)(t + 0xE) = *(u16 *)(p + 0x62);
+    ((TtOtTag *)t)->addr = ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr;
+    ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr = (u32)t;
+    t = *(u8 **)(buf + 4);
+    *(u8 **)(buf + 4) += 0x10;
+    ((TtOtTag *)t)->len = 3; t[7] = 0x61;
+    t[4] = 0xC0; t[5] = 0x68; t[6] = 0xE8;
+    *(s16 *)(t + 8) = *(s16 *)(p + 0x14) - 2; *(s16 *)(t + 0xA) = *(s16 *)(p + 0x16);
+    *(s16 *)(t + 0xC) = 2; *(u16 *)(t + 0xE) = *(u16 *)(p + 0x62);
+    ((TtOtTag *)t)->addr = ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr;
+    ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr = (u32)t;
+    t = *(u8 **)(buf + 4);
+    *(u8 **)(buf + 4) += 0x10;
+    ((TtOtTag *)t)->len = 3; t[7] = 0x61;
+    t[4] = 0x78; t[5] = 0x10; t[6] = 0x90;
+    *(s16 *)(t + 8) = *(s16 *)(p + 0x14) - 3; *(s16 *)(t + 0xA) = *(s16 *)(p + 0x16);
+    *(s16 *)(t + 0xC) = 6; *(u16 *)(t + 0xE) = *(u16 *)(p + 0x62);
+    ((TtOtTag *)t)->addr = ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr;
+    ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr = (u32)t;
+}
 
 void func_80135148(void) {
     u8 *q;
