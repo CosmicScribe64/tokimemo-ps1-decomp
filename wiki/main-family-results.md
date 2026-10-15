@@ -50,3 +50,9 @@ An initial duplicate SPRT declaration in libgpu.h was rejected by the complete M
 - Scheduler 6D138: existing CharFlags casts 347 rows, consistent GameState pointer 262, aggregate flag-copy forms 329/394. Entry speculation/control-flow remains unresolved. No header change retained.
 - Input 42CB0: packet bytes through existing controller arrays and canonical GameState fields 330 rows, pointer 324. Still broad allocation/control-flow differences.
 - Numeric 4AE54: abs argument/texture byte-pair repairs identified, but initial scratch compile failed due an uncorrected void-pointer texture local. No match claim. The prior spill-order evidence remains applicable.
+
+## Final review and validation
+
+Both code-review skill axes (GPT-6.1 Sol medium) pass after removing redundant signed RGB casts. The final source passes all five full-TU default literal proofs (build/main14200/final-proof.log) and **27/27 freshly rerun binary SHA1 checks** (final-confirm-build.log). The complete shared-header build also passes (final-build.log). Headers/globals pass on final source; prototypes report 0 new / 15 known disagreements and branch check OK. All 22 old C bodies remain verbatim. No reserved-file, overlay-source, generated-ASM, compiler or coverage changes; no push/PR.
+
+Final isolated-branch census: 5887/6958 game functions, 1414152/2279368 game bytes (62.0%). Accepted gain is 6624 literal bytes: 2536 without new FAKE and 4088 with the two labeled frame-home locals. This bounded checkpoint is complete; the broader 80% goal and remaining MAIN work are ongoing. Integrate the entire T-14200 commit chain, including the final review corrections, before relying on the source-plausibility result.
