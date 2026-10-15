@@ -14123,3 +14123,6 @@ Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (13
 ## [2026-10-15] lint | Small-match handoff consistency
 
 Checked T-12900 through T-12903 status/card agreement and ticket links. The first two matches (548 bytes) plus the resume handler (264) total 812; no negative experiment contributes coverage. Source comments are committed, old checkpoint hashes are documented as superseded, and scratch files moved under ignored build/t12900/.
+
+## [2026-10-15] build | Goal batch reaches 61.2 percent
+[[tickets/T-12400-integrate-verified-matches]]: new family, type and small-function commits add15functions/14868progressbytes beyond0d777614. Verified total5859/6958functions and1394064/2279368bytes (61.2%); need429432additional alignedbytes for80%. All27 binary checksums pass, headers/globals pass, prototype audit0new/15known. Small-function final history had been rewritten; final source compared to integrated checkpoint differs only by three comments, preserved and affected main/OPTION hashes reverified. Logs build/scratch/goal-batch1.log and goal-batch1-comments.log. Reconciled final ticket statuses before publication. New Sol6.1medium family lanes are active.
