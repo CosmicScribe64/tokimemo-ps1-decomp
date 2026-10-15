@@ -14667,3 +14667,7 @@ Started [[tickets/T-14800-etc-801447b0]]. Read [[etc-family-results]] and [[tick
 
 ## [2026-10-15] build | RPG and ETC draft matches
 Integrated 002eb61d and 2c98de67 with completed draft archive b59ad160. RPG shared-header validation passes all 27 binaries and two default literal proofs. The ETC follow-up preserves prior matching C and uses the established GameState view. Seven exhaustive draft/repair tooling tests pass using the tools directory. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14800-etc-801447b0]].
+
+## [2026-10-15] build | T-14501 SHUGAKU verified draft batch
+
+Promoted 2 ordinary C functions / 1,052 bytes for SHUGAKU after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
