@@ -14175,3 +14175,6 @@ SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passe
 
 ## [2026-10-15] ticket | Claim ETC exam family
 Created [[tickets/T-13102-etc-exam-family]] for medium state handlers and work-memory layout transfer.
+
+## [2026-10-15] decision | Reduce repeated validation cost
+[[tickets/T-12600-byte-coverage-families]]: root observed all526tasks rebuild because headers.ok is a normal implicit dependency of every C object and touches on all-source/header audits. tools/cc.py depfiles currently list ASM/padding dependencies but not actual C headers, so changing stamp ordering alone would be unsafe. Assigned Sol6.1medium build-dependency chat (T13500) to add tested real header tracking while preserving checker gating and all27 binary outputs. No tool changes accepted yet. RPG bounded probe produced no matches; replacement Solmedium lane assigned TAIIKU (T13600), which has27.7% byte coverage.
