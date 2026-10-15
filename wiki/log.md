@@ -13517,3 +13517,7 @@ Docker configure/ninja -j2 passes 27/27 SHA1 checks, headers and globals. Baseli
 ## [2026-10-15] build | RPG_BAT func_80132EE0 matched
 
 Corrected the saved draft's stale counter local to current aggregate reads. Plain C passes linked funcdiff256 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32EE0-match.diff and 32EE0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_8014E300 matched
+
+A shared coordinate/displacement aggregate preserves the original load/store order. Linked funcdiff692 bytes and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/4E300-match.diff and 4E300-build.log.

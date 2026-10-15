@@ -103,31 +103,28 @@ void func_8014E28C(void) {
     func_8014F230();
 }
 
-/* NON_MATCHING: T-10310, near miss */
-#ifdef NON_MATCHING
 void func_8014E300(void) {
+    RpgMotion30 *p = (RpgMotion30 *)&D_8015EC28;
     func_8014E5B4(D_8015EBAC);
-    D_8015EC50 = D_8015EC28 - 0xE0;
-    D_8015EC54 = D_8015EC2C - 0x8E;
+    p->dx = p->x - 0xE0;
+    p->dy = p->y - 0x8E;
     func_8013F15C(0x50F, 0, 1);
     if (D_8015EE0C >= 0x140) {
         func_8013F15C(0x514, 0x10, 3);
     }
     if (D_8015EBAC == 0) {
         D_8015EE0C += 7;
-        func_8013E97C(0x1E, (D_8015EC50 * D_8015EE0C) / 1000 + 0xE0, (func_800A0070((D_8015EE0C << 0xD) / 1000) >> 8) + (D_8015EC54 * D_8015EE0C) / 1000 + 0x80);
+        func_8013E97C(0x1E, (p->dx * D_8015EE0C) / 1000 + 0xE0, (func_800A0070((D_8015EE0C << 0xD) / 1000) >> 8) + (p->dy * D_8015EE0C) / 1000 + 0x80);
     } else {
         D_8015EE0C += 5;
-        func_8013E97C(0x1E, (D_8015EC50 * D_8015EE0C) / 1000 + 0xE0, (func_800A0070((D_8015EE0C * 0x3000) / 1000) >> 8) + (D_8015EC54 * D_8015EE0C) / 1000 + 0x80);
+        func_8013E97C(0x1E, (p->dx * D_8015EE0C) / 1000 + 0xE0, (func_800A0070((D_8015EE0C * 0x3000) / 1000) >> 8) + (p->dy * D_8015EE0C) / 1000 + 0x80);
     }
     if (D_8015EE0C >= 0x3E9) {
-        func_8013E97C(0x1E, D_8015EC28, D_8015EC2C - 0xE);
+        func_8013E97C(0x1E, p->x, p->y - 0xE);
         func_8014F230();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014E300);
-#endif
+
 
 void func_8014E5B4(s32 arg0) {
     switch (arg0) {

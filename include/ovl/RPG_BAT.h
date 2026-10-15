@@ -495,3 +495,12 @@ extern s32 D_8015EEC8;
 /* T-10850: initializer is called before its definition in its original object. */
 s32 func_8014E994(void);
 #endif
+
+/* T-12040: position and displacement share the EC28..EC57 work range. */
+typedef struct RpgMotion30 {
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ u8 unk_08[0x20];
+    /* 0x28 */ s32 dx;
+    /* 0x2C */ s32 dy;
+} RpgMotion30; /* size 0x30 */
