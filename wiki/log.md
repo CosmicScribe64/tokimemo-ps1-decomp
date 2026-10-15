@@ -14340,3 +14340,7 @@ Created [[tickets/T-13701-name-ent-record-types]] for semantic reconstruction of
 
 ## [2026-10-15] build | Incremental dependency optimization integrated
 [[tickets/T-12400-integrate-verified-matches]] independently validated [[tickets/T-13500-incremental-build-dependencies]] on the combined tree: all 11 dependency regressions, all 27 binary checksums, header/global checks, and branch prototype audit pass; final Ninja invocation is a no-op. Evidence: build/scratch/goal-incremental-build.log. Game coverage remains 1404124/2279368 bytes (61.6%), 5874 functions; tooling is not counted as matched bytes. Integrated final ETC completion records and NAME_ENT type research (zero new bytes); reconciled ticket cards against frontmatter. A fresh Sol6.1medium worker owns ENDING/EN_NICHI under T14000, while GEKO/DATE2 chat owns T13900.
+
+## [2026-10-15] build | EN_NICHI input loop verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/EN_NICHI/80132000.c func_801333B0: 476 linked bytes MATCH, EN_NICHI SHA1 OK. Natural ten-object loop matches compiler unrolling; the matched s32 return type preserves the final accumulator lifetime. Total accepted gain 1056 bytes.
