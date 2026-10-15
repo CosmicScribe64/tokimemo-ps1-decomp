@@ -10,7 +10,35 @@ INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80143DD0);
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80144A70);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80144C5C);
+void func_80144C5C(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80144D38();
+        func_8004284C();
+        return;
+    case 1:
+        func_80144E9C();
+        return;
+    case 2:
+        ((BunkaDispatch8 *)&D_80122EB8)->unk_00 = D_80122CDC;
+        if (((BunkaDispatch8 *)&D_80122EB8)->unk_04 == 0xFF) {
+            D_800CA148 = D_80122CDC + 0xC;
+            func_8004284C();
+            return;
+        }
+        func_80042808();
+        return;
+    case 3:
+        normal_date_speak();
+        return;
+    case 4:
+        func_80042808();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80144D38(void) {
     s32 i;
