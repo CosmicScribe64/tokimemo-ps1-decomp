@@ -14540,3 +14540,6 @@ Added source-local offset/evidence comments for the player and schedule bitfield
 ## [2026-10-15] build | EVENT medal-game handler adds 480 bytes
 
 [[tickets/T-14300-event-families]] adds func_801166A8 in src/ovl/EVENT/8010FE10.c. Direct compound updates plus one marked FAKE entry assignment match. Combined seven-function default literal proof, EVENT SHA1 and declaration/aggregate/prototype guards pass. Cumulative gain: seven / 3,684 bytes. Rejected particle draft restored before literal proof; normalized equality alone was not counted.
+## [2026-10-15] ticket | T-14501 proof lane claimed and first batch ready for review
+
+Created [[tickets/T-14501-remaining-draft-proof]] for promotion of T-14500 census candidates. Twelve BUNKAKEN functions (8,384 bytes) pass Docker default linked literal-byte proof; build/ovl/BUNKAKEN.bin SHA1 passes; prototype branch check reports zero new disagreements. Existing C is preserved. Focused standards inspection found ordinary state-machine C and removed empty generated declaration markers. Status In Review pending the required review gate; [[kanban]] and [[index]] updated.
