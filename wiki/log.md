@@ -13513,3 +13513,8 @@ removed the remaining TT packages from wave 1, and handed over seven TT function
 `tt-wave1-handoff`. Took it over in [[tickets/T-11830-tt-wave1-handoff]]: verified (clean rebuild 27/27, funcdiff MATCH
 for all seven, prototype and global checks clean), retagged the T-11660/T-11680 comments to T-11830. TT 252/303 (65.3%);
 grand total `5740/6958   1293292/2279368  56.7%`.
+
+## [2026-10-15] ticket | T-11840 TT batch 10 opened
+
+Opened [[tickets/T-11840-tt-batch-10]] (In Progress), stacked on T-11830 (PR #33): one long Opus run per large TT
+function, two at a time in worktrees, and bulk_m2c with a 900 s autotweak budget on the mid-size functions.
