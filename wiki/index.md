@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-14
+updated: 2026-10-15
 ---
 
 # Wiki Index
@@ -250,5 +250,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-11120-small-functions-sonnet-36|T-11120]] Small functions (Sonnet via Antigravity) 36 (In Progress).
 
 - [[acceleration-audit]] - T-12200 measured stripping speedup, validation limits, queue/reuse priorities, and CPU allocation.
-- [[tickets/T-12210-matching-bottleneck-research|T-12210]] Remaining-byte census and experiments for matching breakthroughs (In Review; 3 matches, 2352 linked bytes).
+- [[tickets/T-12210-matching-bottleneck-research|T-12210]] Remaining-byte census and experiments for matching breakthroughs (Done; 3 matches, 2352 linked bytes).
 - [[matching-breakthroughs]] - T-12210 remaining-byte census, three verified family matches, negative retrieval experiment, and research priorities.

@@ -13541,3 +13541,7 @@ Census at 7a65b3d8 reports 5,733/6,958 functions and 1,288,084/2,279,368 progres
 ## [2026-10-15] ticket | T-12210 matching research in review
 
 Added [[matching-breakthroughs]], including three verified matches / 2,352 linked bytes and the finding that the default under-600-byte bulk selection covers only 21.8% of remaining progress bytes. 600–1,999-byte targets hold 59.2%. Documented heuristic false positives, draft-provenance limitations, bounded negative register-relaxation result, and upstream primary references. [[tickets/T-12210-matching-bottleneck-research]] moved to In Review; affected unit SHA1s and header/global/prototype guards pass. Historical T-12100 log links predate the collision correction; current acceleration ticket is [[tickets/T-12200-acceleration-audit]].
+
+## [2026-10-15] ticket | T-12210 research and matching review complete
+
+Standards and requirements reviews of 47bdf34e...9f34527f passed with no findings. [[tickets/T-12210-matching-bottleneck-research]] moved to Done; [[matching-breakthroughs]] documents three verified matches and evidence-ranked follow-ups, not a claim that the larger matching problem is solved. Final progress measurement is in build/acceleration/progress-after.txt. The branch remains isolated and unmerged.
