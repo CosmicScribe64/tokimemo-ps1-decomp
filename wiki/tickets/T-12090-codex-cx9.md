@@ -29,3 +29,7 @@ Owned files: src/ovl/BUNKA_SD/80132000.c, 80134260.c and 801388D0.c. No main or 
 ### func_80132428: MATCH, 448 text bytes
 
 Canonical GameState selector/timer access and six missing overlay forward declarations make the old score-zero dispatcher compile in its complete translation unit. Plain C, no FAKE. Exact production linked comparison and BUNKA_SD SHA1 pass; headers/globals pass. Worklist size512 includes the64-byte jump table.
+
+### func_80132FF0: MATCH, 532 text bytes
+
+Restored explicit case4/default from the five-entry jump table; canonical player-name arrays and strcat declaration replace old draft aliases. Full linked text MATCH and BUNKA_SD SHA1 pass, with headers/globals OK. FAKE: 24-byte name-buffer capacity was chosen to reproduce observed stack homes; the original source capacity is unknown. Worklist552 includes20-byte jump table. Cumulative980 matched text bytes plus84 table bytes. Added overlay prototypes and typed display-data declarations used by ongoing larger-family reconstruction.

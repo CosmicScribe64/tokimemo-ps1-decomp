@@ -13513,3 +13513,7 @@ Created [[tickets/T-12090-codex-cx9]] In Progress, with [[kanban]] and [[index]]
 ## [2026-10-15] build | T-12090 dispatcher matched
 
 BUNKA_SD:func_80132428 matches exact linked text (448 bytes) with overlay SHA1, headers and globals OK. Canonical global fields and missing forward declarations resolve prior full-file failure. Plain C, no FAKE. Details in [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] build | T-12090 name text builder matched
+
+BUNKA_SD:func_80132FF0 has532 exact linked text bytes and a passing overlay checksum, headers and globals. Restored the fifth jump-table case. Explicit FAKE documents the inferred buffer capacity. Cumulative980 text bytes; see [[tickets/T-12090-codex-cx9]].

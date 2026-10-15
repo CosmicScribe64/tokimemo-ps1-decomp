@@ -427,6 +427,49 @@ void func_80132DFC(void) {
     k_disp_inc();
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80132000", func_80132FF0);
+void func_80132FF0(void) {
+    /* FAKE: 24-byte capacity reproduces observed stack homes; original capacity unknown. T-12090 */
+    u8 sp38[24];
+    s32 sp34;
+
+    if (D_800E6280.unk_1104.u == 1) {
+        switch (D_80122EAC) {
+        case 0:
+            sp34 = func_800AE0E0(D_800E6280.unk_0D4);
+            sp34 += func_800AE0E0(D_800E6280.unk_0DC);
+            func_800AE0F0(sp38, D_800E6280.unk_0D4);
+            strcat(sp38, "　");
+            strcat(sp38, D_800E6280.unk_0DC);
+            func_8004E788((s16) (0x60 - (sp34 * 7)), 0x40, 0, (s32) sp38, 0);
+            break;
+        case 1:
+            if (!(D_800E6280.unk_F80 & 0x20)) {
+                func_80046290(0x0B00001B, 0x05000020, 0xE);
+                func_80044750(0x300);
+            }
+            func_8004E788(0x36, 0x40, 0, (s32) "弁　論者", 0);
+            break;
+        case 2:
+            if (!(D_800E6280.unk_F80 & 0x20)) {
+                func_80046290(0x1D00005B, 0x0B000061, 0);
+                func_80044750(0x300);
+            }
+            func_8004E788(0x28, 0x40, 0, (s32) "藤崎　詩織", 0);
+            break;
+        case 3:
+            func_8004E788(0x28, 0x40, 0, (s32) "如月　未緒", 0);
+            break;
+        case 4:
+        default:
+            func_8004E788(0x44, 0x40, 0, (s32) "女生徒", 0);
+            break;
+        }
+    } else if ((func_800460EC() == 2) && (func_8004ECB4() != 0)) {
+        func_8004284C();
+    }
+    func_8007EDF8();
+    func_8004EC24();
+}
+
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80132000", func_80133204);

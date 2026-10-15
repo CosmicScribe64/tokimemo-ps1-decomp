@@ -139,4 +139,17 @@ extern u8 *D_8013C720;
 extern u8 *D_8013C724;
 extern u8 *D_8013C728;
 
+/* T-12090: typed display setup data and pending dispatcher callees. */
+void func_80139290(void);
+void func_80132FF0(void);
+void func_80133204(void);
+extern u8 *D_8013B7F8;
+extern u8 *D_8013B7FC;
+extern u8 *D_8013B800;
+extern u8 *D_8013B804;
+extern u8 *D_8013D9C0;
+extern u8 *D_8013D9C4;
+extern u8 *D_8013D9C8;
+extern u8 *D_8013D9CC;
+
 #endif /* OVL_BUNKA_SD_H */
