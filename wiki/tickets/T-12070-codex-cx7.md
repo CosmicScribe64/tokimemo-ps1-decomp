@@ -38,3 +38,9 @@ Production `ninja -j2 build/ovl/TACO.ok` passes SHA1; default resolved funcdiff 
 ### func_8015C718 matched — 1,340 linked bytes
 
 Production default resolved funcdiff reports literal MATCH (1,340 bytes, versus worklist estimate 1,364); TACO SHA1 passes. Repaired TcPos by-value calls, removed cached actor pointers across random calls, and reversed commutative position/random additions to recover original scheduling. The last six selector rows required a direct u16 load: casting an s16 load to u16 produces the same load instruction but a different uopt register web. Byte-offset views are FAKE-labeled. Evidence: build/scratch/{c718v2,c718v4,c718selector}.log, C718-v4.diff and C718-production.log. Total: two matches, 3,280 linked bytes.
+
+### func_8015C2CC matched — 972 linked bytes
+
+Production resolved funcdiff literal MATCH and TACO SHA1 pass (build/scratch/C2CC-production.log). Actual size 972 versus worklist estimate 1,040. Direct actor rereads and byte-offset views reduced 307 rows to 9; direct u8 switch read plus explicit case 0 restores the 17-entry jump-table range. The last pair of reversed loads matches when the case-13 call and following load share a source line. These source-shape requirements are FAKE-labeled. Table declarations and the C2CC prototype live in the overlay header; redundant array-address casts removed and reverified. Total: three matches, 4,252 bytes.
+
+User steering through orchestrator now authorizes longer (~45 minute) focused passes on the largest remaining functions, including beyond-list functions in the owned object. Inventory confirms no extra larger targets: ACCC 1,260 bytes; BD30 576 bytes; all others <=360 bytes. Prioritize those two over tiny compiler-gap chases.

@@ -8,6 +8,9 @@
 #include "psx_types.h"
 #include "game.h"
 
+void func_8015C2CC(s32 arg0);
+extern s16 D_801606AC[], D_801606C4[], D_80160858[], D_8016090C[], D_80160A60[];
+
 void func_8013F468(void);
 void func_8013F7D8(void);
 void func_8013F9C0(void);

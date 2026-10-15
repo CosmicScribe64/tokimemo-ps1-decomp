@@ -13525,3 +13525,7 @@ Docker baseline configure/ninja -j2 passed all 27 binary checksums, headers and 
 ## [2026-10-15] build | cx7 C718 exact match
 
 [[tickets/T-12070-codex-cx7]]: `func_8015C718` literal linked MATCH (1,340 bytes), TACO SHA1 passes. Direct unsigned selector load closes the last six register rows; [[matching-notes]] records the reusable distinction. Cumulative 3,280 bytes from two functions. Evidence: build/scratch/C718-production.log.
+
+## [2026-10-15] build | cx7 C2CC exact match and byte-first continuation
+
+[[tickets/T-12070-codex-cx7]]: C2CC matches 972 linked bytes with TACO SHA1 pass; cumulative three functions / 4,252 bytes. Recorded unsigned-selector, jump-table and source-line scheduling evidence in [[matching-notes]]. User steering prioritizes longer passes on largest remaining owned functions: ACCC 1,260 bytes, BD30 576 bytes. No larger beyond-list target remains in this object.
