@@ -765,5 +765,6 @@ void func_80137FF0(void);
 void func_801385AC(void);
 void func_80132FCC(void);
 void func_8013F070(void);
+void func_8013D3B4(void);
 
 #endif

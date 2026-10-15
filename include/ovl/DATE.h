@@ -1535,4 +1535,6 @@ void func_801384D4(void);
 void func_8013E7B0(void);
 void func_8013E980(void);
 void func_8013E9BC(void);
+void func_8014C7FC(void);
+
 #endif
