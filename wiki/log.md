@@ -13459,3 +13459,8 @@ wave-1 TT files. Notes in [[matching-notes]] ("TT overlay, batch 7"), rows in [[
 
 Inline review against CODING_STANDARDS.md: all fakematches carry FAKE with the ticket; one non-building agent commit
 squashed with its fix; stale proto_known entry removed. Moved [[tickets/T-11800-tt-batch-7]] to Done.
+
+## [2026-10-15] ticket | T-11810 TT batch 8 opened
+
+Opened [[tickets/T-11810-tt-batch-8]] (In Progress), stacked on T-11800 (PR #30): Opus pass A on untried bulk_m2c TT drafts
+now; pass B and the wrap-up later. Stays off the wave-1 TT files; no answer on issue #2 yet.
