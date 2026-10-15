@@ -353,4 +353,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-14600-date-draft-repairs|T-14600]] Repair nine DATE draft failures (In Review; all nine compile, no zero comparisons).
 - [[tickets/T-14800-etc-801447b0|T-14800]] ETC func_801447B0: 648 literal linked bytes, ETC SHA1 passes (In Review).
 
-- [[tickets/T-14700-reserved-type-repairs|T-14700]] Reserved aggregate and callback draft repairs (In Review; 15/15 compile, no zero candidates).
+- [[tickets/T-14700-reserved-type-repairs|T-14700]] Reserved aggregate and callback draft repairs (Done; 15/15 compile, no zero candidates, reviewed draft-only archive).

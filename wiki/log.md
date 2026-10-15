@@ -14696,3 +14696,6 @@ Two default linked proofs and affected checksum pass, adding 1,052 coverage byte
 ## [2026-10-15] decision | Distinguish draft coverage gains from literal proof spans
 
 Clarified [[tickets/T-14501-remaining-draft-proof]] byte accounting: frozen inventory coverage sizes can exclude alignment included by funcdiff's linked comparison. SHUGAKU contributes 1,052 coverage bytes while its two proofs compare 1,056 linked bytes. The cumulative 28-function gain is 18,056 inventory coverage bytes; all literal match proofs remain valid. Future batches record both measures separately.
+## [2026-10-15] ticket | T-14700 reviewed draft archive complete
+
+Standards and spec review rechecked ce44a7e0 and resolved both findings, with no further actionable findings. All fifteen compile and artifact hashes/source snapshots validate; failure exit behavior verified. Retained original census and current repair environment fingerprints. Moved [[tickets/T-14700-reserved-type-repairs]] to Done for the draft-only scope; no literal-byte or SHA1 promotion claim.

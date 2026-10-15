@@ -1,7 +1,7 @@
 ---
 id: T-14700
 title: Repair fifteen reserved aggregate and callback drafts
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -34,4 +34,6 @@ Residuals: every candidate has nonzero codegen differences. Original default-arm
 - Serial full-TU compilation and default resolved comparison succeeded for 15/15.
 - Frozen production src/ and include/ remain unchanged.
 - Two direct-expression table drafts score 2; natural used-index alternatives scored 14 and were archived, not selected.
-- Review pending; ticket remains In Review.
+- Independent standards/spec code review completed; both findings resolved in ce44a7e0. Both reviewers rechecked the correction with no further findings.
+- Unknown-target failure exit verified; artifact SHA256 and all baseline source snapshots audited.
+- Done applies to this draft-only archive scope; matching and production integration remain future work.
