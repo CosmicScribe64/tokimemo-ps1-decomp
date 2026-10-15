@@ -96,7 +96,22 @@ extern u8 D_8014CF5C[];
 void func_80132134(void);
 void func_80132E80(void);
 void func_80138488(void);
-/* T-11650: called by func_80138488 before their definitions. */
+/* T-11650: called by func_80132E80 and func_80138488 before their definitions. */
+void func_80134EB8(void);
+void func_80135168(void);
+void func_80135434(s32 arg0);
+void func_801357F4(void);
+void func_80135A98(void);
+void func_80135BB4(void);
+void func_80135E58(void);
+void func_80135F74(void);
+void func_8013621C(s32 arg0);
+void func_801362D0(void);
+void func_80137708(void);
+void func_80137FC4(void);
+void func_80138268(s32 arg0);
+void func_80138330(void);
+void func_80138338(void);
 void func_801385A8(void);
 void func_80138634(void);
 void func_801387F4(void);

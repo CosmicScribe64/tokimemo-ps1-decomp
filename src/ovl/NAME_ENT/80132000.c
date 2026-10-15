@@ -230,7 +230,52 @@ void func_80132A38(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132B78);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132E80);
+void func_80132E80(void) {
+    if (D_800E6280.unk_110A != 0) {
+        if (D_800E6280.unk_110A < 6) {
+            func_80135434(0);
+            func_80134EB8();
+        } else if (D_800E6280.unk_110A < 8) {
+            func_8013621C(0);
+            func_80136808(0);
+        } else {
+            func_80138268(0);
+            func_80138330();
+        }
+    }
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80135168();
+        break;
+    case 1:
+        func_801357F4();
+        break;
+    case 2:
+        func_80135A98();
+        break;
+    case 3:
+        func_80135BB4();
+        break;
+    case 4:
+        func_80135E58();
+        break;
+    case 5:
+        func_80135F74();
+        break;
+    case 6:
+        func_801362D0();
+        break;
+    case 7:
+        func_80137708();
+        break;
+    case 8:
+        func_80137FC4();
+        break;
+    case 9:
+        func_80138338();
+        break;
+    }
+}
 
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.rodata", D_8014B140);
 
