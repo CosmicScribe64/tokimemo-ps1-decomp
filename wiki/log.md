@@ -14163,3 +14163,6 @@ SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passe
 
 ## [2026-10-15] build | TACO mask lifetime probe narrows mismatch
 [[tickets/T-13400-taco-control-flow]]: four local-coalescing full-TU probes improve best57to52rows. No C promotion; assembly and default checksum path unchanged. Remaining lifetime/register problem documented for a later focused pass.
+
+## [2026-10-15] build | New family batch verified at 61.3 percent
+[[tickets/T-12400-integrate-verified-matches]]: DATE7cb6d2a1, ETCf561351b and SHOUGATU21df4fe7 integrated. All27 binary hashes pass; header/global checks and branch prototype audit pass (0new/15known). Current progress5864/6958functions and1397856/2279368bytes (61.3%), a gain5functions/3792progressbytes over b8f516ff. Literal proof totals3796bytes include4bytes not counted by the progress inventory; the unchanged progress definition governs the80% goal. Remaining425640alignedprogressbytes. Evidence build/scratch/goal-family-next.log and goal-date740.log. Previous goal continuation made progress via these source integrations and bounded TACO evidence; this continuation completes verification and publication.
