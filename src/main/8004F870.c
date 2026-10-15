@@ -224,7 +224,22 @@ void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_color);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_bar_show);
+void menu_bar_show(menu)
+    s32 menu;
+{
+    s32 mode;
+    s32 page;
+    s32 flag;
+    s8 item;
+    page = (D_800E3680[menu] >> 24) & 15;
+    mode = (D_800E3680[menu] >> 28) & 7;
+    flag = (D_800E3680[menu] >> 31) << 7;
+    item = ((MenuSelection5 *)&D_800E6280.unk_1090)->current[menu];
+    if (item >= 0 && (u32)item < ((MenuSelection5 *)&D_800E6280.unk_1090)->count[menu]) {
+        func_80049A40(((GsRecF90 (*)[2])D_800E6280.unk_F90)[item][menu].unk_00, ((GsRecF90 (*)[2])D_800E6280.unk_F90)[item][menu].unk_02, ((GsRecF90 (*)[2])D_800E6280.unk_F90)[item][menu].unk_04, ((GsRecF90 (*)[2])D_800E6280.unk_F90)[item][menu].unk_05, page, D_800E3680[menu] & 0xFFFFFF, flag | mode);
+        dtd_on_tpage(0, 0, page, 0, 1);
+    }
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", x_taku_menu_set);
 

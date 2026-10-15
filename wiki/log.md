@@ -13509,3 +13509,7 @@ merged). The seven TT matches that p10 and p12 made and the PRs lack went to dim
 ## [2026-10-15] ticket | Start cx5 matching pass
 
 Created [[tickets/T-12050-codex-cx5]] In Progress with [[kanban]] and [[index]] entries. Read workflow and prior matching evidence for all fourteen functions; Docker configure plus ninja -j2 baseline passes 27/27 SHA1, headers OK and globals OK. Ownership is src/main/8004F870.c plus permitted headers/config/wiki.
+
+## [2026-10-15] build | T-12050 menu bar display matches
+
+main:menu_bar_show is plain C with a 208-byte exact linked MATCH and main executable SHA1 OK. Canonical selection and interleaved record views close the prior register-only miss. No new FAKE. Details in [[tickets/T-12050-codex-cx5]].
