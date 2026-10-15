@@ -1921,3 +1921,5 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80135360 | `func_801356C8` | regorder | T-11560: not kept (about 70 lines): the original keeps the divisor 85 in fp (register divide with break checks); IDO keeps -0x400 there and divides by an immediate |
 | TT/80148DB0 | `func_801494D8` | frame | T-11560: not kept (about 75 lines): frame 0x50 vs 0x58, spill-slot order differs |
 | TT/80142350 | `func_80142350` | regorder | T-11560: still 2 lines: regdiff shows the original's pointer range interferes with v0..a1; in the draft it overlaps nothing |
+| EVENT/8010FE10 | `func_80114B0C` | regorder | T-11600: 4 lines: tie of the hoisted row addresses `D_80124394`/`D_8012439C` (priority 2.5); `v = *r` numbers `D_8012439C` first and it takes `$t1`, the original has it in `$t2`; array views fix the order but hoist the `D_800B0F2C` load out of the loop |
+| EVENT/8010FE10 | `func_80118868` | regorder | T-11600: 8 lines: the third chain of 3s is a uopt colour (`$v0`) in the original, a ugen temporary (`$t6`) in every draft (chain orders, separate stores, local constant) |

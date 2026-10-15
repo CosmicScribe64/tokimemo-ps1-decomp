@@ -4722,7 +4722,7 @@ two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
 
 Twelve functions of `src/ovl/EVENT/8010FE10.c`, six guarded drafts and six m2c drafts. 10 matched (`func_80119B78`,
 `func_801155D4`, `func_801198E8`, `func_8011C470`, `func_80117178`, `func_8011AD7C`, `func_801142E8`, `func_80114784`,
-`func_80114948`, `func_80113520`; 3,816 bytes); two stay guarded. Ticket [[tickets/T-11600-w1-ovl-event-8010fe10]].
+`func_80114948`, `func_80113520`; 3,676 bytes); two stay guarded. Ticket [[tickets/T-11600-w1-ovl-event-8010fe10]].
 
 - **`s32` without a return again.** `or v0,tN,zero` after a byte update (`func_8011C470`, `func_80119B78`) and
   `move v0,zero` after `sw zero` (`func_801155D4`) are the K&R int function falling off its end. In `func_80119B78`
