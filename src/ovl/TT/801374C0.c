@@ -353,7 +353,7 @@ void func_80138E28(void) {
     case 0:
         *(u16 *)(c + 0x364) = 0;
         *(u16 *)(c + 0x3D4) = 0;
-        /* The unsigned bound is a constant of its own; an int 0x12 would share the hoisted register of the 0x12 stored in the 0x4B block and change the register order. T-11680 */
+        /* The unsigned bound is a constant of its own; an int 0x12 would share the hoisted register of the 0x12 stored in the 0x4B block and change the register order. T-11830 */
         for (i = 0x10; i != 0x12U; i++) {
             ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
             ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
@@ -664,7 +664,7 @@ void func_80139770(void) {
 }
 
 /* T-11520 near miss: structure and frame match; 28 differing lines. Spill homes of the promoted a/b pointers are at sp+0x34/0x38 here against 0x38/0x3C in the original (one extra home between them; unused pad locals do not move them), and the hoisted constant 1 takes v0 instead of a2 (case 0x40, 0x52 and 0xA0 stores). The case-0x54 u16 store of 0x80 and the u8 store in case 0xA0 are needed to match the shared li a0,0x80 and sb. */
-/* The constant 1 is one hoisted value (a2) over cases 0x40, 0x52, 0x80 and 0xA0 only when every store of it is unsigned (u16/u8), and the case-0x54 u16 store of 0x80 shares the dispatch's li a0,0x80. a and b are declared first for their spill homes at sp+0x3C/0x38. T-11680 */
+/* The constant 1 is one hoisted value (a2) over cases 0x40, 0x52, 0x80 and 0xA0 only when every store of it is unsigned (u16/u8), and the case-0x54 u16 store of 0x80 shares the dispatch's li a0,0x80. a and b are declared first for their spill homes at sp+0x3C/0x38. T-11830 */
 void func_80139B98(void) {
     u8 *a;
     u8 *b;

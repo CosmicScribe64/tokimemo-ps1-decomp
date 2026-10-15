@@ -537,7 +537,7 @@ void func_8013B4A0(void) {
             c[i * 0x14 + 0x188] = 0;
             c[i + 0x320] = 1;
             /* FAKE: the empty test adds a block to the live range of i * 2 so that j takes $v0 before it
-               (priority over more blocks); on the store's line it keeps the original's delay slot. T-11660 */
+               (priority over more blocks); on the store's line it keeps the original's delay slot. T-11830 */
             *(s16 *)(a + 0x2C8) = 8; if (i) {}
             if (i >= 2) {
                 j = t + 2;

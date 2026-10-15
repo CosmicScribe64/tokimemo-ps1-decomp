@@ -16,7 +16,7 @@ void func_80135360(void) {
     s32 px3;
     s32 px4;
     s16 pt[2];
-    s32 pad[3]; /* FAKE: pq1..px4 and pad are unused; they place the frame, spill slots and pt as in the original. T-11510, T-11660 */
+    s32 pad[3]; /* FAKE: pq1..px4 and pad are unused; they place the frame, spill slots and pt as in the original. T-11510, T-11830 */
 
     c = D_80158A8C;
     a = D_80158A74;
@@ -84,7 +84,7 @@ void func_80135360(void) {
     }
 }
 
-/* -(ang + 0x400) keeps -0x400 out of the hoisted constants, so 85 takes $fp and divides with break checks. T-11660 */
+/* -(ang + 0x400) keeps -0x400 out of the hoisted constants, so 85 takes $fp and divides with break checks. T-11830 */
 void func_801356C8(x, y, ang)
     s16 x;
     s16 y;

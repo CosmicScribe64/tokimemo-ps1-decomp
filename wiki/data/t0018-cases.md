@@ -1982,3 +1982,10 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/801410A0 | `func_801410A0` | regorder | T-11820: not kept (48 lines): both loops match (`i * 16` row index, `call * len`, if/else abs, s16 `spd = -spd`); the turn step keeps `(s16)+-spd` in v1 in the original |
 | TT/801374C0 | `func_80138808` | regorder | T-11820: not kept (145 lines): loop 3's base needs a second chain struct at `g + 0xEFC`; the original unrolls loop 3 but not loop 2 |
 | TT/801487D0 | `func_801487D0` | regorder | T-11820: not kept (103 lines): `func_801336F8` template with one extra local for the 0x48 frame; `ch - 0x20` masking and temp order differ |
+| TT/8013A3E0 | `func_8013B4A0` | sched | T-11830: matched by wave 1 (handoff from the maintainer); supersedes the T-11540..T-11810 rows |
+| TT/801374C0 | `func_80138E28` | sched | T-11830: matched by wave 1 (handoff); supersedes the T-11510..T-11810 rows |
+| TT/801374C0 | `func_80139B98` | frame | T-11830: matched by wave 1 (handoff); supersedes the T-11520 row |
+| TT/80135360 | `func_80135360` | promo | T-11830: matched by wave 1 (handoff): `-(ang + 0x400)` keeps -0x400 out of the hoisted constants, so 85 takes fp and divides with break checks |
+| TT/80135360 | `func_801356C8` | regorder | T-11830: matched by wave 1 (handoff); supersedes the T-11560 row |
+| TT/80135360 | `func_80135B5C` | other | T-11830: matched by wave 1 (handoff); supersedes the T-11500 row |
+| TT/8013BD10 | `func_8013C0A8` | hoist | T-11830: matched by wave 1 (handoff) |
