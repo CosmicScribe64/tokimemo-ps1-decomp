@@ -186,7 +186,7 @@ void func_80143580(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, constants 2 and D_80151A50 sit in $a1/$a2, the original keeps them in $t0/$t1 (20 lines, nothing else differs) */
+/* NON_MATCHING: T-10320, T-11620, constants 2 and D_80151A50 sit in $a1/$a2, the original keeps them in $t0/$t1 (26 diff lines; a counter loop gives the 5/15 order but not the registers, T-11620) */
 void func_801436BC(void) {
     u8 *p;
     u8 *q;
@@ -404,7 +404,7 @@ void func_80144854(void) {
     }
 }
 
-/* T-11500 near miss (3 lines): the two stores of the constant 9 (sb 0x55 and sb 0x92 via D_80158A78) use $v0 here, the original holds 9 in $a0. T-11510: the 9 is a ugen temp (used twice), which takes the lowest free of v0/v1/a0, so the original has v0/v1 busy in that block for an unknown reason; the return type makes no difference (void == s32). */
+/* NON_MATCHING: T-11500, T-11620, 3 instructions (6 diff lines): the two stores of the constant 9 (sb 0x55 and sb 0x92 via D_80158A78) use $v0 here, the original holds 9 in $a0. T-11510: the 9 is a ugen temp (used twice), which takes the lowest free of v0/v1/a0, so the original has v0/v1 busy in that block for an unknown reason; the return type makes no difference (void == s32). */
 #ifdef NON_MATCHING
 s32 func_80144A04(u8 *arg0) {
     u8 *p;
