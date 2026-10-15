@@ -14550,3 +14550,7 @@ Promoted 1 ordinary C functions / 976 inventory coverage bytes for ETC; default 
 ## [2026-10-15] ingest | T-15300 unfinished TACO source archive and handoff
 
 At the user's request, stopped new experiments and saved drafts/T-15300/TACO/func_80133738/: exact latest guarded source/body, header closure and SHA256 manifest, diagnostics, transformations and findings. Eight instruction positions remain different; no match or untested lead is claimed. Restored the production TACO source exactly to its committed ASM fallback. No assembly files, game binaries, or build outputs are included. [[tickets/T-15300-fresh-structural-near-matches]] moves to In Review; [[kanban]] and [[index]] updated.
+
+## [2026-10-15] ingest | Preserve proof-lane scaffolding for complete handoff
+
+Saved the local Python proof helpers and per-target transformations in drafts/T-14501/proof-lane-tools/ with source-path/SHA256 manifest and session context. No game binaries, generated assembly files, or build outputs are included. This preserves remaining local work alongside the exact TACO draft archive; [[tickets/T-14501-remaining-draft-proof]] records the handoff.

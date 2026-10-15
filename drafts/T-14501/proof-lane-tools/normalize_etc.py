@@ -1,0 +1,4 @@
+"""Centralize newly required ETC declarations and preserve its implicit-int definition."""
+from pathlib import Path
+p=Path('src/ovl/ETC/8013BEF0.c');s=p.read_text();start=s.index('/* bulk_m2c declarations (T-11190) */');end=s.index('/* end bulk_m2c declarations */',start);decls=s[start+len('/* bulk_m2c declarations (T-11190) */\n'):end];assert decls.count(';')==12;s=s[:start]+s[end+len('/* end bulk_m2c declarations */\n'):];s=s.replace('s32 func_8013C330(s32 arg0, s32 arg1) {','/* T-14501: retain the earlier callers\' K&R implicit-int view. */\ns32 func_8013C330(s32 arg0, s32 arg1) {');p.write_text(s)
+p=Path('include/ovl/ETC.h');s=p.read_text();i=s.rfind('#endif');assert i!=-1;s=s[:i]+'/* T-14501: scene dispatcher globals and later-defined helpers. */\n'+decls+'s32 func_8013C330(s32 arg0, s32 arg1);\n\n'+s[i:];p.write_text(s)
