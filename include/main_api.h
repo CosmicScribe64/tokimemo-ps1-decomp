@@ -800,7 +800,7 @@ extern u8 D_800CA2FC;
 extern s16 D_800CA300[12];
 extern s16 D_800CA318[12];
 extern s16 D_800CA348[12];
-extern s8 D_800CA360;
+extern u8 D_800CA360;
 extern s8 D_800CA364;
 extern u8 D_800CA368;
 extern DialogueBytes16 D_800CA36C;
