@@ -8,7 +8,7 @@ updated: 2026-10-15
 Read this first. Update on every ingest or new page.
 
 ## Core
-- [[stopping-point-2026-10-15]] - current published coverage, preserved drafts, unresolved work and restart instructions; user-requested stop.
+- [[stopping-point-2026-10-15]] - final handoff: 1,066/1,066 compiling draft scopes, 63.7% verified bytes, reconstruction limitations and restart instructions; user-requested stop.
 - [[overview]] - project goal, stack, pointers to fact pages
 - [[SCHEMA]] - wiki layout summary (full rules in AGENTS.md)
 - [[log]] - append-only chronological record

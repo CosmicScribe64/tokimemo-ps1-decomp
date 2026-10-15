@@ -1,17 +1,14 @@
 {
   "total": 1066,
   "statuses": {
-    "compiling-audit-clear": 849,
-    "uncompilable": 77,
-    "compiling-review-needed": 140
+    "compiling-audit-clear": 901,
+    "compiling-review-needed": 165
   },
   "flag_counts": {
-    "synthesized-stack-local": 184,
-    "inferred-copy-layout": 81,
-    "stack-address-arithmetic": 118,
-    "gamestate-address-arithmetic": 141,
-    "m2c-placeholder": 7,
-    "missing-context": 3
+    "synthesized-stack-local": 194,
+    "inferred-copy-layout": 72,
+    "stack-address-arithmetic": 97,
+    "gamestate-address-arithmetic": 122
   },
   "qualification": "Audit-clear means no listed residual pattern; semantic equivalence is unproven."
 }

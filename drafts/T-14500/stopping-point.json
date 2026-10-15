@@ -7,37 +7,34 @@
     "failed": 129
   },
   "automatic_attempts": 257,
-  "manual_repairs": 33,
-  "repaired_initial_failures": 52,
+  "manual_repairs": 110,
+  "repaired_initial_failures": 129,
   "compiler_coverage": {
     "total": 1066,
     "statuses": {
-      "candidate-zero": 30,
-      "failed": 77,
-      "scored": 959
+      "candidate-zero": 31,
+      "scored": 1035
     },
     "reserved": 33,
-    "repaired": 52,
+    "repaired": 129,
     "absent": 0
   },
   "quality": {
     "total": 1066,
     "statuses": {
-      "compiling-audit-clear": 849,
-      "uncompilable": 77,
-      "compiling-review-needed": 140
+      "compiling-audit-clear": 901,
+      "compiling-review-needed": 165
     },
     "flag_counts": {
-      "synthesized-stack-local": 184,
-      "inferred-copy-layout": 81,
-      "stack-address-arithmetic": 118,
-      "gamestate-address-arithmetic": 141,
-      "m2c-placeholder": 7,
-      "missing-context": 3
+      "synthesized-stack-local": 194,
+      "inferred-copy-layout": 72,
+      "stack-address-arithmetic": 97,
+      "gamestate-address-arithmetic": 122
     },
     "qualification": "Audit-clear means no listed residual pattern; semantic equivalence is unproven."
   },
   "stopped": true,
-  "remaining": "77 scopes lack compiling alternatives; 140 additional compiling scopes retain reconstruction-review flags. Audit-clear does not prove semantics.",
-  "matching_claim": "No production matching claim follows from draft counts or scores."
+  "remaining": "Every frozen scope has a compiling alternative; 165 selected drafts retain reconstruction-review flags. Audit-clear does not prove semantics.",
+  "matching_claim": "No production matching claim follows from draft counts or resolved scores.",
+  "final_compilation_repairs": 77
 }

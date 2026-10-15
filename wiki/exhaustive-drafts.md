@@ -83,6 +83,10 @@ The first two commands reuse completed outcomes and do not repeat existing compi
 
 The later user instruction to get all drafts compiling supersedes the earlier stopping checkpoint. The thirteen-scope mixed-overlay batch now has thirteen full-TU compiling alternatives at `drafts/T-14500/repairs/t15900`; every score was replayed with full diagnostics and preprocessed context saved. EVENT17D80 reuses current verified production source (zero already counted by integration); twelve alternatives remain nonzero. Other assigned repair batches continue, so this batch alone does not close the77-scope manifest. Compilation does not remove the residual semantic/type review requirement.
 
-## Final compilation repair in progress
+## Completed compilation repair
 
-The user subsequently requested all remaining drafts compile before stopping. T15700 has compiled all 28 TACO/TAIIKU alternatives and T15900 all 13 mixed-overlay alternatives; these are published on main. T15800 owns 23 other overlays and T16000 owns thirteen MAIN functions. Full translation-unit contexts, diagnostics and hashes are retained; production matching coverage remains 63.7%. The combined ledgers will be refreshed after the remaining batches finish. See [[stopping-point-2026-10-15]].
+All **1,066 / 1,066** scopes in the frozen unmatched-function census now have a compiling full-translation-unit C alternative. The final 77 failures were repaired in T15700–T16000: 28 TACO/TAIIKU, 23 other overlays, 13 mixed overlays and 13 MAIN functions. Selected compiler outcomes are 31 diagnostic zero candidates and 1035 nonzero scores, with **zero missing or uncompilable scopes**. All 129 initial compiler failures now have compiling alternatives.
+
+Compilation is separate from correctness and matching: the quality audit selects **901 drafts without listed residual patterns and 165 requiring reconstruction review**. Audit-clear does not establish semantic equivalence. Initial failed attempts remain immutable, and every final repair retains source/context/diagnostics and provenance. No additional verified production bytes are claimed from these compilation repairs.
+
+Regenerate the final joined compiler and quality ledgers with `tools/docker.sh python3 tools/refresh_draft_ledgers.py`; this reads saved evidence without launching generation or compilation. The registry references T15700, T15800 and T16000 external archives plus T15900 within T14500. Read [[stopping-point-2026-10-15]] before resuming.

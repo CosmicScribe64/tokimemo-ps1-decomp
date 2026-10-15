@@ -14,6 +14,12 @@ These are source-only working archives, published so reconstruction work is not 
 
 “Compiling-audit-clear” only means the input compiles and does not trigger the listed residual patterns. It does not prove semantic equivalence or byte matching. Reproduction uses the existing project Docker workflow and the documented baseline, not host toolchain installs.
 
+## Final compilation checkpoint
+
+All **1,066 / 1,066** scopes in the frozen unmatched-function census now have a compiling full-translation-unit C alternative. The final 77 failures were repaired in T15700–T16000: 28 TACO/TAIIKU, 23 other overlays, 13 mixed overlays and 13 MAIN functions. Selected compiler outcomes are 31 diagnostic zero candidates and 1035 nonzero scores, with **zero missing or uncompilable scopes**. All 129 initial compiler failures now have compiling alternatives.
+
+Compilation is separate from correctness and matching: the quality audit selects **901 drafts without listed residual patterns and 165 requiring reconstruction review**. Audit-clear does not establish semantic equivalence. Initial failed attempts remain immutable, and every final repair retains source/context/diagnostics and provenance. No additional verified production bytes are claimed from these compilation repairs.
+
 ## Focused work
 
 - `T-14501`: proof and normalization helpers retained from the promotion lane.
@@ -21,6 +27,7 @@ These are source-only working archives, published so reconstruction work is not 
 - `T-15200`: large EVENT dispatcher and related handler reconstructions, still nonmatching.
 - `T-15300`: unfinished TACO reconstruction, contexts, headers and diagnostics.
 - `T-15400`, `T-15500`: BUNKASAI encoding/bitfield alternatives and reproduction scripts.
+- `T-15700`, `T-15800`, `T-16000`, and `T-14500/repairs/t15900`: all 77 final compilation repairs, with full contexts and diagnostics.
 - `T-15600`: RENSYU/SHOUGATU work and unresolved RPG delay-slot probes.
 - `preserved-worktrees-2026-10-15`: older uncommitted source patches, complete modified files, base commits and external-tooling research, preserved without changing the original worktrees.
 
