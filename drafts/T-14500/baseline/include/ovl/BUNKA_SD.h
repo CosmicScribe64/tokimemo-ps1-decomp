@@ -1,0 +1,155 @@
+#ifndef OVL_BUNKA_SD_H
+#define OVL_BUNKA_SD_H
+
+/* main_api.h overrides (T-3340, tools/sync_protos.py): the views this overlay was matched with. */
+#define MAIN_API_OVERRIDE_set_kanji_string /* matched with s32() (main_api.h: void(s32,s32,s32,void*,s32)) */
+
+#include "common.h"
+#include "main_api.h"
+
+s32 set_kanji_string();
+
+/* T-12090: dispatcher and its later definitions in 80132000.c. */
+void func_80132428(void);
+void func_801325E8(void);
+void func_8013261C(void);
+void func_801327E4(void);
+void func_80132DB8(u32 arg0);
+void func_80132DFC(void);
+
+/* BUNKA_SD functions called across the overlay. */
+void func_80132940(void);
+void func_80134938(void);
+void func_80135630(void);
+void func_80135CD4(void);
+void func_80136578(void);
+void func_80138810(s32 arg0, s32 arg1, s32 arg2);
+s32 func_80132708(void);
+
+void func_80134B88(void);
+void func_80134D94(void);
+void func_80133984(void);
+void func_80136F3C(void);
+void func_80137FEC(void);
+void func_801377D4(s32 arg0, s32 arg1, s32 arg2);
+
+void func_80135F38(void);
+void func_801361B8(void);
+void func_80138D48(void);
+void func_80138B3C(void);
+void func_801341A0(s32 arg0, s32 arg1, s32 arg2);
+void func_80136904(void);
+void func_801369AC(void);
+void func_80137620(void);
+void func_80137824(s32 arg0);
+extern s32 D_8013C700;
+extern s32 D_8013C814[];
+extern s32 D_8013CEC8, D_8013CECC, D_8013CED0, D_8013CED4;
+
+extern s32 D_8013B7EC;
+extern s32 D_8013C6C8, D_8013C6D4, D_8013C6D8, D_8013C6DC, D_8013C6E0, D_8013C6E4;
+extern s32 D_8013CEBC, D_8013CED8;
+extern s32 D_8013D988, D_8013D994, D_8013D998, D_8013D99C, D_8013D9A0, D_8013D9A4;
+
+void func_80134260();
+void func_80134418();
+s32 func_801389DC();
+void func_80138CAC();
+void func_8013987C();
+s32 func_801388D0(void);
+void func_80138C34(void);
+s32 func_80135160(void);
+s32 func_801359B0(void);
+s32 func_80136270(void);
+
+extern s32 D_8013B808;
+
+extern s32 D_8013B80C;
+
+extern u8 D_8013B810[];
+extern u8 D_8013B938[];
+extern u8 *D_8013C6CC;
+extern u8 *D_8013C6D0;
+extern u8 D_8013C750[];
+extern u8 D_8013C7B4[];
+extern u8 *D_8013CEC0;
+extern u8 *D_8013CEC4;
+s32 func_801369D0(void);
+extern u8 D_8013CEF0[];
+extern u8 D_8013CFC8[];
+extern u8 *D_8013D98C;
+extern u8 *D_8013D990;
+s32 func_80137B40(void);
+void func_801346D4(void);
+void func_80135B44(void);
+void func_80135A2C(void);
+void func_801352F4(void);
+void func_801351DC(void);
+
+/* T-9730: address-only script data selected by the background dispatcher. */
+extern u8 D_8013B670[];
+extern u8 D_8013B6B4[];
+extern u8 D_8013B6E4[];
+extern u8 D_8013B71C[];
+extern u8 D_8013B74C[];
+extern u8 D_8013B794[];
+extern u8 D_8013B7B0[];
+extern u8 D_8013B7C8[];
+extern u8 D_8013B7DC[];
+extern u8 *D_8013B7F0;
+extern u8 *D_8013B7F4;
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_801347CC(void);
+void func_80134800(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80135C3C(void);
+void func_80135C70(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8013540C(void);
+void func_80135440(void);
+s32 func_801354C8(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80133924(void);
+void func_80133CC4(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80137F8C(void);
+void func_80138898(u32 arg0);
+void func_8013838C(void);
+void func_801383CC(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80136EDC(void);
+void func_801371BC(void);
+void func_8013731C(void);
+void func_8013785C(u32 arg0);
+void func_8013722C(void);
+void func_801372BC(void);
+void func_801364B4(void);
+void func_801364F0(void);
+void func_801363BC(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern s32 D_8013C72C;
+extern u8 *D_8013C720;
+extern u8 *D_8013C724;
+extern u8 *D_8013C728;
+
+/* T-12090: typed display setup data and pending dispatcher callees. */
+void func_80139290(void);
+void func_80132FF0(void);
+void func_80133204(void);
+extern u8 *D_8013B7F8;
+extern u8 *D_8013B7FC;
+extern u8 *D_8013B800;
+extern u8 *D_8013B804;
+extern u8 *D_8013D9C0;
+extern u8 *D_8013D9C4;
+extern u8 *D_8013D9C8;
+extern u8 *D_8013D9CC;
+
+#endif /* OVL_BUNKA_SD_H */

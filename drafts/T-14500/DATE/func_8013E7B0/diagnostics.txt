@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: date_fill_sections_ayako 0, date_fill_sections_megumi 0, date_fill_sections_mio 0, date_fill_sections_mira 0, date_fill_sections_nozomi 0, date_fill_sections_saki 0, date_fill_sections_shiori 0, date_fill_sections_yuina 0, date_fill_sections_yukari 0, date_fill_sections_yuko 0, date_fill_sections_yumi 0

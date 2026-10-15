@@ -1,0 +1,53 @@
+? func_8009EFB0(void *, ?);                         /* extern */
+
+void func_8013D32C(void) {
+    void *sp6C;
+    s16 var_s1;
+    s16 var_s2;
+    s32 var_s5;
+    s8 var_s3;
+    s8 var_s6;
+    void **var_s0;
+    void *temp_v0;
+
+    var_s0 = &sp6C;
+    var_s1 = 0;
+    var_s2 = 0xA0;
+    var_s3 = 0xA0;
+    var_s5 = 0x280;
+    var_s6 = 0;
+    do {
+        temp_v0 = func_800490F0(0x28, D_8011ECA0);
+        *var_s0 = temp_v0;
+        func_8009F040((s32) temp_v0);
+        func_8009EF84(*var_s0, 0);
+        func_8009EFB0(*var_s0, 0);
+        *(s16 *)((unsigned char *)(*var_s0) + (22)) = func_8009ECB0(2, 0, var_s5, 0);
+        *(s16 *)((unsigned char *)(*var_s0) + (8)) = var_s1;
+        *(s16 *)((unsigned char *)(*var_s0) + (10)) = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        *(s16 *)((unsigned char *)(*var_s0) + (16)) = var_s2;
+        *(s16 *)((unsigned char *)(*var_s0) + (18)) = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
+        *(s16 *)((unsigned char *)(*var_s0) + (24)) = var_s1;
+        *(s16 *)((unsigned char *)(*var_s0) + (26)) = (s16) (D_800E6280.unk_018[D_8011ECA0] + 0x78);
+        *(s16 *)((unsigned char *)(*var_s0) + (32)) = var_s2;
+        *(s16 *)((unsigned char *)(*var_s0) + (34)) = (s16) (D_800E6280.unk_018[D_8011ECA0] + 0x78);
+        *(s8 *)((unsigned char *)(*var_s0) + (12)) = var_s6;
+        *(s8 *)((unsigned char *)(*var_s0) + (13)) = 0;
+        *(s8 *)((unsigned char *)(*var_s0) + (20)) = var_s3;
+        *(s8 *)((unsigned char *)(*var_s0) + (21)) = 0;
+        *(s8 *)((unsigned char *)(*var_s0) + (28)) = var_s6;
+        *(s8 *)((unsigned char *)(*var_s0) + (29)) = 0xF0;
+        *(s8 *)((unsigned char *)(*var_s0) + (36)) = var_s3;
+        *(s8 *)((unsigned char *)(*var_s0) + (37)) = 0xF0;
+        *(s8 *)((unsigned char *)(*var_s0) + (4)) = 0x80;
+        *(s8 *)((unsigned char *)(*var_s0) + (5)) = 0x80;
+        *(s8 *)((unsigned char *)(*var_s0) + (6)) = 0x80;
+        func_8009EED0((D_8011ECA0 << 0xA) + 0x38 + D_800E8CA0, *var_s0);
+        var_s3 += 0x20;
+        var_s0 += 4;
+        var_s5 += 0x80;
+        var_s1 += 0xA0;
+        var_s2 += 0xA0;
+        var_s6 += 0x20;
+    } while (var_s3 != 0xE0);
+}

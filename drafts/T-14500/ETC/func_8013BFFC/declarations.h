@@ -1,0 +1,13 @@
+extern s32 D_8014E0C0;
+extern s32 D_80150080;
+extern s32 D_801500D8;
+extern u8 D_800E738D;
+void func_8013DEA0(s32 arg0);
+void func_8013ECDC(void);
+void func_8013EDF8(void);
+void func_8013E364(void);
+void func_8013F498(void);
+void func_8013D264(void);
+void func_8013D2C0(void);
+void func_8013EE28(void);
+void func_8013EEFC(void);

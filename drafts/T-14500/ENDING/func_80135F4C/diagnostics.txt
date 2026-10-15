@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80134DE0 0, func_80137160 4
+python3 failed:
+ -------------------------------^
+cfe: Warning 709: drafts/T-14500/ENDING/func_80135F4C/work/guarded.c, line 3290: Incompatible pointer type assignment
+         temp_t3 = &D_800E6280 + var_s1;
+ ----------------^
+cfe: Warning 709: drafts/T-14500/ENDING/func_80135F4C/work/guarded.c, line 3292: Incompatible pointer type assignment
+         temp_v0 = D_801217D0 + temp_lo;
+ ----------------^
+cfe: Error: drafts/T-14500/ENDING/func_80135F4C/work/guarded.c, line 3332: 'sp' undefined; reoccurrences will not be reported.
+         *(s16 *)((unsigned char *)temp_s0 + (6566)) = (s16) (*(s16 *)((unsigned char *)(sp + temp_s2) + (124)) - 0xA0);
+ ----------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/ENDING/func_80135F4C/work -o drafts/T-14500/ENDING/func_80135F4C/work/guarded.o /tmp/asm_processorzp8wu4gz/preprocessed_5780dbfda5d146caba9b65f8bde5a76a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfr4hrj8h/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/ENDING/func_80135F4C/work/guarded.o drafts/T-14500/ENDING/func_80135F4C/work/guarded.c

@@ -1,0 +1,71 @@
+#ifndef OVL_OMIMAI_H
+#define OVL_OMIMAI_H
+
+#include "common.h"
+#include "game.h"
+
+/* OMIMAI overlay (load address 0x80132000): externs and types. */
+
+void func_80132AD0();
+void func_80132EB0();
+void func_801331B0();
+void func_801320A0();
+extern s32 D_80134A8C;
+extern s32 D_80134ABC;
+extern s32 D_80134AEC;
+void func_80133424();
+void func_801337EC();
+
+/* three parallel tables per object (13 words each), indexed by a fixed slot per value of
+ * D_800E6280.unk_F5F (func_8013285C, func_80132EB0, func_801340E4; T-0500) */
+extern s32 D_80134A60[];
+extern s32 D_80134A90[];
+extern s32 D_80134AC0[];
+extern s32 D_80134B60[];
+extern s32 D_80134B94[];
+extern s32 D_80134BC8[];
+extern s32 D_80134C30[];
+extern s32 D_80134C64[];
+extern s32 D_80134C98[];
+extern s32 D_80134C5C;
+extern s32 D_80134C90;
+extern s32 D_80134CC4;
+extern u8 D_80134CCC;
+s32 func_801323F8(void);
+s32 func_80133500(void);
+
+extern s32 D_80134C34;
+extern s32 D_80134C38;
+extern s32 D_80134C3C;
+extern s32 D_80134C40;
+extern s32 D_80134C44;
+extern s32 D_80134C48;
+extern s32 D_80134C4C;
+extern s32 D_80134C50;
+extern s32 D_80134C54;
+extern s32 D_80134C58;
+extern s32 D_80134C60;
+extern s32 D_80134C68;
+extern s32 D_80134C6C;
+extern s32 D_80134C70;
+extern s32 D_80134C74;
+extern s32 D_80134C78;
+extern s32 D_80134C7C;
+extern s32 D_80134C80;
+extern s32 D_80134C84;
+extern s32 D_80134C88;
+extern s32 D_80134C8C;
+extern s32 D_80134C94;
+extern s32 D_80134C9C;
+extern s32 D_80134CA0;
+extern s32 D_80134CA4;
+extern s32 D_80134CA8;
+extern s32 D_80134CAC;
+extern s32 D_80134CB0;
+extern s32 D_80134CB4;
+extern s32 D_80134CB8;
+extern s32 D_80134CBC;
+extern s32 D_80134CC0;
+extern s32 D_80134CC8;
+
+#endif /* OVL_OMIMAI_H */

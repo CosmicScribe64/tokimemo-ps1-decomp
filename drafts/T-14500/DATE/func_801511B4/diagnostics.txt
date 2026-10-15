@@ -1,0 +1,21 @@
+python3 failed:
+cfe: Error: drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c, line 4276: redeclaration of 'D_8015EC24'; previous declaration at line 4275 in file 'drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c'
+ extern s32 D_8015EC24;
+ -----------^
+cfe: Error: drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c, line 4281: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockA0 *)(&sp2C[0]) = *(M2cBlockA0 *)(&D_8015EC24);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_801511B4/work -o drafts/T-14500/DATE/func_801511B4/work/guarded.o /tmp/asm_processorr8us_s3u/preprocessed_3419e01880d642ecaafbbabe1b889446.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibr9_ndqbh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_801511B4/work/guarded.o drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c, line 4280: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlockA0 *)(&sp2C[0]) = *(M2cBlockA0 *)(&D_8015EC24);
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_801511B4/work -o drafts/T-14500/DATE/func_801511B4/work/guarded.o /tmp/asm_processorx12d47ua/preprocessed_1101f364afad4b6c95540bb5c8bb4cde.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib96uj1p7i/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_801511B4/work/guarded.o drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c, line 4282: Non-function name referenced in function call.
+     (&sp2C[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_801511B4/work -o drafts/T-14500/DATE/func_801511B4/work/guarded.o /tmp/asm_processorw8ahijhe/preprocessed_fc3c004c1c7a41069b6336cde2cc464a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtqjqwpx7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_801511B4/work/guarded.o drafts/T-14500/DATE/func_801511B4/work/guarded.o.sjis.c

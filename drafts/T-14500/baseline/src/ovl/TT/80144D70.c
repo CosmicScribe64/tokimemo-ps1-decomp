@@ -1,0 +1,84 @@
+#include "common.h"
+#include "ovl/TT.h"
+
+INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80144D70", func_80144D70);
+
+/* T-11800: matched. T-10820 dead compare locals reserve a0 in both loops; d2, assigned before the first loop and tested by an empty if inside it (FAKE), also reserves a1 there, so the hoisted 0x40/0x70 take a2/a3 as in the original. */
+void func_80145370(void) {
+    s32 i;
+    u8 *p;
+    int d1;
+    int d2;
+
+    i = 0;
+    p = D_80158A98;
+    d2 = (int)D_80158AA0; /* FAKE: with the empty if (d2) {} below, d2 lives through the first loop and reserves a1, so the hoisted 0x70 takes a3 as in the original; no code is emitted. T-11800 */
+    for (; i < 0x40; i++) {
+        /* FAKE: dead compare locals with an else branch (decomp-permuter); they only reserve registers so that the hoisted constants sit in the original's registers. T-10820 */
+        if (p[0] != 0 && (d1 = (*(u16 *)(p + 4) == 0x40))) {
+            *(u16 *)(p + 4) = 0x70;
+            *(s16 *)(p + 0xA) = 0;
+            *(s16 *)(p + 8) = 0;
+            *(s16 *)(p + 6) = 0;
+            p[0xF] = 0;
+            if (d2) { /* FAKE: see d2 above. T-11800 */
+            }
+            p[0xE] = 0;
+            p[0xD] = 0;
+        } else {
+            d1 = 0;
+        }
+        p += 0x78;
+    }
+    i = 0;
+    p = D_80158AA0;
+    for (; i < 0x80; i++) {
+        if (p[0] != 0 && (d2 = (*(u16 *)(p + 4) == 0x40))) {
+            p[0] = 0;
+            *(s16 *)(p + 0xA) = 0;
+            *(s16 *)(p + 8) = 0;
+            *(s16 *)(p + 6) = 0;
+            p[0xF] = 0;
+            p[0xE] = (*(u16 *)(p + 4) == 0x40) * 0;
+            p[0xD] = 0;
+        } else {
+            d2 = 0;
+        }
+        p += 0x68;
+    }
+}
+
+void func_801454D8(u8 *arg0) {
+    D_80158A74[0x55] = 0xA;
+    func_8013BE9C(arg0 + 0x14);
+}
+
+s32 func_80145508(u8 *arg0, u8 *arg1, u8 *arg2, u8 *arg3) {
+    s16 x1 = *(s16 *)arg1 + *(s16 *)arg0;
+    s16 y1 = *(s16 *)(arg1 + 2) + *(s16 *)(arg0 + 2);
+    s16 x2 = *(s16 *)arg3 + *(s16 *)arg2;
+    s16 y2 = *(s16 *)(arg3 + 2) + *(s16 *)(arg2 + 2);
+    s32 dx = x1 - x2;
+    s32 dy;
+    s32 a;
+
+    if (dx < 0) {
+        a = -dx;
+    } else {
+        a = dx;
+    }
+    dy = y1 - y2;
+    if ((u32)a < (u32)(arg3[4] + arg1[4])) {
+        if (dy < 0) {
+            a = -dy;
+        } else {
+            a = dy;
+        }
+        if ((u32)a < (u32)(arg3[5] + arg1[5])) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80144D70", func_801455C8);
