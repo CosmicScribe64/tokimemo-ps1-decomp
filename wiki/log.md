@@ -13909,3 +13909,6 @@ Created [[tickets/T-12701-bunkaken-address-family]] and [[tickets/T-12702-bunkas
 
 ## [2026-10-15] query | BUNKAKEN aggregate address form and BUNKASAI reload
 Recorded candidate evidence and rejected variants in [[bunka-family-results]]. Full local GameState pointer form scores zero on five BUNKAKEN handlers; one BUNKASAI candidate scores zero after reloading state across calls. Linked verification remains the acceptance gate.
+
+## [2026-10-15] build | Seven BUNKA handlers verified
+[[tickets/T-12701-bunkaken-address-family]] adds five functions / 6,544 bytes (commit fdcac574); [[tickets/T-12702-bunkasai-family]] adds two / 2,520. Each function passes literal linked-byte verification and both affected overlay SHA1 checks pass in Docker. [[bunka-family-results]] records the mechanisms and failures. Review remains pending.

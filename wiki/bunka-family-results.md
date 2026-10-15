@@ -18,3 +18,7 @@ The same form gives zero full-TU differences for func_80142A40, func_80142FD4 an
 The BUNKASAI func_80146A78 archived draft saves a calendar state byte across calls. Reloading the existing GameState field for its final comparison removes the spill and reproduces the target's frame and instruction sequence. Local GameState pointer variants worsen this candidate. Literal proof is recorded in [[tickets/T-12702-bunkasai-family]]; scratch variants remain in build/b12702.
 
 No compiler flags, generated assembly, or shared main types are changed by these experiments. A zero candidate score is not counted as an accepted match until linked bytes and the overlay SHA1 both pass.
+
+## Verified checkpoint
+
+Five BUNKAKEN handlers add 6,544 literal linked bytes, with BUNKAKEN SHA1 OK. Two BUNKASAI handlers add 2,520 bytes, with BUNKASAI SHA1 OK: func_80146A78 (1,216) and func_8013BB94 (1,304). The latter needs existing BunkaReturnFlags stores before the three continuation-state copies; bitfields alone reduce the mismatch but leave instruction ordering wrong. Total accepted at this checkpoint: seven functions / 9,064 bytes. Header validation passes. No whole-game checksum claim is made.
