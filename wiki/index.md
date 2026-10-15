@@ -341,4 +341,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).
 - [[tickets/T-14300-event-families|T-14300]] Remaining EVENT family reconstruction (In Progress).
 
-- [[tickets/T-14700-reserved-type-repairs|T-14700]] Reserved aggregate and callback draft repairs (In Review; 15/15 compile, no zero candidates).
+- [[tickets/T-14700-reserved-type-repairs|T-14700]] Reserved aggregate and callback draft repairs (Done; 15/15 compile, no zero candidates, reviewed draft-only archive).

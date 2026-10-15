@@ -14494,3 +14494,7 @@ Recovered actual byte/halfword/word aggregates and callback tables in draft-only
 ## [2026-10-15] decision | T-14700 resolve draft review findings
 
 Two-axis review identified an EVENT callback still using a synthetic sp global and a scoring script that exited successfully after failures. Replaced dispatch with the actual local table, removed the declaration, made failure status nonzero, retained complete successful compiler diagnostics and reran all fifteen serial full-TU compiles successfully. Semantic audit checked ETC rank loops, GEKO season-relative pairs and EVENT copy-tail lengths. No production promotion. See [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] ticket | T-14700 reviewed draft archive complete
+
+Standards and spec review rechecked ce44a7e0 and resolved both findings, with no further actionable findings. All fifteen compile and artifact hashes/source snapshots validate; failure exit behavior verified. Retained original census and current repair environment fingerprints. Moved [[tickets/T-14700-reserved-type-repairs]] to Done for the draft-only scope; no literal-byte or SHA1 promotion claim.

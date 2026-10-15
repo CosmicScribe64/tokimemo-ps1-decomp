@@ -1,0 +1,19 @@
+{
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "architecture": "aarch64",
+  "python": "3.10.12",
+  "compiler": "IDO 5.3",
+  "flags": "-EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm",
+  "files": {
+    "tools/type_repair_score.py": "e4db6ee5387611d08da57d03a60a24fc62901d38d211605400c367d59c79a277",
+    "tools/order_search.py": "9c9ad81db51915004617484330afde8e2df28e65264635ce5fbba271deb5252f",
+    "tools/cc.py": "1996143556607249784a78545f275241292bb085068c0bea71e6fae2167956d7",
+    "tools/frame_pass.py": "2978bdc9a0d12077f6bed58673d38d97c52e12921ee2e7d24a14a9883f862db7",
+    "tools/funcdiff.py": "32fd163ca161b3ff30f136601837c5fec2eb16addfc5c82312fa262f99269d77",
+    "tools/funcdiff_verify.py": "de2631a600aaa7a54eb48deab6ca2c882cf99f86ebd24ad9b9980494224ad269",
+    "tools/bulk_m2c.py": "e53366dbb533efbdbf306a34ea8b3bd404c9cdd7731384e1f7a849dfc209cad5",
+    "tools/Dockerfile": "4cb48e7f6c01e857e490b49dc1ee23b73ea3dda9393fecd71fa4b1f87a0859ab",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25"
+  },
+  "serial_compilation": true
+}
