@@ -14466,3 +14466,11 @@ Three ticket statuses match Done cards; result page and ticket cross-references 
 
 ## [2026-10-15] decision | Preserve completed family evidence and rotate scopes
 [[tickets/T-12600-byte-coverage-families]] refreshed census at45d52546:1072remainingfunctions/869948bytes. Largest200still387848bytes, below414076-byte80%gap; sustained family coverage remains necessary. DATEc9d9b3b9 and scene6caf5ee9 final records integrated with no production changes or new byte claims; their636/2108bytes were already published. Replacement Sol6.1medium EVENT worker T14300 owns43796remainingbytes/48functions, and OPTION chat T14400 owns29612bytes/44functions. Both receive prior failed-search evidence and full literal-proof requirements. MAIN,TAIIKU,ENDING/EN_NICHI continue independently. Ticket cards reconciled to final frontmatter; coverage remains1409420/2279368bytes (61.8%).
+
+## [2026-10-15] ticket | Start isolated OPTION family pass
+
+Created [[tickets/T-14400-option-menu-families]] on codex/option-14400 from origin/main a46afeb8. Read [[index]], coding standards, local instructions and prior OPTION evidence. Scope is OPTION source/header only, with full-unit linked proof and affected SHA1 required.
+
+## [2026-10-15] build | Verify first OPTION settings pair
+
+[[tickets/T-14400-option-menu-families]] adds 2148 default C bytes in src/ovl/OPTION/8013A550.c. Full-TU literal proofs and OPTION SHA1 pass; recovered packed views and consistent GameState pointer described in [[matching-notes]]. All prior C preserved; no FAKE workaround or compiler change.

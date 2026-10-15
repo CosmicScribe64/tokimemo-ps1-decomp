@@ -70,6 +70,12 @@ void func_80132384();
 
 extern u8 D_8013E740;
 extern s32 D_8013E844[];
+
+/* Sixteen word entries per settings row table, T-14400. */
+extern s32 D_8013E744[];
+extern s32 D_8013E784[];
+extern s32 D_8013E7C4[];
+extern s32 D_8013E804[];
 #endif /* OVL_OPTION_H */
 
 #ifndef T9540_OPT_DRAW44
