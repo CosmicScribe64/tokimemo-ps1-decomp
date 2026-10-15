@@ -293,7 +293,37 @@ INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144DF0);
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144F74);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801451D4);
+s32 func_801451D4(void) {
+    /* FAKE: scalar selector view keeps the selector in v1 for every compare. T-11350 */
+    switch (*(u8 *)&D_800E6280.unk_110D) {
+    case 0:
+        func_80053D10();
+        func_80044750(0x502);
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, (s32) "メモリーカードを認識できません", 0);
+        k_sub_disp_start(1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        k_sub_reset();
+        set_kanji_string(-0x80, 0x32, 1, (s32) "メモリーカードを差し込み口１に", 0);
+        set_kanji_string(-0x80, 0x42, 1, (s32) "セットし、ボタンを押してください。", 0);
+        k_sub_disp_start(2);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x860) {
+            func_80053CE0();
+            func_80042940(0);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80145318);
 
