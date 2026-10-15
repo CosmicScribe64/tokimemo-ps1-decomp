@@ -5212,3 +5212,11 @@ the flag-word update to retain the original high-immediate scheduling.
 All three have full-TU funcdiff --resolve literal linked-byte proof; the
 affected main/OPTION binary SHA1 checks pass. See
 [[tickets/T-12901-small-option-main-first]] and [[tickets/T-12902-small-draft-triage]].
+
+## Native AS1 diagnosis of dialogue_speak_part (T-12500)
+
+The 8,672-byte guarded function still differs at eight instruction positions (16 minus/plus rows), comprising two rotations of `li a0,-40` past the signed-Y conversion and two outgoing string-pointer stores. [[tickets/T-12500-largest-dialogue]] uses native AS1 `-R -xbbdbg 8` diagnostics after the existing frame transformation, preserving the normal cvt/layout pipeline. Ordinary, capture-only and diagnostic full-TU objects are byte-identical: SHA256 `d7802f1a49e6ffc06219dcc8863d5c6f492a30715b0d75851d11751a5cba2566`. Thus all existing matched functions in the TU also serve as controls. No production compiler change was made.
+
+The exercised native trace shows the constant and signed shift as ready nodes with zero downstream cycles. The shift is attached to the preceding increment statement and is selected first. Moving the increment into the call changes the input DAG but adds a narrow assignment copy, changing dependency priority. Fine line-boundary, coordinate type/scope, constant-expression and control-flow probes did not improve the inherited candidate. This is a measured plateau, not proof that the function cannot match.
+
+Reproduction evidence is retained under `build/scratch` in the isolated `largest-dialogue` worktree: `baseline-score.py`, `baseline.diff`, `as1-capture.py`, `trace-compile.py`, `as1-{stock,trace,inline,ycomma,blocks}/`, each `dialogue-*.py` probe and its log, and combined-search JSONL ledgers. The diagnostic wrapper injects options only at AS1 spawn time because the frame shim does not parse the extra option value. Compiler inputs/outputs and transformed binasm remain ignored; no copyrighted binary data was committed. No source candidate has been promoted from this pass.

@@ -14201,3 +14201,23 @@ Created [[tickets/T-13300-rpg-families]] in isolated codex/rpg-13300 from aa2b31
 ## [2026-10-15] ticket | T-13300 diagnostic-only handoff for review
 
 Moved [[tickets/T-13300-rpg-families]] to In Review for the documented bounded experiments. Zero accepted functions/bytes, no production changes. Recovery remains unfinished and requires follow-up work.
+## [2026-10-15] setup | Largest dialogue isolated pass
+
+Created codex/largest-dialogue from integration 2cb6a11c for [[tickets/T-12500-largest-dialogue]]. Own src/main/8007C030.c only, targeting 8,672-byte dialogue_speak_part. Read prior T-10900/T-11590 scheduling findings and external native AS1 research. Reused ignored inputs and tool diagnostics; no integration edits.
+
+## [2026-10-15] build | Largest dialogue baseline verified
+
+[[tickets/T-12500-largest-dialogue]] baseline configure/ninja succeeds: 665 tasks, 27/27 checksums, headers/globals. Prepared ignored AS1 capture wrapper preserving production frame/cvt/layout stages for a diagnostic fidelity control. Prior failed coordinate/argument/string families remain excluded from blind repetition.
+
+## [2026-10-15] query | Dialogue native AS1 fidelity and scheduler localization
+
+[[tickets/T-12500-largest-dialogue]]: stock, capture-only and native diagnostic full-TU objects are byte-identical. Nonempty AS1 DAG trace localizes two rotations to zero-downstream-cycle constant versus signed-Y conversion and string stores. First 24 source-layout probes give no improvement; inline assignment adds a copy and shifts priority. Production source remains untouched. Evidence: build/scratch/as1-{stock,trace,inline}/, baseline.diff and dialogue-probes.log.
+
+## [2026-10-15] query | Dialogue source hypotheses remain at sixteen rows
+
+[[tickets/T-12500-largest-dialogue]] records full-TU type, lifetime, control-flow and expression probes. No improvement over inherited 16 rows; wider types change allocation/frame, inline narrow assignments introduce an extra move. Started a bounded combined-mutation search plus fine source-line boundary sweep. Production source and compiler are unchanged; scratch ledgers retain measured evidence.
+
+
+## [2026-10-15] ticket | Largest dialogue diagnostic handoff
+
+[[tickets/T-12500-largest-dialogue]] moves to In Review with board/index synchronized. Zero new bytes; inherited 16-row guard and production source unchanged. Native AS1 diagnostic fidelity is established; 128 fine line layouts and two bounded combined searches (215 + 44 full-TU evaluations) do not improve it. [[matching-notes]] preserves the measured blocker and reproduction paths. Final configure/rebuild passes 526 tasks, 27/27 checksums, headers/globals; prototypes 0 new / 15 known; fresh guard diff remains 16 rows. No compiler change or assembly patching.

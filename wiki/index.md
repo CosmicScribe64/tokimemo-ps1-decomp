@@ -27,6 +27,8 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-12902-small-draft-triage|T-12902]] Triage saved small OPTION and audio drafts (Done; bounded pass reviewed).
 - [[tickets/T-12901-small-option-main-first|T-12901]] Verify close OPTION and audio drafts (Done; bounded pass reviewed).
 - [[tickets/T-12900-small-option-main|T-12900]] Small OPTION and main audio matching (Done; 3 matches / 812 bytes total across this pass).
+- [[tickets/T-12500-largest-dialogue|T-12500]] Largest dialogue matching pass (In Review; diagnostic pass, zero new bytes).
+
 - [[tickets/T-11830-tt-wave1-handoff|T-11830]] TT: the seven wave-1 TT matches handed over by the maintainer (Done; TT 65.3%).
 - [[tickets/T-12010-codex-cx1|T-12010]] Codex cx1 main helper matching (In Review).
 - [[tickets/T-12020-codex-cx2|T-12020]] Codex cx2 TAIIKU matching pass (In Review).

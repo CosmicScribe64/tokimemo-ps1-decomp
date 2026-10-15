@@ -50,6 +50,9 @@ kanban-plugin: board
 
 
 
+- [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
+
+
 
 
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
@@ -99,6 +102,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
 - [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
 - [ ] [[tickets/T-12050-codex-cx5|T-12050 Codex cx5 main menu matching pass]]
+- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
+
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
 - [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
 - [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
