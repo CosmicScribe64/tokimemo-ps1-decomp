@@ -14498,3 +14498,11 @@ Started [[tickets/T-14800-etc-801447b0]]. Read [[etc-family-results]] and [[tick
 ## [2026-10-15] build | Match ETC album dispatcher through consistent aggregate pointer
 
 [[tickets/T-14800-etc-801447b0]]: func_801447B0 adds 648 default-build literal linked bytes; ETC SHA1 passes. Direct-field six-row difference is a final status-byte register allocation; consistent existing GameState pointer yields diagnostic zero and verified bytes. [[etc-family-results]] records the structural transfer. Original attempts and prior C are unchanged; ticket moved to In Review for independent review.
+
+## [2026-10-15] ticket | Revisit three RPG_BAT diagnostic near matches
+
+Started [[tickets/T-14900-rpg-near-matches]] after reading [[tickets/T-13300-rpg-families]] and T-9780 evidence. Coordinate separate TU ownership with proof lane; preserve immutable draft attempts and existing C. Probe genuine typed aggregate pointers before further expression changes.
+
+## [2026-10-15] build | Match RPG motion through recovered aggregate aliasing
+
+[[tickets/T-14900-rpg-near-matches]]: func_80148B08 passes 1,128 default linked bytes and RPG_BAT SHA1; existing RpgMotion20 aliases preserve EC50 store before EC6C load. Added canonical u8 flag declarations and genuine void prototype. 454F0 remains twenty register rows, AF1C six after corrected u8 stores; bounded typed-pointer/local-lifetime probes do not improve them. Original attempts and preexisting C unchanged. Ticket moves In Review; [[matching-notes]] updated.

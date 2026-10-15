@@ -1,0 +1,10 @@
+-@row 30 3c028016  ; lui v0,0x0
++@row 30 3c058016  ; lui a1,0x0
+-@row 31 8c42edb4  ; lw v0,0(v0)
++@row 31 8ca5edb4  ; lw a1,0(a1)
+-@row 35 00022823  ; negu a1,v0
++@row 35 00052823  ; negu a1,a1
+-@row 115 240e0082  ; li t6,130
++@row 115 240eff82  ; li t6,-126
+-@row 118 240f0082  ; li t7,130
++@row 118 240fff82  ; li t7,-126

@@ -1,0 +1,10 @@
+-@row 173 3c018016  ; lui at,0x0
++@row 173 3c098016  ; lui t1,0x0
+-@row 174 03384023  ; subu t0,t9,t8
++@row 174 8d29ec6c  ; lw t1,0(t1)
+-@row 175 ac28ec50  ; sw t0,0(at)
++@row 175 3c018016  ; lui at,0x0
+-@row 176 3c098016  ; lui t1,0x0
++@row 176 03384023  ; subu t0,t9,t8
+-@row 177 8d29ec6c  ; lw t1,0(t1)
++@row 177 ac28ec50  ; sw t0,0(at)

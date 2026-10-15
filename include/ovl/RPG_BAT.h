@@ -339,6 +339,7 @@ typedef struct RpgFlagRecord44 { /* size 0x44 */
 } RpgFlagRecord44;
 
 void func_80148654(void);
+void func_80148B08(void);
 
 /* T-9780: second dialogue text buffer. */
 s32 func_80142544(void);
