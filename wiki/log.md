@@ -14932,3 +14932,7 @@ T-11690). TT stays excluded (issue #2).
 ## [2026-10-15] ticket | T-11670 In Progress
 
 [[tickets/T-11670-w1-main-8006cb30]] created and claimed: wave 1 package w1-p11, 12 functions of `src/main/8006CB30.c`.
+
+## [2026-10-15] ticket | T-11670 resumed in wave 2 (w2-r11)
+
+[[tickets/T-11670-w1-main-8006cb30]] (In Progress) resumed as wave-2 package w2-r11 under [[tickets/T-16200-matching-wave-2]]. Merged branch `w1-p11` (matches `_schedule_init`, `geko_judge`, `schedule_girls_gakko`; guarded `func_80072998`, `func_800726F0`) onto the wave-2 base; dropped three duplicate declarations in `include/main_api.h`; `src/main/8006CB30.c` sha1 OK.
