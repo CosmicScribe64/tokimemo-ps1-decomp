@@ -76,6 +76,18 @@ extern s32 D_8013E744[];
 extern s32 D_8013E784[];
 extern s32 D_8013E7C4[];
 extern s32 D_8013E804[];
+
+/* Audio selection tables: 16-byte text rows, T-14400. */
+extern u8 D_8013DD58[63][16];
+extern u8 D_8013D968[63][16];
+extern u8 D_8013D3F8[58][16];
+extern u8 D_8013D3DC;
+void func_8013A304(void);
+void func_8013A31C(void);
+void func_8013A4FC(void);
+void func_80138DF8(void);
+void func_80138C20(void);
+void func_80138FC0(void);
 #endif /* OVL_OPTION_H */
 
 #ifndef T9540_OPT_DRAW44

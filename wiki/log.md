@@ -14526,3 +14526,14 @@ T14500 census resumed beyondBUNKAKEN intoBUNKASAI (about44/1066); first12zero-sc
 
 ## [2026-10-15] build | T-14200 resolve initializer review findings
 [[main-family-results]] and [[game-state]] record actual packed birthday/date and character-nibble fields replacing the first checkpoint's masks. Prototype moved inside its guard and pointer casts removed. Both default literal functions and MAIN SHA1 pass. Initial review findings addressed; final re-review pending in [[tickets/T-14200-main-source-families]].
+## [2026-10-15] query | Bound OPTION grid and date probes
+
+[[tickets/T-14400-option-menu-families]] records negative grid-local/type and date-state lifetime experiments. No matching source changed. Four coordinate arrays and sprite member accesses remain useful scratch evidence, but differences in state retention and scheduling are unresolved. Pivoted to the coherent three-handler audio row-table family.
+
+## [2026-10-15] build | Verify three OPTION audio row handlers
+
+[[tickets/T-14400-option-menu-families]] adds 1400 literal linked bytes, cumulative 5868. Default full-TU proofs and OPTION SHA1 pass. Local row-table pointers and genuine loop indices fix the family; no FAKE workaround. Failed grid/date/control probes remain ignored, with precise negative evidence in the ticket and [[matching-notes]].
+
+## [2026-10-15] decision | Document OPTION packed views
+
+Added source-local offset/evidence comments for the player and schedule bitfield views in [[tickets/T-14400-option-menu-families]]. Fresh full-TU proof confirms all six accepted functions and the OPTION SHA1 after final formatting/comments. No prior function body changed.
