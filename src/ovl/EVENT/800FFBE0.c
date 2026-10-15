@@ -179,7 +179,46 @@ void func_80100254(void) {
     tbl.f[idx](0x80);
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/800FFBE0", func_801002C8);
+void func_801002C8(void) {
+    s16 i;
+
+    D_800B1746 = 7;
+    func_80012D2C(1, 0);
+    func_8001886C(1);
+    func_80010678();
+    func_80018944(0);
+    func_80012D40(1);
+    func_80017E50();
+    func_8001FD50();
+    func_80036884("");
+    D_800E96EF = 0;
+    D_800E9733 = 0;
+    D_80094714 = 0;
+    D_80094718 = 0;
+    for (i = 0; i < 5; i++) {
+        ((EventEffectTables *)D_800B0860)->unk_13A8[i + 11] = 1;
+        ((EventEffectTables *)D_800B0860)->unk_13A8[i + 43] = 1;
+        ((EventEffectTables *)D_800B0860)->unk_13A8[i + 21] = 1;
+        ((EventEffectTables *)D_800B0860)->unk_13A8[i + 53] = 1;
+    }
+    func_80045B14();
+    func_800F6000();
+    func_8003535C();
+    func_8003580C();
+    func_80037A90();
+    func_8004C360();
+    D_800F19AB = 0;
+    func_8004BC20(D_800B1746);
+    func_8004CDDC();
+    func_800F6000();
+    D_80120678 = D_801204D4;
+    D_8012067C = D_801204F0;
+    D_80120680 = D_8012050C;
+    func_80078970(D_80094784, "廊下");
+    D_800B0B76++;
+    func_8004C250();
+    func_80011DFC();
+}
 
 void func_80100448(void) {
     func_800FFBE0();
