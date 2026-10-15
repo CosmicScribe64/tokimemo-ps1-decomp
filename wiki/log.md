@@ -13912,3 +13912,6 @@ Recorded candidate evidence and rejected variants in [[bunka-family-results]]. F
 
 ## [2026-10-15] build | Seven BUNKA handlers verified
 [[tickets/T-12701-bunkaken-address-family]] adds five functions / 6,544 bytes (commit fdcac574); [[tickets/T-12702-bunkasai-family]] adds two / 2,520. Each function passes literal linked-byte verification and both affected overlay SHA1 checks pass in Docker. [[bunka-family-results]] records the mechanisms and failures. Review remains pending.
+
+## [2026-10-15] build | Continuation flag ordering transfers to BUNKAKEN
+[[tickets/T-12701-bunkaken-address-family]] adds func_80141B80, 1,860 literal verified bytes with BUNKAKEN SHA1 OK. Existing BunkakenModeFlags stores precede continuation copies in matched siblings; applying that order finishes the prior 134-row miss. Total this branch: 8 functions / 10,924 bytes. Checkpoint Spec review of the first seven functions found no issues.

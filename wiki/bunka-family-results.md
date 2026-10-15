@@ -22,3 +22,5 @@ No compiler flags, generated assembly, or shared main types are changed by these
 ## Verified checkpoint
 
 Five BUNKAKEN handlers add 6,544 literal linked bytes, with BUNKAKEN SHA1 OK. Two BUNKASAI handlers add 2,520 bytes, with BUNKASAI SHA1 OK: func_80146A78 (1,216) and func_8013BB94 (1,304). The latter needs existing BunkaReturnFlags stores before the three continuation-state copies; bitfields alone reduce the mismatch but leave instruction ordering wrong. Total accepted at this checkpoint: seven functions / 9,064 bytes. Header validation passes. No whole-game checksum claim is made.
+
+The continuation-state ordering also resolves BUNKAKEN func_80141B80: existing BunkakenModeFlags assignments before the three continuation copies reduce 134 -> 24 -> 0 rows (bitfields, then order). Its 1,860 linked bytes and BUNKAKEN SHA1 pass. BUNKAKEN now adds 8,404 bytes; both lanes total eight functions / 10,924 bytes.
