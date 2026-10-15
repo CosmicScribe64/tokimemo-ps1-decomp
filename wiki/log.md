@@ -13517,3 +13517,7 @@ Created [[tickets/T-12020-codex-cx2]] In Progress for src/ovl/TAIIKU/80133C80.c.
 ## [2026-10-15] build | Match TAIIKU three-slot wait state machine
 
 [[tickets/T-12020-codex-cx2]]: func_80136EC0 matches 380 linked bytes, with 27/27 checksums and headers/globals OK. The signed selector retains separate constant ranges; the six-byte u16 wait table is declared in include/ovl/TAIIKU.h. Traced regdiff successfully diagnoses the remaining four-position func_801346FC register miss.
+
+## [2026-10-15] build | Match TAIIKU eligible-character actor initialization
+
+[[tickets/T-12020-codex-cx2]]: func_80135AD0 matches 596 exact linked bytes and TAIIKU SHA1. Recovered table/list types, local declaration order and independent actor-store order; headers/globals pass. Scratch-only typed reconstructions expose remaining layout/register gaps in six other owned functions.

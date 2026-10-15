@@ -347,7 +347,56 @@ void func_80135778(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135830);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135AD0);
+void func_80135AD0(void) {
+    s32 i;
+    s32 count;
+    s32 row;
+    s32 available[11];
+    s32 temp;
+    TaiikuS11 characters;
+
+    characters = D_80149558;
+    for (i = 0; i < 11; i++) {
+        available[i] = 128;
+    }
+    count = 0;
+    for (i = 0; i < 11; i++) {
+        if (((D_800E6280.unk_1BC[i].unk_0C.u << 30) >> 31) == 1) {
+            available[count++] = i;
+        }
+    }
+    D_801491EC = characters.v[available[func_800AE0D0() % count]];
+    for (i = 0; i < 30; i++) {
+        if (i < 10) {
+            row = 0;
+        } else if (i < 20) {
+            row = 1;
+        } else {
+            row = 2;
+        }
+        func_80048F64(i + 46);
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_38 = 0x01000000;
+        temp = row + 9;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_01 = temp;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_05 = 128;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_08 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_0C = (u8 *)D_80149FB4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_10 = (u8 *)D_80149FEC;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_34 = (u8 *)D_801492C8;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_14 = (s16)D_8014A024;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[i + 46].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_07 = 128;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_2A = -48 - row * 16;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 = func_80135D24();
+        while (((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 == ((DisplayActor44 *)D_8011ECD0)[i + 45].unk_16) {
+            ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 = func_80135D24();
+        }
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_18 = 0;
+    }
+}
 
 s32 func_80135D24(void) {
     s32 row;

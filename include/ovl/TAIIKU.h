@@ -673,3 +673,7 @@ typedef struct TaiWait3 {
 extern TaiWait3 D_801497F4;
 
 #endif
+
+/* Eleven character IDs used by func_80135AD0. T-12020. */
+extern TaiikuS11 D_80149558;
+
