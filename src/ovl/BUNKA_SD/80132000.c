@@ -643,4 +643,3 @@ void func_80133204(void) {
     func_8007EDF8();
     func_8004EC24();
 }
-
