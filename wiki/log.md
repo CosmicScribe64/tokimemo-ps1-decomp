@@ -14632,3 +14632,6 @@ Created [[tickets/T-14600-date-draft-repairs]] at frozen base 48362009. Preserve
 ## [2026-10-15] build | Compile all nine repaired DATE census drafts
 
 [[tickets/T-14600-date-draft-repairs]] now In Review. All nine alternatives compile serially in Docker; diagnostic differences range from 12 to 628 rows, no zero candidates and no matching-coverage claim. T-14100 real callback-table types were reused for 449D4/44E20. Alternatives, full preprocessed contexts, provenance and comparison records are in drafts/T-14500/repairs. Initial census attempts remain immutable; production C and shared generated assembly are unchanged.
+
+## [2026-10-15] build | KANGEI draft matches and DATE repair archives
+Integrated three KANGEI matches after source inspection and Docker default linked proofs, affected checksum, header/global and prototype checks. Coverage is 1,442,920 / 2,279,368 bytes (63.3%). Nine DATE repair archives compile but remain nonmatching and receive no byte credit. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-14501-remaining-draft-proof]] and [[tickets/T-14600-date-draft-repairs]].
