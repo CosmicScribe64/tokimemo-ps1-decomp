@@ -87,6 +87,7 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
 - [ ] [[tickets/T-13700-name-ent-families|T-13700 Reconstruct NAME_ENT families]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]

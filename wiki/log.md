@@ -14178,3 +14178,11 @@ Created [[tickets/T-13700-name-ent-families]] from origin/main 5ccb8765. Read pr
 ## [2026-10-15] decision | NAME_ENT family pass handoff
 
 Moved [[tickets/T-13700-name-ent-families]] to In Review. [[name-ent-family-results]] records bounded prologue and memory-card menu failures with exact full-TU scores. Zero accepted bytes; production source and headers unchanged. Stopped transfer after no reusable source form emerged.
+
+## [2026-10-15] ticket | NAME_ENT record type recovery
+
+Created [[tickets/T-13701-name-ent-record-types]] for semantic reconstruction of39F30 after [[tickets/T-13700-name-ent-families]] source-form probes. Existing layouts and original strides identify work flags, stored record flags and actor128..140 status fields.
+
+## [2026-10-15] ingest | NAME_ENT record and actor layout evidence
+
+[[tickets/T-13701-name-ent-record-types]] moves to In Review. [[name-ent-family-results]] records existing aggregate views for39F30, fixed actor mapping and a complete compiling typed draft (769 exact rows; bounded actor-end variant746). Zero accepted bytes, no production source/header edits.

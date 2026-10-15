@@ -28,3 +28,21 @@ All scores above are full-TU diagnostics, not matches. No literal proof or overl
 ## Local evidence and handoff
 
 Worktree: /Users/lila/Documents/Projects/tokimemo-wt/name-13700. Drafts, compiler objects and selected diffs: build/name13700/. Reproduction scripts are copied there from /private/tmp/name13700.py, name13701.py, name13702.py and name13703.py. The scripts mount as /probe.py inside Docker and execute from /work; output paths are relative to the worktree. They preserve source as scratch whole-TU candidates rather than editing production files. Other owners should not treat these negative results as proof that the entire overlay is exhausted.
+
+## T-13701 semantic record/actor reconstruction
+
+Follow-up [[tickets/T-13701-name-ent-record-types]] reconstructs39F30 independently of the failed menu substitutions. All fields use existing types; no shared declaration/layout changes are proposed.
+
+| Target evidence | Existing typed view |
+|---|---|
+| D_800E7D24 through D_800E7D30 | NameMetricWork.flags[0..12], base D_800E7D10, offset0x14 |
+| D_801237A8 and D_801237B4 with selected-record stride0xF00 | NameRecordF00.flags[0] and flags[12], base D_80123120, offset0x688 |
+| Loads/stores at actor offsets0x2201 and0x2203, then pointer+=0x44, eight iterations | DisplayActor44 actors128..135, fieldsunk_01 andunk_03 |
+| Fixed bytes D_80121135/137, D_80121179/17B, D_801211BD/1BF, D_80121201/203 | actors137..140, fieldsunk_01 andunk_03, corresponding to flags8..11 |
+| Fixed bytes D_801210F1/F3 | actor136, fieldsunk_01 andunk_03, corresponding to flag12 |
+
+Matching func_80139CB4 independently uses NameMetricWork and NameRecordF00 for the selected record's name fields. Matching func_801324AC uses DisplayActor44 with the same0x44 stride. The original39F30 first draws thirteen icons in flag order0..7,12,8..11, then three four-entry indicator columns and the flag12 indicator. Eight actors are updated in a rolled loop; the remaining five actors are updated individually. In both cache and stored-record branches, zero flag sets actor state4 and bit0x80, while nonzero flag clears bit0x80. The stored-record branch reloads flag12 immediately after its indicator callback and retains that value through actor updates.
+
+A complete coherent typed C draft (no unknown types, unset-register placeholders, fake padding or forced registers) compiles in the full translation unit and scores769 resolved rows. The first long actor loop is compiler-unrolled whereas the original stays rolled. A pointer-end condition using the actor array scores746; using the work-flags address endpoint scores989. These bounded probes establish no byte match. No sibling transfer follows without a reusable matching source form.
+
+Evidence: build/name13700/typed39F30-body.c, typed39F30.c, typed39F30.diff, actor-end39F30.c and address-end39F30.c. Reproduction: build/name13700/name13704.py. The scratch forward declaration void func_80139F30(void) is required before its earlier caller in the same TU; without it, IDO sees an incompatible implicit-int declaration. Production INCLUDE_ASM remains unchanged. The distant draft is kept in ignored scratch instead of adding a hundreds-of-rows NON_MATCHING body to production.
