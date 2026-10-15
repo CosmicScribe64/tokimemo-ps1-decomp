@@ -764,7 +764,120 @@ void func_8014FFE4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/8014DD90", func_80150234);
+void func_80150234(void) {
+    u32 temp_v0;
+    u32 temp_v0_2;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8005742C(0x410F, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E934();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_801431D4();
+            func_80057418(1, func_8005751C(1));
+            func_80062CD0(0x622D);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E81C();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8007C740();
+            D_800E6280.unk_F5F = 6;
+            func_80083474();
+            D_800CA148 = 0x2D;
+        }
+        break;
+    case 5:
+        func_80085A60();
+        break;
+    case 6:
+        cd_read_sectors(0xFU, 0x801E8000, 0x4B13);
+        func_8004284C();
+        break;
+    case 7:
+        func_8007E390();
+        break;
+    case 8:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(6);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x68;
+                break;
+            case 2:
+                D_800CA148 = 0x69;
+                break;
+            case 3:
+                D_800CA148 = 0x6A;
+                break;
+            case 4:
+                D_800CA148 = 0x6B;
+                break;
+            }
+            func_801508C4();
+        }
+        break;
+    case 9:
+        func_80085A60();
+        break;
+    case 10:
+        temp_v0_2 = func_8008667C(6);
+        switch (temp_v0_2) {
+        case 0:
+        case 1:
+            D_800CA148 = 1;
+            func_8004284C();
+            break;
+        case 2:
+            D_800CA148 = 2;
+            func_8004284C();
+            break;
+        case 3:
+            D_800CA148 = 3;
+            func_8004284C();
+            break;
+        case 4:
+            func_8007E5A0();
+            break;
+        }
+        break;
+    case 11:
+        func_80085A60();
+        break;
+    case 12:
+        if (func_8008667C(6) == 4) {
+            func_8004284C();
+        } else {
+            func_8007E5A0();
+        }
+        break;
+    case 13:
+        func_8007E934();
+        break;
+    case 14:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 15:
+        func_80085A60();
+        break;
+    case 16:
+        func_80142BC8();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_8015052C(void) {
     u32 temp_v0;
