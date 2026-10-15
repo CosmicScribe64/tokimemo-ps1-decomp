@@ -14506,3 +14506,7 @@ Promoted 3 ordinary C functions / 1,328 bytes for KANGEI after default linked li
 ## [2026-10-15] build | T-14501 RPG_BAT verified draft batch
 
 Promoted 2 ordinary C functions / 1,048 bytes for RPG_BAT after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | T-14501 SHUGAKU verified draft batch
+
+Promoted 2 ordinary C functions / 1,052 bytes for SHUGAKU after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
