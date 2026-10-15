@@ -13505,3 +13505,11 @@ included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-1
 board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
 merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
 (ported onto main, 27/27, TT 252/303).
+
+## [2026-10-15] setup | cx4 RPG battle matching package
+
+Read the cx4 wiki and workflow/standards, reviewed prior matching notes and compiler-gap rows for the assigned functions, and created [[tickets/T-12040-codex-cx4]] In Progress with matching index/card. Docker configure/build baseline running with ninja -j2; log build/scratch/baseline.log. Work restricted to the four owned RPG_BAT C files plus allowed headers/config/wiki.
+
+## [2026-10-15] build | cx4 baseline verified
+
+Docker configure/ninja -j2 passes 27/27 SHA1 checks, headers and globals. Baseline evidence: build/scratch/baseline.log; matching can begin under [[tickets/T-12040-codex-cx4]].
