@@ -2006,6 +2006,8 @@ void func_80138F00(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138F60);
 
+/* The nine GsRec0FC members of GameState (+0xFC..+0x11C) are walked as one array, as in main
+ * 8007C030: IDO unrolls each nine-record loop into one peeled store and two groups of four. */
 void func_80139440(void) {
     s32 i;
 
