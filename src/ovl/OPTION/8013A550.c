@@ -18,6 +18,7 @@ typedef struct OptionCharBits {
     /* 0x00 */ u32 f24 : 8;
 } OptionCharBits; /* size 0x04 */
 
+/* Packed player word at GameState +0xF4; byte/halfword bitfield accesses, T-14400. */
 typedef struct OptionPlayerBits {
     /* 0x00 */ u32 unk_00 : 8;
     /* 0x00 */ u32 f8 : 4;
@@ -30,6 +31,7 @@ typedef struct OptionPlayerBits {
     /* 0x00 */ u32 unk_21 : 11;
 } OptionPlayerBits; /* size 0x04 */
 
+/* Packed schedule word at GameState +0x54C, T-14400. */
 typedef struct OptionScheduleBits {
     /* 0x00 */ u32 f0 : 5;
     /* 0x00 */ u32 unk_05 : 19;
