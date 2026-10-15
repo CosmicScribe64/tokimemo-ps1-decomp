@@ -29,6 +29,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
 - [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
 
+- [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
+
 - [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
 
 - [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]

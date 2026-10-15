@@ -14178,3 +14178,11 @@ Created [[tickets/T-13102-etc-exam-family]] for medium state handlers and work-m
 
 ## [2026-10-15] decision | Reduce repeated validation cost
 [[tickets/T-12600-byte-coverage-families]]: root observed all526tasks rebuild because headers.ok is a normal implicit dependency of every C object and touches on all-source/header audits. tools/cc.py depfiles currently list ASM/padding dependencies but not actual C headers, so changing stamp ordering alone would be unsafe. Assigned Sol6.1medium build-dependency chat (T13500) to add tested real header tracking while preserving checker gating and all27 binary outputs. No tool changes accepted yet. RPG bounded probe produced no matches; replacement Solmedium lane assigned TAIIKU (T13600), which has27.7% byte coverage.
+## [2026-10-15] ticket | T-13202 sprite initialization family
+Opened [[tickets/T-13202-event-sprite-initializers]] to test existing DisplayActor44 and chained aggregate copies against the two overlays matching initializers. GYOZI selector probes remain33/24 best rows after bounded variants.
+
+## [2026-10-15] decision | T-13202 two initializer zero scores
+Existing DisplayActor44 and chained assignment reconstruct SHOUGATU F494/GYOZI41ACC. Both retain a marked FAKE unused scalar to reproduce two measured temporary stack offsets after bounded natural alternatives fail. No bytes counted before link proof. See [[tickets/T-13202-event-sprite-initializers]].
+
+## [2026-10-15] build | T-13202 two sprite initializers verified
+Default literal proofs verify1328+1440=2768 new bytes; both GYOZI and SHOUGATU SHA1 and header validation pass. Marked FAKE scalar retained with evidence. Lane cumulative3424 bytes. See [[tickets/T-13202-event-sprite-initializers]].

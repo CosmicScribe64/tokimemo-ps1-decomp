@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "ovl/GYOZI.h"
 
 void func_801418B0(void) {
@@ -24,7 +25,73 @@ void func_80141A94(void) {
     func_80081D30(1);
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_80141ACC);
+void func_80141ACC(void) {
+    s32 unused; /* FAKE: restore observed implicit-copy offsets. T-13202. */
+    s16 i;
+
+    D_8014881C = 0;
+    D_80148820 = 0;
+    D_80148824 = 0;
+    func_801418B0();
+    i = 0;
+    do {
+        func_8004EE18(D_80148800, (i + 0x10) & 0xFF, 1, 2, i);
+        i++;
+    } while (i < 9);
+    func_800549E8(0x60);
+    ((DisplayActor44 *)D_80129F40)[96].unk_01 = 8;
+    ((DisplayActor44 *)D_80129F40)[96].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80129F40)[96].unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_80129F40)[96].unk_03 = 4;
+    ((DisplayActor44 *)D_80129F40)[96].unk_0C = D_801487F4;
+    ((DisplayActor44 *)D_80129F40)[96].unk_10 = D_801487F8;
+    ((DisplayActor44 *)D_80129F40)[96].unk_34 = D_801487F0;
+    ((DisplayActor44 *)D_80129F40)[96].unk_14 = D_801487FC;
+    ((DisplayActor44 *)D_80129F40)[96].unk_16 = 0;
+    ((DisplayActor44 *)D_80129F40)[96].unk_18 = 0;
+    ((DisplayActor44 *)D_80129F40)[96].unk_06 = 1;
+    ((DisplayActor44 *)D_80129F40)[96].unk_43 = 0;
+    ((DisplayActor44 *)D_80129F40)[96].unk_26 = 0;
+    ((DisplayActor44 *)D_80129F40)[96].unk_2A = 8;
+    ((DisplayActor44 *)D_80129F40)[96].unk_07 = 0x80;
+    ((DisplayActor44 *)D_80129F40)[96].unk_05 = 0x80;
+    ((DisplayActor44 *)D_80129F40)[96].unk_04 = 0;
+    ((DisplayActor44 *)D_80129F40)[97] = ((DisplayActor44 *)D_80129F40)[96];
+    func_80141900();
+    func_8004EE18((u8 *) D_80148814, 0x1F, 1, 2, 0);
+    ((DisplayActor44 *)D_80129F40)[98] = ((DisplayActor44 *)D_80129F40)[96];
+    ((DisplayActor44 *)D_80129F40)[98].unk_01 = 0xB;
+    ((DisplayActor44 *)D_80129F40)[98].unk_04 = 8;
+    ((DisplayActor44 *)D_80129F40)[98].unk_02 = 1;
+    ((DisplayActor44 *)D_80129F40)[98].unk_0C = D_80148808;
+    ((DisplayActor44 *)D_80129F40)[98].unk_10 = D_8014880C;
+    ((DisplayActor44 *)D_80129F40)[98].unk_34 = D_80148804;
+    ((DisplayActor44 *)D_80129F40)[98].unk_14 = D_80148810;
+    ((DisplayActor44 *)D_80129F40)[98].unk_16 = (s16) (func_800BCE40() % 3);
+    ((DisplayActor44 *)D_80129F40)[98].unk_18 = 0;
+    ((DisplayActor44 *)D_80129F40)[98].unk_26 = -0xA0;
+    ((DisplayActor44 *)D_80129F40)[98].unk_2A = -0x78;
+    ((DisplayActor44 *)D_80129F40)[98].unk_43 = 0x1F;
+    ((DisplayActor44 *)D_80129F40)[101] = ((DisplayActor44 *)D_80129F40)[99] = ((DisplayActor44 *)D_80129F40)[100] = ((DisplayActor44 *)D_80129F40)[98];
+    ((DisplayActor44 *)D_80129F40)[99].unk_26 += 0x48;
+    ((DisplayActor44 *)D_80129F40)[99].unk_16 = (s16) (func_800BCE40() % 3);
+    ((DisplayActor44 *)D_80129F40)[99].unk_18 = 4;
+    ((DisplayActor44 *)D_80129F40)[100].unk_26 += 0x90;
+    ((DisplayActor44 *)D_80129F40)[100].unk_16 = (s16) (func_800BCE40() % 3);
+    ((DisplayActor44 *)D_80129F40)[100].unk_18 = 0xA;
+    ((DisplayActor44 *)D_80129F40)[101].unk_01 = 0xA;
+    ((DisplayActor44 *)D_80129F40)[101].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80129F40)[101].unk_16 = 0;
+    D_80148620 = 0;
+    D_80148614 = D_801481F8;
+    D_80148618 = D_8014822C;
+    D_8014861C = D_80148260;
+    D_800F53A0.girl[0].unk_0A += 1;
+    D_800F53A0.girl[D_80148754].unk_0A += 1;
+    D_800F53A0.girl[D_80148758].unk_0A += 1;
+    func_8008FB00();
+    func_8004DE1C();
+}
 
 INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/801418B0", func_8014206C);
 
