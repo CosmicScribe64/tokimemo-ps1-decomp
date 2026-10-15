@@ -618,8 +618,7 @@ void func_80134BBC(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134BBC);
 #endif
 
-/* NON_MATCHING: T-11620, 17 differing lines (scheduling only): passing q as the unused third argument of func_80141EBC (as its other callers do) gives every register. Left: the original loads 0x3D94 into t3 before the u test (a uopt range, next colour after t2) and so places move a3,a0 earlier; here li t3 is a ugen temp after the join. Tried: a clut local, a ternary, comma and one-line forms, stores in both arms, join-store order (order_search), autotweak 150 s. */
-#ifdef NON_MATCHING
+/* q is passed as the unused third argument of func_80141EBC, as its other callers do; this puts q in a2 (T-11620). */
 void func_80134D0C(u8 *p) {
     u8 *buf;
     u8 *v;
@@ -635,8 +634,8 @@ void func_80134D0C(u8 *p) {
     *(s16 *)(q + 0xA) = *(s16 *)(p + 0x16);
     *(s32 *)(q + 0xC) = *(u16 *)(p + 0x60) + 0x800;
     *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 0xC;
-    v[0x29] = 0;
     *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 0xC;
+    v[0x29] = 0;
     v[0x2A] = 1;
     *(s16 *)(v + 0x10) = 0x18;
     *(s16 *)(v + 0x12) = 0x18;
@@ -653,9 +652,6 @@ void func_80134D0C(u8 *p) {
     v[0x2C] = 1;
     func_80141EBC(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134D0C);
-#endif
 
 /* Tile packets written one PsyQ macro per line (setXY0, setRGB0, setWH); the line order sets the schedule. q is loaded before the test because it is the third argument of func_80141C6C (T-11620). */
 void func_80134E20(u8 *p) {
