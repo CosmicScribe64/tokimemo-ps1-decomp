@@ -14546,3 +14546,7 @@ The main `_schedule_init` candidate passes 188 literal bytes / 188 inventory cov
 ## [2026-10-15] build | T-14501 ETC verified draft batch
 
 Promoted 1 ordinary C functions / 976 inventory coverage bytes for ETC; default linked literal proof compared 976 bytes and overlay SHA1 passes. Header/global/prototype checks pass. No raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] ingest | T-15300 unfinished TACO source archive and handoff
+
+At the user's request, stopped new experiments and saved drafts/T-15300/TACO/func_80133738/: exact latest guarded source/body, header closure and SHA256 manifest, diagnostics, transformations and findings. Eight instruction positions remain different; no match or untested lead is claimed. Restored the production TACO source exactly to its committed ASM fallback. No assembly files, game binaries, or build outputs are included. [[tickets/T-15300-fresh-structural-near-matches]] moves to In Review; [[kanban]] and [[index]] updated.

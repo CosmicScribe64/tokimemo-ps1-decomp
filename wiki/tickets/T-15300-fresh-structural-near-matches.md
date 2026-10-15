@@ -1,7 +1,7 @@
 ---
 id: T-15300
 title: Resolve fresh structural near matches
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -14,9 +14,9 @@ Resolve fresh non-guarded near matches from completed T-14500 units through boun
 
 ## Acceptance criteria
 
-- [ ] Only default literal matches and affected binary SHA1 passes are promoted.
-- [ ] Existing C preserved; ordinary C or any FAKE marked.
-- [ ] Header/global/prototype guards pass.
+- [x] Only default literal matches and affected binary SHA1 passes are promoted.
+- [x] Existing C preserved; ordinary C or any FAKE marked.
+- [x] Header/global/prototype guards pass.
 
 ## Notes
 
@@ -31,3 +31,5 @@ Avoid main, EVENT, RPG_BAT, and separately reserved repair functions. Historical
 2026-10-15: BUNKAKEN func_80145844 matched: 440 inventory coverage / 440 literal linked bytes. The generated mixed label used a C hex escape for the Shift-JIS byte before a backslash; IDO's K&R lexer does not handle that spelling as intended. Restored the ordinary Unicode label, following root's BUNKASAI encoding finding; the existing build converts it correctly. Default literal proof, BUNKAKEN SHA1 and header/global/prototype guards pass. No headers, FAKE, or existing C changed. Evidence: /private/tmp/t15300-bunkaken-unicode-proof.log. Generator owns the broader encoding post-pass and excludes this reserved repair.
 
 2026-10-15: TACO func_80133738 remains local and guarded. Correcting its saved selector and using existing TcPair8 lookup entries plus TcActor[8].unk78 fixes m2c's genuine table-stride error (the seed scaled by 32 instead of 8). Remaining differences are the selector home slot (+0x2C instead of +0x28) and four lookup temporaries; paused for incoming exact/encoding candidates. Evidence: /private/tmp/t15300-taco-{state,structure}-diff.log.
+
+2026-10-15: Final handoff at the user's request: no further experiments. The unfinished TACO func_80133738 probe is archived at drafts/T-15300/TACO/func_80133738/ with body, exact guarded translation-unit context, quoted header snapshots and SHA256 manifest, three diagnostic logs, transformation scripts, and findings. It remains nonmatching (eight instruction positions); no untested local-declaration reorder is claimed. Production src/ovl/TACO/801335A0.c is restored byte-for-byte to its committed INCLUDE_ASM fallback. No assembly files, original binaries, or build artifacts were added. Verified T-15300 production gains are BUNKASAI 852 plus BUNKAKEN 440 = 1,292 inventory coverage bytes; TACO adds zero. Status In Review for root's final handoff check.

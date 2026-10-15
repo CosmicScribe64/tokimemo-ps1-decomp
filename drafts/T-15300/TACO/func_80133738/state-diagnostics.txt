@@ -1,0 +1,23 @@
+TACO:func_80133738: compared NON_MATCHING C (full translation unit)
+TACO:func_80133738: DIFF (- expected, + built)
+  +11e00042  ; beqz t7,2b4 <func_80133738+0x11c>
+  -11e00043  ; beqz t7,2bc <func_80133738+0x124>
+  -24030003  ; li v1,3
+  -1701003e  ; bne t8,at,2bc <func_80133738+0x124>
+  +1701003d  ; bne t8,at,2b4 <func_80133738+0x11c>
+  -1720003b  ; bnez t9,2c0 <func_80133738+0x128>
+  +1720003a  ; bnez t9,2b8 <func_80133738+0x120>
+  -11200036  ; beqz t1,2c0 <func_80133738+0x128>
+  +11200035  ; beqz t1,2b8 <func_80133738+0x120>
+  -11600031  ; beqz t3,2c0 <func_80133738+0x128>
+  +11600030  ; beqz t3,2b8 <func_80133738+0x120>
+  -afa30028  ; sw v1,40(sp)
+  -8fa30028  ; lw v1,40(sp)
+  +00000000  ; nop
+  -1441002b  ; bne v0,at,2c0 <func_80133738+0x128>
+  -8fbf0014  ; lw ra,20(sp)
+  +1441002a  ; bne v0,at,2b4 <func_80133738+0x11c>
+  +24030003  ; li v1,3
+  -000348c0  ; sll t1,v1,0x3
+  +00034940  ; sll t1,v1,0x5
+  resolved: REAL DIFFERENCE, not naming. Symbol+offset or instruction words differ after relocation.
