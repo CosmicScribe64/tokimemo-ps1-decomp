@@ -1918,32 +1918,36 @@ void func_801395B4(void) {
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139664);
 
-/* NON_MATCHING: T-11140, 24 diff lines (uopt CSEs unk_F5F and unk_110A into $t4/$t6 across branches instead of reloading into $v0) */
+/* NON_MATCHING: T-11580, 7 differing lines; the tail load of unk_110A takes $v1 with its lui hoisted, the original reloads it into $v0 */
 #ifdef NON_MATCHING
 s32 func_80139834(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x2A(sp). T-11140 */
     s32 pad;
     s16 prev;
+    u8 g;
 
     if (D_80122CDC == 1) {
-        if (D_800E6280.unk_F5F == 7) {
+        g = D_800E6280.unk_F5F;
+        if (g == 7) {
             prev = D_800E6280.unk_110A;
             func_80085A60();
-            if (prev != D_800E6280.unk_110A) {
+            g = D_800E6280.unk_110A;
+            if (prev != g) {
                 D_800CA148 = 0xA;
-                D_800E6280.unk_110A += 0xC;
+                D_800E6280.unk_110A = g + 0xC;
             }
             return 0;
         }
         D_800CA148 = 9;
-        if (D_800E6280.unk_F5F == 9) {
+        if (g == 9) {
             D_800CA148 = 8;
-        } else if ((D_800E6280.unk_F5F == 4) || (D_800E6280.unk_F5F == 8) || (D_800E6280.unk_F5F == 5)) {
+        } else if ((g == 4) || (g == 8) || (g == 5)) {
             D_800CA148 = 7;
         }
         D_800E6280.unk_110A += 0xC;
     } else {
-        if (D_800E6280.unk_F5F == 7) {
+        g = D_800E6280.unk_F5F;
+        if (g == 7) {
             D_800CA148 += 1;
         }
         D_8015B67C = 1;
