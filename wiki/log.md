@@ -14160,3 +14160,6 @@ Created codex/events-13200 at aa2b3158 and copied ignored inputs from integratio
 
 ## [2026-10-15] build | T-13201 first literal event match
 SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passes. Two GYOZI selector siblings remain failed probes (best33/24 rows); their unchanged-ASM default proofs add no coverage. See [[tickets/T-13201-event-selector-stores]].
+
+## [2026-10-15] build | TACO mask lifetime probe narrows mismatch
+[[tickets/T-13400-taco-control-flow]]: four local-coalescing full-TU probes improve best57to52rows. No C promotion; assembly and default checksum path unchanged. Remaining lifetime/register problem documented for a later focused pass.
