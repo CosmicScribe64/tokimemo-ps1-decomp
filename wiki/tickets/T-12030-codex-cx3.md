@@ -28,3 +28,5 @@ Baseline Docker configure and ninja passed all 27 SHA1 targets (13 before restar
 - 2026-10-15: claimed package cx3; baseline verified.
 
 - Matched `main:join_club_message`: 544 literal linked bytes, production main SHA1 OK. `s32` fall-through preserves the v0 switch copy; scalar-byte selector view preserves v1. The scalar view is marked FAKE. A plain local selector changed the frame and allocation; void lost the copy. Logs: build/scratch/join-final.log and build/scratch/join-build.log.
+
+- `func_8005BE8C`: corrected guarded return type to match its earlier implicit declaration. Three differing instruction rows remain at the final byte-status load (t9 instead of v0). Scalar view and reused local did not help. Autotweak: 262 candidates, unchanged. Permuter: 120 seconds, stripped 160 to 140, no exact match. Original readable draft retained. regdiff works with the existing trace binary copied from the orchestrator's /private/tmp scratch; diagnostic is build/scratch/be-traced.log.

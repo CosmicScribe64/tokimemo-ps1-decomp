@@ -507,8 +507,9 @@ s32 func_8005BC38(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BCEC);
 
+/* NON_MATCHING: T-12030, 3 differing instruction rows; final byte load uses t9 instead of v0. */
 #ifdef NON_MATCHING
-void func_8005BE8C(void) {
+s32 func_8005BE8C(void) {
     switch (D_800E6280.unk_110D) {
     case 0:
         if (func_80053F04() != 0) {
