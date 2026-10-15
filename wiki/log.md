@@ -14144,3 +14144,11 @@ Checked T-12900 through T-12903 status/card agreement and ticket links. The firs
 
 ## [2026-10-15] build | TACO natural conditions improve full-TU candidate
 [[tickets/T-13400-taco-control-flow]]: reproduced89row baseline; removing two decompiler gotos reduces to57rows. Eight full-TU variants show consistent GameState pointer worsens this function and signedness of canonical flag read is irrelevant. Remaining stack/lifetime mismatches retained in scratch; zero coverage claimed.
+## [2026-10-15] ticket | Claim ETC source-family transfer
+Created [[tickets/T-13100-etc-families]] from aa2b3158 in isolated codex/etc-13100 worktree. Read [[bunka-family-results]] and [[matching-breakthroughs]]; original checkout left untouched.
+
+## [2026-10-15] build | ETC dialogue family verified
+[[tickets/T-13100-etc-families]] adds three handlers / 2400 literal linked bytes in src/ovl/ETC/8014ABD0.c, ETC SHA1 OK. Consistent GameState pointer resolves first handler; direct access suffices for held-out siblings.
+
+## [2026-10-15] ticket | Claim ETC career family
+Created [[tickets/T-13101-etc-career-family]] for bounded adjacent-family transfer.

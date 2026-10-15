@@ -1125,4 +1125,27 @@ extern s32 D_80151870;
 extern s32 D_80151874;
 extern s32 D_80151878;
 extern s32 D_801506F8[];
+extern u8 D_80151674;
+extern u8 D_801516BC;
+extern u8 D_801516F0;
+extern u8 D_80151738;
+extern u8 D_80151758;
+extern u8 D_80151778;
+extern u8 D_80151794;
+extern u8 D_801517B4;
+extern u8 D_801517D4;
+extern u8 D_801517F4;
+extern u8 D_80151810;
+extern u8 D_8015182C;
+extern u8 D_80151844;
+
+
+extern u8 *D_801514A4[];
+extern u8 *D_801514B4[];
+extern u8 *D_801514D4[];
+extern u8 *D_801515E4[];
+extern u8 *D_801515F4[];
+extern u8 *D_80151614[];
+extern u8 *D_80151664[];
+extern u8 D_80151398;
 #endif
