@@ -684,3 +684,12 @@ extern u8 D_80155D32[];
 extern u8 D_80155D38[];
 extern u8 D_80155D3E[];
 #endif
+
+#ifndef OVL_TT_T11840_80146348
+#define OVL_TT_T11840_80146348
+/* Six-byte rows at D_80158A60 + 0x30 (three rows shifted by func_80145E60; func_80146348 edits bytes 2..4). T-11840 */
+typedef struct TtRow6 {
+    /* 0x00 */ u16 unk_00;
+    /* 0x02 */ u8 unk_02[4];
+} TtRow6; /* size 0x6 */
+#endif
