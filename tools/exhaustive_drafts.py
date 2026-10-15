@@ -134,6 +134,17 @@ def process(row):
                 decl_lines = fixed
                 continue
             more = bulk.source_fix(msg, body, decl_lines, row['func'], original, headers)
+            # Earlier calls without a prototype imply int in the project's K&R mode.
+            # A newly generated void definition conflicts with that existing TU view.
+            if more is None and ("redeclaration of '%s'" % row['func']) in msg:
+                inc = re.search(bulk.INCLUDE_ASM_TMPL % re.escape(row['func']), original, re.M)
+                before = original[:inc.start()] if inc else ''
+                if not bulk.prototype_in(headers + '\n' + before, row['func']) and re.search(
+                        r'\b' + re.escape(row['func']) + r'\s*\(', before):
+                    repaired = bulk.with_return_type(body, row['func'], 's32')
+                    if repaired != body:
+                        more = repaired, decl_lines
+                        messages.append('repair: existing earlier unprototyped call implies s32 return')
             if more is None:
                 row['reason'] = bulk.first_error(msg) or 'full-TU compile did not score'
                 break

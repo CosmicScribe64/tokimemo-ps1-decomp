@@ -14498,3 +14498,7 @@ Created [[tickets/T-14500-exhaustive-drafts]] and an isolated branch from 483620
 ## [2026-10-15] lint | Check exhaustive-census failure handling
 
 Three synthetic Docker tests passed: guarded/TT inclusion, duplicate-scope rejection, and durable generation-failure recording with unchanged production source. Compiler repair now considers only the latest compile diagnostic while retaining all prior diagnostics, preventing stale errors from reintroducing removed declarations. Complete compiler failures remain explicit outcomes in [[exhaustive-drafts]].
+
+## [2026-10-15] decision | Preserve existing implicit-int function views
+
+Several exhaustive drafts fail only because m2c infers void after an earlier unprototyped call in the same translation unit, which implies int under the existing K&R build. The bounded repair now tries s32 for the new definition only when the compiler reports that redeclaration, an earlier call exists, and no explicit prototype supplies a different view. Production source and shared headers remain unchanged; actual full-TU scores decide candidate quality. See [[exhaustive-drafts]].
