@@ -325,3 +325,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence.
 
 - [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
+
+- [[tickets/T-13600-taiiku-families|T-13600]] TAIIKU source-family recovery (In Progress).
+
+- [[data/t13600-remaining-census]]: baseline TAIIKU remaining functions and unit-tagged historical evidence (T-13600).

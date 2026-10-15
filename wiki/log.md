@@ -14340,3 +14340,26 @@ All twelve assigned functions were attempted. Retained ticketed guards differ by
 
 ## [2026-10-15] build | Final DATE handoff preserves verified coverage
 [[tickets/T-12400-integrate-verified-matches]] integrated completed cx10 handoff589bacb8. The four matches totaling5628literalbytes were already published; this handoff retains documented guarded drafts at4/5/16/17 differing rows. Combined Docker incremental build passes DATE SHA1, header/global gates and branch prototype check; unchanged objects retain the prior27-check verification. Total remains1404124/2279368bytes. Evidence: build/scratch/goal-date-handoff.log. Replacement Sol6.1medium worker T14100 owns DATE and must avoid repeating exhausted probes; existing TAIIKU worker reports two provisional dispatcher matches pending literal proof.
+## [2026-10-15] ticket | T-13600 TAIIKU source-family lane
+
+Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taiiku-13600. Read [[bunka-family-results]] and previous TAIIKU matching notes; prioritize reusable scene/selector/type reconstruction.
+
+## [2026-10-15] query | TAIIKU scene and actor-table family evidence
+
+[[tickets/T-13600-taiiku-families]] records scene-loop non-transfer, recovered nine-halfword table copies, corrected m2c pointer scaling, and the bounded controller/reset family under test. No accepted matches or production changes at this checkpoint.
+
+## [2026-10-15] query | TAIIKU controller and held-out initializer bounded test
+
+[[tickets/T-13600-taiiku-families]] records reset4607C at52 full-TU lines and held-out actor initializer46338 at256, with no accepted bytes. Width and stride evidence is preserved; remaining normalization/frame allocation is not treated as a source win.
+
+## [2026-10-15] query | TAIIKU polygon coordinate-array family evidence
+
+[[tickets/T-13600-taiiku-families]] records POLY_FT4 and six eighty-halfword coordinate arrays shared by3D9B4/3DDB8. The typed full-TU draft remains346 lines; zero accepted functions/bytes. Production source and header files remain unchanged.
+
+## [2026-10-15] decision | Rank fresh TAIIKU helper families
+
+[[tickets/T-13600-taiiku-families]] ranks lower-complexity controller/slot helpers by complete types and matching donors.46A60/47928 are the concrete next family; earlier hard-family diagnostics do not imply exhaustion of all84 remaining functions.
+
+## [2026-10-15] build | T-13600 verify two TAIIKU scene dispatchers
+
+[[tickets/T-13600-taiiku-families]] adds func_80133494 (432 bytes) and func_80133644 (520), both literal linked MATCH with TAIIKU SHA1 OK. Ordinary nested dispatch removes m2c's goto mismatch. Existing source outside the two replacements is text-identical. Headers/globals pass; independent review remains pending. [[data/t13600-remaining-census]] corrects the initial limited prior-evidence search and records all84 baseline candidates.
