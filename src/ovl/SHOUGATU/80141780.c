@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl/SHOUGATU.h"
+#include "game.h"
 
 typedef struct {
     void (*f[51])();
@@ -238,7 +239,23 @@ void func_801432C4(void) {
     func_800AE0F0(D_800CA19C, "近所の公園");
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780", func_801433A4);
+void func_801433A4(void) {
+    D_800E6280.unk_1228[26] = -1;
+    D_800E6280.unk_1228[58] = -1;
+    func_80141920();
+    load_palette(D_80146520, 0x11, 1, 2, 0);
+    func_80084E90((s32) D_80146524, (s32) D_80146528, (s32) D_8014652C, (s32) D_80146530, (s32) D_80146534,
+                  (s32) D_80146538);
+    func_800850D4((s32) D_80146514, (s32) D_80146518, (s32) D_80146510, D_8014651C);
+    ((DisplayActor44 *) D_8011ECD0)[97].unk_04 = 8;
+    ((DisplayActor44 *) D_8011ECD0)[96].unk_04 = 8;
+    ((DisplayActor44 *) D_8011ECD0)[98] = ((DisplayActor44 *) D_8011ECD0)[96];
+    ((DisplayActor44 *) D_8011ECD0)[98].unk_16 = 4;
+    ((DisplayActor44 *) D_8011ECD0)[98].unk_18 = 0;
+    ((DisplayActor44 *) D_8011ECD0)[98].unk_08 = 0;
+    ((DisplayActor44 *) D_8011ECD0)[98].unk_02 = 0;
+    func_8004284C();
+}
 
 void func_801434E0(void) {
     bg_read_sub2(0x42E2);
