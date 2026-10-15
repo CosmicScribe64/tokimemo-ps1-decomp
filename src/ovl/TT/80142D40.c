@@ -363,18 +363,18 @@ void func_80144094(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801441BC);
 
-/* NON_MATCHING: T-11620, 9 differing lines: the original loads p straight into s2 and reloads D_80158A74 for every test (T-0018 promo); IDO merges the first test with p. The volatile read of p reproduces that but builds the address with lui/addiu instead of %lo(D_80158A74)(t6), which also moves sw ra. */
-#ifdef NON_MATCHING
+/* FAKE: the first test reads D_80158A74 through an array view of the pointer block at D_80158A60, so uopt does not
+ * merge it with p; the original loads p straight into s2 and reloads the global for the test (T-0018 promo). T-11620 */
 void func_80144854(void) {
     u8 *p;
     u8 *q;
     u16 k;
     u8 n;
 
-    p = *(u8 * volatile *)&D_80158A74;
+    p = D_80158A74;
     q = D_80158A7C;
     if (p[0] != 0) {
-        if (!(*(u16 *)(D_80158A74 + 0x50) & 2) || !(*(u16 *)(D_80158A60 + 8) & 1)) {
+        if (!(*(u16 *)(((u8 **)&D_80158A60)[5] + 0x50) & 2) || !(*(u16 *)(D_80158A60 + 8) & 1)) {
             k = *(u16 *)(D_80158A74 + 4);
             if (k >= 0x60 && k < 0x64) {
                 if (!(D_80158A74[0x40] & 1)) {
@@ -403,9 +403,6 @@ void func_80144854(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_80144854);
-#endif
 
 /* T-11500 near miss (3 lines): the two stores of the constant 9 (sb 0x55 and sb 0x92 via D_80158A78) use $v0 here, the original holds 9 in $a0. T-11510: the 9 is a ugen temp (used twice), which takes the lowest free of v0/v1/a0, so the original has v0/v1 busy in that block for an unknown reason; the return type makes no difference (void == s32). */
 #ifdef NON_MATCHING
