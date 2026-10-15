@@ -25,6 +25,8 @@ kanban-plugin: board
 ## In Progress
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 
+- [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
