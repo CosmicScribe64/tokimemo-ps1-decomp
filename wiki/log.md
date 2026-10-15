@@ -14098,3 +14098,21 @@ Existing DisplayActor44 and chained assignment reconstruct SHOUGATU F494/GYOZI41
 
 ## [2026-10-15] build | T-13202 two sprite initializers verified
 Default literal proofs verify1328+1440=2768 new bytes; both GYOZI and SHOUGATU SHA1 and header validation pass. Marked FAKE scalar retained with evidence. Lane cumulative3424 bytes. See [[tickets/T-13202-event-sprite-initializers]].
+
+## [2026-10-15] ticket | T-13203 particle initialization family
+Opened [[tickets/T-13203-event-particle-family]] for related50-entry loops. Selector GYOZI39E4C aggregate-field probes improve33->27 but do not match; experimental header restored. GYOZIE824 remains24 rows after bounded source forms.
+
+## [2026-10-15] decision | T-13202 resolve review findings
+Two-axis review confirms3424 bytes and flags uncovered header declarations plus missing central func_800BCE40 declaration. Added overlay guards and minimal main_api.h old-style s32 declaration. No codegen change expected, but all27 checksums now required. See [[tickets/T-13202-event-sprite-initializers]].
+
+## [2026-10-15] ticket | T-13200 family lane enters review
+Created [[event-family-results]] with3424 verified bytes, full failed-probe ledger and unchanged744-body audit. [[tickets/T-13200-event-family-transfer]], [[tickets/T-13201-event-selector-stores]], [[tickets/T-13202-event-sprite-initializers]] and [[tickets/T-13203-event-particle-family]] move In Progress -> In Review. Both review axes resolve guard/central-declaration findings; all27 build pending. The earlier progress-read error was a concurrent splat-regeneration race, not persistent malformed copied input.
+
+## [2026-10-15] build | T-13200 final verified event handoff
+Three default C functions add3424 literal linked bytes (progress convention3420). All27 Docker binary checks and independentSHA1 recomputation pass; headers/globals pass; prototype branch guard0new/15known. Census5862/6958 functions,1397484/2279368 game bytes61.3%; broader80% target remains open. Proof build/events13200/final-proof.txt and final-hashes.txt. See [[event-family-results]].
+
+## [2026-10-15] ticket | T-13200 event family tickets Done
+After independent Standards/Spec review and resolved findings, [[tickets/T-13200-event-family-transfer]], [[tickets/T-13201-event-selector-stores]], [[tickets/T-13202-event-sprite-initializers]] and [[tickets/T-13203-event-particle-family]] move In Review -> Done. Two header guard fixes and necessary shared main function declaration pass all27 checks.
+
+## [2026-10-15] lint | T-13200 scoped wiki consistency
+Four ticket frontmatters match exactly one Done card each; new tickets and [[event-family-results]] are indexed and cross-linked. Existing C preservation audit checks744 bodies against aa2b3158 with0 changes. All47 full-TU probe results, including44 nonzero/error outcomes, remain in ignored build/events13200.

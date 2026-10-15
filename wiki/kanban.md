@@ -24,11 +24,9 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
 
-- [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
 
-- [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 - [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
 
@@ -88,6 +86,7 @@ kanban-plugin: board
 
 ## In Review
 
+
 - [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 
 - [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
@@ -127,6 +126,11 @@ kanban-plugin: board
 
 
 ## Done
+
+- [ ] [[tickets/T-13203-event-particle-family|T-13203 Event particle initialization family]]
+- [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
+- [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
+- [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 - [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]

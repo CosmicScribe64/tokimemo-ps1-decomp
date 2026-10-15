@@ -299,3 +299,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13201-event-selector-stores|T-13201]] Event selector direct-store family.
 
 - [[tickets/T-13202-event-sprite-initializers|T-13202]] Event sprite initializer family.
+
+- [[tickets/T-13203-event-particle-family|T-13203]] Particle initialization family experiment.
+
+- [[event-family-results]] GYOZI/SHOUGATU bounded family transfer:3 functions /3424 literal bytes, failed-probe ledger and review.
