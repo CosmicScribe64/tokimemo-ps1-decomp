@@ -14285,3 +14285,7 @@ Created codex/scenes-13900 at 0e670a13 with ignored reference inputs copied from
 ## [2026-10-15] build | First DATE2 literal match
 
 [[tickets/T-13902-date2-families]] accepts func_8013820C, 768 literal linked bytes with DATE2 SHA1 OK. Direct switch stores plus the target halfword type close it. GEKO background helper remains diagnostic-only; see [[scenes-family-results]].
+
+## [2026-10-15] build | GEKO single induction variable match
+
+[[tickets/T-13901-geko-families]] accepts func_80141374, 416 linked bytes, with GEKO SHA1 OK. [[scenes-family-results]] records the source correction and type-reconstruction negatives.
