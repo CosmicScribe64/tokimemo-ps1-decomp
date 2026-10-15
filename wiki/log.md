@@ -13439,3 +13439,9 @@ usage resets (2026-10-15 22:00 UTC). Merged and Done: packages p01 to p07 (T-115
 `5713/6958   1279320/2279368  56.1%` (from 5660), clean rebuild 27/27, headers, globals and branch prototype check OK.
 Packages p08 to p13 (T-11640 to T-11690) stopped mid-run with their matches committed on their branches; p14 to p18
 (T-11700 to T-11740) not started. Dropped the stale `func_8006C334` line from `config/proto_known.txt`.
+
+## [2026-10-15] ticket | T-11800 TT batch 7 opened
+
+Opened [[tickets/T-11800-tt-batch-7]] (In Progress): bulk_m2c rerun on TT, then two Opus passes (close guarded drafts;
+pipeline drafts and the gcc-built `func_8014D260`). Stays off the TT files of wave 1 (T-11620, T-11630); the question of
+which files the rest of wave 1 touches is open on issue #2. Number chosen above the wave's reserved T-11570..T-11740.
