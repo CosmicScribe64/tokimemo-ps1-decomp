@@ -490,7 +490,7 @@ typedef struct TtActor78 {
     /* 0x44 */ u16 unk_44;
     /* 0x46 */ u8 unk_46;
     /* 0x47 */ u8 unk_47;
-    /* 0x48 */ u8 pad_48[4];
+    /* 0x48 */ s32 unk_48;
     /* 0x4C */ u8 unk_4C;
     /* 0x4D */ u8 unk_4D;
     /* 0x4E */ u8 unk_4E;

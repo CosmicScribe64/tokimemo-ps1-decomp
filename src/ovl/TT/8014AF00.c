@@ -894,7 +894,42 @@ void func_8014CDBC(u8 *arg0) {
     buffer->ordering[*(u16 *)(arg0 + 0x10)].addr = (u32)m;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8014AF00", func_8014CFEC);
+void func_8014CFEC(TtActor78 *arg0) {
+    TtDrawBuffer80B8 *buffer;
+    u8 *q;
+
+    buffer = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
+    q = (u8 *)buffer->cursor;
+    buffer->cursor = (DR_MODE *)(q + 0x30);
+    *(s16 *)(q + 8) = arg0->unk_14;
+    *(s16 *)(q + 0xA) = arg0->unk_16;
+    q[0xC] = 0x38; q[0xD] = 0xB8; /* one line, as a setUV0-style macro: the line orders the two stores */
+    if (arg0->unk_44 & 8) {
+        u8 *core;
+
+        core = D_80158A64;
+        q[4] = core[0x1D];
+        q[5] = core[0x1E];
+        q[6] = core[0x1F];
+        q[0x2A] = 0;
+    } else {
+        q[4] = arg0->unk_38;
+        q[5] = arg0->unk_39;
+        q[6] = arg0->unk_3A;
+        q[0x2A] = arg0->unk_4E;
+    }
+    q[0x29] = arg0->unk_4D;
+    q[0x2B] = arg0->unk_4F;
+    q[0x2C] = arg0->unk_50;
+    *(s16 *)(q + 0x10) = arg0->unk_3C;
+    *(s16 *)(q + 0x12) = arg0->unk_3E;
+    q[0xC] = arg0->unk_46;
+    q[0xD] = arg0->unk_47;
+    *(u16 *)(q + 0x16) = arg0->unk_40.h;
+    *(u16 *)(q + 0xE) = arg0->unk_42;
+    q[0x28] = arg0->unk_4C;
+    func_80141EBC(&buffer->ordering[arg0->unk_10], q, arg0->unk_48);
+}
 
 /* FAKE: `if (1)` after the second case and the bound in the local n give the original's constant registers (the bound 0x80 apart from case 0x80); found with the permuter, T-9380 */
 void func_8014D168(void) {
