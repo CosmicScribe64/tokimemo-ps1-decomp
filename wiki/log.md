@@ -13505,3 +13505,7 @@ included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-1
 board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
 merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
 (ported onto main, 27/27, TT 252/303).
+
+## [2026-10-15] ticket | Start cx2 TAIIKU matching pass
+
+Created [[tickets/T-12020-codex-cx2]] In Progress for src/ovl/TAIIKU/80133C80.c. Baseline Docker configure/build: 27/27 SHA1, headers OK, globals OK. Reviewed prior matching evidence.
