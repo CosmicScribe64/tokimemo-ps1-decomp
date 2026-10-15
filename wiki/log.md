@@ -13478,3 +13478,8 @@ in [[matching-notes]] ("TT overlay, batch 8"), rows in [[data/t0018-cases]].
 
 Inline review against CODING_STANDARDS.md: header declarations moved to their own guarded block; all fakematches carry
 FAKE with the ticket. Moved [[tickets/T-11810-tt-batch-8]] to Done.
+
+## [2026-10-15] ticket | T-11820 TT batch 9 opened
+
+Opened [[tickets/T-11820-tt-batch-9]] (In Progress), stacked on T-11810 (PR #31): one Opus pass on never-attempted TT
+functions, the four drafts T-11810 did not reach, and `func_801333D4`. No more passes on the hard guarded drafts.
