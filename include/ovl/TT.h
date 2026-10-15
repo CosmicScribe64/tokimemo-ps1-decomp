@@ -701,3 +701,17 @@ extern u8 *D_8015676C[];
 /* Defined after its caller func_8014A2B4 in 80148DB0.c. T-11840 */
 void func_8014A7E0(void);
 #endif
+
+#ifndef OVL_TT_T11840_80141450
+#define OVL_TT_T11840_80141450
+/* Scale/rotate parameters read by func_80141450 (second argument). T-11840 */
+typedef struct TtSprXform {
+    /* 0x00 */ s16 sx;
+    /* 0x02 */ s16 sy;
+    /* 0x04 */ s16 cx;
+    /* 0x06 */ s16 cy;
+    /* 0x08 */ s16 rx;
+    /* 0x0A */ s16 ry;
+    /* 0x0C */ s32 angle;
+} TtSprXform; /* size 0x10 */
+#endif
