@@ -14921,3 +14921,10 @@ User requested disk cleanup while retaining game files. Audited worktree status;
 ## [2026-10-15] lint | Verify local storage cleanup
 
 [[tickets/T-11920-local-storage-cleanup]] moved to In Review. Removed 35 clean registered worktrees and four orphaned folders after archive verification. Confirmed 1,360 retained game files still match their SHA-256 hashes, and all six dirty worktrees retain their previous Git status. Main project and other agent worktrees remain. No project code changed.
+
+## [2026-10-15] ticket | T-16200 Matching wave 2 opened
+
+Opened [[tickets/T-16200-matching-wave-2]] (In Progress) on integration branch `w2-int` from main `868c879a`
+(5,945/6,958, 63.7%). Fresh inventory over the T-14500 census: 882 non-TT functions / 739,240 bytes in 128 file-disjoint
+packages; wave 2 runs the top 24 (T-16210..T-16440) plus the four unmerged wave-1 packages (T-11640, T-11650, T-11670,
+T-11690). TT stays excluded (issue #2).
