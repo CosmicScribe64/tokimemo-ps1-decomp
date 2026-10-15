@@ -13569,3 +13569,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | cx3 matches card status handler
 
 [[tickets/T-12030-codex-cx3]] matched func_8005BE8C (704 literal bytes, main SHA1/header/global checks pass). Full-file and production rescoring of an earlier permutation reveals a match despite its nonzero stripped score. A natural status-byte pointer fixes the final three instruction rows. Evidence: build/scratch/be-clean-final.log and be-clean-build.log.
+
+## [2026-10-15] ticket | cx3 ready for review: 5,200 matched bytes
+
+[[tickets/T-12030-codex-cx3]] moves to In Review with twelve matches (5,200 bytes), one guarded 15-row New Year draft, and two restored assembly functions. [[matching-notes]] and [[data/t0018-cases]] record outcomes and compiler evidence. Full configure/build passes 27/27 checksums plus headers/globals; prototype branch check has zero new disagreements; all twelve fresh literal-byte proofs pass. Evidence: build/scratch/final-build.log, final-protos.log, final-matches.log and final-near-miss.log. Board and index are synchronized; no inline assembly or raw-data additions.

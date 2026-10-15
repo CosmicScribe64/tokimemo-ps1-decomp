@@ -130,10 +130,10 @@ typedef union GsHalf {
 
 #ifndef T9540_FLAGS_WORK24
 #define T9540_FLAGS_WORK24
-/* Minimum view covering the word at 0x800E7D10 and fourteen flags at +0x14; T-9540. */
+/* Word at 0x800E7D10, slot bytes at +4, and fourteen flags at +0x14; T-9540/T-12030. */
 typedef struct FlagsWork24 {
     /* 0x00 */ s32 unk_00;
-    /* 0x04 */ u8 pad04[0x10];
+    /* 0x04 */ u8 unk_04[0x10];
     /* 0x14 */ u8 flags[14];
     /* 0x22 */ u8 pad22[2];
 } FlagsWork24; /* size 0x24 */

@@ -675,7 +675,7 @@ void func_8005C5BC(void) {
     k_sub_reset_point_set();
     work = (FlagsWork24 *)&D_800E7D10;
     for (i = 1; i != 15; i++) {
-        if (work->pad04[i] == 1) {
+        if (work->unk_04[i] == 1) {
             break;
         }
     }
@@ -778,7 +778,7 @@ void func_8005CF6C(void) {
     k_sub_reset_point_set();
     work = (FlagsWork24 *)&D_800E7D10;
     for (i = 1; i != 15; i++) {
-        if (work->pad04[i] == 1) {
+        if (work->unk_04[i] == 1) {
             break;
         }
     }
@@ -2374,11 +2374,13 @@ void pre_syogatu0(void) {
     }
 }
 
-/* NON_MATCHING: T-12030, 19 diff rows; buffer-address reuse and frame size. */
+/* NON_MATCHING: T-12030, 15 diff rows; one cached buffer address replaces separate target calculations. */
 #ifdef NON_MATCHING
 s32 pre_syogatu1(void) {
     s32 var_s0;
     s32 var_s1;
+    /* FAKE: two words recover the observed frame without moving the buffers. T-12030. */
+    s32 stack_home[2];
     u8 sp16C[0xC];
     u8 sp6C[0x100];
     u8 sp5C[0x10];

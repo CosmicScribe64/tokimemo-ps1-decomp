@@ -1,7 +1,7 @@
 ---
 id: T-12030
 title: Match cx3 main menu functions
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -14,9 +14,9 @@ Deep matching pass on the 15 assigned functions in src/main/8005A0B0.c.
 
 ## Acceptance criteria
 
-- [ ] Each retained match has exact linked-byte and unit SHA1 verification.
-- [ ] Retained near misses are guarded, counted and documented.
-- [ ] Final configure/build, headers, globals and prototype checks pass.
+- [x] Each retained match has exact linked-byte and unit SHA1 verification.
+- [x] Retained near misses are guarded, counted and documented.
+- [x] Final configure/build, headers, globals and prototype checks pass.
 - [ ] Code review against CODING_STANDARDS.md before Done.
 
 ## Notes
@@ -58,3 +58,10 @@ Baseline Docker configure and ninja passed all 27 SHA1 targets (13 before restar
 - `func_8005CA94`: typed slot access through FlagsWork24 reproduces the indexed +4 loads/stores. Best full-file draft still has 57 differing rows: one missing narrowing instruction, byte-state loads in a0/t2 rather than v0, downstream temporary shifts and the selection spill home. Tested void/s32 returns, one/shared result variables, direct state assignment, scalar-byte view, a status pointer and unsigned word temporaries. Traced 120-second autotweak tried 363 candidates and exact-rescored ten without improvement. Restored plain assembly because the gap exceeds the retention limit. Logs: build/scratch/ca94-*.log and ca94-autotweak.log.
 
 - Matched `main:func_8005BE8C`: 704 literal linked bytes, production main SHA1/header/global checks pass. Exact full-file rescoring of the earlier stripped-score-140 permutation found normalized-zero instructions. Production proof then passed. Rewrote the candidate in the existing readable style: one local pointer to the status byte, used for the status comparisons. No fakematch. This supersedes the earlier three-row near-miss note. Logs: build/scratch/be-pointer-exact.log, be-clean-final.log and be-clean-build.log.
+
+- Final New Year check: a marked two-word local recovers the original frame without moving the three buffers, reducing the retained draft from 19 to 15 diff output rows. Array/element/void address spellings all leave the cached-pointer difference unchanged. The natural array argument is retained. Logs: build/scratch/pre-pad.log and pre-{array_address,element_address,void_view}.log.
+- Recovered the active slot bytes in FlagsWork24 at +4: renamed its former pad04 member to unk_04 and retained its existing layout. Both menu twins use the typed field.
+
+## Final verification
+
+5,200 bytes matched across twelve functions. One guarded near miss: pre_syogatu1, 15 differing output rows. A410 and CA94 restored to assembly. Full Docker configure/build passes 27/27 SHA1 checks, headers and globals. Branch prototype check: zero new disagreements (15 known). Fresh default-build literal proofs pass for all twelve matches. `git diff --check` is clean; no inline assembly or .word additions. Final logs: build/scratch/final-build.log, final-protos.log, final-matches.log and final-near-miss.log. Ticket awaits code review against CODING_STANDARDS.md.

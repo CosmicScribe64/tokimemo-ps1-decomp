@@ -5078,3 +5078,32 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## Codex cx3 matching pass (T-12030)
+
+Ticket [[tickets/T-12030-codex-cx3]]. Added **5,200 verified bytes across twelve functions** in src/main/8005A0B0.c:
+
+| Function | Literal bytes |
+| --- | ---: |
+| join_club_message | 544 |
+| func_8005BE8C | 704 |
+| func_8005D448 | 292 |
+| func_800603C0 | 324 |
+| system_settings_init | 360 |
+| func_8005E150 | 368 |
+| func_8005DEA0 | 376 |
+| func_8005FDEC | 380 |
+| func_8005F09C | 400 |
+| func_8005BCEC | 416 |
+| func_8005C5BC | 516 |
+| func_8005CF6C | 520 |
+
+All promotions were checked against literal linked bytes and the main executable SHA1, then committed. The save/load initializer family contributes 1,036 bytes using natural indexed arrays and the established FlagsWork24 aggregate. The byte range at +4 is used for slot state, so its former padding member is now `unk_04`; no new aggregate or scalar alias was introduced.
+
+Two useful acceptance lessons: the earlier BE8C permutation scored 140 in the stripped harness but matched in production after exact rescoring; and normalized-zero guarded comparisons can still fail literal proof because other active drafts change layout. BCEC, the menu twins, and BE8C were promoted experimentally and accepted only after the default build and literal proof passed. Grouping each width/height store pair on one source line resolves BCEC's historical scheduling gap. A correct void prototype fixes F09C's extra return-address reload.
+
+Marked fakematches remain in join_club_message (selector view), D448 (stack reservation), E150 (initialized empty counter test), F09C (scalar-byte clamp view), and BCEC (stack reservation/store grouping). The other new matches use ordinary typed C.
+
+One near miss is retained: `pre_syogatu1`, 15 diff output rows, with typed buffers and a marked frame reservation. Its remaining blocker is cached buffer-address CSE. `func_8005A410` was restored after coordinate-loop/unroll/spill trials (best 62 diff rows); `func_8005CA94` was restored at 57 rows after typed-slot, result/view and bounded search experiments. Full evidence is in build/scratch/ and the ticket; new compiler-gap/resolution rows are in [[data/t0018-cases]].
+
+Final Docker configure/build passes all 27 SHA1 targets, headers and globals. `sync_protos.py --check-branch` reports zero new disagreements (15 known). Fresh default-build literal comparisons pass all twelve functions. Logs: build/scratch/final-build.log, final-protos.log, final-matches.log and final-near-miss.log. Ticket is In Review, pending the required standards review.
