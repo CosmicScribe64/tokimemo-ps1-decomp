@@ -14770,3 +14770,10 @@ Promoted BUNKAKEN func_80145844: 440 inventory coverage bytes and 440 literal de
 
 ## [2026-10-15] build | Flag and encoding recovery publication
 Default literal proofs and affected checksum/guard checks pass for BUNKASAI820 and BUNKAKEN440 bytes. Total 1,449,772 / 2,279,368 game-code bytes. Nine integrated unaligned repair hashes and eleven tooling tests pass; repairs remain nonmatching. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-15500-bunkasai-character-flags]] and [[tickets/T-15300-fresh-structural-near-matches]].
+## [2026-10-15] build | T-14501 main verified draft batch
+
+Promoted 1 ordinary C functions / 188 inventory coverage bytes for main; default linked literal proof compared 188 bytes and overlay SHA1 passes. Header/global/prototype checks pass. No raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | All first-pass zero candidates have literal proof
+
+The main `_schedule_init` candidate passes 188 literal bytes / 188 inventory coverage bytes. Its three void forward declarations were centralized from existing definitions into main_api.h; all 27 binary SHA1 checks and header/global/prototype guards pass. This completes the 29 first-pass zero candidates, totaling 18,244 inventory coverage bytes across eight units; near/encoding repairs are separate. [[tickets/T-14501-remaining-draft-proof]] records the proof and accounting. The generation lane retains ownership of retry archives.
