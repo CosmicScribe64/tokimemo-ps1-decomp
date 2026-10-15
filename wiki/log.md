@@ -13521,3 +13521,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | T-12030 menu selection handler matched
 
 [[tickets/T-12030-codex-cx3]]: func_8005D448 is active C with 292 exact linked bytes and passing main SHA1, headers and globals. Reused the pre-call menu index and documented its stack-home padding fakematch.
+
+## [2026-10-15] build | T-12030 availability handler matched
+
+[[tickets/T-12030-codex-cx3]]: func_800603C0 verifies 324 linked bytes plus main SHA1, headers and globals. Added D_800E7D24 byte-array declaration and used GameState.unk_53C for the saved draft's old address alias.

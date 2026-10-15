@@ -1653,7 +1653,29 @@ void func_80060150(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_80060178);
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_800603C0);
+s32 func_800603C0(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    k_disp_inc();
+    if (D_800E6280.unk_1094 != -1) {
+        func_800676AC(0);
+        if (D_800E7D24[D_800E6280.unk_1094] != 0 || D_800E6280.unk_53C[D_800E6280.unk_1094] != 0) {
+            func_800676AC(D_800E6280.unk_1094 + 1);
+        }
+    }
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+    } else if ((D_800E6280.unk_F88 & 0x20) && (D_800E6280.unk_1094 != -1)) {
+        if (D_800E6280.unk_1094 == 0xD) {
+            func_80042940(0);
+        } else if ((D_800E7D24[D_800E6280.unk_1094] != 0) || (D_800E6280.unk_53C[D_800E6280.unk_1094] != 0)) {
+            func_800676AC(0);
+            func_800676AC(D_800E6280.unk_1094 + 1);
+            func_8004284C();
+        }
+    }
+}
 
 void func_80060504(void) {
     func_80042940(0);
