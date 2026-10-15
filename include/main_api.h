@@ -2292,7 +2292,7 @@ void normal_date_girl_in_main();
 void normal_date_girl_out(void);
 #endif
 void normal_date_girl_out_init(void);
-void normal_date_girl_out_main(void);
+s32 normal_date_girl_out_main(void);
 s32 normal_date_bg_fadein(void);
 void func_8007E934();
 void normal_date_bg_fadeout(void);

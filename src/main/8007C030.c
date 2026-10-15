@@ -817,7 +817,24 @@ void normal_date_girl_out_init(void) {
     D_800E6280.unk_1104.w = D_800E6280.unk_1104.w + 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
+s32 normal_date_girl_out_main(void) {
+    if (D_800B5940 >= 8) {
+        D_800B5940 -= 8;
+    } else {
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        func_8004284C();
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+        D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+        D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
+        D_80122CF4 = 0;
+        D_80122CF8 = 1;
+        return 0;
+    }
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = D_800B5940;
+    D_8011ECD0[0x843] = D_800B5940;
+}
 
 s32 normal_date_girl_suddenout(void) {
     D_8011ECD0[0x83F] &= ~0x80;
