@@ -224,6 +224,7 @@ extern u8 D_8015EA58[];
 extern u8 D_8015EA80[];
 extern u8 D_8015EAA8[];
 extern s32 D_8015EDA0;
+extern s32 D_8015EDA4;
 extern u32 D_8015EE08;
 void func_8014F38C();
 extern s32 D_8015EDC0;

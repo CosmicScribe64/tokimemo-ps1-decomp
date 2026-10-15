@@ -1,7 +1,54 @@
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013AD50", func_8013AD50);
+void func_8013AD50(void) {
+    if (!(D_8015EDF0 & 0xFF)) {
+        /* FAKE: absolute address instead of D_8015ED98: the original's lui and lw use different registers
+         * (as in func_8013D030, T-4010). T-16210 */
+        if (*(s32 *)0x8015ED98 & 0x100) {
+            func_8013E7C0(0x30, 3, 1, 1);
+        } else {
+            func_8013D030();
+        }
+    }
+    /* FAKE: D_8015EDB4 reached through D_8015EDA8 (one base symbol keeps the switch load after the store,
+     * T-4070); the real aggregate over D_8015EDA8..D_8015EDB8 is not declared yet. T-16210 */
+    D_8015EDA8[3] += 1;
+    switch (D_8015EDA8[1]) {
+    case 0:
+        if (!(D_8015EDC4 & 0xFF) && !(D_8015EDF0 & 0xFF)) {
+            if (D_8015EDB4 >= 0x97) {
+                D_8015ED98 = 0x104;
+                /* FAKE: D_8015EDA0 read through D_8015ED98 so that as1 keeps the load after the store; the
+                 * original probably had one aggregate over these words. T-16210 */
+                D_8015EDA4 = (&D_8015ED98)[2] / 20;
+                if (D_8015EDA4 == 0) {
+                    D_8015EDA4 = 1;
+                }
+                func_800AE0F0(D_8015E74C, D_800E6280.unk_0D4);
+                func_800AE100(D_8015E74C, "の体力が５％回復した");
+                func_8014B738(&D_8015E814, 1, 0x3C);
+                func_8014EBA8();
+            }
+        }
+        break;
+    case 1:
+        func_8014EE3C(1);
+        break;
+    case 2:
+        func_8013EA60(0, 0x21, D_8015EDA4, 0);
+        func_8013F15C(0x502, 1, 0);
+        func_8014EBA8();
+        break;
+    case 3:
+        func_8014ED44(0x14);
+        break;
+    case 4:
+        func_8014EBEC();
+        D_8015ED9C = func_801445E8(1);
+        break;
+    }
+}
 
 void func_8013AF1C(void) {
     switch (D_8015EDAC) {
