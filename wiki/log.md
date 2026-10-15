@@ -14949,3 +14949,10 @@ after the call); `include/ovl/RPG_BAT.h` gets an `RPG_BAT_OVERRIDE_<name>` guard
 functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `CODING_STANDARDS.md` now describes the
 `<NAME>_OVERRIDE_<symbol>` guard for overlay-local symbols that the package introduced (`RPG_BAT_OVERRIDE_func_8013E7C0`,
 `RPG_BAT_OVERRIDE_func_8013E97C`). Follow-up: teach `tools/sync_protos.py` and `tools/check_headers.py` this form.
+
+## [2026-10-15] ticket | T-16900 created, In Progress
+
+[[tickets/T-16900-compiler-experiments]]: two time-boxed compiler experiments on branch `claude/blissful-fermi-43d29a`
+(cut from `w2-good`). 1. The signed narrow selector-copy rule of [[tickets/T-11570-w1-ovl-name_ent-80139740]] in a
+scratch copy of `tools/cvt_pass.py` (item 4 of [[matching-breakthroughs]]). 2. A regdiff survey of the 21-100 line
+drafts of `drafts/T-14500/best-quality-catalog.jsonl` to decide on a ugen trace. No `src/` changes.
