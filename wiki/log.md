@@ -13505,3 +13505,11 @@ included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-1
 board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
 merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
 (ported onto main, 27/27, TT 252/303).
+
+## [2026-10-15] setup | T-12300 isolated byte-focused matching
+
+Created isolated checkout at baseline 7a65b3d8 and [[tickets/T-12300-large-unclaimed-byte-matches]]. Read existing ownership, workflow and external research. The acceleration chat now owns its broad T-12230 cohort objects as well as its earlier matches; exclude these before selecting C files. Checkout moved to /private/tmp/tokimemo-large-bytes for sandbox write access. No source edits yet.
+
+## [2026-10-15] decision | T-12300 claim remaining substantial objects
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] owns RPG_BAT/80145CC0, RPG_BAT/8014ADD0, RPG_BAT/8014A660 and BUNKAKEN/8013BFE0. Census excludes current acceleration manifest and known worktree objects. Additional ticket inspection excludes RPG_BAT/80137280 (T-9960). Focus on the 2,232-byte target and related 1–1.4 KB handlers.

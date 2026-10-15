@@ -247,3 +247,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-11030-big-functions-sonnet-26|T-11030]] Big functions (Sonnet) 26, Done: 2 matches / 1,552 bytes (main func_80072338, DATE func_8013CDF8), two near misses guarded; open frame and mult-hoist puzzles in [[matching-notes]].
 
 - [[tickets/T-11120-small-functions-sonnet-36|T-11120]] Small functions (Sonnet via Antigravity) 36 (In Progress).
+
+- [[tickets/T-12300-large-unclaimed-byte-matches|T-12300]] Substantial unclaimed byte matches (In Progress; ownership census).
