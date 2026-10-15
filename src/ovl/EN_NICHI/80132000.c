@@ -881,7 +881,21 @@ void func_8013556C(void) {
     func_80135F54();
 }
 
-INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_80135600);
+void func_80135600(void) {
+    s32 x;
+    s32 y;
+    s32 b;
+    EnWords64 table;
+
+    table = D_80139B28;
+    b = (D_80139220 / 7) % 8;
+    for (x = 0; x < 12; x++) {
+        for (y = 0; y < 15; y++) {
+            D_801392AC[y][x].unk_02 = table.value[(x + y * 3) % 8][(D_80139220 / 5) % 8];
+            D_801392AC[y][x].unk_06 = table.value[(x * 3 + y) % 8][b];
+        }
+    }
+}
 
 
 void func_801359D0(void) {

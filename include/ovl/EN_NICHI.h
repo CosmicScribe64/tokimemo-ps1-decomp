@@ -164,8 +164,9 @@ extern s16 D_80139228[][4]; /* 8-byte pop-up records (T-10810) */
 #ifndef OVL_EN_NICHI_T10850_TYPES
 #define OVL_EN_NICHI_T10850_TYPES
 /* T-10850: 64 words copied to the local motion lookup table. */
-typedef struct EnWords64 {
+typedef union EnWords64 {
     /* 0x000 */ s32 words[64];
+    /* 0x000 */ s32 value[8][8]; /* matrix access in func_80135600, T-14000 */
 } EnWords64; /* size 0x100 */
 extern EnWords64 D_80139B28;
 #endif
