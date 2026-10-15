@@ -14382,3 +14382,6 @@ Created codex/scenes-13900 at 0e670a13 with ignored reference inputs copied from
 ## [2026-10-15] build | First DATE2 literal match
 
 [[tickets/T-13902-date2-families]] accepts func_8013820C, 768 literal linked bytes with DATE2 SHA1 OK. Direct switch stores plus the target halfword type close it. GEKO background helper remains diagnostic-only; see [[scenes-family-results]].
+
+## [2026-10-15] build | ENDING and DATE2 verified at 61.7 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated fbedc27e and1cd70b47. Root independently confirms default literal linked MATCH for ENDING80136EE4 (580bytes) and DATE2 8013820C (768bytes), affected binary checksums, headers/globals and branch prototype checks. Standards inspection confirms canonical existing bitfield access and direct case stores; DATE2 halfword declaration follows target stores. No unverified drafts counted. Combined total5878/6958functions,1406424/2279368bytes (61.7%); remaining417072alignedbytes to80%. Evidence build/scratch/goal-ending-date2.log. Incremental build scheduled15tasks. Ticket cards reconciled and accumulated blank separators collapsed; active workers continue their families.

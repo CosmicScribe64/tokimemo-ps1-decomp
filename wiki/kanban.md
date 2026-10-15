@@ -24,44 +24,17 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
+- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
+
+- [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-13900-scenes-families|T-13900 GEKO and DATE2 source families]]
-- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
-- [ ] [[tickets/T-13902-date2-families|T-13902 DATE2 bounded family reconstruction]]
-- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
-- [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
 
+- [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- [ ] [[tickets/T-13902-date2-families|T-13902 DATE2 bounded family reconstruction]]
 
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
@@ -78,26 +51,12 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-10910A-big-functions-astra-23|T-10910A Big functions (astra) 23]]
 
-
-
-
 - [ ] [[tickets/T-9930-wave-10-list-3|T-9930 Wave 10: list 3]]
 - [ ] [[tickets/T-9910-wave-10-list-1|T-9910 Wave 10: list 1]]
 
 - [ ] [[tickets/T-9920-wave-10-list-2|T-9920 Wave 10: list 2]]
 - [ ] [[tickets/T-9940-wave-10-list-4|T-9940 Wave 10: list 4]]
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
-
-
-
-
-
-
-
-
-
-
-
 
 ## In Review
 
@@ -131,49 +90,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-13700-name-ent-families|T-13700 Reconstruct NAME_ENT families]]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
@@ -188,14 +104,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-11150-twin-detection-for-jump-table-functions|T-11150 Twin detection for jump-table functions]]
 - [ ] [[tickets/T-11160-twin-detection-for-data-in-function-functions|T-11160 Twin detection for data-in-function functions]]
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
-
-
-
-
-
-
-
-
 
 ## Done
 
@@ -253,64 +161,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-12210-matching-bottleneck-research|T-12210 Identify and test high-leverage matching breakthroughs]]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
-
-
 
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
 - [ ] [[tickets/T-11820-tt-batch-9|T-11820 TT batch 9]]
