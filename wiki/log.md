@@ -13641,3 +13641,50 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] ticket | cx3 ready for review: 5,200 matched bytes
 
 [[tickets/T-12030-codex-cx3]] moves to In Review with twelve matches (5,200 bytes), one guarded 15-row New Year draft, and two restored assembly functions. [[matching-notes]] and [[data/t0018-cases]] record outcomes and compiler evidence. Full configure/build passes 27/27 checksums plus headers/globals; prototype branch check has zero new disagreements; all twelve fresh literal-byte proofs pass. Evidence: build/scratch/final-build.log, final-protos.log, final-matches.log and final-near-miss.log. Board and index are synchronized; no inline assembly or raw-data additions.
+## [2026-10-15] setup | cx4 RPG battle matching package
+
+Read the cx4 wiki and workflow/standards, reviewed prior matching notes and compiler-gap rows for the assigned functions, and created [[tickets/T-12040-codex-cx4]] In Progress with matching index/card. Docker configure/build baseline running with ninja -j2; log build/scratch/baseline.log. Work restricted to the four owned RPG_BAT C files plus allowed headers/config/wiki.
+
+## [2026-10-15] build | cx4 baseline verified
+
+Docker configure/ninja -j2 passes 27/27 SHA1 checks, headers and globals. Baseline evidence: build/scratch/baseline.log; matching can begin under [[tickets/T-12040-codex-cx4]].
+
+## [2026-10-15] build | RPG_BAT func_80132EE0 matched
+
+Corrected the saved draft's stale counter local to current aggregate reads. Plain C passes linked funcdiff256 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32EE0-match.diff and 32EE0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_8014E300 matched
+
+A shared coordinate/displacement aggregate preserves the original load/store order. Linked funcdiff692 bytes and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/4E300-match.diff and 4E300-build.log.
+
+## [2026-10-15] build | RPG_BAT func_801321D0 matched
+
+Restored the dispatcher selector reload after its optional call and declared its shared halfword/helper dependencies. Plain C linked MATCH376, full rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/321D0-match.diff and 321D0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_8013415C matched
+
+Traced uopt led to removing two increment-result temporaries. Plain C passes linked funcdiff1044 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/3415C-regdiff.log and 3415C-match.diff.
+
+## [2026-10-15] build | RPG_BAT func_80134570 matched
+
+The twin's two counter temporaries were replaced by compound increments and direct tests. Plain C linked MATCH1044 and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/34570-match.diff.
+
+## [2026-10-15] build | RPG_BAT func_8015A1F0 matched
+
+Recovered the large battle state's selector reloads, compound counter updates and zero initialization. Plain C linked MATCH1252 and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/5A1F0-match.diff and 5A1F0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_80132348 matched
+
+Combined the compound-counter and shared-work-range findings to match1404 linked bytes. Full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32348-match.diff and 32348-build.log.
+
+## [2026-10-15] ticket | T-12040 deep pass ready for review
+
+All eleven assigned functions attempted; seven matched totaling6068 linked bytes, one existing guard17 rows and three scratch-only drafts. Recorded rejected unsigned and next-record forms, bounded known-gap retries, and table-copy experiments in [[tickets/T-12040-codex-cx4]], [[matching-notes]] and [[data/t0018-cases]]. Ticket/card/index now In Review; no new FAKE code. Final package verification running.
+
+## [2026-10-15] build | T-12040 final 27-binary verification
+
+Final configure/ninja and explicit verification-stamp rebuild passed all27 binary checksums, headers and globals. Branch prototypes: zero new and fifteen known disagreements. The existing full-TU guard remains17 listing lines. Diff whitespace check clean; no added inline assembly. Evidence: build/scratch/final-build.log, final-all-checks.log, final-protos.log and final-guard.diff. [[tickets/T-12040-codex-cx4]] remains In Review with matching [[index]] and [[kanban]] status.
+
+## [2026-10-15] lint | T-12040 trailing blank line cleanup
+
+Independent branch review found an extra blank line at the end of src/ovl/RPG_BAT/801321D0.c. Removed only that trailing blank line; no substantive source change. Full branch whitespace verification follows before committing the cleanup for [[tickets/T-12040-codex-cx4]].

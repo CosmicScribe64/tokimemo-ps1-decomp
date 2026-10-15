@@ -23,6 +23,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-12010-codex-cx1|T-12010]] Codex cx1 main helper matching (In Review).
 - [[tickets/T-12020-codex-cx2|T-12020]] Codex cx2 TAIIKU matching pass (In Review).
 - [[tickets/T-12030-codex-cx3|T-12030]] Codex cx3 main menu functions (In Review).
+- [[tickets/T-12040-codex-cx4|T-12040]] Codex cx4 RPG battle matching (In Review;7 matches,6068 linked bytes).
 - [[tickets/T-11820-tt-batch-9|T-11820]] TT batch 9: never-attempted functions and func_801333D4 (Done; 3 matches, TT 60.6%).
 - [[tickets/T-11810-tt-batch-8|T-11810]] TT batch 8: Opus on untried pipeline drafts and the closest guarded drafts (Done; 7 matches, TT 59.1%).
 - [[tickets/T-11800-tt-batch-7|T-11800]] TT batch 7: bulk_m2c rerun and two Opus passes (Done; 10 matches, TT 56.7%).

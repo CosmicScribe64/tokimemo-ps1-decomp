@@ -28,6 +28,8 @@ typedef union WordBytes4 {
     u8 bytes[4];
 } WordBytes4;
 extern WordBytes4 D_801255D0;
+/* T-12040: halfword tested by the RPG battle command dispatcher. */
+extern s16 D_80121428;
 
 /* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
 typedef struct DialogueVoice8 {

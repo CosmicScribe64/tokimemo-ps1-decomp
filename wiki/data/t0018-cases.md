@@ -2002,3 +2002,7 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | main/8005A0B0 | `func_8005CA94` | regorder | T-12030: restored ASM, best 57 diff rows. Typed FlagsWork24 slot access matches; selector narrowing, v0 versus a0/t2 byte loads and the selection spill differ. Return/result-width, shared result, scalar view, pointer and direct-state trials plus 363-candidate traced search did not improve it. |
 | main/8005A0B0 | `func_8005BCEC` | resolved | T-12030 resolves the earlier T-8080 store-pair gap: put each width and height assignment pair on one source line. Marked stack reservation and grouping, production 416-byte literal match plus main SHA1 OK. |
 | main/8005A0B0 | `func_8005E150` | resolved | T-12030 resolves the shifted-loop-register case using typed coordinate arrays and a marked empty test of an initialized loop counter. Production 368-byte literal match plus main SHA1 OK. |
+
+| RPG_BAT/8014DF60 | `func_8014E300` | resolved | T-12040: shared EC28..EC57 position/displacement view prevents the second coordinate load crossing the first displacement store; plain C linked MATCH692 and27/27 checksums. |
+| RPG_BAT/8015A1F0 | `func_8015A744` | regorder | T-12040: return-type and new full-record/shared-work-range views leave17 listing lines, two copies and global-store order. Existing guard retained. |
+| RPG_BAT/801321D0 | `func_80132B34` | constant folding | T-12040: six current aggregate/pointer and signed/unsigned/narrow-local variants still fold x+48/y-176;154 listing rows. No compiler-pass change; assembly retained. |

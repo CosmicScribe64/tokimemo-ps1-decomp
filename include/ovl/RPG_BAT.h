@@ -495,3 +495,33 @@ extern s32 D_8015EEC8;
 /* T-10850: initializer is called before its definition in its original object. */
 s32 func_8014E994(void);
 #endif
+
+
+#ifndef OVL_RPG_BAT_T12040
+#define OVL_RPG_BAT_T12040
+void func_80132348(void);
+void func_80132A94(s32 arg0, s32 arg1);
+
+/* T-12040: displacement and the six rectangle words share EC50..EC6F. */
+typedef struct RpgMotion20 {
+    /* 0x00 */ s32 dx;
+    /* 0x04 */ s32 dy;
+    /* 0x08 */ RpgRec18 rect;
+} RpgMotion20; /* size 0x20 */
+void func_8015A6D4(void);
+void func_8015A744(void);
+void func_8015A8B4(void);
+void func_80132CE4(void);
+void func_80132DE8(void);
+void func_80132EE0(void);
+
+/* T-12040: position and displacement share the EC28..EC57 work range. */
+typedef struct RpgMotion30 {
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ u8 unk_08[0x20];
+    /* 0x28 */ s32 dx;
+    /* 0x2C */ s32 dy;
+} RpgMotion30; /* size 0x30 */
+
+#endif
