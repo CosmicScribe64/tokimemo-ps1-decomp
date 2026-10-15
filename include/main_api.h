@@ -2598,7 +2598,9 @@ void func_800BCE10();
 s32 func_800BDC20();
 void func_801040F0(void);
 s32 func_80067DFC(void);
+#ifndef MAIN_API_OVERRIDE_func_80053418
 s32 func_80053418();
+#endif
 s32 func_800463E8(void);
 #ifndef MAIN_API_OVERRIDE_func_80049FF0
 s32 func_80049FF0();

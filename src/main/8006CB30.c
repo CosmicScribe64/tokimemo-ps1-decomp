@@ -1,8 +1,10 @@
+#define MAIN_API_OVERRIDE_func_80053418 /* this object calls it as void (no v0 result in the call block, func_8006EA40); main_api.h has s32 */
 #define MAIN_API_OVERRIDE_func_80066104 /* the original callers pass a string the callee ignores; main_api.h has (void) */
 #include "common.h"
 #include "game.h"
 
 void func_80066104();
+void func_80053418();
 
 void schedule_init(void) {
     if (D_800E6280.unk_1109 == 0) {
@@ -219,8 +221,6 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 
-/* NON_MATCHING: T-11670, 24 differing lines; frame, buffers and the return chain match, but the loop's count/i/record base/11 take a1/v1/a0/v0 where the original has a0/v0/v1/a1 (uopt colours i first and skips v0). */
-#ifdef NON_MATCHING
 s32 func_8006EA40(void) {
     s32 count;
     s32 i;
@@ -241,9 +241,6 @@ s32 func_8006EA40(void) {
     }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006EA40);
-#endif
 
 /* NON_MATCHING: T-10880, four flag-word register substitutions. */
 #ifdef NON_MATCHING
