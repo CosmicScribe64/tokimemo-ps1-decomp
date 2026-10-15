@@ -31,10 +31,13 @@ C sources are UTF-8. Before IDO, string and character literals with non-ASCII ch
 re-encoded to Shift-JIS octal escapes (sjis_literals, T-0500; the rule of tools/asm.py), and the
 copy that is compiled is <out.o>.sjis.c. Non-ASCII text outside literals stops the compile.
 
-Also writes <out.o>.d (a make-style depfile) listing the asm/nonmatchings
-files named by INCLUDE_ASM, because the compiler cannot see them.
+Also writes <out.o>.d with compiler-observed headers, INCLUDE_ASM/INCLUDE_RODATA
+files and trailing-pad inputs. IDO dependency preprocessing runs on asm-processor's
+exact temporary C input and include search path; GCC uses its existing cpp output.
 Exits non-zero if any stage fails.
 """
+import ast
+import json
 import os
 import re
 import shutil
@@ -126,9 +129,11 @@ def run_cpp(cpp, src):
 def compile_gcc(src, out, gcc_ver, aspsx_ver):
     gcc = "/opt/gcc/" + gcc_ver
     data = run_cpp(gcc + "/cpp", src)
+    deps = cpp_dependencies(data)
     data = run_stage([gcc + "/cc1"] + GCC_CFLAGS, data)
     data = run_stage(["python3", MASPSX, "--aspsx-version=" + aspsx_ver] + MASPSX_FLAGS, data)
     run_stage(AS + ["-o", out], data)
+    return deps
 
 
 def ido_frame_env(ido_ver, tmp, extra_shims=None):
@@ -204,15 +209,70 @@ def compile_ido(src, out, ido_ver):
         src = out + ".sjis.c"
         with open(src, "w", encoding="ascii") as f:
             f.write(text)
-    cmd = (["python3", ASM_PROCESSOR, "--no-dep-file", "--drop-mdebug-gptab",
-            "--convert-statics", "no",
-            "--asm-prelude", ASM_PRELUDE, "/opt/ido/%s/cc" % ido_ver, "--"]
-           + AS + ["--"] + IDO_CFLAGS + ["-o", out, src])
     tmp = tempfile.mkdtemp(prefix="idolib")
     try:
+        dep_path = os.path.join(tmp, "headers.json")
+        # asm-processor adds its own input directory and compiles a transformed
+        # temporary file. Intercept that exact invocation to avoid a different
+        # quoted-include search order or different preprocessor conditionals.
+        compiler = ["python3", os.path.abspath(__file__), "--ido-deps", dep_path,
+                    "/opt/ido/%s/cc" % ido_ver]
+        cmd = (["python3", ASM_PROCESSOR, "--no-dep-file", "--drop-mdebug-gptab",
+                "--convert-statics", "no", "--asm-prelude", ASM_PRELUDE]
+               + compiler + ["--"] + AS + ["--"] + IDO_CFLAGS + ["-o", out, src])
         run_stage(cmd, None, ido_frame_env(ido_ver, tmp))
+        with open(dep_path) as f:
+            return json.load(f)
     finally:
         shutil.rmtree(tmp)
+
+
+def ido_dependencies(argv):
+    """Internal asm-processor compiler adapter: collect dependencies, then compile.
+
+    IDO -M emits one `target:\tpath` per line, including paths with spaces.
+    Only the transformed temporary source is omitted; Ninja knows the real source.
+    The actual compile command and environment are passed through unchanged.
+    """
+    dep_path, compiler, *args = argv
+    output = run_stage([compiler, "-M"] + args, None).decode()
+    source = os.path.normpath(args[-1])
+    deps = []
+    for line in output.splitlines():
+        _, separator, path = line.partition(":\t")
+        if not separator or not path:
+            sys.exit("cc.py: unexpected IDO dependency line: " + line)
+        path = os.path.normpath(path)
+        if path != source:
+            deps.append(path)
+    if not output.strip():
+        sys.exit("cc.py: IDO emitted no dependencies")
+    run_stage([compiler] + args, None)
+    with open(dep_path, "w") as f:
+        json.dump(deps, f)
+
+
+def cpp_dependencies(data):
+    """Existing GCC cpp line markers name the files it actually read.
+
+    Ignore built-ins and logical #line filenames that do not exist. The tmpfs
+    fallback preserves relative include paths, so these resolve in the worktree.
+    """
+    deps = []
+    for match in re.finditer(rb'^#\s+\d+\s+("(?:[^"\\]|\\.)*")', data, re.M):
+        path = ast.literal_eval(match[1].decode())
+        if os.path.isfile(path):
+            deps.append(os.path.normpath(path))
+    return deps
+
+
+def write_depfile(out, deps):
+    """Write Ninja/GCC make dependency syntax, including special path characters."""
+    def escape(path):
+        return path.replace("$", "$$").replace("\\", "\\\\").replace(" ", "\\ ").replace("#", "\\#").replace(":", "\\:")
+
+    with open(out + ".d", "w") as f:
+        f.write("%s: %s\n" % (escape(out), " ".join(escape(p) for p in sorted(set(deps)))))
 
 
 def pad_text(obj):
@@ -233,16 +293,18 @@ def main(argv):
     includes = INCLUDE_ASM_RE.findall(text)
     deps = ["%s/%s.s" % m for m in includes]
     if kind == "ido" and len(argv) == 5:
-        compile_ido(src, out, argv[4])
+        deps += compile_ido(src, out, argv[4])
     elif kind == "gcc" and len(argv) == 6:
-        compile_gcc(src, out, argv[4], argv[5])
+        deps += compile_gcc(src, out, argv[4], argv[5])
     else:
         sys.exit(__doc__)
     deps += trailing_pad.pad_functions(out, src, {name for _, name in includes})
     pad_text(out)
-    with open(out + ".d", "w") as f:
-        f.write("%s: %s\n" % (out, " ".join(deps)))
+    write_depfile(out, deps)
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    if len(sys.argv) > 1 and sys.argv[1] == "--ido-deps":
+        ido_dependencies(sys.argv[2:])
+    else:
+        main(sys.argv)
