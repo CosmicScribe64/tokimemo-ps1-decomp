@@ -14508,3 +14508,9 @@ Created [[tickets/T-14400-option-menu-families]] on codex/option-14400 from orig
 ## [2026-10-15] build | Verify OPTION character settings
 
 [[tickets/T-14400-option-menu-families]] adds func_8013B568 (2320 literal linked bytes), cumulative 4468. OPTION SHA1 passes. Packed character fields and direct switch stores compile exactly in both direct and pointer forms. Fourth sibling remains scratch-only; existing C stays unchanged.
+
+## [2026-10-15] build | MAIN and OPTION families reach 62.2 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated MAIN5991ac30/d7c2e35d and OPTION90580c83/d63d1842: five functions add5940literalbytes (MAIN1472,OPTION4468). Root standards inspection moved newMAIN declaration inside its existing include guard. Final combined Docker rebuild passes27/27binarychecksums, headers/globals and branch prototype audit; independent defaultlinked proofs confirm allfivefunctions. Total5897/6958functions,1418884/2279368bytes (62.2%); remaining404612alignedbytes to80%. Evidence build/scratch/goal-main-option.log and goal-main-option-final.log. No padding/register tricks introduced.
+
+## [2026-10-15] build | Exhaustive draft execution launched
+T14500 frozen48362009census:1066remainingfunctions/866424bytes,including125guarded drafts,allunitsincluded. DedicatedSol6.1medium harness saves wholecandidateTU,body,declarations and context hashes; serialexecution uses120secondper-targettimeout and per-functionresumable results. Fullrun handle85687, log/private/tmp/t14500-run.log, catalog in drafts-14500/drafts/T-14500/catalog.jsonl. FirstBUNKAKENunit21entriesincludesmultiplezero-scorecandidates; unitboundaryliteralverification underway in separateproofcheckout, uncounteduntil verified. Sharedimmutableinputs avoidindependentdiscimagecopies; currenthost20GiBfree.
