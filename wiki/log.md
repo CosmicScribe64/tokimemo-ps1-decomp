@@ -13400,3 +13400,7 @@ Created [[tickets/T-11620-w1-ovl-tt-80133970]] (In Progress): wave 1 package w1-
 ## [2026-10-15] ticket | T-11620 Done
 
 [[tickets/T-11620-w1-ovl-tt-80133970]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 matched functions (TT `func_80135148`, `func_80134E20`, `func_80134D0C`, `func_80144854`). One finding fixed: two NON_MATCHING comments in `src/ovl/TT/80142D40.c` now name T-11620 and the current line counts.
+
+## [2026-10-15] ticket | T-11670 In Progress
+
+[[tickets/T-11670-w1-main-8006cb30]] created and claimed: wave 1 package w1-p11, 12 functions of `src/main/8006CB30.c`.
