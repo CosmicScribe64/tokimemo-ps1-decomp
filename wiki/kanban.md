@@ -64,6 +64,7 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
+- [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]

@@ -142,7 +142,7 @@ void func_801345A4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, ten listing lines: decrement v1/v0 and scheduling. */
+/* NON_MATCHING: T-12020, 8 differing listing rows (4 positions); decrement v1/v0 register allocation. */
 void func_801346FC(void) {
     s16 text_x;
     s16 panel_x;
@@ -347,7 +347,56 @@ void func_80135778(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135830);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135AD0);
+void func_80135AD0(void) {
+    s32 i;
+    s32 count;
+    s32 row;
+    s32 available[11];
+    s32 temp;
+    TaiikuS11 characters;
+
+    characters = D_80149558;
+    for (i = 0; i < 11; i++) {
+        available[i] = 128;
+    }
+    count = 0;
+    for (i = 0; i < 11; i++) {
+        if (((D_800E6280.unk_1BC[i].unk_0C.u << 30) >> 31) == 1) {
+            available[count++] = i;
+        }
+    }
+    D_801491EC = characters.v[available[func_800AE0D0() % count]];
+    for (i = 0; i < 30; i++) {
+        if (i < 10) {
+            row = 0;
+        } else if (i < 20) {
+            row = 1;
+        } else {
+            row = 2;
+        }
+        func_80048F64(i + 46);
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_38 = 0x01000000;
+        temp = row + 9;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_01 = temp;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_04 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_05 = 128;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_06 = 2;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_08 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_0C = (u8 *)D_80149FB4;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_10 = (u8 *)D_80149FEC;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_34 = (u8 *)D_801492C8;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_14 = (s16)D_8014A024;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_1A = 0x1000;
+        *(s16 *)((DisplayActor44 *)D_8011ECD0)[i + 46].pad_1C = 0x1000;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_07 = 128;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_2A = -48 - row * 16;
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 = func_80135D24();
+        while (((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 == ((DisplayActor44 *)D_8011ECD0)[i + 45].unk_16) {
+            ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_16 = func_80135D24();
+        }
+        ((DisplayActor44 *)D_8011ECD0)[i + 46].unk_18 = 0;
+    }
+}
 
 s32 func_80135D24(void) {
     s32 row;
@@ -367,14 +416,35 @@ s32 func_80135D24(void) {
     return table.value[row][random % 10];
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135DF8);
+void func_80135DF8(void) {
+    s32 index;
+    s32 row;
+    s32 column;
+    s32 skip;
+    TaiRandomTable table;
+
+    table = D_8014964C;
+    index = 0;
+    for (row = 0; row < 10; row++) {
+        skip = func_800AE0D0() % 3;
+        for (column = 0; column < 3; column++) {
+            if (skip != column) {
+                ((DisplayActor44 *)D_8011ECD0)[row * 3 + column + 46].unk_16 = table.value[D_801491EC][index];
+                index++;
+                if (index >= 10) {
+                    index = 0;
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801365C8);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, one swap: the original schedules lui t4 (next load) before the sw to D_80149224; the data of D_80149208..D_80149297 is one object here (TaiikuSlots), 2 lines */
+/* NON_MATCHING: T-12020, 4 differing listing rows (2 positions); next-load lui schedules after the f1C store. */
 s32 func_801368B8() {
     D_80149208.f0C += 1;
     D_80149208.f0E += 1;
@@ -454,7 +524,45 @@ void func_80136B18(void) {
     D_80120676 = state->unk_20.halves.high;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-12020, 4 differing listing rows (2 positions); f03 byte store and f0C clear schedule in reverse order. */
+void func_80136BB4(void) {
+    u16 limit;
+    TaiikuU11 limits;
+    u8 temp;
+
+    limits = D_801497DC;
+    if (D_80122E94 == 1) {
+        limit = limits.v[D_801491DC];
+    } else {
+        limit = limits.v[((DisplayActor44 *)D_8011ECD0)[46 + D_80149208.pad00[2]].unk_16 >> 3];
+    }
+    if ((limit < D_80149208.f0E) && (D_80149208.f18 != 0)) {
+        if (D_80149208.pad04[0] >= 5U) {
+            D_80149208.pad04[0] = 0;
+        } else {
+            D_80149208.pad04[0]++;
+        }
+        D_80149208.f0E = 0;
+    }
+    if (((D_80149208.f0C >= 6U) && (D_80149208.f10 > 0)) || ((D_80149208.f0C >= 8U) && (((s32) D_801491E8 >> 1) < D_80149208.f18)) || ((D_80149208.f0C >= 11U) && (D_80149208.f18 != 0))) {
+        temp = D_80149208.f03;
+        if (temp >= 5U) {
+            D_80149208.f03 = 0;
+        } else {
+            D_80149208.f03 = D_80149208.f03 + 1;
+        }
+        D_80149208.f0C = 0;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = *(s16 *)(D_801492AC + D_80149208.f03 * 2);
+    if ((D_8014929C == 0) && (D_80149208.f10 <= 0)) {
+        D_80149208.f03 = 5;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0x90;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136BB4);
+#endif
 
 s32 func_80136DA4() {
     s32 temp;
@@ -479,7 +587,37 @@ void func_80136E80(void) {
     func_8013732C();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136EC0);
+/* Signed selector keeps the case constants distinct from byte stores. T-12020. */
+void func_80136EC0(void) {
+    s32 i;
+    TaiWait3 wait;
+
+    wait = D_801497F4;
+    for (i = 0; i < 3; i++) {
+        if (D_80149208.pad24[i * 0x24 + 1] != 0) {
+            switch ((s32)D_80149208.pad24[i * 0x24 + 5]) {
+            case 0:
+                *(u16 *)&D_80149208.pad24[i * 0x24 + 8] = func_800AE0D0() % 120 + wait.value[i] + 60;
+                D_80149208.pad24[i * 0x24 + 5]++;
+                break;
+            case 1:
+                if (++*(u16 *)&D_80149208.pad24[i * 0x24 + 10] >= *(u16 *)&D_80149208.pad24[i * 0x24 + 8]) {
+                    D_80149208.pad24[i * 0x24 + 5]++;
+                }
+                break;
+            case 2:
+                if (func_80137784(i + 1) != 0) {
+                    D_80149208.pad24[i * 0x24 + 1] = 0;
+                    D_80149208.pad24[i * 0x24] = 1;
+                }
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+        }
+    }
+}
 
 typedef struct {
     s32 w[3];
@@ -530,45 +668,7 @@ void func_80137090(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, D_80149298.halves.high (D_8014929A) is not hoisted out of the loop as in the original; the rest has the original structure, large diff (all registers) */
-void func_80137228(void) {
-    s32 i;
-    s32 y;
-    s32 j;
-    u8 *a;
-    u8 *r;
-
-    a = (u8 *)&D_80149208;
-    for (i = 0; i < 3; i++) {
-        *(s32 *)(a + i * 0x24 + 0x44) += *(s32 *)(a + i * 0x24 + 0x3C);
-        y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
-        if (D_80120A72 + i * 8 + 8 < y - 0x60) {
-            if (a[i * 0x24 + 0x2A] == 0) {
-                (&D_80120A72)[0x1B] = 0x8D;
-                if (a[i * 0x24 + 0x2A] == 0) {
-                    j = 0;
-                    while (D_801491E0[j] != 0) {
-                        j++;
-                    }
-                    D_801491E0[j] = i + 2;
-                }
-                a[i * 0x24 + 0x2A] = 1;
-                y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
-            }
-        }
-        r = D_8011ECD0 + i * 0x44;
-        *(s16 *)(r + 0x19EA) = y - 0xA0;
-        if (y >= 0x1E1 || y < -0xA0) {
-            r[0x19C7] = 0;
-        } else {
-            r[0x19C7] = 0xA4;
-        }
-    }
-}
-#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137228);
-#endif
 
 void func_8013732C(void) {
     s32 i;
@@ -637,48 +737,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
 
-#ifdef NON_MATCHING
-/* Falls through without a return statement: $v0 still holds D_8014929A. */
-s32 func_80137C44(void) {
-    s32 i;
-    TaiSlot24 *slot;
-    s32 dx;
-
-    slot = (TaiSlot24 *)&D_80149208;
-    for (i = 0; i < 4; i++, slot++) {
-        if (slot->pad_00[0] != 0) {
-            ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 - 8;
-            if (i == 0) {
-                if (D_80122E94 == 1) {
-                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + D_801491D8].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
-                } else {
-                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
-                }
-            } else {
-                ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[slot->pad_03[0]];
-            }
-            if (i + 0x90 == ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18) {
-                if (D_80122E94 == 1) {
-                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = D_80149320[D_801491DC] * 6 + 5;
-                } else {
-                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + 5;
-                }
-            }
-        }
-    }
-    slot = (TaiSlot24 *)&D_80149208;
-    for (i = 0; i < 3; i++, slot++) {
-        if (((slot[1].pad_03[2] == 2 && ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_02 != 0) || slot[1].pad_00[0] == 1) &&
-            (dx = slot[1].unk_20.halves.high - D_80149298.halves.high, dx < 0x140) && dx >= -0x13F) {
-            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0xA4;
-        } else {
-            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0;
-        }
-    }
-}
-#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137C44);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137EA8);
 

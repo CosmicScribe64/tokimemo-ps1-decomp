@@ -664,3 +664,18 @@ void func_801330D4(void);
 
 /* T-11080: six-entry s16 table in the data of 80133C80.c (read by func_80137C44). */
 extern s16 D_801492B8[6];
+
+#ifndef OVL_TAIIKU_WAIT3_T12020
+#define OVL_TAIIKU_WAIT3_T12020
+typedef struct TaiWait3 {
+    /* 0x00 */ u16 value[3];
+} TaiWait3; /* size 0x06 */
+extern TaiWait3 D_801497F4;
+
+#endif
+
+/* Eleven character IDs used by func_80135AD0. T-12020. */
+extern TaiikuS11 D_80149558;
+
+/* Eleven animation limits copied by func_80136BB4. T-12020. */
+extern TaiikuU11 D_801497DC;

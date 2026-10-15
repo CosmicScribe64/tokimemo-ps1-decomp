@@ -1994,3 +1994,7 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | main/800420D0 | `func_800422C8` | regorder | T-12010: traced uopt plus sixteen pointer/stored-value views leave eight listing lines, a3 versus v1. Guard retained; no new compiler rule demonstrated. |
 | main/80047550 | `load_tpage_buf_lock` | param homes | T-12010: signed branch and u32 index view leave 29 listing lines; unsigned-compare 19-line candidate rejected for changed semantics. Guard retained. |
 | main/800451D0 | `func_800460FC` | stack/zero stores | T-12010: readable retry/ring-index form leaves 17 listing lines in homes and zero-store register. FAKE retry-zero chain labeled; larger-buffer 13-line variant not retained. No compiler-pass change proposed. |
+
+| TAIIKU/80133C80 | `func_801346FC` | regorder | T-12020: guarded, 8 +/- listing rows (4 positions), raw actor-x decrement v1/v0; traced priorities and combined predecrement/selector variants exhausted. |
+| TAIIKU/80133C80 | `func_801368B8` | sched | T-12020: guarded, 4 +/- rows (one lui/sw swap); 337 full-file ordering/increment variants unchanged. |
+| TAIIKU/80133C80 | `func_80136BB4` | sched | T-12020: guarded, 4 +/- rows (one sb/sh swap); typed table and used u8 frame local improve 98 to 4, final 130 boundary/increment variants unchanged. |
