@@ -1591,7 +1591,15 @@ extern u8 D_80125128;
 extern u8 D_80125129;
 extern u8 cd_read_status;
 extern s8 D_8012512B;
-extern u8 D_80125130[];
+/* 0x18-byte entry of the 48-entry ring at D_80125130 (read index D_80125128, write index
+ * D_80125129; filled by func_80045318). data[15] is cleared on every write and set to 0xFF when
+ * the caller passes 1 instead of a data pointer. */
+typedef struct Ring18 {
+    /* 0x00 */ u8 cmd;
+    /* 0x04 */ s32 arg;
+    /* 0x08 */ u8 data[16];
+} Ring18; /* size 0x18 */
+extern Ring18 D_80125130[];
 extern s32 D_801255B0;
 extern u8 D_801255B4;
 extern u8 D_801255B5;
