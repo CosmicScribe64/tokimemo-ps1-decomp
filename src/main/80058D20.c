@@ -59,28 +59,26 @@ void initCoordinate(void) {
     } while (p != D_80122CA0);
 }
 
-/* NON_MATCHING: T-10710, 7 differing lines: the original copies the model block pointer (move s2,s3) and adds 8 after the lui setup, the draft folds it into one addiu; pointer parameter type needed (an s32 parameter keeps the pointer in a0 first) */
-#ifdef NON_MATCHING
-void initModelingData_init(s32 *arg0) {
-    s32 *t;
-    TaiikuBig *q;
-    u32 *p;
+/* HYPOTHESIS: the TMD walk of the PsyQ libgs samples (func_8009B3C0 =
+ * GsMapModelingData, func_8009B430 = GsLinkObject4): skip the ID word, map the
+ * data, skip the flags and object-count words. The separate `dop++` steps give
+ * the original's `move s2,s3; addiu s2,s2,8`; the indexed loop gives its
+ * address setup order. T-11610 */
+void initModelingData_init(u32 *arg0) {
+    u32 *dop;
+    s32 i;
 
-    t = arg0 + 1;
-    func_8009B3C0(t);
-    q = D_801227A0;
-    p = D_80122640;
-    do {
-        func_8009B430(t + 2, p, 0);
-        p[1] = (u32)q;
-        q++;
-        p += 4;
-        p[-4] = 0x80000000;
-    } while (q != D_80122CA0);
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    dop++;
+    for (i = 0; i < 16; i++) {
+        func_8009B430((s32)dop, (u8 *)&D_80122640[i * 4], 0);
+        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
+        D_80122640[i * 4] = 0x80000000;
+    }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", initModelingData_init);
-#endif
 
 /* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
 #ifdef NON_MATCHING
