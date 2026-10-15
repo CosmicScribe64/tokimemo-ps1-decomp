@@ -1581,6 +1581,7 @@ extern s32 D_80122EC8;
 #endif
 extern s32 D_80122ECC;
 extern s32 D_801230D0;
+extern s32 D_801230E0[];
 extern s32 D_801230E4;
 extern s32 D_801230F4;
 extern u32 D_80123110;
