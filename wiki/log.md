@@ -14289,3 +14289,7 @@ Created codex/scenes-13900 at 0e670a13 with ignored reference inputs copied from
 ## [2026-10-15] build | GEKO single induction variable match
 
 [[tickets/T-13901-geko-families]] accepts func_80141374, 416 linked bytes, with GEKO SHA1 OK. [[scenes-family-results]] records the source correction and type-reconstruction negatives.
+
+## [2026-10-15] build | GEKO dispatcher and shared indicator source form
+
+[[tickets/T-13901-geko-families]] adds two functions / 924 literal linked bytes with GEKO SHA1 OK. [[scenes-family-results]] records direct global updates and the established function-table source form.
