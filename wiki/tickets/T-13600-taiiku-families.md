@@ -48,10 +48,21 @@ The queue has84 remaining functions,66,732 bytes; three failed families do not e
 
 | Rank | Candidate | Bytes | Type/donor evidence | Prior explicit failure found |
 |---|---|---:|---|---|
-|1|46A60|300|Controller state/animation helper; matching46884/4692C/46994/46B8C share the controller and actor views|No ticket-specific experiment found in inspected notes|
-|2|47928|324|Four-slot helper;47520/4756C and47A6C provide matching slot access donors|No ticket-specific experiment found in inspected notes|
-|3|47318|520|Three-controller slot family;470A0/47120/47210 match nearby|No ticket-specific experiment found in inspected notes|
-|4|44E54|496|Race state/slot family, matching44768/44834/448D4 nearby|No ticket-specific experiment found in inspected notes|
+|1 (superseded)|46A60|300|Controller state/animation helper; matching46884/4692C/46994/46B8C share controller and actor views|Subsequent full census found T-4100 and wave2/w7 register failures in data/t0018-cases|
+|2 (superseded)|47928|324|Four-slot helper;47520/4756C and47A6C provide matching slot access donors|Subsequent census found T-9570 time-boxed code-generation mismatch|
+|3 (superseded)|47318|520|Three-controller slot family;470A0/47120/47210 match nearby|Subsequent census found T-9570 time-boxed code-generation mismatch|
+|4 (superseded)|44E54|496|Race state/slot family, matching44768/44834/448D4 nearby|Subsequent census found T-10010 compile_error in log|
 |Deferred|368B8/37228/3CF88/3C780/3D114|various|High raw queue rank|Documented previous compiler/register failures; do not repeat|
 
 Concrete next family: controller/slot state helpers46A60 and47928, starting from existing types and matching sibling access forms.
+
+### Full prior-evidence census and first verified wins
+
+Initial helper ranking searched only selected notes and missed historical case/ticket evidence. Corrected census of the84 baseline functions (66,732 bytes):70 have unit-tagged wiki evidence,2 only ambiguous address mentions,12 no mention in the searched pages (log/index/kanban excluded; one of the twelve,44E54, has a logged compile failure). These are evidence counts, not an exhaustion claim. Full inventory: [[data/t13600-remaining-census]]. The concrete fresh lower-complexity family is adjacent scene dispatchers33494/33644; both have complete canonical GameState views and matching sibling dispatch donors in80132BD0.c.
+
+- **func_80133494: literal linked MATCH,432 bytes.** Canonical fields alone give zero full-TU differences.
+- **func_80133644: literal linked MATCH,520 bytes.** Replace m2c's cross-branch goto in outer case0 with an ordinary inner switch on GameState.unk_F74. That removes14 full-TU lines; the GameState-pointer alternative worsens to36. The inner-switch source form follows the verified Bunka direct-dispatch family.
+
+Default targeted ninja reports TAIIKU.bin SHA1 OK. funcdiff --resolve --no-build reports both linked function byte ranges equal the target, total **2 functions /952 bytes**. Headers/globals pass. An inverse replacement audit proves all source text outside the two INCLUDE_ASM replacements is unchanged. No header changes, FAKE workarounds, flags or raw assets. Logs: build/taiiku13600/first-wins-build.log, first-wins-proof.log and first-wins-protos.log. Standards self-check covers C89, canonical globals, original symbol/order preservation and no unrelated source edits; independent review remains pending.
+
+Failed helper probes46A60/47928 retain14/65 lines respectively; those bodies remain scratch-only.

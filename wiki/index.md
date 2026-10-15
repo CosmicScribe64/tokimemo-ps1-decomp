@@ -308,3 +308,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13201-event-selector-stores|T-13201]] Event selector direct-store family.
 
 - [[tickets/T-13600-taiiku-families|T-13600]] TAIIKU source-family recovery (In Progress).
+
+- [[data/t13600-remaining-census]]: baseline TAIIKU remaining functions and unit-tagged historical evidence (T-13600).
