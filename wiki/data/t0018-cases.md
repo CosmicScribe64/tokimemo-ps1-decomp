@@ -1926,3 +1926,13 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | main/80058D20 | `func_8005938C` | regorder | T-11610: not kept (104 lines): draft exact but for ugen temporaries; each MATRIX struct copy burns one temporary in the original (`t4`, data `t5`) and two in IDO after the stack stores to `rot`/`m.t` (data `t6`); frame needs three leading 4-byte scalars |
 | main/80058D20 | `func_800591D8` | regorder | T-11610: not kept (54+ lines): original shares `a0`/`a1` between the GameState store and the func_80097F58 argument (and loads `unk_000` into `a0` for the compare); IDO rematerializes the constants; u16 prototype, separate symbols, argument assignments, aliased locals tried |
 | main/80058D20 | `func_800590CC` | regorder | T-11610: guarded, 22 lines: aliased `w`/`h` (FAKE) reproduce the hoisted `li a0,0x140; li a1,0xF0` but spill both before each call and drop the then-arm `li a1,0xF0` |
+| NAME_ENT/80139740 | `func_8013DAC4` | selector copy | T-11570: plain `idx = global` draft, 27 lines; IDO copy-propagates `idx` into the s8 global. With uopt global copy propagation off (experiment) 4 lines left, the constant-first compares (`beq a1,v1`) |
+| NAME_ENT/80139740 | `func_8013F454` | selector copy | T-11570: same as `func_8013DAC4`; 23 lines, 4 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013FB8C` | selector copy | T-11570: same as `func_8013DAC4`; 27 lines, 4 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013D4CC` | selector copy | T-11570: same as `func_8013DAC4`; 33 lines, 10 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013E430` | selector copy | T-11570: same as `func_8013DAC4`; 28 lines, 8 with copy propagation off (compares plus frame 0x30 vs 0x38) |
+| NAME_ENT/80139740 | `func_8013F0DC` | selector copy | T-11570: same as `func_8013DAC4`; T-11370 draft kept (18 lines); the plain `idx` form is 34 lines, 8 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013CEC8` | selector copy | T-11570: same as `func_8013DAC4`; plain `n` draft 42 lines (dropped, commit 64965d57), 14 with copy propagation off |
+| NAME_ENT/80139740 | `func_8013BE18` | frame slot | T-11570: 10 lines, RECT at sp+0x38 vs sp+0x34 in a 0x40 frame; IDO keeps 8 spare bytes below the locals, so no declaration gives the original slot |
+| NAME_ENT/80139740 | `func_80140B20` | regorder | T-11570: in-place u8-view form, 15 lines: the original keeps the chain value in `$v0` (`andi v0,t6,0xff`), IDO stores `$t6`; zcopy off does not change it |
+| NAME_ENT/80139740 | `func_8013BB24` | schedule | T-11570: 28 lines, seven `lui a0,string` / `lui at,store` pairs in the other order; one-line pairs, assignment-in-argument and comma forms fail |

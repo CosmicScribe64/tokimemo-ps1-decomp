@@ -82,87 +82,7 @@ void func_80139CB4(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_80139F30);
 
-#ifdef NON_MATCHING
-void func_8013A9C8(void) {
-    s32 i;
-    u8 status;
-    u8 *p;
-    u8 *q;
-    u8 *rec;
-    u8 *r;
-
-    func_8004EA98();
-    func_8004EAD4(0);
-    for (i = 0; i < 13; i++) {
-        ((NameRecord44 *)D_8011ECD0)[128 + i].unk_03 |= 0x80;
-    }
-    if (D_800E8BEE != 0) {
-        p = (u8 *)&D_800E7D10 + D_800E7D36 * 16;
-        q = p;
-        for (i = 0; i < 8; i++, q++) {
-            status = q[0xCC8];
-            if (status == 0) {
-                ((NameRecord44 *)D_8011ECD0)[128 + i].unk_03 |= 0x80;
-                ((NameRecord44 *)D_8011ECD0)[128 + i].unk_01 = 4;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 &= 0x7F;
-            } else {
-                ((NameRecord44 *)D_8011ECD0)[128 + i].unk_03 &= 0x7F;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 |= 0x80;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_18 = (status & 7) + 0x58;
-            }
-        }
-        q = p + 8;
-        for (i = 8; i < 11; i++, q++) {
-            status = q[0xCC8];
-            if (status == 0) {
-                ((NameRecord44 *)D_8011ECD0)[129 + i].unk_03 |= 0x80;
-                ((NameRecord44 *)D_8011ECD0)[129 + i].unk_01 = 4;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 &= 0x7F;
-            } else {
-                ((NameRecord44 *)D_8011ECD0)[129 + i].unk_03 &= 0x7F;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 |= 0x80;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_18 = (status & 7) + 0x58;
-            }
-        }
-    } else {
-        rec = (u8 *)&((NameRecordF00 *)D_80123120)[D_800E6280.unk_1117];
-        r = rec;
-        for (i = 0; i < 8; i++, r += sizeof(Rec38)) {
-            if (!((Rec38 *)(r + 0x308))->unk_0C.f.b1 || (status = rec[0x664 + i]) == 0) {
-                ((NameRecord44 *)D_8011ECD0)[128 + i].unk_03 |= 0x80;
-                ((NameRecord44 *)D_8011ECD0)[128 + i].unk_01 = 4;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 &= 0x7F;
-            } else {
-                ((NameRecord44 *)D_8011ECD0)[128 + i].unk_03 &= 0x7F;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 |= 0x80;
-                if (status != 0) {
-                    ((NameRecord44 *)D_8011ECD0)[141 + i].unk_18 = (status & 7) + 0x58;
-                }
-            }
-        }
-        r = rec + 8 * sizeof(Rec38);
-        for (i = 8; i < 11; i++, r += sizeof(Rec38)) {
-            if (!((Rec38 *)(r + 0x308))->unk_0C.f.b1 || (status = rec[0x664 + i]) == 0) {
-                ((NameRecord44 *)D_8011ECD0)[129 + i].unk_03 |= 0x80;
-                ((NameRecord44 *)D_8011ECD0)[129 + i].unk_01 = 4;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 &= 0x7F;
-            } else {
-                ((NameRecord44 *)D_8011ECD0)[129 + i].unk_03 &= 0x7F;
-                ((NameRecord44 *)D_8011ECD0)[141 + i].unk_03 |= 0x80;
-                if (status != 0) {
-                    ((NameRecord44 *)D_8011ECD0)[141 + i].unk_18 = (status & 7) + 0x58;
-                }
-            }
-        }
-    }
-    ((NameRecord44 *)D_8011ECD0)[140].unk_03 |= 0x80;
-    ((NameRecord44 *)D_8011ECD0)[140].unk_01 = 4;
-    ((NameRecord44 *)D_8011ECD0)[136].unk_03 |= 0x80;
-    ((NameRecord44 *)D_8011ECD0)[136].unk_01 = 4;
-}
-#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013A9C8);
-#endif
 
 void func_8013ACA4(void) {
     if (D_800E8BEE != 0) {
@@ -400,7 +320,7 @@ void func_8013BB10(void) {
 void func_8013BB1C(void) {
 }
 
-/* NON_MATCHING: T-11010, only instruction order differs: seven pairs of 'lui a0,string' / 'lui at,store' swapped and the kanji_speed store placed before the string address, 16 swaps */
+/* NON_MATCHING: T-11570, 28 rows (14 swaps): seven pairs of 'lui a0,string' / 'lui at,store' swapped; writing the kanji_speed store and its printf on one line fixed that pair (T-11010 had 16 swaps) */
 #ifdef NON_MATCHING
 void func_8013BB24(void) {
     u8 speed;
@@ -417,8 +337,7 @@ void func_8013BB24(void) {
             func_800AE0B0("option setting!");
             D_8014D0AC = D_800E6280.unk_1124;
             speed = get_k_speed();
-            D_8014D0B0 = speed;
-            func_800AE0B0("kanji_speed%d \n", speed);
+            D_8014D0B0 = speed; func_800AE0B0("kanji_speed%d \n", speed);
             D_8014D0B4 = *(u8 *)&D_800E6280.unk_F6C;
             func_800AE0B0("icon_mode %d \n", *(u8 *)&D_800E6280.unk_F6C);
             D_8014D0B8 = *(u8 *)&D_800E6280.unk_1092;
@@ -474,14 +393,14 @@ void func_8013BB24(void) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
 #endif
 
-/* NON_MATCHING: T-11120, 14 lines: the rect sits 4 bytes higher in the frame than in the original (sp+0x34, same frame size; any pad local grows the frame by 8) and the final D_800E62BA store has `li v1,0x80` before `lui at` */
+/* NON_MATCHING: T-11570, 10 lines, frame slot only: the rect sits at sp+0x38 here, sp+0x34 in the original with the same 0x40 frame. IDO places locals from the frame top and keeps 8 spare bytes below them, so any extra local (s32/s16/u8 pad, 12-byte struct, s16[6], block scope) grows the frame by 8 (T-11120). The `li v1,0x80` order was the two case-2 stores swapped. */
 #ifdef NON_MATCHING
 void func_8013BE18(void) {
     RECT rect;
 
-    *(u8 *)&D_800E6280.unk_3A += 4;
-    if (*(u8 *)&D_800E6280.unk_3A >= 0x80) {
-        *(u8 *)&D_800E6280.unk_3A = 0x80;
+    D_800E6280.unk_03A += 4;
+    if (D_800E6280.unk_03A >= 0x80) {
+        D_800E6280.unk_03A = 0x80;
     }
     switch (D_800E6280.unk_110D) {
     case 0:
@@ -503,8 +422,8 @@ void func_8013BE18(void) {
             rect.w = 0x20;
             func_8009C884(&rect, (void *)0x801E0200);
             func_80043914(0x801E0000, 0x18, 1, 2, 0);
+            D_800E6280.unk_03A = 0x80;
             D_800E6280.unk_110D = 3;
-            *(u8 *)&D_800E6280.unk_3A = 0x80;
         }
         break;
     case 3:
@@ -798,42 +717,7 @@ s32 func_8013C9F0(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CB44);
 
-/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4; the original also keeps the selector copy in a stack slot (sp+0x2C) across the calls, frame 0x38 */
-#ifdef NON_MATCHING
-void func_8013CEC8(void) {
-    s32 n;
-
-    menu_check(0, D_8011ECF6, D_8011ECFA);
-    D_800E6280.unk_F88 &= ~0x100;
-    func_8004FC10(0);
-    n = D_800E6280.unk_1093;
-    if (D_800E6280.unk_1093 != -1) {
-        D_80120C6F |= 0x80;
-        D_80120C92 = n / 7 * 0x1F - 0x82;
-        D_80120C96 = n % 7 * 0x10 - 0xB;
-    }
-    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[n] == 1) {
-        if (n + 1 == D_800E7D36) {
-            func_80044750(0x501);
-            func_80042940(3);
-            D_800E6280.unk_1118 = D_800E7D36;
-        } else {
-            D_800E7D36 = D_800E6280.unk_1093 + 1;
-            func_8004E58C();
-            func_80139CB4();
-            func_8004EA98();
-            func_8004EAD4(0);
-            func_8013B51C(n);
-        }
-    }
-    func_8013AF78(1);
-    func_8013B1D8();
-    func_80139C24();
-    func_80142880();
-}
-#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013CEC8);
-#endif
 
 void func_8013D054(void) {
     u8 state;
@@ -896,19 +780,22 @@ void func_8013D054(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013D2AC);
 
-/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4 (selector in $v1 plus a `move v0,v1` copy for the division and the D_800E7D15 index) */
+/* NON_MATCHING: T-11570, 33 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 10 lines off, all compare operand order. See matching-notes T-11570. */
 #ifdef NON_MATCHING
 void func_8013D4CC(void) {
+    s32 idx;
+
     menu_check(0, D_8011ECF6, D_8011ECFA);
     D_800E6280.unk_F88 &= ~0x100;
     func_8004FC10(0);
+    idx = D_800E6280.unk_1093;
     if (D_800E6280.unk_1093 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = (s8)D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
-        D_80120C96 = (s8)D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
+        D_80120C92 = idx / 7 * 0x1F - 0x82;
+        D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[D_800E6280.unk_1093] == 1) {
-        if (D_800E6280.unk_1093 + 1 == D_800E6280.unk_1118) {
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[idx] == 1) {
+        if (idx + 1 == D_800E6280.unk_1118) {
             func_80042940(0x24);
         } else {
             func_80042940(0x22);
@@ -1040,21 +927,21 @@ void func_8013DA40(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11120, 18 lines: the original keeps the selector in $v1 and divides a `move v0,v1` copy of it (-1 in $a1, 7 in $a0); here no copy, constants one register lower. Same prologue in six sibling functions. */
+/* NON_MATCHING: T-11570, 27 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 4 lines off, all compare operand order. See matching-notes T-11570. */
 #ifdef NON_MATCHING
 void func_8013DAC4(void) {
-    s8 *p;
+    s32 idx;
 
     menu_check(0, D_8011ECF6, D_8011ECFA);
     D_800E6280.unk_F88 &= ~0x100;
     func_8004FC10(0);
-    p = &D_800E6280.unk_1093;
-    if (*p != -1) {
+    idx = D_800E6280.unk_1093;
+    if (D_800E6280.unk_1093 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
-        D_80120C96 = D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
+        D_80120C92 = idx / 7 * 0x1F - 0x82;
+        D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (*p != -1)) {
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1)) {
         func_8004284C();
         D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
     }
@@ -1274,7 +1161,7 @@ void func_8013E3C8(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4; the original also keeps the copy in a stack slot (sp+0x2C) across the calls, frame 0x38 */
+/* NON_MATCHING: T-11570, 28 lines. Selector-copy family (see func_8013DAC4): IDO copy-propagates `n` into the global and gives the global $v0; with global copy propagation off (experiment) the draft is 8 lines off (compare operand order, frame 0x30 vs 0x38). */
 #ifdef NON_MATCHING
 void func_8013E430(void) {
     s32 n;
@@ -1536,7 +1423,8 @@ void func_8013F058(void) {
 
 /* NON_MATCHING: T-11370, 18 rows off. The `++idx` keeps the selector copy (`move` in the first delay slot, spill at
  * sp+0x2C), but IDO gives the loaded selector $v0 and the copy $v1 where the original has them the other way round,
- * and the increment lands in the copy's register instead of a temporary. */
+ * and the increment lands in the copy's register instead of a temporary. T-11570: selector-copy family (see
+ * func_8013DAC4); the plain `idx = global` form scores 34 here but 8 with global copy propagation off. */
 #ifdef NON_MATCHING
 void func_8013F0DC(void) {
     s32 sel;
@@ -1634,26 +1522,24 @@ s32 func_8013F208(void) {
 }
 
 
-/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4 (selector in $v1 plus a `move v0,v1` copy for the division and the D_800E7D15 index) */
+/* NON_MATCHING: T-11570, 23 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 4 lines off, all compare operand order. See matching-notes T-11570. */
 #ifdef NON_MATCHING
 void func_8013F454(void) {
-    GameState *g;
     s32 idx;
 
     func_80142880();
     menu_check(0, D_8011ECF6, D_8011ECFA);
     D_800E6280.unk_F88 &= ~0x100;
     func_8004FC10(0);
-    g = &D_800E6280;
-    idx = g->unk_1093;
-    if (idx != -1) {
+    idx = D_800E6280.unk_1093;
+    if (D_800E6280.unk_1093 != -1) {
         D_80120C6F |= 0x80;
         D_80120C92 = idx / 7 * 0x1F - 0x82;
         D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
     if (D_800E6280.unk_F88 & 0x820) {
-        if (idx != -1) {
-            D_800E6280.unk_1118 = idx + 1;
+        if (D_800E6280.unk_1093 != -1) {
+            D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
             if ((u8)(&D_800E7D15)[idx] != 0) {
                 func_8004284C();
             } else if (func_80054694(D_800E6280.unk_1118) == 1) {
@@ -1801,18 +1687,21 @@ void func_8013FB08(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11120, same selector-copy prologue as func_8013DAC4: the original indexes D_800E7D15 and divides a `move v0,v1` copy of the selector, here no copy and constants one register lower. */
+/* NON_MATCHING: T-11570, 27 lines. Selector-copy family: the original divides and indexes a copy of the s8 selector (`move v0,v1`) and compares the selector constant-first (`beq a1,v1`); IDO copy-propagates `idx` into the global. With uopt global copy propagation off (`-zcopy:0` for this procedure, experiment only) this draft is 4 lines off, all compare operand order. See matching-notes T-11570. */
 #ifdef NON_MATCHING
 void func_8013FB8C(void) {
+    s32 idx;
+
     menu_check(0, D_8011ECF6, D_8011ECFA);
     D_800E6280.unk_F88 &= ~0x100;
     func_8004FC10(0);
+    idx = D_800E6280.unk_1093;
     if (D_800E6280.unk_1093 != -1) {
         D_80120C6F |= 0x80;
-        D_80120C92 = (s8)D_800E6280.unk_1093 / 7 * 0x1F - 0x82;
-        D_80120C96 = (s8)D_800E6280.unk_1093 % 7 * 0x10 - 0xB;
+        D_80120C92 = idx / 7 * 0x1F - 0x82;
+        D_80120C96 = idx % 7 * 0x10 - 0xB;
     }
-    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[D_800E6280.unk_1093] != 0) {
+    if ((D_800E6280.unk_F88 & 0x820) && (D_800E6280.unk_1093 != -1) && (u8)(&D_800E7D15)[idx] != 0) {
         func_8004284C();
         func_80044750(0x501);
         D_800E6280.unk_1118 = D_800E6280.unk_1093 + 1;
@@ -2125,21 +2014,15 @@ s32 func_80140574(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
-/* NON_MATCHING: T-10710, 14 lines: the six stores of the value use t6 (one andi) where the original has an extra andi v0,t6,0xFF (double u8 conversion); the original reads D_800E62BA as its own u8 scalar */
+/* NON_MATCHING: T-11570, 15 lines: the in-place global form through the u8 view gives a0/t6 and both stores of the global like the original (the plain field gives the global $v0, 25 lines); the six fade stores use t6 where the original keeps one more `andi v0,t6,0xff` value in $v0 (T-10710: locals, casts, masks, separate stores and an empty test all fold it) */
 #ifdef NON_MATCHING
 void func_80140B20(void) {
-    u8 x;
-    u8 y;
-
-    x = *(u8 *)&D_800E6280.unk_3A;
-    if (x >= 3) {
-        x -= 2;
-        y = x;
-        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = y;
-        *(u8 *)&D_800E6280.unk_3A = x;
-        if (x < 0x80) {
-            *(s8 *)&D_800E6280.unk_3A = x;
-            func_80057390(x);
+    /* FAKE: unk_03A is already u8; the (u8 *) view only moves the global to $a0 like the original (T-11570) */
+    if (*(u8 *)&D_800E6280.unk_03A >= 3) {
+        *(u8 *)&D_800E6280.unk_03A -= 2;
+        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = *(u8 *)&D_800E6280.unk_03A;
+        if (*(u8 *)&D_800E6280.unk_03A < 0x80) {
+            func_80057390(*(u8 *)&D_800E6280.unk_03A);
         }
     }
 }
