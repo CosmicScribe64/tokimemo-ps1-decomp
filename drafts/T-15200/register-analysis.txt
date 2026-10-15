@@ -1,0 +1,20 @@
+regdiff func_80118010 [EVENT]  draft: build/t15200/18010-all-state/context.c
+  169 draft / 169 original instructions
+  13 instruction(s) differ in registers only
+  register map (draft -> original): $v0->$v1 x9, $v1->$a0 x4
+
+FIRST DIVERGENCE at draft insn 90
+  draft    li v1,52
+  original li a0,52
+  draft puts constant 0x34 (built by `li v1,52`) in $v1, the original in $a0 (result of `li v1,52`).
+  draft range: bit 163, new temporary: constant 0x34 (built by `li v1,52`)
+    priority 2 = 3 use(s) + 0 def(s) over 1 unit(s), loop weight 1, denominator 1; constrained, allocated #4, cheapest colour cost 0, got colour 2 ($v1) [def/use counts agree]
+  no live range holding $a0 overlaps it in the draft.
+  hint: the draft took the lower colour 2 ($v1); in the original an interfering range holds it: look for a value the original keeps in a register there (a constant or pointer that is separate or lives longer).
+  not allocated in the draft: bit 3, global S178+3814 (priority -0.25, -ve save). If the original keeps it in a register, make it profitable: more uses, a store plus uses, no call between them.
+  not allocated in the draft: bit 33, global D_800EECBC (net zero: 2 use(s) and 0 def(s) are paid back by 2 reload/save charge(s)). If the original keeps it in a register, make it profitable: more uses, a store plus uses, no call between them.
+  the original passes this value to the call at its insn 119 in $a0: uopt precolours a value that is an argument to that argument register, which makes it the cheapest colour. The draft does not pass the same value straight to a call (a cast, a copy or another expression sits in between).
+  in the original $v1 is held by value computed by `addu v1,a1,t7` (insns 97-101) while this value sits in $a0; the draft has no such value alive there.
+  in the original $v1 is held by value computed by `addu v1,a1,t1` (insns 106-110) while this value sits in $a0; the draft has no such value alive there.
+  constants kept in registers that differ (1): 0x34: draft $v1, original $a0
+  [lookup 0.3s, traced compile 0.6s, analysis 0.2s]

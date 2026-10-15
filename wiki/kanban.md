@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
@@ -77,6 +78,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
 
 - [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
+
+- [ ] [[tickets/T-15200-event-large|T-15200 Reconstruct large EVENT dispatcher and reusable types]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
