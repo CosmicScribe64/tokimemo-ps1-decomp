@@ -14469,3 +14469,6 @@ Three ticket statuses match Done cards; result page and ticket cross-references 
 
 ## [2026-10-15] query | Distinguish retained drafts from remaining assembly
 [[tickets/T-12600-byte-coverage-families]] answers the user's draft-coverage question with a Docker source census:125unmatched functions/70500bytes have retained C drafts;947/799448bytes have only assembly includes in tracked source. Scratch drafts are not exhaustively inventoried and must not be conflated with no prior attempts or usable matching C. Matched coverage unchanged. The previous goal turn published evidence/worker rotation; this query adds measured evidence about the actual remaining reconstruction work.
+## [2026-10-15] build | EN_NICHI pattern matrix verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts func_80135600 in src/ovl/EN_NICHI/80132000.c, 976 literal linked bytes MATCH and overlay SHA1 OK. The existing EnWords64 now includes its observed 8x8 matrix view. Direct invariant expression and natural nested loops recover frame and register shapes without padding. Cumulative accepted gain 2032 bytes / three functions. Rejected AI/spawn hypotheses are retained locally.
