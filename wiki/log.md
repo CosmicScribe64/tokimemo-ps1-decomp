@@ -13942,3 +13942,6 @@ Independent Standards and Spec reviews pass all twenty-one accepted functions / 
 
 ## [2026-10-15] build | Four BUNKASAI held-out matches
 [[tickets/T-12703-bunkasai-heldout-family]] moves to In Review after four literal matches / 4,016 bytes, BUNKASAI SHA1 OK and headers OK. Existing typed byte stores and ordinary switch structure complete 8014DD90.c without changing prior C. Branch total: thirty-four functions / 33,312 bytes.
+
+## [2026-10-15] build | Five more BUNKAKEN siblings and preservation audit
+[[tickets/T-12701-bunkaken-address-family]] adds five verified functions / 3,704 linked bytes in 8013CF30.c, SHA1 OK. All 37 pre-existing C function bodies in touched BUNKAKEN files are textually identical to baseline95c3fc9f. Total branch gain: thirty-nine functions / 37,016 bytes. Standards review passes prior thirty-four-function checkpoint.
