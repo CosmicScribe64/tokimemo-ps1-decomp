@@ -333,3 +333,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[scenes-family-results]] - GEKO/DATE2 family work, [[tickets/T-13900-scenes-families|T-13900]].
 - [[tickets/T-14100-date-near-matches|T-14100]] DATE retained near matches and new-family hypotheses (In Progress).
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Compiler include dependencies reused for DATE experiments.
+- [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
+- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.

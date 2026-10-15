@@ -14277,6 +14277,14 @@ All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 68
 
 ## [2026-10-15] build | Card-state batch verified at 61.6 percent
 [[tickets/T-12400-integrate-verified-matches]]: ETCaa1c51ec adds4functions/2368bytes; event178f61b1 fixes include guards and canonical main declaration without changing matched bytes. All27 checksums, header/global checks and prototype audit pass (0new/15known). Total5874/6958functions,1404124/2279368bytes (61.6%); remaining419372alignedbytes for80%. Evidence build/scratch/goal-card-states.log. Build-dependency experiment remains unintegrated pending file-addition correctness fixes; observed ETC-header rebuild reduction443to13compiles is not a game-byte gain.
+
+## [2026-10-15] ticket | T-14000 ENDING and EN_NICHI families
+
+Created [[tickets/T-14000-ending-en-nichi-families]] in In Progress after reading [[index]], [[decompile-workflow]], [[matching-notes]], CODING_STANDARDS.md and AGENTS.local.md. Isolated worktree codex/ending-14000 owns ENDING and EN_NICHI only.
+
+## [2026-10-15] build | ENDING asset dispatcher verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/ENDING/80134D20.c func_80136EE4: 580 linked bytes MATCH, ENDING SHA1 OK. Existing CharFlags b14 fixes the raw-mask instruction mismatch. Rejected scene and EN_NICHI dispatcher candidates remain ASM; diagnostics in scratchpad/t14000.
 ## [2026-10-15] ticket | 13100 review complete
 [[tickets/T-13100-etc-families]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
 
@@ -14369,7 +14377,7 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 
 ## [2026-10-15] ticket | T-14000 ENDING and EN_NICHI families
 
-Created [[tickets/T-14000-ending-en-nichi-families]] in In Progress after reading [[index]], [[decompile-workflow]], [[matching-notes]], CODING_STANDARDS.md and AGENTS.local.md. Isolated worktree codex/ending-14000 owns ENDING and EN_NICHI only.
+## [2026-10-15] build | EN_NICHI input loop verified
 
 ## [2026-10-15] build | ENDING asset dispatcher verified
 
@@ -14398,3 +14406,4 @@ Created [[tickets/T-14100-date-near-matches]] from the verified [[tickets/T-1210
 ## [2026-10-15] build | DATE flag-aware dispatch matched
 
 [[tickets/T-14100-date-near-matches]] adds func_80152980 in src/ovl/DATE/80151460.c: 296 literal linked bytes, default-build DATE SHA1 OK. Natural bit clearing preserves FF7F immediate. New package total 636 bytes. func_80158338 remains scratch-only after a 16-row comparison.
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/EN_NICHI/80132000.c func_801333B0: 476 linked bytes MATCH, EN_NICHI SHA1 OK. Natural ten-object loop matches compiler unrolling; the matched s32 return type preserves the final accumulator lifetime. Total accepted gain 1056 bytes.
