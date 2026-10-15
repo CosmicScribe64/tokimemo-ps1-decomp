@@ -14456,3 +14456,7 @@ Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45
 ## [2026-10-15] build | EVENT interaction adds 656 bytes
 
 [[tickets/T-14300-event-families]] matches func_80117D80 in src/ovl/EVENT/8010FE10.c using ordinary conditions, the observed signed EventStateView field at offset 0xFE, and one explicitly marked FAKE discarded entry assignment for operand order. Default literal proof, EVENT SHA1, header/global/prototype guards pass. Cumulative gain: six functions / 3,204 literal linked bytes. Shop and medal probes remain ignored scratch.
+
+## [2026-10-15] build | EVENT medal-game handler adds 480 bytes
+
+[[tickets/T-14300-event-families]] adds func_801166A8 in src/ovl/EVENT/8010FE10.c. Direct compound updates plus one marked FAKE entry assignment match. Combined seven-function default literal proof, EVENT SHA1 and declaration/aggregate/prototype guards pass. Cumulative gain: seven / 3,684 bytes. Rejected particle draft restored before literal proof; normalized equality alone was not counted.
