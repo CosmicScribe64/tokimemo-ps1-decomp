@@ -14530,3 +14530,7 @@ Claimed [[tickets/T-15300-fresh-structural-near-matches]] for bounded C fixes fr
 ## [2026-10-15] build | T-15300 BUNKASAI flag-store match
 
 Promoted BUNKASAI func_801438E4: 852 inventory coverage bytes and 852 default linked literal bytes. Existing CharFlags bits 12/13 replace byte-OR updates, resolving the complete 14-row gap. BUNKASAI SHA1 and header/global/prototype guards pass. No FAKE/header changes; existing C preserved. [[tickets/T-15300-fresh-structural-near-matches]] remains In Progress for fresh TACO probes; [[matching-notes]] updated.
+
+## [2026-10-15] build | T-15300 BUNKAKEN label encoding match
+
+Promoted BUNKAKEN func_80145844: 440 inventory coverage bytes and 440 literal default linked bytes. Restoring the ordinary Unicode label fixes an unsupported mixed hex-escape spelling in IDO K&R mode, following root's BUNKASAI finding. BUNKAKEN SHA1 and header/global/prototype guards pass. No FAKE/header changes or existing C edits. TACO's bounded structural probe is retained locally and paused for incoming exact candidates; see [[tickets/T-15300-fresh-structural-near-matches]].
