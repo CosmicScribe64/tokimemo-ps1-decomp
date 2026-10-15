@@ -14713,3 +14713,7 @@ Parent requests immediate draft checkpoint with no further exploration. [[ticket
 ## [2026-10-15] ticket | EVENT draft checkpoint awaits review
 
 [[tickets/T-15200-event-large]] moves In Review for parent integration. Useful nonmatching source, exact context snapshots, hashes, measured alternatives and serial replay scripts are committed separately from production C. Standards/spec review remains required before Done.
+
+## [2026-10-15] build | Verify pinned EVENT draft checkpoint
+
+[[tickets/T-15200-event-large]]: default ASM fallback linked proofs pass (6,848 / 680 bytes); EVENT checksum, header/global guards and prototype branch guard pass (zero new, 15 known). Preferred nonmatching contexts rescore to 1,930 / 26 rows. Host Git confirms production C unchanged; no new matching coverage. Saved proof metadata in drafts/T-15200/verification.json.

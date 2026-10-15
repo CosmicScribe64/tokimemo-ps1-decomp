@@ -1,0 +1,20 @@
+{
+  "build": 0,
+  "default": 0,
+  "prototypes": 0,
+  "func_801103A0": {
+    "rows": 1930,
+    "context_sha256": "c61958a068dc3cf0bef30966a3b6467edcfcbecc27866ea9f6f39430bcb61825",
+    "matching_claim": false
+  },
+  "func_80118010": {
+    "rows": 26,
+    "context_sha256": "19b775945b4903fd6d344626e039a8298c9f049c4c4092e657be71308c3563be",
+    "matching_claim": false
+  },
+  "EVENT_sha1": "ff7184d7e92b7aff372450ac3b8c2bdd42e55a5e",
+  "production_C_unchanged": true,
+  "new_verified_coverage_bytes": 0,
+  "production_C_audit": "Host git diff --quiet c5859bf5 -- src passed; worktree Git metadata is outside Docker mount",
+  "default_proofs_are_ASM_fallbacks": true
+}

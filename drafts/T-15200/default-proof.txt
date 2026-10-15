@@ -1,0 +1,4 @@
+EVENT:func_801103A0: compared default build
+EVENT:func_801103A0: MATCH (linked function bytes equal target (6848 bytes))
+EVENT:func_80118010: compared default build
+EVENT:func_80118010: MATCH (linked function bytes equal target (680 bytes))
