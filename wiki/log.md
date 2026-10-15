@@ -14706,3 +14706,11 @@ Started [[tickets/T-14900-rpg-near-matches]] after reading [[tickets/T-13300-rpg
 ## [2026-10-15] build | Match RPG motion through recovered aggregate aliasing
 
 [[tickets/T-14900-rpg-near-matches]]: func_80148B08 passes 1,128 default linked bytes and RPG_BAT SHA1; existing RpgMotion20 aliases preserve EC50 store before EC6C load. Added canonical u8 flag declarations and genuine void prototype. 454F0 remains twenty register rows, AF1C six after corrected u8 stores; bounded typed-pointer/local-lifetime probes do not improve them. Original attempts and preexisting C unchanged. Ticket moves In Review; [[matching-notes]] updated.
+
+## [2026-10-15] ticket | T-15000 KANGEI near-match investigation
+
+Claimed [[tickets/T-15000-kangei-near-match]] for bounded type/aggregate investigation of KANGEI func_80135CE0, whose T-14500 draft has score 6 over 432 inventory bytes. Incoming zero candidates keep priority; the frozen census context is unchanged. [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15000 KANGEI duplicated-branch-store match
+
+Promoted KANGEI func_80135CE0: 432 inventory coverage bytes and 432 default linked literal bytes. Replaced m2c's shared-store goto with ordinary if/else-if branches, each with its own final byte store. KANGEI SHA1 and header/global/prototype guards pass; no FAKE or header changes. [[tickets/T-15000-kangei-near-match]] moves to In Review, with [[kanban]], [[index]], and [[matching-notes]] updated.
