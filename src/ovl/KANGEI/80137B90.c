@@ -314,7 +314,44 @@ void func_801389F4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138A34);
+void func_80138A34(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        func_80062CD0(0x541D);
+        break;
+    case 1:
+        func_80062CD0(0x5D14);
+        break;
+    case 2:
+        func_80062CD0(0x5201);
+        break;
+    case 3:
+        func_80062CD0(0x5882);
+        break;
+    case 4:
+        func_80062CD0(0x6692);
+        break;
+    case 5:
+        func_80062CD0(0x5F8A);
+        break;
+    case 6:
+        func_80062CD0(0x6200);
+        break;
+    case 7:
+        func_80062CD0(0x5B7F);
+        break;
+    case 8:
+        func_80062CD0(0x506C);
+        break;
+    case 9:
+        func_80062CD0(0x652A);
+        break;
+    default:
+        func_80062CD0(0x6908);
+        break;
+    }
+    func_8004284C();
+}
 
 void func_80138B28(void) {
     D_800B3D60 = 0;
@@ -437,7 +474,65 @@ void func_80138F54(void) {
 
 INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_80138F88);
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80137B90", func_801392D4);
+void func_801392D4(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_80139AD0 = (KObj *) D_8013A174;
+        D_80139AD4 = D_8013A1A8;
+        D_80139AD8 = D_8013A1DC;
+        return;
+    case 1:
+        D_80139AD0 = (KObj *) D_8013A188;
+        D_80139AD4 = D_8013A1BC;
+        D_80139AD8 = D_8013A1F0;
+        return;
+    case 2:
+        D_80139AD0 = (KObj *) D_8013A17C;
+        D_80139AD4 = D_8013A1B0;
+        D_80139AD8 = D_8013A1E4;
+        return;
+    case 3:
+        D_80139AD0 = (KObj *) D_8013A180;
+        D_80139AD4 = D_8013A1B4;
+        D_80139AD8 = D_8013A1E8;
+        return;
+    case 4:
+        D_80139AD0 = (KObj *) D_8013A198;
+        D_80139AD4 = D_8013A1CC;
+        D_80139AD8 = D_8013A200;
+        return;
+    case 5:
+        D_80139AD0 = (KObj *) D_8013A18C;
+        D_80139AD4 = D_8013A1C0;
+        D_80139AD8 = D_8013A1F4;
+        return;
+    case 6:
+        D_80139AD0 = (KObj *) D_8013A190;
+        D_80139AD4 = D_8013A1C4;
+        D_80139AD8 = D_8013A1F8;
+        return;
+    case 7:
+        D_80139AD0 = (KObj *) D_8013A184;
+        D_80139AD4 = D_8013A1B8;
+        D_80139AD8 = D_8013A1EC;
+        return;
+    case 8:
+        D_80139AD0 = (KObj *) D_8013A170;
+        D_80139AD4 = D_8013A1A4;
+        D_80139AD8 = D_8013A1D8;
+        return;
+    case 9:
+        D_80139AD0 = (KObj *) D_8013A194;
+        D_80139AD4 = D_8013A1C8;
+        D_80139AD8 = D_8013A1FC;
+        return;
+    default:
+        D_80139AD0 = (KObj *) D_8013A1A0;
+        D_80139AD4 = D_8013A1D4;
+        D_80139AD8 = D_8013A208;
+        return;
+    }
+}
 
 void func_80139540(void) {
     s32 pad; /* FAKE: unused local, takes the 4 bytes above the table (T-3330 layout); real source unknown. T-4010 */

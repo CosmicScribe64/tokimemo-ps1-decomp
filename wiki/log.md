@@ -14621,3 +14621,7 @@ Standards and spec review pass after all findings resolved. Final five default l
 
 ## [2026-10-15] decision | Expand repair work for complete draft coverage
 [[tickets/T-14500-exhaustive-drafts]] generation is around 325/1066 attempts. DATE repair worker has eight of nine reserved failures compiling with full-TU scores; none is a match yet. Created Sol6.1medium chat T14700 for fifteen reserved aggregate/callback-table failures outside DATE, using type-repair-reservation.json. Original attempts remain immutable; repairs retain complete contexts and provenance. New worktree must share disc inputs. Final MAIN chat completed; its replacement addresses missing drafts rather than repeating known matching searches.
+
+## [2026-10-15] build | T-14501 KANGEI verified draft batch
+
+Promoted 3 ordinary C functions / 1,328 bytes for KANGEI after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
