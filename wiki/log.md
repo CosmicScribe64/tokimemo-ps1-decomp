@@ -14293,3 +14293,15 @@ Created codex/scenes-13900 at 0e670a13 with ignored reference inputs copied from
 ## [2026-10-15] build | GEKO dispatcher and shared indicator source form
 
 [[tickets/T-13901-geko-families]] adds two functions / 924 literal linked bytes with GEKO SHA1 OK. [[scenes-family-results]] records direct global updates and the established function-table source form.
+
+## [2026-10-15] ticket | GEKO and DATE2 bounded pass enters review
+
+Moved [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and [[tickets/T-13902-date2-families]] to In Review. Four default literal proofs, both overlay SHA1 checks, headers/globals/prototypes pass. Exact body audit preserves all 102 pre-existing C bodies. Standards and spec reviews found no actionable issues.
+
+## [2026-10-15] ticket | Close reviewed GEKO and DATE2 bounded pass
+
+Moved [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and [[tickets/T-13902-date2-families]] from In Review to Done after both independent review axes passed without findings. Four functions / 2108 literal linked bytes; affected overlay checks and 102-body preservation audit pass. [[scenes-family-results]] preserves all bounded negatives and unresolved larger candidates. No full-game completion or 27-binary checksum claim.
+
+## [2026-10-15] lint | GEKO and DATE2 handoff consistency
+
+Three ticket statuses match Done cards; result page and ticket cross-references exist. Accepted byte totals agree with final-proof.log. All speculative prototype/type edits removed; only accepted C/header changes remain. Original source checkout read only, copyrighted inputs ignored. Integration remains responsible for main and the 80% goal.

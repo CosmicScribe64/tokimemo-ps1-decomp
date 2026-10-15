@@ -23,9 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-13900-scenes-families|T-13900 GEKO and DATE2 source families]]
-- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
-- [ ] [[tickets/T-13902-date2-families|T-13902 DATE2 bounded family reconstruction]]
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
@@ -146,6 +143,9 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-13900-scenes-families|T-13900 GEKO and DATE2 source families]]
+- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
+- [ ] [[tickets/T-13902-date2-families|T-13902 DATE2 bounded family reconstruction]]
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 - [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
