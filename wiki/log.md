@@ -13359,3 +13359,7 @@ Created [[tickets/T-11570-w1-ovl-name_ent-80139740]] (In Progress): wave 1 packa
 ## [2026-10-15] ticket | T-11570 to In Review
 
 [[tickets/T-11570-w1-ovl-name_ent-80139740]]: no match among the 12 NAME_ENT drafts. The selector-copy family (7 functions) comes to 4-14 lines with uopt global copy propagation off (experiment, not committed); proposed toolchain follow-up in [[matching-notes]]. `func_8013BE18` down to the frame slot, `func_8013BB24` 28 lines; `func_8013A9C8` and `func_8013CEC8` drafts dropped (over 30 lines). Rows added to [[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11570 Done
+
+[[tickets/T-11570-w1-ovl-name_ent-80139740]] reviewed against `CODING_STANDARDS.md` and moved to Done. Matched count: 0 of 12 (selector-copy family traced to uopt global copy propagation, see [[matching-notes]]). One finding fixed: `FAKE` comment on the `func_80140B20` u8-view draft. NAME_ENT sha1 OK.
