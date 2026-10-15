@@ -1742,4 +1742,34 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138F60);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80139440);
 
+/* NON_MATCHING: T-11650, 2 differing lines: compare chain on the $v0 copy, original compares $v1 */
+#ifdef NON_MATCHING
+s32 func_80139684(void) {
+    u8 var_a0;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        if (D_800E6280.unk_1104.u >= 0x41U) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 1:
+        var_a0 = *(u8 *)&D_800E6280.unk_3A;
+        if (var_a0 >= 4) {
+            var_a0 -= 4;
+        } else {
+            D_800E6280.unk_110D += 1;
+            var_a0 = 0;
+        }
+        *(u8 *)&D_800E6280.unk_3A = var_a0;
+        func_80057390(var_a0);
+        break;
+    case 2:
+        main_state_set(0x15);
+        text_set_advance(0xE);
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80139684);
+#endif
