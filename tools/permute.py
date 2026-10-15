@@ -219,26 +219,34 @@ def install_permuter_compat():
     ast_types.build_typemap = build_typemap
 
 
+SIGNATURE_PREFIX = re.compile(r"^[A-Za-z_][^;{}()\n]*[ \t*](\w+)\(", re.M)
+
+
 def signature_names(text):
     """Cheap signature prefixes, including multiline ANSI/K&R definitions."""
     # Collect cheap signature prefixes first. Searching for a whole definition in
     # one regex backtracks exponentially across long prototype lists (T-9810).
     # function_range checks each name separately, including multiline ANSI/K&R.
-    return set(re.findall(r"^[A-Za-z_][^;{}()\n]*[ \t*](\w+)\(", text, re.M))
+    return set(SIGNATURE_PREFIX.findall(text))
 
 
 def strip_functions(pre, func):
     """Strip other ANSI and K&R bodies, preserving the target text/line layout."""
-    names = signature_names(pre)
     edits = []
-    for name in names:
-        if name == func or name.startswith("PERM"):
+    seen = set()
+    # T-12100: inspect each signature at its known offset instead of searching
+    # the entire translation unit once for every prototype in the shared headers.
+    for prefix in SIGNATURE_PREFIX.finditer(pre):
+        name = prefix.group(1)
+        if name == func or name.startswith("PERM") or name in seen:
             continue
-        rng = function_range(pre, name)
-        if rng is None:
+        opening = def_regex(name).match(pre, prefix.start())
+        if opening is None:
             continue
-        a, b = rng
-        opening = def_regex(name).search(pre, a)
+        seen.add(name)
+        a, b = opening.start(), match_brace(pre, opening.end() - 1)
+        if b < 0:
+            continue
         sig = pre[a:opening.end() - 1].rstrip()
         if re.search(r"\)\s*[^{}]+;\s*$", sig):
             sig = sig[:sig.index("(")] + "()"

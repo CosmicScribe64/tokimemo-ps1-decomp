@@ -13505,3 +13505,19 @@ included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-1
 board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
 merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
 (ported onto main, 27/27, TT 252/303).
+
+## [2026-10-15] setup | T-12100 isolated acceleration investigation
+
+Created branch codex/acceleration-audit at 7a65b3d8 in /private/tmp/tokimemo-acceleration and [[tickets/T-12100-acceleration-audit]]. Read existing scoring evidence in [[tickets/T-11250-faster-candidate-scoring]] and [[tickets/T-11260-fast-scoring-order-search-permute]]. Main and matching worktrees are read-only; reuse the existing native Docker image with one CPU for experiments. Docker inspection found about 175% CPU in one active container, plus a transient second container; no running process changed.
+
+## [2026-10-15] decision | T-12100 remove repeated whole-unit scans
+
+Inspection found tools/permute.py searches the entire preprocessed unit for every signature name, including hundreds of header prototypes. Prototype-offset matching can preserve the same definition regex and brace scanner while avoiding repeated full-text searches. Implemented a bounded experiment; comparison against the base revision must prove identical stripped compiler input before adoption. Existing caches stay in place.
+
+## [2026-10-15] build | T-12100 bounded strip comparison
+
+One-CPU/1-GiB native Docker comparison on 21 translation units (8 main and every 30th non-TT overlay source), three repetitions each: all 63 stripped compiler inputs identical to base 7a65b3d8. Sum of per-file medians fell from 14.633 s to 0.800 s (18.29x for stripping only). Added tools/bench_strip.py to reproduce against an exported baseline. Initial scratch harness used an unsupported subprocess helper argument; corrected before measurements. Results live in build/acceleration/strip-results.jsonl (ignored).
+
+## [2026-10-15] ticket | T-12100 ready for review
+
+Moved [[tickets/T-12100-acceleration-audit]] to In Review. Added [[acceleration-audit]] with bounded timing/equality evidence and priorities from read-only cx worklists, including the queued BUNKA_SD zero-score draft. 229 affected tests and header validation passed in the capped Docker container. Compiler and allocator negative results cross-referenced; exact rescoring and linked proof remain unchanged.
