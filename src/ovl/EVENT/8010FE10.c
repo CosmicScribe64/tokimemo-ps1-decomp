@@ -2058,11 +2058,12 @@ void func_80119B58(void) {
     func_80011EC4(0x3A);
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11110, D_800B1AF6 narrow global update keeps truncated u8 in $v0 in original */
-void func_80119B78(void) {
+/* s32 with no return (K&R): the decremented copy `cur` stays in $v0 as the return register. */
+s32 func_80119B78(void) {
+    /* FAKE: unused word reserves top frame slot so before sits at sp+0x28; T-11600 */
     s32 pad;
     s32 before;
+    u8 cur;
 
     if ((D_800B1746 == 6) && (D_800B0A04[6].unk_17 != 0) && (D_800EECBC == 2)) {
         D_80094730 = 0;
@@ -2074,14 +2075,12 @@ void func_80119B78(void) {
         before = D_800B1AF6;
         func_8004CF30();
         if (before != D_800B1AF6) {
+            cur = D_800B1AF6;
             D_80094730 = 0;
-            D_800B1AF6 -= 5;
+            D_800B1AF6 = cur -= 5;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80119B78);
-#endif
 
 void func_80119C40(void) {
     if ((D_800B1746 == 6) && (D_800B0A04[6].unk_17 != 0) && (D_800EECBC == 2)) {
@@ -2663,7 +2662,7 @@ void func_8011C3F4(void) {
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-11110, D_800B1AF6 narrow global update keeps truncated u8 in $v0 in original (T-8080/T-9560) */
-void func_8011C470(void) {
+s32 func_8011C470(void) {
     s32 pad;
     s32 before;
 
