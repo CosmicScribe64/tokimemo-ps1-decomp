@@ -14936,3 +14936,8 @@ T-11690). TT stays excluded (issue #2).
 ## [2026-10-15] ticket | T-11670 resumed in wave 2 (w2-r11)
 
 [[tickets/T-11670-w1-main-8006cb30]] (In Progress) resumed as wave-2 package w2-r11 under [[tickets/T-16200-matching-wave-2]]. Merged branch `w1-p11` (matches `_schedule_init`, `geko_judge`, `schedule_girls_gakko`; guarded `func_80072998`, `func_800726F0`) onto the wave-2 base; dropped three duplicate declarations in `include/main_api.h`; `src/main/8006CB30.c` sha1 OK.
+
+## [2026-10-15] ticket | T-11670 to In Review
+
+[[tickets/T-11670-w1-main-8006cb30]] (wave 2 package w2-r11): 1 new match in `src/main/8006CB30.c` (`func_8006EA40`, 292 bytes; 4 on the ticket with wave 1). New guarded draft `func_8006D6E0` (5 lines), `func_80072D70` cut to 22 lines; others unchanged or left `INCLUDE_ASM`. Finding: a value-returning call used as a statement keeps later ranges in its block out of `v0`; a `void` override fixed `func_8006EA40`. Notes in [[matching-notes]] (T-11670), 5 rows in [[data/t0018-cases]].
+

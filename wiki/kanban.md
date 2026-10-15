@@ -33,7 +33,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
 
-- [ ] [[tickets/T-11670-w1-main-8006cb30|T-11670 Wave 1 package w1-p11]]
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
 - [ ] [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180 Twin-guided matching (Gemini) 39]]
@@ -53,6 +52,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-11670-w1-main-8006cb30|T-11670 Wave 1 package w1-p11]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
