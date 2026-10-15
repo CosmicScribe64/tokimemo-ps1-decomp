@@ -1,0 +1,28 @@
+m2c.py: argument counts from the callees' asm: func_80108330 0
+python3 failed:
+cfe: Error: drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c, line 4525: 'sp6C' undefined; reoccurrences will not be reported.
+     sp6C[0].unk0 = (s32) D_80123B7C;
+ ----^
+cfe: Error: drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c, line 4530: 'sp58' undefined; reoccurrences will not be reported.
+     sp58[0].unk0 = (s32) D_80123B90;
+ ----^
+cfe: Error: drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c, line 4535: 'sp44' undefined; reoccurrences will not be reported.
+     sp44[0].unk0 = (s32) D_80123BA4;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_80109404/work -o drafts/T-14500/EVENT/func_80109404/work/guarded.o /tmp/asm_processor16_eyh7p/preprocessed_e1d31661f0e144289ddc88a05af3ca2d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibtrhw6cf0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_80109404/work/guarded.o drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c, line 4531: 'sp58' undefined; reoccurrences will not be reported.
+     sp58[0].unk0 = (s32) D_80123B90;
+ ----^
+cfe: Error: drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c, line 4536: 'sp44' undefined; reoccurrences will not be reported.
+     sp44[0].unk0 = (s32) D_80123BA4;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_80109404/work -o drafts/T-14500/EVENT/func_80109404/work/guarded.o /tmp/asm_processordiyg7a7v/preprocessed_89146d9fb4254b17bbaef5e59c892f0a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibf4o71tsq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_80109404/work/guarded.o drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c, line 4537: 'sp44' undefined; reoccurrences will not be reported.
+     sp44[0].unk0 = (s32) D_80123BA4;
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_80109404/work -o drafts/T-14500/EVENT/func_80109404/work/guarded.o /tmp/asm_processortmzgwswn/preprocessed_db377edd19d14f1786c0da42be9a8ef1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib37_92ba8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_80109404/work/guarded.o drafts/T-14500/EVENT/func_80109404/work/guarded.o.sjis.c

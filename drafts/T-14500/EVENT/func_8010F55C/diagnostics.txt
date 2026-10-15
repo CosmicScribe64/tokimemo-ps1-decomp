@@ -1,0 +1,26 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/EVENT/func_8010F55C/work/guarded.c, line 5050: Incompatible function return type for this function.
+ void func_8010F55C(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/EVENT/func_8010F55C/work/guarded.c, line 5054: 'sp30' undefined; reoccurrences will not be reported.
+     *(M2cBlockF0 *)(&sp30[0]) = *(M2cBlockF0 *)(&D_801243B8);
+ ---------------------^
+cfe: Warning 689: drafts/T-14500/EVENT/func_8010F55C/work/guarded.c, line 5058: Unacceptable operand of == or !=
+     if (&func_80111E60 == var_v1) {
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_8010F55C/work -o drafts/T-14500/EVENT/func_8010F55C/work/guarded.o /tmp/asm_processor5t6lg4_q/preprocessed_7648966cb75f450c810b66ff0908468e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibslhabp1o/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_8010F55C/work/guarded.o drafts/T-14500/EVENT/func_8010F55C/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/EVENT/func_8010F55C/work/guarded.c, line 5050: Incompatible function return type for this function.
+ void func_8010F55C(void) {
+ ------------------^
+cfe: Warning 709: drafts/T-14500/EVENT/func_8010F55C/work/guarded.c, line 5056: Incompatible pointer type assignment
+     temp_v0 = &(&sp30[0])[D_800B1AF6];
+ ------------^
+cfe: Warning 689: drafts/T-14500/EVENT/func_8010F55C/work/guarded.c, line 5059: Unacceptable operand of == or !=
+     if (&func_80111E60 == var_v1) {
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_8010F55C/work -o drafts/T-14500/EVENT/func_8010F55C/work/guarded.o /tmp/asm_processorp4xna08s/preprocessed_4f57117e7e974ace846acef9e49b3e2b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibr6kj7ggx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_8010F55C/work/guarded.o drafts/T-14500/EVENT/func_8010F55C/work/guarded.c

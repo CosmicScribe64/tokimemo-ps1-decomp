@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_80118DAC 3
+python3 failed:
+ -------------^
+cfe: Warning 681: drafts/T-14500/EVENT/func_80118B4C/work/guarded.o.sjis.c, line 5943: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp38) + (8)) = (u16) *(u16 *)((unsigned char *)(&D_80125360) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/EVENT/func_80118B4C/work/guarded.o.sjis.c, line 5944: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp38) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80125360) + (4));
+ -------------------------------^
+cfe: Error: drafts/T-14500/EVENT/func_80118B4C/work/guarded.o.sjis.c, line 5955: 'sp' undefined; reoccurrences will not be reported.
+     *(s32 *)((unsigned char *)temp_v0_3 + (424)) = (s32) (*(s32 *)((unsigned char *)temp_v0_3 + (424)) + ((s32) ((*(s16 *)((unsigned char *)(sp + ((&D_8012439C)[D_800EECBC] * 2)) + (56)) * sp4A * sp48) << 0x10) / 16));
+ ---------------------------------------------------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_80118B4C/work -o drafts/T-14500/EVENT/func_80118B4C/work/guarded.o /tmp/asm_processorblpi1jtu/preprocessed_0a0e5152728543639e4e93ad116dcc38.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib43difp73/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_80118B4C/work/guarded.o drafts/T-14500/EVENT/func_80118B4C/work/guarded.o.sjis.c

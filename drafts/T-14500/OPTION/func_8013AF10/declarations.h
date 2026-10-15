@@ -1,0 +1,14 @@
+extern s16 D_800E637E;
+extern s16 D_800E6382;
+extern s16 D_800E6386;
+extern s16 D_800E638A;
+extern s16 D_800E638E;
+extern s16 D_800E6392;
+extern s16 D_800E6396;
+extern s16 D_800E639A;
+extern s16 D_800E639E;
+extern s32 D_800E7200;
+extern s32 D_8013E784;
+extern u8 D_800E6375;
+extern u8 D_800E6376;
+extern u8 D_800E7313;

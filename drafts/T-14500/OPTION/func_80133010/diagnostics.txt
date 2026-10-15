@@ -1,0 +1,20 @@
+m2c.py: argument counts from the callees' asm: func_801328C0 0
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80133010/work/guarded.c, line 2601: redeclaration of 'func_80133010'; previous declaration at line 2580 in file 'drafts/T-14500/OPTION/func_80133010/work/guarded.c'
+ void func_80133010(void) {
+ -----^
+cfe: Error: drafts/T-14500/OPTION/func_80133010/work/guarded.c, line 2601: Incompatible function return type for this function.
+ void func_80133010(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80133010/work/guarded.c, line 2655: Reference of an expression of void type or an incomplete type.
+         *(void *)0x80120653 = (u8) (*(u8 *)0x80120653 | 0x80);
+ --------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80133010/work -o drafts/T-14500/OPTION/func_80133010/work/guarded.o /tmp/asm_processor7kwr83jb/preprocessed_052740f1fc504d649935fa31a279e45d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibj4pwc8_5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80133010/work/guarded.o drafts/T-14500/OPTION/func_80133010/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80133010/work/guarded.c, line 2655: Reference of an expression of void type or an incomplete type.
+         *(void *)0x80120653 = (u8) (*(u8 *)0x80120653 | 0x80);
+ --------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80133010/work -o drafts/T-14500/OPTION/func_80133010/work/guarded.o /tmp/asm_processorse5db8h9/preprocessed_315c6438c9374668956866208f5563a1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibgztrfdkf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80133010/work/guarded.o drafts/T-14500/OPTION/func_80133010/work/guarded.c

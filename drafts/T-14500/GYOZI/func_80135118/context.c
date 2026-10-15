@@ -1,0 +1,234 @@
+#include "common.h"
+#include "ovl/GYOZI.h"
+
+typedef struct {
+    void (*f[60])();
+} FnTbl60; /* size 0xF0 */
+extern FnTbl60 D_80145F68;
+
+void func_80134FD0(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl60 tbl;
+
+    tbl = D_80145F68;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
+
+void func_80135044(void) {
+    func_80086AB0(0x603);
+    func_8004DE1C();
+}
+
+/* NON_MATCHING: T-10850, 11 differing listing lines; regdiff evidence in the ticket scratch. */
+#ifdef NON_MATCHING
+s32 func_8013506C(void) {
+    s32 old;
+
+    func_801343A4();
+    old = D_800F6474++;
+    if (old == 0 && (*(u8 ***)&D_80145EAC)[D_80145EB4][D_80145EB8 - 1] == 7) {
+        if (func_800BDC20((*(s32 ***)&D_80145EA8)[D_80145EB4][D_80145EB8 - 1], "\203\113\203\140\203\203") == 0) {
+            func_80086AB0(0x60C);
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134FD0", func_8013506C);
+#endif
+
+/* bulk_m2c declarations (T-11190) */
+extern s32 D_800C3370;
+extern u8 D_800F647D;
+/* end bulk_m2c declarations */
+void func_80135118(void) {
+    s16 temp_v0;
+    s32 temp_a0;
+
+    if ((func_8005B32C() != 0) && (D_80145EB8 < 5)) {
+        if (D_80145EB8 == 0) {
+            temp_v0 = D_80145F64 + 1;
+            if (D_80145F64 < 0x5A) {
+                D_80145F64 = temp_v0;
+                if (temp_v0 == 1) {
+                    func_80086AB0(0x60A);
+                }
+                if (D_80145F64 == 0x1E) {
+                    func_80086AB0(0x604);
+                }
+                return;
+            }
+            if (!(D_800F647D & 7)) {
+                temp_a0 = (((*(&D_800C3370 + ((D_800F62CF * 7) + ((u8) D_800F647D >> 3))) + 0x505) & 0xFF) | 0x600) & 0xFFFF;
+                D_800F647D = D_800F647D;
+                func_80086AB0(temp_a0);
+            }
+            goto block_11;
+        }
+block_11:
+        if ((u8) D_800F647D < 0x40U) {
+            D_800F647D = (D_800F647D + 1) & 0xFF;
+            return;
+        }
+        D_800F647D = 0;
+        func_8005B06C(1);
+        goto block_14;
+    }
+block_14:
+    func_801343A4();
+    if (D_80145EB8 < 5) {
+        D_800F6474 += 1;
+        if (D_800F6474 == 1) {
+            func_80086AB0(0x608);
+        }
+    }
+}
+
+INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80134FD0", func_80135280);
+
+INCLUDE_RODATA("asm/ovl/GYOZI/data/GYOZI/80134FD0.rodata", D_801458E8);
+
+void func_80135420(void) {
+    func_800BCE10(&D_800D92E0, &D_801458E8);
+    D_80145F64 = 0;
+    D_80145F60 = 0;
+    D_80145EC8 = 1;
+    D_80145EB4 = 6;
+    func_8004DE1C();
+}
+
+void func_80135478(void) {
+    if (D_80145EC4 == 0) {
+        func_8008A0D4(0x4107);
+    } else {
+        D_800F647A += 3;
+    }
+    func_8004DE1C();
+}
+
+void func_801354C8(void) {
+    func_8008A0D4(0x4107);
+    func_8004DE1C();
+}
+
+void func_801354F0(void) {
+    func_8008A0D4(0x40E5);
+    func_8004DE1C();
+}
+
+/* FAKE: s32 fall-through preserves the original return/register allocation. T-10010. */
+s32 func_80135518(void) {
+    s32 girl;
+    u8 previous;
+
+    if (D_8012E66C == 0xB) {
+        func_80135730();
+        return 0;
+    }
+    girl = D_8012E66C;
+    previous = D_800F62CF;
+    if (previous == girl && D_80145EC4 != 0) {
+        func_8004DE1C();
+        return 0;
+    }
+    if (D_800F53A0.girl[D_8012E66C].unk_10[3] == 0) {
+        D_80145EB4 = 0;
+        D_80145EA8 = D_80145E34;
+        D_80145EAC = D_80145E6C;
+        D_80145EB0 = D_80145EA4;
+        func_8008F618(D_8012E66C);
+        func_8004DE1C();
+        return 0;
+    }
+    D_800F62CF = (u8)girl;
+    func_80134938(D_8012E66C);
+    func_8008F618((s32) D_800F62CF);
+    D_80145EB4 = 9;
+    func_8004DE1C();
+    func_8004DE1C();
+    func_8004DE1C();
+}
+
+void func_80135628(void) {
+    D_80145EB4 = 7;
+    D_80145EA8 = D_80145E08;
+    D_80145EAC = D_80145E40;
+    D_80145EB0 = D_80145E78;
+    func_8004DE1C();
+    D_800F647A -= 5;
+}
+
+void func_80135690(void) {
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    if (((u8)func_8005E0E0(D_800F62CF) & 0x7F) != 4) {
+        D_80145EB4 += 1;
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+        return;
+    }
+    func_8004DE1C();
+}
+
+void func_801356FC(void) {
+    if (D_8012E66C == 0) {
+        func_8004DE1C();
+    }
+    func_8004DE1C();
+}
+
+void func_80135730(void) {
+    D_80145F60 = 1;
+    D_80145EB4 = 0;
+    D_80145EA8 = D_80145E00;
+    D_80145EAC = D_80145E38;
+    D_80145EB0 = D_80145E70;
+    func_8004DDD8();
+}
+
+void func_80135790(void) {
+    s32 temp_t6;
+
+    /* FAKE: the (u8) cast reserves the extra temp the original has; real prototype unknown. T-2020 */
+    temp_t6 = (u8)func_8005E0E0(D_800F62CF) & 0x7F;
+    switch (temp_t6) {
+    case 0:
+        break;
+    case 1:
+    case 2:
+        D_80145EB4 += 1;
+        break;
+    case 3:
+        D_80145EB4 += 2;
+        break;
+    }
+    func_8004DE1C();
+}
+
+void func_80135814(void) {
+    D_80145EB4 = 0x27;
+    func_8004DE1C();
+}
+
+void func_8013583C(void) {
+    if (D_8012E66C != 0) {
+        D_80145EB4 += 1;
+        func_8004DE1C();
+        func_8004DE1C();
+        func_8004DE1C();
+    }
+    func_8004DE1C();
+}
+
+void func_80135890(void) {
+    if (D_800F62CF != 0) {
+        func_8004DDD8();
+        return;
+    }
+    func_8004DE1C();
+}
+
+void func_801358CC(void) {
+    D_80145EB4 = 0xF;
+    func_8004DE1C();
+}

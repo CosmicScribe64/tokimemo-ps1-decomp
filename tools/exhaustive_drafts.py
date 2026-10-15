@@ -28,7 +28,8 @@ import m2c
 import order_search
 import srcscan
 
-BASE = Path('drafts/T-14500')
+BASE = Path(os.environ.get('TOKIMEMO_DRAFT_BASE', 'drafts/T-14500'))
+VARIANT = os.environ.get('TOKIMEMO_DRAFT_VARIANT', 'default')
 OUT = BASE / 'catalog.jsonl'
 
 
@@ -38,7 +39,9 @@ def digest(text):
 
 def save(path, text):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text)
+    temporary = path.with_name(path.name + '.tmp-' + str(os.getpid()))
+    temporary.write_text(text)
+    os.replace(temporary, path)
 
 
 def census():
@@ -68,7 +71,7 @@ def process(row):
     decl_lines = []
     messages = []
     body = ''
-    row = dict(row, status='failed', score=None, environment_hash=digest((BASE / 'environment.json').read_text()), harness_hash=digest(Path(__file__).read_text()), variant='guarded' if row['guarded'] else 'default')
+    row = dict(row, status='failed', score=None, environment_hash=digest((BASE / 'environment.json').read_text()), harness_hash=digest(Path(__file__).read_text()), variant='guarded' if row['guarded'] else VARIANT)
     try:
         save(folder / 'phase.txt', 'generation\n')
         if row['guarded']:
@@ -78,7 +81,9 @@ def process(row):
             plain = autotweak.rewrite_guard(original, row['func'], body)
         else:
             try:
-                raw = m2c.run_m2c('.', row['scope'], log=lambda msg: messages.append(msg))
+                raw = m2c.run_m2c('.', row['scope'], context=VARIANT != 'no-context',
+                                  extra=('--no-unk-inference',) if VARIANT == 'no-unk-inference' else (),
+                                  log=lambda msg: messages.append(msg))
             except (RuntimeError, LookupError, SystemExit) as exc:
                 messages.append(str(exc))
                 row['variant'] = 'no-context-repair'
@@ -149,6 +154,13 @@ def process(row):
                 row['reason'] = bulk.first_error(msg) or 'full-TU compile did not score'
                 break
             body, decl_lines = more
+            # CFE can report several missing stack slots in one diagnostic. Apply every
+            # independent existing repair before paying for the next full-TU compile.
+            for _batch in range(32):
+                additional = bulk.source_fix(msg, body, decl_lines, row['func'], original, headers)
+                if additional is None or additional == (body, decl_lines):
+                    break
+                body, decl_lines = additional
         else:
             row['reason'] = 'compile: no fix after 12 attempts'
     except BaseException as exc:
@@ -160,18 +172,25 @@ def process(row):
             save(folder / 'body.c', body)
         shutil.rmtree(folder / 'work', ignore_errors=True)
     save(folder / 'phase.txt', 'finished\n')
+    if body:
+        row['draft_hash'] = digest(body)
+    if (folder / 'context.c').exists():
+        row['context_hash'] = digest((folder / 'context.c').read_text())
     row['seconds'] = round(time.monotonic() - started, 3)
     save(folder / 'result.json', json.dumps(row, sort_keys=True) + '\n')
     return row
 
 
 def main():
+    global BASE, OUT
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--out', type=Path, default=BASE, help='draft archive directory')
     p.add_argument('--worker', type=int)
     p.add_argument('--limit', type=int)
     p.add_argument('--stop-after-unit', action='store_true')
     p.add_argument('--timeout', type=int, default=120)
     args = p.parse_args()
+    BASE, OUT = args.out, args.out / 'catalog.jsonl'
     if args.worker is not None:
         row = json.loads((BASE / 'inventory.json').read_text())[args.worker]
         process(row)
@@ -204,7 +223,7 @@ def main():
         folder.mkdir(parents=True, exist_ok=True)
         started = time.monotonic()
         with open(folder / 'worker.log', 'w') as log:
-            proc = subprocess.Popen([sys.executable, __file__, '--worker', str(i)], stdout=log,
+            proc = subprocess.Popen([sys.executable, __file__, '--out', str(BASE), '--worker', str(i)], stdout=log,
                                     stderr=subprocess.STDOUT, start_new_session=True)
             try:
                 rc = proc.wait(timeout=args.timeout)

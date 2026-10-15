@@ -1,0 +1,18 @@
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80135E48/work/guarded.c, line 3028: redeclaration of 'func_80135E48'; previous declaration at line 2451 in file 'drafts/T-14500/OPTION/func_80135E48/work/guarded.c'
+ void func_80135E48(void) {
+ -----^
+cfe: Error: drafts/T-14500/OPTION/func_80135E48/work/guarded.c, line 3028: Incompatible function return type for this function.
+ void func_80135E48(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80135E48/work/guarded.c, line 3066: 'sp70' undefined; reoccurrences will not be reported.
+         temp_a0 = &(&sp70[0])[1];
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80135E48/work -o drafts/T-14500/OPTION/func_80135E48/work/guarded.o /tmp/asm_processornb67_hk6/preprocessed_0370bac4ea514ccfadade8006ed075bc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrucr3xda/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80135E48/work/guarded.o drafts/T-14500/OPTION/func_80135E48/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80135E48/work/guarded.c, line 3066: 'sp70' undefined; reoccurrences will not be reported.
+         temp_a0 = &(&sp70[0])[1];
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80135E48/work -o drafts/T-14500/OPTION/func_80135E48/work/guarded.o /tmp/asm_processor3590v7ks/preprocessed_b819286e3b594bbd80d97c85067ee669.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibktiosigs/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80135E48/work/guarded.o drafts/T-14500/OPTION/func_80135E48/work/guarded.c
