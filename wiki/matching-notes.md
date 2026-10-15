@@ -4717,3 +4717,36 @@ two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
 - Tidy m2c leftovers in matches: `*(u8 *)((unsigned char *)D_80158A64 + (28))` is `D_80158A64[0x1C]` (`func_8013E1E8`).
 - Tools: regdiff named the priority problems (`func_80142C70`, `func_80135148`); autotweak (5 runs) and the permuter (1)
   found nothing on these drafts; a quick ninja-one-object + `funcdiff --no-build` loop was the main workhorse.
+
+## Wave 1 package w1-p04: EVENT 8010FE10.c (T-11600)
+
+Twelve functions of `src/ovl/EVENT/8010FE10.c`, six guarded drafts and six m2c drafts. 10 matched (`func_80119B78`,
+`func_801155D4`, `func_801198E8`, `func_8011C470`, `func_80117178`, `func_8011AD7C`, `func_801142E8`, `func_80114784`,
+`func_80114948`, `func_80113520`; 3,816 bytes); two stay guarded. Ticket [[tickets/T-11600-w1-ovl-event-8010fe10]].
+
+- **`s32` without a return again.** `or v0,tN,zero` after a byte update (`func_8011C470`, `func_80119B78`) and
+  `move v0,zero` after `sw zero` (`func_801155D4`) are the K&R int function falling off its end. In `func_80119B78`
+  the byte update is not at the entry, so the global is not promoted; a `u8` copy does it:
+  `cur = D_800B1AF6; D_800B1AF6 = cur -= 5;`.
+- **cvt_pass decides "unsigned only" over the whole file.** `_unsigned_narrow_globals` collects every load and store of
+  a global in the translation unit; one signed access anywhere (`extern s8 D_80125320` with plain stores in
+  `func_801155D4`) means its CVTs are never stripped, so a compare against a register-held constant always puts the
+  constant first. `D_80125320` is now `u8` in `include/ovl/EVENT.h` (all 27 builds still match); with a dead load
+  before the first call, branch or label (`sel = D_80125320;`, FAKE) the global goes first in `bne` like the original
+  (`func_801198E8`, `func_8011C470`). The same dead load of `D_801252E4` makes uopt keep it in `$a1` across the call
+  in `func_8011AD7C` (whose `func_8002328C` call has one argument: `$a1` only holds the promoted global).
+- **`li 6; multu` per access is the EventStateView index.** The pool, skate, ski and bowling setups match in the
+  shape of the already matched `func_80112930`: `g = (EventStateView *)&D_800B0860;` and `g->unk_EE6 * 6` in each
+  table access gives one `multu` per access with the constant in `$v1`; with `D_800B1746 * 6` IDO shares one shifted
+  product (the old T-0018 rows of `func_801142E8`, `func_80114784`, `func_80114948`).
+- **Reload of the record index after a compare chain.** `*(s16 *)(D_800B0860 + ((EventStateView *)D_800B0860)->unk_EE6 * 0x34 + 0x1A6) += 1`
+  reloads the index into a temporary like the original; `D_800B1746 * 0x34` keeps `D_800B1746` in `$v1` from the
+  compare chain (`func_80117178`).
+- **Not matched.** `func_80114B0C` (4 lines): the two hoisted row addresses tie at priority 2.5 and `D_8012439C`,
+  used first by `v = *r`, is coloured first; the DATE twin's fix (no temporary, `a[i] = b[i]`) needs array views,
+  which hoist the `D_800B0F2C` load out of the loop. A `u8` copy of `D_800B0F2C` fixed its `bne` order (autotweak).
+  `func_80118868` (8 lines): the third chain's 3 is a uopt colour (`$v0`) in the original and a ugen temporary in
+  every draft tried.
+- Tooling: `funcdiff --resolve` on the guarded full unit reports "linked function address or size differs" when other
+  guarded drafts change size; unguard and run ninja to confirm. Some candidate sources fail in cfe with a syntax error
+  at an unrelated line (a truncated line in the `.sjis.c`); adding one space elsewhere in the file avoided it.
