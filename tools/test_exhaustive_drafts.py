@@ -101,5 +101,29 @@ class ExhaustiveDraftTests(unittest.TestCase):
         self.assertTrue(body.startswith('void func_80132000'))
 
 
+    def test_failed_guard_regeneration_preserves_original(self):
+        func='func_80132000'
+        original=('#ifdef NON_MATCHING\nvoid func_80132000(void) { bad_old_body(); }\n'
+                  '#else\nINCLUDE_ASM("asm/test", func_80132000);\n#endif\n')
+        c=self.source(original)
+        row=dict(unit='TT',src=str(c.src),func=func,scope='TT:'+func,size=4,guarded=True,
+                 source_hash=drafts.digest(original))
+        with patch.dict(os.environ,{'TOKIMEMO_REGENERATE_GUARDS':'1'}), \
+             patch.object(drafts.m2c,'run_m2c',return_value='void func_80132000(void) {\n}\n') as generate, \
+             patch.object(drafts.funcloc,'locate',return_value=c), \
+             patch.object(drafts.funcdiff,'expected_object',return_value=('expected.o',None)), \
+             patch.object(drafts.funcdiff,'resolved_functions',return_value={func:['same']}), \
+             patch.object(drafts.funcdiff,'keys',side_effect=lambda x:x), \
+             patch.object(drafts.order_search,'compile_variant',return_value='candidate.o'):
+            result=drafts.process(row)
+        self.assertEqual(generate.call_count,1)
+        self.assertEqual(result['status'],'candidate-zero')
+        self.assertEqual(result['variant'],'regenerated-default')
+        self.assertEqual(c.src.read_text(),original)
+        context=(drafts.BASE/'TT'/func/'context.c').read_text()
+        self.assertNotIn('bad_old_body',context)
+        self.assertNotIn('INCLUDE_ASM',context)
+
+
 if __name__ == '__main__':
     unittest.main()

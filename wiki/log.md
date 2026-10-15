@@ -14522,3 +14522,11 @@ The automatic repair runner keeps initial artifacts immutable, excludes 24 exter
 ## [2026-10-15] build | Harden resumable draft evidence
 
 Per-target artifacts now use atomic replacement, source failures retain body/context hashes, and the harness accepts an explicit archive path. The complete census remains serial; seven synthetic Docker checks continue to pass. Completed source/context batches remain immutable while repairs write separate alternatives.
+
+## [2026-10-15] decision | Regenerate failed guards as separate alternatives
+
+The usable-draft target includes guarded drafts that no longer compile in the current context. Automatic repairs will preserve their original artifacts and separately regenerate from assembly with default/context fallbacks, folding only the target guard to its existing INCLUDE_ASM while building the candidate translation unit. Default census reuse of guards is unchanged. No production source is modified.
+
+## [2026-10-15] query | Exhaustive census checkpoint 678 of 1066
+
+[[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 28, 'failed': 88, 'scored': 562}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.

@@ -66,15 +66,23 @@ def process(row):
     folder = BASE / row['unit'] / row['func']
     folder.mkdir(parents=True, exist_ok=True)
     original = Path(row['src']).read_text()
+    use_guard = row['guarded'] and not os.environ.get('TOKIMEMO_REGENERATE_GUARDS')
+    if row['guarded'] and not use_guard:
+        guard = next(g for g in autotweak.guards(original) if g.func == row['func'])
+        include = re.search(bulk.INCLUDE_ASM_TMPL % re.escape(row['func']),
+                            original[guard.else_end:guard.end], re.M)
+        if include is None:
+            raise RuntimeError('retained guard has no target INCLUDE_ASM')
+        original = autotweak.rewrite_guard(original, row['func'], include.group(0))
     headers = bulk.header_text('.', row['unit'])
     known = {}
     decl_lines = []
     messages = []
     body = ''
-    row = dict(row, status='failed', score=None, environment_hash=digest((BASE / 'environment.json').read_text()), harness_hash=digest(Path(__file__).read_text()), variant='guarded' if row['guarded'] else VARIANT)
+    row = dict(row, status='failed', score=None, environment_hash=digest((BASE / 'environment.json').read_text()), harness_hash=digest(Path(__file__).read_text()), variant='guarded' if use_guard else ('regenerated-' + VARIANT if row['guarded'] else VARIANT))
     try:
         save(folder / 'phase.txt', 'generation\n')
-        if row['guarded']:
+        if use_guard:
             guard = next(g for g in autotweak.guards(original) if g.func == row['func'])
             body = original[guard.body:guard.else_start].strip() + '\n'
             # Keep declarations and all target-specific guard content together.
@@ -115,7 +123,7 @@ def process(row):
         for attempt in range(12):
             row['compile_attempts'] = attempt + 1
             save(folder / 'phase.txt', 'compile-' + str(attempt + 1) + '\n')
-            if row['guarded']:
+            if use_guard:
                 plain = autotweak.rewrite_guard(original, row['func'], body)
             else:
                 placed = bulk.insert_draft(original, row['func'], body, decl_lines)
