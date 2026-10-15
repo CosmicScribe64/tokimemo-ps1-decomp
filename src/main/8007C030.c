@@ -2422,7 +2422,58 @@ void func_80084E6C(void) {
     func_8004284C();
 }
 
+/* NON_MATCHING: T-11590, 5 differing lines; everything matches except the last chain: the original
+ * keeps 0x20 in a0 for the [63] height store and stores andi v0,a0,0xffff to [61]/[62]; IDO
+ * folds the chain value to li v0,0x20. With the s16 width store (no u16 view) the tail matches
+ * but the loop splits the 0x80 constant. */
+#ifdef NON_MATCHING
+void func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s16 i;
+
+    D_80122D04 = 0;
+    D_80122D0C = 0;
+    D_80122D10 = 0;
+    LoadSquare(0x140, 0x80, 0x40, 0x80, (void *)arg0);
+    LoadSquare(0x180, 0x80, 0x40, 0x80, (void *)arg1);
+    LoadSquare(0x1C0, 0x80, 0x40, 0x80, (void *)arg2);
+    LoadSquare(0x200, 0x80, 0x40, 0x80, (void *)arg3);
+    LoadSquare(0x240, 0x80, 0x40, 0x80, (void *)arg4);
+    LoadSquare(0x280, 0x80, 0x40, 0x80, (void *)arg5);
+    D_800E6280.unk_1228[37] = 1;
+    D_800E6280.unk_1228[38] = 1;
+    D_800E6280.unk_1228[39] = 1;
+    D_800E6280.unk_1228[40] = 1;
+    D_800E6280.unk_1228[41] = 1;
+    D_800E6280.unk_1228[42] = 1;
+    for (i = 0x3A; i < 0x40; i++) {
+        D_801217D0[i].unk_0C = i - 0x35;
+        D_801217D0[i].unk_00 = 0xC1000000;
+        /* FAKE: u16 view of the width (GsSPRITE w is unsigned; Rec24 keeps s16 for ETC
+         * func_80142A4C): the 0x80 constant is then shared with unk_0A and unk_0F. T-11590 */
+        *(u16 *)&D_801217D0[i].unk_08 = 0x80;
+        D_801217D0[i].unk_0A = 0x80;
+        D_801217D0[i].unk_0E = 0;
+        D_801217D0[i].unk_0F = 0x80;
+        D_801217D0[i].unk_10 = 0;
+        D_801217D0[i].unk_12 = 0x1F1;
+        D_801217D0[i].unk_14 = 0;
+        D_801217D0[i].unk_15 = 0;
+        D_801217D0[i].unk_16 = 0;
+        D_801217D0[i].unk_18 = 0;
+        D_801217D0[i].unk_1A = 0;
+        D_801217D0[i].unk_1C = 0x1000;
+        D_801217D0[i].unk_1E = 0x1000;
+        D_801217D0[i].unk_20 = 0;
+        D_801217D0[i].unk_04 = ((i - 0x3A) % 3) * 128 - 0xA0;
+        D_801217D0[i].unk_06 = ((i - 0x3A) / 3) * 128 - 0x78;
+        D_800E6280.unk_10A5[i] = 0xB;
+    }
+    D_801217D0[60].unk_08 = D_801217D0[63].unk_08 = 0x40;
+    D_801217D0[61].unk_0A = D_801217D0[62].unk_0A = D_801217D0[63].unk_0A = 0x20;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80084E90);
+#endif
 
 s32 func_800850D4(arg0, arg1, arg2, arg3)
     s32 arg0;
