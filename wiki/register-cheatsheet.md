@@ -1,6 +1,6 @@
 ---
 type: guide
-updated: 2026-10-14
+updated: 2026-10-15
 sources: ["wiki/matching-notes.md", "wiki/uopt-register-allocation.md", "wiki/register-allocation-wave7.md", "wiki/decompile-workflow.md", "tools/regdiff.py"]
 ---
 
@@ -32,6 +32,7 @@ One page for a register-only miss: find the symptom, try the C changes in order,
 | **extra or missing range**: the original keeps a value in a register that the draft recomputes, or the reverse | Add or remove a local for that value. A raw load in one register and a derived value in another means: declare the raw value as a local and repeat the derived expression. |
 | one `li k` stored to several places in the original, separate `li`s in the draft | Chain assignment through elements: `a[0] = b[0] = k;`, or `(&A)[0] = (&B)[0] = k;` for two scalars. Separate plain scalars cannot share it. |
 | `xori; sltiu; beqz`, or a switch-temporary copy `or v0,v1,zero` | Make the function `s32` with no `return` (K&R). Compare the old value: `if (D++ == k)`. |
+| a `move`/`andi`/`li` into v0 near the end that nothing reads, or the outer targets of a chain stored from a v0 copy of the value | Make the function `s32` with no `return`: v0 is then live at the exit and uopt keeps the chain assignment's hidden temporary (or a promoted value) in it. Matched 5 functions in main 8007C030 (T-11590). |
 | one extra ugen temporary after `x |= bit` on a flag byte | Use a bit-field store: `((Bits *)&x)->f = 1;`. |
 | GameState selector read after a call lands in the wrong register | `u8 state; state = D_800E6280.unk_X;` right after the call, then compare `state`. `u32` also works; signed doesn't. |
 | `bne` operands reversed but the registers are right | A narrow local for the shared constant (`s16 one; one = 1;`, mark FAKE), or a `u8 sel` copy of the selector. |

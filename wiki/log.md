@@ -13354,3 +13354,6 @@ Matched ENDING func_8013BE64, RPG_BAT func_80136CCC, main func_8005FA20. Guarded
 
 ## [2026-10-15] ticket | T-11590 Wave 1 package w1-p03
 Created [[tickets/T-11590-w1-main-8007c030]] (In Progress): 12 functions in src/main/8007C030.c.
+
+## [2026-10-15] ticket | T-11590 to In Review
+[[tickets/T-11590-w1-main-8007c030]]: 15 matches in src/main/8007C030.c (10 from the work list, 5 more in the same file), two FAKEs removed (normal_date_girl_suddenin, normal_date_girl_in_init). New rule in [[register-cheatsheet]] and [[matching-notes]]: `s32` without a return keeps the last chain-assignment temporary in v0. Guarded: junban_init, dialogue_speak_part, make_three_select. One T-0018 row ([[data/t0018-cases]], make_three_select frame).
