@@ -5078,3 +5078,7 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## T-12010 Codex cx1 main helpers
+
+InitMouse now matches 16 linked bytes. The historical missing-range blocker was configuration, not an unknown C idiom: every reference to the two pointer slots belongs to 80059710, and the contiguous mouse state ends at 800E36EC with padding to 800E36F0. An explicit owned-data range and generated island let the two-word zero-initialized pointer array be defined in C, which shares the original lui $at. Other mouse data stays as generated INCLUDE_RODATA. Full configure/build passes 27/27, headers and globals OK. See [[tickets/T-12010-codex-cx1]].

@@ -1,5 +1,16 @@
 #include "common.h"
 #include "game.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+/* The two mouse port buffers share one owned pointer table. T-12010. */
+s8 *D_800E36C0[2] = { 0, 0 };
+INCLUDE_RODATA("asm/data/main/80059710.data", D_800E36C8);
+INCLUDE_RODATA("asm/data/main/80059710.data", D_800E36D0);
+INCLUDE_RODATA("asm/data/main/80059710.data", D_800E36D8);
+INCLUDE_RODATA("asm/data/main/80059710.data", D_800E36DC);
+INCLUDE_RODATA("asm/data/main/80059710.data", D_800E36E0);
+INCLUDE_RODATA("asm/data/main/80059710.data", D_800E36E4);
+INCLUDE_RODATA("asm/data/main/80059710.data", D_800E36E8);
 
 s32 MouseState(s32 port, s8 *out) {
     s8 **p;
@@ -21,15 +32,10 @@ s32 MouseState(s32 port, s8 *out) {
     return result;
 }
 
-/* NON_MATCHING: T-10850, 1 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
 void InitMouse(s8 *arg0, s8 *arg1) {
     D_800E36C0[0] = arg0;
     D_800E36C0[1] = arg1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80059710", InitMouse);
-#endif
 
 void RangeMouse(u32 arg0, u32 arg1, u32 arg2, u32 arg3) {
     u32 sx = D_800E36E8;

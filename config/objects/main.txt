@@ -67,3 +67,6 @@ bss 80053650 800E7D10 8011ECD0 owner-min/2 owner-min/2 at:0,ref:26
 bss 80062CD0 8011ECE0 80125CB0 owner-min/2 owner-min/2 at:0,ref:265
 bss 80079B10 80125CC0 80126080 owner-min/2 owner at:0,ref:56
 bss 8007C030 80126080 80128A80 owner owner-min at:0,ref:2
+
+# T-12010: mouse helpers exclusively reference 800E36C0..800E36EA; 16-byte-aligned range.
+data 80059710 800E36C0 800E36F0 owner-mouse/6 owner-mouse/6 at:1,ref:6

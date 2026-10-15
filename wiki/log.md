@@ -13509,3 +13509,7 @@ merged). The seven TT matches that p10 and p12 made and the PRs lack went to dim
 ## [2026-10-15] setup | T-12010 cx1 isolated matching pass
 
 Created [[tickets/T-12010-codex-cx1]] for twelve assigned main helpers. Read standards, [[decompile-workflow]], [[register-cheatsheet]] and historical blockers. Baseline Docker configure/build passed 27/27 SHA1; log /tmp/cx1-baseline.log. Three workers share Docker; subsequent builds use two jobs.
+
+## [2026-10-15] build | T-12010 InitMouse matches through data ownership
+
+[[tickets/T-12010-codex-cx1]] records evidence for the mouse object data range, generated island, and C-defined pointer pair. InitMouse passes literal linked funcdiff (16 bytes); configure/ninja passes 27/27 SHA1 with headers/globals OK. [[matching-notes]] updated. Checksum scheduling and brightness register attempts remain unmatched.
