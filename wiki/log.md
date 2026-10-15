@@ -13574,3 +13574,70 @@ Moved [[tickets/T-12020-codex-cx2]] and its [[kanban]] card to In Review; update
 ## [2026-10-15] build | T-12020 final verification passes
 
 Clean configure plus ninja -j2 completed all 27 SHA1 checks, headers OK and globals OK. Final linked comparisons reconfirmed the three matches (1,300 bytes); full-file guarded comparisons reconfirmed 8/4/4 rows. sync_protos --check-branch reports zero new disagreements, fifteen known, branch check OK. No new inline asm or FAKE constructs; git diff --check clean. [[tickets/T-12020-codex-cx2]] remains In Review for independent standards review.
+## [2026-10-15] setup | T-12030 cx3 baseline and claim
+
+Read workflow, standards and register cheat sheet. Docker configure and ninja verified 27/27 SHA1 targets. Claimed [[tickets/T-12030-codex-cx3]]; owned source is src/main/8005A0B0.c.
+
+## [2026-10-15] build | T-12030 join_club_message matched
+
+[[tickets/T-12030-codex-cx3]]: src/main/8005A0B0.c now has active C for join_club_message. Verified 544 literal linked bytes and main SHA1. Header uses s32; selector-view fakematch is explicitly marked. Global and header checks pass during rebuild.
+
+## [2026-10-15] build | T-12030 guarded status-handler diagnosis
+
+[[tickets/T-12030-codex-cx3]]: func_8005BE8C now compiles as guarded s32 C and remains three differing instruction rows. Traced uopt identifies a temporary allocation discrepancy; scalar view, local reuse, autotweak and bounded permutation found no verified match. Default assembly remains active.
+
+## [2026-10-15] build | T-12030 menu selection handler matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005D448 is active C with 292 exact linked bytes and passing main SHA1, headers and globals. Reused the pre-call menu index and documented its stack-home padding fakematch.
+
+## [2026-10-15] build | T-12030 availability handler matched
+
+[[tickets/T-12030-codex-cx3]]: func_800603C0 verifies 324 linked bytes plus main SHA1, headers and globals. Added D_800E7D24 byte-array declaration and used GameState.unk_53C for the saved draft's old address alias.
+
+## [2026-10-15] build | T-12030 system-settings initializer matched
+
+[[tickets/T-12030-codex-cx3]]: system_settings_init verifies 360 literal linked bytes and main SHA1. Four typed arrays and two real scalar locals recover the frame without a fakematch. Coordinate-loop experiments on func_8005A410 remain beyond retention threshold; assembly restored.
+
+## [2026-10-15] build | T-12030 text-speed initializer matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005E150 verifies 368 literal linked bytes and main SHA1. Typed arrays plus an initialized empty counter test (marked FAKE) resolve the historical loop allocation discrepancy. Removing the test loses the match.
+
+## [2026-10-15] build | T-12030 settings labels matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005DEA0 now verifies 376 linked bytes and main SHA1. Reconstructed indexed coordinate and colour arrays with counter-first declaration order; no fakematch required.
+
+## [2026-10-15] build | T-12030 voice-mode initializer matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005FDEC verifies 380 linked bytes and main SHA1, with typed arrays and an unsigned selector conversion.
+
+## [2026-10-15] build | T-12030 click-speed clamp matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005F09C verifies 400 literal linked bytes and main SHA1. Direct scalar-byte clamping (marked FAKE) plus an explicit void prototype resolve its historical register and exit differences.
+
+## [2026-10-15] build | cx3 reuse established availability aggregate
+
+[[tickets/T-12030-codex-cx3]] reused FlagsWork24 for func_800603C0 and removed a duplicate alias declaration. Literal 324-byte comparison and all 27 checksums pass after a full header-triggered rebuild; evidence in build/scratch/603c0-aggregate.log and aggregate-full-build.log.
+
+## [2026-10-15] build | cx3 matches two-item save/load selector
+
+[[tickets/T-12030-codex-cx3]] matched func_8005BCEC (416 linked bytes, main SHA1 OK). Grouped array-store pairs resolve the T-8080 scheduling gap; stack reservation and grouping are marked FAKE. pre_syogatu1 remains a guarded 19-row draft after typed-buffer recovery and bounded search. Evidence: build/scratch/bcec-final.log, bcec-build.log and pre-autotweak.log.
+
+## [2026-10-15] build | cx3 matches save-menu initializer
+
+[[tickets/T-12030-codex-cx3]] matched func_8005C5BC (516 linked bytes, main SHA1/header/global checks pass). Natural indexed coordinate arrays and a FlagsWork24 pointer recover the layout and induction order without a new fakematch. Evidence: build/scratch/c5bc-final.log and c5bc-build.log.
+
+## [2026-10-15] build | cx3 matches load-menu initializer
+
+[[tickets/T-12030-codex-cx3]] matched func_8005CF6C (520 linked bytes, main SHA1/header/global checks pass). Natural typed coordinate arrays and the established work aggregate also reproduce this menu twin. Evidence: build/scratch/cf6c-final.log and cf6c-build.log.
+
+## [2026-10-15] decision | cx3 card-action candidate restored
+
+[[tickets/T-12030-codex-cx3]] restored func_8005CA94 to assembly after typed aggregate recovery, controlled result/view trials and a 363-candidate search left 57 differing rows. Register tracing identifies structural narrowing and ugen-temporary differences. Evidence remains in build/scratch/ca94-*.log.
+
+## [2026-10-15] build | cx3 matches card status handler
+
+[[tickets/T-12030-codex-cx3]] matched func_8005BE8C (704 literal bytes, main SHA1/header/global checks pass). Full-file and production rescoring of an earlier permutation reveals a match despite its nonzero stripped score. A natural status-byte pointer fixes the final three instruction rows. Evidence: build/scratch/be-clean-final.log and be-clean-build.log.
+
+## [2026-10-15] ticket | cx3 ready for review: 5,200 matched bytes
+
+[[tickets/T-12030-codex-cx3]] moves to In Review with twelve matches (5,200 bytes), one guarded 15-row New Year draft, and two restored assembly functions. [[matching-notes]] and [[data/t0018-cases]] record outcomes and compiler evidence. Full configure/build passes 27/27 checksums plus headers/globals; prototype branch check has zero new disagreements; all twelve fresh literal-byte proofs pass. Evidence: build/scratch/final-build.log, final-protos.log, final-matches.log and final-near-miss.log. Board and index are synchronized; no inline assembly or raw-data additions.

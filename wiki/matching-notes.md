@@ -5099,3 +5099,31 @@ All fifteen listed functions received a full-file compilation pass. Final guarde
 Broad drafts were not retained: `func_80137228` (best 60 rows, high-half alias hoisting), `func_80137C44` (138, slot-loop allocation), `func_80137544` (103, selector/constant allocation), `func_80135480` (124, local-table frame and pointer reuse), `func_80135830` (135, frame/loop allocation), `func_80137EA8` (254, finish-line state/actor loops), `func_801365C8` (228, timer-loop allocation), `func_80133CFC` (74, loader table-copy placement), and `func_80138224` (232, three actor-initialization loops). Oversized inherited guards for 37228/37C44 were restored to plain INCLUDE_ASM as required. Drafts and detailed experiment logs remain ignored under build/scratch.
 
 Useful type evidence for follow-up: D_801492A0 stores are s16; D_801492C4 is loaded/stored as a word although its canonical declaration currently says u8; D_801492DC's loader copies seven words although the current array declaration is six. The latter two declarations were not changed because the loader remains assembly. Actor scale at offset 0x1C must use a halfword view of pad_1C. Main function aliases identified in the loader: Fade_Out_Init, Fade_Out_Main (no arguments), load_palette and search_load_tpage_buf_lock.
+## Codex cx3 matching pass (T-12030)
+
+Ticket [[tickets/T-12030-codex-cx3]]. Added **5,200 verified bytes across twelve functions** in src/main/8005A0B0.c:
+
+| Function | Literal bytes |
+| --- | ---: |
+| join_club_message | 544 |
+| func_8005BE8C | 704 |
+| func_8005D448 | 292 |
+| func_800603C0 | 324 |
+| system_settings_init | 360 |
+| func_8005E150 | 368 |
+| func_8005DEA0 | 376 |
+| func_8005FDEC | 380 |
+| func_8005F09C | 400 |
+| func_8005BCEC | 416 |
+| func_8005C5BC | 516 |
+| func_8005CF6C | 520 |
+
+All promotions were checked against literal linked bytes and the main executable SHA1, then committed. The save/load initializer family contributes 1,036 bytes using natural indexed arrays and the established FlagsWork24 aggregate. The byte range at +4 is used for slot state, so its former padding member is now `unk_04`; no new aggregate or scalar alias was introduced.
+
+Two useful acceptance lessons: the earlier BE8C permutation scored 140 in the stripped harness but matched in production after exact rescoring; and normalized-zero guarded comparisons can still fail literal proof because other active drafts change layout. BCEC, the menu twins, and BE8C were promoted experimentally and accepted only after the default build and literal proof passed. Grouping each width/height store pair on one source line resolves BCEC's historical scheduling gap. A correct void prototype fixes F09C's extra return-address reload.
+
+Marked fakematches remain in join_club_message (selector view), D448 (stack reservation), E150 (initialized empty counter test), F09C (scalar-byte clamp view), and BCEC (stack reservation/store grouping). The other new matches use ordinary typed C.
+
+One near miss is retained: `pre_syogatu1`, 15 diff output rows, with typed buffers and a marked frame reservation. Its remaining blocker is cached buffer-address CSE. `func_8005A410` was restored after coordinate-loop/unroll/spill trials (best 62 diff rows); `func_8005CA94` was restored at 57 rows after typed-slot, result/view and bounded search experiments. Full evidence is in build/scratch/ and the ticket; new compiler-gap/resolution rows are in [[data/t0018-cases]].
+
+Final Docker configure/build passes all 27 SHA1 targets, headers and globals. `sync_protos.py --check-branch` reports zero new disagreements (15 known). Fresh default-build literal comparisons pass all twelve functions. Logs: build/scratch/final-build.log, final-protos.log, final-matches.log and final-near-miss.log. Ticket is In Review, pending the required standards review.
