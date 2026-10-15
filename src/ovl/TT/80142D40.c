@@ -563,7 +563,163 @@ void func_80144094(void) {
     *(s32 *)(q + 0x98) = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142D40", func_801441BC);
+void func_801441BC(void) {
+    s32 i;
+    u8 *g;
+    u8 *h;
+    u8 *r;
+    u8 *p;
+    u8 *q;
+    u16 v;
+
+    p = D_80158A74;
+    q = D_80158A7C;
+    g = D_80158A64;
+    h = D_80158A6C;
+    switch (*(u16 *)(p + 4)) {
+    case 0x20:
+        func_801437F0(h, g);
+        if (p[0xD] != 0) {
+            p[0xD] = 0;
+            *(s16 *)(p + 0x62) = 0;
+            func_80146BE0();
+            func_80148DB0();
+            *(u16 *)(p + 4) = 0x30;
+            *(s16 *)(p + 0xA) = 0;
+            *(s16 *)(p + 8) = 0;
+            *(s16 *)(p + 6) = 0;
+            p[0xF] = 0;
+            p[0xE] = 0;
+            p[0xD] = 0;
+        }
+        break;
+    case 0x30:
+        func_80143A44();
+        v = *(u16 *)(p + 0x62);
+        if (v >= 0x5A) {
+            p[0x52] = 0;
+            *(u16 *)(p + 0x50) &= ~2;
+            *(u16 *)(p + 4) = 0x40;
+            *(s16 *)(p + 0xA) = 0;
+            *(s16 *)(p + 8) = 0;
+            *(s16 *)(p + 6) = 0;
+            p[0xF] = 0;
+            p[0xE] = 0;
+            p[0xD] = 0;
+        } else {
+            *(u16 *)(p + 0x62) = v + 1;
+        }
+        break;
+    case 0x40:
+        func_80143A44();
+        break;
+    case 0x60:
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0x10000;
+        func_801478D0(p + 0x38);
+        func_801478D0(q + 0x38);
+        if (p[0x40] & 1) {
+            *(s32 *)(p + 0x28) = 0;
+            *(s32 *)(p + 0x2C) = 0;
+            *(u16 *)(p + 4) = 0x61;
+        }
+        break;
+    case 0x61:
+        if (D_80158A6C[0xC] == 0) {
+            g[0x12] = 0;
+            *(u16 *)g = 5;
+            *(s16 *)(g + 4) = 0;
+        } else {
+            h[0xC] -= 1;
+            func_80144CA8();
+        }
+        func_801436BC();
+        p[0] = 0;
+        *(s32 *)(p + 0x20) = 0;
+        *(s32 *)(p + 0x24) = 0xF80000;
+        *(s32 *)(p + 0x28) = 0;
+        *(s32 *)(p + 0x2C) = 0;
+        *(s16 *)(p + 0x14) = 0;
+        *(s16 *)(p + 0x16) = 0xF8;
+        *(u16 *)(p + 4) = 0x20;
+        *(s16 *)(p + 0xA) = 0;
+        *(s16 *)(p + 8) = 0;
+        *(s16 *)(p + 6) = 0;
+        p[0xF] = 0;
+        p[0xE] = 0;
+        p[0xD] = 0;
+        break;
+    case 0xA0:
+        func_80143978();
+        p[0x3E] = 0;
+        q[0x3E] = 5;
+        q[0x9E] = 0xA;
+        if (p[0xD] != 0) {
+            /* u16, not s16: the 4 then joins the a2 range of the later == 4 tests (li before the beqz here, and
+             * the empty b/nop join blocks after the inner ifs of cases 0x20, 0x30 and 0x60). T-11840 */
+            *(u16 *)g = 4;
+            *(s16 *)(g + 6) = 0;
+            *(s16 *)(g + 4) = 0;
+            *(s16 *)(g + 2) = 0;
+            g[0xB] = 0;
+            g[0xA] = 0;
+            g[9] = 0;
+        }
+        break;
+    }
+    func_80143FE8();
+    if (*(u16 *)(p + 4) < 0x60) {
+        if (p[0x58] == 0 && p[0x59] == 0) {
+            p[0x57] = 0;
+        } else if (p[0x58] >= 7) {
+            p[0x57] = 2;
+        } else if (p[0x58] >= 3) {
+            p[0x57] = 1;
+        } else if (p[0x59] >= 7) {
+            p[0x57] = 4;
+        } else if (p[0x59] >= 3) {
+            p[0x57] = 3;
+        }
+        p[0x3E] = p[0x57];
+        /* Byte before the product: sets the operand order of the addu and the t-register numbering. T-11840 */
+        q[0x3E] = p[0x5A] + p[0x57] * 10 + 5;
+        q[0x9E] = p[0x5B] + p[0x57] * 10 + 10;
+        if (p[0x5C] != 0) {
+            if (D_801567B0[p[0x5A]] < ++p[0x5E]) {
+                p[0x5E] = 0;
+                if (++p[0x5A] >= 5) {
+                    p[0x5A] = 0;
+                    p[0x5C] = 0;
+                }
+            }
+            r = D_80158A84;
+            for (i = 0; i < 8; i++) {
+                if (r[0] != 0 && r[0x3D] == 0 && p[0x5A] == 4 && p[0x5E] == 1) {
+                    r[1] = 0;
+                    *(s16 *)(r + 0x3E) = 0;
+                }
+                r += 0x58;
+            }
+        }
+        if (p[0x5D] != 0) {
+            if (D_801567B0[p[0x5B]] < ++p[0x5F]) {
+                p[0x5F] = 0;
+                if (++p[0x5B] >= 5) {
+                    p[0x5B] = 0;
+                    p[0x5D] = 0;
+                }
+            }
+            r = D_80158A84;
+            for (i = 0; i < 8; i++) {
+                if (r[0] != 0 && r[0x3D] == 1 && p[0x5B] == 4 && p[0x5F] == 1) {
+                    r[1] = 0;
+                    *(s16 *)(r + 0x3E) = 0;
+                }
+                r += 0x58;
+            }
+        }
+    }
+}
 
 /* FAKE: the first test reads D_80158A74 through an array view of the pointer block at D_80158A60, so uopt does not
  * merge it with p; the original loads p straight into s2 and reloads the global for the test (T-0018 promo). T-11620 */

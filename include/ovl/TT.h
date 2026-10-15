@@ -701,3 +701,11 @@ extern u8 *D_8015676C[];
 /* Defined after its caller func_8014A2B4 in 80148DB0.c. T-11840 */
 void func_8014A7E0(void);
 #endif
+
+#ifndef OVL_TT_T11840_801441BC
+#define OVL_TT_T11840_801441BC
+/* Per-step frame limits indexed by D_80158A74 + 0x5A / + 0x5B (func_801441BC). T-11840 */
+extern u8 D_801567B0[];
+/* Defined after its caller func_801441BC in 80142D40.c. T-11840 */
+void func_80144CA8(void);
+#endif
