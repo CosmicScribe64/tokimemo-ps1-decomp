@@ -92,58 +92,47 @@ u16 func_8013C818(u8 arg0, s8 *arg1) {
     return ret;
 }
 
-/* NON_MATCHING: T-11000, about 25 lines: constant/address hoist order (li 1,15,0x30 vs lui D_80155D50 first) and the end pointer D_80155D56 kept in a1; a two-symbol end compare gets unrolled */
-#ifdef NON_MATCHING
 void func_8013C8DC(void) {
     u8 *q;
-    u8 *p;
-    s32 y;
-    u16 *t;
+    TtPoolDraw14 *p;
+    s32 i;
 
-    p = D_80158AA8;
+    p = (TtPoolDraw14 *)D_80158AA8;
     q = D_80158A60;
     D_80158A6C[0xA] = 0;
     func_8013C6D0();
-    p[0] = 1;
-    *(s16 *)(p + 0xA) = -0x48;
-    *(s16 *)(p + 0xC) = 0x30;
-    *(s16 *)(p + 0xE) = 0x12;
-    p[2] = 0xF;
-    *(s16 *)(p + 6) = 0;
-    *(s16 *)(p + 0x10) = 0;
-    p += 0x14;
-    t = D_80155D50;
-    y = 0x60;
-    do {
-        p[0] = 1;
-        *(s16 *)(p + 0xA) = -0x50;
-        *(s16 *)(p + 0xC) = y;
-        *(s16 *)(p + 0xE) = *t;
-        t++;
-        y += 0x10;
-        p += 0x14;
-        p[-0x12] = 0xF;
-        *(s16 *)(p - 0xE) = 0;
-        *(s16 *)(p - 4) = 0;
-    } while (t != &D_80155D50[3]);
-    p = D_80158AA8 + 0x140;
-    D_80158AA8[0x140] = 1;
-    *(s16 *)(p + 0xA) = 0x30;
-    *(s16 *)(p + 0xC) = 0x60;
-    *(s16 *)(p + 0xE) = func_8013C818(q[0x44], p + 2);
-    *(s16 *)(p + 6) = 0;
-    *(s16 *)(p + 0x10) = 0;
-    p[0x14] = 1;
-    *(s16 *)(p + 0x1E) = 0x30;
-    *(s16 *)(p + 0x20) = 0x70;
-    p += 0x14;
-    *(s16 *)(p + 0xE) = func_8013C818(q[0x45], p + 2);
-    *(s16 *)(p + 6) = 0;
-    *(s16 *)(p + 0x10) = 0;
+    p->unk_00 = 1;
+    p->x = -0x48;
+    p->y = 0x30;
+    p->text = 0x12;
+    p->unk_02 = 0xF;
+    p->flags = 0;
+    p->ot = 0;
+    p++;
+    for (i = 0; i < 3; i++, p++) {
+        p->unk_00 = 1;
+        p->x = -0x50;
+        p->y = i * 16 + 0x60;
+        p->text = D_80155D50[i];
+        p->unk_02 = 0xF;
+        p->flags = 0;
+        p->ot = 0;
+    }
+    p = (TtPoolDraw14 *)D_80158AA8 + 16;
+    p->unk_00 = 1;
+    p->x = 0x30;
+    p->y = 0x60;
+    p->text = func_8013C818(q[0x44], (s8 *)&p->unk_02);
+    p->flags = 0;
+    p->ot = 0;
+    p[1].unk_00 = 1;
+    p[1].x = 0x30;
+    p[1].y = 0x70;
+    p++;
+    p->text = func_8013C818(q[0x45], (s8 *)&p->unk_02);
+    p->flags = 0;
+    p->ot = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013C8DC);
-#endif
 
 void func_8013CA0C(void) {
     u8 *p;
