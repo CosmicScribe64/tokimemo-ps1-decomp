@@ -406,6 +406,8 @@ void func_801330D0(void) {
 INCLUDE_ASM("asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80132000", func_801330D0);
 #endif
 
+/* FAKE: s32 without return keeps the clamp accumulator in v0 and the original
+ * split epilogue. Original return type is unconfirmed. T-14000. */
 s32 func_801333B0(void) {
     s32 i;
 

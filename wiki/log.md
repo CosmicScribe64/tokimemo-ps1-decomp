@@ -14407,3 +14407,7 @@ Created [[tickets/T-14100-date-near-matches]] from the verified [[tickets/T-1210
 
 [[tickets/T-14100-date-near-matches]] adds func_80152980 in src/ovl/DATE/80151460.c: 296 literal linked bytes, default-build DATE SHA1 OK. Natural bit clearing preserves FF7F immediate. New package total 636 bytes. func_80158338 remains scratch-only after a 16-row comparison.
 [[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/EN_NICHI/80132000.c func_801333B0: 476 linked bytes MATCH, EN_NICHI SHA1 OK. Natural ten-object loop matches compiler unrolling; the matched s32 return type preserves the final accumulator lifetime. Total accepted gain 1056 bytes.
+
+## [2026-10-15] decision | Label input handler return accommodation
+
+Review of [[tickets/T-14000-ending-en-nichi-families]] identifies func_801333B0's unconfirmed s32-without-return form as a return/liveness accommodation. Added explicit FAKE comment and ticket explanation, following CODING_STANDARDS.md section 7a. No new coverage.
