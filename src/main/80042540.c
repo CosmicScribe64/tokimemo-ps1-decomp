@@ -16,32 +16,38 @@ void func_80042798(void) {
     func_80042960();
 }
 
-/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
+/* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
+ * store and as1 puts that store in the jr delay slot, as the original does; no
+ * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
+ * return. T-11610 */
 s32 func_80042808(void) {
+    s32 *p;
+    s32 z;
+
     D_800E6280.unk_1109 += 1;
     D_800E6280.unk_110A = 0;
     D_800E6280.unk_1100 = 0;
     D_800E6280.unk_1104.w = 0;
     D_800E6280.unk_110C = 0;
-    D_800E6280.unk_110D = 0;
-    return 0;
+    z = 0;
+    p = &z;
+    D_800E6280.unk_110D = *p;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80042540", func_80042808);
-#endif
 
-/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
+/* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
+ * store and as1 puts that store in the jr delay slot, as the original does; no
+ * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
+ * return. T-11610 */
 s32 func_8004284C(void) {
+    s32 *p;
+    s32 z;
+
     D_800E6280.unk_110A += 1;
     D_800E6280.unk_1104.w = 0;
-    D_800E6280.unk_110D = 0;
-    return 0;
+    z = 0;
+    p = &z;
+    D_800E6280.unk_110D = *p;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80042540", func_8004284C);
-#endif
 
 void main_state_set(s32 arg0) {
     u32 t;
@@ -65,32 +71,38 @@ void main_state_set(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
+/* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
+ * store and as1 puts that store in the jr delay slot, as the original does; no
+ * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
+ * return. T-11610 */
 s32 func_80042908(s32 arg0) {
-    D_800E6280.unk_1109 = (s8) arg0;
+    s32 *p;
+    s32 z;
+
+    D_800E6280.unk_1109 = arg0;
     D_800E6280.unk_110A = 0;
     D_800E6280.unk_1100 = 0;
     D_800E6280.unk_1104.w = 0;
     D_800E6280.unk_110C = 0;
-    D_800E6280.unk_110D = 0;
-    return 0;
+    z = 0;
+    p = &z;
+    D_800E6280.unk_110D = *p;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80042540", func_80042908);
-#endif
 
-/* NON_MATCHING: T-10850, 4 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
+/* FAKE: z is read through its address, so uopt sets v0 = 0 before the last
+ * store and as1 puts that store in the jr delay slot, as the original does; no
+ * `return 0` form does (the normal_date_girl_in_init trick, T-9540). s32 with no
+ * return. T-11610 */
 s32 func_80042940(s32 arg0) {
-    D_800E6280.unk_110A = (s8) arg0;
+    s32 *p;
+    s32 z;
+
+    D_800E6280.unk_110A = arg0;
     D_800E6280.unk_1104.w = 0;
-    D_800E6280.unk_110D = 0;
-    return 0;
+    z = 0;
+    p = &z;
+    D_800E6280.unk_110D = *p;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80042540", func_80042940);
-#endif
 
 s32 func_80042960(void) {
     switch (*(u8 *)&D_800E6280.unk_1108) {
