@@ -93,7 +93,51 @@ void func_8006764C(s32 arg0) {
     }
 }
 
+/* NON_MATCHING: T-11690, 11 differing lines; IDO keeps arg0 in $a1 (move a1,a0 at entry) and hoists li a0,27
+ * into the bnez delay slot, the original stores arg0 to D_800B5C08 straight from $a0. Index local, if/else and
+ * goto spellings give the same (T-9730 tried void/s32 and a 300-second permuter). */
+#ifdef NON_MATCHING
+void func_800676AC(s32 arg0) {
+    if (arg0 == 0 || arg0 >= 0xE) {
+        D_80125C50 = 0x78;
+        D_80125C52 = -0x37;
+        D_80125C54 = 0xF;
+        D_80125C55 = 8;
+        D_800B5C08 = 0;
+        func_8006764C(0);
+        return;
+    }
+    D_800B5C08 = arg0;
+    func_80048F64(0x1B);
+    D_8011ECD0[0x1B].unk_01 = 1;
+    D_8011ECD0[0x1B].unk_02 = 0x40;
+    D_8011ECD0[0x1B].unk_38 = 0x40000000;
+    D_8011ECD0[0x1B].unk_03 = 0x84;
+    D_8011ECD0[0x1B].unk_0C = D_800C5FD4;
+    D_8011ECD0[0x1B].unk_10 = D_800C6010;
+    D_8011ECD0[0x1B].unk_34 = (u8 *)&D_800C5FCC;
+    D_8011ECD0[0x1B].unk_14 = D_800C6014;
+    D_8011ECD0[0x1B].unk_04 = 8;
+    D_8011ECD0[0x1B].unk_05 = 1;
+    D_8011ECD0[0x1B].unk_16 = 0;
+    D_8011ECD0[0x1B].unk_18 = D_800B5C08 - 1;
+    func_80048F64(0x1C);
+    D_8011ECD0[0x1C].unk_01 = 1;
+    D_8011ECD0[0x1C].unk_02 = 0x40;
+    D_8011ECD0[0x1C].unk_38 = 0x40000000;
+    D_8011ECD0[0x1C].unk_03 = 0x84;
+    D_8011ECD0[0x1C].unk_0C = D_800C5FD4;
+    D_8011ECD0[0x1C].unk_10 = D_800C6010;
+    D_8011ECD0[0x1C].unk_34 = (u8 *)&D_800C5FCC;
+    D_8011ECD0[0x1C].unk_14 = D_800C6014;
+    D_8011ECD0[0x1C].unk_04 = 8;
+    D_8011ECD0[0x1C].unk_05 = 1;
+    D_8011ECD0[0x1C].unk_16 = 0;
+    D_8011ECD0[0x1C].unk_18 = 0xD;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800676AC);
+#endif
 
 /* NON_MATCHING: T-11100, 142 words differ in registers (14 structural): the original loads D_800B5C08 into $a3 and
  * passes it with `move a0,a3`, and keeps D_80125C54 in $a2 and the D_80125C5x values in other temporaries (T-0018 style
