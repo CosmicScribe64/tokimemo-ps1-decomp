@@ -13521,3 +13521,11 @@ BUNKA_SD:func_80132FF0 has532 exact linked text bytes and a passing overlay chec
 ## [2026-10-15] build | T-12090 large display setup matched
 
 BUNKA_SD:func_80132940 matches1144 linked text bytes and its overlay checksum. Typed records, a reused loop counter, explicit fifth switch case and unsigned16-bit frame intermediate resolve the setup family. No FAKE. Cumulative2124 verified code bytes; [[tickets/T-12090-codex-cx9]] records evidence.
+
+## [2026-10-15] build | T-12090 native scheduler trace calibrated
+
+A scratch-only AS1 diagnostic shim preserves the complete stock object byte-for-byte while producing a reached scheduling DAG for the952-byte setup near miss. [[tickets/T-12090-codex-cx9]] records fidelity, wrapper limitation and the equal-priority ordering hypothesis. Production compiler tools are unchanged.
+
+## [2026-10-15] build | T-12090 second large setup matched
+
+BUNKA_SD:func_80138D48 now matches952 linked bytes and overlay checksum, headers and globals. Natural for-loop increment placement resolves the equal-priority scheduler tie; keep initialization order intact. No FAKE. Cumulative3076 text bytes; see [[tickets/T-12090-codex-cx9]].
