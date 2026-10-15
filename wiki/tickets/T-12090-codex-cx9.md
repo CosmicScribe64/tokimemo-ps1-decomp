@@ -46,6 +46,10 @@ func_80138D48 reaches6 rows with typed DisplayActor44 access and the texture ass
 
 Typed DisplayActor44 records, a32-bit frame induction variable and unsigned byte stores repair the saved draft. Assigning the image metadata before the counter/index updates fixes the large scheduling gap; putting the index increment in the for clause fixes the final constant scheduling. Keep i=2 before frame=15, outside the for initializer, to preserve load order. Removed unused m2c locals and raw offsets. No FAKE. Exact linked comparison and BUNKA_SD checksum pass; headers/globals OK. Cumulative3076 verified text bytes plus104 jump-table bytes.
 
-### func_80133204: MATCH, 820 text bytes
+### func_80133204: MATCH, 828 text bytes
 
-Restored the fifth switch entry, replaced the shared m2c goto with separate if/else assignments, and used typed word-table indexing for voice records. Natural string-table indexing preserves the match after removing the synthetic byte-offset temporary. Exact production linked comparison and BUNKA_SD checksum pass, headers/globals OK; no FAKE. Cumulative3896 text bytes plus132 table bytes (worklist848 includes28 rodata bytes).
+Restored the fifth switch entry, replaced the shared m2c goto with separate if/else assignments, and used typed word-table indexing for voice records. Natural string-table indexing preserves the match after removing the synthetic byte-offset temporary. Exact production linked comparison and BUNKA_SD checksum pass, headers/globals OK; no FAKE. Cumulative3904 text bytes plus124 table bytes (worklist848 includes20 rodata bytes; linked text includes8 trailing padding bytes).
+
+### func_801388D0: MATCH, 268 bytes
+
+A bounded direct transfer from neighboring matched state machines: s32 no-return keeps the byte-assignment result live, plain +=1 uses the canonical byte conversion, and removing the spurious func_80048390 argument matches the original nop delay slot. Exact linked and overlay SHA1 pass with headers/globals OK. No FAKE. Six matches total4172 text bytes plus124 table bytes.

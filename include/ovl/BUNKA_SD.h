@@ -56,7 +56,7 @@ void func_80134418();
 s32 func_801389DC();
 void func_80138CAC();
 void func_8013987C();
-void func_801388D0();
+s32 func_801388D0(void);
 void func_80138C34(void);
 s32 func_80135160(void);
 s32 func_801359B0(void);

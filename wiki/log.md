@@ -13533,3 +13533,11 @@ BUNKA_SD:func_80138D48 now matches952 linked bytes and overlay checksum, headers
 ## [2026-10-15] build | T-12090 dialogue script matched
 
 BUNKA_SD:func_80133204 matches820 linked text bytes with overlay checksum, headers and globals OK. Typed table access and independent branch assignments remove the m2c control-flow artifact. No FAKE. Cumulative3896 text bytes; [[tickets/T-12090-codex-cx9]] records evidence.
+
+## [2026-10-15] lint | T-12090 linked size correction
+
+Corrected [[tickets/T-12090-codex-cx9]]: func_80133204 exact linked span is828 bytes, including8 trailing padding bytes; the preceding entry used the raw820-byte assembly declaration. Cumulative verified text is3904 bytes plus124 bytes of jump tables.
+
+## [2026-10-15] build | T-12090 state-machine idiom transferred
+
+BUNKA_SD:func_801388D0 matches268 bytes after three evidence-based repairs from neighboring C: live s32 result, byte compound increment, and correct zero-argument call. Exact linked and overlay SHA1/header/global checks pass. Cumulative4172 text bytes; [[tickets/T-12090-codex-cx9]].
