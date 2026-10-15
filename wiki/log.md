@@ -14310,3 +14310,22 @@ Standards review found no documented style violations; both reviews identified a
 ## [2026-10-15] ticket | T-13500 reviewed and complete
 
 Final full Docker rebuild passed 27/27 SHA1 checks; subsequent build no-op. Final touch benchmark preserved source 1/6, main_api.h 442/525, ETC.h 13/18 compiles/tasks. Eleven new integration, 17 cc and 131 surrounding regressions pass (159 total). Standards/spec reviewers cleared the shadow-header/directory-removal fixes; the spec reviewer independently passed all 11 integration tests. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to Done in ticket/kanban/index after resolving every review finding. Read-only original checkout, no push/PR, no game-code edits or matched-byte gain.
+## [2026-10-15] ticket | NAME_ENT family reconstruction
+
+Created [[tickets/T-13700-name-ent-families]] from origin/main 5ccb8765. Read prior negative selector-copy evidence and family reconstruction results. All work isolated in codex/name-13700.
+
+## [2026-10-15] query | NAME_ENT bounded negative evidence
+
+[[tickets/T-13700-name-ent-families]] records exact full-TU failures for prologue setup and table-loop hypotheses. No production source changed; excluded selector-copy family remains untouched. Moving to larger menu handlers.
+
+## [2026-10-15] decision | NAME_ENT family pass handoff
+
+Moved [[tickets/T-13700-name-ent-families]] to In Review. [[name-ent-family-results]] records bounded prologue and memory-card menu failures with exact full-TU scores. Zero accepted bytes; production source and headers unchanged. Stopped transfer after no reusable source form emerged.
+
+## [2026-10-15] ticket | NAME_ENT record type recovery
+
+Created [[tickets/T-13701-name-ent-record-types]] for semantic reconstruction of39F30 after [[tickets/T-13700-name-ent-families]] source-form probes. Existing layouts and original strides identify work flags, stored record flags and actor128..140 status fields.
+
+## [2026-10-15] ingest | NAME_ENT record and actor layout evidence
+
+[[tickets/T-13701-name-ent-record-types]] moves to In Review. [[name-ent-family-results]] records existing aggregate views for39F30, fixed actor mapping and a complete compiling typed draft (769 exact rows; bounded actor-end variant746). Zero accepted bytes, no production source/header edits.

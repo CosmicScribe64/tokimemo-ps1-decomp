@@ -20,6 +20,8 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Incremental build dependencies (Done; 27/27 checks, ETC rebuilds 13 objects instead of 443).
+- [[tickets/T-13701-name-ent-record-types|T-13701]] NAME_ENT record and actor type recovery (In Review; coherent typed draft, no match).
+- [[tickets/T-13700-name-ent-families|T-13700]] NAME_ENT family reconstruction (In Review; zero accepted bytes).
 - [[tickets/T-12903-option-small-handlers|T-12903]] Match small OPTION audio handlers (In Progress).
 - [[tickets/T-12902-small-draft-triage|T-12902]] Triage saved small OPTION and audio drafts (In Review; 264 linked bytes).
 - [[tickets/T-12901-small-option-main-first|T-12901]] Verify close OPTION and audio drafts (In Review; 2 matches / 548 linked bytes).
@@ -320,3 +322,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13103-etc-memory-card-family|T-13103]] ETC memory-card state family.
 
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence.
+
+- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.

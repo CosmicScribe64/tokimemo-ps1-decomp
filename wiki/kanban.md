@@ -23,6 +23,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
+- [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
@@ -88,6 +90,8 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
+- [ ] [[tickets/T-13700-name-ent-families|T-13700 Reconstruct NAME_ENT families]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 - [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
