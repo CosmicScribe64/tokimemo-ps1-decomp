@@ -705,9 +705,40 @@ void func_8013F35C(void);
 
 #ifndef OVL_TAIIKU_RUNNERS_T11640
 #define OVL_TAIIKU_RUNNERS_T11640
+/* T-11640: TAIIKU's view of the D_8011ECD0 display records (DisplayActor44 layout). The bytes at
+ * 0x01 and 0x06 are signed here: func_801400D8 stores them with constants that the original keeps
+ * apart from the unsigned switch constants of its later loops, which a u8 field merges. */
+typedef struct TaiikuActor44 {
+    /* 0x00 */ u8 unk_00;
+    /* 0x01 */ s8 unk_01;
+    /* 0x02 */ u8 unk_02;
+    /* 0x03 */ u8 unk_03;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ s8 unk_06;
+    /* 0x07 */ u8 unk_07;
+    /* 0x08 */ u8 pad_08[4];
+    /* 0x0C */ u8 *unk_0C;
+    /* 0x10 */ u8 *unk_10;
+    /* 0x14 */ s16 unk_14;
+    /* 0x16 */ u8 pad_16[2];
+    /* 0x18 */ s16 unk_18;
+    /* 0x1A */ s16 unk_1A;
+    /* 0x1C */ s16 unk_1C;
+    /* 0x1E */ u8 pad_1E[8];
+    /* 0x26 */ s16 unk_26;
+    /* 0x28 */ u8 pad_28[2];
+    /* 0x2A */ s16 unk_2A;
+    /* 0x2C */ u8 pad_2C[8];
+    /* 0x34 */ u8 *unk_34;
+    /* 0x38 */ s32 unk_38;
+    /* 0x3C */ u8 pad_3C[7];
+    /* 0x43 */ u8 unk_43;
+} TaiikuActor44; /* size 0x44 */
 /* T-11640: per-runner tables of func_8013FC5C (runners 1..3; D_801499B4 holds their 16.16 positions). */
 extern TaiHalves D_801499B4[]; /* 16.16 positions; D_801499B0[1..3] seen from func_8013FB14 */
 extern TaiikuI3 D_80149F80; /* speed added to each position, copied to the stack */
 extern u16 D_801499C4[];
 extern u8 D_801499CC[];
+extern u8 D_80149DF4[];
 #endif

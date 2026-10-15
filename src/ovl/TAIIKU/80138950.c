@@ -1170,7 +1170,66 @@ void func_8013FEF0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_801400D8);
+void func_801400D8(void) {
+    s32 i;
+
+    for (i = 0; i < 8; i++) {
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_03 = 0xA4;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_02 = 0x40;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_05 = 0x80;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_01 = 3;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_38 = 0x1000000;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_07 = 0x80;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_0C = (u8 *)D_80149FE4;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_10 = (u8 *)D_8014A01C;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_34 = D_80149DF4;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_14 = D_8014A054;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_1A = 0x1000;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_1C = 0x1000;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_06 = 2;
+    }
+    for (i = 0; i < 4; i++) {
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_26 = i * 0x40 - 0x78;
+        ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_2A = -8;
+        switch (D_801499D4[i]) {
+        case 0:
+            ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_18 = D_80149940 * 7;
+            break;
+        case 1:
+            ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_18 = 0x4D;
+            ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_43 = 0x1C;
+            break;
+        case 2:
+            ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_18 = 0x4D;
+            ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_43 = 0x1D;
+            break;
+        case 3:
+            ((TaiikuActor44 *)D_8011ECD0)[96 + i].unk_18 = 0x4D;
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        ((TaiikuActor44 *)D_8011ECD0)[100 + i].unk_26 = i * 0x40 - 0x78;
+        ((TaiikuActor44 *)D_8011ECD0)[100 + i].unk_2A = -8;
+        ((TaiikuActor44 *)D_8011ECD0)[100 + i].unk_18 = 0x58;
+        switch (D_801499D4[i]) {
+        case 0:
+            break;
+        case 1:
+            ((TaiikuActor44 *)D_8011ECD0)[100 + i].unk_43 = 0x1C;
+            break;
+        case 2:
+            ((TaiikuActor44 *)D_8011ECD0)[100 + i].unk_43 = 0x1D;
+            break;
+        case 3:
+            ((TaiikuActor44 *)D_8011ECD0)[100 + i].unk_43 = 0x1E;
+            break;
+        }
+    }
+}
 
 void func_80140338(void) {
     s32 i;
