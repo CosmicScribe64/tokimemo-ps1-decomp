@@ -724,7 +724,38 @@ void func_801344C8(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801347B8);
+void func_801347B8(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+
+    D_800CA160 = D_8015BDF4;
+    D_800CA164 = D_8015BE60;
+    D_800CA168 = D_8015BECC;
+    func_800AE0F0(D_800CA19C, "植物園");
+    func_800AE0F0(D_800CA1DC, "園内");
+    D_8015B658 = 3;
+    if (D_800E6280.unk_F5F == 7) {
+        D_8015B658 = 5;
+    }
+    if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[9] & 1)) {
+        D_800CA2FC = 0;
+    } else {
+        D_800CA2FC = 1;
+    }
+    choice_offset = D_800CA2FC * 3;
+    D_80122D08 = 9;
+    *D_800CA22C = (s16) *(g->unk_F5F * 6 + D_8015B578 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 6 + D_8015B578 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 6 + D_8015B578 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 6 + D_8015B57C + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 6 + D_8015B57C + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 6 + D_8015B57C + choice_offset + 2);
+    func_8007ED84(0x45D3);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 void func_801349A0(void) {
     GameState *g;
@@ -929,11 +960,106 @@ void func_8013518C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801353F8);
+void func_801353F8(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135620);
+    D_800CA160 = D_8015BDD4;
+    D_800CA164 = D_8015BE40;
+    D_800CA168 = D_8015BEAC;
+    func_800AE0F0(D_800CA19C, "ゲームセンター");
+    D_8015B658 = 0;
+    if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x10] & 1)) {
+        D_800CA2FC = 0;
+        func_800AE0F0(D_800CA1DC, "ビデオゲームコーナー");
+    } else {
+        D_800CA2FC = 1;
+        func_800AE0F0(D_800CA1DC, "ビデオゲームコーナー");
+    }
+    D_80122D08 = 0x10;
+    if ((D_800E6280.unk_03E >= 0x61) || ((D_800E6280.unk_03E >= 0x60) && (D_800E6280.unk_03F >= 9))) {
+        D_8015B670 = 1;
+    } else {
+        D_8015B670 = 0;
+    }
+    choice_offset = D_800CA2FC * 3;
+    *D_800CA22C = (s16) *(g->unk_F5F * 0xC + D_8015B548 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 0xC + D_8015B548 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 0xC + D_8015B548 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset + 2);
+    func_8007ED84(0x44D6);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80135804);
+void func_80135620(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+
+    D_800CA160 = D_8015BDC4;
+    D_800CA164 = D_8015BE30;
+    D_800CA168 = D_8015BE9C;
+    func_800AE0F0(D_800CA19C, "ボーリング場");
+    D_8015B658 = 3;
+    if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x12] & 1)) {
+        D_800CA2FC = 0;
+        func_800AE0F0(D_800CA1DC, "ボーリング場");
+    } else {
+        D_800CA2FC = 1;
+        func_800AE0F0(D_800CA1DC, "ボーリング場");
+    }
+    choice_offset = D_800CA2FC * 3;
+    D_80122D08 = 0x12;
+    *D_800CA22C = (s16) *(g->unk_F5F * 6 + D_8015B528 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 6 + D_8015B528 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 6 + D_8015B528 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 6 + D_8015B52C + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 6 + D_8015B52C + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 6 + D_8015B52C + choice_offset + 2);
+    func_8007ED84(0x4631);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
+
+void func_80135804(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+
+    D_800CA160 = D_8015BDD8;
+    D_800CA164 = D_8015BE44;
+    D_800CA168 = D_8015BEB0;
+    func_800AE0F0(D_800CA19C, "カラオケ");
+    D_8015B658 = 3;
+    if ((D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x13] % 3) == 0) {
+        D_800CA2FC = 0;
+        func_800AE0F0(D_800CA1DC, "ＢＯＸ内");
+    } else {
+        D_800CA2FC = 1;
+        func_800AE0F0(D_800CA1DC, "ＢＯＸ内");
+    }
+    choice_offset = D_800CA2FC * 3;
+    D_80122D08 = 0x13;
+    *D_800CA22C = (s16) *(g->unk_F5F * 6 + D_8015B550 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 6 + D_8015B550 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 6 + D_8015B550 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 6 + D_8015B554 + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 6 + D_8015B554 + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 6 + D_8015B554 + choice_offset + 2);
+    func_8007ED84(0x4613);
+    func_80085B3C(1, D_80122D08);
+    if ((D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x13] % 3) == 2) {
+        D_800CA2FC = 2;
+    }
+    func_8004284C();
+}
 
 void func_80135A34(void) {
     D_8015DE40 = 0;
@@ -1231,7 +1357,41 @@ void func_801366A4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136870);
+void func_80136870(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+
+    D_800CA160 = D_8015BDF0;
+    D_800CA164 = D_8015BE5C;
+    D_800CA168 = D_8015BEC8;
+    D_8015B658 = 3;
+    if (D_800E6280.unk_F5F == 6) {
+        D_8015B658 = 0;
+    }
+    func_800AE0F0(D_800CA19C, "海岸");
+    func_800AE0F0(D_800CA1DC, "浜辺");
+    if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x1E] & 1)) {
+        D_800CA2FC = 0;
+    } else {
+        D_800CA2FC = 1;
+        if (D_800E6280.unk_F5F == 5) {
+            D_800CA148 = 2;
+        }
+    }
+    choice_offset = D_800CA2FC * 3;
+    D_80122D08 = 0x1E;
+    *D_800CA22C = (s16) *(g->unk_F5F * 6 + D_8015B570 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 6 + D_8015B570 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 6 + D_8015B570 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 6 + D_8015B574 + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 6 + D_8015B574 + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 6 + D_8015B574 + choice_offset + 2);
+    func_8007ED84(0x45A3);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 void func_80136A74(void) {
     D_800E6280.unk_71E |= 0x10;
@@ -1283,7 +1443,40 @@ void func_80136B70(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136D3C);
+void func_80136D3C(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+    u8 flags;
+
+    D_800CA160 = D_8015BE00;
+    D_800CA164 = D_8015BE6C;
+    D_800CA168 = D_8015BED8;
+    D_8015B658 = 3;
+    func_800AE0F0(D_800CA19C, "スキー場");
+    func_800AE0F0(D_800CA1DC, "ゲレンデ");
+    flags = D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x20];
+    if (!(flags & 1)) {
+        D_800CA2FC = 0;
+    } else {
+        D_800CA2FC = 1;
+    }
+    if ((D_800E6280.unk_F5F == 5) && (flags != 0)) {
+        D_800CA2FC = 1;
+    }
+    choice_offset = D_800CA2FC * 3;
+    D_80122D08 = 0x20;
+    *D_800CA22C = (s16) *(g->unk_F5F * 6 + D_8015B590 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 6 + D_8015B590 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 6 + D_8015B590 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 6 + D_8015B594 + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 6 + D_8015B594 + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 6 + D_8015B594 + choice_offset + 2);
+    func_8007ED84(0x4558);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 void func_80136F2C(void) {
     s16 i;
@@ -1952,7 +2145,41 @@ void func_8013938C(void) {
     func_8004284C();
 }
 
+#ifdef NON_MATCHING
+void func_801393DC(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing the girl-row multiply across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+    s16 temp_t0;
+
+    if (D_80122CDC != 0) {
+        if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x11] & 1)) {
+            D_800CA2FC = 2;
+            func_800AE0F0(D_800CA1DC, "メダルゲームコーナー");
+        } else {
+            D_800CA2FC = 3;
+            func_800AE0F0(D_800CA1DC, "メダルゲームコーナー");
+        }
+        choice_offset = D_800CA2FC * 3;
+        D_80122D08 = 0x11;
+        *D_800CA22C = (s16) *(g->unk_F5F * 0xC + D_8015B548 + choice_offset);
+        D_800CA22C[1] = (s16) *(g->unk_F5F * 0xC + D_8015B548 + choice_offset + 1);
+        D_800CA22C[2] = (s16) *(g->unk_F5F * 0xC + D_8015B548 + choice_offset + 2);
+        *D_800CA21C = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset);
+        D_800CA21C[1] = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset + 1);
+        D_800CA21C[2] = (s16) *(g->unk_F5F * 0xC + D_8015B54C + choice_offset + 2);
+    }
+    temp_t0 = D_800CA148 + (D_800CA2FC * 2);
+    D_800CA148 = temp_t0;
+    if ((D_800E6280.unk_F5F == 7) && ((u8) D_800CA2FC >= 2)) {
+        D_800CA148 = temp_t0 + 3;
+    }
+    func_8004284C();
+}
+#else
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801393DC);
+#endif
 
 void func_801395B4(void) {
     u8 g;

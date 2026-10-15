@@ -1477,6 +1477,22 @@ extern u8 *D_8015B564;
 /* func_80136B70: the skating rink tables, same layout. */
 extern u8 *D_8015B588;
 extern u8 *D_8015B58C;
+/* The other place handlers read their two result rows the same way:
+ * D_8015B528 (bowling), D_8015B550 (karaoke), D_8015B570 (beach),
+ * D_8015B578 (botanical garden), D_8015B590 (ski slope), six bytes per
+ * girl; D_8015B548 (game centre, used twice), twelve bytes per girl. */
+extern u8 *D_8015B528;
+extern u8 *D_8015B52C;
+extern u8 *D_8015B548;
+extern u8 *D_8015B54C;
+extern u8 *D_8015B550;
+extern u8 *D_8015B554;
+extern u8 *D_8015B570;
+extern u8 *D_8015B574;
+extern u8 *D_8015B578;
+extern u8 *D_8015B57C;
+extern u8 *D_8015B590;
+extern u8 *D_8015B594;
 #endif
 
 #ifndef DATE_MOVIE_SCENE_T10910A
