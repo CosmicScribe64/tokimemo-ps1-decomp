@@ -14374,3 +14374,11 @@ Created [[tickets/T-14000-ending-en-nichi-families]] in In Progress after readin
 ## [2026-10-15] build | ENDING asset dispatcher verified
 
 [[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/ENDING/80134D20.c func_80136EE4: 580 linked bytes MATCH, ENDING SHA1 OK. Existing CharFlags b14 fixes the raw-mask instruction mismatch. Rejected scene and EN_NICHI dispatcher candidates remain ASM; diagnostics in scratchpad/t14000.
+
+## [2026-10-15] setup | Isolated GEKO and DATE2 lane
+
+Created codex/scenes-13900 at 0e670a13 with ignored reference inputs copied from integration. Claimed [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and [[tickets/T-13902-date2-families]] In Progress. Read prior source-form successes and failures; see [[scenes-family-results]].
+
+## [2026-10-15] build | First DATE2 literal match
+
+[[tickets/T-13902-date2-families]] accepts func_8013820C, 768 literal linked bytes with DATE2 SHA1 OK. Direct switch stores plus the target halfword type close it. GEKO background helper remains diagnostic-only; see [[scenes-family-results]].

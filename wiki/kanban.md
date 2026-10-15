@@ -26,6 +26,9 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
 
+- [ ] [[tickets/T-13900-scenes-families|T-13900 GEKO and DATE2 source families]]
+- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
+- [ ] [[tickets/T-13902-date2-families|T-13902 DATE2 bounded family reconstruction]]
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
