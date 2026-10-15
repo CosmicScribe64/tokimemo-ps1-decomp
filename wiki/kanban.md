@@ -28,6 +28,7 @@ kanban-plugin: board
 
 
 
+- [ ] [[tickets/T-12903-option-small-handlers|T-12903 Match small OPTION audio handlers]]
 
 
 - [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
@@ -80,6 +81,8 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 
 - [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
 

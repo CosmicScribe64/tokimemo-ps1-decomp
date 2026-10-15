@@ -14064,3 +14064,19 @@ Reused generated assembly from all integration address spaces, preserving local 
 ## [2026-10-15] ticket | T-13000 / T-13001 reviewed and Done
 
 Independent standards and spec reviews found no code or scope issues against 95c3fc9f..f17ceea9. The requested explicit prototype-audit record is now included; no unresolved findings. Moved [[tickets/T-13000-types-globals]] and [[tickets/T-13001-master-layout-pilot]] to Done and synchronized board/index. Three matches / 3,648 literal bytes; MASTER checksum and declaration audits pass. Full 27-binary integration gate remains for root.
+
+## [2026-10-15] ticket | Saved small-draft triage
+
+Created [[tickets/T-12902-small-draft-triage]] under [[tickets/T-12900-small-option-main]]. First checkpoint 6aa2f091 has 548 verified bytes. Next run scores existing small drafts with canonical aggregate views, one compiler at a time.
+
+## [2026-10-15] ticket | Additional small OPTION handlers
+
+Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (132/200 bytes) in the owned OPTION/801389A0 unit. [[tickets/T-12902-small-draft-triage]] full-unit triage found no immediate match; closest saved draft is main func_80079F00 at 21 rows, with argument-width differences. No experimental source/header changes installed.
+
+## [2026-10-15] decision | Audio-call width and exact third candidate
+
+[[tickets/T-12902-small-draft-triage]]: func_80079F00 scores zero full-unit rows (264 bytes) with s16 volume arguments and volume assignment before the flag update. Added only the existing override mechanism to include/main_api.h and src/main/80079B10.c. Literal proof and all 27 SHA1 checks are next; other callers retain the prior declaration.
+
+## [2026-10-15] build | Third verified match and shared-header validation
+
+[[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.

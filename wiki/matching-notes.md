@@ -5190,3 +5190,25 @@ Retained guards: func_8013987C14 differing listing rows (pointer setup and missi
 Largest remaining target func_80139290 is1516 text bytes plus88 table bytes. Repaired canonical records, natural independent case stores instead of two m2c shared gotos, and a timer local improve509→89 rows; repeating the delta expression instead of its local reaches87. Regdiff reports377 versus378 instructions: target copies the switch result v1→a1, then allocates the character byte in t0; the draft coalesces that copy and takes a1 for the character, shifting later mask values. Explicit copies, signed/unsigned views, assignment-in-switch, first-case splitting, bounded empty tests, and return liveness do not close it. Broad candidate stays scratch-only. These are measured failures, not proof that matching C is impossible.
 
 Native AS1 diagnostics were calibrated on the952-byte near miss. A scratch copy of frame_pass applies the unchanged transform and injects `-R -xbbdbg 8` only at real as1 invocation; complete stock and traced objects are byte-identical. Captured native output has8958 lines and a reached loop DAG. Direct `-Wa` forwarding fails the production frame wrapper's numeric-argument parser, so do not add it to production flags. The remaining six rows were equal-priority scheduling nodes; natural for-loop increment placement closed them. Retained evidence in cx9 `build/scratch/as1-stock.o`, `as1-trace.o`, `as1-native.log`, `38d-clean.c` and `38d-final.c`. No production tool changes or diagnostic patches are part of the match.
+
+## T-12900 small OPTION and main audio pass
+
+OPTION func_80137E38's word-pair table needs ordinary word-array indexing:
+`((s32 *)*e)[D_801230D0 * 2 + 1]` and the following word. Byte-offset
+expressions compute the same addresses but number the load/shift temporaries
+differently. This resolves the guarded 360-byte handler without a FAKE form.
+
+Main func_8007A868 (188 bytes) needs consistent Work80125D10 member accesses
+to preserve the early flag loads. Put the independent unk_08 assignment after
+the four flag-mask updates; uopt retains the original merged stores and load
+scheduling. No dummy local or source-line scheduling trick is needed.
+
+Main func_80079F00 (264 bytes) calls func_8008BFB0 with signed-halfword second
+and third arguments. Preserve other files' old-style declaration with a scoped
+MAIN_API_OVERRIDE guard. Pass the aggregate halfword directly; explicit s32
+casts generate different conversion chains. Assign unk_1C from unk_1E before
+the flag-word update to retain the original high-immediate scheduling.
+
+All three have full-TU funcdiff --resolve literal linked-byte proof; the
+affected main/OPTION binary SHA1 checks pass. See
+[[tickets/T-12901-small-option-main-first]] and [[tickets/T-12902-small-draft-triage]].
