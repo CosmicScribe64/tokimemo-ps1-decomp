@@ -529,9 +529,9 @@ void func_8013BFF8(void) {
     func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->f25, 0x20, -0x24);
     func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->f0, 0x20, -0x18);
     func_8004AE28((s32) g->unk_724, 0x20, 0);
-    func_8004AE28((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (1)), 0x20, 0xC);
-    func_8004AE28((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (2)), 0x20, 0x18);
-    func_8004AE28((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (3)), 0x20, 0x24);
+    func_8004AE28((s32) g->unk_725, 0x20, 0xC);
+    func_8004AE28((s32) g->unk_726, 0x20, 0x18);
+    func_8004AE28((s32) g->unk_727, 0x20, 0x24);
     func_8004AE28((s32) g->unk_F5F, 0x20, 0x30);
     func_8004AE28((s32) g->unk_75D, 0x20, 0x3C);
     func_8004AE28(D_80122CD4, 0x20, 0x48);
@@ -557,13 +557,13 @@ void func_8013BFF8(void) {
             g->unk_724 = func_8013A550((s32) g->unk_724, 0x15, 0);
             break;
         case 9:
-            *(u8 *)((unsigned char *)(&g->unk_724) + (1)) = func_8013A550((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (1)), 0x15, 0);
+            g->unk_725 = func_8013A550((s32) g->unk_725, 0x15, 0);
             break;
         case 10:
-            *(u8 *)((unsigned char *)(&g->unk_724) + (2)) = func_8013A550((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (2)), 0x15, 0);
+            g->unk_726 = func_8013A550((s32) g->unk_726, 0x15, 0);
             break;
         case 11:
-            *(u8 *)((unsigned char *)(&g->unk_724) + (3)) = func_8013A550((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (3)), 0x15, 0);
+            g->unk_727 = func_8013A550((s32) g->unk_727, 0x15, 0);
             break;
         case 12:
             g->unk_F5F = func_8013A550((s32) g->unk_F5F, 0xA, 0);

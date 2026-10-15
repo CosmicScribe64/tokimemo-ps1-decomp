@@ -97,7 +97,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-14400-option-menu-families|T-14400 Match OPTION menu and state families]]
 
 
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
