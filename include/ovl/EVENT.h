@@ -1509,7 +1509,9 @@ typedef struct EventStateView {
     /* 0x037 */ u8 unk_037;
     /* 0x038 */ u8 pad_038[0xAC];
     /* 0x0E4 */ Rec38Flags unk_0E4;
-    /* 0x0E8 */ u8 pad_0E8[0xBC];
+    /* 0x0E8 */ u8 pad_0E8[0x16];
+    /* 0x0FE */ s16 unk_0FE;
+    /* 0x100 */ u8 pad_100[0xA4];
     /* 0x1A4 */ Rec34 unk_1A4[12];
     /* 0x414 */ u8 pad_414[0x1B6];
     /* 0x5CA */ u8 unk_5CA[0x4B];

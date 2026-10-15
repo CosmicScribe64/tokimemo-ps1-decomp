@@ -14514,3 +14514,6 @@ Created [[tickets/T-14400-option-menu-families]] on codex/option-14400 from orig
 
 ## [2026-10-15] build | Exhaustive draft execution launched
 T14500 frozen48362009census:1066remainingfunctions/866424bytes,including125guarded drafts,allunitsincluded. DedicatedSol6.1medium harness saves wholecandidateTU,body,declarations and context hashes; serialexecution uses120secondper-targettimeout and per-functionresumable results. Fullrun handle85687, log/private/tmp/t14500-run.log, catalog in drafts-14500/drafts/T-14500/catalog.jsonl. FirstBUNKAKENunit21entriesincludesmultiplezero-scorecandidates; unitboundaryliteralverification underway in separateproofcheckout, uncounteduntil verified. Sharedimmutableinputs avoidindependentdiscimagecopies; currenthost20GiBfree.
+## [2026-10-15] build | EVENT interaction adds 656 bytes
+
+[[tickets/T-14300-event-families]] matches func_80117D80 in src/ovl/EVENT/8010FE10.c using ordinary conditions, the observed signed EventStateView field at offset 0xFE, and one explicitly marked FAKE discarded entry assignment for operand order. Default literal proof, EVENT SHA1, header/global/prototype guards pass. Cumulative gain: six functions / 3,204 literal linked bytes. Shop and medal probes remain ignored scratch.
