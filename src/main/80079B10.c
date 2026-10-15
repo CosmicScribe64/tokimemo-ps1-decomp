@@ -72,6 +72,7 @@ void func_80079F00(void) {
                 func_8007A924(D_80125D10.unk_08);
             }
         } else if (!(D_80125D10.unk_00 & 0x4000)) {
+            /* Snapshot volume before flags to preserve load scheduling. T-12902 */
             D_80125D10.unk_1C = D_80125D10.unk_1E;
             D_80125D10.unk_00 = (D_80125D10.unk_00 | 0x400) & 0xFFEFFFFF;
             func_8008B750(0x7F, 0x7F);
@@ -263,6 +264,7 @@ void func_8007A868(void) {
     D_80125D10.unk_00 &= ~0x4000;
     D_80125D10.unk_04 &= ~0x200;
     D_80125D10.unk_04 &= ~0x100;
+    /* Keep this store after the masks to preserve early flag loads. T-12901 */
     D_80125D10.unk_08 = t;
 }
 

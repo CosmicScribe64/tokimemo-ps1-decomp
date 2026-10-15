@@ -42,6 +42,10 @@ kanban-plugin: board
 
 
 
+
+- [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
+- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
+
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
 - [ ] [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180 Twin-guided matching (Gemini) 39]]
@@ -79,6 +83,8 @@ kanban-plugin: board
 
 
 ## In Review
+
+
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
 - [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
@@ -123,6 +129,13 @@ kanban-plugin: board
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 - [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
 - [ ] [[tickets/T-12200-acceleration-audit|T-12200 Measure and reduce matching setup overhead]]
+
+- [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
+- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
+- [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
+- [ ] [[tickets/T-12903-option-small-handlers|T-12903 Match small OPTION audio handlers]]
+- [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
+- [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
 - [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]
 - [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]
 - [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]

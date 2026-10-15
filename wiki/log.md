@@ -14083,3 +14083,43 @@ Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (13
 
 ## [2026-10-15] decision | Goal continuation and Sol medium replacement lanes
 [[tickets/T-12600-byte-coverage-families]]: active goal is at least80% verified game-code bytes published to main. Previous goal turn established the objective; this continuation integrates new committed matches and dispatches replacement work. User requests Sol6.1 medium for new workers. New isolated scopes: ETC (T13100), GYOZI/SHOUGATU (T13200), RPG_BAT (T13300). Existing dialogue and DATE workers continue. Reconciled integrated T12000+ ticket cards to their authoritative frontmatter statuses; no source changes from lint.
+
+## [2026-10-15] ticket | Saved small-draft triage
+
+Created [[tickets/T-12902-small-draft-triage]] under [[tickets/T-12900-small-option-main]]. First checkpoint 6aa2f091 has 548 verified bytes. Next run scores existing small drafts with canonical aggregate views, one compiler at a time.
+
+## [2026-10-15] ticket | Additional small OPTION handlers
+
+Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (132/200 bytes) in the owned OPTION/801389A0 unit. [[tickets/T-12902-small-draft-triage]] full-unit triage found no immediate match; closest saved draft is main func_80079F00 at 21 rows, with argument-width differences. No experimental source/header changes installed.
+
+## [2026-10-15] decision | Audio-call width and exact third candidate
+
+[[tickets/T-12902-small-draft-triage]]: func_80079F00 scores zero full-unit rows (264 bytes) with s16 volume arguments and volume assignment before the flag update. Added only the existing override mechanism to include/main_api.h and src/main/80079B10.c. Literal proof and all 27 SHA1 checks are next; other callers retain the prior declaration.
+
+## [2026-10-15] build | Third verified match and shared-header validation
+
+[[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.
+
+## [2026-10-15] build | All 27 binary checks pass
+
+[[tickets/T-12900-small-option-main]]: Docker ninja -j1 completes 27/27 SHA1 checks after the API guard, with headers/globals checks passing. Standards review requests source-local matching comments and a split first checkpoint; added the comments and split unpublished history without changing the final tree. Replacements: 7cb341f6 (OPTION 360), f1744de9 (main reset 188), 41d7a47e (main resume 264); these supersede 6aa2f091/cbe7698f for integration. Spec review reports no implementation or scope findings; final cleanliness and review validation are next.
+
+## [2026-10-15] ticket | Close T-12900 after review
+
+[[tickets/T-12900-small-option-main]] moves from In Progress to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12901 after review
+
+[[tickets/T-12901-small-option-main-first]] moves from In Review to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12902 after review
+
+[[tickets/T-12902-small-draft-triage]] moves from In Review to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] ticket | Close T-12903 after review
+
+[[tickets/T-12903-option-small-handlers]] moves from In Progress to Done after separate standards/spec reviews and resolved findings. Full default Docker build passes 27/27 checks; final literal proof totals 812 bytes. Local evidence is in build/t12900/experiments/. T-12903 is a bounded negative result, with no new source or match claims.
+
+## [2026-10-15] lint | Small-match handoff consistency
+
+Checked T-12900 through T-12903 status/card agreement and ticket links. The first two matches (548 bytes) plus the resume handler (264) total 812; no negative experiment contributes coverage. Source comments are committed, old checkpoint hashes are documented as superseded, and scratch files moved under ignored build/t12900/.
