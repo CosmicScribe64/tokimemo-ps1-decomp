@@ -14882,3 +14882,7 @@ Started [[tickets/T-15700-taco-taiiku-draft-repairs]], 28 scopes (17/11). Inspec
 ## [2026-10-15] build | Compile every reserved TACO and TAIIKU draft
 
 [[tickets/T-15700-taco-taiiku-draft-repairs]] moves In Review:28/28 full TUs compile in Docker (17TACO/11TAIIKU), 29584 target code bytes, scores98..709 and no zeros/coverage claim. SDK vector/coordinate layouts, actual copied tables and canonical aggregate/ABI views resolve all blockers. Complete C/context/diagnostics/hash/provenance and one-time derivation scripts saved in drafts/T-15700; initial attempts and production C/header files unchanged.
+
+## [2026-10-15] build | Publish 41 final compilation repairs
+
+Integrated T15700 (28) and T15900 (13), plus final257 automatic-attempt census and source-only checkpoint metadata. Published main f600eae0. No production C/header changes from c21bb523 and no new matching-byte claims. Prepared tools/refresh_draft_ledgers.py to join complete final catalogs without launching more generation. T15800 and T16000 continue the remaining compilation repairs; [[exhaustive-drafts]] and [[stopping-point-2026-10-15]] distinguish the earlier 77-failure checkpoint.

@@ -13,7 +13,7 @@ Frozen baseline: 48362009. The configured game-source census contains **1,066 IN
 
 Historical provenance contains 180 matching broad/family attempt rows. Their scores lack full current context, so fresh generation recovers omitted declarations; guarded drafts are reused directly.
 
-Initial smoke validation: three full-TU zero candidates in BUNKAKEN. Complete serial run in progress; no new verified bytes claimed. Log: /private/tmp/t14500-run.log.
+Historical smoke validation: three full-TU zero candidates in BUNKAKEN. The initial serial run subsequently completed; this section records its starting evidence. Log: /private/tmp/t14500-run.log.
 
 See [[tickets/T-14500-exhaustive-drafts]] and [[broad-coverage-results]].
 
@@ -53,7 +53,7 @@ Checkpoint: **1066/1,066 default attempts**; 937 compiled/scored drafts, 129 fai
 
 The default census includes all guarded drafts and all game units. Failed generation or compilation is recorded rather than skipped; a failed entry does not yet constitute a compilable C draft. The post-pass targets these failures with bounded repairs. Nine independent DATE source/type repairs already compile with nonzero full-TU scores (separate artifacts from 1308ed4a); no new byte match follows from those repairs.
 
-## Publishing checkpoint
+## Earlier publishing checkpoint
 
 All **1,066/1,066 initial scopes have an explicit outcome**, with 29 zero candidates, 908 other compiled scores and 129 initial failures. All initial bodies/context/provenance are retained. Independent DATE/type/unaligned repairs recover 33 failures as compiling alternatives. The serial automatic repair remains active; 136 repair attempts are captured at this checkpoint.
 
@@ -61,7 +61,7 @@ Current quality snapshot: **843 compiling drafts without listed residual pattern
 
 `best-catalog.snapshot.jsonl` and `coverage-snapshot.json` pin this publication checkpoint while the live serial repair continues. Encoding analysis found ten generated literals with hexadecimal byte escapes; two have separately owned proof repairs. A tested hex-to-octal helper is retained, but no additional encoding sweep was started after the user requested immediate publication.
 
-## Final stopping point requested by the user
+## Earlier stopping checkpoint, superseded by compilation repair
 
 The authorized serial repair is finished and no further experiment was started. **All 1,066 initial scopes / 866,424 progress bytes have explicit outcomes; zero are unattempted.** Initial outcomes remain 29 zero candidates, 908 other compiled scores, and 129 failures. The three bounded automatic passes retained 257 attempts; 33 independently reconstructed alternatives plus automatic repairs recover **52** initial failures.
 
@@ -82,3 +82,7 @@ The first two commands reuse completed outcomes and do not repeat existing compi
 ## Resumed compiler completion (T15900)
 
 The later user instruction to get all drafts compiling supersedes the earlier stopping checkpoint. The thirteen-scope mixed-overlay batch now has thirteen full-TU compiling alternatives at `drafts/T-14500/repairs/t15900`; every score was replayed with full diagnostics and preprocessed context saved. EVENT17D80 reuses current verified production source (zero already counted by integration); twelve alternatives remain nonzero. Other assigned repair batches continue, so this batch alone does not close the77-scope manifest. Compilation does not remove the residual semantic/type review requirement.
+
+## Final compilation repair in progress
+
+The user subsequently requested all remaining drafts compile before stopping. T15700 has compiled all 28 TACO/TAIIKU alternatives and T15900 all 13 mixed-overlay alternatives; these are published on main. T15800 owns 23 other overlays and T16000 owns thirteen MAIN functions. Full translation-unit contexts, diagnostics and hashes are retained; production matching coverage remains 63.7%. The combined ledgers will be refreshed after the remaining batches finish. See [[stopping-point-2026-10-15]].
