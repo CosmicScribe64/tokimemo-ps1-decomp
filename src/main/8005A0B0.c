@@ -448,7 +448,74 @@ s32 func_8005BC38(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BCEC);
 
+#ifdef NON_MATCHING
+void func_8005BE8C(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        if (func_80053F04() != 0) {
+            if (D_800E6280.unk_1115 == 1) {
+                func_80053D10();
+                D_800E6280.unk_110D++;
+            } else if (D_800E6280.unk_1115 == 0xF1) {
+                func_80053D10();
+                func_80042940(0xA0);
+            } else if (D_800E6280.unk_1115 == 0xFF) {
+                func_80053D10();
+                func_80042940(0xFF);
+            }
+        } else if ((u32)D_800E6280.unk_1120 > 0x200) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    case 1:
+        func_80053CE0();
+        D_800E6280.unk_110D++;
+        break;
+    case 2:
+        if (func_80054140() == 2) {
+            D_800E6280.unk_110D++;
+        } else if ((u32)D_800E6280.unk_1120 > 0x200) {
+            func_80042940(0xFF);
+        }
+        break;
+    case 3:
+        if ((u8)D_800E8BEE != 0) {
+            func_80053D10();
+            func_80053CE0();
+            D_800E6280.unk_110D++;
+        } else {
+            func_80053D10();
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "セーブまたはロードを選んでください", 0);
+            k_disp_switch(1, 1);
+            k_disp_switch(2, 1);
+            k_disp_start(4);
+            func_8004284C();
+        }
+        break;
+    case 4:
+        if (func_80054284() == 3) {
+            func_800552DC(0);
+            func_8005C4CC(1);
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0, "セーブまたはロードを選んでください", 0);
+            k_disp_switch(1, 1);
+            k_disp_switch(2, 1);
+            k_disp_start(4);
+            func_8004284C();
+            func_80053D10();
+        } else if (((u32)D_800E6280.unk_1120 > 0x200) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053D10();
+            func_80042940(0xFF);
+        }
+        break;
+    }
+    k_disp_inc();
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BE8C);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005C14C);
 
