@@ -1,0 +1,50 @@
+m2c.py: argument counts from the callees' asm: func_8006612C 1, menu_set 6
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4325: 'sp62' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp6E, sp62, 3U, "\217\255\202\265\221\254\202\242", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4326: 'sp70' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp70, sp64, 3U, "\221\254\202\242", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4326: 'sp64' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp70, sp64, 3U, "\221\254\202\242", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_8005F730/work -o drafts/T-14500/main/func_8005F730/work/guarded.o /tmp/asm_processor4p0t40xz/preprocessed_03351dd2ef88496ea6639ee96b05fbd8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzujoako_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_8005F730/work/guarded.o drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4327: 'sp6C' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp6C, sp60, 3U, "\225\201\222\312", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4327: 'sp60' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp6C, sp60, 3U, "\225\201\222\312", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4328: 'sp6E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp6E, sp62, 3U, "\217\255\202\265\221\254\202\242", 0);
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_8005F730/work -o drafts/T-14500/main/func_8005F730/work/guarded.o /tmp/asm_processormisqxovw/preprocessed_1cba638c4c93456484230eb69ff92341.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhciuayn8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_8005F730/work/guarded.o drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4323: 'sp5E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp6A, sp5E, 3U, "\222\170\202\242", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4329: 'sp6A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp6A, sp5E, 3U, "\217\255\202\265\222\170\202\242", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4329: 'sp5E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp6A, sp5E, 3U, "\217\255\202\265\222\170\202\242", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_8005F730/work -o drafts/T-14500/main/func_8005F730/work/guarded.o /tmp/asm_processornd8evhr1/preprocessed_4fd72e7d53ee4b7ca34b62a144267390.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcb21a9so/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_8005F730/work/guarded.o drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4277: redeclaration of 'func_8005F730'; previous declaration at line 3602 in file 'drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c'
+ void func_8005F730(void) {
+ -----^
+cfe: Error: drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c, line 4277: Incompatible function return type for this function.
+ void func_8005F730(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_8005F730/work -o drafts/T-14500/main/func_8005F730/work/guarded.o /tmp/asm_processorn10uea_g/preprocessed_c2aa9c3df3244249a3728fa65927fc88.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkyp4x5vh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_8005F730/work/guarded.o drafts/T-14500/main/func_8005F730/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

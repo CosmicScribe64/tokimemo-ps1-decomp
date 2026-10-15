@@ -1,0 +1,13 @@
+python3 failed:
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC/work/guarded.c, line 3499: structure has no member named 'unk0'
+     func_8015ACCC(4, 2, subroutine_arg2, subroutine_arg3, D_801604D4.unk0, *(s32 *)((unsigned char *)(&D_801604D4) + (4)), (*(s32 *)&sp40), *(s32 *)((unsigned char *)(&sp40) + (4)), 6, 0);
+ --------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC/work/guarded.c, line 3499: '&' before array or function; ignored
+     func_8015ACCC(4, 2, subroutine_arg2, subroutine_arg3, D_801604D4.unk0, *(s32 *)((unsigned char *)(&D_801604D4) + (4)), (*(s32 *)&sp40), *(s32 *)((unsigned char *)(&sp40) + (4)), 6, 0);
+ ------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC/work/guarded.c, line 3499: '&' before array or function; ignored
+     func_8015ACCC(4, 2, subroutine_arg2, subroutine_arg3, D_801604D4.unk0, *(s32 *)((unsigned char *)(&D_801604D4) + (4)), (*(s32 *)&sp40), *(s32 *)((unsigned char *)(&sp40) + (4)), 6, 0);
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC/work -o drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC/work/guarded.o /tmp/asm_processora3by4kbw/preprocessed_9bbe1e7f0b214725b7273dc9b167fec7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibi56qmpn5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC/work/guarded.c

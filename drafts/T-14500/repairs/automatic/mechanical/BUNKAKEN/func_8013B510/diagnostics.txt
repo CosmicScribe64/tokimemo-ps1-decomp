@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80063668 0, func_800866A0 1, func_8013BD84 0, func_8013BFA0 0
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/BUNKAKEN/func_8013B510/work/guarded.c, line 2771: Non-function name referenced in function call.
+             *(&D_80155ED0 + (D_80122EBC * 4))();
+ ---------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/BUNKAKEN/func_8013B510/work/guarded.c, line 3029: More than one default label in the same switch statement
+     default:
+ ----^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/BUNKAKEN/func_8013B510/work -o drafts/T-14500/repairs/automatic/mechanical/BUNKAKEN/func_8013B510/work/guarded.o /tmp/asm_processori035vhgk/preprocessed_7377ad682ec149fe956a0d6c023142b4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibbvs3_t73/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/BUNKAKEN/func_8013B510/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/BUNKAKEN/func_8013B510/work/guarded.c

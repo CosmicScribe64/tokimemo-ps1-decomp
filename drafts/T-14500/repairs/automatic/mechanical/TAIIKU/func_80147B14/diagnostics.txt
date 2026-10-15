@@ -1,0 +1,26 @@
+python3 failed:
+ -----------------------------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c, line 3613: '&' before array or function; ignored
+             *(s16 *)((unsigned char *)(&sp74) + (2)) = (s16) (*(s16 *)((unsigned char *)(&sp74) + (2)) + *(&sp3C + var_v1_2));
+ -----------------------------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c, line 3620: 'sp30' undefined; reoccurrences will not be reported.
+         *(s16 *)((unsigned char *)(&sp74) + (2)) = (s16) (*(s16 *)((unsigned char *)(&sp74) + (2)) + sp30);
+ -----------------------------------------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c, line 3625: 'sp32' undefined; reoccurrences will not be reported.
+         *(s16 *)((unsigned char *)(&sp74) + (2)) = (s16) (*(s16 *)((unsigned char *)(&sp74) + (2)) + sp32);
+ -----------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.o /tmp/asm_processor1tx36lrf/preprocessed_6c17bf60a559481796d27f4b25d5524d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibo0nn8e_c/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c
+python3 failed:
+ -----------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c, line 3602: '&' before array or function; ignored
+             *(s16 *)((unsigned char *)(&sp74) + (2)) = (s16) (*(s16 *)((unsigned char *)(&sp74) + (2)) + *(&sp60 + var_v1));
+ -----------------------------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c, line 3603: '&' before array or function; ignored
+             *(s16 *)((unsigned char *)(&sp78) + (2)) = (s16) (*(s16 *)((unsigned char *)(&sp78) + (2)) + *(&sp4C + var_v1));
+ -----------------------------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c, line 3615: '&' before array or function; ignored
+             *(s16 *)((unsigned char *)(&sp74) + (2)) = (s16) (*(s16 *)((unsigned char *)(&sp74) + (2)) + *(&sp3C + var_v1_2));
+ -----------------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.o /tmp/asm_processor2jib2shk/preprocessed_a4330516d5ac411b8e47218e8e5e2750.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib51rq4dxq/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14/work/guarded.c

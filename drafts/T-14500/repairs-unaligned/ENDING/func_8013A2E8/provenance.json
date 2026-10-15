@@ -1,0 +1,21 @@
+{
+  "source_base": "3d581b25",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/ENDING/func_8013A2E8",
+  "original_result": {
+    "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+    "func": "func_8013A2E8",
+    "guarded": false,
+    "harness_hash": "0c03c6e9920ed6496723dffe30af0ea2e3675ff8969a5d3e99b08c740c8a0977",
+    "reason": "m2c-error: M2C_LWL",
+    "scope": "ENDING:func_8013A2E8",
+    "score": null,
+    "seconds": 1.658,
+    "size": 4648,
+    "source_hash": "487d47537c90abb055d951ee60cf4e14babd9f7ec7b1819c7d65f213fe2b357e",
+    "src": "src/ovl/ENDING/801396E0.c",
+    "status": "failed",
+    "unit": "ENDING",
+    "variant": "default"
+  }
+}

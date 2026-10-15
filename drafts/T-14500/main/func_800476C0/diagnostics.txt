@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_8004901C 0, func_80098680 3, search_tpage 4, search_tpage8 4
+python3 failed:
+cfe: Error: drafts/T-14500/main/func_800476C0/work/guarded.c, line 2901: Duplicate case label in the same switch statement
+                                         case 32:
+ ----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_800476C0/work -o drafts/T-14500/main/func_800476C0/work/guarded.o /tmp/asm_processor3o95q9ll/preprocessed_ea2da67f75164de0b292eae56fba6023.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfs777g1r/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_800476C0/work/guarded.o drafts/T-14500/main/func_800476C0/work/guarded.c

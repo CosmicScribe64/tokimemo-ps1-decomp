@@ -1,0 +1,63 @@
+extern s8 D_800E62B6;
+extern s8 D_800E62B7;
+extern s8 D_800E62B8;
+extern s8 D_800E62BA;
+
+void func_80062210(void) {
+    s16 sp76;
+    s16 sp74;
+    s16 sp72;
+    s16 sp70;
+    s16 sp6E;
+    s16 sp6C;
+    s16 sp6A;
+    s16 sp68;
+    s16 var_s2;
+    s32 var_s1;
+    u8 *var_s0;
+
+    sp68 = 0x14;
+    sp6C = 0xA0;
+    sp74 = -0x30;
+    sp70 = 0x42;
+    sp6A = 0x14;
+    sp6E = 0xA0;
+    sp76 = -0x30;
+    sp72 = 0x52;
+    menu_set(0, 2, (s32) &sp74, (s32) &sp70, (s32) &sp6C, (s32) &sp68);
+    D_801230D0 = 0;
+    D_800E62B7 = 0xFF;
+    D_800E62B6 = 0xFF;
+    D_800E62B8 = 0xFF;
+    func_80041584();
+    D_800E62BA = 0x80;
+    func_8006BC28(0);
+    func_8006BD6C(1);
+    func_800623E4();
+    var_s0 = D_8011ECD0;
+    var_s1 = 0;
+    var_s2 = 0;
+    do {
+        func_80048F64(var_s1 + 0x60);
+        var_s1 += 1;
+        *(s16 *)((unsigned char *)var_s0 + (6552)) = var_s2;
+        var_s2 += 2;
+        var_s0 += 0x44;
+        *(s8 *)((unsigned char *)var_s0 + (6461)) = 0xD;
+        *(s8 *)((unsigned char *)var_s0 + (6462)) = 0x40;
+        *(s32 *)((unsigned char *)var_s0 + (6516)) = 0x01000000;
+        *(s8 *)((unsigned char *)var_s0 + (6463)) = 0xA4;
+        *(s32 *)((unsigned char *)var_s0 + (6472)) = 0x801EAB3C;
+        *(s32 *)((unsigned char *)var_s0 + (6476)) = 0x801EAB6C;
+        *(s32 *)((unsigned char *)var_s0 + (6512)) = 0x801EAB20;
+        *(s8 *)((unsigned char *)var_s0 + (6464)) = 8;
+        *(s8 *)((unsigned char *)var_s0 + (6465)) = 0x80;
+        *(s16 *)((unsigned char *)var_s0 + (6498)) = -0xA0;
+        *(s16 *)((unsigned char *)var_s0 + (6502)) = -0x78;
+    } while (var_s1 != 3);
+    D_801206BE = -0x6E;
+    D_80120702 = -0x78;
+    D_801206BA = -0xAA;
+    D_801206FE = -0xAA;
+    func_8004284C();
+}

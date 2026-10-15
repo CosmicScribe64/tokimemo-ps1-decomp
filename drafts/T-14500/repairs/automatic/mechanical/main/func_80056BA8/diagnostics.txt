@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: SetDefDispEnv 4, disp_string 0, func_80042A00 0, func_800476C0 0, func_8005715C 1, func_800868BC 2, func_80086944 2, func_80087EE8 2, func_80088E34 2, func_8008B750 2, func_8008BEE0 3, func_8008BFB0 3, func_8009AC20 0, func_8009AD00 1, func_8009C5E0 1, func_8009CC04 1, func_8009CCF4 1, func_8009F57C 5, func_800AD950 1, strInit 2, strNextVlc 1, strSetDefDecEnv 4, strSync 2
+python3 failed:
+ ------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/main/func_80056BA8/work/guarded.c, line 2823: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/main/func_80056BA8/work/guarded.c, line 2824: '&' before array or function; ignored
+     func_8009CC04((s32) &sp90);
+ ------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/main/func_80056BA8/work/guarded.c, line 2837: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/mechanical/main/func_80056BA8/work/guarded.o /tmp/asm_processorjuxximbl/preprocessed_9606aca0defc452787b99c6b37974b6a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibffnkr8ls/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/main/func_80056BA8/work/guarded.c

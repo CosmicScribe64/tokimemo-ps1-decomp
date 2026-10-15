@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_8004FC10 1, func_80052060 4, func_8005215C 0, func_80053418 2, func_8006B0C8 0, func_8013D88C 4
+python3 failed:
+ ----------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c, line 4442: '&' before array or function; ignored
+         func_80053418((s32) &sp68, (s32) &sp48);
+ -----------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c, line 4443: 'sp' undefined; reoccurrences will not be reported.
+         temp_t2 = (u8) *(u8 *)((unsigned char *)(sp + D_800E71DF) + (104)) >> 2;
+ -------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c, line 4507: Bad type name for cast operator
+         func_8006B5BC((GsWord) (s32) sp44);
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o /tmp/asm_processor9kfw0inj/preprocessed_bd831a56b79c40099566d9a7c7af94a7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0yeu0i8t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c
+python3 failed:
+ -----------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c, line 4443: '&' before array or function; ignored
+         func_80053418((s32) &sp68, (s32) &sp48);
+ ----------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c, line 4443: '&' before array or function; ignored
+         func_80053418((s32) &sp68, (s32) &sp48);
+ -----------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c, line 4508: Bad type name for cast operator
+         func_8006B5BC((GsWord) (s32) sp44);
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work -o drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o /tmp/asm_processorxkmpgjo4/preprocessed_ca3e0ed95bef4c2f94c4b7077471c458.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibsr2uc_bn/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TEL/func_80136724/work/guarded.o.sjis.c

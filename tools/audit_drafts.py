@@ -58,16 +58,16 @@ def residuals(body, raw):
 
 
 def manual_catalogs(base):
-    for catalog in (base / 'repairs').rglob('catalog.*'):
-        if 'automatic' in catalog.parts or catalog.suffix not in ('.json','.jsonl'):
+    for catalog in base.rglob('catalog.*'):
+        if catalog.parent==base or 'automatic' in catalog.parts or catalog.suffix not in ('.json','.jsonl'):
             continue
         entries = json.loads(catalog.read_text()) if catalog.suffix=='.json' else [json.loads(line) for line in catalog.read_text().splitlines()]
         for r in entries:
-            path = r.get('repair_path') or r.get('path')
+            path = r.get('repair_path') or r.get('path') or r.get('archive_path')
             if path:
                 result = Path(path) / 'result.json'
                 complete = json.loads(result.read_text()) if result.exists() else {}
-                yield dict(complete, **r, repair_path=path)
+                yield {**complete, **r, "repair_path": path}
 
 
 def raw_body(base, row):

@@ -1,0 +1,10 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/BUNKA_SD/func_801373D0/work/guarded.o.sjis.c, line 2725: redeclaration of 'func_801373D0'; previous declaration at line 2577 in file 'drafts/T-14500/repairs/automatic/mechanical/BUNKA_SD/func_801373D0/work/guarded.o.sjis.c'
+ void func_801373D0(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/BUNKA_SD/func_801373D0/work/guarded.o.sjis.c, line 2725: Incompatible function return type for this function.
+ void func_801373D0(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/BUNKA_SD/func_801373D0/work -o drafts/T-14500/repairs/automatic/mechanical/BUNKA_SD/func_801373D0/work/guarded.o /tmp/asm_processorrhu7qtkh/preprocessed_cd49078af7634db5b23184eea6c00cfe.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqq4uw48s/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/BUNKA_SD/func_801373D0/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/BUNKA_SD/func_801373D0/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

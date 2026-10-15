@@ -1,0 +1,15 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.c, line 3422: redeclaration of 'D_8014A13C'; previous declaration at line 3184 in file 'drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.c'
+ extern u8 D_8014A13C;
+ ----------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.c, line 3518: This expression is not an lvalue.
+             D_8014A13C = 0;
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.o /tmp/asm_processorhybvi5_b/preprocessed_945d41578b54409f89453121dfc04fab.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxvl71i_8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.c, line 3517: This expression is not an lvalue.
+             D_8014A13C = 0;
+ -----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.o /tmp/asm_processorehzl4tri/preprocessed_3df4012585274358a3b9fceb4a312e20.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnzw4cq75/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50/work/guarded.c

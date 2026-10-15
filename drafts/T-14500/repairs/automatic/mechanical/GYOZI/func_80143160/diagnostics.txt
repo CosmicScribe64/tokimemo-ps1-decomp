@@ -1,0 +1,22 @@
+m2c.py: argument counts from the callees' asm: func_80052060 4, func_80143314 0, func_801433E0 0, func_80143520 0, func_801435C4 0, func_80143940 0, func_801439F0 0
+python3 failed:
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c, line 3328: '&' before array or function; ignored
+     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+ --------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c, line 3332: redeclaration of 'D_80148970'; previous declaration at line 3326 in file 'drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c'
+ extern s32 D_80148970;
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c, line 3342: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0.girl[D_800F62CF]) + (8));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.o /tmp/asm_processoro8to6pas/preprocessed_6eb8ece441e544ec88dde74b2b440851.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0vt4ty1t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c, line 3328: '&' before array or function; ignored
+     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+ --------------^
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0.girl[D_800F62CF]) + (8));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.o /tmp/asm_processora0f2fj8t/preprocessed_0b3ad8ddcf0b4bd28ad6f4cf7e79a42e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibk5xcpt7d/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_80143160/work/guarded.c

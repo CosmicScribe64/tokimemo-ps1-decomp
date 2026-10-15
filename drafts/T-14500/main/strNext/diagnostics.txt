@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_80088CB0 1, func_80088D70 2
+python3 failed:
+ ------^
+cfe: Error: drafts/T-14500/main/strNext/work/guarded.c, line 2700: Incompatible function return type for this function.
+ void *strNext(void *arg0) {
+ -------------^
+cfe: Error: drafts/T-14500/main/strNext/work/guarded.c, line 2714: 'NULL' undefined; reoccurrences will not be reported.
+         if (var_s0 == NULL) {
+ ----------------------^
+cfe: Error: drafts/T-14500/main/strNext/work/guarded.c, line 2729: 'NULL' undefined; reoccurrences will not be reported.
+         return NULL;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/strNext/work -o drafts/T-14500/main/strNext/work/guarded.o /tmp/asm_processoru6ng0_1d/preprocessed_e91f05ed7c2a4ccc98144e8d17ed8e50.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib01lth0ci/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/strNext/work/guarded.o drafts/T-14500/main/strNext/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/main/strNext/work/guarded.c, line 2701: redeclaration of 'strNext'; previous declaration at line 2680 in file 'drafts/T-14500/main/strNext/work/guarded.c'
+ void *strNext(void *arg0) {
+ ------^
+cfe: Error: drafts/T-14500/main/strNext/work/guarded.c, line 2701: Incompatible function return type for this function.
+ void *strNext(void *arg0) {
+ -------------^
+cfe: Warning 712: drafts/T-14500/main/strNext/work/guarded.c, line 2715: illegal combination of pointer and integer
+         if (var_s0 == NULL) {
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/strNext/work -o drafts/T-14500/main/strNext/work/guarded.o /tmp/asm_processorlawc_ujq/preprocessed_b751890f2d974f9da408bfc7cf122f63.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibteer8ua8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/strNext/work/guarded.o drafts/T-14500/main/strNext/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return

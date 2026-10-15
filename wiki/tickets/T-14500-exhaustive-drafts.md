@@ -21,3 +21,7 @@ Inventory every configured game INCLUDE_ASM, retain guarded drafts, generate mis
 ## Comments
 
 2026-10-15: Isolated branch from 48362009; immutable generated inputs hard-linked from integration to avoid duplicated disc images.
+
+## Publishing checkpoint
+
+All 1,066 default attempts are complete (29 zero candidates, 908 other scores, 129 explicit failures). Initial artifacts are immutable; 33 independent source/type repairs and completed automatic alternatives are joined separately. The final target remains usable reconstructed C for every remaining function. This ticket stays In Progress while compiler failures and residual synthetic-expression flags remain. A live serial repair pass continues through bounded fallbacks; no unverified draft entered production.

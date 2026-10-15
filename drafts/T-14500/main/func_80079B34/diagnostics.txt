@@ -1,0 +1,36 @@
+m2c.py: argument counts from the callees' asm: func_80079E4C 1, func_8007A008 0, func_8007A080 1, func_8007A6AC 1, func_8007ADD8 1, func_8007B358 1, func_8007B64C 0
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3024: Incompatible function return type for this function.
+ void func_8007B460(u16 arg0) {
+ ------------------^
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3033: redeclaration of 'func_8007B4E4'; previous declaration at line 2653 in file 'drafts/T-14500/main/func_80079B34/work/guarded.c'
+ void func_8007B4E4(u16 arg0) {
+ -----^
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3033: Incompatible function return type for this function.
+ void func_8007B4E4(u16 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_80079B34/work -o drafts/T-14500/main/func_80079B34/work/guarded.o /tmp/asm_processordhvzm1vg/preprocessed_bbfe0f38c7a14513866269e78b5ce00d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibal3vs0w_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_80079B34/work/guarded.o drafts/T-14500/main/func_80079B34/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3016: Incompatible function return type for this function.
+ void func_8007B3DC(u16 arg0) {
+ ------------------^
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3025: redeclaration of 'func_8007B460'; previous declaration at line 2651 in file 'drafts/T-14500/main/func_80079B34/work/guarded.c'
+ void func_8007B460(u16 arg0) {
+ -----^
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3025: Incompatible function return type for this function.
+ void func_8007B460(u16 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_80079B34/work -o drafts/T-14500/main/func_80079B34/work/guarded.o /tmp/asm_processoryqnkvlil/preprocessed_a08c5f166d814051803b48c9e8603299.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibb78rca40/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_80079B34/work/guarded.o drafts/T-14500/main/func_80079B34/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3017: redeclaration of 'func_8007B3DC'; previous declaration at line 2649 in file 'drafts/T-14500/main/func_80079B34/work/guarded.c'
+ void func_8007B3DC(u16 arg0) {
+ -----^
+cfe: Error: drafts/T-14500/main/func_80079B34/work/guarded.c, line 3017: Incompatible function return type for this function.
+ void func_8007B3DC(u16 arg0) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_80079B34/work -o drafts/T-14500/main/func_80079B34/work/guarded.o /tmp/asm_processoru5rlovcp/preprocessed_c3e724dcfc394afdbf53ac513791db30.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8iwa3hfh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_80079B34/work/guarded.o drafts/T-14500/main/func_80079B34/work/guarded.c

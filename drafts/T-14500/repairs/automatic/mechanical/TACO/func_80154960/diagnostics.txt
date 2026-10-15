@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_8009F02C 1, func_80154F74 0, func_801553AC 0, func_8015595C 0, func_80156178 0, func_801563E4 1, func_8015A900 0, func_8015B59C 0, func_8015C698 0, func_8015CCC8 1
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/mechanical/TACO/func_80154960/work/guarded.c, line 3459: Reference of an expression of void type or an incomplete type.
+         D_80160470 = func_80156178();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/mechanical/TACO/func_80154960/work -o drafts/T-14500/repairs/automatic/mechanical/TACO/func_80154960/work/guarded.o /tmp/asm_processort23tzwl7/preprocessed_a410b946ef7e4a99b768141098bab2fa.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib83csal25/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/mechanical/TACO/func_80154960/work/guarded.o drafts/T-14500/repairs/automatic/mechanical/TACO/func_80154960/work/guarded.c

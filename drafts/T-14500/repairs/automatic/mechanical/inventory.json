@@ -1,0 +1,866 @@
+[
+  {
+    "unit": "BUNKAKEN",
+    "src": "src/ovl/BUNKAKEN/8013B510.c",
+    "func": "func_8013B510",
+    "size": 2164,
+    "guarded": false,
+    "source_hash": "0561753ddfc300e1a40af5fc64884b51d70529fad3d6b0741858c9e6b6029bcb",
+    "scope": "BUNKAKEN:func_8013B510"
+  },
+  {
+    "unit": "BUNKAKEN",
+    "src": "src/ovl/BUNKAKEN/80143DD0.c",
+    "func": "func_80143DD0",
+    "size": 3232,
+    "guarded": false,
+    "source_hash": "98d16a8093926961f70793d81d74384e0c795a9a5cf96f06429b654f676433c6",
+    "scope": "BUNKAKEN:func_80143DD0"
+  },
+  {
+    "unit": "BUNKA_SD",
+    "src": "src/ovl/BUNKA_SD/80133540.c",
+    "func": "func_80133D54",
+    "size": 592,
+    "guarded": false,
+    "source_hash": "a77727aeac7004920481cb899475044726430dd431f44b7b78f7ff635f979742",
+    "scope": "BUNKA_SD:func_80133D54"
+  },
+  {
+    "unit": "BUNKA_SD",
+    "src": "src/ovl/BUNKA_SD/80134540.c",
+    "func": "func_80134850",
+    "size": 232,
+    "guarded": false,
+    "source_hash": "79607d077b9095a47dec5247dba1a53fddf202692b0b6ef4331a3bc9cbfac3bb",
+    "scope": "BUNKA_SD:func_80134850"
+  },
+  {
+    "unit": "BUNKA_SD",
+    "src": "src/ovl/BUNKA_SD/80135160.c",
+    "func": "func_801355AC",
+    "size": 132,
+    "guarded": false,
+    "source_hash": "cd994441c1cc5b77dbaeba6d2d737139d1e8b49c92f3c5587ec42b8217884dcb",
+    "scope": "BUNKA_SD:func_801355AC"
+  },
+  {
+    "unit": "BUNKA_SD",
+    "src": "src/ovl/BUNKA_SD/801369D0.c",
+    "func": "func_801373D0",
+    "size": 592,
+    "guarded": false,
+    "source_hash": "cbaf5fbce115022b99f3de32c3f0ffd3d93ebe5b4990abd2040e4d56d158a509",
+    "scope": "BUNKA_SD:func_801373D0"
+  },
+  {
+    "unit": "BUNKA_SD",
+    "src": "src/ovl/BUNKA_SD/80137B40.c",
+    "func": "func_8013842C",
+    "size": 592,
+    "guarded": false,
+    "source_hash": "68e4acf77291d701146f09d99dd437d5918a3f90e7c4ef6a65411499013fc162",
+    "scope": "BUNKA_SD:func_8013842C"
+  },
+  {
+    "unit": "DATE2",
+    "src": "src/ovl/DATE2/80137D50.c",
+    "func": "func_801395C8",
+    "size": 2644,
+    "guarded": false,
+    "source_hash": "2c5962e1480408421d2fbc86e7c8777af0ff061f764f8c13c9a4d9df45765086",
+    "scope": "DATE2:func_801395C8"
+  },
+  {
+    "unit": "EN_NICHI",
+    "src": "src/ovl/EN_NICHI/80132000.c",
+    "func": "func_80132450",
+    "size": 780,
+    "guarded": false,
+    "source_hash": "1efa36d80c8bca80ce66b64fa60a0213b077f3655e423ff0c9dc484dfcb04efb",
+    "scope": "EN_NICHI:func_80132450"
+  },
+  {
+    "unit": "EN_NICHI",
+    "src": "src/ovl/EN_NICHI/80132000.c",
+    "func": "func_80132834",
+    "size": 472,
+    "guarded": false,
+    "source_hash": "1efa36d80c8bca80ce66b64fa60a0213b077f3655e423ff0c9dc484dfcb04efb",
+    "scope": "EN_NICHI:func_80132834"
+  },
+  {
+    "unit": "EN_NICHI",
+    "src": "src/ovl/EN_NICHI/80132000.c",
+    "func": "func_801362A4",
+    "size": 1116,
+    "guarded": false,
+    "source_hash": "1efa36d80c8bca80ce66b64fa60a0213b077f3655e423ff0c9dc484dfcb04efb",
+    "scope": "EN_NICHI:func_801362A4"
+  },
+  {
+    "unit": "ETC",
+    "src": "src/ovl/ETC/8013BEF0.c",
+    "func": "func_8013BFFC",
+    "size": 820,
+    "guarded": false,
+    "source_hash": "d7ce00aed0d00750b046d761a2ef7b8e9023d576c624b5e26f1cc6ab82f9ddb1",
+    "scope": "ETC:func_8013BFFC"
+  },
+  {
+    "unit": "ETC",
+    "src": "src/ovl/ETC/8013BEF0.c",
+    "func": "func_8013C330",
+    "size": 976,
+    "guarded": false,
+    "source_hash": "d7ce00aed0d00750b046d761a2ef7b8e9023d576c624b5e26f1cc6ab82f9ddb1",
+    "scope": "ETC:func_8013C330"
+  },
+  {
+    "unit": "ETC",
+    "src": "src/ovl/ETC/8013BEF0.c",
+    "func": "func_8013C700",
+    "size": 492,
+    "guarded": false,
+    "source_hash": "d7ce00aed0d00750b046d761a2ef7b8e9023d576c624b5e26f1cc6ab82f9ddb1",
+    "scope": "ETC:func_8013C700"
+  },
+  {
+    "unit": "ETC",
+    "src": "src/ovl/ETC/8013BEF0.c",
+    "func": "func_8013C8EC",
+    "size": 904,
+    "guarded": false,
+    "source_hash": "d7ce00aed0d00750b046d761a2ef7b8e9023d576c624b5e26f1cc6ab82f9ddb1",
+    "scope": "ETC:func_8013C8EC"
+  },
+  {
+    "unit": "ETC",
+    "src": "src/ovl/ETC/80140F50.c",
+    "func": "func_80141BE8",
+    "size": 552,
+    "guarded": false,
+    "source_hash": "c7744d1aa7013152b49ceeea2dd120e6e61f8617d7a2e85c4d34306af6176d11",
+    "scope": "ETC:func_80141BE8"
+  },
+  {
+    "unit": "ETC",
+    "src": "src/ovl/ETC/80143240.c",
+    "func": "func_8014407C",
+    "size": 352,
+    "guarded": false,
+    "source_hash": "f7c35264baa4260300405c48dbe0e0c1bc05875bb8404f26911011e28212e674",
+    "scope": "ETC:func_8014407C"
+  },
+  {
+    "unit": "EVENT",
+    "src": "src/ovl/EVENT/8010FE10.c",
+    "func": "func_80117D80",
+    "size": 656,
+    "guarded": false,
+    "source_hash": "36139c6798fe828dff1752523bbd5e6e13f8a545d7bea5559c7157278addc519",
+    "scope": "EVENT:func_80117D80"
+  },
+  {
+    "unit": "EVENT",
+    "src": "src/ovl/EVENT/8010FE10.c",
+    "func": "func_8011B848",
+    "size": 1408,
+    "guarded": false,
+    "source_hash": "36139c6798fe828dff1752523bbd5e6e13f8a545d7bea5559c7157278addc519",
+    "scope": "EVENT:func_8011B848"
+  },
+  {
+    "unit": "GYOZI",
+    "src": "src/ovl/GYOZI/8013C3B0.c",
+    "func": "func_8013C774",
+    "size": 364,
+    "guarded": false,
+    "source_hash": "cf87ea6be827a5ccc2af52b690b259854164b9b9a06eeae09e15ecbcd75abc4c",
+    "scope": "GYOZI:func_8013C774"
+  },
+  {
+    "unit": "GYOZI",
+    "src": "src/ovl/GYOZI/801418B0.c",
+    "func": "func_80141944",
+    "size": 336,
+    "guarded": false,
+    "source_hash": "809c2ec74e6895ac86c994590c64dd184f51af81c5f4a172b4224b5644b19523",
+    "scope": "GYOZI:func_80141944"
+  },
+  {
+    "unit": "GYOZI",
+    "src": "src/ovl/GYOZI/80143110.c",
+    "func": "func_80143160",
+    "size": 436,
+    "guarded": false,
+    "source_hash": "fd3eece851add8214cff35d03e9f4c8376f31359563a3cf495258829d094d102",
+    "scope": "GYOZI:func_80143160"
+  },
+  {
+    "unit": "GYOZI",
+    "src": "src/ovl/GYOZI/80143AD0.c",
+    "func": "func_80144B70",
+    "size": 1300,
+    "guarded": false,
+    "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+    "scope": "GYOZI:func_80144B70"
+  },
+  {
+    "unit": "GYOZI",
+    "src": "src/ovl/GYOZI/80143AD0.c",
+    "func": "func_80145384",
+    "size": 372,
+    "guarded": false,
+    "source_hash": "b0d3eb65d1d1d27bc538104ef48b852046ea0090c51d12a14507aab83ee63a3c",
+    "scope": "GYOZI:func_80145384"
+  },
+  {
+    "unit": "MASTER",
+    "src": "src/ovl/MASTER/80139000.c",
+    "func": "func_8013B448",
+    "size": 956,
+    "guarded": false,
+    "source_hash": "bc8a3e4c380f672885c25905af0134fa9e0db03428582dfb720d5724ef39b95f",
+    "scope": "MASTER:func_8013B448"
+  },
+  {
+    "unit": "NAME_ENT",
+    "src": "src/ovl/NAME_ENT/80132000.c",
+    "func": "func_80133510",
+    "size": 972,
+    "guarded": false,
+    "source_hash": "d0cad41d11e6bfdb83512733642363f1bcab52fec7a2d808370535037238d957",
+    "scope": "NAME_ENT:func_80133510"
+  },
+  {
+    "unit": "NAME_ENT",
+    "src": "src/ovl/NAME_ENT/80139740.c",
+    "func": "func_80140F90",
+    "size": 2192,
+    "guarded": false,
+    "source_hash": "8801c9ad56521ace07da7b94e8d8b20baa52e3df2dbe791658066394bf53538f",
+    "scope": "NAME_ENT:func_80140F90"
+  },
+  {
+    "unit": "NAME_ENT",
+    "src": "src/ovl/NAME_ENT/80139740.c",
+    "func": "func_80141820",
+    "size": 1924,
+    "guarded": false,
+    "source_hash": "8801c9ad56521ace07da7b94e8d8b20baa52e3df2dbe791658066394bf53538f",
+    "scope": "NAME_ENT:func_80141820"
+  },
+  {
+    "unit": "OPTION",
+    "src": "src/ovl/OPTION/80132000.c",
+    "func": "func_80132384",
+    "size": 356,
+    "guarded": false,
+    "source_hash": "a85ac068332dcc97dee2a74c81148dae6d1003c2ee158bcd6a7f3b15bbe4b8aa",
+    "scope": "OPTION:func_80132384"
+  },
+  {
+    "unit": "OPTION",
+    "src": "src/ovl/OPTION/80132000.c",
+    "func": "func_80132BA8",
+    "size": 1128,
+    "guarded": false,
+    "source_hash": "a85ac068332dcc97dee2a74c81148dae6d1003c2ee158bcd6a7f3b15bbe4b8aa",
+    "scope": "OPTION:func_80132BA8"
+  },
+  {
+    "unit": "OPTION",
+    "src": "src/ovl/OPTION/80132000.c",
+    "func": "func_80133010",
+    "size": 800,
+    "guarded": false,
+    "source_hash": "a85ac068332dcc97dee2a74c81148dae6d1003c2ee158bcd6a7f3b15bbe4b8aa",
+    "scope": "OPTION:func_80133010"
+  },
+  {
+    "unit": "OPTION",
+    "src": "src/ovl/OPTION/80132000.c",
+    "func": "func_80133330",
+    "size": 588,
+    "guarded": false,
+    "source_hash": "a85ac068332dcc97dee2a74c81148dae6d1003c2ee158bcd6a7f3b15bbe4b8aa",
+    "scope": "OPTION:func_80133330"
+  },
+  {
+    "unit": "OPTION",
+    "src": "src/ovl/OPTION/80132000.c",
+    "func": "func_80133718",
+    "size": 564,
+    "guarded": false,
+    "source_hash": "a85ac068332dcc97dee2a74c81148dae6d1003c2ee158bcd6a7f3b15bbe4b8aa",
+    "scope": "OPTION:func_80133718"
+  },
+  {
+    "unit": "RPG_BAT",
+    "src": "src/ovl/RPG_BAT/801321D0.c",
+    "func": "func_801328C4",
+    "size": 464,
+    "guarded": false,
+    "source_hash": "76bd32f93d9377ba5f6840b603568f9ee3e53317df87845b9e129eda106b3dc5",
+    "scope": "RPG_BAT:func_801328C4"
+  },
+  {
+    "unit": "RPG_BAT",
+    "src": "src/ovl/RPG_BAT/8013B5B0.c",
+    "func": "func_8013BBF8",
+    "size": 688,
+    "guarded": false,
+    "source_hash": "dc0ed215147c0e4dd8d4af749065ffae8713c9595d408224f06a82e213302bba",
+    "scope": "RPG_BAT:func_8013BBF8"
+  },
+  {
+    "unit": "RPG_BAT",
+    "src": "src/ovl/RPG_BAT/80144010.c",
+    "func": "func_80144010",
+    "size": 1136,
+    "guarded": false,
+    "source_hash": "143e2f3364e7705ec3e260bd32886f44f6e2d9c18539a0af9a12de82b2e2da59",
+    "scope": "RPG_BAT:func_80144010"
+  },
+  {
+    "unit": "RPG_BAT",
+    "src": "src/ovl/RPG_BAT/801525B0.c",
+    "func": "func_80153784",
+    "size": 732,
+    "guarded": false,
+    "source_hash": "debfa085a070f91ca27d7e296c3d4583c72ebca130380bd0da8e9ab4c770f05b",
+    "scope": "RPG_BAT:func_80153784"
+  },
+  {
+    "unit": "RPG_BAT",
+    "src": "src/ovl/RPG_BAT/80155CC0.c",
+    "func": "func_80156064",
+    "size": 828,
+    "guarded": false,
+    "source_hash": "de64b50ca530ca08b9c0988504090527749504df3e73c9fd120a8c3e8c1e760c",
+    "scope": "RPG_BAT:func_80156064"
+  },
+  {
+    "unit": "RPG_BAT",
+    "src": "src/ovl/RPG_BAT/80157AE0.c",
+    "func": "func_80159B40",
+    "size": 516,
+    "guarded": false,
+    "source_hash": "9b075039d7d8d7aad50037cfc133809aa8a63f5ef2b1933e992ac54d70fc21a4",
+    "scope": "RPG_BAT:func_80159B40"
+  },
+  {
+    "unit": "SHOUGATU",
+    "src": "src/ovl/SHOUGATU/8013E330.c",
+    "func": "func_8013E50C",
+    "size": 472,
+    "guarded": false,
+    "source_hash": "c83fd1ad36be97382443450e6971b2d2222d83c97fc3b2dce574827864b30542",
+    "scope": "SHOUGATU:func_8013E50C"
+  },
+  {
+    "unit": "SHOUGATU",
+    "src": "src/ovl/SHOUGATU/8013E330.c",
+    "func": "func_8013EA98",
+    "size": 920,
+    "guarded": false,
+    "source_hash": "c83fd1ad36be97382443450e6971b2d2222d83c97fc3b2dce574827864b30542",
+    "scope": "SHOUGATU:func_8013EA98"
+  },
+  {
+    "unit": "SHOUGATU",
+    "src": "src/ovl/SHOUGATU/8013F190.c",
+    "func": "func_8013F224",
+    "size": 316,
+    "guarded": false,
+    "source_hash": "84930b7c133150958f35eccca1384b11c86250d4e466449bc0714f80e11f1188",
+    "scope": "SHOUGATU:func_8013F224"
+  },
+  {
+    "unit": "SHOUGATU",
+    "src": "src/ovl/SHOUGATU/80141780.c",
+    "func": "func_801419D0",
+    "size": 240,
+    "guarded": false,
+    "source_hash": "bde24392b08ba7ae594dd2acead03c2ed983c4b6511ac79926d5dc48dc9ef1ce",
+    "scope": "SHOUGATU:func_801419D0"
+  },
+  {
+    "unit": "SHOUGATU",
+    "src": "src/ovl/SHOUGATU/80141780.c",
+    "func": "func_8014288C",
+    "size": 1300,
+    "guarded": false,
+    "source_hash": "bde24392b08ba7ae594dd2acead03c2ed983c4b6511ac79926d5dc48dc9ef1ce",
+    "scope": "SHOUGATU:func_8014288C"
+  },
+  {
+    "unit": "SHOUGATU",
+    "src": "src/ovl/SHOUGATU/80141780.c",
+    "func": "func_801430A0",
+    "size": 352,
+    "guarded": false,
+    "source_hash": "bde24392b08ba7ae594dd2acead03c2ed983c4b6511ac79926d5dc48dc9ef1ce",
+    "scope": "SHOUGATU:func_801430A0"
+  },
+  {
+    "unit": "SHUGAKU",
+    "src": "src/ovl/SHUGAKU/80133D60.c",
+    "func": "func_80133E10",
+    "size": 348,
+    "guarded": false,
+    "source_hash": "ddefb3361b46c884713a8b95df9a628e800791a1fcede57d705655aae382a8b4",
+    "scope": "SHUGAKU:func_80133E10"
+  },
+  {
+    "unit": "SHUGAKU",
+    "src": "src/ovl/SHUGAKU/80134880.c",
+    "func": "func_80134B94",
+    "size": 260,
+    "guarded": false,
+    "source_hash": "fc0fe043dc6e191b8dee5e055528d63be5d0d61f5628784d761978d34cc56dac",
+    "scope": "SHUGAKU:func_80134B94"
+  },
+  {
+    "unit": "SHUGAKU",
+    "src": "src/ovl/SHUGAKU/80135430.c",
+    "func": "func_80135480",
+    "size": 340,
+    "guarded": false,
+    "source_hash": "f402582fb046b356e79661a80334aa7f19291acd6a89dc401d4fcc6166ad4a0a",
+    "scope": "SHUGAKU:func_80135480"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80136B40.c",
+    "func": "func_80137264",
+    "size": 812,
+    "guarded": false,
+    "source_hash": "33dd9da89adb9a842d019816471825e58ffe327e399e44bbd13096fe44eaf0d7",
+    "scope": "TACO:func_80137264"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80139170.c",
+    "func": "func_8013A790",
+    "size": 1492,
+    "guarded": false,
+    "source_hash": "f737d68e2dba269c8bc2708ef311802b1f3f1ffc4b116730e40fc3b2c8101590",
+    "scope": "TACO:func_8013A790"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/8013D1E0.c",
+    "func": "func_8013D528",
+    "size": 784,
+    "guarded": false,
+    "source_hash": "0e9cb8a8f0c10640d84ebffdde8c6ba8f03e2ad08ea4321e428ff0a56679de4f",
+    "scope": "TACO:func_8013D528"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/8013D1E0.c",
+    "func": "func_8013D838",
+    "size": 832,
+    "guarded": false,
+    "source_hash": "0e9cb8a8f0c10640d84ebffdde8c6ba8f03e2ad08ea4321e428ff0a56679de4f",
+    "scope": "TACO:func_8013D838"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/8013DB80.c",
+    "func": "func_8013DEE4",
+    "size": 1336,
+    "guarded": false,
+    "source_hash": "9542055660c66dc1eac9781219fc5ced4b8bc9b6d0036fe33b9ead74b11f035f",
+    "scope": "TACO:func_8013DEE4"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/8013DB80.c",
+    "func": "func_8013E778",
+    "size": 812,
+    "guarded": false,
+    "source_hash": "9542055660c66dc1eac9781219fc5ced4b8bc9b6d0036fe33b9ead74b11f035f",
+    "scope": "TACO:func_8013E778"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/8013DB80.c",
+    "func": "func_8013EAA4",
+    "size": 1948,
+    "guarded": false,
+    "source_hash": "9542055660c66dc1eac9781219fc5ced4b8bc9b6d0036fe33b9ead74b11f035f",
+    "scope": "TACO:func_8013EAA4"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80141DE0.c",
+    "func": "func_801424A8",
+    "size": 880,
+    "guarded": false,
+    "source_hash": "d9ed89fe7c196fc8f5a0e0310bb68f2f5edd5e04a03e21ede160fc36f01f3c72",
+    "scope": "TACO:func_801424A8"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/801447D0.c",
+    "func": "func_80145650",
+    "size": 1908,
+    "guarded": false,
+    "source_hash": "14ba129998bc3d6b8f92dccdc9afe84bf190d0afb9a23a8a834b34bd6661d728",
+    "scope": "TACO:func_80145650"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/801480B0.c",
+    "func": "func_801487A4",
+    "size": 948,
+    "guarded": false,
+    "source_hash": "58f068bd2afdee3306d7bc7f3d76d386fe56e06c4c38ca6f166b3d7744888cb2",
+    "scope": "TACO:func_801487A4"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80148FE0.c",
+    "func": "func_801497EC",
+    "size": 912,
+    "guarded": false,
+    "source_hash": "3c145ff38a9b2866dc22ef56f8adf0e7c47cc61d04434b4933ecdd7abcce2df9",
+    "scope": "TACO:func_801497EC"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80149F90.c",
+    "func": "func_8014CB24",
+    "size": 1756,
+    "guarded": false,
+    "source_hash": "441ad19a2870789350383704d5001df5b4eb2bf327018d306bc3e774cad58afb",
+    "scope": "TACO:func_8014CB24"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80153AA0.c",
+    "func": "func_80153B38",
+    "size": 832,
+    "guarded": false,
+    "source_hash": "da2495c8366d09aea4ec0073ed07117bcc925e8ec1643db50cd6f5f6e00f1da2",
+    "scope": "TACO:func_80153B38"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80154960.c",
+    "func": "func_80154960",
+    "size": 1556,
+    "guarded": false,
+    "source_hash": "813c3cee528df62127c902e6faf0436945d0423cc3d47356fde4673984780eb8",
+    "scope": "TACO:func_80154960"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80154960.c",
+    "func": "func_801553AC",
+    "size": 1084,
+    "guarded": false,
+    "source_hash": "813c3cee528df62127c902e6faf0436945d0423cc3d47356fde4673984780eb8",
+    "scope": "TACO:func_801553AC"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80154960.c",
+    "func": "func_801563E4",
+    "size": 1344,
+    "guarded": false,
+    "source_hash": "813c3cee528df62127c902e6faf0436945d0423cc3d47356fde4673984780eb8",
+    "scope": "TACO:func_801563E4"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/80159090.c",
+    "func": "func_80159260",
+    "size": 1048,
+    "guarded": false,
+    "source_hash": "203b418b4b819247718e8711bd90a04018f74e6d8ff58ab9df9ed114cc6b02b5",
+    "scope": "TACO:func_80159260"
+  },
+  {
+    "unit": "TACO",
+    "src": "src/ovl/TACO/8015ABF0.c",
+    "func": "func_8015ACCC",
+    "size": 1260,
+    "guarded": false,
+    "source_hash": "cdc503f719c6f1ac9c8d54b984bcebebaafee3a7e4d058970bd9c73f8a6a72e9",
+    "scope": "TACO:func_8015ACCC"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80132BD0.c",
+    "func": "func_80132BD0",
+    "size": 592,
+    "guarded": false,
+    "source_hash": "2701b133b5ed56a8a675db081b5cb1f70bcdf0087b5dc37feecb356ee3fb2931",
+    "scope": "TAIIKU:func_80132BD0"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80132BD0.c",
+    "func": "func_80132E20",
+    "size": 692,
+    "guarded": false,
+    "source_hash": "2701b133b5ed56a8a675db081b5cb1f70bcdf0087b5dc37feecb356ee3fb2931",
+    "scope": "TAIIKU:func_80132E20"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80133C80.c",
+    "func": "func_80134060",
+    "size": 1348,
+    "guarded": false,
+    "source_hash": "2c477fa781ae99b85a859cecf39ec0f3f8e4af50d6a77fe4c81c6cada6347ef3",
+    "scope": "TAIIKU:func_80134060"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80133C80.c",
+    "func": "func_80135F3C",
+    "size": 1676,
+    "guarded": false,
+    "source_hash": "2c477fa781ae99b85a859cecf39ec0f3f8e4af50d6a77fe4c81c6cada6347ef3",
+    "scope": "TAIIKU:func_80135F3C"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "func": "func_80138DF8",
+    "size": 1336,
+    "guarded": false,
+    "source_hash": "32865d7c4674497c5689e94097c915febf03562f1441a89bc3bfca9185463765",
+    "scope": "TAIIKU:func_80138DF8"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "func": "func_8013D114",
+    "size": 320,
+    "guarded": false,
+    "source_hash": "32865d7c4674497c5689e94097c915febf03562f1441a89bc3bfca9185463765",
+    "scope": "TAIIKU:func_8013D114"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "func": "func_8013FC5C",
+    "size": 488,
+    "guarded": false,
+    "source_hash": "32865d7c4674497c5689e94097c915febf03562f1441a89bc3bfca9185463765",
+    "scope": "TAIIKU:func_8013FC5C"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80142240.c",
+    "func": "func_80143DD0",
+    "size": 384,
+    "guarded": false,
+    "source_hash": "27e3b2179a1978c7bb6a316e11139d8287acf475ab96d4f7cb81e3b050d9eda1",
+    "scope": "TAIIKU:func_80143DD0"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80142240.c",
+    "func": "func_80143F50",
+    "size": 956,
+    "guarded": false,
+    "source_hash": "27e3b2179a1978c7bb6a316e11139d8287acf475ab96d4f7cb81e3b050d9eda1",
+    "scope": "TAIIKU:func_80143F50"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/80142240.c",
+    "func": "func_80144464",
+    "size": 572,
+    "guarded": false,
+    "source_hash": "27e3b2179a1978c7bb6a316e11139d8287acf475ab96d4f7cb81e3b050d9eda1",
+    "scope": "TAIIKU:func_80144464"
+  },
+  {
+    "unit": "TAIIKU",
+    "src": "src/ovl/TAIIKU/801452D0.c",
+    "func": "func_80147B14",
+    "size": 1020,
+    "guarded": false,
+    "source_hash": "575ecd78ad707f111b4425011b3b6e677969c025469c07b2c6cb8f9c4a18f279",
+    "scope": "TAIIKU:func_80147B14"
+  },
+  {
+    "unit": "TEL",
+    "src": "src/ovl/TEL/80132000.c",
+    "func": "func_80136724",
+    "size": 6580,
+    "guarded": false,
+    "source_hash": "57c81801eb349f1b2d44f0e4cc4cc356264bce9f8856982c087ed058fe6aaa09",
+    "scope": "TEL:func_80136724"
+  },
+  {
+    "unit": "TEL",
+    "src": "src/ovl/TEL/8013CCD0.c",
+    "func": "func_8013D88C",
+    "size": 2972,
+    "guarded": false,
+    "source_hash": "b2683fee4e2375e4da2f191269cca4c9d015cc26a423944d5f58ff047dcab510",
+    "scope": "TEL:func_8013D88C"
+  },
+  {
+    "unit": "TT",
+    "src": "src/ovl/TT/80142D40.c",
+    "func": "func_80143A44",
+    "size": 1444,
+    "guarded": false,
+    "source_hash": "62e17ea1b53b5ad7ba16873ccd92028c4ccccfa1923766818403b58fd565be9a",
+    "scope": "TT:func_80143A44"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/80047550.c",
+    "func": "func_800476C0",
+    "size": 3132,
+    "guarded": false,
+    "source_hash": "4e557fcf4390fef51c329b25111e397dd0dcc3d318c26c76f7f2bfc6cd6210e4",
+    "scope": "main:func_800476C0"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/8004F6B0.c",
+    "func": "func_8004F6B0",
+    "size": 436,
+    "guarded": false,
+    "source_hash": "3473bc0fe8fd2cea325941060b76c77bb30ba7c3cc7d98e743a134aef660cb63",
+    "scope": "main:func_8004F6B0"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/8004F870.c",
+    "func": "func_80052F68",
+    "size": 1200,
+    "guarded": false,
+    "source_hash": "5b7a8d53265e317f1396f074a9721c647b5de7d64a5c9301c6ade4d7507cc179",
+    "scope": "main:func_80052F68"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/8004F870.c",
+    "func": "get_near_menu",
+    "size": 1784,
+    "guarded": false,
+    "source_hash": "5b7a8d53265e317f1396f074a9721c647b5de7d64a5c9301c6ade4d7507cc179",
+    "scope": "main:get_near_menu"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/80053650.c",
+    "func": "func_80054E6C",
+    "size": 340,
+    "guarded": false,
+    "source_hash": "ee9cb6a7192a8eb1a3143a819d7f54fdf33e992dd16fdff75b49b46acf54986a",
+    "scope": "main:func_80054E6C"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/800563F0.c",
+    "func": "func_80056BA8",
+    "size": 1296,
+    "guarded": false,
+    "source_hash": "93519ac20ce992fcac2212711fb09dd57011c4f707402de838c0b657a535ebd7",
+    "scope": "main:func_80056BA8"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/800563F0.c",
+    "func": "func_8005715C",
+    "size": 552,
+    "guarded": false,
+    "source_hash": "93519ac20ce992fcac2212711fb09dd57011c4f707402de838c0b657a535ebd7",
+    "scope": "main:func_8005715C"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/8005A0B0.c",
+    "func": "func_8005CC40",
+    "size": 812,
+    "guarded": false,
+    "source_hash": "541f5b7ec75e93d3f677405430c42eb9cf092f56f60c80103ea76ddd8b97e58f",
+    "scope": "main:func_8005CC40"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/80061710.c",
+    "func": "func_80062948",
+    "size": 736,
+    "guarded": false,
+    "source_hash": "1bd7475d86e3d30da801dcb980aa929b6c673bb922bdc655b75d3028c62124f2",
+    "scope": "main:func_80062948"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/800674B0.c",
+    "func": "func_8006B0C8",
+    "size": 1268,
+    "guarded": false,
+    "source_hash": "647f09dfc43c6171c28057b632cebeb0d4b1cda28450e763000bb3d718118c2f",
+    "scope": "main:func_8006B0C8"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/800737A0.c",
+    "func": "parameter_up_down",
+    "size": 1228,
+    "guarded": false,
+    "source_hash": "510647c5633d94556137c76122252c933d23cf428d3ab8c39659f7d022e5659a",
+    "scope": "main:parameter_up_down"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/80075320.c",
+    "func": "func_80075C84",
+    "size": 796,
+    "guarded": false,
+    "source_hash": "49fba54b7e283041cae0eb4dafae5ac5071434e7e2f5464995d7fd8fc71a32ec",
+    "scope": "main:func_80075C84"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/80075320.c",
+    "func": "func_80077900",
+    "size": 736,
+    "guarded": false,
+    "source_hash": "49fba54b7e283041cae0eb4dafae5ac5071434e7e2f5464995d7fd8fc71a32ec",
+    "scope": "main:func_80077900"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/80079B10.c",
+    "func": "func_8007A50C",
+    "size": 176,
+    "guarded": false,
+    "source_hash": "98a7064b3f9d3549c72460a5f1b67fef9f713caad3253b638ad2969ed18c92c7",
+    "scope": "main:func_8007A50C"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/80079B10.c",
+    "func": "func_8007BBE8",
+    "size": 276,
+    "guarded": false,
+    "source_hash": "98a7064b3f9d3549c72460a5f1b67fef9f713caad3253b638ad2969ed18c92c7",
+    "scope": "main:func_8007BBE8"
+  },
+  {
+    "unit": "main",
+    "src": "src/main/8007C030.c",
+    "func": "dialogue_render",
+    "size": 5588,
+    "guarded": false,
+    "source_hash": "8c28333bea1d8e11d4bf1e0247ad1b8fd4f75d866b2762e7fbbbe02f6afe2c71",
+    "scope": "main:dialogue_render"
+  }
+]

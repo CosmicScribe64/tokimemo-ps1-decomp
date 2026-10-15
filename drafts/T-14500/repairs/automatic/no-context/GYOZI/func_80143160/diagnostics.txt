@@ -1,0 +1,156 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3531: Incompatible function return type for this function.
+ void func_80143940(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3543: redeclaration of 'func_801439F0'; previous declaration at line 3349 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_801439F0(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3543: Incompatible function return type for this function.
+ void func_801439F0(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processor6ftflr4t/preprocessed_7e4050e31ba24422a962364196f092f6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibf7_pm2ll/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3530: Incompatible function return type for this function.
+ void func_80143940(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3542: redeclaration of 'func_801439F0'; previous declaration at line 3384 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_801439F0(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3542: Incompatible function return type for this function.
+ void func_801439F0(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processoro8xr3gz8/preprocessed_d6fa2324338f40a78391419c001e7c45.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrdgo_fo7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3462: Incompatible function return type for this function.
+ void func_801435C4(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3531: redeclaration of 'func_80143940'; previous declaration at line 3348 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_80143940(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3531: Incompatible function return type for this function.
+ void func_80143940(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorjo05vov5/preprocessed_cd84dd4d173f4ee3a77198e70dc18848.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxu23vw_9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3461: Incompatible function return type for this function.
+ void func_801435C4(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3530: redeclaration of 'func_80143940'; previous declaration at line 3381 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_80143940(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3530: Incompatible function return type for this function.
+ void func_80143940(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorialww57n/preprocessed_7030cc7f73944f50b145972400c1127e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn05cboj1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3450: Incompatible function return type for this function.
+ void func_80143520(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3462: redeclaration of 'func_801435C4'; previous declaration at line 3344 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_801435C4(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3462: Incompatible function return type for this function.
+ void func_801435C4(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processor1wd7o1e9/preprocessed_701f4b2bd61745d7ab10e07251b83149.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibyril3y47/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3449: Incompatible function return type for this function.
+ void func_80143520(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3461: redeclaration of 'func_801435C4'; previous declaration at line 3369 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_801435C4(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3461: Incompatible function return type for this function.
+ void func_801435C4(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processor_30yd0yg/preprocessed_3fc15aad832f4b16b9b2c46647916000.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_ozzs21o/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3423: Incompatible function return type for this function.
+ void func_801433E0(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3450: redeclaration of 'func_80143520'; previous declaration at line 3343 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_80143520(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3450: Incompatible function return type for this function.
+ void func_80143520(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorwqcvpp0y/preprocessed_a1acb318baec47f19ceabf57a079cd43.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib40j18unr/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3422: Incompatible function return type for this function.
+ void func_801433E0(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3449: redeclaration of 'func_80143520'; previous declaration at line 3366 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_80143520(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3449: Incompatible function return type for this function.
+ void func_80143520(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorspj2tglc/preprocessed_f0e8d58e4a4b4d5ea5eed0331a349e84.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliboueot5dh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3404: Incompatible function return type for this function.
+ void func_80143314(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3423: redeclaration of 'func_801433E0'; previous declaration at line 3342 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_801433E0(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3423: Incompatible function return type for this function.
+ void func_801433E0(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorzwa3tgkh/preprocessed_51f557bf38984ab39cef36a7fdc82a0e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibry_ytgtx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3403: Incompatible function return type for this function.
+ void func_80143314(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3422: redeclaration of 'func_801433E0'; previous declaration at line 3363 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_801433E0(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3422: Incompatible function return type for this function.
+ void func_801433E0(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processor60jz2_fu/preprocessed_3080abfababc4d0987ddcb46399c0055.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib96jb_ymv/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3353: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0 + (D_800F62CF * 0x38)) + (432));
+ -------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3404: redeclaration of 'func_80143314'; previous declaration at line 3341 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_80143314(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3404: Incompatible function return type for this function.
+ void func_80143314(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorl0svk6ti/preprocessed_63de1ec9deb04f69be69cdc0ff8e52f8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibn6u4a9h8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c
+python3 failed:
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3352: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0 + (D_800F62CF * 0x38)) + (432));
+ -------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3403: redeclaration of 'func_80143314'; previous declaration at line 3360 in file 'drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c'
+ void func_80143314(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c, line 3403: Incompatible function return type for this function.
+ void func_80143314(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o /tmp/asm_processori1c03uj3/preprocessed_9caffb20a589463dab2754cdfaf27524.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibbjawdiy_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.o drafts/T-14500/repairs/automatic/no-context/GYOZI/func_80143160/work/guarded.c

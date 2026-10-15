@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: Hw_Test 0, _card_clear 1, _card_info 1, _card_load 1, func_80053CAC 1, func_80053D24 1, func_800AD950 1

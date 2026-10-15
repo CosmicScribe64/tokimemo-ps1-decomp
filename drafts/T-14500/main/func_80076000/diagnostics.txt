@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: appointment_find_today 3, func_8004500C 2, func_80053564 1, func_8006BDA8 1, get_icon_can_use 1
+python3 failed:
+cfe: Error: drafts/T-14500/main/func_80076000/work/guarded.o.sjis.c, line 2698: 'NULL' undefined; reoccurrences will not be reported.
+             func_80045414(9, 0, NULL);
+ --------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/main/func_80076000/work -o drafts/T-14500/main/func_80076000/work/guarded.o /tmp/asm_processorq95o5oqd/preprocessed_9e0438fd27794b35a754fd5ddf43556a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqljvgef9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/main/func_80076000/work/guarded.o drafts/T-14500/main/func_80076000/work/guarded.o.sjis.c
