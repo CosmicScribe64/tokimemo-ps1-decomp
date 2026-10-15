@@ -1468,6 +1468,14 @@ extern u8 *D_8015B558;
 extern u8 *D_8015B55C;
 #endif
 
+#ifndef OVL_DATE_POOL_TABLES_T11580_H
+#define OVL_DATE_POOL_TABLES_T11580_H
+/* func_801366A4: six bytes per girl, two variants with three result bytes
+ * each, read through flat byte pointers like the other DATE tables. */
+extern u8 *D_8015B560;
+extern u8 *D_8015B564;
+#endif
+
 #ifndef DATE_MOVIE_SCENE_T10910A
 #define DATE_MOVIE_SCENE_T10910A
 /* T-10910A: data range 8015CF80..8015CFD0 belongs to 801461B0.

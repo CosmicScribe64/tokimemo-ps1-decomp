@@ -1201,7 +1201,35 @@ void func_80136340(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_801366A4);
+void func_801366A4(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 6 across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+
+    D_800CA160 = D_8015BDE8;
+    D_800CA164 = D_8015BE54;
+    D_800CA168 = D_8015BEC0;
+    D_8015B658 = 3;
+    func_800AE0F0(D_800CA19C, "プール");
+    func_800AE0F0(D_800CA1DC, "プール内");
+    if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x1D] & 1)) {
+        D_800CA2FC = 0;
+    } else {
+        D_800CA2FC = 1;
+    }
+    choice_offset = D_800CA2FC * 3;
+    D_80122D08 = 0x1D;
+    *D_800CA22C = (s16) *(g->unk_F5F * 6 + D_8015B560 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 6 + D_8015B560 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 6 + D_8015B560 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 6 + D_8015B564 + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 6 + D_8015B564 + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 6 + D_8015B564 + choice_offset + 2);
+    func_8007ED84(0x45BF);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136870);
 
