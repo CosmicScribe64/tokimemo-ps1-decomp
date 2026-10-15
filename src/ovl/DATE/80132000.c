@@ -287,7 +287,7 @@ void func_801324A8(void) {
     D_8015B650 = 0x801B0170;
 }
 
-/* NON_MATCHING: T-11580, 1 differing line; the original adds the two products in the other operand order */
+/* NON_MATCHING: T-11580, 1 differing instruction; the original adds the two products in the other operand order */
 #ifdef NON_MATCHING
 void func_801324DC(void) {
     u8 t;
@@ -1718,7 +1718,7 @@ void func_80137D1C(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 4 differing lines; D_80122CDC at the entry takes $v1, the original $v0 */
+/* NON_MATCHING: T-11580, 4 differing instructions; D_80122CDC at the entry takes $v1, the original $v0 */
 #ifdef NON_MATCHING
 s32 func_80137DF4(void) {
     s32 text;
@@ -2293,7 +2293,7 @@ void func_801395B4(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11580, 9 differing lines; the post-call unk_110A update takes $v1 (the original keeps it in $v0 with an ugen andi), and the entry F5F lui is scheduled one slot later */
+/* NON_MATCHING: T-11580, 9 differing instructions; the post-call unk_110A update takes $v1 (the original keeps it in $v0 with an ugen andi), and the entry F5F lui is scheduled one slot later */
 #ifdef NON_MATCHING
 s32 func_80139664(void) {
     /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
@@ -2342,7 +2342,7 @@ s32 func_80139664(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80139664);
 #endif
 
-/* NON_MATCHING: T-11580, 7 differing lines; the tail load of unk_110A takes $v1 with its lui hoisted, the original reloads it into $v0 */
+/* NON_MATCHING: T-11580, 7 differing instructions; the tail load of unk_110A takes $v1 with its lui hoisted, the original reloads it into $v0 */
 #ifdef NON_MATCHING
 s32 func_80139834(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x2A(sp). T-11140 */
