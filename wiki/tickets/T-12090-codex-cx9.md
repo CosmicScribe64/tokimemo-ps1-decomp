@@ -45,3 +45,7 @@ func_80138D48 reaches6 rows with typed DisplayActor44 access and the texture ass
 ### func_80138D48: MATCH, 952 bytes
 
 Typed DisplayActor44 records, a32-bit frame induction variable and unsigned byte stores repair the saved draft. Assigning the image metadata before the counter/index updates fixes the large scheduling gap; putting the index increment in the for clause fixes the final constant scheduling. Keep i=2 before frame=15, outside the for initializer, to preserve load order. Removed unused m2c locals and raw offsets. No FAKE. Exact linked comparison and BUNKA_SD checksum pass; headers/globals OK. Cumulative3076 verified text bytes plus104 jump-table bytes.
+
+### func_80133204: MATCH, 820 text bytes
+
+Restored the fifth switch entry, replaced the shared m2c goto with separate if/else assignments, and used typed word-table indexing for voice records. Natural string-table indexing preserves the match after removing the synthetic byte-offset temporary. Exact production linked comparison and BUNKA_SD checksum pass, headers/globals OK; no FAKE. Cumulative3896 text bytes plus132 table bytes (worklist848 includes28 rodata bytes).

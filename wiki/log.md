@@ -13529,3 +13529,7 @@ A scratch-only AS1 diagnostic shim preserves the complete stock object byte-for-
 ## [2026-10-15] build | T-12090 second large setup matched
 
 BUNKA_SD:func_80138D48 now matches952 linked bytes and overlay checksum, headers and globals. Natural for-loop increment placement resolves the equal-priority scheduler tie; keep initialization order intact. No FAKE. Cumulative3076 text bytes; see [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] build | T-12090 dialogue script matched
+
+BUNKA_SD:func_80133204 matches820 linked text bytes with overlay checksum, headers and globals OK. Typed table access and independent branch assignments remove the m2c control-flow artifact. No FAKE. Cumulative3896 text bytes; [[tickets/T-12090-codex-cx9]] records evidence.

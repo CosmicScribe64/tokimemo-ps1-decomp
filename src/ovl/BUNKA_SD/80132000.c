@@ -577,4 +577,70 @@ void func_80132FF0(void) {
 }
 
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80132000", func_80133204);
+void func_80133204(void) {
+    s32 index;
+    u8 command;
+    s32 *voice;
+
+    if (D_800E6280.unk_1104.u == 1) {
+        func_8004E9F4(1);
+        switch (D_80122EAC) {
+        case 0:
+            func_8004E788((s16) (-0x68 - (func_800AE0E0(D_800E6280.unk_0D4) * 4)), 0x30, 0, (s32) D_800E6280.unk_0D4, 0);
+            break;
+        case 1:
+            func_8004E788(-0x80, 0x30, 0, (s32) "弁論者", 0);
+            break;
+        case 2:
+            func_8004E788(-0x78, 0x30, 0, (s32) "藤崎", 0);
+            break;
+        case 3:
+            func_8004E788(-0x78, 0x30, 0, (s32) "如月", 0);
+            break;
+        case 4:
+        default:
+            func_8004E788(-0x80, 0x30, 0, (s32) "女生徒", 0);
+            break;
+        }
+        func_8004E788(-0x56, 0x30, 0, (s32) "「", 0);
+        index = D_8013B7EC;
+        if (index < 0x64) {
+            do {
+                func_8004E788(-0x48, (s16) (((index - D_8013B7EC) * 0x10) + 0x30), 0, ((u8 **)D_8013B7F0)[index] + 1, 0);
+                command = *((u8 **)D_8013B7F0)[index];
+                if (command == 0x67) {
+                    if (!(D_800E6280.unk_F80 & 0x20) && (D_80122EAC != 0)) {
+                        voice = (s32 *)D_8013B7F4 + D_800E6280.unk_110D;
+                        func_80046290(voice[0], voice[1], (s32) D_800E6280.unk_F5F);
+                        func_80044750(0x300);
+                    }
+                    D_800E6280.unk_110D += 2;
+                    D_8013B7EC = index + 1;
+                    index = 0x64;
+                } else if (command == 0x45) {
+                    if (!(D_800E6280.unk_F80 & 0x20)) {
+                        if (D_80122EAC != 0) {
+                            voice = (s32 *)D_8013B7F4 + D_800E6280.unk_110D;
+                            func_80046290(voice[0], voice[1], (s32) D_800E6280.unk_F5F);
+                            func_80044750(0x300);
+                        }
+                    }
+                    D_800E6280.unk_110D = 0xFF;
+                    D_8013B7EC = index + 1;
+                    index = 0x64;
+                }
+                index += 1;
+            } while (index < 0x64);
+        }
+    }
+    if ((func_800460EC() == 2) && (func_8004ECB4() != 0)) {
+        if (D_800E6280.unk_110D == 0xFF) {
+            func_8004E9F4(1);
+            func_8004284C();
+        }
+        D_800E6280.unk_1104.u = 0;
+    }
+    func_8007EDF8();
+    func_8004EC24();
+}
+
