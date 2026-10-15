@@ -24,21 +24,9 @@ kanban-plugin: board
 
 ## In Progress
 
-
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
-
-- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
-
-
-
-- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
-
-
-- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
-
-- [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
 
@@ -67,21 +55,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-15600-fresh-near-matches|T-15600 Fresh RENSYU and RPG near matches]]
-- [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
-- [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
-- [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
-- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
-
-- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
-
-- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
-
-- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
-
-- [ ] [[tickets/T-15200-event-large|T-15200 Reconstruct large EVENT dispatcher and reusable types]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
+
+- [ ] [[tickets/T-15200-event-large|T-15200 Reconstruct large EVENT dispatcher and reusable types]]
 
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 
@@ -105,11 +82,15 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
 
+- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
+
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 - [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
 
 - [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
+
+- [ ] [[tickets/T-15600-fresh-near-matches|T-15600 Fresh RENSYU and RPG near matches]]
 
 - [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
 

@@ -14839,3 +14839,6 @@ Parent requests immediate draft checkpoint with no further exploration. [[ticket
 ## [2026-10-15] ticket | EVENT draft checkpoint awaits review
 
 [[tickets/T-15200-event-large]] moves In Review for parent integration. Useful nonmatching source, exact context snapshots, hashes, measured alternatives and serial replay scripts are committed separately from production C. Standards/spec review remains required before Done.
+
+## [2026-10-15] ingest | Draft archive navigation and final worker handoffs
+Added drafts/README.md describing the complete initial census, repair/quality limits, focused reconstruction archives and preserved older worktrees. Integrated final proof-lane helpers/TACO draft and EVENT reconstructions. RENSYU688 and SHOUGATU568 default literal proofs and affected checksum/guards pass; verified total is 1,452,192 / 2,279,368 bytes (63.7%). EVENT header consumer validation is recorded separately in build/scratch/goal-event-archive.log. Remaining automatic pass will receive a final source-only checkpoint. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14500-exhaustive-drafts]].
