@@ -13411,3 +13411,7 @@ Created [[tickets/T-11630-w1-ovl-tt-8013c6d0]] (In Progress): wave 1 package w1-
 ## [2026-10-15] ticket | T-11630 Done
 
 [[tickets/T-11630-w1-ovl-tt-8013c6d0]]: review against `CODING_STANDARDS.md` found two comment issues in `src/ovl/TT/8013C6D0.c` (missing ticket id on the `func_8013CA0C` FAKE pad, stale "used only here" on `TtTileMap`), both fixed; TT.bin sha1 OK. 6 functions matched (2,596 bytes), one guarded, one back to INCLUDE_ASM. Ticket Done.
+
+## [2026-10-15] ticket | T-11690 opened
+
+Created [[tickets/T-11690-w1-main-800674b0]] (In Progress): wave 1 package w1-p13, twelve functions of `src/main/800674B0.c`.
