@@ -46,7 +46,74 @@ void func_801321D0(void) {
 }
 
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801321D0", func_80132348);
+void func_80132348(void) {
+    RpgMotion20 *p = (RpgMotion20 *)&D_8015EC50;
+
+    switch (D_8015EDB0.unk_00) {
+    case 0:
+        p->dx = -0x30;
+        p->dy = -0x140;
+        func_8013E810(0x34, 5, 5, 1);
+        func_8013F0F4(0x505, 1, 0);
+        func_8014EBD0();
+    default:
+        break;
+    case 1:
+        if (D_80121438 == 2) {
+            func_8014EBD0();
+        }
+        break;
+    case 2:
+        func_8013E97C(0x34, ((s32) (p->dx * D_8015EDB0.unk_08) / 1000) + 0x110, ((s32) (p->dy * D_8015EDB0.unk_08) / 1000) + 0x58);
+        D_8015EDB0.unk_08 += 0x14;
+        if (D_8015EDB0.unk_08 >= 0x3E9) {
+            func_8013E810(0x34, 6, 1, 1);
+            func_80132B34();
+            p->dx = p->rect.unk_08 - p->rect.unk_00;
+            p->dy = p->rect.unk_0C - p->rect.unk_04;
+            func_8014EBD0();
+        }
+        break;
+    case 3:
+        func_8013E97C(0x34, ((s32) (p->dx * D_8015EDB0.unk_08) / 1000) + p->rect.unk_00, ((s32) (p->dy * D_8015EDB0.unk_08) / 1000) + p->rect.unk_04);
+        D_8015EDB0.unk_08 += 0x1E;
+        if ((p->rect.unk_14 - 0x10) < (p->rect.unk_04 + ((s32) (p->dy * D_8015EDB0.unk_08) / 1000))) {
+            func_8013F0F4(0x504, 0, 1);
+            func_80132A94(p->rect.unk_10, p->rect.unk_14);
+            func_801328C4(p->rect.unk_10, p->rect.unk_14);
+            func_8013E810(0x34, 0xD, 1, 1);
+        }
+        if (D_8015EDB0.unk_08 >= 0x3E9) {
+            if (D_8015EBAC == 1) {
+                D_801215FD = 4;
+                D_80121685 = 4;
+            }
+            func_8013E810(0x34, 7, 5, 1);
+            D_80121438 = 1;
+            func_8014EBD0();
+        }
+        break;
+    case 4:
+        func_801328C4(p->rect.unk_10, p->rect.unk_14);
+        func_8014ED80(0x1E);
+        break;
+    case 5:
+        func_8013D3E4();
+        func_8014EBD0();
+        break;
+    case 6:
+        func_801328C4(p->rect.unk_10, p->rect.unk_14);
+        func_8013E97C(0x34, ((s32) ((0xF0 - p->rect.unk_08) * D_8015EDB0.unk_08) / 1000) + p->rect.unk_08, (p->rect.unk_0C + ((s32) ((0x58 - p->rect.unk_0C) * D_8015EDB0.unk_08) / 1000)) - (func_800A0070((s32) (D_8015EDB0.unk_08 << 0xB) / 1000) >> 7));
+        D_8015EDB0.unk_08 += 0x14;
+        func_8013E810(0x34, 8, 1, 1);
+        if (D_8015EDB0.unk_08 >= 0x3E9) {
+            func_8013F0F4(0x502, 1, 0);
+            func_8014EBA8();
+        }
+        break;
+    }
+}
+
 
 INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801321D0", func_801328C4);
 

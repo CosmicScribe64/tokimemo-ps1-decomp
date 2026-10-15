@@ -54,3 +54,7 @@ Applied the twin's two compound increments and direct counter tests. Plain C lin
 ### func_8015A1F0 matched (1252 linked bytes)
 
 Restored selector reloads after calls, replaced three increment-result locals with direct compound updates, and expressed the zero-counter initialization as a normal if assigning sixty. The m2c var_at negation temporary created a competing register web; removing it while using the global expression is exact. Plain C linked MATCH1252, full header rebuild27/27, headers/globals OK. No FAKE. Evidence build/scratch/5a-fifth.log, 5A1F0-match.diff and 5A1F0-build.log.
+
+### func_80132348 matched (1404 linked bytes)
+
+The same compound-update recovery reduces147 rows to12. Its remaining load/store schedule is solved with a shared EC50..EC6F displacement/rectangle view, following 4E300's evidence. All function accesses through the view match; changing only the close store pair worsens allocation. Plain C linked MATCH1404, full header rebuild27/27, headers/globals OK. No FAKE. Evidence build/scratch/32348-increments.log, 32348-view.log, 32348-match.diff and 32348-build.log.

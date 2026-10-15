@@ -13537,3 +13537,7 @@ The twin's two counter temporaries were replaced by compound increments and dire
 ## [2026-10-15] build | RPG_BAT func_8015A1F0 matched
 
 Recovered the large battle state's selector reloads, compound counter updates and zero initialization. Plain C linked MATCH1252 and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/5A1F0-match.diff and 5A1F0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_80132348 matched
+
+Combined the compound-counter and shared-work-range findings to match1404 linked bytes. Full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32348-match.diff and 32348-build.log.

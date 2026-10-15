@@ -499,6 +499,15 @@ s32 func_8014E994(void);
 
 #ifndef OVL_RPG_BAT_T12040
 #define OVL_RPG_BAT_T12040
+void func_80132348(void);
+void func_80132A94(s32 arg0, s32 arg1);
+
+/* T-12040: displacement and the six rectangle words share EC50..EC6F. */
+typedef struct RpgMotion20 {
+    /* 0x00 */ s32 dx;
+    /* 0x04 */ s32 dy;
+    /* 0x08 */ RpgRec18 rect;
+} RpgMotion20; /* size 0x20 */
 void func_8015A6D4(void);
 void func_8015A744(void);
 void func_8015A8B4(void);

@@ -5092,3 +5092,5 @@ func_8013415C matches1044 linked bytes after both explicit increment-result temp
 The same two compound-increment changes also match the func_80134570 twin (1044 linked bytes), with independent linked-byte and checksum verification.
 
 func_8015A1F0 matches1252 linked bytes through the same direct-reload/compound-counter pattern. Its case9 m2c var_at pseudo-variable should become a normal if(counter == 0) counter = 60 followed by the global arithmetic expression. Retaining a separate negation variable leaves eighteen rows; removing it while still retaining a counter local changes allocation elsewhere. Expressing the actual global update directly matches without FAKE code.
+
+func_80132348 matches1404 linked bytes after two compound counter updates reduce147 rows to12, then a shared RpgMotion20 displacement/rectangle view preserves the final load/store schedule. Applying the view throughout the function is necessary; a view on only the close pair changes allocation elsewhere. This reuses both cx4 discoveries on the largest assigned movement state machine.
