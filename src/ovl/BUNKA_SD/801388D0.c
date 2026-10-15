@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "ovl/BUNKA_SD.h"
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_801388D0);
@@ -97,7 +98,90 @@ void func_80138CAC(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80138D48);
+void func_80138D48(void) {
+    s32 frame;
+    s32 i;
+    DisplayActor44 *record;
+
+    i = 0;
+    do {
+        load_palette(D_8013D9CC, (i + 0x10) & 0xFF, 1, 1, i);
+        i += 1;
+    } while (i < 0x10);
+    func_80048F64(0x60);
+    ((DisplayActor44 *)D_80120650)[0].unk_01 = 5;
+    ((DisplayActor44 *)D_80120650)[0].unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_80120650)[0].unk_03 = 0x80;
+    ((DisplayActor44 *)D_80120650)[0].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80120650)[0].unk_0C = D_8013D9C4;
+    ((DisplayActor44 *)D_80120650)[0].unk_10 = D_8013D9C8;
+    ((DisplayActor44 *)D_80120650)[0].unk_34 = D_8013D9C0;
+    ((DisplayActor44 *)D_80120650)[0].unk_18 = 0x2B;
+    ((DisplayActor44 *)D_80120650)[0].unk_07 = 0;
+    ((DisplayActor44 *)D_80120650)[0].unk_26 = -0xA0;
+    ((DisplayActor44 *)D_80120650)[0].unk_2A = -0x78;
+    ((DisplayActor44 *)D_80120650)[0].unk_05 = 0x80;
+    ((DisplayActor44 *)D_80120650)[0].unk_43 = 0;
+    ((DisplayActor44 *)D_80120650)[0].unk_04 = 0;
+    func_80048F64(0x61);
+    ((DisplayActor44 *)D_80120650)[1].unk_01 = 4;
+    ((DisplayActor44 *)D_80120650)[1].unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_80120650)[1].unk_03 = 0x80;
+    ((DisplayActor44 *)D_80120650)[1].unk_02 = 0x40;
+    ((DisplayActor44 *)D_80120650)[1].unk_0C = D_8013D9C4;
+    ((DisplayActor44 *)D_80120650)[1].unk_10 = D_8013D9C8;
+    ((DisplayActor44 *)D_80120650)[1].unk_34 = D_8013D9C0;
+    ((DisplayActor44 *)D_80120650)[1].unk_18 = 0;
+    ((DisplayActor44 *)D_80120650)[1].unk_07 = 0;
+    ((DisplayActor44 *)D_80120650)[1].unk_26 = -0xA0;
+    ((DisplayActor44 *)D_80120650)[1].unk_2A = -0x78;
+    ((DisplayActor44 *)D_80120650)[1].unk_05 = 0x80;
+    ((DisplayActor44 *)D_80120650)[1].unk_43 = 0;
+    ((DisplayActor44 *)D_80120650)[1].unk_04 = 0;
+    record = (DisplayActor44 *)D_8011ED58;
+    i = 2;
+    frame = 0xF;
+    for (; i != 6; i++) {
+        func_80048F64(i + 0x60);
+        record[96].unk_01 = 4;
+        record[96].unk_38 = 0x01000000;
+        record[96].unk_03 = 0x80;
+        record[96].unk_02 = 0x40;
+        record[96].unk_0C = D_8013D9C4;
+        record[96].unk_10 = D_8013D9C8;
+        record[96].unk_34 = D_8013D9C0;
+        record[96].unk_18 = frame;
+        frame += 4;
+        record++;
+        record[95].unk_06 = 1;
+        record[95].unk_07 = 0;
+        record[95].unk_26 = -0xA0;
+        record[95].unk_2A = -0x78;
+        record[95].unk_05 = 0x80;
+        record[95].unk_43 = 0;
+        record[95].unk_04 = 0;
+    }
+    if (D_80122EAC & 1) {
+        ((DisplayActor44 *)D_80120650)[3].unk_18 = 0x1F;
+    }
+    if (D_80122EAC & 2) {
+        ((DisplayActor44 *)D_80120650)[4].unk_18 = 0x23;
+    }
+    if (D_80122EAC & 4) {
+        ((DisplayActor44 *)D_80120650)[5].unk_18 = 0x27;
+    }
+    load_tpage_buf_lock(5, ((s32 *)D_8013D9C0)[0], 1);
+    load_tpage_buf_lock(6, ((s32 *)D_8013D9C0)[1], 1);
+    load_tpage_buf_lock(7, ((s32 *)D_8013D9C0)[2], 1);
+    load_tpage_buf_lock(8, ((s32 *)D_8013D9C0)[3], 1);
+    load_tpage_buf_lock(9, ((s32 *)D_8013D9C0)[4], 1);
+    load_tpage_buf_lock(0xA, ((s32 *)D_8013D9C0)[5], 1);
+    load_tpage_buf_lock(0x25, ((s32 *)D_8013D9C0)[6], 1);
+    load_tpage_buf_lock(0x26, ((s32 *)D_8013D9C0)[7], 1);
+    load_tpage_buf_lock(0x27, ((s32 *)D_8013D9C0)[8], 1);
+    load_tpage_buf_lock(0x28, ((s32 *)D_8013D9C0)[9], 1);
+}
+
 
 s32 func_80139100(void) {
     if (D_800E6280.unk_1104.u == 0xBE) {

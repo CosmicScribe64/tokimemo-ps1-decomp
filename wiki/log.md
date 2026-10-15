@@ -13909,3 +13909,19 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] decision | Small-function and type-recovery chats assigned
 [[tickets/T-12600-byte-coverage-families]]: user requested GPT-6.1 Sol medium for small functions, and a separate types/globals chat. Small-function team owns OPTION plus main/80079B10.c (previously queued cx6/cx8), T-12900 series. Type team owns MASTER implementation pilot, T-13000 series, with minimal evidence-backed shared-header edits requiring all27 checks; other scopes read-only. One concurrent compiler per new team initially. Root retains integration responsibility.
+
+## [2026-10-15] build | T-12090 large display setup matched
+
+BUNKA_SD:func_80132940 matches1144 linked text bytes and its overlay checksum. Typed records, a reused loop counter, explicit fifth switch case and unsigned16-bit frame intermediate resolve the setup family. No FAKE. Cumulative2124 verified code bytes; [[tickets/T-12090-codex-cx9]] records evidence.
+
+## [2026-10-15] build | T-12090 native scheduler trace calibrated
+
+A scratch-only AS1 diagnostic shim preserves the complete stock object byte-for-byte while producing a reached scheduling DAG for the952-byte setup near miss. [[tickets/T-12090-codex-cx9]] records fidelity, wrapper limitation and the equal-priority ordering hypothesis. Production compiler tools are unchanged.
+
+## [2026-10-15] build | T-12090 second large setup matched
+
+BUNKA_SD:func_80138D48 now matches952 linked bytes and overlay checksum, headers and globals. Natural for-loop increment placement resolves the equal-priority scheduler tie; keep initialization order intact. No FAKE. Cumulative3076 text bytes; see [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] build | T-12090 dialogue script matched
+
+BUNKA_SD:func_80133204 matches820 linked text bytes with overlay checksum, headers and globals OK. Typed table access and independent branch assignments remove the m2c control-flow artifact. No FAKE. Cumulative3896 text bytes; [[tickets/T-12090-codex-cx9]] records evidence.
