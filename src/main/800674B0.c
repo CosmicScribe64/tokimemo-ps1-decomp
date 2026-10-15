@@ -189,7 +189,57 @@ void func_80067870(void) {
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067C28);
+void func_80067C28(void) {
+    s32 max;
+    s32 level;
+    s32 n;
+    s32 i;
+    u8 k;
+
+    if (*(u8 *)&D_800E6280.unk_03C != 0) {
+        if (func_800460EC() & 4) {
+            level = getCDlevel() + 1;
+        } else {
+            level = 0;
+        }
+        D_80125C80[D_800E6280.unk_10F8 & 3] = level;
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        n = 0;
+        k = D_800E6280.unk_F5F;
+        for (i = 0; i < 3; i++) {
+            if (D_800B5A68[k][i] < level) {
+                n = i + 1;
+            }
+        }
+        if (n >= 4) {
+            n = 3;
+        }
+        if (D_80120668 == 0 || !(D_800E6280.unk_10F8 & 1)) {
+            if (level == 0) {
+                D_80120668 = 0;
+            } else if (n == 0) {
+                D_80120668 = 0;
+            } else if (n == 1) {
+                D_80120668 = 1;
+            } else if (n == 2) {
+                D_80120668 = 2;
+            } else if (n >= 3) {
+                D_80120668 = 3;
+            }
+        }
+    }
+}
 
 /* FAKE: promoted halfword and byte alias retain the final andi before flag storage. T-9550 */
 s32 func_80067DD4(void)
@@ -973,10 +1023,8 @@ void func_8006B5BC(GsWord arg0) {
 void func_8006B640(void) {
 }
 
-/* NON_MATCHING: T-11040, 10 differing lines: the loop test is `li at,11; bne s0,at` where the original keeps `slti at,s0,11; bnez` (uopt counted-loop normalisation), and the constants for the cancel entry (li a0,40 / a1,8) come after li t9,64 / t0,16 where the original has them first. Frame, array slots and registers match (arrays x,y,w,h declared in that order; `first`,`i` and a pad above them). */
-#ifdef NON_MATCHING
 void club_list_menu(void) {
-    s32 pad[2];
+    s32 pad[2]; /* FAKE: reproduces the original's 8-byte gap above `first`; real locals unknown. T-11690 */
     s32 first;
     s32 i;
     s16 x[12];
@@ -1014,18 +1062,18 @@ void club_list_menu(void) {
             w[i] = 0;
         }
     }
-    w[11] = 0x40;
-    h[11] = 0x10;
-    set_kanji_string(x[11] = 0x28, y[11] = 8, 3, "取り消し", 0);
+    i = 11;
+    x[i] = 0x28;
+    y[i] = 8;
+    w[i] = 0x40;
+    h[i] = 0x10;
+    set_kanji_string(x[i], y[i], 3, "取り消し", 0);
     menu_set(1, 0xC, x, y, w, h);
     D_800E6280.unk_1094 = first;
     k_sub_reset_point_set();
     sndi("入部する部活を選択してください", 0, 0xFF);
     k_sub_disp_start(1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", club_list_menu);
-#endif
 
 void func_8006B900(void) {
     s32 i;

@@ -14928,3 +14928,7 @@ Opened [[tickets/T-16200-matching-wave-2]] (In Progress) on integration branch `
 (5,945/6,958, 63.7%). Fresh inventory over the T-14500 census: 882 non-TT functions / 739,240 bytes in 128 file-disjoint
 packages; wave 2 runs the top 24 (T-16210..T-16440) plus the four unmerged wave-1 packages (T-11640, T-11650, T-11670,
 T-11690). TT stays excluded (issue #2).
+
+## [2026-10-15] ticket | T-11690 opened
+
+Created [[tickets/T-11690-w1-main-800674b0]] (In Progress): wave 1 package w1-p13, twelve functions of `src/main/800674B0.c`.
