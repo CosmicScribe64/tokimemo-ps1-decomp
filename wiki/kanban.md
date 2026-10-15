@@ -25,16 +25,12 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
-- [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
-
-- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
-
 
 - [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
 
 - [ ] [[tickets/T-14400-option-menu-families|T-14400 Match OPTION menu and state families]]
 
-- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
+- [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
 
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
 
@@ -64,9 +60,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
-- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
-
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
@@ -74,6 +67,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 
 - [ ] [[tickets/T-13701-name-ent-record-types|T-13701 Recover NAME_ENT record-rendering types]]
+
+- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
 
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
 
@@ -86,6 +81,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
 
 - [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
+
+- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 - [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
 
