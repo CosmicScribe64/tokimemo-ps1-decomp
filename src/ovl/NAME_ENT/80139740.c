@@ -2125,21 +2125,14 @@ s32 func_80140574(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
-/* NON_MATCHING: T-10710, 14 lines: the six stores of the value use t6 (one andi) where the original has an extra andi v0,t6,0xFF (double u8 conversion); the original reads D_800E62BA as its own u8 scalar */
+/* NON_MATCHING: T-11570, 15 lines: the in-place global form gives a0/t6 and both stores of the global like the original; the six fade stores use t6 where the original has one more `andi v0,t6,0xff` copy (T-10710: locals, casts, masks and an empty test all fold it) */
 #ifdef NON_MATCHING
 void func_80140B20(void) {
-    u8 x;
-    u8 y;
-
-    x = *(u8 *)&D_800E6280.unk_3A;
-    if (x >= 3) {
-        x -= 2;
-        y = x;
-        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = y;
-        *(u8 *)&D_800E6280.unk_3A = x;
-        if (x < 0x80) {
-            *(s8 *)&D_800E6280.unk_3A = x;
-            func_80057390(x);
+    if (*(u8 *)&D_800E6280.unk_3A >= 3) {
+        *(u8 *)&D_800E6280.unk_3A -= 2;
+        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = *(u8 *)&D_800E6280.unk_3A;
+        if (*(u8 *)&D_800E6280.unk_3A < 0x80) {
+            func_80057390(*(u8 *)&D_800E6280.unk_3A);
         }
     }
 }
