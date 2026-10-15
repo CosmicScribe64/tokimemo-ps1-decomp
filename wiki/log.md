@@ -14166,3 +14166,23 @@ SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passe
 
 ## [2026-10-15] build | New family batch verified at 61.3 percent
 [[tickets/T-12400-integrate-verified-matches]]: DATE7cb6d2a1, ETCf561351b and SHOUGATU21df4fe7 integrated. All27 binary hashes pass; header/global checks and branch prototype audit pass (0new/15known). Current progress5864/6958functions and1397856/2279368bytes (61.3%), a gain5functions/3792progressbytes over b8f516ff. Literal proof totals3796bytes include4bytes not counted by the progress inventory; the unchanged progress definition governs the80% goal. Remaining425640alignedprogressbytes. Evidence build/scratch/goal-family-next.log and goal-date740.log. Previous goal continuation made progress via these source integrations and bounded TACO evidence; this continuation completes verification and publication.
+
+## [2026-10-15] ticket | T-13600 TAIIKU source-family lane
+
+Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taiiku-13600. Read [[bunka-family-results]] and previous TAIIKU matching notes; prioritize reusable scene/selector/type reconstruction.
+
+## [2026-10-15] query | TAIIKU scene and actor-table family evidence
+
+[[tickets/T-13600-taiiku-families]] records scene-loop non-transfer, recovered nine-halfword table copies, corrected m2c pointer scaling, and the bounded controller/reset family under test. No accepted matches or production changes at this checkpoint.
+
+## [2026-10-15] query | TAIIKU controller and held-out initializer bounded test
+
+[[tickets/T-13600-taiiku-families]] records reset4607C at52 full-TU lines and held-out actor initializer46338 at256, with no accepted bytes. Width and stride evidence is preserved; remaining normalization/frame allocation is not treated as a source win.
+
+## [2026-10-15] query | TAIIKU polygon coordinate-array family evidence
+
+[[tickets/T-13600-taiiku-families]] records POLY_FT4 and six eighty-halfword coordinate arrays shared by3D9B4/3DDB8. The typed full-TU draft remains346 lines; zero accepted functions/bytes. Production source and header files remain unchanged.
+
+## [2026-10-15] decision | Rank fresh TAIIKU helper families
+
+[[tickets/T-13600-taiiku-families]] ranks lower-complexity controller/slot helpers by complete types and matching donors.46A60/47928 are the concrete next family; earlier hard-family diagnostics do not imply exhaustion of all84 remaining functions.

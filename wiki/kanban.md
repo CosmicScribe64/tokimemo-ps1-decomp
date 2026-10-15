@@ -23,6 +23,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
 - [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
