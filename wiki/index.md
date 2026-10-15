@@ -342,3 +342,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-14300-event-families|T-14300]] Remaining EVENT family reconstruction (In Progress).
 
 - [[exhaustive-drafts]] — T-14500 exhaustive game-function drafts and scoring census (In Progress).
+
+- [[tickets/T-15900-remaining-draft-compile-repairs|T-15900]] — Remaining mixed-overlay compile repairs (13 scopes, In Progress).
