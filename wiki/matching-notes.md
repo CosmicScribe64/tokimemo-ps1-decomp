@@ -4956,3 +4956,44 @@ list: `normal_date_girl_suddenout`, `normal_date_three_select_init`, `normal_dat
   (t6..t9) and the params in a1/t2, IDO gives the shifts uopt registers (POLY_G4 draft, 188 lines, not kept).
   `D_80122D48` is declared in the C file because EVENT `80103B60.c` declares that address as a function table;
   moving it to `main_api.h` needs a `MAIN_API_OVERRIDE_D_80122D48` in that EVENT file (follow-up).
+## T-11580 wave 1 package w1-p02 (DATE/80132000)
+
+Ticket [[tickets/T-11580-w1-ovl-date-80132000]]. 11 matched (5,016 bytes): from the list `func_80137D1C`,
+`func_8013D8B0`, `func_801366A4`, `func_80136B70`; outside it, with the place-handler shape of `func_801366A4`,
+`func_801347B8`, `func_801353F8`, `func_80135620`, `func_80135804`, `func_80136870`, `func_80136D3C`,
+`func_801393DC`. Guarded drafts added: `func_801324DC` (1 instruction), `func_80137DF4` (4),
+`func_80139664` (9); improved: `func_80139834` (15 -> 7), `func_8013D5FC`, `func_8013B488` (134 -> 75 funcdiff lines).
+
+- **Place-handler table readers are one family.** Every DATE handler that stores two three-byte result rows
+  `*(F5F * N + D_8015Bxxx + D_800CA2FC * 3 + k)` into `D_800CA22C[0..2]`/`D_800CA21C[0..2]` matches with the
+  `func_80139944` idiom: `GameState *g = &D_800E6280;`, the table declared `u8 *` in `include/ovl/DATE.h`, and the
+  reads written `*(g->unk_F5F * N + D_8015Bxxx + choice_offset + k)` (FAKE: the pointer view stops uopt CSEing the
+  multiply, the original repeats `multu` per element). The bit test before it stays a plain field
+  (`D_800E6280.unk_1BC[F5F].unk_14[k]`). Converting m2c output mechanically took about a minute per function; the
+  T-0018 "hoist" row of `func_801366A4` (family) is solved by it. `func_80137154` (three shops, 18 reads) is the
+  same shape but still 13 instructions short in its counter branches.
+- **A store forwarded to a call argument through an element view.** `D = 0x14; f(0, 0x14)` with one `li a1,20`
+  for both: `(&D_80122D08)[0] = 0x14; func_80085B3C(0, (&D_80122D08)[0]);` (FAKE). The same view makes
+  `D_80122CDC = 1; return 1;` share `li v0,1` (`func_80137DF4`).
+- **A local copy of a selector puts the variable first in `bne`.** `u8 sel = *(u8 *)&D_8015B68C;` in the else
+  chain gave `bne v1,a0` (`func_8013D8B0`). The opposite also holds: a compare on the field itself puts a
+  register constant first (`bne v1,v0` with `li v1,9`, `func_80139664`).
+- **Byte view to stop a CSE.** Two reads of `D_800CA2FC` in one block were CSEd into `$v0`; reading the second one
+  as `*(u8 *)&D_800CA2FC` lets ugen reuse its own load as the original does (FAKE, `func_801393DC`).
+- **Leftover argument registers.** m2c reads constants that live in `$a0`..`$a2` at a call as arguments:
+  `func_8007ED84(0x4529, 5)`, `func_80084D3C(0x38, &D_800E6280)` and the first `func_80048390()` take no extra
+  argument; check the callee and the asm before keeping them. A constant shared by a multiply and a compare in an
+  argument register (`multu a0,a1` with `li a1,6`) is a `u8` local (`six = 6`) when the call does not take it
+  (`func_801324DC`).
+- **Halfword views.** `D_8015BF18/1C/20` are halfwords (`sh` only); their declarations are now `s16`.
+  `D_800CA15C` is read with `lh` in DATE: `*(s16 *)&D_800CA15C`.
+- **Frame slot from declaration order.** An unused or register-held byte local declared before `s32 prev` puts
+  `prev` at 0x28 instead of 0x2C (`func_80139664`, marked FAKE when unused).
+- Blocked (rows in [[data/t0018-cases]]): `func_80139834` and `func_80139664` keep a post-call `unk_110A` in the
+  wrong register or with a hoisted `lui`; `func_80137DF4` selector `$v1` vs `$v0`; `func_801324DC` one schedule
+  slot; `func_8013E6A4` (old value of `D++` in `$a0`), `func_8013BEB8` (third chain value in `$v0`),
+  `func_8013AF1C` (3E/40 range priority), `func_8013B208` (two `s16` locals 4 bytes lower; any extra local grows
+  the frame by 8) were retried with new ideas and no gain.
+- Tools: a side-by-side wrapper around `funcdiff.diff_lines` and a variant runner (one funcdiff per variant, about
+  3 s) did most of the work; a full-unit draft whose instructions match but whose address differs (other drafts
+  change the layout) is a candidate match, confirm it with the guard removed. autotweak (3 runs) found nothing.

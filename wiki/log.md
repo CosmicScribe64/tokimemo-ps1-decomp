@@ -13419,3 +13419,14 @@ Created [[tickets/T-11590-w1-main-8007c030]] (In Progress): 12 functions in src/
 
 ## [2026-10-15] ticket | T-11590 Done
 [[tickets/T-11590-w1-main-8007c030]] reviewed against CODING_STANDARDS.md, two findings fixed (dialogue_speak_part guard comment, byte-offset accesses in func_800850D4 turned into DisplayActor44 fields). 15 functions matched in src/main/8007C030.c, 27/27 sha1.
+## [2026-10-15] ticket | T-11580 created
+
+Created [[tickets/T-11580-w1-ovl-date-80132000]] (In Progress): wave 1 package w1-p02, 12 DATE functions in src/ovl/DATE/80132000.c, worktree w1-p02.
+
+## [2026-10-15] ticket | T-11580 to In Review
+
+[[tickets/T-11580-w1-ovl-date-80132000]]: 11 DATE matches (func_80137D1C, func_8013D8B0, func_801366A4, func_80136B70 and seven place handlers of the same table-reader shape), four guarded drafts, two drafts improved. Notes in [[matching-notes]] (T-11580), rows in [[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11580 Done
+
+[[tickets/T-11580-w1-ovl-date-80132000]] reviewed against CODING_STANDARDS.md and moved to Done: 11 DATE matches. One finding fixed (line counts missing in three `NON_MATCHING` comments of `src/ovl/DATE/80132000.c`); no other findings.

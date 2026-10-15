@@ -544,6 +544,7 @@ extern s32 D_8015E024;
 extern s32 D_8015E160;
 extern u8 D_8015B674;
 extern u8 D_8015B678;
+extern u8 D_8015B69C;
 void func_8013BFF8(void);
 void func_8013C0A4(void);
 void func_8014A810(void);
@@ -554,6 +555,7 @@ s32 func_8013AE5C();
 void func_8014B1F0(void);
 extern s8 D_8015E204;
 void func_80136F2C(void);
+void func_80138934(void);
 void func_801449D4(void);
 void func_80144E20(void);
 void func_80145D14(void);
@@ -702,14 +704,14 @@ extern s16 D_8015B624;
 extern s16 D_8015B628;
 extern s32 D_8015B62C;
 extern s32 D_8015B630;
-extern u8 D_8015BF1C;
-extern u8 D_8015BF20;
+extern s16 D_8015BF1C; /* halfword stores in func_801324DC (T-11580) */
+extern s16 D_8015BF20;
 extern s16 D_8015BF04;
 extern u8 *D_8015B540;
 extern u8 *D_8015B544;
 extern s16 D_8015BF08;
 extern s16 D_8015BF14;
-extern u8 D_8015BF18;
+extern s16 D_8015BF18;
 void func_8013C190(void);
 
 void func_80150C78();
@@ -1466,6 +1468,33 @@ extern u8 *D_8015B534;
  * with three result bytes each. The first year starts with summer. */
 extern u8 *D_8015B558;
 extern u8 *D_8015B55C;
+#endif
+
+#ifndef OVL_DATE_POOL_TABLES_T11580_H
+#define OVL_DATE_POOL_TABLES_T11580_H
+/* func_801366A4 (pool): six bytes per girl, two variants with three result bytes
+ * each, read through flat byte pointers like the other DATE tables. */
+extern u8 *D_8015B560;
+extern u8 *D_8015B564;
+/* func_80136B70: the skating rink tables, same layout. */
+extern u8 *D_8015B588;
+extern u8 *D_8015B58C;
+/* The other place handlers read their two result rows the same way:
+ * D_8015B528 (bowling), D_8015B550 (karaoke), D_8015B570 (beach),
+ * D_8015B578 (botanical garden), D_8015B590 (ski slope), six bytes per
+ * girl; D_8015B548 (game centre, used twice), twelve bytes per girl. */
+extern u8 *D_8015B528;
+extern u8 *D_8015B52C;
+extern u8 *D_8015B548;
+extern u8 *D_8015B54C;
+extern u8 *D_8015B550;
+extern u8 *D_8015B554;
+extern u8 *D_8015B570;
+extern u8 *D_8015B574;
+extern u8 *D_8015B578;
+extern u8 *D_8015B57C;
+extern u8 *D_8015B590;
+extern u8 *D_8015B594;
 #endif
 
 #ifndef DATE_MOVIE_SCENE_T10910A
