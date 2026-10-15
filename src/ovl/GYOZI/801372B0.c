@@ -204,10 +204,6 @@ void func_80137D3C(void) {
     func_8004DE1C();
 }
 
-extern u8 D_800F53DF;
-extern u8 D_800F53E0;
-extern s32 D_800F5490;
-
 void func_80137D70(void) {
     s32 r;
 

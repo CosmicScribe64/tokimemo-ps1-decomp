@@ -83,4 +83,21 @@ void func_80139828(void) {
     func_8004DE1C();
 }
 
-INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80138B50", func_80139858);
+s32 func_80139858(void) {
+    s32 v;
+
+    v = D_800F5490;
+    if (D_800F53E0 == ((u32)(v << 0x17) >> 0x1B) && D_800F53DF == (v & 0xF)
+        && func_8005EBE0(D_800F62CF) >= 0x46U) {
+        D_800F5AB1 = D_800F6479;
+        /* FAKE: D_800F647A read through the D_800F5AB1 base so as1 keeps the load after the store. T-11430 */
+        D_800F5AB2 = (&D_800F5AB1)[0x9C9] + 1;
+        func_8004DEAC(3);
+        return 0;
+    }
+    if (func_8005EBE0(D_800F62CF) >= 0x46U) {
+        func_80138858();
+        return;
+    }
+    func_8004DE1C();
+}
