@@ -336,7 +336,6 @@ void func_80138D94(void) {
 }
 
 /* T-11510 near miss: structure matches; differences are the register numbers of the hoisted constants in the case-0 slot loop (the original ranks 8, the table pointer, 4, then the bound 18; here 18 comes first) and the delay-slot fill of the sltiu before the 0x4B test; about 73 differing instructions (permuter 8 min: no gain). */
-#ifdef NON_MATCHING
 void func_80138E28(void) {
     u8 *c;
     u8 *s;
@@ -345,7 +344,6 @@ void func_80138E28(void) {
     s16 *t;
     s16 j;
     s32 i;
-    s32 a;
     u16 k;
 
     k = *(u16 *)(D_80158A8C + 6);
@@ -355,16 +353,17 @@ void func_80138E28(void) {
     case 0:
         *(u16 *)(c + 0x364) = 0;
         *(u16 *)(c + 0x3D4) = 0;
-        for (i = 0x10; i != 0x12; i++) {
+        /* The unsigned bound is a constant of its own; an int 0x12 would share the hoisted register of the 0x12 stored in the 0x4B block and change the register order. T-11830 */
+        for (i = 0x10; i != 0x12U; i++) {
             ((TtSlot14 *)(c + 0x38))[i].unk_00 = D_80151A50;
             ((TtSlot14 *)(c + 0x38))[i].unk_04 = 0;
             ((TtSlot14 *)(c + 0x38))[i].unk_05 = 4;
             ((TtSlot14 *)(c + 0x38))[i].unk_0A = 0;
             ((TtSlot14 *)(c + 0x38))[i].unk_10 = 0;
             c[0x310 + i] = 0;
-            ((s16 *)(c + 0x2A8))[i] = 8;
-            ((s16 *)(c + 0x248))[i] = 0;
-            ((s16 *)(c + 0x278))[i] = 0;
+            *(s16 *)(c + 0x2A8 + i * 2) = 8;
+            *(s16 *)(c + 0x248 + i * 2) = 0;
+            *(s16 *)(c + 0x278 + i * 2) = 0;
         }
         *(s16 *)(c + 6) = 0x40;
         return;
@@ -386,7 +385,7 @@ void func_80138E28(void) {
         }
         if (*(u16 *)(c + 0x364) == 0x4B) {
             c[0x310] = 0;
-            func_80138B90(D_80150950);
+            func_80138B90();
             c[0x52] = 1;
             p = D_80158AA4 + 0x1900;
             for (i = 0; i != 0x10; i++, p += 0x64) {
@@ -414,17 +413,17 @@ void func_80138E28(void) {
         }
         if (*(u16 *)(c + 0x364) >= 0x4C) {
             p = D_80158AA4 + 0x1900;
-            for (a = 0; a != 0x1000; a += 0x100, p += 0x64) {
-                *(s16 *)(p + 0x14) = ((u32)(*(u16 *)(c + 0x3D4) * func_800A0140(a)) >> 12) + *(s16 *)(c + 0x14) - 8;
-                *(s16 *)(p + 0x16) = ((u32)(*(u16 *)(c + 0x3D4) * func_800A0070(a)) >> 12) + *(s16 *)(c + 0x16) - 8;
+            for (i = 0; i < 0x10; i++, p += 0x64) {
+                *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) + ((u32)(func_800A0140(i * 0x100) * *(u16 *)(c + 0x3D4)) >> 12) - 8;
+                *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) + ((u32)(func_800A0070(i * 0x100) * *(u16 *)(c + 0x3D4)) >> 12) - 8;
                 p[0x4C] = D_80152D30[(*(u16 *)(c + 0x364) >> 2) & 3];
             }
             *(u16 *)(c + 0x3D4) += 4;
         }
         if (*(u16 *)(c + 0x364) >= 0x88) {
             p = D_80158AA4 + 0x1900;
-            for (i = 0; i < 0x10; i++) {
-                p[i * 0x64] = 0;
+            for (i = 0; i < 0x10; i++, p += 0x64) {
+                p[0] = 0;
             }
             *(s16 *)(c + 4) = 0x52;
             *(s16 *)(c + 6) = 0;
@@ -433,9 +432,6 @@ void func_80138E28(void) {
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80138E28);
-#endif
 
 void func_8013923C(void) {
     TtPhase3AE *work;
@@ -668,11 +664,11 @@ void func_80139770(void) {
 }
 
 /* T-11520 near miss: structure and frame match; 28 differing lines. Spill homes of the promoted a/b pointers are at sp+0x34/0x38 here against 0x38/0x3C in the original (one extra home between them; unused pad locals do not move them), and the hoisted constant 1 takes v0 instead of a2 (case 0x40, 0x52 and 0xA0 stores). The case-0x54 u16 store of 0x80 and the u8 store in case 0xA0 are needed to match the shared li a0,0x80 and sb. */
-#ifdef NON_MATCHING
+/* The constant 1 is one hoisted value (a2) over cases 0x40, 0x52, 0x80 and 0xA0 only when every store of it is unsigned (u16/u8), and the case-0x54 u16 store of 0x80 shares the dispatch's li a0,0x80. a and b are declared first for their spill homes at sp+0x3C/0x38. T-11830 */
 void func_80139B98(void) {
-    u8 *c;
     u8 *a;
     u8 *b;
+    u8 *c;
     u8 *d;
     s32 i;
     s16 v;
@@ -712,11 +708,11 @@ void func_80139B98(void) {
     case 0x40:
         v = *(s16 *)(D_80158A8C + 0x30C);
         if (v < 0x20) {
-            *(s16 *)(c + 6) = 2;
+            *(u16 *)(c + 6) = 2;
         } else if (v < 0x40) {
-            *(s16 *)(c + 6) = 1;
+            *(u16 *)(c + 6) = 1;
         } else {
-            *(s16 *)(c + 6) = 0;
+            *(u16 *)(c + 6) = 0;
         }
         func_80138240();
         func_801396C4();
@@ -747,10 +743,10 @@ void func_80139B98(void) {
         break;
     case 0x52:
         *(s16 *)(c + 4) = 0x53;
-        *(s16 *)(c + 0x30E) = 1;
+        *(u16 *)(c + 0x30E) = 1;
         *(s16 *)(c + 0x3A4) = 0;
         *(s16 *)(c + 0x3AA) = 0;
-        *(s16 *)(c + 0x3AC) = 1;
+        *(u16 *)(c + 0x3AC) = 1;
         *(s16 *)(c + 0x366) = 0;
         for (i = 0; i < 4; i++) {
             *(s16 *)(c + 0x2D8 + i * 2) = 0x18;
@@ -805,12 +801,9 @@ void func_80139B98(void) {
         func_80044750(0xB1);
         c[0] = 0;
         b[0x12] = 0;
-        *(s16 *)((u8 *)D_80158A70 + 0x1E) = 1;
+        *(u16 *)((u8 *)D_80158A70 + 0x1E) = 1;
         *(s16 *)(b + 2) = 0xA0;
         break;
     }
     func_80137A78();
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80139B98);
-#endif

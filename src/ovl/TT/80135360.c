@@ -2,7 +2,6 @@
 #include "ovl/TT.h"
 
 /* T-11510 near miss (about 45 differing instructions; frame, spill slots 0x60/0x9C, pt and every branch target match): the first clear loop pointer is s1 in the original (v0 here), temp numbering follows from it, and the two angle sums (idx * 0x733 + 0xC000 - 0x3998 and + 0x4000 - 0xACC8) fold their constants here while the original keeps the hoisted 0xC000/0x4000 and adds the constant separately. The unused s32 locals and pad[4] only place the frame (FAKE, original source unknown). */
-#ifdef NON_MATCHING
 void func_80135360(void) {
     s32 pq1;
     s32 pq2;
@@ -10,21 +9,21 @@ void func_80135360(void) {
     u8 *c;
     u8 *b;
     u8 *p;
-    u8 *e;
     s32 i;
     s32 j;
     s32 px1;
     s32 px2;
     s32 px3;
+    s32 px4;
     s16 pt[2];
-    s32 pad[4]; /* FAKE: unused, places the frame, spill slots and pt as in the original. T-11510 */
+    s32 pad[3]; /* FAKE: pq1..px4 and pad are unused; they place the frame, spill slots and pt as in the original. T-11510, T-11830 */
 
     c = D_80158A8C;
     a = D_80158A74;
     b = D_80158A64;
     if (c[0] != 0) {
-        for (i = 0, e = c; i < 0x18; i++, e += 0x14) {
-            e[0x42] = 0;
+        for (i = 0; i < 0x18; i++) {
+            c[i * 0x14 + 0x42] = 0;
         }
         if (c[0x342] == 0 && func_801427A8() != 0) {
             func_80133AD0(0x503);
@@ -33,7 +32,7 @@ void func_80135360(void) {
             for (i = 0; i != 8; i++) {
                 pt[0] = *(s16 *)(c + 0x14) + *(s16 *)(c + 0x258 + i * 2);
                 pt[1] = *(s16 *)(c + 0x16) + *(s16 *)(c + 0x288 + i * 2);
-                if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, (u8 *)pt, &D_80155B54[c[0xDE + i * 0x14] * 6] + 0x42) != 0) {
+                if (a[0x52] == 0 && a[0] != 0 && func_80145508(a + 0x14, D_80155B30, (u8 *)pt, &D_80155B54[*(c + 0xDE + i * 0x14) * 6] + 0x42) != 0) {
                     func_80144094();
                     *(s16 *)(a + 4) = 0x60;
                     *(s16 *)(a + 10) = 0;
@@ -46,8 +45,7 @@ void func_80135360(void) {
                 p = D_80158A80;
                 for (j = 0; j != 12; j++, p += 0x54) {
                     if (p[0] != 0 && *(u16 *)(p + 4) == 0x40) {
-                    e = i * 0x14 + c;
-                    if (func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155B54[e[0xDE] * 6] + 0x42) != 0) {
+                    if (func_80145508(p + 0x14, &D_80155B36, (u8 *)pt, &D_80155B54[*(c + 0xDE + i * 0x14) * 6] + 0x42) != 0) {
                         b[0x25] = b[0x25] + 1;
                         if (b[0x24] != 0 && !(b[0x25] & 3)) {
                             func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
@@ -63,18 +61,18 @@ void func_80135360(void) {
                             if (*(u16 *)(c + 6) == 1) {
                                 *(u16 *)(c + 0x3B8) += 1;
                                 if ((*(u16 *)(c + 0x3B8) & 7) == 7) {
-                                    func_80133E30(pt[0], pt[1], 0x18, 0xC00 - (e[0xDE] << 7), 0xA0);
+                                    func_80133E30(pt[0], pt[1], 0x18, 0xC00 - (*(c + 0xDE + i * 0x14) << 7), 0xA0);
                                 }
                             }
-                            if (e[0xDE] != 0 && e[0xDE] < 0x10) {
+                            if (*(c + 0xDE + i * 0x14) != 0 && *(c + 0xDE + i * 0x14) < 0x10) {
                                 *(u16 *)(c + 0x3AA) = 0xC000;
-                                if (e[0xDE] >= 9) {
-                                    *(u16 *)(c + 0x3AA) = e[0xDE] * 0x733 + 0xC000 - 0x3998;
+                                if (*(c + 0xDE + i * 0x14) >= 9) {
+                                    *(u16 *)(c + 0x3AA) += *(c + 0xDE + i * 0x14) * 0x733 - 0x3998;
                                 }
-                            } else if (e[0xDE] >= 0x11) {
+                            } else if (*(c + 0xDE + i * 0x14) >= 0x11) {
                                 *(u16 *)(c + 0x3AA) = 0x4000;
-                                if (e[0xDE] < 0x18) {
-                                    *(u16 *)(c + 0x3AA) = e[0xDE] * 0x733 + 0x4000 - 0xACC8;
+                                if (*(c + 0xDE + i * 0x14) < 0x18) {
+                                    *(u16 *)(c + 0x3AA) += *(c + 0xDE + i * 0x14) * 0x733 - 0xACC8;
                                 }
                             }
                         }
@@ -85,11 +83,36 @@ void func_80135360(void) {
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_80135360);
-#endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_801356C8);
+/* -(ang + 0x400) keeps -0x400 out of the hoisted constants, so 85 takes $fp and divides with break checks. T-11830 */
+void func_801356C8(x, y, ang)
+    s16 x;
+    s16 y;
+    s32 ang;
+{
+    u8 *c;
+    s32 i;
+    s32 dir;
+    s32 s;
+
+    c = D_80158A8C;
+    ang &= 0xFFF;
+    for (i = 8; i < 16; i++) {
+        dir = ((ang + 0x40) & 0xFFF) / 128;
+        c[i * 0x14 + 0x3E] = dir;
+        s = -(ang + 0x400);
+        *(s16 *)(c + 0x248 + i * 2) = func_800A0140(s) / 85 + x;
+        *(s16 *)(c + 0x278 + i * 2) = y - 0x18;
+        if (dir >= 8 && dir < 25) {
+            *(s16 *)(c + 0x278 + i * 2) += func_800A0070(s) / 128;
+            *(s16 *)(c + 0x2A8 + i * 2) = 7;
+        } else {
+            *(s16 *)(c + 0x278 + i * 2) += func_800A0070(s) / 171;
+            *(s16 *)(c + 0x2A8 + i * 2) = 9;
+        }
+        ang += 0x200;
+    }
+}
 
 void func_80135848(s32 arg0) {
     D_80158A8C[0x3E] = ((arg0 + 0x40) & 0xFFF) / 128;
@@ -201,7 +224,97 @@ void func_80135AC4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80135360", func_80135B5C);
+void func_80135B5C(flag)
+    u8 flag;
+{
+    u8 *c;
+    s32 i;
+    s32 v;
+
+    c = D_80158A8C;
+    switch (*(u16 *)(c + 8)) {
+    case 0:
+        c[0x342] = 1;
+        c[0x343] = 0;
+        *(u16 *)(c + 0x3B0) = 0;
+        for (i = 0; i < 6; i++) {
+            c[i * 0x14 + 0x48] = 1;
+            *(s16 *)(c + i * 0x14 + 0x44) = 0x1000;
+            *(s16 *)(c + i * 0x14 + 0x46) = 0x1000;
+        }
+        *(u16 *)(c + 8) = 1;
+        break;
+    case 1:
+        v = 0x1000 - func_800A0070(*(u16 *)(c + 0x3B0)) / 2;
+        for (i = 0; i < 6; i++) {
+            *(s16 *)(c + i * 0x14 + 0x46) = v;
+            *(s16 *)(c + i * 0x14 + 0x44) = v;
+        }
+        *(u16 *)(c + 0x3B0) += 0x10;
+        if (*(u16 *)(c + 0x3B0) >= 0x400) {
+            func_80133AD0(0x511);
+            *(u16 *)(c + 0x3B0) = 0x400;
+            if (flag != 0) {
+                *(u16 *)(c + 0x3B2) = 0x1C00;
+            } else {
+                *(u16 *)(c + 0x3B2) = 0xC00;
+            }
+            for (i = 0; i < 6; i++) {
+                *(s16 *)(c + 0x2A8 + i * 2) = 10;
+            }
+            *(u16 *)(c + 8) = 2;
+        }
+        break;
+    case 2:
+        *(s16 *)(c + 0x3B4) = func_800A0140(*(u16 *)(c + 0x3B2)) / 40;
+        *(s16 *)(c + 0x3B6) = func_800A0070(*(u16 *)(c + 0x3B2)) / 51 + 0x50;
+        if (flag != 0) {
+            *(u16 *)(c + 0x3B2) -= 0x20;
+            if (*(u16 *)(c + 0x3B2) <= 0xC00) {
+                *(u16 *)(c + 0x3B2) = 0xC00;
+                *(s16 *)(c + 0x3B4) = 0;
+                *(s16 *)(c + 0x3B6) = 0;
+                *(u16 *)(c + 8) = 3;
+            }
+        } else {
+            *(u16 *)(c + 0x3B2) += 0x20;
+            if (*(u16 *)(c + 0x3B2) >= 0x1C00) {
+                *(u16 *)(c + 0x3B2) = 0x1C00;
+                *(s16 *)(c + 0x3B4) = 0;
+                *(s16 *)(c + 0x3B6) = 0;
+                *(u16 *)(c + 8) = 3;
+            }
+        }
+        break;
+    case 3:
+        v = 0x1000 - func_800A0070(*(u16 *)(c + 0x3B0)) / 2;
+        for (i = 0; i < 6; i++) {
+            *(s16 *)(c + i * 0x14 + 0x46) = v;
+            *(s16 *)(c + i * 0x14 + 0x44) = v;
+        }
+        *(u16 *)(c + 0x3B0) += 0x20;
+        if (*(u16 *)(c + 0x3B0) >= 0x800) {
+            *(u16 *)(c + 0x3B0) = 0x800;
+            *(u16 *)(c + 0x3B2) = 0;
+            for (i = 0; i < 6; i++) {
+                *(s16 *)(c + 0x2A8 + i * 2) = 8;
+            }
+            *(u16 *)(c + 8) = 4;
+        }
+        break;
+    case 4:
+        for (i = 0; i < 6; i++) {
+            c[i * 0x14 + 0x48] = 0;
+        }
+        c[0x342] = 0;
+        c[0x343] = 1;
+        *(u16 *)(c + 0x3AE) += 8;
+        *(u16 *)(c + 0x3B0) = 0;
+        *(s16 *)(c + 0x364) = 0;
+        *(u16 *)(c + 8) = 0;
+        break;
+    }
+}
 
 void func_80135E9C(void) {
     u8 *q;

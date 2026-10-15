@@ -511,11 +511,8 @@ void func_8013B41C(void) {
 }
 
 /* T-11540/T-11800 near miss, 4 lines: T-11800 typed s16 indexing ((s16 *)(c + 0x248))[j] gives the original's addu c, j*2 operand order, and an empty if (j) {} (FAKE) raises j above the i * 2 CSE so j takes $v0 and i * 2 $v1 (was 20 rows). Left: in the hit block the c + i * 4 address (a1) is computed after the 0x2C8 store (the original computes it before and fills the bnez delay slot with the store), and the preheader splits lui/addiu of D_80151A50 around r = c. Tried: an a2 local before/after the store, c + t * 2 and &c[t * 2] forms, order_search on the hit block and the three inits, a tp = D_80151A50 local. */
-#ifdef NON_MATCHING
 void func_8013B4A0(void) {
     u8 *c;
-    u8 *f;
-    u8 *r;
     u8 *a;
     s32 i;
     s32 j;
@@ -527,56 +524,52 @@ void func_8013B4A0(void) {
     if (*(u16 *)(c + 0x3AC) >= 6) {
         *(u16 *)(c + 0x3AC) = 0;
     }
-    r = c;
-    i = 0;
-    f = c;
-    do {
+    for (i = 0; i < 4; i++) {
         t = i * 2;
         a = c + t;
-        if (f[0x343] != 0) {
-            *(u8 **)(r + 0x178) = D_80151A50;
-            r[0x17C] = 0;
-            r[0x17D] = 4;
-            r[0x180] = 0x80;
-            r[0x17E] = 0x34;
-            r[0x182] = 0;
-            r[0x188] = 0;
-            f[0x320] = 1;
-            *(s16 *)(a + 0x2C8) = 8;
+        if (c[i + 0x343] != 0) {
+            *(u8 **)(c + i * 0x14 + 0x178) = D_80151A50;
+            c[i * 0x14 + 0x17C] = 0;
+            c[i * 0x14 + 0x17D] = 4;
+            c[i * 0x14 + 0x180] = 0x80;
+            c[i * 0x14 + 0x17E] = 0x34;
+            c[i * 0x14 + 0x182] = 0;
+            c[i * 0x14 + 0x188] = 0;
+            c[i + 0x320] = 1;
+            /* FAKE: the empty test adds a block to the live range of i * 2 so that j takes $v0 before it
+               (priority over more blocks); on the store's line it keeps the original's delay slot. T-11830 */
+            *(s16 *)(a + 0x2C8) = 8; if (i) {}
             if (i >= 2) {
                 j = t + 2;
             } else {
                 j = t;
             }
-            *(s16 *)(a + 0x268) = ((s16 *)(c + 0x248))[j];
-            if (j) { /* FAKE: an empty test adds a use of j, so j outranks i * 2 and takes $v0 as in the original. T-11800 */
-            }
+            *(s16 *)(a + 0x268) = *(s16 *)(c + 0x248 + j * 2);
             if (i >= 2) {
                 j = t + 2;
             } else {
                 j = t;
             }
-            *(s16 *)(a + 0x298) = ((s16 *)(c + 0x278))[j];
+            *(s16 *)(a + 0x298) = *(s16 *)(c + 0x278 + j * 2);
             if (i >= 2) {
                 *(s16 *)(a + 0x298) += 0xC;
             }
-            *(u8 **)(r + 0x1C8) = D_80151A50;
-            r[0x1CC] = 0;
-            r[0x1CD] = 4;
-            r[0x1D0] = 0x80;
-            r[0x1CE] = 0x34;
-            r[0x1D2] = 0;
-            r[0x1D8] = 0;
-            f[0x324] = 1;
+            *(u8 **)(c + i * 0x14 + 0x1C8) = D_80151A50;
+            c[i * 0x14 + 0x1CC] = 0;
+            c[i * 0x14 + 0x1CD] = 4;
+            c[i * 0x14 + 0x1D0] = 0x80;
+            c[i * 0x14 + 0x1CE] = 0x34;
+            c[i * 0x14 + 0x1D2] = 0;
+            c[i * 0x14 + 0x1D8] = 0;
+            c[i + 0x324] = 1;
             *(s16 *)(a + 0x2D0) = 8;
-            *(s16 *)(a + 0x270) = ((s16 *)(c + 0x24A))[t];
-            *(s16 *)(a + 0x2A0) = ((s16 *)(c + 0x27A))[t];
-            f[0x343] = 0;
+            *(s16 *)(a + 0x270) = ((s16 *)(c + 0x248))[t + 1];
+            *(s16 *)(a + 0x2A0) = ((s16 *)(c + 0x278))[t + 1];
+            c[i + 0x343] = 0;
         }
         func_80142AF0(D_80155AE4, i + 0x10);
         func_80142AF0(D_80155AE4, i + 0x14);
-        f++;
-        if (r[0x17E] == 0x38) {
+        if (c[i * 0x14 + 0x17E] == 0x38) {
             if (i >= 2) {
                 j = t + 2;
             } else {
@@ -585,16 +578,11 @@ void func_8013B4A0(void) {
             c[j + 0x310] = 0;
             c[i * 2 + 0x311] = 0;
         }
-        i++;
-        r += 0x14;
-    } while (i != 4);
+    }
     if (*(u16 *)(c + 4) != 0x20 && *(u16 *)(c + 0x30E) == 0) {
         func_8013B41C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013B4A0);
-#endif
 
 void func_8013B6C8(void) {
     u8 *c;

@@ -13505,3 +13505,11 @@ included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-1
 board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
 merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
 (ported onto main, 27/27, TT 252/303).
+
+## [2026-10-15] ticket | T-11830 TT wave-1 handoff taken over
+
+PRs #30-#32 merged by the maintainer (TT 245/303 on main). On issue #2 the maintainer confirmed TT stays with this fork,
+removed the remaining TT packages from wave 1, and handed over seven TT functions their wave had matched as branch
+`tt-wave1-handoff`. Took it over in [[tickets/T-11830-tt-wave1-handoff]]: verified (clean rebuild 27/27, funcdiff MATCH
+for all seven, prototype and global checks clean), retagged the T-11660/T-11680 comments to T-11830. TT 252/303 (65.3%);
+grand total `5740/6958   1293292/2279368  56.7%`.

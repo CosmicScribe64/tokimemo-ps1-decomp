@@ -84,6 +84,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
 - [ ] [[tickets/T-11820-tt-batch-9|T-11820 TT batch 9]]
 - [ ] [[tickets/T-11810-tt-batch-8|T-11810 TT batch 8]]
 - [ ] [[tickets/T-11800-tt-batch-7|T-11800 TT batch 7]]
