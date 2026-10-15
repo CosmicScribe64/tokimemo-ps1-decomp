@@ -648,6 +648,10 @@ typedef struct TtAnim14 {
     /* 0x10 */ u8 unk_10;
     /* 0x11 */ u8 pad_11[3];
 } TtAnim14; /* size 0x14 */
+#endif
+
+#ifndef OVL_TT_T11810_SCENE_TABLES
+#define OVL_TT_T11810_SCENE_TABLES
 /* Scene tables and update handlers installed by func_801369F4. T-11810 */
 extern u8 D_80151A80[];
 extern u8 D_80151AC8[];
