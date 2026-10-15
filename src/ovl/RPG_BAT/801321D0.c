@@ -187,5 +187,3 @@ void func_80132EE0(void) {
         func_8014EBA8();
     }
 }
-
-

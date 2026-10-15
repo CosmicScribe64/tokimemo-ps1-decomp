@@ -13549,3 +13549,7 @@ All eleven assigned functions attempted; seven matched totaling6068 linked bytes
 ## [2026-10-15] build | T-12040 final 27-binary verification
 
 Final configure/ninja and explicit verification-stamp rebuild passed all27 binary checksums, headers and globals. Branch prototypes: zero new and fifteen known disagreements. The existing full-TU guard remains17 listing lines. Diff whitespace check clean; no added inline assembly. Evidence: build/scratch/final-build.log, final-all-checks.log, final-protos.log and final-guard.diff. [[tickets/T-12040-codex-cx4]] remains In Review with matching [[index]] and [[kanban]] status.
+
+## [2026-10-15] lint | T-12040 trailing blank line cleanup
+
+Independent branch review found an extra blank line at the end of src/ovl/RPG_BAT/801321D0.c. Removed only that trailing blank line; no substantive source change. Full branch whitespace verification follows before committing the cleanup for [[tickets/T-12040-codex-cx4]].
