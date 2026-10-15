@@ -784,7 +784,19 @@ s32 normal_date_girl_in_init(void)
   D_8012180A = *new_var2;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_main);
+s32 normal_date_girl_in_main(void) {
+    if (D_800B5940 < 0x80) {
+        D_800B5940 += 8;
+    } else {
+        func_8004284C();
+        D_80122CF8 = 1;
+        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+        return 0;
+    }
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = D_800B5940;
+    D_8011ECD0[0x843] = D_800B5940;
+}
 
 /* FAKE: the implicit return and byte-array chains retain the original v1-to-v0
  * constant copy and store ordering. D_80121808 is a byte view here. T-9720. */

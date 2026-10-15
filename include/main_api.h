@@ -2287,7 +2287,7 @@ s32 func_8007E390(void);
 void normal_date_girl_in();
 #endif
 s32 normal_date_girl_in_init(void);
-void normal_date_girl_in_main();
+s32 normal_date_girl_in_main(void);
 #ifndef MAIN_API_OVERRIDE_normal_date_girl_out
 void normal_date_girl_out(void);
 #endif
