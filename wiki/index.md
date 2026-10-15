@@ -267,8 +267,8 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[broad-coverage-results]] - T-12230: 190-target ledger, five verified wins, and limits of broad zero-search matching.
 - [[tickets/T-12300-large-unclaimed-byte-matches|T-12300]] Substantial unclaimed byte matches (In Review; 4,920 verified bytes, four functions).
 
-- [[tickets/T-12700-bunka-families|T-12700]] BUNKAKEN/BUNKASAI family reconstruction (In Progress).
-- [[tickets/T-12701-bunkaken-address-family|T-12701]] BUNKAKEN source families (In Review; 35 matches, 33,716 bytes).
+- [[tickets/T-12700-bunka-families|T-12700]] BUNKAKEN/BUNKASAI family reconstruction (Done; 41 matches, 40,252 bytes).
+- [[tickets/T-12701-bunkaken-address-family|T-12701]] BUNKAKEN source families (Done; 35 matches, 33,716 bytes).
 - [[tickets/T-12702-bunkasai-family|T-12702]] BUNKASAI remaining source families (Done; two matches, 2,520 bytes).
 - [[bunka-family-results]] — BUNKAKEN aggregate-address and BUNKASAI state-reload experiments (T-12700).
-- [[tickets/T-12703-bunkasai-heldout-family|T-12703]] BUNKASAI held-out family transfer (In Review; four matches, 4,016 bytes).
+- [[tickets/T-12703-bunkasai-heldout-family|T-12703]] BUNKASAI held-out family transfer (Done; four matches, 4,016 bytes).

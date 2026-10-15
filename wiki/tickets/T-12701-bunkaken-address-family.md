@@ -1,7 +1,7 @@
 ---
 id: T-12701
 title: Match BUNKAKEN flag and address family
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -48,3 +48,5 @@ Text-preservation audit against95c3fc9f compares37 preexisting C function bodies
 Final bounded reconstruction: 8013DBE8 (1752 bytes) matches after expressing its mode=3 combined mask through existing BunkakenModeFlags and placing flags before saved-state fields. 80141088 (1484 bytes) drops228->6 rows after replacing decompiler artificial goto/shared temporary stores with direct switch-case assignments, then6->0 by ordering D_800CA148=4 before the character bitfield store. Signed selector probes do not improve those6 rows. Both literal proofs and full BUNKAKEN SHA1 pass in final-proof.txt/final-build.log. Gain3236 bytes; final ticket gain35 functions /33716 literal bytes. No more families opened; source ready for parent review and integration.
 
 Remaining exploratory failure artifacts are retained under build/bunka12701. The 3B510 callback-table draft was inspected only, not integrated or counted. Historical already-matched controls were restored unchanged. All original matched C bodies remain textually identical to95c3fc9f.
+
+Final independent Standards and Spec reviews pass through 5f404ed5 with zero actionable findings. Final Docker combined checks pass headers/globals/prototypes (0 new, 15 known), and recalculated BUNKAKEN SHA1 matches d423cb6d09b4b7e96e894168c0db4c7d15745b98. Status Done; remaining assembly is outside this completed bounded family pass.

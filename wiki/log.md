@@ -13948,3 +13948,6 @@ Independent Standards and Spec reviews pass all twenty-one accepted functions / 
 
 ## [2026-10-15] build | Final two bounded probes matched
 [[tickets/T-12701-bunkaken-address-family]] moves to In Review with 35 functions / 33,716 literal bytes. Final pair 3DBE8 and41088 adds3,236 bytes and passes BUNKAKEN SHA1. Repeated body audit preserves all37 prior BUNKAKEN C bodies. Combined branch gain:41 functions /40,252 bytes; final review and validation follow.
+
+## [2026-10-15] build | Final BUNKA validation and completed reviews
+[[tickets/T-12700-bunka-families]], [[tickets/T-12701-bunkaken-address-family]] and [[tickets/T-12703-bunkasai-heldout-family]] move to Done after independent Standards/Spec review found no actionable issues through5f404ed5. Final Docker header/global/prototype checks pass (0 new/15 known); both overlay SHA1 hashes were recalculated successfully. Total gain41 functions/40,252 linked bytes; branch progress5,848/6,958 and1,385,776/2,279,368 (60.8%). All53 preexisting C bodies in touched sources remain identical. No full-game checksum or publication claimed; 80% remains pending integration and additional work.

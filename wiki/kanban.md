@@ -25,7 +25,6 @@ kanban-plugin: board
 ## In Progress
 
 
-- [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]
 
 
 
@@ -70,9 +69,7 @@ kanban-plugin: board
 
 
 ## In Review
-- [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
 
-- [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -108,6 +105,10 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]
+- [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
+- [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
+
 - [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]
 
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]

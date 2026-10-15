@@ -1,7 +1,7 @@
 ---
 id: T-12703
 title: Transfer proven scene idioms to held-out BUNKASAI family
-status: In Review
+status: Done
 assignee: bunkasai_family
 created: 2026-10-15
 updated: 2026-10-15
@@ -25,3 +25,5 @@ First held-out `func_8014DF04` reached 14 rows using the aggregate-pointer famil
 All three accepted bodies preserve existing source around their former INCLUDE_ASM sites. Docker `build/b12703/proof.log`: BUNKASAI SHA1 OK; literal linked MATCH for 4DF04 (936 bytes), 4E2AC (832), 4FC70 (884): **3 functions / 2,652 bytes**. No shared-header, compiler or generated-assembly changes. Initial 4E9D0 candidate remains 128 rows; scratch retained under build/b12703.
 
 Final family result: fourth target `func_8014E9D0` reaches zero after replacing m2c's temporary/goto into another case with ordinary direct dialogue-value stores. This removes an artificial join, with no forced registers or FAKE constructs. All four are literal MATCH in `build/b12703/final-proof.log`: 936 + 832 + 1,364 + 884 = **4 functions / 4,016 bytes**. BUNKASAI SHA1 and headers OK. File 8014DD90.c is now entirely C. All source changes ready for parent commit and standards/spec review; no compiler running.
+
+Independent Standards and Spec reviews pass through 27cb12d0 with no findings; subsequent final combined validation passes. All 16 preexisting matched BUNKASAI bodies in touched files are exactly text-identical to 95c3fc9f (build/b12703/preservation.log). Final recalculated BUNKASAI SHA1: 0307afff16d01bd32055ee2699bdf9a075d846ad. Status Done.

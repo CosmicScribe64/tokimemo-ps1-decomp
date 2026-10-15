@@ -42,3 +42,5 @@ Five handlers in BUNKAKEN 8013CF30.c add 3,704 literal verified bytes: 3D048 (42
 ## Final accepted result
 
 Forty-one functions add **40,252 literal linked bytes**: BUNKAKEN 35 / 33,716 and BUNKASAI 6 / 6,536. Final bounded fixes are BUNKAKEN 3DBE8 (1,752 bytes), using mode-3 bitfield stores before state copies, and 41088 (1,484), using ordinary switch stores and the target statement order. Both pass literal proof and BUNKAKEN SHA1 (build/bunka12701/final-proof.txt, final-build.log). All 37 pre-existing BUNKAKEN bodies and 16 pre-existing BUNKASAI bodies across touched files are text-identical to 95c3fc9f. Final review and combined validation are recorded in the umbrella ticket.
+
+Final validation: 5,848/6,958 game functions, 1,385,776/2,279,368 game bytes (60.8%); BUNKAKEN 82.9%, BUNKASAI 88.9% byte coverage. Both final overlay SHA1 hashes were independently recalculated and match references. Headers/globals pass, prototypes have 0 new / 15 known disagreements. Both review axes pass all source changes. This bounded family pass is complete; the game-wide 80% target is not yet reached. All failures remain local in the documented ignored experiment directories.
