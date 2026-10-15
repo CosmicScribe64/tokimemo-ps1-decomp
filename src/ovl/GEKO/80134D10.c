@@ -434,7 +434,35 @@ void func_80134F84(void) {
     D_80145044 = 0x801B155C;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_801351F8);
+typedef struct GekoFnTable73 { /* 0x00 */ void (*f[73])(); } GekoFnTable73; /* size 0x124 */
+extern GekoFnTable73 D_80145094;
+void func_801351F8(void) {
+
+    s32 idx;
+    GekoFnTable73 table;
+
+    table = D_80145094;
+    idx = D_800E6280.unk_110A;
+    table.f[idx](0x80);
+    if ((u8) D_8014507C != 0) {
+        func_80066C08(2);
+        func_80083A10();
+        return;
+    }
+    func_80066C08(1);
+    func_800578F4(0);
+    func_800646CC();
+    if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((D_800E6280.unk_F80 & 0xF000F000) || (D_80122D30 == 1))) {
+        D_8011ECD3 |= 0x80;
+    }
+    if (D_80122D04 != 0) {
+        D_8011ECD3 &= 0x7F;
+    }
+    if (D_8011ECD3 & 0x80) {
+        func_8006BA40();
+    }
+}
+
 
 void func_80135340(void) {
     s32 var_v0;
@@ -1035,7 +1063,84 @@ void func_80137990(void) {
     D_80146270 = 0x8019B494;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/80134D10", func_8013882C);
+void func_8013882C(void) {
+
+    func_80083808();
+    switch (D_80122CD4) {
+    case 0:
+        func_80139A8C();
+        break;
+    case 1:
+        func_8013D1A0();
+        break;
+    case 2:
+        func_8013B030();
+        break;
+    case 3:
+        func_8013C570();
+        break;
+    case 4:
+        func_8013EEF0();
+        break;
+    case 5:
+        func_8013D5B0();
+        break;
+    case 6:
+        func_8013DC30();
+        break;
+    case 7:
+        func_8013CA30();
+        break;
+    case 8:
+        func_80139470();
+        break;
+    case 9:
+        func_8013E040();
+        break;
+    case 10:
+        func_8013F4C0();
+        break;
+    case 11:
+        func_80140C50();
+        break;
+    case 12:
+        func_8013B9F0();
+        break;
+    case 13:
+        func_80141BA0();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    func_8007EDF8();
+    func_800846C0();
+    if (D_80122D38 == 0) {
+        func_80066C08(2);
+    }
+    func_80064F48();
+    func_80066334();
+    func_80064DEC();
+    if (D_80122D38 == 0) {
+        func_80083A10();
+    }
+    func_80047560();
+    if (D_80122D38 != 0) {
+        func_80066C08(1);
+        func_800578F4(0);
+        func_800646CC();
+        if ((D_80122D2C == 0) && (D_80122D04 == 0) && ((D_800E6280.unk_F80 & 0xF000F000) || (D_80122D30 == 1))) {
+            D_8011ECD3 |= 0x80;
+        }
+        if (D_80122D04 != 0) {
+            D_8011ECD3 &= 0x7F;
+        }
+        if (D_8011ECD3 & 0x80) {
+            func_8006BA40();
+        }
+    }
+}
+
 
 void func_80138A80(void) {
     D_800CA134 = &D_800CA150;

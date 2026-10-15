@@ -14428,3 +14428,10 @@ Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-famili
 
 ## [2026-10-15] build | TACO default restored and diagnostic review recorded
 [[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]]: saved probe reproduces 497EC one row and 4A480 three rows; source restored. Explicit checked Docker ninja exits 0 with TACO SHA1 OK (1419e93cbad6c0df790577701181be04e0747969), headers/globals pass. Independent standards review has zero findings; spec review notes the primary matching goal remains unmet and the pending-verification text needed updating (now corrected). Tickets remain In Review, zero accepted bytes; [[taco-family-results]] updated.
+## [2026-10-15] build | GEKO single induction variable match
+
+[[tickets/T-13901-geko-families]] accepts func_80141374, 416 linked bytes, with GEKO SHA1 OK. [[scenes-family-results]] records the source correction and type-reconstruction negatives.
+
+## [2026-10-15] build | GEKO dispatcher and shared indicator source form
+
+[[tickets/T-13901-geko-families]] adds two functions / 924 literal linked bytes with GEKO SHA1 OK. [[scenes-family-results]] records direct global updates and the established function-table source form.
