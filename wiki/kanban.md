@@ -147,6 +147,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-13102-etc-exam-family|T-13102 Reconstruct ETC exam handlers]]
 - [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
 - [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
+- [ ] [[tickets/T-13500-incremental-build-dependencies|T-13500 Incremental build dependencies]]
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 - [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]

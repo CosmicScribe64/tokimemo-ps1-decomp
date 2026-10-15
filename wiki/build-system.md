@@ -70,7 +70,7 @@ SDK names (T-0010) are in `config/symbol_addrs_sdk.txt` and the provisional O.BI
 - Adding or moving a file boundary: edit the `c` subsegment list in `config/SLPM_86.053.yaml` (names `main/<vram>`, start = file offset) and move the functions between `src/main/*.c`; `configure.py`, `objdiff.json`, `progress.py` follow automatically. `INCLUDE_ASM` folder names are `asm/nonmatchings/main/<addr>`.
 - `tools/trailing_pad.py` (T-1310) re-inserts the original's trailing nops after every C function, read from the function's splat `.s` ([[toolchain]]); no `src/ovl/pad` stubs exist any more. `tools/docker.sh sh -c 'cd tools && python3 test_trailing_pad.py'` runs its tests.
 - `tools/cc.py` pads each object's `.text` to a multiple of 16 so the original per-object alignment survives the `SUBALIGN(2)` link ([[source-files]]).
-- Header check (T-1200): `tools/check_headers.py` fails when one identifier is declared with different types, or declared twice, inside one header closure (`include/game.h`, or `include/ovl/<NAME>.h` plus what it includes); prototypes count (return type, parameter types, `()` against a narrow parameter). `configure.py` makes `build/headers.ok` (target `ninja headers`) an input of every C compile, and `.github/workflows/progress.yml` runs it and `tools/test_check_headers.py` on every run, forks included. Rules: CODING_STANDARDS.md section 8a. Since T-3340 `include/main_api.h` is the one declaration of every main-exe symbol and the same tool runs `tools/sync_protos.py`'s checks (a main symbol declared elsewhere, an overlay view that differs without `MAIN_API_OVERRIDE_<symbol>`, a stale or unguarded override, an overlay header that does not reach `main_api.h`, a definition whose type differs from `main_api.h`); the reader of `#include`/`#define`/`#ifdef` is a small preprocessor, so an override define hides the `main_api.h` line in that overlay's units. `tools/sync_protos.py` (`--report --write --fix --prune --snapshot --compare`, tests `tools/test_sync_protos.py`) lists and migrates; `tools/dupes.py` writes the declarations of a copied function to `main_api.h` for main-exe symbols.
+- Header check (T-1200): `tools/check_headers.py` fails when one identifier is declared with different types, or declared twice, inside one header closure (`include/game.h`, or `include/ovl/<NAME>.h` plus what it includes); prototypes count (return type, parameter types, `()` against a narrow parameter). `configure.py` makes `build/headers.ok` (target `ninja headers`) an order-only prerequisite of every C compile (T-13500), and `.github/workflows/progress.yml` runs it and `tools/test_check_headers.py` on every run, forks included. Rules: CODING_STANDARDS.md section 8a. Since T-3340 `include/main_api.h` is the one declaration of every main-exe symbol and the same tool runs `tools/sync_protos.py`'s checks (a main symbol declared elsewhere, an overlay view that differs without `MAIN_API_OVERRIDE_<symbol>`, a stale or unguarded override, an overlay header that does not reach `main_api.h`, a definition whose type differs from `main_api.h`); the reader of `#include`/`#define`/`#ifdef` is a small preprocessor, so an override define hides the `main_api.h` line in that overlay's units. `tools/sync_protos.py` (`--report --write --fix --prune --snapshot --compare`, tests `tools/test_sync_protos.py`) lists and migrates; `tools/dupes.py` writes the declarations of a copied function to `main_api.h` for main-exe symbols.
 - C headers are listed for ninja by glob (`include/*.h`, `include/*.inc`), so new headers need no `configure.py` edit.
 
 ## Per-object C files (T-0500)
@@ -144,3 +144,61 @@ This permits word-aligned source boundaries without changing `cc.py` or its
 compiler flags. Synthetic coverage lives in `tools/test_object_layout.py` and
 `tools/test_orphan_rodata.py`. Rebuild the unit and verify SHA1 after applying:
 planning alone does not prove code, table contents, padding or string placement.
+
+## Incremental compiler dependencies (T-13500)
+
+`tools/cc.py` writes each object's Ninja depfile with the headers actually read
+by its compiler, alongside the existing INCLUDE_ASM, INCLUDE_RODATA and
+trailing-pad assembly inputs. IDO 5.3 supports `-M` but rejects `-MD`. A compiler
+adapter runs `-M` on the exact temporary C input and include arguments that
+asm-processor passes to IDO, then invokes the unchanged compilation. This
+preserves conditional includes, source-local include lookup, and Shift-JIS
+copies. GCC records filenames from the line markers of its existing cpp output;
+its EOVERFLOW tmpfs fallback preserves those relative paths. Neither compiler's
+code-generation arguments nor the matching passes change.
+
+The header checker remains a blocking order-only prerequisite of every C
+object. Its stamp depends on all project headers, source files and checker
+implementation files, so source edits also trigger validation. Changing its
+stamp alone does not invalidate clean objects. The configure generator watches
+include/src directories to refresh the file lists after additions or removals.
+Missing directory inputs have phony producers, so directory removal can still
+regenerate the graph. A configure co-output, `build/include-files.txt`, records
+file names under include/src and changes only when membership changes. All C
+objects depend on it: adding/removing files conservatively recompiles all C to
+cover new higher-priority include shadows that compiler depfiles cannot record.
+Ordinary content edits remain selective. Configure uses restat so an unchanged
+inventory does not cause repeated regeneration; deleting it is recoverable.
+Assembly macro/prelude inputs remain explicit compile dependencies because C
+preprocessing does not see the assembler's includes.
+
+Regression command (existing Docker image):
+`python3 -m unittest discover -s tools -p test_build_deps.py -v`.
+Eleven synthetic Ninja cases use real IDO/GCC compilation and the production
+configure C/checker edges, with unrelated split/link/checksum/layout stages
+replaced by synthetic outputs. They cover source/shared/overlay/nested/conditional
+headers, source-local header lookup, missing active headers, Shift-JIS copies,
+escaped depfile filenames, ASM/rodata/trailing-pad inputs, failed validation, added source-local/nested include shadows, directory removal,
+deleted inventories and no-op regeneration/rebuilds. `tools/test_cc.py` retains the compiler and EOVERFLOW regressions.
+
+At 5ccb8765 (443 C objects), baseline versus updated dry-run touch benchmarks:
+
+| Input | Before: compiles / tasks | After: compiles / tasks |
+| --- | --- | --- |
+| src/main/80041000.c | 1 / 5 | 1 / 6 |
+| include/main_api.h | 443 / 526 | 442 / 525 |
+| include/ovl/ETC.h | 443 / 526 | 13 / 18 |
+
+The extra source-edit task is header validation. All 13 ETC consumers rebuild;
+other overlays and the main executable stay clean. Timed actual updated builds
+in the shared Docker environment took 8.981 seconds for the source touch and
+12.990 seconds for ETC.h, including validation; timings vary with concurrent
+work. Baseline timing was not measured. Baseline and updated full builds each
+passed all 27 binary SHA1 checks, and the following Ninja invocation was a no-op.
+This change adds no matched bytes.
+
+Final review validation: 11 dependency integration tests, 17 existing compiler
+tests and 131 header/prototype/padding/rodata/layout tests passed (159 total).
+Standards and spec reviews cleared the membership fixes; the spec reviewer
+independently reran the 11 integration tests. The final full build again passed
+27/27 SHA1 checks and the subsequent build was a no-op.

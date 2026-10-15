@@ -14291,3 +14291,22 @@ All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 68
 
 ## [2026-10-15] lint | ETC completion records coherent
 Four new tickets each have one Done card matching frontmatter; all new pages are indexed and cross-linked. Eleven final proof spans sum to 5900 bytes. Independent standards/spec reviews pass; 0 new prototype disagreements. See [[etc-family-results]].
+## [2026-10-15] ticket | T-13500 incremental dependency tracking
+
+Created [[tickets/T-13500-incremental-build-dependencies]] in isolated codex/build-deps-13500 from 5ccb8765. Inspected [[build-system]], configure.py, tools/cc.py and compiler behavior in the existing Docker image. IDO -M works; -MD does not. Preserve asm-processor input and include-search semantics when collecting dependencies.
+
+## [2026-10-15] build | T-13500 baseline and dependency implementation
+
+Baseline 5ccb8765 built all 27 binary checks in Docker. Touch benchmark: one main source = 1 compile / 5 tasks; shared main_api.h or overlay ETC.h = 443 compiles / 526 tasks each. Synthetic regressions exposed missing source-triggered header checking and broad overlay invalidation before the change. tools/cc.py now discovers IDO headers from the exact asm-processor temporary input via -M, and GCC headers from its existing cpp output; configure.py uses an order-only validation gate, explicit assembly macro inputs and include/src directory regeneration. [[tickets/T-13500-incremental-build-dependencies]] remains In Progress pending expanded regressions, full build and review.
+
+## [2026-10-15] build | T-13500 incremental proof and review handoff
+
+Eight synthetic Ninja dependency regressions and 17 existing compiler tests pass in Docker. Updated full build passes 27/27 checks; subsequent build is a no-op. ETC.h touch now schedules only 13 compiles / 18 tasks instead of 443 / 526; shared main_api.h retains 442 actual consumers. Source touch retains one compile and now checks headers. Actual incremental source/ETC builds took 8.981s/12.990s on the shared host. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to In Review in ticket and kanban. No new matched-byte claim.
+
+## [2026-10-15] decision | T-13500 review findings and membership fallback
+
+Standards review found no documented style violations; both reviews identified a stale-object risk when a newly added header shadows an existing include. Directory removal could also leave a missing generator input. Added a configure-owned source/include path inventory as a normal C prerequisite: additions/removals conservatively rebuild all C, while content edits stay selective. Watched directories receive phony producers to permit removal-triggered regeneration. New regression cases execute actual configure regeneration and cover source-local/nested header shadow additions, directory removal and deleted-inventory recovery. 131 surrounding header/prototype/padding/rodata/layout tests also pass. [[tickets/T-13500-incremental-build-dependencies]] remains In Review pending verification of the fixes.
+
+## [2026-10-15] ticket | T-13500 reviewed and complete
+
+Final full Docker rebuild passed 27/27 SHA1 checks; subsequent build no-op. Final touch benchmark preserved source 1/6, main_api.h 442/525, ETC.h 13/18 compiles/tasks. Eleven new integration, 17 cc and 131 surrounding regressions pass (159 total). Standards/spec reviewers cleared the shadow-header/directory-removal fixes; the spec reviewer independently passed all 11 integration tests. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to Done in ticket/kanban/index after resolving every review finding. Read-only original checkout, no push/PR, no game-code edits or matched-byte gain.
