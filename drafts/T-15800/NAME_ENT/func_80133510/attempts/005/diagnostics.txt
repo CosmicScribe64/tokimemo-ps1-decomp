@@ -1,0 +1,23 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.c', '/work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3292: '&' before array or function; ignored
+     var_a0 = &spDF;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3311: '&' before array or function; ignored
+     var_v1 = &sp103;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3312: '&' before array or function; ignored
+     var_a1 = &spBB;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3313: '&' before array or function; ignored
+     var_a2 = &sp97;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3314: '&' before array or function; ignored
+     var_a3 = &sp73;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3315: '&' before array or function; ignored
+     var_v0 = &sp4F;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3347: '&' before array or function; ignored
+     } while (var_v0 != &sp6F);
+ -----------------------^
+

@@ -1,0 +1,21 @@
+2511:     } else {
+2512:         D_80120676 = -0xA0;
+2513:     }
+2514:     func_801325A0((s32) &sp50[0]);
+2515:     var_a0 = 0;
+2516:     do {
+2517:         temp_s1 = var_a0 + 1;
+2516:     do {
+2517:         temp_s1 = var_a0 + 1;
+2518:         if (D_800E7389 != temp_s1) {
+2519:             temp_v0 = get_k_work(var_a0);
+2520:             temp_v1 = *temp_v0;
+2521:             if (temp_v1 < -0x78) {
+2522:                 *temp_v0 = temp_v1 + 0xC;
+2525:             }
+2526:         } else {
+2527:             temp_s0 = (var_a0 * 0x14) - 0x58;
+2528:             temp_v0_2 = get_k_work(var_a0);
+2529:             temp_v1_2 = *(s16 *)((unsigned char *)temp_v0_2 + (2));
+2530:             if (temp_v1_2 < temp_s0) {
+2531:                 *(s16 *)((unsigned char *)temp_v0_2 + (2)) = (s16) (temp_v1_2 + 0xC);

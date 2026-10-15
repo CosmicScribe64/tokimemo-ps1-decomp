@@ -1,0 +1,42 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801430A0",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/SHOUGATU/func_801430A0",
+      "reason": "Error: guarded.o.sjis.c, line 3529: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/SHOUGATU/func_801430A0",
+      "reason": "Error: guarded.o.sjis.c, line 3529: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/SHOUGATU/func_801430A0",
+      "reason": "Error: guarded.o.sjis.c, line 3538: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/SHOUGATU/func_801430A0",
+      "reason": "Error: guarded.o.sjis.c, line 3529: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/SHOUGATU/80141780.c",
+  "type_reconstruction": {
+    "kind": "copied callback table",
+    "entries_copied": 48,
+    "observed_data_words": 28068,
+    "table_symbol": "D_80146970",
+    "data_source": "asm/ovl/SHOUGATU/data/SHOUGATU_data_80144D90.data.s",
+    "reason": "word copy followed by indexed jalr; callback table occupies full copied size"
+  },
+  "repairs": [
+    "caller consumes v0 from func_80143228; explicit s32 callback view preserves call-site ABI while frozen helper definition stays unchanged"
+  ]
+}

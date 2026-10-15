@@ -1,0 +1,57 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.c', '/work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3292: '&' before array or function; ignored
+     var_a0 = &spDF;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3311: '&' before array or function; ignored
+     var_v1 = &sp103;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3312: '&' before array or function; ignored
+     var_a1 = &spBB;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3313: '&' before array or function; ignored
+     var_a2 = &sp97;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3314: '&' before array or function; ignored
+     var_a3 = &sp73;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3315: '&' before array or function; ignored
+     var_v0 = &sp4F;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3347: '&' before array or function; ignored
+     } while (var_v0 != &sp6F);
+ -----------------------^
+cfe: Error: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.
+     temp_a0 = *(void **)((unsigned char *)D_8014CE68 + (152)) + (D_8014CCAC << 5);
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/NAME_ENT/func_80133510/work -o /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o /tmp/asm_processorfroz4tbc/preprocessed_5f74450bdd20465c82ca9492031b325e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibkzed9vxe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c
+
+command failed: ['python3', 'tools/cc.py', '/work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.c', '/work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o', 'ido', '5.3']
+
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3292: '&' before array or function; ignored
+     var_a0 = &spDF;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3311: '&' before array or function; ignored
+     var_v1 = &sp103;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3312: '&' before array or function; ignored
+     var_a1 = &spBB;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3313: '&' before array or function; ignored
+     var_a2 = &sp97;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3314: '&' before array or function; ignored
+     var_a3 = &sp73;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3315: '&' before array or function; ignored
+     var_v0 = &sp4F;
+ -------------^
+cfe: Warning 681: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3347: '&' before array or function; ignored
+     } while (var_v0 != &sp6F);
+ -----------------------^
+cfe: Error: /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.
+     temp_a0 = *(void **)((unsigned char *)D_8014CE68 + (152)) + (D_8014CCAC << 5);
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/NAME_ENT/func_80133510/work -o /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o /tmp/asm_processorfroz4tbc/preprocessed_5f74450bdd20465c82ca9492031b325e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibkzed9vxe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o /work/drafts/T-15800/NAME_ENT/func_80133510/work/guarded.o.sjis.c
+

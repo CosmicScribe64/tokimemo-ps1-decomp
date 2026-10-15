@@ -1,0 +1,8 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.c', '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ -------------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ --------------------------------------------^
+

@@ -1,0 +1,6 @@
+python3 failed:
+cfe: Error: /work/drafts/T-15800/SHOUGATU/func_801430A0/work/guarded.o.sjis.c, line 3545: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80143228();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/SHOUGATU/func_801430A0/work -o /work/drafts/T-15800/SHOUGATU/func_801430A0/work/guarded.o /tmp/asm_processor348hu45v/preprocessed_b2e77f7919de4d4b81e91a4097dfafe7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolib8_m0qa6u/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/SHOUGATU/func_801430A0/work/guarded.o /work/drafts/T-15800/SHOUGATU/func_801430A0/work/guarded.o.sjis.c

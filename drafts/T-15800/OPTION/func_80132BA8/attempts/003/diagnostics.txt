@@ -1,0 +1,33 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.c', '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o', 'ido', '5.3']
+cfe: Error: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2603: redeclaration of 'func_80132BA8'; previous declaration at line 2577 in file '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c'
+ void func_80132BA8(void) {
+ -----^
+cfe: Error: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2603: Incompatible function return type for this function.
+ void func_80132BA8(void) {
+ ------------------^
+cfe: Warning 681: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ -------------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ --------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/OPTION/func_80132BA8/work -o /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorq01og15p/preprocessed_faa67c6644f54d3bb7f2981178a10c1a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolib1d510g70/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c
+
+command failed: ['python3', 'tools/cc.py', '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.c', '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o', 'ido', '5.3']
+
+cfe: Error: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2603: redeclaration of 'func_80132BA8'; previous declaration at line 2577 in file '/work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c'
+ void func_80132BA8(void) {
+ -----^
+cfe: Error: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2603: Incompatible function return type for this function.
+ void func_80132BA8(void) {
+ ------------------^
+cfe: Warning 681: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ -------------------------------------^
+cfe: Warning 681: /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: '&' before array or function; ignored
+         menu_set(0, 8, &sp3C, &sp4C, &sp5C, &sp6C);
+ --------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/OPTION/func_80132BA8/work -o /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorq01og15p/preprocessed_faa67c6644f54d3bb7f2981178a10c1a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolib1d510g70/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o /work/drafts/T-15800/OPTION/func_80132BA8/work/guarded.o.sjis.c
+

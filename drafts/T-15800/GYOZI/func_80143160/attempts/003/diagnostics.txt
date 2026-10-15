@@ -1,0 +1,21 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c', '/work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3328: '&' before array or function; ignored
+     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+ --------------^
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0.girl[D_800F62CF]) + (8));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/GYOZI/func_80143160/work -o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorvv3lvme0/preprocessed_3a0de4c2e975408d99133ab3756f7c4b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibwzs3k2i9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c
+
+command failed: ['python3', 'tools/cc.py', '/work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c', '/work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o', 'ido', '5.3']
+
+cfe: Warning 681: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3328: '&' before array or function; ignored
+     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+ --------------^
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0.girl[D_800F62CF]) + (8));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/GYOZI/func_80143160/work -o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorvv3lvme0/preprocessed_3a0de4c2e975408d99133ab3756f7c4b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibwzs3k2i9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c
+

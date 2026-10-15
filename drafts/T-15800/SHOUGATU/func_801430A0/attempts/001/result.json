@@ -1,0 +1,28 @@
+{
+  "scope": "SHOUGATU:func_801430A0",
+  "unit": "SHOUGATU",
+  "func": "func_801430A0",
+  "src": "src/ovl/SHOUGATU/80141780.c",
+  "size": 352,
+  "path": "drafts/T-15800/SHOUGATU/func_801430A0",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 1,
+  "provenance": "drafts/T-15800/SHOUGATU/func_801430A0/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Error: /work/drafts/T-15800/SHOUGATU/func_801430A0/work/guarded.o.sjis.c, line 3529: Non-function name referenced in function call.",
+  "hashes": {
+    "body.c": "da15143e643485510937bc5f0f0087ab591b2bc66b701b615942576e76f0cf0b",
+    "declarations.h": "54979ce677c1d33f2f3ecb20333f6cbb0abb93f0d7c04b9e500bb78d8efb0001",
+    "context.c": "02df01e20e9ac6042916ee856e183bd9301e08705952dee3d46498c1bcdab35f"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/SHOUGATU.h": "d02ec8b64a22d427a9812948ed7c23a60ef624d461388dba4e64ee5ec864afeb"
+  },
+  "seconds": 0.366
+}

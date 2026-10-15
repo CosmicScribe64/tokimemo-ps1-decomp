@@ -1,0 +1,28 @@
+{
+  "scope": "SHOUGATU:func_8013F224",
+  "unit": "SHOUGATU",
+  "func": "func_8013F224",
+  "src": "src/ovl/SHOUGATU/8013F190.c",
+  "size": 316,
+  "path": "drafts/T-15800/SHOUGATU/func_8013F224",
+  "status": "failed",
+  "score": null,
+  "compile_attempts": 4,
+  "provenance": "drafts/T-15800/SHOUGATU/func_8013F224/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "reason": "cfe: Error: /work/drafts/T-15800/SHOUGATU/func_8013F224/work/guarded.c, line 3423: 'func_80140314' undefined; reoccurrences will not be reported.",
+  "hashes": {
+    "body.c": "258dad165ee1eb1ec8d542cf1bd2a2d786cc501a5b4698a5fd5607e225490b5d",
+    "declarations.h": "e562dbf072a398e5c8e3e51611efd0797e8d45b2925c2302a8bd66c8c371dc1c",
+    "context.c": "17504c6421fa63dfb7261cc43a2be62812dd01736c0f199b322c7b2efa9c3c6e"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/SHOUGATU.h": "d02ec8b64a22d427a9812948ed7c23a60ef624d461388dba4e64ee5ec864afeb"
+  },
+  "seconds": 0.339
+}

@@ -14554,3 +14554,11 @@ At the user's request, stopped new experiments and saved drafts/T-15300/TACO/fun
 ## [2026-10-15] ingest | Preserve proof-lane scaffolding for complete handoff
 
 Saved the local Python proof helpers and per-target transformations in drafts/T-14501/proof-lane-tools/ with source-path/SHA256 manifest and session context. No game binaries, generated assembly files, or build outputs are included. This preserves remaining local work alongside the exact TACO draft archive; [[tickets/T-14501-remaining-draft-proof]] records the handoff.
+
+## [2026-10-15] ticket | T-15800 compile every assigned failed overlay draft
+
+The user renewed the stopping condition to seek compiling C for every remaining draft. Claimed 23 nonreserved failed scopes in GYOZI, OPTION, SHOUGATU, SHUGAKU, MASTER and NAME_ENT under [[tickets/T-15800-compile-remaining-overlay-drafts]]. Use frozen source/header snapshots and serial Docker compilation; original archives and production C remain unchanged. [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15800 all 23 assigned alternatives compile
+
+Completed serial full-TU Docker compilation for all 23 assigned scopes across GYOZI, OPTION, SHOUGATU, SHUGAKU, MASTER and NAME_ENT. Typed callback/coordinate/threshold arrays, concrete byte/word views, existing return views and callee-derived argument corrections remove compile blockers. Saved complete final/preprocessed C contexts, all attempt diagnostics, scores, hashes and provenance under drafts/T-15800; archive audit passes 23/23. No target stubs/ASM fallback counted and no production source changed. [[tickets/T-15800-compile-remaining-overlay-drafts]] moves to In Review; [[kanban]] and [[index]] updated.

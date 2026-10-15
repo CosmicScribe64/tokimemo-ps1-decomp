@@ -1,0 +1,39 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_8013C774",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/GYOZI/func_8013C774",
+      "reason": "Error: guarded.o.sjis.c, line 3399: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/GYOZI/func_8013C774",
+      "reason": "Error: guarded.o.sjis.c, line 3399: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/GYOZI/func_8013C774",
+      "reason": "Error: guarded.o.sjis.c, line 3401: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/GYOZI/func_8013C774",
+      "reason": "Error: guarded.o.sjis.c, line 3399: Non-function name referenced in function call.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/GYOZI/8013C3B0.c",
+  "type_reconstruction": {
+    "kind": "copied callback table",
+    "entries_copied": 36,
+    "observed_data_words": 37,
+    "table_symbol": "D_80147C6C",
+    "data_source": "asm/ovl/GYOZI/data/GYOZI_data.data.s",
+    "reason": "word copy followed by indexed jalr; callback table occupies full copied size"
+  }
+}

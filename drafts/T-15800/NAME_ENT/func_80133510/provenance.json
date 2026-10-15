@@ -1,0 +1,34 @@
+{
+  "selected_seed": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80133510",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/NAME_ENT/func_80133510",
+      "reason": "Error: guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/NAME_ENT/func_80133510",
+      "reason": "Error: guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/NAME_ENT/func_80133510",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/NAME_ENT/func_80133510",
+      "reason": "Error: guarded.o.sjis.c, line 3359: Unacceptable operand of '+'.",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "frozen_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "production_src": "src/ovl/NAME_ENT/80132000.c",
+  "repairs": [
+    "string-buffer pointers are byte pointers; IDO C89 does not allow void-pointer arithmetic"
+  ]
+}

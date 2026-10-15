@@ -1,0 +1,27 @@
+{
+  "scope": "SHOUGATU:func_8013EA98",
+  "unit": "SHOUGATU",
+  "func": "func_8013EA98",
+  "src": "src/ovl/SHOUGATU/8013E330.c",
+  "size": 920,
+  "path": "drafts/T-15800/SHOUGATU/func_8013EA98",
+  "status": "compiled",
+  "score": 385,
+  "compile_attempts": 4,
+  "provenance": "drafts/T-15800/SHOUGATU/func_8013EA98/provenance.json",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "compiled_instruction_count": 231,
+  "hashes": {
+    "body.c": "5f8d9e13a9f8468233be777ffa291473f3aea613203459f870a661a7db9c9b5f",
+    "declarations.h": "3596f935eacf5c55ea3a121bb43035251c339db072ec8390da82e32b3405d503",
+    "context.c": "91e1bb0bb8c8a81ea92534309f6da389b41cfef9e288d0104a9859beb9ddd945"
+  },
+  "header_hashes": {
+    "include/common.h": "dc411aae03844dfa54650a626636ec55f2ce0c67f3ee099afb76e158ee0edfc1",
+    "include/include_asm.h": "f0b8655093a7dac35e22ae67a63743121f275cd7427e0f61f5e642303acc8371",
+    "include/libgpu.h": "e05cf2f8e95289e3fe4864a80a90dd092437c2d66e140645b477771cb359b2ba",
+    "include/main_api.h": "7eeb122b60468b7ddadab0536a23d64d69c8e2fa45b82e242286400a27cd9b25",
+    "include/ovl/SHOUGATU.h": "d02ec8b64a22d427a9812948ed7c23a60ef624d461388dba4e64ee5ec864afeb"
+  },
+  "seconds": 0.412
+}

@@ -1,0 +1,17 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/SHUGAKU/func_80133E10/work/guarded.c', '/work/drafts/T-15800/SHUGAKU/func_80133E10/work/guarded.o', 'ido', '5.3']
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80133E10/work/guarded.c, line 3139: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v1) {
+ --------------------^
+cfe: Warning 712: /work/drafts/T-15800/SHUGAKU/func_80133E10/work/guarded.c, line 3147: illegal combination of pointer and integer
+     if (func_800853FC == temp_v1) {
+ ----------------------^
+cfe: Warning 681: /work/drafts/T-15800/SHUGAKU/func_80133E10/work/guarded.c, line 3203: '&' before array or function; ignored
+     func_800AE0F0(&D_800CA188, &D_8013AD70);
+ ------------------^
+cfe: Warning 709: /work/drafts/T-15800/SHUGAKU/func_80133E10/work/guarded.c, line 3239: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA2E4;
+ ---------------^
+cfe: Warning 709: /work/drafts/T-15800/SHUGAKU/func_80133E10/work/guarded.c, line 3240: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA2E8;
+ ---------------^
+

@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Warning 681: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3328: '&' before array or function; ignored
+     *(Word4 *)&D_800F53A0.girl[D_800F62CF].unk_08 = D_80148970;
+ --------------^
+cfe: Error: /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c, line 3341: Type s32  of rhs of assignment expression is incompatible with type struct   of lhs
+         D_80148970 = *(s32 *)((unsigned char *)(&D_800F53A0.girl[D_800F62CF]) + (8));
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15800/GYOZI/func_80143160/work -o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o /tmp/asm_processorzr8u5t3r/preprocessed_acc193a5724b4281930225b2d22cc005.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/build/t15800/root/tools/cc.py --ido-deps /tmp/idolibb3q74lm8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.o /work/drafts/T-15800/GYOZI/func_80143160/work/guarded.c

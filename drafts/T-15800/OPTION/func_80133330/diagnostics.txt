@@ -1,0 +1,5 @@
+COMMAND ['python3', 'tools/cc.py', '/work/drafts/T-15800/OPTION/func_80133330/work/guarded.c', '/work/drafts/T-15800/OPTION/func_80133330/work/guarded.o', 'ido', '5.3']
+cfe: Warning 681: /work/drafts/T-15800/OPTION/func_80133330/work/guarded.c, line 2605: '&' before array or function; ignored
+         func_801325A0((s32) &sp2C[0]);
+ ----------------------------^
+
