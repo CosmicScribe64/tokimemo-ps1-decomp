@@ -192,7 +192,27 @@ void func_80136A24(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10", func_80136A70);
+void func_80136A70(void) {
+    func_800AE120(D_800E6280.unk_10F8);
+    D_800E6280.unk_F5F = 0xE;
+    D_80139DFC = 0;
+    D_80139ADC = 1;
+    D_80139AE0 = 0;
+    func_800AE120(D_800E6280.unk_10F8);
+    D_80139DF4[0] = rand() % 2 + 1;
+    D_80139DF4[1] = rand() % 2 + 1;
+    D_80139DF4[2] = rand() % 2 + 1;
+    if (rand() % 2) {
+        D_80139DF4[0] = 0;
+    }
+    if (rand() % 2) {
+        D_80139DF4[1] = 0;
+    }
+    if (rand() % 2) {
+        D_80139DF4[2] = 0;
+    }
+    func_8004284C();
+}
 
 INCLUDE_RODATA("asm/ovl/KANGEI/data/KANGEI/80135F10.rodata", D_801398E0);
 
