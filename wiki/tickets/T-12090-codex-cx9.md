@@ -1,7 +1,7 @@
 ---
 id: T-12090
 title: Match cx9 BUNKA_SD functions
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -14,9 +14,10 @@ Deep matching pass over ten assigned BUNKA_SD functions, prioritizing verified b
 
 ## Acceptance criteria
 
-- [ ] Exact linked and overlay checksum proof for every match.
-- [ ] Retain only measured guards within about thirty differing rows.
-- [ ] Full configure/build and prototype verification; independent standards review before Done.
+- [x] Exact linked and overlay checksum proof for every match.
+- [x] Retain only measured guards within about thirty differing rows.
+- [x] Full configure/build and prototype verification.
+- [ ] Independent standards review before Done.
 
 ## Notes
 
@@ -53,3 +54,26 @@ Restored the fifth switch entry, replaced the shared m2c goto with separate if/e
 ### func_801388D0: MATCH, 268 bytes
 
 A bounded direct transfer from neighboring matched state machines: s32 no-return keeps the byte-assignment result live, plain +=1 uses the canonical byte conversion, and removing the spurious func_80048390 argument matches the original nop delay slot. Exact linked and overlay SHA1 pass with headers/globals OK. No FAKE. Six matches total4172 text bytes plus124 table bytes.
+
+## T-12090: cx9 BUNKA_SD byte-first pass
+
+Six verified matches, **4172 text bytes**, plus124 bytes of jump tables. All ten targets attempted. Every match has exact production linked proof and passing BUNKA_SD SHA1, with immediate commits. Final package verification is recorded in [[tickets/T-12090-codex-cx9]].
+
+| Function | Linked bytes | Source pattern |
+|---|---:|---|
+| func_80132428 |448| Canonical GameState fields and missing overlay forward declarations repair the old stripped score-zero dispatcher. |
+| func_80132FF0 |532| Explicit case4 restores the five-entry jump table. FAKE:24-byte name-buffer capacity reproduces original stack homes; source capacity unknown. |
+| func_80132940 |1144| Reused palette/setup index; explicit case4; u16 intermediate frame index before subtract2; typed DisplayActor44. |
+| func_80138D48 |952| Unsigned record bytes and32-bit frame induction; image metadata assignment before index updates; for-clause increment, with i=2 then frame=15 initialized before the loop. |
+| func_80133204 |828| Explicit fifth switch case, typed word-table pointer arithmetic, separate if/else assignments instead of m2c shared goto. Linked size includes8 trailing padding bytes. |
+| func_801388D0 |268| Neighboring s32 no-return state-machine idiom, canonical byte +=1, and no spurious argument to func_80048390. |
+
+Retained guards: func_8013987C14 differing listing rows (pointer setup and missing clear-zero live range); func_8013441826 rows (base/selector allocation and shared0x80 constant). Saved func_801344A8 remains57 rows and stays assembly. No new FAKE beyond the disclosed name buffer.
+
+Largest remaining target func_80139290 is1516 text bytes plus88 table bytes. Repaired canonical records, natural independent case stores instead of two m2c shared gotos, and a timer local improve509→89 rows; repeating the delta expression instead of its local reaches87. Regdiff reports377 versus378 instructions: target copies the switch result v1→a1, then allocates the character byte in t0; the draft coalesces that copy and takes a1 for the character, shifting later mask values. Explicit copies, signed/unsigned views, assignment-in-switch, first-case splitting, bounded empty tests, and return liveness do not close it. Broad candidate stays scratch-only. These are measured failures, not proof that matching C is impossible.
+
+Native AS1 diagnostics were calibrated on the952-byte near miss. A scratch copy of frame_pass applies the unchanged transform and injects `-R -xbbdbg 8` only at real as1 invocation; complete stock and traced objects are byte-identical. Captured native output has8958 lines and a reached loop DAG. Direct `-Wa` forwarding fails the production frame wrapper's numeric-argument parser, so do not add it to production flags. The remaining six rows were equal-priority scheduling nodes; natural for-loop increment placement closed them. Retained evidence in cx9 `build/scratch/as1-stock.o`, `as1-trace.o`, `as1-native.log`, `38d-clean.c` and `38d-final.c`. No production tool changes or diagnostic patches are part of the match.
+
+### Final verification
+
+Fresh Docker configure and ninja -j2 pass all 27 SHA1 checks, headers and globals after deleting build .ok stamps. sync_protos --check-branch reports 0 new disagreements, 15 known; branch check OK. git diff --check passes. Logs: build/scratch/cx9-final.log and cx9-protos.log. All ten targets attempted; six matches, two retained guards, two assembly fallbacks. Awaiting independent review.

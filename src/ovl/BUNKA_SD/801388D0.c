@@ -239,7 +239,7 @@ s32 func_80139100(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_80139290);
 
-/* NON_MATCHING: T-10710, 6 lines: v is kept as t6 copy (move v1,t6) where the original masks into t6 and later reloads v1=0 (move v1,zero) for the clear loop stores */
+/* NON_MATCHING: T-12090, 14 differing listing rows; pointer setup order and retained byte-result copy versus clear zero */
 #ifdef NON_MATCHING
 void func_8013987C(void) {
     u8 v;

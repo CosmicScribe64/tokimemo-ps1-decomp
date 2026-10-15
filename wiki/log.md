@@ -14018,3 +14018,11 @@ All 27 binary SHA1 hashes pass against config manifests. Prototype branch check 
 
 ## [2026-10-15] build | Incremental matching chats verified for publication
 [[tickets/T-12400-integrate-verified-matches]] and [[tickets/T-12600-byte-coverage-families]]: integrated cx9 through ed17af5c, Bunka family through4b5f182e, small-function6aa2f091 and large-function handoffdd033b2a. Combined build plus all27 forced checksums pass; final additional BUNKAKEN source passes affected SHA1; headers/globals pass and prototype audit remains0new/15known. Progress5844/6958 functions,1379196/2279368 bytes (60.5%). Gain37functions/33672progressbytes over prior published95c3fc9f. Need444300additional aligned bytes for80%. Reconciled T12800-series status cards. Logs: build/scratch/integration-chats.log and integration-final-chat.log. Direct fast-forward publication authorized; heartbeat checks every10minutes.
+
+## [2026-10-15] decision | T-12090 bounded pass complete
+
+All ten targets attempted, six exact matches totaling4172 text bytes plus124 table bytes. Retained two measured guards, left two broad misses as assembly, and recorded reusable control-flow/type/scheduling fixes in [[matching-notes]] and [[data/t0018-cases]]. Fresh full-package verification is starting; [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] ticket | cx9 ready for independent review
+
+Moved [[tickets/T-12090-codex-cx9]] and its kanban card to In Review. Six exact matches contribute 4172 linked text bytes plus 124 jump-table bytes. Fresh Docker configure/ninja passes 27/27 SHA1 checks and headers/globals; prototype branch audit reports zero new disagreements and 15 known. All ten targets attempted, two measured guards retained and two broader drafts left as assembly. See [[matching-notes]] and [[data/t0018-cases]] for reusable control-flow and scheduling findings.

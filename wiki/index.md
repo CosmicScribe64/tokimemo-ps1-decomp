@@ -31,6 +31,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-12100-codex-cx10|T-12100]] Codex cx10 DATE movie/effect functions (In Progress).
 - [[tickets/T-12200-acceleration-audit|T-12200]] Measured acceleration investigation in an isolated worktree (Done; 18.29x stripping speedup, 229 tests).
 - [[tickets/T-12070-codex-cx7|T-12070]] Codex cx7 TACO actor matching (In Review; three matches, 4,252 linked bytes).
+- [[tickets/T-12090-codex-cx9|T-12090]] Codex cx9 BUNKA_SD matching pass (In Review; six matches, 4172 text bytes plus 124 table bytes).
 - [[tickets/T-11820-tt-batch-9|T-11820]] TT batch 9: never-attempted functions and func_801333D4 (Done; 3 matches, TT 60.6%).
 - [[tickets/T-11810-tt-batch-8|T-11810]] TT batch 8: Opus on untried pipeline drafts and the closest guarded drafts (Done; 7 matches, TT 59.1%).
 - [[tickets/T-11800-tt-batch-7|T-11800]] TT batch 7: bulk_m2c rerun and two Opus passes (Done; 10 matches, TT 56.7%).

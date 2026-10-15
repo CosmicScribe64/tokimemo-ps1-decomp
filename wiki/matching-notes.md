@@ -5172,3 +5172,21 @@ In BUNKAKEN/8013BFE0, func_8013C0AC, func_8013C634 and func_8013CA6C match after
 `func_8015C2CC` adds 972 linked bytes in T-12070. As with C718, a direct unsigned selector load is significant. Explicit case 0 preserves the original jump-table range 0–16; otherwise IDO narrows it to 11–16. The final two load ordering differences disappear when the case-13 call and following flag load share a source line. Byte views, case boundary and line grouping are FAKE-labeled; TACO SHA1 and default literal linked funcdiff pass.
 
 T-12070 handoff: three matches total 4,252 linked bytes. Existing guards remeasured unchanged at B1B8 16 rows, C0A0 9, BF70 32. ACCC 411, BD30 128 and CE64 73 remain scratch-only; user priority shifted to the separate 8,672-byte dialogue target before further small-function passes. Clean configure/ninja passes all 27 checksums, headers/globals; branch prototype audit reports 0 new / 15 known disagreements.
+## T-12090: cx9 BUNKA_SD byte-first pass
+
+Six verified matches, **4172 text bytes**, plus124 bytes of jump tables. All ten targets attempted. Every match has exact production linked proof and passing BUNKA_SD SHA1, with immediate commits. Final package verification is recorded in [[tickets/T-12090-codex-cx9]].
+
+| Function | Linked bytes | Source pattern |
+|---|---:|---|
+| func_80132428 |448| Canonical GameState fields and missing overlay forward declarations repair the old stripped score-zero dispatcher. |
+| func_80132FF0 |532| Explicit case4 restores the five-entry jump table. FAKE:24-byte name-buffer capacity reproduces original stack homes; source capacity unknown. |
+| func_80132940 |1144| Reused palette/setup index; explicit case4; u16 intermediate frame index before subtract2; typed DisplayActor44. |
+| func_80138D48 |952| Unsigned record bytes and32-bit frame induction; image metadata assignment before index updates; for-clause increment, with i=2 then frame=15 initialized before the loop. |
+| func_80133204 |828| Explicit fifth switch case, typed word-table pointer arithmetic, separate if/else assignments instead of m2c shared goto. Linked size includes8 trailing padding bytes. |
+| func_801388D0 |268| Neighboring s32 no-return state-machine idiom, canonical byte +=1, and no spurious argument to func_80048390. |
+
+Retained guards: func_8013987C14 differing listing rows (pointer setup and missing clear-zero live range); func_8013441826 rows (base/selector allocation and shared0x80 constant). Saved func_801344A8 remains57 rows and stays assembly. No new FAKE beyond the disclosed name buffer.
+
+Largest remaining target func_80139290 is1516 text bytes plus88 table bytes. Repaired canonical records, natural independent case stores instead of two m2c shared gotos, and a timer local improve509→89 rows; repeating the delta expression instead of its local reaches87. Regdiff reports377 versus378 instructions: target copies the switch result v1→a1, then allocates the character byte in t0; the draft coalesces that copy and takes a1 for the character, shifting later mask values. Explicit copies, signed/unsigned views, assignment-in-switch, first-case splitting, bounded empty tests, and return liveness do not close it. Broad candidate stays scratch-only. These are measured failures, not proof that matching C is impossible.
+
+Native AS1 diagnostics were calibrated on the952-byte near miss. A scratch copy of frame_pass applies the unchanged transform and injects `-R -xbbdbg 8` only at real as1 invocation; complete stock and traced objects are byte-identical. Captured native output has8958 lines and a reached loop DAG. Direct `-Wa` forwarding fails the production frame wrapper's numeric-argument parser, so do not add it to production flags. The remaining six rows were equal-priority scheduling nodes; natural for-loop increment placement closed them. Retained evidence in cx9 `build/scratch/as1-stock.o`, `as1-trace.o`, `as1-native.log`, `38d-clean.c` and `38d-final.c`. No production tool changes or diagnostic patches are part of the match.
