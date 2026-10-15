@@ -14736,3 +14736,9 @@ Promoted BUNKASAI func_801438E4: 852 inventory coverage bytes and 852 default li
 
 ## [2026-10-15] build | BUNKASAI encoding and bitfield pair
 Combined default linked proofs, affected checksum and guards pass for 440-byte label and 852-byte character-state functions. Total 1,448,512 / 2,279,368 game bytes. Documented the emitted Shift-JIS escape defect for follow-up draft repair. See [[tickets/T-15400-bunkasai-label-draft]], [[tickets/T-15300-fresh-structural-near-matches]] and [[matching-notes]].
+
+## [2026-10-15] ticket | BUNKASAI character flag continuation
+Opened [[tickets/T-15500-bunkasai-character-flags]] to transfer the proven CharFlags access to a fresh six-row candidate.
+
+## [2026-10-15] build | BUNKASAI record-ten flag match
+Existing CharFlags bit13 eliminates six draft differences. Default literal820-byte proof, BUNKASAI SHA1 and guards pass, with prior C preserved. Coverage now 1,449,332 / 2,279,368 bytes (63.6%). See [[tickets/T-15500-bunkasai-character-flags]].

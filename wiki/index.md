@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-15500-bunkasai-character-flags|T-15500]] BUNKASAI record-ten flag match (In Review; 820 bytes).
 - [[tickets/T-15400-bunkasai-label-draft|T-15400]] BUNKASAI label encoding recovery (In Review; 440 coverage bytes).
 - [[tickets/T-15300-fresh-structural-near-matches|T-15300]] Fresh structural near matches: BUNKASAI func_801438E4 matched, 852 coverage/literal bytes; TACO probes continue (In Progress).
 
