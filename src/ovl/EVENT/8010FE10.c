@@ -1445,17 +1445,20 @@ void func_8011749C(void) {
     D_800B1AF6 += 0x10;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11110, D_800B1AF6 narrow global update keeps truncated u8 in $v0 in original */
-void func_80117538(void) {
+/* s32 with no return (K&R): the decremented byte stays in $v0 as the return register. */
+s32 func_80117538(void) {
+    /* FAKE: unused word reserves top frame slot so before sits at sp+0x28; T-11360 */
     s32 pad;
     s32 before;
 
+    /* FAKE: dead load at entry lets the cvt pass keep D_800B1AF6 in $v0; T-11360 */
+    before = D_800B1AF6;
     switch (D_800EECC4) {
     case 0:
         before = D_800B1AF6;
         func_80046600();
-        if (before != D_800B1AF6) {
+        /* FAKE: (s32) cast gives the original operand order of the beq; T-11360 */
+        if (before != (s32)D_800B1AF6) {
             D_800B1AF6 -= 1;
             D_800EECC4 += 1;
         }
@@ -1463,7 +1466,7 @@ void func_80117538(void) {
     case 1:
         before = D_800B1AF6;
         func_800464E8();
-        if (before != D_800B1AF6) {
+        if (before != (s32)D_800B1AF6) {
             D_800B1AF6 -= 1;
             D_800EECC4 += 1;
         }
@@ -1473,9 +1476,6 @@ void func_80117538(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80117538);
-#endif
 
 void func_8011760C(void) {
     u8 v;
