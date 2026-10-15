@@ -67,7 +67,7 @@ def manual_catalogs(base):
             if path:
                 result = Path(path) / 'result.json'
                 complete = json.loads(result.read_text()) if result.exists() else {}
-                yield dict(complete, **r, repair_path=path)
+                yield {**complete, **r, "repair_path": path}
 
 
 def raw_body(base, row):

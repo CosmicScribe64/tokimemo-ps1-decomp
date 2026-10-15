@@ -14761,3 +14761,6 @@ Created [[tickets/T-15100-unaligned-draft-repairs]] and notified the census gene
 ## [2026-10-15] build | Compile nine genuine unaligned-copy alternatives
 
 [[tickets/T-15100-unaligned-draft-repairs]] moves to In Review. All nine full-TU C alternatives compile and compare serially in Docker, spanning 17,408 target code bytes; scores 69..1667, no zeros and no matching-coverage claim. Copies recover genuine byte extents, string initializers and GEKO stack aliases. ENDING uses existing integer dialogue_render ABI evidence only in archived context. Complete separate catalog/provenance in drafts/T-14500/repairs-unaligned; initial attempts and production sources untouched.
+
+## [2026-10-15] build | Repair catalog duplicate-key fix
+Integrated audit test exposed duplicate repair_path keyword handling when joining a manual repair result with its catalog row. Replaced the duplicate keyword construction with an explicit merged mapping and final path override. All eleven draft, repair and audit tests pass in Docker. Initial census has all 1,066 outcomes (29 zero candidates, 908 other compiled scores, 129 failures); repairs remain separate and no complete usable-draft claim is made. See [[tickets/T-14500-exhaustive-drafts]].
