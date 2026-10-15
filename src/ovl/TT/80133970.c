@@ -448,7 +448,7 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134768);
 #endif
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, constant 1 is in v1, original has it in a1 (T-0018 phantom registers, same as func_80134768); 4 reg lines plus sched */
+/* NON_MATCHING: T-10720, T-11620, 14 differing lines: constant 1 is in v1, original has it in a1 (T-0018 phantom registers, same as func_80134768); the lui of D_80155B4E is hoisted early and sh 0x58 late in the original. unk_60 before unk_4C gives the original's t3/t4/t5 (T-11620). */
 void func_80134874(x, y)
 s16 x;
 s16 y;
@@ -472,10 +472,10 @@ s16 y;
         object->unk_20 = x << 16;
         object->unk_28 = 0;
         object->unk_24 = y << 16;
-        object->unk_2C = 0;
         object->unk_58 = 0;
-        object->unk_4C = (u8 *)&D_80155B30[5];
+        object->unk_2C = 0;
         object->unk_60 = *(s16 *)(source + 0x14);
+        object->unk_4C = (u8 *)&D_80155B30[5];
     }
 }
 #else
@@ -618,12 +618,95 @@ void func_80134BBC(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134BBC);
 #endif
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134D0C);
+/* q is passed as the unused third argument of func_80141EBC, as its other callers do; this puts q in a2 (T-11620). */
+void func_80134D0C(u8 *p) {
+    u8 *buf;
+    u8 *v;
+    u8 *g;
+    u8 *q;
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134E20);
+    buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    v = *(u8 **)(buf + 4);
+    g = D_80158A60;
+    q = D_80158AB0;
+    *(u8 **)(buf + 4) += 0x30;
+    *(s16 *)(q + 8) = *(s16 *)(p + 0x14);
+    *(s16 *)(q + 0xA) = *(s16 *)(p + 0x16);
+    *(s32 *)(q + 0xC) = *(u16 *)(p + 0x60) + 0x800;
+    *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 0xC;
+    *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 0xC;
+    v[0x29] = 0;
+    v[0x2A] = 1;
+    *(s16 *)(v + 0x10) = 0x18;
+    *(s16 *)(v + 0x12) = 0x18;
+    v[0x28] = 0;
+    *(u16 *)(v + 0x16) = 0xB;
+    if (*(u16 *)(g + 8) & 1) {
+        v[0xC] = 0xE0;
+    } else {
+        v[0xC] = 0xB0;
+    }
+    v[0xD] = 0;
+    *(u16 *)(v + 0xE) = 0x3D94;
+    v[0x2B] = 0;
+    v[0x2C] = 1;
+    func_80141EBC(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
+}
 
-/* NON_MATCHING: T-11560, 4 lines (registers only): the loop bound 0x80 and the chain constant 0xAB tie in priority and IDO numbers 0xAB first (s5/s6 swapped). The kind local for the inner A8..AA test splits that reload from the chain value (v0 as in the original). Tried: for/while/do loops, a kind local for the chain (bne operand order flips), a test-at-top loop (fixes the constants, adds a loop-head branch), autotweak 300 s, permuter 400 s. */
-#ifdef NON_MATCHING
+/* Tile packets written one PsyQ macro per line (setXY0, setRGB0, setWH); the line order sets the schedule. q is loaded before the test because it is the third argument of func_80141C6C (T-11620). */
+void func_80134E20(u8 *p) {
+    u8 *buf;
+    u8 *v;
+    u8 *q;
+    u8 *t;
+
+    buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
+    q = D_80158AB0;
+    if (*(u16 *)(p + 4) == 0x20) {
+        v = *(u8 **)(buf + 4);
+        *(u8 **)(buf + 4) += 0x30;
+        *(s16 *)(q + 8) = *(s16 *)(p + 0x14);
+        *(s16 *)(q + 0xA) = *(s16 *)(p + 0x16);
+        *(s16 *)(v + 8) = *(s16 *)(p + 0x14) - 8;
+        *(s16 *)(v + 0xA) = *(s16 *)(p + 0x16) - 8;
+        v[0x29] = 0;
+        v[0x2A] = 1;
+        v[0x28] = 0;
+        *(u16 *)(v + 0x16) = 0xA;
+        v[0xC] = 0x90;
+        v[0xD] = 0xF0;
+        *(u16 *)(v + 0xE) = 0x3E56;
+        v[0x2B] = 0;
+        v[0x2C] = 0;
+        func_80141C6C(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
+        return;
+    }
+    t = *(u8 **)(buf + 4);
+    *(u8 **)(buf + 4) += 0x10;
+    ((TtOtTag *)t)->len = 3; t[7] = 0x61;
+    *(s16 *)(t + 8) = *(s16 *)(p + 0x14) - 1; *(s16 *)(t + 0xA) = *(s16 *)(p + 0x16);
+    t[4] = 0xF0; t[5] = 0xE0; t[6] = 0xF0;
+    *(s16 *)(t + 0xC) = 2; *(u16 *)(t + 0xE) = *(u16 *)(p + 0x62);
+    ((TtOtTag *)t)->addr = ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr;
+    ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr = (u32)t;
+    t = *(u8 **)(buf + 4);
+    *(u8 **)(buf + 4) += 0x10;
+    ((TtOtTag *)t)->len = 3; t[7] = 0x61;
+    t[4] = 0xC0; t[5] = 0x68; t[6] = 0xE8;
+    *(s16 *)(t + 8) = *(s16 *)(p + 0x14) - 2; *(s16 *)(t + 0xA) = *(s16 *)(p + 0x16);
+    *(s16 *)(t + 0xC) = 2; *(u16 *)(t + 0xE) = *(u16 *)(p + 0x62);
+    ((TtOtTag *)t)->addr = ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr;
+    ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr = (u32)t;
+    t = *(u8 **)(buf + 4);
+    *(u8 **)(buf + 4) += 0x10;
+    ((TtOtTag *)t)->len = 3; t[7] = 0x61;
+    t[4] = 0x78; t[5] = 0x10; t[6] = 0x90;
+    *(s16 *)(t + 8) = *(s16 *)(p + 0x14) - 3; *(s16 *)(t + 0xA) = *(s16 *)(p + 0x16);
+    *(s16 *)(t + 0xC) = 6; *(u16 *)(t + 0xE) = *(u16 *)(p + 0x62);
+    ((TtOtTag *)t)->addr = ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr;
+    ((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)].addr = (u32)t;
+}
+
 void func_80135148(void) {
     u8 *q;
     u8 *p;
@@ -631,14 +714,14 @@ void func_80135148(void) {
     u8 *v;
     s32 i;
     u16 kind;
+    s32 n;
 
     buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
     q = D_80158AB0;
     p = D_80158AA0;
-    i = 0;
-    do {
+    /* The bound in a local, set in the for init, puts 0x80 in s5 ahead of the chain constants (T-11620). */
+    for (i = 0, n = 0x80; i != n; i++) {
         if (*p != 0) {
-
             if (*(u16 *)(p + 2) == 0xAB) {
                 func_80147A18(p + 0x14, p + 0x38, *(u16 *)(p + 0x10));
             } else if (*(u16 *)(p + 2) == 0xAC) {
@@ -672,10 +755,6 @@ void func_80135148(void) {
                 func_80141C6C(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
             }
         }
-        i++;
         p += 0x68;
-    } while (i != 0x80);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80135148);
-#endif

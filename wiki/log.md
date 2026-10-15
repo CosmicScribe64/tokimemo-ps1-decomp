@@ -13385,3 +13385,18 @@ Created [[tickets/T-11570-w1-ovl-name_ent-80139740]] (In Progress): wave 1 packa
 ## [2026-10-15] ticket | T-11570 Done
 
 [[tickets/T-11570-w1-ovl-name_ent-80139740]] reviewed against `CODING_STANDARDS.md` and moved to Done. Matched count: 0 of 12 (selector-copy family traced to uopt global copy propagation, see [[matching-notes]]). One finding fixed: `FAKE` comment on the `func_80140B20` u8-view draft. NAME_ENT sha1 OK.
+## [2026-10-15] ticket | T-11620 created
+
+Created [[tickets/T-11620-w1-ovl-tt-80133970]] (In Progress): wave 1 package w1-p06, 12 TT functions in `src/ovl/TT/80133970.c` and `src/ovl/TT/80142D40.c`.
+
+## [2026-10-15] build | T-11620 wave 1 package w1-p06: 4 TT matches
+
+[[tickets/T-11620-w1-ovl-tt-80133970]]: matched TT `func_80135148`, `func_80134E20`, `func_80134D0C` and `func_80144854` (FAKE array view), 2,052 bytes. New idioms in [[matching-notes]] ("T-11620"): unused trailing call arguments (q to func_80141C6C/func_80141EBC), loop bound local in the for-init, one PsyQ macro per line for TILE packets, frames from the declaration list. Seven rows in [[data/t0018-cases]]; drafts of the two big unmatched functions in [[data/t11620-func_801441BC-draft.patch]] and [[data/t11620-func_80143A44-draft.patch]].
+
+## [2026-10-15] ticket | T-11620 In Review
+
+[[tickets/T-11620-w1-ovl-tt-80133970]] moved to In Review; needs the CODING_STANDARDS review before Done.
+
+## [2026-10-15] ticket | T-11620 Done
+
+[[tickets/T-11620-w1-ovl-tt-80133970]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 matched functions (TT `func_80135148`, `func_80134E20`, `func_80134D0C`, `func_80144854`). One finding fixed: two NON_MATCHING comments in `src/ovl/TT/80142D40.c` now name T-11620 and the current line counts.
