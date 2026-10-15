@@ -454,9 +454,6 @@ void func_8013D2E0(void) {
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D2E0);
 #endif
 
-/* NON_MATCHING: T-10850, 20 differing listing lines; regdiff evidence in the ticket scratch. */
-#ifdef NON_MATCHING
-/* FAKE: same-line stores preserve packet instruction scheduling. T-10850 */
 void func_8013D3C0(void) {
     u8 *c;
     TtDrawBuffer80B8 *p;
@@ -469,7 +466,10 @@ void func_8013D3C0(void) {
     p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
     v = (TILE *)p->cursor;
     p->cursor = (DR_MODE *)(v + 1);
-    ((TtOtTag *)v)->len = 3; v->code = 0x61;
+    /* comma expressions as in the libgpu setTile/setWH macros (one source line for as1) */
+    ((TtOtTag *)v)->len = 3, v->code = 0x61;
+    /* FAKE: dead store; it numbers g before r, so uopt colours g first (original: r in a2, g in a1). T-11630 */
+    g = 0;
     r = (c[0x13] * c[0x1D]) >> 7;
     if ((s32)r >= 0x100) {
         r = 0xFF;
@@ -487,13 +487,10 @@ void func_8013D3C0(void) {
     v->b0 = b;
     v->x0 = -0x80;
     v->y0 = 8;
-    v->w = 0x100; v->h = 0xE8;
+    v->w = 0x100, v->h = 0xE8;
     ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[15];
     (&p->ordering[15])->addr = (u32)v;
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D3C0);
-#endif
 
 /* Tile map of D_80158A64 + 0x18, used only here: index (u16 per cell), 3-byte records, flag bytes. */
 typedef struct TtTileMap {
