@@ -13900,3 +13900,6 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] build | Verified matches published to main
 [[tickets/T-12400-integrate-verified-matches]]: direct non-force push succeeded, advancing remote main from 1668c560 to 8f78e5e5. All verified matching checkpoints collected for this batch are published; active experiments remain in worker worktrees.
+
+## [2026-10-15] decision | Prioritize byte throughput toward 80 percent
+[[tickets/T-12600-byte-coverage-families]] records the user's 80% target, requiring another 477,972 aligned bytes from current main. Largest-dialogue and DATE work continue; root tests the shared BUNKAKEN flag/addressing family identified by [[broad-coverage-results]]. Avoid repeating the low-yield default sweep; measure production-verified gains.

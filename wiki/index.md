@@ -266,3 +266,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-12230-broad-coverage-sweep|T-12230]] Broad medium/large coverage sweep (Done; 190 targets, five matches).
 - [[broad-coverage-results]] - T-12230: 190-target ledger, five verified wins, and limits of broad zero-search matching.
 - [[tickets/T-12300-large-unclaimed-byte-matches|T-12300]] Substantial unclaimed byte matches (In Review; 4,920 verified bytes, four functions).
+- [[tickets/T-12600-byte-coverage-families|T-12600]] Increase verified byte coverage toward 80% through shared function families (In Progress).
