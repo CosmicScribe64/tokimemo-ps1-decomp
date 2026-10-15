@@ -14271,3 +14271,6 @@ Created [[tickets/T-13103-etc-memory-card-family]] after bounded exam-family tes
 
 ## [2026-10-15] build | Combined ETC literal proof and preservation audit
 All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 681c93b6e57c885f86e074c885a8bf6c3cca2319; 91 existing C bodies are text-identical to aa2b3158. Headers/globals pass. [[etc-family-results]] records bounded positive/negative results and source census.
+
+## [2026-10-15] decision | TACO replacement and final event declaration fixes
+[[tickets/T-12600-byte-coverage-families]]: finished event team replaced by Sol6.1medium TACO chat (T13800; remaining94780bytes/126functions). Prior cx7 and rootT13400 evidence explicitly provided to prevent repeated searches. Integrated event declaration fixes178f61b1 and ETCcard/exam2368-byte checkpointaa1c51ec; combined rebuild/audit running. Ticket cards reconciled to frontmatter after merges. Prior continuation published61.5%; current continuation has new source integration in progress.
