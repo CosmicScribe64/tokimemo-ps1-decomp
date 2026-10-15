@@ -14444,3 +14444,11 @@ Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-famili
 
 ## [2026-10-15] build | TAIIKU actor-field dispatcher integrated
 [[tickets/T-12400-integrate-verified-matches]] integrated54c37e1f. Independent default linked proof confirms func80139330=544bytes; TAIIKU SHA1, headers/globals and branch prototype checks pass. Standards inspection confirms existing DisplayActor44 field views and compatible forward declarations under a dedicated include guard; no artificial frame or register accommodation. Total5886/6958functions,1409420/2279368bytes (61.8%); remaining414076alignedbytes to80%. Evidence build/scratch/goal-taiiku-39330.log. Larger sibling39610 remains16rows and is not counted. Prior turn advanced main by1340bytes; current turn advances it by544bytes.
+
+## [2026-10-15] ticket | Claim remaining EVENT families
+
+Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45d52546. Read [[bunka-family-results]], [[etc-family-results]], [[broad-coverage-results]] and [[tickets/T-12801-event]]; preserve existing C and avoid repeated dispatcher/entry-read negatives. Ignored inputs copied from integration; original checkout read-only.
+
+## [2026-10-15] build | EVENT place-handler family adds 2548 bytes
+
+[[tickets/T-14300-event-families]] verifies five adjacent handlers in src/ovl/EVENT/8010FE10.c through full-TU default literal linked proof and EVENT SHA1. Consistent existing EventStateView access matches; no headers or existing C changed. Header/global/prototype guards pass. 8010A91C typed-bitfield loop probe remains two rows and was restored.
