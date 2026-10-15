@@ -26,9 +26,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 - [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
 
-- [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
 
-- [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]
 
 
 
@@ -82,6 +80,7 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
+
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
@@ -121,6 +120,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 - [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]
 - [ ] [[tickets/T-12803-main|T-12803 Main schedule matching]]
+- [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]
+- [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
+- [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
+
 - [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]
 
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]

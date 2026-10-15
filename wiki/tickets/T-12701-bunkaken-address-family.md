@@ -1,7 +1,7 @@
 ---
 id: T-12701
 title: Match BUNKAKEN flag and address family
-status: In Progress
+status: Done
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -40,3 +40,13 @@ All eight remaining held-out handlers in src/ovl/BUNKAKEN/8014E440.c also match 
 Adjacent-family seed func_8013EC98 initially differs40 rows, all branch relocation shifts plus two extra argument moves at func_80083440. The existing BUNKASAI K&R override convention (callee narrows argument) gives exact zero. Added explained per-TU override in src/ovl/BUNKAKEN/8013EB30.c; canonical header unchanged. Full overlay SHA1 including existing C passes and literal780 bytes verified (kr-build.log/kr-proof.txt). Cumulative20 new functions /20664 bytes.
 
 Eight held-out adjacent siblings match and verify: 8013EFA4 (760), 8013F29C (1040), 8013F6AC (828), 8013F9E8 (856), 801404B0 (508), 801406AC (460), 80140878 (748), 80140B64 (912). Each current baseline was explicitly confirmed INCLUDE_ASM. Source8013EB30.c is now all C. All eight literal proofs and full BUNKAKEN SHA1 pass in adjacent-proof.txt/adjacent-build.log. Gain6112 bytes; cumulative28 new functions /26776 bytes. Verified source-family transfer across two complete translation units; no guessed coverage or reused control wins counted.
+
+8013CF30 family: five matches verified (cf-proof.txt/cf-build.log): 8013D048 (428), 8013D4D8 (852), 8013D82C (956), 8013E2C0 (696), 8013E7C4 (772). Literal-byte total3704; use these proof sizes, not address-gap sizes. Remaining8013DBE8 is170 rows with unconverted mode=3 mask. Cumulative33 new functions /30480 bytes.
+
+Text-preservation audit against95c3fc9f compares37 preexisting C function bodies across every touched BUNKAKEN source, using permute.function_range: zero changes. Script build/bunka12701/audit.py. Similar neighboring functions cause misleading broad Git diff alignment, but original bodies are exactly preserved.
+
+Final bounded reconstruction: 8013DBE8 (1752 bytes) matches after expressing its mode=3 combined mask through existing BunkakenModeFlags and placing flags before saved-state fields. 80141088 (1484 bytes) drops228->6 rows after replacing decompiler artificial goto/shared temporary stores with direct switch-case assignments, then6->0 by ordering D_800CA148=4 before the character bitfield store. Signed selector probes do not improve those6 rows. Both literal proofs and full BUNKAKEN SHA1 pass in final-proof.txt/final-build.log. Gain3236 bytes; final ticket gain35 functions /33716 literal bytes. No more families opened; source ready for parent review and integration.
+
+Remaining exploratory failure artifacts are retained under build/bunka12701. The 3B510 callback-table draft was inspected only, not integrated or counted. Historical already-matched controls were restored unchanged. All original matched C bodies remain textually identical to95c3fc9f.
+
+Final independent Standards and Spec reviews pass through 5f404ed5 with zero actionable findings. Final Docker combined checks pass headers/globals/prototypes (0 new, 15 known), and recalculated BUNKAKEN SHA1 matches d423cb6d09b4b7e96e894168c0db4c7d15745b98. Status Done; remaining assembly is outside this completed bounded family pass.

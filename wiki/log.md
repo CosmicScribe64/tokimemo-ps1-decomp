@@ -14026,3 +14026,18 @@ All ten targets attempted, six exact matches totaling4172 text bytes plus124 tab
 ## [2026-10-15] ticket | cx9 ready for independent review
 
 Moved [[tickets/T-12090-codex-cx9]] and its kanban card to In Review. Six exact matches contribute 4172 linked text bytes plus 124 jump-table bytes. Fresh Docker configure/ninja passes 27/27 SHA1 checks and headers/globals; prototype branch audit reports zero new disagreements and 15 known. All ten targets attempted, two measured guards retained and two broader drafts left as assembly. See [[matching-notes]] and [[data/t0018-cases]] for reusable control-flow and scheduling findings.
+
+## [2026-10-15] build | Four BUNKASAI held-out matches
+[[tickets/T-12703-bunkasai-heldout-family]] moves to In Review after four literal matches / 4,016 bytes, BUNKASAI SHA1 OK and headers OK. Existing typed byte stores and ordinary switch structure complete 8014DD90.c without changing prior C. Branch total: thirty-four functions / 33,312 bytes.
+
+## [2026-10-15] build | Five more BUNKAKEN siblings and preservation audit
+[[tickets/T-12701-bunkaken-address-family]] adds five verified functions / 3,704 linked bytes in 8013CF30.c, SHA1 OK. All 37 pre-existing C function bodies in touched BUNKAKEN files are textually identical to baseline95c3fc9f. Total branch gain: thirty-nine functions / 37,016 bytes. Standards review passes prior thirty-four-function checkpoint.
+
+## [2026-10-15] build | Final two bounded probes matched
+[[tickets/T-12701-bunkaken-address-family]] moves to In Review with 35 functions / 33,716 literal bytes. Final pair 3DBE8 and41088 adds3,236 bytes and passes BUNKAKEN SHA1. Repeated body audit preserves all37 prior BUNKAKEN C bodies. Combined branch gain:41 functions /40,252 bytes; final review and validation follow.
+
+## [2026-10-15] build | Final BUNKA validation and completed reviews
+[[tickets/T-12700-bunka-families]], [[tickets/T-12701-bunkaken-address-family]] and [[tickets/T-12703-bunkasai-heldout-family]] move to Done after independent Standards/Spec review found no actionable issues through5f404ed5. Final Docker header/global/prototype checks pass (0 new/15 known); both overlay SHA1 hashes were recalculated successfully. Total gain41 functions/40,252 linked bytes; branch progress5,848/6,958 and1,385,776/2,279,368 (60.8%). All53 preexisting C bodies in touched sources remain identical. No full-game checksum or publication claimed; 80% remains pending integration and additional work.
+
+## [2026-10-15] lint | Final BUNKA ticket lifecycle check
+Docker lint confirms T-12700 through T-12703 each has one kanban card in Done matching its ticket status. Source handoff was clean at0f2032a3; this final entry records the check.
