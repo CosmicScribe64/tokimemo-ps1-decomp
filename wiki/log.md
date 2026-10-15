@@ -14693,3 +14693,6 @@ Two-axis review identified an EVENT callback still using a synthetic sp global a
 
 ## [2026-10-15] build | SHUGAKU pair and repaired draft checkpoint
 Two default linked proofs and affected checksum pass, adding 1,052 coverage bytes (1,056 literal span bytes). Total 1,445,668 / 2,279,368 bytes. Eight draft-tool tests and fifteen repair-archive hash audits pass. Completed unit archives through SHUGAKU and corrected type repairs are integrated without matching credit. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14700-reserved-type-repairs]].
+## [2026-10-15] decision | Distinguish draft coverage gains from literal proof spans
+
+Clarified [[tickets/T-14501-remaining-draft-proof]] byte accounting: frozen inventory coverage sizes can exclude alignment included by funcdiff's linked comparison. SHUGAKU contributes 1,052 coverage bytes while its two proofs compare 1,056 linked bytes. The cumulative 28-function gain is 18,056 inventory coverage bytes; all literal match proofs remain valid. Future batches record both measures separately.
