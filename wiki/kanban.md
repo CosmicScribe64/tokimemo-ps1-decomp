@@ -24,6 +24,8 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
+
 - [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
 
 - [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]

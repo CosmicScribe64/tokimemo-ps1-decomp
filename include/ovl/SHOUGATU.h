@@ -768,3 +768,7 @@ void func_8013F070(void);
 void func_8013D3B4(void);
 
 #endif
+
+/* T-13202: widths read/written by the sprite initializer. */
+extern s16 D_80146150;
+extern s8 D_8014615C;

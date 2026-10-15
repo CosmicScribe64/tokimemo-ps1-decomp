@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "ovl/SHOUGATU.h"
 
 typedef struct {
@@ -73,7 +74,69 @@ s32 func_8013F3C0(void) {
     return func_80072B5C(1);
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/8013F190", func_8013F494);
+void func_8013F494(void) {
+    s32 unused; /* FAKE: unused local restores observed implicit-copy stack offsets. T-13202. */
+    s16 i;
+
+    D_8014615C = 0;
+    D_80146160 = 0;
+    D_80146164 = 0;
+    func_8013F190();
+    i = 0;
+    do {
+        func_80043914(D_80146140, (i + 0x10) & 0xFF, 1, 2, i);
+        i++;
+    } while (i < 9);
+    func_80048F64(0x60);
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 0x40;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_38 = 0x01000000;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 4;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_0C = D_80146134;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_10 = D_80146138;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_34 = D_80146130;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_14 = D_8014613C;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_06 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_43 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_26 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_2A = 8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_05 = 0x80;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[97] = ((DisplayActor44 *)D_8011ECD0)[96];
+    func_8013F1E0();
+    func_80043914((u8 *) D_80146154, 0x1F, 1, 2, 0);
+    ((DisplayActor44 *)D_8011ECD0)[98] = ((DisplayActor44 *)D_8011ECD0)[96];
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_01 = 0xB;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_04 = 8;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_02 = 1;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_0C = D_80146148;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_10 = D_8014614C;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_34 = D_80146144;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_14 = D_80146150;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_16 = (s16) (func_800AE0D0() % 3);
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_18 = 0;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_26 = -0xA0;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_2A = -0x78;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_43 = 0x1F;
+    ((DisplayActor44 *)D_8011ECD0)[101] = ((DisplayActor44 *)D_8011ECD0)[99] = ((DisplayActor44 *)D_8011ECD0)[100] = ((DisplayActor44 *)D_8011ECD0)[98];
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_26 += 0x48;
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_16 = (s16) (func_800AE0D0() % 3);
+    ((DisplayActor44 *)D_8011ECD0)[99].unk_18 = 4;
+    ((DisplayActor44 *)D_8011ECD0)[100].unk_26 += 0x90;
+    ((DisplayActor44 *)D_8011ECD0)[100].unk_16 = (s16) (func_800AE0D0() % 3);
+    ((DisplayActor44 *)D_8011ECD0)[100].unk_18 = 0xA;
+    ((DisplayActor44 *)D_8011ECD0)[101].unk_01 = 0xA;
+    ((DisplayActor44 *)D_8011ECD0)[101].unk_02 = 0x40;
+    ((DisplayActor44 *)D_8011ECD0)[101].unk_16 = 0;
+    D_80145F2C = 0;
+    D_80145F20 = D_80145AF8;
+    D_80145F24 = D_80145B2C;
+    D_80145F28 = D_80145B60;
+    func_8004284C();
+}
 
 void func_8013F9C4(void) {
     s32 temp = D_80145FE4;

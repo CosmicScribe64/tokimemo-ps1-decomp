@@ -14089,3 +14089,12 @@ Created codex/events-13200 at aa2b3158 and copied ignored inputs from integratio
 
 ## [2026-10-15] build | T-13201 first literal event match
 SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passes. Two GYOZI selector siblings remain failed probes (best33/24 rows); their unchanged-ASM default proofs add no coverage. See [[tickets/T-13201-event-selector-stores]].
+
+## [2026-10-15] ticket | T-13202 sprite initialization family
+Opened [[tickets/T-13202-event-sprite-initializers]] to test existing DisplayActor44 and chained aggregate copies against the two overlays matching initializers. GYOZI selector probes remain33/24 best rows after bounded variants.
+
+## [2026-10-15] decision | T-13202 two initializer zero scores
+Existing DisplayActor44 and chained assignment reconstruct SHOUGATU F494/GYOZI41ACC. Both retain a marked FAKE unused scalar to reproduce two measured temporary stack offsets after bounded natural alternatives fail. No bytes counted before link proof. See [[tickets/T-13202-event-sprite-initializers]].
+
+## [2026-10-15] build | T-13202 two sprite initializers verified
+Default literal proofs verify1328+1440=2768 new bytes; both GYOZI and SHOUGATU SHA1 and header validation pass. Marked FAKE scalar retained with evidence. Lane cumulative3424 bytes. See [[tickets/T-13202-event-sprite-initializers]].
