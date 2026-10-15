@@ -23,6 +23,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
 - [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
@@ -90,6 +91,9 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
+- [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 - [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]

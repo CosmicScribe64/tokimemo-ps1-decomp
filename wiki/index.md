@@ -313,3 +313,6 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13202-event-sprite-initializers|T-13202]] Event sprite initializer family.
 
 - [[tickets/T-13300-rpg-families|T-13300]] RPG_BAT source-family diagnostics (In Review; zero accepted bytes).
+
+- [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (In Review).
+- [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).

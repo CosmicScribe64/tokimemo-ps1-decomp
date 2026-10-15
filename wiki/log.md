@@ -14230,3 +14230,15 @@ Created codex/largest-dialogue from integration 2cb6a11c for [[tickets/T-12500-l
 
 ## [2026-10-15] build | Six further matches verified at 61.5 percent
 [[tickets/T-12400-integrate-verified-matches]]: ETCb5adaff4 and event63d90035 add6functions/3900progressbytes beyond5ccb8765. Current verified total5870/6958functions,1401756/2279368bytes (61.5%); remaining421740alignedbytes to80%. Both combined rebuilds pass all27binarychecksums, header/global checks and branch prototypes0new/15known. Logs build/scratch/goal-etc-career.log and goal-event-pair.log. Diagnostic-only RPG/dialogue/TACO handoffs carry no coverage claims. New Solmedium lanes and safe incremental-build investigation continue.
+
+## [2026-10-15] setup | Isolated TACO family pass
+Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]] before source work. Read [[decompile-workflow]], [[bunka-family-results]], prior T-12070 and T-13400 evidence. Original checkout is read only; Docker only, one compiler initially, verified production matches only.
+
+## [2026-10-15] query | TACO boss transform family selected
+[[tickets/T-13801-taco-actor-family]] records bounded m2c/assembly inspection of actor transform siblings. Initial 4A480 candidate compiles in its full TU after adding one overlay-owned forward declaration, but retains stack/register/address differences. No verified coverage gain yet; original source restored after comparisons.
+
+## [2026-10-15] build | TACO transform reconstruction reaches three rows
+[[tickets/T-13801-taco-actor-family]] records bounded local/type/operand tests: 4A480 now matches the frame and all but three rows. Separate sibling 497EC reconstruction started. All full-TU candidate source edits are restored after scoring; no coverage accepted.
+
+## [2026-10-15] ticket | TACO diagnostic handoff enters review
+[[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]] move to In Review with matching cards. [[taco-family-results]] records zero accepted bytes, one-row 497EC, three-row 4A480 and 62-row 87A4. Preserved all ignored candidate bodies/diffs and reproducible full-TU probe; source and header diffs against 97ec697f are empty. Final default overlay build is running.
