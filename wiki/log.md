@@ -14472,3 +14472,10 @@ Three ticket statuses match Done cards; result page and ticket cross-references 
 ## [2026-10-15] build | EN_NICHI pattern matrix verified
 
 [[tickets/T-14000-ending-en-nichi-families]] converts func_80135600 in src/ovl/EN_NICHI/80132000.c, 976 literal linked bytes MATCH and overlay SHA1 OK. The existing EnWords64 now includes its observed 8x8 matrix view. Direct invariant expression and natural nested loops recover frame and register shapes without padding. Cumulative accepted gain 2032 bytes / three functions. Rejected AI/spawn hypotheses are retained locally.
+## [2026-10-15] ticket | Claim remaining EVENT families
+
+Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45d52546. Read [[bunka-family-results]], [[etc-family-results]], [[broad-coverage-results]] and [[tickets/T-12801-event]]; preserve existing C and avoid repeated dispatcher/entry-read negatives. Ignored inputs copied from integration; original checkout read-only.
+
+## [2026-10-15] build | EVENT place-handler family adds 2548 bytes
+
+[[tickets/T-14300-event-families]] verifies five adjacent handlers in src/ovl/EVENT/8010FE10.c through full-TU default literal linked proof and EVENT SHA1. Consistent existing EventStateView access matches; no headers or existing C changed. Header/global/prototype guards pass. 8010A91C typed-bitfield loop probe remains two rows and was restored.

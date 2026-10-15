@@ -24,6 +24,11 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
+
+
+- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
