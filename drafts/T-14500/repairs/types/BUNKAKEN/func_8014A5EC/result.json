@@ -1,0 +1,24 @@
+{
+  "func": "func_8014A5EC",
+  "guarded": false,
+  "scope": "BUNKAKEN:func_8014A5EC",
+  "score": 2,
+  "size": 176,
+  "source_hash": "e98fdcd48781a95ae36ae8dae8aa7f3e70e2498feb63ff7fee56684853f13006",
+  "src": "src/ovl/BUNKAKEN/80148ED0.c",
+  "status": "scored",
+  "unit": "BUNKAKEN",
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "ticket": "T-14700",
+  "production_changed": false,
+  "body.c_sha256": "11e68191670205e44a43238fa363d729c5e60a1bc4938a5ed07924f6e530b61e",
+  "declarations.h_sha256": "b28e00727afbf29fa7c8b3cb3a960a5ca2ff1c7566b0f2e3b4f9e7eb83e16c08",
+  "context.c_sha256": "de6447e90cbbde12b28b4d1efa22a163b2c31aa67c5ae33ab25bdc3f6a4d423b",
+  "literal_verified": false,
+  "affected_sha1_verified": false,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
+  "compile_verified": true,
+  "remaining_blockers": [
+    "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
+  ]
+}

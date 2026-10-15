@@ -1,0 +1,24 @@
+{
+  "func": "func_80147F8C",
+  "guarded": false,
+  "scope": "BUNKASAI:func_80147F8C",
+  "score": 14,
+  "size": 176,
+  "source_hash": "380a95e86765351907f7a26da760f5dc02b0f537dcf553478dd75e629d6e4eb4",
+  "src": "src/ovl/BUNKASAI/80146FA0.c",
+  "status": "scored",
+  "unit": "BUNKASAI",
+  "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
+  "ticket": "T-14700",
+  "production_changed": false,
+  "body.c_sha256": "aa5d5a8362f4d24f2e87f5b17a0526234c7c25d76e56950507a630e79a0f55d3",
+  "declarations.h_sha256": "9813382dafcf94d2483e274c5296dd1db721b2614ec5f1e4d96ac439f2f5e8b2",
+  "context.c_sha256": "eb5f273952c256b4f44e187948fe12476a737fbe1d9e1861601df8ba65325687",
+  "literal_verified": false,
+  "affected_sha1_verified": false,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
+  "compile_verified": true,
+  "remaining_blockers": [
+    "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
+  ]
+}

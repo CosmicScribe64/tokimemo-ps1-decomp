@@ -14679,3 +14679,10 @@ The usable-draft target includes guarded drafts that no longer compile in the cu
 ## [2026-10-15] query | Exhaustive census checkpoint 678 of 1066
 
 [[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 28, 'failed': 88, 'scored': 562}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.
+## [2026-10-15] setup | T-14700 reserved type repairs
+
+Created isolated codex/type-repair-14700 from 48362009. Archived fifteen immutable attempts; hard-linked immutable inputs; generated ASM remains private. See [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] build | T-14700 fifteen compiling reserved drafts
+
+Recovered actual byte/halfword/word aggregates and callback tables in draft-only archives; all fifteen compile with default full-TU IDO and have nonzero resolved scores. Production C/header closure unchanged. Full diagnostics and provenance in drafts/T-14500/repairs/types/. Ticket moved to In Review: [[tickets/T-14700-reserved-type-repairs]].

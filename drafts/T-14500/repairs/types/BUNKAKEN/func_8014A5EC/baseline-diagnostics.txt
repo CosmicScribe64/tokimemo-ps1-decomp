@@ -1,0 +1,18 @@
+cfe: Error: drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3268: redeclaration of 'func_8014A5EC'; previous declaration at line 3145 in file 'drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c'
+ void func_8014A5EC(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3268: Incompatible function return type for this function.
+ void func_8014A5EC(void) {
+ ------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3271: '&' before array or function; ignored
+     *(M2cBlock128 *)(&sp28) = *(M2cBlock128 *)(&D_8015633C);
+ ---------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3272: '&' before array or function; ignored
+     *(u8 *)((unsigned char *)(&sp28 + 0x120) + (8)) = (u8) *(u8 *)((unsigned char *)(&D_8015633C + 0x120) + (8));
+ ------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c, line 3273: '&' before array or function; ignored
+     func_800AE0F0(D_800CA25C, (&sp28 + (D_800E62BE * 0x63) + (D_80122CDC * 0x21)) - 0x24BD);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work -o drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o /tmp/asm_processorzyf_95ql/preprocessed_a63bf3d64c244660b6098d3ee2164ed8.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib5d_ax4u1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o drafts/T-14500/repairs/types/BUNKAKEN/func_8014A5EC/work/guarded.o.sjis.c
+

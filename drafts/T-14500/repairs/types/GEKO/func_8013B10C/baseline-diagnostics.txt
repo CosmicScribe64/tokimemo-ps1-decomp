@@ -1,0 +1,6 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/types/GEKO/func_8013B10C/work/guarded.o.sjis.c, line 3352: Non-function name referenced in function call.
+     (&sp28[0])[D_800E738A](0x80);
+ --------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/types/GEKO/func_8013B10C/work -o drafts/T-14500/repairs/types/GEKO/func_8013B10C/work/guarded.o /tmp/asm_processorbayp4jf0/preprocessed_c22933d8790e47509da14faec2e7191e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibo47ts07n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/types/GEKO/func_8013B10C/work/guarded.o drafts/T-14500/repairs/types/GEKO/func_8013B10C/work/guarded.o.sjis.c

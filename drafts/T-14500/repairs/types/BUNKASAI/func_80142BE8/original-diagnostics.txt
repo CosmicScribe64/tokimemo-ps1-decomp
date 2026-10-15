@@ -1,0 +1,13 @@
+python3 failed:
+ ---------------------^
+cfe: Warning 681: drafts/T-14500/BUNKASAI/func_80142BE8/work/guarded.c, line 2859: '&' before array or function; ignored
+         D_800E643E = D_800E643E + var_v0 + (((u8) *(&sp24 + temp_t4) >> 1) & 0xFF);
+ ----------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/BUNKASAI/func_80142BE8/work/guarded.c, line 2861: '&' before array or function; ignored
+         var_a0_2 = &sp2A;
+ -------------------^
+cfe: Warning 681: drafts/T-14500/BUNKASAI/func_80142BE8/work/guarded.c, line 2875: '&' before array or function; ignored
+         var_v0_2 = *(&sp24 + (D_80122EBC * 6) + ((u16) D_800E6374 >> 0xC));
+ ---------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/BUNKASAI/func_80142BE8/work -o drafts/T-14500/BUNKASAI/func_80142BE8/work/guarded.o /tmp/asm_processortxqhl70k/preprocessed_5db142fd9893476db2089bc6f8d42c39.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkt54e2oa/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/BUNKASAI/func_80142BE8/work/guarded.o drafts/T-14500/BUNKASAI/func_80142BE8/work/guarded.c
