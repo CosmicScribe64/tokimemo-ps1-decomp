@@ -13545,3 +13545,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | T-12030 click-speed clamp matched
 
 [[tickets/T-12030-codex-cx3]]: func_8005F09C verifies 400 literal linked bytes and main SHA1. Direct scalar-byte clamping (marked FAKE) plus an explicit void prototype resolve its historical register and exit differences.
+
+## [2026-10-15] build | cx3 reuse established availability aggregate
+
+[[tickets/T-12030-codex-cx3]] reused FlagsWork24 for func_800603C0 and removed a duplicate alias declaration. Literal 324-byte comparison and all 27 checksums pass after a full header-triggered rebuild; evidence in build/scratch/603c0-aggregate.log and aggregate-full-build.log.
