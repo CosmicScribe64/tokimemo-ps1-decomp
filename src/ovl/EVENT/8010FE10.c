@@ -1440,7 +1440,38 @@ void func_80116620(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801166A8);
+void func_801166A8(void) {
+    EventStateView *g;
+    s32 temp_t4;
+
+    /* FAKE: discarded entry read suppresses selector CVT hoisting. T-14300 */
+    temp_t4 = D_8012531C;
+    g = (EventStateView *)D_800B0860;
+
+    if (D_800EECBC != 0) {
+        if (!(g->unk_1A4[g->unk_EE6].pad23[1] & 1)) {
+            D_8012531C = 2;
+            func_80078970(D_800947C4, "メダルゲームコーナー");
+        } else {
+            D_8012531C = 3;
+            func_80078970(D_800947C4, "メダルゲームコーナー");
+        }
+        temp_t4 = D_8012531C * 3;
+        D_800EECE4 = 0x10;
+        D_8012439C = (s16) *((g->unk_EE6 * 0xC) + ((u8 *)D_801251F8) + temp_t4);
+        D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0xC) + ((u8 *)D_801251F8) + temp_t4) + (1));
+        D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0xC) + ((u8 *)D_801251F8) + temp_t4) + (2));
+        D_8012438C = (s16) *((g->unk_EE6 * 0xC) + ((u8 *)D_801251FC) + temp_t4);
+        D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0xC) + ((u8 *)D_801251FC) + temp_t4) + (1));
+        D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 0xC) + ((u8 *)D_801251FC) + temp_t4) + (2));
+    }
+    D_80094730 += D_8012531C * 2;
+    if ((g->unk_EE6 == 7) && (D_8012531C >= 2U)) {
+        D_80094730 += 3;
+    }
+    func_80011DFC();
+}
+
 
 void func_80116888(void) {
     u32 v;

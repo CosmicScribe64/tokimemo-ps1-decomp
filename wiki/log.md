@@ -14537,3 +14537,6 @@ T14500 census resumed beyondBUNKAKEN intoBUNKASAI (about44/1066); first12zero-sc
 ## [2026-10-15] decision | Document OPTION packed views
 
 Added source-local offset/evidence comments for the player and schedule bitfield views in [[tickets/T-14400-option-menu-families]]. Fresh full-TU proof confirms all six accepted functions and the OPTION SHA1 after final formatting/comments. No prior function body changed.
+## [2026-10-15] build | EVENT medal-game handler adds 480 bytes
+
+[[tickets/T-14300-event-families]] adds func_801166A8 in src/ovl/EVENT/8010FE10.c. Direct compound updates plus one marked FAKE entry assignment match. Combined seven-function default literal proof, EVENT SHA1 and declaration/aggregate/prototype guards pass. Cumulative gain: seven / 3,684 bytes. Rejected particle draft restored before literal proof; normalized equality alone was not counted.
