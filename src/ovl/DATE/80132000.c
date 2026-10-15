@@ -2296,7 +2296,8 @@ void func_801395B4(void) {
 /* NON_MATCHING: T-11580, 9 differing lines; the post-call unk_110A update takes $v1 (the original keeps it in $v0 with an ugen andi), and the entry F5F lui is scheduled one slot later */
 #ifdef NON_MATCHING
 s32 func_80139664(void) {
-    u8 g;
+    /* FAKE: unused byte local puts prev at 0x28(sp) as in the original. T-11580 */
+    u8 pad;
     s32 prev;
 
     if (D_80122CDC == 1) {
