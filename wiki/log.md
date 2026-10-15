@@ -14604,3 +14604,9 @@ Several exhaustive drafts fail only because m2c infers void after an earlier unp
 ## [2026-10-15] ticket | Reserve DATE draft failures for type repair
 
 Nine failed DATE targets from the completed unit are reserved in drafts/T-14500/date-repair-reservation.json for the independent repair lane. Their initial attempts remain immutable; alternate bodies must retain declarations and full context. The census continues independently, and its later mechanical retry excludes these scopes. See [[tickets/T-14500-exhaustive-drafts]].
+
+## [2026-10-15] build | Sprite and exhaustive-draft matches verified at 63.2 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated MAIN6236f995 (3spritefunctions/5152literalbytes), BUNKA_SDce3db827 (908B), DATEc74b2fb0 (2/1088B), OPTIONfinalrecords605ccaa8 and draftarchive92d39c5f. Independent defaultliteralproofs pass for allsixfunctions; affectedbinarychecksums,headers/globals andbranchprototypes pass. MAINtwoframeworkarounds explicitlyFAKElabeled. Total5927/6958functions,1441592/2279368bytes (63.2%); progressgain7140bytes differsfrom7148literalspan total by8paddingbytes. Remaining381904alignedbytes to80%. Logs build/scratch/goal-bunka-sd-draft.log, goal-main-sprites.log, goal-date-draft-pair.log. Fiveharnessregressions pass.
+
+## [2026-10-15] decision | Draft completion requires addressing missing functions
+User asks whether everyfunctionwillhaveadraftwhenfinished: confirmedtargetis savedCwithreproduciblecontext for everyremainingfunction, notmerelyanattemptcounter. Initialfailures remainexplicitrepairqueue; Sol6.1medium T14600 owns9reservedDATEfailures, whilegenerationcontinues beyond267/1066. First210attemptarchive committedwithbaselines/context/diagnostics, ~16MiB; noASM/binaries. The draftingtask remainsincompleteuntilmissingdrafts areaddressed; byte-matchinggoal isseparate andunchanged. [[tickets/T-14500-exhaustive-drafts]] and [[tickets/T-14501-remaining-draft-proof]] trackbothlanes.

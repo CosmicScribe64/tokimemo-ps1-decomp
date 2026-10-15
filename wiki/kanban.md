@@ -28,8 +28,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
 
-- [ ] [[tickets/T-14400-option-menu-families|T-14400 Match OPTION menu and state families]]
-
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
 
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
@@ -59,8 +57,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-
-
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -104,8 +100,6 @@ kanban-plugin: board
 
 ## In Review
 
-
-
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
@@ -122,8 +116,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
-
-- [ ] [[tickets/T-14400-option-menu-families|T-14400 Match OPTION menu and state families]]
 
 - [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
 
@@ -150,6 +142,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-13900-scenes-families|T-13900 GEKO and DATE2 source families]]
 
 - [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]
+
+- [ ] [[tickets/T-14400-option-menu-families|T-14400 Match OPTION menu and state families]]
 
 - [ ] [[tickets/T-12803-main|T-12803 Main schedule matching]]
 
