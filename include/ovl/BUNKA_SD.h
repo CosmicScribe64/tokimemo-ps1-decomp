@@ -152,4 +152,10 @@ extern u8 *D_8013D9C4;
 extern u8 *D_8013D9C8;
 extern u8 *D_8013D9CC;
 
+/* T-14501: loaded scene data used by func_80136578. */
+extern s32 D_8013C74C;
+extern u8 *D_8013C740;
+extern u8 *D_8013C744;
+extern u8 *D_8013C748;
+
 #endif /* OVL_BUNKA_SD_H */
