@@ -1,0 +1,86 @@
+[
+  {
+    "scope": "RPG_BAT:func_801454F0",
+    "variant": "baseline",
+    "score": 20,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_801454F0",
+    "variant": "state-pointer",
+    "score": 24,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_801454F0",
+    "variant": "motion-pointer",
+    "score": 20,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_801454F0",
+    "variant": "one-counter-local",
+    "score": 20,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_801454F0",
+    "variant": "role-locals",
+    "score": 20,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_80148B08",
+    "variant": "baseline",
+    "score": 10,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_80148B08",
+    "variant": "state-pointer",
+    "score": 12,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_80148B08",
+    "variant": "motion-pointer",
+    "score": 0,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_80148B08",
+    "variant": "motion-direct",
+    "score": 0,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_8013AF1C",
+    "variant": "baseline",
+    "score": 10,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_8013AF1C",
+    "variant": "state-pointer",
+    "score": 10,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_8013AF1C",
+    "variant": "game-pointer",
+    "score": 10,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_8013AF1C",
+    "variant": "unsigned-bytes",
+    "score": 6,
+    "matching_claim": false
+  },
+  {
+    "scope": "RPG_BAT:func_8013AF1C",
+    "variant": "one-counter-local",
+    "score": 6,
+    "matching_claim": false
+  }
+]

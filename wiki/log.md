@@ -14699,3 +14699,10 @@ Clarified [[tickets/T-14501-remaining-draft-proof]] byte accounting: frozen inve
 ## [2026-10-15] ticket | T-14700 reviewed draft archive complete
 
 Standards and spec review rechecked ce44a7e0 and resolved both findings, with no further actionable findings. All fifteen compile and artifact hashes/source snapshots validate; failure exit behavior verified. Retained original census and current repair environment fingerprints. Moved [[tickets/T-14700-reserved-type-repairs]] to Done for the draft-only scope; no literal-byte or SHA1 promotion claim.
+## [2026-10-15] ticket | Revisit three RPG_BAT diagnostic near matches
+
+Started [[tickets/T-14900-rpg-near-matches]] after reading [[tickets/T-13300-rpg-families]] and T-9780 evidence. Coordinate separate TU ownership with proof lane; preserve immutable draft attempts and existing C. Probe genuine typed aggregate pointers before further expression changes.
+
+## [2026-10-15] build | Match RPG motion through recovered aggregate aliasing
+
+[[tickets/T-14900-rpg-near-matches]]: func_80148B08 passes 1,128 default linked bytes and RPG_BAT SHA1; existing RpgMotion20 aliases preserve EC50 store before EC6C load. Added canonical u8 flag declarations and genuine void prototype. 454F0 remains twenty register rows, AF1C six after corrected u8 stores; bounded typed-pointer/local-lifetime probes do not improve them. Original attempts and preexisting C unchanged. Ticket moves In Review; [[matching-notes]] updated.
