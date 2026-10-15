@@ -14932,3 +14932,7 @@ T-11690). TT stays excluded (issue #2).
 ## [2026-10-15] ticket | T-11640 created
 
 Created [[tickets/T-11640-w1-ovl-taiiku-80138950]] (In Progress) in worktree w1-p08: wave 1 package for src/ovl/TAIIKU/80138950.c.
+
+## [2026-10-15] ticket | T-11640 resumed in wave 2 (w2-r08)
+
+Merged branch w1-p08 into w2-r08 (7 TAIIKU matches; main's func_80139330 kept and renamed to the TaiikuBall layout); TAIIKU sha1 OK. [[tickets/T-11640-w1-ovl-taiiku-80138950]] stays In Progress under [[tickets/T-16200-matching-wave-2]].
