@@ -2823,8 +2823,6 @@ void func_8013C700(void) {
     func_80084D3C();
 }
 
-/* NON_MATCHING: T-11030, 2 insns: the two lui of D_800CA2F8 and D_800E6280+0x728 are in the other order (the original reads D_800E69A8 as its own symbol, as1 orders the lui by symbol). */
-#ifdef NON_MATCHING
 s32 func_8013C7D0(void) {
     GameState *g = &D_800E6280;
     s32 any;
@@ -2867,7 +2865,7 @@ s32 func_8013C7D0(void) {
         func_80042940(0x40);
         return 0;
     }
-    if ((g->unk_728[0] == D_800CA2F8) && (g->unk_728[0] == g->unk_728[1]) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E >= 0x60) && (D_800CA2F8 != 0)) {
+    if ((g->unk_728[0] == D_800CA2F8) && (g->unk_728[0] == g->unk_728[1]) && !((DateFlags0F4 *)&g->unk_0F4)->b20 && (g->unk_03E >= 0x60) && ((*(s8 *)&D_800CA2F8) != 0)) {
         D_80122CE0 = 4;
         g->unk_56C[0x55] = 1;
         g->unk_71E &= 8;
@@ -2883,9 +2881,6 @@ s32 func_8013C7D0(void) {
     }
     return func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013C7D0);
-#endif
 
 void func_8013CADC(void) {
     cd_read_sectors(1U, 0x801B0000, 0xAFCA);
@@ -3585,12 +3580,10 @@ void func_8013E9BC(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11140, 3 diff lines (beq v0, v1 vs beq v1, v0 at rows 26, 43, 61) */
-#ifdef NON_MATCHING
 s32 func_8013E9F8(void) {
     /* FAKE: 4 spare bytes reproduce prev's stack home at 0x28(sp). T-11140 */
     s32 pad;
-    s32 prev;
+    u32 prev;
 
     prev = D_800E6280.unk_110A;
     if (D_800CA2FC == 1) {
@@ -3629,9 +3622,6 @@ s32 func_8013E9F8(void) {
     }
     func_8013C190();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013E9F8);
-#endif
 
 s32 func_8013EB1C(void) {
     if (D_800CA2FC == 1) {

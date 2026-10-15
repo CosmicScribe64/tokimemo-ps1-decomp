@@ -865,10 +865,9 @@ void func_80135A98(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11010, 13 differing lines: uopt promotes the global D_8014CC70 into $v1 (regdiff: priority 0.5, conflicts with the unk_F88 selector in $v0) where the original reloads it into $v0 */
-#ifdef NON_MATCHING
 void func_80135BB4(void) {
     u8 cur;
+    u8 temp;
 
     func_8006BA40();
     func_80133D94();
@@ -881,7 +880,7 @@ void func_80135BB4(void) {
     }
     func_80135650();
     if (D_800E6280.unk_F88 & 0x40) {
-        cur = D_8014CC70;
+        cur = (*(u16 *)&D_8014CC70);
         if (cur == 0xC) {
             cur = 6;
         }
@@ -890,7 +889,8 @@ void func_80135BB4(void) {
             D_8014CC70 = cur - 1;
         }
     } else if (D_800E6280.unk_F88 & 0x20) {
-        if (D_8014CC70 < 6 && D_8014CCC0 >= 0 && D_8014CCC4 >= 0) {
+        temp = D_8014CC70;
+        if (temp < 6 && D_8014CCC0 >= 0 && D_8014CCC4 >= 0) {
             func_80134248(1);
             func_80134B18();
         }
@@ -941,9 +941,6 @@ void func_80135BB4(void) {
         func_8004284C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135BB4);
-#endif
 
 void func_80135E58(void) {
 

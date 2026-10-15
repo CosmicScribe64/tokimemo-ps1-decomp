@@ -456,11 +456,11 @@ void func_80136B18(void) {
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136BB4);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, structure matches (promoted D_8014929C written back after the 9298 update); only registers differ: the original never uses $v0 (v1 = D_8014929C, a0 = f10, a1 = limit), 14 lines */
 s32 func_80136DA4() {
+    s32 temp;
     D_8014929C += D_80149208.f10;
-    if (D_801491E8 < D_8014929C) {
+    temp = (*(u32 *)&D_801491E8);
+    if (temp < D_8014929C) {
         D_8014929C = D_801491E8;
     }
     if (D_8014929C < 0 || (D_80149208.f10 < 0 && D_80149208.f22 < -0x9F)) {
@@ -470,9 +470,6 @@ s32 func_80136DA4() {
     func_80085F0C(((D_80149298.halves.high >> 1)) % 640, 0xF, 0, 0x70, 0x280);
     func_80085F0C(D_80149298.halves.high & 0x7F, 0xF, 0x70, 0x80, 0x80);
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136DA4);
-#endif
 
 void func_80136E80(void) {
     func_80136EC0();
@@ -746,11 +743,9 @@ s32 func_80138680(s32 arg0, s32 arg1) {
     return slot;
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, only the ugen temporaries differ ($t1/$t2/$t3/$t4 against $t3/$t4/$t5/$t8: the original consumes two more expression temporaries per loop), 6 lines */
 void func_80138800(void) {
     s32 i;
-    s32 t;
+    s16 t;
 
     if (D_80149208.f0C >= 0xBU) {
         D_80149208.f03 += 1;
@@ -768,9 +763,6 @@ void func_80138800(void) {
         *(s16 *)(D_8011ECD0 + i * 0x44 + 0x1C84) = (D_80149208.f03 & 1) + t;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80138800);
-#endif
 
 s16 func_801388E4(s32 arg0) {
     s32 key;

@@ -1173,8 +1173,6 @@ s32 func_80147A08(void) {
     func_80049A40(0, -0x78, 0xA0, 0xA0, 0xD, 0xFFFFFF, 1);
 }
 
-/* NON_MATCHING: T-10860, ten a0/a1 choices remain after regdiff and permuter. */
-#ifdef NON_MATCHING
 s32 func_80147A80(void) {
     /* FAKE: unused homes preserve the 0x38 frame and spill at sp+0x28. T-10860. */
     s32 unused;
@@ -1192,6 +1190,8 @@ s32 func_80147A80(void) {
     }
     D_8014D1B4[D_800E6280.unk_10F8 & 3] = level;
     average = (D_8014D1B4[0] + D_8014D1B4[1] + D_8014D1B4[2] + D_8014D1B4[3]) / 4;
+    if (average) {} /* FAKE: empty test splits the live range of average. T-11170 */
+    if (average) {} /* FAKE: empty test splits the live range of average. T-11170 */
     frame = average / 10;
     D_8014D1B0 = level;
     if (frame >= 4) {
@@ -1214,9 +1214,6 @@ s32 func_80147A80(void) {
     }
     D_80120668 = 0;
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80147A80);
-#endif
 
 void func_80147BEC(void) {
     s32 temp_v0;
@@ -1782,8 +1779,6 @@ void func_80149118(void) {
     }
 }
 
-/* NON_MATCHING: T-10860, ten a0/a1 choices remain after regdiff and permuter. */
-#ifdef NON_MATCHING
 s32 func_80149144(void) {
     /* FAKE: unused homes preserve the 0x38 frame and spill at sp+0x28. T-10860. */
     s32 unused;
@@ -1801,6 +1796,8 @@ s32 func_80149144(void) {
     }
     D_8014D1B4[D_800E6280.unk_10F8 & 3] = level;
     average = (D_8014D1B4[0] + D_8014D1B4[1] + D_8014D1B4[2] + D_8014D1B4[3]) / 4;
+    if (average) {} /* FAKE: empty test splits the live range of average. T-11170 */
+    if (average) {} /* FAKE: empty test splits the live range of average. T-11170 */
     frame = average / 10;
     D_8014D1B0 = level;
     if (frame >= 4) {
@@ -1822,9 +1819,6 @@ s32 func_80149144(void) {
     }
     D_801206AC = 4;
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80149144);
-#endif
 
 void func_801492B0(void) {
     D_801206D9 = 9;
