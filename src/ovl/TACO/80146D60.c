@@ -48,43 +48,24 @@ void func_80146E3C(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80146F74);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, saved-register order differs: the original gives the end pointer (D_80128880) the first free $s register and the table pointer the next; about 30 lines (a K&R definition fixes the prologue but the header check rejects it) */
+/* NON_MATCHING: T-11300, 4 lines: before the second loop the original copies arg0 to $s4 (`move s4,s3; lw s6,4(s4); addiu s4,s4,8`), IDO folds the copy and reads 4(s3); a pointer local for it is folded too (funcdiff also shows one lui row from its HI16 pairing, not a real difference) */
 void func_801471D0(s32 arg0) {
-    TcObj50 *p;
-    Tc10 *q;
-    Tc10 *r;
-    TcObj50 *o;
-    s32 a;
     s32 i;
     u32 n;
 
     arg0 += 4;
     func_8009B3C0(arg0);
-    p = D_80127480;
-    q = D_80127080;
-    do {
-        func_8009B430(arg0 + 8, (u8 *)q, 0);
-        q->unk4[0] = (s32)p;
-        p++;
-        q++;
-        q[-1].unk0 = 0x80000000;
-    } while (p < (TcObj50 *)D_80128880);
+    for (i = 0; i < 64; i++) {
+        func_8009B430(arg0 + 8, (u8 *)&D_80127080[i], 0);
+        D_80127080[i].unk4[0] = (s32)&D_80127480[i];
+        D_80127080[i].unk0 = 0x80000000;
+    }
     func_8009B3C0(arg0);
     n = *(u32 *)(arg0 + 4);
-    i = 0;
-    if (n != 0) {
-        r = (Tc10 *)((u8 *)D_80127080 + 0x10);
-        o = (TcObj50 *)((u8 *)D_80127480 + 0x50);
-        q = D_80127080;
-        do {
-            func_8009B430(arg0 + 8, (u8 *)r, i);
-            i++;
-            q->unk4[3] = (s32)o;
-            o++;
-            q++;
-            r++;
-            q->unk0 = 0x80000000;
-        } while ((u32)i < n);
+    for (i = 0; i < n; i++) {
+        func_8009B430(arg0 + 8, (u8 *)&D_80127080[i + 1], i);
+        D_80127080[i + 1].unk4[0] = (s32)&D_80127480[i + 1];
+        D_80127080[i + 1].unk0 = 0x80000000;
     }
 }
 #else
