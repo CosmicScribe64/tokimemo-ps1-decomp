@@ -14523,3 +14523,6 @@ T14500 frozen48362009census:1066remainingfunctions/866424bytes,including125guard
 
 ## [2026-10-15] decision | Separate exhaustive generation and proof lanes
 T14500 census resumed beyondBUNKAKEN intoBUNKASAI (about44/1066); first12zero-scorecandidates/8384bytes have affectedchecksum passing but remain pendingcomplete literalproof. Assigned Sol6.1medium proofworker in/private/tmp/t14500-proof to validate/commit batches while generation continues frozencontext uninterrupted. Sharedimmutableinputs retained; proofgeneratedASM private to avoid sharedmutations. No candidatebytes added tocoverageuntilproof and integration. [[tickets/T-12600-byte-coverage-families]] remains80%coordination.
+
+## [2026-10-15] build | T-14200 resolve initializer review findings
+[[main-family-results]] and [[game-state]] record actual packed birthday/date and character-nibble fields replacing the first checkpoint's masks. Prototype moved inside its guard and pointer casts removed. Both default literal functions and MAIN SHA1 pass. Initial review findings addressed; final re-review pending in [[tickets/T-14200-main-source-families]].

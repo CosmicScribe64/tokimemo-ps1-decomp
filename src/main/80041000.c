@@ -154,13 +154,13 @@ void func_800412E0(s32 arg0) {
     func_8004482C();
     menu_bar_color(0x10, 0, 0, 8);
     func_80041840();
-    strncpy((s32) D_800E6280.unk_0C4, (s32) "ときめき", 0x10);
-    strncpy((s32) D_800E6280.unk_0D4, (s32) "アルバ", 8);
-    strncpy((s32) D_800E6280.unk_0DC, (s32) "ム作成", 8);
-    strncpy((s32) D_800E6280.unk_0E4, (s32) "後未セーブ", 0x10);
-    /* The flag word is updated through byte and halfword views. T-14200. */
-    *(u8 *)&D_800E6280.unk_0F8 = (*(u8 *)&D_800E6280.unk_0F8 & 0xFFF0) | 1;
-    *(u16 *)&D_800E6280.unk_0F8 = (*(u16 *)&D_800E6280.unk_0F8 & 0xFE0F) | 0x10;
+    strncpy(D_800E6280.unk_0C4, "ときめき", 0x10);
+    strncpy(D_800E6280.unk_0D4, "アルバ", 8);
+    strncpy(D_800E6280.unk_0DC, "ム作成", 8);
+    strncpy(D_800E6280.unk_0E4, "後未セーブ", 0x10);
+    /* Birthday fields share the existing word view. T-14200. */
+    ((GsDateBits *)&D_800E6280.unk_0F8)->month = 1;
+    ((GsDateBits *)&D_800E6280.unk_0F8)->day = 1;
     func_8006BC28(0);
     func_8006BD6C(0);
     func_8006C848(1);
@@ -315,7 +315,7 @@ void func_80041C2C(void) {
         g->unk_1BC[i].unk_0C.b[3] = 0;
         g->unk_1BC[i].unk_0C.f.b7 = 0;
         g->unk_1BC[i].unk_0C.f.f9 = 0;
-        g->unk_1BC[i].unk_0C.b[2] = (g->unk_1BC[i].unk_0C.b[2] & 0xFF0F) | 0xB0;
+        g->unk_1BC[i].unk_0C.f.f20 = 11;
     }
     g->unk_1BC[0].unk_0C.f.b1 = 1;
     g->unk_1BC[12].unk_0C.f.b1 = 1;
@@ -323,34 +323,34 @@ void func_80041C2C(void) {
     g->unk_1BC[0].unk_0C.f.b6 = 1;
     g->unk_1BC[0].unk_0C.f.b7 = 1;
     g->unk_1BC[12].unk_0C.f.b3 = 1;
-    g->unk_1BC[0].unk_10.b[0] = (g->unk_1BC[0].unk_10.b[0] & 0xFFF0) | 2;
-    g->unk_1BC[0].unk_10.h[0] = (g->unk_1BC[0].unk_10.h[0] & 0xFE0F) | 224;
-    g->unk_1BC[1].unk_10.b[0] = (g->unk_1BC[1].unk_10.b[0] & 0xFFF0) | 2;
-    g->unk_1BC[1].unk_10.h[0] = (g->unk_1BC[1].unk_10.h[0] & 0xFE0F) | 48;
-    g->unk_1BC[2].unk_10.b[0] = (g->unk_1BC[2].unk_10.b[0] & 0xFFF0) | 7;
-    g->unk_1BC[2].unk_10.h[0] = (g->unk_1BC[2].unk_10.h[0] & 0xFE0F) | 112;
-    g->unk_1BC[3].unk_10.b[0] = (g->unk_1BC[3].unk_10.b[0] & 0xFFF0) | 9;
-    g->unk_1BC[3].unk_10.h[0] = (g->unk_1BC[3].unk_10.h[0] & 0xFE0F) | 480;
-    g->unk_1BC[4].unk_10.b[0] = (g->unk_1BC[4].unk_10.b[0] & 0xFFF0) | 1;
-    g->unk_1BC[4].unk_10.h[0] = (g->unk_1BC[4].unk_10.h[0] & 0xFE0F) | 208;
-    g->unk_1BC[5].unk_10.b[0] = (g->unk_1BC[5].unk_10.b[0] & 0xFFF0) | 6;
-    g->unk_1BC[5].unk_10.h[0] = (g->unk_1BC[5].unk_10.h[0] & 0xFE0F) | 208;
-    g->unk_1BC[6].unk_10.b[0] = (g->unk_1BC[6].unk_10.b[0] & 0xFFF0) | 12;
-    g->unk_1BC[6].unk_10.h[0] = (g->unk_1BC[6].unk_10.h[0] & 0xFE0F) | 48;
-    g->unk_1BC[7].unk_10.b[0] = (g->unk_1BC[7].unk_10.b[0] & 0xFFF0) | 11;
-    g->unk_1BC[7].unk_10.h[0] = (g->unk_1BC[7].unk_10.h[0] & 0xFE0F) | 240;
-    g->unk_1BC[8].unk_10.b[0] = (g->unk_1BC[8].unk_10.b[0] & 0xFFF0) | 10;
-    g->unk_1BC[8].unk_10.h[0] = (g->unk_1BC[8].unk_10.h[0] & 0xFE0F) | 272;
-    g->unk_1BC[9].unk_10.b[0] = (g->unk_1BC[9].unk_10.b[0] & 0xFFF0) | 9;
-    g->unk_1BC[9].unk_10.h[0] = (g->unk_1BC[9].unk_10.h[0] & 0xFE0F) | 80;
-    g->unk_1BC[10].unk_10.b[0] = (g->unk_1BC[10].unk_10.b[0] & 0xFFF0) | 5;
-    g->unk_1BC[10].unk_10.h[0] = (g->unk_1BC[10].unk_10.h[0] & 0xFE0F) | 256;
-    g->unk_1BC[11].unk_10.b[0] = (g->unk_1BC[11].unk_10.b[0] & 0xFFF0) | 3;
-    g->unk_1BC[11].unk_10.h[0] = (g->unk_1BC[11].unk_10.h[0] & 0xFE0F) | 48;
-    g->unk_1BC[12].unk_10.b[0] = (g->unk_1BC[12].unk_10.b[0] & 0xFFF0) | 8;
-    g->unk_1BC[12].unk_10.h[0] = (g->unk_1BC[12].unk_10.h[0] & 0xFE0F) | 368;
-    g->unk_1BC[13].unk_10.b[0] = (g->unk_1BC[13].unk_10.b[0] & 0xFFF0) | 4;
-    g->unk_1BC[13].unk_10.h[0] = (g->unk_1BC[13].unk_10.h[0] & 0xFE0F) | 64;
+    g->unk_1BC[0].unk_10.date.month = 2;
+    g->unk_1BC[0].unk_10.date.day = 14;
+    g->unk_1BC[1].unk_10.date.month = 2;
+    g->unk_1BC[1].unk_10.date.day = 3;
+    g->unk_1BC[2].unk_10.date.month = 7;
+    g->unk_1BC[2].unk_10.date.day = 7;
+    g->unk_1BC[3].unk_10.date.month = 9;
+    g->unk_1BC[3].unk_10.date.day = 30;
+    g->unk_1BC[4].unk_10.date.month = 1;
+    g->unk_1BC[4].unk_10.date.day = 13;
+    g->unk_1BC[5].unk_10.date.month = 6;
+    g->unk_1BC[5].unk_10.date.day = 13;
+    g->unk_1BC[6].unk_10.date.month = 12;
+    g->unk_1BC[6].unk_10.date.day = 3;
+    g->unk_1BC[7].unk_10.date.month = 11;
+    g->unk_1BC[7].unk_10.date.day = 15;
+    g->unk_1BC[8].unk_10.date.month = 10;
+    g->unk_1BC[8].unk_10.date.day = 17;
+    g->unk_1BC[9].unk_10.date.month = 9;
+    g->unk_1BC[9].unk_10.date.day = 5;
+    g->unk_1BC[10].unk_10.date.month = 5;
+    g->unk_1BC[10].unk_10.date.day = 16;
+    g->unk_1BC[11].unk_10.date.month = 3;
+    g->unk_1BC[11].unk_10.date.day = 3;
+    g->unk_1BC[12].unk_10.date.month = 8;
+    g->unk_1BC[12].unk_10.date.day = 23;
+    g->unk_1BC[13].unk_10.date.month = 4;
+    g->unk_1BC[13].unk_10.date.day = 4;
 }
 
 void func_80041F48(void) {

@@ -124,7 +124,15 @@ typedef struct Rec34 {
 
 /* One word read as a whole and through its halves and bytes: the original tests bit-fields of these
  * words with lw and shifts, and IDO-style narrowed loads (lbu, then a shift) of single bytes. */
+/* T-14200: month/day packed in the birthday word and Rec38 +0x10. */
+typedef struct GsDateBits {
+    /* 0x00 */ u32 month : 4;
+    u32 day : 5;
+    u32 rest : 23;
+} GsDateBits; /* size 0x04 */
+
 typedef union GsWord {
+    /* 0x00 */ GsDateBits date;
     /* 0x00 */ s32 w;
     /* 0x00 */ u32 u;
     /* 0x00 */ u16 h[2];
@@ -165,7 +173,9 @@ typedef struct CharFlags {
     /* 0x00 */ u32 b12 : 1;
     /* 0x00 */ u32 b13 : 1;
     /* 0x00 */ u32 b14 : 1;
-    /* 0x00 */ u32 rest : 17;
+    /* 0x00 */ u32 f15 : 5;
+    u32 f20 : 4;
+    u32 rest : 8;
 } CharFlags; /* size 0x04 */
 
 /* The Rec38 flag word: whole, by halves and bytes, or by bits. */
