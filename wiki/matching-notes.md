@@ -5261,3 +5261,32 @@ BUNKASAI func_801431D4 had a two-row resolved difference entirely in one label r
 ### T-15600: packed record load and old-counter branch timing
 
 [[tickets/T-15600-fresh-near-matches]] accepts RENSYU func_801320E0 (688 literal linked bytes) and SHOUGATU func_80137144 (568), with both overlay SHA1 checks. RENSYU's word inference at D_800E68EE has wrong width/scaling; actual target lhu accesses bytes +2/+3 of the existing four-byte GameState.unk_66C record. SHOUGATU compares the old counter then increments, faithfully represented by `counter++ >= 0x401U`; the automatic postincrement rewrite had moved the comparison to the new value. These are genuine storage and control-flow corrections. RPG_BAT80155A70 remains a single delay-slot NOP gap, archived without artificial shaping.
+
+## T-16210: RPG_BAT wave-2 package w2-p01 (5 of 5 matched)
+
+[[tickets/T-16210-w2-rpg_bat-801454f0]] matched RPG_BAT `func_80155A70`, `func_8013AF1C`, `func_801454F0`,
+`func_801568A4` and `func_8013AD50` (5,072 bytes) from the T-14500 census drafts; the four owned files
+(`801454F0.c`, `80155A70.c`, `80156870.c`, `8013AD50.c`) hold no asm any more.
+
+- **Callers saw `func_8013E7C0` and `func_8013E97C` as implicit `int`.** A counter `D += k; if (D >= n)` right after
+  a call to one of them is in `$v1` in the original and in `$v0` with the header's `void` prototype (regdiff: "an
+  interfering range holds `$v0`"). The call's `$v0` result only exists for an `int` callee, and it moves the counter's
+  range off `$v0`. The definitions in `8013E4D0.c` stay `void`, so a file matched with the int view defines
+  `RPG_BAT_OVERRIDE_<name>` before its includes and declares `s32 <name>();` itself; `RPG_BAT.h` wraps the two
+  prototypes in `#ifndef RPG_BAT_OVERRIDE_<name>` (same shape as `MAIN_API_OVERRIDE_`). Matched `func_801568A4`
+  (`func_8013E7C0`) and `func_801454F0` (`func_8013E97C`). The same symptom in other RPG_BAT drafts (a counter or
+  stored value in `$v1` where the draft has `$v0`, after a call to a header-`void` function) is worth this test first:
+  copy the C file and `include/ovl/RPG_BAT.h` to `build/scratch/`, change the prototype in the copy and run
+  `regdiff.py --src` on the copy.
+- **`func_80155A70`: `s32` with no return.** The single `nop` in a `bgez` delay slot (T-15600 left it as a gap) is the
+  K&R implicit-int shape: `v0` is live at the exit, so as1 does not move the next block's `lui v0` into the slot.
+- **`func_8013AF1C`:** both scroll cases written as `D_8015EDB4 += 3; if (D_8015EDB4 >= 0x21)` keep the first load of
+  case 1 in `$v0`; m2c's temporaries (or the compound form in one case only) put it in `$a1`.
+- **`func_8013AD50`: one base symbol, three FAKE views.** The split `lui t8; lw t9` of `D_8015ED98` needs the
+  absolute address (as `func_8013D030`, T-4010); the switch load of `D_8015EDAC` and the load of `D_8015EDA0` stay
+  after the stores to `D_8015EDB4`/`D_8015ED98` only when both accesses name one symbol (`D_8015EDA8[3]`,
+  `(&D_8015ED98)[2]`, T-4070). With `D_8015ED8C[1]` (T-4070) this is more evidence that the words from about
+  `D_8015ED8C` to `D_8015EDB8` were one aggregate in the original, not the separate variables `8014E780.c` defines.
+- Census drafts were close: after placing the body only types (`D_8015EC60..6C` are `D_8015EC58.unk_08..14`,
+  `RpgRec18`), new `u8` main-exe bytes (`D_80121316`, `D_8012135A`, `D_80120E0A`) and the prototypes of two helpers
+  defined below their caller (`func_8013B2F0`, `func_8013B534`) were missing.

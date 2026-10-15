@@ -14934,3 +14934,11 @@ T-11690). TT stays excluded (issue #2).
 Opened [[tickets/T-16210-w2-rpg_bat-801454f0]] (In Progress) under [[tickets/T-16200-matching-wave-2]]: five RPG_BAT
 functions from the T-14500 census drafts, owned files `src/ovl/RPG_BAT/801454F0.c`, `src/ovl/RPG_BAT/80155A70.c`,
 `src/ovl/RPG_BAT/80156870.c`, `src/ovl/RPG_BAT/8013AD50.c`.
+
+## [2026-10-15] ticket | T-16210 Wave 2 package w2-p01 to In Review
+
+[[tickets/T-16210-w2-rpg_bat-801454f0]] moved to In Review: 5 of 5 RPG_BAT functions matched (5,072 bytes):
+`func_80155A70`, `func_8013AF1C`, `func_801454F0`, `func_801568A4`, `func_8013AD50`. New finding in
+[[matching-notes]]: callers of `func_8013E7C0`/`func_8013E97C` saw an implicit int declaration (counter in `$v1`
+after the call); `include/ovl/RPG_BAT.h` gets an `RPG_BAT_OVERRIDE_<name>` guard for them. Owned files
+`src/ovl/RPG_BAT/801454F0.c`, `80155A70.c`, `80156870.c`, `8013AD50.c` hold no asm any more.

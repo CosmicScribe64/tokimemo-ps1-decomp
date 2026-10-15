@@ -25,8 +25,6 @@ kanban-plugin: board
 ## In Progress
 - [ ] [[tickets/T-16200-matching-wave-2|T-16200 Matching wave 2]]
 
-- [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
-
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
@@ -54,6 +52,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210 Wave 2 package w2-p01]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
