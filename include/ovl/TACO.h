@@ -530,7 +530,7 @@ void func_80148D6C(void);
 void func_8013E778();
 void func_8013EAA4();
 void func_801428DC(void);
-void func_80142FE8(void);
+u8 func_80142FE8(void);
 void func_80142AF0(void);
 void func_80142EC4(void);
 void func_80142EE4(void);

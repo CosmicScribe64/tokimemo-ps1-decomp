@@ -95,4 +95,25 @@ u8 func_80142F34(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80142820", func_80142FE8);
+u8 func_80142FE8(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        func_8004482C();
+        func_800674B0();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        if (D_800B3220 == 0) {
+            func_80053CE0();
+        } else {
+            func_8004284C();
+        }
+        func_8004284C();
+        break;
+    }
+}
