@@ -110,7 +110,6 @@ extern s32 D_8014A3B4;
 extern s32 D_8014A3B8;
 
 extern u8 D_8014A454[];
-extern s16 D_80149984[2]; /* [0] x, [1] y; defined in 80138950.c */
 extern s32 D_80149940;
 typedef struct TaiikuPair {
     /* 0x0 */ s16 unk0;
@@ -433,7 +432,6 @@ extern u8 D_8014A400[];
 #define OVL_TAIIKU_T10010_SCROLL_POSITION
 void func_8014430C(void);
 extern TaiikuPosition D_8014A1CC; /* Scroll position; signed high half at +2. T-10010. */
-extern s32 D_8014997C;
 void func_8013D254(void);
 extern s32 D_80149948;
 
@@ -449,7 +447,6 @@ typedef struct {
     s32 unk_08;
     s32 unk_0C;
 } TaiikuA0; /* size 0x10 */
-extern Taiiku2x16 D_80149970;
 extern TaiikuA0 D_801499A0;
 extern u8 D_801499DC;
 extern s16 D_801499E0;
@@ -467,9 +464,20 @@ typedef struct {
     s32 unk_04;
     s32 unk_08;
 } Taiiku3s32; /* size 0xC */
-extern Taiiku2s32 D_80149968;
-extern Taiiku2s32 D_80149974;
-extern Taiiku2s16 D_80149980;
+/* 0x20-byte block at D_80149968 (T-11640): func_8013D114 reads the high halves of the 16.16 words at
+ * 0x14 and 0x18 through the block's base address, so the words are fields of one object. */
+typedef struct {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ u16 unk_08;
+    /* 0x0A */ u16 unk_0A;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+    /* 0x1C */ s16 unk_1C[2]; /* [0] x, [1] y */
+} TaiikuBall; /* size 0x20 */
+extern TaiikuBall D_80149968;
 extern Taiiku3s32 D_80149990;
 
 
