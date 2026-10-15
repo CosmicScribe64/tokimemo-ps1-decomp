@@ -14169,3 +14169,9 @@ SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passe
 
 ## [2026-10-15] build | TACO stack-slot evidence retained
 [[tickets/T-13400-taco-control-flow]]: bounded declaration/lifetime tests improve52to44rows. Best candidate matches instruction count but differs in frame size, maskspill home and divide registers. No production promotion or coverage claim.
+
+## [2026-10-15] build | ETC career checkpoint
+[[tickets/T-13101-etc-career-family]] adds four functions / 1132 literal linked bytes, ETC SHA1 OK. Two bounded failures remain assembly; evidence and scores recorded in ticket.
+
+## [2026-10-15] ticket | Claim ETC exam family
+Created [[tickets/T-13102-etc-exam-family]] for medium state handlers and work-memory layout transfer.

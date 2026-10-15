@@ -306,3 +306,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13200-event-family-transfer|T-13200]] GYOZI/SHOUGATU bounded event family transfer.
 
 - [[tickets/T-13201-event-selector-stores|T-13201]] Event selector direct-store family.
+- [[tickets/T-13102-etc-exam-family|T-13102]] ETC exam handlers.
