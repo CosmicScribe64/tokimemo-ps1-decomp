@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
 
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
@@ -63,6 +62,9 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
+
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
