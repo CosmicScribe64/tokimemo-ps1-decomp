@@ -27,6 +27,8 @@ Isolated branch codex/build-deps-13500 at origin/main 5ccb8765. Own configure.py
 
 - Initial inspection: main objects depend on every header; all C objects depend normally on headers.ok. IDO supports -M but rejects -MD. Its -M output is one target/dependency per line, with unescaped path spaces. asm-processor compiles a temporary transformed source with the input directory added after -Iinclude; dependency discovery must use that same input and search path.
 
-- Validation: 8 new synthetic Ninja integration tests and 17 existing cc tests pass in tokimemo-decomp-arm64. Full updated build passed 27/27 binary checks; next build no-op. Baseline also 27/27.
+- Validation: 11 new synthetic Ninja integration tests and 17 existing cc tests pass in tokimemo-decomp-arm64. Full updated build passed 27/27 binary checks; next build no-op. Baseline also 27/27.
 - Baseline/updated dry-run compiles/tasks: source 1/5 -> 1/6 (header checker newly reruns); main_api.h 443/526 -> 442/525; ETC.h 443/526 -> 13/18. Actual updated source/ETC builds 8.981s/12.990s with checksums OK. All ETC compiles belong to ETC; no main/other overlay link.
 - Implementation ready for standards/spec review against 5ccb8765; no production C/header or toolchain/matching-pass changes. See [[build-system]] for the dependency contract and test scope.
+
+- Review fixes: path membership inventory now conservatively invalidates all C on file additions/removals (ordinary edits stay selective); missing watched directories have phony producers. Configure restat and co-output recovery avoid stale/no-op regeneration. New regressions cover higher-priority source-local/nested shadows, removed directories, missing inventory and unchanged-inventory regeneration. 131 related checker/prototype/padding/rodata/layout tests pass.

@@ -162,17 +162,24 @@ object. Its stamp depends on all project headers, source files and checker
 implementation files, so source edits also trigger validation. Changing its
 stamp alone does not invalidate clean objects. The configure generator watches
 include/src directories to refresh the file lists after additions or removals.
+Missing directory inputs have phony producers, so directory removal can still
+regenerate the graph. A configure co-output, `build/include-files.txt`, records
+file names under include/src and changes only when membership changes. All C
+objects depend on it: adding/removing files conservatively recompiles all C to
+cover new higher-priority include shadows that compiler depfiles cannot record.
+Ordinary content edits remain selective. Configure uses restat so an unchanged
+inventory does not cause repeated regeneration; deleting it is recoverable.
 Assembly macro/prelude inputs remain explicit compile dependencies because C
 preprocessing does not see the assembler's includes.
 
 Regression command (existing Docker image):
 `python3 -m unittest discover -s tools -p test_build_deps.py -v`.
-Eight synthetic Ninja cases use real IDO/GCC compilation and the production
+Eleven synthetic Ninja cases use real IDO/GCC compilation and the production
 configure C/checker edges, with unrelated split/link/checksum/layout stages
 replaced by synthetic outputs. They cover source/shared/overlay/nested/conditional
 headers, source-local header lookup, missing active headers, Shift-JIS copies,
-escaped depfile filenames, ASM/rodata/trailing-pad inputs, failed validation and
-no-op rebuilds. `tools/test_cc.py` retains the compiler and EOVERFLOW regressions.
+escaped depfile filenames, ASM/rodata/trailing-pad inputs, failed validation, added source-local/nested include shadows, directory removal,
+deleted inventories and no-op regeneration/rebuilds. `tools/test_cc.py` retains the compiler and EOVERFLOW regressions.
 
 At 5ccb8765 (443 C objects), baseline versus updated dry-run touch benchmarks:
 

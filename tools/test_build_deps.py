@@ -58,6 +58,16 @@ class NinjaDependencies(unittest.TestCase):
         self.write("asm/nonmatchings/main/a/main_a.s", "endlabel main_a\n")
         for path in ("config/SLPM_86.053.yaml", "config/overlays.txt", "config/reloc_addrs.txt", "config/symbol_addrs.txt", "config/SLPM_86.053.sha1", "config/symbol_addrs_obin.txt", "config/symbol_addrs_sdk.txt", "config/symbol_addrs_types.txt", "config/overlays/ALPHA.yaml", "config/overlays/BETA.yaml", "config/overlays/ALPHA.sha1", "config/overlays/BETA.sha1", "config/migrate_globals.txt", "tools/prepare_disc.py", "tools/identify_version.py", "tools/extract_disc.py", "config/versions.txt", "tools/check_symbols.py", "tools/syms_to_ld.py", "tools/data_pieces.py", "tools/migrate_globals.py", "tools/aggregate_audit.py", "tools/asm.py", "configure.py"):
             self.write(path, "")
+        bootstrap = ("import os, sys\n"
+                     "os.chdir(%r)\n" % str(ROOT)
+                     + "sys.path.insert(0, %r)\n" % str(ROOT / "tools")
+                     + "from test_build_deps import NinjaDependencies\n"
+                     + "NinjaDependencies.setUpClass()\n"
+                     + "os.chdir(%r)\n" % str(self.root)
+                     + "case = NinjaDependencies()\n"
+                     + "case.sources = %r\n" % self.sources
+                     + "case.generate(gcc=os.path.exists('gcc-mode'))\n")
+        self.write("configure.py", bootstrap)
         self.generate()
 
     def write(self, name, text):
@@ -75,8 +85,6 @@ class NinjaDependencies(unittest.TestCase):
                     command = "mkdir -p build/ovl && touch $out"
                 elif name in ("ld", "old"):
                     command = "cat $in > $out"
-                elif name == "configure":
-                    command = "touch build.ninja"
                 elif name == "objcopy":
                     command = "cp $in $out"
                 super().rule(name, command=command, **kwargs)
@@ -87,6 +95,7 @@ class NinjaDependencies(unittest.TestCase):
 
         toolchains = {s: ["ido", "5.3"] for s in self.sources[:2]}
         if gcc:
+            Path("gcc-mode").touch()
             toolchains[self.sources[1]] = ["gcc", "2.8.1-psx", "2.79"]
         with patch.object(configure.ninja_syntax, "Writer", FixtureWriter), patch.object(configure, "C_FILES", toolchains), patch.object(configure, "ASM_FILES", []), patch.object(configure, "HEADER_FILES", sorted(str(p) for p in Path("include").rglob("*.h"))), patch.object(configure, "read_overlays", return_value=[("ALPHA", "0", "0"), ("BETA", "0", "0")]), patch.object(configure, "overlay_data_files", return_value=[]), patch.object(configure, "symbol_files", return_value=[]), patch.object(configure.prepare_disc, "find_candidates", return_value=([], [])), patch.object(configure.srcscan, "unit_c_files", side_effect=files):
             configure.main()
@@ -146,11 +155,10 @@ class NinjaDependencies(unittest.TestCase):
         Path("include/nested.h").unlink()
         self.ninja(success=False)
         self.write("include/nested.h", "#define NESTED 9\n")
-        self.assertEqual(self.compiled(self.ninja()), {self.sources[2]})
+        self.assertEqual(self.compiled(self.ninja()), set(self.sources))
         self.write("include/new.h", "#define NEW 8\n")
         self.edit(self.sources[0], '#include "new.h"\n')
-        self.generate()
-        self.assertEqual(self.compiled(self.ninja()), {self.sources[0]})
+        self.assertEqual(self.compiled(self.ninja()), set(self.sources))
         self.edit("include/new.h")
         self.assertEqual(self.compiled(self.ninja()), {self.sources[0]})
 
@@ -172,7 +180,7 @@ class NinjaDependencies(unittest.TestCase):
         Path("include/nested.h").unlink()
         self.ninja(success=False)
         self.write("include/nested.h", "#define NESTED 8\n")
-        self.assertEqual(self.compiled(self.ninja()), {self.sources[1], self.sources[2]})
+        self.assertEqual(self.compiled(self.ninja()), set(self.sources))
 
     def test_ido_tracks_source_local_headers(self):
         self.write("include/shadow.h", "#define PICK 1\n")
@@ -203,6 +211,53 @@ class NinjaDependencies(unittest.TestCase):
         self.assertIn("no work to do", self.ninja())
         self.edit(header)
         self.assertEqual(self.compiled(self.ninja()), {self.sources[0]})
+
+    def test_added_shadow_headers_and_removed_directories_regenerate(self):
+        self.write("include/shadow.h", "#define PICK 1\n")
+        self.write(self.sources[0], '#include "common.h"\n#include "shadow.h"\nint main_a(void) { return PICK; }\n')
+        self.generate()
+        self.ninja()
+        before = Path("build/src/main/a.o").read_bytes()
+        self.write("src/main/shadow.h", "#define PICK 2\n")
+        out = self.ninja()
+        self.assertIn("configure", out)
+        self.assertEqual(self.compiled(out), set(self.sources))
+        self.assertNotEqual(Path("build/src/main/a.o").read_bytes(), before)
+        self.assertIn("no work to do", self.ninja())
+        # An included header's local directory can also acquire a shadow.
+        self.write("include/ovl/nested.h", "#define NESTED 10\n")
+        self.assertEqual(self.compiled(self.ninja()), set(self.sources))
+        self.edit("include/ovl/nested.h")
+        self.assertEqual(self.compiled(self.ninja()), {self.sources[2]})
+        self.write("include/removable/unused.h", "")
+        self.assertEqual(self.compiled(self.ninja()), set(self.sources))
+        shutil.rmtree("include/removable")
+        self.assertEqual(self.compiled(self.ninja()), set(self.sources))
+        self.assertIn("no work to do", self.ninja())
+
+    def test_deleted_inventory_is_regenerated(self):
+        self.ninja()
+        Path("build/include-files.txt").unlink()
+        out = self.ninja()
+        self.assertIn("configure", out)
+        self.assertEqual(self.compiled(out), set(self.sources))
+        self.assertIn("no work to do", self.ninja())
+
+    def test_regeneration_without_membership_change_stays_noop(self):
+        self.ninja()
+        before = Path("build/include-files.txt").stat().st_mtime_ns
+        self.edit("configure.py")
+        out = self.ninja()
+        self.assertIn("configure", out)
+        self.assertFalse(self.compiled(out))
+        self.assertEqual(Path("build/include-files.txt").stat().st_mtime_ns, before)
+        self.assertIn("no work to do", self.ninja())
+        Path("include/empty").mkdir()
+        self.assertFalse(self.compiled(self.ninja()))
+        self.assertIn("no work to do", self.ninja())
+        Path("include/empty").rmdir()
+        self.assertFalse(self.compiled(self.ninja()))
+        self.assertIn("no work to do", self.ninja())
 
 
 if __name__ == "__main__":
