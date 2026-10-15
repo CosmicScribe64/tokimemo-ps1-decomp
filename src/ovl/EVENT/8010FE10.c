@@ -783,9 +783,8 @@ void func_8011552C(void) {
     func_80011DFC();
 }
 
-/* NON_MATCHING: T-11110, 1 line: original emits dead move $v0, $zero after sw $zero, D_800EECBC when D_800EECBC is allocated to $v0; adding return 0 moves D_800EECBC to $v1. */
-#ifdef NON_MATCHING
-void func_801155D4(void) {
+/* s32 with no return (K&R): the stored D_800EECBC value stays in $v0 as the return register. */
+s32 func_801155D4(void) {
     /* FAKE: unused words reserve top frame slots so s32 msg sits at sp+0x28 in a 0x50 frame; T-11110 */
     s32 pad[9];
     s32 msg;
@@ -823,9 +822,6 @@ void func_801155D4(void) {
         D_800EECBC = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801155D4);
-#endif
 
 void func_80115714(void) {
     func_80078970(D_800947C4, "ナイトパレード");
