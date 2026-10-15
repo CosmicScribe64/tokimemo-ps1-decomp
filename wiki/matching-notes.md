@@ -5253,3 +5253,6 @@ KANGEI `func_80135CE0` (432 inventory coverage and linked proof bytes) matches a
 ### T-15300: BUNKASAI character flag stores
 
 BUNKASAI `func_801438E4` (852 inventory coverage and default linked literal bytes) needs the existing character 7 flag fields `.unk_0C.f.b12 = 1` and `.f.b13 = 1`. Byte-OR stores, including explicit read-modify-write assignments, reuse the byte load's base register and shift seven temporary registers (14 diff rows). CharFlags already documents the original bit-field signature: load the byte into another register than its LUI. The canonical aggregate/bit-field view matches without FAKE. Default linked proof, BUNKASAI SHA1 and all guards pass; see [[tickets/T-15300-fresh-structural-near-matches]].
+
+## T-15400: mixed Shift-JIS escape in generated Unicode strings
+BUNKASAI func_801431D4 had a two-row resolved difference entirely in one label relocation. The generated mixed Unicode/escaped string emitted literal ASCII x83 in place of Shift-JIS byte 0x83. Writing the actual label as ordinary Unicode パソコン占い produces the original bytes through the existing conversion pipeline. Canonical GameState access alone did not solve it. Default literal proof and overlay checksum confirm the 440-byte function. Preserve initial drafts and inspect actual emitted bytes before changing control flow for string-only differences.

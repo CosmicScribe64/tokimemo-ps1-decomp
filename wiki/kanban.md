@@ -26,21 +26,13 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
+- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
+
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
 
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
 
 - [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
-- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
-
-
-
-
-
-
-
-
-
 
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
@@ -113,54 +105,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
 
 - [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## In Review
 
@@ -246,72 +190,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-12210-matching-bottleneck-research|T-12210 Identify and test high-leverage matching breakthroughs]]
 
 - [ ] [[tickets/T-14700-reserved-type-repairs|T-14700 Repair fifteen reserved aggregate and callback drafts]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Done
 

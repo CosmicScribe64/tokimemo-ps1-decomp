@@ -14733,3 +14733,6 @@ Claimed [[tickets/T-15300-fresh-structural-near-matches]] for bounded C fixes fr
 ## [2026-10-15] build | T-15300 BUNKASAI flag-store match
 
 Promoted BUNKASAI func_801438E4: 852 inventory coverage bytes and 852 default linked literal bytes. Existing CharFlags bits 12/13 replace byte-OR updates, resolving the complete 14-row gap. BUNKASAI SHA1 and header/global/prototype guards pass. No FAKE/header changes; existing C preserved. [[tickets/T-15300-fresh-structural-near-matches]] remains In Progress for fresh TACO probes; [[matching-notes]] updated.
+
+## [2026-10-15] build | BUNKASAI encoding and bitfield pair
+Combined default linked proofs, affected checksum and guards pass for 440-byte label and 852-byte character-state functions. Total 1,448,512 / 2,279,368 game bytes. Documented the emitted Shift-JIS escape defect for follow-up draft repair. See [[tickets/T-15400-bunkasai-label-draft]], [[tickets/T-15300-fresh-structural-near-matches]] and [[matching-notes]].
