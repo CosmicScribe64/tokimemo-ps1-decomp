@@ -1,0 +1,23 @@
+{
+  "ticket": "T-14600",
+  "source_base": "48362009",
+  "original_attempt": "drafts/T-14500/DATE/func_80152268",
+  "note": "Existing earlier unprototyped call has implicit int ABI; preserve s32 definition.",
+  "original_result": {
+    "compile_attempts": 1,
+    "environment_hash": "6f65598c4801aecc283a0ff94ca04d54505cf70ec6730470159f30c33cb7bd37",
+    "func": "func_80152268",
+    "guarded": false,
+    "harness_hash": "08d9600cf1e5502347694be448cc4d3aa4388c771120ce1eeefa2689f379ef6d",
+    "reason": "Error: guarded.c, line 4230: redeclaration of 'func_80152268'; previous declaration at line 4219 in ",
+    "scope": "DATE:func_80152268",
+    "score": null,
+    "seconds": 1.127,
+    "size": 1052,
+    "source_hash": "4d6459e387492598504601c3eb6e26c8e302294c899b1a1769c7f7205757bd74",
+    "src": "src/ovl/DATE/80151460.c",
+    "status": "failed",
+    "unit": "DATE",
+    "variant": "default"
+  }
+}

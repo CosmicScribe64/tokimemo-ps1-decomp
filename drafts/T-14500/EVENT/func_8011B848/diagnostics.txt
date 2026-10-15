@@ -1,0 +1,13 @@
+python3 failed:
+ ---------------^
+cfe: Warning 681: drafts/T-14500/EVENT/func_8011B848/work/guarded.o.sjis.c, line 6010: '&' before array or function; ignored
+     if ((((EventStateView *)&D_800B0860)->unk_036 == ((EventBirthday4 *)&D_800B0A04[D_800B1746].pad10[0])->month) &&
+ ----------------------------^
+cfe: Error: drafts/T-14500/EVENT/func_8011B848/work/guarded.o.sjis.c, line 6706: Bad operand type for += or -=
+                 var_t1 -= &D_7FFF + 1;
+ -----------------------^
+cfe: Error: drafts/T-14500/EVENT/func_8011B848/work/guarded.o.sjis.c, line 6769: Bad operand type for += or -=
+                             var_t7 -= &D_7FFF + 1;
+ -----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EVENT/func_8011B848/work -o drafts/T-14500/EVENT/func_8011B848/work/guarded.o /tmp/asm_processorxcji60ql/preprocessed_e1201f23cb4e402d9218d39773c921b2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib8xncqd6w/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EVENT/func_8011B848/work/guarded.o drafts/T-14500/EVENT/func_8011B848/work/guarded.o.sjis.c

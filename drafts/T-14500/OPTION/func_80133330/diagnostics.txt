@@ -1,0 +1,32 @@
+m2c.py: argument counts from the callees' asm: func_8004FC10 1, func_801325A0 1, main_state_set 1
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80133330/work/guarded.c, line 2596: redeclaration of 'func_80133330'; previous declaration at line 2583 in file 'drafts/T-14500/OPTION/func_80133330/work/guarded.c'
+ void func_80133330(void) {
+ -----^
+cfe: Error: drafts/T-14500/OPTION/func_80133330/work/guarded.c, line 2596: Incompatible function return type for this function.
+ void func_80133330(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80133330/work/guarded.c, line 2604: 'sp2C' undefined; reoccurrences will not be reported.
+         func_801325A0((s32) &sp2C[0]);
+ -----------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80133330/work -o drafts/T-14500/OPTION/func_80133330/work/guarded.o /tmp/asm_processorthfo4ke3/preprocessed_56414c42947d4a8f8b42228a2362a4eb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib1rz0t6y7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80133330/work/guarded.o drafts/T-14500/OPTION/func_80133330/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80133330/work/guarded.c, line 2596: redeclaration of 'func_80133330'; previous declaration at line 2583 in file 'drafts/T-14500/OPTION/func_80133330/work/guarded.c'
+ void func_80133330(void) {
+ -----^
+cfe: Error: drafts/T-14500/OPTION/func_80133330/work/guarded.c, line 2596: Incompatible function return type for this function.
+ void func_80133330(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80133330/work/guarded.c, line 2607: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80133330/work -o drafts/T-14500/OPTION/func_80133330/work/guarded.o /tmp/asm_processorwe9_376f/preprocessed_e323a241b8bc4c77beeda0c009058bca.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibp_oi2uoe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80133330/work/guarded.o drafts/T-14500/OPTION/func_80133330/work/guarded.c
+repair: existing earlier unprototyped call implies s32 return
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80133330/work/guarded.c, line 2607: Selector requires struct/union as left hand side
+         D_801206BA = (&sp2C[0])[D_800E7313].unk0 + 0x30;
+ -------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80133330/work -o drafts/T-14500/OPTION/func_80133330/work/guarded.o /tmp/asm_processorl4asfnfp/preprocessed_9bcd60a0dbe64d00a5b04148ac50e151.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_1caqkj7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80133330/work/guarded.o drafts/T-14500/OPTION/func_80133330/work/guarded.c

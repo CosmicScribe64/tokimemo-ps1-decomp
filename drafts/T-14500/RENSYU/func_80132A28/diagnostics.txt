@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8004500C 2, func_80083808 0, func_80085B3C 2, func_80132000 0
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/RENSYU/func_80132A28/work/guarded.o.sjis.c, line 2664: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp30) + (24)) = (u16) *(u16 *)((unsigned char *)(&D_8013435C) + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/RENSYU/func_80132A28/work/guarded.o.sjis.c, line 2665: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp30) + (20)) = (s32) *(s32 *)((unsigned char *)(&D_8013435C) + (20));
+ -------------------------------^
+cfe: Error: drafts/T-14500/RENSYU/func_80132A28/work/guarded.o.sjis.c, line 2687: 'sp' undefined; reoccurrences will not be reported.
+             D_800CA148 = *(s16 *)((unsigned char *)(sp + (D_801342D0 * 2)) + (48));
+ ----------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RENSYU/func_80132A28/work -o drafts/T-14500/RENSYU/func_80132A28/work/guarded.o /tmp/asm_processorfdqc8ay_/preprocessed_dc93a01f92954aaba20b416ac8d34da6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibmztoa9r8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RENSYU/func_80132A28/work/guarded.o drafts/T-14500/RENSYU/func_80132A28/work/guarded.o.sjis.c

@@ -1,0 +1,114 @@
+-@row 0 27bdfef8  ; addiu sp,sp,-264
++@row 0 27bdff00  ; addiu sp,sp,-256
+-@row 44 3c02800e  ; lui v0,0x0
++@row 44 3c0a800e  ; lui t2,0x0
+-@row 46 904271df  ; lbu v0,0(v0)
++@row 46 914a71df  ; lbu t2,0(t2)
+-@row 47 3c0b800d  ; lui t3,0x0
++@row 47 3c0c800d  ; lui t4,0x0
+-@row 48 00025080  ; sll t2,v0,0x2
++@row 48 000ac080  ; sll t8,t2,0x2
+-@row 49 01425021  ; addu t2,t2,v0
++@row 49 030ac021  ; addu t8,t8,t2
+-@row 50 000a5080  ; sll t2,t2,0x2
++@row 50 0018c080  ; sll t8,t8,0x2
+-@row 51 916ba2f8  ; lbu t3,0(t3)
++@row 51 918ca2f8  ; lbu t4,0(t4)
+-@row 52 01425021  ; addu t2,t2,v0
++@row 52 030ac021  ; addu t8,t8,t2
+-@row 53 00eac021  ; addu t8,a3,t2
++@row 53 00f85821  ; addu t3,a3,t8
+-@row 54 030b6021  ; addu t4,t8,t3
++@row 54 016c6821  ; addu t5,t3,t4
+-@row 55 91830000  ; lbu v1,0(t4)
++@row 55 91a20000  ; lbu v0,0(t5)
+-@row 56 240d0005  ; li t5,5
++@row 56 240e0005  ; li t6,5
+-@row 57 14600003  ; bnez v1,a504 <func_8013C410+0xf4>
++@row 57 14400003  ; bnez v0,a504 <func_8013C410+0xf4>
+-@row 60 accd0000  ; sw t5,0(a2)
++@row 60 acce0000  ; sw t6,0(a2)
+-@row 61 10610004  ; beq v1,at,a518 <func_8013C410+0x108>
++@row 61 10410004  ; beq v0,at,a518 <func_8013C410+0x108>
+-@row 62 240e0004  ; li t6,4
++@row 62 240f0004  ; li t7,4
+-@row 64 14610004  ; bne v1,at,a524 <func_8013C410+0x114>
++@row 64 14410004  ; bne v0,at,a524 <func_8013C410+0x114>
+-@row 67 acce0000  ; sw t6,0(a2)
++@row 67 accf0000  ; sw t7,0(a2)
+-@row 69 14610004  ; bne v1,at,a538 <func_8013C410+0x128>
++@row 69 14410004  ; bne v0,at,a538 <func_8013C410+0x128>
+-@row 70 24090002  ; li t1,2
++@row 70 24190002  ; li t9,2
+-@row 71 240f0003  ; li t7,3
++@row 71 24090003  ; li t1,3
+-@row 73 accf0000  ; sw t7,0(a2)
++@row 73 acc90000  ; sw t1,0(a2)
+-@row 75 acc90000  ; sw t1,0(a2)
++@row 75 acd90000  ; sw t9,0(a2)
+-@row 82 0000c812  ; mflo t9
++@row 82 00005012  ; mflo t2
+-@row 83 00995023  ; subu t2,a0,t9
++@row 83 008ac023  ; subu t8,a0,t2
+-@row 84 006a082a  ; slt at,v1,t2
++@row 84 0078082a  ; slt at,v1,t8
+-@row 86 24580003  ; addiu t8,v0,3
++@row 86 244b0003  ; addiu t3,v0,3
+-@row 87 acb80000  ; sw t8,0(a1)
++@row 87 acab0000  ; sw t3,0(a1)
+-@row 93 00025c00  ; sll t3,v0,0x10
++@row 93 00026400  ; sll t4,v0,0x10
+-@row 94 000b1403  ; sra v0,t3,0x10
++@row 94 000c1403  ; sra v0,t4,0x10
+-@row 99 3c02800e  ; lui v0,0x0
++@row 99 3c0f800e  ; lui t7,0x0
+-@row 100 240d0008  ; li t5,8
++@row 100 240e0008  ; li t6,8
+-@row 101 acad0000  ; sw t5,0(a1)
++@row 101 acae0000  ; sw t6,0(a1)
+-@row 102 904271df  ; lbu v0,0(v0)
++@row 102 91ef71df  ; lbu t7,0(t7)
+-@row 103 3c09800d  ; lui t1,0x0
++@row 103 3c0a800d  ; lui t2,0x0
+-@row 104 00027080  ; sll t6,v0,0x2
++@row 104 000f4880  ; sll t1,t7,0x2
+-@row 105 01c27021  ; addu t6,t6,v0
++@row 105 012f4821  ; addu t1,t1,t7
+-@row 106 000e7080  ; sll t6,t6,0x2
++@row 106 00094880  ; sll t1,t1,0x2
+-@row 107 9129a2f8  ; lbu t1,0(t1)
++@row 107 914aa2f8  ; lbu t2,0(t2)
+-@row 108 01c27021  ; addu t6,t6,v0
++@row 108 012f4821  ; addu t1,t1,t7
+-@row 109 00ee7821  ; addu t7,a3,t6
++@row 109 00e9c821  ; addu t9,a3,t1
+-@row 110 01e9c821  ; addu t9,t7,t1
++@row 110 032ac021  ; addu t8,t9,t2
+-@row 111 93230000  ; lbu v1,0(t9)
++@row 111 93020000  ; lbu v0,0(t8)
+-@row 112 240a0003  ; li t2,3
++@row 112 240b0003  ; li t3,3
+-@row 113 14600003  ; bnez v1,a5e4 <func_8013C410+0x1d4>
++@row 113 14400003  ; bnez v0,a5e4 <func_8013C410+0x1d4>
+-@row 116 acca0000  ; sw t2,0(a2)
++@row 116 accb0000  ; sw t3,0(a2)
+-@row 117 10610004  ; beq v1,at,a5f8 <func_8013C410+0x1e8>
++@row 117 10410004  ; beq v0,at,a5f8 <func_8013C410+0x1e8>
+-@row 118 24180004  ; li t8,4
++@row 118 240c0004  ; li t4,4
+-@row 120 14610004  ; bne v1,at,a604 <func_8013C410+0x1f4>
++@row 120 14410004  ; bne v0,at,a604 <func_8013C410+0x1f4>
+-@row 123 acd80000  ; sw t8,0(a2)
++@row 123 accc0000  ; sw t4,0(a2)
+-@row 125 14610004  ; bne v1,at,a618 <func_8013C410+0x208>
++@row 125 14410004  ; bne v0,at,a618 <func_8013C410+0x208>
+-@row 126 240c0006  ; li t4,6
++@row 126 240e0006  ; li t6,6
+-@row 127 240b0005  ; li t3,5
++@row 127 240d0005  ; li t5,5
+-@row 129 accb0000  ; sw t3,0(a2)
++@row 129 accd0000  ; sw t5,0(a2)
+-@row 130 accc0000  ; sw t4,0(a2)
++@row 130 acce0000  ; sw t6,0(a2)
+-@row 132 27bd0108  ; addiu sp,sp,264
++@row 132 27bd0100  ; addiu sp,sp,256

@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8005751C 1, func_80062CD0 1, func_8006612C 1, func_80083808 0, func_8008647C 0, func_80132034 0
+python3 failed:
+ --------------------^
+cfe: Error: drafts/T-14500/MASTER/func_801326B4/work/guarded.o.sjis.c, line 3001: 'sp' undefined; reoccurrences will not be reported.
+                     func_80062CD0(*(s32 *)((unsigned char *)(sp + (D_8013C2E0 * 4)) + (372)));
+ -------------------------------------------------------------^
+cfe: Error: drafts/T-14500/MASTER/func_801326B4/work/guarded.o.sjis.c, line 3003: 'sp' undefined; reoccurrences will not be reported.
+                     func_80062CD0(*(s32 *)((unsigned char *)(sp + (D_8013C2E0 * 4)) + (424)));
+ -------------------------------------------------------------^
+cfe: Error: drafts/T-14500/MASTER/func_801326B4/work/guarded.o.sjis.c, line 3030: 'sp' undefined; reoccurrences will not be reported.
+             D_800CA148 = (s16) *(s32 *)((unsigned char *)(sp + (D_8013C2E0 * 4)) + (320));
+ ----------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/MASTER/func_801326B4/work -o drafts/T-14500/MASTER/func_801326B4/work/guarded.o /tmp/asm_processoriulbslyr/preprocessed_d0f07016fb95405abf7a709f4dedb976.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby5si2qtu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/MASTER/func_801326B4/work/guarded.o drafts/T-14500/MASTER/func_801326B4/work/guarded.o.sjis.c

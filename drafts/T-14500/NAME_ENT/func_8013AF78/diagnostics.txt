@@ -1,0 +1,34 @@
+python3 failed:
+ ----------------------------------^
+cfe: Error: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3033: 'sp' undefined; reoccurrences will not be reported.
+     *(s32 *)((unsigned char *)(sp + (((s32) D_8014D0D4 % 3) * 4)) + (28)) = 1;
+ -------------------------------^
+cfe: Error: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3040: 'sp20' undefined; reoccurrences will not be reported.
+     if (sp20 != 0) {
+ --------^
+cfe: Error: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3045: 'sp24' undefined; reoccurrences will not be reported.
+     if (sp24 != 0) {
+ --------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/NAME_ENT/func_8013AF78/work -o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o /tmp/asm_processorcr_oom_6/preprocessed_54e77980820345068707b381443cf508.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibf4zescob/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3020: '&' before array or function; ignored
+     } while ((u32) var_v1 < (u32) &sp28);
+ ----------------------------------^
+cfe: Error: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3041: 'sp20' undefined; reoccurrences will not be reported.
+     if (sp20 != 0) {
+ --------^
+cfe: Error: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3046: 'sp24' undefined; reoccurrences will not be reported.
+     if (sp24 != 0) {
+ --------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/NAME_ENT/func_8013AF78/work -o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o /tmp/asm_processor5wpp9m0v/preprocessed_08a6c5f4582f45518d4b896ee20a3e8f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkzk22tx9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3021: '&' before array or function; ignored
+     } while ((u32) var_v1 < (u32) &sp28);
+ ----------------------------------^
+cfe: Error: drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c, line 3047: 'sp24' undefined; reoccurrences will not be reported.
+     if (sp24 != 0) {
+ --------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/NAME_ENT/func_8013AF78/work -o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o /tmp/asm_processor1arem2h8/preprocessed_9169e79afa864cc59b9d1c8af456d261.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4htca2nl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o drafts/T-14500/NAME_ENT/func_8013AF78/work/guarded.o.sjis.c

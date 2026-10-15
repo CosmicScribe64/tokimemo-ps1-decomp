@@ -1,0 +1,157 @@
+m2c.py: argument counts from the callees' asm: func_801325A0 1, text_set_advance 1
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2639: 'sp58' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp48, sp58, 0, (s32) "\202\250\202\334\202\257", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2640: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2640: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorfx4r8qxq/preprocessed_4cc8882074574e4d9c9f489becc689b6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibor8fm88m/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2640: 'sp48' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp48, sp58, 0, (s32) "\202\250\202\334\202\257", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2641: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2641: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorpsdbhaic/preprocessed_af471c4cdac04bffaa08933948d18e26.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibiswbomg7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2640: 'sp56' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp46, sp56, 0, (s32) "\211\271\220\272\203\202\201\133\203\150", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2642: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2642: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorxk_c2zql/preprocessed_f650679312d340bdbc47ab8a6916ccaa.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibcprxf73_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2641: 'sp46' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp46, sp56, 0, (s32) "\211\271\220\272\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2643: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2643: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorr56zd3sh/preprocessed_12f00f77085a4abcacb5437dd68b0101.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibonhnhsb7/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2641: 'sp54' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp44, sp54, 0, (s32) "\203\112\201\133\x83\\\203\213\221\254\223\170", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2644: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2644: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorgxr7dou7/preprocessed_3021dc048d26457eac15a2a7e4b6ca58.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibg46t9i5s/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2642: 'sp44' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp44, sp54, 0, (s32) "\203\112\201\133\x83\\\203\213\221\254\223\170", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2645: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2645: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processor95jvzh_e/preprocessed_1369d8ea7c12466aa6c38de6c7ae0233.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibf8xzsvrh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2642: 'sp52' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp42, sp52, 0, (s32) "\203\201\203\152\203\205\201\133\203\202\201\133\203\150", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2646: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processoroswi_vs9/preprocessed_78bf5076ea934cbebfe23b27683a11ba.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib7_hmtef6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2643: 'sp42' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp42, sp52, 0, (s32) "\203\201\203\152\203\205\201\133\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2647: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2647: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processor2lo4lj5y/preprocessed_f895c3bbd6f04311b7edb2f79fbbac93.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9n4cif00/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2643: 'sp50' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp40, sp50, 0, (s32) "\203\175\203\105\203\130\220\335\222\350", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2648: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2648: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processor26fdh5im/preprocessed_1c16bedc2a784e2190d511a234a0b8d5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkn6p84_j/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2644: 'sp40' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp40, sp50, 0, (s32) "\203\175\203\105\203\130\220\335\222\350", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2649: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2649: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processornye0u7p9/preprocessed_240b0249fc43456fa1534eb4d5d40ac9.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibs4x_48nm/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2644: 'sp4E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp3E, sp4E, 0, (s32) "\203\101\203\103\203\122\203\223\203\202\201\133\203\150", 0);
+ -------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2650: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2650: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processor7dlbcny9/preprocessed_c38ce246fcfb40d7b055f10b59a5f523.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqy65qzce/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c
+python3 failed:
+ --------------------------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2645: 'sp3E' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp3E, sp4E, 0, (s32) "\203\101\203\103\203\122\203\223\203\202\201\133\203\150", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2651: 'sp4A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------^
+cfe: Error: drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c, line 2651: 'sp5A' undefined; reoccurrences will not be reported.
+         set_kanji_string(sp4A, sp5A, 0, (s32) "\203\111\203\166\203\126\203\207\203\223\217\111\227\271", 0);
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132BA8/work -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o /tmp/asm_processorq4xhn9j4/preprocessed_f10ad2c4698a4c4fadaf0c89599e1052.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqwenr3yf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o drafts/T-14500/OPTION/func_80132BA8/work/guarded.o.sjis.c

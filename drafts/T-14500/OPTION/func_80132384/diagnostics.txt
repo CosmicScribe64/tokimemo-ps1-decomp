@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_801325A0 1
+python3 failed:
+cfe: Error: drafts/T-14500/OPTION/func_80132384/work/guarded.c, line 2499: Syntax Error
+ void func_801325A0(Arrs4x8 *p);
+ ---------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/OPTION/func_80132384/work -o drafts/T-14500/OPTION/func_80132384/work/guarded.o /tmp/asm_processor6o04azeq/preprocessed_c676c0b6f0b6480883c649e643e5ba30.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib49kgiwfl/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/OPTION/func_80132384/work/guarded.o drafts/T-14500/OPTION/func_80132384/work/guarded.c

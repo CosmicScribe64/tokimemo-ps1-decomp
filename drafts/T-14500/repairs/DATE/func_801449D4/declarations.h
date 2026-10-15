@@ -1,0 +1,23 @@
+typedef struct { void (*f[76])(); } DateFnTable76; /* 0x130 */
+extern DateFnTable76 D_8015BF50;
+void func_80133DE8(void);
+void func_80133EA0(void);
+void func_8013426C(void);
+void func_801344C8(void);
+void func_801347B8(void);
+void func_801349A0(void);
+void func_80134C64(void);
+void func_8013518C(void);
+void func_801353F8(void);
+void func_80135620(void);
+void func_80135804(void);
+void func_80135A34(void);
+void func_80135B4C(void);
+void func_80135C14(void);
+void func_80135E7C(void);
+void func_80136340(void);
+void func_801366A4(void);
+void func_80136870(void);
+void func_80136A74(void);
+void func_80136B70(void);
+void func_80136D3C(void);

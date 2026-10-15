@@ -1,0 +1,19 @@
+m2c.py: argument counts from the callees' asm: func_801428EC 0, func_80142C14 0
+python3 failed:
+cfe: Error: drafts/T-14500/GYOZI/func_80141944/work/guarded.c, line 3554: 'sp2C' undefined; reoccurrences will not be reported.
+     *(M2cBlock68 *)(&sp2C[0]) = *(M2cBlock68 *)(&D_80148880);
+ ---------------------^
+cfe: Error: drafts/T-14500/GYOZI/func_80141944/work/guarded.c, line 3588: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80142C14();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GYOZI/func_80141944/work -o drafts/T-14500/GYOZI/func_80141944/work/guarded.o /tmp/asm_processorwxht0g1v/preprocessed_7d898e617b774c479ea4159cda65b187.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib517njjbe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GYOZI/func_80141944/work/guarded.o drafts/T-14500/GYOZI/func_80141944/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/GYOZI/func_80141944/work/guarded.c, line 3556: Non-function name referenced in function call.
+     var_v0 = (&sp2C[0])[D_800F647A](0x80);
+ -----------------------------------^
+cfe: Error: drafts/T-14500/GYOZI/func_80141944/work/guarded.c, line 3589: Reference of an expression of void type or an incomplete type.
+             var_v0 = func_80142C14();
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/GYOZI/func_80141944/work -o drafts/T-14500/GYOZI/func_80141944/work/guarded.o /tmp/asm_processor5kslr1a_/preprocessed_82439e7e1d964075b6d7a2cd95e171f2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibh5lo7ie1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/GYOZI/func_80141944/work/guarded.o drafts/T-14500/GYOZI/func_80141944/work/guarded.c

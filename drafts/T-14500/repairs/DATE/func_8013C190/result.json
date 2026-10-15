@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_8013C190",
+  "status": "scored",
+  "score": 288,
+  "note": "Recover stack array indexing and explicit first-word access to struct.",
+  "body_sha256": "6100d05ea554d1bb6ae21191bad32f5a7c1771217b43b1525516dfc28e26c835",
+  "context_sha256": "487433b4d75a651374f0f13777bc91bd46b963eb68b9741a05c0138461b2f23d",
+  "residual_class": "instruction, control-flow or register allocation differences",
+  "matching_claim": false
+}

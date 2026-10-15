@@ -1,0 +1,7 @@
+m2c.py: argument counts from the callees' asm: func_8004A1A0 10
+python3 failed:
+cfe: Error: drafts/T-14500/NAME_ENT/func_80132A38/work/guarded.o.sjis.c, line 3125: 'sp4C' undefined; reoccurrences will not be reported.
+     temp_v0 = &(&sp4C[0])[2];
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/NAME_ENT/func_80132A38/work -o drafts/T-14500/NAME_ENT/func_80132A38/work/guarded.o /tmp/asm_processorswjua4jk/preprocessed_f5bc295c3f4b46499e9cb45a7bd24775.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib0i1lxtoz/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/NAME_ENT/func_80132A38/work/guarded.o drafts/T-14500/NAME_ENT/func_80132A38/work/guarded.o.sjis.c
