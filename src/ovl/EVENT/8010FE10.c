@@ -2661,7 +2661,8 @@ void func_8011C3F4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-11110, D_800B1AF6 narrow global update keeps truncated u8 in $v0 in original (T-8080/T-9560) */
+/* NON_MATCHING: T-11600, 1 differing line; s32 without a return and the (s32) cast fixed the $v0 update; left: bne t7,v0 (original,
+   D_80125320 first) against bne v0,t7 (register-held 9 first); entry dead loads, u8 views and operand swaps did not move it. */
 s32 func_8011C470(void) {
     s32 pad;
     s32 before;
@@ -2675,7 +2676,7 @@ s32 func_8011C470(void) {
             func_8004A8EC(4);
         }
         func_80033E88();
-        if (before != D_800B1AF6) {
+        if (before != (s32)D_800B1AF6) {
             D_800B1AF6 += 5;
         }
     }
