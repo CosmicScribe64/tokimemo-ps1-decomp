@@ -740,8 +740,24 @@ extern TaiHalves D_801499B4[]; /* 16.16 positions; D_801499B0[1..3] seen from fu
 extern TaiikuI3 D_80149F80; /* speed added to each position, copied to the stack */
 extern u16 D_801499C4[];
 extern u8 D_801499CC[];
-extern u8 D_80149DF4[];
-extern u8 D_80149DAC[];
+extern s32 D_80149DF4[];
+extern s32 D_80149DAC[];
+/* Tables func_80138AA8 copies to the stack and then into D_80149DA4/D_80149DAC/D_80149DF4. */
+typedef struct {
+    /* 0x00 */ s32 v[2];
+} TaiikuW2; /* size 8 */
+typedef struct {
+    /* 0x00 */ s32 v[18];
+} TaiikuW18; /* size 0x48 */
+typedef struct {
+    /* 0x00 */ s32 v[5];
+} TaiikuW5; /* size 0x14 */
+extern TaiikuW2 D_80149E2C;
+extern TaiikuW18 D_80149E34;
+extern TaiikuW5 D_80149E7C;
+void func_80139AB0(void);
+void func_80139DDC(void);
+void func_80139E34(void);
 typedef struct {
     /* 0x00 */ s16 v[16];
 } TaiikuH16; /* size 0x20 */
