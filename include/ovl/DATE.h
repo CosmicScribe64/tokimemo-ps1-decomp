@@ -704,14 +704,14 @@ extern s16 D_8015B624;
 extern s16 D_8015B628;
 extern s32 D_8015B62C;
 extern s32 D_8015B630;
-extern u8 D_8015BF1C;
-extern u8 D_8015BF20;
+extern s16 D_8015BF1C; /* halfword stores in func_801324DC (T-11580) */
+extern s16 D_8015BF20;
 extern s16 D_8015BF04;
 extern u8 *D_8015B540;
 extern u8 *D_8015B544;
 extern s16 D_8015BF08;
 extern s16 D_8015BF14;
-extern u8 D_8015BF18;
+extern s16 D_8015BF18;
 void func_8013C190(void);
 
 void func_80150C78();
