@@ -246,6 +246,7 @@ typedef struct NameRecord44 {
 #define OVL_NAME_ENT_T9770_SELECTION_GLOBALS
 extern s32 D_8014CCAC; /* Word reset in func_801341A8. T-9770 */
 extern s32 D_8014CCB0; /* strlen of the help text in func_80133510 */
+extern u8 *D_8014D010; /* help title shown by func_801338DC: D_8014CCE4, D_8014CD04 or D_8014CD10 */
 extern s32 D_8014CCB4; /* Word selection and old-value snapshot. T-9770 */
 #endif
 
