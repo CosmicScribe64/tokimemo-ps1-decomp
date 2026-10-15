@@ -832,7 +832,7 @@ void func_80134F6C(void) {
     }
 }
 
-/* NON_MATCHING: T-11010, 19 differing lines: three loop pointer setups scheduled after the lui/addiu pair (as1 order), the constant 2 stored to D_8014D0A4 comes from $t6 where the original reuses the promoted $v0 */
+/* NON_MATCHING: T-11010, T-11650, 16 differing lines: the stores to D_8014CC82/D_8014CC7A need the shared lui $at of a variable defined in this file (data island), three loop pointer setups scheduled after the lui/addiu pair (as1 order), the constant 2 stored to D_8014D0A4 comes from $t6 where the original has $v0 */
 #ifdef NON_MATCHING
 void func_80135168(void) {
     u8 *p;
@@ -876,7 +876,7 @@ void func_80135168(void) {
             D_8014CCA0 = 0xFF;
             D_8014CCA4 = 0xFF;
             D_8014CC8F = 0;
-            func_80134F6C(p);
+            func_80134F6C();
         }
     }
     D_8014CC70 = 0;
