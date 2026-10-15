@@ -499,6 +499,9 @@ s32 func_8014E994(void);
 
 #ifndef OVL_RPG_BAT_T12040
 #define OVL_RPG_BAT_T12040
+void func_8015A6D4(void);
+void func_8015A744(void);
+void func_8015A8B4(void);
 void func_80132CE4(void);
 void func_80132DE8(void);
 void func_80132EE0(void);

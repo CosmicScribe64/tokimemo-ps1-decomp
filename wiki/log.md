@@ -13533,3 +13533,7 @@ Traced uopt led to removing two increment-result temporaries. Plain C passes lin
 ## [2026-10-15] build | RPG_BAT func_80134570 matched
 
 The twin's two counter temporaries were replaced by compound increments and direct tests. Plain C linked MATCH1044 and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/34570-match.diff.
+
+## [2026-10-15] build | RPG_BAT func_8015A1F0 matched
+
+Recovered the large battle state's selector reloads, compound counter updates and zero initialization. Plain C linked MATCH1252 and full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/5A1F0-match.diff and 5A1F0-build.log.

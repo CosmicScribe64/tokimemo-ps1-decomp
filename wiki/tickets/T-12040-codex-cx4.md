@@ -50,3 +50,7 @@ Autotweak273 candidates left22 rows. Traced uopt identified the explicit increme
 ### func_80134570 matched (1044 linked bytes)
 
 Applied the twin's two compound increments and direct counter tests. Plain C linked MATCH1044, RPG_BAT checksum/globals OK. No FAKE. Evidence build/scratch/increment-twins.log, 34570-match.diff and 34570-build.log.
+
+### func_8015A1F0 matched (1252 linked bytes)
+
+Restored selector reloads after calls, replaced three increment-result locals with direct compound updates, and expressed the zero-counter initialization as a normal if assigning sixty. The m2c var_at negation temporary created a competing register web; removing it while using the global expression is exact. Plain C linked MATCH1252, full header rebuild27/27, headers/globals OK. No FAKE. Evidence build/scratch/5a-fifth.log, 5A1F0-match.diff and 5A1F0-build.log.

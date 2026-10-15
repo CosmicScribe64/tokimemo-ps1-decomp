@@ -5090,3 +5090,5 @@ func_801321D0 matches376 linked bytes using direct global selector tests and a d
 func_8013415C matches1044 linked bytes after both explicit increment-result temporaries become compound assignments and direct global tests. The 22-row phase/divisor register swap looked local to the negative multiplication block, but traced uopt showed competing webs from later increment copies. Changing only one of the two increments worsens the diff to66; changing both is exact. No artificial register forcing or dead code is needed.
 
 The same two compound-increment changes also match the func_80134570 twin (1044 linked bytes), with independent linked-byte and checksum verification.
+
+func_8015A1F0 matches1252 linked bytes through the same direct-reload/compound-counter pattern. Its case9 m2c var_at pseudo-variable should become a normal if(counter == 0) counter = 60 followed by the global arithmetic expression. Retaining a separate negation variable leaves eighteen rows; removing it while still retaining a counter local changes allocation elsewhere. Expressing the actual global update directly matches without FAKE code.
