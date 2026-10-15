@@ -1041,7 +1041,36 @@ s32 func_8005DDB4(void) {
     return count;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005DEA0);
+s32 func_8005DEA0(s32 arg0) {
+    s32 i;
+    s16 x[8];
+    s16 y[8];
+    s16 w[8];
+    s16 h[8];
+    u8 colour[8];
+
+    for (i = 0; i < 8; i++) {
+        x[i] = -0x7C;
+        y[i] = -0x40 + i * 0xC;
+        w[i] = 0x60;
+        h[i] = 0xC;
+        if (i == arg0) {
+            colour[i] = 4;
+        } else {
+            colour[i] = 3;
+        }
+    }
+    set_kanji_string(x[0], y[0], colour[0], "文字表示速度", 0);
+    set_kanji_string(x[1], y[1], colour[1], "アイコンモード", 0);
+    set_kanji_string(x[2], y[2], colour[2], "マウス設定", 0);
+    set_kanji_string(x[3], y[3], colour[3], "メニューモード", 0);
+    set_kanji_string(x[4], y[4], colour[4], "カーソル速度", 0);
+    set_kanji_string(x[5], y[5], colour[5], "音声モード", 0);
+    if (func_8005DDB4() != 0) {
+        set_kanji_string(x[6], y[6], colour[6], "マスコット", 0);
+    }
+    set_kanji_string(x[7], y[7], colour[7], "設定終了", 0);
+}
 
 void func_8005E018(void) {
     menu_check(0, D_8011ECF6, D_8011ECFA);
