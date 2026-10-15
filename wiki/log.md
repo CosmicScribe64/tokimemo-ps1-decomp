@@ -13529,3 +13529,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | T-12030 system-settings initializer matched
 
 [[tickets/T-12030-codex-cx3]]: system_settings_init verifies 360 literal linked bytes and main SHA1. Four typed arrays and two real scalar locals recover the frame without a fakematch. Coordinate-loop experiments on func_8005A410 remain beyond retention threshold; assembly restored.
+
+## [2026-10-15] build | T-12030 text-speed initializer matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005E150 verifies 368 literal linked bytes and main SHA1. Typed arrays plus an initialized empty counter test (marked FAKE) resolve the historical loop allocation discrepancy. Removing the test loses the match.

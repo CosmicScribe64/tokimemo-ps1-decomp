@@ -1083,7 +1083,46 @@ void func_8005E018(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005E150);
+s32 func_8005E150(void) {
+    s32 i = 0;
+    s32 speed;
+    s16 x[3];
+    s16 y[3];
+    s16 w[3];
+    s16 h[3];
+
+    func_8004E58C();
+    func_8006612C("文字速度");
+    func_8005DEA0(0);
+    if (i) {} /* FAKE: empty test splits the live range of i. T-12030 */
+    for (i = 0; i < 3; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    set_kanji_string(x[0], y[0], 3U, "遅い", 0);
+    set_kanji_string(x[1], y[1], 3U, "普通", 0);
+    set_kanji_string(x[2], y[2], 3U, "速い", 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0U, "文字出力のスピードを変更します", 0);
+    menu_set(1, 3, x, y, w, h);
+    speed = get_k_speed();
+    switch (speed) {
+    default:
+    case 0:
+        D_800E6280.unk_1094 = 2;
+        break;
+    case 1:
+        D_800E6280.unk_1094 = 1;
+        break;
+    case 3:
+        D_800E6280.unk_1094 = 0;
+        break;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005E2C0(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);

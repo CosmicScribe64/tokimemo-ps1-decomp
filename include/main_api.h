@@ -2064,6 +2064,7 @@ void func_8005BD20();
 void func_8005C4CC(s32 arg0);
 void func_8005D174(void);
 s32 func_8005D448(void);
+s32 func_8005E150(void);
 s32 system_settings_init(void);
 s32 func_800603C0(void);
 void func_8005D1B0();
