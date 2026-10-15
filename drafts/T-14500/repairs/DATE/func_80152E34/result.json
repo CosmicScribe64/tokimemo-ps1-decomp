@@ -1,0 +1,10 @@
+{
+  "scope": "DATE:func_80152E34",
+  "status": "scored",
+  "score": 152,
+  "note": "Existing earlier unprototyped call has implicit int ABI; preserve s32 definition.",
+  "body_sha256": "9283694ad30f4023486c3746731735d218eb8dfe0c4ed59897408017634bbb7d",
+  "context_sha256": "f73e47e35664a1330d13163df84c9901fd07953343d35df62d9ab04aaa15e226",
+  "residual_class": "instruction, control-flow or register allocation differences",
+  "matching_claim": false
+}

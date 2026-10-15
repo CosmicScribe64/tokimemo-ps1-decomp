@@ -24,6 +24,12 @@ kanban-plugin: board
 
 ## In Progress
 
+
+- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
+
+
+- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
@@ -55,6 +61,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -97,6 +104,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
 
 ## In Review
+- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
 
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]

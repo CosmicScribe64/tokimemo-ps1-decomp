@@ -14625,3 +14625,10 @@ Standards and spec review pass after all findings resolved. Final five default l
 ## [2026-10-15] build | T-14501 KANGEI verified draft batch
 
 Promoted 3 ordinary C functions / 1,328 bytes for KANGEI after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+## [2026-10-15] ticket | Reserve nine DATE census repair failures
+
+Created [[tickets/T-14600-date-draft-repairs]] at frozen base 48362009. Preserve initial T-14500 attempts and retain repaired alternatives separately. Read T-14100 callback table evidence; no historical draft constitutes a verified match.
+
+## [2026-10-15] build | Compile all nine repaired DATE census drafts
+
+[[tickets/T-14600-date-draft-repairs]] now In Review. All nine alternatives compile serially in Docker; diagnostic differences range from 12 to 628 rows, no zero candidates and no matching-coverage claim. T-14100 real callback-table types were reused for 449D4/44E20. Alternatives, full preprocessed contexts, provenance and comparison records are in drafts/T-14500/repairs. Initial census attempts remain immutable; production C and shared generated assembly are unchanged.
