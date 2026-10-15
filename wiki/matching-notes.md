@@ -4902,3 +4902,57 @@ Eight functions of `src/ovl/TT/8013C6D0.c`; 6 matched (`func_8013C8DC`, `func_80
   `func_8013D988` (the original gives `hi` the register that IDO gives the constant 3). Rows in [[data/t0018-cases]].
 - Tools: a local objdump side-by-side of the guarded draft was faster than funcdiff for structural work; autotweak
   (2 runs on `func_8013D988`) found nothing; regdiff named the bit-order cause in `func_8013D3C0`.
+## Wave 1 package w1-p03: main 8007C030 (T-11590)
+
+Ticket [[tickets/T-11590-w1-main-8007c030]]. One Opus agent on `src/main/8007C030.c`: 15 matches. From the work
+list: `normal_date_girl_suddenout`, `normal_date_three_select_init`, `normal_date_bggirl_fadein`,
+`normal_date_bggirl_fadeout`, `normal_date_girl_in_main`, `normal_date_girl_out_main`,
+`normal_date_move_place_main`, `func_80085CD4`, `func_80083A10`, `func_80085234`; past it: `func_800850D4`,
+`func_80085B3C`, `func_80083474`, `func_80084E90`, `func_80083808`. Two matched functions lost their FAKE
+(`normal_date_girl_suddenin`, `normal_date_girl_in_init`). Left guarded: `junban_init` (34 lines),
+`dialogue_speak_part` (16), `make_three_select` (6, frame only). `_sprite_set_box_shade_tarao` (188 lines) and
+`dialogue_render` (5,588 bytes) stay `INCLUDE_ASM`.
+
+- **`s32` without a return value keeps the last chain value in v0.** IDO compiles `a = b = c = k;` through one
+  hidden temporary per function. In a `void` function uopt folds or copy-propagates it away; in an `int` function
+  that falls off its end, v0 is live at the exit, so the temporary's last value stays in a register: the original's
+  `li v0,0x10` for the last array chain (`normal_date_three_select_init`), `move v0,a0` / `andi v0,a0,0xff`
+  for the two colour chains (`normal_date_bggirl_fadein`, `_fadeout`), `andi v0,a0,0xffff`
+  (`func_80084E90`), even a `li v0,-129` that is never read (`func_80083808`) and the `move v0,zero` of a
+  cleared promoted global (`func_80085B3C`). Symptom: an extra `move`/`andi`/`li` into v0 near the end of the
+  function, or v0 holding a value that nothing reads. Try `s32` with no `return` first (and declare it so in
+  `include/main_api.h`; the callers did not change).
+- **The normal_date sprite bytes are two GsSPRITE-like `Rec24` records.** `D_801217E4..E6` and `D_80121808..0A`
+  are r, g, b of `D_801217D0[0]` and `[1]`, `D_801217DC/DE` are their tpage and u. One chain per record in r, g, b
+  order (`D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;`) gives the original store
+  order (outer targets right to left, the innermost scheduled last). The old scalar and byte-view chains needed
+  FAKEs (`normal_date_girl_suddenin`, `normal_date_girl_in_init`); these are now plain C.
+- **The flag bytes `D_8011F50F`, `D_8011F4CB`, `D_8011F513`, `D_80120653`, `D_80120697`, `D_8011ECD3` are bytes
+  of the `D_8011ECD0` record table** (records 31, 30, 96, 97, 0; byte 3 = the display flag). Written through the
+  table (`D_8011ECD0[0x83F] &= ~0x80;`) the second load stays after the first store, as in the original; the
+  scalars let IDO hoist it.
+- **A global updated in place is promoted by uopt and stored back once.** `if (D_800B5940 >= 8) D_800B5940 -= 8;`
+  followed by chains that read `D_800B5940` gives the original's single register (`v1`), the `andi; move` after the
+  subtraction and the late store (`normal_date_girl_out_main`, `girl_in_main`, `move_place_main`); a local copy
+  gives two registers. The same holds for a flag byte (`func_80083A10`: `D_8011ECD0[3] &= 0x7F; ... |= 0x80;
+  if (D_8011ECD0[3] & 0x80)`).
+- **Return types from the asm:** a `move v0,zero` on one path before the epilogue is `return 0` there and no
+  return elsewhere (the normal_date mains, `func_800850D4`, `func_80083474`).
+- **K&R callee narrowing.** `func_800850D4`'s `sll/sra a3` at entry and the `lh` reload of its home slot after the
+  call are an `s16` K&R parameter; `func_80085B3C`'s `move t7,a1; move a1,t7` is a `u8` K&R parameter (ANSI `u8`
+  or K&R `s32`/`u32` are 140+ lines off). K&R definitions need `()` in `include/main_api.h`.
+- **Types fixed from all users:** `D_800CA360` is `u8` (its only loads are `lbu`). `Rec24.unk_08` is probably
+  unsigned like GsSPRITE `w` (`func_80084E90` shares one 0x80 between `unk_08`, `unk_0A` and `unk_0F`, so it needs
+  a FAKE `u16` view); changing the member needs ETC `func_80142A4C`'s `s16` view of `unk_0A` removed (follow-up).
+- **Tool notes.** `funcdiff --resolve` on a guarded draft compiles the whole NON_MATCHING unit, so an earlier
+  guarded draft of another size moves every later function: it reports "linked function address or size differs"
+  for a correct draft (and so did the trailing-nop pad of `func_80085CD4`, the last function of the object).
+  Check such a candidate by removing its guard and running ninja; the unit sha1 decides.
+- **Left open.** `junban_init`: the v0/v1 swap regdiff names (unconstrained ranges coloured in bit order, the
+  global first); `return D_800CA2A4[0] = r;` puts the global in v1 but adds an `andi v0` (27 lines).
+  `make_three_select`: every instruction matches, but the original's buffer is at sp+0x64 and IDO places the first
+  local at sp+0x68 or higher. `dialogue_speak_part`: the two `li a0,-40` rotations (the original fills the `lbu a2`
+  delay with the `li`). `_sprite_set_box_shade_tarao`: the original keeps the colour shifts in ugen temporaries
+  (t6..t9) and the params in a1/t2, IDO gives the shifts uopt registers (POLY_G4 draft, 188 lines, not kept).
+  `D_80122D48` is declared in the C file because EVENT `80103B60.c` declares that address as a function table;
+  moving it to `main_api.h` needs a `MAIN_API_OVERRIDE_D_80122D48` in that EVENT file (follow-up).

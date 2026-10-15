@@ -61,6 +61,9 @@ INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA36C);
 void func_80084C98(s32 idx, u8 val);
 /* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
 extern s32 D_80122CD0[];
+/* Declared here, not in main_api.h: EVENT src/ovl/EVENT/80103B60.c declares the same address as
+ * a function table (FnTbl55); moving it needs a MAIN_API_OVERRIDE there. T-11590 */
+extern s32 D_80122D48;
 
 void SD_GetCDLevel(CdLevelWork *arg0) {
     s32 shift;
@@ -764,35 +767,35 @@ void normal_date_girl_in(void) {
     func_80057D28(1);
 }
 
-/* FAKE: aliasing a local zero retains the original v0 initialization; s32 without return and the byte-address view preserve its allocation. No meaningful return established. T-9540. */
-s32 normal_date_girl_in_init(void)
-{
-  s32 *new_var2;
-  s32 new_var;
-  D_8011F513 = 0;
-  D_801217E5 = 0;
-  D_801217E4 = 0;
-  D_80121809 = 0;
-  new_var = 0;
-  new_var2 = &new_var;
-  *((u8 *) (&D_80121808)) = new_var;
-  D_800B5940 = *new_var2;
-  D_80122CF8 = *new_var2;
-  D_80122CF4 = 1;
-  D_800E6280.unk_1104.w += 1;
-  D_801217E6 = *new_var2;
-  D_8012180A = *new_var2;
+s32 normal_date_girl_in_init(void) {
+    D_8011ECD0[0x843] = 0;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0;
+    D_800B5940 = 0;
+    D_80122CF8 = 0;
+    D_80122CF4 = 1;
+    D_800E6280.unk_1104.w += 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_in_main);
+s32 normal_date_girl_in_main(void) {
+    if (D_800B5940 < 0x80) {
+        D_800B5940 += 8;
+    } else {
+        func_8004284C();
+        D_80122CF8 = 1;
+        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+        return 0;
+    }
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = D_800B5940;
+    D_8011ECD0[0x843] = D_800B5940;
+}
 
-/* FAKE: the implicit return and byte-array chains retain the original v1-to-v0
- * constant copy and store ordering. D_80121808 is a byte view here. T-9720. */
 s32 normal_date_girl_suddenin(void) {
     D_80122CF4 = 1;
-    D_8011F513 = 0x80;
-    ((u8 *)&D_801217E4)[0] = ((u8 *)&D_801217E5)[0] = ((u8 *)&D_801217E6)[0] = 0x80;
-    ((u8 *)&D_80121808)[0] = ((u8 *)&D_80121809)[0] = ((u8 *)&D_8012180A)[0] = 0x80;
+    D_8011ECD0[0x843] = 0x80;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
     func_8004284C();
 }
 
@@ -817,24 +820,36 @@ void normal_date_girl_out_init(void) {
     D_800E6280.unk_1104.w = D_800E6280.unk_1104.w + 1;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_out_main);
+s32 normal_date_girl_out_main(void) {
+    if (D_800B5940 >= 8) {
+        D_800B5940 -= 8;
+    } else {
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        func_8004284C();
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+        D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+        D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
+        D_80122CF4 = 0;
+        D_80122CF8 = 1;
+        return 0;
+    }
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = D_800B5940;
+    D_8011ECD0[0x843] = D_800B5940;
+}
 
-/* NON_MATCHING: T-10510, 8 lines (wave 12): load order of D_8011F4CB and 0x80000000 constant in a2 (original) vs a1 */
-#ifdef NON_MATCHING
 s32 normal_date_girl_suddenout(void) {
-    D_8011F50F &= 0xFF7F;
-    D_8011F4CB &= 0xFF7F;
+    D_8011ECD0[0x83F] &= ~0x80;
+    D_8011ECD0[0x7FB] &= ~0x80;
     D_801217D0[0].unk_00 |= 0x80000000;
     D_801217D0[1].unk_00 |= 0x80000000;
-    ((u8 *)&D_801217E5)[0] = ((u8 *)&D_801217E4)[0] = ((u8 *)&D_801217E6)[0] = 0x80;
-    ((u8 *)&D_80121809)[0] = ((u8 *)&D_80121808)[0] = ((u8 *)&D_8012180A)[0] = 0x80;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
     D_80122CF4 = 0;
     D_80122CF8 = 1;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_girl_suddenout);
-#endif
 
 s32 normal_date_bg_fadein(void) {
     D_80122CF8 = 1;
@@ -848,26 +863,20 @@ s32 normal_date_bg_fadein(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, 28 lines: u8 x in a0 with the D_800B593C base in v1, copy and andi variants for the two chains (known family, see register-allocation-wave7) */
-#ifdef NON_MATCHING
-void normal_date_bggirl_fadein(void) {
+/* s32 without a return value: the last chain value is then kept in v0 (andi v0,a0,0xff). T-11590 */
+s32 normal_date_bggirl_fadein(void) {
     u8 x;
 
-    D_8011F50F |= 0x80;
+    D_8011ECD0[0x83F] |= 0x80;
     normal_date_bg_fadein();
     x = D_800B593C;
-    D_8011F513 = x;
+    D_8011ECD0[0x843] = x;
     D_801217D0[0].unk_00 &= 0x7FFFFFFF;
     D_801217D0[1].unk_00 &= 0x7FFFFFFF;
-    D_801217E5 = D_801217E4 = x;
-    D_80121809 = D_80121808 = x;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = x;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = x;
     D_80122CF4 = 1;
-    D_801217E6 = x;
-    D_8012180A = x;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadein);
-#endif
 
 void normal_date_bg_fadeout(void) {
     D_80122CF8 = 1;
@@ -882,7 +891,26 @@ void normal_date_bg_fadeout(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadeout);
+/* s32 without a return value, as normal_date_bggirl_fadein. T-11590 */
+s32 normal_date_bggirl_fadeout(void) {
+    u8 x;
+
+    if (D_800B593C < 8) {
+        D_80122CF4 = 0;
+        D_80122CF8 = 0;
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+        D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+    }
+    normal_date_bg_fadeout();
+    x = D_800B593C;
+    D_8011ECD0[0x843] = x;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = x;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = x;
+}
 
 void normal_date_move_place(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -906,7 +934,23 @@ void normal_date_move_place_init(void) {
     func_80058398(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_move_place_main);
+s32 normal_date_move_place_main(void) {
+    if (D_800B5940 >= 8) {
+        D_800B5940 -= 8;
+    } else {
+        func_80058398(1);
+        dec_bg_show_switch(1);
+        func_8004284C();
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+        D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+        D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
+        D_80122CF8 = 1;
+        return 0;
+    }
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = D_800B5940;
+    func_80058398(1);
+}
 
 void place_init(void) {
     k_reset(0);
@@ -1011,7 +1055,7 @@ void wait_sub_sub(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10870, two four-word scheduling rotations remain at the incremented-Y calls. */
+/* NON_MATCHING: T-10870, 16 differing lines: two four-word scheduling rotations (li a0,-40) remain at the incremented-Y calls; T-11590 retried same-line, inline +=, casts and split arguments. */
 #ifdef NON_MATCHING
 s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
@@ -1629,9 +1673,42 @@ u8 arg2;
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
+/* NON_MATCHING: T-11590, 6 differing lines, frame only: every instruction matches, but the
+ * original frame is 0x170 with the buffers at sp+0x64; IDO puts the first local at sp+0x68 or
+ * higher whatever is declared (buf[4][0x40] plus two words gives 0x170 with buf at 0x70) */
+#ifdef NON_MATCHING
+s32 make_three_select(str)
+    u8 *str;
+{
+    u8 buf[3][0x40];
+    s16 i;
+    s16 n;
+    s16 start;
 
-/* NON_MATCHING: T-10310, near miss */
+    n = 0;
+    start = 0;
+    i = 0;
+    for (;;) {
+        if (str[i] == 'P' || str[i] == 'G') {
+            i--;
+        } else if (str[i] == 'q' || str[i] == ' ') {
+            str[i] = 0;
+            strncpy(buf[n++], &str[start], 0x40);
+            start = i + 1;
+            i--;
+        } else if (str[i] == 0) {
+            strncpy(buf[n], &str[start], 0x40);
+            break;
+        }
+        i += 2;
+    }
+    sprintf(str, "%sq%sq%s", buf[D_800CA2A4[0]], buf[D_800CA2A4[1]], buf[D_800CA2A4[2]]);
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
+#endif
+
+/* NON_MATCHING: T-11590, 34 differing lines, all one v0/v1 swap: the original colours the u8 remainder before the GameState word (regdiff: unconstrained ranges go in bit order, the global has the lower bit); return r, a u32 copy, (r = g % 3) == 0 and void do not change it */
 #ifdef NON_MATCHING
 s32 junban_init(void) {
     u8 r;
@@ -1671,10 +1748,9 @@ void normal_date_three_select(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, 4 register lines: 0x10 constant in v0 (original) vs t3 */
-#ifdef NON_MATCHING
-void normal_date_three_select_init(void) {
-    s32 pad;
+/* s32 without a return value: the last chain value stays in v0 (the 0x10 height). T-11590 */
+s32 normal_date_three_select_init(void) {
+    s32 pad; /* FAKE: unused word above the arrays, the original frame is 8 bytes bigger (as in normal_date_two_select_init, T-9020). T-11590 */
     s16 x[3];
     s16 y[3];
     s16 w[3];
@@ -1691,9 +1767,6 @@ void normal_date_three_select_init(void) {
     D_80122D30 = 1;
     D_800E6280.unk_1104.w++;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_three_select_init);
-#endif
 
 s32 normal_date_three_select_main(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
@@ -1806,7 +1879,30 @@ void func_80083440(u8 arg0) {
     func_800634FC(arg0);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083474);
+s32 func_80083474(void) {
+    u8 var_v1;
+
+    if ((((s32 *)D_800CA120)[0] != 0x801820AC || ((s32 *)D_800CA120)[1] != 0x801860AC ||
+         ((s32 *)D_800CA120)[2] != 0x8018A0AC || ((s32 *)D_800CA120)[3] != 0x8018E0AC ||
+         ((s32 *)D_800CA120)[4] != 0x801920AC || ((s32 *)D_800CA128)[0] != 0x8018005C ||
+         ((s32 *)D_800CA128)[1] != 0x80180070 || *(s32 *)D_800CA124 != 0x80180000) &&
+        D_800E6280.unk_1108 >= 0x50 && D_800E6280.unk_1108 < 0x70) {
+        D_800E6280.unk_110A -= 3;
+        func_8004284C();
+        return 0;
+    }
+    if (D_800E6280.unk_1108 >= 0x50 && D_800E6280.unk_1108 < 0x70 && file_checksum_ok(0x2D, 0x80180000) == 0) {
+        func_8004284C();
+        D_800E6280.unk_110A -= 3;
+        return 0;
+    }
+    var_v1 = get_g_zyotai_h((s32) D_800E6280.unk_F5F) & 0x7F;
+    if ((u8) D_800E6280.unk_F5F >= 0xCU) {
+        var_v1 = 0;
+    }
+    func_80062DBC(D_800CA130, D_800CA120, D_800CA124, D_800CA128, var_v1);
+    func_8004284C();
+}
 
 void func_80083628(void) {
     u8 var_v1;
@@ -1841,9 +1937,61 @@ s32 func_800836A0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083808);
+/* s32 without a return value: the ~0x80 mask is then loaded into v0 (li v0,-129) as in the
+ * original, although the byte clears use andi 0xFF7F. T-11590 */
+s32 func_80083808(void) {
+    if (D_80122CF4 != 0) {
+        D_8011ECD0[0x83F] |= 0x80;
+        D_8011ECD0[0x7FB] |= 0x80;
+        D_801217D0[0].unk_00 &= 0x7FFFFFFF;
+        D_801217D0[1].unk_00 &= 0x7FFFFFFF;
+        func_80063668();
+        if (D_80122D20 != 0) {
+            D_801217D0[0].unk_0F = 0;
+        }
+        if (D_800E6280.unk_10F8 % 240 == 0) {
+            bustup_wink();
+        }
+    } else if (D_80122D04 != 0) {
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+        if (D_80122D10 == 1) {
+            if (D_800E6280.unk_10F8 % 240 == 0) {
+                func_80067DFC();
+            }
+        } else if (D_80122D10 == 0) {
+            func_80067C28();
+        }
+        if (D_800E6280.unk_10F8 % 240 == 0 && D_80122D0C == 0) {
+            func_80067DD4();
+        }
+    } else {
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80083A10);
+void func_80083A10(void) {
+    if (D_80122CF8 != 0) {
+        func_800578F4(1);
+    }
+    if (D_80122D2C == 0 && D_80122D04 == 0 && (D_800E6280.unk_F80 & 0xF000F000)) {
+        D_8011ECD0[3] |= 0x80;
+    }
+    if (D_80122D04 != 0 || D_80122D2C != 0) {
+        D_8011ECD0[3] &= 0x7F;
+    }
+    if (D_80122D30 == 1) {
+        D_8011ECD0[3] |= 0x80;
+    }
+    if (D_8011ECD0[3] & 0x80) {
+        func_8006BA40();
+    }
+}
 
 void hizuke_hide(void) {
     hizuke_disp_switch(0);
@@ -2345,11 +2493,128 @@ void func_80084E6C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80084E90);
+/* s32 without a return value: the last chain value stays in v0 (andi v0,a0,0xffff). T-11590 */
+s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s16 i;
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_800850D4);
+    D_80122D04 = 0;
+    D_80122D0C = 0;
+    D_80122D10 = 0;
+    LoadSquare(0x140, 0x80, 0x40, 0x80, (void *)arg0);
+    LoadSquare(0x180, 0x80, 0x40, 0x80, (void *)arg1);
+    LoadSquare(0x1C0, 0x80, 0x40, 0x80, (void *)arg2);
+    LoadSquare(0x200, 0x80, 0x40, 0x80, (void *)arg3);
+    LoadSquare(0x240, 0x80, 0x40, 0x80, (void *)arg4);
+    LoadSquare(0x280, 0x80, 0x40, 0x80, (void *)arg5);
+    D_800E6280.unk_1228[37] = 1;
+    D_800E6280.unk_1228[38] = 1;
+    D_800E6280.unk_1228[39] = 1;
+    D_800E6280.unk_1228[40] = 1;
+    D_800E6280.unk_1228[41] = 1;
+    D_800E6280.unk_1228[42] = 1;
+    for (i = 0x3A; i < 0x40; i++) {
+        D_801217D0[i].unk_0C = i - 0x35;
+        D_801217D0[i].unk_00 = 0xC1000000;
+        /* FAKE: u16 view of the width (GsSPRITE w is unsigned; Rec24 keeps s16 for ETC
+         * func_80142A4C): the 0x80 constant is then shared with unk_0A and unk_0F. T-11590 */
+        *(u16 *)&D_801217D0[i].unk_08 = 0x80;
+        D_801217D0[i].unk_0A = 0x80;
+        D_801217D0[i].unk_0E = 0;
+        D_801217D0[i].unk_0F = 0x80;
+        D_801217D0[i].unk_10 = 0;
+        D_801217D0[i].unk_12 = 0x1F1;
+        D_801217D0[i].unk_14 = 0;
+        D_801217D0[i].unk_15 = 0;
+        D_801217D0[i].unk_16 = 0;
+        D_801217D0[i].unk_18 = 0;
+        D_801217D0[i].unk_1A = 0;
+        D_801217D0[i].unk_1C = 0x1000;
+        D_801217D0[i].unk_1E = 0x1000;
+        D_801217D0[i].unk_20 = 0;
+        D_801217D0[i].unk_04 = ((i - 0x3A) % 3) * 128 - 0xA0;
+        D_801217D0[i].unk_06 = ((i - 0x3A) / 3) * 128 - 0x78;
+        D_800E6280.unk_10A5[i] = 0xB;
+    }
+    D_801217D0[60].unk_08 = D_801217D0[63].unk_08 = 0x40;
+    D_801217D0[61].unk_0A = D_801217D0[62].unk_0A = D_801217D0[63].unk_0A = 0x20;
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085234);
+s32 func_800850D4(arg0, arg1, arg2, arg3)
+    s32 arg0;
+    s32 arg1;
+    s32 arg2;
+    s16 arg3;
+{
+    s16 i;
+    DisplayActor44 *p;
+
+    if (arg0 == 0) {
+        func_80048F64(0x60);
+        func_80048F64(0x61);
+        return 0;
+    }
+    for (i = 0; i < 2; i++) {
+        func_80048F64(i + 0x60);
+        p = &((DisplayActor44 *)D_8011ECD0)[i + 96];
+        p->unk_01 = 0xA;
+        p->unk_02 = 0;
+        p->unk_38 = 0x41000000;
+        p->unk_03 = 4;
+        p->unk_0C = (u8 *)arg0;
+        p->unk_10 = (u8 *)arg1;
+        p->unk_34 = (u8 *)arg2;
+        p->unk_16 = 0;
+        p->unk_18 = 0;
+        p->unk_06 = 2;
+        p->unk_43 = 0x11;
+        p->unk_26 = -0xA0;
+        p->unk_2A = -0x78;
+        p->unk_07 = 0;
+        p->unk_05 = 0;
+        p->unk_04 = 0;
+        p->unk_14 = arg3;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 4;
+    if (arg3 >= 2) {
+        D_800CA360 = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 2;
+    } else {
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0;
+    }
+}
+
+void func_80085234(arg0)
+    u8 arg0;
+{
+    s16 i;
+    u8 t;
+
+    if (arg0) {
+        if (D_8011ECD0[0x1983] != 0) {
+            t = D_800B5A60;
+            D_800B5A60 = D_800CA360;
+            D_800CA360 = t;
+            D_8011ECD0[0x1983] |= 0x80;
+        }
+        if (D_8011ECD0[0x19C7] != 0) {
+            D_8011ECD0[0x19C7] |= 0x80;
+        }
+        for (i = 0x3A; i < 0x40; i++) {
+            D_801217D0[i].unk_00 &= 0x7FFFFFFF;
+        }
+    } else {
+        D_800B5A60 = D_800CA360;
+        if (D_8011ECD0[0x1983] != 0) {
+            D_8011ECD0[0x1983] &= ~0x80;
+        }
+        if (D_8011ECD0[0x19C7] != 0) {
+            D_8011ECD0[0x19C7] &= ~0x80;
+        }
+        for (i = 0x3A; i < 0x40; i++) {
+            D_801217D0[i].unk_00 |= 0x80000000;
+        }
+    }
+}
 
 void func_80085368(void) {
     s16 var_s0;
@@ -2518,6 +2783,68 @@ void vram_bustup_clear(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085B3C);
+s32 func_80085B3C(arg0, arg1)
+    u8 arg0;
+    u8 arg1;
+{
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_00 = D_800E6280.unk_F5F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_02 = arg0;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_01 = arg1;
+    if (D_80122D48 == 0 || D_80122D48 >= 7) {
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = get_g_zyotai_h(D_800E6280.unk_F5F);
+    } else {
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = D_80122D48 - 1;
+    }
+    D_80122D48 = 0;
+    if (D_800E6280.unk_F5F == 0xC) {
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 0;
+    }
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_04 = D_800E6280.unk_03E;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_05 = D_800E6280.unk_03F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_06 = D_800E6280.unk_040;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_07 = D_800E6280.unk_041;
+    if (++D_800E6280.unk_F5E >= 0xFF) {
+        D_800E6280.unk_F5E = 0xFE;
+    }
+}
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085CD4);
+void func_80085CD4(u8 a) {
+    switch (a) {
+    case 0:
+        D_801217D0[0].unk_0C = 7;
+        D_801217D0[0].unk_0E = 0x30;
+        D_801217D0[1].unk_0C = 7;
+        D_801217D0[1].unk_0E = 0;
+        break;
+    case 1:
+        D_801217D0[0].unk_0C = 7;
+        D_801217D0[0].unk_0E = 0x70;
+        D_801217D0[1].unk_0C = 7;
+        D_801217D0[1].unk_0E = 0x40;
+        break;
+    case 2:
+        D_801217D0[0].unk_0C = 8;
+        D_801217D0[0].unk_0E = 0x30;
+        D_801217D0[1].unk_0C = 8;
+        D_801217D0[1].unk_0E = 0;
+        break;
+    case 3:
+        D_801217D0[0].unk_0C = 8;
+        D_801217D0[0].unk_0E = 0x70;
+        D_801217D0[1].unk_0C = 8;
+        D_801217D0[1].unk_0E = 0x40;
+        break;
+    case 4:
+        D_801217D0[0].unk_0C = 9;
+        D_801217D0[0].unk_0E = 0x30;
+        D_801217D0[1].unk_0C = 9;
+        D_801217D0[1].unk_0E = 0;
+        break;
+    case 5:
+        D_801217D0[0].unk_0C = 9;
+        D_801217D0[0].unk_0E = 0x70;
+        D_801217D0[1].unk_0C = 9;
+        D_801217D0[1].unk_0E = 0x40;
+        break;
+    }
+}

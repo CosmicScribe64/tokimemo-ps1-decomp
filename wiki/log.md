@@ -13411,3 +13411,11 @@ Created [[tickets/T-11630-w1-ovl-tt-8013c6d0]] (In Progress): wave 1 package w1-
 ## [2026-10-15] ticket | T-11630 Done
 
 [[tickets/T-11630-w1-ovl-tt-8013c6d0]]: review against `CODING_STANDARDS.md` found two comment issues in `src/ovl/TT/8013C6D0.c` (missing ticket id on the `func_8013CA0C` FAKE pad, stale "used only here" on `TtTileMap`), both fixed; TT.bin sha1 OK. 6 functions matched (2,596 bytes), one guarded, one back to INCLUDE_ASM. Ticket Done.
+## [2026-10-15] ticket | T-11590 Wave 1 package w1-p03
+Created [[tickets/T-11590-w1-main-8007c030]] (In Progress): 12 functions in src/main/8007C030.c.
+
+## [2026-10-15] ticket | T-11590 to In Review
+[[tickets/T-11590-w1-main-8007c030]]: 15 matches in src/main/8007C030.c (10 from the work list, 5 more in the same file), two FAKEs removed (normal_date_girl_suddenin, normal_date_girl_in_init). New rule in [[register-cheatsheet]] and [[matching-notes]]: `s32` without a return keeps the last chain-assignment temporary in v0. Guarded: junban_init, dialogue_speak_part, make_three_select. One T-0018 row ([[data/t0018-cases]], make_three_select frame).
+
+## [2026-10-15] ticket | T-11590 Done
+[[tickets/T-11590-w1-main-8007c030]] reviewed against CODING_STANDARDS.md, two findings fixed (dialogue_speak_part guard comment, byte-offset accesses in func_800850D4 turned into DisplayActor44 fields). 15 functions matched in src/main/8007C030.c, 27/27 sha1.
