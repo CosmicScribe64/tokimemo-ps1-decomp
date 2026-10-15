@@ -1,0 +1,42 @@
+{
+  "scope": "RPG_BAT:func_8013BBF8",
+  "path": "drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock24",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    },
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 3
+    }
+  ],
+  "explanation": "Nine and ten words are copied into ten-word buffers; inspect trailing word and source types before adopting a named layout. Preserve copy representation.",
+  "evidence_path": "drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8/evidence.txt",
+  "compile_status": "scored",
+  "score": 224,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock24",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "Nine and ten words are copied into ten-word buffers; inspect trailing word and source types before adopting a named layout. Preserve copy representation."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock28",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "Nine and ten words are copied into ten-word buffers; inspect trailing word and source types before adopting a named layout. Preserve copy representation."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+-27bdff48  ; addiu sp,sp,-184
++27bdff18  ; addiu sp,sp,-232
++3c0e8015  ; lui t6,0x0
+-afbf0024  ; sw ra,36(sp)
+-afb10020  ; sw s1,32(sp)
+-afb0001c  ; sw s0,28(sp)
+-25ef9e2c  ; addiu t7,t7,0
++8dce9e2c  ; lw t6,0(t6)
++8def9e30  ; lw t7,4(t7)
++afb00020  ; sw s0,32(sp)
+-8de10000  ; lw at,0(t7)
+-8de80004  ; lw t0,4(t7)
++3c188015  ; lui t8,0x0
++27b00094  ; addiu s0,sp,148
++27189e34  ; addiu t8,t8,0
+-27ae00a4  ; addiu t6,sp,164
+-3c0a8015  ; lui t2,0x0
+-254a9e34  ; addiu t2,t2,0
+-27a60048  ; addiu a2,sp,72
+-254d0048  ; addiu t5,t2,72
+-27a9005c  ; addiu t1,sp,92
+-adc10000  ; sw at,0(t6)
+-adc80004  ; sw t0,4(t6)
+-8d410000  ; lw at,0(t2)
++afbf002c  ; sw ra,44(sp)
++afb20028  ; sw s2,40(sp)
++afb10024  ; sw s1,36(sp)
++27090048  ; addiu t1,t8,72
++02005025  ; move t2,s0
++afae00dc  ; sw t6,220(sp)
++afaf00e0  ; sw t7,224(sp)
++8f010000  ; lw at,0(t8)
++2718000c  ; addiu t8,t8,12
++ad410000  ; sw at,0(t2)
++8f01fff8  ; lw at,-8(t8)
+-ad210000  ; sw at,0(t1)
+-8d41fff8  ; lw at,-8(t2)
+-2529000c  ; addiu t1,t1,12
+-ad21fff8  ; sw at,-8(t1)
+-8d41fffc  ; lw at,-4(t2)
+-154dfff8  ; bne t2,t5,1a0 <func_80138AA8+0x48>
+-ad21fffc  ; sw at,-4(t1)
+-3c198015  ; lui t9,0x0
+-27399e7c  ; addiu t9,t9,0
+-8f210000  ; lw at,0(t9)
+-24040001  ; li a0,1
+-acc10000  ; sw at,0(a2)
+-8f2f0004  ; lw t7,4(t9)
+-00000000  ; nop
+-accf0004  ; sw t7,4(a2)
+-8f210008  ; lw at,8(t9)
+-00000000  ; nop
+-acc10008  ; sw at,8(a2)
+-8f2f000c  ; lw t7,12(t9)
+-00000000  ; nop
+-accf000c  ; sw t7,12(a2)
+-8f210010  ; lw at,16(t9)
+-1060000b  ; beqz v1,230 <func_80138AA8+0xd8>
+-acc10010  ; sw at,16(a2)
++ad41fff8  ; sw at,-8(t2)
++8f01fffc  ; lw at,-4(t8)
++1709fff8  ; bne t8,t1,1a0 <func_80138AA8+0x48>
++ad41fffc  ; sw at,-4(t2)
++3c0b8015  ; lui t3,0x0
++3c0c8015  ; lui t4,0x0
++3c0d8015  ; lui t5,0x0
++3c0e8015  ; lui t6,0x0
++3c0f8015  ; lui t7,0x0
++8d6b9e7c  ; lw t3,0(t3)
++8d8c9e80  ; lw t4,4(t4)
++8dad9e84  ; lw t5,8(t5)
++8dce9e88  ; lw t6,12(t6)
++8def9e8c  ; lw t7,16(t7)
++afab0080  ; sw t3,128(sp)
++afac0084  ; sw t4,132(sp)
++afad0088  ; sw t5,136(sp)
++afae008c  ; sw t6,140(sp)
++1060000c  ; beqz v1,230 <func_80138AA8+0xd8>
++afaf0090  ; sw t7,144(sp)
+-1061004b  ; beq v1,at,33c <func_80138AA8+0x1e4>
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

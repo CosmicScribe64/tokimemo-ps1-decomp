@@ -1,0 +1,40 @@
+800767A4:  addiu      $sp, $sp, -0x198
+800767A8:  sw         $ra, 0x14($sp)
+800767AC:  addiu      $v1, $sp, 0x3C
+800767B0:  addiu      $a1, $sp, 0x7C
+800767B4:  addiu      $a0, $sp, 0xBC
+800767B8:  addiu      $a2, $sp, 0xFC
+800767BC:  addiu      $a0, $a0, 0x4
+800767C0:  sb         $zero, 0x1($v1)
+800767C4:  sb         $zero, 0x1($a1)
+800767C8:  sb         $zero, -0x3($a0)
+800767CC:  sb         $zero, 0x2($v1)
+800767D0:  sb         $zero, 0x2($a1)
+800767D4:  sb         $zero, -0x2($a0)
+800767D8:  sb         $zero, 0x3($v1)
+800767DC:  sb         $zero, 0x3($a1)
+800767E0:  sb         $zero, -0x1($a0)
+800767E4:  addiu      $v1, $v1, 0x4
+800767E8:  addiu      $a1, $a1, 0x4
+800767EC:  sb         $zero, -0x4($v1)
+800767F0:  sb         $zero, -0x4($a1)
+80076800:   addiu     $a0, $sp, 0x108
+80076820:  addiu      $a3, $sp, 0x108
+80076898:  sll        $t7, $t6, 2
+800768DC:  sll        $t2, $t1, 2
+80076920:  sll        $t7, $t6, 2
+80076944:   addiu     $a0, $sp, 0xBC
+80076950:  sll        $t2, $t1, 2
+80076960:   addiu     $a0, $sp, 0xBC
+80076970:   addiu     $a0, $sp, 0xBC
+80076980:   addiu     $a0, $sp, 0x7C
+8007698C:  sll        $t4, $t3, 2
+8007699C:   addiu     $a0, $sp, 0x7C
+800769AC:   addiu     $a0, $sp, 0x7C
+800769BC:   addiu     $a0, $sp, 0x3C
+800769C8:  sll        $t6, $t5, 2
+800769D8:   addiu     $a0, $sp, 0x3C
+800769E8:   addiu     $a0, $sp, 0x3C
+800769EC:  addiu      $a0, $sp, 0xBC
+800769F0:  addiu      $a1, $sp, 0x7C
+800769F4:  addiu      $a2, $sp, 0x3C

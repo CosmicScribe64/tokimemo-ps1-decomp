@@ -1,0 +1,28 @@
+Target: ['asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80137FF0/func_80138240.s']
+Review: 148-byte copy exists but raw sp accesses remain; preserve unresolved dispatch table representation.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80138240 */  addiu      $sp, $sp, -0xC8
+    /* 80138248 */  addiu      $t7, $t7, %lo(D_80144FB4)
+    /* 8013824C */  sw         $ra, 0x1C($sp)
+    /* 80138250 */  addiu      $t0, $t7, 0x90
+    /* 80138254 */  addiu      $t6, $sp, 0x30
+    /* 8013825C */  addiu      $t7, $t7, 0xC
+    /* 80138268 */  addiu      $t6, $t6, 0xC
+    /* 80138288 */  lbu        $t1, %lo(D_80144F10)($t1)
+    /* 80138298 */  lbu        $v0, %lo(D_800E738A)($v0)
+    /* 801382B0 */   addiu     $a0, $zero, 0x60
+    /* 801382B4 */  addiu      $t2, $zero, 0x8
+    /* 801382B8 */  addiu      $t3, $zero, 0xD
+    /* 801382BC */  sw         $t3, 0x14($sp)
+    /* 801382C0 */  sw         $t2, 0x10($sp)
+    /* 801382C4 */  addiu      $a1, $zero, -0x10
+    /* 801382C8 */  addiu      $a2, $zero, 0x30
+    /* 801382D0 */   addiu     $a3, $zero, 0x8
+    /* 801382D8 */  lbu        $t4, %lo(D_80144F10)($t4)
+    /* 801382E0 */  lbu        $v0, %lo(D_800E738A)($v0)
+    /* 801382E4 */  addiu      $at, $zero, 0x1
+    /* 801382FC */   addiu     $a0, $zero, -0x3C
+    /* 80138300 */  addiu      $t5, $zero, 0x8
+    /* 80138304 */  addiu      $t9, $zero, 0xD
+    /* 80138308 */  sw         $t9, 0x14($sp)

@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TACO/nonmatchings/TACO/8013F250/func_801407D4.s']
+Review: sp24 is a TcPos-by-value return fragment. Needs canonical TcPos return signature/usage at all call sites.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801407D4 */  addiu      $sp, $sp, -0x38
+    /* 801407D8 */  sw         $s2, 0x1C($sp)
+    /* 801407DC */  sw         $s1, 0x18($sp)
+    /* 801407E0 */  sw         $s0, 0x14($sp)
+    /* 801407E4 */  sw         $a1, 0x3C($sp)
+    /* 801407E8 */  sw         $a2, 0x40($sp)
+    /* 801407EC */  addiu      $t6, $zero, -0x1
+    /* 801407FC */  addiu      $at, $zero, 0x30
+    /* 80140804 */  addiu      $a2, $zero, 0x30
+    /* 80140808 */  addiu      $v0, $zero, 0x88
+    /* 80140820 */  addiu      $s2, $zero, 0x31
+    /* 80140840 */  addiu      $at, $zero, -0x1
+    /* 8014086C */  addu       $t6, $t8, $t9
+    /* 80140870 */  lbu        $t7, 0x881($t6)
+    /* 80140884 */  addiu      $t6, $t1, 0x10
+    /* 80140890 */  addu       $t0, $t7, $t9
+    /* 80140894 */  lbu        $t8, 0x87($t0)
+    /* 801408A8 */  lbu        $t7, 0x86($t9)
+    /* 801408AC */  addiu      $s1, $zero, 0xE
+    /* 801408B8 */  lh         $t3, 0x40($sp)
+    /* 801408BC */  lh         $t8, 0x78($t0)
+    /* 801408C0 */  lw         $t4, 0x24($sp)
+    /* 801408CC */   addiu     $v1, $zero, 0x1
+    /* 801408F0 */  addiu      $at, $zero, -0x1

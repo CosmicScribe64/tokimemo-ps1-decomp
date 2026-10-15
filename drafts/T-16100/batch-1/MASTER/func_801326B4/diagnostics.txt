@@ -1,0 +1,53 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/MASTER -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/MASTER/func_801326B4/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/MASTER -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/MASTER/func_801326B4/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.c drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2908: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp1A8) = *(M2cBlock30 *)(&D_8013C2F4);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2909: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp1A8) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_8013C2F4) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2910: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp174) = *(M2cBlock30 *)(&D_8013C328);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2911: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp174) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_8013C328) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2912: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp140) = *(M2cBlock30 *)(&D_8013C35C);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2913: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp140) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_8013C35C) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2914: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp10C) = *(M2cBlock30 *)(&D_8013C390);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2915: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp10C) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_8013C390) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2916: '&' before array or function; ignored
+     *(M2cBlock30 *)(&spD8) = *(M2cBlock30 *)(&D_8013C3C4);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2917: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spD8) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_8013C3C4) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2918: '&' before array or function; ignored
+     *(M2cBlock30 *)(&spA4) = *(M2cBlock30 *)(&D_8013C3F8);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2919: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA4) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_8013C3F8) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2920: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp70) = *(M2cBlock30 *)(&D_8013C42C);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2921: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp70) + (48)) = (s32) *(s32 *)((unsigned char *)(&D_8013C42C) + (48));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/MASTER/func_801326B4/work/guarded.o.sjis.c, line 2922: '&' before array or function; ignored
+     *(M2cBlock34 *)(&sp3C) = *(M2cBlock34 *)(&D_8013C460);
+ --------------------^
+

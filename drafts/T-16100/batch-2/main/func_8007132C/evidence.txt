@@ -1,0 +1,28 @@
+Target: ['asm/nonmatchings/main/8006CB30/func_8007132C.s']
+Review: Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8007132C */  addiu      $sp, $sp, -0x48
+    /* 80071330 */  sw         $ra, 0x1C($sp)
+    /* 80071338 */   sw        $s0, 0x18($sp)
+    /* 80071348 */  lbu        $t6, %lo(D_800E62BE)($t6)
+    /* 8007135C */  lbu        $t7, %lo(D_800E62BF)($t7)
+    /* 80071370 */  lbu        $t8, %lo(D_800E62C0)($t8)
+    /* 8007138C */   lw        $ra, 0x1C($sp)
+    /* 80071390 */  lbu        $t9, %lo(D_800E62BE)($t9)
+    /* 800713A4 */  lbu        $t0, %lo(D_800E62BF)($t0)
+    /* 800713A8 */  addiu      $at, $zero, 0x2
+    /* 800713B4 */  lbu        $t1, %lo(D_800E62C0)($t1)
+    /* 800713B8 */  addiu      $at, $zero, 0x1A
+    /* 800713C4 */  lbu        $t2, %lo(D_800E683E)($t2)
+    /* 800713D8 */  addiu      $a0, $a0, %lo(D_800E64B0)
+    /* 800713DC */  addiu      $v1, $v1, %lo(D_800E62B8)
+    /* 800713E4 */  addiu      $v1, $v1, 0x38
+    /* 800713E8 */  sll        $t5, $t3, 30
+    /* 800713F4 */  addiu      $v0, $v0, 0x1
+    /* 8007140C */  lbu        $t6, %lo(D_800E699C)($t6)
+    /* 80071414 */  addiu      $t7, $t6, -0x1
+    /* 80071420 */  addiu      $t8, $zero, 0xD
+    /* 80071434 */   addiu     $a0, $zero, 0x5D
+    /* 8007143C */   lw        $ra, 0x1C($sp)
+    /* 80071440 */  lbu        $t9, %lo(D_800E62BE)($t9)

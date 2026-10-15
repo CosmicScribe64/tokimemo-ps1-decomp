@@ -1,0 +1,28 @@
+{
+  "scope": "main:func_80052F68",
+  "path": "drafts/T-16100/batch-2/main/func_80052F68",
+  "changed": false,
+  "outcome": "justified-false-positive",
+  "flags_reviewed": [
+    {
+      "detail": "sp48[12]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    }
+  ],
+  "explanation": "sp48[12] covers twelve halfwords used by the three repeated groups; synthesized name is not itself bad. Preserve the evidence-backed array.",
+  "evidence_path": "drafts/T-16100/batch-2/main/func_80052F68/evidence.txt",
+  "compile_status": "scored",
+  "score": 604,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp48[12]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "justified-false-positive",
+      "explanation": "sp48[12] covers twelve halfwords used by the three repeated groups; synthesized name is not itself bad. Preserve the evidence-backed array."
+    }
+  ]
+}

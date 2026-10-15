@@ -1,0 +1,217 @@
+{
+  "scope": "TACO:func_801424A8",
+  "selected_path": "drafts/T-15700/TACO/func_801424A8",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp96",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "s32 func_801424A8(s32 arg0, s32 arg1) {",
+        "    s32 sp96;",
+        "    s32 sp98;"
+      ]
+    },
+    {
+      "detail": "sp98",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp96;",
+        "    s32 sp98;",
+        "    s32 sp94;"
+      ]
+    },
+    {
+      "detail": "sp94",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp98;",
+        "    s32 sp94;",
+        "    s32 sp92;"
+      ]
+    },
+    {
+      "detail": "sp92",
+      "kind": "synthesized-stack-local",
+      "line": 5,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp94;",
+        "    s32 sp92;",
+        "    s32 sp9E;"
+      ]
+    },
+    {
+      "detail": "sp9E",
+      "kind": "synthesized-stack-local",
+      "line": 6,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp92;",
+        "    s32 sp9E;",
+        "    s32 sp9C;"
+      ]
+    },
+    {
+      "detail": "sp9C",
+      "kind": "synthesized-stack-local",
+      "line": 7,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp9E;",
+        "    s32 sp9C;",
+        "    s32 sp9A;"
+      ]
+    },
+    {
+      "detail": "sp9A",
+      "kind": "synthesized-stack-local",
+      "line": 8,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp9C;",
+        "    s32 sp9A;",
+        "    s32 spA8[8];"
+      ]
+    },
+    {
+      "detail": "+ &sp90",
+      "kind": "stack-address-arithmetic",
+      "line": 60,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        var_s1 = 0;",
+        "        var_s2 = sp54 + &sp90;",
+        "loop_5:"
+      ]
+    },
+    {
+      "detail": "+ &sp6C",
+      "kind": "stack-address-arithmetic",
+      "line": 87,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "            *(s16 *)((unsigned char *)temp_v0_3 + (14)) = func_8009ED74(0x50, 0x1E7);",
+        "            temp_v1 = temp_s1 + &sp6C;",
+        "            *(s8 *)((unsigned char *)temp_v0_3 + (13)) = 0;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target lh/sh read eight consecutive projected screen halfwords at sp+0x90..+0x9E after func_800AB170 writes through pointers to the region. Reconstruct one s16 screen_xy[8] instead of disconnected s32 synthesized scalars; halfword pointer steps 4/8 in generated C represented target byte steps and are halved. Other matrix, input-vector, and pointer stride issues remain unresolved."
+  ],
+  "assembly_path": "asm/ovl/TACO/nonmatchings/TACO/80141DE0/func_801424A8.s",
+  "assembly_sha256": "4c556eb9d038a7eb9a172932b8bdb907458ceda4eb196f2869d70ba5c095b58b",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x6C": [
+      "sh"
+    ],
+    "0x60": [
+      "lw",
+      "sw"
+    ],
+    "0x64": [
+      "lw",
+      "sw"
+    ],
+    "0x80": [
+      "lw",
+      "sw"
+    ],
+    "0x54": [
+      "lw",
+      "sw"
+    ],
+    "0xA4": [
+      "sh"
+    ],
+    "0xA2": [
+      "sh"
+    ],
+    "0xA0": [
+      "sh"
+    ],
+    "0x98": [
+      "lh"
+    ],
+    "0x90": [
+      "lh"
+    ],
+    "0x96": [
+      "lh"
+    ],
+    "0x9E": [
+      "lh"
+    ],
+    "0x92": [
+      "lh"
+    ],
+    "0x94": [
+      "lh"
+    ],
+    "0x9A": [
+      "lh"
+    ],
+    "0x9C": [
+      "lh"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

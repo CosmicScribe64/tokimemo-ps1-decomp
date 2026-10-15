@@ -1,0 +1,81 @@
+-27bdffc0  ; addiu sp,sp,-64
++27bdff60  ; addiu sp,sp,-160
+-102002cb  ; beqz at,19a0 <.L80134FE8+0x38>
++102003cf  ; beqz at,1db0 <func_801344E0+0xf50>
+-14200069  ; bnez at,104c <.L80134690+0x3c>
++1420011d  ; bnez at,131c <func_801344E0+0x4bc>
+-10200050  ; beqz at,ecc <.L80134514+0x38>
++10200104  ; beqz at,12e0 <func_801344E0+0x480>
++3c04800e  ; lui a0,0x0
+-3c02800e  ; lui v0,0x0
+-3c03800e  ; lui v1,0x0
+-2728000f  ; addiu t0,t9,15
+-a428643e  ; sh t0,0(at)
+-24636558  ; addiu v1,v1,0
+-244262b8  ; addiu v0,v0,0
+-844b01f6  ; lh t3,502(v0)
+-844d022e  ; lh t5,558(v0)
+-844f0266  ; lh t7,614(v0)
+-844901be  ; lh t1,446(v0)
+-244200e0  ; addiu v0,v0,224
+-256c000f  ; addiu t4,t3,15
+-25ae000f  ; addiu t6,t5,15
+-25f8000f  ; addiu t8,t7,15
+-252a000f  ; addiu t2,t1,15
+-a4580186  ; sh t8,390(v0)
+-a44e014e  ; sh t6,334(v0)
++3c08800e  ; lui t0,0x0
++272a000f  ; addiu t2,t9,15
++248462b8  ; addiu a0,a0,0
++a42a643e  ; sh t2,0(at)
++25086558  ; addiu t0,t0,0
++01041823  ; subu v1,t0,a0
++24010e00  ; li at,3584
++0061001b  ; divu zero,v1,at
++00801025  ; move v0,a0
++00005810  ; mfhi t3
++01643821  ; addu a3,t3,a0
++11600011  ; beqz t3,f70 <func_801344E0+0x110>
++00000000  ; nop
++844301f6  ; lh v1,502(v0)
++8444022e  ; lh a0,558(v0)
++84450266  ; lh a1,614(v0)
++844601be  ; lh a2,446(v0)
++24420380  ; addiu v0,v0,896
++246e000f  ; addiu t6,v1,15
++248d000f  ; addiu t5,a0,15
++24ac000f  ; addiu t4,a1,15
++24cf000f  ; addiu t7,a2,15
++a44f00de  ; sh t7,222(v0)
++a44c0186  ; sh t4,390(v0)
++a44d014e  ; sh t5,334(v0)
++14e2fff3  ; bne a3,v0,f30 <func_801344E0+0xd0>
++a44e0116  ; sh t6,278(v0)
++104800dd  ; beq v0,t0,12e0 <func_801344E0+0x480>
++00000000  ; nop
++844301f6  ; lh v1,502(v0)
++8444022e  ; lh a0,558(v0)
++84450266  ; lh a1,614(v0)
++844601be  ; lh a2,446(v0)
++246a000f  ; addiu t2,v1,15
++2499000f  ; addiu t9,a0,15
++24b8000f  ; addiu t8,a1,15
++24cb000f  ; addiu t3,a2,15
++8446053e  ; lh a2,1342(v0)
++844505e6  ; lh a1,1510(v0)
++844405ae  ; lh a0,1454(v0)
++84430576  ; lh v1,1398(v0)
++24cf000f  ; addiu t7,a2,15
++24ac000f  ; addiu t4,a1,15
++248d000f  ; addiu t5,a0,15
++246e000f  ; addiu t6,v1,15
++844308f6  ; lh v1,2294(v0)
++8444092e  ; lh a0,2350(v0)
++84450966  ; lh a1,2406(v0)
++844608be  ; lh a2,2238(v0)
++a4580506  ; sh t8,1286(v0)
++a45904ce  ; sh t9,1230(v0)
++a44a0496  ; sh t2,1174(v0)
++a44b045e  ; sh t3,1118(v0)
++246a000f  ; addiu t2,v1,15
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

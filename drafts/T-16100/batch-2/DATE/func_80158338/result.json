@@ -1,0 +1,20 @@
+{
+  "scope": "DATE:func_80158338",
+  "src": "src/ovl/DATE/80157880.c",
+  "size": 268,
+  "path": "drafts/T-16100/batch-2/DATE/func_80158338",
+  "archive_path": "drafts/T-16100/batch-2/DATE/func_80158338",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 39,
+  "changed": false,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "unresolved",
+  "body_c_sha256": "d6f24d0e53ce961742f0961f8322a9a2566d1aefe52607a97e4b3b078d072bd4",
+  "declarations_h_sha256": "0da43c50f5111b82419bc4c7c1f375ee449f83e11207f8cd4f2945abef2795b6",
+  "context_c_sha256": "057dfb44b12c233b8a4646d0804f93c535305458e5c1fa684602cd653d37887f",
+  "full-context_c_sha256": "b92aa64fd5a1c6154f011961e8a4209f5408c154c89db70d6f080404fc073de5",
+  "diagnostics_txt_sha256": "73acf66a1fd7a97591642fbdaa2859250a6e4b6b43da6dd0996814cd81bfc7f2"
+}

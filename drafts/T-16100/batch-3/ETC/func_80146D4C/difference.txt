@@ -1,0 +1,81 @@
+-3c07800e  ; lui a3,0x0
+-90e762c1  ; lbu a3,0(a3)
+-27bdffa8  ; addiu sp,sp,-88
+-afb00020  ; sw s0,32(sp)
+-2ce10005  ; sltiu at,a3,5
+-afbf0024  ; sw ra,36(sp)
+-afa00044  ; sw zero,68(sp)
+-1020007b  ; beqz at,b58 <.L80146EB0+0xa8>
+-00008025  ; move s0,zero
+-00077080  ; sll t6,a3,0x2
++3c0e800e  ; lui t6,0x0
++91ce62c1  ; lbu t6,0(t6)
++27bdff90  ; addiu sp,sp,-112
++2dc10005  ; sltiu at,t6,5
++afbf001c  ; sw ra,28(sp)
++afa00064  ; sw zero,100(sp)
++10200081  ; beqz at,b6c <func_80146D4C+0x220>
++afa0003c  ; sw zero,60(sp)
++000e7080  ; sll t6,t6,0x2
+-afaf0044  ; sw t7,68(sp)
+-1000006e  ; b b68 <.L80146EB0+0xb8>
++afaf0064  ; sw t7,100(sp)
++10000074  ; b b7c <func_80146D4C+0x230>
+-afb80044  ; sw t8,68(sp)
+-10000064  ; b b68 <.L80146EB0+0xb8>
++afb80064  ; sw t8,100(sp)
++1000006a  ; b b7c <func_80146D4C+0x230>
+-3c10800e  ; lui s0,0x0
+-86106392  ; lh s0,0(s0)
++3c02800e  ; lui v0,0x0
++84426392  ; lh v0,0(v0)
++240c0026  ; li t4,38
++00025080  ; sll t2,v0,0x2
++01425023  ; subu t2,t2,v0
+-00105080  ; sll t2,s0,0x2
+-01505023  ; subu t2,t2,s0
+-afa90044  ; sw t1,68(sp)
++afa90064  ; sw t1,100(sp)
+-00008012  ; mflo s0
+-2a010027  ; slti at,s0,39
++00005812  ; mflo t3
++29610027  ; slti at,t3,39
+-00000000  ; nop
+-24100026  ; li s0,38
++afab003c  ; sw t3,60(sp)
++afac003c  ; sw t4,60(sp)
+-1000004a  ; b b68 <.L80146EB0+0xb8>
++1000004f  ; b b7c <func_80146D4C+0x230>
+-3c10800e  ; lui s0,0x0
+-86106382  ; lh s0,0(s0)
++3c0d800e  ; lui t5,0x0
++85ad6382  ; lh t5,0(t5)
+-00106080  ; sll t4,s0,0x2
+-01906023  ; subu t4,t4,s0
+-0181001a  ; div zero,t4,at
+-3c0e800e  ; lui t6,0x0
+-85ce6392  ; lh t6,0(t6)
++000d7080  ; sll t6,t5,0x2
++01cd7023  ; subu t6,t6,t5
++01c1001a  ; div zero,t6,at
++3c18800e  ; lui t8,0x0
++87186392  ; lh t8,0(t8)
+-000e78c0  ; sll t7,t6,0x3
+-01ee7823  ; subu t7,t7,t6
++0018c8c0  ; sll t9,t8,0x3
++0338c823  ; subu t9,t9,t8
+-00008012  ; mflo s0
++00007812  ; mflo t7
++afaf003c  ; sw t7,60(sp)
+-00000000  ; nop
+-01e1001a  ; div zero,t7,at
+-0000c012  ; mflo t8
+-afb80044  ; sw t8,68(sp)
++0321001a  ; div zero,t9,at
++00004012  ; mflo t0
++afa80064  ; sw t0,100(sp)
+-2a010027  ; slti at,s0,39
+-14200031  ; bnez at,b68 <.L80146EB0+0xb8>
++8fa9003c  ; lw t1,60(sp)
+-1000002f  ; b b68 <.L80146EB0+0xb8>
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

@@ -1,0 +1,40 @@
+8013D528:  addiu      $sp, $sp, -0xC0
+8013D530:  sw         $ra, 0x3C($sp)
+8013D534:  sw         $fp, 0x38($sp)
+8013D538:  sw         $s7, 0x34($sp)
+8013D53C:  sw         $s6, 0x30($sp)
+8013D540:  sw         $s5, 0x2C($sp)
+8013D544:  sw         $s4, 0x28($sp)
+8013D548:  sw         $s3, 0x24($sp)
+8013D54C:  sw         $s2, 0x20($sp)
+8013D550:  sw         $s1, 0x1C($sp)
+8013D554:  sw         $s0, 0x18($sp)
+8013D558:  sw         $a0, 0xC0($sp)
+8013D55C:  sw         $a2, 0xC8($sp)
+8013D560:  sw         $a3, 0xCC($sp)
+8013D564:  addiu      $t7, $t7, %lo(D_80129C40)
+8013D568:  lw         $at, 0x0($t7)
+8013D56C:  addiu      $s0, $sp, 0x98
+8013D570:  sw         $at, 0x0($s0)
+8013D574:  lw         $t0, 0x4($t7)
+8013D578:  sll        $s1, $a1, 16
+8013D5D0:  lh         $t1, 0xC8($sp)
+8013D5D4:  addiu      $s3, $sp, 0x90
+8013D5E4:  addiu      $s5, $sp, 0x70
+8013D5E8:  addiu      $s4, $sp, 0x74
+8013D5F0:  lh         $s0, 0xC0($sp)
+8013D5F4:  addiu      $s1, $sp, 0x80
+8013D63C:  lh         $t4, 0x88($sp)
+8013D640:  lh         $t5, 0x80($sp)
+8013D660:  sll        $t6, $a1, 1
+8013D668:  lh         $v0, %lo(D_800E6298)($v0)
+8013D66C:  lh         $t9, 0x86($sp)
+8013D680:  lh         $t7, 0x8E($sp)
+8013D698:  lh         $t2, 0xC8($sp)
+8013D750:  sll        $t5, $a0, 4
+8013D768:  sll        $t6, $v1, 5
+8013D790:  lh         $t9, 0x80($sp)
+8013D79C:  lh         $t8, 0x82($sp)
+8013D7A0:  sll        $t9, $s1, 2
+8013D7A8:  lh         $t7, 0x84($sp)
+8013D7B4:  lh         $t0, 0x86($sp)

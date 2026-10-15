@@ -1,0 +1,67 @@
+{
+  "scope": "TAIIKU:func_80132BD0",
+  "selected_path": "drafts/T-15700/TAIIKU/func_80132BD0",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 6,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. Existing repaired 23-byte and 23-halfword arrays preserve the target trailing copy sizes. The 40-byte block typedef only describes a prefix; retain that inferred-layout finding until the source records have a shared documented type.",
+      "original_excerpt": [
+        "    u8 spF8[23];",
+        "    typedef struct { s32 w[10]; } M2cBlock28; /* m2c memcpy of 40 bytes */",
+        "    s16 *temp_t1;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/TAIIKU/nonmatchings/TAIIKU/80132BD0/func_80132BD0.s",
+  "assembly_sha256": "6a7c0a9aaa2518b311adc417b29c3142cf4263403ed4879b22fbc2b77a3b3100",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "Existing repaired 23-byte and 23-halfword arrays preserve the target trailing copy sizes. The 40-byte block typedef only describes a prefix; retain that inferred-layout finding until the source records have a shared documented type."
+}

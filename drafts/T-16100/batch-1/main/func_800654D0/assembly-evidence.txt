@@ -1,0 +1,67 @@
+    800654D0:  addiu      $sp, $sp, -0xE8
+    800654D4:  sw         $s0, 0x20($sp)
+    800654E4:   sw        $ra, 0x24($sp)
+    8006550C:  sll        $t3, $zero, 1
+    80065518:  addiu      $t7, $sp, 0xC0
+    8006551C:  sll        $t8, $zero, 2
+    80065520:  addiu      $t4, $sp, 0xA0
+    80065524:  addiu      $t5, $sp, 0x80
+    80065528:  addiu      $t6, $sp, 0x60
+    8006552C:  addu       $v0, $t3, $t6
+    80065530:  addu       $a2, $t3, $t5
+    80065534:  addu       $a1, $t3, $t4
+    80065538:  addu       $v1, $t8, $t9
+    8006553C:  addu       $a0, $t3, $t7
+    80065588:   sll       $t3, $t0, 1
+    80065594:  addiu      $t5, $sp, 0xC0
+    80065598:  sll        $t6, $t0, 2
+    8006559C:  addu       $v1, $t6, $t7
+    800655A0:  addu       $a0, $t3, $t5
+    800655A4:  sll        $t5, $s0, 1
+    800655A8:  addiu      $t6, $sp, 0x60
+    800655AC:  addiu      $t8, $sp, 0xA0
+    800655B0:  addiu      $t9, $sp, 0x80
+    800655B4:  addiu      $t4, $sp, 0x60
+    800655B8:  addu       $v0, $t3, $t4
+    800655BC:  addu       $a2, $t3, $t9
+    800655C0:  addu       $a1, $t3, $t8
+    800655C4:  addu       $t2, $t5, $t6
+    8006566C:  addiu      $t5, $sp, 0x80
+    80065670:  addiu      $t6, $sp, 0x60
+    80065674:  sw         $t6, 0x14($sp)
+    80065678:  sw         $t5, 0x10($sp)
+    80065684:  addiu      $a2, $sp, 0xC0
+    80065688:  addiu      $a3, $sp, 0xA0
+    80065690:   sw        $t0, 0xE0($sp)
+    80065694:  lw         $t0, 0xE0($sp)
+    800656AC:  sll        $t9, $t0, 4
+    800656B0:  addu       $t9, $t9, $t0
+    800656C4:  sll        $t9, $t9, 2
+    800656C8:  sll        $t7, $t0, 2
+    800656CC:  addu       $v1, $t7, $t8
+    800656D0:  addu       $v0, $t9, $t4
+    800656FC:   sll       $t9, $t0, 4
+    80065700:  addu       $t9, $t9, $t0
+    80065714:  sll        $t9, $t9, 2
+    80065718:  sll        $t7, $t0, 2
+    8006571C:  addu       $v1, $t7, $t8
+    80065720:  addu       $v0, $t9, $t4
+    800657A4:  sll        $t6, $t0, 4
+    800657A8:  addu       $t6, $t6, $t0
+    800657BC:  sll        $t6, $t6, 2
+    800657C0:  sll        $t4, $t0, 2
+    800657C4:  addu       $v1, $t4, $t5
+    800657C8:  addu       $v0, $t6, $t7
+    800657F8:   sll       $t6, $t0, 4
+    80065800:  sll        $t8, $s0, 4
+    80065804:  addu       $t8, $t8, $s0
+    8006580C:  addu       $t6, $t6, $t0
+    80065818:  sll        $t6, $t6, 2
+    8006581C:  sll        $t8, $t8, 2
+    80065820:  sll        $t4, $t0, 2
+    80065824:  addu       $v1, $t4, $t5
+    80065828:  addu       $a1, $t8, $t7
+    8006582C:  addu       $v0, $t6, $t7
+    800658F0:  lw         $ra, 0x24($sp)
+    800658F4:  lw         $s0, 0x20($sp)
+    800658FC:   addiu     $sp, $sp, 0xE8

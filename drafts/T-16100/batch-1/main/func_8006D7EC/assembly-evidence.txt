@@ -1,0 +1,371 @@
+    8006D800:  addiu      $sp, $sp, -0xA0
+    8006D804:  sw         $s2, 0x20($sp)
+    8006D808:  lui        $s2, %hi(D_800E6280)
+    8006D80C:  addiu      $s2, $s2, %lo(D_800E6280)
+    8006D814:  sw         $ra, 0x3C($sp)
+    8006D818:  sw         $fp, 0x38($sp)
+    8006D81C:  sw         $s7, 0x34($sp)
+    8006D820:  sw         $s6, 0x30($sp)
+    8006D824:  sw         $s5, 0x2C($sp)
+    8006D828:  sw         $s4, 0x28($sp)
+    8006D82C:  sw         $s3, 0x24($sp)
+    8006D830:  sw         $s1, 0x1C($sp)
+    8006D834:  sw         $s0, 0x18($sp)
+    8006D838:  sw         $zero, 0x64($sp)
+    8006D83C:  sb         $zero, 0x61($sp)
+    8006D840:  sb         $zero, 0x63($sp)
+    8006D844:  sb         $zero, 0x62($sp)
+    8006D848:  sw         $zero, 0x70($sp)
+    8006D84C:  sw         $zero, 0x6C($sp)
+    8006D858:  addu       $v0, $s2, $t8
+    8006D8A0:  sw         $t4, 0x7C($sp)
+    8006D8B8:  sll        $t7, $t5, 30
+    8006D900:  sw         $t9, 0x8C($sp)
+    8006D908:   sw        $t0, 0x88($sp)
+    8006D910:  sll        $t3, $t1, 5
+    8006D924:   sw        $a0, 0x78($sp)
+    8006D93C:  lw         $t7, 0x88($sp)
+    8006D974:  addu       $t9, $s2, $s3
+    8006D988:  sll        $t1, $v1, 2
+    8006D990:  addu       $t2, $s2, $t1
+    8006D994:  sll        $t4, $v1, 2
+    8006D99C:  addu       $t5, $s2, $t4
+    8006D9A8:  addiu      $a0, $sp, 0x94
+    8006D9AC:  sw         $v1, 0x94($sp)
+    8006D9C8:   lw        $ra, 0x3C($sp)
+    8006DA08:  addiu      $s0, $sp, 0x94
+    8006DA1C:  sll        $t0, $v1, 2
+    8006DA20:  addu       $t2, $s2, $t0
+    8006DA2C:  sw         $v1, 0x94($sp)
+    8006DA40:  lw         $v1, 0x94($sp)
+    8006DA48:  sll        $t3, $v1, 2
+    8006DA50:  addu       $t5, $s2, $t3
+    8006DA54:  sll        $t6, $v1, 2
+    8006DA5C:  addu       $t7, $s2, $t6
+    8006DA68:  sw         $v1, 0x94($sp)
+    8006DA7C:  lw         $v1, 0x94($sp)
+    8006DA84:  sll        $t9, $v1, 2
+    8006DA8C:  addu       $t1, $s2, $t9
+    8006DA90:  sll        $t0, $v1, 2
+    8006DA98:  addu       $t2, $s2, $t0
+    8006DAA4:  sw         $v1, 0x94($sp)
+    8006DAB8:  lw         $v1, 0x94($sp)
+    8006DAC0:  sll        $t4, $v1, 2
+    8006DAC8:  addu       $t5, $s2, $t4
+    8006DACC:  sll        $t7, $v1, 2
+    8006DAD4:  addu       $t9, $s2, $t7
+    8006DADC:  sll        $t8, $v1, 2
+    8006DAE4:  addu       $t1, $s2, $t8
+    8006DAF0:  sw         $v1, 0x94($sp)
+    8006DB04:  lw         $v1, 0x94($sp)
+    8006DB0C:  sll        $t2, $v1, 2
+    8006DB14:  addu       $t4, $s2, $t2
+    8006DB18:  sll        $t5, $v1, 2
+    8006DB20:  addu       $t7, $s2, $t5
+    8006DB28:  sll        $t6, $v1, 2
+    8006DB30:  addu       $t9, $s2, $t6
+    8006DB3C:  sw         $v1, 0x94($sp)
+    8006DB50:  lw         $v1, 0x94($sp)
+    8006DB58:  sll        $t1, $v1, 2
+    8006DB60:  addu       $t2, $s2, $t1
+    8006DB64:  sll        $t4, $v1, 2
+    8006DB6C:  addu       $t5, $s2, $t4
+    8006DB74:  sll        $t3, $v1, 2
+    8006DB7C:  addu       $t7, $s2, $t3
+    8006DB88:  sw         $v1, 0x94($sp)
+    8006DB9C:  lw         $v1, 0x94($sp)
+    8006DBA4:  sll        $t9, $v1, 2
+    8006DBAC:  addu       $t1, $s2, $t9
+    8006DBB0:  sll        $t2, $v1, 2
+    8006DBB8:  addu       $t4, $s2, $t2
+    8006DBC8:  sw         $v1, 0x94($sp)
+    8006DBE8:   lw        $ra, 0x3C($sp)
+    8006DBEC:  sll        $t0, $v1, 2
+    8006DBF0:  addu       $s1, $s2, $t0
+    8006DC00:  sll        $t3, $v1, 2
+    8006DC0C:  addu       $t7, $s2, $t3
+    8006DC14:  lw         $t9, 0x7C($sp)
+    8006DC18:  sll        $t6, $v1, 2
+    8006DC1C:  addu       $t1, $s2, $t6
+    8006DC24:  sw         $v1, 0x94($sp)
+    8006DC30:  lw         $v1, 0x94($sp)
+    8006DC38:  sll        $t2, $v1, 2
+    8006DC3C:  addu       $s1, $s2, $t2
+    8006DC58:  addiu      $a0, $sp, 0x94
+    8006DC60:  sw         $v1, 0x94($sp)
+    8006DC7C:   lw        $ra, 0x3C($sp)
+    8006DC90:  sll        $t0, $t4, 5
+    8006DC9C:  sll        $t7, $t3, 1
+    8006DCB8:   sw        $v1, 0x94($sp)
+    8006DCC8:  lw         $t8, 0x88($sp)
+    8006DCD8:   sll       $t0, $v1, 2
+    8006DCDC:  addu       $t5, $s2, $t0
+    8006DCF0:  sll        $t3, $s4, 6
+    8006DCF4:  addu       $t7, $s2, $t3
+    8006DCF8:  addu       $s0, $t7, $s3
+    8006DD0C:  sll        $t6, $v1, 2
+    8006DD10:  addu       $t1, $s2, $t6
+    8006DD2C:  sll        $t8, $v1, 2
+    8006DD30:  addu       $t0, $s2, $t8
+    8006DD4C:  sll        $t5, $v1, 2
+    8006DD50:  addu       $t3, $s2, $t5
+    8006DD6C:  sll        $t6, $v1, 2
+    8006DD70:  addu       $t9, $s2, $t6
+    8006DD8C:  sll        $t8, $v1, 2
+    8006DD90:  addu       $t2, $s2, $t8
+    8006DDAC:  sll        $t5, $v1, 2
+    8006DDB0:  addu       $t4, $s2, $t5
+    8006DDCC:  sll        $t6, $v1, 2
+    8006DDD0:  addu       $t7, $s2, $t6
+    8006DDE0:   sw        $v1, 0x94($sp)
+    8006DDF0:  sll        $t8, $v1, 2
+    8006DDF4:  addu       $t1, $s2, $t8
+    8006DE04:   sw        $v1, 0x94($sp)
+    8006DE14:  sll        $t5, $v1, 2
+    8006DE18:  addu       $t0, $s2, $t5
+    8006DE28:   sw        $v1, 0x94($sp)
+    8006DE38:  sll        $t6, $v1, 2
+    8006DE3C:  addu       $t3, $s2, $t6
+    8006DE4C:   sw        $v1, 0x94($sp)
+    8006DE5C:  sll        $t8, $v1, 2
+    8006DE60:  addu       $t9, $s2, $t8
+    8006DE70:   sw        $v1, 0x94($sp)
+    8006DE80:  sll        $t5, $v1, 2
+    8006DE84:  addu       $t2, $s2, $t5
+    8006DE94:   sw        $v1, 0x94($sp)
+    8006DEC0:  sll        $t3, $v1, 2
+    8006DEC8:  addu       $t8, $s2, $t3
+    8006DED0:  sll        $t9, $v1, 2
+    8006DED8:  addu       $t5, $s2, $t9
+    8006DEEC:   sw        $v1, 0x94($sp)
+    8006DF14:  sll        $t0, $v1, 2
+    8006DF18:  addu       $t6, $s2, $t0
+    8006DF28:   sw        $v1, 0x94($sp)
+    8006DF40:   sw        $v1, 0x94($sp)
+    8006DF50:  sw         $v1, 0x94($sp)
+    8006DF64:  lw         $v1, 0x94($sp)
+    8006DF70:  sll        $t9, $v1, 2
+    8006DF7C:  addu       $t7, $s2, $t9
+    8006DF84:  sll        $t1, $v1, 2
+    8006DF8C:  addu       $t0, $s2, $t1
+    8006DF94:  sll        $t6, $v1, 2
+    8006DF9C:  addu       $t3, $s2, $t6
+    8006DFB0:   sw        $v1, 0x94($sp)
+    8006DFB4:  lw         $v1, 0x94($sp)
+    8006DFBC:  sll        $t9, $v1, 2
+    8006DFC0:  addu       $t8, $s2, $t9
+    8006DFD0:   sw        $v1, 0x94($sp)
+    8006DFE4:  lw         $t1, 0x8C($sp)
+    8006DFEC:  addu       $t5, $t1, $s4
+    8006E004:   sw        $v1, 0x94($sp)
+    8006E020:   sll       $t6, $t0, 2
+    8006E024:  addu       $t2, $s2, $t6
+    8006E02C:  lw         $v1, 0x94($sp)
+    8006E040:  sll        $t8, $v1, 2
+    8006E044:  addu       $t7, $s2, $t8
+    8006E054:   sw        $v1, 0x94($sp)
+    8006E05C:  lw         $v1, 0x94($sp)
+    8006E06C:   sll       $t5, $t1, 2
+    8006E070:  addu       $t0, $s2, $t5
+    8006E084:   sll       $t8, $v1, 2
+    8006E088:  lw         $v1, 0x94($sp)
+    8006E090:  sll        $t3, $v1, 2
+    8006E094:  addu       $t9, $s2, $t3
+    8006E0A4:   sw        $v1, 0x94($sp)
+    8006E0A8:  sll        $t8, $v1, 2
+    8006E0AC:  addu       $t4, $s2, $t8
+    8006E0BC:  sll        $t5, $v1, 2
+    8006E0C0:  addu       $t0, $s2, $t5
+    8006E0CC:  lw         $t6, 0x7C($sp)
+    8006E0D0:  sll        $t3, $v1, 2
+    8006E0D4:  addu       $t2, $s2, $t3
+    8006E0E8:   lw        $t4, 0x70($sp)
+    8006E0EC:  lw         $t9, 0x6C($sp)
+    8006E0FC:   sw        $t8, 0x6C($sp)
+    8006E100:  lw         $t4, 0x70($sp)
+    8006E10C:  sw         $t7, 0x70($sp)
+    8006E110:  lw         $v1, 0x94($sp)
+    8006E120:   sw        $v1, 0x94($sp)
+    8006E140:  sll        $t0, $v1, 2
+    8006E144:  addu       $t3, $s2, $t0
+    8006E154:   sw        $v1, 0x94($sp)
+    8006E164:   sw        $v1, 0x94($sp)
+    8006E168:  sll        $t6, $v1, 2
+    8006E174:   addu      $s1, $s2, $t6
+    8006E19C:   sw        $v1, 0x94($sp)
+    8006E1A8:  sll        $t7, $v1, 2
+    8006E1AC:  addu       $t5, $s2, $t7
+    8006E1B8:  lw         $t0, 0x7C($sp)
+    8006E1BC:  sll        $t1, $v1, 2
+    8006E1C0:  addu       $t3, $s2, $t1
+    8006E1C8:  sw         $v1, 0x94($sp)
+    8006E1DC:  lw         $t6, 0x6C($sp)
+    8006E1EC:   sw        $t2, 0x6C($sp)
+    8006E1F0:  lw         $t9, 0x70($sp)
+    8006E1FC:  sw         $t8, 0x70($sp)
+    8006E214:   lw        $v1, 0x94($sp)
+    8006E218:  lw         $v1, 0x94($sp)
+    8006E220:  sll        $t5, $v1, 2
+    8006E224:  addu       $s1, $s2, $t5
+    8006E230:  lw         $v1, 0x94($sp)
+    8006E238:  sll        $t1, $v1, 2
+    8006E23C:  addu       $s1, $s2, $t1
+    8006E258:   sw        $v1, 0x94($sp)
+    8006E25C:  lw         $t3, 0x6C($sp)
+    8006E260:  lw         $t6, 0x70($sp)
+    8006E268:  addu       $t2, $t3, $t6
+    8006E29C:  lw         $v1, 0x94($sp)
+    8006E2A4:  sll        $t4, $v1, 2
+    8006E2A8:  addu       $t5, $s2, $t4
+    8006E2AC:  sll        $t0, $v1, 2
+    8006E2B4:  addu       $t3, $s2, $t0
+    8006E2C0:  sw         $v1, 0x94($sp)
+    8006E314:  sll        $t0, $t7, 30
+    8006E348:  lw         $v1, 0x94($sp)
+    8006E350:  sll        $t2, $v1, 2
+    8006E354:  addu       $t8, $s2, $t2
+    8006E358:  sll        $t4, $v1, 2
+    8006E360:  addu       $t7, $s2, $t4
+    8006E364:  sll        $t0, $v1, 2
+    8006E36C:  addu       $t1, $s2, $t0
+    8006E37C:  sw         $v1, 0x94($sp)
+    8006E3A4:  addu       $t6, $s4, $t2
+    8006E3C0:  lw         $t4, 0x78($sp)
+    8006E3E0:  lw         $v1, 0x94($sp)
+    8006E3E4:  sll        $t9, $v0, 13
+    8006E41C:  sll        $t6, $v1, 2
+    8006E428:  addu       $t8, $s2, $t6
+    8006E438:  sw         $v1, 0x94($sp)
+    8006E480:  lbu        $t1, 0x61($sp)
+    8006E48C:   lw        $t0, 0x64($sp)
+    8006E494:   lw        $t0, 0x64($sp)
+    8006E498:  lw         $t3, 0x78($sp)
+    8006E49C:  addiu      $a1, $sp, 0x62
+    8006E4A8:   addiu     $a0, $sp, 0x63
+    8006E4B0:   addiu     $a0, $sp, 0x63
+    8006E4BC:  lw         $v1, 0x94($sp)
+    8006E4C0:  lbu        $t6, 0x61($sp)
+    8006E4C4:  sll        $t4, $v1, 2
+    8006E4C8:  addu       $t9, $s2, $t4
+    8006E4D0:  lbu        $t7, 0x63($sp)
+    8006E4D4:  sll        $t0, $v1, 2
+    8006E4D8:  addu       $t5, $s2, $t0
+    8006E4E0:  lbu        $t1, 0x62($sp)
+    8006E4E4:  sll        $t3, $v1, 2
+    8006E4EC:  addu       $t6, $s2, $t3
+    8006E4F8:  sb         $t2, 0x61($sp)
+    8006E500:   sw        $v1, 0x94($sp)
+    8006E508:   addiu     $a1, $sp, 0x62
+    8006E514:  lw         $v1, 0x94($sp)
+    8006E518:  lbu        $t2, 0x61($sp)
+    8006E51C:  sll        $t9, $v1, 2
+    8006E520:  addu       $t0, $s2, $t9
+    8006E528:  lbu        $t7, 0x63($sp)
+    8006E52C:  sll        $t5, $v1, 2
+    8006E530:  addu       $t3, $s2, $t5
+    8006E538:  lbu        $t1, 0x62($sp)
+    8006E53C:  sll        $t6, $v1, 2
+    8006E544:  addu       $t2, $s2, $t6
+    8006E550:  sb         $t4, 0x61($sp)
+    8006E554:  sw         $v1, 0x94($sp)
+    8006E56C:   addiu     $a0, $sp, 0x63
+    8006E574:   addiu     $a1, $sp, 0x62
+    8006E580:  lw         $v1, 0x94($sp)
+    8006E584:  lbu        $t8, 0x61($sp)
+    8006E588:  sll        $t7, $v1, 2
+    8006E58C:  addu       $t3, $s2, $t7
+    8006E594:  lbu        $t6, 0x63($sp)
+    8006E598:  sll        $t1, $v1, 2
+    8006E59C:  addu       $t2, $s2, $t1
+    8006E5A4:  lbu        $t4, 0x62($sp)
+    8006E5A8:  sll        $t9, $v1, 2
+    8006E5B0:  addu       $t8, $s2, $t9
+    8006E5BC:  sb         $t0, 0x61($sp)
+    8006E5C0:  sw         $v1, 0x94($sp)
+    8006E5C4:  lw         $t0, 0x64($sp)
+    8006E5F0:  lw         $v1, 0x94($sp)
+    8006E5F4:  lw         $t5, 0x64($sp)
+    8006E5F8:  sll        $t6, $v1, 2
+    8006E5FC:  addu       $t2, $s2, $t6
+    8006E60C:  sw         $t3, 0x64($sp)
+    8006E610:  sw         $v1, 0x94($sp)
+    8006E660:  sll        $t5, $t0, 30
+    8006E6B4:  addu       $t2, $t6, $t1
+    8006E6B8:  addu       $t4, $t2, $t9
+    8006E6CC:  lw         $v1, 0x94($sp)
+    8006E6D8:  sll        $t3, $v1, 2
+    8006E6E0:  addu       $t6, $s2, $t3
+    8006E6E4:  sll        $t2, $v1, 2
+    8006E6EC:  addu       $t9, $s2, $t2
+    8006E700:   sw        $v1, 0x94($sp)
+    8006E73C:  lw         $t3, 0x6C($sp)
+    8006E740:  lw         $t5, 0x70($sp)
+    8006E754:  lw         $t6, 0x7C($sp)
+    8006E77C:   lw        $v1, 0x94($sp)
+    8006E788:  lw         $v1, 0x94($sp)
+    8006E790:  sll        $t4, $v1, 2
+    8006E794:  addu       $t8, $s2, $t4
+    8006E79C:  lw         $t0, 0x7C($sp)
+    8006E7A0:  sll        $t7, $v1, 2
+    8006E7A4:  addu       $t3, $s2, $t7
+    8006E7B4:   sw        $v1, 0x94($sp)
+    8006E7E0:   lw        $t2, 0x7C($sp)
+    8006E800:   lw        $t2, 0x7C($sp)
+    8006E81C:  lw         $v1, 0x94($sp)
+    8006E820:  sll        $t4, $t1, 30
+    8006E82C:  sll        $t8, $v1, 2
+    8006E830:  addu       $t7, $s2, $t8
+    8006E834:  sll        $t3, $v1, 2
+    8006E83C:  addu       $t5, $s2, $t3
+    8006E850:   sw        $v1, 0x94($sp)
+    8006E854:  lw         $t2, 0x7C($sp)
+    8006E878:  lw         $v1, 0x94($sp)
+    8006E880:  sll        $t8, $v1, 2
+    8006E884:  addu       $t9, $s2, $t8
+    8006E888:  sll        $t7, $v1, 2
+    8006E890:  addu       $t3, $s2, $t7
+    8006E89C:  sw         $v1, 0x94($sp)
+    8006E8B4:   addu      $a1, $t0, $s4
+    8006E8C0:  lw         $v1, 0x94($sp)
+    8006E8C8:  sll        $t5, $v1, 2
+    8006E8CC:  addu       $t2, $s2, $t5
+    8006E8D0:  sll        $t1, $v1, 2
+    8006E8D8:  addu       $t6, $s2, $t1
+    8006E8E4:  sw         $v1, 0x94($sp)
+    8006E8EC:  lw         $v1, 0x94($sp)
+    8006E8F8:  sw         $v1, 0x94($sp)
+    8006E8FC:  sll        $t4, $v0, 30
+    8006E904:   sll       $t7, $v0, 25
+    8006E90C:   sw        $v1, 0x94($sp)
+    8006E924:   addu      $a1, $t3, $s4
+    8006E930:  lw         $v1, 0x94($sp)
+    8006E938:  sll        $t0, $v1, 2
+    8006E93C:  addu       $t5, $s2, $t0
+    8006E940:  sll        $t2, $v1, 2
+    8006E948:  addu       $t1, $s2, $t2
+    8006E954:  sw         $v1, 0x94($sp)
+    8006E95C:  lw         $v1, 0x94($sp)
+    8006E978:   sw        $v1, 0x94($sp)
+    8006E990:   addu      $a1, $t4, $s4
+    8006E998:   lw        $v1, 0x94($sp)
+    8006E99C:  lw         $v1, 0x94($sp)
+    8006E9A4:  sll        $t7, $v1, 2
+    8006E9A8:  addu       $t3, $s2, $t7
+    8006E9B4:  sw         $v1, 0x94($sp)
+    8006E9B8:  lw         $v1, 0x94($sp)
+    8006E9C8:  sll        $t5, $v1, 2
+    8006E9CC:  addu       $t2, $s2, $t5
+    8006E9E4:  sll        $t6, $v1, 2
+    8006E9E8:  addu       $t8, $s2, $t6
+    8006EA04:  sw         $v1, 0x94($sp)
+    8006EA10:  lw         $ra, 0x3C($sp)
+    8006EA14:  lw         $s0, 0x18($sp)
+    8006EA18:  lw         $s1, 0x1C($sp)
+    8006EA1C:  lw         $s2, 0x20($sp)
+    8006EA20:  lw         $s3, 0x24($sp)
+    8006EA24:  lw         $s4, 0x28($sp)
+    8006EA28:  lw         $s5, 0x2C($sp)
+    8006EA2C:  lw         $s6, 0x30($sp)
+    8006EA30:  lw         $s7, 0x34($sp)
+    8006EA34:  lw         $fp, 0x38($sp)
+    8006EA3C:   addiu     $sp, $sp, 0xA0

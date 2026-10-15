@@ -1,0 +1,24 @@
+{
+  "scope": "GEKO:func_80144270",
+  "src": "src/ovl/GEKO/80142760.c",
+  "path": "drafts/T-16100/batch-3/GEKO/func_80144270",
+  "archive_path": "drafts/T-16100/batch-3/GEKO/func_80144270",
+  "status": "scored",
+  "score": 491,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 448,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "57bdf54231b469c610d810849cef8e92f225699dc48f91e741f15bf5086c5a88",
+    "provenance.json": "4cd7020c399a40186d603b8638f65ef135a3b0e6c9deb93cc300319d1e3802dd",
+    "declarations.h": "cc9dffb435ab3d8f9a72923f61c29de8c158868513ed018a9adcdbdf9ab4a900",
+    "difference.txt": "231762eafb68ebfe148b9392cfe0073fdc0488feb3156094d9d00be90e466737",
+    "context.c": "c6ecfe94175272de4676c3bc45d5e824d6dc941a2ce92d3655530b884bdcd7ab",
+    "body.c": "8502e73bd4c59e133fac7e42ee81dfd91a06c06795cd6b6ad075d29704812f1c",
+    "full-context.c": "a4d35c253edacb3137a8e9fe802d65b515fe17db94656ba5d2caa06c745b3bd3",
+    "diagnostics.txt": "76aa550ee49b39979714bfdc74f0fb3e960246ec3a0295a64223ff72283e1cfb"
+  }
+}

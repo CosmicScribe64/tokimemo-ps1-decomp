@@ -1,0 +1,11 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/BUNKASAI -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/BUNKASAI/func_8015AF90/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/BUNKASAI -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/BUNKASAI/func_8015AF90/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/BUNKASAI/func_8015AF90/work/guarded.c drafts/T-16100/batch-1/BUNKASAI/func_8015AF90/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/BUNKASAI/func_8015AF90/work/guarded.o.sjis.c, line 2827: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp78) = *(M2cBlock30 *)(&D_80160AE0);
+ --------------------^
+

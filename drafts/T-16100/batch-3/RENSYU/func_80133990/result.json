@@ -1,0 +1,24 @@
+{
+  "scope": "RENSYU:func_80133990",
+  "src": "src/ovl/RENSYU/80132040.c",
+  "path": "drafts/T-16100/batch-3/RENSYU/func_80133990",
+  "archive_path": "drafts/T-16100/batch-3/RENSYU/func_80133990",
+  "status": "scored",
+  "score": 238,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 238,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "46a47e459ab250db99a015a3c1c3e786f081d6aa2f6157e2e5f52ba07347e589",
+    "provenance.json": "06702b86e1914b7918c4c46a5b7c8ce57d534394066ee91dbd97afb0daf381fe",
+    "declarations.h": "5dede658a7e897a2b55bae7b2cb324e9e78273d305dc46fc4d180931d28b8e66",
+    "difference.txt": "88e7fbee585c43a7d2f181f22403f008a1b033ea795ee9d0f301c7f540e4d237",
+    "context.c": "13b591d4e29a3965b6e3f04806a115f387db58ea76e1e2b51f7a76981869061a",
+    "body.c": "c3d43ede519c2a6a33e02fe19e43abc8caae9ccd0b6aeb7d59d97c1d89220d2b",
+    "full-context.c": "42670747758b0da675ebc673e54ff1682b07344acc8cd5a98b96028e79e2a88a",
+    "diagnostics.txt": "369b70fbb002925312fd9fe6766f6c124f5d65a6eff74c41972a4253c62fa47b"
+  }
+}

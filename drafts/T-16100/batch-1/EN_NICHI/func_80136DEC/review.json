@@ -1,0 +1,97 @@
+{
+  "scope": "EN_NICHI:func_80136DEC",
+  "selected_path": "drafts/T-14500/EN_NICHI/func_80136DEC",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&spC4 +",
+      "kind": "stack-address-arithmetic",
+      "line": 34,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 36 bytes followed by two words to each local (44 bytes total); each scalar destination becomes s16[22]. Trailing +0x24 expressions denote byte offsets, not halfword or scalar-word strides. Existing copy-block typedef is retained as unresolved semantic typing. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    *(s32 *)((unsigned char *)(&spC4) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80139C68) + (36));",
+        "    *(s32 *)((unsigned char *)(&spC4 + 0x24) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80139C68 + 0x24) + (4));",
+        "    *(M2cBlock24 *)(&sp98) = *(M2cBlock24 *)(&D_80139C94);"
+      ]
+    },
+    {
+      "detail": "&sp98 +",
+      "kind": "stack-address-arithmetic",
+      "line": 37,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 36 bytes followed by two words to each local (44 bytes total); each scalar destination becomes s16[22]. Trailing +0x24 expressions denote byte offsets, not halfword or scalar-word strides. Existing copy-block typedef is retained as unresolved semantic typing. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    *(s32 *)((unsigned char *)(&sp98) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80139C94) + (36));",
+        "    *(s32 *)((unsigned char *)(&sp98 + 0x24) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80139C94 + 0x24) + (4));",
+        "    *(M2cBlock24 *)(&sp6C) = *(M2cBlock24 *)(&D_80139CC0);"
+      ]
+    },
+    {
+      "detail": "&sp6C +",
+      "kind": "stack-address-arithmetic",
+      "line": 40,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies 36 bytes followed by two words to each local (44 bytes total); each scalar destination becomes s16[22]. Trailing +0x24 expressions denote byte offsets, not halfword or scalar-word strides. Existing copy-block typedef is retained as unresolved semantic typing. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    *(s32 *)((unsigned char *)(&sp6C) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80139CC0) + (36));",
+        "    *(s32 *)((unsigned char *)(&sp6C + 0x24) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80139CC0 + 0x24) + (4));",
+        "    sp54 = (s32) D_80139CEC;"
+      ]
+    },
+    {
+      "detail": "M2cBlock24",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "copy-width-reviewed-layout-partial",
+      "explanation": "Target copies 36 bytes followed by two words to each local (44 bytes total); each scalar destination becomes s16[22]. Trailing +0x24 expressions denote byte offsets, not halfword or scalar-word strides. Existing copy-block typedef is retained as unresolved semantic typing. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_80136DEC(void) {",
+        "    typedef struct { s32 w[9]; } M2cBlock24; /* m2c memcpy of 36 bytes */",
+        "    s16 spC4;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target copies 36 bytes followed by two words to each local (44 bytes total); each scalar destination becomes s16[22]. Trailing +0x24 expressions denote byte offsets, not halfword or scalar-word strides. Existing copy-block typedef is retained as unresolved semantic typing."
+  ],
+  "assembly_path": "asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10/func_80136DEC.s",
+  "assembly_sha256": "1677783e6958e6528fc9fbd76721eec7b68f5fb632f7225bd487e1aa5530682a",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x4C": [
+      "lw",
+      "sw"
+    ],
+    "0x44": [
+      "lw",
+      "sw"
+    ],
+    "0x40": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

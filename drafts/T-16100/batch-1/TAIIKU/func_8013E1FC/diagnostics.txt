@@ -1,0 +1,35 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 3885: '&' before array or function; ignored
+         if ((u32) var_v1 < (u32) &spBC) {
+ ---------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 3951: '&' before array or function; ignored
+         if ((u32) var_v1_2 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 3967: '&' before array or function; ignored
+         if ((u32) var_v1_3 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 3976: Incompatible pointer type assignment
+         if ((temp_t0 < -0xA0) || (var_t1 = ((u8 *)positions_y) + temp_t4_2, ((temp_t0 < 0xA1) == 0)) || (var_v0_3 = *var_t1, ((var_v0_3 < -0x17) != 0)) || (var_v0_3 >= 0x79)) {
+ -----------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 3979: Incompatible pointer type assignment
+                 var_t1 = ((u8 *)positions_y) + temp_t4_2;
+ -----------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 4075: '&' before array or function; ignored
+         if ((u32) var_v1_5 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 4091: '&' before array or function; ignored
+         if ((u32) var_v1_6 < (u32) &spBC) {
+ -----------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 4100: Incompatible pointer type assignment
+         if ((temp_t0_2 < -0xA0) || (var_t1_2 = ((u8 *)positions_y) + temp_t5_2, ((temp_t0_2 < 0xA1) == 0)) || (var_v0_5 = *var_t1_2, ((var_v0_5 < -0x17) != 0)) || (var_v0_5 >= 0x79)) {
+ ---------------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TAIIKU/func_8013E1FC/work/guarded.c, line 4103: Incompatible pointer type assignment
+                 var_t1_2 = ((u8 *)positions_y) + temp_t5_2;
+ -------------------------^
+

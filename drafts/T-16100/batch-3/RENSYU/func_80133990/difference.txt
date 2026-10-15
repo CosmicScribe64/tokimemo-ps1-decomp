@@ -1,0 +1,81 @@
+-27bdffb0  ; addiu sp,sp,-80
++27bdffa0  ; addiu sp,sp,-96
++3c0e8013  ; lui t6,0x0
++3c0f8013  ; lui t7,0x0
++3c188013  ; lui t8,0x0
++3c198013  ; lui t9,0x0
++3c088013  ; lui t0,0x0
++3c098013  ; lui t1,0x0
++3c0a8013  ; lui t2,0x0
++8dce43a8  ; lw t6,0(t6)
++8def43b0  ; lw t7,8(t7)
++8f1843ac  ; lw t8,4(t8)
++8f3943b4  ; lw t9,12(t9)
++8d0843b8  ; lw t0,16(t0)
++952943c0  ; lhu t1,24(t1)
++8d4a43bc  ; lw t2,20(t2)
+-3c0f8013  ; lui t7,0x0
+-25ef43a8  ; addiu t7,t7,0
+-8de10000  ; lw at,0(t7)
+-27ae0030  ; addiu t6,sp,48
+-adc10000  ; sw at,0(t6)
+-8de10008  ; lw at,8(t7)
+-8de80004  ; lw t0,4(t7)
+-adc10008  ; sw at,8(t6)
+-adc80004  ; sw t0,4(t6)
+-8de8000c  ; lw t0,12(t7)
+-8de10010  ; lw at,16(t7)
+-adc8000c  ; sw t0,12(t6)
+-adc10010  ; sw at,16(t6)
+-95e10018  ; lhu at,24(t7)
+-8de80014  ; lw t0,20(t7)
+-a5c10018  ; sh at,24(t6)
++afae0044  ; sw t6,68(sp)
++afaf004c  ; sw t7,76(sp)
++afb80048  ; sw t8,72(sp)
++afb90050  ; sw t9,80(sp)
++afa80054  ; sw t0,84(sp)
++a7a9005c  ; sh t1,92(sp)
+-adc80014  ; sw t0,20(t6)
+-3c09800e  ; lui t1,0x0
+-9129738a  ; lbu t1,0(t1)
+-27a20030  ; addiu v0,sp,48
+-2d210009  ; sltiu at,t1,9
+-102000a9  ; beqz at,1c58 <.L80133C80+0x18>
+-00094880  ; sll t1,t1,0x2
++afaa0058  ; sw t2,88(sp)
++3c0b800e  ; lui t3,0x0
++916b738a  ; lbu t3,0(t3)
++00000000  ; nop
++2d610009  ; sltiu at,t3,9
++102000a3  ; beqz at,1c50 <func_80133990+0x300>
++000b5880  ; sll t3,t3,0x2
+-00290821  ; addu at,at,t1
+-8c290000 R_MIPS_LO16 jump-table  ; lw t1,0(at)
++002b0821  ; addu at,at,t3
++8c2b0000 R_MIPS_LO16 jump-table  ; lw t3,308(at)
+-01200008  ; jr t1
++01600008  ; jr t3
+-1000009c  ; b 1c60 <.L80133C80+0x20>
++10000096  ; b 1c58 <func_80133990+0x308>
+-10000098  ; b 1c60 <.L80133C80+0x20>
++10000092  ; b 1c58 <func_80133990+0x308>
+-3c0a8013  ; lui t2,0x0
+-914a42c4  ; lbu t2,0(t2)
++3c0c8013  ; lui t4,0x0
++918c42c4  ; lbu t4,0(t4)
+-2d410003  ; sltiu at,t2,3
+-14200030  ; bnez at,1ad8 <.L80133A44+0xd4>
++2d810003  ; sltiu at,t4,3
++14200031  ; bnez at,1aec <func_80133990+0x19c>
+-908442d0  ; lbu a0,0(a0)
++908642d0  ; lbu a2,0(a0)
+-00045840  ; sll t3,a0,0x1
+-004b6021  ; addu t4,v0,t3
+-85830000  ; lh v1,0(t4)
+-3c05800e  ; lui a1,0x0
+-24630002  ; addiu v1,v1,2
+-00036c00  ; sll t5,v1,0x10
+-000dcc03  ; sra t9,t5,0x10
+-14810013  ; bne a0,at,1a94 <.L80133A44+0x90>
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

@@ -1,0 +1,12 @@
+extern s16 D_800B5922;
+extern s16 D_800B5924;
+extern s16 D_800B5926;
+extern s16 D_800B592A;
+extern s8 D_800B593A;
+extern u16 D_8013A5CC;
+extern u32 D_800E7384;
+extern u8 D_800E738A;
+extern u8 D_8012200C;
+extern u8 D_8012200D;
+extern u8 D_8012200E;
+void func_801365DC(s32 arg0);

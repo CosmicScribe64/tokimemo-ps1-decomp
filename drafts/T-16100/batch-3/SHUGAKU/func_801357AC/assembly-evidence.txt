@@ -1,0 +1,21 @@
+801357AC:  addiu      $sp, $sp, -0x30
+801357B0:  sw         $ra, 0x1C($sp)
+801357C0:  lw         $a0, %lo(D_8013C2E0)($a0)
+801357C4:  addiu      $a1, $zero, 0x11
+801357C8:  addiu      $a2, $zero, 0x1
+801357CC:  addiu      $a3, $zero, 0x2
+801357D4:   sw        $zero, 0x10($sp)
+801357DC:  addiu      $v1, $v1, %lo(D_801217D0)
+801357E4:  addiu      $a0, $zero, 0x24
+801357E8:  multu      $v0, $a0
+801357EC:  addiu      $v0, $v0, 0x1
+801357F0:  sll        $t8, $v0, 16
+80135800:  addu       $t7, $v1, $t6
+80135808:   sh        $zero, 0x830($t7)
+8013581C:  lh         $a3, %lo(D_8013C2DC)($a3)
+80135820:  lw         $a2, %lo(D_8013C2D0)($a2)
+80135824:  lw         $a1, %lo(D_8013C2D8)($a1)
+80135828:  lw         $a0, %lo(D_8013C2D4)($a0)
+80135834:  addiu      $t0, $zero, 0x8
+8013583C:  sb         $t0, %lo(D_80120698)($at)
+8013592C:  addiu      $sp, $sp, 0x30

@@ -1,0 +1,28 @@
+{
+  "scope": "EN_NICHI:func_80136B74",
+  "path": "drafts/T-16100/batch-2/EN_NICHI/func_80136B74",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 55
+    }
+  ],
+  "explanation": "Constant 2*4 byte GameState arithmetic addresses unk_1228[8] and unk_1228[40]. Repair direct established array fields.",
+  "evidence_path": "drafts/T-16100/batch-2/EN_NICHI/func_80136B74/evidence.txt",
+  "compile_status": "scored",
+  "score": 56,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 55
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Constant 2*4 byte GameState arithmetic addresses unk_1228[8] and unk_1228[40]. Repair direct established array fields."
+    }
+  ]
+}

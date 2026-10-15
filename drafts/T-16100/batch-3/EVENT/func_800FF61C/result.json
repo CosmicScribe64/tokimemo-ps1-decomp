@@ -1,0 +1,24 @@
+{
+  "scope": "EVENT:func_800FF61C",
+  "src": "src/ovl/EVENT/800FDC20.c",
+  "path": "drafts/T-16100/batch-3/EVENT/func_800FF61C",
+  "archive_path": "drafts/T-16100/batch-3/EVENT/func_800FF61C",
+  "status": "scored",
+  "score": 8,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 52,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "7ea6a3d0364835ee84c0907305d7be517440bccd88d46b975c355e2924b02fe2",
+    "provenance.json": "650a078becf790f24b3fdc2158a3a938999db83b9c3debbe83e9a2472b885a56",
+    "declarations.h": "2412a17e0078e813e2a0cef63ffd4a0f5f2c35445d49f14d8bc3b65aab9b1280",
+    "difference.txt": "58d26f124328ebe3e0cb1876d97453fd852e15c8c59799a9659fa895a19feab3",
+    "context.c": "f624140392eff27d81b4dd2bd1c2cf7267bad6e74ea78fbfde44d3422c3c69fa",
+    "body.c": "ecfdc94467772f38292650a9b57f89dc6aa10998562755fc06cac4d63df79df2",
+    "full-context.c": "30e51c26fe5c86e641f56b906830be12793381cd8beae3948b20339fe164f3ff",
+    "diagnostics.txt": "bc86ba1123d82d36962f2999521505a4ca0e76b8571715f4447888351844aaa6"
+  }
+}

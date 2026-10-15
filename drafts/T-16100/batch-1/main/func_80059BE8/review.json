@@ -1,0 +1,37 @@
+{
+  "scope": "main:func_80059BE8",
+  "selected_path": "drafts/T-14500/main/func_80059BE8",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 57,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "    D_800E7594 += 0xFFF80000;",
+        "    temp_v0 = (0x3C * 4) + &D_800E6280;",
+        "    *(s32 *)((unsigned char *)temp_v0 + (4660)) = (s32) (*(s32 *)((unsigned char *)temp_v0 + (4660)) + 0xFFF80000);"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/nonmatchings/main/80059B40/func_80059BE8.s",
+  "assembly_sha256": "ecddee766d8c5ce5051900692b02edce6466e30b9ede41fff2cad529ec14c8b5",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

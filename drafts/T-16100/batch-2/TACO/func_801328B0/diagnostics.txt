@@ -1,0 +1,6 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/TACO/func_801328B0/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/TACO/func_801328B0/full-context.c drafts/T-16100/batch-2/TACO/func_801328B0/work/guarded.o ido 5.3
+
+Full translation unit compiled and scored.

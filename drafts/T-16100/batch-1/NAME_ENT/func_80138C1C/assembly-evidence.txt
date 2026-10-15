@@ -1,0 +1,25 @@
+    80138C1C:  addiu      $sp, $sp, -0x60
+    80138C20:  lui        $v0, %hi(D_800E6280)
+    80138C28:  sw         $ra, 0x14($sp)
+    80138C30:  addiu      $v0, $v0, %lo(D_800E6280)
+    80138C48:  lui        $v0, %hi(D_800E6280)
+    80138C54:  addiu      $v0, $v0, %lo(D_800E6280)
+    80138C7C:  lui        $a3, %hi(D_800E6280)
+    80138C88:  addiu      $a3, $a3, %lo(D_800E6280)
+    80138CBC:   sll       $t8, $a1, 1
+    80138CD4:  addu       $v0, $a3, $t8
+    80138D2C:   sll       $t4, $a1, 1
+    80138D44:  addu       $v0, $a3, $t4
+    80138D9C:   sll       $t8, $a1, 1
+    80138DB4:  addu       $v0, $a3, $t8
+    80138DD8:  addiu      $a0, $sp, 0x34
+    80138DEC:  addiu      $a0, $sp, 0x34
+    80138E00:  addiu      $a1, $sp, 0x34
+    80138E30:  lui        $a3, %hi(D_800E6280)
+    80138E3C:  addiu      $a3, $a3, %lo(D_800E6280)
+    80138E4C:  sll        $t4, $t3, 4
+    80138E70:  sll        $t5, $t4, 1
+    80138EBC:  sll        $t4, $t3, 4
+    80138EE0:  sll        $t5, $t4, 1
+    80138EE4:  lw         $ra, 0x14($sp)
+    80138EFC:   addiu     $sp, $sp, 0x60

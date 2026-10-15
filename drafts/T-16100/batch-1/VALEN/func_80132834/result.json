@@ -1,0 +1,20 @@
+{
+  "scope": "VALEN:func_80132834",
+  "src": "src/ovl/VALEN/80132760.c",
+  "size": 1240,
+  "path": "drafts/T-16100/batch-1/VALEN/func_80132834",
+  "archive_path": "drafts/T-16100/batch-1/VALEN/func_80132834",
+  "status": "scored",
+  "score": 509,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "body.c_sha256": "f5ac4e04e08507663fbcef2ea3946632e1b7a0068fa96b7ee0188be7618353de",
+  "declarations.h_sha256": "de1a8d1ec2d397b16016e64bb6fed5cbbcc7cf1fe9989f44f2b6c8611608ce8c",
+  "context.c_sha256": "3e836c53b21084c5bf9ed0be950cec07032f6ee5ae0f3fbb44c346c605889a83",
+  "full-context.c_sha256": "390f4132b44f2e07b5f3dd7952030ba9ab8e5157618e98025422af7ebdec345a",
+  "diagnostics.txt_sha256": "f2b8fcf352d46d29e6c95c0d3bab81a5d50778f85e2ca6a8c6c01ace2ec99b06",
+  "assembly-evidence.txt_sha256": "678d7edac00ee77ed22dc82c4002c328f4cdb3997a160ad0d468eb6ce0b47285"
+}

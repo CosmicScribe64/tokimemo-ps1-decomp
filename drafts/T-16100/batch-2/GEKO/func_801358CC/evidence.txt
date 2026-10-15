@@ -1,0 +1,28 @@
+Target: ['asm/ovl/GEKO/nonmatchings/GEKO/80134D10/func_801358CC.s']
+Review: Shift/subtract computes girl index*0x38 and +0x1C8 is Rec38.unk_0C. Repair established GameState record field.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801358CC */  addiu      $sp, $sp, -0x50
+    /* 801358D0 */  sw         $fp, 0x38($sp)
+    /* 801358D4 */  sw         $s7, 0x34($sp)
+    /* 801358D8 */  sw         $s6, 0x30($sp)
+    /* 801358DC */  sw         $s0, 0x18($sp)
+    /* 801358E4 */  sw         $ra, 0x3C($sp)
+    /* 801358E8 */  sw         $s5, 0x2C($sp)
+    /* 801358EC */  sw         $s4, 0x28($sp)
+    /* 801358F0 */  sw         $s3, 0x24($sp)
+    /* 801358F4 */  sw         $s2, 0x20($sp)
+    /* 801358F8 */  sw         $s1, 0x1C($sp)
+    /* 801358FC */  addiu      $s7, $zero, 0xFF
+    /* 80135900 */  addiu      $s6, $zero, 0x4
+    /* 80135904 */  addiu      $fp, $fp, %lo(D_800E6280)
+    /* 8013590C */  sll        $t6, $s0, 3
+    /* 80135914 */  sll        $t6, $t6, 3
+    /* 80135918 */  addu       $t7, $fp, $t6
+    /* 80135924 */  sll        $t0, $t8, 30
+    /* 80135980 */  addu       $t1, $v0, $s4
+    /* 80135984 */  addu       $t2, $s3, $s2
+    /* 8013599C */  addiu      $s0, $s0, 0x1
+    /* 801359A0 */  sll        $t3, $s0, 16
+    /* 801359B0 */   sll       $t6, $s0, 3
+    /* 801359B8 */  lbu        $a0, %lo(D_800E71DF)($a0)

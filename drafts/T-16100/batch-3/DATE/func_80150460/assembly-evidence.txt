@@ -1,0 +1,22 @@
+80150464:  lw         $t6, %lo(D_8015DE90)($t6)
+80150470:  lw         $t7, %lo(D_8015DFCC)($t7)
+80150474:  sw         $t6, %lo(D_8015E208)($at)
+80150480:  lw         $t8, %lo(D_8015E108)($t8)
+80150488:  sw         $t7, %lo(D_8015E20C)($at)
+8015048C:  lh         $t9, %lo(D_800E64AE)($t9)
+80150494:  sw         $t8, %lo(D_8015E210)($at)
+8015049C:  addiu      $t0, $t9, 0x2
+801504A0:  sh         $t0, %lo(D_800E64AE)($at)
+801504A8:  lh         $t1, %lo(D_800E64B6)($t1)
+801504AC:  addiu      $sp, $sp, -0x30
+801504B0:  sw         $ra, 0x1C($sp)
+801504B8:  addiu      $t2, $t1, -0xA
+801504C0:   sh        $t2, %lo(D_800E64B6)($at)
+801504D0:  lw         $a0, %lo(D_8015EA6C)($a0)
+801504D4:  addiu      $a1, $zero, 0x11
+801504D8:  addiu      $a2, $zero, 0x1
+801504DC:  addiu      $a3, $zero, 0x2
+801504E4:   sw        $zero, 0x10($sp)
+801504F0:  lw         $t4, %lo(D_8015EA84)($t4)
+80150534:  lh         $a3, %lo(D_8015EA68)($a3)
+801505A8:  addiu      $sp, $sp, 0x30

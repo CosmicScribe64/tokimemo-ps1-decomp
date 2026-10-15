@@ -1,0 +1,35 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/TT/func_8013D988/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/TT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/TT/func_8013D988/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3825: Incompatible pointer type assignment
+         var_s1 = sp70 + &sp78;
+ ---------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3825: '&' before array or function; ignored
+         var_s1 = sp70 + &sp78;
+ ------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3826: Incompatible pointer type assignment
+         var_s0 = sp70 + &sp2BC;
+ ---------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3826: '&' before array or function; ignored
+         var_s0 = sp70 + &sp2BC;
+ ------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3851: '&' before array or function; ignored
+         var_t2 = &sp2BC;
+ -----------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3852: '&' before array or function; ignored
+         var_t1 = &sp78;
+ -----------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3857: Incompatible pointer type assignment
+         temp_a1 = var_t1 + temp_t6_2;
+ ----------------^
+cfe: Warning 709: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3861: Incompatible pointer type assignment
+         temp_a0 = var_t2 + temp_t6_2;
+ ----------------^
+cfe: Warning 681: drafts/T-16100/batch-1/TT/func_8013D988/work/guarded.c, line 3899: '&' before array or function; ignored
+         if (var_t1 != &sp298) {
+ ----------------------^
+

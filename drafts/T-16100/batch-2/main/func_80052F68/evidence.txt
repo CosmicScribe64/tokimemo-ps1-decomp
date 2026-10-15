@@ -1,0 +1,28 @@
+Target: ['asm/nonmatchings/main/8004F870/func_80052F68.s']
+Review: sp48[12] covers twelve halfwords used by the three repeated groups; synthesized name is not itself bad. Preserve the evidence-backed array.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80052F70 */  lb         $t9, %lo(D_800B4349)($t9)
+    /* 80052F74 */  lh         $t8, %lo(D_800E647E)($t8)
+    /* 80052F78 */  addiu      $sp, $sp, -0x80
+    /* 80052F80 */  sw         $s3, 0x24($sp)
+    /* 80052F84 */  sw         $s2, 0x20($sp)
+    /* 80052F88 */  sw         $s1, 0x1C($sp)
+    /* 80052F8C */  sw         $s0, 0x18($sp)
+    /* 80052F90 */  addiu      $t1, $a0, 0x1
+    /* 80052F94 */  lbu        $t6, 0x0($t1)
+    /* 80052F98 */  addiu      $v1, $a0, 0x3
+    /* 80052F9C */  sll        $t7, $t6, 2
+    /* 80052FA0 */  sh         $t7, 0x4A($sp)
+    /* 80052FA4 */  lh         $t7, 0x4A($sp)
+    /* 80052FB0 */  addu       $t8, $t7, $t6
+    /* 80052FB4 */  sh         $t8, 0x4A($sp)
+    /* 80052FC0 */  lh         $t6, %lo(D_800E64B6)($t6)
+    /* 80052FC4 */  lb         $t8, %lo(D_800B434A)($t8)
+    /* 80052FC8 */  lbu        $t9, 0x1($t1)
+    /* 80052FD0 */  sll        $t7, $t9, 2
+    /* 80052FD4 */  sh         $t7, 0x4C($sp)
+    /* 80052FD8 */  lh         $t7, 0x4C($sp)
+    /* 80052FE4 */  addiu      $v0, $v0, %lo(D_800E64E8)
+    /* 80052FE8 */  addiu      $t0, $t0, %lo(D_800E6328)
+    /* 80052FEC */  addiu      $a3, $a3, %lo(D_800B434B)

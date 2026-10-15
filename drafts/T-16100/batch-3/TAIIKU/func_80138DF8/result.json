@@ -1,0 +1,24 @@
+{
+  "scope": "TAIIKU:func_80138DF8",
+  "src": "src/ovl/TAIIKU/80138950.c",
+  "path": "drafts/T-16100/batch-3/TAIIKU/func_80138DF8",
+  "archive_path": "drafts/T-16100/batch-3/TAIIKU/func_80138DF8",
+  "status": "scored",
+  "score": 236,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 236,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "9ac6e088f693d5b8cc95a46b757afe45e6b7379f955e3a673ec649b954b3b08b",
+    "provenance.json": "e73b2afc6a41ab6b69097daa9d4d6d4b6b143a0d4cd68f062cb3c6f90e78fdc2",
+    "declarations.h": "acf9037710e41013115f2c1a12a11ce8f47f308904953fe7a84967ea49dc1160",
+    "difference.txt": "28b571ab1313f61a17d7eab262e298fbe5750c7b4f4afe41d41f005e4a8fd34c",
+    "context.c": "b1c1c1c0095ec067caa44a6f021bee3d380cfe79b2f6bf3c88bff5ec03a79482",
+    "body.c": "fe5b09935852095d9af59c9e1e27d2dfe00bf0087e7f4fde61b11bd492eb32c2",
+    "full-context.c": "40e9aee07d6f946da8260e9b8baa592e069d781bd87f11d283297e93c6e777c2",
+    "diagnostics.txt": "0937444c046d2f087acdd477d0d68af8e1233a4778f26504531af5b596df8f2e"
+  }
+}

@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/main/func_8007AF0C/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/main/func_8007AF0C/work/guarded.c drafts/T-16100/batch-3/main/func_8007AF0C/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/main/func_8007AF0C/work/guarded.c, line 2965: '&' before array or function; ignored
+     func_80090270((s32) (s16) D_80125D4C, (s32) &sp2C);
+ ------------------------------------------------^
+
+Full TU compiled; score 146

@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/TAIIKU/func_80132000/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/TAIIKU/func_80132000/work/guarded.c drafts/T-16100/batch-3/TAIIKU/func_80132000/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80132000/work/guarded.o.sjis.c, line 3210: '&' before array or function; ignored
+     *(M2cBlock28 *)(&sp3C) = *(M2cBlock28 *)(&D_80148EC4);
+ --------------------^
+
+Full TU compiled; score 539

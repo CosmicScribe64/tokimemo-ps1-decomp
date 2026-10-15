@@ -1,0 +1,42 @@
+{
+  "scope": "MASTER:func_8013B448",
+  "path": "drafts/T-16100/batch-2/MASTER/func_8013B448",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 38
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 77
+    }
+  ],
+  "explanation": "0x75E record stride 8 and byte at +0x761 identify unk_75E[index].unk_03. Repair store directly through established aggregate.",
+  "evidence_path": "drafts/T-16100/batch-2/MASTER/func_8013B448/evidence.txt",
+  "compile_status": "scored",
+  "score": 329,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 38
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "0x75E record stride 8 and byte at +0x761 identify unk_75E[index].unk_03. Repair store directly through established aggregate."
+    },
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 77
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "0x75E record stride 8 and byte at +0x761 identify unk_75E[index].unk_03. Repair store directly through established aggregate."
+    }
+  ]
+}

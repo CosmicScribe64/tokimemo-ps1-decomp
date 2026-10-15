@@ -1,0 +1,47 @@
+    80132D04:  addiu      $sp, $sp, -0x38
+    80132D08:  sw         $a0, 0x38($sp)
+    80132D10:  sw         $ra, 0x14($sp)
+    80132D1C:   sw        $a1, 0x3C($sp)
+    80132D34:   sb        $t6, 0x33($sp)
+    80132D40:   lui       $t2, %hi(D_800E6280)
+    80132D44:  lh         $t8, 0x38($sp)
+    80132D48:  lh         $t0, 0x3C($sp)
+    80132D4C:  sll        $t9, $t8, 6
+    80132D50:  addiu      $t2, $t2, %lo(D_800E6280)
+    80132D54:  addu       $t1, $t9, $t0
+    80132D58:  addu       $a1, $t1, $t2
+    80132DB0:   sw        $a1, 0x2C($sp)
+    80132DB4:  lw         $a1, 0x2C($sp)
+    80132DCC:   sw        $a1, 0x2C($sp)
+    80132DD0:  lw         $a1, 0x2C($sp)
+    80132DF0:   sw        $a1, 0x2C($sp)
+    80132DF4:  lw         $a1, 0x2C($sp)
+    80132E10:  lbu        $t8, 0x33($sp)
+    80132E38:   sw        $a1, 0x2C($sp)
+    80132E3C:  lw         $a1, 0x2C($sp)
+    80132E50:   sw        $a1, 0x2C($sp)
+    80132E54:  lw         $a1, 0x2C($sp)
+    80132EA8:   sw        $a1, 0x2C($sp)
+    80132EAC:  lw         $a1, 0x2C($sp)
+    80132EC8:   sw        $a1, 0x2C($sp)
+    80132ECC:  lw         $a1, 0x2C($sp)
+    80132EEC:   sw        $a1, 0x2C($sp)
+    80132EF0:  lw         $a1, 0x2C($sp)
+    80132F10:   sw        $a1, 0x2C($sp)
+    80132F14:  lw         $a1, 0x2C($sp)
+    80132F44:   sw        $a1, 0x2C($sp)
+    80132F48:  lw         $a1, 0x2C($sp)
+    80132F78:   sw        $a1, 0x2C($sp)
+    80132F7C:  lw         $a1, 0x2C($sp)
+    80132F94:   lh        $t6, 0x38($sp)
+    80132FA0:  lh         $t6, 0x38($sp)
+    80132FA4:  lh         $t8, 0x3C($sp)
+    80132FA8:  lui        $t0, %hi(D_800E6280)
+    80132FAC:  sll        $t7, $t6, 6
+    80132FB0:  addiu      $t0, $t0, %lo(D_800E6280)
+    80132FB4:  addu       $t9, $t7, $t8
+    80132FB8:  addu       $a1, $t9, $t0
+    80132FE8:   sw        $a1, 0x2C($sp)
+    80132FEC:  lw         $a1, 0x2C($sp)
+    80133014:  lw         $ra, 0x14($sp)
+    80133018:  addiu      $sp, $sp, 0x38

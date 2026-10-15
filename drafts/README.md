@@ -32,3 +32,7 @@ Compilation is separate from correctness and matching: the quality audit selects
 - `preserved-worktrees-2026-10-15`: older uncommitted source patches, complete modified files, base commits and external-tooling research, preserved without changing the original worktrees.
 
 The archives deliberately exclude disc/game data, compiled binaries, generated assembly, disposable compiler intermediates and caches. Some scripts contain original checkout paths and require adapting those paths or checking out their recorded baseline. Per-ticket wiki records describe accepted matches and limitations.
+
+## Subsequent quality pass
+
+`T-16100` preserves the requested Sol6.1 medium pass over all165 flagged drafts:93 repaired alternatives,165 compiler proofs,49 newly audit-clear scopes. Current audit has116 flagged scopes. See its README and per-scope review notes before reusing older lower-score alternatives. No new verified matching bytes.

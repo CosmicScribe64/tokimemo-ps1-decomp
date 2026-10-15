@@ -1,0 +1,24 @@
+80104C40:  addiu      $sp, $sp, -0x28
+80104C44:  addiu      $t7, $t7, %lo(D_800EAFA0)
+80104C4C:  sw         $ra, 0x14($sp)
+80104C50:  addiu      $t6, $t6, %lo(D_800EB028)
+80104C54:  addiu      $t0, $t7, 0x3C
+80104C58:  lw         $at, 0x0($t7)
+80104C5C:  addiu      $t7, $t7, 0xC
+80104C60:  sw         $at, 0x0($t6)
+80104C64:  lw         $at, -0x8($t7)
+80104C68:  addiu      $t6, $t6, 0xC
+80104C6C:  sw         $at, -0x8($t6)
+80104C70:  lw         $at, -0x4($t7)
+80104C78:   sw        $at, -0x4($t6)
+80104C7C:  lw         $at, 0x0($t7)
+80104C80:  addiu      $t1, $zero, 0x4
+80104C84:  sw         $at, 0x0($t6)
+80104C88:  lw         $t0, 0x4($t7)
+80104C90:  sw         $t0, 0x4($t6)
+80104C94:  sh         $t1, %lo(D_800EB03E)($at)
+80104C9C:  addiu      $t2, $zero, 0x9
+80104CC0:  sll        $t9, $v1, 16
+80104CEC:  lbu        $t0, %lo(D_800EAFA3)($t0)
+80104D00:  lbu        $t6, %lo(D_800EAFE7)($t6)
+80104D3C:  addiu      $sp, $sp, 0x28

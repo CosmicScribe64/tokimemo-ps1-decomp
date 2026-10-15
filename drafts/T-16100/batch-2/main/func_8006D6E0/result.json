@@ -1,0 +1,20 @@
+{
+  "scope": "main:func_8006D6E0",
+  "src": "src/main/8006CB30.c",
+  "size": 268,
+  "path": "drafts/T-16100/batch-2/main/func_8006D6E0",
+  "archive_path": "drafts/T-16100/batch-2/main/func_8006D6E0",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 99,
+  "changed": true,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "repaired-with-unresolved-remainder",
+  "body_c_sha256": "2701425d6c0059d1415fd3934ba26137e82d897fa5ee8d0568138dbce056bae4",
+  "declarations_h_sha256": "76c1064d8c2439dfbe1058c9e4ced0c5fb5f07578f442d4b7b403ad6a0b0143e",
+  "context_c_sha256": "0dbc28aff5b810b38cc5ffeb15b662b9c6fdaa7ac75603f55320018120dfc586",
+  "full-context_c_sha256": "9fe5bfd2709a33446463efb86d40235fa080954f3ec6ad616e741b021a659f9b",
+  "diagnostics_txt_sha256": "48d25a0e00b0db53365ea111b2ce2868532284e87026307dd68f81ed5c5c5633"
+}

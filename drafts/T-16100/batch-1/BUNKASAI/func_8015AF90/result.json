@@ -1,0 +1,20 @@
+{
+  "scope": "BUNKASAI:func_8015AF90",
+  "src": "src/ovl/BUNKASAI/8015AF90.c",
+  "size": 2200,
+  "path": "drafts/T-16100/batch-1/BUNKASAI/func_8015AF90",
+  "archive_path": "drafts/T-16100/batch-1/BUNKASAI/func_8015AF90",
+  "status": "scored",
+  "score": 402,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "68edb09f9682d8a69d3fd6a7c9022359778d3f2b002c14c58494aae7e1e1dda5",
+  "declarations.h_sha256": "c0b5657279132eb6fa26707c6ea8fce94efb31f7cd8ecbd3414dd813307bdd47",
+  "context.c_sha256": "232a5a9b878f8e6592a62e439312cd833ae2600ed4b301e0d85369ec7d35b0b9",
+  "full-context.c_sha256": "f52676c60a4bf001bcc9f1ef5fe01e40a12f0a4acd767416fc32b9d5b7b0553b",
+  "diagnostics.txt_sha256": "f13a8d55a328ff7a3530ccf180409133888768b1460570e024ddfed1cfa21907",
+  "assembly-evidence.txt_sha256": "296d613111065d8656518c676ad173a6a255c1ee9d5e8fcdc7e574bb95c97bb0"
+}

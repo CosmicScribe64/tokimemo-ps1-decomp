@@ -1,0 +1,18 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/TAIIKU/func_80132E20/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/TAIIKU/func_80132E20/work/guarded.c drafts/T-16100/batch-3/TAIIKU/func_80132E20/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-3/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3213: Incompatible pointer type assignment
+                 var_s0 = &(&spA8[0])[0];
+ -----------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3227: Incompatible pointer type assignment
+                 var_s0_2 = &(&spA8[0])[var_s1];
+ -------------------------^
+cfe: Warning 689: drafts/T-16100/batch-3/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3242: Unacceptable operand of == or !=
+                 } while (var_s0_2 != &(&spA8[0])[arg1]);
+ ----------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3246: Incompatible pointer type assignment
+         var_s0_3 = &spA8[0];
+ -----------------^
+
+Full TU compiled; score 525

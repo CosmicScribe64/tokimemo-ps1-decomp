@@ -1,0 +1,11 @@
+{
+  "ticket": "T-16100",
+  "original_attempt": "drafts/T-15700/TAIIKU/func_80147B14",
+  "original_sha256": "9516fd1a3391929ff539dcca8514cff048c0063ab7bd1e40f2742e939fb6b3c8",
+  "source_base": "48362009",
+  "frozen_header_root": "drafts/T-14500/baseline/include",
+  "context_source": "drafts/T-15700/TAIIKU/func_80147B14/context.c",
+  "repair": "tools/t16100_batch3.py",
+  "compiler": "IDO 5.3 via tools/docker.sh; full translation unit",
+  "matching_claim": false
+}

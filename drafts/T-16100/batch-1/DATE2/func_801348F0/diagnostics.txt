@@ -1,0 +1,41 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/DATE2 -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/DATE2/func_801348F0/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/DATE2 -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/DATE2/func_801348F0/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.c drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 2768: '&' before array or function; ignored
+     get_p_name(&D_800CA17C, 0);
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3054: Incompatible pointer type assignment
+             temp_v0_2 = D_801217D0 + temp_lo;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3061: Incompatible pointer type assignment
+             temp_v0_3 = D_801217D0 + temp_lo_2;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3075: Incompatible pointer type assignment
+             temp_v0_4 = D_801217D0 + temp_lo_3;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3084: Incompatible pointer type assignment
+             temp_v0_5 = D_801217D0 + temp_lo_4;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3102: Incompatible pointer type assignment
+             temp_v0_6 = D_801217D0 + temp_lo_5;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3111: Incompatible pointer type assignment
+             temp_v0_7 = D_801217D0 + temp_lo_6;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3137: Incompatible pointer type assignment
+             temp_v0_8 = D_801217D0 + temp_lo_7;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3146: Incompatible pointer type assignment
+             temp_v0_9 = D_801217D0 + temp_lo_8;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3156: Incompatible pointer type assignment
+                 temp_v0_10 = D_801217D0 + temp_lo_9;
+ ---------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/DATE2/func_801348F0/work/guarded.o.sjis.c, line 3163: Incompatible pointer type assignment
+                 temp_v0_11 = D_801217D0 + temp_lo_10;
+ ---------------------------^
+

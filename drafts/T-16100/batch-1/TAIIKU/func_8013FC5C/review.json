@@ -1,0 +1,69 @@
+{
+  "scope": "TAIIKU:func_8013FC5C",
+  "selected_path": "drafts/T-15700/TAIIKU/func_8013FC5C",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&sp64 +",
+      "kind": "stack-address-arithmetic",
+      "line": 25,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target array load uses one sll index by 2 before lw; indexing the s32 array avoids scaling by the whole array size. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "            if (*var_s3 == 0) {",
+        "                var_s4->unk0 = (s32) var_s4->unk0 + *(&sp64 + var_s5);",
+        "            }"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target array load uses one sll index by 2 before lw; indexing the s32 array avoids scaling by the whole array size."
+  ],
+  "assembly_path": "asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950/func_8013FC5C.s",
+  "assembly_sha256": "1239658130b750ee1d2bda118217682613ffdf6ccaae9a984228528d7ced539b",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

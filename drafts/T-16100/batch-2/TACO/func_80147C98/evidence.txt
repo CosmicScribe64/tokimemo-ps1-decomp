@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TACO/nonmatchings/TACO/80146D60/func_80147C98.s']
+Review: sp3C/sp3A represent overlapping halfword/word position fragments; subroutine_arg artifacts remain and need TcPos ABI recovery.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80147C98 */  addiu      $sp, $sp, -0x68
+    /* 80147CA0 */  sw         $ra, 0x14($sp)
+    /* 80147CA4 */  sw         $a0, 0x68($sp)
+    /* 80147CA8 */  sw         $a1, 0x6C($sp)
+    /* 80147CAC */  sw         $a2, 0x70($sp)
+    /* 80147CB0 */  sw         $a3, 0x74($sp)
+    /* 80147CB4 */  addiu      $t6, $t6, %lo(D_80125C60)
+    /* 80147CBC */  addiu      $a1, $sp, 0x48
+    /* 80147CD4 */  addiu      $t2, $t2, %lo(D_80128880)
+    /* 80147D10 */  addiu      $at, $zero, 0x168
+    /* 80147D18 */  lw         $t0, 0x68($sp)
+    /* 80147D20 */  sll        $t1, $t0, 3
+    /* 80147D24 */  addu       $v0, $t1, $t2
+    /* 80147D28 */  lh         $a0, 0x0($v0)
+    /* 80147D2C */  sw         $v0, 0x2C($sp)
+    /* 80147D30 */  sll        $t3, $a0, 12
+    /* 80147D44 */  lw         $t5, 0x2C($sp)
+    /* 80147D48 */  addiu      $at, $zero, 0x168
+    /* 80147D4C */  lh         $a0, 0x4($t5)
+    /* 80147D50 */  addiu      $a1, $sp, 0x48
+    /* 80147D54 */  sll        $t8, $a0, 12
+    /* 80147D68 */  lw         $t6, 0x2C($sp)
+    /* 80147D6C */  addiu      $at, $zero, 0x168
+    /* 80147D70 */  lh         $a0, 0x2($t6)

@@ -1,0 +1,24 @@
+{
+  "scope": "main:get_h_tokimeki",
+  "src": "src/main/8004F870.c",
+  "path": "drafts/T-16100/batch-3/main/get_h_tokimeki",
+  "archive_path": "drafts/T-16100/batch-3/main/get_h_tokimeki",
+  "status": "scored",
+  "score": 844,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 876,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "066c159f4622cc140087421f77368da1f2752f9b7f39a43addd462c382841ba4",
+    "provenance.json": "398be0d27dc70825ff5b3ef92fb165f8880124479c3643562c8b80627a71b90e",
+    "declarations.h": "d1f89709c391b40eaaaed49030612da16ad1c65108d0c57507a147967ec3db47",
+    "difference.txt": "80db48dcb89357c3b22d144858b9a1e66e35aec200a27b45fe37da85af0bb3cb",
+    "context.c": "4960ba52d78d76d8df0a86eda1a6408d33a0d82a4c1e3af3fc7355aaa7a8f618",
+    "body.c": "a99c34963d6bac31b5ebfc9d3c9c2993c84258cf7b98d4b79d1c2319a03f5909",
+    "full-context.c": "bd1e2d40cfabf5e5ebf019eeb25a427870067335f4da01afe6e103ee2533eded",
+    "diagnostics.txt": "fcbed5964dbf9d4ed9078a8645ab3c340eb93ad98e357331f872b1408cc6ac88"
+  }
+}

@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/GYOZI -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/GYOZI/func_80138C9C/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/GYOZI/func_80138C9C/full-context.c drafts/T-16100/batch-2/GYOZI/func_80138C9C/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-2/GYOZI/func_80138C9C/full-context.c, line 3377: Incompatible pointer type assignment
+         temp_s1 = ((var_t1 - var_s0) * 8) + &D_800F53A0;
+ ----------------^
+
+Full translation unit compiled and scored.

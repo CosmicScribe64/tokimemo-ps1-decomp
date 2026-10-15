@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TACO/nonmatchings/TACO/80132220/func_801328B0.s']
+Review: Several scalar stack fragments participate in by-value transform calls; independent names do not establish their aggregate ABI. Needs coordinated TcPos/SDK reconstruction.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801328B0 */  addiu      $sp, $sp, -0x80
+    /* 801328B4 */  sw         $ra, 0x1C($sp)
+    /* 801328B8 */  sw         $s0, 0x18($sp)
+    /* 801328C0 */   addiu     $a0, $sp, 0x70
+    /* 801328C4 */  sw         $v0, 0x38($sp)
+    /* 801328EC */   addiu     $a1, $zero, 0x20
+    /* 801328F8 */  addiu      $a1, $zero, 0x20
+    /* 80132904 */  addiu      $t9, $zero, 0x80
+    /* 80132908 */  addiu      $s0, $t8, 0x440
+    /* 80132910 */  lh         $v0, 0x72($s0)
+    /* 80132914 */  addiu      $t0, $zero, 0x1
+    /* 80132918 */  addiu      $t1, $zero, 0x2
+    /* 80132928 */  addiu      $a0, $zero, 0x1
+    /* 80132930 */   sw        $a1, 0x40($sp)
+    /* 80132934 */  lw         $a1, 0x40($sp)
+    /* 8013293C */   lh        $v0, 0x82($s0)
+    /* 80132940 */  addiu      $at, $zero, 0x1
+    /* 80132948 */   addiu     $a0, $zero, 0x1
+    /* 8013294C */  addiu      $a0, $zero, 0x1
+    /* 80132954 */   sw        $a1, 0x40($sp)
+    /* 80132958 */  lw         $a1, 0x40($sp)
+    /* 80132960 */   lh        $v0, 0x82($s0)
+    /* 80132968 */   sw        $a1, 0x40($sp)
+    /* 8013296C */  lw         $a1, 0x40($sp)

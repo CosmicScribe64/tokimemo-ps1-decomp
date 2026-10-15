@@ -1,0 +1,20 @@
+{
+  "scope": "BUNKAKEN:func_80145550",
+  "src": "src/ovl/BUNKAKEN/80144F70.c",
+  "size": 756,
+  "path": "drafts/T-16100/batch-2/BUNKAKEN/func_80145550",
+  "archive_path": "drafts/T-16100/batch-2/BUNKAKEN/func_80145550",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 302,
+  "changed": false,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "justified-false-positive",
+  "body_c_sha256": "a9b8a6356050517fb196af197f85907e89a5202e15a8678a30a2905d2e404048",
+  "declarations_h_sha256": "6cb49019d88ed1b72bc25fc0ba2f0ece7f6411f77ac9d5062d155515024c5de3",
+  "context_c_sha256": "31fcbf0e09b58684421b96248566ed91bd58447d45448cf0dd59242125287321",
+  "full-context_c_sha256": "cf0be796ff0a4c660b963a3fec97935583909c28376d2948204073b65693b297",
+  "diagnostics_txt_sha256": "329ced61f3b02d5485c8aa3439c0a6954b75de008a68d8ed4c2c5fc4bff80285"
+}

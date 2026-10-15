@@ -1,0 +1,20 @@
+{
+  "scope": "EVENT:func_800FF320",
+  "src": "src/ovl/EVENT/800FDC20.c",
+  "size": 708,
+  "path": "drafts/T-16100/batch-1/EVENT/func_800FF320",
+  "archive_path": "drafts/T-16100/batch-1/EVENT/func_800FF320",
+  "status": "scored",
+  "score": 303,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "f16d4622717d2f29c5177385594302f2a77b3ac192371cd688b620f25d77e18a",
+  "declarations.h_sha256": "fd52dc20619f8c097d84f3d18f183ea73cf297c1567c78522cde0c715cc986f7",
+  "context.c_sha256": "c210c9c1eb361ec2bbfdd6fe6ac7ede221072bb0d677f700c9df1aaf290fb2f1",
+  "full-context.c_sha256": "649a2595ab1b70e976b11ca6ccde034a5087bb8b5601b475a4c537eb484e8353",
+  "diagnostics.txt_sha256": "c3c60e65f3afb51f46d753f193b265cc492c2dbd9f862d1b714926055d486211",
+  "assembly-evidence.txt_sha256": "713f670660fcf140c865f63ef6979d370c71ddda67de9629486aa64e59cc7725"
+}

@@ -1,0 +1,9 @@
+Frozen archived full-context.c replaced at target definition only.
+$ gcc -E -P -Iinclude -Isrc/ovl/KANGEI -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/KANGEI/func_8013769C/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/KANGEI/func_8013769C/work/guarded.c drafts/T-16100/batch-1/KANGEI/func_8013769C/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-1/KANGEI/func_8013769C/work/guarded.c, line 3302: Incompatible pointer type assignment
+         temp_v1 = &D_80139F10[var_s0_2];
+ ----------------^
+

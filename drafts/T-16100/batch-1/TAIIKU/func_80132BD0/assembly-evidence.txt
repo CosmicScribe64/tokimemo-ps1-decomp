@@ -1,0 +1,30 @@
+    80132BD0:  addiu      $sp, $sp, -0x128
+    80132BD8:  sw         $ra, 0x3C($sp)
+    80132BDC:  sw         $fp, 0x38($sp)
+    80132BE0:  sw         $s7, 0x34($sp)
+    80132BE4:  sw         $s6, 0x30($sp)
+    80132BE8:  sw         $s5, 0x2C($sp)
+    80132BEC:  sw         $s4, 0x28($sp)
+    80132BF0:  sw         $s3, 0x24($sp)
+    80132BF4:  sw         $s2, 0x20($sp)
+    80132BF8:  sw         $s1, 0x1C($sp)
+    80132BFC:  sw         $s0, 0x18($sp)
+    80132C08:  addiu      $t6, $sp, 0xF8
+    80132C3C:  addiu      $t1, $sp, 0xC8
+    80132C88:  addiu      $t9, $sp, 0x98
+    80132CD4:  addiu      $t4, $sp, 0x68
+    80132D20:  addiu      $s1, $sp, 0xF8
+    80132D24:  addiu      $s2, $sp, 0xC8
+    80132D28:  addiu      $s3, $sp, 0x98
+    80132D2C:  addiu      $s4, $sp, 0x68
+    80132DF0:  lw         $ra, 0x3C($sp)
+    80132DF4:  lw         $s0, 0x18($sp)
+    80132DF8:  lw         $s1, 0x1C($sp)
+    80132DFC:  lw         $s2, 0x20($sp)
+    80132E00:  lw         $s3, 0x24($sp)
+    80132E04:  lw         $s4, 0x28($sp)
+    80132E08:  lw         $s5, 0x2C($sp)
+    80132E0C:  lw         $s6, 0x30($sp)
+    80132E10:  lw         $s7, 0x34($sp)
+    80132E14:  lw         $fp, 0x38($sp)
+    80132E1C:   addiu     $sp, $sp, 0x128

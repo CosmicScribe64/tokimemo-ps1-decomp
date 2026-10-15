@@ -1,0 +1,98 @@
+{
+  "scope": "DATE:func_8013EFA0",
+  "path": "drafts/T-16100/batch-2/DATE/func_8013EFA0",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "&sp2C +",
+      "kind": "stack-address-arithmetic",
+      "line": 6
+    },
+    {
+      "detail": "M2cBlock2D4",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    },
+    {
+      "detail": "+ &sp2C",
+      "kind": "stack-address-arithmetic",
+      "line": 19
+    },
+    {
+      "detail": "+ &sp2C",
+      "kind": "stack-address-arithmetic",
+      "line": 21
+    },
+    {
+      "detail": "+ &sp2C",
+      "kind": "stack-address-arithmetic",
+      "line": 26
+    },
+    {
+      "detail": "+ &sp2C",
+      "kind": "stack-address-arithmetic",
+      "line": 28
+    }
+  ],
+  "explanation": "Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base.",
+  "evidence_path": "drafts/T-16100/batch-2/DATE/func_8013EFA0/evidence.txt",
+  "compile_status": "scored",
+  "score": 105,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&sp2C +",
+        "kind": "stack-address-arithmetic",
+        "line": 6
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock2D4",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp2C",
+        "kind": "stack-address-arithmetic",
+        "line": 19
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp2C",
+        "kind": "stack-address-arithmetic",
+        "line": 21
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp2C",
+        "kind": "stack-address-arithmetic",
+        "line": 26
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp2C",
+        "kind": "stack-address-arithmetic",
+        "line": 28
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base."
+    }
+  ]
+}

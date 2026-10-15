@@ -1,0 +1,28 @@
+Target: ['asm/ovl/EVENT/nonmatchings/EVENT/801011A0/func_801022C0.s']
+Review: 208-byte block copy plus one trailing word needs 212-byte local; dispatch through stack+index must become sp2C function pointer indexing.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801022C0 */  addiu      $sp, $sp, -0x108
+    /* 801022C8 */  addiu      $t7, $t7, %lo(D_801225A8)
+    /* 801022CC */  sw         $ra, 0x14($sp)
+    /* 801022D0 */  addiu      $t0, $t7, 0xCC
+    /* 801022D4 */  addiu      $t6, $sp, 0x2C
+    /* 801022DC */  addiu      $t7, $t7, 0xC
+    /* 801022E8 */  addiu      $t6, $t6, 0xC
+    /* 80102318 */  lhu        $a3, %lo(D_80094718)($a3)
+    /* 8010231C */  lhu        $a2, %lo(D_80094714)($a2)
+    /* 80102320 */  lbu        $a1, %lo(D_800B1AF6)($a1)
+    /* 8010232C */   addiu     $a0, $a0, %lo(D_8011F854)
+    /* 80102334 */  lbu        $t1, %lo(D_800B1AF6)($t1)
+    /* 80102338 */  addiu      $a0, $zero, 0x80
+    /* 8010233C */  sll        $t2, $t1, 2
+    /* 80102340 */  addu       $t9, $sp, $t2
+    /* 80102358 */  lbu        $t3, %lo(D_800B1AF6)($t3)
+    /* 8010235C */  addiu      $at, $zero, 0xE
+    /* 8010237C */  lbu        $a3, %lo(D_800F19AB)($a3)
+    /* 80102380 */  addiu      $at, $zero, 0x80
+    /* 80102388 */   addiu     $a2, $zero, 0x24
+    /* 80102390 */   addiu     $a3, $zero, 0x60
+    /* 80102394 */  addiu      $a3, $zero, 0x80
+    /* 801023AC */  addiu      $a1, $a1, %lo(D_800EC190)
+    /* 801023B4 */  addiu      $a0, $a0, 0x1

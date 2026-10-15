@@ -1,0 +1,42 @@
+{
+  "scope": "DATE2:func_801350A4",
+  "path": "drafts/T-16100/batch-2/DATE2/func_801350A4",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 85
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 112
+    }
+  ],
+  "explanation": "Loop adds an unscaled index to GameState address and then accesses menu bytes; requires unk_10A5 indexing and review of Rec24 byte offsets throughout.",
+  "evidence_path": "drafts/T-16100/batch-2/DATE2/func_801350A4/evidence.txt",
+  "compile_status": "scored",
+  "score": 1196,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 85
+      },
+      "outcome": "unresolved",
+      "explanation": "Loop adds an unscaled index to GameState address and then accesses menu bytes; requires unk_10A5 indexing and review of Rec24 byte offsets throughout."
+    },
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 112
+      },
+      "outcome": "unresolved",
+      "explanation": "Loop adds an unscaled index to GameState address and then accesses menu bytes; requires unk_10A5 indexing and review of Rec24 byte offsets throughout."
+    }
+  ]
+}

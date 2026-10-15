@@ -1,0 +1,42 @@
+{
+  "scope": "TAIIKU:func_80145370",
+  "path": "drafts/T-16100/batch-2/TAIIKU/func_80145370",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock30",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    },
+    {
+      "detail": "M2cBlock24",
+      "kind": "inferred-copy-layout",
+      "line": 3
+    }
+  ],
+  "explanation": "0x30/0x24 byte memcpy extents exist but destinations sp6C/sp9C are scalars. Needs coordinate/SDK array layout recovery.",
+  "evidence_path": "drafts/T-16100/batch-2/TAIIKU/func_80145370/evidence.txt",
+  "compile_status": "scored",
+  "score": 193,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock30",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "0x30/0x24 byte memcpy extents exist but destinations sp6C/sp9C are scalars. Needs coordinate/SDK array layout recovery."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock24",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "0x30/0x24 byte memcpy extents exist but destinations sp6C/sp9C are scalars. Needs coordinate/SDK array layout recovery."
+    }
+  ]
+}

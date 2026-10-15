@@ -1,0 +1,42 @@
+{
+  "scope": "TACO:func_80147C98",
+  "path": "drafts/T-16100/batch-2/TACO/func_80147C98",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp3C",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "sp3A",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    }
+  ],
+  "explanation": "sp3C/sp3A represent overlapping halfword/word position fragments; subroutine_arg artifacts remain and need TcPos ABI recovery.",
+  "evidence_path": "drafts/T-16100/batch-2/TACO/func_80147C98/evidence.txt",
+  "compile_status": "scored",
+  "score": 168,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp3C",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp3C/sp3A represent overlapping halfword/word position fragments; subroutine_arg artifacts remain and need TcPos ABI recovery."
+    },
+    {
+      "flag": {
+        "detail": "sp3A",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "sp3C/sp3A represent overlapping halfword/word position fragments; subroutine_arg artifacts remain and need TcPos ABI recovery."
+    }
+  ]
+}

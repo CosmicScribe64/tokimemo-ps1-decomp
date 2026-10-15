@@ -1,0 +1,20 @@
+{
+  "scope": "KANGEI:func_8013769C",
+  "src": "src/ovl/KANGEI/80135F10.c",
+  "size": 1256,
+  "path": "drafts/T-16100/batch-1/KANGEI/func_8013769C",
+  "archive_path": "drafts/T-16100/batch-1/KANGEI/func_8013769C",
+  "status": "scored",
+  "score": 142,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": false,
+  "compile_verified": true,
+  "body.c_sha256": "fa4f983fc661342e5abde0072c5ed3ce33c7d6d63d4017999917ed79dbd792dc",
+  "declarations.h_sha256": "9f2c0812280602ec55fc13e575c180e4384b34bbe63a1d8e7a67b8031971c2c8",
+  "context.c_sha256": "e679cd09809b7c8d009f2784054ae448dee7cd09dc86f09f68f29b30fcb16a15",
+  "full-context.c_sha256": "055d576bf01e2745029a16acf41dfb3c2dbfad0620bc3db45bdc066c3f115f30",
+  "diagnostics.txt_sha256": "a89cf1382e7c27ed2ba990227d9c663af8465de0b02a007d7164bf274abf4e2e",
+  "assembly-evidence.txt_sha256": "77a7ca1a1bc017d81f0d7867e3776366fa82e26b68d71cc655842280661fd78c"
+}

@@ -1,0 +1,173 @@
+{
+  "scope": "main:get_near_menu",
+  "selected_path": "drafts/T-16000/get_near_menu",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp88[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "s32 get_near_menu(s32 arg0, s32 arg1, s32 arg2) {",
+        "    s16 sp88[16];",
+        "    s32 sp80;"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 44,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "",
+        "    temp_s5 = &D_800E6280 + arg2;",
+        "    temp_v0 = *(u8 *)((unsigned char *)temp_s5 + (4240));"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 58,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "                temp_s1 = arg2 * 8;",
+        "                var_s0 = &D_800E6280 + (0 * 0x10) + temp_s1;",
+        "                var_v0_2 = &(&sp88[0])[0];"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 72,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "                temp_s1_2 = arg2 * 8;",
+        "                var_s0_2 = &D_800E6280 + (var_s2 * 0x10) + temp_s1_2;",
+        "                var_v0_3 = &(&sp88[0])[var_s2];"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 94,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "                temp_s1_3 = arg2 * 8;",
+        "                var_s0_3 = &D_800E6280 + (0 * 0x10) + temp_s1_3;",
+        "                var_v0_4 = &(&sp88[0])[0];"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 108,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "                temp_s1_4 = arg2 * 8;",
+        "                var_s0_4 = &D_800E6280 + (var_s2 * 0x10) + temp_s1_4;",
+        "                var_v0_5 = &(&sp88[0])[var_s2];"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 223,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "                if (temp_v1_6 != 0) {",
+        "                    if ((arg0 == 0) && (temp_v0_2 = &D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_5, (*(s16 *)((unsigned char *)var_s0_5 + (3986)) == *(s16 *)((unsigned char *)temp_v0_2 + (3986))))) {",
+        "                        if (var_s6 > 0) {"
+      ]
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 231,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "                        }",
+        "                    } else if ((arg0 == 1) && (temp_v0_3 = &D_800E6280 + (*(s8 *)((unsigned char *)temp_s5 + (4243)) * 0x10) + temp_s1_5, (*(s16 *)((unsigned char *)var_s0_5 + (3984)) == *(s16 *)((unsigned char *)temp_v0_3 + (3984))))) {",
+        "                        temp_a1_5 = *(s16 *)((unsigned char *)temp_v0_3 + (3986));"
+      ]
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 218,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "    if ((s32) var_s7 > 0) {",
+        "        var_s0_5 = temp_s1_5 + &D_800E6280;",
+        "        do {"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/nonmatchings/main/8004F870/get_near_menu.s",
+  "assembly_sha256": "bca4ea4a6f02ed3be67c66a1e2ab03f498c3f8ed8f6d5ba942710ef9d5e6c239",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x7C": [
+      "lw",
+      "sw"
+    ],
+    "0x80": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

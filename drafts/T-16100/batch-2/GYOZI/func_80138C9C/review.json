@@ -1,0 +1,56 @@
+{
+  "scope": "GYOZI:func_80138C9C",
+  "path": "drafts/T-16100/batch-2/GYOZI/func_80138C9C",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "sp4C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "&sp4C[0] +",
+      "kind": "stack-address-arithmetic",
+      "line": 33
+    },
+    {
+      "detail": "&sp4C[0] +",
+      "kind": "stack-address-arithmetic",
+      "line": 45
+    }
+  ],
+  "explanation": "Assembly stores and loads indexed halfwords with stride 2. Existing s32[16] and s32-scaled additions are wrong; use s16[16] and element indexing.",
+  "evidence_path": "drafts/T-16100/batch-2/GYOZI/func_80138C9C/evidence.txt",
+  "compile_status": "scored",
+  "score": 302,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp4C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Assembly stores and loads indexed halfwords with stride 2. Existing s32[16] and s32-scaled additions are wrong; use s16[16] and element indexing."
+    },
+    {
+      "flag": {
+        "detail": "&sp4C[0] +",
+        "kind": "stack-address-arithmetic",
+        "line": 33
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Assembly stores and loads indexed halfwords with stride 2. Existing s32[16] and s32-scaled additions are wrong; use s16[16] and element indexing."
+    },
+    {
+      "flag": {
+        "detail": "&sp4C[0] +",
+        "kind": "stack-address-arithmetic",
+        "line": 45
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Assembly stores and loads indexed halfwords with stride 2. Existing s32[16] and s32-scaled additions are wrong; use s16[16] and element indexing."
+    }
+  ]
+}

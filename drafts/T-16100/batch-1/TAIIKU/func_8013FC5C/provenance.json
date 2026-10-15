@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-15700/TAIIKU/func_8013FC5C",
+  "original_body_sha256": "de07949c0c7e376d7003b3170a40c80855f6a8af8acf194a3223ebfb6b6f93dc",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

@@ -1,0 +1,74 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/EVENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EVENT/func_8011A8E4/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/EVENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.c drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4214: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4256: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4291: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4365: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4426: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4572: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4625: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4657: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4699: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4759: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4816: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4890: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 4916: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+cfe: Warning 709: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 5805: Incompatible pointer type assignment
+     D_8009471C = &D_8012437C;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 5806: Incompatible pointer type assignment
+     D_80094720 = &D_80124380;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 5813: Incompatible pointer type assignment
+     D_8009471C = &D_80124384;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 5814: Incompatible pointer type assignment
+     D_80094720 = &D_80124388;
+ ---------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 6010: '&' before array or function; ignored
+     if ((((EventStateView *)&D_800B0860)->unk_036 == ((EventBirthday4 *)&D_800B0A04[D_800B1746].pad10[0])->month) &&
+ ----------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 6474: '&' before array or function; ignored
+     *(M2cBlock28 *)(&sp90) = *(M2cBlock28 *)(&D_80125454);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 6476: '&' before array or function; ignored
+     *(M2cBlock28 *)(&sp64) = *(M2cBlock28 *)(&D_80125480);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 6478: '&' before array or function; ignored
+     *(M2cBlock28 *)(&sp38) = *(M2cBlock28 *)(&D_801254AC);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_8011A8E4/work/guarded.o.sjis.c, line 6841: '&' before array or function; ignored
+     g = (EventStateView *)&D_800B0860;
+ --------------------------^
+

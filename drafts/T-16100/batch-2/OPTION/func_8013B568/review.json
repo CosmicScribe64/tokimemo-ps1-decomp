@@ -1,0 +1,42 @@
+{
+  "scope": "OPTION:func_8013B568",
+  "path": "drafts/T-16100/batch-2/OPTION/func_8013B568",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 70
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 85
+    }
+  ],
+  "explanation": "The 0x38 girl stride is bytes, not GameState objects. Shared var_v1 and byte stores need a Rec38-based rewrite.",
+  "evidence_path": "drafts/T-16100/batch-2/OPTION/func_8013B568/evidence.txt",
+  "compile_status": "scored",
+  "score": 479,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 70
+      },
+      "outcome": "unresolved",
+      "explanation": "The 0x38 girl stride is bytes, not GameState objects. Shared var_v1 and byte stores need a Rec38-based rewrite."
+    },
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 85
+      },
+      "outcome": "unresolved",
+      "explanation": "The 0x38 girl stride is bytes, not GameState objects. Shared var_v1 and byte stores need a Rec38-based rewrite."
+    }
+  ]
+}

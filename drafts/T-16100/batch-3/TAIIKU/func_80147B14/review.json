@@ -1,0 +1,46 @@
+{
+  "scope": "TAIIKU:func_80147B14",
+  "selected_path": "drafts/T-15700/TAIIKU/func_80147B14",
+  "archive_path": "drafts/T-16100/batch-3/TAIIKU/func_80147B14",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "Initializer extents 20/20/16 bytes and target lh plus byte index stepping two establish halfword tables; explicit byte additions preserve those offsets."
+  ],
+  "flags": [
+    {
+      "detail": "sp2C[8]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "Initializer extents 20/20/16 bytes and target lh plus byte index stepping two establish halfword tables; explicit byte additions preserve those offsets. Halfword table extents and byte index additions reconstructed. Independent global pointer strides and coordinate packed-word views remain outside this repair."
+    },
+    {
+      "detail": "&sp60 +",
+      "kind": "stack-address-arithmetic",
+      "line": 59,
+      "outcome": "repaired",
+      "explanation": "Initializer extents 20/20/16 bytes and target lh plus byte index stepping two establish halfword tables; explicit byte additions preserve those offsets. Halfword table extents and byte index additions reconstructed. Independent global pointer strides and coordinate packed-word views remain outside this repair."
+    },
+    {
+      "detail": "&sp4C +",
+      "kind": "stack-address-arithmetic",
+      "line": 60,
+      "outcome": "repaired",
+      "explanation": "Initializer extents 20/20/16 bytes and target lh plus byte index stepping two establish halfword tables; explicit byte additions preserve those offsets. Halfword table extents and byte index additions reconstructed. Independent global pointer strides and coordinate packed-word views remain outside this repair."
+    },
+    {
+      "detail": "&sp3C +",
+      "kind": "stack-address-arithmetic",
+      "line": 72,
+      "outcome": "repaired",
+      "explanation": "Initializer extents 20/20/16 bytes and target lh plus byte index stepping two establish halfword tables; explicit byte additions preserve those offsets. Halfword table extents and byte index additions reconstructed. Independent global pointer strides and coordinate packed-word views remain outside this repair."
+    }
+  ],
+  "notes": "Halfword table extents and byte index additions reconstructed. Independent global pointer strides and coordinate packed-word views remain outside this repair.",
+  "assembly_evidence": "drafts/T-16100/batch-3/TAIIKU/func_80147B14/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

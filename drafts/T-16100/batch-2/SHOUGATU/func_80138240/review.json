@@ -1,0 +1,28 @@
+{
+  "scope": "SHOUGATU:func_80138240",
+  "path": "drafts/T-16100/batch-2/SHOUGATU/func_80138240",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock94",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "148-byte copy exists but raw sp accesses remain; preserve unresolved dispatch table representation.",
+  "evidence_path": "drafts/T-16100/batch-2/SHOUGATU/func_80138240/evidence.txt",
+  "compile_status": "scored",
+  "score": 39,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock94",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "148-byte copy exists but raw sp accesses remain; preserve unresolved dispatch table representation."
+    }
+  ]
+}

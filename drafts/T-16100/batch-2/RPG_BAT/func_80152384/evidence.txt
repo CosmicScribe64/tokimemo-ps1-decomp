@@ -1,0 +1,28 @@
+Target: ['asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80151FC0/func_80152384.s']
+Review: Four four-word tables are copied at 0x64/0x80/0x90/0xA0; repair sp64[4], one-past-end bound, word pointer increment, and raw sp lookups to the actual arrays.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80152384 */  addiu      $sp, $sp, -0xB0
+    /* 80152388 */  sw         $ra, 0x3C($sp)
+    /* 8015238C */  sw         $fp, 0x38($sp)
+    /* 80152390 */  sw         $s7, 0x34($sp)
+    /* 80152394 */  sw         $s6, 0x30($sp)
+    /* 80152398 */  sw         $s5, 0x2C($sp)
+    /* 8015239C */  sw         $s4, 0x28($sp)
+    /* 801523A0 */  sw         $s3, 0x24($sp)
+    /* 801523A4 */  sw         $s2, 0x20($sp)
+    /* 801523A8 */  sw         $s1, 0x1C($sp)
+    /* 801523AC */  sw         $s0, 0x18($sp)
+    /* 801523B4 */  addiu      $t7, $t7, %lo(D_8015EFA0)
+    /* 801523C0 */  addiu      $t6, $sp, 0xA0
+    /* 801523E0 */  addiu      $t2, $t2, %lo(D_8015EFB0)
+    /* 801523EC */  addiu      $t1, $sp, 0x90
+    /* 8015240C */  addiu      $t8, $t8, %lo(D_8015EFC0)
+    /* 80152418 */  addiu      $t9, $sp, 0x80
+    /* 80152430 */  addiu      $t4, $t4, %lo(D_8015EFD0)
+    /* 80152440 */  addiu      $s2, $sp, 0x64
+    /* 80152458 */  addiu      $a0, $zero, 0x5
+    /* 80152470 */   addiu     $s1, $zero, 0x2
+    /* 80152478 */   addiu     $s1, $zero, 0x3
+    /* 80152484 */  addiu      $s4, $zero, 0x1
+    /* 8015248C */   addiu     $a0, $zero, 0x4

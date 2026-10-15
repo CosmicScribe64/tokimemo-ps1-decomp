@@ -1,0 +1,28 @@
+Target: ['asm/ovl/OPTION/nonmatchings/OPTION/8013A550/func_8013B568.s']
+Review: The 0x38 girl stride is bytes, not GameState objects. Shared var_v1 and byte stores need a Rec38-based rewrite.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013B568 */  addiu      $sp, $sp, -0x30
+    /* 8013B574 */  sw         $ra, 0x1C($sp)
+    /* 8013B578 */  lh         $a2, %lo(D_8011ECFA)($a2)
+    /* 8013B57C */  lh         $a1, %lo(D_8011ECF6)($a1)
+    /* 8013B580 */  sw         $s1, 0x18($sp)
+    /* 8013B584 */  sw         $s0, 0x14($sp)
+    /* 8013B5A4 */  addiu      $s1, $s1, %lo(D_8013E7C4)
+    /* 8013B5A8 */  addiu      $s0, $zero, -0x60
+    /* 8013B5B0 */  addiu      $a1, $zero, -0x20
+    /* 8013B5BC */  addiu      $s0, $s0, 0xC
+    /* 8013B5C0 */  addiu      $at, $zero, 0x60
+    /* 8013B5C8 */   addiu     $s1, $s1, 0x4
+    /* 8013B5D0 */  lbu        $a0, %lo(D_8013E740)($a0)
+    /* 8013B5D4 */  addiu      $a1, $zero, 0x20
+    /* 8013B5DC */   addiu     $a2, $zero, -0x60
+    /* 8013B5E4 */  lbu        $t6, %lo(D_8013E740)($t6)
+    /* 8013B5E8 */  addiu      $s1, $zero, 0x38
+    /* 8013B5F4 */  addiu      $s0, $s0, %lo(D_800E6280)
+    /* 8013B5F8 */  addiu      $a1, $zero, 0x20
+    /* 8013B5FC */  addiu      $a2, $zero, -0x54
+    /* 8013B604 */  addu       $t8, $s0, $t7
+    /* 8013B608 */  lh         $a0, 0x1BE($t8)
+    /* 8013B618 */  lbu        $t9, %lo(D_8013E740)($t9)
+    /* 8013B61C */  addiu      $a1, $zero, 0x20

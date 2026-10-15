@@ -1,0 +1,72 @@
+{
+  "scope": "TACO:func_801416E8",
+  "selected_path": "drafts/T-14500/TACO/func_801416E8",
+  "archive_path": "drafts/T-16100/batch-3/TACO/func_801416E8",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "sp98",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    },
+    {
+      "detail": "sp92",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    },
+    {
+      "detail": "sp9E",
+      "kind": "synthesized-stack-local",
+      "line": 4,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    },
+    {
+      "detail": "sp96",
+      "kind": "synthesized-stack-local",
+      "line": 5,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    },
+    {
+      "detail": "sp9C",
+      "kind": "synthesized-stack-local",
+      "line": 6,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    },
+    {
+      "detail": "sp9A",
+      "kind": "synthesized-stack-local",
+      "line": 7,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    },
+    {
+      "detail": "sp94",
+      "kind": "synthesized-stack-local",
+      "line": 8,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    },
+    {
+      "detail": "+ &sp90",
+      "kind": "stack-address-arithmetic",
+      "line": 65,
+      "outcome": "unresolved",
+      "explanation": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array."
+    }
+  ],
+  "notes": "Projection outputs span 0x90..0x9F in four 4-byte vertices; independent s32 aliases at halfword offsets are invalid and sp54+&sp90 scales by s16. Needs a four-element screen-coordinate array.",
+  "assembly_evidence": "drafts/T-16100/batch-3/TACO/func_801416E8/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

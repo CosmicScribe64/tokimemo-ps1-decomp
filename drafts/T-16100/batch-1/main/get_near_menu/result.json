@@ -1,0 +1,20 @@
+{
+  "scope": "main:get_near_menu",
+  "src": "src/main/8004F870.c",
+  "size": 1784,
+  "path": "drafts/T-16100/batch-1/main/get_near_menu",
+  "archive_path": "drafts/T-16100/batch-1/main/get_near_menu",
+  "status": "scored",
+  "score": 1432,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "ec891d2df7a7fb1e6f5fb20617a3644f1bf636b596a595aa09ddbab4749c7d2d",
+  "declarations.h_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "context.c_sha256": "90f72498e3d21468af73c1499163e9f576bba9be8ae95179b2fdb1a76479e189",
+  "full-context.c_sha256": "0d6d74fed8409c753d300886229fd96d3e9615eeb58e8678fec7e7037c723d40",
+  "diagnostics.txt_sha256": "db5eeb1052b93cf90a6668d970a6cda3ca38ee5c5e83be6b7f125bf0c42b1ca6",
+  "assembly-evidence.txt_sha256": "fa01646053968061a6b3b7b2aa831a4fa6b19873d6b14c591ca1ac85c190987e"
+}

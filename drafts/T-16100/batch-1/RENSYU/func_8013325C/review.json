@@ -1,0 +1,49 @@
+{
+  "scope": "RENSYU:func_8013325C",
+  "selected_path": "drafts/T-14500/RENSYU/func_8013325C",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp40[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target copies five words plus a halfword (22 bytes), then indexes with index<<1 and lh. Represent eleven s16 entries; the former sixteen-word array had both wrong element width and extent. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "void func_8013325C(void) {",
+        "    s32 sp40[16];",
+        "    s32 sp64;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target copies five words plus a halfword (22 bytes), then indexes with index<<1 and lh. Represent eleven s16 entries; the former sixteen-word array had both wrong element width and extent."
+  ],
+  "assembly_path": "asm/ovl/RENSYU/nonmatchings/RENSYU/80132040/func_8013325C.s",
+  "assembly_sha256": "98efdf9ae5aed23e638b7b4daabe6bb03e535b05df4a6a1aedd88f51ad0080a0",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x64": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

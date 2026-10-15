@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80/func_80135F3C.s']
+Review: 88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80135F3C */  addiu      $sp, $sp, -0x128
+    /* 80135F40 */  sw         $s6, 0x30($sp)
+    /* 80135F48 */  addiu      $s6, $sp, 0xF0
+    /* 80135F4C */  sw         $fp, 0x38($sp)
+    /* 80135F50 */  sw         $s7, 0x34($sp)
+    /* 80135F54 */  sw         $s4, 0x28($sp)
+    /* 80135F58 */  addiu      $t6, $t6, %lo(D_80149728)
+    /* 80135F5C */  addiu      $s4, $sp, 0xD8
+    /* 80135F60 */  addiu      $s7, $sp, 0xC0
+    /* 80135F64 */  addiu      $fp, $sp, 0x68
+    /* 80135F68 */  sw         $ra, 0x3C($sp)
+    /* 80135F6C */  sw         $s5, 0x2C($sp)
+    /* 80135F70 */  sw         $s3, 0x24($sp)
+    /* 80135F74 */  sw         $s2, 0x20($sp)
+    /* 80135F78 */  sw         $s1, 0x1C($sp)
+    /* 80135F7C */  sw         $s0, 0x18($sp)
+    /* 80135F80 */  addiu      $t9, $t6, 0x24
+    /* 80135F8C */  addiu      $t6, $t6, 0xC
+    /* 80135F98 */  addiu      $t0, $t0, 0xC
+    /* 80135FBC */  addiu      $t1, $t1, %lo(D_80149754)
+    /* 80135FD4 */  addiu      $t5, $t5, %lo(D_8014976C)
+    /* 80135FEC */  addiu      $t6, $t6, %lo(D_80149784)
+    /* 80135FF8 */  addiu      $t2, $t6, 0x54
+    /* 80136000 */  lhu        $at, 0x14($t1)

@@ -1,0 +1,230 @@
+{
+  "scope": "TAIIKU:func_8013E1FC",
+  "selected_path": "drafts/T-14500/TAIIKU/func_8013E1FC",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 129,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_t6 = var_a0 * 8;",
+        "        temp_t1 = &sp9C + temp_t6;",
+        "        temp_v0 = (*(s32 *)temp_t1);"
+      ]
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 133,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        if ((temp_v0 > 0) || (*(s32 *)((unsigned char *)temp_t1 + (4)) > 0)) {",
+        "            temp_v1 = &spAC + temp_t6;",
+        "            var_t0 = (*(s32 *)temp_v1);"
+      ]
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 190,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_t4_2 = var_a0_2 * 8;",
+        "        temp_v1_2 = &spAC + temp_t4_2;",
+        "        temp_t0 = (*(s32 *)temp_v1_2);"
+      ]
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 192,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_t0 = (*(s32 *)temp_v1_2);",
+        "        if ((temp_t0 < -0xA0) || (var_t1 = &sp9C + temp_t4_2, ((temp_t0 < 0xA1) == 0)) || (var_v0_3 = *var_t1, ((var_v0_3 < -0x17) != 0)) || (var_v0_3 >= 0x79)) {",
+        "            temp_v0_2 = *(s32 *)((unsigned char *)temp_v1_2 + (4));"
+      ]
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 195,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "            if (temp_v0_2 >= -0xA0) {",
+        "                var_t1 = &sp9C + temp_t4_2;",
+        "                if (temp_v0_2 < 0xA1) {"
+      ]
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 253,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_t2_2 = var_a0_3 * 8;",
+        "        temp_t1_2 = &sp9C + temp_t2_2;",
+        "        temp_v0_4 = (*(s32 *)temp_t1_2);"
+      ]
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 257,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        if ((temp_v0_4 > 0) || (*(s32 *)((unsigned char *)temp_t1_2 + (4)) > 0)) {",
+        "            temp_v1_3 = &spAC + temp_t2_2;",
+        "            var_t0_2 = (*(s32 *)temp_v1_3);"
+      ]
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 314,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_t5_2 = var_a0_4 * 8;",
+        "        temp_v1_4 = &spAC + temp_t5_2;",
+        "        temp_t0_2 = (*(s32 *)temp_v1_4);"
+      ]
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 316,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "        temp_t0_2 = (*(s32 *)temp_v1_4);",
+        "        if ((temp_t0_2 < -0xA0) || (var_t1_2 = &sp9C + temp_t5_2, ((temp_t0_2 < 0xA1) == 0)) || (var_v0_5 = *var_t1_2, ((var_v0_5 < -0x17) != 0)) || (var_v0_5 >= 0x79)) {",
+        "            temp_v0_5 = *(s32 *)((unsigned char *)temp_v1_4 + (4));"
+      ]
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 319,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "            if (temp_v0_5 >= -0xA0) {",
+        "                var_t1_2 = &sp9C + temp_t5_2;",
+        "                if (temp_v0_5 < 0xA1) {"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target accesses two groups of four words at sp+0x9C..A8 and AC..B8 by pair index<<3 and lw +0/+4. Use s32[4] groups with explicit byte views for the already-byte-scaled pair offset. Remaining pointer loops beyond these sites remain unresolved."
+  ],
+  "assembly_path": "asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950/func_8013E1FC.s",
+  "assembly_sha256": "d10a6e1431f9fc80e77ea84c082f2ff9946d70d6626ed92d46c455a2bbce1fe7",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x40": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x48": [
+      "lw",
+      "sw"
+    ],
+    "0x44": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x4C": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0xB0": [
+      "lw",
+      "sw"
+    ],
+    "0xB8": [
+      "lw",
+      "sw"
+    ],
+    "0x9C": [
+      "lw",
+      "sw"
+    ],
+    "0xA0": [
+      "lw",
+      "sw"
+    ],
+    "0xB4": [
+      "lw",
+      "sw"
+    ],
+    "0xAC": [
+      "lw",
+      "sw"
+    ],
+    "0x78": [
+      "lw",
+      "sw"
+    ],
+    "0xA4": [
+      "sw"
+    ],
+    "0xA8": [
+      "sw"
+    ],
+    "0x18": [
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x60": [
+      "lw",
+      "sw"
+    ],
+    "0x94": [
+      "sw"
+    ],
+    "0x90": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

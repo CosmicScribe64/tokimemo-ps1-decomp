@@ -1,0 +1,28 @@
+{
+  "scope": "TAIIKU:func_80140A90",
+  "path": "drafts/T-16100/batch-2/TAIIKU/func_80140A90",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock44",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "68-byte memcpy loop has 0x44 stride table origin; local block is an exact opaque copy representation, not an identified record type. Retained pending shared record recovery.",
+  "evidence_path": "drafts/T-16100/batch-2/TAIIKU/func_80140A90/evidence.txt",
+  "compile_status": "scored",
+  "score": 228,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "68-byte memcpy loop has 0x44 stride table origin; local block is an exact opaque copy representation, not an identified record type. Retained pending shared record recovery."
+    }
+  ]
+}

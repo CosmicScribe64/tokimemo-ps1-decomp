@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TAIIKU/nonmatchings/TAIIKU/80140810/func_80140A90.s']
+Review: 68-byte memcpy loop has 0x44 stride table origin; local block is an exact opaque copy representation, not an identified record type. Retained pending shared record recovery.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80140A90 */  addiu      $sp, $sp, -0x30
+    /* 80140A94 */  sw         $ra, 0x1C($sp)
+    /* 80140AA4 */  lbu        $t6, %lo(D_800E738A)($t6)
+    /* 80140AB4 */   sll       $t6, $t6, 2
+    /* 80140ABC */  addu       $at, $at, $t6
+    /* 80140AE4 */  addiu      $t7, $zero, -0x1
+    /* 80140AF4 */  addiu      $a0, $zero, 0x413C
+    /* 80140AFC */   addiu     $a1, $zero, 0x1
+    /* 80140B2C */   addiu     $a0, $zero, 0x1
+    /* 80140B34 */   addiu     $a0, $zero, 0x5F5D
+    /* 80140B84 */   addiu     $a0, $a0, %lo(D_80148C80)
+    /* 80140B8C */   addiu     $a0, $zero, 0x1
+    /* 80140B98 */  addiu      $t0, $zero, 0x1
+    /* 80140BC0 */  addiu      $a0, $zero, 0x1
+    /* 80140C04 */   addiu     $a0, $zero, 0x1
+    /* 80140CAC */  addiu      $at, $zero, 0x1
+    /* 80140CCC */   addiu     $a0, $zero, 0x11
+    /* 80140CDC */   addiu     $a0, $zero, 0xB
+    /* 80140CF4 */  lh         $t5, %lo(D_800E647A)($t5)
+    /* 80140CFC */  addiu      $t6, $t5, -0x1
+    /* 80140D08 */  lh         $t7, %lo(D_800E6476)($t7)
+    /* 80140D10 */  addiu      $t8, $t7, -0x1
+    /* 80140D1C */  lh         $t9, %lo(D_800E647E)($t9)
+    /* 80140D24 */  addiu      $t0, $t9, 0xA

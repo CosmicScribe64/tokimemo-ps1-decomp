@@ -1,0 +1,36 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/GEKO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/GEKO/func_80138E10/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 3902: Incompatible pointer type assignment
+     D_800CA134 = &D_80145060;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 3903: Incompatible pointer type assignment
+     D_800CA138 = &D_80145064;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 3910: Incompatible pointer type assignment
+     D_800CA134 = &D_80145060;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 3911: Incompatible pointer type assignment
+     D_800CA138 = &D_80145064;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 4361: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 4362: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 4369: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 4370: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 4377: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA150;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-3/GEKO/func_80138E10/work/guarded.c, line 4378: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA154;
+ ---------------^
+
+Full TU compiled; score 75

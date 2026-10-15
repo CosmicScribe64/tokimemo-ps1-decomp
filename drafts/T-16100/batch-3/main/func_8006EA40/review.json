@@ -1,0 +1,25 @@
+{
+  "scope": "main:func_8006EA40",
+  "selected_path": "drafts/T-14500/main/func_8006EA40",
+  "archive_path": "drafts/T-16100/batch-3/main/func_8006EA40",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "func_80053418 writes sixteen s16 outputs to a1 and bytes to a0; target iterates records by 0x38 bytes, so use GsRec38* increment rather than GameState* +0x38."
+  ],
+  "flags": [
+    {
+      "detail": "sp2C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "func_80053418 writes sixteen s16 outputs to a1 and bytes to a0; target iterates records by 0x38 bytes, so use GsRec38* increment rather than GameState* +0x38. "
+    }
+  ],
+  "notes": "",
+  "assembly_evidence": "drafts/T-16100/batch-3/main/func_8006EA40/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

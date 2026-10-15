@@ -1,0 +1,28 @@
+80139E34:  addiu      $sp, $sp, -0x78
+80139E3C:  sw         $ra, 0x3C($sp)
+80139E40:  sw         $fp, 0x38($sp)
+80139E44:  sw         $s7, 0x34($sp)
+80139E48:  sw         $s6, 0x30($sp)
+80139E4C:  sw         $s5, 0x2C($sp)
+80139E50:  sw         $s4, 0x28($sp)
+80139E54:  sw         $s3, 0x24($sp)
+80139E58:  sw         $s2, 0x20($sp)
+80139E5C:  sw         $s1, 0x1C($sp)
+80139E60:  sw         $s0, 0x18($sp)
+80139E64:  addiu      $t6, $t6, %lo(D_80149EE8)
+80139E68:  lw         $at, 0x0($t6)
+80139E6C:  addiu      $fp, $sp, 0x54
+80139E70:  sw         $at, 0x0($fp)
+80139E74:  lw         $t9, 0x4($t6)
+80139E7C:  sw         $t9, 0x4($fp)
+80139E80:  lw         $at, 0x8($t6)
+80139E88:  sw         $at, 0x8($fp)
+80139E8C:  lw         $t9, 0xC($t6)
+80139EA4:  lhu        $at, 0x14($t6)
+80139EFC:  lh         $t4, %lo(D_8014A050)($t4)
+80139F34:  sll        $t5, $s1, 3
+80139F3C:  sll        $t5, $t5, 3
+80139F50:  sll        $t7, $t8, 30
+80139F60:  sll        $t9, $s2, 1
+80139F68:  lh         $t1, 0x0($t0)
+80139FE0:   addiu     $sp, $sp, 0x78

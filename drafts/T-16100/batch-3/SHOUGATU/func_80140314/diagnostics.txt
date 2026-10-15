@@ -1,0 +1,30 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/SHOUGATU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3609: '&' before array or function; ignored
+     *(M2cBlock30 *)(&sp70) = *(M2cBlock30 *)(&D_801461D8);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3610: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp4C) = *(M2cBlock24 *)(&D_80146208);
+ --------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3618: Incompatible pointer type assignment
+     temp_v0 = &sp70 + (*(u8 *)((unsigned char *)(&sp4C + D_80146168[D_80146158] + (D_800E62BE * 0xC)) + (-1140)) * 8);
+ ------------^
+cfe: Warning 681: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3618: '&' before array or function; ignored
+     temp_v0 = &sp70 + (*(u8 *)((unsigned char *)(&sp4C + D_80146168[D_80146158] + (D_800E62BE * 0xC)) + (-1140)) * 8);
+ --------------^
+cfe: Warning 681: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3618: '&' before array or function; ignored
+     temp_v0 = &sp70 + (*(u8 *)((unsigned char *)(&sp4C + D_80146168[D_80146158] + (D_800E62BE * 0xC)) + (-1140)) * 8);
+ -------------------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3624: Incompatible pointer type assignment
+     temp_v0_2 = (*(u8 *)((unsigned char *)(sp + (D_80146168[D_80146158] + (D_800E62BE * 0xC))) + (-1064)) * 8) + &sp70;
+ --------------^
+cfe: Warning 681: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3624: '&' before array or function; ignored
+     temp_v0_2 = (*(u8 *)((unsigned char *)(sp + (D_80146168[D_80146158] + (D_800E62BE * 0xC))) + (-1064)) * 8) + &sp70;
+ -----------------------------------------------------------------------------------------------------------------^
+cfe: Warning 689: drafts/T-16100/batch-3/SHOUGATU/func_80140314/work/guarded.c, line 3658: Unacceptable operand of == or !=
+     if (normal_date_bg_fadein == tbl.f[j] || normal_date_bg_fadeout == tbl.f[j]) {
+ ------------------------------^
+
+Full TU compiled; score 181

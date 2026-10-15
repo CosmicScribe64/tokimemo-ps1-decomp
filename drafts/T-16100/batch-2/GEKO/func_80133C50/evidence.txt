@@ -1,0 +1,28 @@
+Target: ['asm/ovl/GEKO/nonmatchings/GEKO/801338F0/func_80133C50.s']
+Review: 240-byte copy and address calculation index*20 identify byte table. Repair s32-array-pointer scaling to explicit byte stride.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80133C50 */  addiu      $sp, $sp, -0x128
+    /* 80133C58 */  addiu      $v0, $sp, 0x30
+    /* 80133C5C */  addiu      $t6, $t6, %lo(D_80144D8C)
+    /* 80133C60 */  sw         $ra, 0x14($sp)
+    /* 80133C64 */  addiu      $t9, $t6, 0xF0
+    /* 80133C70 */  addiu      $t6, $t6, 0xC
+    /* 80133C7C */  addiu      $t0, $t0, 0xC
+    /* 80133C94 */  lhu        $t1, %lo(D_800E6374)($t1)
+    /* 80133CA0 */  sll        $t3, $t2, 2
+    /* 80133CA4 */  addu       $t3, $t3, $t2
+    /* 80133CA8 */  sll        $t3, $t3, 2
+    /* 80133CAC */  addu       $a1, $v0, $t3
+    /* 80133CB4 */   addiu     $a0, $a0, %lo(D_800CA280)
+    /* 80133CBC */  lbu        $t4, %lo(D_800E71DF)($t4)
+    /* 80133CC0 */  addiu      $a2, $zero, 0x38
+    /* 80133CCC */  addiu      $a1, $a1, %lo(D_800E6280)
+    /* 80133CD4 */  addiu      $at, $zero, 0xA
+    /* 80133CE0 */  addu       $v1, $a1, $t5
+    /* 80133CE4 */  lbu        $t7, 0x1C8($v1)
+    /* 80133CE8 */  addiu      $t5, $zero, 0x16
+    /* 80133CF4 */  lbu        $t6, %lo(D_80144C50)($t6)
+    /* 80133D04 */  lbu        $t0, %lo(D_800E71DF)($t0)
+    /* 80133D14 */  addu       $v1, $a1, $t1
+    /* 80133D18 */  lbu        $t3, 0x1C8($v1)

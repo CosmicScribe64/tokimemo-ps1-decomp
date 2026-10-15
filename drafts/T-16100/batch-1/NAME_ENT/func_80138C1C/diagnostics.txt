@@ -1,0 +1,23 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/NAME_ENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/NAME_ENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/guarded.c drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/guarded.o.sjis.c, line 4069: Incompatible pointer type assignment
+     var_v0 = ((u8 *)&D_800E6280);
+ -----------^
+cfe: Warning 709: drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/guarded.o.sjis.c, line 4075: Incompatible pointer type assignment
+     var_v0_2 = ((u8 *)&D_800E6280);
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/guarded.o.sjis.c, line 4117: '&' before array or function; ignored
+     func_800AE090(&sp34, &D_800E6354, 8);
+ ------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/guarded.o.sjis.c, line 4118: '&' before array or function; ignored
+     func_800AE110(&sp34, &D_800E635C, 8);
+ ------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/NAME_ENT/func_80138C1C/work/guarded.o.sjis.c, line 4119: '&' before array or function; ignored
+     func_800AE090(&D_800E6344, &sp34, 0x10);
+ -------------------------------^
+

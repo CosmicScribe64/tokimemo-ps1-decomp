@@ -1,0 +1,6 @@
+Frozen archived full-context.c replaced at target definition only.
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/TAIIKU/func_80132BD0/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/TAIIKU/func_80132BD0/work/guarded.c drafts/T-16100/batch-1/TAIIKU/func_80132BD0/work/guarded.o ido 5.3
+

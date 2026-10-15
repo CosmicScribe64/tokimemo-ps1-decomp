@@ -1,0 +1,28 @@
+{
+  "scope": "ENDING:func_801330E4",
+  "path": "drafts/T-16100/batch-2/ENDING/func_801330E4",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "M2cBlock24",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "36-byte copied record plus sp78[1] and raw sp indexing do not define a valid full local table; exact copy alone is insufficient.",
+  "evidence_path": "drafts/T-16100/batch-2/ENDING/func_801330E4/evidence.txt",
+  "compile_status": "scored",
+  "score": 129,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "M2cBlock24",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "36-byte copied record plus sp78[1] and raw sp indexing do not define a valid full local table; exact copy alone is insufficient."
+    }
+  ]
+}

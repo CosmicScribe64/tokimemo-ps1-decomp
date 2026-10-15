@@ -1,0 +1,24 @@
+{
+  "scope": "DATE2:func_80133AF0",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "path": "drafts/T-16100/batch-3/DATE2/func_80133AF0",
+  "archive_path": "drafts/T-16100/batch-3/DATE2/func_80133AF0",
+  "status": "scored",
+  "score": 1441,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 1364,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "f5ef62c72a0eabcb4d2b70d88b806963dae12fd7f40ac0cf66a0b6df3d63eae8",
+    "provenance.json": "2f371df6c64cb9a5ff804b2e806c97c62c9f17c54fee3298ee34b0b0d8a71fa8",
+    "declarations.h": "bc0b476b8b90a4c1aad6ea4b9e63b8a3d366f8857ef9b25572b2bdbb4138744e",
+    "difference.txt": "e9aa50ec562836ccf95f3e9b2200f70f1f5bc313319df4e74e17a60946aa4b18",
+    "context.c": "1a91154c21cf917ad2c8176e7287b4cca5784525d227f74b601cf80f2a0a6e29",
+    "body.c": "bba14ddd75fcbe91a6b5d4bf5e87dab4d9e590fb7d639fdd6b364d5824eed871",
+    "full-context.c": "dcfec8d6ab0e3f45294c8e4d199c9f7f28f8fba85e5fc7466b6594b920a1cdc8",
+    "diagnostics.txt": "a59d44f6de6af117bc313d06d12814d18a7f4812c23f52a2e427327373c3cd64"
+  }
+}

@@ -1,0 +1,14 @@
+    8011A8E4:  addiu      $sp, $sp, -0xC0
+    8011A8F0:  addiu      $t0, $sp, 0x90
+    8011A8FC:  sw         $ra, 0x1C($sp)
+    8011A900:  addiu      $t1, $sp, 0x64
+    8011A904:  addiu      $t2, $sp, 0x38
+    8011AAB4:   sll       $v0, $v1, 1
+    8011AAC0:  sll        $v0, $v1, 1
+    8011AAC4:  addu       $t9, $t2, $v0
+    8011AACC:  addu       $t4, $t1, $v0
+    8011AAD4:  addu       $t3, $t0, $v0
+    8011AAD8:  sw         $t8, 0x10($sp)
+    8011AAE4:   sw        $t5, 0x14($sp)
+    8011AAF0:  lw         $ra, 0x1C($sp)
+    8011AAF4:  addiu      $sp, $sp, 0xC0

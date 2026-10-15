@@ -1,0 +1,63 @@
+    80141D20:  addiu      $sp, $sp, -0x50
+    80141D2C:  sw         $ra, 0x3C($sp)
+    80141D30:  sw         $fp, 0x38($sp)
+    80141D34:  sw         $s7, 0x34($sp)
+    80141D38:  sw         $s6, 0x30($sp)
+    80141D3C:  sw         $s5, 0x2C($sp)
+    80141D40:  sw         $s4, 0x28($sp)
+    80141D44:  sw         $s3, 0x24($sp)
+    80141D48:  sw         $s2, 0x20($sp)
+    80141D4C:  sw         $s1, 0x1C($sp)
+    80141D54:   sw        $s0, 0x18($sp)
+    80141D80:  sll        $t6, $a1, 16
+    80141DA8:  sll        $t0, $a1, 16
+    80141E08:  sll        $t7, $a1, 3
+    80141E0C:  addu       $t7, $t7, $a1
+    80141E10:  sll        $t7, $t7, 2
+    80141E18:  addu       $v1, $t7, $t8
+    80141E30:  sll        $t0, $t9, 3
+    80141E44:  lui        $s6, %hi(D_800E6280)
+    80141E48:  addiu      $s6, $s6, %lo(D_800E6280)
+    80141E4C:  addu       $t3, $s6, $a1
+    80141E74:  sll        $t4, $a1, 1
+    80141E78:  addu       $v1, $t4, $t5
+    80141E9C:  lui        $s6, %hi(D_800E6280)
+    80141EA0:  addiu      $s6, $s6, %lo(D_800E6280)
+    80141EA4:  addu       $t9, $s6, $a1
+    80141ECC:  sll        $t0, $a1, 1
+    80141ED0:  addu       $v1, $t0, $t1
+    80141F00:  sll        $t5, $t4, 1
+    80141F04:  addu       $t6, $t5, $v0
+    80141F10:  sll        $t0, $a1, 2
+    80141F40:  addu       $at, $at, $t0
+    80141F60:  lui        $s6, %hi(D_800E6280)
+    80141F68:  addiu      $s6, $s6, %lo(D_800E6280)
+    80141F8C:  sll        $t6, $s2, 1
+    80141F90:  addu       $s5, $t6, $t8
+    80141F98:  sll        $t1, $s2, 3
+    80141FA0:  addu       $t1, $t1, $s2
+    80141FAC:  sll        $t1, $t1, 2
+    80141FB8:  addu       $s0, $t1, $t2
+    80141FD4:  sll        $v0, $s2, 2
+    80141FE8:  addu       $s4, $v0, $t2
+    80141FEC:  addu       $s1, $fp, $v0
+    80141FF0:  addu       $s3, $v0, $t5
+    8014202C:  addu       $t4, $t3, $v1
+    80142044:  addu       $t0, $v1, $t9
+    801420AC:  sll        $t9, $t7, 3
+    801420C4:  addu       $t2, $s6, $s2
+    801420F4:  addu       $t6, $s6, $s2
+    8014212C:  sll        $t0, $t9, 1
+    80142130:  addu       $t1, $t0, $v0
+    80142184:  sll        $t5, $s2, 16
+    801421A4:  lw         $ra, 0x3C($sp)
+    801421A8:  lw         $s0, 0x18($sp)
+    801421AC:  lw         $s1, 0x1C($sp)
+    801421B0:  lw         $s2, 0x20($sp)
+    801421B4:  lw         $s3, 0x24($sp)
+    801421B8:  lw         $s4, 0x28($sp)
+    801421BC:  lw         $s5, 0x2C($sp)
+    801421C0:  lw         $s6, 0x30($sp)
+    801421C4:  lw         $s7, 0x34($sp)
+    801421C8:  lw         $fp, 0x38($sp)
+    801421D0:   addiu     $sp, $sp, 0x50

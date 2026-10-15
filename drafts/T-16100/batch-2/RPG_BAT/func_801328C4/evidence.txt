@@ -1,0 +1,28 @@
+Target: ['asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801321D0/func_801328C4.s']
+Review: 60-byte copied table stored in sp4C[16] is an exact block but buffer extra element has no identified need; preserve unresolved table type.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801328C4 */  addiu      $sp, $sp, -0x90
+    /* 801328CC */  sw         $s5, 0x28($sp)
+    /* 801328D0 */  sw         $s4, 0x24($sp)
+    /* 801328D4 */  addiu      $t7, $t7, %lo(D_8015E4F0)
+    /* 801328E0 */  sw         $ra, 0x2C($sp)
+    /* 801328E4 */  sw         $s3, 0x20($sp)
+    /* 801328E8 */  sw         $s2, 0x1C($sp)
+    /* 801328EC */  sw         $s1, 0x18($sp)
+    /* 801328F0 */  sw         $s0, 0x14($sp)
+    /* 801328F4 */  addiu      $t0, $t7, 0x3C
+    /* 801328F8 */  addiu      $t6, $sp, 0x4C
+    /* 80132900 */  addiu      $t7, $t7, 0xC
+    /* 8013290C */  addiu      $t6, $t6, 0xC
+    /* 80132928 */  addiu      $s1, $sp, 0x4C
+    /* 8013292C */  addiu      $s2, $zero, 0x3E8
+    /* 80132940 */  sll        $t1, $s3, 11
+    /* 80132954 */  addiu      $at, $zero, -0x1
+    /* 80132990 */  addiu      $a0, $s0, 0x28
+    /* 801329B0 */  addiu      $at, $zero, -0x1
+    /* 801329CC */  addu       $a1, $t4, $s4
+    /* 801329F4 */  addiu      $at, $zero, -0x1
+    /* 80132A10 */  addu       $t0, $s5, $t8
+    /* 80132A1C */  addiu      $s0, $s0, 0x1
+    /* 80132A28 */   addiu     $s1, $s1, 0x8

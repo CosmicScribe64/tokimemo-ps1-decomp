@@ -1,0 +1,30 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/main/func_8007132C/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/main/func_8007132C/full-context.c drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3529: Incompatible pointer type assignment
+     temp_t8 = (D_800E699C * 4) + &D_800E6280;
+ ------------^
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3537: Incompatible pointer type assignment
+             var_a1 = (temp_t2 * 4) + &D_800E6280;
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3544: Incompatible pointer type assignment
+             var_a1 = (temp_t0 * 4) + &D_800E6280;
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3553: Incompatible pointer type assignment
+             var_a1 = (temp_t5 * 4) + &D_800E6280;
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3559: Incompatible pointer type assignment
+             var_a1 = ((temp_t6 & 0xFF) * 4) + &D_800E6280;
+ -------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3679: Incompatible pointer type assignment
+     var_a1_2 = (D_800E699C * 4) + &D_800E6280;
+ -------------^
+cfe: Warning 689: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3719: Unacceptable operand of == or !=
+                 if (var_v1_9 == &D_800E64E8) {
+ -----------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_8007132C/work/guarded.o.sjis.c, line 3737: Incompatible pointer type assignment
+         var_a1_2 = (D_800E699C * 4) + &D_800E6280;
+ -----------------^
+
+Full translation unit compiled and scored.

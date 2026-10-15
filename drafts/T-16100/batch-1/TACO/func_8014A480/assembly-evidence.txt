@@ -1,0 +1,67 @@
+    8014A480:  addiu      $sp, $sp, -0x80
+    8014A484:  sw         $a1, 0x84($sp)
+    8014A488:  lw         $t6, 0x84($sp)
+    8014A48C:  sw         $ra, 0x14($sp)
+    8014A490:  sll        $v1, $t6, 1
+    8014A494:  sll        $t8, $v1, 1
+    8014A49C:  sw         $a0, 0x80($sp)
+    8014A4A0:  sw         $t7, 0x4C($sp)
+    8014A4A4:  addu       $v0, $a2, $t8
+    8014A4AC:  lw         $t1, 0x84($sp)
+    8014A4B0:  sw         $t9, 0x48($sp)
+    8014A4BC:  sll        $t5, $t6, 4
+    8014A4C4:  addu       $t5, $t5, $t6
+    8014A4C8:  addu       $t2, $a3, $t1
+    8014A4CC:  sw         $t0, 0x44($sp)
+    8014A4D4:  sll        $t5, $t5, 3
+    8014A4DC:  addu       $t7, $t4, $t5
+    8014A4EC:  addiu      $a1, $sp, 0x60
+    8014A54C:  sw         $v1, 0x3C($sp)
+    8014A550:  sll        $t1, $a0, 12
+    8014A570:  sll        $t6, $a0, 12
+    8014A578:  addiu      $a1, $sp, 0x60
+    8014A594:  sll        $t5, $a0, 12
+    8014A59C:  addiu      $a1, $sp, 0x60
+    8014A5AC:  lw         $t7, 0x80($sp)
+    8014A5B4:  sll        $t9, $t7, 2
+    8014A5B8:  addu       $t9, $t9, $t7
+    8014A5BC:  sll        $t9, $t9, 4
+    8014A5C4:  addu       $a3, $t9, $t8
+    8014A5D4:  sw         $a3, 0x38($sp)
+    8014A5D8:  addiu      $a0, $sp, 0x60
+    8014A5DC:  addiu      $a1, $sp, 0x58
+    8014A5E0:  addiu      $a2, $sp, 0x50
+    8014A5E4:  sh         $t0, 0x58($sp)
+    8014A5E8:  sh         $t1, 0x5A($sp)
+    8014A5F0:   sh        $t2, 0x5C($sp)
+    8014A5F4:  lw         $v1, 0x4C($sp)
+    8014A600:  lh         $t5, 0x50($sp)
+    8014A608:  sll        $t6, $v1, 4
+    8014A610:  lw         $t7, 0x48($sp)
+    8014A614:  addu       $t6, $t6, $v1
+    8014A618:  sll        $v1, $t6, 3
+    8014A61C:  addu       $t3, $t4, $t5
+    8014A620:  lw         $a3, 0x38($sp)
+    8014A624:  addu       $t0, $t8, $v1
+    8014A628:  addu       $t9, $t3, $t7
+    8014A638:  lh         $t2, 0x52($sp)
+    8014A644:  lw         $t4, 0x44($sp)
+    8014A648:  addu       $t6, $t1, $t2
+    8014A64C:  addu       $t7, $t3, $v1
+    8014A650:  addu       $t5, $t6, $t4
+    8014A668:  lh         $t9, 0x54($sp)
+    8014A66C:  addu       $t2, $t1, $v1
+    8014A670:  addu       $t0, $t8, $t9
+    8014A684:  addu       $v0, $v1, $t6
+    8014A6A4:  lw         $t5, 0x3C($sp)
+    8014A6B4:  lw         $t7, 0x90($sp)
+    8014A6BC:  addu       $t8, $t5, $t7
+    8014A6D4:  addu       $v0, $v1, $t1
+    8014A6F0:  addu       $t4, $t6, $v1
+    8014A700:   lw        $ra, 0x14($sp)
+    8014A704:  lw         $t3, 0x80($sp)
+    8014A714:  lw         $a1, 0x94($sp)
+    8014A71C:   sw        $a3, 0x38($sp)
+    8014A720:  lw         $a3, 0x38($sp)
+    8014A78C:  lw         $ra, 0x14($sp)
+    8014A790:  addiu      $sp, $sp, 0x80

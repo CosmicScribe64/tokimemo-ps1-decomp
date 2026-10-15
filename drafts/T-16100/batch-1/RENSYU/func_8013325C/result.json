@@ -1,0 +1,20 @@
+{
+  "scope": "RENSYU:func_8013325C",
+  "src": "src/ovl/RENSYU/80132040.c",
+  "size": 972,
+  "path": "drafts/T-16100/batch-1/RENSYU/func_8013325C",
+  "archive_path": "drafts/T-16100/batch-1/RENSYU/func_8013325C",
+  "status": "scored",
+  "score": 287,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "bfade4afa3e06e9af7054cfa02c5f2735c7442a043ef6d806a562402a2efdfc7",
+  "declarations.h_sha256": "aed11eed00a2421574ee7a4c08c8655defadae4f52ee0461c3c0d741887d9d2d",
+  "context.c_sha256": "1bf27f7f828d33f88f961382d192e1d3aae0a7e73728cf09da2dcdb740ddd644",
+  "full-context.c_sha256": "52b5cc06b0f21438fa1fcabeac1f1510e067459ae157d3f9f745f9add1ba2306",
+  "diagnostics.txt_sha256": "3aa006b3aefcb887c51c110b880f3bc8aedf22c5bc6aa54eaff2ec1e3a066b87",
+  "assembly-evidence.txt_sha256": "a198b6e035a0093e7e5183738306bd7fb9aa3ead95e11e4810e8573c294b996d"
+}

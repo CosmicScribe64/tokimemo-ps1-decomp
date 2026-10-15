@@ -1,0 +1,38 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/EN_NICHI -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/EN_NICHI -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2925: '&' before array or function; ignored
+     *(M2cBlock24 *)(&spC4) = *(M2cBlock24 *)(&D_80139C68);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2926: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spC4) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80139C68) + (36));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2928: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp98) = *(M2cBlock24 *)(&D_80139C94);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2929: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp98) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80139C94) + (36));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2931: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp6C) = *(M2cBlock24 *)(&D_80139CC0);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2932: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp6C) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80139CC0) + (36));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2959: '&' before array or function; ignored
+         var_v1 = &spC4;
+ -----------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2960: '&' before array or function; ignored
+         var_a1 = &sp98;
+ -----------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 2961: '&' before array or function; ignored
+         var_a2 = &sp6C;
+ -----------------^
+cfe: Warning 689: drafts/T-16100/batch-1/EN_NICHI/func_80136DEC/work/guarded.c, line 3026: Unacceptable operand of == or !=
+         } while (var_v0_3 != &D_8011F2A8);
+ --------------------------^
+

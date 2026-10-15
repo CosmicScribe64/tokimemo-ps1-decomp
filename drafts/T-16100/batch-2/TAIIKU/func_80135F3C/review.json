@@ -1,0 +1,154 @@
+{
+  "scope": "TAIIKU:func_80135F3C",
+  "path": "drafts/T-16100/batch-2/TAIIKU/func_80135F3C",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "spC0[11]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "spD8[11]",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    },
+    {
+      "detail": "spF0[11]",
+      "kind": "synthesized-stack-local",
+      "line": 4
+    },
+    {
+      "detail": "&sp68 +",
+      "kind": "stack-address-arithmetic",
+      "line": 81
+    },
+    {
+      "detail": "&sp68 +",
+      "kind": "stack-address-arithmetic",
+      "line": 126
+    },
+    {
+      "detail": "&sp68 +",
+      "kind": "stack-address-arithmetic",
+      "line": 128
+    },
+    {
+      "detail": "&sp68 +",
+      "kind": "stack-address-arithmetic",
+      "line": 130
+    },
+    {
+      "detail": "&sp68 +",
+      "kind": "stack-address-arithmetic",
+      "line": 132
+    },
+    {
+      "detail": "M2cBlock2C",
+      "kind": "inferred-copy-layout",
+      "line": 5
+    },
+    {
+      "detail": "M2cBlock58",
+      "kind": "inferred-copy-layout",
+      "line": 6
+    }
+  ],
+  "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent.",
+  "evidence_path": "drafts/T-16100/batch-2/TAIIKU/func_80135F3C/evidence.txt",
+  "compile_status": "scored",
+  "score": 535,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "spC0[11]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "spD8[11]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "spF0[11]",
+        "kind": "synthesized-stack-local",
+        "line": 4
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "&sp68 +",
+        "kind": "stack-address-arithmetic",
+        "line": 81
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "&sp68 +",
+        "kind": "stack-address-arithmetic",
+        "line": 126
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "&sp68 +",
+        "kind": "stack-address-arithmetic",
+        "line": 128
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "&sp68 +",
+        "kind": "stack-address-arithmetic",
+        "line": 130
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "&sp68 +",
+        "kind": "stack-address-arithmetic",
+        "line": 132
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock2C",
+        "kind": "inferred-copy-layout",
+        "line": 5
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock58",
+        "kind": "inferred-copy-layout",
+        "line": 6
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "88-byte copied table is indexed by a byte row/column encoding. Reconstruct as u8[88] and use byte indexing; keep exact opaque copy extent."
+    }
+  ]
+}

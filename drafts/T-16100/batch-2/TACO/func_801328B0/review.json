@@ -1,0 +1,42 @@
+{
+  "scope": "TACO:func_801328B0",
+  "path": "drafts/T-16100/batch-2/TACO/func_801328B0",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp50",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "sp4C",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    }
+  ],
+  "explanation": "Several scalar stack fragments participate in by-value transform calls; independent names do not establish their aggregate ABI. Needs coordinated TcPos/SDK reconstruction.",
+  "evidence_path": "drafts/T-16100/batch-2/TACO/func_801328B0/evidence.txt",
+  "compile_status": "scored",
+  "score": 541,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp50",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "Several scalar stack fragments participate in by-value transform calls; independent names do not establish their aggregate ABI. Needs coordinated TcPos/SDK reconstruction."
+    },
+    {
+      "flag": {
+        "detail": "sp4C",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "Several scalar stack fragments participate in by-value transform calls; independent names do not establish their aggregate ABI. Needs coordinated TcPos/SDK reconstruction."
+    }
+  ]
+}

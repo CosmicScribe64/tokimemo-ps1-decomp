@@ -1,0 +1,8 @@
+-@row 0 ; addiu sp,sp,-240
++@row 0 ; addiu sp,sp,-232
+-@row 5 ; addiu t6,sp,44
++@row 5 ; addiu t6,sp,40
+-@row 25 ; lw t9,44(t9)
++@row 25 ; lw t9,40(t9)
+-@row 58 ; addiu sp,sp,240
++@row 58 ; addiu sp,sp,232

@@ -1,0 +1,28 @@
+{
+  "scope": "BUNKAKEN:func_80145550",
+  "path": "drafts/T-16100/batch-2/BUNKAKEN/func_80145550",
+  "changed": false,
+  "outcome": "justified-false-positive",
+  "flags_reviewed": [
+    {
+      "detail": "spDA",
+      "kind": "synthesized-stack-local",
+      "line": 6
+    }
+  ],
+  "explanation": "spDA is intentionally uninitialized byte in original default arm; exact 54/66/66-byte copies already recovered. Preserve explicit diagnostic; flag is justified false positive.",
+  "evidence_path": "drafts/T-16100/batch-2/BUNKAKEN/func_80145550/evidence.txt",
+  "compile_status": "scored",
+  "score": 302,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "spDA",
+        "kind": "synthesized-stack-local",
+        "line": 6
+      },
+      "outcome": "justified-false-positive",
+      "explanation": "spDA is intentionally uninitialized byte in original default arm; exact 54/66/66-byte copies already recovered. Preserve explicit diagnostic; flag is justified false positive."
+    }
+  ]
+}

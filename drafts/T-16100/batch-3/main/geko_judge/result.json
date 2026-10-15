@@ -1,0 +1,24 @@
+{
+  "scope": "main:geko_judge",
+  "src": "src/main/8006CB30.c",
+  "path": "drafts/T-16100/batch-3/main/geko_judge",
+  "archive_path": "drafts/T-16100/batch-3/main/geko_judge",
+  "status": "scored",
+  "score": 22,
+  "source_base": "48362009",
+  "header_base": "drafts/T-14500/baseline/include",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "initial_score": 43,
+  "artifact_sha256": {
+    "assembly-evidence.txt": "302be3c8d5ea33cc5baf1d6cc16b55c7deb0708d1e224d790b150765cc013fec",
+    "provenance.json": "c24fd782846f4c3b37c626c6a9c94ea93bb0d46ac9f4f27844b254393c392cba",
+    "declarations.h": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "difference.txt": "9aed010da639a950e9e6b6138a23e681d8620505cc6edbd502be803438b24029",
+    "context.c": "bfc6992bba5854e4b2773b6909cb84be3e3a357bc8c8bb2d39c18313d5e9cb9d",
+    "body.c": "0e50b267a14bc511bcc6d8fbacce7e8f2ff29fa994ca024d11465fd202bac8ea",
+    "full-context.c": "136ecd5cb0980fa20939b9620037dcb03a9bb99ddffbb0e1a07b214d50fdbdfc",
+    "diagnostics.txt": "ae58338492925d42bbdecc96e64df22781e56fec55a273df1a7209fbe8544146"
+  }
+}

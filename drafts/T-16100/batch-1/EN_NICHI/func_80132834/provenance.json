@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-14500/repairs/automatic/mechanical/EN_NICHI/func_80132834",
+  "original_body_sha256": "2a41b88ba74f130dbe3505f5aa9e927f05ff853aa7575a3f1eda6f265c6446e9",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

@@ -1,0 +1,154 @@
+{
+  "scope": "TAIIKU:func_8013EC60",
+  "path": "drafts/T-16100/batch-2/TAIIKU/func_8013EC60",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 139
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 143
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 200
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 202
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 205
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 263
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 267
+    },
+    {
+      "detail": "&spAC +",
+      "kind": "stack-address-arithmetic",
+      "line": 324
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 326
+    },
+    {
+      "detail": "&sp9C +",
+      "kind": "stack-address-arithmetic",
+      "line": 329
+    }
+  ],
+  "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair.",
+  "evidence_path": "drafts/T-16100/batch-2/TAIIKU/func_8013EC60/evidence.txt",
+  "compile_status": "scored",
+  "score": 784,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 139
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&spAC +",
+        "kind": "stack-address-arithmetic",
+        "line": 143
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&spAC +",
+        "kind": "stack-address-arithmetic",
+        "line": 200
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 202
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 205
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 263
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&spAC +",
+        "kind": "stack-address-arithmetic",
+        "line": 267
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&spAC +",
+        "kind": "stack-address-arithmetic",
+        "line": 324
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 326
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    },
+    {
+      "flag": {
+        "detail": "&sp9C +",
+        "kind": "stack-address-arithmetic",
+        "line": 329
+      },
+      "outcome": "unresolved",
+      "explanation": "sp9C and spAC indexed with an 8-byte stride indicate two coordinate arrays. Declared scalar bases and fixed adjacent slots must be unified before safe repair."
+    }
+  ]
+}

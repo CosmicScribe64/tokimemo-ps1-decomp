@@ -1,0 +1,31 @@
+    8007739C:  addiu      $sp, $sp, -0x30
+    800773A0:  sw         $ra, 0x1C($sp)
+    800773A4:  sw         $s1, 0x18($sp)
+    800773AC:   sw        $s0, 0x14($sp)
+    800773CC:  lui        $s1, %hi(D_800E6280)
+    800773D0:  addiu      $s1, $s1, %lo(D_800E6280)
+    800773E0:  sll        $t7, $t6, 2
+    800773E4:  addu       $t8, $s1, $t7
+    8007742C:  sll        $t1, $t0, 2
+    80077430:  addu       $t2, $s1, $t1
+    8007743C:  sll        $t6, $t4, 4
+    8007746C:  addu       $v0, $s1, $t2
+    800774A8:   sll       $t8, $t6, 2
+    800774AC:  addu       $v0, $s1, $t8
+    800774E0:   lw        $ra, 0x1C($sp)
+    80077524:   lw        $ra, 0x1C($sp)
+    80077564:   lw        $ra, 0x1C($sp)
+    800775D4:  lui        $s1, %hi(D_800E6280)
+    800775D8:  addiu      $s1, $s1, %lo(D_800E6280)
+    800775DC:  sll        $t8, $t6, 2
+    800775E0:  addu       $t9, $s1, $t8
+    80077600:  sll        $t2, $t1, 2
+    80077604:  addu       $a2, $a2, $t2
+    80077634:  sll        $t4, $t3, 2
+    80077638:  addu       $a2, $a2, $t4
+    80077660:   lw        $ra, 0x1C($sp)
+    80077674:   lw        $ra, 0x1C($sp)
+    80077680:  lw         $ra, 0x1C($sp)
+    80077684:  lw         $s0, 0x14($sp)
+    80077688:  lw         $s1, 0x18($sp)
+    80077690:   addiu     $sp, $sp, 0x30

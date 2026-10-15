@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE/nonmatchings/DATE/80150010/func_80150ED4.s']
+Review: 156-byte copy is supported but raw sp uses remain instead of sp30 indexing. Opaque block alone is insufficient to claim valid full stack layout.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80150ED4 */  addiu      $sp, $sp, -0xD0
+    /* 80150EE0 */  addiu      $t7, $t7, %lo(D_8015EB88)
+    /* 80150EE4 */  lbu        $v0, %lo(D_800E62BE)($v0)
+    /* 80150EE8 */  sw         $ra, 0x14($sp)
+    /* 80150EEC */  addiu      $t0, $t7, 0x9C
+    /* 80150EF0 */  addiu      $t6, $sp, 0x30
+    /* 80150EF8 */  addiu      $t7, $t7, 0xC
+    /* 80150F04 */  addiu      $t6, $t6, 0xC
+    /* 80150F18 */  addiu      $at, $zero, 0x5F
+    /* 80150F24 */  lbu        $a0, %lo(D_800E62BF)($a0)
+    /* 80150F28 */  addiu      $a1, $zero, 0x7
+    /* 80150F34 */  lbu        $v1, %lo(D_800E62C0)($v1)
+    /* 80150F38 */  addiu      $at, $zero, 0x17
+    /* 80150F48 */  lbu        $a0, %lo(D_800E62BF)($a0)
+    /* 80150F4C */  lbu        $v1, %lo(D_800E62C0)($v1)
+    /* 80150F50 */  addiu      $at, $zero, 0x60
+    /* 80150F58 */   addiu     $a1, $zero, 0x7
+    /* 80150F60 */   addiu     $at, $zero, 0x1C
+    /* 80150F68 */   addiu     $at, $zero, 0x61
+    /* 80150F78 */   addiu     $at, $zero, 0x1B
+    /* 80150F84 */  lbu        $t1, %lo(D_800B593C)($t1)
+    /* 80150F88 */  addiu      $at, $zero, 0x80
+    /* 80150FA4 */  lbu        $t3, %lo(D_800E738A)($t3)
+    /* 80150FC4 */  lbu        $t4, %lo(D_800E738A)($t4)

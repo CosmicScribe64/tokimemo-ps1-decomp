@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TEL/nonmatchings/TEL/8013CCD0/func_8013CCD0.s']
+Review: sp78[16] and sp98[1] overlap logical stack slots and unresolved sp references remain. Needs actual copied table and element type reconstruction.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013CCD0 */  addiu      $sp, $sp, -0xC0
+    /* 8013CCD4 */  sw         $fp, 0x40($sp)
+    /* 8013CCD8 */  sw         $s7, 0x3C($sp)
+    /* 8013CCDC */  sw         $s6, 0x38($sp)
+    /* 8013CCE0 */  sw         $s0, 0x20($sp)
+    /* 8013CCE4 */  sw         $s5, 0x34($sp)
+    /* 8013CCE8 */  sw         $s4, 0x30($sp)
+    /* 8013CCEC */  sw         $s3, 0x2C($sp)
+    /* 8013CCF0 */  sw         $s2, 0x28($sp)
+    /* 8013CCF4 */  sw         $s1, 0x24($sp)
+    /* 8013CD08 */  sw         $ra, 0x44($sp)
+    /* 8013CD0C */  addiu      $fp, $fp, %lo(D_800C9730)
+    /* 8013CD10 */  addiu      $s7, $s7, %lo(D_800C9A14)
+    /* 8013CD14 */  addiu      $s6, $s6, %lo(sprite_frame_table)
+    /* 8013CD18 */  addiu      $s0, $s0, %lo(D_8011ECD0)
+    /* 8013CD1C */  addiu      $s1, $zero, 0x4
+    /* 8013CD24 */  addiu      $s3, $zero, 0x40
+    /* 8013CD2C */  addiu      $s5, $zero, 0x84
+    /* 8013CD34 */   addiu     $a0, $s2, 0x60
+    /* 8013CD58 */  lh         $t6, %lo(D_800C9A54)($t6)
+    /* 8013CD5C */  addiu      $s2, $s2, 0x1
+    /* 8013CD64 */  addiu      $t7, $zero, 0x8
+    /* 8013CD68 */  addiu      $t8, $zero, 0x1
+    /* 8013CD6C */  addiu      $t9, $zero, 0x200

@@ -1,0 +1,28 @@
+Target: ['asm/nonmatchings/main/80053650/func_8005557C.s']
+Review: Copy blocks 0x78/0x34 represent save payload sections, not independently recovered structs; exact extents alone do not justify invented game types.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8005557C */  sll        $t6, $a0, 4
+    /* 8005558C */  lbu        $t8, %lo(D_800E62BD)($t8)
+    /* 80055590 */  addiu      $t7, $t7, %lo(D_80123120)
+    /* 80055594 */  sll        $t6, $t6, 8
+    /* 80055598 */  addu       $a2, $t6, $t7
+    /* 800555A4 */  lbu        $t9, %lo(D_800E62BE)($t9)
+    /* 800555B0 */  lbu        $t0, %lo(D_800E62BF)($t0)
+    /* 800555BC */  lbu        $t1, %lo(D_800E62C0)($t1)
+    /* 800555C8 */  lbu        $t2, %lo(D_800E62C1)($t2)
+    /* 800555D4 */  lhu        $t3, %lo(D_800E62C2)($t3)
+    /* 800555DC */  addiu      $sp, $sp, -0x40
+    /* 800555E0 */  addiu      $t4, $t4, %lo(D_800E62C4)
+    /* 800555E4 */  sw         $ra, 0x14($sp)
+    /* 800555E8 */  addiu      $t6, $t4, 0x3C
+    /* 800555FC */  addiu      $t4, $t4, 0xC
+    /* 80055610 */  addiu      $t7, $t7, 0xC
+    /* 80055640 */  addiu      $t8, $t8, %lo(D_800E6304)
+    /* 80055648 */  addiu      $t0, $t8, 0x3C
+    /* 8005565C */  addiu      $t8, $t8, 0xC
+    /* 80055670 */  addiu      $t1, $t1, 0xC
+    /* 800556A0 */  addiu      $t2, $t2, %lo(D_800E6344)
+    /* 800556A8 */  addiu      $t5, $t2, 0x78
+    /* 800556B8 */  addiu      $t2, $t2, 0xC
+    /* 800556C4 */  addiu      $t6, $t6, 0xC

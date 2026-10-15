@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-14500/EVENT/func_8011A8E4",
+  "original_body_sha256": "02850a19b3ff83fbf0f8191b41c310bb4e3281107a2af94d43b61e640eda579d",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

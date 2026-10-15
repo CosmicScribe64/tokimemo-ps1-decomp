@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TAIIKU/nonmatchings/TAIIKU/80142240/func_80142400.s']
+Review: spA4/sp90 initializations write five words into s16 scalars, sp70 writes eight words, sp44 copies 40. Real overlapping stack storage defect; large coordinated reconstruction deferred.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80142400 */  addiu      $sp, $sp, -0xC0
+    /* 80142404 */  sw         $ra, 0x24($sp)
+    /* 80142408 */  sw         $s1, 0x20($sp)
+    /* 8014240C */  sw         $s0, 0x1C($sp)
+    /* 80142414 */  addiu      $t7, $t7, %lo(D_8014A27C)
+    /* 80142420 */  lbu        $v1, %lo(D_800E738A)($v1)
+    /* 80142424 */  addiu      $t6, $sp, 0xA4
+    /* 80142450 */  addiu      $t2, $t2, %lo(D_8014A290)
+    /* 80142458 */  addiu      $t1, $sp, 0x90
+    /* 80142484 */  addiu      $t8, $t8, %lo(D_8014A2A4)
+    /* 80142490 */  addiu      $t9, $sp, 0x70
+    /* 801424C8 */  addiu      $t3, $t3, %lo(D_8014A2C4)
+    /* 801424CC */  addiu      $t5, $t3, 0x24
+    /* 801424D0 */  addiu      $t4, $sp, 0x44
+    /* 801424E0 */  addiu      $t3, $t3, 0xC
+    /* 801424EC */  addiu      $t4, $t4, 0xC
+    /* 80142514 */  addiu      $at, $zero, 0x1
+    /* 8014251C */   addiu     $at, $zero, 0x2
+    /* 80142524 */   addiu     $at, $zero, 0x3
+    /* 8014253C */  lbu        $t7, %lo(D_8014A110)($t7)
+    /* 80142540 */  addiu      $at, $zero, 0x1
+    /* 80142550 */   addiu     $a0, $zero, 0xBF
+    /* 8014255C */  sw         $t9, 0x14($sp)
+    /* 80142560 */  sw         $t6, 0x10($sp)

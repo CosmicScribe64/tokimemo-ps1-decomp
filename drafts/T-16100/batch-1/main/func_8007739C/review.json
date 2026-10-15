@@ -1,0 +1,41 @@
+{
+  "scope": "main:func_8007739C",
+  "selected_path": "drafts/T-14500/main/func_8007739C",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 22,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "        D_800E71E8 = temp_t9;",
+        "        temp_v0 = &D_800E6280 + ((u32) ((u32) (temp_t9 & 0xFF) >> 4) % 9U);",
+        "        *(u8 *)((unsigned char *)temp_v0 + (309)) = (u8) (*(u8 *)((unsigned char *)temp_v0 + (309)) + 1);"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/nonmatchings/main/80075320/func_8007739C.s",
+  "assembly_sha256": "8efd98c3c0c2b8ccf0f79e9f1c7fa2274f3d21286704c2a81715ba2cc03a2132",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x14": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

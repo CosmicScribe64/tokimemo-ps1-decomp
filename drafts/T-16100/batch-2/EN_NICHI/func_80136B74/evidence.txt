@@ -1,0 +1,28 @@
+Target: ['asm/ovl/EN_NICHI/nonmatchings/EN_NICHI/80136B10/func_80136B74.s']
+Review: Constant 2*4 byte GameState arithmetic addresses unk_1228[8] and unk_1228[40]. Repair direct established array fields.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80136B78 */  lbu        $t6, %lo(D_800E738A)($t6)
+    /* 80136B7C */  addiu      $sp, $sp, -0x38
+    /* 80136B84 */  sw         $ra, 0x24($sp)
+    /* 80136B8C */   sw        $s0, 0x20($sp)
+    /* 80136B90 */  sll        $t6, $t6, 2
+    /* 80136B98 */  addu       $at, $at, $t6
+    /* 80136BAC */  addiu      $a0, $zero, 0x1
+    /* 80136BE4 */   addiu     $a0, $zero, 0xCF
+    /* 80136BF4 */   lw        $ra, 0x24($sp)
+    /* 80136BF8 */  addiu      $a0, $zero, 0x6C
+    /* 80136C04 */   addiu     $a2, $zero, 0x7D0B
+    /* 80136C14 */   lw        $ra, 0x24($sp)
+    /* 80136C3C */  addiu      $a1, $s0, 0x10
+    /* 80136C4C */  addiu      $a2, $zero, 0x1
+    /* 80136C50 */  addiu      $a3, $zero, 0x1
+    /* 80136C58 */   sw        $s0, 0x10($sp)
+    /* 80136C5C */  addiu      $s0, $s0, 0x1
+    /* 80136C60 */  addiu      $at, $zero, 0x2
+    /* 80136C9C */  addiu      $a1, $zero, 0x5
+    /* 80136CA0 */  addiu      $a2, $zero, 0x580
+    /* 80136CA8 */   addiu     $a3, $zero, 0xF0
+    /* 80136CC0 */   lw        $ra, 0x24($sp)
+    /* 80136CC8 */   addiu     $a0, $zero, 0x203
+    /* 80136CD8 */   lw        $ra, 0x24($sp)

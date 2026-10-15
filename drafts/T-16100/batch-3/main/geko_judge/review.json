@@ -1,0 +1,25 @@
+{
+  "scope": "main:geko_judge",
+  "selected_path": "drafts/T-14500/main/geko_judge",
+  "archive_path": "drafts/T-16100/batch-3/main/geko_judge",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "func_80053418 writes sixteen bytes to a0 and sixteen halfwords to a1; target uses unscaled lbu from stack+0x7C. Reconstruct both output arrays."
+  ],
+  "flags": [
+    {
+      "detail": "&sp7C +",
+      "kind": "stack-address-arithmetic",
+      "line": 16,
+      "outcome": "repaired",
+      "explanation": "func_80053418 writes sixteen bytes to a0 and sixteen halfwords to a1; target uses unscaled lbu from stack+0x7C. Reconstruct both output arrays. "
+    }
+  ],
+  "notes": "",
+  "assembly_evidence": "drafts/T-16100/batch-3/main/geko_judge/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

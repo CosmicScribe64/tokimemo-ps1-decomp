@@ -1,0 +1,40 @@
+80147B18:  addiu      $t6, $t6, %lo(D_8014A620)
+80147B1C:  lw         $at, 0x0($t6)
+80147B20:  addiu      $sp, $sp, -0x80
+80147B24:  addiu      $t3, $sp, 0x60
+80147B28:  sw         $at, 0x0($t3)
+80147B2C:  lw         $t9, 0x4($t6)
+80147B34:  sw         $t9, 0x4($t3)
+80147B38:  lw         $at, 0x8($t6)
+80147B3C:  addiu      $t8, $t8, %lo(D_8014A634)
+80147B40:  sw         $at, 0x8($t3)
+80147B44:  lw         $t9, 0xC($t6)
+80147B48:  addiu      $t4, $sp, 0x4C
+80147B4C:  sw         $t9, 0xC($t3)
+80147B50:  lw         $at, 0x10($t6)
+80147B58:  sw         $at, 0x10($t3)
+80147B5C:  lw         $at, 0x0($t8)
+80147B60:  addiu      $t6, $t6, %lo(D_8014A648)
+80147B64:  sw         $at, 0x0($t4)
+80147B68:  lw         $t9, 0x4($t8)
+80147B6C:  addiu      $t5, $sp, 0x3C
+80147B78:  addiu      $t1, $sp, 0x2C
+80147BB4:  sll        $a3, $a0, 2
+80147BC0:  sll        $t6, $a0, 4
+80147BD8:  sll        $t6, $t6, 2
+80147BF0:  sll        $t8, $a0, 3
+80147C00:  sll        $t8, $t8, 2
+80147C2C:  sll        $a3, $a3, 2
+80147C44:  lh         $a2, 0x1998($t2)
+80147C54:  addiu      $v0, $sp, 0x74
+80147C58:  addiu      $a0, $sp, 0x78
+80147C60:  lhu        $t6, 0x0($a1)
+80147C78:  lh         $t6, 0x0($t8)
+80147C7C:  lh         $t7, 0x2($v0)
+80147C80:  lh         $t8, 0x2($a0)
+80147C8C:  lh         $t6, 0x0($t7)
+80147CB8:  lhu        $t7, 0x0($a1)
+80147CCC:  lh         $t6, 0x2($a0)
+80147CD0:  lh         $t7, 0x2($v0)
+80147CE8:  lh         $t7, 0x0($t9)
+80147CEC:  lh         $t6, 0x2($v0)

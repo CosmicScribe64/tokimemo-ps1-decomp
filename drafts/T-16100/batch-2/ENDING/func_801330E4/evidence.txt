@@ -1,0 +1,28 @@
+Target: ['asm/ovl/ENDING/nonmatchings/ENDING/80133030/func_801330E4.s']
+Review: 36-byte copied record plus sp78[1] and raw sp indexing do not define a valid full local table; exact copy alone is insufficient.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801330E4 */  addiu      $sp, $sp, -0xB0
+    /* 801330EC */  addiu      $t7, $t7, %lo(D_8013C3B0)
+    /* 801330F0 */  sw         $ra, 0x14($sp)
+    /* 801330F4 */  addiu      $a3, $sp, 0x58
+    /* 801330F8 */  addiu      $t0, $t7, 0x24
+    /* 801330FC */  addiu      $t6, $sp, 0x30
+    /* 80133104 */  addiu      $t7, $t7, 0xC
+    /* 80133110 */  addiu      $t6, $t6, 0xC
+    /* 80133124 */  addiu      $t1, $zero, 0x62
+    /* 80133134 */  addiu      $t2, $zero, 0x3
+    /* 80133140 */  addiu      $t3, $zero, 0x1
+    /* 8013314C */  addiu      $t4, $zero, 0x6
+    /* 80133154 */  addiu      $a0, $sp, 0x78
+    /* 80133160 */  lh         $t9, 0x58($sp)
+    /* 80133164 */  addiu      $t5, $zero, 0xD
+    /* 80133178 */   addiu     $a3, $sp, 0x58
+    /* 80133180 */  lbu        $t8, %lo(D_800E66EB)($t8)
+    /* 80133194 */  lbu        $t0, %lo(D_800E683B)($t0)
+    /* 80133198 */  addiu      $at, $zero, 0x2
+    /* 801331A0 */   addiu     $t7, $zero, 0xC
+    /* 801331B4 */  addiu      $a0, $zero, 0x1F3
+    /* 801331B8 */  addiu      $a1, $a1, %lo(D_800E6280)
+    /* 801331C0 */  addiu      $a2, $zero, 0x38
+    /* 801331C8 */  sll        $t5, $v0, 1

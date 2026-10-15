@@ -1,0 +1,12 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/ENDING -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/ENDING/func_801330E4/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/ENDING/func_801330E4/full-context.c drafts/T-16100/batch-2/ENDING/func_801330E4/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_801330E4/work/guarded.o.sjis.c, line 2926: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp30) = *(M2cBlock24 *)(&D_8013C3B0);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ENDING/func_801330E4/work/guarded.o.sjis.c, line 2931: '&' before array or function; ignored
+     func_80053418((s32) &sp78, (s32) &sp58);
+ ------------------------^
+
+Full translation unit compiled and scored.

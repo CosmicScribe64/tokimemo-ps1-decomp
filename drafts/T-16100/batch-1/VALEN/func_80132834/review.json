@@ -1,0 +1,63 @@
+{
+  "scope": "VALEN:func_80132834",
+  "selected_path": "drafts/T-14500/VALEN/func_80132834",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "sp5C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "unresolved-layout",
+      "explanation": "Stack accesses and initialization/call sites reviewed against the target. Separate synthesized locals or oversized arrays are not evidence of a valid aggregate. No safe complete layout was established in this bounded pass; preserve the flag and original draft. sp5C is passed to get_h_yuukou as an s16 array and later reused as the eligible-character pool. The synthesized s32[16] is suspicious; two uses and the callee write extent must be reconciled before assigning an exact halfword extent.",
+      "original_excerpt": [
+        "void func_80132834(void) {",
+        "    s32 sp5C[16];",
+        "    s16 sp54;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/VALEN/nonmatchings/VALEN/80132760/func_80132834.s",
+  "assembly_sha256": "882728b9f12d02e06b00406718a1cf51520323976d6e4a9677c3805d2795884e",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x50": [
+      "lh",
+      "sh"
+    ],
+    "0x52": [
+      "lh",
+      "sh"
+    ],
+    "0x54": [
+      "lh",
+      "sh"
+    ]
+  },
+  "layout_limit": "sp5C is passed to get_h_yuukou as an s16 array and later reused as the eligible-character pool. The synthesized s32[16] is suspicious; two uses and the callee write extent must be reconciled before assigning an exact halfword extent."
+}

@@ -1,0 +1,81 @@
+-27bdfe38  ; addiu sp,sp,-456
++27bdff58  ; addiu sp,sp,-168
++afbe0038  ; sw s8,56(sp)
++afb70034  ; sw s7,52(sp)
++afb00018  ; sw s0,24(sp)
++87b600a4  ; lh s6,164(sp)
++00e0a025  ; move s4,a3
++afbf003c  ; sw ra,60(sp)
+-00e09825  ; move s3,a3
+-00c0b025  ; move s6,a2
+-afbf003c  ; sw ra,60(sp)
+-afbe0038  ; sw s8,56(sp)
+-afb70034  ; sw s7,52(sp)
+-afb00018  ; sw s0,24(sp)
+-afa401c8  ; sw a0,456(sp)
+-afa501cc  ; sw a1,460(sp)
+-00009025  ; move s2,zero
+-34149000  ; li s4,0x9000
+-24150168  ; li s5,360
+-16400007  ; bnez s2,100 <func_80153B38+0x68>
+-00000000  ; nop
++afa400a8  ; sw a0,168(sp)
++afa500ac  ; sw a1,172(sp)
++afa600b0  ; sw a2,176(sp)
++00008025  ; move s0,zero
++27b500a2  ; addiu s5,sp,162
++2417002a  ; li s7,42
++341e9000  ; li s8,0x9000
++16000004  ; bnez s0,fc <func_80153B38+0x64>
+-240f0078  ; li t7,120
+-a7ae0078  ; sh t6,120(sp)
+-a7af007a  ; sh t7,122(sp)
+-10000029  ; b 1a0 <func_80153B38+0x108>
+-a7a0007c  ; sh zero,124(sp)
+-02540019  ; multu s2,s4
+-0012c8c0  ; sll t9,s2,0x3
+-27a80078  ; addiu t0,sp,120
+-03288021  ; addu s0,t9,t0
+-0000c012  ; mflo t8
++a7ae00a2  ; sh t6,162(sp)
++10000023  ; b 184 <func_80153B38+0xec>
++24160078  ; li s6,120
++021e0019  ; multu s0,s8
++24010168  ; li at,360
++001098c0  ; sll s3,s0,0x3
++00009012  ; mflo s2
+-0315001a  ; div zero,t8,s5
+-16a00002  ; bnez s5,12c <func_80153B38+0x94>
+-00000000  ; nop
+-0007000d  ; break 0x7
+-2401ffff  ; li at,-1
+-16a10004  ; bne s5,at,144 <func_80153B38+0xac>
+-3c018000  ; lui at,0x8000
+-17010002  ; bne t8,at,144 <func_80153B38+0xac>
+-00000000  ; nop
+-0006000d  ; break 0x6
+-00008812  ; mflo s1
+-02202025  ; move a0,s1
++0241001a  ; div zero,s2,at
++00002012  ; mflo a0
++00809025  ; move s2,a0
+-00530019  ; multu v0,s3
+-02202025  ; move a0,s1
+-00004812  ; mflo t1
+-05210003  ; bgez t1,170 <func_80153B38+0xd8>
+-00095303  ; sra t2,t1,0xc
+-25210fff  ; addiu at,t1,4095
+-00015303  ; sra t2,at,0xc
+-254b0100  ; addiu t3,t2,256
++00540019  ; multu v0,s4
++0013c040  ; sll t8,s3,0x1
++03158821  ; addu s1,t8,s5
++02402025  ; move a0,s2
++0000c812  ; mflo t9
++07210003  ; bgez t9,14c <func_80153B38+0xb4>
++00194303  ; sra t0,t9,0xc
++27210fff  ; addiu at,t9,4095
++00014303  ; sra t0,at,0xc
++25090100  ; addiu t1,t0,256
++00095400  ; sll t2,t1,0x10
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

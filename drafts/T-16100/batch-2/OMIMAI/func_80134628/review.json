@@ -1,0 +1,56 @@
+{
+  "scope": "OMIMAI:func_80134628",
+  "path": "drafts/T-16100/batch-2/OMIMAI/func_80134628",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp28[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "sp30[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    },
+    {
+      "detail": "M2cBlock2C",
+      "kind": "inferred-copy-layout",
+      "line": 4
+    }
+  ],
+  "explanation": "sp28[16]/sp30[16] overlap and 44-byte copy targets local scalar. Need one actual stack record; no declaration-only rename.",
+  "evidence_path": "drafts/T-16100/batch-2/OMIMAI/func_80134628/evidence.txt",
+  "compile_status": "scored",
+  "score": 125,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp28[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp28[16]/sp30[16] overlap and 44-byte copy targets local scalar. Need one actual stack record; no declaration-only rename."
+    },
+    {
+      "flag": {
+        "detail": "sp30[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "sp28[16]/sp30[16] overlap and 44-byte copy targets local scalar. Need one actual stack record; no declaration-only rename."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock2C",
+        "kind": "inferred-copy-layout",
+        "line": 4
+      },
+      "outcome": "unresolved",
+      "explanation": "sp28[16]/sp30[16] overlap and 44-byte copy targets local scalar. Need one actual stack record; no declaration-only rename."
+    }
+  ]
+}

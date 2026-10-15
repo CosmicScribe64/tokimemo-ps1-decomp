@@ -1,0 +1,24 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.c drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.c, line 3571: '&' before array or function; ignored
+     (*(s32 *)&sp64) = (s32) D_8014A668;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.c, line 3572: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp64) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_8014A668) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.c, line 3573: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp64) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8014A668) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.c, line 3574: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp64) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_8014A668) + (12));
+ -------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.c, line 3581: Incompatible pointer type assignment
+             temp_s1 = (u8 *)sp64 + var_s3;
+ --------------------^
+cfe: Warning 689: drafts/T-16100/batch-3/TAIIKU/func_80147F58/work/guarded.c, line 3625: Unacceptable operand of == or !=
+         } while (var_s1_2 != &D_8014A4F4);
+ --------------------------^
+
+Full TU compiled; score 246

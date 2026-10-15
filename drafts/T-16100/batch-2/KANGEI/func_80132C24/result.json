@@ -1,0 +1,20 @@
+{
+  "scope": "KANGEI:func_80132C24",
+  "src": "src/ovl/KANGEI/80132090.c",
+  "size": 540,
+  "path": "drafts/T-16100/batch-2/KANGEI/func_80132C24",
+  "archive_path": "drafts/T-16100/batch-2/KANGEI/func_80132C24",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 114,
+  "changed": false,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "unresolved",
+  "body_c_sha256": "620b53e5271c12a06181b2706ce79e7a16ab3b9180a9fe1473565f64e1c7258b",
+  "declarations_h_sha256": "cee56043bdd1bde2954e7e9928f1ebb206151c5741eebd48771dd43cd585d50b",
+  "context_c_sha256": "64134d79d8791eb334e9588b2f5188b53079eda3c2c3fee84ed6a4f29b66ce26",
+  "full-context_c_sha256": "ba0e0f4766ace1f3042d04bc4ef34187459628ac2ba01c8831ef7625d25600fd",
+  "diagnostics_txt_sha256": "30ba33369367a1aa26123312314d65232331c1539ff31dfc3b5d7be8522a8940"
+}

@@ -1,0 +1,42 @@
+{
+  "scope": "TAIIKU:func_80134060",
+  "path": "drafts/T-16100/batch-2/TAIIKU/func_80134060",
+  "changed": false,
+  "outcome": "justified-false-positive",
+  "flags_reviewed": [
+    {
+      "detail": "sp54[9]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "sp68[9]",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    }
+  ],
+  "explanation": "sp54/sp68 each have nine signed halfword elements copied through offsets 0..16; naming alone is a detector false positive. Other pointer-walk scaling still warrants later work.",
+  "evidence_path": "drafts/T-16100/batch-2/TAIIKU/func_80134060/evidence.txt",
+  "compile_status": "scored",
+  "score": 364,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp54[9]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "justified-false-positive",
+      "explanation": "sp54/sp68 each have nine signed halfword elements copied through offsets 0..16; naming alone is a detector false positive. Other pointer-walk scaling still warrants later work."
+    },
+    {
+      "flag": {
+        "detail": "sp68[9]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "justified-false-positive",
+      "explanation": "sp54/sp68 each have nine signed halfword elements copied through offsets 0..16; naming alone is a detector false positive. Other pointer-walk scaling still warrants later work."
+    }
+  ]
+}

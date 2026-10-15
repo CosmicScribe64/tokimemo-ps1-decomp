@@ -1,0 +1,43 @@
+{
+  "scope": "DATE2:func_801348F0",
+  "selected_path": "drafts/T-14500/DATE2/func_801348F0",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 67,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "            temp_t9 = var_a0 << 7;",
+        "            temp_t6 = &D_800E6280 + var_a0;",
+        "            var_a0 += 1;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/ovl/DATE2/nonmatchings/DATE2/80132DE0/func_801348F0.s",
+  "assembly_sha256": "d5c16065692dd436d13c02767a89bd5cbc7ad484b28035395fcc5fb24f627b90",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ],
+    "0x14": [
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

@@ -1,0 +1,39 @@
+80153B38:  addiu      $sp, $sp, -0x1C8
+80153B3C:  sw         $s6, 0x30($sp)
+80153B40:  sw         $s5, 0x2C($sp)
+80153B44:  sw         $s4, 0x28($sp)
+80153B48:  sw         $s3, 0x24($sp)
+80153B4C:  sw         $s2, 0x20($sp)
+80153B58:  sw         $ra, 0x3C($sp)
+80153B5C:  sw         $fp, 0x38($sp)
+80153B60:  sw         $s7, 0x34($sp)
+80153B64:  sw         $s1, 0x1C($sp)
+80153B68:  sw         $s0, 0x18($sp)
+80153B6C:  sw         $a0, 0x1C8($sp)
+80153B70:  sw         $a1, 0x1CC($sp)
+80153B7C:  addiu      $s5, $zero, 0x168
+80153B88:  addiu      $t6, $zero, 0x100
+80153B8C:  addiu      $t7, $zero, 0x78
+80153B90:  sh         $t6, 0x78($sp)
+80153B94:  sh         $t7, 0x7A($sp)
+80153B9C:   sh        $zero, 0x7C($sp)
+80153BA0:  multu      $s2, $s4
+80153BA4:  sll        $t9, $s2, 3
+80153BA8:  addiu      $t0, $sp, 0x78
+80153C88:  addiu      $s6, $sp, 0x78
+80153CCC:  sll        $t3, $s2, 3
+80153CD8:  lh         $t4, 0x8($s0)
+80153CE8:  lh         $t6, 0xA($s0)
+80153CFC:  lh         $t9, 0x78($sp)
+80153D08:  lh         $t1, 0x7A($sp)
+80153D1C:  lh         $t4, 0x10($s0)
+80153D28:  lh         $t6, 0x12($s0)
+80153D48:   sll       $t0, $s2, 3
+80153D50:  lh         $t1, 0x8($s0)
+80153D64:  lh         $t3, 0xA($s0)
+80153D74:  lh         $t5, 0x78($sp)
+80153D84:  lh         $t7, 0x7A($sp)
+80153D94:  lh         $t9, 0x10($s0)
+80153DA4:  lh         $t1, 0x12($s0)
+80153E28:  sll        $t4, $t3, 10
+80153E74:   addiu     $sp, $sp, 0x1C8

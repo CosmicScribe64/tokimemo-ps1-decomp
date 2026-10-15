@@ -1,0 +1,9 @@
+    8013AF78:  addiu      $sp, $sp, -0x30
+    8013AF7C:  addiu      $v1, $sp, 0x1C
+    8013AF80:  addiu      $v0, $sp, 0x28
+    8013B024:  sll        $t3, $t2, 2
+    8013B028:  addu       $t4, $sp, $t3
+    8013B030:  lw         $t5, 0x1C($sp)
+    8013B048:  lw         $t1, 0x20($sp)
+    8013B068:  lw         $t3, 0x24($sp)
+    8013B09C:   addiu     $sp, $sp, 0x30

@@ -1,0 +1,56 @@
+{
+  "scope": "DATE:func_8013EB8C",
+  "path": "drafts/T-16100/batch-2/DATE/func_8013EB8C",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "&sp34 +",
+      "kind": "stack-address-arithmetic",
+      "line": 18
+    },
+    {
+      "detail": "M2cBlock54",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    },
+    {
+      "detail": "M2cBlock28",
+      "kind": "inferred-copy-layout",
+      "line": 3
+    }
+  ],
+  "explanation": "Final table is 40 copied bytes plus one halfword. Repair 42-byte local and tail, and replace raw sp table reads with real local indexing.",
+  "evidence_path": "drafts/T-16100/batch-2/DATE/func_8013EB8C/evidence.txt",
+  "compile_status": "scored",
+  "score": 145,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&sp34 +",
+        "kind": "stack-address-arithmetic",
+        "line": 18
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Final table is 40 copied bytes plus one halfword. Repair 42-byte local and tail, and replace raw sp table reads with real local indexing."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock54",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Final table is 40 copied bytes plus one halfword. Repair 42-byte local and tail, and replace raw sp table reads with real local indexing."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock28",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Final table is 40 copied bytes plus one halfword. Repair 42-byte local and tail, and replace raw sp table reads with real local indexing."
+    }
+  ]
+}

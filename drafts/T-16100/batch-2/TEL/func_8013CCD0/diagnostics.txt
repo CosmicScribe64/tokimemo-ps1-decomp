@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/TEL -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/TEL/func_8013CCD0/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/TEL/func_8013CCD0/full-context.c drafts/T-16100/batch-2/TEL/func_8013CCD0/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/TEL/func_8013CCD0/work/guarded.o.sjis.c, line 2740: '&' before array or function; ignored
+     func_80053418((s32) &sp98, (s32) &sp78[0]);
+ ------------------------^
+
+Full translation unit compiled and scored.

@@ -1,0 +1,15 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/TAIIKU/func_80142400/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/TAIIKU/func_80142400/full-context.c drafts/T-16100/batch-2/TAIIKU/func_80142400/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_80142400/full-context.c, line 3365: '&' before array or function; ignored
+         } while ((u32) var_v0_3 < (u32) &spB8);
+ ----------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/TAIIKU/func_80142400/full-context.c, line 3367: '&' before array or function; ignored
+         var_v0_4 = &sp94;
+ -------------------^
+cfe: Warning 689: drafts/T-16100/batch-2/TAIIKU/func_80142400/full-context.c, line 3381: Unacceptable operand of == or !=
+         } while (var_v0_4 != &spA4);
+ --------------------------^
+
+Full translation unit compiled and scored.

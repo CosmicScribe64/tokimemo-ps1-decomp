@@ -1,0 +1,70 @@
+{
+  "scope": "EVENT:func_800FEAE8",
+  "path": "drafts/T-16100/batch-2/EVENT/func_800FEAE8",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "spD4",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "&sp2C +",
+      "kind": "stack-address-arithmetic",
+      "line": 15
+    },
+    {
+      "detail": "M2cBlockA0",
+      "kind": "inferred-copy-layout",
+      "line": 3
+    },
+    {
+      "detail": "+ &sp2C",
+      "kind": "stack-address-arithmetic",
+      "line": 35
+    }
+  ],
+  "explanation": "40 copied words plus one trailing word total 164 bytes. Repair extent, byte tail, and indexed byte address; retain unresolved wider table semantics.",
+  "evidence_path": "drafts/T-16100/batch-2/EVENT/func_800FEAE8/evidence.txt",
+  "compile_status": "scored",
+  "score": 121,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "spD4",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "40 copied words plus one trailing word total 164 bytes. Repair extent, byte tail, and indexed byte address; retain unresolved wider table semantics."
+    },
+    {
+      "flag": {
+        "detail": "&sp2C +",
+        "kind": "stack-address-arithmetic",
+        "line": 15
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "40 copied words plus one trailing word total 164 bytes. Repair extent, byte tail, and indexed byte address; retain unresolved wider table semantics."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlockA0",
+        "kind": "inferred-copy-layout",
+        "line": 3
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "40 copied words plus one trailing word total 164 bytes. Repair extent, byte tail, and indexed byte address; retain unresolved wider table semantics."
+    },
+    {
+      "flag": {
+        "detail": "+ &sp2C",
+        "kind": "stack-address-arithmetic",
+        "line": 35
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "40 copied words plus one trailing word total 164 bytes. Repair extent, byte tail, and indexed byte address; retain unresolved wider table semantics."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+801462B4:  lw         $t6, %lo(D_800E7384)($t6)
+801462BC:  sb         $zero, %lo(D_800B3D60)($at)
+801462C0:  addiu      $sp, $sp, -0x68
+801462CC:   sw        $ra, 0x1C($sp)
+801462D0:  sll        $t6, $t6, 2
+801462D8:  addu       $at, $at, $t6
+801462DC:  lw         $t6, %lo(jtbl_8015B1C8)($at)
+801462F0:  addiu      $t7, $zero, 0x1
+801462F8:  lw         $a0, %lo(D_800E7378)($a0)
+80146300:   sw        $t7, %lo(D_80122D2C)($at)
+80146308:   addiu     $a0, $zero, 0x206
+80146310:  sh         $zero, %lo(D_800B5926)($at)
+80146318:  sh         $zero, %lo(D_800B5922)($at)
+80146320:  sh         $zero, %lo(D_800B5924)($at)
+80146328:  sh         $zero, %lo(D_800B5920)($at)
+80146330:  sb         $zero, %lo(D_800B5939)($at)
+80146338:  sb         $zero, %lo(D_800B5938)($at)
+80146340:  addiu      $t8, $zero, -0x1
+80146344:  sw         $t8, %lo(D_800B5948)($at)
+8014634C:  sh         $zero, %lo(D_800B592A)($at)
+801463B0:  sll        $t6, $v1, 6
+801463B8:  sll        $t8, $v1, 1
+801463CC:  sll        $t5, $v1, 7
+801463D8:  sll        $t8, $v1, 16
+8014643C:  sll        $t6, $v1, 6
+80146444:  sll        $t8, $v1, 1
+80146458:  sll        $t5, $v1, 7
+80146464:  sll        $t8, $v1, 16
+80146548:   addiu     $a0, $sp, 0x54
+801465FC:   addiu     $a0, $sp, 0x54
+801466B4:   addiu     $a0, $sp, 0x54
+80146768:   addiu     $a0, $sp, 0x54
+801467B4:  sll        $t6, $v1, 16
+80146808:  lbu        $v1, %lo(D_80121874)($v1)
+801468C4:  lbu        $v1, %lo(D_80121874)($v1)
+80146950:  sll        $t6, $v1, 16
+801469A0:  lbu        $a0, %lo(D_800E738A)($a0)
+801469B8:  lbu        $a0, %lo(D_800E738A)($a0)
+80146A48:  lbu        $v1, %lo(D_800E738A)($v1)
+80146A60:  lbu        $a0, %lo(D_800E738A)($a0)

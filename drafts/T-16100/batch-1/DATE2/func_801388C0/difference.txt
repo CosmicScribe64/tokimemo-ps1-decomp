@@ -1,0 +1,81 @@
+-3c02800b  ; lui v0,0x0
+-90423cfc  ; lbu v0,0(v0)
++3c03800b  ; lui v1,0x0
++90633cfc  ; lbu v1,0(v1)
+-10400017  ; beqz v0,c0c <func_801388C0+0x9c>
+-00000000  ; nop
++10600017  ; beqz v1,c0c <func_801388C0+0x9c>
++00601025  ; move v0,v1
+-11c20013  ; beq t6,v0,c0c <func_801388C0+0x9c>
++106e0013  ; beq v1,t6,c0c <func_801388C0+0x9c>
+-24420001  ; addiu v0,v0,1
+-304f00ff  ; andi t7,v0,0xff
++244f0001  ; addiu t7,v0,1
++31e300ff  ; andi v1,t7,0xff
+-2de10003  ; sltiu at,t7,3
+-14200003  ; bnez at,bf8 <func_801388C0+0x88>
+-24020001  ; li v0,1
++2c610003  ; sltiu at,v1,3
++14200004  ; bnez at,bfc <func_801388C0+0x8c>
++00001025  ; move v0,zero
++24180001  ; li t8,1
+-a022b5cc  ; sb v0,0(at)
++a038b5cc  ; sb t8,0(at)
+-00001025  ; move v0,zero
+-3c18800e  ; lui t8,0x0
+-8f187208  ; lw t8,0(t8)
++3c19800e  ; lui t9,0x0
++8f397208  ; lw t9,0(t9)
+-0301c824  ; and t9,t8,at
+-1320002a  ; beqz t9,cdc <func_801388C0+0x16c>
+-3c048014  ; lui a0,0x0
+-3c03800e  ; lui v1,0x0
+-24636280  ; addiu v1,v1,0
++03214024  ; and t0,t9,at
++11000029  ; beqz t0,cd8 <func_801388C0+0x168>
+-2484b5e4  ; addiu a0,a0,0
+-00024100  ; sll t0,v0,0x4
+-00684821  ; addu t1,v1,t0
++3c058014  ; lui a1,0x0
++3c04800e  ; lui a0,0x0
++00001825  ; move v1,zero
++24846280  ; addiu a0,a0,0
++24a5b5e4  ; addiu a1,a1,0
++00834821  ; addu t1,a0,v1
+-00025840  ; sll t3,v0,0x1
+-1140001a  ; beqz t2,cc4 <func_801388C0+0x154>
+-008b6021  ; addu t4,a0,t3
+-858d0000  ; lh t5,0(t4)
++000260c0  ; sll t4,v0,0x3
++11400019  ; beqz t2,cc0 <func_801388C0+0x150>
++00ac6821  ; addu t5,a1,t4
++8dae0000  ; lw t6,0(t5)
+-11a00016  ; beqz t5,cc4 <func_801388C0+0x154>
++11c00015  ; beqz t6,cc0 <func_801388C0+0x150>
+-3c0e8012  ; lui t6,0x0
+-91ceecd3  ; lbu t6,0(t6)
++3c0f8012  ; lui t7,0x0
++91efecd3  ; lbu t7,0(t7)
+-31cfff7f  ; andi t7,t6,0xff7f
+-a02fecd3  ; sb t7,0(at)
++31f8ff7f  ; andi t8,t7,0xff7f
++a038ecd3  ; sb t8,0(at)
+-3c18800e  ; lui t8,0x0
+-8f187384  ; lw t8,0(t8)
++3c19800e  ; lui t9,0x0
++8f397384  ; lw t9,0(t9)
+-27190001  ; addiu t9,t8,1
+-ac397384  ; sw t9,0(at)
++27280001  ; addiu t0,t9,1
++ac287384  ; sw t0,0(at)
++10000007  ; b cd8 <func_801388C0+0x168>
+-10000007  ; b cdc <func_801388C0+0x16c>
+-00001025  ; move v0,zero
+-00024400  ; sll t0,v0,0x10
+-00081403  ; sra v0,t0,0x10
++00024c00  ; sll t1,v0,0x10
++00091403  ; sra v0,t1,0x10
+-1420ffdd  ; bnez at,c4c <func_801388C0+0xdc>
+-00024100  ; sll t0,v0,0x4
++1420ffde  ; bnez at,c4c <func_801388C0+0xdc>
++00021900  ; sll v1,v0,0x4

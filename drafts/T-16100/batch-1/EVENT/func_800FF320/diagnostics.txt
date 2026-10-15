@@ -1,0 +1,32 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/EVENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EVENT/func_800FF320/context.c
+[preprocessed full TU archived]
+
+$ gcc -E -P -Iinclude -Isrc/ovl/EVENT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-1/EVENT/func_800FF320/work/variant.c
+[preprocessed full TU archived]
+
+$ python3 tools/cc.py drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.c drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4393: '&' before array or function; ignored
+     (*(s32 *)&sp50) = (s32) D_80121AD8;
+ -------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4394: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp50) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80121AD8) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4395: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp50) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80121AD8) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4396: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp50) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80121AD8) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4397: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp50) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80121AD8) + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4398: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp50) + (20)) = (s32) *(s32 *)((unsigned char *)(&D_80121AD8) + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4399: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp50) + (24)) = (s32) *(s32 *)((unsigned char *)(&D_80121AD8) + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-1/EVENT/func_800FF320/work/guarded.o.sjis.c, line 4400: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp50) + (28)) = (s32) *(s32 *)((unsigned char *)(&D_80121AD8) + (28));
+ -------------------------------^
+

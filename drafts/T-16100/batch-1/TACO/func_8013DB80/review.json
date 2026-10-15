@@ -1,0 +1,93 @@
+{
+  "scope": "TACO:func_8013DB80",
+  "selected_path": "drafts/T-14500/TACO/func_8013DB80",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "sp44",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sw/lw use three consecutive words starting sp+0x4C as func_800AA460 input and sp+0x3C as output; connect each triplet into an s32[3] so output writes initialize all later consumed components. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "s32 func_8013DB80(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {",
+        "    s32 sp44;",
+        "    s32 sp40;"
+      ]
+    },
+    {
+      "detail": "sp40",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target sw/lw use three consecutive words starting sp+0x4C as func_800AA460 input and sp+0x3C as output; connect each triplet into an s32[3] so output writes initialize all later consumed components. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "    s32 sp44;",
+        "    s32 sp40;",
+        "    s32 sp60;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target sw/lw use three consecutive words starting sp+0x4C as func_800AA460 input and sp+0x3C as output; connect each triplet into an s32[3] so output writes initialize all later consumed components."
+  ],
+  "assembly_path": "asm/ovl/TACO/nonmatchings/TACO/8013DB80/func_8013DB80.s",
+  "assembly_sha256": "37cc3df3116743981ed902a132dac3cc92493a1a14dc9c060b046949b6424859",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x14": [
+      "lw",
+      "sw"
+    ],
+    "0x68": [
+      "lh",
+      "sw"
+    ],
+    "0x6C": [
+      "lh",
+      "sw"
+    ],
+    "0x74": [
+      "lw",
+      "sw"
+    ],
+    "0x3A": [
+      "lh",
+      "sh"
+    ],
+    "0x6A": [
+      "lh"
+    ],
+    "0x4C": [
+      "lw",
+      "sw"
+    ],
+    "0x50": [
+      "lw",
+      "sw"
+    ],
+    "0x54": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x60": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw"
+    ],
+    "0x40": [
+      "lw"
+    ],
+    "0x44": [
+      "lw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

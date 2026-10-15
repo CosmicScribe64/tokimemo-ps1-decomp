@@ -1,0 +1,81 @@
+-27a5002c  ; addiu a1,sp,44
++27a50048  ; addiu a1,sp,72
+-27a4004c  ; addiu a0,sp,76
+-3c03800e  ; lui v1,0x0
+-27a6002c  ; addiu a2,sp,44
+-00002025  ; move a0,zero
+-24636280  ; addiu v1,v1,0
+-00001025  ; move v0,zero
+-2405000b  ; li a1,11
+-8c6e01c8  ; lw t6,456(v1)
+-0002c840  ; sll t9,v0,0x1
+-000ec780  ; sll t8,t6,0x1e
+-07010007  ; bgez t8,1f68 <func_8006EA40+0x58>
+-00d94021  ; addu t0,a2,t9
+-85090000  ; lh t1,0(t0)
++27a40038  ; addiu a0,sp,56
++3c04800e  ; lui a0,0x0
++27a60048  ; addiu a2,sp,72
++00002825  ; move a1,zero
++2484643c  ; addiu a0,a0,444
++00001825  ; move v1,zero
++2402000b  ; li v0,11
++8c8e000c  ; lw t6,12(a0)
++0003c040  ; sll t8,v1,0x1
++31cf0002  ; andi t7,t6,0x2
++11e00007  ; beqz t7,1f68 <func_8006EA40+0x58>
++00d8c821  ; addu t9,a2,t8
++87280000  ; lh t0,0(t9)
+-292101f5  ; slti at,t1,501
++290101f5  ; slti at,t0,501
+-24840001  ; addiu a0,a0,1
+-24420001  ; addiu v0,v0,1
+-1445fff3  ; bne v0,a1,1f3c <func_8006EA40+0x2c>
+-24630038  ; addiu v1,v1,56
++24a50001  ; addiu a1,a1,1
++24630001  ; addiu v1,v1,1
++1462fff3  ; bne v1,v0,1f3c <func_8006EA40+0x2c>
++24840038  ; addiu a0,a0,56
++3c09800e  ; lui t1,0x0
++912962be  ; lbu t1,0(t1)
++24010062  ; li at,98
++15210029  ; bne t1,at,2028 <func_8006EA40+0x118>
+-914a62be  ; lbu t2,0(t2)
+-24010062  ; li at,98
+-15410027  ; bne t2,at,2020 <func_8006EA40+0x110>
++914a62bf  ; lbu t2,0(t2)
++24010002  ; li at,2
++15410025  ; bne t2,at,2028 <func_8006EA40+0x118>
+-916b62bf  ; lbu t3,0(t3)
+-24010002  ; li at,2
+-15610023  ; bne t3,at,2020 <func_8006EA40+0x110>
++916b62c0  ; lbu t3,0(t3)
++2401000f  ; li at,15
++15610021  ; bne t3,at,2028 <func_8006EA40+0x118>
++28a10002  ; slti at,a1,2
++1420001f  ; bnez at,2028 <func_8006EA40+0x118>
+-918c62c0  ; lbu t4,0(t4)
+-2401000f  ; li at,15
+-1581001f  ; bne t4,at,2020 <func_8006EA40+0x110>
+-28810002  ; slti at,a0,2
+-1420001d  ; bnez at,2020 <func_8006EA40+0x110>
+-3c0d800e  ; lui t5,0x0
+-8dad66b0  ; lw t5,0(t5)
++8d8c66b0  ; lw t4,0(t4)
++3c0f800e  ; lui t7,0x0
++000c6d00  ; sll t5,t4,0x14
++000d7742  ; srl t6,t5,0x1d
++2dc10004  ; sltiu at,t6,4
++14200016  ; bnez at,2020 <func_8006EA40+0x110>
++00000000  ; nop
++91ef6838  ; lbu t7,0(t7)
+-000d7500  ; sll t6,t5,0x14
+-000e7f42  ; srl t7,t6,0x1d
+-2de10004  ; sltiu at,t7,4
+-14200017  ; bnez at,2024 <func_8006EA40+0x114>
+-00001025  ; move v0,zero
+-93186838  ; lbu t8,0(t8)
++11e00012  ; beqz t7,2020 <func_8006EA40+0x110>
++00000000  ; nop
++9318683a  ; lbu t8,0(t8)
+[Excerpt limited to 80 differing rows; score retains complete resolved diff count.]

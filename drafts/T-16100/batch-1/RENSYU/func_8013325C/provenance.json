@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-14500/RENSYU/func_8013325C",
+  "original_body_sha256": "6484afeb472051e698254f59ff39f73a7c83f26cbef1fff2a03ab409ea556f3f",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

@@ -1,0 +1,8 @@
+{
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "original_path": "drafts/T-14500/RPG_BAT/func_80139E88",
+  "original_body_sha256": "c5a8aafbef34c51239f3422aac398475ed65930ce9ec2ba31762b1b104e3c6e7",
+  "compiler": "IDO 5.3 via order_search.compile_variant, full translation unit, Docker serial",
+  "matching_claim": false
+}

@@ -1,0 +1,62 @@
+{
+  "scope": "KANGEI:func_8013769C",
+  "selected_path": "drafts/T-14500/repairs-unaligned/KANGEI/func_8013769C",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "M2cBlock44",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. Selected alternative already preserves unaligned 220-byte and 231-byte text copies. The remaining 0x44-byte word block copies global records; no additional safe semantic struct conversion was established.",
+      "original_excerpt": [
+        "void func_8013769C(void) {",
+        "    typedef struct { s32 w[17]; } M2cBlock44; /* m2c memcpy of 68 bytes */",
+        "    UnalignedBytes220 sp13C;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/ovl/KANGEI/nonmatchings/KANGEI/80135F10/func_8013769C.s",
+  "assembly_sha256": "ff7dc3a2283e3ace7698d61b7a7504e4e361f143900bcf21c317812db3ee4e88",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x10": [
+      "sw"
+    ]
+  },
+  "layout_limit": "Selected alternative already preserves unaligned 220-byte and 231-byte text copies. The remaining 0x44-byte word block copies global records; no additional safe semantic struct conversion was established."
+}

@@ -1,0 +1,28 @@
+Target: ['asm/ovl/OPTION/nonmatchings/OPTION/80132000/func_80135E48.s']
+Review: sp70[16] is used alongside split s16 coordinate locals. Name flag alone is insufficient; aggregate extent and aliases remain unresolved.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80135E4C */  lbu        $t6, %lo(D_800E738D)($t6)
+    /* 80135E50 */  addiu      $sp, $sp, -0x88
+    /* 80135E58 */   sw        $ra, 0x1C($sp)
+    /* 80135E5C */  addiu      $t7, $zero, 0x4
+    /* 80135E6C */  addiu      $t8, $zero, -0xA0
+    /* 80135E78 */  addiu      $t9, $zero, -0x78
+    /* 80135E8C */  addiu      $t6, $zero, 0x7FFF
+    /* 80135E98 */  addiu      $t7, $zero, 0x1
+    /* 80135EA0 */  addiu      $v1, $zero, 0x7FFF
+    /* 80135EB4 */  lh         $v1, %lo(D_80120912)($v1)
+    /* 80135EB8 */  addiu      $v0, $zero, 0x11
+    /* 80135ED0 */  addiu      $at, $zero, -0x1
+    /* 80135EE8 */  lh         $t7, %lo(D_80120914)($t7)
+    /* 80135EEC */  addiu      $t3, $zero, 0x1
+    /* 80135EF0 */  sll        $a3, $t3, 2
+    /* 80135EF8 */  addiu      $a2, $zero, 0x10
+    /* 80135EFC */  addiu      $t2, $zero, 0x30
+    /* 80135F00 */  addiu      $t4, $sp, 0x58
+    /* 80135F04 */  addiu      $t5, $sp, 0x4C
+    /* 80135F08 */  sll        $a3, $a3, 3
+    /* 80135F10 */  sll        $t8, $v1, 4
+    /* 80135F14 */  sll        $t9, $t8, 16
+    /* 80135F30 */  addiu      $at, $zero, -0x1
+    /* 80135F4C */  addiu      $t6, $zero, 0x1000

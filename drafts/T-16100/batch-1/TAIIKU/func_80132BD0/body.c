@@ -1,0 +1,64 @@
+void func_80132BD0(void) {
+    s16 sp68[23];
+    s16 sp98[23];
+    s16 spC8[23];
+    u8 spF8[23];
+    typedef struct { s32 w[10]; } M2cBlock28; /* m2c memcpy of 40 bytes */
+    s16 *temp_t1;
+    s16 *temp_t4;
+    s16 *temp_t9;
+    s16 *var_s2;
+    s16 *var_s3;
+    s16 *var_s4;
+    s16 temp_t1_2;
+    s16 temp_t4_2;
+    s16 temp_t7;
+    s32 temp_s5;
+    s32 var_v0;
+    u8 *var_s0;
+    u8 *var_s1;
+    void *temp_t2;
+    void *temp_t3;
+    void *temp_t8;
+
+    *(RepairBytes23 *)spF8 = *(RepairBytes23 *)&D_80148F10;
+    *(RepairShort23 *)spC8 = *(RepairShort23 *)&D_80148F28;
+    *(RepairShort23 *)sp98 = *(RepairShort23 *)&D_80148F58;
+    *(RepairShort23 *)sp68 = *(RepairShort23 *)&D_80148F88;
+    var_s0 = D_8011ECD0;
+    var_v0 = 0;
+    var_s1 = spF8;
+    var_s2 = spC8;
+    var_s3 = sp98;
+    var_s4 = sp68;
+    do {
+        temp_s5 = var_v0 + 1;
+        func_80048F64(temp_s5);
+        *(s32 *)((unsigned char *)var_s0 + (124)) = 0x01000000;
+        *(s8 *)((unsigned char *)var_s0 + (72)) = 0;
+        *(s8 *)((unsigned char *)var_s0 + (73)) = 0x80;
+        *(s8 *)((unsigned char *)var_s0 + (74)) = 2;
+        *(s16 *)((unsigned char *)var_s0 + (76)) = 0;
+        *(u8 *)((unsigned char *)var_s0 + (69)) = (u8) *var_s1;
+        *(s32 *)((unsigned char *)var_s0 + (80)) = (s32) D_80149FCC;
+        *(s32 **)((unsigned char *)var_s0 + (120)) = D_8014A070;
+        *(s32 *)((unsigned char *)var_s0 + (84)) = (s32) D_8014A004;
+        temp_t7 = *var_s4;
+        temp_t1_2 = *var_s2 - 0xA0;
+        temp_t4_2 = *var_s3 - 0x78;
+        var_v0 = temp_s5;
+        var_s0 += 0x44;
+        var_s1 += 1;
+        var_s2 += 2;
+        var_s3 += 2;
+        var_s4 += 2;
+        *(s16 *)((unsigned char *)var_s0 + (26)) = 0x1000;
+        *(s16 *)((unsigned char *)var_s0 + (28)) = 0x1000;
+        *(s8 *)((unsigned char *)var_s0 + (7)) = 0x80;
+        *(s16 *)((unsigned char *)var_s0 + (38)) = temp_t1_2;
+        *(s16 *)((unsigned char *)var_s0 + (42)) = temp_t4_2;
+        *(s16 *)((unsigned char *)var_s0 + (24)) = 0;
+        *(s16 *)((unsigned char *)var_s0 + (20)) = (s16) D_8014A03C;
+        *(s16 *)((unsigned char *)var_s0 + (22)) = temp_t7;
+    } while (temp_s5 != 0x17);
+}

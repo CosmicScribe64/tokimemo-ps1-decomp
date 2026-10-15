@@ -1,0 +1,28 @@
+{
+  "reviewed": 165,
+  "compiled": 165,
+  "changed": 93,
+  "unchanged": 72,
+  "previous_flagged": 165,
+  "current_flagged": 116,
+  "newly_audit_clear": 49,
+  "zero_candidates_this_pass": 0,
+  "production_changed": false,
+  "verified_bytes": 1452192,
+  "total_game_bytes": 2279368,
+  "quality": {
+    "total": 1066,
+    "statuses": {
+      "compiling-audit-clear": 950,
+      "compiling-review-needed": 116
+    },
+    "flag_counts": {
+      "synthesized-stack-local": 115,
+      "inferred-copy-layout": 72,
+      "gamestate-address-arithmetic": 27,
+      "stack-address-arithmetic": 37
+    },
+    "qualification": "Audit-clear means no listed residual pattern; semantic equivalence is unproven."
+  },
+  "qualification": "Audit flags are conservative patterns; clear is not proof of semantic equivalence. Source fixes can worsen diagnostic scores. Review individual findings before promotion."
+}

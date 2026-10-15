@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE2/nonmatchings/DATE2/80132DE0/func_801350A4.s']
+Review: Loop adds an unscaled index to GameState address and then accesses menu bytes; requires unk_10A5 indexing and review of Rec24 byte offsets throughout.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 801350B4 */  addiu      $sp, $sp, -0x60
+    /* 801350C0 */   sw        $ra, 0x1C($sp)
+    /* 801350C4 */  sll        $t6, $a3, 2
+    /* 801350CC */  addu       $at, $at, $t6
+    /* 801350E4 */   addiu     $a0, $zero, 0xCF
+    /* 801350E8 */  addiu      $t7, $zero, 0x1
+    /* 80135128 */  addiu      $t8, $zero, -0x1
+    /* 80135154 */  addiu      $v1, $v1, %lo(D_801217D0)
+    /* 80135158 */  addiu      $t3, $t3, %lo(D_800E6280)
+    /* 80135164 */  addiu      $t4, $zero, 0xB
+    /* 80135168 */  addiu      $t2, $zero, 0x1E0
+    /* 80135170 */  addiu      $t0, $zero, 0x1000
+    /* 80135174 */  addiu      $a3, $zero, -0x78
+    /* 80135178 */  addiu      $a2, $zero, 0xA0
+    /* 8013517C */  addiu      $a1, $zero, 0x24
+    /* 80135184 */  sll        $t5, $a0, 6
+    /* 80135188 */  addiu      $t6, $t5, 0x80
+    /* 8013518C */  sll        $t7, $a0, 1
+    /* 80135190 */  addiu      $t8, $t7, 0x15
+    /* 80135198 */  addu       $v0, $v1, $t9
+    /* 801351A0 */  sll        $t9, $a0, 7
+    /* 801351A4 */  addu       $t6, $t3, $a0
+    /* 801351A8 */  addiu      $a0, $a0, 0x1
+    /* 801351AC */  sll        $t7, $a0, 16

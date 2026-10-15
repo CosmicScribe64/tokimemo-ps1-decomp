@@ -1,0 +1,28 @@
+{
+  "scope": "TEL:func_8013CCD0",
+  "path": "drafts/T-16100/batch-2/TEL/func_8013CCD0",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp78[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    }
+  ],
+  "explanation": "sp78[16] and sp98[1] overlap logical stack slots and unresolved sp references remain. Needs actual copied table and element type reconstruction.",
+  "evidence_path": "drafts/T-16100/batch-2/TEL/func_8013CCD0/evidence.txt",
+  "compile_status": "scored",
+  "score": 220,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp78[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp78[16] and sp98[1] overlap logical stack slots and unresolved sp references remain. Needs actual copied table and element type reconstruction."
+    }
+  ]
+}

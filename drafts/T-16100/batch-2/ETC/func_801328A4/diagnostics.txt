@@ -1,0 +1,39 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/ETC -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/ETC/func_801328A4/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c drafts/T-16100/batch-2/ETC/func_801328A4/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3781: '&' before array or function; ignored
+         var_s0 = &sp90;
+ -----------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3783: '&' before array or function; ignored
+             var_s1 = &sp22D0;
+ ---------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3792: '&' before array or function; ignored
+             } while (var_s1 != &sp33F0);
+ -------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3797: Incompatible pointer type assignment
+         temp_s1 = ((temp_t5 % 3) * 0x1120) + &sp90;
+ ----------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3797: '&' before array or function; ignored
+         temp_s1 = ((temp_t5 % 3) * 0x1120) + &sp90;
+ ---------------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3798: Incompatible pointer type assignment
+         temp_s5 = ((var_fp % 3) * 0x1120) + &sp90;
+ ----------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3798: '&' before array or function; ignored
+         temp_s5 = ((var_fp % 3) * 0x1120) + &sp90;
+ --------------------------------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3800: Incompatible pointer type assignment
+         temp_a0 = temp_s1 + var_s0_2;
+ ----------------^
+cfe: Warning 709: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3802: Incompatible pointer type assignment
+             temp_a0_2 = temp_s1 + var_s0_2;
+ ----------------------^
+cfe: Warning 709: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3818: Incompatible pointer type assignment
+         temp_v1 = (((s32) (var_fp + 2) % 3) * 0x1120) + &sp90 + var_s0_3;
+ ----------------^
+cfe: Warning 681: drafts/T-16100/batch-2/ETC/func_801328A4/full-context.c, line 3818: '&' before array or function; ignored
+         temp_v1 = (((s32) (var_fp + 2) % 3) * 0x1120) + &sp90 + var_s0_3;
+ --------------------------------------------------------^
+
+Full translation unit compiled and scored.

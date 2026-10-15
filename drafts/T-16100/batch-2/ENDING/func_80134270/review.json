@@ -1,0 +1,42 @@
+{
+  "scope": "ENDING:func_80134270",
+  "path": "drafts/T-16100/batch-2/ENDING/func_80134270",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 45
+    },
+    {
+      "detail": "M2cBlock44",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "68-byte copied record plus GameState+index menu updates: copy extent is supported but GameState arithmetic remains invalid.",
+  "evidence_path": "drafts/T-16100/batch-2/ENDING/func_80134270/evidence.txt",
+  "compile_status": "scored",
+  "score": 501,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 45
+      },
+      "outcome": "unresolved",
+      "explanation": "68-byte copied record plus GameState+index menu updates: copy extent is supported but GameState arithmetic remains invalid."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlock44",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "68-byte copied record plus GameState+index menu updates: copy extent is supported but GameState arithmetic remains invalid."
+    }
+  ]
+}

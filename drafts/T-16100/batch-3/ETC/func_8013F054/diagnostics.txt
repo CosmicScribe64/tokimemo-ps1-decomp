@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/ETC -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/ETC/func_8013F054/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/ETC/func_8013F054/work/guarded.c drafts/T-16100/batch-3/ETC/func_8013F054/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-3/ETC/func_8013F054/work/guarded.c, line 4438: Incompatible pointer type assignment
+         temp_v0_2 = (D_80150080 * 8) + &D_800E7D10;
+ ------------------^
+
+Full TU compiled; score 238

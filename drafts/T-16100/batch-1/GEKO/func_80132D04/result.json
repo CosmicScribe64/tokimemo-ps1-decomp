@@ -1,0 +1,20 @@
+{
+  "scope": "GEKO:func_80132D04",
+  "src": "src/ovl/GEKO/801323E0.c",
+  "size": 800,
+  "path": "drafts/T-16100/batch-1/GEKO/func_80132D04",
+  "archive_path": "drafts/T-16100/batch-1/GEKO/func_80132D04",
+  "status": "scored",
+  "score": 182,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "96c4500bd2a845797be69d1846b9c035103060809a0156068f73c0a3bece3b54",
+  "declarations.h_sha256": "cb7b6b216ca092915715de160388906771e865c8c1e85619f363ab8942b8cc09",
+  "context.c_sha256": "4ccd604bff674c67d6dfd613ca9fc9d3014bf2a4d83cfaab57640f92b71adb9d",
+  "full-context.c_sha256": "f3e556023a073e75a91eb0eaaca4a899b5afc8b571b3765644d53d2921439bb4",
+  "diagnostics.txt_sha256": "09482548904a28c445327ee3f4265efe05e4ce10c1745a5183d87e9282bf3b55",
+  "assembly-evidence.txt_sha256": "5251280acf7cd8ebf375bf7aff760b1f3340653ed848313518317ddfef1189b6"
+}

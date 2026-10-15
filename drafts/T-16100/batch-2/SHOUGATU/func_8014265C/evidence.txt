@@ -1,0 +1,23 @@
+Target: ['asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80141780/func_8014265C.s']
+Review: 64/68-byte global copies have exact extents, opaque block types are not established semantic layouts; retain until shared record type recovered.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8014265C */  addiu      $sp, $sp, -0x28
+    /* 80142660 */  sw         $ra, 0x14($sp)
+    /* 8014267C */  addiu      $a0, $a0, 0x1
+    /* 8014268C */  addiu      $v1, $v1, %lo(D_80120650)
+    /* 80142694 */  addiu      $v0, $v0, %lo(D_801206D8)
+    /* 801426A0 */  addiu      $t8, $v1, 0x3C
+    /* 801426A8 */  addiu      $t9, $t9, 0xC
+    /* 801426B4 */  addiu      $t0, $t0, 0xC
+    /* 801426DC */  addiu      $t3, $v1, 0x3C
+    /* 801426E8 */  addiu      $t4, $t4, 0xC
+    /* 801426F4 */  addiu      $t5, $t5, 0xC
+    /* 8014270C */  addiu      $t7, $zero, 0x4
+    /* 80142728 */  lhu        $t6, %lo(D_800CA150)($t6)
+    /* 8014272C */  addiu      $at, $zero, 0x7
+    /* 80142738 */  lhu        $t8, %lo(D_800CA154)($t8)
+    /* 8014273C */  addiu      $at, $zero, 0x1
+    /* 80142754 */   addiu     $t9, $zero, 0x1
+    /* 80142774 */  lw         $ra, 0x14($sp)
+    /* 80142778 */  addiu      $sp, $sp, 0x28

@@ -1,0 +1,9 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/main/func_80075C84/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/main/func_80075C84/full-context.c drafts/T-16100/batch-2/main/func_80075C84/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-2/main/func_80075C84/work/guarded.o.sjis.c, line 2725: Incompatible pointer type assignment
+                     temp_a1 = &D_800E6280 + (var_a2 * 0x38);
+ ----------------------------^
+
+Full translation unit compiled and scored.

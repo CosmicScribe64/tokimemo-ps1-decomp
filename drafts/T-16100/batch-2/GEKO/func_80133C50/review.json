@@ -1,0 +1,42 @@
+{
+  "scope": "GEKO:func_80133C50",
+  "path": "drafts/T-16100/batch-2/GEKO/func_80133C50",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "&sp30 +",
+      "kind": "stack-address-arithmetic",
+      "line": 12
+    },
+    {
+      "detail": "M2cBlockF0",
+      "kind": "inferred-copy-layout",
+      "line": 2
+    }
+  ],
+  "explanation": "240-byte copy and address calculation index*20 identify byte table. Repair s32-array-pointer scaling to explicit byte stride.",
+  "evidence_path": "drafts/T-16100/batch-2/GEKO/func_80133C50/evidence.txt",
+  "compile_status": "scored",
+  "score": 168,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&sp30 +",
+        "kind": "stack-address-arithmetic",
+        "line": 12
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "240-byte copy and address calculation index*20 identify byte table. Repair s32-array-pointer scaling to explicit byte stride."
+    },
+    {
+      "flag": {
+        "detail": "M2cBlockF0",
+        "kind": "inferred-copy-layout",
+        "line": 2
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "240-byte copy and address calculation index*20 identify byte table. Repair s32-array-pointer scaling to explicit byte stride."
+    }
+  ]
+}

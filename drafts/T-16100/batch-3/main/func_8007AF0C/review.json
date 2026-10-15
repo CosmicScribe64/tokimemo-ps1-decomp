@@ -1,0 +1,23 @@
+{
+  "scope": "main:func_8007AF0C",
+  "selected_path": "drafts/T-14500/main/func_8007AF0C",
+  "archive_path": "drafts/T-16100/batch-3/main/func_8007AF0C",
+  "changed": false,
+  "reviewed": true,
+  "repair_notes": [],
+  "flags": [
+    {
+      "detail": "sp44",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "func_80090270 writes via sp2C, then the draft reads independent sp44 without initialization. Recover the actual output aggregate and its +0x18 member."
+    }
+  ],
+  "notes": "func_80090270 writes via sp2C, then the draft reads independent sp44 without initialization. Recover the actual output aggregate and its +0x18 member.",
+  "assembly_evidence": "drafts/T-16100/batch-3/main/func_8007AF0C/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "reviewed-unresolved"
+}

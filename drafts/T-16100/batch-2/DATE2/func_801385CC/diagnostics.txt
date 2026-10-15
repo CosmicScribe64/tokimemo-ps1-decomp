@@ -1,0 +1,45 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/DATE2 -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/DATE2/func_801385CC/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/DATE2/func_801385CC/full-context.c drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2663: Incompatible pointer type assignment
+     D_800CA134 = &D_8013B5F8;
+ ---------------^
+cfe: Warning 709: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2664: Incompatible pointer type assignment
+     D_800CA138 = &D_8013B5FC;
+ ---------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2836: '&' before array or function; ignored
+     *(M2cBlock54 *)(&sp50) = *(M2cBlock54 *)(&D_8013B634);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2845: '&' before array or function; ignored
+     D_8013B5E6 = (s16) ((func_800AE0E0(&sp65) / 2) * 0x10);
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2856: '&' before array or function; ignored
+             func_800AE0F0(&sp50, "\227\366\202\315\201\143\201\151\211\314\225\164\202\253\201\152");
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2858: '&' before array or function; ignored
+         D_8013B5E4 = (func_800AE0E0(&sp50) / 2) * 0x10;
+ ------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2859: '&' before array or function; ignored
+         k_disp_start(set_kanji_string(sp48, sp40, 0, (s32) &sp50, 0));
+ -----------------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2861: '&' before array or function; ignored
+     k_disp_start(set_kanji_string(sp4A, sp42, 0, (s32) &sp65, 0));
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2863: '&' before array or function; ignored
+         D_8013B5E8 = (func_800AE0E0(&sp7A) / 2) * 0x10;
+ ------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2864: '&' before array or function; ignored
+         k_disp_start(set_kanji_string(sp4C, sp44, 0, (s32) &sp7A, 0));
+ -----------------------------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2868: '&' before array or function; ignored
+             func_800AE0F0(&sp8F, "\217\227\201\130\202\265\202\242\201\143\201\151\211\314\225\164\202\253\201\152");
+ --------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2870: '&' before array or function; ignored
+         D_8013B5EA = (func_800AE0E0(&sp8F) / 2) * 0x10;
+ ------------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/DATE2/func_801385CC/work/guarded.o.sjis.c, line 2871: '&' before array or function; ignored
+         k_disp_start(set_kanji_string(sp4E, sp46, 0, (s32) &sp8F, 0));
+ -----------------------------------------------------------^
+
+Full translation unit compiled and scored.

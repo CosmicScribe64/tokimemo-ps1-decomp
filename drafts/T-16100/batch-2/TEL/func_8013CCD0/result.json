@@ -1,0 +1,20 @@
+{
+  "scope": "TEL:func_8013CCD0",
+  "src": "src/ovl/TEL/8013CCD0.c",
+  "size": 876,
+  "path": "drafts/T-16100/batch-2/TEL/func_8013CCD0",
+  "archive_path": "drafts/T-16100/batch-2/TEL/func_8013CCD0",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 220,
+  "changed": false,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "unresolved",
+  "body_c_sha256": "37dc5932a73d88c792c681bc5afff137b747413e6270f13433525dd649d6e286",
+  "declarations_h_sha256": "a063870b34514c587e7234eec9ded298310c7bd870192dc7218ab2b0fc2cb6b0",
+  "context_c_sha256": "a4387ebedc462e4e6123d8eb923980659e65849eb4770817b36c779764f1386f",
+  "full-context_c_sha256": "f756a4216bf73b8b62ba75132e2b773804a70482627b962e712376f6951d86a3",
+  "diagnostics_txt_sha256": "f5c486a896d94f4c47d41dbc2e220cb616078d3728f2d185b115b74f13da5e88"
+}

@@ -1,0 +1,40 @@
+80133AF4:  lw         $t6, %lo(D_800E7384)($t6)
+80133AFC:  sb         $zero, %lo(D_800B3D60)($at)
+80133B00:  addiu      $sp, $sp, -0x68
+80133B0C:   sw        $ra, 0x1C($sp)
+80133B10:  sll        $t6, $t6, 2
+80133B18:  addu       $at, $at, $t6
+80133B1C:  lw         $t6, %lo(jtbl_8013A16C)($at)
+80133B30:  addiu      $t7, $zero, 0x1
+80133B38:  lw         $a0, %lo(D_800E7378)($a0)
+80133B40:   sw        $t7, %lo(D_80122D2C)($at)
+80133B48:   addiu     $a0, $zero, 0x206
+80133B50:  sh         $zero, %lo(D_800B5926)($at)
+80133B58:  sh         $zero, %lo(D_800B5922)($at)
+80133B60:  sh         $zero, %lo(D_800B5924)($at)
+80133B68:  sh         $zero, %lo(D_800B5920)($at)
+80133B70:  sb         $zero, %lo(D_800B5939)($at)
+80133B78:  sb         $zero, %lo(D_800B5938)($at)
+80133B80:  addiu      $t8, $zero, -0x1
+80133B84:  sw         $t8, %lo(D_800B5948)($at)
+80133B8C:  sh         $zero, %lo(D_800B592A)($at)
+80133BF0:  sll        $t6, $v1, 6
+80133BF8:  sll        $t8, $v1, 1
+80133C0C:  sll        $t5, $v1, 7
+80133C18:  sll        $t8, $v1, 16
+80133C7C:  sll        $t6, $v1, 6
+80133C84:  sll        $t8, $v1, 1
+80133C98:  sll        $t5, $v1, 7
+80133CA4:  sll        $t8, $v1, 16
+80133D88:   addiu     $a0, $sp, 0x54
+80133E3C:   addiu     $a0, $sp, 0x54
+80133EF4:   addiu     $a0, $sp, 0x54
+80133FA8:   addiu     $a0, $sp, 0x54
+80133FF4:  sll        $t6, $v1, 16
+80134048:  lbu        $v1, %lo(D_80121874)($v1)
+80134104:  lbu        $v1, %lo(D_80121874)($v1)
+80134190:  sll        $t6, $v1, 16
+801341E0:  lbu        $t5, %lo(D_800E738A)($t5)
+801341F8:  lbu        $v1, %lo(D_800E738A)($v1)
+80134290:  lbu        $t5, %lo(D_800E738A)($t5)
+801343D0:  lbu        $t8, %lo(D_800E738A)($t8)

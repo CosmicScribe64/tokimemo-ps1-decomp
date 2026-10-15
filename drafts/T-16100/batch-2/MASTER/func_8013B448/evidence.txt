@@ -1,0 +1,28 @@
+Target: ['asm/ovl/MASTER/nonmatchings/MASTER/80139000/func_8013B448.s']
+Review: 0x75E record stride 8 and byte at +0x761 identify unk_75E[index].unk_03. Repair store directly through established aggregate.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013B44C */  lbu        $t7, %lo(D_800E71DE)($t7)
+    /* 8013B458 */  lbu        $t6, %lo(D_800E71DF)($t6)
+    /* 8013B45C */  addiu      $a0, $a0, %lo(D_800E6280)
+    /* 8013B460 */  sll        $t8, $t7, 3
+    /* 8013B464 */  addu       $t9, $a0, $t8
+    /* 8013B470 */  lbu        $t1, %lo(D_800E71DE)($t1)
+    /* 8013B474 */  addiu      $t0, $zero, 0x15
+    /* 8013B478 */  sll        $t2, $t1, 3
+    /* 8013B47C */  addu       $t3, $a0, $t2
+    /* 8013B488 */  lbu        $t5, %lo(D_800E71DE)($t5)
+    /* 8013B490 */  lbu        $t4, %lo(D_800E62BE)($t4)
+    /* 8013B494 */  sll        $t7, $t5, 3
+    /* 8013B498 */  addu       $t8, $a0, $t7
+    /* 8013B4A4 */  lbu        $t9, %lo(D_800E71DE)($t9)
+    /* 8013B4AC */  lbu        $t6, %lo(D_800E62BF)($t6)
+    /* 8013B4B0 */  sll        $t1, $t9, 3
+    /* 8013B4B4 */  addu       $t2, $a0, $t1
+    /* 8013B4C0 */  lbu        $t3, %lo(D_800E71DE)($t3)
+    /* 8013B4C8 */  lbu        $t0, %lo(D_800E62C0)($t0)
+    /* 8013B4CC */  sll        $t5, $t3, 3
+    /* 8013B4D0 */  addu       $t7, $a0, $t5
+    /* 8013B4DC */  lbu        $t8, %lo(D_800E71DE)($t8)
+    /* 8013B4E4 */  lbu        $t4, %lo(D_800E62C1)($t4)
+    /* 8013B4E8 */  sll        $t9, $t8, 3

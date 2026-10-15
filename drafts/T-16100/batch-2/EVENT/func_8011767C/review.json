@@ -1,0 +1,42 @@
+{
+  "scope": "EVENT:func_8011767C",
+  "path": "drafts/T-16100/batch-2/EVENT/func_8011767C",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp3C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    },
+    {
+      "detail": "sp54[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    }
+  ],
+  "explanation": "sp3C[16]/sp54[16] overlap original offsets and halfword aliases; must reconstruct copied coordinate structures rather than keep independently oversized arrays.",
+  "evidence_path": "drafts/T-16100/batch-2/EVENT/func_8011767C/evidence.txt",
+  "compile_status": "scored",
+  "score": 346,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp3C[16]",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "sp3C[16]/sp54[16] overlap original offsets and halfword aliases; must reconstruct copied coordinate structures rather than keep independently oversized arrays."
+    },
+    {
+      "flag": {
+        "detail": "sp54[16]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "unresolved",
+      "explanation": "sp3C[16]/sp54[16] overlap original offsets and halfword aliases; must reconstruct copied coordinate structures rather than keep independently oversized arrays."
+    }
+  ]
+}

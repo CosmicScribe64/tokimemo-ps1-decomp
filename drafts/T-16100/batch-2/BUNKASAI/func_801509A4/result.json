@@ -1,0 +1,20 @@
+{
+  "scope": "BUNKASAI:func_801509A4",
+  "src": "src/ovl/BUNKASAI/80150930.c",
+  "size": 472,
+  "path": "drafts/T-16100/batch-2/BUNKASAI/func_801509A4",
+  "archive_path": "drafts/T-16100/batch-2/BUNKASAI/func_801509A4",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 59,
+  "changed": true,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "repaired-with-unresolved-remainder",
+  "body_c_sha256": "93849ec5589c7df132230a6a2bbdf94557945292fd876d3e526f4be15e11dc84",
+  "declarations_h_sha256": "4bd09bf184f488ff2a46bf0f681481861ebd938fe9b65636bad1d6897d787586",
+  "context_c_sha256": "31d5a44d61b2565aac5525415c74cff231f442542a3644f33fffd95227198c70",
+  "full-context_c_sha256": "a725d1dbaa45ff95b9f5b011020e060643d7df9d2c11ec3ee3a3ff760072b036",
+  "diagnostics_txt_sha256": "2962bcca5362614c6ba79b5521b727ffcfc35b78e855323e0be2c036af559c96"
+}

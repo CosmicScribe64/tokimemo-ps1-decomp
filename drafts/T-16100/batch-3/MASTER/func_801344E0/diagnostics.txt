@@ -1,0 +1,12 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/MASTER -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/MASTER/func_801344E0/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/MASTER/func_801344E0/work/guarded.c drafts/T-16100/batch-3/MASTER/func_801344E0/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-3/MASTER/func_801344E0/work/guarded.o.sjis.c, line 3318: Incompatible pointer type assignment
+                 sp34 = var_a0;
+ ---------------------^
+cfe: Warning 689: drafts/T-16100/batch-3/MASTER/func_801344E0/work/guarded.o.sjis.c, line 3325: Unacceptable operand of == or !=
+             } while (var_v1_2 != D_8013C5B4);
+ ------------------------------^
+
+Full TU compiled; score 1014

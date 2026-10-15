@@ -1,0 +1,15 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-3/TACO/func_80153B38/work/variant.c
+[Preprocessed C retained in full-context.c]
+
+$ python3 tools/cc.py drafts/T-16100/batch-3/TACO/func_80153B38/work/guarded.c drafts/T-16100/batch-3/TACO/func_80153B38/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16100/batch-3/TACO/func_80153B38/work/guarded.c, line 3449: Incompatible pointer type assignment
+             temp_s0 = (var_s2 * 8) + &sp78;
+ --------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TACO/func_80153B38/work/guarded.c, line 3473: Incompatible pointer type assignment
+         temp_s0_2 = &sp78 + (var_s2_2 * 8);
+ ------------------^
+cfe: Warning 709: drafts/T-16100/batch-3/TACO/func_80153B38/work/guarded.c, line 3483: Incompatible pointer type assignment
+             temp_s0_3 = &sp78 + (var_s2_2 * 8);
+ ----------------------^
+
+Full TU compiled; score 293

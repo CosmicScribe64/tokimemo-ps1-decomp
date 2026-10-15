@@ -1,0 +1,13 @@
+extern s16 D_80128882;
+extern s16 D_80128884;
+extern s32 D_801270B0;
+extern s32 D_801270C0;
+extern s32 D_801270F0;
+extern s32 D_80127100;
+extern s32 D_80127110;
+extern s32 D_80127120;
+extern s32 D_80127498;
+extern s32 D_80127610;
+extern s32 D_801277F0;
+s32 func_800A0ECC();
+void func_8015163C(s32 arg0, s32 arg1);

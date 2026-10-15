@@ -1,0 +1,28 @@
+{
+  "scope": "TACO:func_80140028",
+  "path": "drafts/T-16100/batch-2/TACO/func_80140028",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "sp6C",
+      "kind": "synthesized-stack-local",
+      "line": 2
+    }
+  ],
+  "explanation": "Scalar sp6C/sp8C/sp80 fragments coexist with subroutine_arg extern artifacts. Aggregate/by-value ABI remains unresolved.",
+  "evidence_path": "drafts/T-16100/batch-2/TACO/func_80140028/evidence.txt",
+  "compile_status": "scored",
+  "score": 296,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp6C",
+        "kind": "synthesized-stack-local",
+        "line": 2
+      },
+      "outcome": "unresolved",
+      "explanation": "Scalar sp6C/sp8C/sp80 fragments coexist with subroutine_arg extern artifacts. Aggregate/by-value ABI remains unresolved."
+    }
+  ]
+}

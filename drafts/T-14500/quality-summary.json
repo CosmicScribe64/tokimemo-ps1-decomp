@@ -1,14 +1,14 @@
 {
   "total": 1066,
   "statuses": {
-    "compiling-audit-clear": 901,
-    "compiling-review-needed": 165
+    "compiling-audit-clear": 950,
+    "compiling-review-needed": 116
   },
   "flag_counts": {
-    "synthesized-stack-local": 194,
+    "synthesized-stack-local": 115,
     "inferred-copy-layout": 72,
-    "stack-address-arithmetic": 97,
-    "gamestate-address-arithmetic": 122
+    "gamestate-address-arithmetic": 27,
+    "stack-address-arithmetic": 37
   },
   "qualification": "Audit-clear means no listed residual pattern; semantic equivalence is unproven."
 }

@@ -1,0 +1,15 @@
+$ gcc -E -P -Idrafts/T-14500/baseline/include -Iinclude -Isrc/ovl/RPG_BAT -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8/context.c
+[Preprocessed full TU retained]
+
+$ python3 tools/cc.py drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8/full-context.c drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8/full-context.c, line 3084: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp58) = *(M2cBlock24 *)(&D_8015E550);
+ --------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8/full-context.c, line 3085: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp58) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_8015E550) + (36));
+ -------------------------------^
+cfe: Warning 681: drafts/T-16100/batch-2/RPG_BAT/func_8013BBF8/full-context.c, line 3086: '&' before array or function; ignored
+     *(M2cBlock28 *)(&sp30) = *(M2cBlock28 *)(&D_8015E578);
+ --------------------^
+
+Full translation unit compiled and scored.

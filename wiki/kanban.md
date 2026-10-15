@@ -24,8 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-16100-flagged-draft-pass|T-16100 Review 165 flagged compiling drafts]]
-
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
@@ -93,6 +91,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-15600-fresh-near-matches|T-15600 Fresh RENSYU and RPG near matches]]
 
 - [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
+
+- [ ] [[tickets/T-16100-flagged-draft-pass|T-16100 Review 165 flagged compiling drafts]]
 
 - [ ] [[tickets/T-12040-codex-cx4|T-12040 Codex cx4 RPG battle matching]]
 

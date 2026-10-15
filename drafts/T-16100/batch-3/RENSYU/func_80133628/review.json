@@ -1,0 +1,26 @@
+{
+  "scope": "RENSYU:func_80133628",
+  "selected_path": "drafts/T-14500/RENSYU/func_80133628",
+  "archive_path": "drafts/T-16100/batch-3/RENSYU/func_80133628",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "sp2C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11].",
+    "Target table read is lhu, so use unsigned halfwords for this threshold table."
+  ],
+  "flags": [
+    {
+      "detail": "sp2C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "repaired",
+      "explanation": "sp2C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11]. Target table read is lhu, so use unsigned halfwords for this threshold table. Five copied words plus a halfword and target lhu index*2 justify u16[11]."
+    }
+  ],
+  "notes": "Five copied words plus a halfword and target lhu index*2 justify u16[11].",
+  "assembly_evidence": "drafts/T-16100/batch-3/RENSYU/func_80133628/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

@@ -1,0 +1,25 @@
+800FF61C:  addiu      $sp, $sp, -0xF0
+800FF624:  addiu      $t7, $t7, %lo(D_80121AF8)
+800FF628:  sw         $ra, 0x14($sp)
+800FF62C:  addiu      $t0, $t7, 0xC0
+800FF630:  addiu      $t6, $sp, 0x2C
+800FF634:  lw         $at, 0x0($t7)
+800FF638:  addiu      $t7, $t7, 0xC
+800FF63C:  sw         $at, 0x0($t6)
+800FF640:  lw         $at, -0x8($t7)
+800FF644:  addiu      $t6, $t6, 0xC
+800FF648:  sw         $at, -0x8($t6)
+800FF64C:  lw         $at, -0x4($t7)
+800FF654:   sw        $at, -0x4($t6)
+800FF65C:  lbu        $a1, %lo(D_800B1AF6)($a1)
+800FF668:   addiu     $a0, $a0, %lo(D_8011F744)
+800FF670:  lbu        $v0, %lo(D_800B1AF6)($v0)
+800FF674:  addiu      $a0, $zero, 0x80
+800FF678:  sll        $t1, $v0, 2
+800FF67C:  addu       $t9, $sp, $t1
+800FF680:  lw         $t9, 0x2C($t9)
+800FF6A8:  lbu        $t3, %lo(D_800EB02B)($t3)
+800FF6B8:  lbu        $t5, %lo(D_800F19AB)($t5)
+800FF6CC:  lbu        $t8, %lo(D_800EB02B)($t8)
+800FF6DC:  lbu        $v0, %lo(D_800B1AF6)($v0)
+800FF704:  addiu      $sp, $sp, 0xF0

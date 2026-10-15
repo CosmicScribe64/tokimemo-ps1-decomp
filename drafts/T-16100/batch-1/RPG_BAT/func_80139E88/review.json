@@ -1,0 +1,81 @@
+{
+  "scope": "RPG_BAT:func_80139E88",
+  "selected_path": "drafts/T-14500/RPG_BAT/func_80139E88",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "+ &sp80",
+      "kind": "stack-address-arithmetic",
+      "line": 62,
+      "verdict": "partially-repaired-layout",
+      "explanation": "Target array load uses one sll index by 2 before lw; indexing the s32 array avoids scaling by the whole array size. Retained flag: full original layout/typing is not proven.",
+      "original_excerpt": [
+        "            func_800AE0F0(*(void **)((unsigned char *)temp_s0 + (12)), \"\u304a\u305f\u304b\u3089\uff1a\");",
+        "            func_800AE100(*(void **)((unsigned char *)temp_s0 + (12)), *(var_s2 + &sp80));",
+        "            var_fp += 1;"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target array load uses one sll index by 2 before lw; indexing the s32 array avoids scaling by the whole array size."
+  ],
+  "assembly_path": "asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80137280/func_80139E88.s",
+  "assembly_sha256": "2754bc355a687cad5103a89d66d2887023b8e7a072fd72d08e3589298ee97b35",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x3C": [
+      "lw",
+      "sw"
+    ],
+    "0x38": [
+      "lw",
+      "sw"
+    ],
+    "0x34": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x28": [
+      "lw",
+      "sw"
+    ],
+    "0x24": [
+      "lw",
+      "sw"
+    ],
+    "0x20": [
+      "lw",
+      "sw"
+    ],
+    "0x1C": [
+      "lw",
+      "sw"
+    ],
+    "0x18": [
+      "lw",
+      "sw"
+    ],
+    "0x64": [
+      "sw"
+    ],
+    "0x68": [
+      "sw"
+    ],
+    "0x6C": [
+      "sw"
+    ],
+    "0x70": [
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

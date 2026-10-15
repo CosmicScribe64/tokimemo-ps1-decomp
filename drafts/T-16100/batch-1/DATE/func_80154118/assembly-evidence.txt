@@ -1,0 +1,8 @@
+    80154118:  addiu      $sp, $sp, -0x68
+    80154124:  sw         $ra, 0x14($sp)
+    8015412C:  addiu      $t6, $sp, 0x28
+    8015422C:  sll        $t4, $t3, 2
+    80154230:  addu       $t9, $sp, $t4
+    8015423C:  jalr       $t9
+    80154244:  lw         $ra, 0x14($sp)
+    80154248:  addiu      $sp, $sp, 0x68

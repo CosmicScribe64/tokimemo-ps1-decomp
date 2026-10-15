@@ -1,0 +1,28 @@
+{
+  "scope": "DATE:func_8014C20C",
+  "path": "drafts/T-16100/batch-2/DATE/func_8014C20C",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 38
+    }
+  ],
+  "explanation": "Read at 0x758 + 8*index equals unk_75E[index-1].unk_02. Established GameState documentation confirms one-based record indexing; repair direct member read.",
+  "evidence_path": "drafts/T-16100/batch-2/DATE/func_8014C20C/evidence.txt",
+  "compile_status": "scored",
+  "score": 254,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "&D_800E6280 +",
+        "kind": "gamestate-address-arithmetic",
+        "line": 38
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "Read at 0x758 + 8*index equals unk_75E[index-1].unk_02. Established GameState documentation confirms one-based record indexing; repair direct member read."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+-@row 0 ; addiu sp,sp,-160
++@row 0 ; addiu sp,sp,-152
+-@row 11 ; sw a0,160(sp)
++@row 11 ; sw a0,152(sp)
+-@row 17 ; addiu s8,sp,124
++@row 17 ; addiu s8,sp,136
+-@row 19 ; addiu a1,sp,92
++@row 19 ; addiu a1,sp,104
+-@row 24 ; addiu s4,s4,0
++@row 24 ; move s1,zero
+-@row 25 ; move s1,zero
++@row 25 ; move s2,s0
+-@row 26 ; move s2,s0
++@row 26 ; addiu s4,s4,0
+-@row 86 ; nop
++@row 86 ; addiu s1,s1,1
+-@row 88 ; addiu s1,s1,1
++@row 88 ; nop
+-@row 89 ; lw t7,160(sp)
++@row 89 ; lw t7,152(sp)
+-@row 110 ; addiu sp,sp,160
++@row 110 ; addiu sp,sp,152

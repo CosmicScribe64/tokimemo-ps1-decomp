@@ -1,0 +1,22 @@
+80054C74:  addiu      $sp, $sp, -0x60
+80054C78:  sw         $ra, 0x24($sp)
+80054C7C:  sw         $s1, 0x18($sp)
+80054C84:  sw         $s3, 0x20($sp)
+80054C88:  sw         $s2, 0x1C($sp)
+80054C90:   sw        $s0, 0x14($sp)
+80054C94:  addiu      $s0, $sp, 0x44
+80054CA8:  lw         $a0, %lo(D_800B58E4)($a0)
+80054CBC:   addiu     $a1, $zero, 0x2
+80054CC4:  sw         $v0, %lo(D_800B58E4)($at)
+80054CC8:  addiu      $at, $zero, -0x1
+80054CD8:   addiu     $v0, $zero, -0x1
+80054CDC:  addiu      $s2, $s2, %lo(D_80123120)
+80054CE4:  addiu      $a1, $a1, %lo(D_800AFC1C)
+80054CF0:   addiu     $a2, $zero, 0x2
+80054CF4:  addiu      $t6, $zero, 0x13
+80054D00:  sb         $t6, %lo(D_80123122)($at)
+80054D04:  addiu      $s0, $s0, %lo(D_80123124)
+80054D0C:  addiu      $t7, $zero, 0x1
+80054D10:  sb         $t7, %lo(D_80123123)($at)
+80054D40:  sll        $t9, $s1, 2
+80054E68:   addiu     $sp, $sp, 0x60

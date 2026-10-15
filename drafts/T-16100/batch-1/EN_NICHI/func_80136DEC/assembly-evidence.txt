@@ -1,0 +1,37 @@
+    80136DEC:  addiu      $sp, $sp, -0xF8
+    80136E00:  sw         $ra, 0x24($sp)
+    80136E04:  sw         $s2, 0x20($sp)
+    80136E08:  sw         $s1, 0x1C($sp)
+    80136E0C:  sw         $s0, 0x18($sp)
+    80136E14:  addiu      $t6, $sp, 0xC4
+    80136E50:  addiu      $t1, $sp, 0x98
+    80136E94:  addiu      $t9, $sp, 0x6C
+    80136EE0:  addiu      $t4, $sp, 0x54
+    80136F60:  addu       $t6, $t0, $s0
+    80136F94:  addu       $t9, $t8, $s0
+    80136FBC:   lw        $ra, 0x24($sp)
+    80136FCC:  addiu      $s0, $sp, 0x54
+    80136FD0:  addiu      $v1, $sp, 0xC4
+    80136FD4:  addiu      $a1, $sp, 0x98
+    80136FD8:  addiu      $a2, $sp, 0x6C
+    80136FE4:  sw         $v0, 0x4C($sp)
+    80136FE8:  sw         $v1, 0x44($sp)
+    80136FEC:  sw         $a1, 0x40($sp)
+    80136FF4:   sw        $a2, 0x3C($sp)
+    80136FF8:  lw         $v0, 0x4C($sp)
+    8013704C:  lw         $v1, 0x44($sp)
+    80137050:  lw         $a1, 0x40($sp)
+    80137054:  lw         $a2, 0x3C($sp)
+    80137114:   lw        $ra, 0x24($sp)
+    801371BC:   lw        $ra, 0x24($sp)
+    801371D0:   sll       $t4, $t4, 2
+    801371D8:  addu       $at, $at, $t4
+    801372E4:  addu       $v0, $s1, $t2
+    801372E8:  addu       $v1, $s1, $t5
+    801372EC:  addu       $a0, $s1, $t4
+    80137338:   lw        $ra, 0x24($sp)
+    80137344:  lw         $ra, 0x24($sp)
+    80137348:  lw         $s0, 0x18($sp)
+    8013734C:  lw         $s1, 0x1C($sp)
+    80137350:  lw         $s2, 0x20($sp)
+    80137358:   addiu     $sp, $sp, 0xF8

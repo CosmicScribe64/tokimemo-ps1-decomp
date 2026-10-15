@@ -1,0 +1,28 @@
+{
+  "scope": "ETC:func_8013CCE4",
+  "path": "drafts/T-16100/batch-2/ETC/func_8013CCE4",
+  "changed": false,
+  "outcome": "justified-false-positive",
+  "flags_reviewed": [
+    {
+      "detail": "sp54[6]",
+      "kind": "synthesized-stack-local",
+      "line": 3
+    }
+  ],
+  "explanation": "sp54[6] has six word stores and six-entry accesses; synthesized naming is a detector false positive, though other source quality is outside these flags.",
+  "evidence_path": "drafts/T-16100/batch-2/ETC/func_8013CCE4/evidence.txt",
+  "compile_status": "scored",
+  "score": 138,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "sp54[6]",
+        "kind": "synthesized-stack-local",
+        "line": 3
+      },
+      "outcome": "justified-false-positive",
+      "explanation": "sp54[6] has six word stores and six-entry accesses; synthesized naming is a detector false positive, though other source quality is outside these flags."
+    }
+  ]
+}

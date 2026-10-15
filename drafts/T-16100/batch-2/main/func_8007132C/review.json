@@ -1,0 +1,126 @@
+{
+  "scope": "main:func_8007132C",
+  "path": "drafts/T-16100/batch-2/main/func_8007132C",
+  "changed": false,
+  "outcome": "unresolved",
+  "flags_reviewed": [
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 79
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 100
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 108
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 115
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 124
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 130
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 250
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 308
+    }
+  ],
+  "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix.",
+  "evidence_path": "drafts/T-16100/batch-2/main/func_8007132C/evidence.txt",
+  "compile_status": "scored",
+  "score": 1440,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 79
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 100
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 108
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 115
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 124
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 130
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 250
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    },
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 308
+      },
+      "outcome": "unresolved",
+      "explanation": "Mixed GameState pointer walks and byte displacements; record stride 4 belongs to unk_69C. Multiple aliases and predecessor reads need coherent aggregate rewrite, not a cast-only fix."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+8013E50C:  addiu      $sp, $sp, -0x58
+8013E514:  sw         $ra, 0x14($sp)
+8013E518:  addiu      $t6, $t6, %lo(D_801460CC)
+8013E51C:  lw         $at, 0x0($t6)
+8013E520:  addiu      $a1, $sp, 0x40
+8013E524:  sw         $at, 0x0($a1)
+8013E528:  lw         $t9, 0x4($t6)
+8013E530:  sw         $t9, 0x4($a1)
+8013E534:  lw         $at, 0x8($t6)
+8013E538:  addiu      $t1, $t1, %lo(D_801460DC)
+8013E53C:  sw         $at, 0x8($a1)
+8013E540:  lhu        $at, 0xC($t6)
+8013E544:  addiu      $t0, $sp, 0x30
+8013E548:  sh         $at, 0xC($a1)
+8013E54C:  lw         $at, 0x0($t1)
+8013E550:  lw         $t4, 0x4($t1)
+8013E554:  sw         $at, 0x0($t0)
+8013E558:  lw         $at, 0x8($t1)
+8013E560:  sw         $at, 0x8($t0)
+8013E564:  lhu        $at, 0xC($t1)
+8013E578:  sll        $t7, $t5, 30
+8013E58C:  lh         $t6, %lo(D_800E6636)($t6)
+8013E5D4:  sll        $t5, $t4, 2
+8013E60C:  lbu        $a0, %lo(D_800E71DF)($a2)
+8013E620:  lbu        $t9, %lo(D_800E71DF)($t9)
+8013E634:  addiu      $a1, $sp, 0x40
+8013E648:  lh         $t2, 0x1C2($a0)
+8013E65C:  lh         $a0, %lo(D_800E6396)($a0)
+8013E664:  sll        $v0, $v1, 1
+8013E66C:  lh         $t4, 0x0($t1)
+8013E67C:   sll       $t5, $v1, 16
+8013E690:  sll        $v0, $t8, 1
+8013E694:  lbu        $t7, %lo(D_800E71DF)($t7)
+8013E6A0:  lh         $t3, 0x30($t3)
+8013E6AC:  lh         $t9, 0x1BE($a0)
+8013E6D8:  addiu      $sp, $sp, 0x58

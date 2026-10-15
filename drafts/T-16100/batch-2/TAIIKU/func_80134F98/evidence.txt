@@ -1,0 +1,28 @@
+Target: ['asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80/func_80134F98.s']
+Review: 0x24-byte copy then words at +0x24 and +0x28 requires 44-byte destination. Repair tail byte arithmetic and local extent; replace raw sp lookup with sp34 indexing.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80134F98 */  addiu      $sp, $sp, -0x68
+    /* 80134FA0 */  addiu      $t7, $t7, %lo(D_801494C4)
+    /* 80134FA4 */  sw         $ra, 0x1C($sp)
+    /* 80134FA8 */  addiu      $t0, $t7, 0x24
+    /* 80134FAC */  addiu      $t6, $sp, 0x34
+    /* 80134FB4 */  addiu      $t7, $t7, 0xC
+    /* 80134FC0 */  addiu      $t6, $t6, 0xC
+    /* 80134FDC */  addiu      $t1, $zero, 0x280
+    /* 80134FE8 */  sw         $t1, 0x10($sp)
+    /* 80134FF0 */  addiu      $a1, $zero, 0xF
+    /* 80134FFC */   addiu     $a3, $zero, 0x70
+    /* 80135000 */  addiu      $t2, $zero, 0x80
+    /* 80135004 */  sw         $t2, 0x10($sp)
+    /* 8013500C */  addiu      $a1, $zero, 0xF
+    /* 80135010 */  addiu      $a2, $zero, 0x70
+    /* 80135018 */   addiu     $a3, $zero, 0x80
+    /* 80135020 */  lbu        $t3, %lo(D_800E738A)($t3)
+    /* 80135030 */   sll       $t3, $t3, 2
+    /* 80135038 */  addu       $at, $at, $t3
+    /* 80135050 */   addiu     $a0, $zero, 0x60B
+    /* 80135068 */   lw        $ra, 0x1C($sp)
+    /* 8013507C */  lbu        $t4, %lo(D_801491E0)($t4)
+    /* 80135080 */  addiu      $a2, $zero, 0x1
+    /* 8013508C */  lbu        $t5, %lo(D_801491E1)($t5)

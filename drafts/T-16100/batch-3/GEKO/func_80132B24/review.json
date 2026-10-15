@@ -1,0 +1,33 @@
+{
+  "scope": "GEKO:func_80132B24",
+  "selected_path": "drafts/T-14500/GEKO/func_80132B24",
+  "archive_path": "drafts/T-16100/batch-3/GEKO/func_80132B24",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "sp34: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[11].",
+    "sp1C: copied halfword table uses signed lh and doubled element index in target; changed sixteen-word scratch to s16[12]."
+  ],
+  "flags": [
+    {
+      "detail": "sp1C[16]",
+      "kind": "synthesized-stack-local",
+      "line": 2,
+      "outcome": "unresolved",
+      "explanation": "Copied tables are s16[11] and s16[12]. Separate sp1E remains an uninitialized alias of sp1C[1], requiring a follow-up."
+    },
+    {
+      "detail": "sp34[16]",
+      "kind": "synthesized-stack-local",
+      "line": 3,
+      "outcome": "unresolved",
+      "explanation": "Copied tables are s16[11] and s16[12]. Separate sp1E remains an uninitialized alias of sp1C[1], requiring a follow-up."
+    }
+  ],
+  "notes": "Copied tables are s16[11] and s16[12]. Separate sp1E remains an uninitialized alias of sp1C[1], requiring a follow-up.",
+  "assembly_evidence": "drafts/T-16100/batch-3/GEKO/func_80132B24/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "partial-repair"
+}

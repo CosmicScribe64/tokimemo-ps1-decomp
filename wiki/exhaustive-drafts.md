@@ -90,3 +90,7 @@ All **1,066 / 1,066** scopes in the frozen unmatched-function census now have a 
 Compilation is separate from correctness and matching: the quality audit selects **901 drafts without listed residual patterns and 165 requiring reconstruction review**. Audit-clear does not establish semantic equivalence. Initial failed attempts remain immutable, and every final repair retains source/context/diagnostics and provenance. No additional verified production bytes are claimed from these compilation repairs.
 
 Regenerate the final joined compiler and quality ledgers with `tools/docker.sh python3 tools/refresh_draft_ledgers.py`; this reads saved evidence without launching generation or compilation. The registry references T15700, T15800 and T16000 external archives plus T15900 within T14500. Read [[stopping-point-2026-10-15]] before resuming.
+
+## Subsequent Sol medium quality pass
+
+[[flagged-draft-pass]] records review of all165 flagged scopes,93 repaired alternatives and165 full-TU compiler proofs. Current quality selection is950 audit-clear/116 review-needed; all1066 scopes still compile. Audit logic unchanged; no production matching gain. Original attempts remain immutable.

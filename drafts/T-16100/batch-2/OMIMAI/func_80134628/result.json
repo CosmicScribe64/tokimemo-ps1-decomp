@@ -1,0 +1,20 @@
+{
+  "scope": "OMIMAI:func_80134628",
+  "src": "src/ovl/OMIMAI/801331B0.c",
+  "size": 644,
+  "path": "drafts/T-16100/batch-2/OMIMAI/func_80134628",
+  "archive_path": "drafts/T-16100/batch-2/OMIMAI/func_80134628",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 125,
+  "changed": false,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "unresolved",
+  "body_c_sha256": "42864b95af2acd0d7d1b75903c2fc2018e43b288b5487e2ae52d5c808fd11265",
+  "declarations_h_sha256": "f2b82ae4481ffd18d49dda0e7ecec3a25bdb231801b61ddcb3a87e700bb3dbad",
+  "context_c_sha256": "cd40b9ad7ec65b955a1e75a23edc9f979926b31e3851046744868b8333464675",
+  "full-context_c_sha256": "890586ad98636af0e2db18f36e1a393e14be99eed07010328a3527405c54f5d2",
+  "diagnostics_txt_sha256": "50922f49f6c545381a3d274285918fb0b6e0e207ee520e93ffac6787291d302b"
+}

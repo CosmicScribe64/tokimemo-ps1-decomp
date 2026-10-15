@@ -1,0 +1,40 @@
+80132E20:  addiu      $sp, $sp, -0xC0
+80132E24:  sw         $s6, 0x30($sp)
+80132E28:  sll        $s6, $a0, 16
+80132E34:  sw         $s3, 0x24($sp)
+80132E38:  addiu      $t8, $t8, %lo(D_80148FB8)
+80132E44:  sw         $ra, 0x34($sp)
+80132E48:  sw         $s5, 0x2C($sp)
+80132E4C:  sw         $s4, 0x28($sp)
+80132E50:  sw         $s2, 0x20($sp)
+80132E54:  sw         $s1, 0x1C($sp)
+80132E58:  sw         $s0, 0x18($sp)
+80132E5C:  addiu      $t2, $t8, 0x24
+80132E60:  addiu      $t7, $sp, 0x78
+80132E64:  lw         $at, 0x0($t8)
+80132E68:  addiu      $t8, $t8, 0xC
+80132E6C:  sw         $at, 0x0($t7)
+80132E70:  lw         $at, -0x8($t8)
+80132E74:  addiu      $t7, $t7, 0xC
+80132E78:  sw         $at, -0x8($t7)
+80132E7C:  lw         $at, -0x4($t8)
+80132E94:  lhu        $at, 0x8($t8)
+80132EB4:  sll        $t3, $s5, 1
+80132EB8:  addiu      $t4, $sp, 0x78
+80132EC8:  lh         $t1, 0x0($t0)
+80132ECC:  sll        $t9, $zero, 10
+80132ED8:  sll        $t5, $zero, 1
+80132EDC:  addiu      $t6, $sp, 0xA8
+80132F04:   sll       $t4, $s1, 2
+80132F08:  lh         $t3, 0x0($t0)
+80132F10:  sll        $t4, $t4, 8
+80132F1C:  addiu      $t7, $sp, 0xA8
+80132F20:  sll        $t8, $s1, 1
+80132F24:  sll        $t6, $s3, 1
+80132F70:   addiu     $s0, $sp, 0xA8
+80132F74:  lh         $a0, 0x0($s0)
+80132F80:  lh         $a0, 0xA8($sp)
+80132F98:  lh         $t1, 0x0($s0)
+80132FAC:  lh         $t9, 0xA8($sp)
+80132FC8:  lh         $v0, %lo(D_8011ED3A)($v0)
+80133030:  lh         $v0, 0x6A($s4)

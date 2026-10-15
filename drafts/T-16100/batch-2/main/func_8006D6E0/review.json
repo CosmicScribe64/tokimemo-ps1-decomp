@@ -1,0 +1,28 @@
+{
+  "scope": "main:func_8006D6E0",
+  "path": "drafts/T-16100/batch-2/main/func_8006D6E0",
+  "changed": true,
+  "outcome": "repaired-with-unresolved-remainder",
+  "flags_reviewed": [
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 44
+    }
+  ],
+  "explanation": "GameState pointer advances by 4 bytes while C advances by four whole objects; use GsRec69C pointer and direct queue members throughout.",
+  "evidence_path": "drafts/T-16100/batch-2/main/func_8006D6E0/evidence.txt",
+  "compile_status": "scored",
+  "score": 99,
+  "flag_outcomes": [
+    {
+      "flag": {
+        "detail": "+ &D_800E6280",
+        "kind": "gamestate-address-arithmetic",
+        "line": 44
+      },
+      "outcome": "repaired-with-unresolved-remainder",
+      "explanation": "GameState pointer advances by 4 bytes while C advances by four whole objects; use GsRec69C pointer and direct queue members throughout."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+80138E14:  lbu        $v0, %lo(D_800E738D)($v0)
+80138E18:  addiu      $sp, $sp, -0x28
+80138E20:   sw        $ra, 0x14($sp)
+80138E28:   addiu     $a0, $zero, 0xB2
+80138E38:  lbu        $v0, %lo(D_800E738D)($v0)
+80138E40:  addiu      $v0, $v0, 0x1
+80138E50:  sb         $v0, %lo(D_800E738D)($at)
+80138E54:  addiu      $at, $zero, 0x1
+80138E60:  lw         $v1, %lo(D_800E7384)($v1)
+80138E70:  addiu      $v1, $v1, 0x1
+80138E78:   sw        $v1, %lo(D_800E7384)($at)
+80138E90:  sb         $zero, %lo(D_800E738D)($at)
+80138E9C:  addiu      $at, $zero, 0x1
+80138EB4:   addiu     $a0, $zero, 0x22
+80138EBC:   addiu     $a0, $zero, 0x21
+80138EC4:   addiu     $a0, $zero, 0x2F
+80138ECC:  lw         $t7, %lo(D_80122CD4)($t7)
+80138ED8:  lbu        $a1, %lo(D_800CA368)($a1)
+80138EDC:  sb         $t7, %lo(D_800E71DF)($at)
+80138EE0:  addiu      $at, $zero, 0xFF
+80138EF8:  lbu        $a1, %lo(D_800CA368)($a1)
+80138F0C:  lbu        $t8, %lo(D_800E71DE)($t8)
+80138F14:  sll        $t9, $t8, 3
+80138F1C:  lbu        $t0, 0x758($v0)
+80138F2C:  lbu        $t1, 0x75F($v0)
+80138F48:  lbu        $t4, %lo(D_800E71DE)($t4)
+80138F50:  sll        $t5, $t4, 3
+80138F70:  addiu      $sp, $sp, 0x28

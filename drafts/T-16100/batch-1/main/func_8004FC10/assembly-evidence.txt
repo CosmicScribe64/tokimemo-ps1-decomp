@@ -1,0 +1,104 @@
+    8004FC18:  addiu      $sp, $sp, -0x50
+    8004FC1C:  lui        $t5, %hi(D_800E6280)
+    8004FC20:  addiu      $t5, $t5, %lo(D_800E6280)
+    8004FC24:  sw         $s0, 0x18($sp)
+    8004FC30:  sw         $ra, 0x1C($sp)
+    8004FC5C:  addu       $t9, $t5, $a0
+    8004FCA8:   sw        $t2, 0x4C($sp)
+    8004FCAC:  lui        $t5, %hi(D_800E6280)
+    8004FCB0:  addiu      $t5, $t5, %lo(D_800E6280)
+    8004FCB4:  addu       $a2, $t5, $s0
+    8004FCBC:  lw         $t2, 0x4C($sp)
+    8004FCC8:  lui        $t9, %hi(D_800E6280)
+    8004FCCC:  addiu      $t9, $t9, %lo(D_800E6280)
+    8004FCD0:  sll        $t8, $s0, 3
+    8004FCD4:  addu       $v0, $t8, $t9
+    8004FCDC:  addu       $t7, $t2, $s0
+    8004FD24:   addu      $a2, $t5, $s0
+    8004FD2C:   addu      $a2, $t5, $s0
+    8004FD50:   addu      $a2, $t5, $s0
+    8004FD68:  addu       $a2, $t5, $s0
+    8004FD84:  sll        $a1, $s0, 3
+    8004FDC0:  sll        $t6, $v1, 4
+    8004FDC4:  addu       $t7, $t5, $t6
+    8004FDC8:  addu       $v0, $t7, $a1
+    8004FDE8:  sll        $t9, $v1, 4
+    8004FDEC:  addu       $t6, $t5, $t9
+    8004FDF4:   addu      $v0, $t6, $a1
+    8004FDFC:   addu      $a0, $t2, $s0
+    8004FE6C:  sll        $t9, $t8, 4
+    8004FE70:  addu       $t6, $t2, $t9
+    8004FE74:  addu       $t7, $t6, $a1
+    8004FE88:  sll        $t9, $v1, 4
+    8004FE8C:  addu       $t6, $t5, $t9
+    8004FE90:  addu       $v0, $t6, $a1
+    8004FEA0:  addu       $t9, $t7, $t8
+    8004FEB4:  sll        $t8, $t7, 4
+    8004FEB8:  addu       $t9, $t5, $t8
+    8004FEBC:  addu       $t6, $t9, $a1
+    8004FEF0:   addu      $a2, $t5, $s0
+    8004FEF8:  sll        $a1, $s0, 3
+    8004FF08:  sll        $t6, $t9, 4
+    8004FF0C:  addu       $t7, $t5, $t6
+    8004FF14:   addu      $v0, $t7, $a1
+    8004FF2C:   addu      $a2, $t5, $s0
+    8004FF40:   addu      $a2, $t5, $s0
+    8004FF48:   addu      $a2, $t5, $s0
+    8004FF60:  addu       $a2, $t5, $s0
+    8004FF7C:  sll        $a1, $s0, 3
+    8004FFB8:  sll        $t7, $v1, 4
+    8004FFBC:  addu       $t8, $t5, $t7
+    8004FFC0:  addu       $v0, $t8, $a1
+    8004FFE0:  sll        $t6, $v1, 4
+    8004FFE4:  addu       $t7, $t5, $t6
+    8004FFEC:   addu      $v0, $t7, $a1
+    8004FFF4:   addu      $a0, $t2, $s0
+    80050064:  sll        $t6, $t9, 4
+    80050068:  addu       $t7, $t2, $t6
+    8005006C:  addu       $t8, $t7, $a1
+    80050080:  sll        $t6, $v1, 4
+    80050084:  addu       $t7, $t5, $t6
+    80050088:  addu       $v0, $t7, $a1
+    80050098:  addu       $t6, $t8, $t9
+    800500AC:  sll        $t9, $t8, 4
+    800500B0:  addu       $t6, $t5, $t9
+    800500B4:  addu       $t7, $t6, $a1
+    800500D0:   sw        $t2, 0x4C($sp)
+    800500D4:  lui        $t5, %hi(D_800E6280)
+    800500D8:  addiu      $t5, $t5, %lo(D_800E6280)
+    800500DC:  addu       $a2, $t5, $s0
+    800500E4:  lw         $t2, 0x4C($sp)
+    800500F0:  lui        $t8, %hi(D_800E6280)
+    800500F4:  addiu      $t8, $t8, %lo(D_800E6280)
+    800500F8:  sll        $t7, $s0, 3
+    800500FC:  addu       $v0, $t7, $t8
+    80050100:  addu       $a0, $t2, $s0
+    8005017C:  lui        $t5, %hi(D_800E6280)
+    80050180:  addiu      $t5, $t5, %lo(D_800E6280)
+    80050198:  lui        $t5, %hi(D_800E6280)
+    8005019C:  addiu      $t5, $t5, %lo(D_800E6280)
+    800501B4:  lui        $t5, %hi(D_800E6280)
+    800501B8:  addiu      $t5, $t5, %lo(D_800E6280)
+    800501D0:  lui        $t5, %hi(D_800E6280)
+    800501D4:  addiu      $t5, $t5, %lo(D_800E6280)
+    800501E4:   addu      $a2, $t5, $s0
+    800501E8:  addu       $t7, $t5, $s0
+    8005020C:   sw        $a2, 0x30($sp)
+    80050210:  lw         $a2, 0x30($sp)
+    80050214:  lui        $t5, %hi(D_800E6280)
+    80050220:  addiu      $t5, $t5, %lo(D_800E6280)
+    80050234:   sw        $a2, 0x30($sp)
+    80050238:  lw         $a2, 0x30($sp)
+    8005023C:  lui        $t5, %hi(D_800E6280)
+    80050248:  addiu      $t5, $t5, %lo(D_800E6280)
+    8005024C:  sll        $t9, $v1, 4
+    80050250:  addu       $t6, $t5, $t9
+    80050254:  sll        $a1, $s0, 3
+    80050258:  addu       $v0, $t6, $a1
+    80050268:  addu       $t9, $t7, $t8
+    8005027C:  sll        $t8, $t7, 4
+    80050280:  addu       $t9, $t5, $t8
+    80050284:  addu       $t6, $t9, $a1
+    80050314:  lw         $ra, 0x1C($sp)
+    80050318:  lw         $s0, 0x18($sp)
+    80050320:   addiu     $sp, $sp, 0x50

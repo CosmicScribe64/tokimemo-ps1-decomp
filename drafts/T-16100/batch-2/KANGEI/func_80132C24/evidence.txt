@@ -1,0 +1,28 @@
+Target: ['asm/ovl/KANGEI/nonmatchings/KANGEI/80132090/func_80132C24.s']
+Review: KANGEI duplicates OMIMAI copied record and overlapping sp28/sp30 buffers; same coordinated record repair needed.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80132C24 */  addiu      $sp, $sp, -0x70
+    /* 80132C30 */  addiu      $v1, $sp, 0x40
+    /* 80132C34 */  addiu      $t6, $t6, %lo(D_80139A08)
+    /* 80132C38 */  lbu        $v0, %lo(D_800E62BF)($v0)
+    /* 80132C3C */  sw         $ra, 0x14($sp)
+    /* 80132C40 */  addiu      $a1, $sp, 0x38
+    /* 80132C44 */  addiu      $a2, $sp, 0x30
+    /* 80132C48 */  addiu      $a3, $sp, 0x28
+    /* 80132C4C */  addiu      $t9, $t6, 0x24
+    /* 80132C58 */  addiu      $t6, $t6, 0xC
+    /* 80132C64 */  addiu      $t0, $t0, 0xC
+    /* 80132C88 */  addiu      $t1, $t1, %lo(D_80139A34)
+    /* 80132CA0 */  addiu      $t5, $t5, %lo(D_80139A3C)
+    /* 80132CB8 */  addiu      $t6, $t6, %lo(D_80139A44)
+    /* 80132CE4 */   addiu     $t1, $zero, 0x544A
+    /* 80132CE8 */  addiu      $t4, $zero, 0x544A
+    /* 80132CEC */  addiu      $t7, $zero, 0x544A
+    /* 80132CF0 */  addiu      $t8, $zero, 0x5D41
+    /* 80132CF4 */  addiu      $t5, $zero, 0x522E
+    /* 80132CF8 */  addiu      $t9, $zero, 0x58AF
+    /* 80132CFC */  sw         $t1, 0x40($sp)
+    /* 80132D00 */  sw         $t4, 0x4C($sp)
+    /* 80132D04 */  sw         $t7, 0x54($sp)
+    /* 80132D08 */  sw         $t8, 0x38($sp)

@@ -1,0 +1,32 @@
+{
+  "scope": "SHOUGATU:func_8013737C",
+  "selected_path": "drafts/T-14500/SHOUGATU/func_8013737C",
+  "archive_path": "drafts/T-16100/batch-3/SHOUGATU/func_8013737C",
+  "changed": true,
+  "reviewed": true,
+  "repair_notes": [
+    "GameState arithmetic changed to explicit byte-address addition: target addu adds unscaled index/byte stride; GameState* addition multiplies by sizeof(GameState). Existing member uses remain available."
+  ],
+  "flags": [
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 44,
+      "outcome": "repaired",
+      "explanation": "Explicit u8* base makes addition use target byte offsets instead of sizeof(GameState). "
+    },
+    {
+      "detail": "&D_800E6280 +",
+      "kind": "gamestate-address-arithmetic",
+      "line": 51,
+      "outcome": "repaired",
+      "explanation": "Explicit u8* base makes addition use target byte offsets instead of sizeof(GameState). "
+    }
+  ],
+  "notes": "",
+  "assembly_evidence": "drafts/T-16100/batch-3/SHOUGATU/func_8013737C/assembly-evidence.txt",
+  "current_types": "include/main_api.h and include/game.h; compilation uses frozen baseline/include closure",
+  "matching_claim": false,
+  "review_basis": "Read selected draft and target stack/copy/access instructions; checked aggregate width against current main_api.h and game-state wiki. Full TU uses frozen census header closure.",
+  "outcome": "repaired"
+}

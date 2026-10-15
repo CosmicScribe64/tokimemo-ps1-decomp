@@ -1,0 +1,25 @@
+    8013FB1C:  addiu      $sp, $sp, -0x30
+    8013FB28:  sw         $ra, 0x1C($sp)
+    8013FB3C:  multu      $v0, $a2
+    8013FB44:  sll        $t2, $v0, 16
+    8013FB5C:  addu       $t9, $a1, $t8
+    8013FB84:  multu      $v0, $t0
+    8013FB8C:  sll        $t5, $v0, 16
+    8013FB9C:  addu       $v1, $a3, $t4
+    8013FBE4:  multu      $v0, $a2
+    8013FBEC:  sll        $t2, $v0, 16
+    8013FBFC:  addu       $v1, $a1, $t8
+    8013FC8C:  multu      $v0, $t0
+    8013FC94:  sll        $t5, $v0, 16
+    8013FCA4:  addu       $v1, $a3, $t2
+    8013FCD4:   sw        $zero, 0x10($sp)
+    8013FCD8:  lui        $a1, %hi(D_800E6280)
+    8013FCDC:  addiu      $a1, $a1, %lo(D_800E6280)
+    8013FCE8:  sll        $t8, $v0, 2
+    8013FCF0:  sll        $t7, $v0, 16
+    8013FCFC:  addu       $v1, $a1, $t8
+    8013FD10:  sll        $t2, $v0, 2
+    8013FD18:  sll        $t3, $v0, 16
+    8013FD24:  addu       $v1, $a1, $t2
+    8013FD5C:  lw         $ra, 0x1C($sp)
+    8013FD60:  addiu      $sp, $sp, 0x30

@@ -1,0 +1,28 @@
+Target: ['asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80157AE0/func_80159B40.s']
+Review: sp88[4] is a copied four-word pointer table. Repair byte-stride lookup, unify four flags at sp5C into one four-word array, and use one-past-end bound with word increments.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80159B40 */  addiu      $sp, $sp, -0x98
+    /* 80159B44 */  sw         $ra, 0x34($sp)
+    /* 80159B48 */  sw         $s7, 0x30($sp)
+    /* 80159B4C */  sw         $s6, 0x2C($sp)
+    /* 80159B50 */  sw         $s5, 0x28($sp)
+    /* 80159B54 */  sw         $s4, 0x24($sp)
+    /* 80159B58 */  sw         $s3, 0x20($sp)
+    /* 80159B5C */  sw         $s2, 0x1C($sp)
+    /* 80159B60 */  sw         $s1, 0x18($sp)
+    /* 80159B64 */  sw         $s0, 0x14($sp)
+    /* 80159B6C */  addiu      $t7, $t7, %lo(D_8015EFE0)
+    /* 80159B78 */  addiu      $t6, $sp, 0x88
+    /* 80159B98 */  addiu      $t2, $t2, %lo(D_8015EFF0)
+    /* 80159BA4 */  addiu      $t1, $sp, 0x78
+    /* 80159BC4 */  addiu      $t8, $t8, %lo(D_8015F000)
+    /* 80159BD0 */  addiu      $t9, $sp, 0x5C
+    /* 80159BE8 */  addiu      $a0, $zero, 0x5
+    /* 80159BFC */   addiu     $s1, $zero, 0x2
+    /* 80159C04 */   addiu     $s1, $zero, 0x3
+    /* 80159C14 */   addiu     $a0, $zero, 0xA
+    /* 80159C20 */   sll       $t4, $v0, 2
+    /* 80159C28 */  addu       $at, $at, $t4
+    /* 80159C3C */  addiu      $t3, $zero, 0x1
+    /* 80159C44 */   sw        $t3, 0x5C($sp)

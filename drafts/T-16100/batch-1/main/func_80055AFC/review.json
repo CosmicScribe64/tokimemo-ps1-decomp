@@ -1,0 +1,54 @@
+{
+  "scope": "main:func_80055AFC",
+  "selected_path": "drafts/T-14500/main/func_80055AFC",
+  "changed": false,
+  "outcomes": [
+    {
+      "detail": "M2cBlock78",
+      "kind": "inferred-copy-layout",
+      "line": 2,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. The 120-byte and 52-byte copies represent save/restore spans crossing several GameState subfields. Widths alone do not establish a replacement record type, so both inferred copy types remain visible.",
+      "original_excerpt": [
+        "s32 func_80055AFC(s32 arg0) {",
+        "    typedef struct { s32 w[30]; } M2cBlock78; /* m2c memcpy of 120 bytes */",
+        "    typedef struct { s32 w[13]; } M2cBlock34; /* m2c memcpy of 52 bytes */"
+      ]
+    },
+    {
+      "detail": "M2cBlock34",
+      "kind": "inferred-copy-layout",
+      "line": 3,
+      "verdict": "reviewed-copy-evidence-partial",
+      "explanation": "Target lw/sw copy sequences support the documented block byte width. This synthetic block typedef does not establish the original source type; semantic layout and any adjacent/trailing fields remain unresolved. Preserve the flag. The 120-byte and 52-byte copies represent save/restore spans crossing several GameState subfields. Widths alone do not establish a replacement record type, so both inferred copy types remain visible.",
+      "original_excerpt": [
+        "    typedef struct { s32 w[30]; } M2cBlock78; /* m2c memcpy of 120 bytes */",
+        "    typedef struct { s32 w[13]; } M2cBlock34; /* m2c memcpy of 52 bytes */",
+        "    void *sp30;"
+      ]
+    }
+  ],
+  "repair_notes": [],
+  "assembly_path": "asm/nonmatchings/main/80053650/func_80055AFC.s",
+  "assembly_sha256": "a36589a02686ea166f160f66278de49266e6058700886bc9941d29c5f6f68e5a",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x14": [
+      "lw",
+      "sw"
+    ],
+    "0x48": [
+      "sw"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ],
+    "0x30": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The 120-byte and 52-byte copies represent save/restore spans crossing several GameState subfields. Widths alone do not establish a replacement record type, so both inferred copy types remain visible."
+}

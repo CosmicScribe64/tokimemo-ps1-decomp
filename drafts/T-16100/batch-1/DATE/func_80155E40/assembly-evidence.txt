@@ -1,0 +1,17 @@
+    80155E40:  addiu      $sp, $sp, -0xE8
+    80155E54:  sw         $ra, 0x14($sp)
+    80155E5C:  addiu      $t6, $sp, 0x2C
+    80155F38:  sll        $t3, $a2, 2
+    80155F3C:  addu       $t9, $sp, $t3
+    80155F48:  jalr       $t9
+    80155F5C:  sll        $t5, $a2, 2
+    80155F60:  addu       $t8, $sp, $t5
+    80155F80:  multu      $v0, $a1
+    80155F88:  sll        $t1, $v0, 16
+    80155FA0:  addu       $t6, $a0, $t7
+    80155FC8:  multu      $v0, $a1
+    80155FD0:  sll        $t8, $v0, 16
+    80155FE0:  addu       $v1, $a0, $t9
+    80156008:   lw        $ra, 0x14($sp)
+    80156014:  lw         $ra, 0x14($sp)
+    80156018:  addiu      $sp, $sp, 0xE8

@@ -1,0 +1,20 @@
+{
+  "scope": "MASTER:func_8013B448",
+  "src": "src/ovl/MASTER/80139000.c",
+  "size": 956,
+  "path": "drafts/T-16100/batch-2/MASTER/func_8013B448",
+  "archive_path": "drafts/T-16100/batch-2/MASTER/func_8013B448",
+  "ticket": "T-16100",
+  "matching_claim": false,
+  "status": "scored",
+  "score": 329,
+  "changed": true,
+  "source_base": "48362009",
+  "compile_verified": true,
+  "review_outcome": "repaired-with-unresolved-remainder",
+  "body_c_sha256": "3c1bc399f03c2dfe61268b9fdb294d33798bf05f430b09bc5d383aad1b797d2e",
+  "declarations_h_sha256": "19db75973578a897cfbfa3fa5a513f5e5cf63f75fe084dbf63681e6098ea8096",
+  "context_c_sha256": "53f14613530e775d806a266e6601892634778ad8737ac667ff17f563ce17a004",
+  "full-context_c_sha256": "4e560d1335e9d12893fc175d80b561f58b3a6592539d444b918dae1a3b8bd529",
+  "diagnostics_txt_sha256": "13a2fbacc834c5f42b2da104d724219ea213c585449f0552d21111e4776f0aa9"
+}

@@ -1,0 +1,61 @@
+{
+  "scope": "GEKO:func_80132D04",
+  "selected_path": "drafts/T-14500/GEKO/func_80132D04",
+  "changed": true,
+  "outcomes": [
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 12,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "    if ((D_80144C50 != 1) && (D_80144C50 != 0x10)) {",
+        "        var_a1 = (arg0 << 6) + arg1 + &D_800E6280;",
+        "        var_v1 = *(u8 *)((unsigned char *)var_a1 + (101));"
+      ]
+    },
+    {
+      "detail": "+ &D_800E6280",
+      "kind": "gamestate-address-arithmetic",
+      "line": 75,
+      "verdict": "repaired-byte-scaling",
+      "explanation": "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields.",
+      "original_excerpt": [
+        "    }",
+        "    temp_a1 = (arg0 << 6) + arg1 + &D_800E6280;",
+        "    var_v1_3 = *(u8 *)((unsigned char *)temp_a1 + (101));"
+      ]
+    }
+  ],
+  "repair_notes": [
+    "Target addu uses the GameState base plus the explicit byte index (sll/multu are already in that index); cast the base before addition to prevent an erroneous extra sizeof(GameState)=0x1A90 scale. Field recovery remains incomplete where this view spans multiple fields."
+  ],
+  "assembly_path": "asm/ovl/GEKO/nonmatchings/GEKO/801323E0/func_80132D04.s",
+  "assembly_sha256": "7d3e8c5b5cbf0a502cb36b0afa6dec8e58847af83503fef3b14dd25fe207e084",
+  "current_types": "include/game.h and include/main_api.h; frozen baseline include closure used for compilation",
+  "remaining_limitations": "No production integration or matching claim; synthetic copy typedefs and unproven neighboring stack layouts remain review findings.",
+  "direct_stack_accesses": {
+    "0x38": [
+      "lh",
+      "sw"
+    ],
+    "0x14": [
+      "lw",
+      "sw"
+    ],
+    "0x3C": [
+      "lh",
+      "sw"
+    ],
+    "0x33": [
+      "lbu",
+      "sb"
+    ],
+    "0x2C": [
+      "lw",
+      "sw"
+    ]
+  },
+  "layout_limit": "The archived repair addresses only the specific assembly-supported width, alias or stride findings described above; remaining generated pointer types, control flow and semantic record layouts require further reconstruction."
+}

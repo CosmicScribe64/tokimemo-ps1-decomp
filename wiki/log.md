@@ -14905,3 +14905,11 @@ T15900 moves In Review following completed13/13 compilation; ticket and board no
 ## [2026-10-15] ticket | Review 165 flagged compiling drafts
 
 User requested Sol6.1 medium pass. Froze165 selected review-needed scopes and assigned disjoint batches under [[tickets/T-16100-flagged-draft-pass]]. Preserve original alternatives, repair supported issues, retain explicit unresolved findings, and compile changed full contexts. No automated matching restart.
+
+## [2026-10-15] build | Sol medium pass reviews all165 flagged drafts
+
+Three disjoint Sol6.1 medium workers reviewed165 scopes and retained165 full-TU compiled/scored alternatives;93 bodies repaired,72 preserved. Scope coverage and archive hashes validate. Unchanged quality audit moves901/165 to950/116 audit-clear/review-needed (49 cleared). No production edits or new matching bytes; original alternatives preserved. Added [[flagged-draft-pass]] and refreshed [[exhaustive-drafts]], [[stopping-point-2026-10-15]] and ledgers. [[tickets/T-16100-flagged-draft-pass]] moves In Review with semantic limitations explicit.
+
+## [2026-10-15] decision | Prepare final main publication and agent handoff
+
+User requested all work on main and a wiki ready for a later agent. Rewrote [[stopping-point-2026-10-15]] around current63.7% matching coverage,1066 compiling census scopes,116 remaining flagged scopes, archive paths, evidence limitations and exact metadata validation commands. All workers finished; recurring monitoring remains paused. Join/hash checks and13 draft-tool tests pass; production files unchanged. Original checkout and archived attempts preserved.

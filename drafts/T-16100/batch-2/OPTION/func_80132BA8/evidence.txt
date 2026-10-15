@@ -1,0 +1,28 @@
+Target: ['asm/ovl/OPTION/nonmatchings/OPTION/80132000/func_80132BA8.s']
+Review: Many synthesized s32 locals at halfword offsets overlap and RECT-like storage is split. Needs explicit packed structs and SDK ABI evidence, not individual renamed scalars.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 80132BAC */  lbu        $v1, %lo(D_800E738D)($v1)
+    /* 80132BB0 */  addiu      $sp, $sp, -0x90
+    /* 80132BBC */   sw        $ra, 0x1C($sp)
+    /* 80132BC0 */  addiu      $at, $zero, 0xFF
+    /* 80132BC8 */   addiu     $a0, $zero, 0x3D
+    /* 80132BD0 */   addiu     $a0, $zero, 0x3D
+    /* 80132BDC */   sll       $t6, $v1, 2
+    /* 80132BE4 */  addu       $at, $at, $t6
+    /* 80132BF8 */  addiu      $t7, $zero, 0x1
+    /* 80132C04 */  addiu      $a0, $zero, 0x1
+    /* 80132C14 */   addiu     $a0, $zero, 0x1
+    /* 80132C28 */  addiu      $t8, $zero, 0xA0
+    /* 80132C38 */   addiu     $a0, $zero, 0x1
+    /* 80132C7C */  addiu      $t9, $zero, 0xFF
+    /* 80132CA4 */   addiu     $a0, $zero, 0xE
+    /* 80132CAC */   addiu     $a0, $sp, 0x3C
+    /* 80132CB0 */  addiu      $t0, $sp, 0x5C
+    /* 80132CB4 */  addiu      $t1, $sp, 0x6C
+    /* 80132CB8 */  sw         $t1, 0x14($sp)
+    /* 80132CBC */  sw         $t0, 0x10($sp)
+    /* 80132CC4 */  addiu      $a1, $zero, 0x8
+    /* 80132CC8 */  addiu      $a2, $sp, 0x3C
+    /* 80132CD0 */   addiu     $a3, $sp, 0x4C
+    /* 80132CD4 */  lh         $a0, 0x3C($sp)

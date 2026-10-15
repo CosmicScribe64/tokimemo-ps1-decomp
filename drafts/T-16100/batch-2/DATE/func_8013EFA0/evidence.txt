@@ -1,0 +1,28 @@
+Target: ['asm/ovl/DATE/nonmatchings/DATE/80132000/func_8013EFA0.s']
+Review: Copy is 0x2D0 bytes loop + word + halfword = 726 bytes; strings indexed at byte stride 33. Reconstruct a 726-byte char array and correct byte tail/base.
+
+Selected target mnemonic/operand excerpts (opcode words omitted):
+    /* 8013EFA0 */  addiu      $sp, $sp, -0x308
+    /* 8013EFA8 */  addiu      $t7, $t7, %lo(date_place_names)
+    /* 8013EFAC */  sw         $ra, 0x14($sp)
+    /* 8013EFB0 */  addiu      $t0, $t7, 0x2D0
+    /* 8013EFB4 */  addiu      $t6, $sp, 0x2C
+    /* 8013EFBC */  addiu      $t7, $t7, 0xC
+    /* 8013EFC8 */  addiu      $t6, $t6, 0xC
+    /* 8013EFE0 */  addiu      $a0, $zero, 0x1
+    /* 8013EFE8 */  lhu        $at, 0x4($t7)
+    /* 8013EFF8 */  lbu        $a0, %lo(D_800E71DF)($v0)
+    /* 8013F00C */  addiu      $at, $zero, 0x4
+    /* 8013F01C */  lbu        $t4, %lo(D_800E738A)($t4)
+    /* 8013F020 */  addiu      $t3, $zero, 0x8
+    /* 8013F030 */  addiu      $t5, $t4, 0x24
+    /* 8013F040 */  lbu        $a0, %lo(D_800E69A4)($a0)
+    /* 8013F044 */  lbu        $v1, %lo(D_800E69A5)($v1)
+    /* 8013F054 */  lbu        $t9, %lo(date_arrival)($t9)
+    /* 8013F058 */  addiu      $at, $zero, 0x1
+    /* 8013F068 */  lbu        $v0, %lo(D_800E69A6)($v0)
+    /* 8013F06C */  addiu      $a3, $zero, 0xFF
+    /* 8013F080 */  lbu        $a2, %lo(D_800E69A7)($a2)
+    /* 8013F090 */  lbu        $a2, %lo(D_800E69A7)($a2)
+    /* 8013F0A4 */  lbu        $t8, %lo(D_800E738A)($t8)
+    /* 8013F0AC */  addiu      $t0, $t8, 0x11

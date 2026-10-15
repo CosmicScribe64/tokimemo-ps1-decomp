@@ -1,0 +1,20 @@
+{
+  "scope": "TACO:func_801487A4",
+  "src": "src/ovl/TACO/801480B0.c",
+  "size": 948,
+  "path": "drafts/T-16100/batch-1/TACO/func_801487A4",
+  "archive_path": "drafts/T-16100/batch-1/TACO/func_801487A4",
+  "status": "scored",
+  "score": 313,
+  "ticket": "T-16100",
+  "source_base": "48362009",
+  "matching_claim": false,
+  "changed": true,
+  "compile_verified": true,
+  "body.c_sha256": "d55511c610812a5612cb14aa63759c1c03df62d12183198b17b92cba246c008b",
+  "declarations.h_sha256": "a64d86033507b0163d8a0609b67ee476b00e3c27e12d8166e1b88a7c3a40e736",
+  "context.c_sha256": "72dc3f22e95edc2102b6da9f03b7684959f75ff4f1afdc8e431445ad727ed575",
+  "full-context.c_sha256": "5ff1f0a2bffe8463e2761e6fd7ea0351cf8c87fdd08d042f08d62f595d3a194f",
+  "diagnostics.txt_sha256": "44548d4fb7772fac7e495f901f51395a222068c1c7394bcd611001a2388d930f",
+  "assembly-evidence.txt_sha256": "98f191e7f233d9ee2442d8dad4ae8cf4fe10900d86986cd57aa09c9f3aa85a30"
+}
