@@ -1577,13 +1577,13 @@ typedef struct EventParticleView44 {
 } EventParticleView44; /* size 0x44 */
 
 /* Partial state view at D_800B0860. The word table's observed accesses
- * extend through element 47; its full allocation size is not yet known. */
+ * extend through element 57; its full allocation size is not yet known. */
 typedef struct EventEffectTables {
     /* 0x0000 */ u8 pad0000[0x1031];
     /* 0x1031 */ u8 unk_1031[6];
     /* 0x1037 */ u8 pad1037[0x371];
-    /* 0x13A8 */ s32 unk_13A8[48];
-} EventEffectTables; /* size 0x1468, minimum observed extent */
+    /* 0x13A8 */ s32 unk_13A8[58];
+} EventEffectTables; /* size 0x1490, minimum observed extent */
 
 extern s32 D_801257DC[10];
 extern s16 D_8012527C;
