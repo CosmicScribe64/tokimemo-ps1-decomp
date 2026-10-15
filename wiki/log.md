@@ -14080,3 +14080,19 @@ Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (13
 ## [2026-10-15] build | Third verified match and shared-header validation
 
 [[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.
+
+## [2026-10-15] ticket | T-13300 RPG_BAT source-family recovery
+
+Created [[tickets/T-13300-rpg-families]] in isolated codex/rpg-13300 from aa2b3158. Read [[broad-coverage-results]] and [[bunka-family-results]]; avoid repeating blind sweeps and failed counter forms.
+
+## [2026-10-15] query | RPG_BAT bounded counter and call-family negative evidence
+
+[[tickets/T-13300-rpg-families]] records corrected full-TU scores and rejected evidence-backed source forms. AF1C remains six rows, 568A4 twenty, 52080 thirty-two; compact damage helper 495DC improves to forty after correcting local width. Zero accepted functions/bytes and no production edits. Scratch evidence retained under build/rpg13300.
+
+## [2026-10-15] query | RPG_BAT water-state held-out test
+
+[[tickets/T-13300-rpg-families]] records four activity words and four position pairs confirmed by AB84 and held-out AC74. Typed views preserve the remaining register gaps; no verified wins. The broad type-recovery proposal is insufficient for canonical migration. Existing guarded drafts outperform fresh m2c's excessive locals and mis-scaled word-pointer walk. Production files remain untouched.
+
+## [2026-10-15] ticket | T-13300 diagnostic-only handoff for review
+
+Moved [[tickets/T-13300-rpg-families]] to In Review for the documented bounded experiments. Zero accepted functions/bytes, no production changes. Recovery remains unfinished and requires follow-up work.

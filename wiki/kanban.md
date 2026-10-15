@@ -81,6 +81,7 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
 
 - [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 

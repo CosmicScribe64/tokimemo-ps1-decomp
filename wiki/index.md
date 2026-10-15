@@ -293,3 +293,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13001-master-layout-pilot|T-13001]] Recover MASTER layouts and verify pilot matches (Done).
 
 - [[master-types-pilot]] — T-13000/T-13001: three MASTER typed-table matches, 3,648 literal bytes and evidence limits.
+
+- [[tickets/T-13300-rpg-families|T-13300]] RPG_BAT source-family diagnostics (In Review; zero accepted bytes).
