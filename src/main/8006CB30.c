@@ -829,7 +829,28 @@ s32 special_event_select(char *arg0, char *arg1) {
 }
 
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", geko_judge);
+s32 geko_judge(s8 *arg0) {
+    s32 i;
+    s32 idx;
+    s32 n;
+    u8 sp7C[0x18];
+    u8 sp5C[0x20];
+
+    *arg0 = 0;
+    n = (u32)D_800E7D10 % 11;
+    func_80053418(sp7C, sp5C);
+    for (i = 0, idx = n; i != 11; i++, idx++) {
+        n = idx % 11;
+        if ((D_800E6280.unk_1BC[n].unk_0C.f.b1 != 0) && (D_800E6280.unk_1BC[n].unk_0A < 0x3C) && (get_g_zyotai_s(n) != 4) && (sp7C[n] >= 0x11) && ((rand() % 100) < 0x32)) {
+            if (D_800B6740 != n) {
+                *arg0 = n;
+                D_800B6740 = n;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 s32 date_sasoi_judge(s8 *arg0) {
     s32 i;
@@ -874,7 +895,36 @@ s32 date_sasoi_judge(s8 *arg0) {
     return 0;
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
+void schedule_girls_gakko(void) {
+    u8 cnt;
+    s32 i;
+    char girl;
+    char arg;
+
+    cnt = 0;
+    for (i = 0; i < 32; i++) {
+        if (D_800E6280.unk_69C[i].unk_00 == 0x44) {
+            if (D_800E6280.unk_69C[i + 1].unk_00 == 0x33 || D_800E6280.unk_69C[i + 1].unk_00 == 0x32 || D_800E6280.unk_69C[i + 1].unk_00 == 0x47) {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            } else if ((D_800E6280.unk_0F4.b[1] & 0xF) == 3) {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            } else if (special_event_select(&girl, &arg)) {
+                D_800E6280.unk_69C[i].unk_00 = 0x45;
+                D_800E6280.unk_69C[i].unk_01 = girl;
+                D_800E6280.unk_69C[i].unk_02 = arg;
+            } else if (date_sasoi_judge(&girl) == 1 && cnt == 0) {
+                cnt++;
+                D_800E6280.unk_69C[i].unk_00 = 0x46;
+                D_800E6280.unk_69C[i].unk_01 = girl;
+            } else if (geko_judge(&girl)) {
+                D_800E6280.unk_69C[i].unk_01 = girl;
+            } else {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            }
+        }
+    }
+    func_8004284C();
+}
 
 void yuukou_down(void) {
     s32 i;
@@ -1154,7 +1204,54 @@ void func_800725B0(void) {
     func_80067870();
     func_80066C08(0);
 }
+/* NON_MATCHING: T-11670, 20 differing lines; the original stores 1/2/3 to unk_03D from $v1 (the flag kept in a register, T-0018 promotion); IDO uses t7/t8/t9. A u8 h with D = h = k gets the v1 stores but moves the load to v0 (26 lines). */
+#ifdef NON_MATCHING
+void func_800726F0(void) {
+    s32 h;
+
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_8004E58C();
+        func_80066104("ダミー");
+        func_80065F34(0);
+        gnsx(&D_800E6280.unk_0D4);
+        h = D_800E6280.unk_03D;
+        if (h != 0 && D_800E6280.unk_040 == 2) {
+            D_800E6280.unk_03D = 0;
+            sndisp("明日から新学期だ）", 0, 0x1F);
+        } else if (h != 0) {
+            D_800E6280.unk_03D = 0;
+            sndisp("明日から新学期だ）", 0, 0x1F);
+        } else if (D_800E6280.unk_03F == 7) {
+            sndisp("明日から夏休みだ）", 0, 0x1F);
+            D_800E6280.unk_03D = 1;
+        } else if (D_800E6280.unk_03F == 0xC) {
+            sndisp("明日から冬休みだ）", 0, 0x1F);
+            D_800E6280.unk_03D = 2;
+        } else if (D_800E6280.unk_03F == 3) {
+            sndisp("明日から春休みだ）", 0, 0x1F);
+            D_800E6280.unk_03D = 3;
+        } else {
+            D_800E6280.unk_03D = 0;
+        }
+        func_800674B0();
+        k_disp_start(3);
+        func_8004284C();
+        break;
+    case 1:
+        if (func_80044E8C() == 1) {
+            func_8004500C(0, 0);
+            func_80042808();
+        }
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_800726F0);
+#endif
 
 void func_800728A4(void) {
     switch (D_800E6280.unk_1109) {
@@ -1185,7 +1282,47 @@ s32 func_80072944(void) {
     }
 }
 
+/* NON_MATCHING: T-11670, 16 differing lines; the year/month arguments of func_80068938 are scheduled a0-first (original a1-first), and the month reloaded after the call sits in v0 with 9 in v1 (original a1 and v0). */
+#ifdef NON_MATCHING
+s32 func_80072998(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        cd_read_sectors(0x95, 0x801A0000, 0x9B94);
+        D_800E6280.unk_110D++;
+        break;
+    case 1:
+        if (cd_read_sync_status() & 1) {
+            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 1);
+            if (D_800E6280.unk_03F % 3 == 0) {
+                if (D_800E6280.unk_03F == 9 && D_800E6280.unk_040 == 1 && D_800E6280.unk_03E == 0x60) {
+                    func_80042808();
+                } else if (D_800E6280.unk_03F == 9) {
+                    func_8004E58C();
+                    func_80066104("ダミー");
+                    func_80065F34(0);
+                    gnsx(&D_800E6280.unk_0D4);
+                    sndisp("明日から新学期だ）", 0, 0x1F);
+                    k_disp_start(3);
+                    func_80044750(0xC1);
+                    func_800674B0();
+                    func_8004284C();
+                } else {
+                    func_80044750(0xC1);
+                    func_800674B0();
+                    func_8004284C();
+                }
+                func_8006D00C();
+                D_800B5BC8 = 0xEF;
+            } else {
+                func_80042808();
+            }
+        }
+        break;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_80072998);
+#endif
 
 void func_80072B20(void) {
     if (func_80044E8C() == 1) {
