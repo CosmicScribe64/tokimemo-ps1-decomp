@@ -219,6 +219,7 @@ INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 
+/* NON_MATCHING: T-11670, 24 differing lines; frame, buffers and the return chain match, but the loop's count/i/record base/11 take a1/v1/a0/v0 where the original has a0/v0/v1/a1 (uopt colours i first and skips v0). */
 #ifdef NON_MATCHING
 s32 func_8006EA40(void) {
     s32 count;
