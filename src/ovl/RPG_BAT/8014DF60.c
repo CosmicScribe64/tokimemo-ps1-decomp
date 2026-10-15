@@ -150,4 +150,49 @@ void func_8014E5B4(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8014DF60", func_8014E64C);
+s32 func_8014E64C() {
+    s32 temp_v0;
+
+    if (D_8015EDC4 & 0x100000) {
+        temp_v0 = func_8013E9A8(3);
+        switch (temp_v0) {
+        case 0:
+            if (*D_8015EBCC == 0) {
+                D_8015EBAC = 0;
+                return;
+            }
+            if (D_8015EBD0 == 0) {
+                D_8015EBAC = 1;
+                return;
+            }
+            D_8015EBAC = 2;
+            return;
+        case 1:
+            if (D_8015EBD0 == 0) {
+                D_8015EBAC = 1;
+                return;
+            }
+            if (D_8015EBD4 == 0) {
+                D_8015EBAC = 2;
+                return;
+            }
+            D_8015EBAC = 0;
+            return;
+        case 2:
+            if (D_8015EBD4 == 0) {
+                D_8015EBAC = 2;
+                return;
+            }
+            if (*D_8015EBCC == 0) {
+                D_8015EBAC = 0;
+                return;
+            }
+            D_8015EBAC = 1;
+            return;
+        }
+    } else {
+        D_8015EBAC = 3;
+        D_8015EDF0 = 2;
+    }
+}
+

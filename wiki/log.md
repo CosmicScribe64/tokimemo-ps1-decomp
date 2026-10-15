@@ -13335,3 +13335,6 @@ guarded `func_80148764` (9 lines), `func_80135148` (4), `func_80149BB0` (5). TT 
 
 Inline review against CODING_STANDARDS.md: the one new trick (`volatile` pointer in a guarded draft) is marked FAKE with
 the ticket; m2c leftovers tidied in the bulk match. No findings. Moved [[tickets/T-11560-tt-batch-6]] to Done.
+## [2026-10-14] ticket | T-11320 to In Progress
+
+[[tickets/T-11320-close-near-misses-sonnet-48]] started in worktree s48.

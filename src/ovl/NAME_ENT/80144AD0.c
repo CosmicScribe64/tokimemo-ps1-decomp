@@ -506,7 +506,7 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80144AD0", func_80145FB0);
 #ifdef NON_MATCHING
 void func_801460D8(void) {
     u8 temp_a1;
-    u8 temp_v1;
+    u32 temp_v1;
 
     switch (D_800E6280.unk_110D) {
     case 0:
@@ -520,12 +520,9 @@ void func_801460D8(void) {
         D_800E6280.unk_110D += 1;
         break;
     case 1:
-        temp_a1 = D_801220E0;
-        temp_v1 = temp_a1 + 4;
+        temp_a1 = ((u8 *)&D_801220E0)[0];
         if (temp_a1 < 0x81U) {
-            D_801220E1 = temp_v1;
-            D_801220E2 = temp_v1;
-            D_801220E0 = temp_v1;
+            D_801220E0 = D_801220E2 = D_801220E1 = temp_v1 = temp_a1 + 4;
             func_80057390(temp_v1 & 0xFF, temp_a1);
         }
         prologue_line_run();
