@@ -13547,3 +13547,11 @@ Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build 
 [[tickets/T-12100-codex-cx10]] moves to In Review with 5,628 verified bytes in four matches. Fresh Docker configure and ninja -j2 passed 27/27 binary checksums, headers, globals and symbols; the prototype check reports zero new disagreements and 15 known baseline conflicts. Final literal production-byte checks reconfirm 489D0 (2,068), E3E8 (2,000), A4DC (820) and D298 (740). None of these matches uses FAKE shaping.
 
 All twelve assigned functions were attempted. Retained ticketed guards differ by 4 rows (47958), 5 (AD9C), 16 (DCCC) and 17 (AF88); required return/frame/source-grouping shaping in 47958 is labelled FAKE. Larger unproven reconstructions remain only in ignored build/scratch; production retains assembly fallbacks. Reusable findings are recorded in [[matching-notes]]. Evidence: build/scratch/final-build.log, final-protos.log, final-literal.log and *-retained.log. No production toolchain changes or new conflicts.
+
+## [2026-10-15] setup | DATE near-match follow-up
+
+Created [[tickets/T-14100-date-near-matches]] from the verified [[tickets/T-12100-codex-cx10]] handoff. Reused selective compiler include-dependency fixes; broad integration merge was aborted because of overlapping wiki history. Existing four DATE matches remain baseline.
+
+## [2026-10-15] build | Two DATE dispatch handlers verified
+
+[[tickets/T-14100-date-near-matches]] adds 340 verified bytes: src/ovl/DATE/8015A190.c func_8015A288 and src/ovl/DATE/80152FC0.c func_80154004. Full-TU default literal bytes match and production DATE SHA1 passes. New table declarations live in include/ovl/DATE.h. Four bounded scoped-width probes failed for 47958; original guard restored. [[matching-notes]] records the callback/selector reload rule.

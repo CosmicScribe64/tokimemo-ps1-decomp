@@ -359,7 +359,19 @@ void func_80153FCC(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80152FC0", func_80154004);
+void func_80154004(void) {
+    s32 idx;
+    DateDispatch80154004 tbl;
+    tbl = D_8015F434;
+    if (D_800E6280.unk_110A < 9) {
+        func_8006B900();
+    }
+    if ((D_800E6280.unk_110A >= 0x16) && (D_800E6280.unk_110A < 0x1C)) {
+        func_8006B900();
+    }
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x80);
+}
 
 void func_801540B8(void) {
     func_80044750(0x502);
