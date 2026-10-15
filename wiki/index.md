@@ -309,3 +309,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13102-etc-exam-family|T-13102]] ETC exam handlers.
 
 - [[tickets/T-13202-event-sprite-initializers|T-13202]] Event sprite initializer family.
+
+- [[tickets/T-13300-rpg-families|T-13300]] RPG_BAT source-family diagnostics (In Review; zero accepted bytes).

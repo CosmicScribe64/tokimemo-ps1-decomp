@@ -89,6 +89,12 @@ kanban-plugin: board
 
 
 ## In Review
+- [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
+
+- [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
+
+- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
+
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
 - [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
