@@ -14166,3 +14166,15 @@ SHOUGATU func_8013BDE0 adds656 literal linked bytes; affected overlay SHA1 passe
 
 ## [2026-10-15] build | New family batch verified at 61.3 percent
 [[tickets/T-12400-integrate-verified-matches]]: DATE7cb6d2a1, ETCf561351b and SHOUGATU21df4fe7 integrated. All27 binary hashes pass; header/global checks and branch prototype audit pass (0new/15known). Current progress5864/6958functions and1397856/2279368bytes (61.3%), a gain5functions/3792progressbytes over b8f516ff. Literal proof totals3796bytes include4bytes not counted by the progress inventory; the unchanged progress definition governs the80% goal. Remaining425640alignedprogressbytes. Evidence build/scratch/goal-family-next.log and goal-date740.log. Previous goal continuation made progress via these source integrations and bounded TACO evidence; this continuation completes verification and publication.
+
+## [2026-10-15] ticket | T-13500 incremental dependency tracking
+
+Created [[tickets/T-13500-incremental-build-dependencies]] in isolated codex/build-deps-13500 from 5ccb8765. Inspected [[build-system]], configure.py, tools/cc.py and compiler behavior in the existing Docker image. IDO -M works; -MD does not. Preserve asm-processor input and include-search semantics when collecting dependencies.
+
+## [2026-10-15] build | T-13500 baseline and dependency implementation
+
+Baseline 5ccb8765 built all 27 binary checks in Docker. Touch benchmark: one main source = 1 compile / 5 tasks; shared main_api.h or overlay ETC.h = 443 compiles / 526 tasks each. Synthetic regressions exposed missing source-triggered header checking and broad overlay invalidation before the change. tools/cc.py now discovers IDO headers from the exact asm-processor temporary input via -M, and GCC headers from its existing cpp output; configure.py uses an order-only validation gate, explicit assembly macro inputs and include/src directory regeneration. [[tickets/T-13500-incremental-build-dependencies]] remains In Progress pending expanded regressions, full build and review.
+
+## [2026-10-15] build | T-13500 incremental proof and review handoff
+
+Eight synthetic Ninja dependency regressions and 17 existing compiler tests pass in Docker. Updated full build passes 27/27 checks; subsequent build is a no-op. ETC.h touch now schedules only 13 compiles / 18 tasks instead of 443 / 526; shared main_api.h retains 442 actual consumers. Source touch retains one compile and now checks headers. Actual incremental source/ETC builds took 8.981s/12.990s on the shared host. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to In Review in ticket and kanban. No new matched-byte claim.

@@ -192,10 +192,10 @@ def overlay_targets(n, overlays):
         for cf in srcscan.unit_c_files(name):
             n.build(cf.obj, "cc", str(cf.src),
                     variables={"toolchain": " ".join(OBJECT_TOOLCHAINS.get(cf.name, OVL_C_TOOLCHAIN))},
-                    implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "include/common.h", "include/include_asm.h",
+                    implicit=[stamp, SYMBOLS_OK, "include/macro.inc", "include/labels.inc",
                               "include/asmproc_prelude.inc",
                               "include/gte_macros.inc", "tools/cc.py", "tools/frame_pass.py",
-                              "tools/object_layout.py"])
+                              "tools/object_layout.py"], order_only=[HEADERS_OK])
             c_os.append(cf.obj)
         data_os = []
         for data_s in data_ss:
@@ -222,6 +222,7 @@ def main():
     n.build("build.ninja", "configure", "configure.py",
             implicit=["config/%s.yaml" % EXE, "config/overlays.txt"]
             + ([TOOLCHAINS_FILE] if os.path.exists(TOOLCHAINS_FILE) else []) + image_dirs
+            + sorted(glob.glob("include/**/", recursive=True) + glob.glob("src/**/", recursive=True))
             + ["config/overlays/%s.yaml" % o[0] for o in read_overlays()])
     # game image -> disc/files (T-3300); reruns only when an image or the tools change, and a new
     # file in game/ changes a directory time, which regenerates build.ninja and so re-finds the images
@@ -240,7 +241,9 @@ def main():
     n.build("symbols", "phony", SYMBOLS_OK)
     n.rule("headers", command="python3 tools/check_headers.py include src && touch $out",
            description="CHECK HEADERS")
-    n.build(HEADERS_OK, "headers", implicit=["tools/check_headers.py"] + HEADER_FILES)
+    n.build(HEADERS_OK, "headers",
+            implicit=["tools/check_headers.py", "tools/sync_protos.py", "tools/srcscan.py"]
+            + HEADER_FILES + sorted(glob.glob("src/**/*.c", recursive=True)))
     n.build("headers", "phony", HEADERS_OK)
     # old D_ names of aggregate fields (T-5100): tools/migrate_globals.py --check over every C file
     n.rule("globals", command="python3 tools/migrate_globals.py --check && touch $out",
@@ -274,12 +277,13 @@ def main():
             implicit=[DISC_STAMP, "tools/data_pieces.py"])
 
     objs = []
-    headers = sorted(glob.glob("include/**/*.h", recursive=True) + glob.glob("include/**/*.inc", recursive=True))
     for c, toolchain in sorted(C_FILES.items()):
         o = "build/" + c[:-2] + ".o"
         n.build(o, "cc", c, variables={"toolchain": " ".join(toolchain)},
-                implicit=[stamp, HEADERS_OK, SYMBOLS_OK, "tools/cc.py", "tools/frame_pass.py",
-                          "tools/object_layout.py"] + headers)
+                implicit=[stamp, SYMBOLS_OK, "tools/cc.py", "tools/frame_pass.py",
+                          "tools/object_layout.py", "include/asmproc_prelude.inc",
+                          "include/gte_macros.inc", "include/macro.inc", "include/labels.inc"],
+                order_only=[HEADERS_OK])
         objs.append(o)
     for s in ASM_FILES:
         o = "build/" + s[:-2] + ".o"
