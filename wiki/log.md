@@ -14116,3 +14116,18 @@ Created [[tickets/T-13103-etc-memory-card-family]] after bounded exam-family tes
 
 ## [2026-10-15] build | Combined ETC literal proof and preservation audit
 All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 681c93b6e57c885f86e074c885a8bf6c3cca2319; 91 existing C bodies are text-identical to aa2b3158. Headers/globals pass. [[etc-family-results]] records bounded positive/negative results and source census.
+
+## [2026-10-15] ticket | 13100 review complete
+[[tickets/T-13100-etc-families]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13101 review complete
+[[tickets/T-13101-etc-career-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13102 review complete
+[[tickets/T-13102-etc-exam-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13103 review complete
+[[tickets/T-13103-etc-memory-card-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] lint | ETC completion records coherent
+Four new tickets each have one Done card matching frontmatter; all new pages are indexed and cross-linked. Eleven final proof spans sum to 5900 bytes. Independent standards/spec reviews pass; 0 new prototype disagreements. See [[etc-family-results]].

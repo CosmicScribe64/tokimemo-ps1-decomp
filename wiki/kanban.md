@@ -81,10 +81,6 @@ kanban-plugin: board
 
 
 ## In Review
-- [ ] [[tickets/T-13103-etc-memory-card-family|T-13103 Reconstruct ETC memory-card state handlers]]
-- [ ] [[tickets/T-13102-etc-exam-family|T-13102 Reconstruct ETC exam handlers]]
-- [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
-- [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
 
 - [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 
@@ -125,6 +121,10 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-13103-etc-memory-card-family|T-13103 Reconstruct ETC memory-card state handlers]]
+- [ ] [[tickets/T-13102-etc-exam-family|T-13102 Reconstruct ETC exam handlers]]
+- [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
+- [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 - [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]
