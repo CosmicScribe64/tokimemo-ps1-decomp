@@ -14913,3 +14913,11 @@ Three disjoint Sol6.1 medium workers reviewed165 scopes and retained165 full-TU 
 ## [2026-10-15] decision | Prepare final main publication and agent handoff
 
 User requested all work on main and a wiki ready for a later agent. Rewrote [[stopping-point-2026-10-15]] around current63.7% matching coverage,1066 compiling census scopes,116 remaining flagged scopes, archive paths, evidence limitations and exact metadata validation commands. All workers finished; recurring monitoring remains paused. Join/hash checks and13 draft-tool tests pass; production files unchanged. Original checkout and archived attempts preserved.
+
+## [2026-10-15] decision | Local worktree storage cleanup
+
+User requested disk cleanup while retaining game files. Audited worktree status; dirty and locked trees are retained. Clean tokimemo-wt checkouts are archived with file-hash verification, duplicate disc files are verified against retained main-project copies, and commit references are retained before worktree removal. See [[tickets/T-11920-local-storage-cleanup]].
+
+## [2026-10-15] lint | Verify local storage cleanup
+
+[[tickets/T-11920-local-storage-cleanup]] moved to In Review. Removed 35 clean registered worktrees and four orphaned folders after archive verification. Confirmed 1,360 retained game files still match their SHA-256 hashes, and all six dirty worktrees retain their previous Git status. Main project and other agent worktrees remain. No project code changed.
