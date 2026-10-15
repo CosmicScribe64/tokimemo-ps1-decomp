@@ -4717,3 +4717,38 @@ two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
 - Tidy m2c leftovers in matches: `*(u8 *)((unsigned char *)D_80158A64 + (28))` is `D_80158A64[0x1C]` (`func_8013E1E8`).
 - Tools: regdiff named the priority problems (`func_80142C70`, `func_80135148`); autotweak (5 runs) and the permuter (1)
   found nothing on these drafts; a quick ninja-one-object + `funcdiff --no-build` loop was the main workhorse.
+
+## T-11620: wave 1 package w1-p06 (TT 80133970.c, 80142D40.c)
+
+Four matches (2,052 bytes): `func_80135148`, `func_80134E20`, `func_80134D0C`, `func_80144854` (FAKE view). Ticket
+[[tickets/T-11620-w1-ovl-tt-80133970]].
+
+- **Unused trailing call arguments.** func_80141C6C/func_80141EBC take (ot, packet, q) even where the callee ignores q.
+  Passing q puts it in a2 for its whole range and fixes every other register (`func_80134D0C`, `func_80134E20`). The
+  callee's asm does not show the extra argument, so m2c drops it; check the other callers in `src/` first. In the same
+  way `func_801441BC` calls `func_801437F0(h, g)` with D_80158A6C/D_80158A64 in a0/a1.
+- **Loop bound in a local set in the for-init.** `for (i = 0, n = 0x80; i != n; i++)` makes 0x80 a variable that is
+  numbered before the chain constants (0xAB, 0xAC, 0xAD), giving the original's s5/s6 order (`func_80135148`, the
+  pattern `func_80134BBC` already used). `n = 0x80;` as a statement before the loop moves its `li` too early.
+- **One PsyQ macro per line for TILE packets.** `setXY0`, `setRGB0` and `setWH` each on one line; the order of the
+  lines sets the schedule (tile 1 xy/rgb/wh, tiles 2 and 3 rgb/xy/wh) and `((TtOtTag *)t)->len = 3; t[7] = 0x61;` on
+  one line gives the original constant order (`func_80134E20`).
+- **x and y stores before the flag bytes** (`func_80134D0C`, found by `permute.py` in 180 s): the order of the
+  sprite stores moved a `li` of 0x3D94 and a `move` that looked like a uopt range.
+- **A test that re-reads a global after a local copy.** The original loads p straight into s2 and reloads D_80158A74
+  for the next test; IDO merges the first test's read with p. Only an array view of the D_80158A60 pointer block on
+  that one read keeps them apart (`func_80144854`, FAKE). In `func_80143978` and `func_801441BC` the plain global read
+  already stays separate.
+- **Frames without saved registers.** Every declared local takes a 4-byte slot, top-down in declaration order, whether
+  or not it is spilled; spill offsets and the frame size follow from the declaration list (`func_801441BC`: frame and
+  slots matched once the locals were declared i, g, h, r, p, q, v plus a pad).
+- **`found = a[0]`** after `a[0] = 1` gives the original's `andi t4,t1,0xff`; `found = 1` gives `li` (`func_80143A44`).
+- **Slot searches** are pointer walks with a separate counter: `r = D_80158A80 + 6 * 0x54; for (i = 6; i < 8; i++)
+  { ...; r += 0x54; }`; `r = base + i * 0x54` inside the loop strength-reduces differently (`func_80143A44`).
+- **Blocked:** `func_801441BC` (the original keeps the `break` after an inner `if` as a separate `b; nop` block, IDO
+  threads it), `func_80143A44` (the pad & 2 part), and the phantom-register drafts (`func_80134768`, `func_80134874`,
+  `func_801436BC`, `func_80144A04`, `func_801437F0`). Drafts of the two big functions are in
+  [[data/t11620-func_801441BC-draft.patch]] and [[data/t11620-func_80143A44-draft.patch]].
+- Tools: a side-by-side `objdump` of `build/permute/<func>/base.c` (compiled with its `compile.sh`) against
+  `target.o`, with registers and branch targets normalized, showed the structural differences of the big functions in
+  a few lines. autotweak took `func_80143A44` from 320 to 106 lines (its edits include a FAKE empty test).

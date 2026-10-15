@@ -1921,3 +1921,10 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80135360 | `func_801356C8` | regorder | T-11560: not kept (about 70 lines): the original keeps the divisor 85 in fp (register divide with break checks); IDO keeps -0x400 there and divides by an immediate |
 | TT/80148DB0 | `func_801494D8` | frame | T-11560: not kept (about 75 lines): frame 0x50 vs 0x58, spill-slot order differs |
 | TT/80142350 | `func_80142350` | regorder | T-11560: still 2 lines: regdiff shows the original's pointer range interferes with v0..a1; in the draft it overlaps nothing |
+| TT/80142D40 | `func_801441BC` | shape | T-11620: not kept (draft in [[data/t11620-func_801441BC-draft.patch]]): the original keeps the `break` after an inner `if` as its own `b; nop` block in three cases, IDO retargets the `beqz` and fills the delay slot; the constant 4 stays in one a2 range from case 0xA0 to the loops |
+| TT/80142D40 | `func_80143A44` | regorder | T-11620: not kept, 106 lines (draft in [[data/t11620-func_80143A44-draft.patch]]): all code before the `pad & 2` part matches; there b gets a1 (original v0), the s16 store of 1 at +0x3E needs a chain that adds an `andi`, and the p[0x60] load sits later |
+| TT/80133970 | `func_80134874` | regorder | T-11620: 14 lines with unk_60 before unk_4C (original t3/t4/t5); constant 1 still v1 (original a1), early lui of D_80155B4E; permuter 180 s no gain |
+| TT/80142D40 | `func_80144A04` | regorder | T-11620: unchanged 3 lines; a 64-bit return type and a 180 s permuter run change nothing |
+| TT/80142D40 | `func_801437F0` | regorder | T-11620: not kept (145 lines): the original keeps p in s1 across the first call (frame 0x38); IDO spills it in v1 (frame 0x40); unused (h, g) parameters (the caller passes them) do not help |
+| TT/80142D40 | `func_801436BC` | phantom | T-11620: `for (n = 0; n < 2; n++)` with `n * 5 + 5` gives the original's 5/15 order but not the a1/a2 phantom ranges; same 26 lines |
+| TT/80133970 | `func_80134768` | phantom | T-11620: a chain `unk_08 = unk_06 = 0` reloads through the struct; a zero local, s32 return, K&R definition and assignment-in-if all stay at 30 lines |

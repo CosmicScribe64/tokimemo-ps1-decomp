@@ -13355,3 +13355,11 @@ Matched ENDING func_8013BE64, RPG_BAT func_80136CCC, main func_8005FA20. Guarded
 ## [2026-10-15] ticket | T-11620 created
 
 Created [[tickets/T-11620-w1-ovl-tt-80133970]] (In Progress): wave 1 package w1-p06, 12 TT functions in `src/ovl/TT/80133970.c` and `src/ovl/TT/80142D40.c`.
+
+## [2026-10-15] build | T-11620 wave 1 package w1-p06: 4 TT matches
+
+[[tickets/T-11620-w1-ovl-tt-80133970]]: matched TT `func_80135148`, `func_80134E20`, `func_80134D0C` and `func_80144854` (FAKE array view), 2,052 bytes. New idioms in [[matching-notes]] ("T-11620"): unused trailing call arguments (q to func_80141C6C/func_80141EBC), loop bound local in the for-init, one PsyQ macro per line for TILE packets, frames from the declaration list. Seven rows in [[data/t0018-cases]]; drafts of the two big unmatched functions in [[data/t11620-func_801441BC-draft.patch]] and [[data/t11620-func_80143A44-draft.patch]].
+
+## [2026-10-15] ticket | T-11620 In Review
+
+[[tickets/T-11620-w1-ovl-tt-80133970]] moved to In Review; needs the CODING_STANDARDS review before Done.
