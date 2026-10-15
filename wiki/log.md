@@ -14518,3 +14518,7 @@ Clarified [[tickets/T-14501-remaining-draft-proof]] byte accounting: frozen inve
 ## [2026-10-15] ticket | T-15000 KANGEI near-match investigation
 
 Claimed [[tickets/T-15000-kangei-near-match]] for bounded type/aggregate investigation of KANGEI func_80135CE0, whose T-14500 draft has score 6 over 432 inventory bytes. Incoming zero candidates keep priority; the frozen census context is unchanged. [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15000 KANGEI duplicated-branch-store match
+
+Promoted KANGEI func_80135CE0: 432 inventory coverage bytes and 432 default linked literal bytes. Replaced m2c's shared-store goto with ordinary if/else-if branches, each with its own final byte store. KANGEI SHA1 and header/global/prototype guards pass; no FAKE or header changes. [[tickets/T-15000-kangei-near-match]] moves to In Review, with [[kanban]], [[index]], and [[matching-notes]] updated.
