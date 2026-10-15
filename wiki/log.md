@@ -14242,3 +14242,6 @@ Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-famili
 
 ## [2026-10-15] ticket | TACO diagnostic handoff enters review
 [[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]] move to In Review with matching cards. [[taco-family-results]] records zero accepted bytes, one-row 497EC, three-row 4A480 and 62-row 87A4. Preserved all ignored candidate bodies/diffs and reproducible full-TU probe; source and header diffs against 97ec697f are empty. Final default overlay build is running.
+
+## [2026-10-15] build | TACO default restored and diagnostic review recorded
+[[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]]: saved probe reproduces 497EC one row and 4A480 three rows; source restored. Explicit checked Docker ninja exits 0 with TACO SHA1 OK (1419e93cbad6c0df790577701181be04e0747969), headers/globals pass. Independent standards review has zero findings; spec review notes the primary matching goal remains unmet and the pending-verification text needed updating (now corrected). Tickets remain In Review, zero accepted bytes; [[taco-family-results]] updated.

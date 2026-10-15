@@ -29,4 +29,10 @@ Fresh m2c reads for 3D528/3D838 reveal unresolved SDK projection locals and matr
 
 ## Diagnostic handoff
 
-No production function accepted: zero new matched bytes. Best 497EC has one commuted pointer-add row; 4A480 has three rows. 87A4 natural full-TU candidate has 62 rows. See [[taco-family-results]] for bounded experiments and ignored build/t13801/reprobe.py for reproduction. All production source/header trial edits restored; awaiting final default overlay verification and standards/spec review.
+No production function accepted: zero new matched bytes. Best 497EC has one commuted pointer-add row; 4A480 has three rows. 87A4 natural full-TU candidate has 62 rows. See [[taco-family-results]] for bounded experiments and ignored build/t13801/reprobe.py for reproduction. All production source/header trial edits restored. Final default overlay verification and independent standards/spec review are recorded below.
+
+### Final verification and review
+
+Docker reprobe.py reproduces 497EC one row and 4A480 three rows, no compile errors, and restores source bytes. Subsequent `ninja -j1 build/ovl/TACO.ok build/headers.ok build/globals.ok` exits 0; TACO SHA1 OK (1419e93cbad6c0df790577701181be04e0747969). Logs build/t13801/{reprobe,final-verified}.log; the earlier full rebuild records headers OK. Production src/include diff versus 97ec697f is empty. No whole-game checksum claim is made.
+
+Independent GPT-6.1 Sol medium standards review: no findings. Spec review: primary matching goal remains unmet (zero accepted bytes); the stale pending-validation statement is now corrected. Tickets remain In Review as a research handoff, not Done. No shared declarations, guards or FAKE workarounds were installed. Original checkout remains unchanged by this task.
