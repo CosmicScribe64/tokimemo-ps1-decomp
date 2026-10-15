@@ -79,8 +79,6 @@ void func_801101B4(void) {
     D_801252E0 = 0x801E2000;
 }
 
-/* NON_MATCHING: T-11110, 24 lines: original keeps 6 in $a1 for multu $a0, $a1 (D_801252E4 * 6) and bne $a1, $t3 (D_800B0898 == 6) and puts D_801252E4 in $a0; IDO strength-reduces * 6 to shifts/subu and puts D_801252E4 in $v1. */
-#ifdef NON_MATCHING
 void func_80110234(void) {
     u8 v;
 
@@ -88,7 +86,7 @@ void func_80110234(void) {
     D_80094730 += D_8012531C * (u8)D_801252E8;
     D_80094734 = 0;
     v = func_8002328C(D_800B1746);
-    D_80124344 = (((v & 0x7F) >= 2U) + ((v & 0x7F) >= 3U)) * ((D_801252E4 == 0) + 1) + D_801252E4 * 6 - (D_801252E4 == 2) * 3;
+    D_80124344 = (((v & 0x7F) >= 2U) + ((v & 0x7F) >= 3U)) * (((*(s8 *)&D_801252E4) == 0) + 1) + D_801252E4 * 6 - ((*(s8 *)&D_801252E4) == 2) * 3;
     D_80124348 = 0;
     *(s16 *)&D_80124358 = 0;
     *(s16 *)&D_80124360 = 0;
@@ -100,7 +98,7 @@ void func_80110234(void) {
     D_80124378 = 0;
     *(s16 *)&D_80124364 = 0;
     *(s16 *)&D_80124368 = 0;
-    if ((D_800B0898 == 6) && (D_800B0897 < 8)) {
+    if (((s16)D_800B0898 == 6) && (D_800B0897 < 8)) {
         D_80125328 = 1;
     } else {
         D_80125328 = 0;
@@ -110,9 +108,6 @@ void func_80110234(void) {
     D_80094868 = 0;
     func_80011DFC();
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80110234);
-#endif
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801103A0);
 
