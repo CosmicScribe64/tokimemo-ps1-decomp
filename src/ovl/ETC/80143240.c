@@ -217,7 +217,39 @@ void func_801441DC(s32 arg0, s32 arg1) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144224);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80144540);
+s32 func_80144540(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        tpage_buf_clear();
+        draw2d3d(1, 0);
+        k_speed_set(0);
+        D_800E6280.unk_F6F = 3;
+        func_80048EB8(0);
+        func_80048DAC(1);
+        func_80041584();
+        *(s32 *) &D_800E6280.unk_1095[3] = 0x9F;
+        func_8006BC28(0);
+        back_clear_switch(1);
+        func_8004E58C();
+        set_kanji_string(-0x90, -0x40, 0xF, "今回のプレイをセーブしますか？", 0);
+        set_kanji_string(-0x18, 4, 0xF, D_801500F0, 0);
+        set_kanji_string(0x3C, 4, 1, func_80140F50(), 0);
+        set_kanji_string(-0x18, 0x14, 0xF, D_8015010C, 0);
+        set_kanji_string(0x3C, 0x14, 2, func_80140F94(), 0);
+        k_sub_reset_point_set();
+        k_sub_disp_start(0);
+        data_save_load_class_init();
+        D_80120653 |= 0x20;
+        D_800E6280.unk_110D += 1;
+        D_800E6280.unk_03A = 0;
+        break;
+    case 1:
+        if (D_800E6280.unk_03A++ > 0x80) {
+            func_8004284C();
+        }
+        break;
+    }
+}
 
 void func_801446E4(void) {
     if (D_800E6280.unk_F88 & 0x20) {
