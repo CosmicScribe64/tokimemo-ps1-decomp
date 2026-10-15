@@ -66,7 +66,7 @@ typedef struct MouseOut {
 void func_80059860(s32 arg0, MouseOut *arg1) {
     s8 *p;
 
-    func_80059938();
+    func_80059938(arg0);
     arg1->unk_0 = (u32)D_800E36C8[arg0] / D_800E36E8;
     arg1->unk_4 = (u32)D_800E36D0[arg0] / D_800E36EA;
     arg1->unk_8 = -0x100;
@@ -76,4 +76,23 @@ void func_80059860(s32 arg0, MouseOut *arg1) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/80059710", func_80059938);
+void func_80059938(s32 port) {
+    s8 **slot;
+    s8 *p;
+    slot = &D_800E36C0[port];
+    p = *slot;
+    if ((p[0] == 0) && (p[1] == 0x12)) {
+        D_800E36C8[port] += p[4];
+        D_800E36D0[port] += p[5];
+        if (D_800E36C8[port] > D_800E36DC) {
+            D_800E36C8[port] = D_800E36DC;
+        } else if (D_800E36C8[port] < D_800E36D8) {
+            D_800E36C8[port] = D_800E36D8;
+        }
+        if (D_800E36D0[port] > D_800E36E4) {
+            D_800E36D0[port] = D_800E36E4;
+        } else if (D_800E36D0[port] < D_800E36E0) {
+            D_800E36D0[port] = D_800E36E0;
+        }
+    }
+}

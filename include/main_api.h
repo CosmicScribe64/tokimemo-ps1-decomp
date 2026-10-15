@@ -2025,7 +2025,7 @@ void func_80059308(void);
 void func_80059688(s32 arg0);
 void SenseMouse(u16 arg0, u16 arg1);
 void SetMouse(s32 arg0, u32 arg1, u32 arg2);
-void func_80059938(void);
+void func_80059938(s32 port);
 void func_80059B04();
 void func_80059B40(void);
 void func_80059BC0(void);

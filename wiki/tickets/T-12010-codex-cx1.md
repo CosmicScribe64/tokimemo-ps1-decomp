@@ -42,3 +42,7 @@ Migrated the saved main-loop draft to GameState fields and used a local GameStat
 ### func_80049044 matched (112 bytes)
 
 A five-minute permuter run improved its stripped score from 90 to 50 using a u8 pointer to the brightness field. Full-unit variants show the simple initialized pointer (with both loads and stores through it) is actually exact. The original six-word ugen mismatch disappears. Plain C linked funcdiff MATCH (112 bytes), main SHA1 and globals OK; headers unchanged since the preceding 27/27 build. No FAKE: the pointer is an ordinary field view, with no alias offset or dead statement. Evidence build/scratch/49044-pointer.log and 49044-match.diff.
+
+### func_80059938 matched (232 linked bytes)
+
+Replaced m2c unknown-register placeholders with the incoming port index, then rewrote coordinate updates as ordinary array accesses. A named pointer-table slot (s8 **slot = &D_800E36C0[port], p = *slot) gives the exact original index/pointer allocation; direct table indexing misses by 20 lines. Updated the shared prototype and the existing owned caller to pass its port explicitly. Both func_80059938 (232 bytes) and the previously matched func_80059860 (216 bytes) pass linked verification. Full header rebuild 27/27, headers/globals OK, followed by clean-pointer main checksum pass. No FAKE. Evidence build/scratch/59938-clean-match.diff, 59938-clean-build.log and 59938-build.log.

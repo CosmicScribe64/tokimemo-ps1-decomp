@@ -13521,3 +13521,7 @@ func_80042134 in src/main/800420D0.c passes literal linked funcdiff (404 bytes) 
 ## [2026-10-15] build | T-12010 brightness clamp matches
 
 func_80049044 passes 112-byte linked comparison and main checksum via a local field pointer. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record why the nonzero stripped permutation score concealed an exact full-unit match. Previous main-loop header rebuild finished 27/27.
+
+## [2026-10-15] build | T-12010 mouse coordinate update matches
+
+func_80059938 passes linked verification (232 bytes) and main SHA1; its updated explicit-port caller remains a 216-byte match. Shared header rebuild passed 27/27 with headers/globals OK. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record the natural pointer-table slot idiom.
