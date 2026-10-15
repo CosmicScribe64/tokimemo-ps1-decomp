@@ -13726,3 +13726,14 @@ Docker baseline configure/ninja -j2 passed all 27 binary checksums, headers and 
 ## [2026-10-15] build | cx7 C718 exact match
 
 [[tickets/T-12070-codex-cx7]]: `func_8015C718` literal linked MATCH (1,340 bytes), TACO SHA1 passes. Direct unsigned selector load closes the last six register rows; [[matching-notes]] records the reusable distinction. Cumulative 3,280 bytes from two functions. Evidence: build/scratch/C718-production.log.
+## [2026-10-15] ticket | Start cx9 BUNKA_SD matching pass
+
+Created [[tickets/T-12090-codex-cx9]] In Progress, with [[kanban]] and [[index]] entries. Read required guidance and historical evidence for all ten targets. Baseline Docker configure/ninja passes 27/27 SHA1, headers and globals. Prioritize verified bytes and larger related setup functions.
+
+## [2026-10-15] build | T-12090 dispatcher matched
+
+BUNKA_SD:func_80132428 matches exact linked text (448 bytes) with overlay SHA1, headers and globals OK. Canonical global fields and missing forward declarations resolve prior full-file failure. Plain C, no FAKE. Details in [[tickets/T-12090-codex-cx9]].
+
+## [2026-10-15] build | T-12090 name text builder matched
+
+BUNKA_SD:func_80132FF0 has532 exact linked text bytes and a passing overlay checksum, headers and globals. Restored the fifth jump-table case. Explicit FAKE documents the inferred buffer capacity. Cumulative980 text bytes; see [[tickets/T-12090-codex-cx9]].
