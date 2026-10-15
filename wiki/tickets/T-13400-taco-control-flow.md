@@ -1,7 +1,7 @@
 ---
 id: T-13400
 title: Recover TACO flag handler control flow
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -24,3 +24,5 @@ Current full-TU baseline reproduces89rows. Eight bounded candidates combine natu
 Four bounded local-coalescing tests: merging the two decompiler mask temporaries improves57to52rows; merging either with stack-spill temporary worsens to74/67, merging all three gives56. Evidence supports a remaining register/stack-lifetime mismatch rather than the aggregate-address pattern that solved Bunka. Scratch candidates preserved; no guarded draft installed because residual remains above the run's short-guard threshold.
 
 Twelve bounded local-slot/type forms improve52to44rows by declaring the unified mask first. The improved candidate has the correct instruction count, but a56-byteframe instead of64 and maskspill52 instead of48, plus divide-input register and scheduling differences. Word-width and pointer-order changes do not solve it. No new ASM guard or artificial padding added. Evidence build/t13400/slots.log and best.diff.
+
+Bounded diagnostic handoff: zero production changes, zero matched bytes; candidate44rows and reproducible scripts retained. No further repetition without a new local-lifetime hypothesis.

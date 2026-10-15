@@ -14224,3 +14224,6 @@ Created codex/largest-dialogue from integration 2cb6a11c for [[tickets/T-12500-l
 
 ## [2026-10-15] decision | Replace exhausted dialogue pass with NAME_ENT family work
 [[tickets/T-12600-byte-coverage-families]]: largest-function worker completed diagnostic-only b1d78a41 after calibrated AS1 tracing and bounded source searches; dialogue_speak_part remains16rows/0newbytes. Evidence retained under [[tickets/T-12500-largest-dialogue]]. New replacement agent uses user-requested Sol6.1medium, isolated NAME_ENT scope and T13700 series. Avoid repeating exhausted T11570 selector-copy hypotheses; prioritize coherent type/control-flow families. DATE, ETC, GYOZI/SHOUGATU, TAIIKU and build-dependency work remain active.
+
+## [2026-10-15] ticket | Bounded TACO pass enters review
+[[tickets/T-13400-taco-control-flow]] moved to In Review after reproducing89rows and reducing to44 with natural conditions and local lifetimes. No new C or claimed bytes. Integrated ticket cards reconciled with frontmatter after completed worker handoffs.

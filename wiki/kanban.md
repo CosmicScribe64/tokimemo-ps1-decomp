@@ -23,18 +23,14 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
+- [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
+- [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
+- [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
+- [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
+- [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
 - [ ] [[tickets/T-13102-etc-exam-family|T-13102 Reconstruct ETC exam handlers]]
 - [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
-- [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
-
-- [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
-
-- [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
-
-- [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
-- [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 
 
@@ -50,7 +46,9 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
+
+
+
 
 
 
@@ -92,23 +90,22 @@ kanban-plugin: board
 
 
 ## In Review
-- [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
-
-- [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
-
-- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
-
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
+- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 - [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
 - [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
 - [ ] [[tickets/T-12050-codex-cx5|T-12050 Codex cx5 main menu matching pass]]
-- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
-
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
 - [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
 - [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
+- [ ] [[tickets/T-13400-taco-control-flow|T-13400 Recover TACO flag handler control flow]]
 - [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
 - [ ] [[tickets/T-12040-codex-cx4|T-12040 Codex cx4 RPG battle matching]]
+- [ ] [[tickets/T-13300-rpg-families|T-13300 Recover RPG_BAT source families]]
+
+
+
+
 
 
 
