@@ -14510,3 +14510,7 @@ Promoted 2 ordinary C functions / 1,048 bytes for RPG_BAT after default linked l
 ## [2026-10-15] build | T-14501 SHUGAKU verified draft batch
 
 Promoted 2 ordinary C functions / 1,052 bytes for SHUGAKU after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] decision | Distinguish draft coverage gains from literal proof spans
+
+Clarified [[tickets/T-14501-remaining-draft-proof]] byte accounting: frozen inventory coverage sizes can exclude alignment included by funcdiff's linked comparison. SHUGAKU contributes 1,052 coverage bytes while its two proofs compare 1,056 linked bytes. The cumulative 28-function gain is 18,056 inventory coverage bytes; all literal match proofs remain valid. Future batches record both measures separately.
