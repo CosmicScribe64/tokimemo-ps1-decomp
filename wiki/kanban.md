@@ -60,7 +60,6 @@ kanban-plugin: board
 
 
 ## In Review
-- [ ] [[tickets/T-11580-w1-ovl-date-80132000|T-11580 Wave 1 package w1-p02]]
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
@@ -85,6 +84,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-11580-w1-ovl-date-80132000|T-11580 Wave 1 package w1-p02]]
 - [ ] [[tickets/T-11560-tt-batch-6|T-11560 TT batch 6]]
 - [ ] [[tickets/T-11550-tt-opus-near-miss-pass|T-11550 TT Opus near-miss pass]]
 - [ ] [[tickets/T-11540-tt-order-search-pass|T-11540 TT order_search pass]]

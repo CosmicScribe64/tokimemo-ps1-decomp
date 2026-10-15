@@ -2891,9 +2891,9 @@ void func_8013B208(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013B208);
 #endif
 
-/* NON_MATCHING: T-11020, T-11580: unk_75C and D_80122D08 take v1/a0 where the original has v0/v1 and the
-   original reloads unk_75C before the nested test; D_800CA15C is read as a halfword and func_80084D3C takes
-   no arguments (T-11580) */
+/* NON_MATCHING: T-11020, T-11580, 75 funcdiff lines left: unk_75C and D_80122D08 take v1/a0 where the
+   original has v0/v1, and the original reloads unk_75C before the nested test (D_800CA15C is read as a
+   halfword and func_80084D3C takes no arguments in this draft, T-11580) */
 #ifdef NON_MATCHING
 void func_8013B488(void) {
     u32 t;
@@ -3562,7 +3562,7 @@ s32 func_8013D468(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11020, register-only (39 insns): constant 8 in a3 (compares) + a2 (call arg) instead of one a2, n in v0 vs v1; first branch matches */
+/* NON_MATCHING: T-11020, T-11580, 93 funcdiff lines left (register-only): constant 8 in a3 (compares) + a2 (call arg) instead of one a2, n in v0 vs v1; first branch matches */
 #ifdef NON_MATCHING
 s32 func_8013D5FC(void) {
     GameState *g;
@@ -3953,7 +3953,7 @@ void func_8013E614(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, post-increment compare, a0/v1 vs v1/v0 */
+/* NON_MATCHING: T-10510, T-11580, 12 funcdiff lines left: post-increment compare, a0/v1 vs v1/v0 */
 #ifdef NON_MATCHING
 void func_8013E6A4(void) {
     s32 d;

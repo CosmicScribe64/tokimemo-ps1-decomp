@@ -13359,3 +13359,7 @@ Created [[tickets/T-11580-w1-ovl-date-80132000]] (In Progress): wave 1 package w
 ## [2026-10-15] ticket | T-11580 to In Review
 
 [[tickets/T-11580-w1-ovl-date-80132000]]: 11 DATE matches (func_80137D1C, func_8013D8B0, func_801366A4, func_80136B70 and seven place handlers of the same table-reader shape), four guarded drafts, two drafts improved. Notes in [[matching-notes]] (T-11580), rows in [[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11580 Done
+
+[[tickets/T-11580-w1-ovl-date-80132000]] reviewed against CODING_STANDARDS.md and moved to Done: 11 DATE matches. One finding fixed (line counts missing in three `NON_MATCHING` comments of `src/ovl/DATE/80132000.c`); no other findings.
