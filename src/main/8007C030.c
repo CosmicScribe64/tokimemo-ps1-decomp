@@ -801,13 +801,11 @@ s32 normal_date_girl_in_main(void) {
     D_8011ECD0[0x843] = D_800B5940;
 }
 
-/* FAKE: the implicit return and byte-array chains retain the original v1-to-v0
- * constant copy and store ordering. D_80121808 is a byte view here. T-9720. */
 s32 normal_date_girl_suddenin(void) {
     D_80122CF4 = 1;
-    D_8011F513 = 0x80;
-    ((u8 *)&D_801217E4)[0] = ((u8 *)&D_801217E5)[0] = ((u8 *)&D_801217E6)[0] = 0x80;
-    ((u8 *)&D_80121808)[0] = ((u8 *)&D_80121809)[0] = ((u8 *)&D_8012180A)[0] = 0x80;
+    D_8011ECD0[0x843] = 0x80;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
     func_8004284C();
 }
 
