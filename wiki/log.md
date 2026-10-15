@@ -13529,3 +13529,11 @@ Full-file probes exposed two missing overlay declarations: existing void BUNKAKE
 ## [2026-10-15] build | T-12300 verified 3604-byte BUNKAKEN family
 
 [[tickets/T-12300-large-unclaimed-byte-matches]]: three related 1–1.4 KB handlers pass literal linked-byte proof and whole BUNKAKEN SHA1. [[matching-notes]] records consistent GameState pointer and CharFlags bit2 idioms. Existing C preserved; no FAKE added. Compiler slot transferred to the RPG effects/UI worker.
+
+## [2026-10-15] build | T-12300 retain structurally recovered RPG target
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] records the 2,232-byte func_80145CC0 guarded draft: zero byte gain, 557/557 compared instructions, 58 register-only positions remaining after bounded source experiments. Default RPG_BAT SHA1 and header/global checks pass. Raw experiment evidence retained in ignored scratch; no compiler changes or dummy source workarounds.
+
+## [2026-10-15] build | T-12300 verified 1316-byte RPG effect handler
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] reaches 4,920 verified bytes / four functions. RPG_BAT func_8014A660 passes literal linked proof and unit SHA1 with explicit nested cases and a documented FAKE scalar pointer view. [[matching-notes]] records both the success and failed transfer to the larger guarded timer handler. Final full-game checks and review follow.
