@@ -46,7 +46,12 @@ void func_801394EC(void) {
     D_80120652 = 1;
 }
 
-INCLUDE_ASM("asm/ovl/GEKO/nonmatchings/GEKO/801393C0", func_8013957C);
+void func_8013957C(void) {
+    normal_date_move_place();
+    if (D_800E6280.unk_110D++ == 0) {
+        func_80044750(0x501);
+    }
+}
 
 void func_801395C0(void) {
     cd_read_sectors(0x3D, 0x801B0000, 0x7D96);

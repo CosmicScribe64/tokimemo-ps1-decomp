@@ -8,7 +8,72 @@ extern Tbl6_80144D38 D_80155F70;
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80143DD0);
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80144A70);
+void func_80144A70(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_800866A0(0x6C5F);
+        break;
+    case 1:
+        addr_init_bustup();
+        D_800E6280.unk_F5F = 0xD;
+        func_80083474();
+        cd_read_sectors(5U, 0x801E8000, 0x49BA);
+        break;
+    case 2:
+        normal_date_girl_in();
+        break;
+    case 3:
+        if (cd_read_sync_status() & 1) {
+            func_800847B8(0xDU);
+            func_801324E0();
+            D_800CA148 = 6;
+            D_800CA14C = 0;
+            D_800CA160 = (s32) D_80155E90;
+            D_800CA164 = (s32) D_80155E94;
+            D_800CA168 = (s32) D_80155E98;
+            func_8004284C();
+        }
+        break;
+    case 4:
+        normal_date_speak();
+        break;
+    case 5:
+        switch (D_800E6280.unk_03E) {
+        case 0x5F:
+            break;
+        case 0x60:
+            D_800CA148 += 1;
+            break;
+        case 0x61:
+            D_800CA148 += 2;
+            break;
+        default:
+            func_80046500();
+            break;
+        }
+        func_8004284C();
+        break;
+    case 6:
+        normal_date_speak();
+        break;
+    case 7:
+        normal_date_girl_out();
+        break;
+    case 8:
+        D_800CA148 = 0xA;
+        func_8004284C();
+        break;
+    case 9:
+        normal_date_speak();
+        break;
+    case 10:
+        func_80042908(3);
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80143DD0", func_80144C5C);
 

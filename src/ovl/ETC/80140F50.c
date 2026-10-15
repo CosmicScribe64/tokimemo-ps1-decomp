@@ -23,7 +23,60 @@ u8 *func_80140F94(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80140FD8);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80140F50", func_80141154);
+void func_80141154(void) {
+    u8 temp;
+    temp = D_800E6280.unk_110D;
+    switch (temp) {
+    case 0:
+        func_8004E58C();
+        set_kanji_string(-0x78, 0x30, 0xF, (s32) "未初期化のメモリーカードです。", 0);
+        k_disp_start(1);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        func_8004E58C();
+        set_kanji_string(-0x78, 0x30, 0xF, (s32) "初期化していいですか？", 0);
+        set_kanji_string(-0x88, 0x5A, 0, (s32) D_801500F0, 0);
+        set_kanji_string(-0x34, 0x5A, 1, func_80140F50(), 0);
+        set_kanji_string(8, 0x5A, 0, (s32) D_8015010C, 0);
+        set_kanji_string(0x5C, 0x5A, 2, func_80140F94(), 0);
+        k_disp_start(5);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            if (func_80054108() == 1) {
+                func_80042940(4);
+            } else {
+                func_80042940(2);
+            }
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 4:
+        func_8004E58C();
+        set_kanji_string(-0x78, 0x30, 0xF, (s32) "別のメモリーカードを", 0);
+        set_kanji_string(-0x78, 0x3E, 1, (s32) "差し込み口１", 0);
+        set_kanji_string(-0x78, 0x3E, 0xF, (s32) "　　　　　　にセットして、", 0);
+        set_kanji_string(-0x78, 0x4C, 0xF, (s32) "　ボタンを押してください。", 0);
+        set_kanji_string(-0x78, 0x4C, 1, func_80140F50(), 0);
+        D_800E6280.unk_110D += 1;
+        k_disp_start(5);
+        break;
+    case 5:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80042940(4);
+        }
+        break;
+    }
+    func_800578F4(2);
+}
 
 void func_801413FC(void) {
     func_800AE0B0("データセーブ");

@@ -480,6 +480,9 @@ void func_80133A68(void);
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 extern s16 D_8013C87C;
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80132F44(void);
+
 #endif /* OVL_SHUGAKU_H */
 
 #ifndef T9540_SHUGAKU_FN68

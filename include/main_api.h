@@ -2624,4 +2624,64 @@ extern u8 D_800B3638;
 
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern s16 D_80120BB8;
+extern u8 D_800E71F3;
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern u32 D_800E73A0;
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8005C414(void);
+void func_8005D56C(void);
+s32 func_8005D804(void);
+void func_8005D31C(void);
+void func_8005C968(void);
+s32 func_8005BAE0(void);
+s32 func_8005BC38(void);
+s32 func_8005BB84(void);
+
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_8005E018(void);
+void func_8005E2C0(void);
+void func_8005E40C(void);
+void func_8005E454(void);
+void func_8005E5C8(void);
+void func_8005E7A4(void);
+void func_8005E7F0(void);
+void func_8005E924(void);
+void func_8005E9EC(void);
+void func_8005EA38(void);
+void func_8005EB74(void);
+void func_8005EC78(void);
+void func_8005ECB8(void);
+void func_8005EE00(void);
+void func_8005EF04(void);
+void func_8005EF44(void);
+void func_8005F22C(void);
+void func_8005F26C(void);
+void func_8005F478(void);
+void func_8005F6E4(void);
+void func_8005FDA0(void);
+void func_8005FF68(void);
+void func_80060104(void);
+void func_80060504(void);
+void func_80060150(void);
+
 #endif /* MAIN_API_H */

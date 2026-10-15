@@ -389,7 +389,66 @@ void func_8005B8E0(void) {
     func_80042940(2);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005B908);
+void func_8005B908(void) {
+    u8 temp;
+    temp = (u8) D_800E6280.unk_110A;
+    switch (temp) {
+    case 0x0:
+        func_8005BCEC();
+        break;
+    case 0x1:
+        func_8005BE8C();
+        break;
+    case 0x2:
+        func_8005C414();
+        break;
+    case 0x3:
+        func_8005C5BC();
+        break;
+    case 0x4:
+        func_8005CA94();
+        break;
+    case 0x5:
+        func_8005CC40();
+        break;
+    case 0x6:
+        func_8005CF6C();
+        break;
+    case 0x7:
+        func_8005D448();
+        break;
+    case 0x8:
+        func_8005D56C();
+        break;
+    case 0x9:
+        func_8005D804();
+        break;
+    case 0xA0:
+        func_8005C14C();
+        break;
+    case 0xB0:
+        func_8005D31C();
+        break;
+    case 0xC0:
+        func_8005C968();
+        break;
+    case 0xE0:
+        func_8005BAE0();
+        break;
+    case 0xF0:
+        func_8005BC38();
+        break;
+    case 0xFF:
+        func_8005BB84();
+        break;
+    }
+    func_80066334();
+    cal_base_show();
+    message_window_show();
+    parameter_show();
+    hizuke_show();
+    func_8006BA40();
+}
 
 s32 func_8005BAE0(void) {
     switch (D_800E6280.unk_110D) {
@@ -710,7 +769,115 @@ s32 func_8005D804(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005D9B4);
+void func_8005D9B4(void) {
+    switch (*(u8 *)&D_800E6280.unk_110A) { /* FAKE: scalar byte view of the switch selector. T-11170 */
+    case 0x0:
+        system_settings_init();
+        break;
+    case 0x1:
+        func_8005E018();
+        break;
+    case 0x10:
+        func_8005E150();
+        break;
+    case 0x11:
+        func_8005E2C0();
+        break;
+    case 0x12:
+        func_8005E40C();
+        break;
+    case 0x20:
+        func_8005E454();
+        break;
+    case 0x21:
+        func_8005E5C8();
+        break;
+    case 0x22:
+        func_8005E7A4();
+        break;
+    case 0x30:
+        func_8005E7F0();
+        break;
+    case 0x31:
+        func_8005E924();
+        break;
+    case 0x32:
+        func_8005E9EC();
+        break;
+    case 0x33:
+        func_8005EA38();
+        break;
+    case 0x34:
+        func_8005EB74();
+        break;
+    case 0x35:
+        func_8005EC78();
+        break;
+    case 0x36:
+        func_8005ECB8();
+        break;
+    case 0x37:
+        func_8005EE00();
+        break;
+    case 0x38:
+        func_8005EF04();
+        break;
+    case 0x39:
+        func_8005EF44();
+        break;
+    case 0x3A:
+        func_8005F09C();
+        break;
+    case 0x3B:
+        func_8005F22C();
+        break;
+    case 0x40:
+        func_8005F26C();
+        break;
+    case 0x41:
+        func_8005F478();
+        break;
+    case 0x42:
+        func_8005F6E4();
+        break;
+    case 0x50:
+        func_8005F730();
+        break;
+    case 0x51:
+        func_8005FA20();
+        break;
+    case 0x52:
+        func_8005FDA0();
+        break;
+    case 0x60:
+        func_8005FDEC();
+        break;
+    case 0x61:
+        func_8005FF68();
+        break;
+    case 0x62:
+        func_80060104();
+        break;
+    case 0x70:
+        func_80060178();
+        break;
+    case 0x71:
+        func_800603C0();
+        break;
+    case 0x72:
+        func_80060504();
+        break;
+    case 0xFF:
+        func_80060150();
+        break;
+    }
+    func_80066334();
+    cal_base_show();
+    message_window_show();
+    parameter_show();
+    hizuke_show();
+    func_8006BA40();
+}
 
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", system_settings_init);
 

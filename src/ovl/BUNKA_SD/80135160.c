@@ -130,4 +130,72 @@ s32 func_801354C8(void) {
 
 INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80135160", func_801355AC);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80135160", func_80135630);
+void func_80135630(void) {
+    s32 var_s0;
+
+    var_s0 = 0;
+    do {
+        load_palette(D_8013C72C, (var_s0 + 0x10) & 0xFF, 1, 1, var_s0);
+        var_s0 += 1;
+    } while (var_s0 != 0x10);
+    func_80048F64(0x60);
+    D_80120651 = 4;
+    D_80120688 = 0x01000000;
+    D_80120653 = 0x80;
+    D_8012065C = D_8013C724;
+    D_80120660 = D_8013C728;
+    D_80120684 = D_8013C720;
+    D_80120666 = (s16) D_80122EAC;
+    D_80120656 = 1;
+    D_80120657 = 0;
+    D_80120676 = -0xA0;
+    D_8012067A = -0x78;
+    D_80120655 = 0x80;
+    D_80120693 = 0;
+    D_80120654 = 0;
+    func_80048F64(0x61);
+    D_80120695 = 4;
+    D_801206CC = 0x01000000;
+    D_80120697 = 0;
+    D_801206A0 = (s32) D_8013C724;
+    D_801206A4 = (s32) D_8013C728;
+    D_801206C8 = (s32) D_8013C720;
+    if (D_80122EAC == 3) {
+        D_801206AA = 5;
+    } else {
+        D_801206AA = 4;
+    }
+    D_8012069A = 1;
+    D_8012069B = 0x80;
+    D_801206BA = -0xA0;
+    D_801206BE = -0x78;
+    D_80120699 = 0;
+    D_801206D7 = 0x11;
+    D_80120698 = 0;
+    func_80048F64(0x62);
+    D_801206D9 = 4;
+    D_80120710 = 0x01000000;
+    D_801206DB = 0x80;
+    D_801206DA = 0x40;
+    D_801206E4 = (s32) D_8013C724;
+    D_801206E8 = (s32) D_8013C728;
+    D_8012070C = (s32) D_8013C720;
+    D_801206F0 = 0x80;
+    D_801206DE = 1;
+    D_801206DF = 0;
+    D_801206FE = -0xA0;
+    D_80120702 = -0x78;
+    D_801206DD = 0x80;
+    D_8012071B = 0;
+    D_801206DC = 0;
+    load_tpage_buf_lock(5, (*(s32 *)D_8013C720), 1);
+    load_tpage_buf_lock(6, *(s32 *)((unsigned char *)D_8013C720 + (4)), 1);
+    load_tpage_buf_lock(7, *(s32 *)((unsigned char *)D_8013C720 + (8)), 1);
+    load_tpage_buf_lock(8, *(s32 *)((unsigned char *)D_8013C720 + (12)), 1);
+    load_tpage_buf_lock(9, *(s32 *)((unsigned char *)D_8013C720 + (16)), 1);
+    load_tpage_buf_lock(0xA, *(s32 *)((unsigned char *)D_8013C720 + (20)), 1);
+    load_tpage_buf_lock(0x25, *(s32 *)((unsigned char *)D_8013C720 + (24)), 1);
+    load_tpage_buf_lock(0x26, *(s32 *)((unsigned char *)D_8013C720 + (28)), 1);
+    load_tpage_buf_lock(0x27, *(s32 *)((unsigned char *)D_8013C720 + (32)), 1);
+    load_tpage_buf_lock(0x28, *(s32 *)((unsigned char *)D_8013C720 + (36)), 1);
+}

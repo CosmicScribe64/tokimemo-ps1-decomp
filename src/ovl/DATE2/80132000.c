@@ -37,7 +37,41 @@ void func_80132000(void) {
     D_8013A400 = 0x8019F39C;
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80132000", func_80132214);
+void func_80132214(void) {
+    func_80083808();
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_801326F0();
+        break;
+    case 1:
+        func_80132DE0();
+        break;
+    case 2:
+        func_80136660();
+        break;
+    case 3:
+        func_801375D4();
+        break;
+    case 4:
+        func_80136FC4();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+    check_k_scroll();
+    k_disp_inc2();
+    if ((D_800E6280.unk_1109 == 0) && ((u8) D_800E6280.unk_110A < 0x13U)) {
+        parameter_show();
+        func_800578F4(0);
+    } else {
+        func_80066C08(2);
+        func_80083A10();
+    }
+    message_window_show();
+    func_80066334();
+    hizuke_show();
+}
 
 void func_80132334(void) {
     D_800CA134 = &D_8013A428;

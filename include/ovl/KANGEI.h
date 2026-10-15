@@ -276,6 +276,9 @@ typedef struct KangeiStateView {
     /* 0x66C */ KangeiModeFlags modes[12];
 } KangeiStateView; /* size 0x69C */
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80138158(void);
+
 #endif /* OVL_KANGEI_H */
 extern u8 D_80139DF8;
 void func_80138D40(void);
