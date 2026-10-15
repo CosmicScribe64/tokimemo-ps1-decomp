@@ -253,3 +253,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-12210-matching-bottleneck-research|T-12210]] Remaining-byte census and experiments for matching breakthroughs (Done; 3 matches, 2352 linked bytes).
 - [[matching-breakthroughs]] - T-12210 remaining-byte census, three verified family matches, negative retrieval experiment, and research priorities.
 - [[tickets/T-12220-scene-handler-family-experiment|T-12220]] Medium-function cohort and paired bitfield experiment (Done; 20 matches, 16,272 linked bytes).
+- [[tickets/T-12230-broad-coverage-sweep|T-12230]] Broad medium/large coverage sweep (In Review; 190 targets, five matches).
+- [[broad-coverage-results]] - T-12230: 190-target ledger, five verified wins, and limits of broad zero-search matching.

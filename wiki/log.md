@@ -13565,3 +13565,27 @@ BUNKASAI func_80150234 and func_80145930 both pass literal linked equality at 76
 ## [2026-10-15] ticket | T-12220 reviewed and complete
 
 Requirements review of f1010b54...5deb7fa0 passed; standards review found only the stale index status, now fixed. No code findings. [[tickets/T-12220-scene-handler-family-experiment]] moved to Done with synchronized board/index. Twenty literal-verified functions and 16,272 bytes are committed locally on codex/acceleration-audit; no merge or push. [[matching-breakthroughs]] records the bounded result and next scheduling experiment.
+
+## [2026-10-15] ticket | T-12230 broaden coverage sweep
+
+User requested broader work aimed at large coverage gains. Opened [[tickets/T-12230-broad-coverage-sweep]] to extend the successful medium-function pipeline into unclaimed objects and larger functions. Baseline 6d1e9cf2, 57.3%. Inspecting current ownership read-only before freezing targets.
+
+## [2026-10-15] decision | T-12230 freeze broad cohort
+
+[[tickets/T-12230-broad-coverage-sweep]] selects 101 functions / 150,524 list bytes across 18 units, emphasizing the larger eligible functions. Known cx claims and all other worktree source differences excluded; three stale worktrees checked by filesystem comparison. Zero-search pipeline started under one CPU / 1 GiB. No global success-rate extrapolation from the earlier two-overlay sample.
+
+## [2026-10-15] decision | T-12230 preserve misses and check selection bias
+
+The broad first-pass sample is much harder than T-12220's related-overlay cohort. Two wins in the first 51 attempts; remaining failures retained. After the first sweep completes, test remaining eligible medium/large targets under the same ownership exclusions, then apply the known CharFlags store idiom to suitable close drafts. No claim that widening the size limit alone produces a game-wide high success rate.
+
+## [2026-10-15] build | T-12230 first broad sweep result
+
+101-target sweep completed in 459.49 seconds: two verified pipeline matches / 2,228 bytes, 92 near misses, seven draft/compile failures. Global migration and header checks pass. This rejects extrapolating T-12220's 16/24 direct success rate across these broader units. The remaining 99 eligible targets are now running with identical zero-search settings. A 1,996-byte RPG_BAT draft has a 20-row exact mismatch and is prioritized for bounded follow-up.
+
+## [2026-10-15] build | T-12230 second cohort and targeted follow-up
+
+Remaining sweep completed: 89 targets / 85,100 bytes, one verified pipeline match / 792 bytes, 86 near misses, two compile failures, 432.70 seconds. Correction to the earlier estimate: 190 eligible targets total, not 200, hence 89 remaining rather than 99. Broad direct totals: 3/190, 3,020 bytes. Scratch RPG_BAT increment, return-type and aggregate probes did not improve the 20-row mismatch. Follow-up tests known CharFlags reads/stores, the existing func_80083440 K&R call convention, and up to five m2c source variants on ten closest remaining drafts. Ambiguous D_800E68FC in the K&R draft resolved to its existing halfword GameState member.
+
+## [2026-10-15] build | T-12230 five verified matches, broad hypothesis bounded
+
+[[broad-coverage-results]] records 190 targets / 235,624 list bytes across 18 units: three direct wins plus the K&R call and CharFlags test fixes, five functions / 5,036 literal bytes total. Both affected overlay SHA1s and header/global/prototype guards pass. Nine source-variant retries produced no win; flag-store/local-copy and RPG counter probes remain nonmatching. No broad success-rate or full-game-build claim. [[tickets/T-12230-broad-coverage-sweep]] moved to In Review with full outcome ledger and linked evidence.

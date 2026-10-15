@@ -116,3 +116,7 @@ Total: **20 functions / 16,272 literal linked bytes**, comprising two seeds, 16 
 The practical next step is a bounded sweep of unclaimed 600–1,999-byte functions using existing drafts and exact rescoring, followed by grouping near misses by known type/code-generation patterns. Keep a small-function control sample and include failed attempts, setup and review in the timing before claiming a general speedup. This selected pair of related overlays supports changing target selection; it does not establish a game-wide 67% success rate. Do not start with an unbounded random-mutation farm.
 
 Evidence: build/family/final-proof.txt (18 functions), pair-proof.txt (two fixes), final-build.log and pair-build.log (unit checksums), progress-final.txt. Cohort and attempt records: /private/tmp/tokimemo-family-out/cohort.json and state.jsonl; run.log records elapsed time. Scratch scripts in build/family/ are local and ignored. The table above preserves the complete cohort and outcomes in versioned documentation.
+
+## Broad follow-up (T-12230)
+
+[[broad-coverage-results]] extends this test to 190 unclaimed targets across 18 units / 235,624 list bytes. Only three matched directly; two known type/call-convention fixes bring the gain to five functions / 5,036 literal bytes. Five variants on nine close targets added none. This materially limits extrapolation of the earlier 16/24 sample: wider size selection alone did not produce a large jump. The full ledger and unresolved shared type/addressing cases are preserved in that report.
