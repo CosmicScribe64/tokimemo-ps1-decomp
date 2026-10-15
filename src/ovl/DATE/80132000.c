@@ -1253,7 +1253,35 @@ void func_80136A74(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136B70);
+void func_80136B70(void) {
+    /* FAKE: pointer view and byte-pointer indexing prevent uopt from CSEing g->unk_F5F * 6 across stores
+       (same idiom as func_80139944). T-11580 */
+    GameState *g = &D_800E6280;
+    s32 choice_offset;
+
+    D_800CA160 = D_8015BDFC;
+    D_800CA164 = D_8015BE68;
+    D_800CA168 = D_8015BED4;
+    D_8015B658 = 3;
+    func_800AE0F0(D_800CA19C, "スケート場");
+    func_800AE0F0(D_800CA1DC, "スケートリンク");
+    if (!(D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_14[0x1F] & 1)) {
+        D_800CA2FC = 0;
+    } else {
+        D_800CA2FC = 1;
+    }
+    choice_offset = D_800CA2FC * 3;
+    D_80122D08 = 0x1F;
+    *D_800CA22C = (s16) *(g->unk_F5F * 6 + D_8015B588 + choice_offset);
+    D_800CA22C[1] = (s16) *(g->unk_F5F * 6 + D_8015B588 + choice_offset + 1);
+    D_800CA22C[2] = (s16) *(g->unk_F5F * 6 + D_8015B588 + choice_offset + 2);
+    *D_800CA21C = (s16) *(g->unk_F5F * 6 + D_8015B58C + choice_offset);
+    D_800CA21C[1] = (s16) *(g->unk_F5F * 6 + D_8015B58C + choice_offset + 1);
+    D_800CA21C[2] = (s16) *(g->unk_F5F * 6 + D_8015B58C + choice_offset + 2);
+    func_8007ED84(0x456C);
+    func_80085B3C(1, D_80122D08);
+    func_8004284C();
+}
 
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_80136D3C);
 

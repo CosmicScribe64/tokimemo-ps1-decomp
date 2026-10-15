@@ -1470,10 +1470,13 @@ extern u8 *D_8015B55C;
 
 #ifndef OVL_DATE_POOL_TABLES_T11580_H
 #define OVL_DATE_POOL_TABLES_T11580_H
-/* func_801366A4: six bytes per girl, two variants with three result bytes
+/* func_801366A4 (pool): six bytes per girl, two variants with three result bytes
  * each, read through flat byte pointers like the other DATE tables. */
 extern u8 *D_8015B560;
 extern u8 *D_8015B564;
+/* func_80136B70: the skating rink tables, same layout. */
+extern u8 *D_8015B588;
+extern u8 *D_8015B58C;
 #endif
 
 #ifndef DATE_MOVIE_SCENE_T10910A
