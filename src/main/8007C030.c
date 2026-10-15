@@ -767,24 +767,14 @@ void normal_date_girl_in(void) {
     func_80057D28(1);
 }
 
-/* FAKE: aliasing a local zero retains the original v0 initialization; s32 without return and the byte-address view preserve its allocation. No meaningful return established. T-9540. */
-s32 normal_date_girl_in_init(void)
-{
-  s32 *new_var2;
-  s32 new_var;
-  D_8011F513 = 0;
-  D_801217E5 = 0;
-  D_801217E4 = 0;
-  D_80121809 = 0;
-  new_var = 0;
-  new_var2 = &new_var;
-  *((u8 *) (&D_80121808)) = new_var;
-  D_800B5940 = *new_var2;
-  D_80122CF8 = *new_var2;
-  D_80122CF4 = 1;
-  D_800E6280.unk_1104.w += 1;
-  D_801217E6 = *new_var2;
-  D_8012180A = *new_var2;
+s32 normal_date_girl_in_init(void) {
+    D_8011ECD0[0x843] = 0;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0;
+    D_800B5940 = 0;
+    D_80122CF8 = 0;
+    D_80122CF4 = 1;
+    D_800E6280.unk_1104.w += 1;
 }
 
 s32 normal_date_girl_in_main(void) {
