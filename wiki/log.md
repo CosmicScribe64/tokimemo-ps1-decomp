@@ -13430,3 +13430,12 @@ Created [[tickets/T-11580-w1-ovl-date-80132000]] (In Progress): wave 1 package w
 ## [2026-10-15] ticket | T-11580 Done
 
 [[tickets/T-11580-w1-ovl-date-80132000]] reviewed against CODING_STANDARDS.md and moved to Done: 11 DATE matches. One finding fixed (line counts missing in three `NON_MATCHING` comments of `src/ovl/DATE/80132000.c`); no other findings.
+
+## [2026-10-15] decision | Wave 1 paused until the weekly usage reset
+
+Matching wave 1 (tickets T-11570 to T-11740, one Opus agent per file-disjoint package, Sonnet review and merge into
+the integration branch `w1-int`) paused at the user's request after about 2.5 hours, to resume when the weekly Claude
+usage resets (2026-10-15 22:00 UTC). Merged and Done: packages p01 to p07 (T-11570 to T-11630); grand total
+`5713/6958   1279320/2279368  56.1%` (from 5660), clean rebuild 27/27, headers, globals and branch prototype check OK.
+Packages p08 to p13 (T-11640 to T-11690) stopped mid-run with their matches committed on their branches; p14 to p18
+(T-11700 to T-11740) not started. Dropped the stale `func_8006C334` line from `config/proto_known.txt`.
