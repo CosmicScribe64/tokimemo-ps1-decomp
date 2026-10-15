@@ -13894,3 +13894,6 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 ## [2026-10-15] ticket | cx7 In Review handoff
 
 [[tickets/T-12070-codex-cx7]] moved In Review with index/kanban synchronized. Three matches / 4,252 linked bytes; existing guards unchanged (16/9/32 rows), larger misses remain scratch-only. Final configure and forced clean checksum/header/global rebuild passed 526 ninja tasks, 27/27 binary checksums, headers and globals. Branch prototypes: 0 new, 15 known. Baseline-to-HEAD diff check passes. Logs: build/scratch/final-{configure,clean,build,prototypes,guards}.log. User-directed next focus is the separate largest dialogue routine; this worktree awaits independent review.
+
+## [2026-10-15] build | Combined matching integration verified
+[[tickets/T-12400-integrate-verified-matches]] integrates completed worker and acceleration/large-function chat commits. All 27 binary checksums, headers, globals and prototype checks pass (0 new/15 known); 55 permuter tests pass. Coverage rises by 67 functions and 52,232 bytes to 59.0%. Reconciled duplicate cx7 index/kanban entries; integration moved to In Review. User authorized direct push to main without a PR.

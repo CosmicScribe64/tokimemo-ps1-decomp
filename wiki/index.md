@@ -25,7 +25,6 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-12030-codex-cx3|T-12030]] Codex cx3 main menu functions (In Review).
 - [[tickets/T-12040-codex-cx4|T-12040]] Codex cx4 RPG battle matching (In Review;7 matches,6068 linked bytes).
 - [[tickets/T-12050-codex-cx5|T-12050]] Codex cx5 main menu matching pass (In Review; 208 verified bytes).
-- [[tickets/T-12070-codex-cx7|T-12070]] Codex cx7 TACO actor matching (In Progress).
 - [[tickets/T-12090-codex-cx9|T-12090]] Codex cx9 BUNKA_SD matching pass (In Progress).
 - [[tickets/T-12100-codex-cx10|T-12100]] Codex cx10 DATE movie/effect functions (In Progress).
 - [[tickets/T-12200-acceleration-audit|T-12200]] Measured acceleration investigation in an isolated worktree (Done; 18.29x stripping speedup, 229 tests).
@@ -259,7 +258,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-11120-small-functions-sonnet-36|T-11120]] Small functions (Sonnet via Antigravity) 36 (In Progress).
 
-- [[tickets/T-12400-integrate-verified-matches|T-12400]] Integrate verified matching branches directly on main (In Progress).
+- [[tickets/T-12400-integrate-verified-matches|T-12400]] Integrate verified matching branches directly on main (In Review; combined 27/27 checks pass, 59.0% byte coverage).
 - [[acceleration-audit]] - T-12200 measured stripping speedup, validation limits, queue/reuse priorities, and CPU allocation.
 - [[tickets/T-12210-matching-bottleneck-research|T-12210]] Remaining-byte census and experiments for matching breakthroughs (Done; 3 matches, 2352 linked bytes).
 - [[matching-breakthroughs]] - T-12210 remaining-byte census, three verified family matches, negative retrieval experiment, and research priorities.
