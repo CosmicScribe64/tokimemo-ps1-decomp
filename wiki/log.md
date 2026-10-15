@@ -13363,3 +13363,7 @@ Created [[tickets/T-11620-w1-ovl-tt-80133970]] (In Progress): wave 1 package w1-
 ## [2026-10-15] ticket | T-11620 In Review
 
 [[tickets/T-11620-w1-ovl-tt-80133970]] moved to In Review; needs the CODING_STANDARDS review before Done.
+
+## [2026-10-15] ticket | T-11620 Done
+
+[[tickets/T-11620-w1-ovl-tt-80133970]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 matched functions (TT `func_80135148`, `func_80134E20`, `func_80134D0C`, `func_80144854`). One finding fixed: two NON_MATCHING comments in `src/ovl/TT/80142D40.c` now name T-11620 and the current line counts.
