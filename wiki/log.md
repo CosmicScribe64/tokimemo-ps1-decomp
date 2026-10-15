@@ -14490,3 +14490,7 @@ Created [[tickets/T-14400-option-menu-families]] on codex/option-14400 from orig
 ## [2026-10-15] decision | Document OPTION packed views
 
 Added source-local offset/evidence comments for the player and schedule bitfield views in [[tickets/T-14400-option-menu-families]]. Fresh full-TU proof confirms all six accepted functions and the OPTION SHA1 after final formatting/comments. No prior function body changed.
+
+## [2026-10-15] ticket | OPTION batch ready for review
+
+[[tickets/T-14400-option-menu-families]] moves to In Review. Six functions add 5868 default literal verified bytes. Headers/globals pass, prototype guard reports zero new / twelve known disagreements, and affected OPTION SHA1 is exact. All pre-existing C bodies in touched sources are unchanged. Separate standards and spec reviews cover a46afeb8 through ff37e3ab; 80% game-wide goal remains outside this bounded pass.
