@@ -2006,7 +2006,39 @@ void func_80138F00(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138F60);
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80139440);
+void func_80139440(void) {
+    s32 i;
+
+    if (func_800AEEB0(D_8014CC84, "こなみまん") == 0) {
+        for (i = 0; i < 9; i++) {
+            (&D_800E6280.unk_0FC)[i].unk_02 = 0x23D;
+        }
+    }
+    if (func_800AEEB0(D_8014CC74, "みんな") == 0 && func_800AEEB0(D_8014CC7C, "仲良し") == 0) {
+        D_800E6280.unk_1BC[0].unk_02 = 0x20;
+        D_800E6280.unk_1BC[0].unk_06 = 0x40;
+        for (i = 1; i < 9; i++) {
+            if ((D_800E6280.unk_1BC[i].unk_0C.b[2] >> 4) != (D_800E6280.unk_1BC[0].unk_0C.b[2] >> 4)) {
+                D_800E6280.unk_1BC[i].unk_02 = 0x7F;
+                D_800E6280.unk_1BC[i].unk_0C.f.b1 = 1;
+                D_800E6280.unk_1BC[i].unk_0C.f.b3 = 1;
+                D_800E6280.unk_1BC[i].unk_06 = 0x7F;
+            }
+        }
+    }
+    if (func_800AEEB0(D_8014CC74, "上上") == 0 && func_800AEEB0(D_8014CC7C, "下下") == 0
+        && func_800AEEB0(D_8014CC84, "左右左右×") == 0) {
+        for (i = 0; i < 9; i++) {
+            (&D_800E6280.unk_0FC)[i].unk_02 = 0;
+        }
+    }
+    if (func_800AEEB0(D_8014CC74, "↑↑") == 0 && func_800AEEB0(D_8014CC7C, "↓↓") == 0
+        && func_800AEEB0(D_8014CC84, "←→←→×") == 0) {
+        for (i = 0; i < 9; i++) {
+            (&D_800E6280.unk_0FC)[i].unk_02 = 0x3E7;
+        }
+    }
+}
 
 s32 func_80139684(void) {
     switch (*(u8 *)&D_800E6280.unk_110D) {
