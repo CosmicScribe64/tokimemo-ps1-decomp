@@ -13529,3 +13529,15 @@ Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build 
 ## [2026-10-15] build | cx10 matches 820-byte DATE startup handler
 
 [[tickets/T-12100-codex-cx10]] promotes func_8014A4DC: real pointer-array ownership, corrected buffer iteration and source statement grouping recover exact bytes. DATE SHA1, linked-byte proof and globals pass; package total 4,888 bytes. EF1C packet experiments remain distant and were restored. Evidence: build/scratch/a4dc-final.log and a4dc-build.log.
+
+## [2026-10-15] query | cx10 reconstructs largest DATE state machine
+
+[[tickets/T-12100-codex-cx10]] revisits the 4,044-byte 47958 handler following bytes-first steering. Natural indexed loops restore most original register choices; a typed GameState pointer improves callback state preservation. Exact matching remains blocked by fade conversion and callback/timer scheduling, and the assembly fallback stays active. Scratch evidence recorded in ticket.
+
+## [2026-10-15] query | cx10 narrows largest DATE handler to four rows
+
+[[tickets/T-12100-codex-cx10]] records exact1,010-instruction alignment for47958 after natural indexed loops, control-flow reconstruction and callback statement grouping. Four fade register rows remain; frame-only local and undefined return shaping require FAKE labels if retained. Production fallback remains active; no additional coverage claimed.
+
+## [2026-10-15] build | cx10 matches 740-byte DATE scene initializer
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014D298 after exact production linked-byte and DATE checksum proof. Existing DateParticleView44 recovers the three68-byte copies; natural local declaration order recovers the stack address. No dummy padding retained. Package total5,628 bytes; evidence build/scratch/d298-final.log and d298-build.log.

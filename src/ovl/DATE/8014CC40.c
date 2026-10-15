@@ -210,7 +210,46 @@ void func_8014D0A0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8014CC40", func_8014D298);
+void func_8014D298(void) {
+    DateParticleView44 *sprites;
+    DateParticleView44 scene;
+
+    func_800AE0F0(D_800CA1DC, "ナイトパレード");
+    D_800E6280.unk_71E |= 7;
+    D_8015E208 = D_8015DE58;
+    D_8015E20C = D_8015DF94;
+    D_8015E210 = D_8015E0D0;
+    D_800E6280.unk_1BC[8].unk_02 += 3;
+    D_800E6280.unk_1BC[8].unk_06 += 2;
+    D_800E6280.unk_1BC[8].unk_0A -= 0x14;
+    func_80084D3C();
+    D_800E6280.unk_1228[26] = -1;
+    D_800E6280.unk_1228[58] = -1;
+    func_8014CCF0();
+    func_80043914(D_8015E25C, 0x11, 1, 2, 0);
+    func_80043914(D_8015E25C, 0x12, 1, 2, 4);
+    func_80043914(D_8015E25C, 0x13, 1, 2, 0);
+    func_80084E90(D_8015E260, D_8015E264, D_8015E268, D_8015E26C, D_8015E270, D_8015E274);
+    func_800850D4(D_8015E250, D_8015E254, D_8015E24C, (s32) D_8015E258);
+    D_800CA360 = 1;
+    sprites = (DateParticleView44 *)D_80120650;
+    scene = sprites[0];
+    sprites[3] = scene;
+    *(DateParticleView44 *)D_801206D8 = scene;
+    D_8012071E = 0x40;
+    D_801206DA = 0x40;
+    D_801206F0 = 8;
+    D_801206D9 = 0xC;
+    D_8012071B = 0x13;
+    D_80120734 = 9;
+    D_8012071D = 0xC;
+    D_8012075F = 0x12;
+    D_8015E314 = 0;
+    D_8015E310 = 0;
+    D_8015E318 = 1;
+    func_8004284C();
+}
+
 
 void func_8014D57C(void) {
     D_8015E310 = 0;
