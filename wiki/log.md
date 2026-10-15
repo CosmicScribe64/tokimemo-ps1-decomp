@@ -13541,3 +13541,11 @@ Recovered the large battle state's selector reloads, compound counter updates an
 ## [2026-10-15] build | RPG_BAT func_80132348 matched
 
 Combined the compound-counter and shared-work-range findings to match1404 linked bytes. Full header rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/32348-match.diff and 32348-build.log.
+
+## [2026-10-15] ticket | T-12040 deep pass ready for review
+
+All eleven assigned functions attempted; seven matched totaling6068 linked bytes, one existing guard17 rows and three scratch-only drafts. Recorded rejected unsigned and next-record forms, bounded known-gap retries, and table-copy experiments in [[tickets/T-12040-codex-cx4]], [[matching-notes]] and [[data/t0018-cases]]. Ticket/card/index now In Review; no new FAKE code. Final package verification running.
+
+## [2026-10-15] build | T-12040 final 27-binary verification
+
+Final configure/ninja and explicit verification-stamp rebuild passed all27 binary checksums, headers and globals. Branch prototypes: zero new and fifteen known disagreements. The existing full-TU guard remains17 listing lines. Diff whitespace check clean; no added inline assembly. Evidence: build/scratch/final-build.log, final-all-checks.log, final-protos.log and final-guard.diff. [[tickets/T-12040-codex-cx4]] remains In Review with matching [[index]] and [[kanban]] status.

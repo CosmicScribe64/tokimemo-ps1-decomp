@@ -1,7 +1,7 @@
 ---
 id: T-12040
 title: Codex cx4 RPG battle matching
-status: In Progress
+status: In Review
 assignee: Codex cx1
 created: 2026-10-15
 updated: 2026-10-15
@@ -14,9 +14,9 @@ Deep matching pass over the eleven functions in ../codex/cx4-list.txt, owning on
 
 ## Acceptance criteria
 
-- [ ] Investigate assigned functions and document guarded drafts and blockers.
-- [ ] Every promoted function passes linked funcdiff and overlay checksum verification.
-- [ ] Final configure/build verifies 27 binaries, headers, globals and branch prototypes.
+- [x] Investigate assigned functions and document guarded drafts and blockers.
+- [x] Every promoted function passes linked funcdiff and overlay checksum verification.
+- [x] Final configure/build verifies 27 binaries, headers, globals and branch prototypes.
 - [ ] Submit for standards review.
 
 ## Notes
@@ -58,3 +58,22 @@ Restored selector reloads after calls, replaced three increment-result locals wi
 ### func_80132348 matched (1404 linked bytes)
 
 The same compound-update recovery reduces147 rows to12. Its remaining load/store schedule is solved with a shared EC50..EC6F displacement/rectangle view, following 4E300's evidence. All function accesses through the view match; changing only the close store pair worsens allocation. Plain C linked MATCH1404, full header rebuild27/27, headers/globals OK. No FAKE. Evidence build/scratch/32348-increments.log, 32348-view.log, 32348-match.diff and 32348-build.log.
+
+### Remaining bounded passes
+
+All eleven assigned functions attempted. Seven exact promotions total6068 linked bytes. One existing guard retained; three functions remain INCLUDE_ASM with scratch-only drafts. No new FAKE code.
+
+| Function | Final outcome | Experiments and blocker |
+|---|---|---|
+| func_8015A744 | Existing guard,17 listing lines | Signed/unsigned return views and new exact0x44-byte record/shared-work-range views unchanged. Two register copies and global-store scheduling remain; 5a744-view.log, return-variants.log. |
+| func_8015A8B4 | Assembly retained; corrected scratch draft50 rows | Saved27-row m2c draft reads the next record at the tail, but the original saves the current record's halfword. Corrected reload/saved-coordinate forms differ by one scheduling insertion and missing a0 copy, causing aligned-row cascade. Local widths, order, early index and record-value forms did not close it. An unsigned24-row variant changes comparison/division semantics and was rejected. 5a8-repair.log, 5a8-signed-close.diff, 5a8-index.log. |
+| func_80132B34 | Assembly retained; scratch154 rows | Known constant-folding gap. Repaired current aggregate fields then tried six signed/unsigned/narrow-local and pointer forms; all fold derived values rather than retaining the original addiu expressions. 32b34-final.log. |
+| func_801328C4 | Assembly retained; scratch97 rows | Fixed erroneous pointer increment(8 words versus8 bytes), full64-byte copy rather than split60+4, direct counter update, initializer types, declaration cleanup, tail-loop forms and phase local. Remaining copy-address CSE, stack homes, counter allocation and evaluation order. Larger variants107..194 rows discarded. 328-copy.log, 328-init.log, 328-loops.log. |
+
+All logs/drafts are under ignored build/scratch/. Compiler experiments used Docker and the existing orchestrator-supplied traced uopt at build/scratch/r9-uopt/variants/trace. No new toolchain/dependencies, no inline assembly, no per-function compiler tweaks. Small numerical eight-direction initializer trials stayed scratch-only; no new data/config changes were retained.
+
+### Review handoff
+
+Ticket and card moved to In Review; independent CODING_STANDARDS review remains required. Seven functions have individual linked-byte proofs and immediate commits. Final configure/build, current guarded score and prototype checks recorded below after completion.
+
+Final verification passed: configure/ninja -j2, then explicit invalidation of verification stamps and a full rebuild reran all 27 binary SHA1 checks, headers and globals successfully (build/scratch/final-build.log, final-all-checks.log). Branch prototype check passes with zero new and fifteen known disagreements (final-protos.log). Current full-TU func_8015A744 draft remains17 listing lines (final-guard.diff). `git diff --check` clean; branch source diff contains no added inline assembly. All seven promoted functions have no new FAKE annotations or artificial source tricks.

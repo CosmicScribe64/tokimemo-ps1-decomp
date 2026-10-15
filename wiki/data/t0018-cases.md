@@ -1982,3 +1982,7 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/801410A0 | `func_801410A0` | regorder | T-11820: not kept (48 lines): both loops match (`i * 16` row index, `call * len`, if/else abs, s16 `spd = -spd`); the turn step keeps `(s16)+-spd` in v1 in the original |
 | TT/801374C0 | `func_80138808` | regorder | T-11820: not kept (145 lines): loop 3's base needs a second chain struct at `g + 0xEFC`; the original unrolls loop 3 but not loop 2 |
 | TT/801487D0 | `func_801487D0` | regorder | T-11820: not kept (103 lines): `func_801336F8` template with one extra local for the 0x48 frame; `ch - 0x20` masking and temp order differ |
+
+| RPG_BAT/8014DF60 | `func_8014E300` | resolved | T-12040: shared EC28..EC57 position/displacement view prevents the second coordinate load crossing the first displacement store; plain C linked MATCH692 and27/27 checksums. |
+| RPG_BAT/8015A1F0 | `func_8015A744` | regorder | T-12040: return-type and new full-record/shared-work-range views leave17 listing lines, two copies and global-store order. Existing guard retained. |
+| RPG_BAT/801321D0 | `func_80132B34` | constant folding | T-12040: six current aggregate/pointer and signed/unsigned/narrow-local variants still fold x+48/y-176;154 listing rows. No compiler-pass change; assembly retained. |

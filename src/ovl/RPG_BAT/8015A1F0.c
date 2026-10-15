@@ -111,7 +111,7 @@ void func_8015A6D4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, two dead register copies ($a1 = v, $a0 = x) and the order of the D_8015EC54 store differ, 17 lines */
+/* NON_MATCHING: T-12040, two dead register copies ($a1 = v, $a0 = x) and the order of the D_8015EC54 store differ, 17 lines */
 void func_8015A744(void) {
     u8 *p;
     s32 i;
