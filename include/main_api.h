@@ -2361,7 +2361,7 @@ void don_wait(void);
 void normal_date_speak_1line();
 void func_80085A60();
 void normal_date_speak(void);
-void func_80085B3C(s32 arg0, s32 arg1);
+s32 func_80085B3C();
 void func_80085CD4(u8 a);
 void func_80085E30(s32 arg0, s32 arg1);
 void Vblnk_Timer_Init(void);

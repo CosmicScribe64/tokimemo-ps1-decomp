@@ -61,6 +61,9 @@ INCLUDE_RODATA("asm/data/main/8007C030.data", D_800CA36C);
 void func_80084C98(s32 idx, u8 val);
 /* FAKE: minimum array view inferred from clearing words 5 through 30; full object extent remains unknown. T-9540 */
 extern s32 D_80122CD0[];
+/* Declared here, not in main_api.h: EVENT src/ovl/EVENT/80103B60.c declares the same address as
+ * a function table (FnTbl55); moving it needs a MAIN_API_OVERRIDE there. T-11590 */
+extern s32 D_80122D48;
 
 void SD_GetCDLevel(CdLevelWork *arg0) {
     s32 shift;
@@ -2719,7 +2722,30 @@ void vram_bustup_clear(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085B3C);
+s32 func_80085B3C(arg0, arg1)
+    u8 arg0;
+    u8 arg1;
+{
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_00 = D_800E6280.unk_F5F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_02 = arg0;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_01 = arg1;
+    if (D_80122D48 == 0 || D_80122D48 >= 7) {
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = get_g_zyotai_h(D_800E6280.unk_F5F);
+    } else {
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = D_80122D48 - 1;
+    }
+    D_80122D48 = 0;
+    if (D_800E6280.unk_F5F == 0xC) {
+        D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_03 = 0;
+    }
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_04 = D_800E6280.unk_03E;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_05 = D_800E6280.unk_03F;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_06 = D_800E6280.unk_040;
+    D_800E6280.unk_75E[D_800E6280.unk_F5E].unk_07 = D_800E6280.unk_041;
+    if (++D_800E6280.unk_F5E >= 0xFF) {
+        D_800E6280.unk_F5E = 0xFE;
+    }
+}
 
 void func_80085CD4(u8 a) {
     switch (a) {
