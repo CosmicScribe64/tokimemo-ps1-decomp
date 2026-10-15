@@ -500,7 +500,37 @@ void func_80136E80(void) {
     func_8013732C();
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136EC0);
+/* Signed selector keeps the case constants distinct from byte stores. T-12020. */
+void func_80136EC0(void) {
+    s32 i;
+    TaiWait3 wait;
+
+    wait = D_801497F4;
+    for (i = 0; i < 3; i++) {
+        if (D_80149208.pad24[i * 0x24 + 1] != 0) {
+            switch ((s32)D_80149208.pad24[i * 0x24 + 5]) {
+            case 0:
+                *(u16 *)&D_80149208.pad24[i * 0x24 + 8] = func_800AE0D0() % 120 + wait.value[i] + 60;
+                D_80149208.pad24[i * 0x24 + 5]++;
+                break;
+            case 1:
+                if (++*(u16 *)&D_80149208.pad24[i * 0x24 + 10] >= *(u16 *)&D_80149208.pad24[i * 0x24 + 8]) {
+                    D_80149208.pad24[i * 0x24 + 5]++;
+                }
+                break;
+            case 2:
+                if (func_80137784(i + 1) != 0) {
+                    D_80149208.pad24[i * 0x24 + 1] = 0;
+                    D_80149208.pad24[i * 0x24] = 1;
+                }
+                break;
+            default:
+                func_80046500();
+                break;
+            }
+        }
+    }
+}
 
 typedef struct {
     s32 w[3];

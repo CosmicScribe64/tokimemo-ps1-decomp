@@ -33,3 +33,9 @@ A TaiRandomTable assignment and nested ten-by-three actor loops reproduce the ta
 ### Initial guarded-draft experiments
 
 func_801368B8 remains four +/- diff rows (two instruction positions) after 145 source-line and increment-form variants, all full-file scored. func_801346FC remains eight rows (four positions) after return-type and decrement-local variants. Sixteen explicit hoist/local/member variants did not improve func_80137228; keep these compiler-gap timeboxes bounded.
+
+### func_80136EC0: MATCH, 380 bytes
+
+Recovered a three-entry u16 table (TaiWait3, size 6) at D_801497F4. The signed switch selector preserves separate case-1 and byte-store constants, and random-result-first addition gives the original temporary ordering. Exact linked funcdiff: 380-byte MATCH. Full header-triggered rebuild: 27/27 checksums, headers/globals OK. No FAKE required.
+
+Traced regdiff uses the existing trace compiler copied by the orchestrator into build/scratch/r9-uopt/variants/trace (source /private/tmp/claude-501/-Users-lila-Documents-Projects-tokimemo-decomp/b1bfb9f2-ead9-439a-9858-e4d32a33c9ae/scratchpad/r9-uopt/variants/trace). It runs successfully: func_801346FC has 421/421 instructions and four register-only positions; local M123-212 outranks the selector range. Selector-width/lifetime variants did not improve the eight listing rows.

@@ -13513,3 +13513,7 @@ Created [[tickets/T-12020-codex-cx2]] In Progress for src/ovl/TAIIKU/80133C80.c.
 ## [2026-10-15] build | Match TAIIKU random actor table assignment
 
 [[tickets/T-12020-codex-cx2]]: src/ovl/TAIIKU/80133C80.c func_80135DF8 matches 324 linked bytes and TAIIKU.bin SHA1 passes. Typed table assignment and nested actor indexing need no fakematch. Initial counter/hoist/decrement grids did not improve existing guarded drafts.
+
+## [2026-10-15] build | Match TAIIKU three-slot wait state machine
+
+[[tickets/T-12020-codex-cx2]]: func_80136EC0 matches 380 linked bytes, with 27/27 checksums and headers/globals OK. The signed selector retains separate constant ranges; the six-byte u16 wait table is declared in include/ovl/TAIIKU.h. Traced regdiff successfully diagnoses the remaining four-position func_801346FC register miss.
