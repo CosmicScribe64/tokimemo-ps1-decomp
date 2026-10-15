@@ -25,7 +25,43 @@ void func_80134930(void) {
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80134A18);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80134930", func_80134D8C);
+void func_80134D8C(void) {
+    D_800E6280.unk_1104.w += 1;
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80134EBC();
+        break;
+    case 1:
+        func_80135220();
+        break;
+    case 2:
+        func_80135278();
+        break;
+    case 3:
+        func_801352CC();
+        break;
+    case 4:
+        func_80135330();
+        break;
+    case 5:
+        func_80135350();
+        break;
+    }
+    func_80134A18();
+    func_8013506C();
+    if (D_800E6280.unk_1100 == 0xA0) {
+        func_801335A0(0, 0x504);
+    }
+    if (D_800E6280.unk_1100 == 0x40) {
+        func_801335A0(0, 0x505);
+    }
+    if (D_800E6280.unk_1100 == 0x80) {
+        func_801335A0(0, 0x506);
+    }
+    if (D_800E6280.unk_1100 == 0xC0) {
+        func_801335A0(0, 0x507);
+    }
+}
 
 void func_80134EBC(void) {
     s32 i;
