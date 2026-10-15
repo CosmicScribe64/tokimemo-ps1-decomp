@@ -2498,12 +2498,8 @@ void func_80084E6C(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11590, 5 differing lines; everything matches except the last chain: the original
- * keeps 0x20 in a0 for the [63] height store and stores andi v0,a0,0xffff to [61]/[62]; IDO
- * folds the chain value to li v0,0x20. With the s16 width store (no u16 view) the tail matches
- * but the loop splits the 0x80 constant. */
-#ifdef NON_MATCHING
-void func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+/* s32 without a return value: the last chain value stays in v0 (andi v0,a0,0xffff). T-11590 */
+s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     s16 i;
 
     D_80122D04 = 0;
@@ -2547,9 +2543,6 @@ void func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     D_801217D0[60].unk_08 = D_801217D0[63].unk_08 = 0x40;
     D_801217D0[61].unk_0A = D_801217D0[62].unk_0A = D_801217D0[63].unk_0A = 0x20;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80084E90);
-#endif
 
 s32 func_800850D4(arg0, arg1, arg2, arg3)
     s32 arg0;

@@ -2349,7 +2349,7 @@ void sprite_brightness(s16 idx, u8 val);
 void check_para_limit(void);
 void func_80084D3C();
 void func_80084E4C(void);
-void func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+s32 func_80084E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 s32 func_800850D4();
 void func_80085234();
 void func_80085368(void);
