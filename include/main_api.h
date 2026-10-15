@@ -2316,7 +2316,7 @@ void func_80081D30();
 s32 func_80082764();
 s32 make_three_select();
 void normal_date_three_select(void);
-void normal_date_three_select_init(void);
+s32 normal_date_three_select_init(void);
 s32 normal_date_three_select_main(void);
 void normal_date_two_select(void);
 void normal_date_two_select_init(void);
