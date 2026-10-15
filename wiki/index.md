@@ -23,6 +23,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-11610-w1-main-80042540|T-11610]] Wave 1 package w1-p05: main 80042540.c and 80058D20.c (Done; 7 of 10 matched, 80042540.c all C).
 - [[tickets/T-11570-w1-ovl-name_ent-80139740|T-11570]] Wave 1 package w1-p01: NAME_ENT 80139740.c guarded drafts (Done; no match, selector-copy family traced to uopt copy propagation).
 - [[tickets/T-11620-w1-ovl-tt-80133970|T-11620]] Wave 1 package w1-p06: 4 of 12 TT functions matched (2,052 bytes), notes in [[matching-notes]] (Done).
+- [[tickets/T-11630-w1-ovl-tt-8013c6d0|T-11630]] Wave 1 package w1-p07: TT `8013C6D0.c` (Done; 6 of 8 matched, one FAKE).
 - [[tickets/T-11560-tt-batch-6|T-11560]] TT batch 6: bulk_m2c over TT, then Opus on the closest drafts (Done; 4 matches, TT 48.6%).
 - [[tickets/T-11550-tt-opus-near-miss-pass|T-11550]] TT Opus near-miss pass with all solvers (Done; 5 matches, TT 48.0%).
 - [[tickets/T-11540-tt-order-search-pass|T-11540]] TT order_search pass (Done; func_8013DE10 matched, five drafts improved, stale func_8014CC04 draft removed).
