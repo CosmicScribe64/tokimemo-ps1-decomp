@@ -973,8 +973,6 @@ void func_8006B5BC(GsWord arg0) {
 void func_8006B640(void) {
 }
 
-/* NON_MATCHING: T-11040, 10 differing lines: the loop test is `li at,11; bne s0,at` where the original keeps `slti at,s0,11; bnez` (uopt counted-loop normalisation), and the constants for the cancel entry (li a0,40 / a1,8) come after li t9,64 / t0,16 where the original has them first. Frame, array slots and registers match (arrays x,y,w,h declared in that order; `first`,`i` and a pad above them). */
-#ifdef NON_MATCHING
 void club_list_menu(void) {
     s32 pad[2];
     s32 first;
@@ -1014,18 +1012,18 @@ void club_list_menu(void) {
             w[i] = 0;
         }
     }
-    w[11] = 0x40;
-    h[11] = 0x10;
-    set_kanji_string(x[11] = 0x28, y[11] = 8, 3, "取り消し", 0);
+    i = 11;
+    x[i] = 0x28;
+    y[i] = 8;
+    w[i] = 0x40;
+    h[i] = 0x10;
+    set_kanji_string(x[i], y[i], 3, "取り消し", 0);
     menu_set(1, 0xC, x, y, w, h);
     D_800E6280.unk_1094 = first;
     k_sub_reset_point_set();
     sndi("入部する部活を選択してください", 0, 0xFF);
     k_sub_disp_start(1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", club_list_menu);
-#endif
 
 void func_8006B900(void) {
     s32 i;
