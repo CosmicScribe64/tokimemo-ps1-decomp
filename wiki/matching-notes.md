@@ -5082,3 +5082,5 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 ## T-12070: TACO particle actor loop
 
 `func_8015B59C` matches 1,940 linked bytes. Reconstructing by-value TcPos calls and using unsigned flag stores restored repeated particle emissions. Replacing m2c pointer/byte-offset induction temporaries with a natural indexed for loop and removing a switch temporary restored pointer allocation and the original frame. Direct typed fields change alias/reload allocation; the byte-offset views are explicitly FAKE-labeled. Production literal funcdiff and TACO SHA1 pass; [[tickets/T-12070-codex-cx7]].
+
+`func_8015C718` adds 1,340 linked bytes in T-12070. Its final six-row switch gap disappeared with a direct u16 dereference, while `(u16)` applied to an s16 load retained v0 instead of t0 despite identical load width/sign. Removing saved m2c actor pointers restores reloads after random calls; swapping the commutative coordinate/random additions restores scheduling. Byte-offset actor views remain FAKE-labeled; default linked funcdiff and TACO SHA1 pass.

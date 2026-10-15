@@ -34,3 +34,7 @@ Initial full-file pass repaired saved drafts' missing by-value TcPos arguments a
 ### func_8015B59C matched — 1,940 linked bytes
 
 Production `ninja -j2 build/ovl/TACO.ok` passes SHA1; default resolved funcdiff reports literal linked MATCH, 1,940 bytes (worklist's 2,392-byte estimate is stale). Natural indexed loop, direct actor reloads, unsigned byte flag stores and inline switch expression eliminate saved draft artifacts; TcPos reproduces the by-value particle calls. Byte-offset actor views remain FAKE-labeled because replacing them with direct TcActor fields differs by 30 rows. No compiler change. Proof: build/scratch/B59C-production.log; progression b59v3/v4/v5/b59clean logs. One match, 1,940 bytes so far.
+
+### func_8015C718 matched — 1,340 linked bytes
+
+Production default resolved funcdiff reports literal MATCH (1,340 bytes, versus worklist estimate 1,364); TACO SHA1 passes. Repaired TcPos by-value calls, removed cached actor pointers across random calls, and reversed commutative position/random additions to recover original scheduling. The last six selector rows required a direct u16 load: casting an s16 load to u16 produces the same load instruction but a different uopt register web. Byte-offset views are FAKE-labeled. Evidence: build/scratch/{c718v2,c718v4,c718selector}.log, C718-v4.diff and C718-production.log. Total: two matches, 3,280 linked bytes.

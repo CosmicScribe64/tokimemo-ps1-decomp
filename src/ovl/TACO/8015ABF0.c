@@ -288,7 +288,84 @@ void func_8015C698(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015C718);
+/* FAKE: byte-offset actor views retain the original reload/alias behavior.
+ * The switch intentionally reads the selector as u16. T-12070. */
+void func_8015C718(s32 arg0) {
+    TcPos position;
+    s16 counter;
+
+    if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122)) == 0) {
+        if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 134)) != 6) {
+            func_800AE120(D_801604C0 + arg0);
+            (*(u8 *)((u8 *)&D_8015EDB4[arg0] + 1)) = 0x90;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)) = (func_800AE0D0() % 40) - 0x14;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 126)) = (func_800AE0D0() % 10) + 0xA;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 128)) = (func_800AE0D0() % 10) + 0xA;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 106)) = (s16) (func_800AE0D0() % 6);
+            func_8013D1E0(*(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 116)), *(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)), 0);
+
+        } else {
+            func_800AE120(D_801604C0 + arg0);
+            (*(u8 *)((u8 *)&D_8015EDB4[arg0] + 1)) = 0x90;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)) = (func_800AE0D0() % 10) - 5;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 126)) = (func_800AE0D0() % 2) + 2;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 128)) = (func_800AE0D0() % 2) + 2;
+            func_8013D1E0(*(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 116)), *(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)), 0);
+
+        }
+    }
+    if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 134)) != 6) {
+        switch (*(u16 *)((u8 *)&D_8015EDB4[arg0] + 106)) {
+        case 0:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 100)) += 0x10;
+
+            break;
+        case 1:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 102)) += 0x10;
+
+            break;
+        case 2:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 104)) += 0x10;
+
+            break;
+        case 3:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 100)) -= 0x10;
+
+            break;
+        case 4:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 102)) -= 0x10;
+
+            break;
+        case 5:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 104)) -= 0x10;
+
+            break;
+        }
+        counter = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122));
+    } else {
+        if (((s16) (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122)) % 3) == 0) {
+            func_800AE120(D_801604C0 + arg0);
+            position.x = ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 116)) + (func_800AE0D0() % 500)) - 0xFA;
+
+            position.y = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 118)) + (func_800AE0D0() % 250);
+            position.z = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 120));
+            func_8013D1E0(position, *(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)), 0);
+
+        }
+        (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 100)) += 2;
+
+        (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 104)) += 2;
+        counter = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122));
+    }
+    if (!(counter & 1)) {
+        func_8015C0A0(1, arg0);
+    } else {
+        func_8015C0A0(0, arg0);
+    }
+    if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122)) >= 0x3D) {
+        func_8015C208(arg0);
+    }
+}
 
 s32 func_8015CC54(void) {
     s32 n;

@@ -13521,3 +13521,7 @@ Docker baseline configure/ninja -j2 passed all 27 binary checksums, headers and 
 ## [2026-10-15] build | cx7 B59C exact match
 
 [[tickets/T-12070-codex-cx7]]: `func_8015B59C` production linked MATCH (1,940 bytes) and TACO SHA1 pass. Recorded FAKE byte-offset actor views and reusable induction/temporary cleanup in [[matching-notes]]. Worklist's 2,392-byte estimate corrected to literal linked size. Proof: build/scratch/B59C-production.log.
+
+## [2026-10-15] build | cx7 C718 exact match
+
+[[tickets/T-12070-codex-cx7]]: `func_8015C718` literal linked MATCH (1,340 bytes), TACO SHA1 passes. Direct unsigned selector load closes the last six register rows; [[matching-notes]] records the reusable distinction. Cumulative 3,280 bytes from two functions. Evidence: build/scratch/C718-production.log.
