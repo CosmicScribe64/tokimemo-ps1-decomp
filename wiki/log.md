@@ -14506,3 +14506,11 @@ Started [[tickets/T-14900-rpg-near-matches]] after reading [[tickets/T-13300-rpg
 ## [2026-10-15] build | Match RPG motion through recovered aggregate aliasing
 
 [[tickets/T-14900-rpg-near-matches]]: func_80148B08 passes 1,128 default linked bytes and RPG_BAT SHA1; existing RpgMotion20 aliases preserve EC50 store before EC6C load. Added canonical u8 flag declarations and genuine void prototype. 454F0 remains twenty register rows, AF1C six after corrected u8 stores; bounded typed-pointer/local-lifetime probes do not improve them. Original attempts and preexisting C unchanged. Ticket moves In Review; [[matching-notes]] updated.
+
+## [2026-10-15] ticket | Reserve unaligned aggregate-copy repair lane
+
+Created [[tickets/T-15100-unaligned-draft-repairs]] and notified the census generator to reserve the nine listed scopes. Read original m2c and target copy tails. Genuine sizes include 35-byte fortune table, three-byte flag table, and byte-string initializers; preserve original attempts and reconstruct typed alternatives without ASM edits.
+
+## [2026-10-15] build | Compile nine genuine unaligned-copy alternatives
+
+[[tickets/T-15100-unaligned-draft-repairs]] moves to In Review. All nine full-TU C alternatives compile and compare serially in Docker, spanning 17,408 target code bytes; scores 69..1667, no zeros and no matching-coverage claim. Copies recover genuine byte extents, string initializers and GEKO stack aliases. ENDING uses existing integer dialogue_render ABI evidence only in archived context. Complete separate catalog/provenance in drafts/T-14500/repairs-unaligned; initial attempts and production sources untouched.

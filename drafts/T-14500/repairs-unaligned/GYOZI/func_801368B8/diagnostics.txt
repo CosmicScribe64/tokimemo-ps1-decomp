@@ -1,0 +1,1 @@
+Full-TU IDO 5.3 compile succeeded; diagnostic comparison only.
