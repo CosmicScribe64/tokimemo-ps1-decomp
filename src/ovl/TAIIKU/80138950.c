@@ -84,7 +84,69 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138AA8);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138DF8);
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80139330);
+void func_80139330(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_800867CC();
+        if (D_80122EA0 != 0) {
+            func_80044750(0x2E);
+            D_80149990.unk_00 = 0;
+            func_8004284C();
+        }
+        func_8013DDB8();
+        func_8013D788();
+        func_8013D2B4();
+        return;
+    case 1:
+        func_80044750(0x24);
+        func_8013DDB8();
+        func_8013D788();
+        func_8013D2B4();
+        func_8004284C();
+        return;
+    case 2:
+        func_80044750(0x23);
+        func_8013DDB8();
+        func_8013D788();
+        func_8013D2B4();
+        func_8004284C();
+        return;
+    case 3:
+        func_80044750(0x502);
+        func_8013DDB8();
+        func_8013D788();
+        func_8013D2B4();
+        func_80085ED0();
+        func_8004284C();
+        return;
+    case 4:
+        func_8013A63C();
+        func_8013CCFC();
+        func_8013A6FC();
+        func_8013B0AC();
+        if (((DisplayActor44 *)D_8011ECD0)[96].unk_2A >= ((DisplayActor44 *)D_8011ECD0)[97].unk_2A) {
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 2;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 3;
+        } else {
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_01 = 3;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_01 = 2;
+        }
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96].unk_26;
+        ((DisplayActor44 *)D_8011ECD0)[99].unk_26 = ((DisplayActor44 *)D_8011ECD0)[97].unk_26;
+        ((DisplayActor44 *)D_8011ECD0)[98].unk_2A = ((DisplayActor44 *)D_8011ECD0)[96].unk_2A;
+        ((DisplayActor44 *)D_8011ECD0)[99].unk_2A = ((DisplayActor44 *)D_8011ECD0)[97].unk_2A;
+        ((DisplayActor44 *)D_8011ECD0)[103].unk_26 = D_80149984[0] >> 3;
+        ((DisplayActor44 *)D_8011ECD0)[103].unk_2A = (D_80149984[1] >> 3) + 0x20;
+        func_8013DDB8();
+        func_8013D788();
+        func_8013F35C();
+        func_8013FC5C();
+        return;
+    default:
+        func_80046500();
+        return;
+    }
+}
 
 void func_80139550(void) {
     s32 i;
