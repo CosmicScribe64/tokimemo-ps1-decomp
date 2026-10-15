@@ -14202,3 +14202,7 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 ## [2026-10-15] build | T-13600 bounded resource dispatcher and table helper
 
 [[tickets/T-13600-taiiku-families]] records45640's12/4-word resource tables, canonical two-argument resource API, and61-line stack residual;44464's four-halfword table draft remains197 lines. No new production source or shared declarations, no additional verified bytes. Root's disk cleanup allowed resuming small one-compiler Docker comparisons.
+
+## [2026-10-15] build | T-13600 fresh timing and animation helper evidence
+
+[[tickets/T-13600-taiiku-families]] recordsBCEC's collapsed second coordinate and115-line residual, plus43DD0's matching-sibling direct-store improvement109 to36 lines. No production source is accepted and no further verified bytes claimed. New drivers and diffs are preserved in build/taiiku13600 for the exhaustive draft catalog.
