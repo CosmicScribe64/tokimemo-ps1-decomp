@@ -19,6 +19,8 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-12901-small-option-main-first|T-12901]] Verify close OPTION and audio drafts (In Review; 2 matches / 548 linked bytes).
+- [[tickets/T-12900-small-option-main|T-12900]] Small OPTION and main audio matching (In Progress).
 - [[tickets/T-11830-tt-wave1-handoff|T-11830]] TT: the seven wave-1 TT matches handed over by the maintainer (Done; TT 65.3%).
 - [[tickets/T-12010-codex-cx1|T-12010]] Codex cx1 main helper matching (In Review).
 - [[tickets/T-12020-codex-cx2|T-12020]] Codex cx2 TAIIKU matching pass (In Review).
