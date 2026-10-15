@@ -97,7 +97,80 @@ void func_8015B3B0(s32 arg0, s16 *arg1, s32 arg2) {
     obj->unk_00 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B59C);
+/* FAKE: byte-offset actor views preserve the original alias/reload behavior;
+ * direct TcActor fields differ by 30 listing rows. T-12070. */
+void func_8015B59C(void) {
+    s32 i;
+    TcPos position;
+    for (i = 0x10; i != 0x3F; i++) {
+        if (*(u8 *)((u8 *)&D_8015EDB4[i] + 1) & 0x80) {
+            if (*(s16 *)((u8 *)&D_8015EDB4[i] + 122) == 0x7FFF) {
+                func_8015C0A0(1, i);
+                *(s16 *)((u8 *)&D_8015EDB4[i] + 122) = 0;
+            }
+            if ((*(u8 *)((u8 *)&D_8015EDB4[i] + 133) == 0) && (*(u8 *)((u8 *)&D_8015EDB4[i] + 2) != 0xFF)) {
+                *(s16 *)((u8 *)&D_8015EDB4[i] + 122) = 0;
+                *(u8 *)((u8 *)&D_8015EDB4[i] + 3) = 2;
+                *(u8 *)((u8 *)&D_8015EDB4[i] + 2) = 0xFF;
+                position.x = *(s16 *)((u8 *)&D_8015EDB4[i] + 116);
+                position.y = *(s16 *)((u8 *)&D_8015EDB4[i] + 118);
+                position.z = *(s16 *)((u8 *)&D_8015EDB4[i] + 120);
+                switch (*(u8 *)((u8 *)&D_8015EDB4[i] + 135) & 0xF0) {
+                case 0x10:
+                    func_8013E424(position, 6);
+                    break;
+                case 0x20:
+                    func_8013E424(position, 7);
+                    break;
+                case 0x30:
+                    func_8013E424(position, 0);
+                    break;
+                case 0x40:
+                    func_8013E424(position, 1);
+                    break;
+                case 0x50:
+                    func_8013E424(position, 2);
+                    break;
+                case 0x60:
+                    func_8013E424(position, 3);
+                    break;
+                case 0x70:
+                    func_8013E424(position, 4);
+                    break;
+                case 0x80:
+                    func_8013E424(position, 5);
+                    break;
+                case 0xD0:
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    break;
+                case 0xE0:
+                    func_8013E424(position, 0);
+                    func_8013E424(position, 1);
+                    func_8013E424(position, 7);
+                    break;
+                case 0xF0:
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 7);
+                    func_8013E424(position, 2);
+                    func_8013E424(position, 0);
+                    func_8013E424(position, 1);
+                    func_8013E424(position, 5);
+                    func_8013E424(position, 3);
+                    func_8013E424(position, 4);
+                    break;
+                }
+            }
+            func_8015A948((s32) *(u8 *)((u8 *)&D_8015EDB4[i] + 2), i);
+            func_8015C2CC(i);
+            *(s16 *)((u8 *)&D_8015EDB4[i] + 122) = (s16) (*(s16 *)((u8 *)&D_8015EDB4[i] + 122) + 1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BD30);
 

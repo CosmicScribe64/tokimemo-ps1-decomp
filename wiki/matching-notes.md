@@ -5078,3 +5078,7 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## T-12070: TACO particle actor loop
+
+`func_8015B59C` matches 1,940 linked bytes. Reconstructing by-value TcPos calls and using unsigned flag stores restored repeated particle emissions. Replacing m2c pointer/byte-offset induction temporaries with a natural indexed for loop and removing a switch temporary restored pointer allocation and the original frame. Direct typed fields change alias/reload allocation; the byte-offset views are explicitly FAKE-labeled. Production literal funcdiff and TACO SHA1 pass; [[tickets/T-12070-codex-cx7]].
