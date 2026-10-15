@@ -13505,3 +13505,11 @@ included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-1
 board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
 merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
 (ported onto main, 27/27, TT 252/303).
+
+## [2026-10-15] setup | cx7 TACO actor matching
+
+Read the cx7 index, standards/workflow/cheatsheet and prior target notes; created [[tickets/T-12070-codex-cx7]] In Progress with matching index/card. Docker baseline running with ninja -j2. Larger actor functions and reusable patterns take priority per user steering; only src/ovl/TACO/8015ABF0.c is owned.
+
+## [2026-10-15] build | cx7 baseline verified
+
+Docker baseline configure/ninja -j2 passed all 27 binary checksums, headers and globals. Evidence build/scratch/baseline.log; matching now begins under [[tickets/T-12070-codex-cx7]].

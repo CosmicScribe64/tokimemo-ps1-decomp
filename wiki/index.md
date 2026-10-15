@@ -19,6 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
+- [[tickets/T-12070-codex-cx7|T-12070]] Codex cx7 TACO actor matching (In Progress).
 - [[tickets/T-11820-tt-batch-9|T-11820]] TT batch 9: never-attempted functions and func_801333D4 (Done; 3 matches, TT 60.6%).
 - [[tickets/T-11810-tt-batch-8|T-11810]] TT batch 8: Opus on untried pipeline drafts and the closest guarded drafts (Done; 7 matches, TT 59.1%).
 - [[tickets/T-11800-tt-batch-7|T-11800]] TT batch 7: bulk_m2c rerun and two Opus passes (Done; 10 matches, TT 56.7%).
