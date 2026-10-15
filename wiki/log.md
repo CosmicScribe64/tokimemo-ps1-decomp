@@ -14764,3 +14764,6 @@ Created [[tickets/T-15100-unaligned-draft-repairs]] and notified the census gene
 
 ## [2026-10-15] build | Repair catalog duplicate-key fix
 Integrated audit test exposed duplicate repair_path keyword handling when joining a manual repair result with its catalog row. Replaced the duplicate keyword construction with an explicit merged mapping and final path override. All eleven draft, repair and audit tests pass in Docker. Initial census has all 1,066 outcomes (29 zero candidates, 908 other compiled scores, 129 failures); repairs remain separate and no complete usable-draft claim is made. See [[tickets/T-14500-exhaustive-drafts]].
+## [2026-10-15] build | T-15300 BUNKAKEN label encoding match
+
+Promoted BUNKAKEN func_80145844: 440 inventory coverage bytes and 440 literal default linked bytes. Restoring the ordinary Unicode label fixes an unsupported mixed hex-escape spelling in IDO K&R mode, following root's BUNKASAI finding. BUNKAKEN SHA1 and header/global/prototype guards pass. No FAKE/header changes or existing C edits. TACO's bounded structural probe is retained locally and paused for incoming exact candidates; see [[tickets/T-15300-fresh-structural-near-matches]].
