@@ -2891,7 +2891,9 @@ void func_8013B208(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013B208);
 #endif
 
-/* NON_MATCHING: T-11020, register-only (35 insns, first 45 rows exact): unk_75C and D_80122D08 take v1/a0 where the original has v0/v1 (tie of the lui range with cvt(D_800CA2F8)) */
+/* NON_MATCHING: T-11020, T-11580: unk_75C and D_80122D08 take v1/a0 where the original has v0/v1 and the
+   original reloads unk_75C before the nested test; D_800CA15C is read as a halfword and func_80084D3C takes
+   no arguments (T-11580) */
 #ifdef NON_MATCHING
 void func_8013B488(void) {
     u32 t;
@@ -2931,7 +2933,7 @@ void func_8013B488(void) {
                                     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_02 -= 1;
                                     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_06 -= 2;
                                     D_800E6280.unk_1BC[D_800E6280.unk_F5F].unk_0A += 5;
-                                    func_80084D3C(0x38, &D_800E6280);
+                                    func_80084D3C();
                                 }
                                 if (sp39 < 2U) {
                                     if (D_800E6280.unk_F5F == 6) {
@@ -2948,7 +2950,7 @@ void func_8013B488(void) {
     D_800CA134 = (u8 *) &sp3A;
     D_800CA138 = &D_800CA15C;
     t = func_80051A68(D_800E6280.unk_F5F) & 0x7F;
-    if (((D_800E6280.unk_F5F == 1) || (D_800E6280.unk_F5F == 5)) && (t < 2U) && (D_800CA15C == 3)) {
+    if (((D_800E6280.unk_F5F == 1) || (D_800E6280.unk_F5F == 5)) && (t < 2U) && (*(s16 *)&D_800CA15C == 3)) {
         func_80083440(1);
     }
     D_800CA13C = D_8015BE18;
