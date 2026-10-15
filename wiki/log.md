@@ -14547,3 +14547,7 @@ Created [[tickets/T-14501-remaining-draft-proof]] for promotion of T-14500 censu
 ## [2026-10-15] build | T-14501 BUNKASAI verified draft batch
 
 Promoted 6 ordinary C functions / 4,248 bytes for BUNKASAI after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | EVENT typed record loop adds 400 bytes
+
+[[tickets/T-14300-event-families]] adds func_8010A91C through the observed Rec34 bit1 view and an ordinary for loop, superseding its earlier two-row negative. Combined eight-function default literal proof and EVENT SHA1 pass; header/global/prototype checks pass, zero new and 12 known disagreements. Cumulative accepted gain: eight functions / 4,084 bytes. Existing-body audit preserves both touched files' baseline C. Scope complete and moved In Review for independent review.

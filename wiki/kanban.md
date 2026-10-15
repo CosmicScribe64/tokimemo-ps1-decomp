@@ -26,6 +26,7 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
+
 - [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
 
 - [ ] [[tickets/T-14400-option-menu-families|T-14400 Match OPTION menu and state families]]
@@ -61,6 +62,7 @@ kanban-plugin: board
 ## In Review
 
 - [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
+- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
