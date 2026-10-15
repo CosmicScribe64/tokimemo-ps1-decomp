@@ -135,3 +135,7 @@ void func_8013EAC8(void);
 void func_80148E68(void);
 void func_80150CC8(void);
 void func_80152618(void);
+
+/* T-11390: forward calls within 80143DD0.c. */
+void func_80144D38(void);
+void func_80144E9C(void);
