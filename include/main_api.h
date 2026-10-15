@@ -2549,6 +2549,8 @@ s32 printf(u8 *fmt, ...);
 s32 func_800AE0C0(s32);
 s32 func_800AE0D0(void);
 s32 rand();
+/* GYOZI calls this entry with an implicit-int ABI; semantics unknown. T-13202. */
+s32 func_800BCE40();
 s32 func_800AE0E0(void *arg0);
 s32 strlen(u8 *s);
 void func_800AE0F0(void *dst, void *src);  /* strcpy (SDK libc) */

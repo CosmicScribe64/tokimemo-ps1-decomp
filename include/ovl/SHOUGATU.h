@@ -769,6 +769,9 @@ void func_8013D3B4(void);
 
 #endif
 
+#ifndef OVL_SHOUGATU_T13202_INITIALIZER
+#define OVL_SHOUGATU_T13202_INITIALIZER
 /* T-13202: widths read/written by the sprite initializer. */
 extern s16 D_80146150;
 extern s8 D_8014615C;
+#endif
