@@ -13906,3 +13906,6 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] decision | Additional matching chats with subagents
 [[tickets/T-12600-byte-coverage-families]]: user explicitly authorized additional chats and their own subagents. Dispatched shared-fix team (T-12700 series; BUNKAKEN/BUNKASAI, including root's candidate family) and large-function team (T-12800 series; main/8006CB30.c, EVENT/8010FE10.c, TEL/80132000.c). Root yields those sources; current workers retain dialogue, BUNKA_SD and DATE. Each new team is capped at two concurrent compilers initially and must provide literal/affected-binary proof before root integration.
+
+## [2026-10-15] decision | Small-function and type-recovery chats assigned
+[[tickets/T-12600-byte-coverage-families]]: user requested GPT-6.1 Sol medium for small functions, and a separate types/globals chat. Small-function team owns OPTION plus main/80079B10.c (previously queued cx6/cx8), T-12900 series. Type team owns MASTER implementation pilot, T-13000 series, with minimal evidence-backed shared-header edits requiring all27 checks; other scopes read-only. One concurrent compiler per new team initially. Root retains integration responsibility.
