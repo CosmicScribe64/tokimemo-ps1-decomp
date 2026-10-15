@@ -14277,3 +14277,17 @@ All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 68
 
 ## [2026-10-15] build | Card-state batch verified at 61.6 percent
 [[tickets/T-12400-integrate-verified-matches]]: ETCaa1c51ec adds4functions/2368bytes; event178f61b1 fixes include guards and canonical main declaration without changing matched bytes. All27 checksums, header/global checks and prototype audit pass (0new/15known). Total5874/6958functions,1404124/2279368bytes (61.6%); remaining419372alignedbytes for80%. Evidence build/scratch/goal-card-states.log. Build-dependency experiment remains unintegrated pending file-addition correctness fixes; observed ETC-header rebuild reduction443to13compiles is not a game-byte gain.
+## [2026-10-15] ticket | 13100 review complete
+[[tickets/T-13100-etc-families]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13101 review complete
+[[tickets/T-13101-etc-career-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13102 review complete
+[[tickets/T-13102-etc-exam-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13103 review complete
+[[tickets/T-13103-etc-memory-card-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] lint | ETC completion records coherent
+Four new tickets each have one Done card matching frontmatter; all new pages are indexed and cross-linked. Eleven final proof spans sum to 5900 bytes. Independent standards/spec reviews pass; 0 new prototype disagreements. See [[etc-family-results]].

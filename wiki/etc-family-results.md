@@ -35,3 +35,7 @@ All rejected variants stay in ignored build/etc13100. Do not repeat these bounde
 ## Census boundary
 
 Source census after this pass: ETC 349/394 functions, 70936/107284 bytes (66.1%, baseline 65036 bytes). Whole game 5870/6958 functions, 1399964/2279368 bytes (61.4%). SDK assembly excluded. These census numbers are not a fresh 27-binary checksum claim; this lane rebuilt and verified ETC. The broad 80% objective remains ongoing.
+
+## Review and final gates
+
+Repository code-review skill, aa2b3158...aa1c51ec: GPT-6.1 Sol medium standards and spec reviews both pass without findings. The spec review documentation observation was resolved by recording the completed prototype guard in all four tickets: **0 new / 15 known disagreements**, branch check OK. Tickets moved to Done after both review axes and guards passed. No production edits followed review. Final branch is codex/etc-13100, ready for integration; no push or PR.
