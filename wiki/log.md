@@ -13903,3 +13903,6 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 
 ## [2026-10-15] decision | Prioritize byte throughput toward 80 percent
 [[tickets/T-12600-byte-coverage-families]] records the user's 80% target, requiring another 477,972 aligned bytes from current main. Largest-dialogue and DATE work continue; root tests the shared BUNKAKEN flag/addressing family identified by [[broad-coverage-results]]. Avoid repeating the low-yield default sweep; measure production-verified gains.
+
+## [2026-10-15] decision | Additional matching chats with subagents
+[[tickets/T-12600-byte-coverage-families]]: user explicitly authorized additional chats and their own subagents. Dispatched shared-fix team (T-12700 series; BUNKAKEN/BUNKASAI, including root's candidate family) and large-function team (T-12800 series; main/8006CB30.c, EVENT/8010FE10.c, TEL/80132000.c). Root yields those sources; current workers retain dialogue, BUNKA_SD and DATE. Each new team is capped at two concurrent compilers initially and must provide literal/affected-binary proof before root integration.
