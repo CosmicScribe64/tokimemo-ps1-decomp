@@ -14041,3 +14041,26 @@ Moved [[tickets/T-12090-codex-cx9]] and its kanban card to In Review. Six exact 
 
 ## [2026-10-15] lint | Final BUNKA ticket lifecycle check
 Docker lint confirms T-12700 through T-12703 each has one kanban card in Done matching its ticket status. Source handoff was clean at0f2032a3; this final entry records the check.
+## [2026-10-15] ticket | T-13000 / T-13001 types and MASTER pilot
+
+Created isolated worktree at origin/main 95c3fc9f; read [[data-types]], [[game-state]], [[broad-coverage-results]] and coding standards. Claimed MASTER only; compile concurrency one. Tickets [[tickets/T-13000-types-globals]] and [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] build | MASTER typed-copy pilot
+
+Baseline MASTER checksum passed. type_recovery identified three 0x1A-byte copies; original indexed lh confirms MasterHalfwords13 at D_8013C7E8/C804/C820. Full-TU pilot func_80139910 matched 952 literal linked bytes after local declaration ordering and the existing sibling scalar byte-view idiom; others still under test. No shared headers changed. [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] build | Three MASTER typed-table matches
+
+[[master-types-pilot]] records 952 + 1,388 + 1,308 = 3,648 literal linked bytes in three handlers. Existing table and sprite views recovered; artificial selector/stack idioms labelled FAKE. Event-log helper experiment rejected and INCLUDE_ASM restored. Updated [[data-types]]. No shared headers changed.
+
+## [2026-10-15] ticket | T-13000 and T-13001 ready for review
+
+Moved both tickets to In Review with matching board cards. MASTER checksum and all three literal-byte checks pass. No shared declarations changed; no full-game rebuild claimed. [[tickets/T-13000-types-globals]], [[tickets/T-13001-master-layout-pilot]].
+
+## [2026-10-15] lint | Complete declaration audit for MASTER pilot
+
+Reused generated assembly from all integration address spaces, preserving local MASTER assembly. Header/global checks pass; prototype branch audit reports zero new disagreements / 15 known. This replaces the initial MASTER-only 12-known audit count. [[master-types-pilot]].
+
+## [2026-10-15] ticket | T-13000 / T-13001 reviewed and Done
+
+Independent standards and spec reviews found no code or scope issues against 95c3fc9f..f17ceea9. The requested explicit prototype-audit record is now included; no unresolved findings. Moved [[tickets/T-13000-types-globals]] and [[tickets/T-13001-master-layout-pilot]] to Done and synchronized board/index. Three matches / 3,648 literal bytes; MASTER checksum and declaration audits pass. Full 27-binary integration gate remains for root.

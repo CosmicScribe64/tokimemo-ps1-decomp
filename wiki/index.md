@@ -285,3 +285,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-12803-main|T-12803]] Main schedule matching (Done).
 - [[tickets/T-12703-bunkasai-heldout-family|T-12703]] BUNKASAI held-out family transfer (Done; four matches, 4,016 bytes).
+
+- [[tickets/T-13000-types-globals|T-13000]] Recover evidence-backed types and globals (Done).
+
+- [[tickets/T-13001-master-layout-pilot|T-13001]] Recover MASTER layouts and verify pilot matches (Done).
+
+- [[master-types-pilot]] — T-13000/T-13001: three MASTER typed-table matches, 3,648 literal bytes and evidence limits.

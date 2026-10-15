@@ -122,3 +122,7 @@ but the actual packet is eight bytes (tag plus one command word), as recorded
 in the [DIABPSX.SYM type dump](https://gist.github.com/mewmew/f4c94068e1462e40142b6cab112d43d2).
 The shared declaration and ABI test use that eight-byte layout. DR_STP is
 twelve bytes, with two command words.
+
+## MASTER held-out table pilot (T-13001)
+
+[[master-types-pilot]] verifies three additional 13-s16 copies at D_8013C7E8/C804/C820 using the existing MasterHalfwords13 type. Reusing MasterSprite44 preserves ordered accesses at +03/+07/+16 in the two later handlers. Three full-TU matches add 3,648 literal bytes; source-level register/stack idioms remain FAKE-labelled, distinct from the demonstrated layouts. No shared type migration.
