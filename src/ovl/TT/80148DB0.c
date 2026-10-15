@@ -336,7 +336,46 @@ void func_80149E44(void) {
     *(u16 *)(p + 0x6A) += 0x10;
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_80149EA0);
+void func_80149EA0(void) {
+    u8 *p;
+    u8 *c;
+    u8 *s;
+    u8 *f;
+
+    p = D_80158A74;
+    s = D_80158A64;
+    c = D_80158A6C;
+    f = D_80158AA8;
+    /* abs(x - 0x9C0000) written as the usual ABS() expansion; locals for x or the difference give other registers. T-11810 */
+    if ((*(s32 *)(p + 0x24) - 0x9C0000 < 0 ? -(*(s32 *)(p + 0x24) - 0x9C0000) : *(s32 *)(p + 0x24) - 0x9C0000) < 0x8001) {
+        *(s32 *)(p + 0x24) = 0x9C0000;
+    } else if (*(s32 *)(p + 0x24) < 0x9C0000) {
+        *(s32 *)(p + 0x24) += 0x8000;
+    } else {
+        *(s32 *)(p + 0x24) -= 0x8000;
+    }
+    *(s16 *)(p + 0x16) = *(s16 *)(p + 0x26);
+    if (*(u16 *)(c + 0x10) >= 0x1E) {
+        *(u16 *)(c + 0x10) = 0;
+        f[0] = 1;
+        *(u16 *)(s + 2) += 1;
+    }
+    switch (*(u16 *)(c + 0x10)) {
+    case 0:
+        p[0x3E] = 5;
+        break;
+    case 1:
+        func_80133AD0(0x601);
+        break;
+    case 6:
+        p[0x3E] = 6;
+        break;
+    case 30:
+        p[0x3E] = 7;
+        break;
+    }
+    *(u16 *)(c + 0x10) += 1;
+}
 
 void func_8014A000(void) {
     s32 i;
