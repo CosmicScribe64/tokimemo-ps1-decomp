@@ -1148,4 +1148,14 @@ extern u8 *D_801515F4[];
 extern u8 *D_80151614[];
 extern u8 *D_80151664[];
 extern u8 D_80151398;
+extern u8 *D_80150A9C[];
+extern u8 *D_80150B08[];
+extern u8 *D_80150E60[];
+extern u8 D_80150CFC;
+extern u8 D_80150E78;
+void func_8014988C(void);
+void func_8014A6D4(void);
+void func_8014A9A4(void);
+void func_8014AB5C(void);
+void func_8014AB88(void);
 #endif

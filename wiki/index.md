@@ -297,3 +297,5 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13100-etc-families|T-13100]] ETC source-family transfer, isolated worktree.
 
 - [[tickets/T-13101-etc-career-family|T-13101]] ETC career state handlers.
+
+- [[tickets/T-13102-etc-exam-family|T-13102]] ETC exam handlers.

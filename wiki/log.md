@@ -14089,3 +14089,9 @@ Created [[tickets/T-13100-etc-families]] from aa2b3158 in isolated codex/etc-131
 
 ## [2026-10-15] ticket | Claim ETC career family
 Created [[tickets/T-13101-etc-career-family]] for bounded adjacent-family transfer.
+
+## [2026-10-15] build | ETC career checkpoint
+[[tickets/T-13101-etc-career-family]] adds four functions / 1132 literal linked bytes, ETC SHA1 OK. Two bounded failures remain assembly; evidence and scores recorded in ticket.
+
+## [2026-10-15] ticket | Claim ETC exam family
+Created [[tickets/T-13102-etc-exam-family]] for medium state handlers and work-memory layout transfer.

@@ -1,7 +1,33 @@
 #include "common.h"
 #include "ovl/ETC.h"
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_801492C0);
+void func_801492C0(void) {
+    switch (D_800E6280.unk_1109) {
+    case 0:
+        func_801498BC();
+        break;
+    case 1:
+        func_8014A6D4();
+        break;
+    case 2:
+        func_8014A9A4();
+        break;
+    case 3:
+        func_8014AB5C();
+        break;
+    case 4:
+        func_8014AB88();
+        break;
+    }
+    func_8006BA40();
+    hizuke_show();
+    message_window_show();
+    func_80066334();
+    func_80066C08(0);
+    func_800578F4(get_last_gamen_mode());
+    func_8014988C();
+    func_80067870();
+}
 
 s32 func_80149394(void) {
     func_800438DC(1, 0);
@@ -185,7 +211,34 @@ s32 func_80149A08(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_80149AC4);
+void func_80149AC4(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_80150A9C[D_80150E98], 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(&D_80150CFC, 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 3:
+        xa_wait();
+        return;
+    case 4:
+        func_8004284C();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+
 
 /* FAKE: the u8 view of the selector keeps the compares on the global ($v1), as in the original (T-5010) */
 s32 func_80149BC0(void) {
@@ -347,7 +400,58 @@ s32 func_8014A32C(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A360);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A534);
+void func_8014A534(void) {
+    u32 temp_v0;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_80150E60[func_8014A2C4()], 0, 0x1F);
+        temp_v0 = func_8014A2C4();
+        switch (temp_v0) {
+        case 0:
+            func_8004500C(1, 0x204);
+            break;
+        case 1:
+            func_8004500C(1, 0x201);
+            break;
+        case 2:
+            func_8004500C(1, 0x201);
+            break;
+        case 3:
+            func_8004500C(1, 0x200);
+            break;
+        case 4:
+            func_8004500C(1, 0x203);
+            break;
+        case 5:
+            func_8004500C(1, 0x203);
+            break;
+        }
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(&D_80150E78, 0, 0x1F);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 3:
+        xa_wait();
+        return;
+    case 4:
+        func_8014A360();
+        func_80042908(4);
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+
 
 void func_8014A6D4(void) {
     D_800E6280.unk_1104.w += 1;
@@ -412,7 +516,34 @@ void func_8014A7A4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/801492C0", func_8014A8A8);
+void func_8014A8A8(void) {
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(D_80150B08[D_80150E98], 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        k_sub_reset();
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(&D_80150CFC, 0, 0xF);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 3:
+        xa_wait();
+        return;
+    case 4:
+        func_8004284C();
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+
 
 void func_8014A9A4(void) {
     D_800E6280.unk_1104.w += 1;
