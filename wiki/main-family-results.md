@@ -25,3 +25,7 @@ All drafts below remain ignored in build/main14200; no production/header changes
 These are full-TU diagnostic row counts, not literal matches. Historical evidence read first: [[matching-breakthroughs]], [[bunka-family-results]], [[etc-family-results]], [[broad-coverage-results]] and referenced MAIN tickets. Do not repeat the same source forms without new evidence.
 
 Initializer guards pass: headers OK, globals OK, prototypes 0 new / 15 known, branch check OK (build/main14200/412-guards.log). Review remains pending while further families are investigated.
+
+## Character initializer checkpoint
+
+func_80041C2C adds **796 literal linked bytes**. Using one local GameState pointer for every access with existing CharFlags b1/b3/b6/b7/f9 stores changes the full-TU score from 366 rows to zero. A new month/day bitfield view also scores zero with the pointer but is unnecessary and was removed. No header layout change or new FAKE is needed. The explicit month/day byte/halfword masks retain the original stores. Evidence: build/main14200/41c-proof.log, 41c-build.log and 41c-guards.log. Both new functions pass default literal verification together; MAIN SHA1, headers and globals pass. Cumulative accepted gain: **2 functions / 1472 bytes**.

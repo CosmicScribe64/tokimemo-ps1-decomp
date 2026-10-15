@@ -300,7 +300,58 @@ void func_800418B0(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/80041000", func_800419FC);
 
-INCLUDE_ASM("asm/nonmatchings/main/80041000", func_80041C2C);
+void func_80041C2C(void) {
+    GameState *g = &D_800E6280;
+    s32 i;
+
+    bzero(g->unk_1BC, 0x380);
+    for (i = 0; i < 16; i++) {
+        g->unk_1BC[i].unk_0C.f.b1 = 0;
+        g->unk_1BC[i].unk_0C.f.b3 = 0;
+        g->unk_1BC[i].unk_0C.f.b6 = 0;
+        g->unk_1BC[i].unk_02 = 0;
+        g->unk_1BC[i].unk_06 = 0x32;
+        g->unk_1BC[i].unk_0A = 0;
+        g->unk_1BC[i].unk_0C.b[3] = 0;
+        g->unk_1BC[i].unk_0C.f.b7 = 0;
+        g->unk_1BC[i].unk_0C.f.f9 = 0;
+        g->unk_1BC[i].unk_0C.b[2] = (g->unk_1BC[i].unk_0C.b[2] & 0xFF0F) | 0xB0;
+    }
+    g->unk_1BC[0].unk_0C.f.b1 = 1;
+    g->unk_1BC[12].unk_0C.f.b1 = 1;
+    g->unk_1BC[0].unk_0C.f.b3 = 1;
+    g->unk_1BC[0].unk_0C.f.b6 = 1;
+    g->unk_1BC[0].unk_0C.f.b7 = 1;
+    g->unk_1BC[12].unk_0C.f.b3 = 1;
+    g->unk_1BC[0].unk_10.b[0] = (g->unk_1BC[0].unk_10.b[0] & 0xFFF0) | 2;
+    g->unk_1BC[0].unk_10.h[0] = (g->unk_1BC[0].unk_10.h[0] & 0xFE0F) | 224;
+    g->unk_1BC[1].unk_10.b[0] = (g->unk_1BC[1].unk_10.b[0] & 0xFFF0) | 2;
+    g->unk_1BC[1].unk_10.h[0] = (g->unk_1BC[1].unk_10.h[0] & 0xFE0F) | 48;
+    g->unk_1BC[2].unk_10.b[0] = (g->unk_1BC[2].unk_10.b[0] & 0xFFF0) | 7;
+    g->unk_1BC[2].unk_10.h[0] = (g->unk_1BC[2].unk_10.h[0] & 0xFE0F) | 112;
+    g->unk_1BC[3].unk_10.b[0] = (g->unk_1BC[3].unk_10.b[0] & 0xFFF0) | 9;
+    g->unk_1BC[3].unk_10.h[0] = (g->unk_1BC[3].unk_10.h[0] & 0xFE0F) | 480;
+    g->unk_1BC[4].unk_10.b[0] = (g->unk_1BC[4].unk_10.b[0] & 0xFFF0) | 1;
+    g->unk_1BC[4].unk_10.h[0] = (g->unk_1BC[4].unk_10.h[0] & 0xFE0F) | 208;
+    g->unk_1BC[5].unk_10.b[0] = (g->unk_1BC[5].unk_10.b[0] & 0xFFF0) | 6;
+    g->unk_1BC[5].unk_10.h[0] = (g->unk_1BC[5].unk_10.h[0] & 0xFE0F) | 208;
+    g->unk_1BC[6].unk_10.b[0] = (g->unk_1BC[6].unk_10.b[0] & 0xFFF0) | 12;
+    g->unk_1BC[6].unk_10.h[0] = (g->unk_1BC[6].unk_10.h[0] & 0xFE0F) | 48;
+    g->unk_1BC[7].unk_10.b[0] = (g->unk_1BC[7].unk_10.b[0] & 0xFFF0) | 11;
+    g->unk_1BC[7].unk_10.h[0] = (g->unk_1BC[7].unk_10.h[0] & 0xFE0F) | 240;
+    g->unk_1BC[8].unk_10.b[0] = (g->unk_1BC[8].unk_10.b[0] & 0xFFF0) | 10;
+    g->unk_1BC[8].unk_10.h[0] = (g->unk_1BC[8].unk_10.h[0] & 0xFE0F) | 272;
+    g->unk_1BC[9].unk_10.b[0] = (g->unk_1BC[9].unk_10.b[0] & 0xFFF0) | 9;
+    g->unk_1BC[9].unk_10.h[0] = (g->unk_1BC[9].unk_10.h[0] & 0xFE0F) | 80;
+    g->unk_1BC[10].unk_10.b[0] = (g->unk_1BC[10].unk_10.b[0] & 0xFFF0) | 5;
+    g->unk_1BC[10].unk_10.h[0] = (g->unk_1BC[10].unk_10.h[0] & 0xFE0F) | 256;
+    g->unk_1BC[11].unk_10.b[0] = (g->unk_1BC[11].unk_10.b[0] & 0xFFF0) | 3;
+    g->unk_1BC[11].unk_10.h[0] = (g->unk_1BC[11].unk_10.h[0] & 0xFE0F) | 48;
+    g->unk_1BC[12].unk_10.b[0] = (g->unk_1BC[12].unk_10.b[0] & 0xFFF0) | 8;
+    g->unk_1BC[12].unk_10.h[0] = (g->unk_1BC[12].unk_10.h[0] & 0xFE0F) | 368;
+    g->unk_1BC[13].unk_10.b[0] = (g->unk_1BC[13].unk_10.b[0] & 0xFFF0) | 4;
+    g->unk_1BC[13].unk_10.h[0] = (g->unk_1BC[13].unk_10.h[0] & 0xFE0F) | 64;
+}
 
 void func_80041F48(void) {
     s32 i;

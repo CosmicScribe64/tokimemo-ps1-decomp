@@ -24,3 +24,6 @@ Existing image only, Docker analysis/build, one compiler. Prior broad default sw
 ### Initializer checkpoint
 func_800412E0: 676 default full-TU literal linked bytes, MAIN SHA1 OK. Evidence and rejected focused probes in [[main-family-results]]. Only added shared prototype is the existing void func_80041840 definition. No generated assembly or existing C bodies modified.
 Header/global guards pass; prototype guard: 0 new / 15 known disagreements, branch check OK (build/main14200/412-guards.log). MAIN SHA1 independently checked by ninja. Review pending; work continues.
+
+### Character initializer checkpoint
+func_80041C2C: 796 default linked bytes, MAIN SHA1, headers/globals pass; prior 676-byte initializer reverified. Existing GameState pointer and CharFlags suffice; no new type layout. Cumulative 1472 bytes. Evidence in [[main-family-results]].

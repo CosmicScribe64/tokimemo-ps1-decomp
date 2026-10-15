@@ -14420,3 +14420,6 @@ Created isolated codex/main-14200 from 0f117230; original checkout read only. Re
 
 ## [2026-10-15] build | T-14200 initializer 676-byte checkpoint
 [[main-family-results]] records default full-TU literal MATCH for func_800412E0 and MAIN SHA1 OK. Canonical state views close the prior initializer near miss; original 0xFFF0 mask retained. Rejected appointment/parameter source forms and temporary headers removed. [[tickets/T-14200-main-source-families]] remains In Progress.
+
+## [2026-10-15] build | T-14200 character initializer 796-byte checkpoint
+[[main-family-results]] records func_80041C2C: consistent GameState pointer and existing flag members give default literal MATCH; MAIN SHA1 OK, earlier initializer reverified. No new header layout or FAKE. [[tickets/T-14200-main-source-families]] continues at 1472 verified bytes.
