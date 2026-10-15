@@ -1063,28 +1063,57 @@ s16 func_8013FBA8(s32 arg0) {
     return (s16) (temp_v1 - 0xC00);
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013FC5C);
+void func_8013FC5C(void) {
+    s32 i;
+    s32 j;
+    TaiikuI3 speed;
+
+    speed = D_80149F80;
+    for (i = 0; i < 3; i++) {
+        if (D_801499B4[i].halves.high < 0xE00) {
+            if (D_801499CC[i] == 0) {
+                D_801499B4[i].word += speed.v[i];
+            }
+        } else if (D_801499C4[i] != 0xFFFF) {
+            D_801499C4[i] = 0xFFFF;
+            for (j = 0; D_801499D4[j] != 0xFF; j++) {
+            }
+            D_801499D4[j] = i + 1;
+        }
+        if ((func_8013FB14(i + 1) == 1 || func_8013FB14(i + 1) == 2 || func_8013FB14(i + 1) == 4 ||
+             func_8013FB14(i + 1) == 5) && !(func_800AE0D0() & 0xFFF)) {
+            D_801499CC[i] = 1;
+        }
+        if (D_801499CC[i] == 1) {
+            D_801499C4[i]++;
+            if (D_801499C4[i] > 240) {
+                D_801499CC[i] = 0;
+                D_801499C4[i] = 0;
+            }
+        }
+    }
+}
 
 s8 func_8013FE44(void) {
     s32 i;
     s16 v[3];
 
     for (i = 0; i < 3; i++) {
-        if (D_801499B4[i].val < 0xE00) {
-            v[i] = D_801499B4[i].val;
+        if (D_801499B4[i].halves.high < 0xE00) {
+            v[i] = D_801499B4[i].halves.high;
         } else {
             v[i] = -1;
         }
     }
     if ((v[0] >= v[1]) && (v[0] >= v[2])) {
-        D_801499B4[0].val = -1;
+        D_801499B4[0].halves.high = -1;
         return 1;
     }
     if (v[1] >= v[2]) {
-        D_801499B4[1].val = -1;
+        D_801499B4[1].halves.high = -1;
         return 2;
     }
-    D_801499B4[2].val = -1;
+    D_801499B4[2].halves.high = -1;
     return 3;
 }
 

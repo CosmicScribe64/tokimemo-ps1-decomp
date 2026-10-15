@@ -186,7 +186,6 @@ extern s32 D_8014999C;
 void func_8013B104(void);
 void func_8013C780(void);
 void func_8013C978(void);
-extern TaiikuPair D_801499B4[];
 
 extern u8 D_8014A3C4;
 extern s32 D_8014A3D0;
@@ -702,4 +701,13 @@ void func_8013A6FC(void);
 void func_8013CCFC(void);
 void func_8013B0AC(void);
 void func_8013F35C(void);
+#endif
+
+#ifndef OVL_TAIIKU_RUNNERS_T11640
+#define OVL_TAIIKU_RUNNERS_T11640
+/* T-11640: per-runner tables of func_8013FC5C (runners 1..3; D_801499B4 holds their 16.16 positions). */
+extern TaiHalves D_801499B4[]; /* 16.16 positions; D_801499B0[1..3] seen from func_8013FB14 */
+extern TaiikuI3 D_80149F80; /* speed added to each position, copied to the stack */
+extern u16 D_801499C4[];
+extern u8 D_801499CC[];
 #endif
