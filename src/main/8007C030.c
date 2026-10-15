@@ -1693,7 +1693,40 @@ u8 arg2;
     return 0;
 }
 
+/* NON_MATCHING: T-11590, 6 differing lines, frame only: every instruction matches, but the
+ * original frame is 0x170 with the buffers at sp+0x64; IDO puts the first local at sp+0x68 or
+ * higher whatever is declared (buf[4][0x40] plus two words gives 0x170 with buf at 0x70) */
+#ifdef NON_MATCHING
+s32 make_three_select(str)
+    u8 *str;
+{
+    u8 buf[3][0x40];
+    s16 i;
+    s16 n;
+    s16 start;
+
+    n = 0;
+    start = 0;
+    i = 0;
+    for (;;) {
+        if (str[i] == 'P' || str[i] == 'G') {
+            i--;
+        } else if (str[i] == 'q' || str[i] == ' ') {
+            str[i] = 0;
+            strncpy(buf[n++], &str[start], 0x40);
+            start = i + 1;
+            i--;
+        } else if (str[i] == 0) {
+            strncpy(buf[n], &str[start], 0x40);
+            break;
+        }
+        i += 2;
+    }
+    sprintf(str, "%sq%sq%s", buf[D_800CA2A4[0]], buf[D_800CA2A4[1]], buf[D_800CA2A4[2]]);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
+#endif
 
 /* NON_MATCHING: T-11590, 34 differing lines, all one v0/v1 swap: the original colours the u8 remainder before the GameState word (regdiff: unconstrained ranges go in bit order, the global has the lower bit); return r, a u32 copy, (r = g % 3) == 0 and void do not change it */
 #ifdef NON_MATCHING
