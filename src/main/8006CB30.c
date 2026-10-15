@@ -177,7 +177,45 @@ void func_8006D52C(s32 *arg0, s32 arg1, s32 arg2) {
     }
 }
 
+/* NON_MATCHING: T-11670, 5 differing lines; the original keeps the second loop's start index as a copy (move v1,v0), IDO folds it into the promoted unk_71C. */
+#ifdef NON_MATCHING
+void func_8006D6E0(void) {
+    GameState *gs;
+    s32 n;
+    s32 i;
+
+    gs = &D_800E6280;
+    n = D_800E6280.unk_041;
+    for (i = 0; i < 32; i++) {
+        if (D_800E6280.unk_69C[i].unk_00 == 0xFB) {
+            if (n == 0) {
+                gs->unk_71C = i;
+                if (D_800E6280.unk_69C[i - 1].unk_00 != 0x25) {
+                    D_800E6280.unk_71C--;
+                    if (D_800E6280.unk_69C[i - 2].unk_00 != 0x25) {
+                        D_800E6280.unk_71C--;
+                    }
+                }
+                break;
+            }
+            n--;
+        }
+    }
+    if (gs->unk_71C != 0) {
+        gs->unk_71C--;
+    }
+    for (i = gs->unk_71C; i < 32; i++) {
+        if (D_800E6280.unk_69C[i].unk_00 == 0x25) {
+            D_800E6280.unk_69C[i].unk_00 = 0;
+        }
+        if (D_800E6280.unk_69C[i].unk_00 == 0xFF) {
+            break;
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D6E0);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", func_8006D7EC);
 
