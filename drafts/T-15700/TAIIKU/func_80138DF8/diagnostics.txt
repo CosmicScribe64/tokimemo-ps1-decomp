@@ -1,0 +1,13 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80138DF8/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3289: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp44) = *(M2cBlock24 *)(&D_80149EBC);
+ --------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3290: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp44) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80149EBC) + (36));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3291: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp44 + 0x24) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80149EBC + 0x24) + (4));
+ -------------------------------^

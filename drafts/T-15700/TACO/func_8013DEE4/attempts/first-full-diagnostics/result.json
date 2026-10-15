@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_8013DEE4",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "size": 1336,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_8013DEE4",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TACO/func_8013DEE4/work/guarded.c, line 3519: 'sp6E' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "02695e222b78e2f892bac5b93ed07380ec5346c1754faba7734bba70a421417f",
+  "context_c_sha256": "f4d6577dbdb370de848fd1d20c29d2ec1338e8e8602ab27fc23c49dd3ec7ad44",
+  "declarations_h_sha256": "1ca486b8569517dc89ed00cc0c662349be658d5f8f5685984caec1b4f3fae2d5"
+}

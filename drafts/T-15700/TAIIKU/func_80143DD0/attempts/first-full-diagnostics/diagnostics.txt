@@ -1,0 +1,53 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80143DD0/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3423: redeclaration of 'D_8014A13C'; previous declaration at line 3186 in file 'drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c'
+ extern u8 D_8014A13C;
+ ----------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3430: Unacceptable operand of &.
+             var_v0 = (D_8014A13C + 1) & 0xFF;
+ ---------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3433: This expression is not an lvalue.
+         D_8014A13C = var_v0;
+ -------------------^
+cfe: Warning 712: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3443: illegal combination of pointer and integer
+         if (D_8014A13C == 2) {
+ -----------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3454: Unacceptable operand of a multiplicative operator.
+             D_80120668 = *(&D_8014A1E8 + (D_8014A13C * 2));
+ ------------------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3456: Unacceptable operand of a multiplicative operator.
+             D_80120668 = *(D_8014A1D4 + (D_8014A13C * 2));
+ -----------------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3458: This expression is not an lvalue.
+         D_8014A13C = D_8014A13C;
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TAIIKU/func_80143DD0/work -o drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.o /tmp/asm_processorodhackhu/preprocessed_921bf08ad0de43b1ab891fb77414f6d6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibay68qvld/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.o drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c
+
+
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80143DD0/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3429: Unacceptable operand of &.
+             var_v0 = (D_8014A13C + 1) & 0xFF;
+ ---------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3432: This expression is not an lvalue.
+         D_8014A13C = var_v0;
+ -------------------^
+cfe: Warning 712: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3442: illegal combination of pointer and integer
+         if (D_8014A13C == 2) {
+ -----------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3453: Unacceptable operand of a multiplicative operator.
+             D_80120668 = *(&D_8014A1E8 + (D_8014A13C * 2));
+ ------------------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3455: Unacceptable operand of a multiplicative operator.
+             D_80120668 = *(D_8014A1D4 + (D_8014A13C * 2));
+ -----------------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c, line 3457: This expression is not an lvalue.
+         D_8014A13C = D_8014A13C;
+ -------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TAIIKU/func_80143DD0/work -o drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.o /tmp/asm_processorp4k6j0eh/preprocessed_f0346937115b4f6ba377c06342c6aaf5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibffzwl8u1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.o drafts/T-15700/TAIIKU/func_80143DD0/work/guarded.c

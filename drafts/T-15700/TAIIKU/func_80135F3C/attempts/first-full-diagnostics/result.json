@@ -1,0 +1,15 @@
+{
+  "scope": "TAIIKU:func_80135F3C",
+  "src": "src/ovl/TAIIKU/80133C80.c",
+  "size": 1676,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TAIIKU/func_80135F3C",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TAIIKU/func_80135F3C/work/guarded.c, line 3520: 'spF0' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "b1909936b60cdacb2e6e5d8de57bc296483bab4d7d50a0fac4476ba75629d905",
+  "context_c_sha256": "9b67ee5a19b5073675958ee22a7a8dd055af5b094d93117fe68654c67f1277cd",
+  "declarations_h_sha256": "e9a1e506be1ace1813b5ab349595411f8b6d34d780f5aed0622a474da9a1c38d"
+}

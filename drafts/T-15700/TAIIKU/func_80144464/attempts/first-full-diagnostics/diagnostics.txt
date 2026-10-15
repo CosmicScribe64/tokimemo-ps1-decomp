@@ -1,0 +1,33 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80144464/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80144464/work/guarded.c drafts/T-15700/TAIIKU/func_80144464/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3442: redeclaration of 'D_8014A13C'; previous declaration at line 3186 in file 'drafts/T-15700/TAIIKU/func_80144464/work/guarded.c'
+ extern s32 D_8014A13C;
+ -----------^
+cfe: Warning 709: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3467: Incompatible pointer type assignment
+     var_v0_3 = &D_8014A13C;
+ -------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3467: '&' before array or function; ignored
+     var_v0_3 = &D_8014A13C;
+ ---------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3484: '&' before array or function; ignored
+     } while ((u32) var_v1 < (u32) &sp40);
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TAIIKU/func_80144464/work -o drafts/T-15700/TAIIKU/func_80144464/work/guarded.o /tmp/asm_processor9j8p81w2/preprocessed_af936a8cd8e347dd95cd6bbecbad7ed2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2wyv041d/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TAIIKU/func_80144464/work/guarded.o drafts/T-15700/TAIIKU/func_80144464/work/guarded.c
+
+
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80144464/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80144464/work/guarded.c drafts/T-15700/TAIIKU/func_80144464/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3466: Incompatible pointer type assignment
+     var_v0_3 = &D_8014A13C;
+ -------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3466: '&' before array or function; ignored
+     var_v0_3 = &D_8014A13C;
+ ---------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80144464/work/guarded.c, line 3483: '&' before array or function; ignored
+     } while ((u32) var_v1 < (u32) &sp40);
+ ----------------------------------^

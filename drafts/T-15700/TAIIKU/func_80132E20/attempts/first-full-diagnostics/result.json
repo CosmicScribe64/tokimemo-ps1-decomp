@@ -1,0 +1,15 @@
+{
+  "scope": "TAIIKU:func_80132E20",
+  "src": "src/ovl/TAIIKU/80132BD0.c",
+  "size": 692,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TAIIKU/func_80132E20",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3204: 'sp78' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "40f851ff0a6b22565dae1ca5aae6969643da50e5bcde7240476dd13e8fba1875",
+  "context_c_sha256": "8f7390b7a7ad968d5d9c9f5abeb01ee76c0aeccaecad6dd7de360df41d9f6097",
+  "declarations_h_sha256": "e421fa1088e7b977adb453921083ef4a5d5df811a9986a083c0130796a03176d"
+}

@@ -14874,3 +14874,11 @@ The user superseded the stopping request and asked to get all drafts compiling. 
 ## [2026-10-15] build | T15900 thirteen compiling source alternatives
 
 All thirteen reserved mixed-overlay scopes now compile through default full-TU IDO5.3, replayed with exact score assertions. Saved bodies, declarations, complete and preprocessed contexts, full compiler output, hashes and provenance under `drafts/T-14500/repairs/t15900`. Existing production EVENT17D80 is reused; no new matching-byte claim. Original attempts remain immutable. Updated [[exhaustive-drafts]] and [[tickets/T-15900-remaining-draft-compile-repairs]]. Remaining77 completion still awaits the disjoint batches.
+
+## [2026-10-15] ticket | Reserve all TACO and TAIIKU draft failures
+
+Started [[tickets/T-15700-taco-taiiku-draft-repairs]], 28 scopes (17/11). Inspected all prior alternative references/diagnostics and four historical source trees; none implements these exact targets. Preserve initial attempts; capture full diagnostics rather than helper-tail truncation before genuine SDK/type/stack reconstruction.
+
+## [2026-10-15] build | Compile every reserved TACO and TAIIKU draft
+
+[[tickets/T-15700-taco-taiiku-draft-repairs]] moves In Review:28/28 full TUs compile in Docker (17TACO/11TAIIKU), 29584 target code bytes, scores98..709 and no zeros/coverage claim. SDK vector/coordinate layouts, actual copied tables and canonical aggregate/ABI views resolve all blockers. Complete C/context/diagnostics/hash/provenance and one-time derivation scripts saved in drafts/T-15700; initial attempts and production C/header files unchanged.

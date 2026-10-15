@@ -369,3 +369,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-15200-event-large|T-15200]] Large EVENT dispatcher and reusable types (In Review; independent drafts and type evidence, zero new matching bytes).
 
 - [[tickets/T-15900-remaining-draft-compile-repairs|T-15900]] — Remaining mixed-overlay compile repairs (13 scopes, In Progress).
+- [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]] All28 TACO/TAIIKU failed drafts now compile; no zeros (In Review).

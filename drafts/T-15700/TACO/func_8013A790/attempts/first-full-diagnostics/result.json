@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_8013A790",
+  "src": "src/ovl/TACO/80139170.c",
+  "size": 1492,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_8013A790",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3653: Type int  of rhs of assignment expression is incompatible with type struct TacoRnd  of lhs",
+  "body_c_sha256": "7a5a3ae843e87f0bdf4939ad119c4931bb3fe731060c34dfdb4a4f229922d96d",
+  "context_c_sha256": "76f7abe98f9e3a08c4a68232859ecacd516d000021cc55f0aed5d448a3ff85a1",
+  "declarations_h_sha256": "0673ae4b50b311350a3674677301a2733094ed5d7c0b474d870de53928966be6"
+}

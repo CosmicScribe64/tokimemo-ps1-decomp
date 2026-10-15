@@ -1,0 +1,36 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_80153B38/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_80153B38/work/guarded.c drafts/T-15700/TACO/func_80153B38/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3424: redeclaration of 'func_80153B38'; previous declaration at line 3418 in file 'drafts/T-15700/TACO/func_80153B38/work/guarded.c'
+ void func_80153B38(void **arg0, s32 arg1, u32 arg2, s32 arg3) {
+ -----^
+cfe: Error: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3424: Incompatible function return type for this function.
+ void func_80153B38(void **arg0, s32 arg1, u32 arg2, s32 arg3) {
+ ------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3451: Incompatible pointer type assignment
+             temp_s0 = (var_s2 * 8) + &sp78;
+ --------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3475: Incompatible pointer type assignment
+         temp_s0_2 = &sp78 + (var_s2_2 * 8);
+ ------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3485: Incompatible pointer type assignment
+             temp_s0_3 = &sp78 + (var_s2_2 * 8);
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TACO/func_80153B38/work -o drafts/T-15700/TACO/func_80153B38/work/guarded.o /tmp/asm_processorn12hi9f5/preprocessed_544f8e67931d430aa02911c93dc1825b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliboj678jat/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TACO/func_80153B38/work/guarded.o drafts/T-15700/TACO/func_80153B38/work/guarded.c
+
+
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_80153B38/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_80153B38/work/guarded.c drafts/T-15700/TACO/func_80153B38/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3451: Incompatible pointer type assignment
+             temp_s0 = (var_s2 * 8) + &sp78;
+ --------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3475: Incompatible pointer type assignment
+         temp_s0_2 = &sp78 + (var_s2_2 * 8);
+ ------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_80153B38/work/guarded.c, line 3485: Incompatible pointer type assignment
+             temp_s0_3 = &sp78 + (var_s2_2 * 8);
+ ----------------------^

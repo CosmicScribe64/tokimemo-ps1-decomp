@@ -1,0 +1,15 @@
+{
+  "scope": "TAIIKU:func_80147B14",
+  "src": "src/ovl/TAIIKU/801452D0.c",
+  "size": 1020,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TAIIKU/func_80147B14",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TAIIKU/func_80147B14/work/guarded.c, line 3585: 'sp2C' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "b2201950f0cb2004f3c3fd12ed220d4dd986f38298e76df6cbc1b540a25405c4",
+  "context_c_sha256": "3610ffd76f67c39d63eee11bc7cc90325aa08b5879243d9a04d423911685bea3",
+  "declarations_h_sha256": "0e497e6c7da65637f5abc421eaf9bbb35c68ac8bb0dade813b018c82a786826c"
+}

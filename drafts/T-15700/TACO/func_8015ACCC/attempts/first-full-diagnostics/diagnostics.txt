@@ -1,0 +1,18 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_8015ACCC/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_8015ACCC/work/guarded.c drafts/T-15700/TACO/func_8015ACCC/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TACO/func_8015ACCC/work/guarded.c, line 3436: redeclaration of 'func_8015ACCC'; previous declaration at line 3218 in file 'drafts/T-15700/TACO/func_8015ACCC/work/guarded.c'
+ s32 func_8015ACCC(s32 a, s32 b, s16 c_unk0, s16 c_unk4, s16 d_unk0, s16 d_unk4, s16 e_unk0, s16 e_unk4, s32 f, s32 g) {
+ ----^
+cfe: Error: drafts/T-15700/TACO/func_8015ACCC/work/guarded.c, line 3436: Function func_8015ACCC is redeclared with an incompatible argument type (after default argument promotion), which could lead to undefined run-time behaviour.
+ s32 func_8015ACCC(s32 a, s32 b, s16 c_unk0, s16 c_unk4, s16 d_unk0, s16 d_unk4, s16 e_unk0, s16 e_unk4, s32 f, s32 g) {
+ ------------------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8015ACCC/work/guarded.c, line 3506: Incompatible pointer type assignment
+                 temp_s3 = sp50 + D_80161E60;
+ ------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8015ACCC/work/guarded.c, line 3542: Incompatible pointer type assignment
+     temp_v0_3 = (a * 2) + &D_80161EA4;
+ --------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TACO/func_8015ACCC/work -o drafts/T-15700/TACO/func_8015ACCC/work/guarded.o /tmp/asm_processorf715bo6j/preprocessed_d1cf3094677c47789765f4593b004fe7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibpmh53l91/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TACO/func_8015ACCC/work/guarded.o drafts/T-15700/TACO/func_8015ACCC/work/guarded.c

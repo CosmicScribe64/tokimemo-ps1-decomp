@@ -1,0 +1,31 @@
+{
+  "original_attempt": "drafts/T-14500/TAIIKU/func_80138DF8",
+  "prior_attempts": [
+    {
+      "path": "drafts/T-14500/TAIIKU/func_80138DF8",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80138DF8",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    },
+    {
+      "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80138DF8",
+      "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+      "score": null,
+      "status": "failed"
+    }
+  ],
+  "source_base": "48362009",
+  "repair_base": "a445c4e2"
+}

@@ -1,0 +1,22 @@
+{
+  "scope": "TACO:func_8013E778",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "size": 812,
+  "status": "scored",
+  "score": 263,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_8013E778",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "compile_attempts": 1,
+  "body_c_sha256": "9945dd0d72742f077b7fd675454ee1beb049c7a2635a095f5374cf655d8811db",
+  "context_c_sha256": "c4a084138861c21a9ed171b7da0e232f1c36a9c4b5091c21983580bcceabbd7c",
+  "declarations_h_sha256": "1ca486b8569517dc89ed00cc0c662349be658d5f8f5685984caec1b4f3fae2d5",
+  "draft_hash": "9945dd0d72742f077b7fd675454ee1beb049c7a2635a095f5374cf655d8811db",
+  "context_hash": "c4a084138861c21a9ed171b7da0e232f1c36a9c4b5091c21983580bcceabbd7c",
+  "full_context_hash": "80964e91b8242e179bbfb79926b8827ee341cc3aafbfc54fc383507dd4ca6807",
+  "diagnostics_hash": "22ac20a806b84fce00df7a22f6cd617956f0b8cbc34266a7ba1710801e495d42",
+  "declarations_hash": "1ca486b8569517dc89ed00cc0c662349be658d5f8f5685984caec1b4f3fae2d5",
+  "compile_verified": true,
+  "residual_class": "nonmatching compiler-generated instruction/control-flow/register differences; draft semantics not independently proved"
+}
