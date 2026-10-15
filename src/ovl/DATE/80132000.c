@@ -3193,11 +3193,11 @@ void func_8013D5FC(void) {
 INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013D5FC);
 #endif
 
-/* NON_MATCHING: T-11140, 1 diff line (bne v1, a0 vs bne a0, v1 at row 52) */
-#ifdef NON_MATCHING
 void func_8013D8B0(void) {
-    /* FAKE: narrow constant and casts retain the original branch operand order. T-11140 */
+    /* FAKE: narrow constant and casts retain the original branch operand order. T-11140
+       The selector copy in the else chain puts the variable first in its compares (T-11580). */
     u16 one;
+    u8 sel;
 
     one = 1;
     if ((D_800E6280.unk_F5F == (u8)one) && (*(u8 *)&D_8015B68C == 3)) {
@@ -3207,20 +3207,18 @@ void func_8013D8B0(void) {
         if (one == D_800E6280.unk_56C[9]) {
             D_800E6280.unk_110A += 0xD;
         }
-    } else if ((D_800E6280.unk_F5F == 4) && (*(u8 *)&D_8015B68C == 3) &&
-               (D_800E6280.unk_1BC[4].unk_14[0x18] != 0)) {
-        D_800E6280.unk_110A += 7;
-    } else if ((D_800E6280.unk_F5F == 7) && (*(u8 *)&D_8015B68C == 1)) {
-        D_800E6280.unk_110A += 7;
-    } else if ((D_800E6280.unk_F5F == 8) && (*(u8 *)&D_8015B68C == 2) &&
-               (D_800E6280.unk_1BC[8].unk_14[0x17] != 0)) {
-        D_800E6280.unk_110A += 7;
+    } else {
+        sel = *(u8 *)&D_8015B68C;
+        if ((D_800E6280.unk_F5F == 4) && (sel == 3) && (D_800E6280.unk_1BC[4].unk_14[0x18] != 0)) {
+            D_800E6280.unk_110A += 7;
+        } else if ((D_800E6280.unk_F5F == 7) && (sel == 1)) {
+            D_800E6280.unk_110A += 7;
+        } else if ((D_800E6280.unk_F5F == 8) && (sel == 2) && (D_800E6280.unk_1BC[8].unk_14[0x17] != 0)) {
+            D_800E6280.unk_110A += 7;
+        }
     }
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80132000", func_8013D8B0);
-#endif
 
 void func_8013D9E8(void) {
     if (D_800E6280.unk_F5F == 2) {
