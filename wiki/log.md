@@ -14638,3 +14638,7 @@ Integrated three KANGEI matches after source inspection and Docker default linke
 
 ## [2026-10-15] lint | DATE repair archive integrity
 Docker audit verified all nine body/context hashes and required context, provenance, comparison and diagnostics artifacts. Every result remains explicitly nonmatching. Fixed the results table header in [[tickets/T-14600-date-draft-repairs]].
+
+## [2026-10-15] build | T-14501 RPG_BAT verified draft batch
+
+Promoted 2 ordinary C functions / 1,048 bytes for RPG_BAT after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
