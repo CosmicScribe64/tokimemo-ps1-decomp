@@ -23,7 +23,7 @@ Read this first. Update on every ingest or new page.
 
 - [[tickets/T-15000-kangei-near-match|T-15000]] KANGEI func_80135CE0 matched: ordinary duplicated branch stores, 432 coverage/literal bytes (In Review).
 
-- [[tickets/T-14501-remaining-draft-proof|T-14501]] Verify exhaustive draft candidates: 29 literal matches / 18,244 inventory coverage bytes in 8 units (In Review).
+- [[tickets/T-14501-remaining-draft-proof|T-14501]] Verify exhaustive draft candidates: 30 literal matches / 19,220 inventory coverage bytes in 9 units (In Review).
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Incremental build dependencies (Done; 27/27 checks, ETC rebuilds 13 objects instead of 443).
 - [[tickets/T-13701-name-ent-record-types|T-13701]] NAME_ENT record and actor type recovery (In Review; coherent typed draft, no match).
 - [[tickets/T-13700-name-ent-families|T-13700]] NAME_ENT family reconstruction (In Review; zero accepted bytes).
