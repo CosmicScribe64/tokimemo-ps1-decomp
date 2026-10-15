@@ -904,6 +904,7 @@ void normal_date_bg_fadeout(void) {
     }
 }
 
+/* NON_MATCHING: T-11590, 10 differing lines; the first block matches, the tail after the call has the normal_date_bggirl_fadein residue (x in a0, chain values through move v0,a0 and andi v0,a0,0xff) */
 #ifdef NON_MATCHING
 void normal_date_bggirl_fadeout(void) {
     u8 x;
@@ -1691,7 +1692,7 @@ u8 arg2;
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", make_three_select);
 
-/* NON_MATCHING: T-10310, near miss */
+/* NON_MATCHING: T-11590, 34 differing lines, all one v0/v1 swap: the original colours the u8 remainder before the GameState word (regdiff: unconstrained ranges go in bit order, the global has the lower bit); return r, a u32 copy, (r = g % 3) == 0 and void do not change it */
 #ifdef NON_MATCHING
 s32 junban_init(void) {
     u8 r;
