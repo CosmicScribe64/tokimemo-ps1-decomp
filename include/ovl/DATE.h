@@ -1177,7 +1177,7 @@ typedef struct Tbl21 {
 extern Tbl21 D_8015B9B0;
 
 extern s16 D_8015DDD0[];
-extern s32 D_8015DE34;
+extern s32 D_8015DE34[3];
 extern s32 D_8015DE38;
 extern s32 D_8015DE3C;
 void func_8014AD9C();
@@ -1567,3 +1567,7 @@ void func_8013E9BC(void);
 void func_8014C7FC(void);
 
 #endif
+
+/* T-12100: calls recovered in DATE startup state dispatch. */
+void func_8014AF88(void);
+void func_8014B080(void);
