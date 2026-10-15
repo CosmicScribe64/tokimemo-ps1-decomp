@@ -24,13 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
-
-
-- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
-
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
-
-- [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
 
@@ -61,7 +55,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -123,7 +116,6 @@ kanban-plugin: board
 ## Done
 
 - [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
-- [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
 
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 
@@ -132,6 +124,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
 
 - [ ] [[tickets/T-13202-event-sprite-initializers|T-13202 Event sprite initializer family]]
+
+- [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
 
 - [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
 

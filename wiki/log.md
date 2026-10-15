@@ -14615,3 +14615,9 @@ Moved [[tickets/T-14200-main-source-families]] and its kanban card to In Review 
 
 ## [2026-10-15] ticket | T-14200 checkpoint Done after review
 Standards and spec review pass after all findings resolved. Final five default literal proofs total 6624 bytes; all 27 freshly rerun binary SHA1 checks pass, headers/globals pass, prototypes 0 new / 15 known. Two FAKE frame-home functions account for 4088 bytes; ordinary-source gain 2536 bytes. All 22 old C bodies preserved. Moved [[tickets/T-14200-main-source-families]] and its card to Done; [[main-family-results]] records evidence and 62.0% isolated census. The wider 80% goal remains ongoing. No push/PR; cross-chat status delivery was rejected by automatic approval review and not bypassed.
+
+## [2026-10-15] build | Final MAIN corrections preserve sprite matches
+[[tickets/T-12400-integrate-verified-matches]] integrated ded2a3bf, removing redundant signed RGB casts and recording completed MAIN reviews. Independent default linked proofs reconfirm all three renderers; MAIN checksum, header/global checks and branch prototype audit pass. No new bytes claimed. Evidence: build/scratch/goal-main-final-review.log. Coverage remains 1441592/2279368 bytes (63.2%).
+
+## [2026-10-15] decision | Expand repair work for complete draft coverage
+[[tickets/T-14500-exhaustive-drafts]] generation is around 325/1066 attempts. DATE repair worker has eight of nine reserved failures compiling with full-TU scores; none is a match yet. Created Sol6.1medium chat T14700 for fifteen reserved aggregate/callback-table failures outside DATE, using type-repair-reservation.json. Original attempts remain immutable; repairs retain complete contexts and provenance. New worktree must share disc inputs. Final MAIN chat completed; its replacement addresses missing drafts rather than repeating known matching searches.
