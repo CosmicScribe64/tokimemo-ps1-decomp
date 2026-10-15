@@ -14444,3 +14444,11 @@ Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-famili
 
 ## [2026-10-15] build | TAIIKU actor-field dispatcher integrated
 [[tickets/T-12400-integrate-verified-matches]] integrated54c37e1f. Independent default linked proof confirms func80139330=544bytes; TAIIKU SHA1, headers/globals and branch prototype checks pass. Standards inspection confirms existing DisplayActor44 field views and compatible forward declarations under a dedicated include guard; no artificial frame or register accommodation. Total5886/6958functions,1409420/2279368bytes (61.8%); remaining414076alignedbytes to80%. Evidence build/scratch/goal-taiiku-39330.log. Larger sibling39610 remains16rows and is not counted. Prior turn advanced main by1340bytes; current turn advances it by544bytes.
+
+## [2026-10-15] ticket | DATE follow-up ready for review
+
+Moved [[tickets/T-14100-date-near-matches]] to In Review with 636 verified new bytes in three natural dispatchers. Larger func_80144E20 and func_801449D4 typed recoveries remain distant; documented bounded alias/type/data-flow evidence in [[matching-notes]] and restored assembly fallbacks and temporary header context. Existing matched source and near guards are unchanged.
+
+## [2026-10-15] build | DATE cleanup verification passed
+
+After restoring distant scratch experiments, [[tickets/T-14100-date-near-matches]] passes all three default-build literal-byte proofs, DATE SHA1, headers, and prototype branch check (zero new disagreements; 15 known baseline). No further bytes claimed.
