@@ -16,7 +16,55 @@ typedef struct TtAnimScene366 {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F040);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F3B4);
+void func_8013F3B4(void) {
+    u8 *p;
+    s32 i;
+
+    p = D_80158A8C;
+    func_80142740();
+    func_80142774();
+    p[0] = 1;
+    p[0x342] = 0;
+    *(s32 *)(p + 0x20) = 0;
+    *(s32 *)(p + 0x24) = 0xFFC00000;
+    *(s16 *)(p + 0x14) = 0;
+    *(s16 *)(p + 0x16) = -0x40;
+    *(s32 *)(p + 0x28) = 0;
+    *(s32 *)(p + 0x2C) = 0;
+    *(s16 *)(p + 0x30C) = 0xE0;
+    *(s16 *)(p + 0x30E) = 0;
+    for (i = 0; i < 11; i++) {
+        ((TtAnim14 *)(p + 0x38))[i].frames = D_80151A50;
+        ((TtAnim14 *)(p + 0x38))[i].unk_04 = D_80155E14[i];
+        ((TtAnim14 *)(p + 0x38))[i].unk_05 = 0xA;
+        ((TtAnim14 *)(p + 0x38))[i].unk_06 = D_80155E20[i];
+        ((TtAnim14 *)(p + 0x38))[i].unk_08 = 0x60;
+        ((TtAnim14 *)(p + 0x38))[i].unk_0B = 0xF;
+        ((TtAnim14 *)(p + 0x38))[i].unk_10 = 0;
+        p[i + 0x310] = 1;
+        ((s16 *)(p + 0x2A8))[i] = 9;
+        ((s16 *)(p + 0x248))[i] = 0;
+        ((s16 *)(p + 0x278))[i] = 0;
+    }
+    *(s32 *)(p + 0x3E4) = *(s32 *)(p + 0x20);
+    *(s16 *)(p + 0x2AA) = 8;
+    *(s16 *)(p + 0x2AC) = 8;
+    *(s16 *)(p + 0x3A4) = 0;
+    *(s16 *)(p + 0x3A6) = 0;
+    *(s32 *)(p + 0x3E8) = 0;
+    *(s32 *)(p + 0x3EC) = 0;
+    *(s32 *)(p + 0x3F0) = 0;
+    *(s32 *)(p + 0x3F4) = 0;
+    *(s32 *)(p + 0x3F8) = 0;
+    *(s16 *)(p + 0x364) = 0;
+    *(s16 *)(p + 0x366) = 0;
+    *(s16 *)(p + 0x368) = 0;
+    p[0x343] = 1;
+    p[0x344] = 1;
+    *(u8 **)(p + 0x228) = D_80155D32;
+    *(u8 **)(p + 0x22C) = D_80155D38;
+    *(u8 **)(p + 0x230) = D_80155D3E;
+}
 
 void func_8013F588(void) {
     u8 *p = D_80158A8C;

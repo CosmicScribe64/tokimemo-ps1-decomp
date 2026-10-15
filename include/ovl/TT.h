@@ -666,3 +666,21 @@ void func_801365C4(s32 arg0);
 void func_8013BB28(s32 arg0);
 void func_80140D84(void);
 #endif
+
+#ifndef OVL_TT_T11820_TABLES
+#define OVL_TT_T11820_TABLES
+/* x and image tables of the two menu record rows set up by func_80149704. T-11820 */
+extern s16 D_80156C9C[];
+extern u16 D_80156CA4[];
+extern s16 D_80156CAC[];
+extern u16 D_80156CB0[];
+/* Previous and current page (*D_80158A6C / 0x8000) of func_80136830. T-11820 */
+extern s32 D_80152AF0;
+extern s32 D_80152AF4;
+/* Record tables of func_8013F3B4 (indices 0..10) and its three work pointers. T-11820 */
+extern u8 D_80155E14[];
+extern u8 D_80155E20[];
+extern u8 D_80155D32[];
+extern u8 D_80155D38[];
+extern u8 D_80155D3E[];
+#endif

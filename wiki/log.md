@@ -13478,3 +13478,20 @@ in [[matching-notes]] ("TT overlay, batch 8"), rows in [[data/t0018-cases]].
 
 Inline review against CODING_STANDARDS.md: header declarations moved to their own guarded block; all fakematches carry
 FAKE with the ticket. Moved [[tickets/T-11810-tt-batch-8]] to Done.
+
+## [2026-10-15] ticket | T-11820 TT batch 9 opened
+
+Opened [[tickets/T-11820-tt-batch-9]] (In Progress), stacked on T-11810 (PR #31): one Opus pass on never-attempted TT
+functions, the four drafts T-11810 did not reach, and `func_801333D4`. No more passes on the hard guarded drafts.
+
+## [2026-10-15] build | T-11820 TT batch 9: 3 matches
+
+One Opus pass on never-attempted TT functions and the drafts T-11810 did not reach: matched `func_8013F3B4`,
+`func_801333D4` (hand-written switch; m2c could not draft it) and `func_8014B274`; guarded `func_80149704`,
+`func_80136830`, `func_80146000`. TT 245/303 (60.6%); grand total `5733/6958   1288084/2279368  56.5%`. 27/27; funcdiff
+MATCH for all three; prototype and global checks clean. Notes in [[matching-notes]] ("TT overlay, batch 9"), rows in
+[[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11820 Done
+
+Inline review against CODING_STANDARDS.md: no findings. Moved [[tickets/T-11820-tt-batch-9]] to Done.

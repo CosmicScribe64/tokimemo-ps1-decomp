@@ -172,7 +172,116 @@ call:
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80132F10", func_801333D4);
+void func_801333D4(void) {
+    u8 *g;
+    u8 *p;
+    s32 i;
+
+    g = D_80158A64;
+    func_801330D8();
+    for (i = 0, p = D_80158A9C; i != 0x20; i++, p += 0x78) {
+        if (p[0] == 0) {
+            continue;
+        }
+        switch (*(u16 *)(p + 4)) {
+        case 0x40:
+            if (*(s16 *)(p + 0x16) >= 0xF9) {
+                p[0] = 0;
+            }
+            break;
+        case 0x70:
+            func_80133AD0(0x60D);
+            g[0x25]++;
+            if (g[0x24] != 0 && (g[0x25] & 1)) {
+                if (g[0x25] & 2) {
+                    func_801342CC(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+                } else {
+                    func_80133FB0(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x100, 0x20, 0xA0);
+                }
+            }
+            *(u8 **)(p + 0x38) = D_80151A50;
+            p[0x3C] = 0;
+            p[0x3D] = 2;
+            p[0x3E] = 0xE;
+            p[0x40] = 0x20;
+            *(u16 *)(p + 4) = 0x71;
+            *(u16 *)(p + 0xA) = 0;
+            *(u16 *)(p + 8) = 0;
+            *(u16 *)(p + 6) = 0;
+            p[0xF] = 0;
+            p[0xE] = 0;
+            p[0xD] = 0;
+            break;
+        case 0x78:
+            if (--*(u16 *)(p + 0x66) == 0) {
+                *(u16 *)(p + 0x56) = 2;
+                *(u16 *)(p + 0x66) = 0x1E;
+                *(u16 *)(p + 4) = 0x79;
+                *(u16 *)(p + 0xA) = 0;
+                *(u16 *)(p + 8) = 0;
+                *(u16 *)(p + 6) = 0;
+                p[0xF] = 0;
+                p[0xE] = 0;
+                p[0xD] = 0;
+            }
+            break;
+        case 0x79:
+            if (--*(u16 *)(p + 0x66) == 0) {
+                *(u16 *)(p + 4) = 0x80;
+            }
+            break;
+        case 0x7A:
+            if (*(s16 *)(p + 0x16) >= 0xF9) {
+                p[0] = 0;
+            }
+            break;
+        case 0x80:
+            p[0] = 0;
+            break;
+        }
+        func_80133288(p);
+        if (*(u16 *)(p + 4) == 0x40) {
+            func_80132000(p + 0x38, p + 0x5C, p + 0x5D);
+        } else if (*(u16 *)(p + 4) == 0x71) {
+            func_801478D0(p + 0x38);
+            if (p[0x40] & 1) {
+                switch (func_80148764()) {
+                case 0:
+                    func_80133058(p, 0x6D);
+                    *(u16 *)(p + 0x66) = 0x3C;
+                    *(u16 *)(p + 4) = 0x78;
+                    *(u16 *)(p + 0xA) = 0;
+                    *(u16 *)(p + 8) = 0;
+                    *(u16 *)(p + 6) = 0;
+                    p[0xF] = 0;
+                    p[0xE] = 0;
+                    p[0xD] = 0;
+                    break;
+                case 1:
+                    func_80133058(p, 0x6E);
+                    *(u16 *)(p + 4) = 0x7A;
+                    *(u16 *)(p + 0xA) = 0;
+                    *(u16 *)(p + 8) = 0;
+                    *(u16 *)(p + 6) = 0;
+                    p[0xF] = 0;
+                    p[0xE] = 0;
+                    p[0xD] = 0;
+                    break;
+                case 2:
+                    func_80133058(p, 0x6F);
+                    *(u16 *)(p + 4) = 0x7A;
+                    *(u16 *)(p + 0xA) = 0;
+                    *(u16 *)(p + 8) = 0;
+                    *(u16 *)(p + 6) = 0;
+                    p[0xF] = 0;
+                    p[0xE] = 0;
+                    p[0xD] = 0;
+                    break;
+                }
+            }
+        }
+    }
+}
 
 void func_801336F8(void) {
     TtDrawBuffer80B8 *buffer;

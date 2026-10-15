@@ -5056,3 +5056,25 @@ closest guarded drafts: no match, but the rules below. Ticket [[tickets/T-11810-
   chain zero stores through a register that later holds another variable stay open (`func_80147FD0`, `func_8014C5F8`).
 - Earlier record-walk and twin idioms (T-11800) matched three functions here on the first try; typed record indexing
   (`TtAnim14`) cleared the T-10030 blocker of `func_8013F9E0`.
+
+## TT overlay, batch 9 (T-11820)
+
+One Opus pass on never-attempted TT functions and the drafts T-11810 did not reach: 3 matched (`func_8013F3B4`,
+`func_801333D4`, `func_8014B274`), 3 guarded at 6 to 17 lines, 3 not kept, 2 not reached (`func_80142AF0`,
+`func_80146E10`). Ticket [[tickets/T-11820-tt-batch-9]].
+
+- **Constant-trip loops are peeled then unrolled.** IDO peels the remainder and unrolls the rest: 11 iterations become
+  1 peeled + 5 x 2, 6 become 2 + 4. An index offset (`i + 1`) shows as constants in the peeled copies and `a0 + k` in the
+  unrolled body; a leftover `sw 1, 0x28(sp)` is the peeled counter (`func_8013F3B4`, `func_80136830`).
+- **Hand-written switch for m2c failures.** `func_801333D4` (m2c put case labels inside else-if arms) matched with the
+  switch structure written from the asm: case 0x40 plus a 0x70..0x80 jump table, inside a `for` loop with `continue`.
+  `g[0x25]++` followed by a reread matched where a `k = ++g[0x25]` local did not.
+- **as1 rewrites what the C seems to say.** It copies a join instruction into both branch delay slots, so a ternary
+  `+= (c) ? 0x60 : -0x60` looks like duplicated arms; and it moves loads above an `addiu base, N`, adjusting their
+  offsets, so negative-offset C after `p += N` produces positive-offset loads (`func_8014B274`).
+- A dead final `addiu` on a walked pointer means the source had `q += stride` blocks. A call result held in a local keeps
+  the induction-variable increment after the call.
+- A `u16` versus `s16` store view splits a hoisted constant into two webs (`func_80146000`).
+- Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
+  `func_80133AD0` changed `func_80140920`, so that call stays implicit.
+- Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.

@@ -1973,3 +1973,12 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/8013A3E0 | `func_8013B4A0` | sched | T-11810: still 4 lines: `cc -S` shows ugen emits the PRE'd `c + t*2` addu after the 0x2C8 store (as1 then fills the bnez slot with the addu) and `la D_80151A50` after the preheader li's |
 | TT/80148DB0 | `func_80148E7C` | regorder | T-11810: still 7 lines: the shared 0x20 temp (bit 101) is coloured after 0x40 (bit 99); `0x20U` in one loop splits it but flips the li/move order |
 | TT/801478D0 | `func_80147FD0` | regorder | T-11810: chained zero stores go through a register that later holds i/p; IDO 5.3 propagates every zero form tried into `$zero` (same family: `func_8014C5F8`) |
+| TT/8013F040 | `func_8013F3B4` | regorder | T-11820: matched: twin of `func_80135870`; `TtAnim14` loop `i < 11` (IDO peels 1 and unrolls by 2); the 0x3E4 copy first after the loop sets the ugen temp order |
+| TT/80132F10 | `func_801333D4` | other | T-11820: matched: switch written by hand (0x40 plus a 0x70..0x80 jump table in the existing rodata island); `g[0x25]++` then a reread instead of a pre-increment local |
+| TT/8014AF00 | `func_8014B274` | regorder | T-11820: matched (twin of `func_8014B088`): ternary `ang += (i == 0) ? 0x60 : -0x60` (as1 copies the join addu into both delay slots); call result in a local, then `p += 0x78` with negative-offset stores |
+| TT/80148DB0 | `func_80149704` | regorder | T-11820: guarded, 6 instructions: second-record constants in t9/t1/t2 instead of t1/t2/t3; FAKE `if (q) {}` before the 0x65 store gives it v0 |
+| TT/80136830 | `func_80136830` | regorder | T-11820: guarded, 17 lines: the 6-record loop matches with `i + 1` (IDO peels 2, unrolls by 4); head: the old `D_80152AF4` reaches a0 through t7 instead of a direct v0 load |
+| TT/80145E60 | `func_80146000` | regorder | T-11820: guarded, 7 instructions: local `c` (priority 1) coloured after the u16 constant 8 (priority 2), a1/a0 instead of a0/v1 |
+| TT/801410A0 | `func_801410A0` | regorder | T-11820: not kept (48 lines): both loops match (`i * 16` row index, `call * len`, if/else abs, s16 `spd = -spd`); the turn step keeps `(s16)+-spd` in v1 in the original |
+| TT/801374C0 | `func_80138808` | regorder | T-11820: not kept (145 lines): loop 3's base needs a second chain struct at `g + 0xEFC`; the original unrolls loop 3 but not loop 2 |
+| TT/801487D0 | `func_801487D0` | regorder | T-11820: not kept (103 lines): `func_801336F8` template with one extra local for the 0x48 frame; `ch - 0x20` masking and temp order differ |
