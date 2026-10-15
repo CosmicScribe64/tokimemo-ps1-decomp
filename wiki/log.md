@@ -13513,3 +13513,19 @@ Created isolated checkout at baseline 7a65b3d8 and [[tickets/T-12300-large-uncla
 ## [2026-10-15] decision | T-12300 claim remaining substantial objects
 
 [[tickets/T-12300-large-unclaimed-byte-matches]] owns RPG_BAT/80145CC0, RPG_BAT/8014ADD0, RPG_BAT/8014A660 and BUNKAKEN/8013BFE0. Census excludes current acceleration manifest and known worktree objects. Additional ticket inspection excludes RPG_BAT/80137280 (T-9960). Focus on the 2,232-byte target and related 1–1.4 KB handlers.
+
+## [2026-10-15] build | T-12300 baseline verified
+
+All 27 baseline binaries passed SHA1 in Docker (build/large-bytes/setup.log), with header/global checks. The bulk tool requires scratch outside the checkout; corrected the output mount to /results before any matching attempts.
+
+## [2026-10-15] build | T-12300 first drafts and parallel source work
+
+Eight substantial drafts produced no immediate match; full-unit scores 103–501 rows retained in [[tickets/T-12300-large-unclaimed-byte-matches]]. User requested subagents; assigned disjoint owned source files, two compiler slots total, and a third source-reasoning task. Existing aggregate normalization and switch/counter reconstruction are the next experiments.
+
+## [2026-10-15] build | T-12300 draft declaration prerequisites
+
+Full-file probes exposed two missing overlay declarations: existing void BUNKAKEN func_8013CEC0 and RPG_BAT word D_8015EE18 (definition in src/ovl/RPG_BAT/8014E780.c). Added their canonical overlay declarations for source probes; final validation will include all 27 binaries. No main API edits.
+
+## [2026-10-15] build | T-12300 verified 3604-byte BUNKAKEN family
+
+[[tickets/T-12300-large-unclaimed-byte-matches]]: three related 1–1.4 KB handlers pass literal linked-byte proof and whole BUNKAKEN SHA1. [[matching-notes]] records consistent GameState pointer and CharFlags bit2 idioms. Existing C preserved; no FAKE added. Compiler slot transferred to the RPG effects/UI worker.

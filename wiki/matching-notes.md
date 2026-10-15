@@ -5078,3 +5078,7 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## Substantial BUNKAKEN handlers (T-12300)
+
+In BUNKAKEN/8013BFE0, func_8013C0AC, func_8013C634 and func_8013CA6C match after normalizing GameState aliases, using one initialized `GameState *g = &D_800E6280` for every state access, and expressing character flag bit2 tests/stores through the existing `CharFlags.f.b2`. Direct `.w & 4` and byte-OR forms retained register/temporary differences. The ambiguous old symbol D_800E6480 is character 1's flag byte; its use must resolve to the existing record. Correct u8 declaration of overlay flag D_80155F50 removes the final two instruction rows in C0AC. Three literal linked matches total 3,604 bytes; whole BUNKAKEN SHA1 passes. This is a source/aggregate idiom, no compiler change or fakematch.
