@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_8014EB58 1
+python3 failed:
+cfe: Error: drafts/T-14500/RPG_BAT/func_8014B79C/work/guarded.c, line 3021: redeclaration of 'func_8014B79C'; previous declaration at line 2747 in file 'drafts/T-14500/RPG_BAT/func_8014B79C/work/guarded.c'
+ void func_8014B79C(void) {
+ -----^
+cfe: Error: drafts/T-14500/RPG_BAT/func_8014B79C/work/guarded.c, line 3021: Incompatible function return type for this function.
+ void func_8014B79C(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RPG_BAT/func_8014B79C/work -o drafts/T-14500/RPG_BAT/func_8014B79C/work/guarded.o /tmp/asm_processorz_pxhbj9/preprocessed_0ce22d2960294c42a731e03b00cd581e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibkwdiolp_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RPG_BAT/func_8014B79C/work/guarded.o drafts/T-14500/RPG_BAT/func_8014B79C/work/guarded.c

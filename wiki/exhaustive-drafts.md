@@ -19,7 +19,7 @@ See [[tickets/T-14500-exhaustive-drafts]] and [[broad-coverage-results]].
 
 ## Census execution
 
-Checkpoint: **487/1,066 default attempts**; 422 compiled/scored drafts, 65 failures, 0 timeouts. 24 zero candidates are diagnostic scores, separate from production proof records. Initial outcomes remain immutable; externally owned type repairs and automatic retries use separate directories.
+Checkpoint: **678/1,066 default attempts**; 590 compiled/scored drafts, 88 failures, 0 timeouts. 28 zero candidates are diagnostic scores, separate from production proof records. Initial outcomes remain immutable; externally owned type repairs and automatic retries use separate directories.
 
 | Unit | Completed / total | Zero candidates | Failed / timeout |
 |---|---:|---:|---:|
@@ -41,10 +41,10 @@ Checkpoint: **487/1,066 default attempts**; 422 compiled/scored drafts, 65 failu
 | OMIMAI | 3 / 3 | 0 | 0 |
 | OPTION | 44 / 44 | 0 | 5 |
 | RENSYU | 7 / 7 | 0 | 0 |
-| RPG_BAT | 20 / 83 | 0 | 2 |
-| SHOUGATU | 0 / 39 | 0 | 0 |
-| SHUGAKU | 0 / 28 | 0 | 0 |
-| TACO | 0 / 126 | 0 | 0 |
+| RPG_BAT | 83 / 83 | 2 | 6 |
+| SHOUGATU | 39 / 39 | 0 | 9 |
+| SHUGAKU | 28 / 28 | 2 | 3 |
+| TACO | 61 / 126 | 0 | 7 |
 | TAIIKU | 0 / 81 | 0 | 0 |
 | TEL | 0 / 5 | 0 | 0 |
 | TT | 0 / 51 | 0 | 0 |
@@ -52,3 +52,9 @@ Checkpoint: **487/1,066 default attempts**; 422 compiled/scored drafts, 65 failu
 | main | 0 / 180 | 0 | 0 |
 
 The default census includes all guarded drafts and all game units. Failed generation or compilation is recorded rather than skipped; a failed entry does not yet constitute a compilable C draft. The post-pass targets these failures with bounded repairs. Nine independent DATE source/type repairs already compile with nonzero full-TU scores (separate artifacts from 1308ed4a); no new byte match follows from those repairs.
+
+## Reconstruction quality
+
+`tools/audit_drafts.py` records a separate per-scope quality ledger. A compiling draft is still flagged for review if it contains an M2C placeholder, a synthesized primitive spXX local absent from its raw/retained source, scaled stack/GameState address arithmetic, or generic M2cBlock copy layouts. Both operand orders are checked, while explicit byte-pointer views are recognized. These conservative flags require inspection; absence of a listed pattern does not prove semantic equivalence.
+
+The quality ledger prefers compiling, audit-clear alternatives before a lower numerical score with unresolved reconstruction flags. Initial attempts are immutable. Manual DATE and type-repair archives are joined from their independent JSON/JSONL catalogs, with full context and provenance preserved. Final completeness must distinguish unattempted scopes, failed compilation/generation, compiling drafts needing review, and compiling drafts with no listed residual pattern.

@@ -69,15 +69,11 @@ def main():
                 remaining.append(row)
         selected = remaining
     # Independently owned source/type repairs are separate, context-qualified alternatives.
-    for catalog in (BASE / 'repairs').rglob('catalog.jsonl'):
-        if 'automatic' in catalog.parts:
-            continue
-        for line in catalog.read_text().splitlines():
-            alternative = json.loads(line)
-            scope = alternative.get('scope')
-            path = alternative.get('repair_path')
-            if scope in attempts and path:
-                attempts[scope].append(dict(path=path, result=alternative))
+    from audit_drafts import manual_catalogs
+    for alternative in manual_catalogs(BASE):
+        scope = alternative.get('scope')
+        if scope in attempts:
+            attempts[scope].append(dict(path=alternative['repair_path'],result=alternative))
     best = []
     for row in rows:
         original = initial[row['scope']]

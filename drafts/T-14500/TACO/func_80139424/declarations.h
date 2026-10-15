@@ -1,0 +1,10 @@
+extern s32 D_8015F5A0;
+extern s32 D_8015F5B4;
+extern u8 D_8015F5E8;
+extern u8 D_8015F5E9;
+extern u8 D_8015F5EA;
+extern u8 D_8015F5EB;
+extern u8 D_8015F5EC;
+extern u8 D_8015F5ED;
+extern u8 D_8015F5EE;
+extern u8 D_8015F5EF;

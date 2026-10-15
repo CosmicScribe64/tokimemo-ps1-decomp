@@ -1,0 +1,15 @@
+m2c.py: argument counts from the callees' asm: func_80052060 4, func_8005215C 0
+python3 failed:
+ ----------------------------^
+cfe: Warning 681: drafts/T-14500/TEL/func_80134FE4/work/guarded.o.sjis.c, line 3492: '&' before array or function; ignored
+         func_80052060((s32) &D_80144E4C, (s32) &D_80144EAC, (s32) D_800E6280.unk_1094, 0xD);
+ -----------------------------------------------^
+cfe: Error: drafts/T-14500/TEL/func_80134FE4/work/guarded.o.sjis.c, line 3858: redeclaration of 'func_80134FE4'; previous declaration at line 3742 in file 'drafts/T-14500/TEL/func_80134FE4/work/guarded.o.sjis.c'
+ void func_80134FE4(void) {
+ -----^
+cfe: Error: drafts/T-14500/TEL/func_80134FE4/work/guarded.o.sjis.c, line 3858: Incompatible function return type for this function.
+ void func_80134FE4(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TEL/func_80134FE4/work -o drafts/T-14500/TEL/func_80134FE4/work/guarded.o /tmp/asm_processorr6mnnjg_/preprocessed_e042156a58f145f0a8b13c9740d3a809.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqj0_fo3x/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TEL/func_80134FE4/work/guarded.o drafts/T-14500/TEL/func_80134FE4/work/guarded.o.sjis.c
+repair: existing earlier unprototyped call implies s32 return

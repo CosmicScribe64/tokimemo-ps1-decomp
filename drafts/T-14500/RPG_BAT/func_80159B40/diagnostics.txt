@@ -1,0 +1,26 @@
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c, line 3696: '&' before array or function; ignored
+             func_800AE100(*(void **)((unsigned char *)var_s1_2 + (12)), *(var_s2 + &sp88));
+ -----------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c, line 3702: '&' before array or function; ignored
+     } while (var_s0_2 != &sp6C);
+ -------------------------^
+cfe: Error: drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c, line 3704: 'sp' undefined; reoccurrences will not be reported.
+     func_800AE100(*(void **)((unsigned char *)var_s1_2 + (12)), *(s32 *)((unsigned char *)(sp + (func_8013E9A8(4) * 4)) + (120)));
+ -------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RPG_BAT/func_80159B40/work -o drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o /tmp/asm_processorn5hc0d7_/preprocessed_5fd5418ed7da465da5d1104fb2843000.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibpgibiazw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c, line 3654: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp78) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_8015EFF0) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c, line 3697: '&' before array or function; ignored
+             func_800AE100(*(void **)((unsigned char *)var_s1_2 + (12)), *(var_s2 + &sp88));
+ -----------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c, line 3703: '&' before array or function; ignored
+     } while (var_s0_2 != &sp6C);
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/RPG_BAT/func_80159B40/work -o drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o /tmp/asm_processorsuxks70l/preprocessed_fd916d23ea92427aa7193519c6934ef3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibl68c3ohp/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o drafts/T-14500/RPG_BAT/func_80159B40/work/guarded.o.sjis.c

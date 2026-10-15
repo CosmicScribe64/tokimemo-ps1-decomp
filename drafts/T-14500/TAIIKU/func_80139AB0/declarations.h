@@ -1,0 +1,14 @@
+extern s16 D_8014998E;
+extern s32 D_800E7374;
+extern s32 D_80122DD4;
+extern s32 D_80122DD8;
+extern s32 D_80149964;
+extern s32 D_80149982;
+extern s32 D_801499C4;
+extern s32 D_801499CC;
+extern s32 D_801499E4;
+extern s32 D_80149A84;
+extern s32 D_80149B24;
+extern s32 D_80149BC4;
+extern s32 D_80149C64;
+extern s32 D_80149D04;

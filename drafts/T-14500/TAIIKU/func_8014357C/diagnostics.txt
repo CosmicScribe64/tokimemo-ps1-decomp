@@ -1,0 +1,12 @@
+python3 failed:
+cfe: Error: drafts/T-14500/TAIIKU/func_8014357C/work/guarded.c, line 3364: redeclaration of 'D_8014A161'; previous declaration at line 3216 in file 'drafts/T-14500/TAIIKU/func_8014357C/work/guarded.c'
+ extern s32 D_8014A161;
+ -----------^
+cfe: Error: drafts/T-14500/TAIIKU/func_8014357C/work/guarded.c, line 3368: redeclaration of 'D_8014A185'; previous declaration at line 3217 in file 'drafts/T-14500/TAIIKU/func_8014357C/work/guarded.c'
+ extern s32 D_8014A185;
+ -----------^
+cfe: Error: drafts/T-14500/TAIIKU/func_8014357C/work/guarded.c, line 3372: redeclaration of 'D_8014A1A9'; previous declaration at line 3218 in file 'drafts/T-14500/TAIIKU/func_8014357C/work/guarded.c'
+ extern s32 D_8014A1A9;
+ -----------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_8014357C/work -o drafts/T-14500/TAIIKU/func_8014357C/work/guarded.o /tmp/asm_processorfoyt1umu/preprocessed_4a17d9108ddf4df3b125b606bb636e4b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4ty0khz0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_8014357C/work/guarded.o drafts/T-14500/TAIIKU/func_8014357C/work/guarded.c

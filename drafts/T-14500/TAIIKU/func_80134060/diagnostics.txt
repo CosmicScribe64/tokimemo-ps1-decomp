@@ -1,0 +1,27 @@
+m2c.py: argument counts from the callees' asm: func_80132BD0 0, func_80135830 0, func_80135AD0 0, func_80135DF8 0, func_80135F3C 0
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80134060/work/guarded.c, line 3302: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (12));
+ -------------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80134060/work/guarded.c, line 3358: 'sp' undefined; reoccurrences will not be reported.
+             D_80120666 = *(s16 *)((unsigned char *)(sp + (temp_hi * 2)) + (64));
+ ----------------------------------------------------^
+cfe: Error: drafts/T-14500/TAIIKU/func_80134060/work/guarded.c, line 3376: 'sp' undefined; reoccurrences will not be reported.
+             D_80120666 = *(s16 *)((unsigned char *)(sp + (temp_hi_2 * 2)) + (64));
+ ----------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80134060/work -o drafts/T-14500/TAIIKU/func_80134060/work/guarded.o /tmp/asm_processord4lcofwv/preprocessed_11649e14fa864714aeed8b9cb26b6cec.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4usrnyai/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80134060/work/guarded.o drafts/T-14500/TAIIKU/func_80134060/work/guarded.c
+python3 failed:
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80134060/work/guarded.c, line 3301: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80134060/work/guarded.c, line 3302: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp40) + (16)) = (u16) D_801493E8.value[8];
+ -------------------------------^
+cfe: Warning 681: drafts/T-14500/TAIIKU/func_80134060/work/guarded.c, line 3303: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (12));
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TAIIKU/func_80134060/work -o drafts/T-14500/TAIIKU/func_80134060/work/guarded.o /tmp/asm_processorkxfmmf4_/preprocessed_1e64915f17874198bfb2390e173eb601.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfu70xdrk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TAIIKU/func_80134060/work/guarded.o drafts/T-14500/TAIIKU/func_80134060/work/guarded.c

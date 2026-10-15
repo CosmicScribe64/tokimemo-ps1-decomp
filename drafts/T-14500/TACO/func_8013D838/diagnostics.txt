@@ -1,0 +1,53 @@
+m2c.py: argument counts from the callees' asm: func_8009ED74 2, func_8009F040 1, func_800A1100 1, func_800AB170 4
+python3 failed:
+ --------------------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3579: 'sp84' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_2 + (16)) = sp84;
+ --------------------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3582: 'sp8A' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_2 + (26)) = sp8A;
+ --------------------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3583: 'sp8C' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_2 + (32)) = sp8C;
+ --------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8013D838/work -o drafts/T-14500/TACO/func_8013D838/work/guarded.o /tmp/asm_processorasm5xrih/preprocessed_ef74412b9c9c4b079fac34a3a385fce5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib_tdsitne/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8013D838/work/guarded.o drafts/T-14500/TACO/func_8013D838/work/guarded.c
+python3 failed:
+ ---------^
+cfe: Error: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3551: 'sp86' undefined; reoccurrences will not be reported.
+         if (sp86 >= (temp_v0 - 0x200)) {
+ ------------^
+cfe: Error: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3552: 'sp8E' undefined; reoccurrences will not be reported.
+             if ((temp_v0 + 0x200) >= sp8E) {
+ -------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3581: 'sp82' undefined; reoccurrences will not be reported.
+                 *(s16 *)((unsigned char *)temp_v0_2 + (10)) = sp82;
+ --------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8013D838/work -o drafts/T-14500/TACO/func_8013D838/work/guarded.o /tmp/asm_processorr4yk64cs/preprocessed_a041f1406bbe49e3974e1dcd2fc06bd4.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibu_kqhf5q/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8013D838/work/guarded.o drafts/T-14500/TACO/func_8013D838/work/guarded.c
+python3 failed:
+ ---------------^
+cfe: Warning 681: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3540: '&' before array or function; ignored
+         func_800AB170((s32) &sp90, (s32) var_s2, (s32) &sp74, (s32) &sp70);
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3540: '&' before array or function; ignored
+         func_800AB170((s32) &sp90, (s32) var_s2, (s32) &sp74, (s32) &sp70);
+ --------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3552: 'sp88' undefined; reoccurrences will not be reported.
+     if ((sp88 >= -0x2C0) && (sp80 < 0x2C1)) {
+ ---------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8013D838/work -o drafts/T-14500/TACO/func_8013D838/work/guarded.o /tmp/asm_processor7a77gboz/preprocessed_5f5ca97ea687484ab16e288d7f9e3a50.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdo3pzngk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8013D838/work/guarded.o drafts/T-14500/TACO/func_8013D838/work/guarded.c
+python3 failed:
+ ------------------^
+cfe: Warning 709: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3538: Incompatible pointer type assignment
+         var_s2 = sp58 + &sp80;
+ ---------------^
+cfe: Warning 681: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3541: '&' before array or function; ignored
+         func_800AB170((s32) &sp90, (s32) var_s2, (s32) &sp74, (s32) &sp70);
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/TACO/func_8013D838/work/guarded.c, line 3541: '&' before array or function; ignored
+         func_800AB170((s32) &sp90, (s32) var_s2, (s32) &sp74, (s32) &sp70);
+ --------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/TACO/func_8013D838/work -o drafts/T-14500/TACO/func_8013D838/work/guarded.o /tmp/asm_processorqk_b38w0/preprocessed_40e2310f57cf480bbaedef8068d38e59.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib08zqskmk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/TACO/func_8013D838/work/guarded.o drafts/T-14500/TACO/func_8013D838/work/guarded.c
