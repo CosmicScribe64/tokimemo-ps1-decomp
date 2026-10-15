@@ -258,9 +258,9 @@ void func_80057D28(s32 arg0) {
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
-    sprite->r0 = (s8) (0x80 - D_800B5940);
-    sprite->g0 = (s8) (0x80 - D_800B5940);
-    sprite->b0 = (s8) (0x80 - D_800B5940);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
         sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
@@ -282,9 +282,9 @@ void func_80057D28(s32 arg0) {
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
-    sprite->r0 = (s8) (0x80 - D_800B5940);
-    sprite->g0 = (s8) (0x80 - D_800B5940);
-    sprite->b0 = (s8) (0x80 - D_800B5940);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
         sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
@@ -357,9 +357,9 @@ void func_80058398(s32 arg0) {
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
-    sprite->r0 = (s8) (0x80 - D_800B5940);
-    sprite->g0 = (s8) (0x80 - D_800B5940);
-    sprite->b0 = (s8) (0x80 - D_800B5940);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
         sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] - 0xA0), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;
@@ -381,9 +381,9 @@ void func_80058398(s32 arg0) {
     func_8009F0A4(sprite);
     SetSemiTrans(sprite, 1);
     SetShadeTex(sprite, 0);
-    sprite->r0 = (s8) (0x80 - D_800B5940);
-    sprite->g0 = (s8) (0x80 - D_800B5940);
-    sprite->b0 = (s8) (0x80 - D_800B5940);
+    sprite->r0 = (0x80 - D_800B5940);
+    sprite->g0 = (0x80 - D_800B5940);
+    sprite->b0 = (0x80 - D_800B5940);
     if (arg0 == 1) {
         sprite->x0 = (s16) (D_800E6280.unk_014[D_8011ECA0] + 0x20), sprite->y0 = (s16) (D_800E6280.unk_018[D_8011ECA0] - 0x78);
         sprite->u0 = 0, sprite->v0 = 0;

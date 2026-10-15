@@ -342,6 +342,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).
 - [[tickets/T-14300-event-families|T-14300]] Remaining EVENT family reconstruction (In Progress).
 - [[tickets/T-14200-main-source-families|T-14200]] MAIN source-family recovery (In Progress).
+- [[tickets/T-14200-main-source-families|T-14200]] MAIN source-family recovery (Done; 5 functions / 6624 literal bytes, two labeled FAKE frame homes).
 - [[main-family-results]] - T-14200 MAIN verified checkpoints and rejected focused probes.
 
 - [[tickets/T-14400-option-menu-families|T-14400]] OPTION menu/state family matching (In Progress).

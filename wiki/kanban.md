@@ -24,6 +24,10 @@ kanban-plugin: board
 
 ## In Progress
 
+
+
+- [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
+
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
@@ -57,6 +61,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -118,6 +123,7 @@ kanban-plugin: board
 ## Done
 
 - [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
+- [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]
 
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 
