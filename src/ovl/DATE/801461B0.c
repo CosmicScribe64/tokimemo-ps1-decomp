@@ -1,5 +1,21 @@
 #include "common.h"
 #include "ovl/DATE.h"
+/* .data of this object (T-9010, tools/data_island.py): one line per variable in
+ * address order; replace a line by the variable's C definition. */
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF80);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF84);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF88);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF8C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF90);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF94);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF98);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CF9C);
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CFA0);
+s16 D_8015CFA4[3] = { 0, 0, 0 };
+s16 D_8015CFAC[3] = { 0, 0, 0 };
+s16 D_8015CFB4[3] = { 0, 0, 0 };
+s16 D_8015CFBC[3] = { 0, 0, 0 };
+INCLUDE_RODATA("asm/ovl/DATE/data/DATE/801461B0.data", D_8015CFC4);
 
 void func_801461B0(void) {
     D_8015CF80 = 0x801C6000;
@@ -51,8 +67,6 @@ s32 func_80148924(s16 a0) {
     D_801217D0[7].unk_0F -= a0;
 }
 
-/* NON_MATCHING: T-10040, 13-line initialization/data-ownership residual. */
-#ifdef NON_MATCHING
 s32 func_801489D0(void) {
     s16 *temp_a0;
     s16 *temp_v0;
@@ -202,9 +216,6 @@ s32 func_801489D0(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/801461B0", func_801489D0);
-#endif
 
 void func_801491E4(s32 arg0) {
     s32 temp_v0;

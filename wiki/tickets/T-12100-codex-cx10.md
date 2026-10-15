@@ -28,3 +28,5 @@ The existing 489D0 draft has a documented data-ownership/shared-LUI blocker. Unl
 ## Comments
 
 - 2026-10-15: package claimed after successful baseline.
+
+- Matched `DATE:func_801489D0`: 2,068 literal linked bytes, production DATE SHA1 and header/global checks pass. Added the established 8015CF80..8015CFD0 data island, first verifying its assembly pieces unchanged, then defined the four known s16[3] coordinate/velocity arrays in the owning C file. Their zero initializers and aligned padding reproduce the original bytes. Shared LUI initialization now matches without any function-body trick. Existing DateMovieScene50 layout and array declarations were reused. Logs: build/scratch/data-island.log, island-build.log, 489d0-before.log, 489d0-owned.log, 489d0-build.log and 489d0-final.log.

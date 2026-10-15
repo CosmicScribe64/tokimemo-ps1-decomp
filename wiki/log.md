@@ -13509,3 +13509,7 @@ merged). The seven TT matches that p10 and p12 made and the PRs lack went to dim
 ## [2026-10-15] setup | cx10 DATE package baseline verified
 
 Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build passed 27/27 checksums plus headers/globals. Prioritize larger movie/effect functions and legitimate data ownership repair; native AS1 research is diagnostic only. Baseline evidence: build/scratch/baseline.log. Board and index updated.
+
+## [2026-10-15] build | cx10 matches 2,068-byte DATE movie handler
+
+[[tickets/T-12100-codex-cx10]] matched func_801489D0 with exact production linked bytes and DATE SHA1. The owned data range 8015CF80..8015CFD0 is now a data island; four recovered coordinate/velocity arrays are defined in the C object. This resolves the previously scope-blocked shared-LUI initialization residual without a fakematch. Evidence: build/scratch/489d0-final.log, 489d0-build.log and island-build.log.
