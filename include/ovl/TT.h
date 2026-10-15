@@ -639,4 +639,17 @@ typedef struct TtAnim14 {
     /* 0x10 */ u8 unk_10;
     /* 0x11 */ u8 pad_11[3];
 } TtAnim14; /* size 0x14 */
+/* Scene tables and update handlers installed by func_801369F4. T-11810 */
+extern u8 D_80151A80[];
+extern u8 D_80151AC8[];
+extern u8 D_80154520[];
+extern u8 D_80154564[];
+extern u8 D_80155D60[];
+extern u8 D_80155D9C[];
+extern u8 D_801564E0[];
+extern u8 D_80156534[];
+void func_80139B98(void);
+void func_801365C4(s32 arg0);
+void func_8013BB28(s32 arg0);
+void func_80140D84(void);
 #endif
