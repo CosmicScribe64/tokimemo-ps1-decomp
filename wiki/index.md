@@ -329,3 +329,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13600-taiiku-families|T-13600]] TAIIKU source-family recovery (In Progress).
 
 - [[data/t13600-remaining-census]]: baseline TAIIKU remaining functions and unit-tagged historical evidence (T-13600).
+- [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).

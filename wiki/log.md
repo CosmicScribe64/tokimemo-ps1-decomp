@@ -14366,3 +14366,11 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 
 ## [2026-10-15] build | TAIIKU dispatcher pair verified on integration
 [[tickets/T-12400-integrate-verified-matches]] integrated95a444d5 from [[tickets/T-13600-taiiku-families]]. Root standards inspection finds ordinary C89 dispatchers with canonical fields, no artificial padding/register tricks, no header changes and original function order preserved. Independent default linked funcdiff confirms33494=432bytes and33644=520bytes; affected TAIIKU checksum, header/global checks and branch prototype audit pass. Total5876/6958functions,1405076/2279368bytes (61.6%); remaining418420alignedbytes to80%. Evidence build/scratch/goal-taiiku-pair.log. T13600 remains In Progress while the worker pursues adjacent families.
+
+## [2026-10-15] ticket | T-14000 ENDING and EN_NICHI families
+
+Created [[tickets/T-14000-ending-en-nichi-families]] in In Progress after reading [[index]], [[decompile-workflow]], [[matching-notes]], CODING_STANDARDS.md and AGENTS.local.md. Isolated worktree codex/ending-14000 owns ENDING and EN_NICHI only.
+
+## [2026-10-15] build | ENDING asset dispatcher verified
+
+[[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/ENDING/80134D20.c func_80136EE4: 580 linked bytes MATCH, ENDING SHA1 OK. Existing CharFlags b14 fixes the raw-mask instruction mismatch. Rejected scene and EN_NICHI dispatcher candidates remain ASM; diagnostics in scratchpad/t14000.
