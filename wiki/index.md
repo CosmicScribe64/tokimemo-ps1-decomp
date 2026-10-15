@@ -248,4 +248,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[tickets/T-11120-small-functions-sonnet-36|T-11120]] Small functions (Sonnet via Antigravity) 36 (In Progress).
 
-- [[tickets/T-12300-large-unclaimed-byte-matches|T-12300]] Substantial unclaimed byte matches (In Progress; ownership census).
+- [[tickets/T-12300-large-unclaimed-byte-matches|T-12300]] Substantial unclaimed byte matches (In Review; 4,920 verified bytes, four functions).

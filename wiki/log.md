@@ -13537,3 +13537,11 @@ Full-file probes exposed two missing overlay declarations: existing void BUNKAKE
 ## [2026-10-15] build | T-12300 verified 1316-byte RPG effect handler
 
 [[tickets/T-12300-large-unclaimed-byte-matches]] reaches 4,920 verified bytes / four functions. RPG_BAT func_8014A660 passes literal linked proof and unit SHA1 with explicit nested cases and a documented FAKE scalar pointer view. [[matching-notes]] records both the success and failed transfer to the larger guarded timer handler. Final full-game checks and review follow.
+
+## [2026-10-15] lint | T-12300 independent standards and requirements review
+
+Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive issue; standards found one unreachable break after an all-return nested switch in RPG_BAT func_8014A660. Removed it and scheduled fresh literal/unit validation. Refreshed stale ownership-plan wording in [[tickets/T-12300-large-unclaimed-byte-matches]]. Final In Review handoff and full-check evidence remain pending validation.
+
+## [2026-10-15] ticket | T-12300 reviewed handoff with 4920 verified bytes
+
+[[tickets/T-12300-large-unclaimed-byte-matches]] moves to In Review, synchronized with board/index. Four functions add 4,920 literal linked bytes; final progress 5,737/6,958 functions and 1,293,004/2,279,368 bytes (56.7%). Review's unreachable break removed; fresh rebuilt literal proof and all 27 built-binary SHA1s pass. Header/global checks pass; prototypes 0 new / 15 known. Requirements review has no substantive findings; standards follow-up resolved its sole finding. Guarded 2,232-byte timer target contributes zero bytes. All work committed locally, no integration or push. Checkout returning from temporary sandbox staging to its original managed path for persistent chat attachment.
