@@ -23,15 +23,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
-- [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
-
-
-
+- [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
 - [ ] [[tickets/T-12903-option-small-handlers|T-12903 Match small OPTION audio handlers]]
 
 
-- [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
 
 
 
@@ -41,8 +38,9 @@ kanban-plugin: board
 
 
 
-- [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
-- [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
+
+
+
 
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
@@ -81,22 +79,22 @@ kanban-plugin: board
 
 
 ## In Review
-
+- [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
+- [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
+- [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
+- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
+- [ ] [[tickets/T-12050-codex-cx5|T-12050 Codex cx5 main menu matching pass]]
+- [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
+- [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
+- [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
+- [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
+- [ ] [[tickets/T-12040-codex-cx4|T-12040 Codex cx4 RPG battle matching]]
 - [ ] [[tickets/T-12902-small-draft-triage|T-12902 Triage saved small OPTION and audio drafts]]
 
-- [ ] [[tickets/T-12901-small-option-main-first|T-12901 Verify close OPTION and audio drafts]]
 
-- [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
-- [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
-- [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
-- [ ] [[tickets/T-12030-codex-cx3|T-12030 Codex cx3 main menu functions]]
-- [ ] [[tickets/T-12040-codex-cx4|T-12040 Codex cx4 RPG battle matching]]
-- [ ] [[tickets/T-12050-codex-cx5|T-12050 Codex cx5 main menu matching pass]]
-- [ ] [[tickets/T-12300-large-unclaimed-byte-matches|T-12300 Match substantial unclaimed functions]]
 
-- [ ] [[tickets/T-12070-codex-cx7|T-12070 Codex cx7 TACO actor matching]]
-- [ ] [[tickets/T-12090-codex-cx9|T-12090 Codex cx9 BUNKA_SD matching pass]]
+
 - [ ] [[tickets/T-11300-close-near-misses-sonnet-46|T-11300 Close near misses (Sonnet) 46]]
 - [ ] [[tickets/T-11270-exact-rescore-autotweak-bulk-m2c|T-11270 Exact rescoring in autotweak and bulk_m2c]]
 - [ ] [[tickets/T-11260-fast-scoring-order-search-permute|T-11260 Fast scoring for order_search, permute and the permuter farm]]
@@ -123,22 +121,22 @@ kanban-plugin: board
 ## Done
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 - [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
-- [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]
-- [ ] [[tickets/T-12803-main|T-12803 Main schedule matching]]
-- [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]
-- [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
 - [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
-
+- [ ] [[tickets/T-12200-acceleration-audit|T-12200 Measure and reduce matching setup overhead]]
+- [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]
+- [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]
 - [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]
-
-
+- [ ] [[tickets/T-12803-main|T-12803 Main schedule matching]]
+- [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
+- [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
+- [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]
 - [ ] [[tickets/T-13001-master-layout-pilot|T-13001 Recover MASTER layouts and verify pilot matches]]
 - [ ] [[tickets/T-13000-types-globals|T-13000 Recover evidence-backed types and globals]]
-- [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
-- [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
-- [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]
 - [ ] [[tickets/T-12210-matching-bottleneck-research|T-12210 Identify and test high-leverage matching breakthroughs]]
-- [ ] [[tickets/T-12200-acceleration-audit|T-12200 Measure and reduce matching setup overhead]]
+
+
+
+- [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
 - [ ] [[tickets/T-11820-tt-batch-9|T-11820 TT batch 9]]
 - [ ] [[tickets/T-11810-tt-batch-8|T-11810 TT batch 8]]
 - [ ] [[tickets/T-11800-tt-batch-7|T-11800 TT batch 7]]

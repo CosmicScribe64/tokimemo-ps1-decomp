@@ -14080,3 +14080,6 @@ Created [[tickets/T-12903-option-small-handlers]] for two guarded candidates (13
 ## [2026-10-15] build | Third verified match and shared-header validation
 
 [[tickets/T-12902-small-draft-triage]] moves to In Review. func_80079F00 proves 264 literal linked bytes, and main SHA1 passes. Combined checkpoint is 3 functions / 812 bytes (360 + 188 + 264). Full 27-check rebuild is running serially; [[matching-notes]] records the indexing, aggregate, and call-width findings.
+
+## [2026-10-15] decision | Goal continuation and Sol medium replacement lanes
+[[tickets/T-12600-byte-coverage-families]]: active goal is at least80% verified game-code bytes published to main. Previous goal turn established the objective; this continuation integrates new committed matches and dispatches replacement work. User requests Sol6.1 medium for new workers. New isolated scopes: ETC (T13100), GYOZI/SHOUGATU (T13200), RPG_BAT (T13300). Existing dialogue and DATE workers continue. Reconciled integrated T12000+ ticket cards to their authoritative frontmatter statuses; no source changes from lint.
