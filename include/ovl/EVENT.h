@@ -142,7 +142,6 @@ extern s32 D_80120748;
 extern s16 D_8012074C;
 extern s32 D_80120758;
 extern s32 D_8012075C;
-extern s32 D_80120760;
 extern s32 D_80120764;
 extern s32 D_80120768;
 extern s32 D_80120774;
