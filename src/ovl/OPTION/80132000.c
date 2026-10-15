@@ -792,6 +792,7 @@ void func_80137E38(void) {
         if (D_801230D0 < **e) {
             if (func_800460EC() & 2) {
                 D_8013D2FC = 0;
+                /* Word indexing preserves the original temporary allocation. T-12901 */
                 func_80046290(((s32 *)*e)[D_801230D0 * 2 + 1], ((s32 *)*e)[D_801230D0 * 2 + 2], sel);
                 D_801230D0 += 1;
                 func_80044750(0x300);
