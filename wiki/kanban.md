@@ -24,6 +24,9 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
+
+
 
 
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]

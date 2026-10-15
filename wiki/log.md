@@ -14522,3 +14522,7 @@ Claimed [[tickets/T-15000-kangei-near-match]] for bounded type/aggregate investi
 ## [2026-10-15] build | T-15000 KANGEI duplicated-branch-store match
 
 Promoted KANGEI func_80135CE0: 432 inventory coverage bytes and 432 default linked literal bytes. Replaced m2c's shared-store goto with ordinary if/else-if branches, each with its own final byte store. KANGEI SHA1 and header/global/prototype guards pass; no FAKE or header changes. [[tickets/T-15000-kangei-near-match]] moves to In Review, with [[kanban]], [[index]], and [[matching-notes]] updated.
+
+## [2026-10-15] ticket | T-15300 fresh structural near matches
+
+Claimed [[tickets/T-15300-fresh-structural-near-matches]] for bounded C fixes from completed census units, starting fresh BUNKASAI func_801438E4 (852 inventory bytes, score 14). No prior scope entry in historical wiki/catalog. Incoming zero proofs keep priority; [[kanban]] and [[index]] updated.
