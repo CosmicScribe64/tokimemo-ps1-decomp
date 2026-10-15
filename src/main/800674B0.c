@@ -189,7 +189,57 @@ void func_80067870(void) {
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067C28);
+void func_80067C28(void) {
+    s32 max;
+    s32 level;
+    s32 n;
+    s32 i;
+    u8 k;
+
+    if (*(u8 *)&D_800E6280.unk_03C != 0) {
+        if (func_800460EC() & 4) {
+            level = getCDlevel() + 1;
+        } else {
+            level = 0;
+        }
+        D_80125C80[D_800E6280.unk_10F8 & 3] = level;
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        n = 0;
+        k = D_800E6280.unk_F5F;
+        for (i = 0; i < 3; i++) {
+            if (D_800B5A68[k][i] < level) {
+                n = i + 1;
+            }
+        }
+        if (n >= 4) {
+            n = 3;
+        }
+        if (D_80120668 == 0 || !(D_800E6280.unk_10F8 & 1)) {
+            if (level == 0) {
+                D_80120668 = 0;
+            } else if (n == 0) {
+                D_80120668 = 0;
+            } else if (n == 1) {
+                D_80120668 = 1;
+            } else if (n == 2) {
+                D_80120668 = 2;
+            } else if (n >= 3) {
+                D_80120668 = 3;
+            }
+        }
+    }
+}
 
 /* FAKE: promoted halfword and byte alias retain the final andi before flag storage. T-9550 */
 s32 func_80067DD4(void)
