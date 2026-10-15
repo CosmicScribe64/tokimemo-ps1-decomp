@@ -622,7 +622,34 @@ void func_80113FD4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801142E8);
+void func_801142E8(void) {
+    EventStateView *g;
+    s32 temp;
+
+    g = (EventStateView *)&D_800B0860;
+
+    D_8009473C = D_80124228;
+    D_80094740 = D_80124294;
+    D_80094744 = D_80124300;
+    D_801252E8 = 3;
+    func_80078970(D_80094784, "プール");
+    func_80078970(D_800947C4, "プール内");
+    if (!(D_800B0860[g->unk_EE6 * 0x34 + 0x1D4] & 1)) {
+        D_8012531C = 0;
+    } else {
+        D_8012531C = 1;
+    }
+    D_800EECE4 = 0x1C;
+    temp = D_8012531C * 3;
+    D_8012439C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125210) + temp);
+    D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125210) + temp) + (1));
+    D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125210) + temp) + (2));
+    D_8012438C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125214) + temp);
+    D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125214) + temp) + (1));
+    D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125214) + temp) + (2));
+    func_800469F4(0x452B);
+    func_80011DFC();
+}
 
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_801144AC);
 
@@ -644,9 +671,71 @@ void func_801146B4(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114784);
+#ifdef NON_MATCHING
+void func_80114784(void) {
+    EventStateView *g;
+    s32 temp;
 
+    g = (EventStateView *)&D_800B0860;
+
+    D_8009473C = D_8012423C;
+    D_80094740 = D_801242A8;
+    D_80094744 = D_80124314;
+    D_801252E8 = 3;
+    func_80078970(D_80094784, "スケート場");
+    func_80078970(D_800947C4, "スケートリンク");
+    if (!(D_800B0860[g->unk_EE6 * 0x34 + 0x1D6] & 1)) {
+        D_8012531C = 0;
+    } else {
+        D_8012531C = 1;
+    }
+    D_800EECE4 = 0x1E;
+    temp = D_8012531C * 3;
+    D_8012439C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125238) + temp);
+    D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125238) + temp) + (1));
+    D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125238) + temp) + (2));
+    D_8012438C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_8012523C) + temp);
+    D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012523C) + temp) + (1));
+    D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_8012523C) + temp) + (2));
+    func_800469F4(0x44D8);
+    func_80011DFC();
+}
+#else
+INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114784);
+#endif
+
+#ifdef NON_MATCHING
+void func_80114948(void) {
+    EventStateView *g;
+    s32 temp;
+
+    g = (EventStateView *)&D_800B0860;
+
+    D_8009473C = D_80124240;
+    D_80094740 = D_801242AC;
+    D_80094744 = D_80124318;
+    D_801252E8 = 3;
+    func_80078970(D_80094784, "スキー場");
+    func_80078970(D_800947C4, "ゲレンデ");
+    if (!(D_800B0860[g->unk_EE6 * 0x34 + 0x1D7] & 1)) {
+        D_8012531C = 0;
+    } else {
+        D_8012531C = 1;
+    }
+    D_800EECE4 = 0x1F;
+    temp = D_8012531C * 3;
+    D_8012439C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125240) + temp);
+    D_8012439E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125240) + temp) + (1));
+    D_801243A0 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125240) + temp) + (2));
+    D_8012438C = (s16) *((g->unk_EE6 * 6) + ((u8 *)D_80125244) + temp);
+    D_8012438E = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125244) + temp) + (1));
+    D_80124390 = (s16) *(u8 *)((unsigned char *)((g->unk_EE6 * 6) + ((u8 *)D_80125244) + temp) + (2));
+    func_800469F4(0x44C4);
+    func_80011DFC();
+}
+#else
 INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_80114948);
+#endif
 
 /* NON_MATCHING: T-10330, T-11600, 4 differing lines: base registers of D_80124394/D_8012439C swapped (t1/t2). regdiff: both
  * hoisted addresses have priority 2.5 and D_8012439C, used first by `v = *r`, is coloured first; v = *p = *r, *p = *r; v = *p,
