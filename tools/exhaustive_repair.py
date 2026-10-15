@@ -3,7 +3,8 @@
 
 Run in Docker after exhaustive_drafts.py finishes. Initial artifacts are immutable.
 Reserved DATE/type-worker scopes are excluded. Failed targets first retry the latest
-mechanical repairs, then unguarded failures try no-context and no-unknown-inference.
+mechanical repairs, then failures try no-context and no-unknown-inference. Failed retained guards
+are regenerated separately, preserving the original guarded source in the initial archive.
 Every attempt has its own complete context and outcome under repairs/automatic/.
 No production source is changed and no zero-score candidate is promoted.
 """
@@ -50,12 +51,11 @@ def main():
     for label, variant in [('mechanical', 'default'), ('no-context', 'no-context'),
                            ('no-unk-inference', 'no-unk-inference')]:
         base = BASE / 'repairs' / 'automatic' / label
-        if label != 'mechanical':
-            selected = [r for r in selected if not r['guarded']]
         if not selected:
             continue
         prepare(base, selected)
-        env = dict(os.environ, TOKIMEMO_DRAFT_BASE=str(base), TOKIMEMO_DRAFT_VARIANT=variant)
+        env = dict(os.environ, TOKIMEMO_DRAFT_BASE=str(base), TOKIMEMO_DRAFT_VARIANT=variant,
+                   TOKIMEMO_REGENERATE_GUARDS='1')
         print('REPAIR PASS', label, len(selected), 'targets', flush=True)
         subprocess.run([sys.executable, 'tools/exhaustive_drafts.py', '--timeout', str(args.timeout)],
                        env=env, check=True)

@@ -14671,3 +14671,11 @@ Integrated 002eb61d and 2c98de67 with completed draft archive b59ad160. RPG shar
 ## [2026-10-15] build | T-14501 SHUGAKU verified draft batch
 
 Promoted 2 ordinary C functions / 1,052 bytes for SHUGAKU after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] decision | Regenerate failed guards as separate alternatives
+
+The usable-draft target includes guarded drafts that no longer compile in the current context. Automatic repairs will preserve their original artifacts and separately regenerate from assembly with default/context fallbacks, folding only the target guard to its existing INCLUDE_ASM while building the candidate translation unit. Default census reuse of guards is unchanged. No production source is modified.
+
+## [2026-10-15] query | Exhaustive census checkpoint 678 of 1066
+
+[[exhaustive-drafts]] updated with the complete per-unit execution table: {'candidate-zero': 28, 'failed': 88, 'scored': 562}. Initial outcomes are preserved; separate repair attempts improve compilable draft coverage without changing production source.

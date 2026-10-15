@@ -51,14 +51,14 @@ class ExhaustiveRepairTests(unittest.TestCase):
             seen.append([r['scope'] for r in cohort])
             for row in cohort:
                 folder=base/row['unit']/row['func'];folder.mkdir(parents=True)
-                (folder/'result.json').write_text(json.dumps(dict(row,status='failed' if row['guarded'] else 'scored',score=None if row['guarded'] else 9)))
+                (folder/'result.json').write_text(json.dumps(dict(row,status='failed' if row['guarded'] and env['TOKIMEMO_DRAFT_VARIANT']=='default' else 'scored',score=None if row['guarded'] and env['TOKIMEMO_DRAFT_VARIANT']=='default' else 9)))
         with patch('sys.argv',['repair']),patch.object(repair.subprocess,'run',side_effect=complete):
             repair.main()
-        self.assertEqual(seen,[['TT:a','TT:d']])
+        self.assertEqual(seen,[['TT:a','TT:d'],['TT:d']])
         for row in rows:
             self.assertEqual((repair.BASE/row['unit']/row['func']/'result.json').read_text(),snapshots[row['scope']])
         coverage=json.loads((repair.BASE/'coverage.json').read_text())
-        self.assertEqual(coverage['repaired'],1)
+        self.assertEqual(coverage['repaired'],2)
         self.assertEqual(coverage['reserved'],1)
         best=[json.loads(line) for line in (repair.BASE/'best-catalog.jsonl').read_text().splitlines()]
         self.assertTrue(next(r for r in best if r['scope']=='TT:b')['reserved'])
