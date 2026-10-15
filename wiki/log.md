@@ -14502,3 +14502,7 @@ Added source-local offset/evidence comments for the player and schedule bitfield
 ## [2026-10-15] decision | Remove redundant OPTION audio initialization
 
 Removed unnecessary pre-branch loop initializations from two new audio handlers in [[tickets/T-14400-option-menu-families]]. Both scratch probes and fresh default linked proofs remain exact; OPTION SHA1 and all 33 pre-existing C body comparisons pass.
+
+## [2026-10-15] ticket | Complete reviewed OPTION family pass
+
+[[tickets/T-14400-option-menu-families]] moves to Done after both independent review axes pass the source fixes. Six functions add 5868 literal verified bytes, OPTION SHA1 matches, headers/globals/prototypes pass, and all 33 pre-existing C bodies are unchanged. No new FAKE workaround or shared main-header change. Remaining assigned OPTION queue: 23744 bytes / 38 functions; broader 80% goal ongoing. Branch codex/option-14400 is ready for integration without a worker push or PR.

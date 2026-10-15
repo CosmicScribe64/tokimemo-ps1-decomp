@@ -340,4 +340,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (In Review).
 - [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).
 
-- [[tickets/T-14400-option-menu-families|T-14400]] OPTION menu/state family matching (In Review).
+- [[tickets/T-14400-option-menu-families|T-14400]] OPTION menu/state family matching (Done; 6 functions / 5868 literal verified bytes).

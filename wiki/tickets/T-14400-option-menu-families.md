@@ -1,7 +1,7 @@
 ---
 id: T-14400
 title: Match OPTION menu and state families
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -43,3 +43,21 @@ Prior work: T-12900/12901/12902; Bunka, ETC and GEKO family findings. Focus on c
 - Moved to In Review for standards/spec review against a46afeb8...HEAD. Existing C body preservation audit is in build/option14400/body-audit.log.
 
 - Standards review found three first-member byte-offset accesses in BFF8 despite existing GameState fields (CODING_STANDARDS 8). Replaced with g->unk_725/726/727 and reran all literal proofs. Removed two redundant audio initialization statements after dedicated full-TU probes proved them unnecessary (both remain zero rows); no artificial initialization remains. Removed duplicate ticket card caused by preexisting repeated In Review headings. Awaiting re-review.
+
+## Final review and handoff
+
+Standards/spec code-review skill axes independently reviewed a46afeb8...916b4079, then re-reviewed e63fe3e4/150489c4. Original first-member-access finding resolved; both axes report no outstanding actionable findings. Reviewers read proof logs and source; they did not independently compile. Final headers/globals pass, prototype guard passes with zero new / twelve known disagreements. All six default literal proofs and OPTION SHA1 pass after the reviewed fixes; all 33 pre-existing C bodies in touched files are unchanged. Ticket Done covers this bounded OPTION family pass, not the game-wide 80% goal.
+
+| Function | Literal linked bytes | Family |
+| --- | ---: | --- |
+| func_8013AF10 | 1196 | Player settings |
+| func_8013B568 | 2320 | Character settings |
+| func_8013BFF8 | 952 | Schedule settings |
+| func_80138C20 | 472 | XA row menu |
+| func_80138DF8 | 456 | Sequence row menu |
+| func_80138FC0 | 472 | SE row menu |
+| **Total** | **5868** | **6 functions** |
+
+Branch codex/option-14400, base a46afeb8, worktree /Users/lila/Documents/Projects/tokimemo-wt/option-14400. Source batches d63d1842, 90580c83, 24c028b4; comments ff37e3ab; review fixes e63fe3e4 and 150489c4. Integrate the complete branch range so the review fixes are included. No push or PR. Original checkout source remains unchanged. No new FAKE workaround, guarded draft, compiler change, generated assembly edit, or shared main-header change. OPTION remainder from the assigned 29612-byte/44-function baseline is 23744 bytes/38 functions.
+
+Final evidence in ignored build/option14400: review-proof.log, review-build.log, headers.log, globals.log, protos.log, body-audit.log. Precise negative probes remain there and are summarized above. No copyright game input/output is committed. Future work should recover the existing sprite-local state/lifetime forms before revisiting grid handlers; do not repeat the recorded bounded probes without a new hypothesis.
