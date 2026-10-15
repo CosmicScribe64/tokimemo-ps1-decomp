@@ -302,3 +302,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13100-etc-families|T-13100]] ETC source-family transfer, isolated worktree.
 
 - [[tickets/T-13101-etc-career-family|T-13101]] ETC career state handlers.
+
+- [[tickets/T-13200-event-family-transfer|T-13200]] GYOZI/SHOUGATU bounded event family transfer.
+
+- [[tickets/T-13201-event-selector-stores|T-13201]] Event selector direct-store family.

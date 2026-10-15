@@ -27,6 +27,10 @@ kanban-plugin: board
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
 - [ ] [[tickets/T-13101-etc-career-family|T-13101 Reconstruct ETC career state handlers]]
 - [ ] [[tickets/T-13100-etc-families|T-13100 Transfer source-family evidence to ETC]]
+
+- [ ] [[tickets/T-13201-event-selector-stores|T-13201 Event selector direct stores]]
+
+- [ ] [[tickets/T-13200-event-family-transfer|T-13200 Transfer event handler families]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 
