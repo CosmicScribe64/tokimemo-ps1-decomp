@@ -2656,30 +2656,30 @@ void func_8011C3F4(void) {
     func_80011DFC();
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-11600, 1 differing line; s32 without a return and the (s32) cast fixed the $v0 update; left: bne t7,v0 (original,
-   D_80125320 first) against bne v0,t7 (register-held 9 first); entry dead loads, u8 views and operand swaps did not move it. */
+/* s32 with no return (K&R): the incremented byte stays in $v0 as the return register. */
 s32 func_8011C470(void) {
+    /* FAKE: unused word reserves top frame slot so before sits at sp+0x28; T-11600 */
     s32 pad;
     s32 before;
+    u8 sel;
 
     before = D_800B1AF6;
+    /* FAKE: dead load before the first call lets cvt_pass strip the CVT of D_80125320, so it goes first in bne; T-11600 */
+    sel = D_80125320;
     func_8004CF30();
-    if ((D_800B1746 == 9) && ((u8)D_80125320 == 9)) {
+    if ((D_800B1746 == 9) && (D_80125320 == 9)) {
         if (D_800B0BCF == 0) {
             func_8004A8EC(3);
         } else {
             func_8004A8EC(4);
         }
         func_80033E88();
+        /* FAKE: (s32) cast gives the original operand order of the beq; T-11600 */
         if (before != (s32)D_800B1AF6) {
             D_800B1AF6 += 5;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011C470);
-#endif
 
 void func_8011C514(void) {
     if (D_800B0A04[D_800B1746].unk_0C.b12 || D_800B0A04[D_800B1746].unk_0C.b13) {
