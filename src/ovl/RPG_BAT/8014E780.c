@@ -128,14 +128,14 @@ s32 func_8014E994(void) {
     s32 *var_v1;
     s32 *var_v1_2;
 
-    var_v1 = &D_8015EBAC;
     end = (s32 *)((u8 *)D_8015ED64 - 0x28);
+    var_v1 = &D_8015EBAC;
     do {
         var_v1++;
         var_v1[-1] = 0;
     } while ((u32) var_v1 < (u32) end);
-    var_v1_2 = D_8015ED3C;
     end = (s32 *)D_8015ED64;
+    var_v1_2 = D_8015ED3C;
     do {
         var_v1_2++;
         var_v1_2[-1] = 0;
