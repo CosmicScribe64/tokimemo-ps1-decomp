@@ -116,7 +116,141 @@ void func_80137878(void) {
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137A78);
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/801374C0", func_80137C20);
+/* The u16 store of 8 lets the constant share t5 with the s[0x1A] store; the 0x11C ring row is spelled like the packet loops' s + i * 4 loads so both share one induction variable (a3), and the 2D-array rows keep i * 4 as the loop test; the packet loops' grouped stores share a source line because as1 schedules the stores of one line together. T-11840 */
+void func_80137C20(void) {
+    u8 *c;
+    u8 *s;
+    u8 *p;
+    s32 i;
+    s32 j;
+
+    c = D_80158A8C;
+    s = D_80158AAC;
+    func_80142740();
+    func_80142774();
+    c[0] = 1;
+    c[0x342] = 0;
+    *(s32 *)(c + 0x20) = 0;
+    *(s32 *)(c + 0x24) = 0xFFC00000;
+    *(s16 *)(c + 0x14) = 0;
+    *(s16 *)(c + 0x16) = -0x40;
+    *(s32 *)(c + 0x28) = 0;
+    *(s32 *)(c + 0x2C) = 0x20000;
+    for (i = 0; i < 4; i++) {
+        ((TtAnim14 *)(c + 0x38))[i].frames = D_80151A50;
+        ((TtAnim14 *)(c + 0x38))[i].unk_04 = 0;
+        ((TtAnim14 *)(c + 0x38))[i].unk_05 = D_80152C4C[i];
+        ((TtAnim14 *)(c + 0x38))[i].unk_06 = D_80152C50[i];
+        ((TtAnim14 *)(c + 0x38))[i].unk_08 = 0x60;
+        ((TtAnim14 *)(c + 0x38))[i].unk_0B = 0xF;
+        ((TtAnim14 *)(c + 0x38))[i].unk_10 = 0;
+        c[0x310 + i] = 1;
+        if (i < 2) {
+            *(s16 *)(c + 0x2A8 + i * 2) = 10;
+        } else {
+            *(u16 *)(c + 0x2A8 + i * 2) = 8;
+        }
+        *(s16 *)(c + 0x248 + i * 2) = 0;
+        *(s16 *)(c + 0x278 + i * 2) = 0;
+    }
+    *(s16 *)(c + 0x278) = -6;
+    *(s16 *)(c + 0x24C) = 0x18;
+    *(s16 *)(c + 0x27C) = 0x34;
+    *(s16 *)(c + 0x24E) = -0x18;
+    *(s16 *)(c + 0x27E) = 0x34;
+    *(s16 *)(c + 0x30C) = 0x60;
+    *(s16 *)(c + 0x30E) = 0;
+    *(s16 *)(c + 0x3A4) = 0;
+    *(s16 *)(c + 0x3A6) = 0;
+    *(s16 *)(c + 0x3A8) = 0;
+    *(s16 *)(c + 0x3AA) = 0;
+    *(s16 *)(c + 0x3AC) = 0;
+    *(s16 *)(c + 0x364) = 0;
+    *(s16 *)(c + 0x366) = 0;
+    *(s16 *)(c + 0x368) = 0;
+    *(s16 *)(c + 0x36A) = 0;
+    *(s16 *)(c + 0x36C) = 0;
+    c[0x343] = 0;
+    *(s16 *)s = *(s16 *)(c + 0x14) + 0x1C;
+    *(s16 *)(s + 2) = *(s16 *)(c + 0x16) - 0x22;
+    *(s16 *)(s + 0x10) = 0xC00;
+    *(s16 *)(s + 0x14) = 0xC00;
+    *(s16 *)(s + 0x12) = 0xC00;
+    *(s16 *)(s + 0x16) = 0xC00;
+    *(s16 *)(s + 0x18) = 0x100;
+    s[0x1A] = 8;
+    s[0x1B] = 4;
+    *(s32 *)(s + 0xC) = 0x380;
+    *(s32 *)(s + 8) = 0x1C0;
+    for (i = 0; i < 32; i++) {
+        *(s32 *)(s + 0x11C + i * 4) = 0x380;
+        ((s16 *)(s + 0x99C))[i] = 0xC00;
+        ((s16 *)(s + 0xDDC))[i] = 0;
+        for (j = 0; j < 16; j++) {
+            ((s32 (*)[16])(s + 0x19C))[i][j] = 0x380;
+            ((s16 (*)[16])(s + 0x9DC))[i][j] = 0xC00;
+        }
+    }
+    func_801410A0(s);
+    *(s16 *)(s + 0xEFC) = *(s16 *)(c + 0x14) - 0x1C;
+    s += 0xEFC;
+    *(s16 *)(s + 2) = *(s16 *)(c + 0x16) - 0x22;
+    *(s16 *)(s + 0x10) = 0xC00;
+    *(s16 *)(s + 0x14) = 0xC00;
+    *(s16 *)(s + 0x12) = 0xC00;
+    *(s16 *)(s + 0x16) = 0xC00;
+    *(s16 *)(s + 0x18) = 0x100;
+    s[0x1A] = 8;
+    s[0x1B] = 4;
+    *(s32 *)(s + 0xC) = 0x380;
+    *(s32 *)(s + 8) = 0x1C0;
+    for (i = 0; i < 32; i++) {
+        *(s32 *)(s + 0x11C + i * 4) = 0x380;
+        ((s16 *)(s + 0x99C))[i] = 0xC00;
+        ((s16 *)(s + 0xDDC))[i] = 0;
+        for (j = 0; j < 16; j++) {
+            ((s32 (*)[16])(s + 0x19C))[i][j] = 0x380;
+            ((s16 (*)[16])(s + 0x9DC))[i][j] = 0xC00;
+        }
+    }
+    func_801410A0(s);
+    p = D_80158AA4 + 0xFA0;
+    for (i = 0; i < 7; i++) {
+        p[0] = 1;
+        p[1] = 0;
+        *(s16 *)(p + 0x44) = 0;
+        *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) + 0x14;
+        *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) + i * 8 - 0x2A;
+        *(s16 *)(p + 0x14) = *(s16 *)(s + 0x1E + i * 4) - 8;
+        p -= 0x64;
+        *(s16 *)(p + 0x7A) = *(s16 *)(s + 0x9E + i * 4) - 8;
+        *(s16 *)(p + 0xA0) = 0x10; *(s16 *)(p + 0xA2) = 0x10; /* FAKE: stores grouped on one line keep the original as1 order. T-11840 */
+        p[0xAA] = 0x90; p[0xAB] = 0x80; /* FAKE: one line, as above. T-11840 */
+        p[0x9C] = 0x80; p[0x9D] = 0x80; p[0x9E] = 0x80; /* FAKE: one line, as above. T-11840 */
+        *(s16 *)(p + 0xA4) = 0x12;
+        *(s16 *)(p + 0xA6) = 0x3CD9;
+        p[0x9F] = 0x65;
+        *(s16 *)(p + 0x74) = 9;
+    }
+    p = D_80158AA4 + 0x12C0;
+    for (i = 0; i < 7; i++, p -= 0x64) {
+        p[0] = 1;
+        p[1] = 0;
+        *(s16 *)(p + 0x44) = 0;
+        *(s16 *)(p + 0x14) = *(s16 *)(c + 0x14) - 0x24;
+        *(s16 *)(p + 0x16) = *(s16 *)(c + 0x16) + i * 8 - 0x2A;
+        *(s16 *)(p + 0x14) = *(s16 *)(s + 0x1E + i * 4) - 8;
+        *(s16 *)(p + 0x16) = *(s16 *)(s + 0x9E + i * 4) - 8;
+        *(s16 *)(p + 0x3C) = 0x10; *(s16 *)(p + 0x3E) = 0x10; /* FAKE: one line, as above. T-11840 */
+        p[0x46] = 0x90; p[0x47] = 0x80; /* FAKE: one line, as above. T-11840 */
+        p[0x38] = 0x80; p[0x39] = 0x80; p[0x3A] = 0x80; /* FAKE: one line, as above. T-11840 */
+        *(s16 *)(p + 0x40) = 0x12;
+        *(s16 *)(p + 0x42) = 0x3CD9;
+        p[0x3B] = 0x65;
+        *(s16 *)(p + 0x10) = 9;
+    }
+    *(u8 **)(c + 0x238) = D_80155C5E;
+}
 
 void func_80138178(void) {
     u8 *p = D_80158A8C;
