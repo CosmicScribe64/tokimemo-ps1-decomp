@@ -14005,3 +14005,6 @@ Created [[tickets/T-12800-large-event-tel]] and children [[tickets/T-12801-event
 
 ## [2026-10-15] lint | Incremental integration whitespace
 [[tickets/T-12400-integrate-verified-matches]]: removed an extra final blank line from src/ovl/BUNKA_SD/80132000.c after new matching commits. Combined verification is running. User requested continued integration; heartbeat checks every10minutes and reports only meaningful changes.
+
+## [2026-10-15] build | Complete adjacent BUNKAKEN scene handlers
+[[tickets/T-12701-bunkaken-address-family]] adds eight functions / 6,112 linked bytes and passes BUNKAKEN SHA1. 8013EB30.c now contains only C; prior matched bodies are preserved. BUNKAKEN cumulative gain: twenty-eight functions / 26,776 bytes.
