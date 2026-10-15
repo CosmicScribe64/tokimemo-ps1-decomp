@@ -13561,3 +13561,7 @@ BUNKASAI func_80150234 and func_80145930 both pass literal linked equality at 76
 ## [2026-10-15] build | T-12220 twenty verified medium-function matches
 
 [[tickets/T-12220-scene-handler-family-experiment]]: 16/24 direct cohort wins in 260.18 seconds, two seed wins, and two paired CharFlags bitfield fixes; 20 functions / 16,272 literal linked bytes total. Both unit checksums pass. [[matching-breakthroughs]] preserves the cohort, negative results, timing boundaries and limited transfer claim. Header/global/prototype guards pass; no full-game build. Ticket moved to In Review for standards and requirements review.
+
+## [2026-10-15] ticket | T-12220 reviewed and complete
+
+Requirements review of f1010b54...5deb7fa0 passed; standards review found only the stale index status, now fixed. No code findings. [[tickets/T-12220-scene-handler-family-experiment]] moved to Done with synchronized board/index. Twenty literal-verified functions and 16,272 bytes are committed locally on codex/acceleration-audit; no merge or push. [[matching-breakthroughs]] records the bounded result and next scheduling experiment.
