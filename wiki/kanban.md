@@ -34,18 +34,6 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
 
-
-
-
-
-
-- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
-
-
-
-
-
-
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
 - [ ] [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180 Twin-guided matching (Gemini) 39]]
@@ -69,10 +57,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
-- [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
-- [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]
-- [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
-- [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -114,6 +98,8 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
 
+- [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
+
 - [ ] [[tickets/T-13801-taco-actor-family|T-13801 Reconstruct TACO actor initialization and update family]]
 
 - [ ] [[tickets/T-14100-date-near-matches|T-14100 Resolve DATE near matches]]
@@ -121,54 +107,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
 
 - [ ] [[tickets/T-13800-taco-families|T-13800 Recover remaining TACO actor families]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## In Review
 
@@ -254,72 +192,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-12210-matching-bottleneck-research|T-12210 Identify and test high-leverage matching breakthroughs]]
 
 - [ ] [[tickets/T-14700-reserved-type-repairs|T-14700 Repair fifteen reserved aggregate and callback drafts]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Done
 

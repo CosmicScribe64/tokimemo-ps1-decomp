@@ -14767,3 +14767,6 @@ Integrated audit test exposed duplicate repair_path keyword handling when joinin
 ## [2026-10-15] build | T-15300 BUNKAKEN label encoding match
 
 Promoted BUNKAKEN func_80145844: 440 inventory coverage bytes and 440 literal default linked bytes. Restoring the ordinary Unicode label fixes an unsupported mixed hex-escape spelling in IDO K&R mode, following root's BUNKASAI finding. BUNKAKEN SHA1 and header/global/prototype guards pass. No FAKE/header changes or existing C edits. TACO's bounded structural probe is retained locally and paused for incoming exact candidates; see [[tickets/T-15300-fresh-structural-near-matches]].
+
+## [2026-10-15] build | Flag and encoding recovery publication
+Default literal proofs and affected checksum/guard checks pass for BUNKASAI820 and BUNKAKEN440 bytes. Total 1,449,772 / 2,279,368 game-code bytes. Nine integrated unaligned repair hashes and eleven tooling tests pass; repairs remain nonmatching. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-15500-bunkasai-character-flags]] and [[tickets/T-15300-fresh-structural-near-matches]].
