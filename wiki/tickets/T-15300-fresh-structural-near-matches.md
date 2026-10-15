@@ -25,3 +25,5 @@ Avoid main, EVENT, RPG_BAT, and separately reserved repair functions. Historical
 ## Comments
 
 2026-10-15: Claimed at root's request. Inspect original control flow before bounded experiments; do not change the frozen census context.
+
+2026-10-15: BUNKASAI func_801438E4 matched: 852 inventory coverage bytes / 852 literal linked bytes. All 14 diff rows came from the final byte flag ORs. Replaced those operations with the existing character-record CharFlags.f.b12 and .b13 assignments; explicit byte read-modify-write syntax had not helped. This uses the established aggregate and bit-field model (T-9020/T-12300); no FAKE or headers changed. Original C preserved: only the target INCLUDE_ASM line removed. Docker default literal proof, BUNKASAI SHA1, headers/globals and branch prototype guard all pass (zero new / 15 known). Evidence: /private/tmp/t15300-bunkasai-{seed,rmw,bitfield}-diff.log and /private/tmp/t15300-bunkasai-final-proof.log. Continuing fresh TACO candidates under this ticket; incoming zeros retain priority.

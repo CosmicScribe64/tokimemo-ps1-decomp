@@ -5237,3 +5237,7 @@ For DATE func_801449D4, explicit pointers to dynamically indexed local table slo
 ### T-15000: duplicated final stores instead of m2c's shared goto
 
 KANGEI `func_80135CE0` (432 inventory coverage and linked proof bytes) matches as an ordinary `if`/`else if` with `D_80120657 = 0` at the end of each branch. The six-score m2c seed shared that store through a goto into the second branch, which removed the target's first branch store/branch sequence. Restoring the source-level branches fixes the entire difference without type tricks or FAKE. Default linked bytes, KANGEI SHA1 and header/global/prototype guards pass. See [[tickets/T-15000-kangei-near-match]].
+
+### T-15300: BUNKASAI character flag stores
+
+BUNKASAI `func_801438E4` (852 inventory coverage and default linked literal bytes) needs the existing character 7 flag fields `.unk_0C.f.b12 = 1` and `.f.b13 = 1`. Byte-OR stores, including explicit read-modify-write assignments, reuse the byte load's base register and shift seven temporary registers (14 diff rows). CharFlags already documents the original bit-field signature: load the byte into another register than its LUI. The canonical aggregate/bit-field view matches without FAKE. Default linked proof, BUNKASAI SHA1 and all guards pass; see [[tickets/T-15300-fresh-structural-near-matches]].
