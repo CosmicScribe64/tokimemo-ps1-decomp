@@ -1705,31 +1705,19 @@ s32 make_three_select(str)
     sprintf(str, "%sq%sq%s", buf[D_800CA2A4[0]], buf[D_800CA2A4[1]], buf[D_800CA2A4[2]]);
 }
 
-/* NON_MATCHING: T-11590, 34 differing lines, all one v0/v1 swap: the original colours the u8 remainder before the GameState word (regdiff: unconstrained ranges go in bit order, the global has the lower bit); return r, a u32 copy, (r = g % 3) == 0 and void do not change it */
-#ifdef NON_MATCHING
 s32 junban_init(void) {
-    u8 r;
-    u8 q;
-
-    q = D_800E6280.unk_10F8 % 3;
-    r = q;
-    if (r == 0) {
-        D_800CA2A4[1] = r + (D_800E6280.unk_10F8 & 1) + 1;
-        D_800CA2A4[2] = r + ((D_800E6280.unk_10F8 + 1) & 1) + 1;
-        D_800CA2A4[0] = r;
-    } else if (r == 1) {
-        D_800CA2A4[1] = (r - 1) + ((D_800E6280.unk_10F8 & 1) * 2);
-        D_800CA2A4[2] = (r - 1) + (((D_800E6280.unk_10F8 + 1) & 1) * 2);
-        D_800CA2A4[0] = r;
+    D_800CA2A4[0] = D_800E6280.unk_10F8 % 3;
+    if (D_800CA2A4[0] == 0) {
+        D_800CA2A4[1] = D_800CA2A4[0] + (D_800E6280.unk_10F8 & 1) + 1;
+        D_800CA2A4[2] = D_800CA2A4[0] + ((D_800E6280.unk_10F8 + 1) & 1) + 1;
+    } else if (D_800CA2A4[0] == 1) {
+        D_800CA2A4[1] = (D_800CA2A4[0] - 1) + ((D_800E6280.unk_10F8 & 1) * 2);
+        D_800CA2A4[2] = (D_800CA2A4[0] - 1) + (((D_800E6280.unk_10F8 + 1) & 1) * 2);
     } else {
-        D_800CA2A4[1] = (r - 1) - (D_800E6280.unk_10F8 & 1);
-        D_800CA2A4[2] = (r - 1) - ((D_800E6280.unk_10F8 + 1) & 1);
-        D_800CA2A4[0] = r;
+        D_800CA2A4[1] = (D_800CA2A4[0] - 1) - (D_800E6280.unk_10F8 & 1);
+        D_800CA2A4[2] = (D_800CA2A4[0] - 1) - ((D_800E6280.unk_10F8 + 1) & 1);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", junban_init);
-#endif
 
 void normal_date_three_select(void) {
     switch (D_800E6280.unk_1104.u) {
