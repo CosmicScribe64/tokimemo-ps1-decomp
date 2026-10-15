@@ -13445,3 +13445,17 @@ Packages p08 to p13 (T-11640 to T-11690) stopped mid-run with their matches comm
 Opened [[tickets/T-11800-tt-batch-7]] (In Progress): bulk_m2c rerun on TT, then two Opus passes (close guarded drafts;
 pipeline drafts and the gcc-built `func_8014D260`). Stays off the TT files of wave 1 (T-11620, T-11630); the question of
 which files the rest of wave 1 touches is open on issue #2. Number chosen above the wave's reserved T-11570..T-11740.
+
+## [2026-10-15] build | T-11800 TT batch 7: 10 matches
+
+bulk_m2c rerun on TT: no match, 52 drafts ranked. Opus pass 1 on the guarded drafts: 3 matched (`func_80142350`,
+`func_80149BB0`, `func_80145370`). Opus pass 2 on the pipeline drafts: 7 matched (`func_8014CFEC`, `func_80149400`,
+`func_801491F0` + twin `func_8014ACEC`, `func_8013AE3C`, `func_80138B90`, `func_80132198`); `func_8014D260` (gcc) ruled
+out for every existing gcc/aspsx combination, details in [[gcc-objects]]. TT 235/303 (56.7%); grand total
+`5723/6958   1283736/2279368  56.3%`. 27/27; funcdiff MATCH for all ten; prototype and global checks clean. Stayed off the
+wave-1 TT files. Notes in [[matching-notes]] ("TT overlay, batch 7"), rows in [[data/t0018-cases]].
+
+## [2026-10-15] ticket | T-11800 Done
+
+Inline review against CODING_STANDARDS.md: all fakematches carry FAKE with the ticket; one non-building agent commit
+squashed with its fix; stale proto_known entry removed. Moved [[tickets/T-11800-tt-batch-7]] to Done.

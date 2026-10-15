@@ -29,6 +29,16 @@ Chosen by compiling the C and comparing bytes. `func_801488F0`: 2.7.2-psx and 2.
 ## `func_8014D260` (open)
 With gcc 2.7.2-psx / 2.6.3-psx and maspsx `--expand-div`, the C in [[tickets/T-9200-gcc-built-sdk-objects-in-overlays]] is identical to the original up to the first division and has the same block structure, but is 4 bytes shorter. The divisions differ in layout: ASPSX expands `div rd,rs,rt` as `div $zero,rs,rt; mflo rd; <checks>` when `rd` is neither `rs` nor `rt` and as `div; <checks>; mflo rd` otherwise (original: four divisions, two of each kind), and puts the `mflo` hazard nops in other places (`mflo a0; nop; nop; j; sll v0,a0,1` against `mflo a0; nop; sll`). GNU as always puts the `mflo` after the checks. A pass in front of `maspsx` could model it; one function is too little evidence for CODING_STANDARDS 7a, so this waits for a second division site in gcc-built code.
 
+T-11800 (2026-10-15) tried every existing combination: gcc 2.6.3-psx, 2.7.2-cdk, 2.7.2-psx, 2.8.0-psx, 2.8.1-psx and
+2.91.66-psx (2.95.2-psx's cpp rejects `-undef`) against maspsx `--aspsx-version` 2.21, 2.34, 2.56, 2.67, 2.77, 2.79, 2.81
+and 2.86, each with and without `--expand-div`. None matches; the best is 96 instructions against 97 (2.6.3/2.7.2-psx,
+aspsx >= 2.56, `--expand-div`). The C is a standard PsyQ `ratan2(y, x)` (sign flags, `x == 0 && y == 0` return,
+`(y & 0x7FE00000) ? y / (x >> 10) : (y << 10) / x`, table `D_80159B20`, `1024 - tbl`, `2048 - c`, negate) and is identical
+to the original up to the first division. Three ASPSX behaviours maspsx does not model: (1) `div; mflo; checks` when rd is
+neither rs nor rt (maspsx: `div; checks; mflo`); (2) the `mflo` hazard nops (`mflo a0; nop; nop; j; sll` and
+`mflo a0; sll v0,a0,1; nop`); (3) `lh $3,sym($2)` expanded through the destination register
+(`lui v1,%hi; addu v1,v1,v0; lh v1,%lo(v1)`), where maspsx always uses `$at`. Matching it needs a maspsx change.
+
 ## Build integration
 - `config/toolchains.txt` names the toolchain of an object (`<subsegment name> gcc <ver> <aspsx>`); `configure.py` validates it and passes it to `tools/cc.py`. The gcc path has no asm-processor, so only objects whose functions are all C belong there. Test: `tools/test_configure_toolchains.py`.
 - `tools/cc.py` runs maspsx with `--expand-div` (ASPSX expands the three-operand divide with its zero and overflow checks).
