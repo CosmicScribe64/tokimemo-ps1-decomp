@@ -1,0 +1,20 @@
+cfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2820: redeclaration of 'parameter_up_down'; previous declaration at line 2795 in file 'drafts/T-16000/parameter_up_down/work/guarded.c'
+ void parameter_up_down(s32 arg0, s32 arg1, s32 arg2);
+ -----^
+cfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2820: Incompatible function return type for this function.
+ void parameter_up_down(s32 arg0, s32 arg1, s32 arg2);
+ ----------------------^
+cfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2821: redeclaration of 'parameter_up_down'; previous declaration at line 2795 in file 'drafts/T-16000/parameter_up_down/work/guarded.c'
+ void parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
+ -----^
+cfe: Error: drafts/T-16000/parameter_up_down/work/guarded.c, line 2821: Incompatible function return type for this function.
+ void parameter_up_down(s32 arg0, s32 arg1, s32 arg2) {
+ ----------------------^
+cfe: Warning 709: drafts/T-16000/parameter_up_down/work/guarded.c, line 2858: Incompatible pointer type assignment
+         temp_t9 = (((u16) D_800E6374 >> 0xC) * 9) + &D_800B6928;
+ ----------------^
+cfe: Warning 709: drafts/T-16000/parameter_up_down/work/guarded.c, line 2880: Incompatible pointer type assignment
+     temp_t5 = (arg0 * 9) + &D_800B68E0;
+ ------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/parameter_up_down/work -o drafts/T-16000/parameter_up_down/work/guarded.o /tmp/asm_processorqarzjm5z/preprocessed_8eaa48113cbb48ab8d8eccb4714118bd.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdz3v6lcy/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/parameter_up_down/work/guarded.o drafts/T-16000/parameter_up_down/work/guarded.c

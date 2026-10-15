@@ -1,0 +1,36 @@
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16000/func_8007BBE8/work/variant.c
+Preprocessed C retained in full-context.c
+
+$ python3 tools/cc.py drafts/T-16000/func_8007BBE8/work/guarded.c drafts/T-16000/func_8007BBE8/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3191: Incompatible pointer type assignment
+     var_a3 = (temp_t6 << 5) + &D_80125E20;
+ -----------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3192: Incompatible pointer type assignment
+     var_a2 = (temp_t6 << 6) + &D_80125DA0;
+ -----------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3201: Incompatible pointer type assignment
+         var_t6 = arg0 + temp_v0;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3203: Incompatible pointer type assignment
+             var_t6 = arg0 + *arg0;
+ -------------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3209: Incompatible pointer type assignment
+         var_t4 = arg0 + temp_v0_2;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3211: Incompatible pointer type assignment
+             var_t4 = arg0 + *arg0;
+ -------------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3217: Incompatible pointer type assignment
+         var_t8 = arg0 + temp_v0_3;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3219: Incompatible pointer type assignment
+             var_t8 = arg0 + *arg0;
+ -------------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3225: Incompatible pointer type assignment
+         var_t6_2 = arg0 + temp_v0_4;
+ -----------------^
+cfe: Warning 709: drafts/T-16000/func_8007BBE8/work/guarded.c, line 3227: Incompatible pointer type assignment
+             var_t6_2 = arg0 + *arg0;
+ ---------------------^
+
+Full translation unit compiled with IDO 5.3. Score 147

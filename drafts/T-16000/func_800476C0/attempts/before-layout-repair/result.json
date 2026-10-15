@@ -1,0 +1,18 @@
+{
+  "unit": "main",
+  "src": "src/main/80047550.c",
+  "func": "func_800476C0",
+  "size": 3132,
+  "guarded": false,
+  "source_hash": "4e557fcf4390fef51c329b25111e397dd0dcc3d318c26c76f7f2bfc6cd6210e4",
+  "scope": "main:func_800476C0",
+  "status": "failed",
+  "score": null,
+  "ticket": "T-16000",
+  "matching_claim": false,
+  "path": "drafts/T-16000/func_800476C0",
+  "reason": "cfe: Error: drafts/T-16000/func_800476C0/work/guarded.c, line 2916: Duplicate case label in the same switch statement\n                                         case 32:\n ----------------------------------------^\ncc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/func_800476C0/work -o drafts/T-16000/func_800476C0/work/guarded.o /tmp/asm_processordsyy7872/preprocessed_31d08822e9fc44458fa0e962658c84e1.c\ncc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibrizz_f58/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/func_800476C0/work/guarded.o drafts/T-16000/func_800476C0/work/guarded.c\n",
+  "body.c_sha256": "fcec60e8e6283a7894508a0c0815b7bceb6552ee488afa387b257a4f1afe622b",
+  "declarations.h_sha256": "0e7b36b24f3ff457df1e1054e2e81973da9cdd17970c11a94a728f3687d9052b",
+  "context.c_sha256": "e4041e4a44267fa439c08856df17ee6ebf7bf9b2de8102277f1290071d24ee4e"
+}

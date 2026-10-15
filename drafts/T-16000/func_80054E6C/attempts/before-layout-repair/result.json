@@ -1,0 +1,18 @@
+{
+  "unit": "main",
+  "src": "src/main/80053650.c",
+  "func": "func_80054E6C",
+  "size": 340,
+  "guarded": false,
+  "source_hash": "ee9cb6a7192a8eb1a3143a819d7f54fdf33e992dd16fdff75b49b46acf54986a",
+  "scope": "main:func_80054E6C",
+  "status": "failed",
+  "score": null,
+  "ticket": "T-16000",
+  "matching_claim": false,
+  "path": "drafts/T-16000/func_80054E6C",
+  "reason": "cfe: Warning 709: drafts/T-16000/func_80054E6C/work/guarded.c, line 3103: Incompatible pointer type assignment\n     temp_a3 = &D_800E7D10 + temp_t6;\n ------------^\ncfe: Warning 709: drafts/T-16000/func_80054E6C/work/guarded.c, line 3106: Incompatible pointer type assignment\n     temp_v0 = &D_800E7D10 + (temp_t6 * 8);\n ------------^\ncfe: Error: drafts/T-16000/func_80054E6C/work/guarded.c, line 3116: Improper cast of non-scalar type expression.\n         temp_t6_2 = (s32) var_v0->unk_0FC;\n --------------------------------^\ncfe: Warning 709: drafts/T-16000/func_80054E6C/work/guarded.c, line 3122: Incompatible pointer type assignment\n     var_v1_2 = (temp_t6 * 0x10) + &D_800E7D10;\n -------------^\ncfe: Warning 689: drafts/T-16000/func_80054E6C/work/guarded.c, line 3134: Unacceptable operand of == or !=\n     } while (var_v0_2 != &D_800E6290);\n ----------------------^\ncc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/func_80054E6C/work -o drafts/T-16000/func_80054E6C/work/guarded.o /tmp/asm_processormz0zvbcv/preprocessed_a50c2bce19274837be656d42f136944e.c\ncc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfxcx0k9_/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/func_80054E6C/work/guarded.o drafts/T-16000/func_80054E6C/work/guarded.c\n",
+  "body.c_sha256": "c39c103697e78cda75ab0e6353f3c60f7fd351a1037d1a711e21bbaaffd10bca",
+  "declarations.h_sha256": "2f2c4066c79d6ae8499dc82e37cce69fd3cfde66ff2d3ee68c10153e8d3e8e51",
+  "context.c_sha256": "b7693cc5e117d6113fa2fa12d6632fd7f85dbc71c568ed4d766c42d940913580"
+}

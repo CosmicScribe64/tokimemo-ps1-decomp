@@ -1,0 +1,42 @@
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16000/func_8006B0C8/work/variant.c
+Preprocessed C retained in full-context.c
+
+$ python3 tools/cc.py drafts/T-16000/func_8006B0C8/work/guarded.c drafts/T-16000/func_8006B0C8/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3044: Incompatible pointer type assignment
+             temp_t8 = (var_t3 * 4) + 0x54C + &D_800E6280;
+ --------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3051: Incompatible pointer type assignment
+         var_a0 = (var_t3 * 4) + 0x54C + &D_800E6280;
+ ---------------^
+cfe: Warning 689: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3057: Unacceptable operand of == or !=
+         } while (var_a0 != &D_800E67EC);
+ ------------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3064: Incompatible pointer type assignment
+                 var_a1_2 = (0 * 4) + &D_800E6280;
+ -------------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3077: Incompatible pointer type assignment
+                 var_a1_3 = (var_a2 * 4) + &D_800E6280;
+ -------------------------^
+cfe: Warning 689: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3092: Unacceptable operand of == or !=
+                 } while (var_a1_3 != ((var_t3 * 4) + &D_800E6280));
+ ----------------------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3112: Incompatible pointer type assignment
+                     var_a1_4 = (var_a2_2 * 4) + &D_800E6280;
+ -----------------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3130: Incompatible pointer type assignment
+                     var_a1_5 = (var_a2_2 * 4) + &D_800E6280;
+ -----------------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3163: Incompatible pointer type assignment
+             temp_v0_2 = (var_a3 * 4) + 0x54C + &D_800E6280;
+ ----------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3174: Incompatible pointer type assignment
+             var_a1_6 = (0 * 4) + &D_800E6280;
+ ---------------------^
+cfe: Warning 709: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3187: Incompatible pointer type assignment
+             var_a1_7 = (var_a2_3 * 4) + &D_800E6280;
+ ---------------------^
+cfe: Warning 689: drafts/T-16000/func_8006B0C8/work/guarded.c, line 3202: Unacceptable operand of == or !=
+             } while (var_a1_7 != ((var_t3 * 4) + &D_800E6280));
+ ------------------------------^
+
+Full translation unit compiled with IDO 5.3. Score 1056

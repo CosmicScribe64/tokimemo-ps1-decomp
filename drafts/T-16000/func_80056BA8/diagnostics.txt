@@ -1,0 +1,39 @@
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16000/func_80056BA8/work/variant.c
+Preprocessed C retained in full-context.c
+
+$ python3 tools/cc.py drafts/T-16000/func_80056BA8/work/guarded.c drafts/T-16000/func_80056BA8/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2773: '&' before array or function; ignored
+         if (func_80088E34((s32) &sp5C, arg0) == 0) {
+ --------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2781: '&' before array or function; ignored
+             if (func_80088E34((s32) &sp5C, arg0) != 0) {
+ ------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2799: '&' before array or function; ignored
+     SetDefDispEnv((s32) &spEC, (s32) *(s16 *)((unsigned char *)D_80125C58 + (28)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (30)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (32)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (34)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2800: '&' before array or function; ignored
+     func_8009F57C((s32) &sp90, (s32) *(s16 *)((unsigned char *)D_80125C58 + (28)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (30)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (32)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (34)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2805: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2806: '&' before array or function; ignored
+     func_8009CC04((s32) &sp90);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2829: '&' before array or function; ignored
+     SetDefDispEnv((s32) &spEC, (s32) *(s16 *)((unsigned char *)temp_s0 + (20)), (s32) *(s16 *)((unsigned char *)temp_s0 + (22)), (s32) *(s16 *)((unsigned char *)temp_s0 + (24)), (s32) *(s16 *)((unsigned char *)temp_s0 + (26)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2831: '&' before array or function; ignored
+     func_8009F57C((s32) &sp90, (s32) *(s16 *)((unsigned char *)temp_s0_2 + (20)), (s32) *(s16 *)((unsigned char *)temp_s0_2 + (22)), (s32) *(s16 *)((unsigned char *)temp_s0_2 + (24)), (s32) *(s16 *)((unsigned char *)temp_s0_2 + (26)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2836: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2837: '&' before array or function; ignored
+     func_8009CC04((s32) &sp90);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2850: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+
+Full translation unit compiled with IDO 5.3. Score 252

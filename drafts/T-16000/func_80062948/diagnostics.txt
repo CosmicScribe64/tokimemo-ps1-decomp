@@ -1,0 +1,90 @@
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16000/func_80062948/work/variant.c
+Preprocessed C retained in full-context.c
+
+$ python3 tools/cc.py drafts/T-16000/func_80062948/work/guarded.c drafts/T-16000/func_80062948/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2939: '&' before array or function; ignored
+         (*(s32 *)&spA0) = (s32) (*(s32 *)D_80125C60);
+ -----------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2940: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&spA0) + (4)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (4));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2941: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&spA0) + (8)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (8));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2942: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp80) + (4)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (4));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2943: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&spA0) + (16)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (16));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2944: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&spA0) + (24)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (24));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2945: '&' before array or function; ignored
+         (*(s32 *)&sp80) = (s32) (*(s32 *)D_80125C60);
+ -----------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2946: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&spA0) + (12)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (12));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2947: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp80) + (12)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (12));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2948: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp80) + (8)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (8));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2949: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&spA0) + (20)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (20));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2950: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp80) + (16)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (16));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2951: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp80) + (20)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (20));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2952: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&spA0) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2953: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp80) + (28)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (28));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2954: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)(&sp80) + (24)) = (s32) *(s32 *)((unsigned char *)D_80125C60 + (24));
+ -----------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2955: '&' before array or function; ignored
+         RotMatrix((s32) &spC0, (s32) &spA0);
+ -------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2962: '&' before array or function; ignored
+         ScaleMatrix((s32) &sp80, (s32) &sp70);
+ --------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2963: '&' before array or function; ignored
+         MulMatrix((s32) &spA0, (s32) &sp80);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2963: '&' before array or function; ignored
+         MulMatrix((s32) &spA0, (s32) &sp80);
+ -------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2969: '&' before array or function; ignored
+         (*(s32 *)var_s7) = (s32) (*(s32 *)&spA0);
+ ------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2970: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (4)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (4));
+ -----------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2971: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (8)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (8));
+ -----------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2972: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (12)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (12));
+ ------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2973: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (16)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (16));
+ ------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2974: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (20)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (20));
+ ------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2975: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (24)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (24));
+ ------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80062948/work/guarded.c, line 2978: '&' before array or function; ignored
+         *(s32 *)((unsigned char *)var_s7 + (28)) = (s32) *(s32 *)((unsigned char *)(&spA0) + (28));
+ ------------------------------------------------------------------------------------^
+
+Full translation unit compiled with IDO 5.3. Score 255

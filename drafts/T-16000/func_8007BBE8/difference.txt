@@ -1,0 +1,147 @@
+-30aeffff  ; andi t6,a1,0xffff
++30b9ffff  ; andi t9,a1,0xffff
+-3c0c8012  ; lui t4,0x0
+-258c5e20  ; addiu t4,t4,0
+-27185da0  ; addiu t8,t8,0
+-000e7980  ; sll t7,t6,0x6
+-000ec940  ; sll t9,t6,0x5
+-032c3821  ; addu a3,t9,t4
+-01f83021  ; addu a2,t7,t8
+-2405004c  ; li a1,76
+-00001825  ; move v1,zero
+-00804025  ; move t0,a0
+-24090004  ; li t1,4
+-240a0008  ; li t2,8
+-240b000c  ; li t3,12
+-00646821  ; addu t5,v1,a0
+-8da20000  ; lw v0,0(t5)
++27185e20  ; addiu t8,t8,0
++001979c0  ; sll t7,t9,0x7
++01f81021  ; addu v0,t7,t8
++27bdffc0  ; addiu sp,sp,-64
++3c0f8012  ; lui t7,0x0
++00197200  ; sll t6,t9,0x8
++25ef5da0  ; addiu t7,t7,0
++01cf1821  ; addu v1,t6,t7
++afb00014  ; sw s0,20(sp)
++24180004  ; li t8,4
++24190008  ; li t9,8
++240e000c  ; li t6,12
++00803025  ; move a2,a0
++afb80024  ; sw t8,36(sp)
++afb90020  ; sw t9,32(sp)
++afae001c  ; sw t6,28(sp)
++24100130  ; li s0,304
++00803825  ; move a3,a0
++24880010  ; addiu t0,a0,16
++24890020  ; addiu t1,a0,32
++240a0030  ; li t2,48
++248b0030  ; addiu t3,a0,48
++8ce50000  ; lw a1,0(a3)
++24e70040  ; addiu a3,a3,64
++00057880  ; sll t7,a1,0x2
++14a00005  ; bnez a1,215c <func_8007BBE8+0x84>
++01e46021  ; addu t4,t7,a0
++8c980000  ; lw t8,0(a0)
++00000000  ; nop
++0018c880  ; sll t9,t8,0x2
++03246021  ; addu t4,t9,a0
++258e0010  ; addiu t6,t4,16
++ac6e0000  ; sw t6,0(v1)
++90cf0040  ; lbu t7,64(a2)
++25080040  ; addiu t0,t0,64
++ac4f0000  ; sw t7,0(v0)
++8d05ffc0  ; lw a1,-64(t0)
++00000000  ; nop
++0005c080  ; sll t8,a1,0x2
++14a00005  ; bnez a1,2194 <func_8007BBE8+0xbc>
++03046821  ; addu t5,t8,a0
++8c990000  ; lw t9,0(a0)
++00000000  ; nop
++00197080  ; sll t6,t9,0x2
++01c46821  ; addu t5,t6,a0
++25af0010  ; addiu t7,t5,16
++ac6f0004  ; sw t7,4(v1)
++90d80041  ; lbu t8,65(a2)
++25290040  ; addiu t1,t1,64
++a4580002  ; sh t8,2(v0)
++8d25ffc0  ; lw a1,-64(t1)
++00000000  ; nop
++0005c880  ; sll t9,a1,0x2
++14a00005  ; bnez a1,21cc <func_8007BBE8+0xf4>
++03246021  ; addu t4,t9,a0
++8c8e0000  ; lw t6,0(a0)
++00000000  ; nop
++000e7880  ; sll t7,t6,0x2
++01e46021  ; addu t4,t7,a0
++25980010  ; addiu t8,t4,16
++ac780008  ; sw t8,8(v1)
++90d90042  ; lbu t9,66(a2)
++254a0040  ; addiu t2,t2,64
++a4590004  ; sh t9,4(v0)
++8d650000  ; lw a1,0(t3)
++256b0040  ; addiu t3,t3,64
++00057080  ; sll t6,a1,0x2
++14a00005  ; bnez a1,2204 <func_8007BBE8+0x12c>
++01c46821  ; addu t5,t6,a0
++8c8f0000  ; lw t7,0(a0)
++00000000  ; nop
++000fc080  ; sll t8,t7,0x2
++03046821  ; addu t5,t8,a0
++25b90010  ; addiu t9,t5,16
++ac79000c  ; sw t9,12(v1)
++90c50043  ; lbu a1,67(a2)
+-14400004  ; bnez v0,2134 <func_8007BBE8+0x5c>
+-00827021  ; addu t6,a0,v0
+-8c820000  ; lw v0,0(a0)
+-00000000  ; nop
+-00827021  ; addu t6,a0,v0
+-25cf0010  ; addiu t7,t6,16
+-accf0000  ; sw t7,0(a2)
+-91180040  ; lbu t8,64(t0)
+-0124c821  ; addu t9,t1,a0
+-a4f80000  ; sh t8,0(a3)
+-8f220000  ; lw v0,0(t9)
+-25290010  ; addiu t1,t1,16
+-14400004  ; bnez v0,2164 <func_8007BBE8+0x8c>
+-00826021  ; addu t4,a0,v0
+-8c820000  ; lw v0,0(a0)
+-00000000  ; nop
+-00826021  ; addu t4,a0,v0
+-258d0010  ; addiu t5,t4,16
+-accd0004  ; sw t5,4(a2)
+-910e0041  ; lbu t6,65(t0)
+-01447821  ; addu t7,t2,a0
+-a4ee0002  ; sh t6,2(a3)
+-8de20000  ; lw v0,0(t7)
+-254a0010  ; addiu t2,t2,16
+-14400004  ; bnez v0,2194 <func_8007BBE8+0xbc>
+-0082c021  ; addu t8,a0,v0
+-8c820000  ; lw v0,0(a0)
+-00000000  ; nop
+-0082c021  ; addu t8,a0,v0
+-27190010  ; addiu t9,t8,16
+-acd90008  ; sw t9,8(a2)
+-910c0042  ; lbu t4,66(t0)
+-01646821  ; addu t5,t3,a0
+-a4ec0004  ; sh t4,4(a3)
+-8da20000  ; lw v0,0(t5)
+-256b0010  ; addiu t3,t3,16
+-14400004  ; bnez v0,21c4 <func_8007BBE8+0xec>
+-00827021  ; addu t6,a0,v0
+-8c820000  ; lw v0,0(a0)
+-00000000  ; nop
+-00827021  ; addu t6,a0,v0
+-25cf0010  ; addiu t7,t6,16
+-accf000c  ; sw t7,12(a2)
+-91180043  ; lbu t8,67(t0)
++24420008  ; addiu v0,v0,8
+-24e70008  ; addiu a3,a3,8
+-25080004  ; addiu t0,t0,4
+-1565ffcd  ; bne t3,a1,2114 <func_8007BBE8+0x3c>
+-a4f8fffe  ; sh t8,-2(a3)
++1550ffc6  ; bne t2,s0,2138 <func_8007BBE8+0x60>
++a445fffe  ; sh a1,-2(v0)
++8fb00014  ; lw s0,20(sp)
+-00000000  ; nop
++27bd0040  ; addiu sp,sp,64

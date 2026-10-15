@@ -1,0 +1,35 @@
+cfe: Error: drafts/T-16000/func_80056BA8/work/guarded.c, line 2790: 'sp5D' undefined; reoccurrences will not be reported.
+         *(u8 *)((unsigned char *)D_80125C58 + (1)) = sp5D;
+ -----------------------------------------------------^
+cfe: Error: drafts/T-16000/func_80056BA8/work/guarded.c, line 2791: 'sp5E' undefined; reoccurrences will not be reported.
+         *(u8 *)((unsigned char *)D_80125C58 + (2)) = sp5E;
+ -----------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2801: '&' before array or function; ignored
+     SetDefDispEnv((s32) &spEC, (s32) *(s16 *)((unsigned char *)D_80125C58 + (28)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (30)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (32)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (34)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2802: '&' before array or function; ignored
+     func_8009F57C((s32) &sp90, (s32) *(s16 *)((unsigned char *)D_80125C58 + (28)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (30)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (32)), (s32) *(s16 *)((unsigned char *)D_80125C58 + (34)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2807: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2808: '&' before array or function; ignored
+     func_8009CC04((s32) &sp90);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2831: '&' before array or function; ignored
+     SetDefDispEnv((s32) &spEC, (s32) *(s16 *)((unsigned char *)temp_s0 + (20)), (s32) *(s16 *)((unsigned char *)temp_s0 + (22)), (s32) *(s16 *)((unsigned char *)temp_s0 + (24)), (s32) *(s16 *)((unsigned char *)temp_s0 + (26)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2833: '&' before array or function; ignored
+     func_8009F57C((s32) &sp90, (s32) *(s16 *)((unsigned char *)temp_s0_2 + (20)), (s32) *(s16 *)((unsigned char *)temp_s0_2 + (22)), (s32) *(s16 *)((unsigned char *)temp_s0_2 + (24)), (s32) *(s16 *)((unsigned char *)temp_s0_2 + (26)));
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2838: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2839: '&' before array or function; ignored
+     func_8009CC04((s32) &sp90);
+ ------------------------^
+cfe: Warning 681: drafts/T-16000/func_80056BA8/work/guarded.c, line 2852: '&' before array or function; ignored
+     func_8009CCF4((s32) &spEC);
+ ------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-16000/func_80056BA8/work -o drafts/T-16000/func_80056BA8/work/guarded.o /tmp/asm_processor106eak6r/preprocessed_40cacff2ece64b709350723d6d7638e1.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib27h322qi/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-16000/func_80056BA8/work/guarded.o drafts/T-16000/func_80056BA8/work/guarded.c

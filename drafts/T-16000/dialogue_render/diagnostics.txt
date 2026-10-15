@@ -1,0 +1,108 @@
+$ gcc -E -P -Iinclude -Isrc/main -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-16000/dialogue_render/work/variant.c
+Preprocessed C retained in full-context.c
+
+$ python3 tools/cc.py drafts/T-16000/dialogue_render/work/guarded.c drafts/T-16000/dialogue_render/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3706: '&' before array or function; ignored
+     *(MainCopy3 *)sp80 = *(MainCopy3 *)&D_800B2228;
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3707: '&' before array or function; ignored
+     *(MainCopy3 *)sp7C = *(MainCopy3 *)&D_800B222C;
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3708: '&' before array or function; ignored
+     *(MainCopy3 *)sp78 = *(MainCopy3 *)&D_800B2230;
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3709: '&' before array or function; ignored
+     *(MainCopy3 *)sp74 = *(MainCopy3 *)&D_800B2234;
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3710: '&' before array or function; ignored
+     *(MainCopy3 *)sp70 = *(MainCopy3 *)&D_800B2238;
+ ---------------------------------------^
+cfe: Warning 712: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3725: illegal combination of pointer and integer
+             } else if (((temp_v0_2 != sp80) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp80[1])) && ((temp_v0_2 != sp7C) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp7C[1])) && ((temp_v0_2 != sp78) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp78[1])) && ((temp_v0_2 != sp74) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp74[1])) && ((temp_v0_2 != sp70) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp70[1]))) {
+ -----------------------------------^
+cfe: Warning 712: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3725: illegal combination of pointer and integer
+             } else if (((temp_v0_2 != sp80) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp80[1])) && ((temp_v0_2 != sp7C) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp7C[1])) && ((temp_v0_2 != sp78) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp78[1])) && ((temp_v0_2 != sp74) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp74[1])) && ((temp_v0_2 != sp70) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp70[1]))) {
+ --------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 712: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3725: illegal combination of pointer and integer
+             } else if (((temp_v0_2 != sp80) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp80[1])) && ((temp_v0_2 != sp7C) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp7C[1])) && ((temp_v0_2 != sp78) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp78[1])) && ((temp_v0_2 != sp74) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp74[1])) && ((temp_v0_2 != sp70) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp70[1]))) {
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 712: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3725: illegal combination of pointer and integer
+             } else if (((temp_v0_2 != sp80) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp80[1])) && ((temp_v0_2 != sp7C) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp7C[1])) && ((temp_v0_2 != sp78) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp78[1])) && ((temp_v0_2 != sp74) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp74[1])) && ((temp_v0_2 != sp70) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp70[1]))) {
+ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 712: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3725: illegal combination of pointer and integer
+             } else if (((temp_v0_2 != sp80) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp80[1])) && ((temp_v0_2 != sp7C) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp7C[1])) && ((temp_v0_2 != sp78) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp78[1])) && ((temp_v0_2 != sp74) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp74[1])) && ((temp_v0_2 != sp70) || (*(u8 *)((unsigned char *)temp_v1 + (1)) != sp70[1]))) {
+ -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3909: '&' before array or function; ignored
+                                 if (strlen(&D_800CA248) > 0) {
+ -------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3912: '&' before array or function; ignored
+                                         temp_t6_3 = (&D_800CA248)[var_s0_9];
+ -----------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3915: '&' before array or function; ignored
+                                     } while (var_s0_9 < strlen(&D_800CA248));
+ ---------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3918: '&' before array or function; ignored
+                                 var_s5 = (var_s5 + strlen(&D_800CA248)) - 1;
+ ----------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3919: '&' before array or function; ignored
+                                 var_s3 = (var_s3 + strlen(&D_800CA248)) - 2;
+ ----------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3954: '&' before array or function; ignored
+                                             if (strlen(&D_800CA280) > 0) {
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3957: '&' before array or function; ignored
+                                                     temp_t9_4 = (&D_800CA280)[var_s0_12];
+ -----------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3960: '&' before array or function; ignored
+                                                 } while (var_s0_12 < strlen(&D_800CA280));
+ ----------------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3963: '&' before array or function; ignored
+                                             var_s5 = (var_s5 + strlen(&D_800CA280)) - 1;
+ ----------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 3965: '&' before array or function; ignored
+                                             var_s3 = (var_s3 + strlen(&D_800CA280)) - 2;
+ ----------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4131: '&' before array or function; ignored
+                             if (strlen(&D_800CA248) > 0) {
+ ---------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4134: '&' before array or function; ignored
+                                     temp_t7_6 = (&D_800CA248)[var_s0_20];
+ -------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4137: '&' before array or function; ignored
+                                 } while (var_s0_20 < strlen(&D_800CA248));
+ ------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4140: '&' before array or function; ignored
+                             var_s5_2 = (var_s5_2 + strlen(&D_800CA248)) - 1;
+ ----------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4141: '&' before array or function; ignored
+                             var_s3 = (var_s3 + strlen(&D_800CA248)) - 2;
+ ------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4177: '&' before array or function; ignored
+                                     if (strlen(&D_800CA280) > 0) {
+ -----------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4180: '&' before array or function; ignored
+                                             temp_t8_9 = (&D_800CA280)[var_s0_23];
+ ---------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4183: '&' before array or function; ignored
+                                         } while (var_s0_23 < strlen(&D_800CA280));
+ --------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4186: '&' before array or function; ignored
+                                     var_s5_2 = (var_s5_2 + strlen(&D_800CA280)) - 1;
+ ------------------------------------------------------------------^
+cfe: Warning 681: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 4188: '&' before array or function; ignored
+                                     var_s3 = (var_s3 + strlen(&D_800CA280)) - 2;
+ --------------------------------------------------------------^
+cfe: Warning 709: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 5241: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA148;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 5242: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA14C;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 5249: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA148;
+ ---------------^
+cfe: Warning 709: drafts/T-16000/dialogue_render/work/guarded.o.sjis.c, line 5250: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA14C;
+ ---------------^
+
+Full translation unit compiled with IDO 5.3. Score 1769
