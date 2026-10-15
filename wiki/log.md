@@ -14690,3 +14690,6 @@ Recovered actual byte/halfword/word aggregates and callback tables in draft-only
 ## [2026-10-15] decision | T-14700 resolve draft review findings
 
 Two-axis review identified an EVENT callback still using a synthetic sp global and a scoring script that exited successfully after failures. Replaced dispatch with the actual local table, removed the declaration, made failure status nonzero, retained complete successful compiler diagnostics and reran all fifteen serial full-TU compiles successfully. Semantic audit checked ETC rank loops, GEKO season-relative pairs and EVENT copy-tail lengths. No production promotion. See [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] build | SHUGAKU pair and repaired draft checkpoint
+Two default linked proofs and affected checksum pass, adding 1,052 coverage bytes (1,056 literal span bytes). Total 1,445,668 / 2,279,368 bytes. Eight draft-tool tests and fifteen repair-archive hash audits pass. Completed unit archives through SHUGAKU and corrected type repairs are integrated without matching credit. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14700-reserved-type-repairs]].
