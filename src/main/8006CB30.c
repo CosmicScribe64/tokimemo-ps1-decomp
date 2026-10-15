@@ -895,7 +895,36 @@ s32 date_sasoi_judge(s8 *arg0) {
 INCLUDE_ASM("asm/nonmatchings/main/8006CB30", date_sasoi_judge);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/main/8006CB30", schedule_girls_gakko);
+void schedule_girls_gakko(void) {
+    u8 cnt;
+    s32 i;
+    char girl;
+    char arg;
+
+    cnt = 0;
+    for (i = 0; i < 32; i++) {
+        if (D_800E6280.unk_69C[i].unk_00 == 0x44) {
+            if (D_800E6280.unk_69C[i + 1].unk_00 == 0x33 || D_800E6280.unk_69C[i + 1].unk_00 == 0x32 || D_800E6280.unk_69C[i + 1].unk_00 == 0x47) {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            } else if ((D_800E6280.unk_0F4.b[1] & 0xF) == 3) {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            } else if (special_event_select(&girl, &arg)) {
+                D_800E6280.unk_69C[i].unk_00 = 0x45;
+                D_800E6280.unk_69C[i].unk_01 = girl;
+                D_800E6280.unk_69C[i].unk_02 = arg;
+            } else if (date_sasoi_judge(&girl) == 1 && cnt == 0) {
+                cnt++;
+                D_800E6280.unk_69C[i].unk_00 = 0x46;
+                D_800E6280.unk_69C[i].unk_01 = girl;
+            } else if (geko_judge(&girl)) {
+                D_800E6280.unk_69C[i].unk_01 = girl;
+            } else {
+                D_800E6280.unk_69C[i].unk_00 = 0xFA;
+            }
+        }
+    }
+    func_8004284C();
+}
 
 void yuukou_down(void) {
     s32 i;
