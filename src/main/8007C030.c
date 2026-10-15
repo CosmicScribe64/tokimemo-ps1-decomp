@@ -1055,7 +1055,7 @@ void wait_sub_sub(s16 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10870, two four-word scheduling rotations remain at the incremented-Y calls. */
+/* NON_MATCHING: T-10870, 16 differing lines: two four-word scheduling rotations (li a0,-40) remain at the incremented-Y calls; T-11590 retried same-line, inline +=, casts and split arguments. */
 #ifdef NON_MATCHING
 s32 dialogue_speak_part(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 u8 *arg0;
@@ -2574,12 +2574,12 @@ s32 func_800850D4(arg0, arg1, arg2, arg3)
         p->unk_04 = 0;
         p->unk_14 = arg3;
     }
-    D_8011ECD0[96 * 0x44 + 2] = 4;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_02 = 4;
     if (arg3 >= 2) {
         D_800CA360 = 0;
-        *(s16 *)&D_8011ECD0[96 * 0x44 + 0x16] = 2;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 2;
     } else {
-        D_8011ECD0[96 * 0x44 + 3] = 0;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = 0;
     }
 }
 
