@@ -1,24 +1,22 @@
 {
-  "func": "func_80138CCC",
-  "guarded": false,
   "scope": "EN_NICHI:func_80138CCC",
-  "score": 376,
-  "size": 1028,
-  "source_hash": "7301e9ecf03ca967c541c1118fc9863e1d7a894a7cd3b03850a176fbd125ed6d",
-  "src": "src/ovl/EN_NICHI/80136B10.c",
-  "status": "scored",
   "unit": "EN_NICHI",
+  "func": "func_80138CCC",
+  "src": "src/ovl/EN_NICHI/80136B10.c",
+  "size": 1028,
+  "status": "scored",
+  "score": 376,
   "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
   "ticket": "T-14700",
   "production_changed": false,
-  "body.c_sha256": "dd3cfff7cc667218d9297db71d53cf44dbed21343bf4bc79e47c736d8df21376",
-  "declarations.h_sha256": "5b6ea9d4eb981a1ff3d860f3fb8dbf8b5505bcd4b3e475682e7e520ebb0aa8fe",
-  "context.c_sha256": "3f1b282c6878b4520b69c2bd70e49b907caeb82c013f1537b66861a78c294135",
   "literal_verified": false,
   "affected_sha1_verified": false,
-  "scoring": "default full-TU resolved comparison; diagnostic only",
   "compile_verified": true,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
   "remaining_blockers": [
     "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
-  ]
+  ],
+  "body.c_sha256": "dd3cfff7cc667218d9297db71d53cf44dbed21343bf4bc79e47c736d8df21376",
+  "declarations.h_sha256": "5b6ea9d4eb981a1ff3d860f3fb8dbf8b5505bcd4b3e475682e7e520ebb0aa8fe",
+  "context.c_sha256": "3f1b282c6878b4520b69c2bd70e49b907caeb82c013f1537b66861a78c294135"
 }

@@ -1,24 +1,22 @@
 {
-  "func": "func_80142BE8",
-  "guarded": false,
   "scope": "BUNKASAI:func_80142BE8",
-  "score": 445,
-  "size": 1516,
-  "source_hash": "37469fd1ed0a67754d1efac8c20667f4838426b69d6eee18b046a2f387b9336e",
-  "src": "src/ovl/BUNKASAI/80142700.c",
-  "status": "scored",
   "unit": "BUNKASAI",
+  "func": "func_80142BE8",
+  "src": "src/ovl/BUNKASAI/80142700.c",
+  "size": 1516,
+  "status": "scored",
+  "score": 445,
   "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
   "ticket": "T-14700",
   "production_changed": false,
-  "body.c_sha256": "87b8650057c63c24fe4ade76516ab4af1f0c7a763d905ed7b0c8856f2c1ae0c4",
-  "declarations.h_sha256": "f564d02bb8a700df55d9decfedb65271db30933b1a82700909379516db25dd95",
-  "context.c_sha256": "cbcf7c027f6e189a33742860242b6da469d42cff8bd9b9232697526bafba2a1b",
   "literal_verified": false,
   "affected_sha1_verified": false,
-  "scoring": "default full-TU resolved comparison; diagnostic only",
   "compile_verified": true,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
   "remaining_blockers": [
     "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
-  ]
+  ],
+  "body.c_sha256": "87b8650057c63c24fe4ade76516ab4af1f0c7a763d905ed7b0c8856f2c1ae0c4",
+  "declarations.h_sha256": "f564d02bb8a700df55d9decfedb65271db30933b1a82700909379516db25dd95",
+  "context.c_sha256": "cbcf7c027f6e189a33742860242b6da469d42cff8bd9b9232697526bafba2a1b"
 }
