@@ -14126,3 +14126,6 @@ Checked T-12900 through T-12903 status/card agreement and ticket links. The firs
 
 ## [2026-10-15] build | Goal batch reaches 61.2 percent
 [[tickets/T-12400-integrate-verified-matches]]: new family, type and small-function commits add15functions/14868progressbytes beyond0d777614. Verified total5859/6958functions and1394064/2279368bytes (61.2%); need429432additional alignedbytes for80%. All27 binary checksums pass, headers/globals pass, prototype audit0new/15known. Small-function final history had been rewritten; final source compared to integrated checkpoint differs only by three comments, preserved and affected main/OPTION hashes reverified. Logs build/scratch/goal-batch1.log and goal-batch1-comments.log. Reconciled final ticket statuses before publication. New Sol6.1medium family lanes are active.
+
+## [2026-10-15] ticket | Root TACO control-flow probe
+[[tickets/T-13400-taco-control-flow]] opened for a bounded full-TU experiment on func_80132FE8 while other family lanes continue. Previous goal turn made authoritative progress by publishing61.2%; current checks confirm active worker processes and no new committed matches yet. Baseline source remains assembly.
