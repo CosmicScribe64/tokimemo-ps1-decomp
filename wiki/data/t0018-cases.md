@@ -1989,3 +1989,8 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80135360 | `func_801356C8` | regorder | T-11830: matched by wave 1 (handoff); supersedes the T-11560 row |
 | TT/80135360 | `func_80135B5C` | other | T-11830: matched by wave 1 (handoff); supersedes the T-11500 row |
 | TT/8013BD10 | `func_8013C0A8` | hoist | T-11830: matched by wave 1 (handoff) |
+
+| main/800451D0 | `file_checksum_ok` | sched | T-12010: four listing lines remain (sltu/andi swap), unchanged after 385 autotweaks, 720 orders, manual loop/narrowing views and 300s permuter. Guard retained. |
+| main/800420D0 | `func_800422C8` | regorder | T-12010: traced uopt plus sixteen pointer/stored-value views leave eight listing lines, a3 versus v1. Guard retained; no new compiler rule demonstrated. |
+| main/80047550 | `load_tpage_buf_lock` | param homes | T-12010: signed branch and u32 index view leave 29 listing lines; unsigned-compare 19-line candidate rejected for changed semantics. Guard retained. |
+| main/800451D0 | `func_800460FC` | stack/zero stores | T-12010: readable retry/ring-index form leaves 17 listing lines in homes and zero-store register. FAKE retry-zero chain labeled; larger-buffer 13-line variant not retained. No compiler-pass change proposed. |

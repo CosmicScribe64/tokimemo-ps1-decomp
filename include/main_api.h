@@ -22,6 +22,13 @@
 #include "common.h"
 #include "libgpu.h"
 
+/* T-12010: D_801255D0 is saved as a word and read as four bytes. */
+typedef union WordBytes4 {
+    u32 word;
+    u8 bytes[4];
+} WordBytes4;
+extern WordBytes4 D_801255D0;
+
 /* T-10730: dialogue voice table leaves, indexed with an eight-byte stride. */
 typedef struct DialogueVoice8 {
     /* 0x00 */ s32 unk_00;
@@ -1765,6 +1772,8 @@ void func_80041C2C(void);
 void func_80041F48(void);
 void func_80042058(void);
 void func_80042134();
+void func_800422C8(void);
+void func_80042418(void);
 void func_80042458(void);
 void func_80042488(void);
 s32 func_80042808(void);
@@ -2023,7 +2032,7 @@ void func_80059308(void);
 void func_80059688(s32 arg0);
 void SenseMouse(u16 arg0, u16 arg1);
 void SetMouse(s32 arg0, u32 arg1, u32 arg2);
-void func_80059938(void);
+void func_80059938(s32 port);
 void func_80059B04();
 void func_80059B40(void);
 void func_80059BC0(void);

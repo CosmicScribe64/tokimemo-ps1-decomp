@@ -13516,3 +13516,34 @@ grand total `5740/6958   1293292/2279368  56.7%`.
 
 ## [2026-10-15] ticket | Integrate verified matching work on main
 Created [[tickets/T-12400-integrate-verified-matches]] after explicit user authorization to merge PR #33 and push the current verified matches directly to main, without draft PRs. An isolated integration checkout starts from 1668c560; original main and active workers remain untouched. PR #33 independently passed all27 checksums and seven literal proofs (5216 bytes); GitHub merge1668c560 confirmed.
+## [2026-10-15] setup | T-12010 cx1 isolated matching pass
+
+Created [[tickets/T-12010-codex-cx1]] for twelve assigned main helpers. Read standards, [[decompile-workflow]], [[register-cheatsheet]] and historical blockers. Baseline Docker configure/build passed 27/27 SHA1; log /tmp/cx1-baseline.log. Three workers share Docker; subsequent builds use two jobs.
+
+## [2026-10-15] build | T-12010 InitMouse matches through data ownership
+
+[[tickets/T-12010-codex-cx1]] records evidence for the mouse object data range, generated island, and C-defined pointer pair. InitMouse passes literal linked funcdiff (16 bytes); configure/ninja passes 27/27 SHA1 with headers/globals OK. [[matching-notes]] updated. Checksum scheduling and brightness register attempts remain unmatched.
+
+## [2026-10-15] build | T-12010 main entry loop matches
+
+func_80042134 in src/main/800420D0.c passes literal linked funcdiff (404 bytes) and main SHA1 after promotion to plain C. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record the loop-tail GameState pointer and forward prototypes. Full overlay rebuild follows the shared header change.
+
+## [2026-10-15] build | T-12010 brightness clamp matches
+
+func_80049044 passes 112-byte linked comparison and main checksum via a local field pointer. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record why the nonzero stripped permutation score concealed an exact full-unit match. Previous main-loop header rebuild finished 27/27.
+
+## [2026-10-15] build | T-12010 mouse coordinate update matches
+
+func_80059938 passes linked verification (232 bytes) and main SHA1; its updated explicit-port caller remains a 216-byte match. Shared header rebuild passed 27/27 with headers/globals OK. [[tickets/T-12010-codex-cx1]] and [[matching-notes]] record the natural pointer-table slot idiom.
+
+## [2026-10-15] ticket | T-12010 deep pass ready for review
+
+All twelve assigned cx1 functions were attempted: four matched, four guarded near misses (4/8/29/17 listing lines), four larger scratch-only drafts. Recorded bounded permutation/type/stack experiments and rejected semantically different or unjustified-buffer candidates in [[tickets/T-12010-codex-cx1]], [[matching-notes]] and [[data/t0018-cases]]. Moved the ticket/card to In Review; one new guard has an explicit FAKE zero-chain note. Final configure/build and prototype validation running; independent code review remains required.
+
+## [2026-10-15] build | T-12010 final package verification
+
+Final Docker configure/ninja -j2 passes all 27 binary checksums, headers and globals. Branch prototype check passes with zero new and fifteen known disagreements. Current full-unit guarded diffs are 4/8/29/17 listing lines. `git diff --check` is clean and no inline assembly was added. Evidence in build/scratch/final-build.log, final-protos.log and final-guards.log; [[tickets/T-12010-codex-cx1]] remains In Review.
+
+## [2026-10-15] lint | T-12010 index status reconciled
+
+Updated [[index]] to agree with the In Review ticket and kanban card for [[tickets/T-12010-codex-cx1]].

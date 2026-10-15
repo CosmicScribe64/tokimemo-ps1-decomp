@@ -5078,3 +5078,15 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## T-12010 Codex cx1 main helpers
+
+InitMouse now matches 16 linked bytes. The historical missing-range blocker was configuration, not an unknown C idiom: every reference to the two pointer slots belongs to 80059710, and the contiguous mouse state ends at 800E36EC with padding to 800E36F0. An explicit owned-data range and generated island let the two-word zero-initialized pointer array be defined in C, which shares the original lui $at. Other mouse data stays as generated INCLUDE_RODATA. Full configure/build passes 27/27, headers and globals OK. See [[tickets/T-12010-codex-cx1]].
+
+The main entry loop func_80042134 matches 404 bytes using GameState *g = &D_800E6280 only for the final g->unk_110F loop condition. Keep earlier accesses direct: the original holds this base in s2 across the whole loop but still uses direct addresses for earlier selector reads. Its two later-defined void helpers need shared prototypes.
+
+func_80049044 matches 112 bytes with a local u8 *p = &D_800E6280.unk_03A and loads/stores through *p. Direct singleton member reads put the raw brightness in t6/t7 before addition; the pointer view puts it directly in v1, matching both clamp branches. The permuter stripped score stayed nonzero (50), but the full translation unit is exact; verify promising nonzero candidates in context.
+
+func_80059938 matches 232 linked bytes with ordinary indexed coordinate updates and a named pointer-table slot before reading the mouse packet: slot = &D_800E36C0[port]; p = *slot;. This yields the original v0 index and v1 packet pointer; direct indexing swaps their allocation. The old void prototype concealed a real incoming port parameter, now explicit in its matched caller.
+
+The cx1 deep pass retains file_checksum_ok (4 listing lines), func_800422C8 (8), load_tpage_buf_lock (29) and func_800460FC (17) behind guards. func_800460FC uses a shared four-byte word/byte union, a bounded retry loop and a pointer to the ring read index; these recover the original restore and decrement path. Local homes and zero stores remain different; its retry-zero chain is marked FAKE. Enlarging the location buffer reaches 13 lines but lacks source evidence, so it was rejected. An unsigned comparison improves the loader score to 19 but changes negative-index behavior, so the signed 29-line draft is retained. Larger 47560/45414/455C4/476C0 drafts remain scratch-only (91/128/533/1036 rows). Fresh m2c's nested-switch reconstruction for 476C0 creates duplicate case labels; --no-switches is a useful compiling starting point. Full trial details and evidence are in [[tickets/T-12010-codex-cx1]].
