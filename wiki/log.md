@@ -14198,3 +14198,7 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 ## [2026-10-15] decision | Preserve bounded TAIIKU follow-up evidence during disk audit
 
 [[tickets/T-13600-taiiku-families]] records39610's sixteen-line residual after canonical stat-loop reconstruction,34F98's copied-table mismatch, and3D788's unsuccessful calling-convention test. No new source or ABI changes are accepted; cumulative gain remains1,496 literal-verified bytes. Root's disk audit limits further large outputs/full builds while the committed wins await independent review.
+
+## [2026-10-15] build | T-13600 bounded resource dispatcher and table helper
+
+[[tickets/T-13600-taiiku-families]] records45640's12/4-word resource tables, canonical two-argument resource API, and61-line stack residual;44464's four-halfword table draft remains197 lines. No new production source or shared declarations, no additional verified bytes. Root's disk cleanup allowed resuming small one-compiler Docker comparisons.
