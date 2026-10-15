@@ -365,8 +365,6 @@ void func_8013D060(void) {
     }
 }
 
-/* NON_MATCHING: T-10710, 99 of 99 instructions: locals for the four pointer globals (hoisted loads) match; remaining diff is register/constant sharing: the draft hoists 0x30000/0x8000 into a0/a1 while the original builds them in t7/v0/a0 per use, and the first-branch constant stays separate */
-#ifdef NON_MATCHING
 void func_8013D150(void) {
     u8 *p;
     s32 *q;
@@ -375,7 +373,6 @@ void func_8013D150(void) {
     u8 mode;
     u16 w;
     s16 h;
-    s32 target;
     s32 cur;
     s32 diff;
 
@@ -402,43 +399,33 @@ void func_8013D150(void) {
             *(u16 *)(p + 0x34) = w + 0x40;
         }
     }
-    target = 0;
     if (*(u16 *)((u8 *)r + 2) >= 0x401) {
         q[1] = 0;
     } else {
         h = *(s16 *)(t + 0x16);
         if (h < 0x50) {
-            q[1] = 0x30000U;
+            q[1] = 0x30000;
         } else {
             q[1] = 0x28000 - (((h - 0x50) / 32) << 15);
         }
-        target = q[1];
-        if (target < 0x8000) {
-            target = q[1] = 0x8000;
+        if (q[1] < 0x8000) {
+            q[1] = 0x8000;
         }
-        if (target > 0x30000) {
-            q[1] = target = 0x30000;
+        if (q[1] > 0x30000) {
+            q[1] = 0x30000;
         }
     }
-    cur = q[0];
-    if (target < cur) {
-        q[0] = cur - 0x400;
+    if (q[1] < q[0]) {
+        q[0] -= 0x400;
     } else {
-        q[0] = cur + 0x200;
+        q[0] += 0x200;
     }
-    target = q[1];
-    diff = q[0] - target;
-    cur = diff;
-    if (diff < 0) {
-        cur = -diff;
-    }
+    diff = q[0] - q[1];
+    cur = (diff < 0) ? -diff : diff;
     if (cur < 0x1000) {
-        q[0] = target;
+        q[0] = q[1];
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013C6D0", func_8013D150);
-#endif
 
 /* NON_MATCHING: T-10510, registers only (v in a1: a0 left unused by the original) */
 #ifdef NON_MATCHING
