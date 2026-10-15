@@ -621,3 +621,22 @@ extern u8 D_8014ED60[]; /* T-11000 */
 extern u8 D_80151AF0[];
 extern u8 D_80152E20[];
 extern u8 D_80154590[];
+
+#ifndef OVL_TT_T11800_ANIM14
+#define OVL_TT_T11800_ANIM14
+/* Animation records of the D_80158A8C work, 0x14 bytes from work+0x38 (func_80138B90). T-11800. */
+typedef struct TtAnim14 {
+    /* 0x00 */ u8 *frames;
+    /* 0x04 */ u8 unk_04;
+    /* 0x05 */ u8 unk_05;
+    /* 0x06 */ u8 unk_06;
+    /* 0x07 */ u8 pad_07;
+    /* 0x08 */ u8 unk_08;
+    /* 0x09 */ u8 unk_09;
+    /* 0x0A */ u8 pad_0A;
+    /* 0x0B */ u8 unk_0B;
+    /* 0x0C */ u8 pad_0C[4];
+    /* 0x10 */ u8 unk_10;
+    /* 0x11 */ u8 pad_11[3];
+} TtAnim14; /* size 0x14 */
+#endif
