@@ -13521,3 +13521,7 @@ One-CPU/1-GiB native Docker comparison on 21 translation units (8 main and every
 ## [2026-10-15] ticket | T-12100 ready for review
 
 Moved [[tickets/T-12100-acceleration-audit]] to In Review. Added [[acceleration-audit]] with bounded timing/equality evidence and priorities from read-only cx worklists, including the queued BUNKA_SD zero-score draft. 229 affected tests and header validation passed in the capped Docker container. Compiler and allocator negative results cross-referenced; exact rescoring and linked proof remain unchanged.
+
+## [2026-10-15] ticket | T-12100 reviews complete
+
+Separate code-review skill standards and requirements reviews of 7a65b3d8...87e7889d returned no findings. Both confirmed scope and equivalence logic and the limits of timing claims. Recorded reviews in [[tickets/T-12100-acceleration-audit]] and moved the ticket/card/index to Done. No merge, push, game-source edit, or other-worker change performed.
