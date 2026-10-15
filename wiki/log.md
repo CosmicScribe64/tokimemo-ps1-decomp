@@ -14572,3 +14572,6 @@ Three synthetic Docker tests passed: guarded/TT inclusion, duplicate-scope rejec
 
 ## [2026-10-15] build | Exhaustive tooling checkpoint verified
 Integrated5d4717cc complete1066-targetinventory andserialfull-TU draft/scoringharness under [[tickets/T-14500-exhaustive-drafts]]. Three syntheticregressions pass inDocker. Activegeneration beyond169entries retains failures/context; proofworker continueslaterunits separately. Sourcecatalog andcompileridentities tracked; generateddraftbatches stillinprogress. Disk20GiBfree; nocopieddiscimages. [[tickets/T-14501-remaining-draft-proof]] remainsongoingasfuturebatchesarrive.
+## [2026-10-15] build | T-14501 BUNKA_SD verified draft batch
+
+Promoted 1 ordinary C functions / 908 bytes for BUNKA_SD after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
