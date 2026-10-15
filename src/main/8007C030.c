@@ -843,22 +843,20 @@ s32 normal_date_bg_fadein(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, 28 lines: u8 x in a0 with the D_800B593C base in v1, copy and andi variants for the two chains (known family, see register-allocation-wave7) */
+/* NON_MATCHING: T-11590, 10 differing lines; the Rec24 r = g = b chains and the D_8011ECD0 bytes fix the order and the base register, left: the original keeps x in a0 and stores the chain values through a copy (move v0,a0) and a second andi v0,a0,0xff; IDO stores x itself from v0 */
 #ifdef NON_MATCHING
 void normal_date_bggirl_fadein(void) {
     u8 x;
 
-    D_8011F50F |= 0x80;
+    D_8011ECD0[0x83F] |= 0x80;
     normal_date_bg_fadein();
     x = D_800B593C;
-    D_8011F513 = x;
+    D_8011ECD0[0x843] = x;
     D_801217D0[0].unk_00 &= 0x7FFFFFFF;
     D_801217D0[1].unk_00 &= 0x7FFFFFFF;
-    D_801217E5 = D_801217E4 = x;
-    D_80121809 = D_80121808 = x;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = x;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = x;
     D_80122CF4 = 1;
-    D_801217E6 = x;
-    D_8012180A = x;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadein);
