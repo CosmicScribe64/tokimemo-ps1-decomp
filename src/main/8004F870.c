@@ -8,68 +8,7 @@ typedef struct MenuSelection5 {
     /* 0x03 */ s8 current[2];
 } MenuSelection5; /* size 0x05 */
 
-/* NON_MATCHING: T-10710, loops and stores match; the original keeps n=(arg1 & 0xFF) in s0 (frame 0x18), the draft uses a2 */
-#ifdef NON_MATCHING
-s32 menu_set(arg0, arg1, arg2, arg3, arg4, arg5)
-    s32 arg0;
-    s32 arg1;
-    s16 *arg2;
-    s16 *arg3;
-    s16 *arg4;
-    s16 *arg5;
-{
-    GameState *g;
-    s32 i;
-    u32 n;
-    s16 *p2;
-    s16 *p3;
-    s16 *p4;
-    s16 *p5;
-
-    g = &D_800E6280;
-    for (i = 0; i < 0x10; i++) {
-        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_07 = 0;
-        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_05 = 0;
-        ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_04 = 0;
-    }
-    n = arg1 & 0xFF;
-    if (n >= 0x11) {
-        return -1;
-    }
-    ((MenuSelection5 *)&g->unk_1090)->count[arg0] = n;
-    g->unk_1095[arg0] = -1;
-    if (arg0 >= 2) {
-        return -1;
-    }
-    p2 = arg2;
-    p3 = arg3;
-    p4 = arg4;
-    p5 = arg5;
-    i = 0;
-    if (n != 0) {
-        do {
-            ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_00 = *p2;
-            ((GsRecF90 (*)[2])g->unk_F90)[i][arg0].unk_02 = *p3;
-            p2++;
-            p3++;
-            i++;
-            if (*p5 * *p4 == 0) {
-                ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_07 = 1;
-            } else {
-                ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_07 = 0;
-            }
-            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_04 = *p4;
-            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_06 = 0;
-            ((GsRecF90 (*)[2])g->unk_F90)[i - 1][arg0].unk_05 = *p5;
-            p4++;
-            p5++;
-        } while (i < n);
-    }
-    return i;
-}
-#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", menu_set);
-#endif
 
 s8 menu_check(arg0, arg1, arg2)
     s32 arg0;
@@ -102,9 +41,9 @@ s8 menu_check(arg0, arg1, arg2)
     return menu_check_1(arg0, arg1, arg2);
 }
 
-/* NON_MATCHING: T-10850, 27 differing listing lines; see the ticket scratch evidence. */
+/* NON_MATCHING: T-12050, 27 differing listing rows; selector/base allocation and signed return extension. */
 #ifdef NON_MATCHING
-/* FAKE: duplicate GameState pointer steers record/base allocation. T-10850 */
+/* FAKE: duplicate GameState pointer steers record/base allocation. T-12050 (inherited T-10850) */
 s8 menu_check_1(arg0, arg1, arg2)
     s32 arg0;
     s16 arg1;
@@ -211,7 +150,7 @@ s32 func_80050324(s32 menu, s32 reverse) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", get_near_menu);
 
-/* NON_MATCHING: T-10510, the original defines D_800E3680 in this object (one lui at for both stores), no data range for it */
+/* NON_MATCHING: T-12050, 17 differing listing rows; shared lui requires unowned D_800E3680 data range */
 #ifdef NON_MATCHING
 void menu_bar_color(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg0 >= 0x10) {
@@ -241,7 +180,29 @@ void menu_bar_show(menu)
     }
 }
 
+/* NON_MATCHING: T-12050, 24 differing listing rows; array homes are eight bytes too high. */
+#ifdef NON_MATCHING
+void x_taku_menu_set(s32 menu, s32 count)
+{
+    s16 x[4];
+    s16 width[4];
+    s16 height[4];
+    s32 i;
+
+    for (i = 0; i < count; i++) {
+        x[i] = -120;
+        width[i] = 240;
+        height[i] = 16;
+    }
+    if (count == 3) {
+        menu_set(menu, 3, x, D_800B40F0, width, height);
+        return;
+    }
+    menu_set(menu, 2, x, D_800B40F0, width, height);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8004F870", x_taku_menu_set);
+#endif
 
 void x_taku_string_set(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     set_kanji_string(-0x78, 0x32, 0, arg0, 0);

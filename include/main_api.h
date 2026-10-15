@@ -634,6 +634,8 @@ typedef struct KWork {
     /* 0xB */ u8 pad_0B;
 } KWork; /* size 0xC */
 extern KWork text_list_count;
+/* Four signed menu row positions, read by x_taku_menu_set. */
+extern s16 D_800B40F0[4];
 extern u8 D_800B4100[13];
 extern u8 D_800B4110[13];
 extern u8 D_800B4120[13];

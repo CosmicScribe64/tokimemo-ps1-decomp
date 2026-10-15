@@ -1982,3 +1982,6 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/801410A0 | `func_801410A0` | regorder | T-11820: not kept (48 lines): both loops match (`i * 16` row index, `call * len`, if/else abs, s16 `spd = -spd`); the turn step keeps `(s16)+-spd` in v1 in the original |
 | TT/801374C0 | `func_80138808` | regorder | T-11820: not kept (145 lines): loop 3's base needs a second chain struct at `g + 0xEFC`; the original unrolls loop 3 but not loop 2 |
 | TT/801487D0 | `func_801487D0` | regorder | T-11820: not kept (103 lines): `func_801336F8` template with one extra local for the 0x48 frame; `ch - 0x20` masking and temp order differ |
+
+| 8004F870 | `func_8005215C` | regorder | T-12050: regdiff reports field-load lifetime and frame differences; disjoint temporary reuse reaches 219 listing rows, empty-test FAKE 195; not retained. |
+| 8004F870 | `get_h_tokimeki` | other | T-12050: regdiff confirms structural loop/hoisting gap (535 versus 400 instructions initially); indexed flag stores reduce 817 to 637 rows; not retained. |
