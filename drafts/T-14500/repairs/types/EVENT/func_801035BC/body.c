@@ -10,7 +10,7 @@ void func_801035BC(void) {
 
     sp28 = D_801228E0;
     func_80078950("%d\n", D_800B1AF6);
-    (*(s32 (**)(s32))((unsigned char *)(sp + (D_800B1AF6 * 4)) + (40)))(0x80);
+    sp28.f[D_800B1AF6](0x80);
     if (func_8004C984 == sp28.f[D_800B1AF6]) {
         var_v0 = 0;
         do {

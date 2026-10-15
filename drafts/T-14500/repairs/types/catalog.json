@@ -76,7 +76,7 @@
     "src": "src/ovl/EVENT/801024B0.c",
     "path": "drafts/T-14500/repairs/types/EVENT/func_801035BC",
     "status": "scored",
-    "score": 100,
+    "score": 82,
     "compile_verified": true,
     "literal_verified": false
   },

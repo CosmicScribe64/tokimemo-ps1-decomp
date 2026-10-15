@@ -1,24 +1,22 @@
 {
-  "func": "func_801035BC",
-  "guarded": false,
   "scope": "EVENT:func_801035BC",
-  "score": 100,
-  "size": 344,
-  "source_hash": "06e4d8beac4db77eaae06f5615676527e78c6a0f770e34312d7d631a20dbdc31",
-  "src": "src/ovl/EVENT/801024B0.c",
-  "status": "scored",
   "unit": "EVENT",
+  "func": "func_801035BC",
+  "src": "src/ovl/EVENT/801024B0.c",
+  "size": 344,
+  "status": "scored",
+  "score": 82,
   "base_commit": "4836200960c04659c0705aa566dc4da3b5749e7a",
   "ticket": "T-14700",
   "production_changed": false,
-  "body.c_sha256": "6df0422ab4bb01129279e81a2e297ba2ac800bb82c22adc66a57e0eb425e5e46",
-  "declarations.h_sha256": "a063870b34514c587e7234eec9ded298310c7bd870192dc7218ab2b0fc2cb6b0",
-  "context.c_sha256": "4131f01dedfe8e168d0bf770815b4aba71f05121bdc0dc7c1efe93b325f96f30",
   "literal_verified": false,
   "affected_sha1_verified": false,
-  "scoring": "default full-TU resolved comparison; diagnostic only",
   "compile_verified": true,
+  "scoring": "default full-TU resolved comparison; diagnostic only",
   "remaining_blockers": [
     "Nonzero code generation differences; literal-byte proof and affected SHA1 required before promotion."
-  ]
+  ],
+  "body.c_sha256": "810708330677dbe7f935dc08fc85f4994885b44d46187277d6ac7aecfd37086e",
+  "declarations.h_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "context.c_sha256": "7e0384fcbf78e927e926387f9955374a88188e2f0d652836e7dd4fbead91f760"
 }

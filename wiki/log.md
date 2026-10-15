@@ -14686,3 +14686,7 @@ Created isolated codex/type-repair-14700 from 48362009. Archived fifteen immutab
 ## [2026-10-15] build | T-14700 fifteen compiling reserved drafts
 
 Recovered actual byte/halfword/word aggregates and callback tables in draft-only archives; all fifteen compile with default full-TU IDO and have nonzero resolved scores. Production C/header closure unchanged. Full diagnostics and provenance in drafts/T-14500/repairs/types/. Ticket moved to In Review: [[tickets/T-14700-reserved-type-repairs]].
+
+## [2026-10-15] decision | T-14700 resolve draft review findings
+
+Two-axis review identified an EVENT callback still using a synthetic sp global and a scoring script that exited successfully after failures. Replaced dispatch with the actual local table, removed the declaration, made failure status nonzero, retained complete successful compiler diagnostics and reran all fifteen serial full-TU compiles successfully. Semantic audit checked ETC rank loops, GEKO season-relative pairs and EVENT copy-tail lengths. No production promotion. See [[tickets/T-14700-reserved-type-repairs]].

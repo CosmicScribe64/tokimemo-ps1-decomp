@@ -338,9 +338,6 @@ void func_80103584(void) {
     func_80011DFC();
 }
 
-/* bulk_m2c declarations (T-11190) */
-extern s32 sp;
-/* end bulk_m2c declarations */
 /* NON_MATCHING: T-14700, draft-only type reconstruction; see result.json. */
 void func_801035BC(void) {
     EvFnTbl44 sp28;
@@ -353,7 +350,7 @@ void func_801035BC(void) {
 
     sp28 = D_801228E0;
     func_80078950("%d\n", D_800B1AF6);
-    (*(s32 (**)(s32))((unsigned char *)(sp + (D_800B1AF6 * 4)) + (40)))(0x80);
+    sp28.f[D_800B1AF6](0x80);
     if (func_8004C984 == sp28.f[D_800B1AF6]) {
         var_v0 = 0;
         do {

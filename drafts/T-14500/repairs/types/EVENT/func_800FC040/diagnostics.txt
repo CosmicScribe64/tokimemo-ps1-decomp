@@ -1,1 +1,11 @@
+cfe: Warning 681: drafts/T-14500/repairs/types/EVENT/func_800FC040/work/guarded.o.sjis.c, line 4369: '&' before array or function; ignored
+     ((EventStateView *)&D_800B0860)->unk_1037 = 0xB;
+ -----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/EVENT/func_800FC040/work/guarded.o.sjis.c, line 4370: '&' before array or function; ignored
+     ((EventStateView *)&D_800B0860)->unk_1A4[2].unk_06 += 2;
+ -----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/types/EVENT/func_800FC040/work/guarded.o.sjis.c, line 4371: '&' before array or function; ignored
+     ((EventStateView *)&D_800B0860)->unk_1A4[2].unk_0A -= 0xA;
+ -----------------------^
+
 Full-TU compile successful. Default resolved score: 55

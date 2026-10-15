@@ -18,7 +18,7 @@ Residual risks: generated C remains nonmatching. BUNKAKEN/BUNKASAI default switc
 | ETC:func_8013CCE4 | 138 |
 | ETC:func_801480D0 | 1200 |
 | EVENT:func_800FC040 | 55 |
-| EVENT:func_801035BC | 100 |
+| EVENT:func_801035BC | 82 |
 | EVENT:func_8010AE7C | 22 |
 | EVENT:func_8010F55C | 184 |
 | EVENT:func_8010F74C | 150 |

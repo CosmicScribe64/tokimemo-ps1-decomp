@@ -1,1 +1,1 @@
-Full-TU compile successful. Default resolved score: 100
+Full-TU compile successful. Default resolved score: 82
