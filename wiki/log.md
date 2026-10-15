@@ -13553,3 +13553,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | cx3 matches two-item save/load selector
 
 [[tickets/T-12030-codex-cx3]] matched func_8005BCEC (416 linked bytes, main SHA1 OK). Grouped array-store pairs resolve the T-8080 scheduling gap; stack reservation and grouping are marked FAKE. pre_syogatu1 remains a guarded 19-row draft after typed-buffer recovery and bounded search. Evidence: build/scratch/bcec-final.log, bcec-build.log and pre-autotweak.log.
+
+## [2026-10-15] build | cx3 matches save-menu initializer
+
+[[tickets/T-12030-codex-cx3]] matched func_8005C5BC (516 linked bytes, main SHA1/header/global checks pass). Natural indexed coordinate arrays and a FlagsWork24 pointer recover the layout and induction order without a new fakematch. Evidence: build/scratch/c5bc-final.log and c5bc-build.log.

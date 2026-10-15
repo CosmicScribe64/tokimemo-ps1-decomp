@@ -2064,6 +2064,12 @@ void func_8005C4CC(s32 arg0);
 void func_8005D174(void);
 s32 func_8005D448(void);
 void func_8005BCEC(void);
+void func_8005C5BC(void);
+void func_8005CF6C(void);
+void func_8005CA94(void);
+
+void func_8005C7C0(void);
+void func_8005C7FC(void);
 extern u8 D_800B59F8[];
 extern u8 D_800B5A1C[];
 void func_8005F09C(void);
