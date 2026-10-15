@@ -13894,3 +13894,11 @@ Two-axis review of 7a65b3d8...be40e697: requirements review found no substantive
 ## [2026-10-15] ticket | cx7 In Review handoff
 
 [[tickets/T-12070-codex-cx7]] moved In Review with index/kanban synchronized. Three matches / 4,252 linked bytes; existing guards unchanged (16/9/32 rows), larger misses remain scratch-only. Final configure and forced clean checksum/header/global rebuild passed 526 ninja tasks, 27/27 binary checksums, headers and globals. Branch prototypes: 0 new, 15 known. Baseline-to-HEAD diff check passes. Logs: build/scratch/final-{configure,clean,build,prototypes,guards}.log. User-directed next focus is the separate largest dialogue routine; this worktree awaits independent review.
+
+## [2026-10-15] setup | Largest dialogue isolated pass
+
+Created codex/largest-dialogue from integration 2cb6a11c for [[tickets/T-12500-largest-dialogue]]. Own src/main/8007C030.c only, targeting 8,672-byte dialogue_speak_part. Read prior T-10900/T-11590 scheduling findings and external native AS1 research. Reused ignored inputs and tool diagnostics; no integration edits.
+
+## [2026-10-15] build | Largest dialogue baseline verified
+
+[[tickets/T-12500-largest-dialogue]] baseline configure/ninja succeeds: 665 tasks, 27/27 checksums, headers/globals. Prepared ignored AS1 capture wrapper preserving production frame/cvt/layout stages for a diagnostic fidelity control. Prior failed coordinate/argument/string families remain excluded from blind repetition.
