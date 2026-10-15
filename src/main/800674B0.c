@@ -704,11 +704,11 @@ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800696DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
-/* NON_MATCHING: T-11100, T-11690, 58 differing lines. Each record triple (unk_18/unk_26/unk_2A) after the loop
- * is written on one line, as from a macro (fixed the in-branch store order). Left: the unk_03E/unk_03F reloads
- * after the calls come in the other order, the unk_03E load at the start of cases 1, 5-7, 8-10 and 11-12 is
- * scheduled one store later, `beq a1,t0` operands swap, and two spill slots (0x34/0x38) swap. Removing the dead
- * `var_v1 = unk_03F` read at the top fixes the operand order but moves unk_03F from $t0 to $a2. */
+/* NON_MATCHING: T-11100, T-11690, 4 differing lines. Each record triple (unk_18/unk_26/unk_2A) after the loop is
+ * written on one line, as from a macro. The two dead reads of unk_03F and unk_03E at the top are needed: without
+ * them uopt does not promote unk_03E and gives unk_03F $a2 instead of $t0. Left: in cases 8-10 the original
+ * compares `beq a1,t0` (constant 8 first), the draft `beq t0,a1`; without the dead unk_03F read the order is right
+ * but the allocation is not. */
 #ifdef NON_MATCHING
 void func_8006A2CC(void) {
     s32 pad1;
@@ -718,6 +718,7 @@ void func_8006A2CC(void) {
     s32 sp3C;
 
     var_v1 = D_800E6280.unk_03F;
+    var_v1_2 = D_800E6280.unk_03E;
     func_80048E78();
     func_80048F64(0x60);
     D_8011ECD0[96].unk_01 = 5;
@@ -825,7 +826,7 @@ void func_8006A2CC(void) {
         var_v1_2++;
         if (D_800E6280.unk_03E == 0x5F) {
             sp3C = 2;
-            if (8 != D_800E6280.unk_03F) {
+            if (D_800E6280.unk_03F != 8) {
                 D_800E6280.unk_120[7] = 1;
             }
             D_8011ECD0[var_v1_2].unk_18 = 0x7F; D_8011ECD0[var_v1_2].unk_26 = 8; D_8011ECD0[var_v1_2].unk_2A = -0x28;
@@ -833,7 +834,7 @@ void func_8006A2CC(void) {
         }
         if (D_800E6280.unk_03E == 0x60) {
             sp3C = 6;
-            if (8 != D_800E6280.unk_03F) {
+            if (D_800E6280.unk_03F != 8) {
                 D_800E6280.unk_120[10] = 1;
             }
             D_8011ECD0[var_v1_2].unk_18 = 0x83; D_8011ECD0[var_v1_2].unk_26 = 8; D_8011ECD0[var_v1_2].unk_2A = -0x28;
