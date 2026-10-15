@@ -14363,3 +14363,6 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 ## [2026-10-15] build | T-13600 verify two TAIIKU scene dispatchers
 
 [[tickets/T-13600-taiiku-families]] adds func_80133494 (432 bytes) and func_80133644 (520), both literal linked MATCH with TAIIKU SHA1 OK. Ordinary nested dispatch removes m2c's goto mismatch. Existing source outside the two replacements is text-identical. Headers/globals pass; independent review remains pending. [[data/t13600-remaining-census]] corrects the initial limited prior-evidence search and records all84 baseline candidates.
+
+## [2026-10-15] build | TAIIKU dispatcher pair verified on integration
+[[tickets/T-12400-integrate-verified-matches]] integrated95a444d5 from [[tickets/T-13600-taiiku-families]]. Root standards inspection finds ordinary C89 dispatchers with canonical fields, no artificial padding/register tricks, no header changes and original function order preserved. Independent default linked funcdiff confirms33494=432bytes and33644=520bytes; affected TAIIKU checksum, header/global checks and branch prototype audit pass. Total5876/6958functions,1405076/2279368bytes (61.6%); remaining418420alignedbytes to80%. Evidence build/scratch/goal-taiiku-pair.log. T13600 remains In Progress while the worker pursues adjacent families.
