@@ -2459,7 +2459,42 @@ s32 func_8011AC18(void) {
     func_80011DFC();
 }
 
-INCLUDE_ASM("asm/ovl/EVENT/nonmatchings/EVENT/8010FE10", func_8011AD7C);
+void func_8011AD7C(void) {
+    u8 v;
+    u8 sel;
+
+    /* FAKE: dead load before the first branch lets cvt_pass strip the CVTs of D_801252E4, so uopt keeps it in $a1; T-11600 */
+    sel = D_801252E4;
+    if ((D_800B0F2D == D_800B0F2C) && (D_800EECBC == 0)) {
+        D_801243B4 = 1;
+        D_80124344 += 1;
+        D_800B1AF6 += 0xD;
+        return;
+    }
+    if ((D_800B0F2D != D_800B0F2C) && (D_800EECBC == 0)) {
+        D_800B1AF6 += 0x1E;
+        return;
+    }
+    D_80124384 += D_800EECBC;
+    D_801252E4 = 2;
+    v = func_8002328C(D_800B1746) & 0x7F;
+    D_80124344 = ((v >= 2) + (v >= 3)) * ((D_801252E4 == 0) + 1) + D_801252E4 * 6 - (D_801252E4 == 2) * 3;
+    if (D_800EECBC == 1) {
+        if (D_800B0F2E == D_800B0F2C) {
+            D_801243B0 = D_800B0F2D;
+        } else {
+            D_801243B0 = D_800B0F2E;
+        }
+    }
+    if (D_800EECBC == 2) {
+        if (D_800B0F2F == D_800B0F2C) {
+            D_801243B0 = D_800B0F2D;
+        } else {
+            D_801243B0 = D_800B0F2F;
+        }
+    }
+    func_80011DFC();
+}
 
 void func_8011AF20(void) {
     if (D_800B0F2D != D_801243B0) {
