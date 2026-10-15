@@ -25,6 +25,9 @@ kanban-plugin: board
 ## In Progress
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
+- [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
+
+- [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 
 - [ ] [[tickets/T-14200-main-source-families|T-14200 Recover MAIN source families]]

@@ -14551,3 +14551,18 @@ Promoted 6 ordinary C functions / 4,248 bytes for BUNKASAI after default linked 
 ## [2026-10-15] build | EVENT typed record loop adds 400 bytes
 
 [[tickets/T-14300-event-families]] adds func_8010A91C through the observed Rec34 bit1 view and an ordinary for loop, superseding its earlier two-row negative. Combined eight-function default literal proof and EVENT SHA1 pass; header/global/prototype checks pass, zero new and 12 known disagreements. Cumulative accepted gain: eight functions / 4,084 bytes. Existing-body audit preserves both touched files' baseline C. Scope complete and moved In Review for independent review.
+## [2026-10-15] setup | Exhaustive remaining-function draft census
+
+Created [[tickets/T-14500-exhaustive-drafts]] and an isolated branch from 48362009. Shared immutable inputs with hard links. The census includes guarded drafts and all units, with serial bounded full-TU scoring and retained context; unverified C stays under drafts/T-14500/.
+
+## [2026-10-15] query | Freeze exhaustive game-function census
+
+[[exhaustive-drafts]] records 1,066 remaining functions / 866,424 progress bytes at 48362009, including 125 guards. Serial bounded run started after three smoke scores. Historical scores lack full current context and remain provenance only; no verified-byte gain claimed.
+
+## [2026-10-15] ingest | Preserve reproducible draft context
+
+[[exhaustive-drafts]] now has full source/header snapshots, compiler/tool/header hashes and 180 historical broad/family attempt records. First 45 entries yielded 18 full-TU zero candidates, 19 nonzero scores and eight retained failures; these are draft outcomes, not verified gains. A separate proof checkout preserves frozen scoring context.
+
+## [2026-10-15] lint | Check exhaustive-census failure handling
+
+Three synthetic Docker tests passed: guarded/TT inclusion, duplicate-scope rejection, and durable generation-failure recording with unchanged production source. Compiler repair now considers only the latest compile diagnostic while retaining all prior diagnostics, preventing stale errors from reintroducing removed declarations. Complete compiler failures remain explicit outcomes in [[exhaustive-drafts]].
