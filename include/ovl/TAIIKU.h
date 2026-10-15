@@ -677,3 +677,5 @@ extern TaiWait3 D_801497F4;
 /* Eleven character IDs used by func_80135AD0. T-12020. */
 extern TaiikuS11 D_80149558;
 
+/* Eleven animation limits copied by func_80136BB4. T-12020. */
+extern TaiikuU11 D_801497DC;

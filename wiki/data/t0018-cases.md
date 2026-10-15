@@ -1982,3 +1982,7 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/801410A0 | `func_801410A0` | regorder | T-11820: not kept (48 lines): both loops match (`i * 16` row index, `call * len`, if/else abs, s16 `spd = -spd`); the turn step keeps `(s16)+-spd` in v1 in the original |
 | TT/801374C0 | `func_80138808` | regorder | T-11820: not kept (145 lines): loop 3's base needs a second chain struct at `g + 0xEFC`; the original unrolls loop 3 but not loop 2 |
 | TT/801487D0 | `func_801487D0` | regorder | T-11820: not kept (103 lines): `func_801336F8` template with one extra local for the 0x48 frame; `ch - 0x20` masking and temp order differ |
+
+| TAIIKU/80133C80 | `func_801346FC` | regorder | T-12020: guarded, 8 +/- listing rows (4 positions), raw actor-x decrement v1/v0; traced priorities and combined predecrement/selector variants exhausted. |
+| TAIIKU/80133C80 | `func_801368B8` | sched | T-12020: guarded, 4 +/- rows (one lui/sw swap); 337 full-file ordering/increment variants unchanged. |
+| TAIIKU/80133C80 | `func_80136BB4` | sched | T-12020: guarded, 4 +/- rows (one sb/sh swap); typed table and used u8 frame local improve 98 to 4, final 130 boundary/increment variants unchanged. |

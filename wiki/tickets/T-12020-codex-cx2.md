@@ -1,7 +1,7 @@
 ---
 id: T-12020
 title: Match cx2 TAIIKU functions
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -14,9 +14,9 @@ Deep matching pass over fifteen cx2 functions in src/ovl/TAIIKU/80133C80.c.
 
 ## Acceptance criteria
 
-- [ ] Matches verified by exact linked funcdiff and unit SHA1.
-- [ ] Retained drafts guarded with measured differences.
-- [ ] Clean build, prototype checks and standards review.
+- [x] Matches verified by exact linked funcdiff and unit SHA1.
+- [x] Retained drafts guarded with measured differences.
+- [ ] Independent standards review before Done.
 
 ## Notes
 
@@ -45,3 +45,7 @@ Traced regdiff uses the existing trace compiler copied by the orchestrator into 
 Recovered eleven signed character IDs at D_80149558 and an eleven-word eligible-character list. A named row+9 byte-store value gives the original frame homes without unused locals. Declare the eligible array, used temporary, then the copied table to recover exact stack offsets. Store the sprite-resource ID before scale fields and the y coordinate last: the full-file order search reaches zero. No FAKE required. Docker targeted ninja: TAIIKU.bin SHA1, headers and globals pass; funcdiff: exact linked 596-byte MATCH.
 
 Other scratch results: func_80136BB4 reaches 32 +/- rows after table/local declaration ordering; typed func_80137544 remains 103+ rows, func_80135480 160 rows, func_80135830 135 rows, func_80137EA8 254 rows and func_801365C8 228 rows. These broad drafts remain scratch-only pending deeper passes.
+
+### Final deep-pass results
+
+All 15 listed functions attempted; 3 matches (1,300 bytes), 3 retained guarded near misses, 9 plain INCLUDE_ASM. See [[matching-notes#T-12020: cx2 TAIIKU deep pass]] for per-function counts and blockers. Final animation draft reaches four rows; the earlier 32-row estimate is superseded. No new FAKE; inherited decrement frame padding remains identified. Final verification: refreshed build stamps, clean configure plus ninja -j2 completed 27/27 SHA1, headers OK and globals OK. All three matches were rechecked against final linked bytes. sync_protos --check-branch reports 0 new disagreements, 15 known, branch check OK. git diff --check passes; no new inline assembly, raw data or FAKE constructs. Logs: build/scratch/final-all-checks.log, final-protos.log, final-matches.log and final-guards.log.

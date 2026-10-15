@@ -142,7 +142,7 @@ void func_801345A4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, ten listing lines: decrement v1/v0 and scheduling. */
+/* NON_MATCHING: T-12020, 8 differing listing rows (4 positions); decrement v1/v0 register allocation. */
 void func_801346FC(void) {
     s16 text_x;
     s16 panel_x;
@@ -444,7 +444,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80135F3C);
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_801365C8);
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, one swap: the original schedules lui t4 (next load) before the sw to D_80149224; the data of D_80149208..D_80149297 is one object here (TaiikuSlots), 2 lines */
+/* NON_MATCHING: T-12020, 4 differing listing rows (2 positions); next-load lui schedules after the f1C store. */
 s32 func_801368B8() {
     D_80149208.f0C += 1;
     D_80149208.f0E += 1;
@@ -524,7 +524,45 @@ void func_80136B18(void) {
     D_80120676 = state->unk_20.halves.high;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-12020, 4 differing listing rows (2 positions); f03 byte store and f0C clear schedule in reverse order. */
+void func_80136BB4(void) {
+    u16 limit;
+    TaiikuU11 limits;
+    u8 temp;
+
+    limits = D_801497DC;
+    if (D_80122E94 == 1) {
+        limit = limits.v[D_801491DC];
+    } else {
+        limit = limits.v[((DisplayActor44 *)D_8011ECD0)[46 + D_80149208.pad00[2]].unk_16 >> 3];
+    }
+    if ((limit < D_80149208.f0E) && (D_80149208.f18 != 0)) {
+        if (D_80149208.pad04[0] >= 5U) {
+            D_80149208.pad04[0] = 0;
+        } else {
+            D_80149208.pad04[0]++;
+        }
+        D_80149208.f0E = 0;
+    }
+    if (((D_80149208.f0C >= 6U) && (D_80149208.f10 > 0)) || ((D_80149208.f0C >= 8U) && (((s32) D_801491E8 >> 1) < D_80149208.f18)) || ((D_80149208.f0C >= 11U) && (D_80149208.f18 != 0))) {
+        temp = D_80149208.f03;
+        if (temp >= 5U) {
+            D_80149208.f03 = 0;
+        } else {
+            D_80149208.f03 = D_80149208.f03 + 1;
+        }
+        D_80149208.f0C = 0;
+    }
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = *(s16 *)(D_801492AC + D_80149208.f03 * 2);
+    if ((D_8014929C == 0) && (D_80149208.f10 <= 0)) {
+        D_80149208.f03 = 5;
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_18 = 0x90;
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80136BB4);
+#endif
 
 s32 func_80136DA4() {
     s32 temp;
@@ -630,45 +668,7 @@ void func_80137090(void) {
     }
 }
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10520, D_80149298.halves.high (D_8014929A) is not hoisted out of the loop as in the original; the rest has the original structure, large diff (all registers) */
-void func_80137228(void) {
-    s32 i;
-    s32 y;
-    s32 j;
-    u8 *a;
-    u8 *r;
-
-    a = (u8 *)&D_80149208;
-    for (i = 0; i < 3; i++) {
-        *(s32 *)(a + i * 0x24 + 0x44) += *(s32 *)(a + i * 0x24 + 0x3C);
-        y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
-        if (D_80120A72 + i * 8 + 8 < y - 0x60) {
-            if (a[i * 0x24 + 0x2A] == 0) {
-                (&D_80120A72)[0x1B] = 0x8D;
-                if (a[i * 0x24 + 0x2A] == 0) {
-                    j = 0;
-                    while (D_801491E0[j] != 0) {
-                        j++;
-                    }
-                    D_801491E0[j] = i + 2;
-                }
-                a[i * 0x24 + 0x2A] = 1;
-                y = *(s16 *)(a + i * 0x24 + 0x46) - D_80149298.halves.high;
-            }
-        }
-        r = D_8011ECD0 + i * 0x44;
-        *(s16 *)(r + 0x19EA) = y - 0xA0;
-        if (y >= 0x1E1 || y < -0xA0) {
-            r[0x19C7] = 0;
-        } else {
-            r[0x19C7] = 0xA4;
-        }
-    }
-}
-#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137228);
-#endif
 
 void func_8013732C(void) {
     s32 i;
@@ -737,48 +737,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137544);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137784);
 
-#ifdef NON_MATCHING
-/* Falls through without a return statement: $v0 still holds D_8014929A. */
-s32 func_80137C44(void) {
-    s32 i;
-    TaiSlot24 *slot;
-    s32 dx;
-
-    slot = (TaiSlot24 *)&D_80149208;
-    for (i = 0; i < 4; i++, slot++) {
-        if (slot->pad_00[0] != 0) {
-            ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_26 = ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_26 - 8;
-            if (i == 0) {
-                if (D_80122E94 == 1) {
-                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + D_801491D8].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
-                } else {
-                    ((DisplayActor44 *)D_8011ECD0)[107].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[D_80149208.pad04[0]];
-                }
-            } else {
-                ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + D_801492B8[slot->pad_03[0]];
-            }
-            if (i + 0x90 == ((DisplayActor44 *)D_8011ECD0)[96 + i].unk_18) {
-                if (D_80122E94 == 1) {
-                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = D_80149320[D_801491DC] * 6 + 5;
-                } else {
-                    ((DisplayActor44 *)D_8011ECD0)[107 + i].unk_18 = (((DisplayActor44 *)D_8011ECD0)[46 + slot->index].unk_16 >> 3) * 6 + 5;
-                }
-            }
-        }
-    }
-    slot = (TaiSlot24 *)&D_80149208;
-    for (i = 0; i < 3; i++, slot++) {
-        if (((slot[1].pad_03[2] == 2 && ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_02 != 0) || slot[1].pad_00[0] == 1) &&
-            (dx = slot[1].unk_20.halves.high - D_80149298.halves.high, dx < 0x140) && dx >= -0x13F) {
-            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0xA4;
-        } else {
-            ((DisplayActor44 *)D_8011ECD0)[108 + i].unk_03 = 0;
-        }
-    }
-}
-#else
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137C44);
-#endif
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80133C80", func_80137EA8);
 

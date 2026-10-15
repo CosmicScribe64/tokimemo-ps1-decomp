@@ -13521,3 +13521,15 @@ Created [[tickets/T-12020-codex-cx2]] In Progress for src/ovl/TAIIKU/80133C80.c.
 ## [2026-10-15] build | Match TAIIKU eligible-character actor initialization
 
 [[tickets/T-12020-codex-cx2]]: func_80135AD0 matches 596 exact linked bytes and TAIIKU SHA1. Recovered table/list types, local declaration order and independent actor-store order; headers/globals pass. Scratch-only typed reconstructions expose remaining layout/register gaps in six other owned functions.
+
+## [2026-10-15] decision | T-12020 bounded deep pass complete
+
+All fifteen cx2 functions attempted: three exact matches totaling 1,300 bytes. Retained three guarded drafts with 8/4/4 differing listing rows; removed oversized inherited guards for func_80137228 and func_80137C44. Recorded full-file experiment counts, traced-compiler evidence and remaining type/loop blockers in [[matching-notes]], [[data/t0018-cases]] and [[tickets/T-12020-codex-cx2]]. Final verification underway.
+
+## [2026-10-15] ticket | T-12020 ready for review
+
+Moved [[tickets/T-12020-codex-cx2]] and its [[kanban]] card to In Review; updated [[index]]. Implementation and measured near-miss records are complete. Independent review against CODING_STANDARDS.md remains required before Done.
+
+## [2026-10-15] build | T-12020 final verification passes
+
+Clean configure plus ninja -j2 completed all 27 SHA1 checks, headers OK and globals OK. Final linked comparisons reconfirmed the three matches (1,300 bytes); full-file guarded comparisons reconfirmed 8/4/4 rows. sync_protos --check-branch reports zero new disagreements, fifteen known, branch check OK. No new inline asm or FAKE constructs; git diff --check clean. [[tickets/T-12020-codex-cx2]] remains In Review for independent standards review.
