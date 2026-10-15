@@ -13513,3 +13513,7 @@ Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build 
 ## [2026-10-15] build | cx10 matches 2,068-byte DATE movie handler
 
 [[tickets/T-12100-codex-cx10]] matched func_801489D0 with exact production linked bytes and DATE SHA1. The owned data range 8015CF80..8015CFD0 is now a data island; four recovered coordinate/velocity arrays are defined in the C object. This resolves the previously scope-blocked shared-LUI initialization residual without a fakematch. Evidence: build/scratch/489d0-final.log, 489d0-build.log and island-build.log.
+
+## [2026-10-15] build | cx10 matches 2,000-byte DATE colour animation
+
+[[tickets/T-12100-codex-cx10]] promotes func_8014E3E8 after literal linked-byte equality and DATE SHA1. A correctly typed initialized colour table and remainder expressions recover data and stack layout naturally. Normalized relocation diagnostics cannot resolve the anonymous local initializer, so the existing exact verifier was invoked directly on a frozen production object with stable source hashes. Evidence: build/scratch/e3e8-literal.log and e3e8-build.log. Package total: 4,068 bytes in two matches.
