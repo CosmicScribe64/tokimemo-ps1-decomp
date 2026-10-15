@@ -1509,7 +1509,42 @@ void func_8005EF44(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005F09C);
+/* FAKE: scalar-byte view lets IDO keep the clamp value in v0 across stores. T-12030. */
+void func_8005F09C(void) {
+    menu_check(1, D_8011ECF6, D_8011ECFA);
+    menu_bar_show(1);
+    func_8004FC10(1);
+    k_disp_inc();
+    if (D_800E6280.unk_F88 & 0x40) {
+        func_80042940(0);
+    } else if (((D_800E6280.unk_F75 != 0) && (D_800E6280.unk_F77 & 4)) || ((D_800E6280.unk_F75 == 0) && (D_800E6280.unk_F77 & 8))) {
+        switch (D_800E6280.unk_1094) {
+        case 0:
+            k_sub_reset();
+            set_kanji_string(-0x80, 0x32, 0U, "クリックスピードを初期状態にしました", 0);
+            *(u8 *)&D_800E6280.unk_F73 = 0x20;
+            func_8004284C();
+            break;
+        case 1:
+            if (D_801230E4 != 0) {
+                *(u8 *)&D_800E6280.unk_F73 = 0xFF - D_801230E4;
+                if (*(u8 *)&D_800E6280.unk_F73 < 0x10) {
+                    *(u8 *)&D_800E6280.unk_F73 = 0x10;
+                }
+                if (*(u8 *)&D_800E6280.unk_F73 > 0x40) {
+                    *(u8 *)&D_800E6280.unk_F73 = 0x40;
+                }
+                D_801230E4 = 0;
+                k_sub_reset();
+                set_kanji_string(-0x80, 0x32, 0U, "クリックスピードを変更しました", 0);
+                func_8004284C();
+                break;
+            }
+            D_801230E4 = 0xFF;
+            break;
+        }
+    }
+}
 
 void func_8005F22C(void) {
     k_disp_inc();

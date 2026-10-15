@@ -13541,3 +13541,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | T-12030 voice-mode initializer matched
 
 [[tickets/T-12030-codex-cx3]]: func_8005FDEC verifies 380 linked bytes and main SHA1, with typed arrays and an unsigned selector conversion.
+
+## [2026-10-15] build | T-12030 click-speed clamp matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005F09C verifies 400 literal linked bytes and main SHA1. Direct scalar-byte clamping (marked FAKE) plus an explicit void prototype resolve its historical register and exit differences.
