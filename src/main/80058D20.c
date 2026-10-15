@@ -81,9 +81,11 @@ void initModelingData_init(s32 *arg0) {
 }
 
 /* Same TMD walk as initModelingData_init for one object slot (count clamped
- * to 15). The repeated slot address, not a local, gives the original's shared
- * spill slot (as in TAIIKU func_80140738); `&D_80122640[arg1 * 4]` costs one
- * more ugen temporary. T-11610 */
+ * to 15). FAKE: the slot is reached by byte offset from D_80122640 (u32[], 16
+ * bytes per slot) because the record type is not declared yet; the repeated
+ * slot address, not a local, gives the original's shared spill slot (as in
+ * TAIIKU func_80140738), and `&D_80122640[arg1 * 4]` costs one more ugen
+ * temporary. T-11610 */
 s32 func_80058F9C(u32 *arg0, s32 arg1, u32 arg2) {
     u32 *dop;
     u32 n;
