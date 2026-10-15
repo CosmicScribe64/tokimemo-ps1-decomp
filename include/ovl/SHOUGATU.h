@@ -775,3 +775,11 @@ void func_8013D3B4(void);
 extern s16 D_80146150;
 extern s8 D_8014615C;
 #endif
+
+#ifndef OVL_SHOUGATU_T15600_DISPATCH
+#define OVL_SHOUGATU_T15600_DISPATCH
+/* T-15600: definitions in 80136F90.c, called by the earlier dispatcher. */
+void func_801377CC(void);
+void func_80137818(void);
+void func_80137A04(void);
+#endif

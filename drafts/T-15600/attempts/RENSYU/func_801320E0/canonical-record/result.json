@@ -1,0 +1,14 @@
+{
+  "scope": "RENSYU:func_801320E0",
+  "variant": "canonical-record",
+  "score": 2,
+  "status": "scored",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RENSYU/func_801320E0",
+  "archive_path": "drafts/T-15600/attempts/RENSYU/func_801320E0/canonical-record",
+  "body_sha256": "cef65d66d0064674f298bb2c21bd4f8e477402fea39463716bdfdd87786adf12",
+  "context_sha256": "5abfa23cca717de7ff071fefac086ad62b5d59b15d999714d7c80f11419ffd6d",
+  "compiled_context_sha256": "63bcfd2b04ce38d892ac78bd35a58ba5604396c8f36fe1613fddfc2f36a1cc27"
+}

@@ -5238,3 +5238,8 @@ For DATE func_801449D4, explicit pointers to dynamically indexed local table slo
 ### T-14900: shared motion aggregate preserves source store/load order
 
 [[tickets/T-14900-rpg-near-matches]]: RPG_BAT func_80148B08 recovers the existing `RpgMotion20` view rooted at EC50, including displacement dx/dy and rect words at EC68/EC6C. Independent scalar declarations let IDO move the EC6C load before the EC50 store; one genuine shared aggregate view restores the original ordering. Both member and local-pointer forms compare at zero full-TU rows; pointer form passes default literal linked bytes (1,128 including eight padding bytes) and RPG_BAT SHA1. Reuses the established 80132348 layout rather than inventing padding or volatile barriers. Void forward declaration avoids a generated implicit-int repair while preserving exact bytes.
+
+
+### T-15600: packed record load and old-counter branch timing
+
+[[tickets/T-15600-fresh-near-matches]] accepts RENSYU func_801320E0 (688 literal linked bytes) and SHOUGATU func_80137144 (568), with both overlay SHA1 checks. RENSYU's word inference at D_800E68EE has wrong width/scaling; actual target lhu accesses bytes +2/+3 of the existing four-byte GameState.unk_66C record. SHOUGATU compares the old counter then increments, faithfully represented by `counter++ >= 0x401U`; the automatic postincrement rewrite had moved the comparison to the new value. These are genuine storage and control-flow corrections. RPG_BAT80155A70 remains a single delay-slot NOP gap, archived without artificial shaping.

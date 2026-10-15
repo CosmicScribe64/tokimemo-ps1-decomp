@@ -1,0 +1,14 @@
+{
+  "scope": "RENSYU:func_801320E0",
+  "variant": "packed-halfword",
+  "score": 0,
+  "status": "diagnostic-zero",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/RENSYU/func_801320E0",
+  "archive_path": "drafts/T-15600/attempts/RENSYU/func_801320E0/packed-halfword",
+  "body_sha256": "815511ba791f01208853d17d2accdd7e71bbe75d8dbdfd0706a8f4f978883e70",
+  "context_sha256": "4603b121cf7053dd357ae7e01a8dbf5cfdfb7be75b78cfacf7880f06e7ad3709",
+  "compiled_context_sha256": "e7c7f2ce41820fc97a199caae0071c5bc5a654ec22d41dab198d46a4fbadee89"
+}

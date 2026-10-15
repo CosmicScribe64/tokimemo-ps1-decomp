@@ -14514,3 +14514,15 @@ Created [[tickets/T-15100-unaligned-draft-repairs]] and notified the census gene
 ## [2026-10-15] build | Compile nine genuine unaligned-copy alternatives
 
 [[tickets/T-15100-unaligned-draft-repairs]] moves to In Review. All nine full-TU C alternatives compile and compare serially in Docker, spanning 17,408 target code bytes; scores 69..1667, no zeros and no matching-coverage claim. Copies recover genuine byte extents, string initializers and GEKO stack aliases. ENDING uses existing integer dialogue_render ABI evidence only in archived context. Complete separate catalog/provenance in drafts/T-14500/repairs-unaligned; initial attempts and production sources untouched.
+
+## [2026-10-15] ticket | Inspect fresh RENSYU and RPG near matches
+
+Started [[tickets/T-15600-fresh-near-matches]]. Read wiki evidence and initial census drafts; RENSYU's inferred word at GameState+0x66E is an existing canonical record byte at stride four. No prior target-specific experiments found; old rodata build restriction is obsolete. Preserve all previous matches and archived attempts.
+
+## [2026-10-15] build | Verify fresh RENSYU and SHOUGATU matches
+
+[[tickets/T-15600-fresh-near-matches]]: two default linked-byte matches / 1,256 bytes, RENSYU and SHOUGATU SHA1 OK, headers/globals OK, prototype0new/15known. Packed record halfword and original postincrement timing explain the gains; [[matching-notes]] updated. RPG's remaining nine-row NOP gap and all attempted C/context/provenance are archived in drafts/T-15600. Original attempts and previous matching C preserved. Ticket moved In Review; no further experiments under the user's usage-budget instruction.
+
+## [2026-10-15] lint | Normalize archived context EOF whitespace
+
+[[tickets/T-15600-fresh-near-matches]] archived source contexts drop surplus EOF blank lines; updated archive hashes retain original compiled-context hashes separately. Full preprocessed inputs and production code are unchanged. Diff whitespace check passes; no new experiments.

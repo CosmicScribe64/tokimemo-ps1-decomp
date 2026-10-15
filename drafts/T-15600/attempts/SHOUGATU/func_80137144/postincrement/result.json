@@ -1,0 +1,13 @@
+{
+  "scope": "SHOUGATU:func_80137144",
+  "variant": "postincrement",
+  "score": 0,
+  "status": "diagnostic-zero",
+  "matching_claim": false,
+  "source_base": "ffac0f04",
+  "census_base": "48362009",
+  "original_attempt": "drafts/T-14500/SHOUGATU/func_80137144",
+  "archive_path": "drafts/T-15600/attempts/SHOUGATU/func_80137144/postincrement",
+  "body_sha256": "5aeb4676e8d6c115de87ba70086e836965c68cb594c2fa759c63dda935bded47",
+  "context_sha256": "86abad43d1112c489cc4925793a42d6ad3ce26ac7dd5aa9ef0b5c96064b0da9e"
+}

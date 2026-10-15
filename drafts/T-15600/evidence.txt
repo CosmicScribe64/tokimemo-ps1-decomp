@@ -1,0 +1,28 @@
+T-15600 final verified production proof
+
+
+default-proof.log
+RENSYU:func_801320E0: compared default build
+note: ignored 1 stale asm file(s) of functions that changed between C and INCLUDE_ASM (e.g. asm/ovl/RENSYU/nonmatchings/RENSYU/80132040/func_801320E0.s); `rm` them or rebuild asm/ to clean up
+RENSYU:func_801320E0: MATCH (linked function bytes equal target (688 bytes))
+SHOUGATU:func_80137144: compared default build
+note: ignored 1 stale asm file(s) of functions that changed between C and INCLUDE_ASM (e.g. asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80136F90/func_80137144.s); `rm` them or rebuild asm/ to clean up
+SHOUGATU:func_80137144: MATCH (linked function bytes equal target (568 bytes))
+
+sha1.log
+[1/4] OBJCOPY build/ovl/RENSYU.bin
+[2/4] SHA1 CHECK build/ovl/RENSYU.bin
+build/ovl/RENSYU.bin: OK
+[3/4] OBJCOPY build/ovl/SHOUGATU.bin
+[4/4] SHA1 CHECK build/ovl/SHOUGATU.bin
+build/ovl/SHOUGATU.bin: OK
+
+headers.log
+headers OK
+
+globals.log
+globals OK
+
+protos.log
+0 new disagreement(s), 15 known (config/proto_known.txt)
+branch check OK
