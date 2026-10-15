@@ -700,10 +700,10 @@ s32 func_8013CEF8(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, instruction order: lw of D_8014996C and the sh to D_80149970+2 are swapped, plus lui a2 placement, 6 lines */
+/* NON_MATCHING: T-11640, 16 differing lines (8 rows): the original loads the clamp constant 0x10001 (lui/ori a2) in the block of the add, before the first clamp branch, which puts the sh of D_80149970.unk_02 ahead of the lw of D_80149968.unk_04; IDO loads it at the join after 'if (x < 0) x = 0', so the sh moves into the bgez delay slot (statement order, ternary clamps tried) */
 void func_8013CF88(void) {
     if (D_80149990.unk_00 != 0 && D_8014994C == 4 && D_80149950 == 4) {
-        D_80149978 = 0;
+        D_80149974.unk_04 = 0;
         if (D_80149990.unk_00 == 1) {
             D_80149974.unk_00 = -0x10000;
             return;
@@ -712,27 +712,27 @@ void func_8013CF88(void) {
         return;
     }
     if (D_80149970.unk_02 > 10) {
-        D_80149978 += D_8014996C;
         D_80149970.unk_02 = 0;
-        if (D_80149978 < 0) {
-            D_80149978 = 0;
+        D_80149974.unk_04 += D_80149968.unk_04;
+        if (D_80149974.unk_04 < 0) {
+            D_80149974.unk_04 = 0;
         }
-        if (D_80149978 > 0x10000) {
-            D_80149978 = 0x10000;
+        if (D_80149974.unk_04 > 0x10000) {
+            D_80149974.unk_04 = 0x10000;
         }
         if (D_80149974.unk_00 > 0) {
             D_80149974.unk_00 += D_80149968.unk_00;
             if (D_80149974.unk_00 <= 0) {
-                D_80149994 = 0;
-                D_801499A8 = 0;
+                D_80149990.unk_04 = 0;
+                D_801499A0.unk_08 = 0;
                 D_80149968.unk_00 = 0;
                 D_80149974.unk_00 = 0;
             }
         } else if (D_80149974.unk_00 < 0) {
             D_80149974.unk_00 += D_80149968.unk_00;
             if (D_80149974.unk_00 >= 0) {
-                D_80149994 = 0;
-                D_801499A8 = 0;
+                D_80149990.unk_04 = 0;
+                D_801499A0.unk_08 = 0;
                 D_80149968.unk_00 = 0;
                 D_80149974.unk_00 = 0;
             }
@@ -745,11 +745,11 @@ void func_8013CF88(void) {
         if (D_80149974.unk_00 > 0x10000) {
             D_80149974.unk_00 = 0x10000;
         }
-        if (D_80149978 < -0x10000) {
-            D_80149978 = -0x10000;
+        if (D_80149974.unk_04 < -0x10000) {
+            D_80149974.unk_04 = -0x10000;
         }
-        if (D_80149978 > 0x10000) {
-            D_80149978 = 0x10000;
+        if (D_80149974.unk_04 > 0x10000) {
+            D_80149974.unk_04 = 0x10000;
         }
     }
 }
@@ -1013,7 +1013,7 @@ void func_8014064C(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-11640, 3 differing lines; same as TACO func_801347F4: the original keeps 'move s2,s3; addiu s2,s2,8' where this folds to one addiu (s3 = arg0 + 4). The indexed loop (uopt strength-reduces it) fixes the lui order of the older pointer-loop draft. */
+/* NON_MATCHING: T-11640, 3 differing lines (move/addiu); same as TACO func_801347F4: the original keeps 'move s2,s3; addiu s2,s2,8' where this folds to one addiu (s3 = arg0 + 4). The indexed loop (uopt strength-reduces it) fixes the lui order of the older pointer-loop draft. */
 void func_801406A8(arg0)
 s32 arg0;
 {
