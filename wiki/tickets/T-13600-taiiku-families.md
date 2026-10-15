@@ -66,3 +66,11 @@ Initial helper ranking searched only selected notes and missed historical case/t
 Default targeted ninja reports TAIIKU.bin SHA1 OK. funcdiff --resolve --no-build reports both linked function byte ranges equal the target, total **2 functions /952 bytes**. Headers/globals pass. An inverse replacement audit proves all source text outside the two INCLUDE_ASM replacements is unchanged. No header changes, FAKE workarounds, flags or raw assets. Logs: build/taiiku13600/first-wins-build.log, first-wins-proof.log and first-wins-protos.log. Standards self-check covers C89, canonical globals, original symbol/order preservation and no unrelated source edits; independent review remains pending.
 
 Failed helper probes46A60/47928 retain14/65 lines respectively; those bodies remain scratch-only.
+
+### Third verified scene dispatcher
+
+**func_80139330: literal linked MATCH,544 bytes.** Its direct canonical-GameState draft leaves four +/- lines (one load/store pair); grouping the stores on one source line does not help. Writing the four x-coordinate accesses through the existing DisplayActor44 view reaches zero without artificial statements or formatting. Added canonical forward declarations in TAIIKU.h for the dispatcher and its five already-defined void helpers; whole-overlay SHA1 proves these declarations preserve all pre-existing C output. Source text outside the one INCLUDE_ASM replacement is identical.
+
+Default ninja: TAIIKU SHA1 OK, headers/globals pass. Literal proof: build/taiiku13600/second-proof.log; build log: second-build.log. Cumulative gain: **3 functions /1,496 verified linked bytes**. Independent review remains pending.
+
+Further bounded scratch results: the complete-type state twins3BB3C/3C33C remain141/139 lines after fixed-point union and canonical fields; race initializer44E54 remains139 after actor views and explicit resource snapshots. Fresh32BD0/34F98 inspection finds substantial copied-table/unrolled-stat reconstruction, so neither is treated as a simple dispatcher. These candidates remain assembly-backed. Larger sibling39610's natural thirteen-character stat-loop source is under test.

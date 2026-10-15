@@ -14190,3 +14190,7 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 ## [2026-10-15] build | T-13600 verify two TAIIKU scene dispatchers
 
 [[tickets/T-13600-taiiku-families]] adds func_80133494 (432 bytes) and func_80133644 (520), both literal linked MATCH with TAIIKU SHA1 OK. Ordinary nested dispatch removes m2c's goto mismatch. Existing source outside the two replacements is text-identical. Headers/globals pass; independent review remains pending. [[data/t13600-remaining-census]] corrects the initial limited prior-evidence search and records all84 baseline candidates.
+
+## [2026-10-15] build | T-13600 verify actor-field scene dispatcher
+
+[[tickets/T-13600-taiiku-families]] adds func_80139330 (544 literal linked bytes), with TAIIKU SHA1 and headers/globals passing. Existing DisplayActor44 coordinate fields fix the target load/store ordering. Canonical overlay prototypes preserve all existing output; source bodies remain untouched. Cumulative gain3 functions/1,496 bytes.
