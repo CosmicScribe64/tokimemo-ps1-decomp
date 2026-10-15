@@ -1,0 +1,2 @@
+rewrote src/ovl/TACO/801335A0.c
+src/ovl/TACO/801335A0.c:63: D_800E7378: no s32 field at offset 0x10F8 (there: u32 .unk_10F8) (left for a hand rewrite)

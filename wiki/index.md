@@ -22,6 +22,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-15500-bunkasai-character-flags|T-15500]] BUNKASAI record-ten flag match (In Review; 820 bytes).
 - [[tickets/T-15400-bunkasai-label-draft|T-15400]] BUNKASAI label encoding recovery (In Review; 440 coverage bytes).
 - [[tickets/T-15300-fresh-structural-near-matches|T-15300]] Fresh structural near matches: BUNKASAI func_801438E4 matched, 852 coverage/literal bytes; TACO probes continue (In Progress).
+- [[tickets/T-15300-fresh-structural-near-matches|T-15300]] Fresh structural matches: BUNKASAI 852 + BUNKAKEN 440 coverage/literal bytes; unfinished TACO draft archived with context (In Review).
 
 - [[tickets/T-15000-kangei-near-match|T-15000]] KANGEI func_80135CE0 matched: ordinary duplicated branch stores, 432 coverage/literal bytes (In Review).
 

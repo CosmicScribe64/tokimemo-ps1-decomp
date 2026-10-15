@@ -72,6 +72,12 @@ kanban-plugin: board
 - [ ] [[tickets/T-14800-etc-801447b0|T-14800 Resolve ETC func_801447B0]]
 - [ ] [[tickets/T-14600-date-draft-repairs|T-14600 Repair nine DATE census draft failures]]
 
+- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
+
+- [ ] [[tickets/T-15000-kangei-near-match|T-15000 Resolve KANGEI scene setup near match]]
+
+- [ ] [[tickets/T-14501-remaining-draft-proof|T-14501 Verify and integrate remaining-function drafts]]
+
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
 - [ ] [[tickets/T-12100-codex-cx10|T-12100 Codex cx10 DATE movie/effect functions]]
