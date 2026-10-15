@@ -46,3 +46,7 @@ The saved draft preserved the dispatcher selector across a side-effecting call a
 ### func_8013415C matched (1044 linked bytes)
 
 Autotweak273 candidates left22 rows. Traced uopt identified the explicit increment-result locals as competing register webs. Replacing both increment/copy sequences with D_8015EE0C += amount and testing the global removes the v0/v1 swap; changing only one produces66 rows. Natural C, no FAKE. Linked funcdiff MATCH1044 and RPG_BAT SHA1/globals OK. Evidence build/scratch/increment-twins.log, 3415C-regdiff.log, 3415C-match.diff and 3415C-build.log.
+
+### func_80134570 matched (1044 linked bytes)
+
+Applied the twin's two compound increments and direct counter tests. Plain C linked MATCH1044, RPG_BAT checksum/globals OK. No FAKE. Evidence build/scratch/increment-twins.log, 34570-match.diff and 34570-build.log.

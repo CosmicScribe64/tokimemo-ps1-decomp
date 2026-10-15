@@ -5088,3 +5088,5 @@ func_8014E300 matches692 bytes with a shared RpgMotion30 view of the EC28..EC57 
 func_801321D0 matches376 linked bytes using direct global selector tests and a direct switch after the optional call. The m2c-saved selector local concealed the original post-call reload and introduced an unnecessary range-test temporary/goto. Later C helpers need explicit shared prototypes once promoted.
 
 func_8013415C matches1044 linked bytes after both explicit increment-result temporaries become compound assignments and direct global tests. The 22-row phase/divisor register swap looked local to the negative multiplication block, but traced uopt showed competing webs from later increment copies. Changing only one of the two increments worsens the diff to66; changing both is exact. No artificial register forcing or dead code is needed.
+
+The same two compound-increment changes also match the func_80134570 twin (1044 linked bytes), with independent linked-byte and checksum verification.

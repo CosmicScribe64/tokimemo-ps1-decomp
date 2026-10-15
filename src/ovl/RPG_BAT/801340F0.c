@@ -93,11 +93,7 @@ void func_8013415C(void) {
 }
 
 
-/* NON_MATCHING: T-12040, 22 listing lines; phase/divisor v0-v1 swap. */
-#ifdef NON_MATCHING
 void func_80134570(void) {
-    s32 temp_v0;
-    s32 temp_v0_2;
 
     switch (D_8015EE04) {
     case 0:
@@ -122,9 +118,8 @@ void func_80134570(void) {
         return;
     case 4:
         func_8013E97C(0x1D, (s32) (D_8015EE0C * -0xA8) / 1000, (s32) (D_8015EE0C * -0x30) / 1000);
-        temp_v0 = D_8015EE0C + 5;
-        D_8015EE0C = temp_v0;
-        if (temp_v0 >= 0x3E9) {
+        D_8015EE0C += 5;
+        if (D_8015EE0C >= 0x3E9) {
             func_8013E97C(0x1D, -0xA8, -0x30);
             func_8013E97C(0x1E, -0xA8, -0x30);
             func_8013E7C0(0x1D, 0xB, 1, 1);
@@ -155,9 +150,8 @@ void func_80134570(void) {
         return;
     case 9:
         func_8013E97C(0x1D, ((s32) (D_8015EE0C * 0xA8) / 100) - 0xA8, ((s32) (D_8015EE0C * 0x30) / 100) - 0x30);
-        temp_v0_2 = D_8015EE0C + 2;
-        D_8015EE0C = temp_v0_2;
-        if (temp_v0_2 >= 0x65) {
+        D_8015EE0C += 2;
+        if (D_8015EE0C >= 0x65) {
             func_8013E97C(0x1D, 0, 0);
             func_8013E7C0(0x1D, 0, 1, 1);
             func_8014F230();
@@ -175,9 +169,7 @@ void func_80134570(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801340F0", func_80134570);
-#endif
+
 
 void func_80134984(void) {
     switch (D_8015EE04) {

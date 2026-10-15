@@ -13529,3 +13529,7 @@ Restored the dispatcher selector reload after its optional call and declared its
 ## [2026-10-15] build | RPG_BAT func_8013415C matched
 
 Traced uopt led to removing two increment-result temporaries. Plain C passes linked funcdiff1044 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/3415C-regdiff.log and 3415C-match.diff.
+
+## [2026-10-15] build | RPG_BAT func_80134570 matched
+
+The twin's two counter temporaries were replaced by compound increments and direct tests. Plain C linked MATCH1044 and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/34570-match.diff.
