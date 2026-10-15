@@ -170,37 +170,7 @@ void func_800590CC(s32 arg0) {
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800590CC);
 #endif
 
-#ifdef NON_MATCHING
-void func_800591D8(s32 arg0) {
-    func_80059308();
-    func_8009C674(0);
-    func_8009C210(1);
-    func_8009C5E0(0);
-    if (arg0 != 0 && D_800E6280.unk_000 != 0x200) {
-        D_800E6280.unk_014[0] = 0x100;
-        D_800E6280.unk_014[1] = 0x100;
-        D_800E6280.unk_000 = 0x200;
-        D_800E6280.unk_002 = 0xF0;
-        D_800E6280.unk_004 = 0;
-        func_80097F58(0x200, 0xF0, 0, 0, 0);
-        func_8005907C();
-        back_clear_switch(1);
-    } else if (arg0 == 0 && D_800E6280.unk_000 != 0x140) {
-        D_800E6280.unk_014[0] = 0xA0;
-        D_800E6280.unk_014[1] = 0xA0;
-        D_800E6280.unk_000 = 0x140;
-        D_800E6280.unk_002 = 0xF0;
-        D_800E6280.unk_004 = 0;
-        func_80097F58(0x140, 0xF0, 0, 0, 0);
-        func_8005907C();
-        back_clear_switch(1);
-    }
-    func_800AD950(0);
-    func_8009C5E0(1);
-}
-#else
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800591D8);
-#endif
 
 /* FAKE: the RECT field stores sharing a source line are scheduled as a unit by as1, which gives the original's store order (h before w). T-8010 */
 void func_80059308(void) {
