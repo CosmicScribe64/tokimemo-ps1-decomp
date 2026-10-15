@@ -14452,3 +14452,7 @@ Created [[tickets/T-14300-event-families]] in isolated codex/event-14300 from 45
 ## [2026-10-15] build | EVENT place-handler family adds 2548 bytes
 
 [[tickets/T-14300-event-families]] verifies five adjacent handlers in src/ovl/EVENT/8010FE10.c through full-TU default literal linked proof and EVENT SHA1. Consistent existing EventStateView access matches; no headers or existing C changed. Header/global/prototype guards pass. 8010A91C typed-bitfield loop probe remains two rows and was restored.
+
+## [2026-10-15] build | EVENT interaction adds 656 bytes
+
+[[tickets/T-14300-event-families]] matches func_80117D80 in src/ovl/EVENT/8010FE10.c using ordinary conditions, the observed signed EventStateView field at offset 0xFE, and one explicitly marked FAKE discarded entry assignment for operand order. Default literal proof, EVENT SHA1, header/global/prototype guards pass. Cumulative gain: six functions / 3,204 literal linked bytes. Shop and medal probes remain ignored scratch.
