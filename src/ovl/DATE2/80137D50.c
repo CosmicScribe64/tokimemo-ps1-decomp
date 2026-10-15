@@ -111,7 +111,82 @@ void func_801381D4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE2/nonmatchings/DATE2/80137D50", func_8013820C);
+void func_8013820C(void) {
+
+    *D_800CA234 = 0;
+    D_800CA236 = 0;
+    D_800CA234[2] = 0;
+    *D_800CA224 = 1;
+    D_800CA224[1] = 1;
+    D_800CA224[2] = 1;
+    func_8004E9F4(0);
+    func_8006612C((s32) "ＢＯＸ内");
+    D_80122CDC = 0;
+    D_8013B5CC = 0;
+    D_8013B5D0 = 0;
+    func_80137D50();
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_8013B5EC = D_8013B544;
+        D_8013B5F0 = D_8013B570;
+        D_8013B5F4 = D_8013B59C;
+        break;
+    case 1:
+        D_8013B5EC = D_8013B554;
+        D_8013B5F0 = D_8013B580;
+        D_8013B5F4 = D_8013B5AC;
+        break;
+    case 2:
+        D_8013B5EC = D_8013B548;
+        D_8013B5F0 = D_8013B574;
+        D_8013B5F4 = D_8013B5A0;
+        break;
+    case 3:
+        D_8013B5EC = D_8013B54C;
+        D_8013B5F0 = D_8013B578;
+        D_8013B5F4 = D_8013B5A4;
+        break;
+    case 4:
+        D_8013B5EC = D_8013B564;
+        D_8013B5F0 = D_8013B590;
+        D_8013B5F4 = D_8013B5BC;
+        break;
+    case 5:
+        D_8013B5EC = D_8013B558;
+        D_8013B5F0 = D_8013B584;
+        D_8013B5F4 = D_8013B5B0;
+        break;
+    case 6:
+        D_8013B5EC = D_8013B55C;
+        D_8013B5F0 = D_8013B588;
+        D_8013B5F4 = D_8013B5B4;
+        break;
+    case 7:
+        D_8013B5EC = D_8013B550;
+        D_8013B5F0 = D_8013B57C;
+        D_8013B5F4 = D_8013B5A8;
+        break;
+    case 8:
+        D_8013B5EC = D_8013B540;
+        D_8013B5F0 = D_8013B56C;
+        D_8013B5F4 = D_8013B598;
+        break;
+    case 9:
+        D_8013B5EC = D_8013B560;
+        D_8013B5F0 = D_8013B58C;
+        D_8013B5F4 = D_8013B5B8;
+        break;
+    case 10:
+        D_8013B5EC = D_8013B568;
+        D_8013B5F0 = D_8013B594;
+        D_8013B5F4 = D_8013B5C0;
+        break;
+    }
+    D_8013B5F8 = 0;
+    D_8013B5FC = 0;
+    func_8004284C();
+}
+
 
 void func_8013850C(void) {
     switch (D_800E6280.unk_1104.u) {

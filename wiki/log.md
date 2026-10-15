@@ -14277,3 +14277,11 @@ All eleven functions / 5900 literal bytes pass default linked proof, ETC SHA1 68
 
 ## [2026-10-15] build | Card-state batch verified at 61.6 percent
 [[tickets/T-12400-integrate-verified-matches]]: ETCaa1c51ec adds4functions/2368bytes; event178f61b1 fixes include guards and canonical main declaration without changing matched bytes. All27 checksums, header/global checks and prototype audit pass (0new/15known). Total5874/6958functions,1404124/2279368bytes (61.6%); remaining419372alignedbytes for80%. Evidence build/scratch/goal-card-states.log. Build-dependency experiment remains unintegrated pending file-addition correctness fixes; observed ETC-header rebuild reduction443to13compiles is not a game-byte gain.
+
+## [2026-10-15] setup | Isolated GEKO and DATE2 lane
+
+Created codex/scenes-13900 at 0e670a13 with ignored reference inputs copied from integration. Claimed [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and [[tickets/T-13902-date2-families]] In Progress. Read prior source-form successes and failures; see [[scenes-family-results]].
+
+## [2026-10-15] build | First DATE2 literal match
+
+[[tickets/T-13902-date2-families]] accepts func_8013820C, 768 literal linked bytes with DATE2 SHA1 OK. Direct switch stores plus the target halfword type close it. GEKO background helper remains diagnostic-only; see [[scenes-family-results]].
