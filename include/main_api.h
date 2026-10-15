@@ -2180,7 +2180,7 @@ void func_8007259C(u8 arg0);
 void func_800726F0(void);
 void func_80072734();
 s32 func_80072944(void);
-void func_80072998(void);
+s32 func_80072998(void);
 void func_80072B20(void);
 s32 func_80072B5C(s32 arg0);
 void func_80072C68(void);
