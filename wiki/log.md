@@ -14008,3 +14008,10 @@ Created [[tickets/T-12800-large-event-tel]] and children [[tickets/T-12801-event
 
 ## [2026-10-15] build | Complete adjacent BUNKAKEN scene handlers
 [[tickets/T-12701-bunkaken-address-family]] adds eight functions / 6,112 linked bytes and passes BUNKAKEN SHA1. 8013EB30.c now contains only C; prior matched bodies are preserved. BUNKAKEN cumulative gain: twenty-eight functions / 26,776 bytes.
+## [2026-10-15] ticket | T-12800 batch enters review
+
+[[tickets/T-12800-large-event-tel]], [[tickets/T-12801-event]], [[tickets/T-12802-tel]], and [[tickets/T-12803-main]] moved to In Review. Commit c0cc3335 contains one 644-byte production match. EVENT/TEL experiments restored; negative evidence retained. Full 27-binary build running at two jobs.
+
+## [2026-10-15] build | T-12800 final proof and review
+
+All 27 binary SHA1 hashes pass against config manifests. Prototype branch check has zero new disagreements (15 known), header and global checks pass, and standards/spec reviews are clean. [[tickets/T-12800-large-event-tel]], [[tickets/T-12801-event]], [[tickets/T-12802-tel]], [[tickets/T-12803-main]] moved In Review to Done. Only production change is date_sasoi_judge, 644 linked bytes, commit c0cc3335. Local experiments moved under gitignored build/t12800-evidence/ for clean handoff; large global 80% objective remains with integration.

@@ -34,13 +34,9 @@ kanban-plugin: board
 
 - [ ] [[tickets/T-12900-small-option-main|T-12900 Small OPTION and main audio matching]]
 
-- [ ] [[tickets/T-12803-main|T-12803 Main schedule matching]]
 
-- [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
 
-- [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
 
-- [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]
 
 
 
@@ -122,6 +118,10 @@ kanban-plugin: board
 ## Done
 - [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]
 
+- [ ] [[tickets/T-12803-main|T-12803 Main schedule matching]]
+- [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]
+- [ ] [[tickets/T-12801-event|T-12801 EVENT control flow matching]]
+- [ ] [[tickets/T-12800-large-event-tel|T-12800 Large EVENT TEL and main matching]]
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
 - [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
 - [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]

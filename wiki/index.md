@@ -276,10 +276,10 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[bunka-family-results]] — BUNKAKEN aggregate-address and BUNKASAI state-reload experiments (T-12700).
 - [[tickets/T-12703-bunkasai-heldout-family|T-12703]] BUNKASAI held-out family transfer (In Progress).
 
-- [[tickets/T-12800-large-event-tel|T-12800]] Large EVENT TEL and main matching (In Progress).
+- [[tickets/T-12800-large-event-tel|T-12800]] Large EVENT TEL and main matching (Done).
 
-- [[tickets/T-12801-event|T-12801]] EVENT control flow matching (In Progress).
+- [[tickets/T-12801-event|T-12801]] EVENT control flow matching (Done).
 
-- [[tickets/T-12802-tel|T-12802]] TEL table and control flow matching (In Progress).
+- [[tickets/T-12802-tel|T-12802]] TEL table and control flow matching (Done).
 
-- [[tickets/T-12803-main|T-12803]] Main schedule matching (In Progress).
+- [[tickets/T-12803-main|T-12803]] Main schedule matching (Done).
