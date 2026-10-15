@@ -431,14 +431,13 @@ void func_8013B41C(void) {
     }
 }
 
-/* T-11540 near miss (order_search, 20 rows left of 22): temp t (i*2) is in $v0 and the if/else index in $v1, the original has them swapped (declaration order and operand swaps of c + t*2 / c + j*2 do not change it; IDO canonicalizes those sums), and the original hoists D_80151A50 before i = 0 (44 listing rows). */
+/* T-11540/T-11800 near miss, 4 lines: T-11800 typed s16 indexing ((s16 *)(c + 0x248))[j] gives the original's addu c, j*2 operand order, and an empty if (j) {} (FAKE) raises j above the i * 2 CSE so j takes $v0 and i * 2 $v1 (was 20 rows). Left: in the hit block the c + i * 4 address (a1) is computed after the 0x2C8 store (the original computes it before and fills the bnez delay slot with the store), and the preheader splits lui/addiu of D_80151A50 around r = c. Tried: an a2 local before/after the store, c + t * 2 and &c[t * 2] forms, order_search on the hit block and the three inits, a tp = D_80151A50 local. */
 #ifdef NON_MATCHING
 void func_8013B4A0(void) {
     u8 *c;
     u8 *f;
     u8 *r;
     u8 *a;
-    u8 *a2;
     s32 i;
     s32 j;
     s32 t;
@@ -464,20 +463,21 @@ void func_8013B4A0(void) {
             r[0x182] = 0;
             r[0x188] = 0;
             f[0x320] = 1;
-            a2 = t * 2 + c;
             *(s16 *)(a + 0x2C8) = 8;
             if (i >= 2) {
                 j = t + 2;
             } else {
                 j = t;
             }
-            *(s16 *)(a + 0x268) = *(s16 *)(c + j * 2 + 0x248);
+            *(s16 *)(a + 0x268) = ((s16 *)(c + 0x248))[j];
+            if (j) { /* FAKE: an empty test adds a use of j, so j outranks i * 2 and takes $v0 as in the original. T-11800 */
+            }
             if (i >= 2) {
                 j = t + 2;
             } else {
                 j = t;
             }
-            *(s16 *)(a + 0x298) = *(s16 *)(c + j * 2 + 0x278);
+            *(s16 *)(a + 0x298) = ((s16 *)(c + 0x278))[j];
             if (i >= 2) {
                 *(s16 *)(a + 0x298) += 0xC;
             }
@@ -490,8 +490,8 @@ void func_8013B4A0(void) {
             r[0x1D8] = 0;
             f[0x324] = 1;
             *(s16 *)(a + 0x2D0) = 8;
-            *(s16 *)(a + 0x270) = *(s16 *)(a2 + 0x24A);
-            *(s16 *)(a + 0x2A0) = *(s16 *)(a2 + 0x27A);
+            *(s16 *)(a + 0x270) = ((s16 *)(c + 0x24A))[t];
+            *(s16 *)(a + 0x2A0) = ((s16 *)(c + 0x27A))[t];
             f[0x343] = 0;
         }
         func_80142AF0(D_80155AE4, i + 0x10);
