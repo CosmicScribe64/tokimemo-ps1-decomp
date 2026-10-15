@@ -335,3 +335,6 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Compiler include dependencies reused for DATE experiments.
 - [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
 - [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
+
+- [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (In Review).
+- [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).

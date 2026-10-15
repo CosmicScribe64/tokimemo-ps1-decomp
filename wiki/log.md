@@ -14414,3 +14414,17 @@ Review of [[tickets/T-14000-ending-en-nichi-families]] identifies func_801333B0'
 
 ## [2026-10-15] build | DATE and EN_NICHI gain verified at 61.8 percent
 [[tickets/T-12400-integrate-verified-matches]] integrated6e23f2c0 and4f1ca7a6 plus3860fddf annotation fix. Independent default literal proof confirms DATE80152980=296bytes and EN_NICHI801333B0=476bytes, with affected binary SHA1s, headers/globals and branch prototype checks passing. Standards inspection required an explicit FAKE label for the unconfirmed s32-without-return lifetime choice; final annotated source reverified. Total5882/6958functions,1407536/2279368bytes (61.8%); remaining415960alignedbytes to80%. Evidence build/scratch/goal-date-52980.log, goal-en-nichi.log and goal-en-nichi-final.log. DATE worker now reconstructs3192-byte dispatch aggregate family; other active workers continue distinct scopes.
+## [2026-10-15] setup | Isolated TACO family pass
+Created codex/taco-13800 from 97ec697f and claimed [[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]] before source work. Read [[decompile-workflow]], [[bunka-family-results]], prior T-12070 and T-13400 evidence. Original checkout is read only; Docker only, one compiler initially, verified production matches only.
+
+## [2026-10-15] query | TACO boss transform family selected
+[[tickets/T-13801-taco-actor-family]] records bounded m2c/assembly inspection of actor transform siblings. Initial 4A480 candidate compiles in its full TU after adding one overlay-owned forward declaration, but retains stack/register/address differences. No verified coverage gain yet; original source restored after comparisons.
+
+## [2026-10-15] build | TACO transform reconstruction reaches three rows
+[[tickets/T-13801-taco-actor-family]] records bounded local/type/operand tests: 4A480 now matches the frame and all but three rows. Separate sibling 497EC reconstruction started. All full-TU candidate source edits are restored after scoring; no coverage accepted.
+
+## [2026-10-15] ticket | TACO diagnostic handoff enters review
+[[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]] move to In Review with matching cards. [[taco-family-results]] records zero accepted bytes, one-row 497EC, three-row 4A480 and 62-row 87A4. Preserved all ignored candidate bodies/diffs and reproducible full-TU probe; source and header diffs against 97ec697f are empty. Final default overlay build is running.
+
+## [2026-10-15] build | TACO default restored and diagnostic review recorded
+[[tickets/T-13800-taco-families]] and [[tickets/T-13801-taco-actor-family]]: saved probe reproduces 497EC one row and 4A480 three rows; source restored. Explicit checked Docker ninja exits 0 with TACO SHA1 OK (1419e93cbad6c0df790577701181be04e0747969), headers/globals pass. Independent standards review has zero findings; spec review notes the primary matching goal remains unmet and the pending-verification text needed updating (now corrected). Tickets remain In Review, zero accepted bytes; [[taco-family-results]] updated.
