@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 - [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
-- [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]
 
 - [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]
 
@@ -105,6 +104,8 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-12702-bunkasai-family|T-12702 BUNKASAI source families]]
+
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
 - [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
 - [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]

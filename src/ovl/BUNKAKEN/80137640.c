@@ -638,7 +638,164 @@ void func_801386C0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80137640", func_80138A08);
+void func_80138A08(void) {
+    GameState *g = &D_800E6280;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 temp_v0_3;
+    switch (g->unk_110A) {
+    case 0:
+        dec_bg_cd_read(0x4105, 1);
+        func_8004284C();
+        break;
+    case 1:
+        normal_date_bggirl_fadeout();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_80145844();
+            dec_bg_show_set(1, func_8005751C(1));
+            cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        normal_date_bggirl_fadein();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(4);
+            switch (temp_v0) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x34;
+                break;
+            case 2:
+            case 3:
+                D_800CA148 = 0x35;
+                break;
+            }
+            func_80139DEC();
+        }
+        break;
+    case 5:
+        normal_date_speak();
+        break;
+    case 6:
+        normal_date_girl_out();
+        break;
+    case 7:
+        ((BunkakenModeFlags *)&D_800E7D4F)->b1 = 1;
+        ((BunkakenModeFlags *)&D_800E7D4F)->mode = 0;
+        g->unk_720 = g->unk_1108;
+        g->unk_721 = g->unk_1109;
+        g->unk_722 = g->unk_110A + 1;
+        func_80042908(0x8D);
+        break;
+    case 8:
+        D_80122E98 = 1;
+        D_80122EB0 = (s32) g->unk_1109;
+        D_80122EB4 = g->unk_110A + 1;
+        func_80042908(0x8C);
+        break;
+    case 9:
+        func_80044750(0xBF);
+        func_80044890(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
+        func_80085E30(1, 0);
+        func_80145844();
+        D_80125CA0 = 0xC0;
+        message_window_init();
+        hizuke_init();
+        func_80084E4C();
+        func_800847B8(4U);
+        D_80122E98 = 0;
+        func_8004284C();
+        break;
+    case 10:
+        if (func_80044E8C() == 1) {
+            func_80044750(0x200);
+            dec_bg_reset();
+            set_dec_bri(0);
+            dec_bg_cd_read(0x4105, 1);
+            func_8004284C();
+        }
+        break;
+    case 11:
+        if (cd_read_sync_status() & 1) {
+            dec_bg_show_set(1, func_8005751C(1));
+            func_8004284C();
+        }
+        break;
+    case 12:
+        func_800866A0(0x66BF);
+        break;
+    case 13:
+        addr_init_bustup();
+        g->unk_F5F = 4;
+        func_80083474();
+        cd_read_sectors(0xCU, 0x801E8000, 0x4B52);
+        break;
+    case 14:
+        normal_date_bggirl_fadein();
+        break;
+    case 15:
+        if (cd_read_sync_status() & 1) {
+            temp_v0_2 = func_8008667C(4);
+            switch (temp_v0_2) {
+            case 0:
+            case 1:
+                D_800CA148 = 0x36;
+                break;
+            case 2:
+            case 3:
+                D_800CA148 = 0x38;
+                break;
+            }
+            if ((u8) D_800E7D4E < 2U) {
+                D_800CA148 += 1;
+            }
+            func_80139DEC();
+        }
+        break;
+    case 16:
+        normal_date_speak();
+        break;
+    case 17:
+        temp_v0_3 = func_8008667C(4);
+        switch (temp_v0_3) {
+        case 0:
+        case 1:
+            D_800CA148 = 0x3A;
+            break;
+        case 2:
+        case 3:
+            D_800CA148 = 0x3B;
+            break;
+        }
+        func_8004284C();
+        break;
+    case 18:
+        normal_date_speak();
+        break;
+    case 19:
+        normal_date_bggirl_fadeout();
+        break;
+    case 20:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 21:
+        normal_date_speak();
+        break;
+    case 22:
+        ((BunkakenModeFlags *)&D_800E7D4F)->b0 = 1;
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_80138EB8(void) {
     s32 temp_v0;
