@@ -14463,3 +14463,6 @@ Moved [[tickets/T-13900-scenes-families]], [[tickets/T-13901-geko-families]] and
 ## [2026-10-15] lint | GEKO and DATE2 handoff consistency
 
 Three ticket statuses match Done cards; result page and ticket cross-references exist. Accepted byte totals agree with final-proof.log. All speculative prototype/type edits removed; only accepted C/header changes remain. Original source checkout read only, copyrighted inputs ignored. Integration remains responsible for main and the 80% goal.
+
+## [2026-10-15] decision | Preserve completed family evidence and rotate scopes
+[[tickets/T-12600-byte-coverage-families]] refreshed census at45d52546:1072remainingfunctions/869948bytes. Largest200still387848bytes, below414076-byte80%gap; sustained family coverage remains necessary. DATEc9d9b3b9 and scene6caf5ee9 final records integrated with no production changes or new byte claims; their636/2108bytes were already published. Replacement Sol6.1medium EVENT worker T14300 owns43796remainingbytes/48functions, and OPTION chat T14400 owns29612bytes/44functions. Both receive prior failed-search evidence and full literal-proof requirements. MAIN,TAIIKU,ENDING/EN_NICHI continue independently. Ticket cards reconciled to final frontmatter; coverage remains1409420/2279368bytes (61.8%).
