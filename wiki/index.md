@@ -267,10 +267,10 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[broad-coverage-results]] - T-12230: 190-target ledger, five verified wins, and limits of broad zero-search matching.
 - [[tickets/T-12300-large-unclaimed-byte-matches|T-12300]] Substantial unclaimed byte matches (In Review; 4,920 verified bytes, four functions).
 
-- [[tickets/T-12800-large-event-tel|T-12800]] Large EVENT TEL and main matching (In Progress).
+- [[tickets/T-12800-large-event-tel|T-12800]] Large EVENT TEL and main matching (Done).
 
-- [[tickets/T-12801-event|T-12801]] EVENT control flow matching (In Progress).
+- [[tickets/T-12801-event|T-12801]] EVENT control flow matching (Done).
 
-- [[tickets/T-12802-tel|T-12802]] TEL table and control flow matching (In Progress).
+- [[tickets/T-12802-tel|T-12802]] TEL table and control flow matching (Done).
 
-- [[tickets/T-12803-main|T-12803]] Main schedule matching (In Progress).
+- [[tickets/T-12803-main|T-12803]] Main schedule matching (Done).

@@ -13920,3 +13920,11 @@ Created [[tickets/T-12800-large-event-tel]] and children [[tickets/T-12801-event
 ## [2026-10-15] build | Production calendar match verified
 
 [[tickets/T-12803-main]]: default full-TU linked proof passes for 644 bytes; build/SLPM_86.053.bin SHA1 OK. Separate standards/spec reviews found no source issues.
+
+## [2026-10-15] ticket | T-12800 batch enters review
+
+[[tickets/T-12800-large-event-tel]], [[tickets/T-12801-event]], [[tickets/T-12802-tel]], and [[tickets/T-12803-main]] moved to In Review. Commit c0cc3335 contains one 644-byte production match. EVENT/TEL experiments restored; negative evidence retained. Full 27-binary build running at two jobs.
+
+## [2026-10-15] build | T-12800 final proof and review
+
+All 27 binary SHA1 hashes pass against config manifests. Prototype branch check has zero new disagreements (15 known), header and global checks pass, and standards/spec reviews are clean. [[tickets/T-12800-large-event-tel]], [[tickets/T-12801-event]], [[tickets/T-12802-tel]], [[tickets/T-12803-main]] moved In Review to Done. Only production change is date_sasoi_judge, 644 linked bytes, commit c0cc3335. Local experiments moved under gitignored build/t12800-evidence/ for clean handoff; large global 80% objective remains with integration.
