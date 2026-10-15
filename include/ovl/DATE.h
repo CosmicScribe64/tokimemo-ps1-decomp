@@ -1581,6 +1581,11 @@ void func_8013E980(void);
 void func_8013E9BC(void);
 void func_8014C7FC(void);
 
+/* T-14501: section fillers called before their definitions. */
+void date_fill_sections_shiori(void);
+void date_fill_sections_mio(void);
+void date_fill_sections_yuina(void);
+
 #endif
 
 /* T-12100: calls recovered in DATE startup state dispatch. */

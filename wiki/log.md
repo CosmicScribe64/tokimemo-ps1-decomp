@@ -14594,3 +14594,6 @@ Removed unnecessary pre-branch loop initializations from two new audio handlers 
 ## [2026-10-15] ticket | Complete reviewed OPTION family pass
 
 [[tickets/T-14400-option-menu-families]] moves to Done after both independent review axes pass the source fixes. Six functions add 5868 literal verified bytes, OPTION SHA1 matches, headers/globals/prototypes pass, and all 33 pre-existing C bodies are unchanged. No new FAKE workaround or shared main-header change. Remaining assigned OPTION queue: 23744 bytes / 38 functions; broader 80% goal ongoing. Branch codex/option-14400 is ready for integration without a worker push or PR.
+## [2026-10-15] build | T-14501 DATE verified draft batch
+
+Promoted 2 ordinary C functions / 1,088 bytes for DATE after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
