@@ -30,3 +30,6 @@ func_80041C2C: 796 default linked bytes, MAIN SHA1, headers/globals pass; prior 
 
 ### Review corrections
 Initial standards/spec reviews identified an unguarded prototype, unexplained strncpy casts and match-directed literal masks. Header guard fixed, casts removed, final source uses actual GsDateBits/CharFlags.f20 fields. Both literal functions and MAIN SHA1 reverified (bitfield-proof.log, bitfield-build.log). Re-review pending. No initializer FAKE remains.
+
+### Background checkpoint
+Default literal matches 578F4 (1064), 57D28 (1648), 58398 (2440), MAIN SHA1 OK. Reuse existing SPRT plus paired size stores and one sprite pointer. The latter two explicitly carry FAKE unused-word frame/home workarounds (4088 bytes); 578F4 needs no FAKE. Cumulative 6624 literal bytes; 2536 without new FAKE. All 22 original C bodies preserved verbatim. Evidence in [[main-family-results]]; final guards/review pending.

@@ -14575,3 +14575,6 @@ Integrated5d4717cc complete1066-targetinventory andserialfull-TU draft/scoringha
 ## [2026-10-15] build | T-14501 BUNKA_SD verified draft batch
 
 Promoted 1 ordinary C functions / 908 bytes for BUNKA_SD after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+
+## [2026-10-15] build | T-14200 background renderers add 5152 bytes
+Three default literal functions and MAIN SHA1 pass; [[main-family-results]] documents one reused SPRT pointer, actual mode comparisons and paired sizes. 57D28/58398 honestly label FAKE unused-word frame homes; 578F4 is ordinary C. Cumulative five functions/6624 bytes, 2536 without new FAKE. Source audit preserves 22 old C bodies. [[tickets/T-14200-main-source-families]] remains In Progress pending final guards/review.

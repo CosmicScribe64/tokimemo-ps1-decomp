@@ -33,3 +33,20 @@ func_80041C2C adds **796 literal linked bytes**. Using one local GameState point
 ## Review correction to initializers
 
 The first standards/spec reviews found the new prototype outside the include guard, unexplained pointer-to-s32 strncpy casts, and redundant literal mask spellings whose original-source plausibility was not established. These have been removed. The final initializer source uses GsDateBits month/day fields for the birthday word and Rec38 +0x10, and CharFlags.f20 for the initialized nibble. Existing word/byte/halfword views and record sizes remain unchanged. The prototype is inside MAIN_API_H; strncpy receives pointers directly. Ordinary complemented-mask probes failed (store scheduling and a widened AND), so they were rejected. Both final bitfield functions retain default literal MATCH and MAIN SHA1 OK (build/main14200/bitfield-proof.log and bitfield-build.log). No FAKE is needed for the initializer pair. Re-review and final guards follow.
+
+## Background sprite checkpoint
+
+Three related renderers add **5152 default literal linked bytes**: func_800578F4 (1064), func_80057D28 (1648), func_80058398 (2440). MAIN SHA1 passes. Proof: build/main14200/bg-proof.log and bg-build2.log.
+
+The decisive source repair is one reused SPRT pointer across successive packets, rather than m2c's separate short-lived packet values. Shared table-pointer comparisons in the draft were actually comparisons of the incoming mode with 1/2; those now use the argument directly. The repository already defines SPRT in include/psx_types.h; it is reused, with a PsyQ-compatible setWH comma-expression helper. Paired size assignment and x/y-before-UV store order close the remaining scheduling differences.
+
+**Two functions are FAKE:** 57D28 and 58398 each need one unused s32 word before the table-pointer local to reproduce the target's +0x3C spill home and 0x50-byte frame. Without it all non-frame instructions match, but 24/32 frame/home rows differ. Their source comments explicitly label this T-14200 workaround; the real extra local remains unknown. The 1064-byte 578F4 function uses no FAKE. Cumulative gain: **5 functions / 6624 literal bytes**, comprising **2536 bytes without new FAKE and 4088 bytes in two labeled frame-workaround functions**.
+
+An initial duplicate SPRT declaration in libgpu.h was rejected by the complete MAIN build; it was removed in favor of the existing shared type. The subsequent build and literal proofs pass. A source audit confirms all 22 pre-existing C bodies in the two touched files remain byte-for-byte identical as source (build/main14200/body-audit.log).
+
+## Additional bounded negative evidence
+
+- Neighboring initializer 419FC improves 36 -> 22 -> 14 rows by correcting its byte clear, one-based index and loop increment in the body. Return-type and consistent-pointer probes do not close the remaining aggregate-base register and clear/store scheduling gap. No promotion.
+- Scheduler 6D138: existing CharFlags casts 347 rows, consistent GameState pointer 262, aggregate flag-copy forms 329/394. Entry speculation/control-flow remains unresolved. No header change retained.
+- Input 42CB0: packet bytes through existing controller arrays and canonical GameState fields 330 rows, pointer 324. Still broad allocation/control-flow differences.
+- Numeric 4AE54: abs argument/texture byte-pair repairs identified, but initial scratch compile failed due an uncorrected void-pointer texture local. No match claim. The prior spill-order evidence remains applicable.

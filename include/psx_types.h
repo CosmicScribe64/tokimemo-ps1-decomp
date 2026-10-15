@@ -3,6 +3,9 @@
 
 #include "libgpu.h"
 
+/* T-14200: PsyQ-compatible assignment of a rectangle packet size. */
+#define setWH(p, _w, _h) ((p)->w = (_w), (p)->h = (_h))
+
 /* Shared packet and geometry types for recovered rendering code. T-9610. */
 /* PsyQ 3.x packet ABI, written here from field widths and GPU command order.
  * These are DMA packets: tag is one 32-bit word, including on LP64 hosts.
