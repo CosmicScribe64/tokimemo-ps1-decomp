@@ -3,8 +3,7 @@
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80144D70", func_80144D70);
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10820, 4 differing lines (was 10 register lines): dead compare locals reserve a0, the constant 0x70 still sits in $a1 where the original has $a3 */
+/* T-11800: matched. T-10820 dead compare locals reserve a0 in both loops; d2, assigned before the first loop and tested by an empty if inside it (FAKE), also reserves a1 there, so the hoisted 0x40/0x70 take a2/a3 as in the original. */
 void func_80145370(void) {
     s32 i;
     u8 *p;
@@ -13,6 +12,7 @@ void func_80145370(void) {
 
     i = 0;
     p = D_80158A98;
+    d2 = (int)D_80158AA0; /* FAKE: with the empty if (d2) {} below, d2 lives through the first loop and reserves a1, so the hoisted 0x70 takes a3 as in the original; no code is emitted. T-11800 */
     for (; i < 0x40; i++) {
         /* FAKE: dead compare locals with an else branch (decomp-permuter); they only reserve registers so that the hoisted constants sit in the original's registers. T-10820 */
         if (p[0] != 0 && (d1 = (*(u16 *)(p + 4) == 0x40))) {
@@ -21,6 +21,8 @@ void func_80145370(void) {
             *(s16 *)(p + 8) = 0;
             *(s16 *)(p + 6) = 0;
             p[0xF] = 0;
+            if (d2) { /* FAKE: see d2 above. T-11800 */
+            }
             p[0xE] = 0;
             p[0xD] = 0;
         } else {
@@ -45,9 +47,6 @@ void func_80145370(void) {
         p += 0x68;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80144D70", func_80145370);
-#endif
 
 void func_801454D8(u8 *arg0) {
     D_80158A74[0x55] = 0xA;
