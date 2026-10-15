@@ -13351,3 +13351,7 @@ Created [[tickets/T-11310-close-near-misses-sonnet-47]] (In Progress): near-miss
 
 ## [2026-10-14] ticket | T-11310 takeover (Opus)
 Matched ENDING func_8013BE64, RPG_BAT func_80136CCC, main func_8005FA20. Guarded drafts added: SHUGAKU func_801352B0, SHOUGATU func_801347E0, main func_80049044, join_club_message, func_8005BE8C. Commits ce24cd4d, 7a176bf2, 4fb5a542, 2febc5c2 are mislabelled "autotweak match": a leftover runner swept in-progress drafts; no autotweak matches.
+
+## [2026-10-15] ticket | T-11630 opened
+
+Created [[tickets/T-11630-w1-ovl-tt-8013c6d0]] (In Progress): wave 1 package w1-p07, eight functions of `src/ovl/TT/8013C6D0.c`.
