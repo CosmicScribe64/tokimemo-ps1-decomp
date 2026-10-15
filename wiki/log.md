@@ -14860,3 +14860,6 @@ Added drafts/README.md describing the complete initial census, repair/quality li
 ## [2026-10-15] build | Verify pinned EVENT draft checkpoint
 
 [[tickets/T-15200-event-large]]: default ASM fallback linked proofs pass (6,848 / 680 bytes); EVENT checksum, header/global guards and prototype branch guard pass (zero new, 15 known). Preferred nonmatching contexts rescore to 1,930 / 26 rows. Host Git confirms production C unchanged; no new matching coverage. Saved proof metadata in drafts/T-15200/verification.json.
+
+## [2026-10-15] decision | Repair all remaining compile failures before stopping
+User updated stopping condition to try to get every draft compiling. Partitioned remaining77 failures into disjoint batches: T15700 TACO/TAIIKU28, T15800 other small overlays23, T15900 remaining overlays13, T16000 main13. Current preservation checkpoints remain on main; recurring monitoring stays paused while this explicit repair request proceeds. See [[tickets/T-16000-main-draft-compilation]] and [[exhaustive-drafts]].
