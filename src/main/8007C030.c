@@ -904,7 +904,29 @@ void normal_date_bg_fadeout(void) {
     }
 }
 
+#ifdef NON_MATCHING
+void normal_date_bggirl_fadeout(void) {
+    u8 x;
+
+    if (D_800B593C < 8) {
+        D_80122CF4 = 0;
+        D_80122CF8 = 0;
+        D_8011ECD0[0x83F] &= ~0x80;
+        D_8011ECD0[0x7FB] &= ~0x80;
+        D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+        D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+    }
+    normal_date_bg_fadeout();
+    x = D_800B593C;
+    D_8011ECD0[0x843] = x;
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = x;
+    D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = x;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_bggirl_fadeout);
+#endif
 
 void normal_date_move_place(void) {
     switch (D_800E6280.unk_1104.u) {
@@ -2542,4 +2564,43 @@ void vram_bustup_clear(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085B3C);
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", func_80085CD4);
+void func_80085CD4(u8 a) {
+    switch (a) {
+    case 0:
+        D_801217D0[0].unk_0C = 7;
+        D_801217D0[0].unk_0E = 0x30;
+        D_801217D0[1].unk_0C = 7;
+        D_801217D0[1].unk_0E = 0;
+        break;
+    case 1:
+        D_801217D0[0].unk_0C = 7;
+        D_801217D0[0].unk_0E = 0x70;
+        D_801217D0[1].unk_0C = 7;
+        D_801217D0[1].unk_0E = 0x40;
+        break;
+    case 2:
+        D_801217D0[0].unk_0C = 8;
+        D_801217D0[0].unk_0E = 0x30;
+        D_801217D0[1].unk_0C = 8;
+        D_801217D0[1].unk_0E = 0;
+        break;
+    case 3:
+        D_801217D0[0].unk_0C = 8;
+        D_801217D0[0].unk_0E = 0x70;
+        D_801217D0[1].unk_0C = 8;
+        D_801217D0[1].unk_0E = 0x40;
+        break;
+    case 4:
+        D_801217D0[0].unk_0C = 9;
+        D_801217D0[0].unk_0E = 0x30;
+        D_801217D0[1].unk_0C = 9;
+        D_801217D0[1].unk_0E = 0;
+        break;
+    case 5:
+        D_801217D0[0].unk_0C = 9;
+        D_801217D0[0].unk_0E = 0x70;
+        D_801217D0[1].unk_0C = 9;
+        D_801217D0[1].unk_0E = 0x40;
+        break;
+    }
+}
