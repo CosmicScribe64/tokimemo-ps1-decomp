@@ -136,7 +136,7 @@ void func_8013C8DC(void) {
 
 void func_8013CA0C(void) {
     u8 *p;
-    s32 pad[3]; /* FAKE: unused locals between p and r, real source unknown (frame layout) */
+    s32 pad[3]; /* FAKE: unused locals between p and r, real source unknown (frame layout). T-9130 */
     u8 *r;
     u8 *q;
     u8 *a;
@@ -487,7 +487,7 @@ void func_8013D3C0(void) {
     (&p->ordering[15])->addr = (u32)v;
 }
 
-/* Tile map of D_80158A64 + 0x18, used only here: index (u16 per cell), 3-byte records, flag bytes. */
+/* Tile map of D_80158A64 + 0x18, used only by the draw functions below: index (u16 per cell), 3-byte records, flag bytes. */
 typedef struct TtTileMap {
     /* 0x00 */ u8 *index;
     /* 0x04 */ u8 *record;
