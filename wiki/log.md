@@ -14285,3 +14285,58 @@ Created [[tickets/T-14000-ending-en-nichi-families]] in In Progress after readin
 ## [2026-10-15] build | ENDING asset dispatcher verified
 
 [[tickets/T-14000-ending-en-nichi-families]] converts src/ovl/ENDING/80134D20.c func_80136EE4: 580 linked bytes MATCH, ENDING SHA1 OK. Existing CharFlags b14 fixes the raw-mask instruction mismatch. Rejected scene and EN_NICHI dispatcher candidates remain ASM; diagnostics in scratchpad/t14000.
+## [2026-10-15] ticket | 13100 review complete
+[[tickets/T-13100-etc-families]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13101 review complete
+[[tickets/T-13101-etc-career-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13102 review complete
+[[tickets/T-13102-etc-exam-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] ticket | 13103 review complete
+[[tickets/T-13103-etc-memory-card-family]] moved In Review -> Done after independent standards/spec reviews (zero findings) and completed prototype guard (0 new / 15 known). Literal proofs and affected ETC SHA1 pass; 91 existing C bodies preserved.
+
+## [2026-10-15] lint | ETC completion records coherent
+Four new tickets each have one Done card matching frontmatter; all new pages are indexed and cross-linked. Eleven final proof spans sum to 5900 bytes. Independent standards/spec reviews pass; 0 new prototype disagreements. See [[etc-family-results]].
+## [2026-10-15] ticket | T-13500 incremental dependency tracking
+
+Created [[tickets/T-13500-incremental-build-dependencies]] in isolated codex/build-deps-13500 from 5ccb8765. Inspected [[build-system]], configure.py, tools/cc.py and compiler behavior in the existing Docker image. IDO -M works; -MD does not. Preserve asm-processor input and include-search semantics when collecting dependencies.
+
+## [2026-10-15] build | T-13500 baseline and dependency implementation
+
+Baseline 5ccb8765 built all 27 binary checks in Docker. Touch benchmark: one main source = 1 compile / 5 tasks; shared main_api.h or overlay ETC.h = 443 compiles / 526 tasks each. Synthetic regressions exposed missing source-triggered header checking and broad overlay invalidation before the change. tools/cc.py now discovers IDO headers from the exact asm-processor temporary input via -M, and GCC headers from its existing cpp output; configure.py uses an order-only validation gate, explicit assembly macro inputs and include/src directory regeneration. [[tickets/T-13500-incremental-build-dependencies]] remains In Progress pending expanded regressions, full build and review.
+
+## [2026-10-15] build | T-13500 incremental proof and review handoff
+
+Eight synthetic Ninja dependency regressions and 17 existing compiler tests pass in Docker. Updated full build passes 27/27 checks; subsequent build is a no-op. ETC.h touch now schedules only 13 compiles / 18 tasks instead of 443 / 526; shared main_api.h retains 442 actual consumers. Source touch retains one compile and now checks headers. Actual incremental source/ETC builds took 8.981s/12.990s on the shared host. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to In Review in ticket and kanban. No new matched-byte claim.
+
+## [2026-10-15] decision | T-13500 review findings and membership fallback
+
+Standards review found no documented style violations; both reviews identified a stale-object risk when a newly added header shadows an existing include. Directory removal could also leave a missing generator input. Added a configure-owned source/include path inventory as a normal C prerequisite: additions/removals conservatively rebuild all C, while content edits stay selective. Watched directories receive phony producers to permit removal-triggered regeneration. New regression cases execute actual configure regeneration and cover source-local/nested header shadow additions, directory removal and deleted-inventory recovery. 131 surrounding header/prototype/padding/rodata/layout tests also pass. [[tickets/T-13500-incremental-build-dependencies]] remains In Review pending verification of the fixes.
+
+## [2026-10-15] ticket | T-13500 reviewed and complete
+
+Final full Docker rebuild passed 27/27 SHA1 checks; subsequent build no-op. Final touch benchmark preserved source 1/6, main_api.h 442/525, ETC.h 13/18 compiles/tasks. Eleven new integration, 17 cc and 131 surrounding regressions pass (159 total). Standards/spec reviewers cleared the shadow-header/directory-removal fixes; the spec reviewer independently passed all 11 integration tests. Updated [[build-system]], moved [[tickets/T-13500-incremental-build-dependencies]] to Done in ticket/kanban/index after resolving every review finding. Read-only original checkout, no push/PR, no game-code edits or matched-byte gain.
+## [2026-10-15] ticket | NAME_ENT family reconstruction
+
+Created [[tickets/T-13700-name-ent-families]] from origin/main 5ccb8765. Read prior negative selector-copy evidence and family reconstruction results. All work isolated in codex/name-13700.
+
+## [2026-10-15] query | NAME_ENT bounded negative evidence
+
+[[tickets/T-13700-name-ent-families]] records exact full-TU failures for prologue setup and table-loop hypotheses. No production source changed; excluded selector-copy family remains untouched. Moving to larger menu handlers.
+
+## [2026-10-15] decision | NAME_ENT family pass handoff
+
+Moved [[tickets/T-13700-name-ent-families]] to In Review. [[name-ent-family-results]] records bounded prologue and memory-card menu failures with exact full-TU scores. Zero accepted bytes; production source and headers unchanged. Stopped transfer after no reusable source form emerged.
+
+## [2026-10-15] ticket | NAME_ENT record type recovery
+
+Created [[tickets/T-13701-name-ent-record-types]] for semantic reconstruction of39F30 after [[tickets/T-13700-name-ent-families]] source-form probes. Existing layouts and original strides identify work flags, stored record flags and actor128..140 status fields.
+
+## [2026-10-15] ingest | NAME_ENT record and actor layout evidence
+
+[[tickets/T-13701-name-ent-record-types]] moves to In Review. [[name-ent-family-results]] records existing aggregate views for39F30, fixed actor mapping and a complete compiling typed draft (769 exact rows; bounded actor-end variant746). Zero accepted bytes, no production source/header edits.
+
+## [2026-10-15] build | Incremental dependency optimization integrated
+[[tickets/T-12400-integrate-verified-matches]] independently validated [[tickets/T-13500-incremental-build-dependencies]] on the combined tree: all 11 dependency regressions, all 27 binary checksums, header/global checks, and branch prototype audit pass; final Ninja invocation is a no-op. Evidence: build/scratch/goal-incremental-build.log. Game coverage remains 1404124/2279368 bytes (61.6%), 5874 functions; tooling is not counted as matched bytes. Integrated final ETC completion records and NAME_ENT type research (zero new bytes); reconciled ticket cards against frontmatter. A fresh Sol6.1medium worker owns ENDING/EN_NICHI under T14000, while GEKO/DATE2 chat owns T13900.

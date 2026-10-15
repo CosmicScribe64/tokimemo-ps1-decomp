@@ -1,7 +1,7 @@
 ---
 id: T-13100
 title: Transfer source-family evidence to ETC
-status: In Review
+status: Done
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -27,3 +27,5 @@ Original checkout is read only. One compiler initially, existing Docker image on
 Career checkpoint [[tickets/T-13101-etc-career-family]] adds 1132 bytes; cumulative seven functions / 3532 literal linked bytes, ETC SHA1 OK.
 
 2026-10-15: Combined checkpoint: eleven functions / 5900 literal linked bytes; final default proofs and ETC SHA1 pass. All 91 existing C bodies unchanged; headers/globals pass. Details in [[etc-family-results]]. Awaiting standards/spec review.
+
+2026-10-15 review: repository code-review skill applied to aa2b3158...aa1c51ec. GPT-6.1 Sol medium reviewers: standards axis no findings; spec axis no actionable findings. Documentation observation about missing prototype result resolved here: sync_protos.py --check-branch passed, **0 new / 15 known disagreements**, branch check OK. Header/global guards pass; all eleven combined default literal proofs and ETC SHA1 pass. Existing-body preservation audit: 91/91 unchanged. No production edits after reviewed commit. Ticket complete within its bounded ETC scope; broad game-wide 80% goal remains ongoing.
