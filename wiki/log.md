@@ -14206,3 +14206,7 @@ Created [[tickets/T-13600-taiiku-families]] from 5ccb8765 in isolated codex/taii
 ## [2026-10-15] build | T-13600 fresh timing and animation helper evidence
 
 [[tickets/T-13600-taiiku-families]] recordsBCEC's collapsed second coordinate and115-line residual, plus43DD0's matching-sibling direct-store improvement109 to36 lines. No production source is accepted and no further verified bytes claimed. New drivers and diffs are preserved in build/taiiku13600 for the exhaustive draft catalog.
+
+## [2026-10-15] decision | T-13600 isolate donor reset ordering
+
+[[tickets/T-13600-taiiku-families]] records43DD0's20-line residual after applying only the matched44B40 per-branch reset form. All twelve previously unmentioned candidates have now received inspection or bounded tests; the larger84-function baseline remains open and the exhaustive catalog can guide the next family. No new verified bytes.
