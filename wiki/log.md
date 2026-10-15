@@ -14486,3 +14486,7 @@ User authorized cleanup after disk audit found2.9GiB free99%,39GB in matching wo
 ## [2026-10-15] ticket | T-14501 proof lane claimed and first batch ready for review
 
 Created [[tickets/T-14501-remaining-draft-proof]] for promotion of T-14500 census candidates. Twelve BUNKAKEN functions (8,384 bytes) pass Docker default linked literal-byte proof; build/ovl/BUNKAKEN.bin SHA1 passes; prototype branch check reports zero new disagreements. Existing C is preserved. Focused standards inspection found ordinary state-machine C and removed empty generated declaration markers. Status In Review pending the required review gate; [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-14501 BUNKASAI verified draft batch
+
+Promoted 6 ordinary C functions / 4,248 bytes for BUNKASAI after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.

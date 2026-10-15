@@ -29,3 +29,5 @@ Local evidence: build/t14500/rows.json, build/t14500/proof.txt, /private/tmp/t14
 ## Comments
 
 2026-10-15: Claimed proof lane under parent T-14500. Focused CODING_STANDARDS.md inspection: C89, fixed-width local types, ordinary state-machine C; no forced registers, dummy operations, oversized locals, or FAKE patterns. No new declarations or overrides. Removed empty generated declaration-marker comments. Ticket remains In Review for the full code-review gate. Prototype check: zero new disagreements, 15 known.
+
+2026-10-15: BUNKASAI batch: 6 functions / 4,248 default linked bytes verified after GameState normalization; overlay SHA1, header/global checks and prototype branch guard pass. Focused standards inspection: ordinary C89 state handlers; no FAKE artifacts; original C preserved. Functions: func_8013ABA0 (616), func_8013AE08 (792), func_80141F70 (808), func_801464A8 (596), func_8013A95C (580), func_80143C38 (856). Evidence: /private/tmp/t14500-BUNKASAI-proof.log and local build/t14500/BUNKASAI-proof.txt.
