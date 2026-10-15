@@ -14863,3 +14863,10 @@ Added drafts/README.md describing the complete initial census, repair/quality li
 
 ## [2026-10-15] decision | Repair all remaining compile failures before stopping
 User updated stopping condition to try to get every draft compiling. Partitioned remaining77 failures into disjoint batches: T15700 TACO/TAIIKU28, T15800 other small overlays23, T15900 remaining overlays13, T16000 main13. Current preservation checkpoints remain on main; recurring monitoring stays paused while this explicit repair request proceeds. See [[tickets/T-16000-main-draft-compilation]] and [[exhaustive-drafts]].
+## [2026-10-15] decision | Stop exhaustive drafting at the user-requested checkpoint
+
+Finished the already-running final repair pass and stopped without starting new work. All 1,066 initial scopes have outcomes. Across 257 automatic attempts and 33 manual reconstructions, 52 original failures now compile; 77 still do not. Quality ledger: 849 compiling/audit-clear, 140 compiling/review-needed, 77 uncompilable. Original artifacts remain immutable. [[exhaustive-drafts]] records remaining gaps and restart commands; the all-usable target is not marked complete.
+
+## [2026-10-15] ticket | Resume to compile every remaining draft
+
+The user superseded the stopping request and asked to get all drafts compiling. Reopened work with an exact 77-scope manifest carrying all context paths and complete diagnostics. Disjoint assignment: T-16000 MAIN13, T-15700 TACO17/TAIIKU11, T-15800 six-unit batch23, T-15900 mixed-overlay batch13. Initial artifacts remain immutable; no stub bodies are permitted.

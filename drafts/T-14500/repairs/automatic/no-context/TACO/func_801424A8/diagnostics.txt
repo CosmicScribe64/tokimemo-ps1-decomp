@@ -1,0 +1,78 @@
+python3 failed:
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3578: 'sp9C' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (32)) = sp9C;
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3579: 'sp9E' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (34)) = sp9E;
+ ----------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3580: '&' before array or function; ignored
+             AddPrim((D_8011ECA0 << 0xA) + 0x10 + &D_800E8CA0, temp_v0_3);
+ -------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o /tmp/asm_processor9lll2pc0/preprocessed_4836b7c043f44275b85e5c45bfb98934.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9ta429qe/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3576: 'sp94' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (16)) = sp94;
+ ----------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3579: 'sp9A' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (26)) = sp9A;
+ ----------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3582: '&' before array or function; ignored
+             AddPrim((D_8011ECA0 << 0xA) + 0x10 + &D_800E8CA0, temp_v0_3);
+ -------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o /tmp/asm_processore14fghx3/preprocessed_aa27f6dba69347fb99618a324c986e72.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib2qqgqn4d/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ -------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3567: Incompatible pointer type assignment
+             temp_v1 = temp_s1 + &sp6C;
+ --------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3577: 'sp92' undefined; reoccurrences will not be reported.
+             *(s16 *)((unsigned char *)temp_v0_3 + (10)) = sp92;
+ ----------------------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3584: '&' before array or function; ignored
+             AddPrim((D_8011ECA0 << 0xA) + 0x10 + &D_800E8CA0, temp_v0_3);
+ -------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o /tmp/asm_processor403rsvsa/preprocessed_355d37a3fb5a46728b898513e23c56d5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibklydt91z/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ ---------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3558: 'sp96' undefined; reoccurrences will not be reported.
+         if ((sp96 >= (temp_v0_2 - 0x200)) && ((temp_v0_2 + 0x200) >= sp9E)) {
+ -------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3568: Incompatible pointer type assignment
+             temp_v1 = temp_s1 + &sp6C;
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3585: '&' before array or function; ignored
+             AddPrim((D_8011ECA0 << 0xA) + 0x10 + &D_800E8CA0, temp_v0_3);
+ -------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o /tmp/asm_processor_zsfuy85/preprocessed_f7d6e396b2964b20ae3ff216c107215d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib43x7i1r1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ --------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3557: 'sp98' undefined; reoccurrences will not be reported.
+     if ((sp98 >= -0x2C0) && (sp90 < 0x2C1)) {
+ ---------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3569: Incompatible pointer type assignment
+             temp_v1 = temp_s1 + &sp6C;
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3586: '&' before array or function; ignored
+             AddPrim((D_8011ECA0 << 0xA) + 0x10 + &D_800E8CA0, temp_v0_3);
+ -------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o /tmp/asm_processor8ry9wtbm/preprocessed_34665901dcb04359950af97a194d7bf5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhrqfjp4x/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c
+python3 failed:
+ -------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3546: '&' before array or function; ignored
+         func_800AB170(&spA0, var_s2, &sp7C, &sp78);
+ --------------------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3570: Incompatible pointer type assignment
+             temp_v1 = temp_s1 + &sp6C;
+ --------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c, line 3587: '&' before array or function; ignored
+             AddPrim((D_8011ECA0 << 0xA) + 0x10 + &D_800E8CA0, temp_v0_3);
+ -------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o /tmp/asm_processor4ode6bae/preprocessed_3a2b3c95d8c345ea8ec51905e2892512.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib33elqif3/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8/work/guarded.c

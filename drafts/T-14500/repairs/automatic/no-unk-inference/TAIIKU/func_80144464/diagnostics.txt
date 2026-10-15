@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_801446A0 0
+python3 failed:
+ -----------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464/work/guarded.c, line 3465: Incompatible pointer type assignment
+     var_v0_3 = &D_8014A13C;
+ -------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464/work/guarded.c, line 3465: '&' before array or function; ignored
+     var_v0_3 = &D_8014A13C;
+ ---------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464/work/guarded.c, line 3482: '&' before array or function; ignored
+     } while ((u32) var_v1 < (u32) &sp40);
+ ----------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464/work/guarded.o /tmp/asm_processorcgnhmkbj/preprocessed_7aa8e2caa2b2474e826ded2c49321f98.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib6yzrkame/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464/work/guarded.c

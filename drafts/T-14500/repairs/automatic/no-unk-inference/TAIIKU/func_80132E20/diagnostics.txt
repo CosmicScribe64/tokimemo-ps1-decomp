@@ -1,0 +1,26 @@
+python3 failed:
+ ------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3214: 'spA8' undefined; reoccurrences will not be reported.
+                 var_s0 = &(&spA8[0])[0];
+ ----------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3228: 'spA8' undefined; reoccurrences will not be reported.
+                 var_s0_2 = &(&spA8[0])[var_s1];
+ ------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3247: 'spA8' undefined; reoccurrences will not be reported.
+         var_s0_3 = &spA8[0];
+ --------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o /tmp/asm_processor3gc03lny/preprocessed_e8a83a84ed9b44659b24d1c5620c63f2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibfbxbndp8/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c
+python3 failed:
+ -----------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3229: Incompatible pointer type assignment
+                 var_s0_2 = &(&spA8[0])[var_s1];
+ -------------------------^
+cfe: Warning 689: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3244: Unacceptable operand of == or !=
+                 } while (var_s0_2 != &(&spA8[0])[arg1]);
+ ----------------------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c, line 3248: Incompatible pointer type assignment
+         var_s0_3 = &spA8[0];
+ -----------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o /tmp/asm_processorjguahmaq/preprocessed_a08e59a267074bf3b7d6ccf4c786d3cc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib5nu0uvkf/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20/work/guarded.o.sjis.c

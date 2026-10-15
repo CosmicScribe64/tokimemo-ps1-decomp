@@ -1,0 +1,13 @@
+python3 failed:
+ --------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38/work/guarded.c, line 3478: Incompatible pointer type assignment
+         temp_s0_2 = &sp78 + (var_s2_2 * 8);
+ ------------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38/work/guarded.c, line 3488: Incompatible pointer type assignment
+             temp_s0_3 = &sp78 + (var_s2_2 * 8);
+ ----------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38/work/guarded.c, line 3505: '&' before array or function; ignored
+         AddPrim((D_8011ECA0 << 0xA) + 0x10 + &D_800E8CA0, *var_s1);
+ ---------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38/work/guarded.o /tmp/asm_processoroortzldu/preprocessed_8fefbe3f625a43c09877a946dc9d0d6e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib02si4iin/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38/work/guarded.c

@@ -1,0 +1,91 @@
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2756: redeclaration of 'func_800AD950'; previous declaration at line 2283 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c'
+ s32 func_800AD950();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2756: Incompatible function return type for this function.
+ s32 func_800AD950();
+ -----------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2757: Incompatible function return type for this function.
+ s32 strInit();
+ -----------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o /tmp/asm_processor8jjpwqy2/preprocessed_e83528bf73614ab1ae09ea5d780282ba.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibvptaesek/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2756: redeclaration of 'strInit'; previous declaration at line 2624 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c'
+ s32 strInit();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2756: Incompatible function return type for this function.
+ s32 strInit();
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2758: Incompatible function return type for this function.
+ s32 strSetDefDecEnv();
+ -------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o /tmp/asm_processorgiu9cak9/preprocessed_60bec3ac3310478689d77168dee60869.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwt9htdq1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2757: redeclaration of 'strSetDefDecEnv'; previous declaration at line 2632 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c'
+ s32 strSetDefDecEnv();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2757: Incompatible function return type for this function.
+ s32 strSetDefDecEnv();
+ -------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2758: Incompatible function return type for this function.
+ s32 strSync();
+ -----------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o /tmp/asm_processor5nil56_9/preprocessed_1e42bf7fbe4b4b218ea270118b84c5db.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibzi783sfw/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2757: redeclaration of 'strSync'; previous declaration at line 2698 in file 'drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c'
+ s32 strSync();
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2757: Incompatible function return type for this function.
+ s32 strSync();
+ -----------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2758: Incompatible function return type for this function.
+ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
+ -----------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o /tmp/asm_processorfmoxyofy/preprocessed_a212123e2b234941944ed867871da99b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibsxvnnwbb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2757: Incompatible function return type for this function.
+ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
+ -----------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2784: Incompatible pointer type assignment
+     D_80125C58 = &D_8018003C;
+ ---------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2805: 'sp5D' undefined; reoccurrences will not be reported.
+         *(u8 *)((unsigned char *)D_80125C58 + (1)) = sp5D;
+ -----------------------------------------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o /tmp/asm_processorz24b6cf9/preprocessed_54c80601f4624187a24cd47169865418.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4lgh1f0o/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2757: Incompatible function return type for this function.
+ s32 func_80056BA8(s32 arg0, s32 arg1, s32 arg2) {
+ -----------------^
+cfe: Warning 709: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2785: Incompatible pointer type assignment
+     D_80125C58 = &D_8018003C;
+ ---------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2807: 'sp5E' undefined; reoccurrences will not be reported.
+         *(u8 *)((unsigned char *)D_80125C58 + (2)) = sp5E;
+ -----------------------------------------------------^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o /tmp/asm_processorbgqneut6/preprocessed_304b2bed47aa4acc9f905d3f06d49621.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliby37smf3c/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c
+python3 failed:
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2856: '&' before array or function; ignored
+     func_8009CC04(&sp90);
+ ------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2869: '&' before array or function; ignored
+     func_8009CCF4(&spEC);
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c, line 2881: Type void  of returning expression is incompatible with type int  of function return type
+     return func_8009C674(0);
+ ----^
+cfe: Fatal: Too many errors... goodbye.
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o /tmp/asm_processoriccgeagp/preprocessed_9c107c8af3684b168e8c1e61f69cb35d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibou1enc_n/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.o drafts/T-14500/repairs/automatic/no-context/main/func_80056BA8/work/guarded.c

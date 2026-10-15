@@ -1,0 +1,65 @@
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3564: Incompatible function return type for this function.
+ void func_80154F74(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3621: redeclaration of 'func_8015595C'; previous declaration at line 3423 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c'
+ void func_8015595C(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3621: Incompatible function return type for this function.
+ void func_8015595C(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o /tmp/asm_processorbfaj050n/preprocessed_c159a4ae6f3748c39982625a659e3643.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib7llwq65l/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c
+python3 failed:
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3563: Incompatible function return type for this function.
+ void func_80154F74(void) {
+ ------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3620: redeclaration of 'func_8015595C'; previous declaration at line 3498 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c'
+ void func_8015595C(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3620: Incompatible function return type for this function.
+ void func_8015595C(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o /tmp/asm_processorgjmtorg5/preprocessed_8365bc63567e4f6bb3680e1106021008.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdr4z31ol/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c
+python3 failed:
+ --------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3553: '&' before array or function; ignored
+         AddPrim((D_8011ECA0 << 0xA) + &D_800E8CA0, sp30);
+ --------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3564: redeclaration of 'func_80154F74'; previous declaration at line 3421 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c'
+ void func_80154F74(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3564: Incompatible function return type for this function.
+ void func_80154F74(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o /tmp/asm_processorw_0gjnec/preprocessed_6460e6c4def846f79cd5f9659be616d6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib9c3uijr9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c
+python3 failed:
+ --------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3552: '&' before array or function; ignored
+         AddPrim((D_8011ECA0 << 0xA) + &D_800E8CA0, sp30);
+ --------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3563: redeclaration of 'func_80154F74'; previous declaration at line 3450 in file 'drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c'
+ void func_80154F74(void) {
+ -----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3563: Incompatible function return type for this function.
+ void func_80154F74(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o /tmp/asm_processor212jnly7/preprocessed_7e0027ce435649f58f2ed284e055286f.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhso780zh/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c
+python3 failed:
+ ----^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3425: Incompatible function return type for this function.
+ s32 func_8015ABF0();
+ -----------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3529: '&' before array or function; ignored
+         AddPrim((D_8011ECA0 << 0xA) + &D_800E8CA0, sp30);
+ --------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c, line 3553: '&' before array or function; ignored
+         AddPrim((D_8011ECA0 << 0xA) + &D_800E8CA0, sp30);
+ --------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o /tmp/asm_processorzjwfl9eu/preprocessed_ffcc2810112a4383b9efec07bded7bdb.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibnyrd7wbx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960/work/guarded.c

@@ -1,0 +1,15 @@
+extern s32 D_800E6280;
+extern s32 D_800E7318;
+extern s32 D_800E8C70;
+extern s32 D_8011ECA0;
+extern s32 D_8011ECD0;
+extern u32 D_800E7378;
+extern u8 D_800E7388;
+extern u8 D_800E7389;
+extern u8 D_800E738A;
+extern u8 D_800E738D;
+s32 func_80098680();
+s32 printf();
+s32 search_tpage();
+s32 search_tpage8();
+u8 func_8004901C();

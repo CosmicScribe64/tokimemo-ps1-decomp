@@ -1,0 +1,13 @@
+python3 failed:
+ ---------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260/work/guarded.c, line 3501: structure has no member named 'unk0'
+         func_8015ACCC(2, 0x20, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), D_801604E4.unk0, *(s32 *)((unsigned char *)(&D_801604E4) + (4)), 4, 0);
+ ---------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260/work/guarded.c, line 3504: structure has no member named 'unk0'
+         func_8015ACCC(2, 0x20, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), D_801604E4.unk0, *(s32 *)((unsigned char *)(&D_801604E4) + (4)), 4, 0);
+ ---------------------------------------------------------------------------------------------------------------------------^
+cfe: Warning 749: drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260/work/guarded.c, line 3507: structure has no member named 'unk0'
+         func_8015ACCC(2, 0x20, subroutine_arg2, subroutine_arg3, sp50, *(s32 *)((unsigned char *)(&sp50) + (4)), D_801604E4.unk0, *(s32 *)((unsigned char *)(&D_801604E4) + (4)), 4, 0);
+ ---------------------------------------------------------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260/work/guarded.o /tmp/asm_processor7hhawm7q/preprocessed_a579bb27bfcb41db88f536b38e2d8b38.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibl69ysfms/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260/work/guarded.c

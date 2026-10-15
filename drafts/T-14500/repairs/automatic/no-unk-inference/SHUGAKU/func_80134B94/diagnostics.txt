@@ -1,0 +1,37 @@
+python3 failed:
+ ---------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3174: 'sp' undefined; reoccurrences will not be reported.
+     temp_v0 = *(s32 *)((unsigned char *)(sp + (D_800E738A * 4)) + (48));
+ -----------------------------------------^
+cfe: Warning 712: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3175: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3179: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work -o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o /tmp/asm_processordp1hvvrl/preprocessed_dac82d05e7974ab5bb589ec012b2b450.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqtlf_6l6/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3173: 'sp30' undefined; reoccurrences will not be reported.
+     *(M2cBlockA4 *)(&sp30[0]) = *(M2cBlockA4 *)(&D_8013C228);
+ ---------------------^
+cfe: Warning 712: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3176: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3180: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work -o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o /tmp/asm_processorjj9029lq/preprocessed_bc6444fafbc1440594d1899b2ba0e99b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqtmw4rup/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3175: Non-function name referenced in function call.
+     (&sp30[0])[D_800E738A](0x80);
+ --------------------------^
+cfe: Warning 712: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3177: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3181: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work -o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o /tmp/asm_processor1s0mmcqg/preprocessed_e9cd2c725f7c41c5a140d77057cbbf0d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibpc0dvoyb/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o drafts/T-14500/repairs/automatic/no-unk-inference/SHUGAKU/func_80134B94/work/guarded.o.sjis.c

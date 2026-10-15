@@ -1,0 +1,104 @@
+python3 failed:
+ ------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3645: 'sp9C' undefined; reoccurrences will not be reported.
+                     *(s16 *)((unsigned char *)temp_v0_2 + (32)) = sp9C;
+ ------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3647: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3647: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processorwqnq88gc/preprocessed_0e96980bf8ae4aa68f51c3174bfa8203.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib1eih495t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c
+python3 failed:
+ ------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3644: 'spA4' undefined; reoccurrences will not be reported.
+                     *(s16 *)((unsigned char *)temp_v0_2 + (24)) = spA4;
+ ------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3648: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3648: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processordwsv7c4k/preprocessed_e5eb3fa8bce34befa08d47bd18bbb5e5.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibavxza_qu/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c
+python3 failed:
+ ------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3644: 'sp9A' undefined; reoccurrences will not be reported.
+                     *(s16 *)((unsigned char *)temp_v0_2 + (18)) = sp9A;
+ ------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3649: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3649: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processorc9fggn2c/preprocessed_2ec3d48280a84a44a545e206419ca714.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibiectiuht/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c
+python3 failed:
+ ------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3643: 'spA2' undefined; reoccurrences will not be reported.
+                     *(s16 *)((unsigned char *)temp_v0_2 + (10)) = spA2;
+ ------------------------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3650: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3650: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processor50pycp5g/preprocessed_03b95c8d35ca4433812c13e9a06fcd5d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibut0vali9/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c
+python3 failed:
+ ------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3544: 'spA6' undefined; reoccurrences will not be reported.
+             if ((var_v0 + 0x200) >= spA6) {
+ ------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3651: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3651: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processorcsuyrje9/preprocessed_023d67a558f541bdbf903504a11547b0.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibwcoxls3m/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c
+python3 failed:
+ ---------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3544: 'sp9E' undefined; reoccurrences will not be reported.
+         if (sp9E >= (var_v0 - 0x200)) {
+ ------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3652: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3652: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processorgbvsp7yu/preprocessed_e9ad0506224b47d5b319f12950e0e18b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibjpgq6nal/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c
+python3 failed:
+ -----------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3543: 'spA0' undefined; reoccurrences will not be reported.
+     if ((spA0 >= -0x2C0) && (sp98 < 0x2C1)) {
+ ---------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3653: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3653: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processor2f2grzju/preprocessed_b42776c2201d4c2fbd46afc16c47a6cd.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib1ffi25bs/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c
+python3 failed:
+ ----------------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3532: '&' before array or function; ignored
+         var_v0 = func_800AB170(&spA8, var_s2, &sp8C, &sp88);
+ -----------------------------------------------------^
+cfe: Error: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3654: Reference of an expression of void type or an incomplete type.
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ------------------------------------^
+cfe: Warning 681: drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c, line 3654: '&' before array or function; ignored
+                     var_v0 = AddPrim((D_8011ECA0 << 0xA) + (var_s2_2 * 4) + &D_800E8CA0, temp_v0_2);
+ ----------------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o /tmp/asm_processorpvzvp5wd/preprocessed_6067f7f8e735406893a3a848d4ece1b6.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibplxwekuo/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.o drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4/work/guarded.c

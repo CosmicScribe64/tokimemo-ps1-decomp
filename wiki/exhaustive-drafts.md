@@ -60,3 +60,21 @@ All **1,066/1,066 initial scopes have an explicit outcome**, with 29 zero candid
 Current quality snapshot: **843 compiling drafts without listed residual patterns; 139 compiling drafts requiring reconstruction review; 84 scopes without a compiling alternative.** Audit-clear is not proof of semantic equivalence. Residual placeholders, synthesized stack locals, scaled address arithmetic and generic copy layouts remain explicitly listed in `quality-audit.jsonl`. The all-usable-drafts target remains open.
 
 `best-catalog.snapshot.jsonl` and `coverage-snapshot.json` pin this publication checkpoint while the live serial repair continues. Encoding analysis found ten generated literals with hexadecimal byte escapes; two have separately owned proof repairs. A tested hex-to-octal helper is retained, but no additional encoding sweep was started after the user requested immediate publication.
+
+## Final stopping point requested by the user
+
+The authorized serial repair is finished and no further experiment was started. **All 1,066 initial scopes / 866,424 progress bytes have explicit outcomes; zero are unattempted.** Initial outcomes remain 29 zero candidates, 908 other compiled scores, and 129 failures. The three bounded automatic passes retained 257 attempts; 33 independently reconstructed alternatives plus automatic repairs recover **52** initial failures.
+
+Compiler coverage now has **989 compiling/scored scopes** (30 diagnostic zero candidates and 959 nonzero scores), with **77 scopes still lacking a compiling alternative**. The separate quality audit selects **849 compiling drafts without listed residual patterns**, **140 compiling drafts needing reconstruction review**, and the same **77 uncompilable scopes**. Audit-clear does not prove semantic equivalence; the all-usable-drafts target remains incomplete. No draft-count increase is counted as matching bytes.
+
+Restart from `drafts/T-14500/quality-audit.jsonl` and `best-quality-catalog.jsonl`, which list every remaining flag and complete selected context. `best-catalog.jsonl` preserves the compiler-score choices; quality choices can differ. `stopping-point.json` pins final counts. Existing attempts are immutable. Create a new, separately named repair alternative for a selected unresolved scope; never delete or overwrite its initial result to force a retry.
+
+Read-only/resumable status commands in Docker:
+
+```sh
+tools/docker.sh python3 tools/exhaustive_drafts.py --out drafts/T-14500
+tools/docker.sh python3 tools/exhaustive_repair.py
+tools/docker.sh python3 tools/audit_drafts.py --archive drafts/T-14500
+```
+
+The first two commands reuse completed outcomes and do not repeat existing compiles. The audit refreshes quality metadata. Unresolved families include callback-table/stack layout recovery, scaled stack/GameState address expressions, missing aggregate views/prototypes, and decompiler placeholders. Eight unowned encoding cases remain noted; no encoding sweep ran after the publication/stop request. Production candidates require independent default literal linked proof and affected-unit SHA1.
