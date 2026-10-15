@@ -14578,3 +14578,19 @@ Promoted 1 ordinary C functions / 908 bytes for BUNKA_SD after default linked li
 
 ## [2026-10-15] build | T-14200 background renderers add 5152 bytes
 Three default literal functions and MAIN SHA1 pass; [[main-family-results]] documents one reused SPRT pointer, actual mode comparisons and paired sizes. 57D28/58398 honestly label FAKE unused-word frame homes; 578F4 is ordinary C. Cumulative five functions/6624 bytes, 2536 without new FAKE. Source audit preserves 22 old C bodies. [[tickets/T-14200-main-source-families]] remains In Progress pending final guards/review.
+
+## [2026-10-15] ticket | OPTION batch ready for review
+
+[[tickets/T-14400-option-menu-families]] moves to In Review. Six functions add 5868 default literal verified bytes. Headers/globals pass, prototype guard reports zero new / twelve known disagreements, and affected OPTION SHA1 is exact. All pre-existing C bodies in touched sources are unchanged. Separate standards and spec reviews cover a46afeb8 through ff37e3ab; 80% game-wide goal remains outside this bounded pass.
+
+## [2026-10-15] decision | Resolve OPTION standards finding
+
+[[tickets/T-14400-option-menu-families]] review flagged three byte offsets through the first GameState member. Replaced them with the existing named fields, removed unnecessary audio initializations, and deduplicated the ticket card. All prior C bodies remain preserved; repeat literal proofs and standards review required before Done.
+
+## [2026-10-15] decision | Remove redundant OPTION audio initialization
+
+Removed unnecessary pre-branch loop initializations from two new audio handlers in [[tickets/T-14400-option-menu-families]]. Both scratch probes and fresh default linked proofs remain exact; OPTION SHA1 and all 33 pre-existing C body comparisons pass.
+
+## [2026-10-15] ticket | Complete reviewed OPTION family pass
+
+[[tickets/T-14400-option-menu-families]] moves to Done after both independent review axes pass the source fixes. Six functions add 5868 literal verified bytes, OPTION SHA1 matches, headers/globals/prototypes pass, and all 33 pre-existing C bodies are unchanged. No new FAKE workaround or shared main-header change. Remaining assigned OPTION queue: 23744 bytes / 38 functions; broader 80% goal ongoing. Branch codex/option-14400 is ready for integration without a worker push or PR.

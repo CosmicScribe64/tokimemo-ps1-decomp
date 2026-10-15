@@ -348,3 +348,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-14300-event-families|T-14300]] Remaining EVENT family reconstruction (In Review; eight matches / 4,084 literal bytes).
 
 - [[exhaustive-drafts]] — T-14500 exhaustive game-function drafts and scoring census (In Progress).
+- [[tickets/T-14400-option-menu-families|T-14400]] OPTION menu/state family matching (Done; 6 functions / 5868 literal verified bytes).
