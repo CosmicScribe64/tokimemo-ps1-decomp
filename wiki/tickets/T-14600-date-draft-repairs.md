@@ -28,6 +28,8 @@ Frozen source base 48362009. Original archives are in the census worktree at dra
 
 All nine compile in Docker with the normal full-TU IDO 5.3 path. No zero scores; no production C changes or claimed matching coverage. Repaired alternatives are archived at drafts/T-14500/repairs/DATE; manifest and reproduction details at drafts/T-14500/repairs/README.md.
 
+| Function | Difference rows | Repair |
+| --- | ---: | --- |
 | func_8013C190 | 288 | Recover stack array indexing and explicit first-word access to struct. |
 | func_8013C410 | 114 | Recover 11x21 byte aggregate from 228-byte copy plus unaligned three-byte tail. |
 | func_8013FD6C | 471 | Absolute-address mask symbol denotes integer constant; existing scalar union fields retained. |
@@ -43,3 +45,6 @@ The callback dispatch func_801511B4 is the nearest at 12 diagnostic rows (frame 
 ## Review
 
 Self-check: all nine compiled and compared again serially; C89 aggregate/table types; no generated ASM edits; no assets or binaries in tracked changes. Independent standards review remains pending; ticket stays In Review.
+
+## Integration archive audit
+All nine archived body and context SHA256 values agree with their saved result manifests. Every entry has a nonempty full compiler context, provenance, comparison and diagnostics. All nine are explicitly nonmatching with positive scores. This checks archive integrity and reproducibility inputs; it does not promote drafts to production source or assert semantic equivalence.

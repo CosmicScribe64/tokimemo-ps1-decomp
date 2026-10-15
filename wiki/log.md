@@ -14635,3 +14635,6 @@ Created [[tickets/T-14600-date-draft-repairs]] at frozen base 48362009. Preserve
 
 ## [2026-10-15] build | KANGEI draft matches and DATE repair archives
 Integrated three KANGEI matches after source inspection and Docker default linked proofs, affected checksum, header/global and prototype checks. Coverage is 1,442,920 / 2,279,368 bytes (63.3%). Nine DATE repair archives compile but remain nonmatching and receive no byte credit. See [[tickets/T-12600-byte-coverage-families]], [[tickets/T-14501-remaining-draft-proof]] and [[tickets/T-14600-date-draft-repairs]].
+
+## [2026-10-15] lint | DATE repair archive integrity
+Docker audit verified all nine body/context hashes and required context, provenance, comparison and diagnostics artifacts. Every result remains explicitly nonmatching. Fixed the results table header in [[tickets/T-14600-date-draft-repairs]].
