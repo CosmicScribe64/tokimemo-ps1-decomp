@@ -14720,3 +14720,9 @@ RPG motion aggregate reconstruction passes all 27 integrated binary checksums an
 
 ## [2026-10-15] build | Motion and branch publication validation
 Final KANGEI default literal proof and checksum pass. Combined total is 1,447,220 / 2,279,368 game-code bytes (63.5%); 376,276 remain to the 80% threshold. See [[tickets/T-12600-byte-coverage-families]].
+
+## [2026-10-15] ticket | BUNKASAI label draft investigation
+Opened [[tickets/T-15400-bunkasai-label-draft]] for the fresh two-row candidate. Check emitted string bytes and canonical GameState access before changing control flow; initial archive is immutable.
+
+## [2026-10-15] build | BUNKASAI label encoding match
+Ordinary Unicode label text fixes the two-row escaped-byte difference in func_801431D4. Canonical GameState access and restored text pass explicit default linked proof, affected SHA1 and guards, adding 440 coverage bytes. Original draft archive preserved. See [[tickets/T-15400-bunkasai-label-draft]].
