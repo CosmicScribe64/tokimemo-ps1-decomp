@@ -473,7 +473,7 @@ void func_8013BB24(void) {
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8013BB24);
 #endif
 
-/* NON_MATCHING: T-11120, 14 lines: the rect sits 4 bytes higher in the frame than in the original (sp+0x34, same frame size; any pad local grows the frame by 8) and the final D_800E62BA store has `li v1,0x80` before `lui at` */
+/* NON_MATCHING: T-11570, 10 lines, frame slot only: the rect sits at sp+0x38 here, sp+0x34 in the original with the same 0x40 frame. IDO places locals from the frame top and keeps 8 spare bytes below them, so any extra local (s32/s16/u8 pad, 12-byte struct, s16[6], block scope) grows the frame by 8 (T-11120). The `li v1,0x80` order was the two case-2 stores swapped. */
 #ifdef NON_MATCHING
 void func_8013BE18(void) {
     RECT rect;
@@ -502,8 +502,8 @@ void func_8013BE18(void) {
             rect.w = 0x20;
             func_8009C884(&rect, (void *)0x801E0200);
             func_80043914(0x801E0000, 0x18, 1, 2, 0);
-            D_800E6280.unk_110D = 3;
             D_800E6280.unk_03A = 0x80;
+            D_800E6280.unk_110D = 3;
         }
         break;
     case 3:
@@ -2124,14 +2124,14 @@ s32 func_80140574(void) {
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80139740", func_8014068C);
 
-/* NON_MATCHING: T-11570, 15 lines: the in-place global form gives a0/t6 and both stores of the global like the original; the six fade stores use t6 where the original has one more `andi v0,t6,0xff` copy (T-10710: locals, casts, masks and an empty test all fold it) */
+/* NON_MATCHING: T-11570, 15 lines: the in-place global form through the u8 view gives a0/t6 and both stores of the global like the original (the plain field gives the global $v0, 25 lines); the six fade stores use t6 where the original keeps one more `andi v0,t6,0xff` value in $v0 (T-10710: locals, casts, masks, separate stores and an empty test all fold it) */
 #ifdef NON_MATCHING
 void func_80140B20(void) {
-    if (D_800E6280.unk_03A >= 3) {
-        D_800E6280.unk_03A -= 2;
-        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = D_800E6280.unk_03A;
-        if (D_800E6280.unk_03A < 0x80) {
-            func_80057390(D_800E6280.unk_03A);
+    if (*(u8 *)&D_800E6280.unk_03A >= 3) {
+        *(u8 *)&D_800E6280.unk_03A -= 2;
+        D_801220E0 = D_801220E1 = D_801220E2 = D_80122104 = D_80122105 = D_80122106 = *(u8 *)&D_800E6280.unk_03A;
+        if (*(u8 *)&D_800E6280.unk_03A < 0x80) {
+            func_80057390(*(u8 *)&D_800E6280.unk_03A);
         }
     }
 }
