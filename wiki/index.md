@@ -19,7 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
-- [[tickets/T-14501-remaining-draft-proof|T-14501]] Verify exhaustive draft candidates: BUNKAKEN 12 literal matches / 8,384 bytes (In Review).
+- [[tickets/T-14501-remaining-draft-proof|T-14501]] Verify exhaustive draft candidates: 26 literal matches / 17,004 bytes in 6 overlays (In Review).
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Incremental build dependencies (Done; 27/27 checks, ETC rebuilds 13 objects instead of 443).
 - [[tickets/T-13701-name-ent-record-types|T-13701]] NAME_ENT record and actor type recovery (In Review; coherent typed draft, no match).
 - [[tickets/T-13700-name-ent-families|T-13700]] NAME_ENT family reconstruction (In Review; zero accepted bytes).
