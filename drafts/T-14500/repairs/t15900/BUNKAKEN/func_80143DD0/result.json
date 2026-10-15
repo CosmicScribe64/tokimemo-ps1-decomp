@@ -1,0 +1,18 @@
+{
+  "unit": "BUNKAKEN",
+  "src": "src/ovl/BUNKAKEN/80143DD0.c",
+  "func": "func_80143DD0",
+  "scope": "BUNKAKEN:func_80143DD0",
+  "size": 3232,
+  "status": "scored",
+  "score": 449,
+  "body_hash": "7549a5dcfd44bea417d96f69d4248246ba86834822b5dc619ab1e5d2051a4d10",
+  "context_hash": "921b063859227d4a8e3c6d8a0d895f8f075f20017b7f3296e1f69002c284889c",
+  "repair_path": "drafts/T-14500/repairs/t15900/BUNKAKEN/func_80143DD0",
+  "ticket": "T-15900",
+  "repair_notes": "Treat D_80155ED0 as callback-pointer table, preserving address and fourbyte stride.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "565c9973e4f7333a3f95473a6cbbe3c606b5ede96cc0d1720bee51e0c61bfa8f"
+}

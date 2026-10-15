@@ -1,0 +1,18 @@
+{
+  "unit": "TEL",
+  "src": "src/ovl/TEL/80132000.c",
+  "func": "func_80136724",
+  "scope": "TEL:func_80136724",
+  "size": 6580,
+  "status": "scored",
+  "score": 1162,
+  "body_hash": "8f4abfdd49ddc1d14cb7de70e10d9edd22e0d5557c8423f4bbbadca8acf1f37e",
+  "context_hash": "61d110d70470eb3fb0916193a93830ad7ff6c30e96eefe4ff637499b508e03fe",
+  "repair_path": "drafts/T-14500/repairs/t15900/TEL/func_80136724",
+  "ticket": "T-15900",
+  "repair_notes": "Recover func80053418 outputs as16byte and16halfword arrays from callee; stack0x44 packed word is GsWord with byte/halfword accesses; stack0x78 textbuffer extends to0x17C based on observed next local.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "669aba297f0b4c83dde3d437b4cb86095e2a608c1ec9f1633f3b19ff93ba73ec"
+}

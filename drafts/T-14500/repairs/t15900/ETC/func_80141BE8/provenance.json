@@ -1,0 +1,7 @@
+{
+  "scope": "ETC:func_80141BE8",
+  "original": "drafts/T-14500/ETC/func_80141BE8",
+  "notes": "Use implicit-int ABI established by earlier unprototyped call. No return value manufactured.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

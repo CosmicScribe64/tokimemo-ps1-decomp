@@ -1,0 +1,18 @@
+{
+  "unit": "ETC",
+  "src": "src/ovl/ETC/80140F50.c",
+  "func": "func_80141BE8",
+  "scope": "ETC:func_80141BE8",
+  "size": 552,
+  "status": "scored",
+  "score": 104,
+  "body_hash": "7f0dcd58aa15f83b90116ec18c44dd0cad1fc7c7a6b54ae59c14ad638118db20",
+  "context_hash": "71fc831ea600642601acc9a94d7e6ede83bc1bc3ccf678972c1c4363bcdba03d",
+  "repair_path": "drafts/T-14500/repairs/t15900/ETC/func_80141BE8",
+  "ticket": "T-15900",
+  "repair_notes": "Use implicit-int ABI established by earlier unprototyped call. No return value manufactured.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "2da4310f93c63ec7bc2a59bfe2d3c6e99ca213b78a3481cc6e825a6fd74e898e"
+}

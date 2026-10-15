@@ -1,0 +1,7 @@
+{
+  "scope": "BUNKAKEN:func_8013B510",
+  "original": "drafts/T-14500/BUNKAKEN/func_8013B510",
+  "notes": "Treat D_80155ED0 as callback-pointer table; remove duplicated outer default at case4 fallthrough; explicit terminal default remains.",
+  "header_snapshot": "drafts/T-14500/baseline/include",
+  "tool_environment": "drafts/T-14500/environment.json"
+}

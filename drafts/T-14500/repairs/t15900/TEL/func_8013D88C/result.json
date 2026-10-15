@@ -1,0 +1,18 @@
+{
+  "unit": "TEL",
+  "src": "src/ovl/TEL/8013CCD0.c",
+  "func": "func_8013D88C",
+  "scope": "TEL:func_8013D88C",
+  "size": 2972,
+  "status": "scored",
+  "score": 1045,
+  "body_hash": "b035a71577c189502bd9b4497642566afa3189a9fd1d498f95740fcba5fdc199",
+  "context_hash": "88486ee2f9e597a19e9eedce3eb2a4c1f6e0aa2a84bfb2d338fb4d3282975b5e",
+  "repair_path": "drafts/T-14500/repairs/t15900/TEL/func_8013D88C",
+  "ticket": "T-15900",
+  "repair_notes": "Give empty labels null statements; separate consecutive unary negations. Recover four12halfword menu arrays at0x78/90/A8/C0 with explicit element aliases for other stack offsets; byte arithmetic uses byte casts.",
+  "baseline": "48362009",
+  "compiler": "IDO5.3 default full-TU via order_search.compile_variant",
+  "production_changed": false,
+  "preprocessed_context_hash": "0d3c25dde5e9c37ee6d63b91b2e48a81dd77f1add4e7767a6330eb82f973eef9"
+}

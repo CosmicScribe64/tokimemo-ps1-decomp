@@ -78,3 +78,7 @@ tools/docker.sh python3 tools/audit_drafts.py --archive drafts/T-14500
 ```
 
 The first two commands reuse completed outcomes and do not repeat existing compiles. The audit refreshes quality metadata. Unresolved families include callback-table/stack layout recovery, scaled stack/GameState address expressions, missing aggregate views/prototypes, and decompiler placeholders. Eight unowned encoding cases remain noted; no encoding sweep ran after the publication/stop request. Production candidates require independent default literal linked proof and affected-unit SHA1.
+
+## Resumed compiler completion (T15900)
+
+The later user instruction to get all drafts compiling supersedes the earlier stopping checkpoint. The thirteen-scope mixed-overlay batch now has thirteen full-TU compiling alternatives at `drafts/T-14500/repairs/t15900`; every score was replayed with full diagnostics and preprocessed context saved. EVENT17D80 reuses current verified production source (zero already counted by integration); twelve alternatives remain nonzero. Other assigned repair batches continue, so this batch alone does not close the77-scope manifest. Compilation does not remove the residual semantic/type review requirement.
