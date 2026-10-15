@@ -1210,11 +1210,7 @@ void func_80135E58(void) {
     func_8004284C();
 }
 
-/* NON_MATCHING: T-11010, 23 differing lines: same as func_80135BB4, D_8014CC70 is promoted into $v1 where the original keeps $v0 for it */
-#ifdef NON_MATCHING
 void func_80135F74(void) {
-    u8 cur;
-
     func_8006BA40();
     func_80133D94();
     func_80133E54();
@@ -1226,11 +1222,10 @@ void func_80135F74(void) {
     }
     func_80135650();
     if (D_800E6280.unk_F88 & 0x40) {
-        cur = D_8014CC70;
-        if (cur == 0xC) {
-            D_8014CC70 = 0xA;
-        } else if (cur >= 7) {
-            D_8014CC70 = cur - 1;
+        if (*(u8 *)&D_8014CC70 == 0xC) {
+            *(u8 *)&D_8014CC70 = 0xA;
+        } else if (*(u8 *)&D_8014CC70 >= 7) {
+            *(u8 *)&D_8014CC70 -= 1;
         }
     } else if (D_800E6280.unk_F88 & 0x20) {
         if (D_8014CC70 < 0xB && D_8014CCC0 >= 0 && D_8014CCC4 >= 0) {
@@ -1284,9 +1279,6 @@ void func_80135F74(void) {
         func_8004284C();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135F74);
-#endif
 
 void func_8013621C(s32 arg0) {
     s32 color;
