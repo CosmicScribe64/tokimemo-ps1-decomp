@@ -979,7 +979,36 @@ void func_8005D9B4(void) {
     func_8006BA40();
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", system_settings_init);
+s32 system_settings_init(void) {
+    s32 i;
+    s32 available;
+    s16 x[8];
+    s16 y[8];
+    s16 w[8];
+    s16 h[8];
+
+    func_8004E58C();
+    func_8006612C("システム設定画面");
+    icon_disp_switch(0);
+    data_save_load_class_init();
+    for (i = 0; i < 8; i++) {
+        x[i] = -0x7C;
+        y[i] = -0x40 + i * 0xC;
+        w[i] = 0x60;
+        h[i] = 0xC;
+    }
+    func_8005DEA0(-1);
+    available = func_8005DDB4();
+    if (available == 0) {
+        w[6] = 0;
+    }
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0, "システム設定を変更します", 0);
+    menu_set(0, 8, x, y, w, h);
+    D_800E6280.unk_1093 = (s8)D_800E6280.unk_1093 % 8;
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 /* FAKE: the no-op index mask preserves the GameState loop base.
  * T-9560; original indexing expression unknown. */

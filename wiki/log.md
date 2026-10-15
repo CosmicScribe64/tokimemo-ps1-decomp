@@ -13525,3 +13525,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | T-12030 availability handler matched
 
 [[tickets/T-12030-codex-cx3]]: func_800603C0 verifies 324 linked bytes plus main SHA1, headers and globals. Added D_800E7D24 byte-array declaration and used GameState.unk_53C for the saved draft's old address alias.
+
+## [2026-10-15] build | T-12030 system-settings initializer matched
+
+[[tickets/T-12030-codex-cx3]]: system_settings_init verifies 360 literal linked bytes and main SHA1. Four typed arrays and two real scalar locals recover the frame without a fakematch. Coordinate-loop experiments on func_8005A410 remain beyond retention threshold; assembly restored.
