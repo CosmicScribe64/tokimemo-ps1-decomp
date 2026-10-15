@@ -13936,3 +13936,6 @@ Independent Standards and Spec reviews pass all twenty-one accepted functions / 
 
 ## [2026-10-15] build | Adjacent BUNKAKEN call convention seed
 [[tickets/T-12701-bunkaken-address-family]] adds func_8013EC98, 780 verified linked bytes, using the existing K&R declaration override mechanism. BUNKAKEN SHA1 passes. The override is translation-unit-local and documented; shared main prototypes are unchanged. Cumulative branch gain: twenty-two functions / 23,184 bytes.
+
+## [2026-10-15] build | Complete adjacent BUNKAKEN scene handlers
+[[tickets/T-12701-bunkaken-address-family]] adds eight functions / 6,112 linked bytes and passes BUNKAKEN SHA1. 8013EB30.c now contains only C; prior matched bodies are preserved. BUNKAKEN cumulative gain: twenty-eight functions / 26,776 bytes.
