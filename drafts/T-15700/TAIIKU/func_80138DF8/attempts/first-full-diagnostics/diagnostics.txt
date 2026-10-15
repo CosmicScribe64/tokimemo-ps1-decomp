@@ -1,0 +1,18 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80138DF8/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3287: 'sp70' undefined; reoccurrences will not be reported.
+     *(M2cBlock28 *)(&sp70[0]) = *(M2cBlock28 *)(&D_80149E90);
+ ---------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3289: '&' before array or function; ignored
+     *(M2cBlock24 *)(&sp44) = *(M2cBlock24 *)(&D_80149EBC);
+ --------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3290: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp44) + (36)) = (s32) *(s32 *)((unsigned char *)(&D_80149EBC) + (36));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c, line 3291: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp44 + 0x24) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80149EBC + 0x24) + (4));
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TAIIKU/func_80138DF8/work -o drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.o /tmp/asm_processor_cxjb3z2/preprocessed_71ddbb3bde994b45be7cf1651decfe4d.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4psyaic1/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.o drafts/T-15700/TAIIKU/func_80138DF8/work/guarded.c

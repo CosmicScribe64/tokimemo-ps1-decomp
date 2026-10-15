@@ -14526,3 +14526,11 @@ Started [[tickets/T-15600-fresh-near-matches]]. Read wiki evidence and initial c
 ## [2026-10-15] lint | Normalize archived context EOF whitespace
 
 [[tickets/T-15600-fresh-near-matches]] archived source contexts drop surplus EOF blank lines; updated archive hashes retain original compiled-context hashes separately. Full preprocessed inputs and production code are unchanged. Diff whitespace check passes; no new experiments.
+
+## [2026-10-15] ticket | Reserve all TACO and TAIIKU draft failures
+
+Started [[tickets/T-15700-taco-taiiku-draft-repairs]], 28 scopes (17/11). Inspected all prior alternative references/diagnostics and four historical source trees; none implements these exact targets. Preserve initial attempts; capture full diagnostics rather than helper-tail truncation before genuine SDK/type/stack reconstruction.
+
+## [2026-10-15] build | Compile every reserved TACO and TAIIKU draft
+
+[[tickets/T-15700-taco-taiiku-draft-repairs]] moves In Review:28/28 full TUs compile in Docker (17TACO/11TAIIKU), 29584 target code bytes, scores98..709 and no zeros/coverage claim. SDK vector/coordinate layouts, actual copied tables and canonical aggregate/ABI views resolve all blockers. Complete C/context/diagnostics/hash/provenance and one-time derivation scripts saved in drafts/T-15700; initial attempts and production C/header files unchanged.

@@ -1,0 +1,15 @@
+{
+  "scope": "TAIIKU:func_80143F50",
+  "src": "src/ovl/TAIIKU/80142240.c",
+  "size": 956,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TAIIKU/func_80143F50",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TAIIKU/func_80143F50/work/guarded.c, line 3519: This expression is not an lvalue.",
+  "body_c_sha256": "589eb9c896ef5bb0ac250b8dada8e6b5bda1b4c2b74e29a69ddd837ac0dbd4f9",
+  "context_c_sha256": "6a1d246d2bef5fb65759114914b5e3c4e50a396f21a33dd0e737576106a45452",
+  "declarations_h_sha256": "94c505438f82415ed48c807326e7daacaa39324713ca31bd8d2f6e518a72b6d2"
+}

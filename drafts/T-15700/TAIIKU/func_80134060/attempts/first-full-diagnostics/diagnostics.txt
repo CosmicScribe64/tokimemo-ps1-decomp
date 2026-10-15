@@ -1,0 +1,36 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TAIIKU -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TAIIKU/func_80134060/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TAIIKU/func_80134060/work/guarded.c drafts/T-15700/TAIIKU/func_80134060/work/guarded.o ido 5.3
+cfe: Error: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3291: 'sp68' undefined; reoccurrences will not be reported.
+     sp68[0].unk0 = (s32) D_801493C0.unk0;
+ ----^
+cfe: Warning 749: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3291: structure has no member named 'unk0'
+     sp68[0].unk0 = (s32) D_801493C0.unk0;
+ -----------------------------------^
+cfe: Error: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3296: 'sp54' undefined; reoccurrences will not be reported.
+     sp54[0].unk0 = (s32) D_801493D4.unk0;
+ ----^
+cfe: Warning 749: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3296: structure has no member named 'unk0'
+     sp54[0].unk0 = (s32) D_801493D4.unk0;
+ -----------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3301: '&' before array or function; ignored
+     (*(s32 *)&sp40) = (s32) D_801493E8.unk0;
+ -------------^
+cfe: Warning 749: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3301: structure has no member named 'unk0'
+     (*(s32 *)&sp40) = (s32) D_801493E8.unk0;
+ --------------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3302: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3303: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3304: '&' before array or function; ignored
+     *(u16 *)((unsigned char *)(&sp40) + (16)) = (u16) D_801493E8.value[8];
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TAIIKU/func_80134060/work/guarded.c, line 3305: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&sp40) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_801493E8) + (12));
+ -------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TAIIKU/func_80134060/work -o drafts/T-15700/TAIIKU/func_80134060/work/guarded.o /tmp/asm_processorki93faj8/preprocessed_4d4411dec9f04de2b4b2aee769d1c534.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib5vx5fxgj/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TAIIKU/func_80134060/work/guarded.o drafts/T-15700/TAIIKU/func_80134060/work/guarded.c

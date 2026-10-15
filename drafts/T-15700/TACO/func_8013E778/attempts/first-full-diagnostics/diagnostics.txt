@@ -1,0 +1,48 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_8013E778/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_8013E778/work/guarded.c drafts/T-15700/TACO/func_8013E778/work/guarded.o ido 5.3
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3548: '&' before array or function; ignored
+     (*(s32 *)&spA8) = (s32) D_80129C40;
+ -------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3549: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA8) + (4)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (4));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3550: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA8) + (8)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (8));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3551: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA8) + (12)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (12));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3552: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA8) + (16)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (16));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3553: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA8) + (20)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (20));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3555: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA8) + (24)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (24));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3556: '&' before array or function; ignored
+     *(s32 *)((unsigned char *)(&spA8) + (28)) = (s32) *(s32 *)((unsigned char *)(&D_80129C40) + (28));
+ -------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3562: '&' before array or function; ignored
+     func_800A1100((s32) &spA8);
+ ------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3563: '&' before array or function; ignored
+     func_800A1070(&spA8);
+ ------------------^
+cfe: Error: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3569: 'sp8A' undefined; reoccurrences will not be reported.
+         spA2 = (sp8A + var_fp) - 0x40;
+ ----------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3570: Incompatible pointer type assignment
+         var_s2 = var_s7 + var_s1;
+ ---------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3574: '&' before array or function; ignored
+         func_800AB170((s32) &spA0, (s32) var_s2, (s32) &sp7C, (s32) &sp78);
+ -------------------------------------------------------^
+cfe: Warning 681: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3574: '&' before array or function; ignored
+         func_800AB170((s32) &spA0, (s32) var_s2, (s32) &sp7C, (s32) &sp78);
+ --------------------------------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TACO/func_8013E778/work -o drafts/T-15700/TACO/func_8013E778/work/guarded.o /tmp/asm_processoret2f6otu/preprocessed_fd115c4480aa4f04941eb74d21c8875a.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolib4wlv5ild/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TACO/func_8013E778/work/guarded.o drafts/T-15700/TACO/func_8013E778/work/guarded.c

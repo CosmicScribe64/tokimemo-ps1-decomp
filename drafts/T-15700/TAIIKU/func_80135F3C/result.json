@@ -1,0 +1,22 @@
+{
+  "scope": "TAIIKU:func_80135F3C",
+  "src": "src/ovl/TAIIKU/80133C80.c",
+  "size": 1676,
+  "status": "scored",
+  "score": 556,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TAIIKU/func_80135F3C",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "compile_attempts": 1,
+  "body_c_sha256": "ae86aa65f91b979f2271670fa801bca98c1234fde9c8d161fa962b9052e92de3",
+  "context_c_sha256": "9f884dc4207d8f716a8e73f56201fe76e5e912ba214acf08b149a95246ef92f7",
+  "declarations_h_sha256": "a4523ac1f0d55ca7b248042b1d77c7115e096908c8a516b79dc81843b954e8f3",
+  "draft_hash": "ae86aa65f91b979f2271670fa801bca98c1234fde9c8d161fa962b9052e92de3",
+  "context_hash": "9f884dc4207d8f716a8e73f56201fe76e5e912ba214acf08b149a95246ef92f7",
+  "full_context_hash": "1e5494c24f52e686559c4f9f320fc7ef32bd3e5915126c0898e6a3d492aeb9f0",
+  "diagnostics_hash": "582b94bbd5645cf96e248b35724defd2c287a36a632005f16100a193b49c945a",
+  "declarations_hash": "a4523ac1f0d55ca7b248042b1d77c7115e096908c8a516b79dc81843b954e8f3",
+  "compile_verified": true,
+  "residual_class": "nonmatching compiler-generated instruction/control-flow/register differences; draft semantics not independently proved"
+}

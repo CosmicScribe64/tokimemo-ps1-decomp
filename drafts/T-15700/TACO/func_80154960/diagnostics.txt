@@ -1,0 +1,4 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_80154960/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_80154960/work/guarded.c drafts/T-15700/TACO/func_80154960/work/guarded.o ido 5.3

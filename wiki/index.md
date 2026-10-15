@@ -345,3 +345,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-14900-rpg-near-matches|T-14900]] RPG_BAT motion aggregate match: 1,128 linked bytes, two bounded counter blockers (In Review).
 - [[tickets/T-15100-unaligned-draft-repairs|T-15100]] Nine unaligned aggregate-copy drafts compile; no zero comparisons (In Review).
 - [[tickets/T-15600-fresh-near-matches|T-15600]] RENSYU/SHOUGATU: 1,256 literal linked bytes; RPG NOP gap archived (In Review).
+- [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700]] All28 TACO/TAIIKU failed drafts now compile; no zeros (In Review).

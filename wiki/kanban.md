@@ -29,6 +29,7 @@ kanban-plugin: board
 
 
 
+
 - [ ] [[tickets/T-14300-event-families|T-14300 Recover remaining EVENT source families]]
 
 
@@ -63,6 +64,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-9960-wave-10-list-6|T-9960 Wave 10: list 6]]
 
 ## In Review
+- [ ] [[tickets/T-15700-taco-taiiku-draft-repairs|T-15700 Compile 28 TACO/TAIIKU failed drafts]]
 - [ ] [[tickets/T-15600-fresh-near-matches|T-15600 Fresh RENSYU and RPG near matches]]
 - [ ] [[tickets/T-15100-unaligned-draft-repairs|T-15100 Recover nine unaligned-copy drafts]]
 - [ ] [[tickets/T-14900-rpg-near-matches|T-14900 Revisit three RPG_BAT near matches]]

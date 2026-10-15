@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_801497EC",
+  "src": "src/ovl/TACO/80148FE0.c",
+  "size": 912,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_801497EC",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TACO/func_801497EC/work/guarded.c, line 3566: 'sp6A' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "0c23dbd4d5a315b6cda998de2c8de16aaa90c42ef0dd411dec28ab7d79c1ca20",
+  "context_c_sha256": "e2789ddae08c34a5f6945bd9337c041e33305183d2bfc19036faa0f87043ecbf",
+  "declarations_h_sha256": "9e15e1ad78d51ddf16477e0b776162343cc28d7a89e07bd7bf5218643c6ddca0"
+}

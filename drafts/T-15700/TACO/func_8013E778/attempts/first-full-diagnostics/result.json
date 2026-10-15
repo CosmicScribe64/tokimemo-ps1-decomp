@@ -1,0 +1,15 @@
+{
+  "scope": "TACO:func_8013E778",
+  "src": "src/ovl/TACO/8013DB80.c",
+  "size": 812,
+  "status": "failed",
+  "score": null,
+  "matching_claim": false,
+  "archive_path": "drafts/T-15700/TACO/func_8013E778",
+  "source_base": "48362009",
+  "ticket": "T-15700",
+  "reason": "cfe: Error: drafts/T-15700/TACO/func_8013E778/work/guarded.c, line 3569: 'sp8A' undefined; reoccurrences will not be reported.",
+  "body_c_sha256": "8a39eb7b1fb46c7d9f94771a05bfe69774976fe3ee65d4b8ef2840aaa68531f9",
+  "context_c_sha256": "689fc0cc0cda2d17c7caba7d524cb19cf5d7865efe5d35a19c1f46f82c29b0f8",
+  "declarations_h_sha256": "1ca486b8569517dc89ed00cc0c662349be658d5f8f5685984caec1b4f3fae2d5"
+}

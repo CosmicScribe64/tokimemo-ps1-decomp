@@ -1,0 +1,75 @@
+$ gcc -E -P -Iinclude -Isrc/ovl/TACO -D__sgi -D__attribute__(x)= -DINCLUDE_ASM(F,N)=INCLUDE_ASM(F,N) -DINCLUDE_RODATA(F,N)=INCLUDE_RODATA(F,N) drafts/T-15700/TACO/func_8013A790/work/variant.c
+[Preprocessor C stdout omitted here; final full-context.c or frozen source/include snapshots retain the input.]
+
+$ python3 tools/cc.py drafts/T-15700/TACO/func_8013A790/work/guarded.c drafts/T-15700/TACO/func_8013A790/work/guarded.o ido 5.3
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3579: Incompatible pointer type assignment
+             temp_v0_2 = D_8015F4EC + var_s0;
+ ----------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3581: Incompatible pointer type assignment
+             var_v0 = D_8015F4EC + var_s0;
+ -------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3585: Incompatible pointer type assignment
+                 var_v0 = D_8015F4EC + var_s0;
+ -----------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3588: Incompatible pointer type assignment
+             var_v0_2 = D_8015F4EC + var_s0;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3592: Incompatible pointer type assignment
+                 var_v0_2 = D_8015F4EC + var_s0;
+ -------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3595: Incompatible pointer type assignment
+             var_v0_3 = D_8015F4EC + var_s0;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3599: Incompatible pointer type assignment
+                 var_v0_3 = D_8015F4EC + var_s0;
+ -------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3602: Incompatible pointer type assignment
+             temp_v0_3 = D_8015F4EC + var_s0;
+ ----------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3613: Incompatible pointer type assignment
+             temp_v0_4 = D_8015F4EC + var_s0_2;
+ ----------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3615: Incompatible pointer type assignment
+             var_v0_4 = D_8015F4EC + var_s0_2;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3619: Incompatible pointer type assignment
+                 var_v0_4 = D_8015F4EC + var_s0_2;
+ -------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3622: Incompatible pointer type assignment
+             var_v0_5 = D_8015F4EC + var_s0_2;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3626: Incompatible pointer type assignment
+                 var_v0_5 = D_8015F4EC + var_s0_2;
+ -------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3629: Incompatible pointer type assignment
+             var_v0_6 = D_8015F4EC + var_s0_2;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3633: Incompatible pointer type assignment
+                 var_v0_6 = D_8015F4EC + var_s0_2;
+ -------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3636: Incompatible pointer type assignment
+             temp_v0_5 = D_8015F4EC + var_s0_2;
+ ----------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3647: Incompatible pointer type assignment
+         var_v0_7 = D_8015F4EC + var_s0_3;
+ -----------------^
+cfe: Error: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3653: Type int  of rhs of assignment expression is incompatible with type struct TacoRnd  of lhs
+                 *(D_8015F4EC + var_s0_3) = func_800AE0D0() % 4096;
+ -----------------------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3660: Incompatible pointer type assignment
+             var_v0_7 = D_8015F4EC + var_s0_3;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3667: Incompatible pointer type assignment
+             var_v0_8 = D_8015F4EC + var_s0_3;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3671: Incompatible pointer type assignment
+                 var_v0_8 = D_8015F4EC + var_s0_3;
+ -------------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3676: Incompatible pointer type assignment
+             var_v0_8 = D_8015F4EC + var_s0_3;
+ ---------------------^
+cfe: Warning 709: drafts/T-15700/TACO/func_8013A790/work/guarded.c, line 3680: Incompatible pointer type assignment
+                 var_v0_8 = D_8015F4EC + var_s0_3;
+ -------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-15700/TACO/func_8013A790/work -o drafts/T-15700/TACO/func_8013A790/work/guarded.o /tmp/asm_processornrqxpq30/preprocessed_3f04f1364da1478ca4f64f780c03b7c7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibdcab6v_t/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-15700/TACO/func_8013A790/work/guarded.o drafts/T-15700/TACO/func_8013A790/work/guarded.c

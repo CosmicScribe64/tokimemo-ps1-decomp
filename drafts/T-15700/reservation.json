@@ -1,0 +1,1010 @@
+[
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_80137264",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_80137264",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_80137264",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80137264",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_80137264",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80137264",
+    "size": 812,
+    "src": "src/ovl/TACO/80136B40.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8013A790",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013A790",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013A790",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013A790",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8013A790",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013A790",
+    "size": 1492,
+    "src": "src/ovl/TACO/80139170.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013D528",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8013D528",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013D528",
+    "size": 784,
+    "src": "src/ovl/TACO/8013D1E0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8013D838",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013D838",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013D838",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013D838",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8013D838",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013D838",
+    "size": 832,
+    "src": "src/ovl/TACO/8013D1E0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8013DEE4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013DEE4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013DEE4",
+        "reason": "Error: guarded.c, line 3654: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013DEE4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8013DEE4",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013DEE4",
+    "size": 1336,
+    "src": "src/ovl/TACO/8013DB80.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013E778",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8013E778",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013E778",
+    "size": 812,
+    "src": "src/ovl/TACO/8013DB80.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8013EAA4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8013EAA4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8013EAA4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013EAA4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8013EAA4",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8013EAA4",
+    "size": 1948,
+    "src": "src/ovl/TACO/8013DB80.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_801424A8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_801424A8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_801424A8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_801424A8",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801424A8",
+    "size": 880,
+    "src": "src/ovl/TACO/80141DE0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_80145650",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_80145650",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_80145650",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_80145650",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80145650",
+    "size": 1908,
+    "src": "src/ovl/TACO/801447D0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_801487A4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_801487A4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_801487A4",
+        "reason": "Error: guarded.c, line 3579: Type int  of rhs of assignment expression is incompatible with type str",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801487A4",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_801487A4",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801487A4",
+    "size": 948,
+    "src": "src/ovl/TACO/801480B0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_801497EC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_801497EC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_801497EC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801497EC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_801497EC",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801497EC",
+    "size": 912,
+    "src": "src/ovl/TACO/80148FE0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8014CB24",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8014CB24",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8014CB24",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8014CB24",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8014CB24",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8014CB24",
+    "size": 1756,
+    "src": "src/ovl/TACO/80149F90.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80153B38",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_80153B38",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80153B38",
+    "size": 832,
+    "src": "src/ovl/TACO/80153AA0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_80154960",
+        "reason": "Error: guarded.c, line 3459: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_80154960",
+        "reason": "Error: guarded.c, line 3459: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_80154960",
+        "reason": "Error: guarded.c, line 3425: Incompatible function return type for this function.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80154960",
+        "reason": "Error: guarded.c, line 3459: Reference of an expression of void type or an incomplete type.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_80154960",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80154960",
+    "size": 1556,
+    "src": "src/ovl/TACO/80154960.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_801553AC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_801553AC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_801553AC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801553AC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_801553AC",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_801553AC",
+    "size": 1084,
+    "src": "src/ovl/TACO/80154960.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_80159260",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_80159260",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_80159260",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80159260",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_80159260",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_80159260",
+    "size": 1048,
+    "src": "src/ovl/TACO/80159090.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TACO/func_8015ACCC",
+        "reason": "Error: guarded.c, line 3434: Function func_8015ACCC is redeclared with an incompatible argument type",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TACO/func_8015ACCC",
+        "reason": "Error: guarded.c, line 3434: Function func_8015ACCC is redeclared with an incompatible argument type",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TACO/func_8015ACCC",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8015ACCC",
+        "reason": "Error: guarded.c, line 3434: Function func_8015ACCC is redeclared with an incompatible argument type",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TACO:func_8015ACCC",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TACO/func_8015ACCC",
+    "size": 1260,
+    "src": "src/ovl/TACO/8015ABF0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80132BD0",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80132BD0",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80132BD0",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132BD0",
+        "reason": "m2c-error: M2C_LWL",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80132BD0",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132BD0",
+    "size": 592,
+    "src": "src/ovl/TAIIKU/80132BD0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80132E20",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80132E20",
+    "size": 692,
+    "src": "src/ovl/TAIIKU/80132BD0.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80134060",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80134060",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80134060",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80134060",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80134060",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80134060",
+    "size": 1348,
+    "src": "src/ovl/TAIIKU/80133C80.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80135F3C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80135F3C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80135F3C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80135F3C",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80135F3C",
+    "size": 1676,
+    "src": "src/ovl/TAIIKU/80133C80.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80138DF8",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80138DF8",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80138DF8",
+    "size": 1336,
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_8013D114",
+        "reason": "Error: guarded.c, line 3780: Improper cast of non-scalar type expression.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_8013D114",
+        "reason": "Error: guarded.c, line 3780: Improper cast of non-scalar type expression.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013D114",
+        "reason": "Error: guarded.c, line 3818: Unacceptable operand of a multiplicative operator.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_8013D114",
+        "reason": "Error: guarded.c, line 3780: Improper cast of non-scalar type expression.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_8013D114",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_8013D114",
+    "size": 320,
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_8013FC5C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_8013FC5C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_8013FC5C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_8013FC5C",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_8013FC5C",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_8013FC5C",
+    "size": 488,
+    "src": "src/ovl/TAIIKU/80138950.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80143DD0",
+        "reason": "Error: guarded.c, line 3452: Unacceptable operand of a multiplicative operator.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143DD0",
+        "reason": "Error: guarded.c, line 3452: Unacceptable operand of a multiplicative operator.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143DD0",
+        "reason": "Error: guarded.c, line 3464: Unacceptable operand of a multiplicative operator.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80143DD0",
+        "reason": "Error: guarded.c, line 3452: Unacceptable operand of a multiplicative operator.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80143DD0",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80143DD0",
+    "size": 384,
+    "src": "src/ovl/TAIIKU/80142240.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80143F50",
+        "reason": "Error: guarded.c, line 3517: This expression is not an lvalue.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80143F50",
+        "reason": "Error: guarded.c, line 3517: This expression is not an lvalue.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80143F50",
+        "reason": "Error: guarded.c, line 3522: This expression is not an lvalue.",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80143F50",
+        "reason": "Error: guarded.c, line 3517: This expression is not an lvalue.",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80143F50",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80143F50",
+    "size": 956,
+    "src": "src/ovl/TAIIKU/80142240.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80144464",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80144464",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80144464",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80144464",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80144464",
+    "size": 572,
+    "src": "src/ovl/TAIIKU/80142240.c",
+    "status": "failed"
+  },
+  {
+    "attempts": [
+      {
+        "path": "drafts/T-14500/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/mechanical/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-context/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      },
+      {
+        "path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80147B14",
+        "reason": "cc.py: stage failed (55): python3 build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --",
+        "score": null,
+        "status": "failed"
+      }
+    ],
+    "guarded": false,
+    "reserved": false,
+    "scope": "TAIIKU:func_80147B14",
+    "score": null,
+    "selected_path": "drafts/T-14500/repairs/automatic/no-unk-inference/TAIIKU/func_80147B14",
+    "size": 1020,
+    "src": "src/ovl/TAIIKU/801452D0.c",
+    "status": "failed"
+  }
+]
