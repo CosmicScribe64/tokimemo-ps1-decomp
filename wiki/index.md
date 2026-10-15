@@ -19,7 +19,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
-- [[tickets/T-12500-largest-dialogue|T-12500]] Largest dialogue matching pass (In Progress).
+- [[tickets/T-12500-largest-dialogue|T-12500]] Largest dialogue matching pass (In Review; diagnostic pass, zero new bytes).
 
 - [[tickets/T-11830-tt-wave1-handoff|T-11830]] TT: the seven wave-1 TT matches handed over by the maintainer (Done; TT 65.3%).
 - [[tickets/T-12010-codex-cx1|T-12010]] Codex cx1 main helper matching (In Review).

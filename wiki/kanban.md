@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
 
@@ -71,6 +70,8 @@ kanban-plugin: board
 
 
 ## In Review
+
+- [ ] [[tickets/T-12500-largest-dialogue|T-12500 Match largest dialogue routine]]
 
 - [ ] [[tickets/T-12010-codex-cx1|T-12010 Codex cx1 main helper matching]]
 - [ ] [[tickets/T-12020-codex-cx2|T-12020 Codex cx2 TAIIKU matching pass]]
