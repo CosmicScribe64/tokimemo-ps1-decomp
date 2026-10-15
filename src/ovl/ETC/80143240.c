@@ -300,7 +300,7 @@ s32 func_801451D4(void) {
         func_80053D10();
         func_80044750(0x502);
         k_sub_reset();
-        set_kanji_string(-0x80, 0x32, 1, D_8014D2B8, 0);
+        set_kanji_string(-0x80, 0x32, 1, (s32) "メモリーカードを認識できません", 0);
         k_sub_disp_start(1);
         D_800E6280.unk_110D += 1;
         break;
@@ -311,8 +311,8 @@ s32 func_801451D4(void) {
         break;
     case 2:
         k_sub_reset();
-        set_kanji_string(-0x80, 0x32, 1, D_8014D2D8, 0);
-        set_kanji_string(-0x80, 0x42, 1, D_8014D2F8, 0);
+        set_kanji_string(-0x80, 0x32, 1, (s32) "メモリーカードを差し込み口１に", 0);
+        set_kanji_string(-0x80, 0x42, 1, (s32) "セットし、ボタンを押してください。", 0);
         k_sub_disp_start(2);
         D_800E6280.unk_110D += 1;
         break;
