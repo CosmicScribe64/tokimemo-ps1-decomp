@@ -42,3 +42,7 @@ The first position/displacement store pair needed an aggregate view of the share
 ### func_801321D0 matched (376 linked bytes)
 
 The saved draft preserved the dispatcher selector across a side-effecting call and reconstructed a temporary range-test goto. A direct condition followed by switch(D_8015EDAC) reproduces the original reload and table dispatch. Added the missing shared halfword declaration and later helper prototypes. Plain C linked MATCH376; full rebuild27/27, headers/globals OK. No FAKE. Evidence build/scratch/321D0-match.diff and 321D0-build.log.
+
+### func_8013415C matched (1044 linked bytes)
+
+Autotweak273 candidates left22 rows. Traced uopt identified the explicit increment-result locals as competing register webs. Replacing both increment/copy sequences with D_8015EE0C += amount and testing the global removes the v0/v1 swap; changing only one produces66 rows. Natural C, no FAKE. Linked funcdiff MATCH1044 and RPG_BAT SHA1/globals OK. Evidence build/scratch/increment-twins.log, 3415C-regdiff.log, 3415C-match.diff and 3415C-build.log.

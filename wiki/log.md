@@ -13525,3 +13525,7 @@ A shared coordinate/displacement aggregate preserves the original load/store ord
 ## [2026-10-15] build | RPG_BAT func_801321D0 matched
 
 Restored the dispatcher selector reload after its optional call and declared its shared halfword/helper dependencies. Plain C linked MATCH376, full rebuild27/27, headers/globals OK. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/321D0-match.diff and 321D0-build.log.
+
+## [2026-10-15] build | RPG_BAT func_8013415C matched
+
+Traced uopt led to removing two increment-result temporaries. Plain C passes linked funcdiff1044 bytes and RPG_BAT checksum/globals. Updated [[tickets/T-12040-codex-cx4]] and [[matching-notes]]; evidence build/scratch/3415C-regdiff.log and 3415C-match.diff.
