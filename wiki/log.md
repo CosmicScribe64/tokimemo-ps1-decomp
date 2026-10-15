@@ -13921,3 +13921,9 @@ Recorded candidate evidence and rejected variants in [[bunka-family-results]]. F
 
 ## [2026-10-15] build | Fresh family transfer adds three handlers
 [[tickets/T-12701-bunkaken-address-family]] adds 2,164 verified bytes in BUNKAKEN 8014E440.c using the established aggregate-pointer/bitfield/ordering forms. Literal proof and overlay SHA1 pass. Both review axes passed prior ten-function checkpoint; final checks there show 5,817/6,958 functions and 1,358,452/2,279,368 bytes with zero new prototype disagreements (15 known). Current new total: thirteen functions / 15,092 bytes.
+
+## [2026-10-15] decision | Expand only the successful source family
+BUNKAKEN fresh probes in 8014E440.c have reached zero full-TU differences for all eight further adjacent handlers after the first three verified matches. Linked proof remains required. This evidence justifies a bounded analogous BUNKASAI probe under T-12703, rather than a repeated default sweep. Two compiler workers maximum; each lane stops after two distant misses.
+
+## [2026-10-15] build | Complete the 8014E440 handler family
+[[tickets/T-12701-bunkaken-address-family]] adds eight literal-verified functions / 7,312 bytes, BUNKAKEN SHA1 OK. All eleven previously remaining functions in that file are now C using the same source reconstruction. Branch cumulative gain: twenty-one functions / 22,404 bytes. One adjacent-family held-out probe is next; no unrelated overlays claimed.
