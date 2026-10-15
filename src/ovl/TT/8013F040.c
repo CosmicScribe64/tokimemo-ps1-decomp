@@ -167,7 +167,66 @@ void func_8013F988(s32 i, u8 *p) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013F040", func_8013F9E0);
+void func_8013F9E0(void) {
+    u8 *p;
+    s32 i;
+    s16 v;
+
+    p = D_80158A8C;
+    switch (*(u16 *)(p + 6)) {
+    case 0:
+        if (*(s32 *)(D_80158A8C + 0x24) >= 0x600000) {
+            *(s32 *)(p + 0x24) = 0x600000;
+            *(s16 *)(p + 6) = 0x20;
+        } else {
+            *(s32 *)(p + 0x24) += 0x8000;
+        }
+        break;
+    case 0x20:
+        for (i = 0xB; i < 0xD; i++) {
+            ((TtAnim14 *)(p + 0x38))[i].frames = D_80151A50;
+            ((TtAnim14 *)(p + 0x38))[i].unk_04 = 0;
+            ((TtAnim14 *)(p + 0x38))[i].unk_05 = 0xA;
+            ((TtAnim14 *)(p + 0x38))[i].unk_08 = 0x60;
+            ((TtAnim14 *)(p + 0x38))[i].unk_0B = 0xF;
+            ((TtAnim14 *)(p + 0x38))[i].unk_10 = 0;
+            p[i + 0x310] = 1;
+            ((s16 *)(p + 0x2A8))[i] = 8;
+            ((s16 *)(p + 0x248))[i] = 0;
+            ((s16 *)(p + 0x278))[i] = -0x78;
+        }
+        p[0x11A] = 0x18;
+        p[0x12E] = 0xC;
+        *(s16 *)(p + 6) = 0x40;
+        break;
+    case 0x40:
+        v = *(s16 *)(D_80158A8C + 0x28E);
+        if (v >= -0x30) {
+            func_80133AD0(0x502);
+            *(s16 *)(p + 0x28E) = -0x30;
+            *(s16 *)(p + 0x290) = -0x30;
+            *(s16 *)(p + 6) = 0x50;
+            break;
+        }
+        if (v >= -0x40) {
+            if (*(u8 *)(D_80158A8C + 0xF2) == 0x16) {
+                p[0xF2] = 0x3C;
+            } else if (*(u8 *)(D_80158A8C + 0xF2) == 0x17) {
+                p[0xF2] = 0x3D;
+            }
+        }
+        *(s16 *)(p + 0x28E) += 1;
+        *(s16 *)(p + 0x290) = *(s16 *)(p + 0x28E);
+        break;
+    case 0x50:
+        func_80142AF0(D_80155E48, 0xB);
+        if (p[0x11C] & 1) {
+            *(s16 *)(p + 4) = 0x80;
+            *(s16 *)(p + 6) = 0;
+        }
+        break;
+    }
+}
 
 void func_8013FBD0(void) {
     u8 *c;

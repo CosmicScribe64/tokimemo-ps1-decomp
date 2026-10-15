@@ -49,6 +49,7 @@ extern u8 D_80152C88[];
 extern u8 D_80155AE4[]; /* T-11000 */
 extern u8 D_80155C58[];
 extern u8 D_80155E2C[];
+extern u8 D_80155E48[]; /* T-11810 */
 extern u8 D_80155D2C[];
 void func_8013B6C8(void);
 void func_8013B928(void);
