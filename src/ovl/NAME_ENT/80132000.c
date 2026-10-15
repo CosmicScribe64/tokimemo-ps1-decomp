@@ -915,13 +915,11 @@ void func_80134F6C(void) {
     }
 }
 
-/* NON_MATCHING: T-11010, T-11650, 4 differing lines: the constant 2 stored to D_8014D0A4 comes from $t6 where the original has $v0 */
-#ifdef NON_MATCHING
 void func_80135168(void) {
     u8 *p;
 
-    if ((u8) D_8014D0A4 < 2) {
-        if ((u8) D_8014D0A4 == 1) {
+    if (*(u8 *)&D_8014D0A4 < 2) {
+        if (*(u8 *)&D_8014D0A4 == 1) {
             func_800AE0A0(D_8014CC74, D_8014D070, 8);
             func_800AE0A0(D_8014CC7C, D_8014D078, 8);
             func_800AE0A0(D_8014CC84, D_8014D080, 0xC);
@@ -969,12 +967,9 @@ void func_80135168(void) {
     func_80044750(0x300);
     func_8004EA98();
     func_80134B18();
-    D_8014D0A4 = 2;
+    *(u8 *)&D_8014D0A4 = 2;
     func_8004284C();
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80135168);
-#endif
 
 void func_80135434(s32 arg0) {
     s32 col;
