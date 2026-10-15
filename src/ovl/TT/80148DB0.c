@@ -157,7 +157,39 @@ void func_80149108(void) {
     } while (index != 8);
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_801491F0);
+void func_801491F0(void) {
+    DR_MODE *m;
+    TtDrawBuffer80B8 *buffer;
+    TtSpritePacket20 *q;
+    s32 i;
+    u8 *p;
+
+    p = D_80158A88;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0; i != 8; i++) {
+        if (p[0] != 0) {
+            q = (TtSpritePacket20 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
+            q->tag.len = 4; q->code = 0x65; /* one line (setlen/setcode macro style) */
+            q->x = *(s16 *)(p + 0x14) - 8;
+            q->y = *(s16 *)(p + 0x16) - 8;
+            q->h = 0x10;
+            q->w = 0x10;
+            q->u = p[0x42];
+            q->v = p[0x43];
+            q->clut = *(u16 *)(p + 0x40);
+            q->tag.addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)q;
+            m = buffer->cursor;
+            buffer->cursor++;
+            func_8009D294((s32)m, 0, 0, *(u16 *)(p + 0x3E), 0);
+            ((TtOtTag *)m)->addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)m;
+        }
+        if ((s32)p != 8) {} /* FAKE: a second use of the bound gives it a saved register ahead of i. T-11800 */
+        p += 0x58;
+    }
+}
 
 void func_80149400(void) {
     s32 pad; /* FAKE: moves the spill slot of p to sp+0x28. T-11800 */
@@ -544,4 +576,36 @@ void func_8014AB48(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80148DB0", func_8014ACEC);
+void func_8014ACEC(void) {
+    DR_MODE *m;
+    TtDrawBuffer80B8 *buffer;
+    TtSpritePacket20 *q;
+    s32 i;
+    u8 *p;
+
+    p = D_80158A80;
+    buffer = (TtDrawBuffer80B8 *)(D_80158AB4 + ((TtDrawSelect0C *)D_80158A68)->index * 0x80B8);
+    for (i = 0; i != 12; i++) {
+        if (p[0] != 0) {
+            q = (TtSpritePacket20 *)buffer->cursor;
+            buffer->cursor = (DR_MODE *)((u8 *)buffer->cursor + 0x14);
+            q->tag.len = 4; q->code = 0x65; /* one line (setlen/setcode macro style) */
+            q->x = *(s16 *)(p + 0x22) - 8;
+            q->y = *(s16 *)(p + 0x26) - 8;
+            q->h = 0x10;
+            q->w = 0x10;
+            q->u = p[0x42];
+            q->v = p[0x43];
+            q->clut = *(u16 *)(p + 0x40);
+            q->tag.addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)q;
+            m = buffer->cursor;
+            buffer->cursor++;
+            func_8009D294((s32)m, 0, 0, *(u16 *)(p + 0x3E), 0);
+            ((TtOtTag *)m)->addr = buffer->ordering[*(u16 *)(p + 0x10)].addr;
+            buffer->ordering[*(u16 *)(p + 0x10)].addr = (u32)m;
+        }
+        if ((s32)p != 12) {} /* FAKE: a second use of the bound gives it a saved register ahead of i. T-11800 */
+        p += 0x54;
+    }
+}
