@@ -97,7 +97,80 @@ void func_8015B3B0(s32 arg0, s16 *arg1, s32 arg2) {
     obj->unk_00 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015B59C);
+/* FAKE: byte-offset actor views preserve the original alias/reload behavior;
+ * direct TcActor fields differ by 30 listing rows. T-12070. */
+void func_8015B59C(void) {
+    s32 i;
+    TcPos position;
+    for (i = 0x10; i != 0x3F; i++) {
+        if (*(u8 *)((u8 *)&D_8015EDB4[i] + 1) & 0x80) {
+            if (*(s16 *)((u8 *)&D_8015EDB4[i] + 122) == 0x7FFF) {
+                func_8015C0A0(1, i);
+                *(s16 *)((u8 *)&D_8015EDB4[i] + 122) = 0;
+            }
+            if ((*(u8 *)((u8 *)&D_8015EDB4[i] + 133) == 0) && (*(u8 *)((u8 *)&D_8015EDB4[i] + 2) != 0xFF)) {
+                *(s16 *)((u8 *)&D_8015EDB4[i] + 122) = 0;
+                *(u8 *)((u8 *)&D_8015EDB4[i] + 3) = 2;
+                *(u8 *)((u8 *)&D_8015EDB4[i] + 2) = 0xFF;
+                position.x = *(s16 *)((u8 *)&D_8015EDB4[i] + 116);
+                position.y = *(s16 *)((u8 *)&D_8015EDB4[i] + 118);
+                position.z = *(s16 *)((u8 *)&D_8015EDB4[i] + 120);
+                switch (*(u8 *)((u8 *)&D_8015EDB4[i] + 135) & 0xF0) {
+                case 0x10:
+                    func_8013E424(position, 6);
+                    break;
+                case 0x20:
+                    func_8013E424(position, 7);
+                    break;
+                case 0x30:
+                    func_8013E424(position, 0);
+                    break;
+                case 0x40:
+                    func_8013E424(position, 1);
+                    break;
+                case 0x50:
+                    func_8013E424(position, 2);
+                    break;
+                case 0x60:
+                    func_8013E424(position, 3);
+                    break;
+                case 0x70:
+                    func_8013E424(position, 4);
+                    break;
+                case 0x80:
+                    func_8013E424(position, 5);
+                    break;
+                case 0xD0:
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    break;
+                case 0xE0:
+                    func_8013E424(position, 0);
+                    func_8013E424(position, 1);
+                    func_8013E424(position, 7);
+                    break;
+                case 0xF0:
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 6);
+                    func_8013E424(position, 7);
+                    func_8013E424(position, 2);
+                    func_8013E424(position, 0);
+                    func_8013E424(position, 1);
+                    func_8013E424(position, 5);
+                    func_8013E424(position, 3);
+                    func_8013E424(position, 4);
+                    break;
+                }
+            }
+            func_8015A948((s32) *(u8 *)((u8 *)&D_8015EDB4[i] + 2), i);
+            func_8015C2CC(i);
+            *(s16 *)((u8 *)&D_8015EDB4[i] + 122) = (s16) (*(s16 *)((u8 *)&D_8015EDB4[i] + 122) + 1);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015BD30);
 
@@ -215,7 +288,84 @@ void func_8015C698(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8015ABF0", func_8015C718);
+/* FAKE: byte-offset actor views retain the original reload/alias behavior.
+ * The switch intentionally reads the selector as u16. T-12070. */
+void func_8015C718(s32 arg0) {
+    TcPos position;
+    s16 counter;
+
+    if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122)) == 0) {
+        if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 134)) != 6) {
+            func_800AE120(D_801604C0 + arg0);
+            (*(u8 *)((u8 *)&D_8015EDB4[arg0] + 1)) = 0x90;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)) = (func_800AE0D0() % 40) - 0x14;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 126)) = (func_800AE0D0() % 10) + 0xA;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 128)) = (func_800AE0D0() % 10) + 0xA;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 106)) = (s16) (func_800AE0D0() % 6);
+            func_8013D1E0(*(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 116)), *(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)), 0);
+
+        } else {
+            func_800AE120(D_801604C0 + arg0);
+            (*(u8 *)((u8 *)&D_8015EDB4[arg0] + 1)) = 0x90;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)) = (func_800AE0D0() % 10) - 5;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 126)) = (func_800AE0D0() % 2) + 2;
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 128)) = (func_800AE0D0() % 2) + 2;
+            func_8013D1E0(*(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 116)), *(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)), 0);
+
+        }
+    }
+    if ((*(u8 *)((u8 *)&D_8015EDB4[arg0] + 134)) != 6) {
+        switch (*(u16 *)((u8 *)&D_8015EDB4[arg0] + 106)) {
+        case 0:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 100)) += 0x10;
+
+            break;
+        case 1:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 102)) += 0x10;
+
+            break;
+        case 2:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 104)) += 0x10;
+
+            break;
+        case 3:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 100)) -= 0x10;
+
+            break;
+        case 4:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 102)) -= 0x10;
+
+            break;
+        case 5:
+            (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 104)) -= 0x10;
+
+            break;
+        }
+        counter = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122));
+    } else {
+        if (((s16) (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122)) % 3) == 0) {
+            func_800AE120(D_801604C0 + arg0);
+            position.x = ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 116)) + (func_800AE0D0() % 500)) - 0xFA;
+
+            position.y = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 118)) + (func_800AE0D0() % 250);
+            position.z = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 120));
+            func_8013D1E0(position, *(TcPos *)&(*(s16 *)((u8 *)&D_8015EDB4[arg0] + 124)), 0);
+
+        }
+        (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 100)) += 2;
+
+        (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 104)) += 2;
+        counter = (*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122));
+    }
+    if (!(counter & 1)) {
+        func_8015C0A0(1, arg0);
+    } else {
+        func_8015C0A0(0, arg0);
+    }
+    if ((*(s16 *)((u8 *)&D_8015EDB4[arg0] + 122)) >= 0x3D) {
+        func_8015C208(arg0);
+    }
+}
 
 s32 func_8015CC54(void) {
     s32 n;

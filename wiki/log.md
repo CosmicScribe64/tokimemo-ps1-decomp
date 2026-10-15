@@ -13707,3 +13707,22 @@ All fourteen cx5 targets attempted, with 208 verified matched bytes. Retained th
 ## [2026-10-15] ticket | T-12050 ready for review
 
 Moved [[tickets/T-12050-codex-cx5]] and [[kanban]] to In Review, refreshed [[index]]. Fresh configure/ninja passes 27/27 SHA1, headers and globals; prototype branch check has zero new disagreements. Linked menu_bar_show matches 208 bytes. Ticket/card status and retained guard counts checked; independent standards review remains pending.
+## [2026-10-15] setup | cx7 TACO actor matching
+
+Read the cx7 index, standards/workflow/cheatsheet and prior target notes; created [[tickets/T-12070-codex-cx7]] In Progress with matching index/card. Docker baseline running with ninja -j2. Larger actor functions and reusable patterns take priority per user steering; only src/ovl/TACO/8015ABF0.c is owned.
+
+## [2026-10-15] build | cx7 baseline verified
+
+Docker baseline configure/ninja -j2 passed all 27 binary checksums, headers and globals. Evidence build/scratch/baseline.log; matching now begins under [[tickets/T-12070-codex-cx7]].
+
+## [2026-10-15] query | cx7 large TACO draft repairs
+
+[[tickets/T-12070-codex-cx7]]: repaired by-value position calls and actor pointer scaling in scratch drafts; unsigned flag stores recovered most of the 2,392-byte B59C function (550 to 61 full-file differing rows). Large candidates remain scratch-only while stack layout and pointer live ranges are tested. Existing production source unchanged.
+
+## [2026-10-15] build | cx7 B59C exact match
+
+[[tickets/T-12070-codex-cx7]]: `func_8015B59C` production linked MATCH (1,940 bytes) and TACO SHA1 pass. Recorded FAKE byte-offset actor views and reusable induction/temporary cleanup in [[matching-notes]]. Worklist's 2,392-byte estimate corrected to literal linked size. Proof: build/scratch/B59C-production.log.
+
+## [2026-10-15] build | cx7 C718 exact match
+
+[[tickets/T-12070-codex-cx7]]: `func_8015C718` literal linked MATCH (1,340 bytes), TACO SHA1 passes. Direct unsigned selector load closes the last six register rows; [[matching-notes]] records the reusable distinction. Cumulative 3,280 bytes from two functions. Evidence: build/scratch/C718-production.log.
