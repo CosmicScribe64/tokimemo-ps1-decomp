@@ -36,6 +36,9 @@ extern u8 *D_80158A60;
 extern u8 *D_80158AB4;
 void func_8013E320(void);
 extern s32 D_8014E34C;
+extern s32 D_8014E350; /* T-11810 */
+extern s32 D_8014E354; /* T-11810 */
+extern u8 D_80155B10[]; /* T-11810 */
 
 extern u8 *D_80158A64;
 extern s32 *D_80158A70;
