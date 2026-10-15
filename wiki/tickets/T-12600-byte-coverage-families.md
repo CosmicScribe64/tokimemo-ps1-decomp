@@ -29,3 +29,8 @@ User query: whether the remaining game bytes all have nonmatching drafts. Source
 
 ## KANGEI draft integration (2026-10-15)
 Integrated b9bb9045: three KANGEI functions add 1,328 verified bytes. Normal C switch selectors replace only INCLUDE_ASM entries; existing C is preserved. Docker build, affected KANGEI SHA1, header/global guards, branch prototype check and three explicit default linked literal proofs pass (build/scratch/goal-kangei-drafts.log). Current total: 5,930 / 6,958 functions and 1,442,920 / 2,279,368 bytes (63.3%); 380,576 bytes remain to the 80% target. Also integrated 1308ed4a, nine compiling DATE repair archives, with zero coverage credit.
+
+## RPG and ETC draft follow-up (2026-10-15)
+RPG_BAT 002eb61d adds 1,048 literal bytes with one shared byte-global declaration. Integrated full Docker build passes all 27 binary checksums; both explicit default function proofs pass. ETC 2c98de67 uses a consistent GameState pointer to resolve the final register difference in func_801447B0 (648 bytes), preserving prior C bodies. Draft archive checkpoint b59ad160 retains completed units through RENSYU. Seven drafting/repair tests pass from tools/; the earlier tests/ discovery ran zero tests and is not counted as validation. Evidence: build/scratch/goal-rpg-drafts.log and build/scratch/goal-etc-447b0.log.
+
+ETC integrated checksum and explicit default literal proof pass. Verified total is now 5,933 / 6,958 functions, 1,444,616 / 2,279,368 bytes (63.4%). Remaining to the 80% threshold: 378,880 bytes.

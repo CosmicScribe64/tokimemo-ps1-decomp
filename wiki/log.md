@@ -14664,3 +14664,6 @@ Started [[tickets/T-14800-etc-801447b0]]. Read [[etc-family-results]] and [[tick
 ## [2026-10-15] build | Match ETC album dispatcher through consistent aggregate pointer
 
 [[tickets/T-14800-etc-801447b0]]: func_801447B0 adds 648 default-build literal linked bytes; ETC SHA1 passes. Direct-field six-row difference is a final status-byte register allocation; consistent existing GameState pointer yields diagnostic zero and verified bytes. [[etc-family-results]] records the structural transfer. Original attempts and prior C are unchanged; ticket moved to In Review for independent review.
+
+## [2026-10-15] build | RPG and ETC draft matches
+Integrated 002eb61d and 2c98de67 with completed draft archive b59ad160. RPG shared-header validation passes all 27 binaries and two default literal proofs. The ETC follow-up preserves prior matching C and uses the established GameState view. Seven exhaustive draft/repair tooling tests pass using the tools directory. See [[tickets/T-12600-byte-coverage-families]] and [[tickets/T-14800-etc-801447b0]].
