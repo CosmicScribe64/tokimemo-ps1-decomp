@@ -1,7 +1,7 @@
 ---
 id: T-12100
 title: Match DATE movie and effect functions
-status: In Progress
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -14,9 +14,9 @@ Byte-matching pass on the twelve assigned DATE functions, prioritizing the large
 
 ## Acceptance criteria
 
-- [ ] Every promotion has literal linked-byte and DATE SHA1 verification.
-- [ ] All assigned functions attempted; only ticketed near misses below about 30 rows retained.
-- [ ] Final configure/full build passes 27 checksums, headers, globals and prototype checks.
+- [x] Every promotion has literal linked-byte and DATE SHA1 verification.
+- [x] All assigned functions attempted; only ticketed near misses below about 30 rows retained.
+- [x] Final configure/full build passes 27 checksums, headers, globals and prototype checks.
 - [ ] Standards review before Done.
 
 ## Notes
@@ -46,3 +46,15 @@ The existing 489D0 draft has a documented data-ownership/shared-LUI blocker. Unl
 - Deep 47958 follow-up: all 1,010 instructions now align; best candidate differs in four register-only rows (two fade addiu/andi pairs). Removed redundant inner returns in cases23/40 to recover the original branch layout. Reordered genuine locals and added movie/header pointer declarations to recover the96-byte frame; header declaration is currently unused and must be labelled FAKE if retained. Reversing the case42 comparison restores branch operand order. Keeping the case40 call, state restoration and comparison on one source line restores the original AS1 load schedule; ordinary separated lines differ by2–3 rows. Existing DateMovieHeader8 direct field casts preserve the old header loads. Evidence: build/scratch/g2-callandafter.log, g2-typedheader.log, 47958-seven-reg.log. No bytes claimed/promoted yet.
 
 - Matched `DATE:func_8014D298`: 740 literal linked bytes, production DATE SHA1 and header/global checks pass. Reused DateParticleView44 for the68-byte local and all three record copies; the genuine record-pointer declaration before the scene local recovers its0x30 stack address. A diagnostic unused padding declaration also matched, but was discarded in favor of the useful pointer. Recovered GameState field accesses replace old scalar aliases. No FAKE shaping. Evidence: build/scratch/d298-{typed,natural,build,final}.log. Package total5,628 bytes / four matches.
+
+## Final matching pass
+
+Verified coverage is **5,628 bytes in four functions**: 489D0 (2,068), E3E8 (2,000), A4DC (820), D298 (740). All four have production DATE checksum and literal linked-byte evidence; none uses FAKE shaping.
+
+The retained new guards are 47958 (four instruction rows) and AD9C (five instruction rows). The former matches the full 1,010-instruction structure; remaining fade addiu/andi pairs use ugen temporaries instead of destructively updating the source register. Its unknown non-void return behavior, unused frame slot and callback source grouping are explicitly FAKE. Width, signed-promotion, repeated-expression, liveness, indexed/global views and 500 optimizer-guided candidates did not close the gap. AD9C uses SDK MATRIX and SVECTOR, correct 12-byte motion and 8-byte angle strides, and exact instruction/register order; only two saved-pointer slots differ by 4 bytes. Natural declaration-order and genuine-pointer-local probes failed; no padding retained. Logs: 47958-autotweak.log, g2-callandafter.log, ad9c-vector.log and ad9c-layout0..5.log.
+
+Existing AF88 and DCCC guards received bounded follow-up. DCCC's byte-field pointer fixes its frame and table offset, leaving 16 register/operand rows; 235 guided candidates made no further improvement. AF88 remains a saved-constant/end-pointer allocation mismatch. Evidence: dccc-ptr-first.log, dccc-autotweak.log, af88-baseline.log, af88-permute.log.
+
+462B0 was reconstructed to the exact 950-instruction count, with natural indexed loops, a shared animation tail and four-way substate switch. Saved-state promotion, fade narrowing, timer registers and local placement still differ substantially. A8FC received corrected pointer strides, shared counters, chained RGB updates, natural object-hide iteration and return-type diagnostics; it remains distant. Both are restored to assembly; latest candidates are ignored scratch files func_801462B0-final-distant.c and func_8014A8FC-final-distant.c. Their earlier checkpoints preserve alternate hypotheses. Together with the previously recorded 4718C and EF1C attempts, all 12 assigned functions were attempted.
+
+Final handoff validation: fresh configure and Docker ninja -j2 passed all 27 binary SHA1 checks, headers, globals and symbols. Branch prototype check reports zero new conflicts (15 known baseline conflicts). Four retained guards: 47958 (4 rows), AD9C (5), DCCC (16), AF88 (17). All larger unmatched drafts use assembly fallbacks. Evidence: build/scratch/final-build.log, final-protos.log and *-retained.log. Awaiting standards review; no new matches in this final guard-only checkpoint.

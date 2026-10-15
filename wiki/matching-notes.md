@@ -5078,3 +5078,11 @@ One Opus pass on never-attempted TT functions and the drafts T-11810 did not rea
 - Adding a K&R or `void` prototype for a function that callers used implicitly can change their code: declaring
   `func_80133AD0` changed `func_80140920`, so that call stays implicit.
 - Twins found by reading, not by `neardupes`: `func_8013F3B4` / `func_80135870`, `func_8014B274` / `func_8014B088`.
+
+## DATE movie and scene records (T-12100, 2026-10-15)
+
+The cx10 pass gains 5,628 verified bytes in 489D0, E3E8, A4DC and D298. Existing aggregate/data ownership resolves shared-LUI misses; exact details and proof logs are in [[tickets/T-12100-codex-cx10]]. E3E8's anonymous initialized data requires literal linked-byte proof rather than trusting two unresolved normalizer rows.
+
+For large DATE movie handlers, natural `D_801217D0[i + k]` record loops recover register choices that m2c pointer temporaries obscure. Removing redundant inner returns and moving the shared animation tail after the main switch recovers original branch structure. The 4,044-byte 47958 guard now differs in four fade register rows; 462B0 reaches the original 950-instruction count but remains too distant to retain. Callback source-line grouping affects AS1 load order and is explicitly FAKE where required.
+
+AD9C's motion stream uses 12-byte records and its angles use 8-byte SDK SVECTOR entries. Selecting the motion record before the MATRIX copy and ordering translation additions correctly reproduces temporary creation order. Using `s16[arg0 * 4]` for angles consumes an additional ugen temporary despite producing the same final shift; SVECTOR indexing removes it. The retained guard differs only at two saved-pointer stack slots (five rows). D298's three 68-byte record copies match with the existing DateParticleView44 and a genuine record-pointer local declared before the local scene; no padding is needed.

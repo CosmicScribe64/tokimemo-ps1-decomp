@@ -414,27 +414,30 @@ typedef struct {
 extern FnTbl39 D_8015E3C4;
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, base/index registers swapped (a0/v1) around a local function-pointer table, 20 differing lines */
+/* NON_MATCHING: T-10320 / T-12100, sixteen register/operand rows remain.
+ * A byte-field pointer restores the original table offset and frame size. */
 void func_8014DCCC(void) {
+    u8 *selector;
     FnTbl39 tbl;
     void (*fn)();
 
+    selector = &D_800E6280.unk_110A;
     tbl = D_8015E3C4;
-    fn = tbl.f[D_800E6280.unk_110A];
-    if (fn == place_init2) {
+    fn = tbl.f[*selector];
+    if (place_init2 == fn) {
         D_80120653 |= 0x80;
     }
-    if (fn == normal_date_bg_out) {
+    if (normal_date_bg_out == fn) {
         D_80120653 &= 0xFF7F;
     }
     fn(0x80);
     if (D_80122D04 != 0) {
         func_8014E010();
     }
-    if (D_800E6280.unk_110A == 0xE) {
+    if (*selector == 0xE) {
         func_8014E108();
     }
-    if (D_800E6280.unk_110A >= 0x19 && D_800E6280.unk_110A < 0x24) {
+    if (*selector >= 0x19 && *selector < 0x24) {
         func_80140D38();
     }
 }

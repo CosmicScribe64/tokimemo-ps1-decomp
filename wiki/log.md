@@ -13541,3 +13541,9 @@ Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build 
 ## [2026-10-15] build | cx10 matches 740-byte DATE scene initializer
 
 [[tickets/T-12100-codex-cx10]] promotes func_8014D298 after exact production linked-byte and DATE checksum proof. Existing DateParticleView44 recovers the three68-byte copies; natural local declaration order recovers the stack address. No dummy padding retained. Package total5,628 bytes; evidence build/scratch/d298-final.log and d298-build.log.
+
+## [2026-10-15] ticket | cx10 DATE handoff ready for review
+
+[[tickets/T-12100-codex-cx10]] moves to In Review with 5,628 verified bytes in four matches. Fresh Docker configure and ninja -j2 passed 27/27 binary checksums, headers, globals and symbols; the prototype check reports zero new disagreements and 15 known baseline conflicts. Final literal production-byte checks reconfirm 489D0 (2,068), E3E8 (2,000), A4DC (820) and D298 (740). None of these matches uses FAKE shaping.
+
+All twelve assigned functions were attempted. Retained ticketed guards differ by 4 rows (47958), 5 (AD9C), 16 (DCCC) and 17 (AF88); required return/frame/source-grouping shaping in 47958 is labelled FAKE. Larger unproven reconstructions remain only in ignored build/scratch; production retains assembly fallbacks. Reusable findings are recorded in [[matching-notes]]. Evidence: build/scratch/final-build.log, final-protos.log, final-literal.log and *-retained.log. No production toolchain changes or new conflicts.
