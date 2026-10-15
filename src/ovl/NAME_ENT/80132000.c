@@ -190,7 +190,7 @@ void func_80132320(void) {
             D_801220E0 = 0;
             D_800E6280.unk_110D += 1;
             D_801220E2 = 0;
-            *(u8 *)&D_800E6280.unk_3A = 0;
+            D_800E6280.unk_03A = 0;
         }
     } else {
         val = (D_800B593C + 4) & 0xFF;
@@ -198,7 +198,7 @@ void func_80132320(void) {
         D_801220E0 = val;
         D_800B593C = val;
         D_801220E2 = val;
-        *(u8 *)&D_800E6280.unk_3A = val;
+        D_800E6280.unk_03A = val;
         if ((u32)val >= 0x80) {
             func_80057640(0xF0);
             func_801324AC();
@@ -1939,34 +1939,27 @@ INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80138F60);
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80139440);
 
-/* NON_MATCHING: T-11650, 2 differing lines: compare chain on the $v0 copy, original compares $v1 */
-#ifdef NON_MATCHING
 s32 func_80139684(void) {
-    u8 var_a0;
-
-    switch (D_800E6280.unk_110D) {
+    switch (*(u8 *)&D_800E6280.unk_110D) {
     case 0:
         if (D_800E6280.unk_1104.u >= 0x41U) {
-            D_800E6280.unk_110D += 1;
+            *(u8 *)&D_800E6280.unk_110D += 1;
+            return;
         }
-        break;
+        return;
     case 1:
-        var_a0 = *(u8 *)&D_800E6280.unk_3A;
-        if (var_a0 >= 4) {
-            var_a0 -= 4;
+        if (*(u8 *)&D_800E6280.unk_03A >= 4) {
+            *(u8 *)&D_800E6280.unk_03A -= 4;
         } else {
-            D_800E6280.unk_110D += 1;
-            var_a0 = 0;
+            *(u8 *)&D_800E6280.unk_110D += 1;
+            *(u8 *)&D_800E6280.unk_03A = 0;
         }
-        *(u8 *)&D_800E6280.unk_3A = var_a0;
-        func_80057390(var_a0);
-        break;
+        func_80057390(*(u8 *)&D_800E6280.unk_03A);
+        return;
     case 2:
         main_state_set(0x15);
         text_set_advance(0xE);
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80139684);
-#endif
+
