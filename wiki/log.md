@@ -14411,3 +14411,6 @@ Created [[tickets/T-14100-date-near-matches]] from the verified [[tickets/T-1210
 ## [2026-10-15] decision | Label input handler return accommodation
 
 Review of [[tickets/T-14000-ending-en-nichi-families]] identifies func_801333B0's unconfirmed s32-without-return form as a return/liveness accommodation. Added explicit FAKE comment and ticket explanation, following CODING_STANDARDS.md section 7a. No new coverage.
+
+## [2026-10-15] build | DATE and EN_NICHI gain verified at 61.8 percent
+[[tickets/T-12400-integrate-verified-matches]] integrated6e23f2c0 and4f1ca7a6 plus3860fddf annotation fix. Independent default literal proof confirms DATE80152980=296bytes and EN_NICHI801333B0=476bytes, with affected binary SHA1s, headers/globals and branch prototype checks passing. Standards inspection required an explicit FAKE label for the unconfirmed s32-without-return lifetime choice; final annotated source reverified. Total5882/6958functions,1407536/2279368bytes (61.8%); remaining415960alignedbytes to80%. Evidence build/scratch/goal-date-52980.log, goal-en-nichi.log and goal-en-nichi-final.log. DATE worker now reconstructs3192-byte dispatch aggregate family; other active workers continue distinct scopes.
