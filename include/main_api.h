@@ -2299,7 +2299,7 @@ void normal_date_bg_fadeout(void);
 void normal_date_bggirl_fadeout(void);
 void normal_date_move_place(void);
 void normal_date_move_place_init(void);
-void normal_date_move_place_main(void);
+s32 normal_date_move_place_main(void);
 void place_init(void);
 void bg_read_sub2(s32 arg0);
 void func_8007ED84();

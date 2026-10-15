@@ -950,7 +950,23 @@ void normal_date_move_place_init(void) {
     func_80058398(1);
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8007C030", normal_date_move_place_main);
+s32 normal_date_move_place_main(void) {
+    if (D_800B5940 >= 8) {
+        D_800B5940 -= 8;
+    } else {
+        func_80058398(1);
+        dec_bg_show_switch(1);
+        func_8004284C();
+        D_801217D0[0].unk_00 |= 0x80000000;
+        D_801217D0[1].unk_00 |= 0x80000000;
+        D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;
+        D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = 0x80;
+        D_80122CF8 = 1;
+        return 0;
+    }
+    D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = D_801217D0[1].unk_14 = D_801217D0[1].unk_15 = D_801217D0[1].unk_16 = D_800B5940;
+    func_80058398(1);
+}
 
 void place_init(void) {
     k_reset(0);
