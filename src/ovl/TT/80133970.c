@@ -622,8 +622,6 @@ INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134D0C);
 
 INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134E20);
 
-/* NON_MATCHING: T-11560, 4 lines (registers only): the loop bound 0x80 and the chain constant 0xAB tie in priority and IDO numbers 0xAB first (s5/s6 swapped). The kind local for the inner A8..AA test splits that reload from the chain value (v0 as in the original). Tried: for/while/do loops, a kind local for the chain (bne operand order flips), a test-at-top loop (fixes the constants, adds a loop-head branch), autotweak 300 s, permuter 400 s. */
-#ifdef NON_MATCHING
 void func_80135148(void) {
     u8 *q;
     u8 *p;
@@ -631,14 +629,14 @@ void func_80135148(void) {
     u8 *v;
     s32 i;
     u16 kind;
+    s32 n;
 
     buf = *(s32 *)(D_80158A68 + 8) * 0x80B8 + D_80158AB4;
     q = D_80158AB0;
     p = D_80158AA0;
-    i = 0;
-    do {
+    /* The bound in a local, set in the for init, puts 0x80 in s5 ahead of the chain constants (T-11620). */
+    for (i = 0, n = 0x80; i != n; i++) {
         if (*p != 0) {
-
             if (*(u16 *)(p + 2) == 0xAB) {
                 func_80147A18(p + 0x14, p + 0x38, *(u16 *)(p + 0x10));
             } else if (*(u16 *)(p + 2) == 0xAC) {
@@ -672,10 +670,6 @@ void func_80135148(void) {
                 func_80141C6C(&((TtDrawBuffer80B8 *)buf)->ordering[*(u16 *)(p + 0x10)], v, q);
             }
         }
-        i++;
         p += 0x68;
-    } while (i != 0x80);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80135148);
-#endif
