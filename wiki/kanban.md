@@ -23,6 +23,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
+- [ ] [[tickets/T-12703-bunkasai-heldout-family|T-12703 BUNKASAI held-out family transfer]]
+
 - [ ] [[tickets/T-12701-bunkaken-address-family|T-12701 BUNKAKEN address family]]
 
 - [ ] [[tickets/T-12700-bunka-families|T-12700 Match BUNKAKEN and BUNKASAI source families]]

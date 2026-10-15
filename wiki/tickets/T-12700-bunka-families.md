@@ -20,3 +20,5 @@ Prior experiments read from integration wiki/matching-breakthroughs.md and wiki/
 
 ## Comments
 2026-10-15: Worktree created at /Users/lila/Documents/Projects/tokimemo-wt/bunka-12700. Child file assignments: T-12701 BUNKAKEN 80140F60.c; T-12702 BUNKASAI all files. Parent owns BUNKAKEN remaining files and integration. At most two compiler workers total.
+
+Checkpoint review through bad8fc7b: both independent Standards and Spec axes report no actionable findings for twenty-one new functions / 22,404 bytes. Review used the recorded literal proofs and overlay checksum logs; reviewers did not independently rebuild. Fresh follow-up remains within owned BUNKAKEN/BUNKASAI families, with one compiler per lane.

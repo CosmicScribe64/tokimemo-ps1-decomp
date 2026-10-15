@@ -1,5 +1,8 @@
+#define MAIN_API_OVERRIDE_func_80083440 /* T-12701: K&R call; callee narrows the argument. */
 #include "common.h"
 #include "ovl/BUNKAKEN.h"
+
+void func_80083440();
 
 void func_8013EB30(void) {
     switch (D_80122EB8) {
@@ -51,7 +54,117 @@ void func_8013EB30(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/8013EB30", func_8013EC98);
+void func_8013EC98(void) {
+    GameState *g = &D_800E6280;
+    s32 temp_v0;
+    s32 temp_v0_2;
+
+    switch (g->unk_110A) {
+    case 0:
+        func_8005742C(0x40EA, 1);
+        func_8004284C();
+        break;
+    case 1:
+        func_8007E99C();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_80145844();
+            func_80057418(1, func_8005751C(1));
+            cd_read_sectors(0x10U, 0x801E8000, 0x49A7);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        func_8007E884();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            temp_v0 = func_8008667C(8);
+            switch (temp_v0) {                      /* switch 2; irregular */
+            case 0:
+            case 1:
+                D_800CA148 = 2;
+                break;
+            case 2:
+                D_800CA148 = 3;
+                break;
+            case 3:
+                D_800CA148 = 4;
+                break;
+            }
+            func_80140EF4();
+            if (g->unk_03E == 0x60) {
+                D_800CA148 += 3;
+            }
+        }
+        break;
+    case 5:
+        func_80085A60();
+        if (func_8008667C(8) < 3) {
+            if (D_800CA14C >= 3) {
+                func_80083440(5U);
+            }
+        }
+        break;
+    case 6:
+        if (func_8008667C(8) == 3) {
+            func_80042940(9);
+        } else {
+            D_800CA148 = 1;
+            func_8007E99C();
+        }
+        break;
+    case 7:
+        func_80085A60();
+        func_80083440(3U);
+        break;
+    case 8:
+        func_8007E884();
+        break;
+    case 9:
+        temp_v0_2 = func_8008667C(8);
+        switch (temp_v0_2) {                        /* switch 3; irregular */
+        case 0:
+        case 1:
+            D_800CA148 = 8;
+            break;
+        case 2:
+            D_800CA148 = 9;
+            break;
+        case 3:
+            D_800CA148 = 0xA;
+            break;
+        }
+        func_8004284C();
+        break;
+    case 10:
+        func_80085A60();
+        if (D_800CA14C >= 4) {
+            func_80083440(func_80051B48(8) & 0x7F);
+        }
+        break;
+    case 11:
+        func_8007E5A0();
+        break;
+    case 12:
+        func_8007E934();
+        break;
+    case 13:
+        D_800CA148 = 0;
+        func_8004284C();
+        break;
+    case 14:
+        func_80085A60();
+        break;
+    case 15:
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/8013EB30", func_8013EFA4);
 

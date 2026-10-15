@@ -13927,3 +13927,12 @@ BUNKAKEN fresh probes in 8014E440.c have reached zero full-TU differences for al
 
 ## [2026-10-15] build | Complete the 8014E440 handler family
 [[tickets/T-12701-bunkaken-address-family]] adds eight literal-verified functions / 7,312 bytes, BUNKAKEN SHA1 OK. All eleven previously remaining functions in that file are now C using the same source reconstruction. Branch cumulative gain: twenty-one functions / 22,404 bytes. One adjacent-family held-out probe is next; no unrelated overlays claimed.
+
+## [2026-10-15] ticket | BUNKASAI held-out family transfer
+Created [[tickets/T-12703-bunkasai-heldout-family]] in In Progress for the bounded 8014DD90.c test justified by BUNKAKEN transfer results. Existing BunkasaiModeFlags and direct source evidence govern candidates; old matched source is preserved.
+
+## [2026-10-15] query | Review checkpoint through bad8fc7b
+Independent Standards and Spec reviews pass all twenty-one accepted functions / 22,404 bytes. No fake matches or scope violations found. [[tickets/T-12700-bunka-families]] records the review boundary; subsequent candidates still require their own proof and review.
+
+## [2026-10-15] build | Adjacent BUNKAKEN call convention seed
+[[tickets/T-12701-bunkaken-address-family]] adds func_8013EC98, 780 verified linked bytes, using the existing K&R declaration override mechanism. BUNKAKEN SHA1 passes. The override is translation-unit-local and documented; shared main prototypes are unchanged. Cumulative branch gain: twenty-two functions / 23,184 bytes.

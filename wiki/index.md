@@ -271,3 +271,4 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-12701-bunkaken-address-family|T-12701]] BUNKAKEN 80140F60 address family (In Progress).
 - [[tickets/T-12702-bunkasai-family|T-12702]] BUNKASAI remaining source families (Done; two matches, 2,520 bytes).
 - [[bunka-family-results]] — BUNKAKEN aggregate-address and BUNKASAI state-reload experiments (T-12700).
+- [[tickets/T-12703-bunkasai-heldout-family|T-12703]] BUNKASAI held-out family transfer (In Progress).
