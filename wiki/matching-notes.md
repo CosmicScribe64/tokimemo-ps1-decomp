@@ -4717,3 +4717,46 @@ two unchanged. Ticket [[tickets/T-11550-tt-opus-near-miss-pass]].
 - Tidy m2c leftovers in matches: `*(u8 *)((unsigned char *)D_80158A64 + (28))` is `D_80158A64[0x1C]` (`func_8013E1E8`).
 - Tools: regdiff named the priority problems (`func_80142C70`, `func_80135148`); autotweak (5 runs) and the permuter (1)
   found nothing on these drafts; a quick ninja-one-object + `funcdiff --no-build` loop was the main workhorse.
+
+## Wave 1 package w1-p03: main 8007C030 (T-11590)
+
+Ticket [[tickets/T-11590-w1-main-8007c030]]. One Opus agent on `src/main/8007C030.c`: 10 matches
+(`normal_date_girl_suddenout`, `normal_date_girl_out_main`, `normal_date_girl_in_main`,
+`normal_date_move_place_main`, `func_80085CD4`, `func_80083A10`, `func_80085234`, and, past the work list,
+`func_800850D4`, `func_80085B3C`, `func_80083474`). Guarded drafts:
+`normal_date_bggirl_fadein` (28 -> 10 lines), `normal_date_bggirl_fadeout` (new, 10), `func_80084E90` (5),
+`func_80083808` (18), `make_three_select` (6, frame only), `junban_init` (34, comment updated),
+`normal_date_three_select_init` and `dialogue_speak_part` unchanged. Rows in [[data/t0018-cases]].
+
+- **The normal_date sprite bytes are two GsSPRITE-like `Rec24` records.** `D_801217E4..E6` and `D_80121808..0A`
+  are r, g, b of `D_801217D0[0]` and `[1]`, `D_801217DC/DE` are their tpage and u. One chain per record in r, g, b
+  order (`D_801217D0[0].unk_14 = D_801217D0[0].unk_15 = D_801217D0[0].unk_16 = 0x80;`) gives the original store
+  order (outer targets right to left, the innermost scheduled last) and the `li; move` constant copy that the old
+  scalar and byte-view chains (`normal_date_girl_suddenin`, FAKE) could not.
+- **The flag bytes `D_8011F50F`, `D_8011F4CB`, `D_8011F513`, `D_80120653`, `D_80120697`, `D_8011ECD3` are bytes
+  of the `D_8011ECD0` record table** (records 31, 30, 96, 97, 0; byte 3 = the display flag). Written through the
+  table (`D_8011ECD0[0x83F] &= ~0x80;`) the second load stays after the first store, as in the original; the
+  scalars let IDO hoist it.
+- **A global updated in place is promoted by uopt and stored back once.** `if (D_800B5940 >= 8) D_800B5940 -= 8;`
+  followed by chains that read `D_800B5940` gives the original's single register (`v1`), the `andi; move` after the
+  subtraction and the late store (`normal_date_girl_out_main`, `girl_in_main`, `move_place_main`); a local copy
+  gives two registers. The same holds for a flag byte (`func_80083A10`: `D_8011ECD0[3] &= 0x7F; ... |= 0x80;
+  if (D_8011ECD0[3] & 0x80)`).
+- **Return types found from the asm:** a `move v0,zero` before the epilogue on one path means `s32` with `return 0`
+  there and no return elsewhere (the four normal_date mains, `func_800850D4`, `func_80083474`); an `s32` function
+  without any return also produced the `move v0,zero` of a cleared promoted global (`func_80085B3C`).
+- **K&R callee narrowing.** `func_800850D4`'s `sll/sra a3` at entry and the `lh` reload of its home slot after the
+  call are an `s16` K&R parameter; `func_80085B3C`'s `move t7,a1; move a1,t7` is a `u8` K&R parameter (ANSI `u8`
+  or K&R `s32`/`u32` are 140+ lines off). K&R definitions need `()` in `include/main_api.h`.
+- **Types fixed from all users:** `D_800CA360` is `u8` (its only loads are `lbu`).
+- **Tool notes.** `funcdiff --resolve` on a guarded draft compiles the whole NON_MATCHING unit, so an earlier
+  guarded draft of another size moves every later function: it reports "linked function address or size differs"
+  for a correct draft (and so did the trailing-nop pad of `func_80085CD4`, the last function of the object).
+  Check such a candidate by removing its guard and running ninja; the unit sha1 decides.
+- **Left open.** The two bggirl fades, `func_80084E90` and `func_80083808` all miss on whether uopt keeps a value
+  in a register (a chain value through `move`/`andi`, a never-read `li v0,-129`); `make_three_select` needs the
+  first local 4 bytes below where IDO puts it; `junban_init` is the bit-order v0/v1 swap regdiff names
+  (unconstrained ranges coloured in bit order); `dialogue_speak_part` keeps its two `li a0,-40` scheduling
+  rotations (same-line, inline `+=`, casts and split arguments tried). `D_80122D48` is declared in the C file
+  because EVENT `80103B60.c` declares that address as a function table; moving it to `main_api.h` needs a
+  `MAIN_API_OVERRIDE_D_80122D48` in that EVENT file (follow-up).
