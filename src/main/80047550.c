@@ -328,13 +328,15 @@ void func_80049044(void) {
 
     if ((s8)D_800E6280.unk_03B != 0) {
         if ((s8)D_800E6280.unk_03B > 0) {
-            v = D_800E6280.unk_03A + (s8)D_800E6280.unk_03B;
+            v = D_800E6280.unk_03A;
+            v += (s8)D_800E6280.unk_03B;
             if (v >= 0x100) {
                 v = 0xFF;
             }
             D_800E6280.unk_03A = v;
         } else if ((s8)D_800E6280.unk_03B < 0) {
-            v = D_800E6280.unk_03A + (s8)D_800E6280.unk_03B;
+            v = D_800E6280.unk_03A;
+            v += (s8)D_800E6280.unk_03B;
             if (v < 0) {
                 v = 0;
             }
