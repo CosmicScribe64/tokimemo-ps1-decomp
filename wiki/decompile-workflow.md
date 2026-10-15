@@ -1897,3 +1897,7 @@ Part A, post-m2c rewrites, from a small C expression parser with just enough typ
 
 Part B, autotweak edits (labels start with the kind): `cast` (add `(u8)/(s8)/(u16)/(s16)` to a read, `(u32)/(s32)` on a compare/shift/divide operand), `castdrop`, `castflip` (sign or width of an existing cast), `mask` (`x & 0xFF` <-> `(u8)x`, mask dropped), `view` (read a global through another type, `*(u16 *)&D_X`, `((u16 *)D_X)[i]`, types from `include/**/*.h`), `access` (type of an existing `*(T *)p`), `usuffix` (`U` on a compared constant), `decl` (other declared integer types). The scorer exposes no positions, so each applies to every candidate; the kinds are appended to the regdiff hint lists for structure, argument and ugen. Tests: `python3 tools/test_typefix.py`. The rerun of the failed drafts is pending (orchestrator, fast scorer).
 
+
+## T-12803 calendar register tie
+
+`date_sasoi_judge` now matches 644 linked bytes. Read month before day into the existing loop locals `i` and `idx`, and assign comparison constant 12 to the existing `n` before both. Explicit `n == i` retains the original constant-first branch operands. New dedicated calendar locals fix allocation but enlarge the frame from 160 to 168 bytes; reusing the later loop locals preserves homes. Literal reversal and unsigned casts alone do not fix the two branch operands. This allocation-driven reuse is FAKE-marked. Default linked proof and main SHA1 both pass.
