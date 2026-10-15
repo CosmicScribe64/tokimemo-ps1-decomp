@@ -28,7 +28,7 @@ void func_80148DE4(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10720, shape matches; the hoisted loop constants 0x40/0x20 sit in t0/t1 where the original has t1/t0 and one li/sh pair in the hit branch is ordered differently, about 10 lines */
+/* NON_MATCHING: T-10720/T-11800, 7 lines (registers only): the hoisted loop constants 0x40/0x20 sit in t0/t1 where the original has t1/t0 (unconstrained ranges coloured in bit order; 0x40 is created first). T-11800 (order_search): writing the hit-branch stores as 0x20, 0x1C, 0x44, then p[0x64] fixes the li/sh order (was 11 lines). Tried: do/while loops, for (i = 0, p = ...) heads. */
 void func_80148E7C(arg0, arg1)
 u8 *arg0;
 s32 arg1;
@@ -61,8 +61,8 @@ s32 arg1;
                     }
                     if (dx < 0x20) {
                         *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
-                        *(s16 *)(arg0 + 0x44) = i;
                         *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
+                        *(s16 *)(arg0 + 0x44) = i;
                         p[0x64] = 1;
                         break;
                     }
@@ -88,8 +88,8 @@ s32 arg1;
                     }
                     if (dx < 0x20) {
                         *(s32 *)(arg0 + 0x20) = *(s32 *)(p + 0x20);
-                        *(s16 *)(arg0 + 0x44) = i;
                         *(s32 *)(arg0 + 0x1C) = *(s32 *)(p + 0x1C);
+                        *(s16 *)(arg0 + 0x44) = i;
                         p[0x64] = 1;
                         break;
                     }
