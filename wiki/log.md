@@ -13557,3 +13557,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | cx3 matches save-menu initializer
 
 [[tickets/T-12030-codex-cx3]] matched func_8005C5BC (516 linked bytes, main SHA1/header/global checks pass). Natural indexed coordinate arrays and a FlagsWork24 pointer recover the layout and induction order without a new fakematch. Evidence: build/scratch/c5bc-final.log and c5bc-build.log.
+
+## [2026-10-15] build | cx3 matches load-menu initializer
+
+[[tickets/T-12030-codex-cx3]] matched func_8005CF6C (520 linked bytes, main SHA1/header/global checks pass). Natural typed coordinate arrays and the established work aggregate also reproduce this menu twin. Evidence: build/scratch/cf6c-final.log and cf6c-build.log.
