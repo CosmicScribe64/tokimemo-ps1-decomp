@@ -481,7 +481,100 @@ void func_8013ADC4(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/BUNKAKEN/nonmatchings/BUNKAKEN/80139E50", func_8013AF00);
+void func_8013AF00(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        dec_bg_cd_read(0x4118, 1);
+        func_8004284C();
+        break;
+    case 1:
+        normal_date_bg_fadeout();
+        break;
+    case 2:
+        if (cd_read_sync_status() & 1) {
+            func_80145844();
+            dec_bg_show_set(1, func_8005751C(1));
+            cd_read_sectors(5U, 0x801E8000, 0x49BA);
+            func_8004284C();
+        }
+        break;
+    case 3:
+        normal_date_bg_fadein();
+        break;
+    case 4:
+        if (cd_read_sync_status() & 1) {
+            func_8013B4A0();
+            func_800847B8(0xDU);
+            D_800CA148 = 0x47;
+        }
+        break;
+    case 5:
+        func_800866A0(0x6C5F);
+        break;
+    case 6:
+        addr_init_bustup();
+        D_800E6280.unk_F5F = 0xD;
+        func_80083474();
+        break;
+    case 7:
+        normal_date_speak();
+        break;
+    case 8:
+        normal_date_girl_in();
+        break;
+    case 9:
+        normal_date_speak();
+        break;
+    case 10:
+        normal_date_two_select();
+        break;
+    case 11:
+        if (D_80122CDC != 0) {
+            D_800CA148 = 0x4B;
+            func_80042940(0x11);
+        } else {
+            func_8004284C();
+        }
+        break;
+    case 12:
+        normal_date_speak();
+        break;
+    case 13:
+        normal_date_girl_out();
+        break;
+    case 14:
+        normal_date_speak();
+        break;
+    case 15:
+        normal_date_bg_fadeout();
+        break;
+    case 16:
+        func_80042940(0x14);
+        break;
+    case 17:
+        normal_date_speak();
+        break;
+    case 18:
+        normal_date_girl_out();
+        break;
+    case 19:
+        normal_date_bg_fadeout();
+        break;
+    case 20:
+        D_800CA148 = 0x52;
+        func_8004284C();
+        break;
+    case 21:
+        normal_date_speak();
+        break;
+    case 22:
+        func_80145530();
+        break;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_8013B170(void) {
     switch (D_800E6280.unk_110A) {

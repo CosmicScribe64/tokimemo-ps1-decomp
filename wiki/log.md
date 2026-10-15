@@ -13760,3 +13760,90 @@ Created [[tickets/T-12100-codex-cx10]] In Progress after Docker configure/build 
 ## [2026-10-15] build | cx10 matches 820-byte DATE startup handler
 
 [[tickets/T-12100-codex-cx10]] promotes func_8014A4DC: real pointer-array ownership, corrected buffer iteration and source statement grouping recover exact bytes. DATE SHA1, linked-byte proof and globals pass; package total 4,888 bytes. EF1C packet experiments remain distant and were restored. Evidence: build/scratch/a4dc-final.log and a4dc-build.log.
+## [2026-10-15] setup | T-12100 isolated acceleration investigation
+
+Created branch codex/acceleration-audit at 7a65b3d8 in /private/tmp/tokimemo-acceleration and [[tickets/T-12100-acceleration-audit]]. Read existing scoring evidence in [[tickets/T-11250-faster-candidate-scoring]] and [[tickets/T-11260-fast-scoring-order-search-permute]]. Main and matching worktrees are read-only; reuse the existing native Docker image with one CPU for experiments. Docker inspection found about 175% CPU in one active container, plus a transient second container; no running process changed.
+
+## [2026-10-15] decision | T-12100 remove repeated whole-unit scans
+
+Inspection found tools/permute.py searches the entire preprocessed unit for every signature name, including hundreds of header prototypes. Prototype-offset matching can preserve the same definition regex and brace scanner while avoiding repeated full-text searches. Implemented a bounded experiment; comparison against the base revision must prove identical stripped compiler input before adoption. Existing caches stay in place.
+
+## [2026-10-15] build | T-12100 bounded strip comparison
+
+One-CPU/1-GiB native Docker comparison on 21 translation units (8 main and every 30th non-TT overlay source), three repetitions each: all 63 stripped compiler inputs identical to base 7a65b3d8. Sum of per-file medians fell from 14.633 s to 0.800 s (18.29x for stripping only). Added tools/bench_strip.py to reproduce against an exported baseline. Initial scratch harness used an unsupported subprocess helper argument; corrected before measurements. Results live in build/acceleration/strip-results.jsonl (ignored).
+
+## [2026-10-15] ticket | T-12100 ready for review
+
+Moved [[tickets/T-12100-acceleration-audit]] to In Review. Added [[acceleration-audit]] with bounded timing/equality evidence and priorities from read-only cx worklists, including the queued BUNKA_SD zero-score draft. 229 affected tests and header validation passed in the capped Docker container. Compiler and allocator negative results cross-referenced; exact rescoring and linked proof remain unchanged.
+
+## [2026-10-15] ticket | T-12100 reviews complete
+
+Separate code-review skill standards and requirements reviews of 7a65b3d8...87e7889d returned no findings. Both confirmed scope and equivalence logic and the limits of timing claims. Recorded reviews in [[tickets/T-12100-acceleration-audit]] and moved the ticket/card/index to Done. No merge, push, game-source edit, or other-worker change performed.
+
+## [2026-10-15] ticket | Correct acceleration ticket collision and start matching research
+
+Read-only inspection of the external run's status revealed T-12100 is reserved for cx10. Renamed this branch's acceleration ticket to [[tickets/T-12200-acceleration-audit]] and updated current references; previous log entries and commit messages remain historical. Opened [[tickets/T-12210-matching-bottleneck-research]] for the user's clarified priority: high-impact matching research, with remaining-byte and repeated-blocker measurements plus a concrete experiment.
+
+## [2026-10-15] query | T-12210 baseline and exhausted exact reuse
+
+Census at 7a65b3d8 reports 5,733/6,958 functions and 1,288,084/2,279,368 progress bytes in C (56.5%). Queue: 1,225 remaining, 424 heuristically blocked, 801 unblocked; only 134 have guarded drafts in src (external drafts not yet counted). Exact duplicate report yields two plans, eight skips; near-duplicate report yields zero immediately fillable and five skipped. Tests of register-relaxed family discovery follow. Copied generated asm into this worktree; all analysis in one-CPU Docker. Reports in build/acceleration/.
+
+## [2026-10-15] build | T-12210 two family-guided matches
+
+[[tickets/T-12210-matching-bottleneck-research]]: two BUNKASAI matches in src/ovl/BUNKASAI/8014DD90.c, 1,512 literal linked bytes; BUNKASAI SHA1 passes. Distinguishing character-ID constants from switch labels resolved automatic near-copy rejection. Register-only fingerprint relaxation found no new whole-function families beyond existing duplicate leads. Upstream m2c documentation confirms multi-function/stack-template inference; upstream permuter documentation positions it as end-stage register-allocation work, not a solution for structural differences. Research synthesis follows.
+
+## [2026-10-15] ticket | T-12210 matching research in review
+
+Added [[matching-breakthroughs]], including three verified matches / 2,352 linked bytes and the finding that the default under-600-byte bulk selection covers only 21.8% of remaining progress bytes. 600–1,999-byte targets hold 59.2%. Documented heuristic false positives, draft-provenance limitations, bounded negative register-relaxation result, and upstream primary references. [[tickets/T-12210-matching-bottleneck-research]] moved to In Review; affected unit SHA1s and header/global/prototype guards pass. Historical T-12100 log links predate the collision correction; current acceleration ticket is [[tickets/T-12200-acceleration-audit]].
+
+## [2026-10-15] ticket | T-12210 research and matching review complete
+
+Standards and requirements reviews of 47bdf34e...9f34527f passed with no findings. [[tickets/T-12210-matching-bottleneck-research]] moved to Done; [[matching-breakthroughs]] documents three verified matches and evidence-ranked follow-ups, not a claim that the larger matching problem is solved. Final progress measurement is in build/acceleration/progress-after.txt. The branch remains isolated and unmerged.
+
+## [2026-10-15] ticket | T-12220 continue with medium handler families
+
+User requested continued matching research. Opened [[tickets/T-12220-scene-handler-family-experiment]] to compare fresh m2c output with family-guided reconstruction in BUNKASAI objects outside cx ownership. Read active run status read-only; preserve its work. Prior census and experiment rationale are in [[matching-breakthroughs]].
+
+## [2026-10-15] decision | T-12220 zero-search medium cohort
+
+Fresh normalized m2c drafts for both seed handlers scored zero, so a special family-guided rewrite would not explain these outcomes. [[tickets/T-12220-scene-handler-family-experiment]] now tests a frozen 24-target medium-function cohort through existing bulk_m2c with no hill-climb budget. Preserve precise distinction between full-unit zero score and final linked verification.
+
+## [2026-10-15] build | T-12220 seed matches and cohort underway
+
+BUNKASAI func_80150234 and func_80145930 both pass literal linked equality at 760 bytes each and the BUNKASAI SHA1. The frozen 24-target medium cohort is running in one-CPU Docker with --time 0, one m2c variant, no order/regdiff search. First three pipeline records are verified matches; final counts and post-migration verification pending. State and frozen target list are outside the worktree at /private/tmp/tokimemo-family-out/.
+
+## [2026-10-15] build | T-12220 twenty verified medium-function matches
+
+[[tickets/T-12220-scene-handler-family-experiment]]: 16/24 direct cohort wins in 260.18 seconds, two seed wins, and two paired CharFlags bitfield fixes; 20 functions / 16,272 literal linked bytes total. Both unit checksums pass. [[matching-breakthroughs]] preserves the cohort, negative results, timing boundaries and limited transfer claim. Header/global/prototype guards pass; no full-game build. Ticket moved to In Review for standards and requirements review.
+
+## [2026-10-15] ticket | T-12220 reviewed and complete
+
+Requirements review of f1010b54...5deb7fa0 passed; standards review found only the stale index status, now fixed. No code findings. [[tickets/T-12220-scene-handler-family-experiment]] moved to Done with synchronized board/index. Twenty literal-verified functions and 16,272 bytes are committed locally on codex/acceleration-audit; no merge or push. [[matching-breakthroughs]] records the bounded result and next scheduling experiment.
+
+## [2026-10-15] ticket | T-12230 broaden coverage sweep
+
+User requested broader work aimed at large coverage gains. Opened [[tickets/T-12230-broad-coverage-sweep]] to extend the successful medium-function pipeline into unclaimed objects and larger functions. Baseline 6d1e9cf2, 57.3%. Inspecting current ownership read-only before freezing targets.
+
+## [2026-10-15] decision | T-12230 freeze broad cohort
+
+[[tickets/T-12230-broad-coverage-sweep]] selects 101 functions / 150,524 list bytes across 18 units, emphasizing the larger eligible functions. Known cx claims and all other worktree source differences excluded; three stale worktrees checked by filesystem comparison. Zero-search pipeline started under one CPU / 1 GiB. No global success-rate extrapolation from the earlier two-overlay sample.
+
+## [2026-10-15] decision | T-12230 preserve misses and check selection bias
+
+The broad first-pass sample is much harder than T-12220's related-overlay cohort. Two wins in the first 51 attempts; remaining failures retained. After the first sweep completes, test remaining eligible medium/large targets under the same ownership exclusions, then apply the known CharFlags store idiom to suitable close drafts. No claim that widening the size limit alone produces a game-wide high success rate.
+
+## [2026-10-15] build | T-12230 first broad sweep result
+
+101-target sweep completed in 459.49 seconds: two verified pipeline matches / 2,228 bytes, 92 near misses, seven draft/compile failures. Global migration and header checks pass. This rejects extrapolating T-12220's 16/24 direct success rate across these broader units. The remaining 99 eligible targets are now running with identical zero-search settings. A 1,996-byte RPG_BAT draft has a 20-row exact mismatch and is prioritized for bounded follow-up.
+
+## [2026-10-15] build | T-12230 second cohort and targeted follow-up
+
+Remaining sweep completed: 89 targets / 85,100 bytes, one verified pipeline match / 792 bytes, 86 near misses, two compile failures, 432.70 seconds. Correction to the earlier estimate: 190 eligible targets total, not 200, hence 89 remaining rather than 99. Broad direct totals: 3/190, 3,020 bytes. Scratch RPG_BAT increment, return-type and aggregate probes did not improve the 20-row mismatch. Follow-up tests known CharFlags reads/stores, the existing func_80083440 K&R call convention, and up to five m2c source variants on ten closest remaining drafts. Ambiguous D_800E68FC in the K&R draft resolved to its existing halfword GameState member.
+
+## [2026-10-15] build | T-12230 five verified matches, broad hypothesis bounded
+
+[[broad-coverage-results]] records 190 targets / 235,624 list bytes across 18 units: three direct wins plus the K&R call and CharFlags test fixes, five functions / 5,036 literal bytes total. Both affected overlay SHA1s and header/global/prototype guards pass. Nine source-variant retries produced no win; flag-store/local-copy and RPG counter probes remain nonmatching. No broad success-rate or full-game-build claim. [[tickets/T-12230-broad-coverage-sweep]] moved to In Review with full outcome ledger and linked evidence.
+
+## [2026-10-15] ticket | T-12230 broad sweep reviewed and complete
+
+Standards and requirements reviews of 6d1e9cf2...70307e64 both passed with no actionable findings. [[tickets/T-12230-broad-coverage-sweep]] moved to Done; index and board synchronized. [[broad-coverage-results]] records 190 attempts, five literal matches / 5,036 bytes, and the negative result for blind expansion/variants. Changes remain committed locally, unmerged and unpushed.

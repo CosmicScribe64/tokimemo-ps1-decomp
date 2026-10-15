@@ -98,6 +98,10 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-11830-tt-wave1-handoff|T-11830 TT: wave-1 handoff]]
+- [ ] [[tickets/T-12230-broad-coverage-sweep|T-12230 Broaden medium and large function coverage]]
+- [ ] [[tickets/T-12220-scene-handler-family-experiment|T-12220 Test partial-family reconstruction on medium scene handlers]]
+- [ ] [[tickets/T-12210-matching-bottleneck-research|T-12210 Identify and test high-leverage matching breakthroughs]]
+- [ ] [[tickets/T-12200-acceleration-audit|T-12200 Measure and reduce matching setup overhead]]
 - [ ] [[tickets/T-11820-tt-batch-9|T-11820 TT batch 9]]
 - [ ] [[tickets/T-11810-tt-batch-8|T-11810 TT batch 8]]
 - [ ] [[tickets/T-11800-tt-batch-7|T-11800 TT batch 7]]

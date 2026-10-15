@@ -77,6 +77,9 @@ void func_8013B4A0(void);
 /* T-11190: declarations added by tools/bulk_m2c.py. */
 void func_80139DEC(void);
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+void func_80143D68(void);
+
 #endif
 
 #ifndef OVL_BUNKAKEN_T9960

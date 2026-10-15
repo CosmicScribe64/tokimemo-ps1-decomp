@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-14
+updated: 2026-10-15
 ---
 
 # Wiki Index
@@ -28,6 +28,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-12070-codex-cx7|T-12070]] Codex cx7 TACO actor matching (In Progress).
 - [[tickets/T-12090-codex-cx9|T-12090]] Codex cx9 BUNKA_SD matching pass (In Progress).
 - [[tickets/T-12100-codex-cx10|T-12100]] Codex cx10 DATE movie/effect functions (In Progress).
+- [[tickets/T-12200-acceleration-audit|T-12200]] Measured acceleration investigation in an isolated worktree (Done; 18.29x stripping speedup, 229 tests).
 - [[tickets/T-11820-tt-batch-9|T-11820]] TT batch 9: never-attempted functions and func_801333D4 (Done; 3 matches, TT 60.6%).
 - [[tickets/T-11810-tt-batch-8|T-11810]] TT batch 8: Opus on untried pipeline drafts and the closest guarded drafts (Done; 7 matches, TT 59.1%).
 - [[tickets/T-11800-tt-batch-7|T-11800]] TT batch 7: bulk_m2c rerun and two Opus passes (Done; 10 matches, TT 56.7%).
@@ -258,3 +259,9 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-11120-small-functions-sonnet-36|T-11120]] Small functions (Sonnet via Antigravity) 36 (In Progress).
 
 - [[tickets/T-12400-integrate-verified-matches|T-12400]] Integrate verified matching branches directly on main (In Progress).
+- [[acceleration-audit]] - T-12200 measured stripping speedup, validation limits, queue/reuse priorities, and CPU allocation.
+- [[tickets/T-12210-matching-bottleneck-research|T-12210]] Remaining-byte census and experiments for matching breakthroughs (Done; 3 matches, 2352 linked bytes).
+- [[matching-breakthroughs]] - T-12210 remaining-byte census, three verified family matches, negative retrieval experiment, and research priorities.
+- [[tickets/T-12220-scene-handler-family-experiment|T-12220]] Medium-function cohort and paired bitfield experiment (Done; 20 matches, 16,272 linked bytes).
+- [[tickets/T-12230-broad-coverage-sweep|T-12230]] Broad medium/large coverage sweep (Done; 190 targets, five matches).
+- [[broad-coverage-results]] - T-12230: 190-target ledger, five verified wins, and limits of broad zero-search matching.

@@ -208,6 +208,23 @@ class Args(unittest.TestCase):
 
 @unittest.skipUnless(os.path.isdir(permute.PERMUTER) and shutil.which("gcc"), "needs decomp-permuter and gcc (Docker)")
 class KnrBase(unittest.TestCase):
+    def test_prototypes_before_definition_do_not_hide_body(self):
+        text = ('int other(int a);\nint other(int a);\n'
+                'int other(int a) { return a; }\n'
+                'int target(void) { return other(7); }\n')
+        self.assertEqual(permute.strip_functions(text, 'target'),
+                         text.replace('int other(int a) { return a; }',
+                                      'int other(int a);'))
+
+    def test_first_definition_only_and_perm_macro_preserved(self):
+        text = ('int other(void) { return 1; }\n'
+                'int other(void) { return 2; }\n'
+                'int PERM_helper(void) { return 3; }\n'
+                'int target(void) { return 7; }\n')
+        self.assertEqual(permute.strip_functions(text, 'target'),
+                         text.replace('int other(void) { return 1; }',
+                                      'int other(void);'))
+
     def test_long_declaration_sequence_without_body_is_rejected_quickly(self):
         # A malformed or macro-expanded signature must not stall the farm.
         text = 'int decoy(a)\n' + ''.join('int arg%d;\n' % i for i in range(40)) + ';\n'
