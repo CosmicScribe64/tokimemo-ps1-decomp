@@ -13549,3 +13549,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | cx3 reuse established availability aggregate
 
 [[tickets/T-12030-codex-cx3]] reused FlagsWork24 for func_800603C0 and removed a duplicate alias declaration. Literal 324-byte comparison and all 27 checksums pass after a full header-triggered rebuild; evidence in build/scratch/603c0-aggregate.log and aggregate-full-build.log.
+
+## [2026-10-15] build | cx3 matches two-item save/load selector
+
+[[tickets/T-12030-codex-cx3]] matched func_8005BCEC (416 linked bytes, main SHA1 OK). Grouped array-store pairs resolve the T-8080 scheduling gap; stack reservation and grouping are marked FAKE. pre_syogatu1 remains a guarded 19-row draft after typed-buffer recovery and bounded search. Evidence: build/scratch/bcec-final.log, bcec-build.log and pre-autotweak.log.

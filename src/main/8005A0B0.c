@@ -505,7 +505,41 @@ s32 func_8005BC38(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005BCEC);
+void func_8005BCEC(void) {
+    /* FAKE: reserves the observed stack home; grouped stores preserve scheduling. T-12030. */
+    s32 stack_home;
+    s16 x[2];
+    s16 y[2];
+    s16 w[2];
+    s16 h[2];
+
+    func_8004E58C();
+    func_80066104("メモリーカード");
+    k_sub_reset_point_set();
+    icon_disp_switch(0);
+    data_save_load_class_init();
+    x[0] = -0x50;
+    x[1] = 0x10;
+    y[0] = -0x10;
+    y[1] = -0x10;
+    w[0] = 0x30; w[1] = 0x30;
+    h[0] = 0x14; h[1] = 0x14;
+    set_kanji_string(x[0], y[0], 0xFU, "セーブ", 0);
+    set_kanji_string(x[1], y[1], 0xFU, "ロード", 0);
+    k_disp_switch(1, 0);
+    k_disp_switch(2, 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0U, D_800B59F8, 0);
+    set_kanji_string(-0x80, 0x42, 0U, D_800B5A1C, 0);
+    set_kanji_string(-0x80, 0x4A, 0U, D_800B5A1C, 0);
+    set_kanji_string(-0x80, 0x52, 0U, D_800B5A1C, 0);
+    set_kanji_string(-0x80, 0x5A, 0U, D_800B5A1C, 0);
+    k_sub_disp_start(1);
+    func_80056284();
+    menu_set(1, 2, x, y, w, h);
+    D_800E6280.unk_1094 = 0;
+    func_8004284C();
+}
 
 /* NON_MATCHING: T-12030, 3 differing instruction rows; final byte load uses t9 instead of v0. */
 #ifdef NON_MATCHING
@@ -2258,7 +2292,52 @@ void pre_syogatu0(void) {
     }
 }
 
+/* NON_MATCHING: T-12030, 19 diff rows; buffer-address reuse and frame size. */
+#ifdef NON_MATCHING
+s32 pre_syogatu1(void) {
+    s32 var_s0;
+    s32 var_s1;
+    u8 sp16C[0xC];
+    u8 sp6C[0x100];
+    u8 sp5C[0x10];
+    u8 *var_s2;
+
+    switch (D_800E6280.unk_110D) {
+    case 0:
+        get_h_yuukou_table(sp16C);
+        k_sub_reset();
+        strcpy(sp6C, "やった！ ");
+        var_s1 = 0;
+        var_s0 = 0;
+        var_s2 = sp16C;
+        do {
+            if (((u8) *var_s2 >= 0x4DU) && (D_800E6280.unk_1BC[var_s0].unk_0C.f.b1)) {
+                if (var_s1 != 0) {
+                    strcat(sp6C, "と、 ");
+                }
+                get_g_name(sp5C, var_s0);
+                strcat(sp6C, sp5C);
+                var_s1 += 1;
+            }
+            var_s0 += 1;
+            var_s2 += 1;
+        } while (var_s0 != 0xB);
+        strcat(sp6C, "から、 年賀状をもらったラッキー。）");
+        gnsx(D_800E6280.unk_0D4);
+        sndisp(sp6C, 0, 0x1F);
+        D_800E6280.unk_110D += 1;
+        return;
+    case 1:
+        xa_wait();
+        return;
+    case 2:
+        main_state_set(0x53);
+        return;
+    }
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", pre_syogatu1);
+#endif
 
 s32 func_80061634(void) {
     switch (D_800E6280.unk_110A) {
