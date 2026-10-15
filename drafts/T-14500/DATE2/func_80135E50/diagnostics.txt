@@ -1,0 +1,2 @@
+m2c.py: argument counts from the callees' asm: func_8004A814 8, func_8005751C 1, func_801365DC 1
+m2c.py: the asm compares the value from before the increment of D_8013A5CC: wrote `D_8013A5CC++` in the condition (m2c compared the variable after the store)

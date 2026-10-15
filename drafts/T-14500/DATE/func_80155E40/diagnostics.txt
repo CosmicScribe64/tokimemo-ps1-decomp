@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_801560E0 0
+python3 failed:
+cfe: Warning 681: drafts/T-14500/DATE/func_80155E40/work/guarded.c, line 4204: '&' before array or function; ignored
+     *(M2cBlockB4 *)(&sp2C) = *(M2cBlockB4 *)(&D_8015FA68);
+ --------------------^
+cfe: Error: drafts/T-14500/DATE/func_80155E40/work/guarded.c, line 4208: 'sp' undefined; reoccurrences will not be reported.
+     (*(s32 (**)(s32))((unsigned char *)(sp + (D_800E738A * 4)) + (44)))(0x80);
+ ----------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_80155E40/work -o drafts/T-14500/DATE/func_80155E40/work/guarded.o /tmp/asm_processorz6g__zh_/preprocessed_c03bbece043c4243ab2c98728584c84b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibryjgjva5/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_80155E40/work/guarded.o drafts/T-14500/DATE/func_80155E40/work/guarded.c

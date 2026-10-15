@@ -1,0 +1,1 @@
+{"func": "func_80142700", "guarded": false, "reason": "m2c-error: M2C_LWL", "scope": "BUNKASAI:func_80142700", "score": null, "seconds": 2.318, "size": 1176, "source_hash": "37469fd1ed0a67754d1efac8c20667f4838426b69d6eee18b046a2f387b9336e", "src": "src/ovl/BUNKASAI/80142700.c", "status": "failed", "unit": "BUNKASAI", "variant": "default"}

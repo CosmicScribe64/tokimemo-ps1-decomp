@@ -14597,3 +14597,10 @@ Removed unnecessary pre-branch loop initializations from two new audio handlers 
 ## [2026-10-15] build | T-14501 DATE verified draft batch
 
 Promoted 2 ordinary C functions / 1,088 bytes for DATE after default linked literal proof and overlay SHA1. Header/global/prototype checks pass. GameState references normalized; no raw data or asm committed; original C preserved. [[tickets/T-14501-remaining-draft-proof]] remains In Review for root review.
+## [2026-10-15] decision | Preserve existing implicit-int function views
+
+Several exhaustive drafts fail only because m2c infers void after an earlier unprototyped call in the same translation unit, which implies int under the existing K&R build. The bounded repair now tries s32 for the new definition only when the compiler reports that redeclaration, an earlier call exists, and no explicit prototype supplies a different view. Production source and shared headers remain unchanged; actual full-TU scores decide candidate quality. See [[exhaustive-drafts]].
+
+## [2026-10-15] ticket | Reserve DATE draft failures for type repair
+
+Nine failed DATE targets from the completed unit are reserved in drafts/T-14500/date-repair-reservation.json for the independent repair lane. Their initial attempts remain immutable; alternate bodies must retain declarations and full context. The census continues independently, and its later mechanical retry excludes these scopes. See [[tickets/T-14500-exhaustive-drafts]].

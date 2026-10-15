@@ -68,5 +68,38 @@ class ExhaustiveDraftTests(unittest.TestCase):
         self.assertIn('missing type Example', (folder / 'diagnostics.txt').read_text())
 
 
+    def implicit_return_case(self, explicit=False):
+        func = 'func_80132000'
+        original = ('void func_80132000(void);\n' if explicit else '') + (
+            'void earlier(void) { func_80132000(); }\n'
+            'INCLUDE_ASM("asm/test", func_80132000);\n')
+        c = self.source(original)
+        row = dict(unit=c.unit, src=str(c.src), func=func, scope='TT:'+func,
+                   size=4, guarded=False, source_hash=drafts.digest(original))
+        with patch.object(drafts.m2c, 'run_m2c', return_value='void func_80132000(void) {\n}\n'), \
+             patch.object(drafts.funcloc, 'locate', return_value=c), \
+             patch.object(drafts.funcdiff, 'expected_object', return_value=('expected.o', None)), \
+             patch.object(drafts.funcdiff, 'resolved_functions', return_value={func: ['same']}), \
+             patch.object(drafts.funcdiff, 'keys', side_effect=lambda x: x), \
+             patch.object(drafts.order_search, 'compile_variant', side_effect=[
+                 SystemExit("redeclaration of 'func_80132000'; Incompatible function return type"),
+                 'candidate.o']) as compile_mock:
+            result = drafts.process(row)
+        self.assertEqual(c.src.read_text(), original)
+        return result, compile_mock.call_count, (drafts.BASE/'TT'/func/'body.c').read_text()
+
+    def test_implicit_int_return_is_repaired(self):
+        result, calls, body = self.implicit_return_case()
+        self.assertEqual(result['status'], 'candidate-zero')
+        self.assertEqual(calls, 2)
+        self.assertTrue(body.startswith('s32 func_80132000'))
+
+    def test_explicit_prototype_prevents_implicit_int_guess(self):
+        result, calls, body = self.implicit_return_case(explicit=True)
+        self.assertEqual(result['status'], 'failed')
+        self.assertEqual(calls, 1)
+        self.assertTrue(body.startswith('void func_80132000'))
+
+
 if __name__ == '__main__':
     unittest.main()

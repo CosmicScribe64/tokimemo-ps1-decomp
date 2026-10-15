@@ -1,0 +1,13 @@
+python3 failed:
+ ----------------^
+cfe: Warning 709: drafts/T-14500/DATE/func_801560E0/work/guarded.c, line 4247: Incompatible pointer type assignment
+             temp_s1 = &D_8015F9A8 + var_s2;
+ --------------------^
+cfe: Warning 709: drafts/T-14500/DATE/func_801560E0/work/guarded.c, line 4250: Incompatible pointer type assignment
+         temp_s1_2 = &D_8015F9A8 + var_s2;
+ ------------------^
+cfe: Error: drafts/T-14500/DATE/func_801560E0/work/guarded.c, line 4273: 'sp' undefined; reoccurrences will not be reported.
+             if ((*(s16 *)((unsigned char *)(sp + (var_s2 * 4)) + (106)) - 0x78) < *(s16 *)((unsigned char *)temp_s0 + (6706))) {
+ --------------------------------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/DATE/func_801560E0/work -o drafts/T-14500/DATE/func_801560E0/work/guarded.o /tmp/asm_processorco0nb4ce/preprocessed_3d6478eb9e374cf69c31a124f4b76df3.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibhxvffghk/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/DATE/func_801560E0/work/guarded.o drafts/T-14500/DATE/func_801560E0/work/guarded.c

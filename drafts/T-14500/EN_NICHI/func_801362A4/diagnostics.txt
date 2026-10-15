@@ -1,0 +1,10 @@
+m2c.py: argument counts from the callees' asm: func_80132C4C 0, func_80136700 0, func_80136904 2
+python3 failed:
+cfe: Error: drafts/T-14500/EN_NICHI/func_801362A4/work/guarded.c, line 3624: redeclaration of 'func_801362A4'; previous declaration at line 2918 in file 'drafts/T-14500/EN_NICHI/func_801362A4/work/guarded.c'
+ void func_801362A4(void) {
+ -----^
+cfe: Error: drafts/T-14500/EN_NICHI/func_801362A4/work/guarded.c, line 3624: Incompatible function return type for this function.
+ void func_801362A4(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-14500/EN_NICHI/func_801362A4/work -o drafts/T-14500/EN_NICHI/func_801362A4/work/guarded.o /tmp/asm_processorcv2qhrff/preprocessed_214d3f4086734d62af37fbc0a5315c2e.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibuivhcxqi/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-14500/EN_NICHI/func_801362A4/work/guarded.o drafts/T-14500/EN_NICHI/func_801362A4/work/guarded.c

@@ -1,0 +1,1 @@
+m2c.py: argument counts from the callees' asm: func_8005751C 1, func_8006612C 1, func_80085B3C 2, func_8013257C 0, func_80148ED0 0

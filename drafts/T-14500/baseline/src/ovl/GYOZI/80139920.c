@@ -1,0 +1,133 @@
+#include "common.h"
+#include "ovl/GYOZI.h"
+
+typedef struct {
+    void (*f[9])();
+} FnTbl9; /* size 0x24 */
+extern FnTbl9 D_80147330;
+
+void func_80139920(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl9 tbl;
+
+    tbl = D_80147330;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
+
+void func_80139994(void) {
+    func_80050D60(0, 0);
+    func_80081D30(1);
+}
+
+/* Bit 1 of a girl flag byte: IDO loads its byte into another register than the lui (T-7010). */
+typedef struct {
+    u8 pad0 : 1;
+    u8 f : 1;
+    u8 pad1 : 6;
+} GyoziBit1;
+
+void func_801399C0(void) {
+    if (D_80147240 != 0) {
+        ((GyoziBit1 *)&D_800F53A0.girl[9].unk_10[0])->f = 1;
+    }
+    if (D_8014723C >= 7) {
+        D_80147198 = 0;
+    } else if (D_8014723C >= 5) {
+        D_80147198 = 1;
+    } else if (D_8014723C >= 3) {
+        D_80147198 = 2;
+    } else if (D_8014723C > 0) {
+        D_80147198 = 3;
+    } else {
+        D_80147198 = 4;
+    }
+    D_8014718C = D_801470F4;
+    D_80147190 = D_80147128;
+    D_80147194 = D_8014715C;
+    func_8004DE1C();
+}
+
+void func_80139A98(void) {
+    func_8008A0D4(0x40ED);
+    func_8004DE1C();
+}
+
+void func_80139AC0(void) {
+    D_801462BC = 0x801B00D0;
+    D_801462C0 = 0x801B0274;
+    D_801462C4 = 0x801B0374;
+    D_801462C8 = 0x801B0464;
+    D_801462CC = 0x801B05F4;
+    D_801462D0 = 0x801B0788;
+    D_801462D4 = 0x801B0950;
+    D_801462D8 = 0x801B0B44;
+    D_801462DC = 0x801B0CDC;
+    D_801462E0 = 0x801B0EA0;
+    D_801462E4 = 0x801B109C;
+    D_801462E8 = 0x801B1210;
+    D_801462EC = 0x801B1380;
+    D_801462F0 = 0x801B00E8;
+    D_801462F4 = 0x801B0290;
+    D_801462F8 = 0x801B037C;
+    D_801462FC = 0x801B047C;
+    D_80146300 = 0x801B060C;
+    D_80146304 = 0x801B07A0;
+    D_80146308 = 0x801B096C;
+    D_8014630C = 0x801B0B5C;
+    D_80146310 = 0x801B0CF4;
+    D_80146314 = 0x801B0EBC;
+    D_80146318 = 0x801B10B8;
+    D_8014631C = 0x801B1218;
+    D_80146320 = 0x801B139C;
+    D_80146324 = 0x801B019C;
+    D_80146328 = 0x801B0344;
+    D_8014632C = 0x801B039C;
+    D_80146330 = 0x801B0530;
+    D_80146334 = 0x801B06C0;
+    D_80146338 = 0x801B0854;
+    D_8014633C = 0x801B0A58;
+    D_80146340 = 0x801B0C10;
+    D_80146344 = 0x801B0DA8;
+    D_80146348 = 0x801B0FA8;
+    D_8014634C = 0x801B11A4;
+    D_80146350 = 0x801B1270;
+    D_80146354 = 0x801B1488;
+}
+
+typedef struct {
+    void (*f[12])();
+} FnTbl12; /* size 0x30 */
+extern FnTbl12 D_801473FC;
+
+void func_80139D34(void) {
+    s32 idx; /* declared before tbl: its stack slot sits above tbl (T-3330) */
+    FnTbl12 tbl;
+
+    tbl = D_801473FC;
+    idx = D_800F647A;
+    tbl.f[idx](0x80);
+}
+
+void func_80139DA8(void) {
+    func_80051DD8(3, 0x801B0000, 0xA3FB);
+    func_80137524();
+    func_8004DE1C();
+}
+
+void func_80139DE0(void) {
+    func_80090960(0xD, 0x26);
+    D_8014718C = D_80147100;
+    D_80147190 = D_80147134;
+    D_80147194 = D_80147168;
+    D_80147198 = 9;
+    D_8014719C = 0;
+    func_8004DE1C();
+}
+
+INCLUDE_ASM("asm/ovl/GYOZI/nonmatchings/GYOZI/80139920", func_80139E4C);
+
+void func_8013A104(void) {
+    func_8004DEAC(D_800F5AB1);
+    func_8004DEE4(D_800F5AB2);
+}
