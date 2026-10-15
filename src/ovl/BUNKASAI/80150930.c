@@ -19,7 +19,47 @@ INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_801509A4);
 
 INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_80150B7C);
 
-INCLUDE_ASM("asm/ovl/BUNKASAI/nonmatchings/BUNKASAI/80150930", func_80150F20);
+void func_80150F20(void) {
+    switch (D_800E6280.unk_110A) {
+    case 0:
+        func_80048EB8(0);
+        func_8006BD6C(0);
+        func_80041168(0xFF);
+        func_8004284C();
+        return;
+    case 1:
+        func_80059E00();
+        return;
+    case 2:
+        func_80059BC0();
+        return;
+    case 3:
+        func_8004ADE4();
+        func_8004284C();
+        return;
+    case 4:
+        cd_read_sectors(0x95U, 0x801A0000, 0x9B94);
+        func_8004284C();
+        return;
+    case 5:
+        if (cd_read_sync_status() & 1) {
+            func_80068938(D_800E6280.unk_03E, D_800E6280.unk_03F, 0);
+            func_8004284C();
+            return;
+        }
+        return;
+    case 6:
+        func_8006BC28(0);
+        func_8006BD6C(0);
+        D_800B5BC8 = 0xFE;
+        func_80042908((s32) (*(u8 *)&D_80122EB0));
+        func_80042940((s32) (*(u8 *)&D_80122EB4));
+        return;
+    default:
+        func_80046500();
+        break;
+    }
+}
 
 void func_80151064(void) {
     switch (D_800E6280.unk_110A) {

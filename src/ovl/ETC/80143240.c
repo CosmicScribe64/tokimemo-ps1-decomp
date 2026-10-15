@@ -327,7 +327,91 @@ s32 func_801451D4(void) {
 
 INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_80145318);
 
-INCLUDE_ASM("asm/ovl/ETC/nonmatchings/ETC/80143240", func_801455B0);
+void func_801455B0(void) {
+    u8 temp;
+    temp = D_800E6280.unk_110D;
+    switch (temp) {
+    case 0:
+        func_8004E58C();
+        set_kanji_string(-0x80, -0x3C, 0xF, (s32) "未初期化のメモリーカードです。", 0);
+        k_disp_start(1);
+        D_800E6280.unk_110D += 1;
+    default:
+        break;
+    case 1:
+        if (D_800E6280.unk_F88 & 0x860) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 2:
+        func_8004E58C();
+        set_kanji_string(-0x80, -0x3C, 0xF, (s32) "初期化していいですか？", 0);
+        set_kanji_string(-0x90, -0x12, 0, (s32) D_801500F0, 0);
+        set_kanji_string(-0x3C, -0x12, 1, func_80140F50(), 0);
+        set_kanji_string(-0x90, -4, 0, (s32) D_8015010C, 0);
+        set_kanji_string(-0x3C, -4, 2, func_80140F94(), 0);
+        k_disp_start(5);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 3:
+        if (D_800E6280.unk_F88 & 0x20) {
+            if (func_80054108() == 1) {
+                D_800E6280.unk_110D = 0x10;
+            } else {
+                func_80053CE0();
+                func_80042940(0);
+            }
+        } else if (D_800E6280.unk_F88 & 0x40) {
+            D_800E6280.unk_110D += 1;
+        }
+        break;
+    case 4:
+        func_8004E58C();
+        set_kanji_string(-0x80, -0x3C, 0xF, (s32) "別のメモリーカードを", 0);
+        set_kanji_string(-0x80, -0x2E, 1, (s32) "差し込み口１", 0);
+        set_kanji_string(-0x80, -0x2E, 0xF, (s32) "　　　　　　にセットして、", 0);
+        set_kanji_string(-0x80, -0x20, 0xF, (s32) "　ボタンを押してください。", 0);
+        set_kanji_string(-0x80, -0x20, 1, func_80140F50(), 0);
+        k_disp_start(5);
+        D_800E6280.unk_110D += 1;
+        break;
+    case 5:
+        if (D_800E6280.unk_F88 & 0x20) {
+            func_80053CE0();
+            func_80042940(0);
+        }
+        break;
+    case 16:
+        if (func_80054694(0) == 1) {
+            D_800E6280.unk_110D += 1;
+        } else {
+            func_80053CE0();
+            func_80042940(0);
+        }
+        break;
+    case 17:
+        D_800E7D36 = 0;
+        *D_800E7D14 = 1;
+        D_800E6280.unk_1118 = 0;
+        func_80053CE0();
+        func_80054E6C();
+        D_800E6280.unk_110D += 1;
+        break;
+    case 18:
+        if (func_80054388() == 0x13) {
+            func_80053D10();
+            D_800E6280.unk_110D += 1;
+        } else if (((u32) D_800E73A0 >= 0x201U) || (D_800E6280.unk_1115 == 0xF0)) {
+            func_80053CE0();
+            func_80042940(0);
+        }
+        break;
+    case 19:
+        func_80053CE0();
+        func_80042940(0);
+        break;
+    }
+}
 
 void func_80145960(void) {
     u8 sel = D_800E6280.unk_110A; /* FAKE: shared global, yet the original selector is in $v0; cause unknown (T-5010) */

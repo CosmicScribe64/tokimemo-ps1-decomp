@@ -659,7 +659,78 @@ void func_80134EB8(void) {
     D_80120CDA = 0x100;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80134F6C);
+void func_80134F6C(void) {
+    if (D_800E6280.unk_F80 & 0x100) {
+        switch (D_800E6280.unk_F88) {
+        case 4:
+            func_80132000(0xA);
+            func_80134B18();
+            return;
+        case 1:
+            func_80132000(1);
+            func_80134B18();
+            return;
+        case 8:
+            func_80132000(2);
+            func_80134B18();
+            return;
+        case 2:
+            func_80132000(9);
+            func_80134B18();
+            return;
+        case 5:
+            func_80132000(4);
+            func_80134B18();
+            return;
+        case 10:
+            func_80132000(3);
+            func_80134B18();
+            return;
+        case 12:
+            func_80132000(5);
+            func_80134B18();
+            return;
+        case 3:
+            func_80132000(6);
+            func_80134B18();
+            return;
+        case 9:
+            func_80132000(7);
+            func_80134B18();
+            return;
+        case 6:
+            func_80132000(8);
+            func_80134B18();
+            return;
+        case 13:
+            func_80132000(0xB);
+            func_80134B18();
+            return;
+        case 7:
+            func_80132000(0xC);
+            func_80134B18();
+            return;
+        case 14:
+            func_80132000(0xD);
+            func_80134B18();
+            return;
+        case 11:
+            func_80132000(0xE);
+            func_80134B18();
+            return;
+        case 15:
+            func_80132000(0);
+            D_8014CC90 = 0xB;
+            D_8014CC94 = 9;
+            D_8014CC98 = 0;
+            D_8014CC9C = 1;
+            D_8014CCA0 = 0xD;
+            D_8014CCA4 = 3;
+            func_80134B18();
+            break;
+        }
+    }
+}
 
 /* NON_MATCHING: T-11010, 19 differing lines: three loop pointer setups scheduled after the lui/addiu pair (as1 order), the constant 2 stored to D_8014D0A4 comes from $t6 where the original reuses the promoted $v0 */
 #ifdef NON_MATCHING

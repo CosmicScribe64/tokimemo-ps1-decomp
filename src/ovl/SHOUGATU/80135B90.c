@@ -431,4 +431,64 @@ void func_80136CE0(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHOUGATU/nonmatchings/SHOUGATU/80135B90", func_80136D18);
+void func_80136D18(void) {
+    switch (D_800E6280.unk_F5F) {
+    case 0:
+        D_800CA160 = D_80143F50;
+        D_800CA164 = D_80143F84;
+        D_800CA168 = D_80143FB8;
+        return;
+    case 1:
+        D_800CA160 = D_80143F64;
+        D_800CA164 = D_80143F98;
+        D_800CA168 = D_80143FCC;
+        return;
+    case 2:
+        D_800CA160 = D_80143F58;
+        D_800CA164 = D_80143F8C;
+        D_800CA168 = D_80143FC0;
+        return;
+    case 3:
+        D_800CA160 = D_80143F5C;
+        D_800CA164 = D_80143F90;
+        D_800CA168 = D_80143FC4;
+        return;
+    case 4:
+        D_800CA160 = D_80143F74;
+        D_800CA164 = D_80143FA8;
+        D_800CA168 = D_80143FDC;
+        return;
+    case 5:
+        D_800CA160 = D_80143F68;
+        D_800CA164 = D_80143F9C;
+        D_800CA168 = D_80143FD0;
+        return;
+    case 6:
+        D_800CA160 = D_80143F6C;
+        D_800CA164 = D_80143FA0;
+        D_800CA168 = D_80143FD4;
+        return;
+    case 7:
+        D_800CA160 = D_80143F60;
+        D_800CA164 = D_80143F94;
+        D_800CA168 = D_80143FC8;
+        return;
+    case 8:
+        D_800CA160 = D_80143F4C;
+        D_800CA164 = D_80143F80;
+        D_800CA168 = D_80143FB4;
+        return;
+    case 9:
+        D_800CA160 = D_80143F70;
+        D_800CA164 = D_80143FA4;
+        D_800CA168 = D_80143FD8;
+        return;
+    case 10:
+        D_800CA160 = D_80143F7C;
+        D_800CA164 = D_80143FB0;
+        D_800CA168 = D_80143FE4;
+        /* fallthrough */
+    default:
+        return;
+    }
+}

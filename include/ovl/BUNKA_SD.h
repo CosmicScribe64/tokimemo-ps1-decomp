@@ -125,4 +125,10 @@ void func_801364B4(void);
 void func_801364F0(void);
 void func_801363BC(void);
 
+/* T-11190: declarations added by tools/bulk_m2c.py. */
+extern s32 D_8013C72C;
+extern u8 *D_8013C720;
+extern u8 *D_8013C724;
+extern u8 *D_8013C728;
+
 #endif /* OVL_BUNKA_SD_H */

@@ -484,7 +484,19 @@ void func_80135034(void) {
 
 INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80135110);
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_801352FC);
+void func_801352FC(void) {
+    if ((D_800E71F3 != 0) && ((u32) ((D_800E6280.unk_10F8 / (u8) D_800E71F3) & 3) < 2U)) {
+        if ((u32) ((u32) D_800E6280.unk_10F8 % (u8) D_800E71F3) < 2U) {
+            if (D_800E6280.unk_F75 == 0) {
+                D_80120BB8 = 0x78;
+                return;
+            }
+            D_80120BB8 = 0x79;
+            return;
+        }
+        D_80120BB8 = 0x77;
+    }
+}
 
 void func_8013539C(void) {
     s32 i;
@@ -805,7 +817,28 @@ void func_801386C8(void) {
     func_801320C0();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/80132000", func_80138708);
+void func_80138708(void) {
+    s32 temp_v0;
+    u8 temp;
+
+    if ((u8) D_800E6280.unk_03A >= 3U) {
+        D_800E6280.unk_03A -= 2;
+    } else {
+        func_80048E78();
+        func_80041584();
+    }
+    temp_v0 = D_801220E0 - 2;
+    temp = (u8) D_801220E0;
+    if (temp >= 3U) {
+        D_801220E2 = temp_v0;
+        D_801220E1 = temp_v0;
+        D_801220E0 = temp_v0;
+    }
+    if (func_80044E8C() == 1) {
+        cd_read_sectors(0x11U, 0x801F0000, 0xAE07);
+        func_8004284C();
+    }
+}
 
 void func_801387A8(void) {
     if (cd_read_sync_status() & 1) {

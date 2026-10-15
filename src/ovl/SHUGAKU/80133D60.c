@@ -17,7 +17,20 @@ void func_80133D60(void) {
 
 INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80133D60", func_80133E10);
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80133D60", func_80133F6C);
+void func_80133F6C(void) {
+    if (((D_800E6280.unk_1BC[0].unk_10.w & 0xF) == D_800E6280.unk_03F) && (((u32) (D_800E6280.unk_1BC[0].unk_10.w << 0x17) >> 0x1B) == D_800E6280.unk_040)) {
+        D_800E6280.unk_75D = D_800E6280.unk_F5F;
+        D_800E6280.unk_F5F = 0;
+        func_80042908(6);
+        return;
+    }
+    if ((D_800E6280.unk_03F == (D_800E6280.unk_0F8 & 0xF)) && (D_800E6280.unk_040 == ((u32) (D_800E6280.unk_0F8 << 0x17) >> 0x1B))) {
+        D_800E6280.unk_75D = D_800E6280.unk_F5F;
+        func_80042908(7);
+        return;
+    }
+    func_8004284C();
+}
 
 s32 func_80134024(void) {
     func_801343B0();

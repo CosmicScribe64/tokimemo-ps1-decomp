@@ -257,4 +257,21 @@ s32 func_8013B5E4(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/ENDING/nonmatchings/ENDING/801396E0", func_8013B640);
+void func_8013B640(void) {
+    s32 temp_v0;
+    s32 var_s0;
+    u32 temp_s1;
+    u8 *temp_v0_2;
+
+    temp_v0 = get_now_k();
+    temp_s1 = temp_v0 & 0xFF;
+    get_k_work(temp_v0);
+    var_s0 = 0;
+    if (temp_s1 != 0) {
+        do {
+            temp_v0_2 = get_k_work(var_s0);
+            var_s0 = (s32) (s16) (var_s0 + 1);
+            *(s8 *)((unsigned char *)temp_v0_2 + (7)) = 0;
+        } while ((u32) var_s0 < temp_s1);
+    }
+}

@@ -72,7 +72,36 @@ void func_80139E8C(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/SHUGAKU/nonmatchings/SHUGAKU/80139D00", func_80139FD4);
+s32 func_80139FD4(void) {
+    if (D_800CA2CC == 1) {
+        if (((*(s32 *)D_8013CAF0) != 0x801E2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (4)) != 0x801E6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (8)) != 0x801EA120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (12)) != 0x801EE120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (16)) != 0x801F2120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (20)) != 0x801F6120) || (*(s32 *)((unsigned char *)D_8013CAF0 + (24)) != 0x801FA120) || (*(s32 *)D_8013CAF8 != 0x801E20A8)) {
+            D_800E6280.unk_110A -= 2;
+            return 0;
+        }
+        load_palette(D_8013CB00, 0x11, 0, 1, 0);
+        func_80048F64(0x61);
+        D_80120695 = 0xC;
+        D_80120696 = 1;
+        D_801206CC = 0x01000000;
+        D_80120697 = 0x84;
+        D_801206A0 = D_8013CAF4;
+        D_801206A4 = D_8013CAF8;
+        D_801206C8 = D_8013CAF0;
+        D_801206A8 = D_8013CAFC;
+        D_801206AA = 0;
+        D_801206AC = 0;
+        D_8012069A = 1;
+        D_801206D7 = 0x11;
+        D_801206BA = 0x10;
+        D_801206BE = -0x77;
+        D_8012069B = 0;
+        D_80120699 = 1;
+        D_80120698 = 0;
+        goto block_11;
+    }
+block_11:
+    return func_8004284C();
+}
 
 void func_8013A1B4(void) {
     func_80042940(0x22);
