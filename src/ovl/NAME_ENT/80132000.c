@@ -689,7 +689,7 @@ void func_801341A8(void) {
 }
 
 #ifdef NON_MATCHING
-/* NON_MATCHING: T-10890, character-page selection. */
+/* NON_MATCHING: T-10890, T-11650, character-page selection, about 730 differing lines. */
 void func_80134248(s32 arg0) {
     s32 selected;
     u32 index;
@@ -699,18 +699,18 @@ void func_80134248(s32 arg0) {
     selected = D_8014CC70;
     switch (arg0) {
     case 0:
-        if ((s32)D_8014CC70 >= 3) {
+        if (selected >= 3) {
             selected = 2;
         }
         break;
     case 1:
-        selected = D_8014CC70 - 3;
+        selected = *(u8 *)&D_8014CC70 - 3;
         if (selected >= 3) {
             selected = 2;
         }
         break;
     case 2:
-        selected = D_8014CC70 - 6;
+        selected = *(u8 *)&D_8014CC70 - 6;
         if (selected >= 5) {
             selected = 4;
         }
