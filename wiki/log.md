@@ -14490,3 +14490,11 @@ Created [[tickets/T-14600-date-draft-repairs]] at frozen base 48362009. Preserve
 ## [2026-10-15] build | Compile all nine repaired DATE census drafts
 
 [[tickets/T-14600-date-draft-repairs]] now In Review. All nine alternatives compile serially in Docker; diagnostic differences range from 12 to 628 rows, no zero candidates and no matching-coverage claim. T-14100 real callback-table types were reused for 449D4/44E20. Alternatives, full preprocessed contexts, provenance and comparison records are in drafts/T-14500/repairs. Initial census attempts remain immutable; production C and shared generated assembly are unchanged.
+
+## [2026-10-15] ticket | Inspect ETC six-row album dispatcher near-match
+
+Started [[tickets/T-14800-etc-801447b0]]. Read [[etc-family-results]] and [[tickets/T-13100-etc-families]]; no retained target-specific historical probe was located. ETC source/header are identical to integration 3aaa8c01. Preserve original census attempt and test structural hypotheses in scratch.
+
+## [2026-10-15] build | Match ETC album dispatcher through consistent aggregate pointer
+
+[[tickets/T-14800-etc-801447b0]]: func_801447B0 adds 648 default-build literal linked bytes; ETC SHA1 passes. Direct-field six-row difference is a final status-byte register allocation; consistent existing GameState pointer yields diagnostic zero and verified bytes. [[etc-family-results]] records the structural transfer. Original attempts and prior C are unchanged; ticket moved to In Review for independent review.
