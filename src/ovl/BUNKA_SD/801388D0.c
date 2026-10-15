@@ -2,7 +2,27 @@
 #include "game.h"
 #include "ovl/BUNKA_SD.h"
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/801388D0", func_801388D0);
+s32 func_801388D0(void) {
+    if (D_800E6280.unk_110D == 0) {
+        if (func_800460EC() == 2) {
+            D_800E6280.unk_110D += 1;
+        }
+    } else if (D_800E6280.unk_110D == 1) {
+        func_80044890(1, 0xC478, 0xC44B, 0xD258, 0xD208, 0xD200);
+        D_800E6280.unk_110D += 1;
+    } else if (D_800E6280.unk_110D == 2) {
+        if (func_80044E8C() == 1) {
+            D_800E6280.unk_110D += 1;
+        }
+    } else {
+        func_80048390();
+        func_80048E78();
+        func_8006492C(1);
+        func_80042908(0x10);
+        func_80044750(0x200);
+    }
+}
+
 
 s32 func_801389DC(void) {
     if (D_800E6280.unk_110D == 0) {
