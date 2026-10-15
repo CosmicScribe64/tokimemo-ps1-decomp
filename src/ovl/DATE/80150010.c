@@ -100,7 +100,22 @@ void func_80150344(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/80150010", func_80150460);
+/* Copies display record 96 (D_80120650) over record 98 (D_801206D8). */
+void func_80150460(void) {
+    D_8015E208 = D_8015DE90;
+    D_8015E20C = D_8015DFCC;
+    D_8015E210 = D_8015E108;
+    D_800E6280.unk_1BC[2].unk_02 += 2;
+    D_800E6280.unk_1BC[2].unk_0A -= 0xA;
+    func_80084D3C();
+    func_80150080();
+    func_80043914((s32) D_8015EA6C, 0x11, 1, 2, 0);
+    func_80084E90((s32) D_8015EA70, (s32) D_8015EA74, (s32) D_8015EA78, (s32) D_8015EA7C, (s32) D_8015EA80, (s32) D_8015EA84);
+    func_800850D4((s32) D_8015EA60, (s32) D_8015EA64, (s32) D_8015EA5C, (s32) D_8015EA68);
+    ((DisplayRecord44 *)D_8011ECD0)[98] = ((DisplayRecord44 *)D_8011ECD0)[96];
+    D_800CA360 = 1;
+    func_8004284C();
+}
 
 void func_801505B4(void) {
     D_8015E208 = D_8015DE94;
