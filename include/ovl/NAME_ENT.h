@@ -96,6 +96,30 @@ extern u8 D_8014CF5C[];
 void func_80132134(void);
 void func_80132E80(void);
 void func_80138488(void);
+/* T-11650: called by func_80132320, func_80132E80 and func_80138488 before their definitions. */
+void func_801324AC(void);
+void func_80132A38(void);
+void func_80134EB8(void);
+void func_80135168(void);
+void func_80135434(s32 arg0);
+void func_801357F4(void);
+void func_80135A98(void);
+void func_80135BB4(void);
+void func_80135E58(void);
+void func_80135F74(void);
+void func_8013621C(s32 arg0);
+void func_801362D0(void);
+void func_80137708(void);
+void func_80137FC4(void);
+void func_80138268(s32 arg0);
+void func_80138330(void);
+void func_80138338(void);
+void func_801385A8(void);
+void func_80138634(void);
+void func_801387F4(void);
+void func_80138A7C(void);
+void func_80138BCC(void);
+s32 func_80139684(void);
 
 void func_80140D6C(void);
 void func_80140E18(void);
@@ -420,11 +444,7 @@ extern s32 D_8014CC3C;
 
 #ifndef OVL_NAME_ENT_T11010_E_H
 #define OVL_NAME_ENT_T11010_E_H
-extern u8 D_8014CC7A; /* loop bounds: addresses inside D_8014CC74 / D_8014CC7C / D_8014CC84 */
-extern u8 D_8014CC82;
-extern u8 D_8014CC8E;
-extern u8 D_8014CC7B;
-extern u8 D_8014CC83;
+extern u8 D_8014CC8E; /* loop bound and terminator: labels inside D_8014CC84, the original addresses them by name */
 extern u8 D_8014CC8F;
 #endif
 
