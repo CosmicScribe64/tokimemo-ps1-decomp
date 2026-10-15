@@ -13537,3 +13537,7 @@ Read workflow, standards and register cheat sheet. Docker configure and ninja ve
 ## [2026-10-15] build | T-12030 settings labels matched
 
 [[tickets/T-12030-codex-cx3]]: func_8005DEA0 now verifies 376 linked bytes and main SHA1. Reconstructed indexed coordinate and colour arrays with counter-first declaration order; no fakematch required.
+
+## [2026-10-15] build | T-12030 voice-mode initializer matched
+
+[[tickets/T-12030-codex-cx3]]: func_8005FDEC verifies 380 linked bytes and main SHA1, with typed arrays and an unsigned selector conversion.

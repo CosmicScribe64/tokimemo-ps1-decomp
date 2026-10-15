@@ -1697,7 +1697,45 @@ void func_8005FDA0(void) {
     }
 }
 
-INCLUDE_ASM("asm/nonmatchings/main/8005A0B0", func_8005FDEC);
+s32 func_8005FDEC(void) {
+    s32 i;
+    s32 mode;
+    s16 x[3];
+    s16 y[3];
+    s16 w[3];
+    s16 h[3];
+
+    func_8004E58C();
+    func_8006612C("音声モード");
+    func_8005DEA0(5);
+    for (i = 0; i < 3; i++) {
+        x[i] = -4;
+        y[i] = -0x40 + i * 0x10;
+        w[i] = 0x6C;
+        h[i] = 0x10;
+    }
+    set_kanji_string(x[0], y[0], 3U, "常にＯＮ", 0);
+    set_kanji_string(x[1], y[1], 3U, "常にＯＦＦ", 0);
+    set_kanji_string(x[2], y[2], 3U, "×ボタンでカット", 0);
+    k_sub_reset_point_set();
+    set_kanji_string(-0x80, 0x32, 0U, "音声のモードを設定します", 0);
+    menu_set(1, 3, x, y, w, h);
+    mode = (u8)D_800E6280.unk_03C;
+    switch (mode) {
+    case 1:
+        D_800E6280.unk_1094 = 0;
+        break;
+    case 0:
+        D_800E6280.unk_1094 = 1;
+        break;
+    default:
+    case 2:
+        D_800E6280.unk_1094 = 2;
+        break;
+    }
+    k_sub_disp_start(0);
+    func_8004284C();
+}
 
 void func_8005FF68(void) {
     menu_check(1, D_8011ECF6, D_8011ECFA);
