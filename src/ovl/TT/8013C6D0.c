@@ -427,7 +427,7 @@ void func_8013D150(void) {
     }
 }
 
-/* NON_MATCHING: T-10510, registers only (v in a1: a0 left unused by the original) */
+/* NON_MATCHING: T-11630, 20 differing lines, registers only: the original leaves a0 unused (v in a1, base in a2, tag in a3) */
 #ifdef NON_MATCHING
 void func_8013D2E0(void) {
     u8 *c;
@@ -438,15 +438,10 @@ void func_8013D2E0(void) {
     p = ((TtDrawSelect0C *)D_80158A68)->index + (TtDrawBuffer80B8 *)D_80158AB4;
     v = (TILE *)p->cursor;
     p->cursor = (DR_MODE *)(v + 1);
-    ((TtOtTag *)v)->len = 3;
-    v->code = 0x61;
-    v->r0 = c[0x13];
-    v->g0 = c[0x14];
-    v->b0 = c[0x15];
-    v->x0 = -0x80;
-    v->y0 = 8;
-    v->w = 0x100;
-    v->h = 0xE8;
+    ((TtOtTag *)v)->len = 3, v->code = 0x61;
+    v->r0 = c[0x13], v->g0 = c[0x14], v->b0 = c[0x15];
+    v->x0 = -0x80, v->y0 = 8;
+    v->w = 0x100, v->h = 0xE8;
     ((TtOtTag *)v)->addr = *(u32 *)&p->ordering[15];
     (&p->ordering[15])->addr = (u32)v;
 }
