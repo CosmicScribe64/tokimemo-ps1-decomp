@@ -13533,3 +13533,7 @@ All twelve assigned cx1 functions were attempted: four matched, four guarded nea
 ## [2026-10-15] build | T-12010 final package verification
 
 Final Docker configure/ninja -j2 passes all 27 binary checksums, headers and globals. Branch prototype check passes with zero new and fifteen known disagreements. Current full-unit guarded diffs are 4/8/29/17 listing lines. `git diff --check` is clean and no inline assembly was added. Evidence in build/scratch/final-build.log, final-protos.log and final-guards.log; [[tickets/T-12010-codex-cx1]] remains In Review.
+
+## [2026-10-15] lint | T-12010 index status reconciled
+
+Updated [[index]] to agree with the In Review ticket and kanban card for [[tickets/T-12010-codex-cx1]].
