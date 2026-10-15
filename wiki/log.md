@@ -14141,3 +14141,6 @@ Checked T-12900 through T-12903 status/card agreement and ticket links. The firs
 ## [2026-10-15] build | cx10 matches 740-byte DATE scene initializer
 
 [[tickets/T-12100-codex-cx10]] promotes func_8014D298 after exact production linked-byte and DATE checksum proof. Existing DateParticleView44 recovers the three68-byte copies; natural local declaration order recovers the stack address. No dummy padding retained. Package total5,628 bytes; evidence build/scratch/d298-final.log and d298-build.log.
+
+## [2026-10-15] build | TACO natural conditions improve full-TU candidate
+[[tickets/T-13400-taco-control-flow]]: reproduced89row baseline; removing two decompiler gotos reduces to57rows. Eight full-TU variants show consistent GameState pointer worsens this function and signedness of canonical flag read is irrelevant. Remaining stack/lifetime mismatches retained in scratch; zero coverage claimed.
