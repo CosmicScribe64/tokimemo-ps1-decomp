@@ -340,7 +340,38 @@ INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/80137B40.rodata", D_8013B500);
 
 INCLUDE_RODATA("asm/ovl/BUNKA_SD/data/BUNKA_SD/80137B40.rodata", D_8013B510);
 
-INCLUDE_ASM("asm/ovl/BUNKA_SD/nonmatchings/BUNKA_SD/80137B40", func_8013867C);
+void func_8013867C(void) {
+    s32 index;
+    s32 *coordinates;
+
+    if (D_800E6280.unk_1100 == 1) {
+        D_800E6280.unk_1100++;
+        set_kanji_string(-86, 64, 0, (s32)"「", 0);
+        index = D_8013D988;
+        if (D_8013D988 < 100) {
+            do {
+                set_kanji_string(-72, (s16)((index - D_8013D988) * 16 + 64), 0, (s32)(((u8 **)D_8013D98C)[index] + 1), 0);
+                if (((u8 **)D_8013D98C)[index][0] == 103) {
+                    if (!(D_800E6280.unk_F80 & 32)) {
+                        coordinates = (s32 *)D_8013D990;
+                        coordinates += *(u8 *)&D_800E6280.unk_110C;
+                        func_80046290(coordinates[0], coordinates[1], D_800E6280.unk_F5F);
+                        func_80044750(0x300);
+                    }
+                    (*(u8 *)&D_800E6280.unk_110C) += 2;
+                    D_8013D988 = index + 1;
+                    index = 100;
+                }
+                index++;
+            } while (index < 100);
+        }
+    }
+    if (func_800460EC() == 2 && check_end_k() != 0) {
+        D_800E6280.unk_1100 = 0;
+    }
+    check_k_scroll();
+    k_disp_inc();
+}
 
 void func_80138810(s32 arg0, s32 arg1, s32 arg2) {
     u8 *p;
