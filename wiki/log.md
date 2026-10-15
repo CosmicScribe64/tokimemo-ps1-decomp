@@ -13495,3 +13495,13 @@ MATCH for all three; prototype and global checks clean. Notes in [[matching-note
 ## [2026-10-15] ticket | T-11820 Done
 
 Inline review against CODING_STANDARDS.md: no findings. Moved [[tickets/T-11820-tt-batch-9]] to Done.
+
+## [2026-10-15] decision | TT handed to diman8; PRs #30-#32 merged
+
+Merged diman8's PRs #30, #31 and #32 (T-11800, T-11810, T-11820; 20 TT functions) after a local check of all three
+stacked on main: clean rebuild 27/27, headers, globals and `sync_protos.py --check-branch` OK; TT 245/303; grand
+total `5733/6958   1288084/2279368  56.5%`. User decision: TT belongs to the contributor (issue #2), remainder
+included. Wave 1 dropped its TT packages p10, p12 and p16 (T-11660, T-11680, T-11720; never merged, so not on the
+board); later work lists exclude TT. Wave 1 had included two TT packages by mistake (p06 T-11620, p07 T-11630, already
+merged). The seven TT matches that p10 and p12 made and the PRs lack went to diman8 on branch `tt-wave1-handoff`
+(ported onto main, 27/27, TT 252/303).
