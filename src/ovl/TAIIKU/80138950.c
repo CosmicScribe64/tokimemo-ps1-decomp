@@ -1513,26 +1513,6 @@ s8 func_8013FE44(void) {
     return 3;
 }
 
-typedef struct {
-    s16 vx;
-    s16 vy;
-    s16 vz;
-    s16 pad;
-} TaiikuSVec; /* SVECTOR layout */
-
-typedef struct {
-    s32 vx;
-    s32 vy;
-    s32 vz;
-    s32 pad;
-} TaiikuVec; /* VECTOR layout */
-
-typedef struct {
-    s16 m[3][3];
-    s16 pad;
-    s32 t[3];
-} TaiikuMat; /* MATRIX layout, size 0x20 */
-
 void func_8013FEF0(void) {
     TaiikuMat m1;
     TaiikuMat m2;
