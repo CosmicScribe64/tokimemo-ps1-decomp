@@ -125,7 +125,6 @@ void func_80138C20(void) {
         } while (i != 7);
         D_800E6280.unk_110D += 1;
     } else {
-        i = 0;
         if (D_800E6280.unk_F88 & 0x20) {
             if (D_800E6280.unk_1094 != -1) {
                 D_8013D3A4 = D_800E6280.unk_1094 + D_8013D3A4;
@@ -216,7 +215,6 @@ void func_80138FC0(void) {
         } while (i != 7);
         D_800E6280.unk_110D += 1;
     } else {
-        i = 0;
         if (D_800E6280.unk_F88 & 0x20) {
             if (D_800E6280.unk_1094 != -1) {
                 D_8013D3A0 = D_800E6280.unk_1094 + D_8013D3A0;

@@ -14498,3 +14498,7 @@ Added source-local offset/evidence comments for the player and schedule bitfield
 ## [2026-10-15] decision | Resolve OPTION standards finding
 
 [[tickets/T-14400-option-menu-families]] review flagged three byte offsets through the first GameState member. Replaced them with the existing named fields, removed unnecessary audio initializations, and deduplicated the ticket card. All prior C bodies remain preserved; repeat literal proofs and standards review required before Done.
+
+## [2026-10-15] decision | Remove redundant OPTION audio initialization
+
+Removed unnecessary pre-branch loop initializations from two new audio handlers in [[tickets/T-14400-option-menu-families]]. Both scratch probes and fresh default linked proofs remain exact; OPTION SHA1 and all 33 pre-existing C body comparisons pass.
