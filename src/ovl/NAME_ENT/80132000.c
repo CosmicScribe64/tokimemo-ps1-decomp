@@ -1,6 +1,10 @@
+#define MAIN_API_OVERRIDE_func_800AE090 /* func_80133510 calls it without the length: no prototype (main_api.h: three parameters) */
 #include "common.h"
 #include "ovl/NAME_ENT.h"
 #include "game.h"
+
+void func_800AE090();
+
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/NAME_ENT/data/NAME_ENT/80132000.data", D_8014CC30);
@@ -670,7 +674,90 @@ void func_801332FC(s32 arg0) {
     set_kanji_string(0x48, 0x10, 0xA, D_8014CDA4, 0);
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80133510);
+void func_80133510(u8 *arg0) {
+    s32 i;
+    u8 *p;
+    u8 *text;
+    u8 line0[0x24];
+    u8 line1[0x24];
+    u8 line2[0x24];
+    u8 line3[0x24];
+    u8 line4[0x24];
+    u8 line5[0x24];
+
+    for (i = 0; i < 0x23; i++) {
+        line0[i] = 0;
+        line1[i] = 0;
+        line2[i] = 0;
+        line3[i] = 0;
+        line4[i] = 0;
+        line5[i] = 0;
+    }
+    func_8004E58C();
+    set_kanji_string(-0x98, -0x68, 0xA, arg0, 0);
+    if (D_8014CE64[38] < D_8014CCAC * 16 + 0x50) {
+        D_8014CCAC = (D_8014CE64[38] >> 4) - 5;
+        if (D_8014CCAC < 0) {
+            D_8014CCAC = 0;
+        }
+    }
+    D_8014CCB0 = func_800AE0E0(D_8014CE68[38]);
+    text = D_8014CE68[38];
+    text += D_8014CCAC * 32;
+    if (func_800AE0E0(text) < 0x20) {
+        func_800AE0F0(line0, text);
+    } else {
+        func_800AE090(line0, text, 0x20);
+        p = text + 0x20;
+        if (func_800AE0E0(p) < 0x20) {
+            func_800AE0F0(line1, p);
+        } else {
+            func_800AE090(line1, p, 0x20);
+            p = text + 0x40;
+            if (func_800AE0E0(p) < 0x20) {
+                func_800AE0F0(line2, p);
+            } else {
+                func_800AE090(line2, p, 0x20);
+                p = text + 0x60;
+                if (func_800AE0E0(p) < 0x20) {
+                    func_800AE0F0(line3, p);
+                } else {
+                    func_800AE090(line3, p, 0x20);
+                    p = text + 0x80;
+                    if (func_800AE0E0(p) < 0x20) {
+                        func_800AE0F0(line4, p);
+                    } else {
+                        func_800AE090(line4, p);
+                        p = text + 0xA0;
+                        if (func_800AE0E0(p) < 0x20) {
+                            func_800AE0F0(line5, p);
+                        } else {
+                            func_800AE090(line5, p);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (line0[0] != 0) {
+        set_kanji_string(-0x78, -0x30, 0xA, line0, 0);
+    }
+    if (line1[0] != 0) {
+        set_kanji_string(-0x78, -0x20, 0xA, line1, 0);
+    }
+    if (line2[0] != 0) {
+        set_kanji_string(-0x78, -0x10, 0xA, line2, 0);
+    }
+    if (line3[0] != 0) {
+        set_kanji_string(-0x78, 0, 0xA, line3, 0);
+    }
+    if (line4[0] != 0) {
+        set_kanji_string(-0x78, 0x10, 0xA, line4, 0);
+    }
+    if (line5[0] != 0) {
+        set_kanji_string(-0x78, 0x20, 0xA, line5, 0);
+    }
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_801338DC);
 
