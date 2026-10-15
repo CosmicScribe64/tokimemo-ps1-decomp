@@ -1,5 +1,43 @@
 #include "common.h"
 #include "ovl/OPTION.h"
+/* Packed Rec38 settings fields, T-14400. */
+typedef struct OptionCharBits {
+    /* 0x00 */ u32 b0 : 1;
+    /* 0x00 */ u32 b1 : 1;
+    /* 0x00 */ u32 b2 : 1;
+    /* 0x00 */ u32 b3 : 1;
+    /* 0x00 */ u32 unk_04 : 2;
+    /* 0x00 */ u32 b6 : 1;
+    /* 0x00 */ u32 b7 : 1;
+    /* 0x00 */ u32 b8 : 1;
+    /* 0x00 */ u32 f9 : 3;
+    /* 0x00 */ u32 b12 : 1;
+    /* 0x00 */ u32 b13 : 1;
+    /* 0x00 */ u32 unk_14 : 6;
+    /* 0x00 */ u32 f20 : 4;
+    /* 0x00 */ u32 f24 : 8;
+} OptionCharBits; /* size 0x04 */
+
+typedef struct OptionPlayerBits {
+    /* 0x00 */ u32 unk_00 : 8;
+    /* 0x00 */ u32 f8 : 4;
+    /* 0x00 */ u32 f12 : 4;
+    /* 0x00 */ u32 b16 : 1;
+    /* 0x00 */ u32 b17 : 1;
+    /* 0x00 */ u32 b18 : 1;
+    /* 0x00 */ u32 b19 : 1;
+    /* 0x00 */ u32 b20 : 1;
+    /* 0x00 */ u32 unk_21 : 11;
+} OptionPlayerBits; /* size 0x04 */
+
+typedef struct OptionScheduleBits {
+    /* 0x00 */ u32 f0 : 5;
+    /* 0x00 */ u32 unk_05 : 19;
+    /* 0x00 */ u32 b24 : 1;
+    /* 0x00 */ u32 f25 : 4;
+    /* 0x00 */ u32 unk_29 : 3;
+} OptionScheduleBits; /* size 0x04 */
+
 
 s32 func_8013A550(s32 arg0, s32 arg1, s32 arg2) {
     if (D_800E6280.unk_F88 & 0x80) {
@@ -161,7 +199,91 @@ void func_8013AD94(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013AF10);
+void func_8013AF10(void) {
+    GameState *g = &D_800E6280;
+    s32 *var_s1;
+    s32 var_s0;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    menu_bar_show(0);
+    var_s1 = D_8013E784;
+    var_s0 = -0x60;
+    do {
+        func_8004B338(*var_s1, -0x20, var_s0);
+        var_s0 += 0xC;
+        var_s1++;
+    } while (var_s0 != 0x60);
+    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->f8, 0x20, -0x60);
+    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->f12, 0x20, -0x54);
+    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b16, 0x20, -0x48);
+    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b17, 0x20, -0x3C);
+    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b18, 0x20, -0x30);
+    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b19, 0x20, -0x24);
+    func_8004AE28(((OptionPlayerBits *)&g->unk_0F4)->b20, 0x20, -0x18);
+    func_8004AE28((s32) g->unk_0FC.unk_02, 0x20, -0xC);
+    func_8004AE28((s32) g->unk_100.unk_02, 0x20, 0);
+    func_8004AE28((s32) g->unk_104.unk_02, 0x20, 0xC);
+    func_8004AE28((s32) g->unk_108.unk_02, 0x20, 0x18);
+    func_8004AE28((s32) g->unk_10C.unk_02, 0x20, 0x24);
+    func_8004AE28((s32) g->unk_110.unk_02, 0x20, 0x30);
+    func_8004AE28((s32) g->unk_114.unk_02, 0x20, 0x3C);
+    func_8004AE28((s32) g->unk_118.unk_02, 0x20, 0x48);
+    func_8004AE28((s32) g->unk_11C.unk_02, 0x20, 0x54);
+    if (g->unk_F80 & 0x90) {
+        switch (g->unk_1093) {
+        case 0:
+            ((OptionPlayerBits *)&g->unk_0F4)->f8 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->f8, 3, 0);
+            break;
+        case 1:
+            ((OptionPlayerBits *)&g->unk_0F4)->f12 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->f12, 11, 0);
+            break;
+        case 2:
+            ((OptionPlayerBits *)&g->unk_0F4)->b16 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b16, 1, 0);
+            break;
+        case 3:
+            ((OptionPlayerBits *)&g->unk_0F4)->b17 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b17, 1, 0);
+            break;
+        case 4:
+            ((OptionPlayerBits *)&g->unk_0F4)->b18 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b18, 1, 0);
+            break;
+        case 5:
+            ((OptionPlayerBits *)&g->unk_0F4)->b19 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b19, 1, 0);
+            break;
+        case 6:
+            ((OptionPlayerBits *)&g->unk_0F4)->b20 = func_8013A550(((OptionPlayerBits *)&g->unk_0F4)->b20, 1, 0);
+            break;
+        case 7:
+            g->unk_0FC.unk_02 = func_8013A550((s32) g->unk_0FC.unk_02, 0x3E7, 0);
+            break;
+        case 8:
+            g->unk_100.unk_02 = func_8013A550((s32) g->unk_100.unk_02, 0x3E7, 0);
+            break;
+        case 9:
+            g->unk_104.unk_02 = func_8013A550((s32) g->unk_104.unk_02, 0x3E7, 0);
+            break;
+        case 10:
+            g->unk_108.unk_02 = func_8013A550((s32) g->unk_108.unk_02, 0x3E7, 0);
+            break;
+        case 11:
+            g->unk_10C.unk_02 = func_8013A550((s32) g->unk_10C.unk_02, 0x3E7, 0);
+            break;
+        case 12:
+            g->unk_110.unk_02 = func_8013A550((s32) g->unk_110.unk_02, 0x3E7, 0);
+            break;
+        case 13:
+            g->unk_114.unk_02 = func_8013A550((s32) g->unk_114.unk_02, 0x3E7, 0);
+            break;
+        case 14:
+            g->unk_118.unk_02 = func_8013A550((s32) g->unk_118.unk_02, 0x3E7, 0);
+            break;
+        case 15:
+            g->unk_11C.unk_02 = func_8013A550((s32) g->unk_11C.unk_02, 0x3E7, 0);
+            break;
+        }
+    }
+}
+
 
 s32 func_8013B3BC(void) {
     switch (D_800E6280.unk_110A) {
@@ -230,7 +352,92 @@ void func_8013B410(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013B568);
+void func_8013B568(void) {
+    s32 *var_s1;
+    s32 var_s0;
+    u8 *var_v1;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    menu_bar_show(0);
+    var_s1 = D_8013E7C4;
+    var_s0 = -0x60;
+    do {
+        func_8004B338(*var_s1, -0x20, var_s0);
+        var_s0 += 0xC;
+        var_s1++;
+    } while (var_s0 != 0x60);
+    func_8004AE28((s32) D_8013E740, 0x20, -0x60);
+    func_8004AE28((s32) D_800E6280.unk_1BC[D_8013E740].unk_02, 0x20, -0x54);
+    func_8004AE28((s32) D_800E6280.unk_1BC[D_8013E740].unk_06, 0x20, -0x48);
+    func_8004AE28((s32) D_800E6280.unk_1BC[D_8013E740].unk_0A, 0x20, -0x3C);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b0, 0x20, -0x30);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b1, 0x20, -0x24);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b2, 0x20, -0x18);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b3, 0x20, -0xC);
+    func_8004AE28((s32) ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f24, 0x20, 0);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b6, 0x20, 0xC);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b7, 0x20, 0x18);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b8, 0x20, 0x24);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f9, 0x20, 0x30);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f20, 0x20, 0x3C);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b12, 0x20, 0x48);
+    func_8004AE28(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b13, 0x20, 0x54);
+    if (D_800E6280.unk_F80 & 0x90) {
+        switch (D_800E6280.unk_1093) {
+        case 0:
+            D_8013E740 = func_8013A550((s32) D_8013E740, 0xB, 0);
+            func_80042940(0);
+            break;
+        case 1:
+            D_800E6280.unk_1BC[D_8013E740].unk_02 = func_8013A550((s32) D_800E6280.unk_1BC[D_8013E740].unk_02, 0x7F, 0);
+            break;
+        case 2:
+            D_800E6280.unk_1BC[D_8013E740].unk_06 = func_8013A550((s32) D_800E6280.unk_1BC[D_8013E740].unk_06, 0x7F, 0);
+            break;
+        case 3:
+            D_800E6280.unk_1BC[D_8013E740].unk_0A = func_8013A550((s32) D_800E6280.unk_1BC[D_8013E740].unk_0A, 0x7F, 0);
+            break;
+        case 4:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b0 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b0, 1, 0);
+            break;
+        case 5:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b1 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b1, 1, 0);
+            break;
+        case 6:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b2 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b2, 1, 0);
+            break;
+        case 7:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b3 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b3, 1, 0);
+            break;
+        case 8:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f24 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f24, 999, 0);
+            break;
+        case 9:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b6 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b6, 1, 0);
+            break;
+        case 10:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b7 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b7, 1, 0);
+            break;
+        case 11:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b8 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b8, 1, 0);
+            break;
+        case 12:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f9 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f9, 7, 0);
+            break;
+        case 13:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f20 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->f20, 11, 0);
+            break;
+        case 14:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b12 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b12, 1, 0);
+            break;
+        case 15:
+            ((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b13 = func_8013A550(((OptionCharBits *)&D_800E6280.unk_1BC[D_8013E740].unk_0C)->b13, 1, 0);
+            break;
+        }
+    }
+}
+
 
 s32 func_8013BE78(void) {
     switch (D_800E6280.unk_110A) {
@@ -299,7 +506,79 @@ void func_8013BECC(void) {
     D_800E6280.unk_71C = 0;
 }
 
-INCLUDE_ASM("asm/ovl/OPTION/nonmatchings/OPTION/8013A550", func_8013BFF8);
+void func_8013BFF8(void) {
+    GameState *g = &D_800E6280;
+    s32 *var_s1;
+    s32 var_s0;
+
+    menu_check(0, D_8011ECF6, D_8011ECFA);
+    func_8004FC10(0);
+    menu_bar_show(0);
+    var_s1 = D_8013E804;
+    var_s0 = -0x60;
+    do {
+        func_8004B338(*var_s1, -0x20, var_s0);
+        var_s0 += 0xC;
+        var_s1++;
+    } while (var_s0 != 0x60);
+    func_8004AE28((s32) g->unk_69C[0].unk_01, 0x20, -0x60);
+    func_8004AE28((s32) g->unk_69C[0].unk_02, 0x20, -0x54);
+    func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->b24, 0x20, -0x30);
+    func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->f25, 0x20, -0x24);
+    func_8004AE28(((OptionScheduleBits *)&g->unk_54C[0])->f0, 0x20, -0x18);
+    func_8004AE28((s32) g->unk_724, 0x20, 0);
+    func_8004AE28((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (1)), 0x20, 0xC);
+    func_8004AE28((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (2)), 0x20, 0x18);
+    func_8004AE28((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (3)), 0x20, 0x24);
+    func_8004AE28((s32) g->unk_F5F, 0x20, 0x30);
+    func_8004AE28((s32) g->unk_75D, 0x20, 0x3C);
+    func_8004AE28(D_80122CD4, 0x20, 0x48);
+    func_8004AE28(D_80122CD0, 0x20, 0x54);
+    if (g->unk_F80 & 0x90) {
+        switch (g->unk_1093) {
+        case 0:
+            g->unk_69C[0].unk_01 = func_8013A550((s32) g->unk_69C[0].unk_01, 0xA, 0);
+            break;
+        case 1:
+            g->unk_69C[0].unk_02 = func_8013A550((s32) g->unk_69C[0].unk_02, 0x24, 0);
+            break;
+        case 4:
+            ((OptionScheduleBits *)&g->unk_54C[0])->b24 = func_8013A550(((OptionScheduleBits *)&g->unk_54C[0])->b24, 1, 0);
+            break;
+        case 5:
+            ((OptionScheduleBits *)&g->unk_54C[0])->f25 = func_8013A550(((OptionScheduleBits *)&g->unk_54C[0])->f25, 0xA, 0);
+            break;
+        case 6:
+            ((OptionScheduleBits *)&g->unk_54C[0])->f0 = func_8013A550(((OptionScheduleBits *)&g->unk_54C[0])->f0, 0x15, 0);
+            break;
+        case 8:
+            g->unk_724 = func_8013A550((s32) g->unk_724, 0x15, 0);
+            break;
+        case 9:
+            *(u8 *)((unsigned char *)(&g->unk_724) + (1)) = func_8013A550((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (1)), 0x15, 0);
+            break;
+        case 10:
+            *(u8 *)((unsigned char *)(&g->unk_724) + (2)) = func_8013A550((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (2)), 0x15, 0);
+            break;
+        case 11:
+            *(u8 *)((unsigned char *)(&g->unk_724) + (3)) = func_8013A550((s32) *(u8 *)((unsigned char *)(&g->unk_724) + (3)), 0x15, 0);
+            break;
+        case 12:
+            g->unk_F5F = func_8013A550((s32) g->unk_F5F, 0xA, 0);
+            break;
+        case 13:
+            g->unk_75D = func_8013A550((s32) g->unk_75D, 0xA, 0);
+            break;
+        case 14:
+            D_80122CD4 = func_8013A550(D_80122CD4, 0xC, 0);
+            break;
+        case 15:
+            D_80122CD0 = func_8013A550(D_80122CD0, 8, 1);
+            break;
+        }
+    }
+}
+
 
 s32 func_8013C3B0(void) {
     switch (D_800E6280.unk_110A) {

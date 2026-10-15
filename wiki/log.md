@@ -14497,3 +14497,14 @@ Created isolated codex/main-14200 from 0f117230; original checkout read only. Re
 
 ## [2026-10-15] build | T-14200 character initializer 796-byte checkpoint
 [[main-family-results]] records func_80041C2C: consistent GameState pointer and existing flag members give default literal MATCH; MAIN SHA1 OK, earlier initializer reverified. No new header layout or FAKE. [[tickets/T-14200-main-source-families]] continues at 1472 verified bytes.
+## [2026-10-15] ticket | Start isolated OPTION family pass
+
+Created [[tickets/T-14400-option-menu-families]] on codex/option-14400 from origin/main a46afeb8. Read [[index]], coding standards, local instructions and prior OPTION evidence. Scope is OPTION source/header only, with full-unit linked proof and affected SHA1 required.
+
+## [2026-10-15] build | Verify first OPTION settings pair
+
+[[tickets/T-14400-option-menu-families]] adds 2148 default C bytes in src/ovl/OPTION/8013A550.c. Full-TU literal proofs and OPTION SHA1 pass; recovered packed views and consistent GameState pointer described in [[matching-notes]]. All prior C preserved; no FAKE workaround or compiler change.
+
+## [2026-10-15] build | Verify OPTION character settings
+
+[[tickets/T-14400-option-menu-families]] adds func_8013B568 (2320 literal linked bytes), cumulative 4468. OPTION SHA1 passes. Packed character fields and direct switch stores compile exactly in both direct and pointer forms. Fourth sibling remains scratch-only; existing C stays unchanged.
