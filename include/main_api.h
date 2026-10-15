@@ -1830,6 +1830,7 @@ void func_80047550(void);
 void func_80047560();
 void tpage_buf_clear_all(void);
 void func_80048390();
+s32 func_800486A4();
 void tpage_buf_clear(void);
 void _sys_default_tpage_set(void);
 void load_tpage_buf_lock();

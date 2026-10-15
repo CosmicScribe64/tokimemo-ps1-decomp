@@ -213,7 +213,20 @@ void func_801324AC(void) {
     ((DisplayActor44 *)D_8011ECD0)[124].unk_03 = 0;
 }
 
-INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132A38);
+void func_80132A38(void) {
+    s32 i;
+    s32 pad[2]; /* FAKE: unused 8-byte local reproduces the original frame (buf at 0x4C); real source unknown. T-11650 */
+    s32 buf[6];
+
+    func_80138F00();
+    /* FAKE: loop body on the for line gives the original as1 schedule. T-11650 */
+    for (i = 0; i < 6; i++) { buf[i] = (u32)D_800E6280.unk_1A7C + i * 0x4000; }
+    func_8004A1A0(buf, 0, 6, 3, 2, 0x1F8, -0xA0, -0x78, 8, 0xD);
+    D_801220D0 |= 0x40000000;
+    D_800E6280.unk_1228[func_800486A4(*(s32 *)D_800E6280.unk_1A3C, 2)] = *(s32 *)D_800E6280.unk_1A3C;
+    func_80043914(D_800E6280.unk_1A84, 0x18, 1, 2, 0);
+    func_80043914(D_800E6280.unk_1A6C, 0x10, 1, 2, 0);
+}
 
 INCLUDE_ASM("asm/ovl/NAME_ENT/nonmatchings/NAME_ENT/80132000", func_80132B78);
 
