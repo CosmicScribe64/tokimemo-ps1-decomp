@@ -23,7 +23,6 @@ kanban-plugin: board
 - [ ] [[tickets/T-3050-run-per-object-migration-after-wave-2|T-3050 Run the per-object migration on the whole tree after wave 2]]
 
 ## In Progress
-- [ ] [[tickets/T-11820-tt-batch-9|T-11820 TT batch 9]]
 - [ ] [[tickets/T-11320-close-near-misses-sonnet-48|T-11320 Close near misses (Sonnet) 48]]
 - [ ] [[tickets/T-11310-close-near-misses-sonnet-47|T-11310 Close near misses (Sonnet) 47]]
 - [ ] [[tickets/T-11180-twin-guided-matching-gemini-39|T-11180 Twin-guided matching (Gemini) 39]]
@@ -85,6 +84,7 @@ kanban-plugin: board
 
 
 ## Done
+- [ ] [[tickets/T-11820-tt-batch-9|T-11820 TT batch 9]]
 - [ ] [[tickets/T-11810-tt-batch-8|T-11810 TT batch 8]]
 - [ ] [[tickets/T-11800-tt-batch-7|T-11800 TT batch 7]]
 - [ ] [[tickets/T-11600-w1-ovl-event-8010fe10|T-11600 Wave 1 package w1-p04]]
