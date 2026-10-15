@@ -14726,3 +14726,10 @@ Opened [[tickets/T-15400-bunkasai-label-draft]] for the fresh two-row candidate.
 
 ## [2026-10-15] build | BUNKASAI label encoding match
 Ordinary Unicode label text fixes the two-row escaped-byte difference in func_801431D4. Canonical GameState access and restored text pass explicit default linked proof, affected SHA1 and guards, adding 440 coverage bytes. Original draft archive preserved. See [[tickets/T-15400-bunkasai-label-draft]].
+## [2026-10-15] ticket | T-15300 fresh structural near matches
+
+Claimed [[tickets/T-15300-fresh-structural-near-matches]] for bounded C fixes from completed census units, starting fresh BUNKASAI func_801438E4 (852 inventory bytes, score 14). No prior scope entry in historical wiki/catalog. Incoming zero proofs keep priority; [[kanban]] and [[index]] updated.
+
+## [2026-10-15] build | T-15300 BUNKASAI flag-store match
+
+Promoted BUNKASAI func_801438E4: 852 inventory coverage bytes and 852 default linked literal bytes. Existing CharFlags bits 12/13 replace byte-OR updates, resolving the complete 14-row gap. BUNKASAI SHA1 and header/global/prototype guards pass. No FAKE/header changes; existing C preserved. [[tickets/T-15300-fresh-structural-near-matches]] remains In Progress for fresh TACO probes; [[matching-notes]] updated.

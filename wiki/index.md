@@ -20,6 +20,8 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-15400-bunkasai-label-draft|T-15400]] BUNKASAI label encoding recovery (In Review; 440 coverage bytes).
+- [[tickets/T-15300-fresh-structural-near-matches|T-15300]] Fresh structural near matches: BUNKASAI func_801438E4 matched, 852 coverage/literal bytes; TACO probes continue (In Progress).
+
 - [[tickets/T-15000-kangei-near-match|T-15000]] KANGEI func_80135CE0 matched: ordinary duplicated branch stores, 432 coverage/literal bytes (In Review).
 
 - [[tickets/T-14501-remaining-draft-proof|T-14501]] Verify exhaustive draft candidates: 28 literal matches / 18,056 inventory coverage bytes in 7 overlays (In Review).

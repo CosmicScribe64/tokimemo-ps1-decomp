@@ -31,6 +31,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-13600-taiiku-families|T-13600 Recover TAIIKU source families]]
 
 - [ ] [[tickets/T-14000-ending-en-nichi-families|T-14000 Match ENDING and EN_NICHI coherent families]]
+- [ ] [[tickets/T-15300-fresh-structural-near-matches|T-15300 Resolve fresh structural near matches]]
+
 
 
 
