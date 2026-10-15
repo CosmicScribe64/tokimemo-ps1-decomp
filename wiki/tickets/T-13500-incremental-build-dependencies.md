@@ -2,6 +2,7 @@
 id: T-13500
 title: Track compiler header dependencies for incremental builds
 status: Done
+status: In Review
 assignee: Codex
 created: 2026-10-15
 updated: 2026-10-15
@@ -18,6 +19,7 @@ Make source and header integrations rebuild only affected consumers while retain
 - [x] Source, shared header, overlay header, ASM/rodata and no-op rebuilds tested with Ninja.
 - [x] Header validation still runs before compiles and blocks failures.
 - [x] Full 27 binary checks, baseline rebuild counts and standards review recorded.
+- [ ] Full 27 binary checks, baseline rebuild counts and standards review recorded.
 
 ## Notes
 

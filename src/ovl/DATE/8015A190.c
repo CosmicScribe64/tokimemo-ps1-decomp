@@ -30,7 +30,16 @@ void func_8015A250(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/DATE/nonmatchings/DATE/8015A190", func_8015A288);
+void func_8015A288(void) {
+    s32 idx;
+    DateDispatch8015A288 tbl;
+    tbl = D_80160AA8;
+    if ((D_800E6280.unk_110A >= 0x1D) && (D_800E6280.unk_110A < 0x26)) {
+        func_8006B900();
+    }
+    idx = D_800E6280.unk_110A;
+    tbl.f[idx](0x3C);
+}
 
 void func_8015A328(void) {
     func_80044750(0x501);

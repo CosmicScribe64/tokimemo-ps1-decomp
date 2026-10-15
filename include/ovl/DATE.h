@@ -13,6 +13,16 @@
 
 void func_8009B430(s32 arg0, u8 *arg1, s32 arg2);
 
+typedef struct {
+    void (*f[52])();
+} DateDispatch8015A288; /* size 0xD0 */
+extern DateDispatch8015A288 D_80160AA8;
+
+typedef struct {
+    void (*f[42])();
+} DateDispatch80154004; /* size 0xA8 */
+extern DateDispatch80154004 D_8015F434;
+
 extern s16 D_8015D084;
 extern s16 D_8015D088;
 void func_80145AA0(void);
