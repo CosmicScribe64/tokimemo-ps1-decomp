@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-10-12
+updated: 2026-10-15
 sources: ["tools/cc.py", "tools/funcdiff.py", "include/game.h", "configure.py"]
 ---
 
@@ -4750,3 +4750,43 @@ Twelve functions of `src/ovl/EVENT/8010FE10.c`, six guarded drafts and six m2c d
 - Tooling: `funcdiff --resolve` on the guarded full unit reports "linked function address or size differs" when other
   guarded drafts change size; unguard and run ninja to confirm. Some candidate sources fail in cfe with a syntax error
   at an unrelated line (a truncated line in the `.sjis.c`); adding one space elsewhere in the file avoided it.
+## Wave 1 package w1-p05: main 80042540.c and 80058D20.c (T-11610)
+
+Ten functions, 7 matched: `func_80042808`, `func_8004284C`, `func_80042908`, `func_80042940`, `initModelingData_init`,
+`func_80058F9C`, `func_80042540` (`src/main/80042540.c` is now all C). `func_800590CC` stays guarded (22 lines);
+`func_800591D8` and `func_8005938C` are back to `INCLUDE_ASM`. Ticket [[tickets/T-11610-w1-main-80042540]].
+
+- **`return 0` after a last store through `lui at` (the reset-helper family, T-4020 to T-10850).** The original puts
+  `or v0,zero,zero` before the last `lui at` and the store in the `jr` delay slot. Every `return 0` form puts the move in
+  the slot. The `normal_date_girl_in_init` trick (T-9540) fixes it: `s32` function with no `return`, and the last store
+  reads a zero through its address: `z = 0; p = &z; D_800E6280.unk_110D = *p;`. Only the last store needs it. FAKE.
+  Other functions with the same tail (`or v0,zero,zero; jr ra; s? ..($at)`) can use it.
+- **PsyQ TMD walk.** `initModelingData_init` and `func_80058F9C` are the libgs sample's model setup (func_8009B3C0 and
+  func_8009B430 look like GsMapModelingData and GsLinkObject4). Write the pointer as separate steps,
+  `dop = arg0; dop++; map(dop); dop++; n = *dop; dop++;`: that keeps the original's `move s2,s3; addiu s2,s2,8` (and
+  in `func_80058F9C` the `addiu a3,a0,4; lw v0,0(a3); addiu a3,a3,4` chain), which `arg0 + 1`/`t + 2` forms fold. The
+  object loop of `initModelingData_init` is an indexed `for (i = 0; i < 16; i++)` over `D_80122640[i * 4]` and
+  `&D_801227A0[i]`; the pointer do-while gave the wrong address-setup order. The TAIIKU twin `func_801406A8` should take
+  the same C (`dupes.py`).
+- **Repeated slot address instead of a local** (`func_80058F9C`): `(u8 *)D_80122640 + arg1 * 0x10` written three times
+  shares the original's one spill slot (compiler temporaries share slots, named locals do not), and
+  `&D_80122640[arg1 * 4]` costs one more ugen temporary than `arg1 * 0x10` (`t7` instead of `t6`).
+- **Byte views of both selectors** matched `func_80042540` (`switch (*(u8 *)&D_800E6280.unk_1108)`, and the s8
+  `unk_111A` read with `lbu`).
+- **Constants shared between a store and a call argument (`func_800590CC`, `func_800591D8`, T-0017 family).** The
+  original stores and passes the same `a0`/`a1` (`li a0,0x200; sh a0,D_800E6280; ...; jal func_80097F58`) and, in
+  `func_800590CC`, loads the else-arm's 0x140/0xF0 into `a0`/`a1` before the branch. IDO propagates the constants
+  (`li t9; sh t9` and a separate `li a0`). Tried without effect: a `u16` prototype for func_80097F58 (it looks like
+  GsInitGraph), separate scalar globals instead of GameState fields (same code), assignments inside the call
+  arguments, `w`/`h` locals, a local struct. Reading `w`/`h` through their addresses (FAKE) stops the propagation and
+  gives the original's hoisted constants, but then `w`/`h` are spilled before each call (frame +8): 22 lines in
+  `func_800590CC`, 54 in `func_800591D8`.
+- **Struct copies and ugen temporaries (`func_8005938C`).** The draft (an 0x88-byte model record over two
+  `D_8011ECD0` slots: GsDOBJ2-like at +4, coordinate at +0x14, rotation/scale/translation/velocity SVECTORs at
+  +0x64..+0x7C; locals `SVECTOR rot; VECTOR scale; MATRIX m, sm, ls, lw;`) is exact apart from ugen temporaries. The
+  frame (0x108, `lw` at sp+0x64) needs three 4-byte scalars declared before `rot` (`i`, `p` and one more, FAKE if
+  unused). The rest: the original's three `MATRIX` copies each burn one ugen temporary before the data register
+  (`t4` then `t5`), IDO burns two (`t4`, `t5`, then `t6`). Probes: IDO burns two after a store to a stack local or at
+  the start of a function, one after a store through a pointer (`q[0] = x;` right before the copy); ETC
+  `func_8013FA7C`'s original burns two after its stack stores, so the original compiler does both. No C form found
+  that keeps the rot stores on the stack and burns one; a `temp` local for one rot load fixes copy 1 only (104 lines).

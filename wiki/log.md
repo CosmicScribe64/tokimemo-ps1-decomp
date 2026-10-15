@@ -13363,3 +13363,14 @@ Created [[tickets/T-11600-w1-ovl-event-8010fe10]] (In Progress) in worktree w1-p
 ## [2026-10-15] ticket | T-11600 Done
 
 [[tickets/T-11600-w1-ovl-event-8010fe10]]: code review against CODING_STANDARDS.md, no findings; 10 of 12 functions matched (3,676 bytes), `func_80114B0C` and `func_80118868` stay guarded. EVENT.bin sha1, globals, headers and `sync_protos --check-branch` OK in the worktree.
+## [2026-10-15] ticket | T-11610 created
+
+Created [[tickets/T-11610-w1-main-80042540]] (In Progress): wave 1 package w1-p05, main `src/main/80042540.c` and `src/main/80058D20.c`.
+
+## [2026-10-15] ticket | T-11610 to In Review
+
+[[tickets/T-11610-w1-main-80042540]]: 7 of 10 matched (`func_80042808`, `func_8004284C`, `func_80042908`, `func_80042940` with the aliased-zero trick; `initModelingData_init`, `func_80058F9C` as the PsyQ TMD walk; `func_80042540`). `func_800590CC` guarded at 22 lines; `func_800591D8`, `func_8005938C` back to asm with rows in [[data/t0018-cases]]. Notes in [[matching-notes]].
+
+## [2026-10-15] ticket | T-11610 Done
+
+[[tickets/T-11610-w1-main-80042540]]: code review against `CODING_STANDARDS.md` done, one finding fixed (FAKE mark on the `D_80122640` byte-offset reach in `func_80058F9C`). 7 functions matched (`func_80042808`, `func_8004284C`, `func_80042908`, `func_80042940`, `initModelingData_init`, `func_80058F9C`, `func_80042540`); `func_800590CC` guarded at 22 lines; `func_800591D8`, `func_8005938C` stay `INCLUDE_ASM`.

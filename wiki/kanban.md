@@ -85,6 +85,7 @@ kanban-plugin: board
 
 ## Done
 - [ ] [[tickets/T-11600-w1-ovl-event-8010fe10|T-11600 Wave 1 package w1-p04]]
+- [ ] [[tickets/T-11610-w1-main-80042540|T-11610 Wave 1 package w1-p05]]
 - [ ] [[tickets/T-11560-tt-batch-6|T-11560 TT batch 6]]
 - [ ] [[tickets/T-11550-tt-opus-near-miss-pass|T-11550 TT Opus near-miss pass]]
 - [ ] [[tickets/T-11540-tt-order-search-pass|T-11540 TT order_search pass]]

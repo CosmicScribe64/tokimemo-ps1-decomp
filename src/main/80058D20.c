@@ -59,56 +59,54 @@ void initCoordinate(void) {
     } while (p != D_80122CA0);
 }
 
-/* NON_MATCHING: T-10710, 7 differing lines: the original copies the model block pointer (move s2,s3) and adds 8 after the lui setup, the draft folds it into one addiu; pointer parameter type needed (an s32 parameter keeps the pointer in a0 first) */
-#ifdef NON_MATCHING
+/* HYPOTHESIS: the TMD walk of the PsyQ libgs samples (func_8009B3C0 =
+ * GsMapModelingData, func_8009B430 = GsLinkObject4): skip the ID word, map the
+ * data, skip the flags and object-count words. The separate `dop++` steps give
+ * the original's `move s2,s3; addiu s2,s2,8`; the indexed loop gives its
+ * address setup order. T-11610 */
 void initModelingData_init(s32 *arg0) {
-    s32 *t;
-    TaiikuBig *q;
-    u32 *p;
+    s32 *dop;
+    s32 i;
 
-    t = arg0 + 1;
-    func_8009B3C0(t);
-    q = D_801227A0;
-    p = D_80122640;
-    do {
-        func_8009B430(t + 2, p, 0);
-        p[1] = (u32)q;
-        q++;
-        p += 4;
-        p[-4] = 0x80000000;
-    } while (q != D_80122CA0);
-}
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", initModelingData_init);
-#endif
-
-/* NON_MATCHING: T-10850, 14 differing listing lines; see the ticket scratch evidence. */
-#ifdef NON_MATCHING
-s32 func_80058F9C(u8 *arg0, s32 arg1, u32 arg2) {
-    u8 *q;
-    u32 limit;
-    u8 *p;
-
-    p = (u8 *)arg0 + 4;
-    func_8009B3C0((s32)p);
-    q = p + 4;
-    limit = *(u32 *)q;
-    if (limit >= 0x11) {
-        limit = 0xF;
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    dop++;
+    for (i = 0; i < 16; i++) {
+        func_8009B430((s32)dop, (u8 *)&D_80122640[i * 4], 0);
+        D_80122640[i * 4 + 1] = (u32)&D_801227A0[i];
+        D_80122640[i * 4] = 0x80000000;
     }
-    q += 4;
-    if (arg2 < limit) {
-        p = (u8 *)D_80122640 + arg1 * 0x10;
-        func_8009B430((s32)q, (u8 *)p, arg2);
-        *(TaiikuBig **)(p + 4) = &D_801227A0[arg1];
-        *(s32 *)p = 0;
+}
+
+/* Same TMD walk as initModelingData_init for one object slot (count clamped
+ * to 15). FAKE: the slot is reached by byte offset from D_80122640 (u32[], 16
+ * bytes per slot) because the record type is not declared yet; the repeated
+ * slot address, not a local, gives the original's shared spill slot (as in
+ * TAIIKU func_80140738), and `&D_80122640[arg1 * 4]` costs one more ugen
+ * temporary. T-11610 */
+s32 func_80058F9C(u32 *arg0, s32 arg1, u32 arg2) {
+    u32 *dop;
+    u32 n;
+
+    dop = arg0;
+    dop++;
+    func_8009B3C0((s32)dop);
+    dop++;
+    n = *dop;
+    if (n > 16) {
+        n = 15;
+    }
+    dop++;
+    if (arg2 < n) {
+        func_8009B430((s32)dop, (u8 *)D_80122640 + arg1 * 0x10, arg2);
+        *(u32 *)((u8 *)D_80122640 + arg1 * 0x10 + 4) = (u32)&D_801227A0[arg1];
+        *(u32 *)((u8 *)D_80122640 + arg1 * 0x10) = 0;
         return 1;
     }
     return -1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_80058F9C);
-#endif
 
 void func_80059048(void) {
     s32 i;
@@ -126,7 +124,53 @@ void func_8005907C(void) {
     D_8011ECA0 = func_80098370();
 }
 
+/* NON_MATCHING: T-11610, 22 differing lines. Reading w and h through their
+ * addresses (FAKE) stops uopt from propagating the constants, so 0x140/0xF0 are
+ * loaded into a0/a1 before the branch as in the original; left: w and h are
+ * spilled to the stack before each call (frame 0x38, not 0x30) and the then-arm
+ * loses its second `li a1,0xF0`. Plain constants give 40 lines. */
+#ifdef NON_MATCHING
+void func_800590CC(s32 arg0) {
+    s32 w;
+    s32 h;
+    s32 *pw;
+    s32 *ph;
+
+    func_8009C674(0);
+    func_8009C210(1);
+    func_800AD950(0);
+    func_8009C5E0(0);
+    w = 0x140;
+    h = 0xF0;
+    pw = &w;
+    ph = &h;
+    if (arg0 != 0) {
+        D_800E6280.unk_014[0] = 0x80;
+        D_800E6280.unk_014[1] = 0x80;
+        w = 0x100;
+        D_800E6280.unk_000 = *pw;
+        h = 0xF0;
+        D_800E6280.unk_002 = *ph;
+        D_800E6280.unk_004 = 0;
+        func_80097F58(*pw, *ph, 0, 0, 0);
+        func_8005907C();
+        back_clear_switch(1);
+    } else {
+        D_800E6280.unk_014[0] = 0xA0;
+        D_800E6280.unk_014[1] = 0xA0;
+        D_800E6280.unk_000 = *pw;
+        D_800E6280.unk_002 = *ph;
+        D_800E6280.unk_004 = 0;
+        func_80097F58(*pw, *ph, 0, 0, 0);
+        func_8005907C();
+        back_clear_switch(1);
+    }
+    func_800AD950(0);
+    func_8009C5E0(1);
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800590CC);
+#endif
 
 INCLUDE_ASM("asm/nonmatchings/main/80058D20", func_800591D8);
 

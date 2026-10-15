@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-14
+updated: 2026-10-15
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -1923,3 +1923,6 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TT/80142350 | `func_80142350` | regorder | T-11560: still 2 lines: regdiff shows the original's pointer range interferes with v0..a1; in the draft it overlaps nothing |
 | EVENT/8010FE10 | `func_80114B0C` | regorder | T-11600: 4 lines: tie of the hoisted row addresses `D_80124394`/`D_8012439C` (priority 2.5); `v = *r` numbers `D_8012439C` first and it takes `$t1`, the original has it in `$t2`; array views fix the order but hoist the `D_800B0F2C` load out of the loop |
 | EVENT/8010FE10 | `func_80118868` | regorder | T-11600: 8 lines: the third chain of 3s is a uopt colour (`$v0`) in the original, a ugen temporary (`$t6`) in every draft (chain orders, separate stores, local constant) |
+| main/80058D20 | `func_8005938C` | regorder | T-11610: not kept (104 lines): draft exact but for ugen temporaries; each MATRIX struct copy burns one temporary in the original (`t4`, data `t5`) and two in IDO after the stack stores to `rot`/`m.t` (data `t6`); frame needs three leading 4-byte scalars |
+| main/80058D20 | `func_800591D8` | regorder | T-11610: not kept (54+ lines): original shares `a0`/`a1` between the GameState store and the func_80097F58 argument (and loads `unk_000` into `a0` for the compare); IDO rematerializes the constants; u16 prototype, separate symbols, argument assignments, aliased locals tried |
+| main/80058D20 | `func_800590CC` | regorder | T-11610: guarded, 22 lines: aliased `w`/`h` (FAKE) reproduce the hoisted `li a0,0x140; li a1,0xF0` but spill both before each call and drop the then-arm `li a1,0xF0` |
