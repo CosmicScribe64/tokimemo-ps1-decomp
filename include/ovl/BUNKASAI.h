@@ -20,6 +20,48 @@ typedef struct BunkasaiNameTable {
 extern BunkasaiNameTable D_801606DC;
 void func_80147F8C(void);
 
+/* T-18700: text-pointer tables copied to the stack by func_8015AF90 (BUNKAKEN func_80152680 form). */
+typedef struct BunkasaiTexts12 {
+    /* 0x00 */ u8 *text[12];
+} BunkasaiTexts12; /* size 0x30 */
+typedef struct BunkasaiTexts11 {
+    /* 0x00 */ u8 *text[11];
+} BunkasaiTexts11; /* size 0x2C */
+typedef struct BunkasaiTexts4 {
+    /* 0x00 */ u8 *text[4];
+} BunkasaiTexts4; /* size 0x10 */
+extern BunkasaiTexts12 D_80160AE0;
+extern BunkasaiTexts11 D_80160B10;
+extern BunkasaiTexts4 D_80160B3C;
+extern u8 D_80160B4C; /* frame counter of func_8015AF90 */
+void func_80132410(void);
+s32 func_8015B828(void);
+
+/* T-18700: per-girl byte tables copied to the stack. func_80142700 reads one byte per girl
+ * (0..10); func_80142BE8 picks one 13-by-6 table per school year and a column through the
+ * six-byte selector. */
+typedef struct BunkasaiGirlBytes {
+    /* 0x00 */ u8 v[11];
+} BunkasaiGirlBytes; /* size 0x0B */
+typedef struct BunkasaiColumns {
+    /* 0x00 */ u8 v[6];
+} BunkasaiColumns; /* size 0x06 */
+typedef struct BunkasaiGirlColumns {
+    /* 0x00 */ u8 v[13][6];
+} BunkasaiGirlColumns; /* size 0x4E */
+extern BunkasaiGirlBytes D_80160520;
+extern BunkasaiColumns D_8016052C;
+extern BunkasaiGirlColumns D_80160534; /* first year */
+extern BunkasaiGirlColumns D_80160584; /* second year */
+extern BunkasaiGirlColumns D_801605D4; /* third year */
+
+/* T-18700: eleven words (all 0x80) copied to the stack by func_801509A4, which fills it with the
+ * indices of the girls whose Rec38 flag bit 1 is set and picks one at random. */
+typedef struct BunkasaiGirlList {
+    /* 0x00 */ s32 v[11];
+} BunkasaiGirlList; /* size 0x2C */
+extern BunkasaiGirlList D_80160AA4;
+
 /* defined in C in one object, called from another (T-0500) */
 void func_80132000(void);
 void func_80132034(void);
