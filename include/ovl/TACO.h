@@ -480,6 +480,8 @@ void func_801508D0(void);
 void func_80150DE8(void);
 void func_8014D530(s32 arg0, s32 arg1);
 void func_80153774(s32 arg0);
+void func_8015AB18(s32 arg0);
+void func_8015AB80(s32 arg0);
 
 #ifndef OVL_TACO_MATCHED_VIEWS_T9520
 #define OVL_TACO_MATCHED_VIEWS_T9520
