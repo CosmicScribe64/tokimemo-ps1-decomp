@@ -10,6 +10,8 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     u8 *notes;
     TelSignDays days;
     Rec38 *p;
+    /* FAKE: volatile copy of the record base; the original reloads the spilled base at every later use. T-19027 */
+    GameState *volatile q;
 
     if (arg0 == 0xB) {
         n = 0xC;
@@ -21,6 +23,7 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     p->unk_0C.f.b6 = 1;
     p->unk_0C.f.b2 = 1;
     p->unk_0C.f.b7 = 1;
+    q = (GameState *)((u8 *)p - 0x1BC);
     D_800E6280.unk_1A3C = 0x801B01B0;
     D_800E6280.unk_1A4C = 0x801B01C0;
     D_800E6280.unk_1A5C = 0;
@@ -74,10 +77,10 @@ void func_8013D03C(s32 arg0, s32 arg1) {
         REC(i + 0x60).unk_03 = 0x84;
         REC(i + 0x60).unk_0C = (u8 *)D_800E6280.unk_1A4C;
         REC(i + 0x60).unk_10 = (u8 *)D_800E6280.unk_1A5C;
+        REC(i + 0x60).unk_34 = (u8 *)D_800E6280.unk_1A3C;
         REC(i + 0x60).unk_14 = 0;
         REC(i + 0x60).unk_04 = 8;
         REC(i + 0x60).unk_05 = 0x80;
-        REC(i + 0x60).unk_34 = (u8 *)D_800E6280.unk_1A3C;
     }
     REC(0x68).unk_18 = arg0;
     REC(0x68).unk_26 = 0x40;
@@ -89,15 +92,15 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     }
     set_kanji_string(-0x20, -0x62, 5, "電話番号", 0);
     set_kanji_string(-0x8A, -0x4E, 4, "誕生日", 0);
-    strcpy(buf, D_800B32CC[p->unk_10.date.month - 1]);
+    strcpy(buf, D_800B32CC[q->unk_1BC[0].unk_10.date.month - 1]);
     strcat(buf, "月");
-    day = p->unk_10.date.day;
+    day = q->unk_1BC[0].unk_10.date.day;
     if (day >= 10) {
         strcat(buf, D_800B3288[(s32)day / 10]);
     } else {
         strcat(buf, D_800B3644);
     }
-    strcat(buf, D_800B3288[(s32)p->unk_10.date.day % 10]);
+    strcat(buf, D_800B3288[(s32)q->unk_1BC[0].unk_10.date.day % 10]);
     strcat(buf, "日");
     set_kanji_string(-0x58, -0x4E, 3, buf, 0);
     set_kanji_string(-0x8A, -0x1E, 4, "ＢＷＨ", 0);
@@ -112,8 +115,8 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     set_kanji_string(-0x58, -0x1E, 3, (u8 *)0x801B2334 + (arg0 * 3 + j) * 0x12, 0);
     set_kanji_string(-0x8A, -0x3E, 4, "星座", 0);
     days = D_80146FD0;
-    v = p->unk_10.date.month - 1;
-    if (days.w[v] < p->unk_10.date.day) {
+    v = q->unk_1BC[0].unk_10.date.month - 1;
+    if (days.w[v] < q->unk_1BC[0].unk_10.date.day) {
         v++;
     }
     set_kanji_string(-0x58, -0x3E, 3, (u8 *)0x801B22BC + (v % 12) * 10, 0);
@@ -121,13 +124,13 @@ void func_8013D03C(s32 arg0, s32 arg1) {
     if (arg0 == 0xB) {
         set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(D_800E6280.unk_1BC[12].unk_10.w << 0x15)) >> 0x1E) * 8, 0);
     } else {
-        set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(p->unk_10.w << 0x15)) >> 0x1E) * 8, 0);
+        set_kanji_string(-0x58, -0x2E, 3, (u8 *)0x801B229C + (((u32)(q->unk_1BC[0].unk_10.w << 0x15)) >> 0x1E) * 8, 0);
     }
     set_kanji_string(-0x8A, -0xE, 4, "クラブ", 0);
     if (arg0 == 0xB) {
         set_kanji_string(-0x58, -0xE, 3, "私設部", 0);
     } else {
-        set_kanji_string(-0x58, -0xE, 3, (u8 *)0x801B2200 + (p->unk_0C.b[2] >> 4) * 12, 0);
+        set_kanji_string(-0x58, -0xE, 3, (u8 *)0x801B2200 + (q->unk_1BC[0].unk_0C.b[2] >> 4) * 12, 0);
     }
     set_kanji_string(-0x8A, 2, 4, "備考", 0);
     notes = (u8 *)0x801B25F4 + ((arg0 * 6 + j * 2) << 5);
