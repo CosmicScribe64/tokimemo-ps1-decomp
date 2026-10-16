@@ -1,0 +1,92 @@
+[
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "func": "func_801330D4",
+  "size": 388,
+  "guarded": false,
+  "source_hash": "a7b9947266f67de84556264761113d45e524adb642c86bd2c971c8d94b74315a",
+  "scope": "DATE2:func_801330D4"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "func": "func_80133AF0",
+  "size": 3584,
+  "guarded": false,
+  "source_hash": "a7b9947266f67de84556264761113d45e524adb642c86bd2c971c8d94b74315a",
+  "scope": "DATE2:func_80133AF0"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "func": "func_801348F0",
+  "size": 1972,
+  "guarded": false,
+  "source_hash": "a7b9947266f67de84556264761113d45e524adb642c86bd2c971c8d94b74315a",
+  "scope": "DATE2:func_801348F0"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "func": "func_801350A4",
+  "size": 3328,
+  "guarded": false,
+  "source_hash": "a7b9947266f67de84556264761113d45e524adb642c86bd2c971c8d94b74315a",
+  "scope": "DATE2:func_801350A4"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "func": "func_80135E50",
+  "size": 1932,
+  "guarded": false,
+  "source_hash": "a7b9947266f67de84556264761113d45e524adb642c86bd2c971c8d94b74315a",
+  "scope": "DATE2:func_80135E50"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "func": "func_80136794",
+  "size": 204,
+  "guarded": false,
+  "source_hash": "a7b9947266f67de84556264761113d45e524adb642c86bd2c971c8d94b74315a",
+  "scope": "DATE2:func_80136794"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80132DE0.c",
+  "func": "func_80136860",
+  "size": 560,
+  "guarded": false,
+  "source_hash": "a7b9947266f67de84556264761113d45e524adb642c86bd2c971c8d94b74315a",
+  "scope": "DATE2:func_80136860"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80137D50.c",
+  "func": "func_801385CC",
+  "size": 756,
+  "guarded": false,
+  "source_hash": "2c5962e1480408421d2fbc86e7c8777af0ff061f764f8c13c9a4d9df45765086",
+  "scope": "DATE2:func_801385CC"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80137D50.c",
+  "func": "func_801388C0",
+  "size": 380,
+  "guarded": false,
+  "source_hash": "2c5962e1480408421d2fbc86e7c8777af0ff061f764f8c13c9a4d9df45765086",
+  "scope": "DATE2:func_801388C0"
+ },
+ {
+  "unit": "DATE2",
+  "src": "src/ovl/DATE2/80137D50.c",
+  "func": "func_801395C8",
+  "size": 2644,
+  "guarded": false,
+  "source_hash": "2c5962e1480408421d2fbc86e7c8777af0ff061f764f8c13c9a4d9df45765086",
+  "scope": "DATE2:func_801395C8"
+ }
+]

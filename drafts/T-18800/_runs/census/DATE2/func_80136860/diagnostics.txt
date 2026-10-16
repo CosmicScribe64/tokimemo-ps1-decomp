@@ -1,0 +1,9 @@
+python3 failed:
+cfe: Warning 681: drafts/T-18800/_runs/census/DATE2/func_80136860/work/guarded.o.sjis.c, line 3090: '&' before array or function; ignored
+     get_p_name(&D_800CA17C, 0);
+ ---------------^
+cfe: Error: drafts/T-18800/_runs/census/DATE2/func_80136860/work/guarded.o.sjis.c, line 3295: 'D_800E7384' undefined; reoccurrences will not be reported.
+         if ((u32) D_800E7384++ >= 0x400U) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18800/_runs/census/DATE2/func_80136860/work -o drafts/T-18800/_runs/census/DATE2/func_80136860/work/guarded.o /tmp/asm_processori44tz_0l/preprocessed_73b227799f904b22b81ad4cedb86cc01.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibh6nl_7j0/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18800/_runs/census/DATE2/func_80136860/work/guarded.o drafts/T-18800/_runs/census/DATE2/func_80136860/work/guarded.o.sjis.c

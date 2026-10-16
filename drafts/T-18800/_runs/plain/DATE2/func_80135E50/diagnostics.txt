@@ -1,0 +1,14 @@
+m2c.py: argument counts from the callees' asm: func_8004A814 8, func_8005751C 1
+m2c.py: the asm compares the value from before the increment of D_8013A5CC: wrote `D_8013A5CC++` in the condition (m2c compared the variable after the store)
+python3 failed:
+cfe: Warning 681: drafts/T-18800/_runs/plain/DATE2/func_80135E50/work/guarded.o.sjis.c, line 3090: '&' before array or function; ignored
+     get_p_name(&D_800CA17C, 0);
+ ---------------^
+cfe: Error: drafts/T-18800/_runs/plain/DATE2/func_80135E50/work/guarded.o.sjis.c, line 3261: redeclaration of 'func_80135E50'; previous declaration at line 2729 in file 'drafts/T-18800/_runs/plain/DATE2/func_80135E50/work/guarded.o.sjis.c'
+ void func_80135E50(void) {
+ -----^
+cfe: Error: drafts/T-18800/_runs/plain/DATE2/func_80135E50/work/guarded.o.sjis.c, line 3261: Incompatible function return type for this function.
+ void func_80135E50(void) {
+ ------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18800/_runs/plain/DATE2/func_80135E50/work -o drafts/T-18800/_runs/plain/DATE2/func_80135E50/work/guarded.o /tmp/asm_processorbc18j7lw/preprocessed_d952870758d6412d9b187d56ba98956b.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idoliboa2uz7sa/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18800/_runs/plain/DATE2/func_80135E50/work/guarded.o drafts/T-18800/_runs/plain/DATE2/func_80135E50/work/guarded.o.sjis.c

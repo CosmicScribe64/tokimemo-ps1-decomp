@@ -1,0 +1,13 @@
+extern s8 D_800B593A;
+extern u8 D_80121875;
+extern u8 D_80121876;
+extern u8 D_80121898;
+extern u8 D_80121899;
+extern u8 D_8012189A;
+extern u8 D_801218BC;
+extern u8 D_801218BD;
+extern u8 D_801218BE;
+extern u8 D_801218E0;
+extern u8 D_801218E1;
+extern u8 D_801218E2;
+s32 func_80135DA4();

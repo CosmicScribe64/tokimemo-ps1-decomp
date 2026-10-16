@@ -6114,3 +6114,20 @@ Time: about 100 minutes, two matches by minute 72 (`func_80141B18` at 70, `func_
 - **`func_80133990` (844 B, 78 lines) and `func_8013325C` (972 B, about 100 lines), `INCLUDE_ASM`.** Frames and table offsets match, control flow of `func_80133990` matches except case 4. Case 4 of `func_80133990` and case 0 of `func_8013325C` store a different constant in each arm and the original keeps all of them in `v1` (a uopt range for the stored global), the drafts get ugen temporaries; the table base `addiu v0,sp,0x30` loses `v0` to two `s16` ranges (priority 0.5 against 2.5) in `func_80133990`. `func_8013325C` case 1 clears five bytes with a pointer loop (`do { *p++ = 0; } while (p < &D_801342C8[5]);`), fills `D_801342C4` of them with 1, swaps byte 0 and 4 when `D_801342C4 >= 3`, then swaps random pairs `n` times (`n` is spilled to sp+0x64 and reloaded each pass). Autotweak found nothing on any of them (`emptytest` variants only).
 
 Tried without effect on the `v0`/`v1` swap of `func_80133628`: an empty test in case 3 (`diff = 0; if (diff) {}` before or after `girl`, `diff = 1; if (diff) {}` before the statement) and in case 0 (a `girl` test) left it unchanged. Open rows: [[data/t0018-cases]]. Cheat sheet rows: [[register-cheatsheet]] (stack table layout, bit-field counter, inline call block, empty test as block boundary).
+
+## DATE2 types-first pass (T-18800)
+
+[[tickets/T-18800-types-first-date2]], details in [[scenes-family-results]] ("Types-first pass (T-18800)").
+
+- **Port a twin with its data.** `func_80135E50` is DATE's matched `func_801489D0` with other names, but the
+  port kept extra `lui $at` rows at every element store until the dot arrays were defined in the C file (`tools/data_island.py DATE2/80132DE0`,
+  then `s16 D_8013A5D4[3] = { 0, 0, 0 };` in place of the two island lines of each array): the original stores
+  `[0]`..`[2]` through one `lui $at`, an `extern` array gets one `lui` per element. When the twin defines its data
+  in C, the port needs the island too.
+- **Empty test before a post-increment compare (FAKE).** `if (D++ == k)` right after a call compiled to
+  `xori; bnez` with the old value in `a1`; the original has `v1` and `xori; sltiu; beqz` (the implicit-int form,
+  already `s32`). An empty `if (var_s3) {}` in front (no code) gave the original's code; a dead
+  `if (D >= 0x8000) {}` gave the `sltiu` form with `a1` still (8 rows). In the DATE twin real statements precede
+  the test.
+- Open: `func_80136794` loads both call arguments through `a1` (`lui a1,%hi(X); lbu a0,%lo(X)(a1)`), where IDO
+  uses `a0` for both; m2c reads that `a1` as a second argument `&X`.
