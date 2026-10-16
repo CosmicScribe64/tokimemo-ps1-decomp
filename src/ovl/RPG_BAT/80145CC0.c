@@ -1,9 +1,13 @@
+#define RPG_BAT_OVERRIDE_func_8013E7C0 /* implicit int view: the calls' $v0 moves the D_8015EDE0 timer to $v1 (T-17101) */
+#define RPG_BAT_OVERRIDE_func_8013E97C /* implicit int view, same reason (T-17101) */
+#define RPG_BAT_OVERRIDE_func_8013F15C /* implicit int view: the call's $v0 moves the D_8015EDDC selector of func_80146578 to $v1 (T-17101) */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
 
-/* NON_MATCHING: T-12300, 557/557 instructions; promoted D_8015EDE0
- * uses v0 instead of v1 at 58 positions. Control flow and scheduling agree. */
-#ifdef NON_MATCHING
+s32 func_8013E7C0();
+s32 func_8013E97C();
+s32 func_8013F15C();
+
 void func_80145CC0(void) {
     switch (D_8015EDD8) {
     case 0:
@@ -217,8 +221,69 @@ void func_80145CC0(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80145CC0", func_80145CC0);
-#endif
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/80145CC0", func_80146578);
+/* The caller (func_80145CC0) calls this without a prototype, so it is int here and returns nothing (K&R). */
+s32 func_80146578(void) {
+    s32 timer; /* also the loop counter of the three loops */
+    s32 x_neg;
+    s32 bounce;
+    s32 x_pos;
+    s32 y;
+    s32 zero[1]; /* FAKE: a one-word array keeps the 0 in its stack word and reloads it for the later calls (a scalar is folded away); T-17101 */
+
+    func_8013F15C(0x508, 0, 1);
+    switch (D_8015EDDC) {
+    case 0:
+        for (timer = 0; timer < 12; timer++) {
+            ((DisplayActor44 *)D_8011ECD0)[timer + 148].unk_0C = (u8 *)D_8015EEA8;
+            ((DisplayActor44 *)D_8011ECD0)[timer + 148].unk_10 = (u8 *)D_8015EEC0;
+            ((DisplayActor44 *)D_8011ECD0)[timer + 148].unk_34 = (u8 *)D_8015EE90;
+            ((DisplayActor44 *)D_8011ECD0)[timer + 148].unk_38 = 0x41000000;
+            ((DisplayActor44 *)D_8011ECD0)[timer + 148].unk_07 = 0x80;
+            ((DisplayActor44 *)D_8011ECD0)[timer + 148].unk_43 = 0x13;
+            func_8013E97C(timer + 0x34, 0, 0);
+            func_8013E7C0(timer + 0x34, timer + 5, 1, 1);
+        }
+        func_8014EF6C();
+        break;
+    case 1:
+        D_8015EDE0 += 1;
+        timer = D_8015EDE0;
+        bounce = func_800A0070((timer << 11) / 100) >> 8;
+        x_neg = (timer * -0x30) / 100;
+        func_8013E97C(0x34, x_neg, x_neg - bounce);
+        y = x_neg - bounce;
+        /* FAKE: the store of 0 rides in the argument so it lands in the call's delay slot; T-17101 */
+        func_8013E97C(0x35, zero[0] = 0, y);
+        x_pos = (timer * 0x30) / 100;
+        func_8013E97C(0x36, x_pos, y);
+        y = ((timer * -0x10) / 100) - bounce;
+        func_8013E97C(0x37, x_neg, y);
+        func_8013E97C(0x38, zero[0], y);
+        func_8013E97C(0x39, x_pos, y);
+        y = ((timer * 0x10) / 100) - bounce;
+        func_8013E97C(0x3A, x_neg, y);
+        func_8013E97C(0x3B, zero[0], y);
+        func_8013E97C(0x3C, x_pos, y);
+        func_8013E97C(0x3D, (timer * 0x60) / 100, y);
+        y = x_pos - bounce;
+        func_8013E97C(0x3E, zero[0], y);
+        func_8013E97C(0x3F, x_pos, y);
+        if (D_8015EDE0 >= 0x51) {
+            if (!(D_8015EDE0 & 1)) {
+                for (timer = 0; timer < 12; timer++) {
+                    func_8013E7C0(timer + 0x34, timer + 5, 1, 1);
+                }
+            } else {
+                for (timer = 0; timer < 12; timer++) {
+                    func_8013E7C0(timer + 0x34, timer + 5, 1, 0);
+                }
+            }
+        }
+        if (D_8015EDE0 >= 0x65) {
+            D_8015EE18 ^= 0x10000000;
+            func_8014EF3C();
+        }
+        break;
+    }
+}

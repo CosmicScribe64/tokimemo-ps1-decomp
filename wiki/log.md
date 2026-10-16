@@ -16267,3 +16267,14 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17205 Done
 
 [[tickets/T-17205-w3-date-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found 2 minor items (the `(u8)` cast in `func_801496C4` and the `(s16)` cast in `func_80149F48` had no explanatory comment), fixed with comments only in `src/ovl/DATE/80149310.c`, bytes unchanged. Headers OK, globals OK, sync_protos OK, DATE sha1 OK. 5 of 5 functions matched (3,136 bytes). Card moved in [[kanban]], line in [[index]].
+## [2026-10-16] ticket | T-17101 In Progress
+
+[[tickets/T-17101-w3-rpg-bat-p01]] created and In Progress: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`; `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`). Branch `w3-rpg-bat-p01` from `w2-good`. Links [[tickets/T-17100-types-first-rpg_bat]].
+
+## [2026-10-16] ticket | T-17101 In Review
+
+[[tickets/T-17101-w3-rpg-bat-p01]] In Progress to In Review: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`, `include/ovl/RPG_BAT.h`, `include/main_api.h`), 4 of 4 functions matched (4,564 bytes): `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`. Findings in [[matching-notes]] (section T-17101), six rows in [[register-cheatsheet]], update paragraph in [[data/t0018-cases]], section in [[rpg-bat-family-results]]. Review pending.
+
+## [2026-10-16] ticket | T-17101 Done
+
+[[tickets/T-17101-w3-rpg-bat-p01]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p01 (RPG_BAT `src/ovl/RPG_BAT/80145CC0.c`, `src/ovl/RPG_BAT/80151FC0.c`, `include/ovl/RPG_BAT.h`, `include/main_api.h`), 4 of 4 functions matched (4,564 bytes: `func_80152080`, `func_80145CC0`, `func_80152384`, `func_80146578`; three ticketed FAKEs). One finding fixed: the `RPG_BAT.h` comment for the override wrappers now covers `func_8013F15C`. 27 of 27 units sha1 OK; headers, globals and proto checks OK.
