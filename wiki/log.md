@@ -16499,3 +16499,15 @@ Clean rebuild of the w3-rpg-bat-p05 worktree (`rm -rf build && configure.py && n
 ## [2026-10-16] ticket | T-17107 Done
 
 [[tickets/T-17107-w3-rpg-bat-p07]] reviewed against `CODING_STANDARDS.md`: one finding (the `FAKE` note of `RPG_GAUGE` in `include/ovl/RPG_BAT.h` now starts its own comment), fixed. In Review to Done (kanban card moved). Matched 2 of 4 (`func_8013BBF8`, `func_8013EA60`); `func_8013B5B0` and `func_8013E54C` stay guarded.
+## [2026-10-16] ticket | T-17117 In Progress
+[[tickets/T-17117-w3-rpg-bat-p17]] created and started: RPG_BAT `func_8013CC90` (`src/ovl/RPG_BAT/8013CC90.c`), worktree `w3-rpg-bat-p17`.
+
+## [2026-10-16] build | T-17117 matches
+[[tickets/T-17117-w3-rpg-bat-p17]], worktree `w3-rpg-bat-p17`, 21:19-21:35 UTC. Matched `func_8013CC90` (928 bytes, 1 of 1) in `src/ovl/RPG_BAT/8013CC90.c`, plain C, no FAKE, one commit. From the 157-row typed draft: wrong field in one arm, local replaced by in-place updates of `D_8015EBFC.unk_34`, `switch (sel = ...)`, `u32` file view of `D_8015ED98` (`RPG_BAT_OVERRIDE_D_8015ED98`), scalar-view scrutinee found by `autotweak`. Notes in [[matching-notes]], four rows in [[register-cheatsheet]], update in [[data/t0018-cases]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17117 In Review
+[[tickets/T-17117-w3-rpg-bat-p17]] In Progress to In Review: 1 of 1 matched. Clean rebuild (`rm -rf build && configure.py && ninja`) 27/27 SHA1 OK (26 overlays and the main executable), `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Code review against `CODING_STANDARDS.md` pending.
+
+## [2026-10-16] ticket | T-17117 Done
+
+[[tickets/T-17117-w3-rpg-bat-p17]] In Review to Done: code review against `CODING_STANDARDS.md` found one item, fixed (the `*(u32 *)&D_8015ED98` switch scrutinee is a fakematch and now carries a `FAKE` comment; wiki pages say "one FAKE"). Rebuild OK (globals, headers, `RPG_BAT.bin` sha1 OK). 1 of 1 function matched (`func_8013CC90`, 928 bytes). Card moved to Done in [[kanban]]. Merge via the wave 3 merge script.

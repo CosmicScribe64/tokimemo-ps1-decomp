@@ -14,7 +14,9 @@ extern s32 D_8015EC28;
 extern s32 D_8015EC2C;
 extern s32 D_8015EC6C;
 extern s32 D_8015E744;
+#ifndef RPG_BAT_OVERRIDE_D_8015ED98
 extern s32 D_8015ED98;
+#endif
 extern s32 D_8015EBDC;
 extern s32 D_8015EBD8;
 extern s32 D_8015EBE0;
@@ -288,6 +290,7 @@ void func_80135AE0();
 void func_80136374();
 void func_80136E2C();
 void func_8013D030();
+void func_8013D0D4(void);
 void func_801420EC();
 s32 func_801446F8();
 s32 func_801447B8(void);
