@@ -1053,7 +1053,48 @@ void func_8013BEF8(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013C0E4);
+/* FAKE: T-11640, the u16 pointer views of the counter and the flag as in func_8013BEF8. */
+void func_8013C0E4(void) {
+    s32 tmp;
+
+    func_8013C5C8(0x11800);
+    func_8013C694();
+    if (!(((u16 *)&D_801499A0)[1] & 8)) {
+        func_8013C4E4(0x8000);
+    }
+    if (!(((u16 *)&D_801499A0)[1] & 0xF)) {
+        ((s16 *)&tmp)[0] = 0;
+        ((s16 *)&tmp)[1] = D_80149968.unk_1C[0] >> 3;
+        tmp += D_80149968.unk_0C * 80;
+        D_801499A0.unk_04 = ((s16 *)&tmp)[1];
+        D_801499A0.unk_06 = (D_80149968.unk_1C[1] >> 3) + 0x10;
+    }
+    if (D_80120676 < ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] &&
+        func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
+        ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] - 0x20 < D_80120676) {
+        ((TaiikuScene44 *)D_8011ECD0)[97].position.w += 0x11800;
+    } else if (((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] < D_80120676 &&
+               func_800AE0C0(D_8012067A - D_801206BE) < 12 &&
+               D_80120676 < ((TaiikuScene44 *)D_8011ECD0)[97].position.h[1] + 0x20) {
+        ((TaiikuScene44 *)D_8011ECD0)[97].position.w -= 0x11800;
+    }
+    if (((u16 *)&D_801499A0)[1] > 128) {
+        ((u16 *)&D_801499A0)[1] = 0x20;
+    }
+    if (((u16 *)&D_801499A0)[1] != 0 && !(((u16 *)&D_801499A0)[1] & 0x1F) && ((u16 *)&D_801499A0)[1] > 32) {
+        if (((u16 *)D_801499B0)[1] == 0) {
+            ((u16 *)D_801499B0)[1] = 1;
+            ((u16 *)&D_801499A0)[1]++;
+            func_80044750(0x800);
+        } else if (((u16 *)D_801499B0)[1] == 1) {
+            ((u16 *)D_801499B0)[1] = 0;
+            ((u16 *)&D_801499A0)[1]++;
+            func_80044750(0x801);
+        } else {
+            ((u16 *)D_801499B0)[1] = 0;
+        }
+    }
+}
 
 /* FAKE: T-11640. The original reloads the counter D_801499A0.unk_02 and the flag D_801499B2 in
  * every block where IDO keeps them in a register: the counter is read through a u16 view of
