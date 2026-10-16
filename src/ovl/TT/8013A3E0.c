@@ -7,8 +7,6 @@ typedef struct {
     u8 pad4[0x1C];
 } TtXY; /* FAKE: pad4 and fake_pad below reproduce the original's frame (locals 0x30..0x54); real locals unknown. T-8060 */
 
-#ifdef NON_MATCHING
-/* NON_MATCHING: T-10320, IDO hoists the loop-invariant &D_80155B36 into $s8 (the original keeps lui/addiu in the loop and hoists 12 into $s7), 26 lines */
 void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2) {
     u8 *a;
     u8 *b;
@@ -16,7 +14,6 @@ void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2) {
     u8 *p;
     s32 i;
     s32 j;
-    s32 k;
 
     a = D_80158A74;
     b = D_80158A64;
@@ -32,9 +29,11 @@ void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2) {
         a[13] = 0;
     }
     p = D_80158A80;
-    i = 0;
-    do {
-        if (p[0] != 0 && *(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, arg0, arg1) != 0) {
+    for (i = 0; i != 12; i++, p += 0x54) {
+        if (p[0] == 0) {
+            continue;
+        }
+        if (*(u16 *)(p + 4) == 0x40 && func_80145508(p + 0x14, &D_80155B36, arg0, arg1) != 0) {
             b[0x25] = b[0x25] + 1;
             if (b[0x24] != 0 && !(b[0x25] & 3)) {
                 func_80133D14(*(s16 *)(p + 0x14), *(s16 *)(p + 0x16), 0x20, 0xA0);
@@ -49,30 +48,26 @@ void func_8013A3E0(void *arg0, u8 *arg1, s32 arg2) {
             p[13] = 0;
             if (arg2 >= 0) {
                 if (i >= 6) {
-                    *(s16 *)(c + arg2 * 2 + 0x2D8) -= 1;
+                    *(s16 *)(c + 0x2D8 + arg2 * 2) -= 1;
                 } else if (*(u16 *)(p + 2) == 9) {
-                    *(s16 *)(c + arg2 * 2 + 0x2D8) -= 4;
+                    *(s16 *)(c + 0x2D8 + arg2 * 2) -= 4;
                 } else {
-                    *(s16 *)(c + arg2 * 2 + 0x2D8) -= 2;
+                    *(s16 *)(c + 0x2D8 + arg2 * 2) -= 2;
                 }
-                j = arg2 * 2;
                 if (arg2 >= 2) {
                     j = arg2 * 2 + 2;
+                } else {
+                    j = arg2 * 2;
                 }
                 c[j * 0x14 + 0x42] = 1;
-                if (*(s16 *)(c + arg2 * 2 + 0x2D8) < 0) {
+                if (*(s16 *)(c + 0x2D8 + arg2 * 2) < 0) {
                     func_80133AD0(0x50A);
                     c[arg2 + 0x343] = 1;
                 }
             }
         }
-        i++;
-        p += 0x54;
-    } while (i != 12);
+    }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/8013A3E0", func_8013A3E0);
-#endif
 
 void func_8013A610(void) {
     TtSceneDraw *p;
