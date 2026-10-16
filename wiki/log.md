@@ -15610,3 +15610,7 @@ Opened [[tickets/T-17700-types-first-geko]] (In Progress) under [[tickets/T-1699
 ## [2026-10-16] ticket | T-17900 Types-first: NAME_ENT started
 
 Opened [[tickets/T-17900-types-first-name_ent]] (In Progress) under [[tickets/T-16990-wave-3-conveyor]]: recover NAME_ENT's shared types, redraft its unmatched functions with the T-16550/T-16560/T-17700 drivers, then cut packages. Branch `w3-name-ent-types` from `w2-good`.
+
+## [2026-10-16] ticket | T-17900 Types-first: NAME_ENT to In Review
+
+[[tickets/T-17900-types-first-name_ent]]: NAME_ENT's flag counters (`D_8014D060`, `D_8014D158`), digit sprite table `D_8014D0F4[10][2]` and name-entry buffers typed in `include/ovl/NAME_ENT.h`; the main-exe records (`NameMetricWork` at `D_800E7D10`, `NameRecordF00[]` at `D_80123120`, `DisplayActor44[]` at `D_8011ECD0`) typed in the m2c context of `drafts/T-17900/redraft.py` (from T-17700) and read through casts; 30 redrafts, 14 of 21 unguarded better than the census (sum 7,056 to 6,107 rows), none 0; 2 matches / 904 bytes (`func_80139740`, `func_8013EE7C`, sibling ports); packages T-17901..T-17904 (17 functions, 11,316 bytes). New section "Types-first pass (T-17900)" on [[name-ent-family-results]], a row in [[data-types]]; the duplicate index line of [[name-ent-family-results]] merged. In Review, waiting for the code review.

@@ -26,7 +26,7 @@ Read this first. Update on every ingest or new page.
 - [[speedup-research-2026-10-16]] - would compiler reverse engineering help (mostly no: 5-10% of remaining bytes are compiler-limited), and ranked ways to speed up source recovery with skeptic verdicts
 
 ## Tickets
-- [[tickets/T-17900-types-first-name_ent|T-17900]] Types-first: NAME_ENT: recover the overlay's shared types, redraft its unmatched functions, cut packages (In Progress).
+- [[tickets/T-17900-types-first-name_ent|T-17900]] Types-first: NAME_ENT: flag-counter, digit and name-buffer tables in `NAME_ENT.h`, typed views of the main-exe records in the redraft, 30 redrafts (14 better than the census), 2 matches / 904 bytes, packages T-17901..T-17904 (In Review).
 - [[tickets/T-17500-types-first-shougatu|T-17500]] Types-first: SHOUGATU: 49 step tables (`FnTblNN`) and 4 stack-table types in `SHOUGATU.h`, 38 redrafts (15 better than the census), 4 matches / 1,516 bytes, packages T-17501..T-17507 (Done).
 - [[tickets/T-19009-w3-d-p09|T-19009]] Wave 3 package w3-d-p09: TACO `80142820.c`, `80143E80.c`, `func_801428DC` (one-struct settings block), `func_80144430` (stack-slot order, `void` lib call) and `func_80142AF0` matched, 1,956 B; `func_80144094` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-19007-w3-d-p07|T-19007]] Wave 3 package w3-d-p07: TAIIKU `801452D0.c`, 1 of 4 matched (`func_80146D18`, 648 B); `func_8014607C` and `func_80145370` stay guarded, typed draft for `func_80147B14` (Done).
@@ -388,7 +388,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 
 - [[etc-family-results]]: eleven ETC matches / 5900 literal bytes, positive and negative transfer evidence; the T-17300 types-first pass (ETC types, redraft numbers, sibling ports, near misses, packages).
 
-- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
+- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction; NAME_ENT types-first pass (type map, redraft numbers, near misses, packages; T-17900).
 
 - [[tickets/T-13600-taiiku-families|T-13600]] TAIIKU source-family recovery (In Progress).
 
@@ -399,7 +399,6 @@ See [[kanban]]. Template: [[tickets/_template]].
 - [[tickets/T-14100-date-near-matches|T-14100]] DATE retained near matches and new-family hypotheses (In Review; three matches, 636 bytes).
 - [[tickets/T-13500-incremental-build-dependencies|T-13500]] Compiler include dependencies reused for DATE experiments.
 - [[tickets/T-14000-ending-en-nichi-families|T-14000]] ENDING and EN_NICHI family matching (In Progress).
-- [[name-ent-family-results]] - T-13700 bounded negative evidence for prologue setup and memory-card menu reconstruction.
 
 - [[tickets/T-13800-taco-families|T-13800]] TACO family reconstruction; [[tickets/T-13801-taco-actor-family|T-13801]] actor/table experiments (Done).
 - [[taco-family-results]] — bounded TACO boss transform reconstruction; zero accepted bytes, 497EC one-row and 4A480 three-row near misses (T-13800/T-13801).

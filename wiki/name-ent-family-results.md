@@ -113,4 +113,14 @@ not change scores (same addresses), it only makes the drafts readable. No draft 
 
 ### Packages
 
-See the T-17900 ticket for the package list (T-17901 onward).
+Cut by the wave-3 package scripts from the committed tree (17 functions, 11,316 bytes). The other 13 unmatched
+functions are not in a package: `func_80138C1C`, `func_80138F60`, `func_801398EC`, `func_80139F30`,
+`func_8013A9C8`, `func_8013B1D8`, `func_8013B994`, `func_8013BB24`, `func_8013CB44`, `func_8014068C`,
+`func_80140F90`, `func_80141820`, `func_80143580`.
+
+| Package | Ticket | File | Functions |
+| --- | --- | --- | --- |
+| w3-name-ent-p01 | T-17901 | `80142A80.c` | `func_80142A80`, `func_80142E24`, `func_8014472C` (3,116 B) |
+| w3-name-ent-p02 | T-17902 | `80132000.c` | `func_80132320`, `func_80134B94`, `func_80134248`, `func_80134110` (3,608 B) |
+| w3-name-ent-p03 | T-17903 | `80139740.c` | `func_80140B20`, `func_8013BE18`, `func_8013DF88`, `func_8013AF78`, `func_8013D2AC` (2,252 B) |
+| w3-name-ent-p04 | T-17904 | `80144AD0.c` | `prologue_line_start`, `func_801460D8`, `func_80145FB0`, `func_80149B08`, `prologue_line_run` (2,340 B) |
