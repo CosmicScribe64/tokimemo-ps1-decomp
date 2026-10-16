@@ -163,7 +163,8 @@ void func_80149538(void) {
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80148FE0", func_80149538);
 #endif
 
-/* NON_MATCHING: T-19019, 4 differing lines (2 rows); the actor address `addu` of the first test and of `unk82 += 1` has the operands as (index, base) in the original and (base, index) here. */
+/* NON_MATCHING: T-19019, 4 differing lines (2 rows); the spill slot of `arg1 * 2` is 0x48, the original has it at 0x4C (rows 51 and 160). The cached selector `st` and the `(idx + D_8015EDB4)->` forms are the idiom of the matched siblings in 801480B0.c and 80149F90.c and give the original's `addu` operand order; the u8 `st` takes a slot below `obj`, one word more than the original has.
+ * Without `st` (direct `D_8015EDB4[idx]` reads) the spill is right and two `addu` have base and index swapped (also 4 lines). A single loop counter, `obj` as an expression, `register`, a pointer local for the actor and every other spelling of the address (byte offset, cast index, `&D[idx]` pointer) moved the frame by 8 or changed the register web (44 to 190 lines). */
 #ifdef NON_MATCHING
 s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
     MATRIX mtx;
@@ -174,6 +175,7 @@ s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
     s32 idx;
     s32 offX;
     s32 offY;
+    u8 st;
     TcObj50 *obj;
 
     idx = arg1 + 0x10;
@@ -192,12 +194,14 @@ s32 func_801497EC(s32 arg0, s32 arg1, s16 *arg2, u8 *arg3, u8 *arg4) {
     D_8015EDB4[idx].unk74 = D_80127480[0].unk18 + out.x + offX;
     D_8015EDB4[idx].unk76 = D_80127480[0].unk1C + out.y + offY;
     D_8015EDB4[idx].unk78 = D_80127480[0].unk20 + out.z;
-    if (D_8015EDB4[idx].unk84[1] < 0x15U && D_8015EDB4[idx].unk82 < D_8015EDB4[idx].unk7A) {
-        D_8015EDB4[idx].unk84[1] = arg4[arg1 * 2];
-        D_8015EDB4[idx].unk82 += 1;
+    st = (idx + D_8015EDB4)->unk84[1];
+    if (st < 0x15U && (idx + D_8015EDB4)->unk82 < (idx + D_8015EDB4)->unk7A) {
+        (idx + D_8015EDB4)->unk84[1] = arg4[arg1 * 2];
+        (idx + D_8015EDB4)->unk82 += 1;
         D_8015EDB4[17].unk84[2] = 1;
+        st = D_8015EDB4[idx].unk84[1];
     }
-    if (D_8015EDB4[idx].unk84[1] == 0) {
+    if (st == 0) {
         func_8015435C(arg0, 9);
         if (obj == &D_801274D0) {
             for (i = 4; i != 0x16; i += 3) {
