@@ -1435,7 +1435,7 @@ void func_80072CA0(void) {
     }
 }
 
-/* NON_MATCHING: T-11670, 22 differing lines; the original loads D_800E639A straight into lim's s1 and the selector byte into v1, IDO keeps the 0x800E0000 base in v0 and the selector in a0 (constant 11 holds v1). */
+/* NON_MATCHING: T-11670 (rechecked in T-17004), 22 differing lines; the original loads D_800E639A straight into lim's s1 and the selector byte into v1, IDO keeps the 0x800E0000 base in v0 and the selector in a0 (constant 11 holds v1). */
 #ifdef NON_MATCHING
 s32 func_80072D70(void) {
     s32 state;
