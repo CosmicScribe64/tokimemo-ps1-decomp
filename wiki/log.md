@@ -16593,3 +16593,9 @@ User idea: start phase 2 renames and constants now, with agents using a PS1 emul
 Held off while the wave 3 conveyor uses the CPU. Plan notes in [[tickets/T-20500-emulator-assisted-naming]]: open
 BIOS only (no proprietary BIOS), Docker, GameState names and enums first, rename in a quiet window or via the merge-time
 rename table.
+
+## [2026-10-16] ticket | T-20610 Promotion family: cvt_pass entry rule (In Progress)
+
+[[tickets/T-20610-promo-entry-rule]] created In Progress (compiler-gap family agent, worktree `cg-promo`): the `promo`
+rows of [[data/t0018-cases]] for unmatched functions, a uniform refinement of the `tools/cvt_pass.py` entry rule
+(T-5010) measured against every matched function, or a negative result.
