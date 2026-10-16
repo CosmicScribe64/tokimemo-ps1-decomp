@@ -1,0 +1,13 @@
+T-19027, TEL:func_8013D03C. Typed draft (body.c) built in src/ovl/TEL/8013CCD0.c with the declarations in declarations.h.
+Status at the end of the session: the frame, the stack slots and everything up to the strcpy of the birthday text
+match; 111 rows still differ, all from one cause (see below), so the draft was not kept under NON_MATCHING.
+Findings:
+- D_800E7CBC/CCC/CDC/CEC are D_800E6280.unk_1A3C/1A4C/1A5C/1A6C; D_800E62C2 is unk_042; D_800E66EC is unk_1BC[12].unk_10.w.
+- D_80120668.. are DisplayRecord44 fields of records 0x60..0x68 (+0x18, +0x26, +0x2A); use REC(n).
+- The flag ORs match as bit-fields: p->unk_0C.f.b3 = 1; f.b6 = 1; f.b2 = 1; f.b7 = 1 (not |= on b[0]).
+- Frame: a FAKE unused u8 pad[32] declared first, then n, buf[32], i, j, day, v, notes, TelSignDays days, then Rec38 *p.
+  A Rec38 *p = &D_800E6280.unk_1BC[n] (not a direct expression) gives the original's sw v0,0x50(sp) (spilled base without +0x1BC).
+- Open: the original reloads the base from 0x50(sp) at every later use (lw t7,0x50(sp); lw t8,0x1CC(t7)), with s1 = BWH index j and
+  s2 = the constant 10; the build promotes p to s1 after the second loop (lw s1,0x50(sp); addiu s1,s1,444), which shifts j to s2
+  and 10 to s3 and changes every later row. volatile, an address-taken p and a one-element array reproduce the reload but break
+  the first part (they reload p inside every bit-field store).
