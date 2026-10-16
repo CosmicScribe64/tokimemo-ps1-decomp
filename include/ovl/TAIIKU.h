@@ -13,6 +13,7 @@ void func_8013B200(void);
 void func_8013B608(void);
 void func_8013B78C(void);
 void func_8013BB3C(void);
+void func_8013BCEC(void);
 void func_8013C33C(void);
 void func_8013C4E4(s32 arg0);
 void func_8013C5C8(s32 arg0);

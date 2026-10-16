@@ -15579,3 +15579,19 @@ Clean build 27/27 (all unit sha1 OK, TACO `1419e93c...`), `check_headers`, `migr
 ## [2026-10-16] ticket | T-19007 Done
 
 [[tickets/T-19007-w3-d-p07]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing. 1 of 4 functions matched (648 bytes): TAIIKU `func_80146D18` in plain C. `func_8014607C` and `func_80145370` stay guarded, `func_80147B14` stays `INCLUDE_ASM` with a typed draft. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-19008 In Progress
+
+[[tickets/T-19008-w3-d-p08]] created and In Progress: wave 3 package w3-d-p08, TAIIKU `func_8013B608`, `func_8013B200`, `func_8013B78C`, `func_8013B94C`, `func_8013BCEC` (`src/ovl/TAIIKU/80138950.c`).
+
+## [2026-10-16] ticket | T-19008 In Review
+
+[[tickets/T-19008-w3-d-p08]] In Progress to In Review: 1 of 5 TAIIKU functions matched (`func_8013B200`, 432 bytes, FAKE u16 views; commit `f40d9f27`), `func_8013BCEC` and `func_8013B608` guarded (18 differing lines each, `src/ovl/TAIIKU/80138950.c`, prototype in `include/ovl/TAIIKU.h`), `func_8013B78C`, `func_8013B94C` left `INCLUDE_ASM`. Notes in [[matching-notes]] (T-19008, includes the `ugen -S` method), [[register-cheatsheet]], [[data/t0018-cases]] and [[taiiku-family-results]]. About 85 minutes.
+
+## [2026-10-16] build | T-19008 closer pass
+
+[[tickets/T-19008-w3-d-p08]] Opus closer pass on the two guarded drafts in `src/ovl/TAIIKU/80138950.c`: `func_8013B608` matched (388 bytes, commit `d37b5187`) by splitting the result assignment, `v = x >> 3; v += (x >> 3) * 80 / 48;`, whose s16 narrowing gives the missing ugen temporary and leaves no instruction. `func_8013BCEC` is now 2 instructions short (counter write-back before `func_8013C5C8`) and stays guarded. Updated [[matching-notes]] (T-19008), [[data/t0018-cases]], [[register-cheatsheet]], [[taiiku-family-results]], the ticket and [[index]]. Ticket stays In Review.
+
+## [2026-10-16] ticket | T-19008 Done
+
+[[tickets/T-19008-w3-d-p08]] In Review to Done after the code review: 2 of 5 listed TAIIKU functions matched (820 bytes: `func_8013B200` 432, `func_8013B608` 388, FAKE views), `func_8013BCEC` guarded (2 instructions missing), `func_8013B78C` and `func_8013B94C` left `INCLUDE_ASM`. Three findings fixed: a stray edit of the T-16554 time in [[taiiku-family-results]], stale lead statements (guarded `func_8013B608`, 85 minutes) in the ticket, [[taiiku-family-results]] and [[matching-notes]], and the missing ticket id in the `func_8013BCEC` FAKE comment. Unit sha1 OK, headers, globals and proto checks OK.
