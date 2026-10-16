@@ -15,6 +15,8 @@ void func_8014B738(s32 arg0, s32 arg1, s32 arg2) {
     D_8015EE44.unk_04 = 1;
 }
 
+/* D_8015EE48 and D_8015EE4C are the scalar views of D_8015EE44.unk_04 and .unk_08: uopt only
+ * promotes them into registers as scalars (as in the other RPG_BAT files); T-17110. */
 void func_8014B79C(void) {
     s32 pad; /* FAKE: unused local, reserves the top spill word so idx sits at 0x30(sp); T-17110 */
     s32 idx;
@@ -64,6 +66,7 @@ void func_8014B79C(void) {
                         func_8014EB58(0);
                         break;
                     case 3:
+                        /* empty on purpose: gives the compare tree of the original; T-17110 */
                         break;
                     case 4:
                         D_8015EE48 = 1;
@@ -180,7 +183,7 @@ void func_8014C360(s32 arg0, s32 arg1, s32 arg2) {
     }
     rec = (DisplayActor44 *) D_8011ECD0;
     t = arg0 * 12;
-    u = t + 0x40;
+    u = t + 0x40; /* named local: t and u get the two spill slots of the original; T-17110 */
     rec[64 + t].unk_26 = arg1;
     rec[64 + t].unk_2A = arg2;
     rec[68 + t].unk_26 = arg1;
@@ -438,6 +441,8 @@ void func_8014D11C(u8 *dst, u8 *name, u8 *label, s32 num, u8 *suffix) {
     if (num == 0) {
         func_800AE100(dst, "０");
     }
+    /* radix in one variable: with literal 10 the unsigned % and the signed / keep two copies in
+     * two $s registers; T-17110 */
     base = 10;
     for (place = 0x3E8; place > 0; place = place / base) {
         quot = num / place;

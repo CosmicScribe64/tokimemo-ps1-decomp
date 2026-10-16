@@ -1,7 +1,7 @@
 ---
 id: T-17110
 title: "Wave 3 package w3-rpg-bat-p10"
-status: In Review
+status: Done
 assignee: claude-opus (w3-rpg-bat-p10)
 created: 2026-10-16
 updated: 2026-10-16
@@ -10,7 +10,7 @@ links: ["[[tickets/T-17100-types-first-rpg_bat]]", "[[rpg-bat-family-results]]"]
 
 ## Goal
 
-Match as many as possible of four RPG_BAT functions in `src/ovl/RPG_BAT/8014ADD0.c` from the T-17100 types-first drafts: `func_8014C360` (412 B), `func_8014B79C` (876 B), `func_8014D11C` (652 B), `func_8014BFE4` (892 B). Wave 3 package ([[tickets/T-16990-wave-3-conveyor]]).
+Match as many as possible of four RPG_BAT functions in `src/ovl/RPG_BAT/8014ADD0.c` from the T-17100 types-first drafts: `func_8014C360` (412 B), `func_8014B79C` (776 B), `func_8014D11C` (600 B), `func_8014BFE4` (892 B). Wave 3 package ([[tickets/T-16990-wave-3-conveyor]]).
 
 ## Acceptance criteria
 
@@ -28,3 +28,4 @@ Result: 3 of 4 matched (about 60 minutes), nothing guarded. `func_8014C360` (par
 ## Comments
 
 - 2026-10-16: In Review. Code review against `CODING_STANDARDS.md` still to do.
+- 2026-10-16: Code review against `CODING_STANDARDS.md` (checklist, section 1 to 13). Checked: only `src/ovl/RPG_BAT/8014ADD0.c` changed among C files (plus `include/ovl/RPG_BAT.h` and the new `drafts/T-17110/` folder; no existing draft touched); no inline asm or `.word`; the three matches are plain C; the one fakematch (`s32 pad;` in `func_8014B79C`) carries FAKE and the ticket; `func_8014BFE4` is `INCLUDE_ASM` with its hand draft archived, no `NON_MATCHING` block needed; header changes (`D_8015E740` to `u8 **`, `func_8014B79C` to `void`, new externs and prototypes for `func_8013E864`, `func_8014EB58`, `D_8015EE5C/68/74/80`) are declared once and agree with the definitions in `8014E780.c`; non-ASCII only in game string literals, as in the other overlays; no game data. Rebuild after the fixes (`tools/docker.sh ninja`): `build/ovl/RPG_BAT.bin` sha1 OK (the clean 27/27 build runs in the merge script), `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` (0 new, 15 known) pass. Findings, all fixed: (1) byte counts wrong in the ticket Goal (`func_8014B79C` 876 B, `func_8014D11C` 652 B) and the notes (`func_8014D11C` 612 B, total 1,800 B): the asm sizes are 0x308 = 776, 0x258 = 600, 0x19C = 412, so the matched total is 1,788 B; corrected in the ticket, [[matching-notes]] and [[rpg-bat-family-results]] (the earlier log entry keeps the old figure). (2) The matching tricks had no comment in the C (scalar views `D_8015EE48`/`D_8015EE4C` of the struct words, empty `case 3`, radix variable `base`, named local `u`): one-line comments added (comment-only change, sha1 unchanged). No open findings. Done.

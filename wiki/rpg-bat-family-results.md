@@ -94,6 +94,6 @@ Types: `RpgObjectRecord44.unk_40` (record 155 +0x40, the byte of `D_8012163C`), 
 
 ## Package w3-rpg-bat-p10 (T-17110)
 
-[[tickets/T-17110-w3-rpg-bat-p10]]: `src/ovl/RPG_BAT/8014ADD0.c`, 3 of 4 matched in plain C (`func_8014C360`, `func_8014B79C`, `func_8014D11C`, 1,800 bytes); `func_8014BFE4` stays `INCLUDE_ASM` (hand draft, 128 rows, `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c`). Details in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]].
+[[tickets/T-17110-w3-rpg-bat-p10]]: `src/ovl/RPG_BAT/8014ADD0.c`, 3 of 4 matched in plain C (`func_8014C360`, `func_8014B79C`, `func_8014D11C`, 1,788 bytes); `func_8014BFE4` stays `INCLUDE_ASM` (hand draft, 128 rows, `drafts/T-17110/RPG_BAT/func_8014BFE4/hand.c`). Details in [[matching-notes]] ("T-17110"), four rows in [[register-cheatsheet]].
 
 Types and header: `D_8015E740` is `u8 **` (a table of string pointers), `func_8014B79C` is `void`, prototypes for `func_8013E864` and `func_8014EB58`, externs for the four triple heads `D_8015EE5C/68/74/80`. The state triple `D_8015EE44` is read as scalars (`D_8015EE48` state, `D_8015EE4C` counter) in the state machine, which lets uopt promote the state into `$a0`; keep that in the other functions of the family that touch it. The `D_8015EE5C`..`D_8015EE88` triples are four 0xC-byte records (`func_8014C360` and `func_8014BFE4` clear one by `switch (slot)`); they stay scalars because the original writes them with separate `lui` per store.
