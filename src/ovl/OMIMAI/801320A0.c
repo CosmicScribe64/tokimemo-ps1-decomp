@@ -126,7 +126,40 @@ void func_80132630(void) {
     func_8004284C();
 }
 
-INCLUDE_ASM("asm/ovl/OMIMAI/nonmatchings/OMIMAI/801320A0", func_80132670);
+void func_80132670(void) {
+    u32 x;
+    u8 a;
+
+    draw2d3d(1, 0);
+    func_80048DAC(1);
+    func_80041584();
+    func_80048EB8(0);
+    back_clear_switch(1);
+    tpage_buf_clear();
+    func_8004E58C();
+    func_800AE0F0(D_800CA19C, "玄関");
+    D_800E6280.unk_10A2 = 0;
+    D_800E6280.unk_10E8 = 1;
+    func_8008585C();
+    D_800E6280.unk_03A = 0x80;
+    D_800B593C = 0;
+    D_800B5940 = 0;
+    hizuke_init();
+    message_window_init();
+    func_80084E4C();
+    D_800CA148 = 0;
+    /* FAKE: scalar view of the girl index (the original reads a separate symbol with its own lui); T-19012. */
+    x = *(u8 *)&D_800E6280.unk_75D;
+    D_800CA14C = 0;
+    a = x;
+    if (x == 4 && (((u16) D_800E6280.unk_0F4.h >> 0xC) == ((u8) D_800E6280.unk_1BC[4].unk_0C.b[2] >> 4))) {
+        D_800CA148 = 1;
+    }
+    D_800E6280.unk_F5F = a;
+    func_800847B8(a);
+    func_8013285C();
+    func_8004284C();
+}
 
 void func_80132788(void) {
     bg_read_sub2(0x4144);

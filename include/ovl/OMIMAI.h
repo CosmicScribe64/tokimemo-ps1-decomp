@@ -6,6 +6,7 @@
 
 /* OMIMAI overlay (load address 0x80132000): externs and types. */
 
+void func_8013285C(void);
 void func_80132AD0();
 void func_80132EB0();
 void func_801331B0();
@@ -33,6 +34,18 @@ extern s32 D_80134CC4;
 extern u8 D_80134CCC;
 s32 func_801323F8(void);
 s32 func_80133500(void);
+
+/* Girl-indexed value tables of func_80134628 (copied to the stack, T-19012). */
+typedef struct OmimaiWords11 {
+    /* 0x00 */ s32 unk_00[11];
+} OmimaiWords11; /* size 0x2C */
+typedef struct OmimaiWords2 {
+    /* 0x00 */ s32 unk_00[2];
+} OmimaiWords2; /* size 0x08 */
+extern OmimaiWords11 D_80134D38;
+extern OmimaiWords2 D_80134D64;
+extern OmimaiWords2 D_80134D6C;
+extern OmimaiWords2 D_80134D74;
 
 extern s32 D_80134C34;
 extern s32 D_80134C38;
