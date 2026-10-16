@@ -413,8 +413,6 @@ void func_80134630(s16 x, s16 y, s32 speed, u16 kind) {
     }
 }
 
-/* NON_MATCHING: T-10510, 30 lines: object in v0 / constants 1 and 0 in a2 and a0 in the original */
-#ifdef NON_MATCHING
 void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
     TtActor68 *object;
 
@@ -423,12 +421,9 @@ void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
         object->unk_00 = 1;
         object->unk_02 = 0xAB;
         object->unk_04 = 0x40;
-        object->unk_08 = 0;
-        object->unk_06 = 0;
-        object->unk_0A = 0;
-        object->unk_0F = 0;
-        object->unk_0E = 0;
-        object->unk_0D = 0;
+        /* FAKE: u16 view of the s16 fields; the u16 chain reloads 0 into a0 and keeps a dead range in a1, so 1 lands in a2 as in the original. T-11850 */
+        *(u16 *)&object->unk_06 = *(u16 *)&object->unk_08 = *(u16 *)&object->unk_0A = 0;
+        object->unk_0D = object->unk_0E = object->unk_0F = 0;
         object->unk_10 = 1;
         object->unk_20 = x << 16;
         object->unk_24 = y << 16;
@@ -443,9 +438,6 @@ void func_80134768(s16 x, s16 y, s32 speed, s32 angle) {
         object->unk_4C = (u8 *)&D_80155B30[5];
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80133970", func_80134768);
-#endif
 
 void func_80134874(x, y)
 s16 x;
