@@ -15227,3 +15227,11 @@ duplicate T-16200 line removed from [[index]]. Tickets [[tickets/T-16900-compile
 ## [2026-10-16] ticket | T-16563 In Progress
 
 [[tickets/T-16563-taco-types-first-p3]]: matching stage of the TACO types-first pilot, package 3 (`src/ovl/TACO/80151C30.c`, `src/ovl/TACO/8015ABF0.c`, 10 functions) on branch `pt-taco-p3`. Follows [[tickets/T-16560-taco-types-first]].
+
+## [2026-10-16] build | T-16563 matches
+
+[[tickets/T-16563-taco-types-first-p3]]: 9 functions matched on branch `pt-taco-p3` in `src/ovl/TACO/80151C30.c` and `src/ovl/TACO/8015ABF0.c`: `func_8015C0A0`, `func_80151D1C`, `func_80152944`, `func_8015BF70`, `func_80152808`, `func_80152DB4`, `func_801523D0`, `func_801521EC`, `func_8015CE64` (4,164 bytes, two with a `FAKE`). `include/ovl/TACO.h` gains the pair tables, a pointer-table view and three prototypes. `func_8015B1B8` stays guarded (8 lines); `func_8015BD30` (65 rows) stays `INCLUDE_ASM`. Notes: [[matching-notes]], [[taco-family-results]], [[register-cheatsheet]], [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-16563 In Review
+
+[[tickets/T-16563-taco-types-first-p3]] moved to In Review after about 60 minutes of agent time: 9 of 10 listed functions matched. Clean build 27/27, `tools/check_headers.py`, `tools/migrate_globals.py --check` and `tools/sync_protos.py --check-branch` OK.

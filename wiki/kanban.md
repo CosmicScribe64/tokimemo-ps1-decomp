@@ -24,7 +24,6 @@ kanban-plugin: board
 
 ## In Progress
 
-- [ ] [[tickets/T-16563-taco-types-first-p3|T-16563 Types-first pilot package pt-taco-p3]]
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]
 
 - [ ] [[tickets/T-14500-exhaustive-drafts|T-14500 Draft and score every remaining game function]]
@@ -53,6 +52,7 @@ kanban-plugin: board
 
 ## In Review
 
+- [ ] [[tickets/T-16563-taco-types-first-p3|T-16563 Types-first pilot package pt-taco-p3]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]

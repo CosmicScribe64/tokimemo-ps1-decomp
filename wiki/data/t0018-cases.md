@@ -1,6 +1,6 @@
 ---
 type: data
-updated: 2026-10-15
+updated: 2026-10-16
 sources: ["wiki/matching-notes.md", "tools/queue.py"]
 ---
 
@@ -2047,3 +2047,5 @@ SHA1 pass; the historical rows are retained. See [[decompile-workflow]].
 | TAIIKU/80140810 | `func_80140A90` | other | T-16554: the block copy of display record 96 to 98 after a strength-reduced flag loop hides one ugen temporary fewer than in the original (end pointer `$t3` for `$t4`, 33 instructions differ in registers only); a real store between loop and copy gives the original's numbering but adds code; the `$v0`/`$v1` halves are solved |
 | TAIIKU/80142240 | `func_8014357C` | regorder | T-16554: flags byte `& 0xF` is a uopt variable in `$v1` in the original, a ugen temporary in IDO; the s16 rating field is loaded into `$v0` directly in the original, promoted into `$a1` plus `move` here, and the three constants of the `D_8014A130` stores are loaded together with one shared `lui at` (19 instructions in one window); as `func_8013D2B4` |
 | TAIIKU/80142240 | `func_80142FB8` | other | T-16554: loop pointer and constants `1`, `4` stay in `$v0`/`$v1`/`$at` with a spill around the call in the original, IDO colours them `$s1..$s3` (120 lines, frame 64 against 72); source forms of the loop do not matter |
+| TACO/8015ABF0 | `func_8015B1B8` | regorder | T-16563: the struct-copy temporary stays `t2` for the original `t3` (8 lines) with the object address as `(arg0 + D_80127480)`, the copy before and after `unk_00 = 0`, a `MATRIX *` destination and a `(MATRIX *)&obj->transform` cast; ugen's rotation `t6,t7,t8,t9,t3,t4,t5,t6` is identical up to the copy, so the copy picks its temporary by another rule |
+| TACO/8015ABF0 | `func_8015BD30` | other | T-16563: search loop and calls match after the rewrite (65 rows left); frame 0x68 against 0x58 (16 bytes of local slots the original lacks; the number of declared locals does not explain it), `i`/`j * 4` and offset/`D_80161E60` swap colours, `&D_8015EDB4[arg0].unk14` is not shared with the earlier actor pointer |
