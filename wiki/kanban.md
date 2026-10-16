@@ -24,6 +24,7 @@ kanban-plugin: board
 
 ## In Progress
 
+- [ ] [[tickets/T-17112-w3-rpg-bat-p12|T-17112 Wave 3 package w3-rpg-bat-p12]]
 - [ ] [[tickets/T-16990-wave-3-conveyor|T-16990 Wave 3 conveyor]]
 
 - [ ] [[tickets/T-12600-byte-coverage-families|T-12600 Increase verified byte coverage through shared function families]]

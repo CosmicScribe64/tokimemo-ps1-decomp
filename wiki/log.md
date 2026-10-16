@@ -16321,3 +16321,7 @@ Clean rebuild of the w3-date-p08 worktree: 27/27 sha1 OK, `check_headers` header
 ## [2026-10-16] ticket | T-17108 Done
 
 [[tickets/T-17108-w3-rpg-bat-p08]] In Review to Done after the code review: wave 3 package w3-rpg-bat-p08 (RPG_BAT `src/ovl/RPG_BAT/8014E780.c`, `src/ovl/RPG_BAT/8014A660.c`), 6 of 6 functions matched (1,844 bytes: `func_8014E994`, `func_8014EBEC`, `func_8014EF8C`, `func_8014F278`, `func_8014AC74`, `func_8014AB84`; six ticketed FAKE comments). No findings. Headers, globals and proto checks OK, build up to date.
+
+## [2026-10-16] ticket | T-17112 In Progress
+
+[[tickets/T-17112-w3-rpg-bat-p12]] created and In Progress: wave 3 package w3-rpg-bat-p12 (RPG_BAT `src/ovl/RPG_BAT/801525B0.c`; `func_80154220`, `func_80153784`, `func_80153F3C`, `func_801529B4`). Branch `w3-rpg-bat-p12` from `w2-good`, worktree `tokimemo-wt/w3-rpg-bat-p12`.
