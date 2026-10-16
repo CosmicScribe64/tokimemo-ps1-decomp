@@ -115,3 +115,7 @@ comes from register allocation, loop shape and local layout, not from missing ty
 Work packages for the matching stage: T-16561..T-16564 (`pt-taco-p1`..`p4`), about 170 minutes each,
 best expected bytes first (expected bytes = size / (1 + score / 30)); the gcc-built
 `8015CF30.c`, `8015D0D0.c` and `8015D270.c` are left out.
+
+## Matching stage, package 2 (T-16562)
+
+[[tickets/T-16562-taco-types-first-p2]] worked the first ten functions of the T-16560 list for `80154230.c`, `801430B0.c` and `80133870.c`: five matched in plain C (`func_801430D0`, `func_801347F4`, `func_80143B58`, `func_801342CC`, `func_80133870`, 2,156 bytes, about one hour), five guarded or left. Method and blockers: [[matching-notes]], "T-16562". New types and declarations: the font UV tables `D_8015F5A0[20]`, `D_8015F5B4[52]` and eight scalar glyph bytes (`D_8015F5E8`..`D_8015F5EF`), prototypes for the loading-screen state handlers (`func_80133980`, `func_80133AF4`, `func_80133C08`, `func_80133E98`, `func_80134500`), `func_801347F4(s32 *)`. The three functions with the entry copy (`func_80154230`, `func_801546FC`, `func_8015443C`) stay at 8-9 lines each.

@@ -15140,3 +15140,7 @@ bytes). Clean rebuild 27/27, headers, globals and prototype checks OK: 5,997/6,9
 ## [2026-10-16] ticket | T-16562 opened
 
 [[tickets/T-16562-taco-types-first-p2]] (In Progress): matching package 2 of the TACO types-first pilot ([[tickets/T-16560-taco-types-first]]). Worktree `pt-taco-p2` from `w2-good`; owns `src/ovl/TACO/80154230.c`, `src/ovl/TACO/801430B0.c`, `src/ovl/TACO/80133870.c`.
+
+## [2026-10-16] ticket | T-16562 to In Review
+
+[[tickets/T-16562-taco-types-first-p2]]: pilot stage B on `pt-taco-p2`, 5 functions matched (2,156 bytes): `func_801430D0`, `func_801347F4`, `func_80143B58`, `func_801342CC`, `func_80133870`; guarded near misses `func_80154230`, `func_801546FC`, `func_8015443C` (entry copy, 8-9 lines each), `func_801432F0` (8), `func_801345D4` (12); `func_80154820` and `func_80133E98` left `INCLUDE_ASM`. New header entries in `include/ovl/TACO.h` (font tables, loading-screen state handler prototypes, `func_801347F4(s32 *)`). Notes in [[matching-notes]] (section T-16562), rows in [[data/t0018-cases]], [[register-cheatsheet]] (two rows, one extended), [[taco-family-results]].

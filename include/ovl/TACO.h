@@ -567,10 +567,6 @@ void func_8013546C(void);
 
 #ifndef OVL_TACO_T10010_SCORE_TABLE
 #define OVL_TACO_T10010_SCORE_TABLE
-/* Font UV pairs (u, v), T-16562: digits 0-9, letters A-Z, then '.', '-', ' ' and a fallback glyph. */
-extern u8 D_8015F5A0[20];
-extern u8 D_8015F5B4[52];
-extern u8 D_8015F5E8, D_8015F5E9, D_8015F5EA, D_8015F5EB, D_8015F5EC, D_8015F5ED, D_8015F5EE, D_8015F5EF;
 extern s32 D_8015F504[]; /* Word score table indexed modulo 17. T-10010. */
 
 extern Tc14 D_8015EB30[16];
@@ -592,6 +588,11 @@ void func_80142DE0(void);
 void func_80142820(void);
 
 #endif
+
+/* Font UV pairs (u, v), T-16562: digits 0-9, letters A-Z, then '.', '-', ' ' and a fallback glyph. */
+extern u8 D_8015F5A0[20];
+extern u8 D_8015F5B4[52];
+extern u8 D_8015F5E8, D_8015F5E9, D_8015F5EA, D_8015F5EB, D_8015F5EC, D_8015F5ED, D_8015F5EE, D_8015F5EF;
 
 extern u8 D_80161ECD;
 extern s32 D_8016024C[];
