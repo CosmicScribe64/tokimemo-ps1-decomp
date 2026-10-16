@@ -116,3 +116,7 @@ Types and header: `D_8015E740` is `u8 **` (a table of string pointers), `func_80
 
 `func_8013BBF8` and `func_8013EA60` matched (types `RpgPadSeq` at `D_8015EBEC`, four words; `RpgGauge` over `D_8015EBC0..D_8015EBD4`, six words, reached through `RPG_GAUGE` until the other users migrate); `func_8013B5B0` (25 rows, promoted state byte in `$v0` instead of `$v1`) and `func_8013E54C` (16 rows, loop preheader order) stay guarded. Notes: [[matching-notes]], section "T-17107".
 - `w3-rpg-bat-p15` ([[tickets/T-17115-w3-rpg-bat-p15]]): 2 of 4 matched, `func_801328C4` (464 B: declare the loop counter before the stack table, the table drops 4 bytes) and `func_8014A3DC` (672 B: an `s32` return type for the implicit-int definition stops as1 from hoisting a second `lui` above the case branch). `func_80132B34` (constant folding, a phi form keeps the adds unfolded but IDO shares the tail) and `func_80149C5C` (252 register rows: the original keeps `D_8015EDB4` in `$a1` and the chain value in `$v1`) stay `INCLUDE_ASM`. Details in [[matching-notes]] ("T-17115").
+
+### Package w3-rpg-bat-p18 (T-17118)
+
+`func_80133108` (4,192 B, the 30-case Salmon Boomerang cutscene script) matched from the 863-row T-14500 draft: angle computed once before the sine loops, one shared `tmp` local, the case 9 record loop indexed `[i + 64]`, `RPG_BAT_OVERRIDE_func_8013F15C` only. Details in [[matching-notes]] (section T-17118).

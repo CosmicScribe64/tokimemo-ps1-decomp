@@ -55,7 +55,6 @@ kanban-plugin: board
 ## In Review
 
 
-
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -154,6 +153,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-17106-w3-rpg-bat-p06|T-17106 Wave 3 package w3-rpg-bat-p06]]
 - [ ] [[tickets/T-17105-w3-rpg-bat-p05|T-17105 Wave 3 package w3-rpg-bat-p05]]
 - [ ] [[tickets/T-17107-w3-rpg-bat-p07|T-17107 Wave 3 package w3-rpg-bat-p07]]
+- [ ] [[tickets/T-17118-w3-rpg-bat-p18|T-17118 Wave 3 package w3-rpg-bat-p18]]
 - [ ] [[tickets/T-17207-w3-date-p07|T-17207 Wave 3 package w3-date-p07]]
 - [ ] [[tickets/T-17208-w3-date-p08|T-17208 Wave 3 package w3-date-p08]]
 - [ ] [[tickets/T-17101-w3-rpg-bat-p01|T-17101 Wave 3 package w3-rpg-bat-p01]]

@@ -16531,3 +16531,15 @@ Created [[tickets/T-17115-w3-rpg-bat-p15]] (Wave 3 package, RPG_BAT `src/ovl/RPG
 
 ## [2026-10-16] ticket | T-17113 Done
 [[tickets/T-17113-w3-rpg-bat-p13]] In Review to Done: code review against `CODING_STANDARDS.md`; only `src/ovl/RPG_BAT/8013C890.c`, `src/ovl/RPG_BAT/801484E0.c` and `include/ovl/RPG_BAT.h` changed in code, `drafts/T-17113/` is new. One finding fixed: the guarded `func_80148714` draft reached the `D_8015EBAC` and `D_8015EC70` tables through their first symbol without a mark, now a `FAKE` comment with the ticket (comment only). `s32` without a return (`RPG_BAT_OVERRIDE_func_8013C890`) judged plain C with a comment, as in T-17109. Unit sha1 OK, `check_headers`, `migrate_globals --check`, `sync_protos --check-branch` OK. 1 of 4 matched (`func_8013C890`, 1,024 bytes). Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17118 In Progress
+[[tickets/T-17118-w3-rpg-bat-p18]] created and started: RPG_BAT `func_80133108` (`src/ovl/RPG_BAT/80132FE0.c`), worktree `w3-rpg-bat-p18`.
+
+## [2026-10-16] build | T-17118 match
+[[tickets/T-17118-w3-rpg-bat-p18]]: `func_80133108` (`src/ovl/RPG_BAT/80132FE0.c`, 4,192 B) matched in plain C from the 863-row T-14500 draft: `ang` computed once before the loops and `ang + i * 0x200` at the calls, one shared `tmp` local (priority tie with the counter, case 19's call result in `$s2`), case 9 records as `[i + 64]`, only `RPG_BAT_OVERRIDE_func_8013F15C` kept. Notes in [[matching-notes]], two rows in [[register-cheatsheet]], [[rpg-bat-family-results]].
+
+## [2026-10-16] ticket | T-17118 In Review
+[[tickets/T-17118-w3-rpg-bat-p18]] In Progress to In Review (1 of 1 matched). Card moved.
+
+## [2026-10-16] ticket | T-17118 Done
+[[tickets/T-17118-w3-rpg-bat-p18]] reviewed against `CODING_STANDARDS.md`: no findings. In Review to Done (kanban card moved). Matched 1 of 1 (`func_80133108`, 4,192 B), no guard left.
