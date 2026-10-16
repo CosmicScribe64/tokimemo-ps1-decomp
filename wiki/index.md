@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-10-15
+updated: 2026-10-16
 ---
 
 # Wiki Index
@@ -21,7 +21,7 @@ Read this first. Update on every ingest or new page.
 - [[ref-english-patch]] - facts-only reference from the English-patch internals notes: ~150 addresses by area (overlay loader, CD, boot, text renderer, font, script/dialogue, menus), current symbol names (T-11090)
 
 ## Tickets
-- [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (In Progress).
+- [[tickets/T-16510-m2c-defect-rewrites|T-16510]] Detect and rewrite recurring m2c draft defects (In Review): `tools/draft_fixes.py`; 50 T-14500 drafts changed, 34 better, 3 at score 0; results in `drafts/T-16510/`.
 - [[tickets/T-16210-w2-rpg_bat-801454f0|T-16210]] Wave 2 package w2-p01: RPG_BAT census drafts, 5 of 5 matched (Done).
 - [[tickets/T-16200-matching-wave-2|T-16200]] Matching wave 2: 24 new packages and four resumed wave-1 packages (In Progress).
 - [[tickets/T-11920-local-storage-cleanup|T-11920]] Local storage cleanup with verified backups (In Review; cleanup complete).
@@ -261,6 +261,7 @@ See [[kanban]]. Template: [[tickets/_template]].
 - Raw sources (plain paths): `raw/disc-findings.md`, `wiki/raw/compiler-mismatch-research-sources.md`, `wiki/raw/ai-disclosure-research.md`, `wiki/raw/original-compiler-sources.md` (T-3100)
 
 ## Tooling
+- `tools/draft_fixes.py` (T-16510): detectors and mechanical rewrites for recurring m2c defects (shared-store `goto`, Shift-JIS escapes, old-value post-increment compares; report-only `s32` and callers-read-`$v0` candidates), `survey` and `rescore` over a draft archive, `tools/m2c.py --fix-defects`; tests `tools/test_draft_fixes.py`; [[decompile-workflow]] ("Recurring m2c defects"), [[matching-notes]].
 - `tools/order_search.py` (T-11530): exhaustive or hill-climb search over marked statement orders (`/* ORDER */`) and operand orders (`ORDER_SWAP`), scored with funcdiff's resolved comparison; tests `tools/test_order_search.py`; [[decompile-workflow]] ("Statement and operand order search").
 - `tools/orphan_rodata.py` and `tools/object_layout.py` (T-10200): reference-based orphan ownership and configured text tail alignment; [[build-system]], [[decompile-workflow]].
 - `tools/header_merge.py` (T-10100): rebuild both-changed headers of a two-parent merge as ours plus whole other-side additions; `--check` previews; tests `tools/test_header_merge.py`; [[matching-notes]].

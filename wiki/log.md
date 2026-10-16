@@ -14968,3 +14968,7 @@ functions matched (5,072 bytes), no blocking findings. One fix: section 8a of `C
 ## [2026-10-16] ticket | T-16510 started
 
 [[tickets/T-16510-m2c-defect-rewrites]] (In Progress, under [[tickets/T-16200-matching-wave-2]]): detectors and mechanical rewrites for recurring m2c draft defects (shared-store goto, Shift-JIS hex escapes, post-increment compare; report-only void/s32 candidates), run over the `drafts/T-14500` selected bodies. Branch `t16510-m2c-defects`.
+
+## [2026-10-16] ticket | T-16510 to In Review
+
+[[tickets/T-16510-m2c-defect-rewrites]]: `tools/draft_fixes.py` (detectors, mechanical rewrites, `survey`, `rescore`), `tools/m2c.py --fix-defects`, in-place post-increment fix in `tools/m2c_args.py`, tests `tools/test_draft_fixes.py`, section in [[decompile-workflow]], notes in [[matching-notes]]. Survey of the 1,066 selected T-14500 bodies: 27 rewritable shared-store `goto` bodies (263 labels left alone), 13 Shift-JIS escape bodies, 11 post-increment bodies, 71 `s32-no-return` candidates, 0 void-callers-read-v0. Rescore of the 50 changed drafts in the full unit: 3 at score 0 (BUNKAKEN `func_80145844`, BUNKASAI `func_801431D4`, SHOUGATU `func_80137144`, all already matched by hand), 31 better, 3 equal, 13 worse (original kept); 1,499 rows removed. Output in `drafts/T-16510/` (`GEKO:func_801327AC` 223 to 2, score 0 with one more line). No change under `src/`. Waiting for code review.

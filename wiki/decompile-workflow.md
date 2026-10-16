@@ -1,7 +1,7 @@
 ---
 type: concept
-updated: 2026-10-13
-sources: ["tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/funcloc.py", "tools/sync_protos.py", "tools/migrate_globals.py", "tools/data_island.py", "tools/data_pieces.py"]
+updated: 2026-10-16
+sources: ["tools/draft_fixes.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/funcloc.py", "tools/sync_protos.py", "tools/migrate_globals.py", "tools/data_island.py", "tools/data_pieces.py"]
 sources: ["tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py"]
 sources: ["tools/type_recovery.py", "tools/queue.py", "tools/dupes.py", "tools/neardupes.py", "tools/m2c.py", "tools/funcdiff.py", "tools/permute.py", "tools/progress.py", "tools/cc.py", "configure.py", "tools/rodata_island.py", "tools/rodata_pieces.py", "tools/regdiff.py"]
 ---
@@ -186,6 +186,30 @@ Both were reported in wave 4 as m2c mistakes. What the investigation found and w
 - **Argument counts.** The prototypes of `include/main_api.h` and the overlay header were already in the m2c context (`game.h`), and m2c keeps them: a callee with a real prototype is never wrong. The wrong counts came from callees the context declares with `()` (264 of the main-exe declarations: the call-site evidence of the time) or not at all (SDK functions such as `abs`, `SquareRoot0`): m2c then counts every argument register that holds a value at the call, so a stale `$a1`/`$a2` of an earlier call becomes an argument (`abs(sp40, 1, 0, var_a3)`, `SquareRoot0(x, temp_lo, D_80125C54)`). The wrapper now reads the callee's own asm (`tools/m2c_args.py`, `arity()`: `$a0`-`$a3` and stack words that are read before they are written) and gives m2c `ret f(s32, s32)` for such callees, keeping the header's return type; the counts used are printed on stderr (`m2c.py: argument counts from the callees' asm: ...`). Measured against the 313 prototyped main-exe functions that take parameters: 295 agree, 18 do not (12 declare parameters their asm never reads, 5 read one parameter fewer than declared, two of them through the stack, 1 reads one more). Callees whose asm reads no argument register keep m2c's guess (an unused parameter is still passed by the C). **Not fixable here:** a callee without asm (no `glabel` in `asm/` or `asm/lib*.s`), the SDK's GTE functions (`SquareRoot0`: `cop2` code the scan does not read), indirect calls through a table, and a caller that passes more arguments than the callee reads. For those, count the argument registers set before each `jal` in the asm yourself.
 - **Post-increment order.** m2c prints the store of `D = D + 1` first and then compares the variable (`D += 1; if ((u8) D >= 0x41U)`); the asm compares the register that still holds the old value (`lbu v1; sltiu v0,v1,0x41; addiu t6,v1,1; sb t6`). The wrapper detects that asm shape (load into R, `addiu T,R,+-1`, store of T to the same symbol, a compare or branch that reads R) and prints `if ((u8) D++ >= 0x41U)`. The detector finds the shape in 78 functions of the asm; of the 8 that are matched, 6 use `++`/`--` in their C (`func_8005A560` and `func_80140244` do not, so read the asm before trusting a rewrite). **Not fixable here:** whether IDO then builds the original's `xori; sltiu; beqz` or `xori; bnez` (return type, `== 1` against `>=`, see [[matching-notes]], "Post-increment compare"); that stays a matching question.
 - m2c types and structs: the draft still indexes a record table as `(D_x + off)->unk4` where `GameState` fields exist; run `migrate_globals.py --apply` after pasting the C (step 5b).
+
+## Recurring m2c defects (T-16510)
+
+`tools/draft_fixes.py` finds the m2c mistakes that agents fixed by hand again and again and writes the mechanical fix as an alternative body. Run it on any draft body, or let `tools/m2c.py --fix-defects` do it on the draft it prints (each rewrite is listed on stderr).
+
+| Detector | What m2c prints | Rewrite |
+|---|---|---|
+| `goto-shared-store` | `var = 5; block_N: D = var; break;` and `var = 6; goto block_N;` in the other cases (T-12701) | `D = 5; break;` in each case; the temporary and its declaration go |
+| `sjis-escape` | `"パ\x83\\コン占い"`: Shift-JIS bytes as C escapes; IDO's K&R lexer reads `\x83` as the letters `x83` (T-15300, T-15400) | the text, `"パソコン占い"`, as matched code has it; `cc.py` turns it back into octal bytes |
+| `postinc-compare` | `D += 1; if ((u32) D >= 0x401U)` where the asm compares the old value (T-15600) | `if ((u32) D++ >= 0x401U)`; the asm decides, also for an in-place `addiu $v1, $v1, 1` |
+| `postinc-wrong` | a `D++` whose asm compares the new value | `D += 1;` above the condition (no hit so far) |
+| `s32-no-return` (report) | `void` draft, asm leaves a dead copy or constant in `$v0` at an exit (T-16210) | none: try `s32 f(void)` without a `return` value, and the same type in the header |
+| `void-callers-read-v0` (report) | `void` draft, callers read `$v0` after the call | none |
+
+Commands (Docker, repo root):
+- `python3 tools/draft_fixes.py check|fix BODY.c --scope UNIT:func` prints findings on stderr and the new body on stdout.
+- `survey --archive drafts/T-14500` counts the hits per detector.
+- `rescore --archive drafts/T-14500 --top 30 --out DIR --jobs 2` compiles every rewrite in its full translation unit, as `exhaustive_drafts.py` does, and saves the bodies that beat the unmodified one with provenance. `--list` shows the hits without compiling.
+
+`rescore` tries all rewrites of a body, each one alone and a greedy build-up, and keeps the best; it never edits `src/` or the archive.
+
+A rewrite is a candidate. A `goto` that the original really shares stays better as a `goto` (TT `func_80132000`): on the T-14500 drafts the direct stores won 13 times and lost 13 times, `sjis-escape` never lost (13 bodies), `postinc-compare` never lost (11). Results, the 50 hits and the near matches: `drafts/T-16510/README.md`. Labels the tool leaves alone are counted with their reason by `survey` (`goto_blocked_reasons`): loops, shared calls or `if`s after the label, a temporary used elsewhere.
+
+Limits: line-oriented (one statement per line, m2c's layout); the post-increment and `$v0` detectors need the function's asm (`--scope` or `--asm`); the callers scan reads the fall-through path after the `jal` only and sees no indirect calls; the `s32` signal holds for 207 of 334 matched `s32` functions without a value return and 32 of 5,383 matched `void` ones, so it ranks candidates and proves nothing; a score of 0 still needs `funcdiff.py --resolve` and the unit SHA1. Tests: `tools/test_draft_fixes.py`.
 
 ## Before finishing (T-5030)
 Run these in your branch before you report done. They find in the branch what otherwise shows up at merge.

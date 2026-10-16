@@ -1,7 +1,7 @@
 ---
 id: T-16510
 title: Detect and rewrite recurring m2c draft defects
-status: In Progress
+status: In Review
 assignee: claude
 created: 2026-10-16
 updated: 2026-10-16
@@ -14,15 +14,61 @@ Agents keep fixing the same m2c output defects by hand: the shared-store `goto` 
 
 ## Acceptance criteria
 
-- [ ] Detectors for: shared-store goto/label after switch cases, Shift-JIS hex-escape strings, post-increment compare rewrite; report-only: void draft whose callers read `$v0`, s32-without-return candidates (T-16210 rule).
-- [ ] Unit tests from real before/after pairs in the notes; full tool test suite passes.
-- [ ] Detector hit counts over the `drafts/T-14500` selected bodies.
-- [ ] Rewrites applied to the top 30 hits by score, rescored with full-translation-unit scoring (at most 2 jobs); score changes and new zero-score drafts reported; improved alternatives saved under `drafts/T-16510/` with provenance.
-- [ ] Short section in `wiki/decompile-workflow.md`.
-- [ ] No edits under `src/`, no in-place edits of existing `drafts/` archives.
+- [x] Detectors for: shared-store goto/label after switch cases, Shift-JIS hex-escape strings, post-increment compare rewrite; report-only: void draft whose callers read `$v0`, s32-without-return candidates (T-16210 rule).
+- [x] Unit tests from real before/after pairs (`tools/test_draft_fixes.py`, 37 tests; `tools/test_m2c_args.py` +3); the full tool test suite passes.
+- [x] Detector hit counts over the `drafts/T-14500` selected bodies (below, `drafts/T-16510/survey.json`).
+- [x] Rewrites applied to the top 30 hits by score and rescored with full-translation-unit scoring (2 jobs); score changes and new zero-score drafts reported; improved alternatives saved under `drafts/T-16510/` with provenance.
+- [x] Short section in `wiki/decompile-workflow.md`.
+- [x] No edits under `src/`, no in-place edits of the existing `drafts/` archives.
+- [ ] Code review against `CODING_STANDARDS.md` (needed for Done).
 
 ## Notes
 
 Source fixes: `wiki/matching-notes.md`, T-12701, T-13201, T-15300, T-15400, T-15600, T-16210.
+
+### What was built
+
+- `tools/draft_fixes.py`: `analyze(body, asm_text, rewrite, callers, scope, select)` runs the detectors; CLI `check`, `fix`, `survey`, `rescore` (docstring and [[decompile-workflow]] "Recurring m2c defects"). `tools/m2c.py --fix-defects` runs the rewrites on m2c's output.
+- `tools/m2c_args.py`: `post_increment_compares` (old/new per symbol) replaces the scan inside `post_increment_old`. The old scan stopped at an in-place `addiu Rl, Rl, 1`, so m2c.py never wrote `D++` for SHOUGATU `func_80137144` (the T-15600 case); `postinc_pattern` is shared.
+- Tests: `tools/test_draft_fixes.py` (T-12701 BUNKAKEN switch, T-15400 and T-15300 Shift-JIS strings, T-15600 post-increment, T-16210 implicit int, synthetic asm for the `$v0` flow and the callers scan, archive survey and subset selection with a fake scorer).
+
+### Detector hits over the 1,066 selected bodies (`drafts/T-16510/survey.json`)
+
+| Detector | Bodies | Findings |
+|---|---:|---:|
+| `goto-shared-store` (rewritable) | 27 | 30 |
+| `goto-shared-store-blocked` | 263 | 602 |
+| `sjis-escape` | 13 | 18 |
+| `postinc-compare` | 11 | 11 |
+| `postinc-wrong` | 0 | 0 |
+| `s32-no-return` (report) | 71 | 71 |
+| `void-callers-read-v0` (report) | 0 | 0 |
+
+Why labels stay gotos (602): shared tail with calls or `if`s after the label 384, real loops 188, empty tail (shared return) 8, tail of calls 10, break inside another loop 3, a temporary the tail reads that the switch assigns 4, a temporary not assigned at every jump 3, other 2. The rule base for `s32-no-return` was measured on the matched sources: 207 of 334 `s32` functions without a value return show the signal, 32 of 5,383 `void` ones do (86.6 percent of the flagged are `s32`). Callers that read `$v0` after a call: 209 of 4,007 call targets have such a caller, none of the archive's drafts.
+
+### Rescore (50 drafts changed by a rewrite, ranks by archived score; ranks 1 to 30 are the "top 30")
+
+Score = differing rows of the function in the full unit (`exhaustive_drafts.py` path), the unmodified body recompiled in this tree as baseline, rewrites tried alone and as a greedy build-up.
+
+| | bodies | score 0 | improved | same | worse (kept original) |
+|---|---:|---:|---:|---:|---:|
+| ranks 1 to 30 | 30 | 3 | 18 | 2 | 7 |
+| ranks 31 to 50 | 20 | 0 | 13 | 1 | 6 |
+| `sjis-escape` | 13 | 2 | 8 | 3 | 0 |
+| `postinc-compare` | 11 | 1 | 10 | 0 | 0 |
+| `goto-shared-store` | 26 | 0 | 13 | 0 | 13 |
+
+- New score-0 drafts: `BUNKAKEN:func_80145844`, `BUNKASAI:func_801431D4`, `SHOUGATU:func_80137144` (all three are already matched in `src/` by T-15300, T-15400 and T-15600: the tool reproduces the hand fixes; paths `drafts/T-16510/BUNKAKEN/func_80145844/`, `.../BUNKASAI/func_801431D4/`, `.../SHOUGATU/func_80137144/`). No other mechanical zero.
+- Biggest gains: `main:func_80079070` 450 to 35, `GEKO:func_801327AC` 223 to 2, `BUNKA_SD:func_80139290` 509 to 133, `SHUGAKU:func_8013282C` 183 to 116, `BUNKASAI:func_8013B25C` 183 to 122, `RPG_BAT:func_801525B0` 35 to 20 (a call value moved into the one store). Total 1,499 differing rows removed over 34 bodies.
+- Candidate for matching agents (not promoted, unverified): `GEKO:func_801327AC` (`INCLUDE_ASM` in `src/ovl/GEKO/801323E0.c`): after the rewrite one row differs (`sb` for `sh`); `*(s16 *)&D_80144C40 = 0;` (the initializer's line, T-9510) gives score 0: `drafts/T-16510/follow-up/GEKO/func_801327AC/`.
+- Seven drafts got worse with the `goto` removal and keep the original: the "shared block" in m2c's output is often real.
+- `SHOUGATU:func_8013737C`: the archived unit no longer compiles (another function of the file was matched since); baseline and rewrite were scored in a unit rebuilt from the current source, 208 to 194.
+- Experiment, not part of the tool: signature-only change to `s32` on the 71 `s32-no-return` drafts: 3 better, 29 same, 12 worse, 27 do not compile against the existing `void` prototype.
+
+### Follow-ups
+
+- Hand off `GEKO:func_801327AC` (above) and the lowest new scores to matching agents: `main:func_80079070` 35, `RPG_BAT:func_801525B0` 20, `GEKO:func_80134228` 25, `GEKO:func_80135AC8` 25, `SHOUGATU:func_80139334` 27, `NAME_ENT:func_80142A80` 28.
+- `m2c.py --fix-defects` is off by default; turn it on in `bulk_m2c.py` only after a bulk run shows no regression (the rewrite is scored there anyway).
+- The s32 report cannot be judged by score until the header prototype is changed with the signature.
 
 ## Comments
