@@ -16609,3 +16609,15 @@ rename table.
 ## [2026-10-16] ticket | T-17116 Done
 
 [[tickets/T-17116-w3-rpg-bat-p16]] In Review to Done: code review against `CODING_STANDARDS.md` found two issues, both fixed: wrong byte counts in the ticket, [[matching-notes]], [[rpg-bat-family-results]] and `drafts/T-17116/RPG_BAT/func_80134E78/NOTES.txt` (the list sizes 856 B and 1,268 B include jump table words; the code is 828 B and 1,248 B) and missing comments for the `s32` return without `return` in `src/ovl/RPG_BAT/80155CC0.c` and `src/ovl/RPG_BAT/80134D30.c`. 2 of 3 functions matched (`func_80156064` 828 B, `func_80135358` 1,700 B; 2,528 B), unit sha1 OK; `func_80134E78` stays `INCLUDE_ASM`. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17003 In Progress
+[[tickets/T-17003-w3-main-p03]] created and In Progress: wave 3 package w3-main-p03, `src/main/800789E0.c`, `func_80079070` and `func_80079800`. Worktree `tokimemo-wt/w3-main-p03`, branch `w3-main-p03` from `w2-good`.
+
+## [2026-10-16] ticket | T-17003 In Review
+[[tickets/T-17003-w3-main-p03]] In Progress to In Review (1 of 2 matched). `func_80079800` (784 B) matched in plain C with one FAKE local (TACO `func_80142AF0` idiom) and a `main_api.h` prototype; `func_80079070` guarded at 14 differing lines, T-0018 row (`sched`) in [[data/t0018-cases]], notes in [[matching-notes]] (section T-17003). Card moved. Commits in `src/main/800789E0.c`, `include/main_api.h`.
+
+## [2026-10-16] build | T-17003 closer pass
+[[tickets/T-17003-w3-main-p03]]: `func_80079070` from 14 to 4 differing lines, still guarded. A `GameState *gs` pointer store with the argument loaded into a local first, and `ovl_load_state = 0` before the saves, give the original's tail schedule; left is the call-argument colour (`lui v0; lbu a0,(v0)` against `lui a0; lbu a0`). [[data/t0018-cases]] row now `regorder`, notes in [[matching-notes]]. Clean build 27/27, header, globals and prototype checks OK. `src/main/800789E0.c`.
+
+## [2026-10-16] ticket | T-17003 Done
+[[tickets/T-17003-w3-main-p03]] reviewed against `CODING_STANDARDS.md`: 2 findings fixed (FAKE mark on the u8 views of the s8 fields in the guarded `func_80079070` draft, an unfinished sentence in the [[data/t0018-cases]] row), no others. In Review to Done (kanban card moved). Matched 1 of 2 (`func_80079800`, 784 B); `func_80079070` stays guarded at 4 lines, `regorder`.

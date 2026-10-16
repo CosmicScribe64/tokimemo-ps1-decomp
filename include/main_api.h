@@ -2356,6 +2356,7 @@ void ovl_load_poll(void);
 void ovl_load_verify(void);
 void func_80079070();
 s32 func_80079524(void);
+void func_80079800(void);
 void func_80079B10(u16 arg0);
 void func_80079C70(void);
 void func_80079D28(s16 arg0);
