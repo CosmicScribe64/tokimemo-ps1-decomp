@@ -15883,3 +15883,6 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 
 ## [2026-10-16] ticket | T-19017 Done
 [[tickets/T-19017-w3-d-p17]] reviewed against `CODING_STANDARDS.md` and moved to Done: 4 functions matched (2,104 bytes: TACO `func_80141B18`, `func_801413B8`, `func_80141050`, `func_80141170`), `func_801416E8` stays guarded at 28 lines. Two review findings in `src/ovl/TACO/80140DF0.c` and the wiki, fixed: the pointer-compare loop test in `func_80141B18` got an explanatory comment (comment only), and the stale "guarded" lines for `func_80141050`/`func_80141170` in [[index]], [[data/t0018-cases]] and [[matching-notes]] were refreshed (TACO.bin SHA1 OK, globals and headers OK).
+
+## [2026-10-16] ticket | T-19023 started
+[[tickets/T-19023-w3-d-p23]] In Progress (worktree `w3-d-p23`, base `w2-good`, 14:39 UTC): TACO `src/ovl/TACO/80135720.c`, `func_801357B0`, `func_80136988`, `func_80135A04`.
