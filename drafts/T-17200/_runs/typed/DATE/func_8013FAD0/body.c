@@ -14,7 +14,7 @@ void func_8013FAD0(void) {
     s32 temp_t8;
     u8 temp_a0;
     Rec24 *temp_v1;
-    u8 *temp_v1_2;
+    DisplayActor44 *temp_v1_2;
     u8 *temp_v1_4;
     u8 *temp_v1_5;
 
@@ -26,27 +26,27 @@ void func_8013FAD0(void) {
     D_8015BD3C = temp_a0;
     D_801217E6 = temp_a0;
     D_8012180A = temp_a0;
-    *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115)) = temp_a0;
+    ((DisplayActor44 *)D_8011ECD0)[31].unk_07 = temp_a0;
     var_v0 = 0;
     do {
         temp_lo = var_v0 * 0x44;
         var_v0 += 1;
-        *(u8 *)((unsigned char *)((DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo)) + (6535)) = (u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115));
+        *(u8 *)((unsigned char *)((DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo)) + (6535)) = (u8) ((DisplayActor44 *)D_8011ECD0)[31].unk_07;
     } while (var_v0 < 4);
     var_v0_2 = 0x3A;
     do {
         temp_lo_2 = var_v0_2 * 0x24;
         var_v0_2 += 1;
-        temp_v1 = &D_801217D0[var_v0_2];
-        temp_v1->unk_16 = (u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115));
-        temp_v1->unk_15 = (u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115));
-        temp_v1->unk_14 = (u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115));
+        temp_v1 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_2);
+        temp_v1->unk_16 = (u8) ((DisplayActor44 *)D_8011ECD0)[31].unk_07;
+        temp_v1->unk_15 = (u8) ((DisplayActor44 *)D_8011ECD0)[31].unk_07;
+        temp_v1->unk_14 = (u8) ((DisplayActor44 *)D_8011ECD0)[31].unk_07;
     } while (var_v0_2 < 0x40);
-    if ((u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115)) < 0x11U) {
+    if ((u8) ((DisplayActor44 *)D_8011ECD0)[31].unk_07 < 0x11U) {
         D_80122D14 = 0;
     }
-    *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115)) = (u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115));
-    if (*(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2115)) == 0) {
+    ((DisplayActor44 *)D_8011ECD0)[31].unk_07 = (u8) ((DisplayActor44 *)D_8011ECD0)[31].unk_07;
+    if (((DisplayActor44 *)D_8011ECD0)[31].unk_07 == 0) {
         D_80122D14 = 0;
         D_80122CF4 = 0;
         var_v0_3 = 0;
@@ -54,9 +54,9 @@ void func_8013FAD0(void) {
             temp_lo_3 = var_v0_3 * 0x44;
             var_v0_3 += 1;
             temp_v1_2 = (DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo_3);
-            *(u8 *)((unsigned char *)temp_v1_2 + (6531)) = (u8) (*(u8 *)((unsigned char *)temp_v1_2 + (6531)) & 0x7F);
+            temp_v1_2[96].unk_03 = (u8) (temp_v1_2[96].unk_03 & 0x7F);
         } while (var_v0_3 < 0xA);
-        *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2111)) = (u8) (*(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (2111)) & 0xFF7F);
+        ((DisplayActor44 *)D_8011ECD0)[31].unk_03 = (u8) (((DisplayActor44 *)D_8011ECD0)[31].unk_03 & 0xFF7F);
         D_801217E5 = 0x80;
         D_801217E4 = 0x80;
         D_80121809 = 0x80;
@@ -69,7 +69,7 @@ void func_8013FAD0(void) {
         do {
             temp_lo_4 = var_v0_4 * 0x24;
             var_v0_4 += 1;
-            temp_v1_3 = &D_801217D0[var_v0_4];
+            temp_v1_3 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_4);
             *temp_v1_3 |= 0x80000000;
         } while (var_v0_4 < 0x40);
         load_palette(D_800CA130, 0x10, 1, 2, 0);

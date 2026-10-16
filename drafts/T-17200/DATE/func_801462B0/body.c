@@ -180,7 +180,7 @@ block_53:
                                 temp_lo = var_v1_7 * 0x24;
                                 temp_t5_3 = var_v1_7 * 2;
                                 var_v1_7 += 1;
-                                temp_v0_3 = &D_801217D0[var_v1_7];
+                                temp_v0_3 = (Rec24 *)((u8 *)D_801217D0 + temp_lo);
                                 temp_v0_3[6].unk_0A = 0;
                                 temp_v0_3[6].unk_0F = 0xA0;
                                 temp_v0_3[6].unk_06 = -0x78;
@@ -193,7 +193,7 @@ block_53:
                             temp_lo_2 = var_v1_6 * 0x24;
                             temp_t7_3 = var_v1_6 * 2;
                             var_v1_6 += 1;
-                            temp_v0_4 = &D_801217D0[var_v1_6];
+                            temp_v0_4 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_2);
                             temp_v0_4[4].unk_0A = 0;
                             temp_v0_4[4].unk_0F = 0xA0;
                             temp_v0_4[4].unk_06 = -0x78;
@@ -206,7 +206,7 @@ block_53:
                         temp_lo_3 = var_v1_5 * 0x24;
                         temp_t6_2 = var_v1_5 * 2;
                         var_v1_5 += 1;
-                        temp_v0_5 = &D_801217D0[var_v1_5];
+                        temp_v0_5 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_3);
                         temp_v0_5[6].unk_0A = 0;
                         temp_v0_5[6].unk_0F = 0xA0;
                         temp_v0_5[6].unk_06 = -0x78;
@@ -219,7 +219,7 @@ block_53:
                     temp_lo_4 = var_v1_4 * 0x24;
                     temp_t9_3 = var_v1_4 * 2;
                     var_v1_4 += 1;
-                    temp_v0_6 = &D_801217D0[var_v1_4];
+                    temp_v0_6 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_4);
                     temp_v0_6[4].unk_0A = 0;
                     temp_v0_6[4].unk_0F = 0xA0;
                     temp_v0_6[4].unk_06 = -0x78;

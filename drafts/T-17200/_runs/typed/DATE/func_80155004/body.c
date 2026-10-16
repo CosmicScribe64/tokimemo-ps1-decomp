@@ -23,12 +23,12 @@ void func_80155004(void) {
                     var_a3 = 0x60;
                 }
             }
-            *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6535)) = var_a3;
-            *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6603)) = var_a3;
+            ((DisplayActor44 *)D_8011ECD0)[96].unk_07 = var_a3;
+            ((DisplayActor44 *)D_8011ECD0)[97].unk_07 = var_a3;
             do {
                 temp_lo = var_a0 * 0x24;
                 var_a0 += 1;
-                temp_v0 = &D_801217D0[var_a0];
+                temp_v0 = (Rec24 *)((u8 *)D_801217D0 + temp_lo);
                 temp_v0->unk_16 = var_a3;
                 temp_v0->unk_15 = var_a3;
                 temp_v0->unk_14 = var_a3;

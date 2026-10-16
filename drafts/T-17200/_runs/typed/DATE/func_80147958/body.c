@@ -232,7 +232,7 @@ void func_80147958(void) {
         do {
             temp_lo = var_v1_3 * 0x24;
             var_v1_3 += 1;
-            temp_v0_3 = &D_801217D0[var_v1_3];
+            temp_v0_3 = (Rec24 *)((u8 *)D_801217D0 + temp_lo);
             temp_v0_3[4].unk_00 = (s32) (temp_v0_3[4].unk_00 & 0x7FFFFFFF);
         } while (var_v1_3 < 4);
         D_800E6280.unk_1104.w = temp_a3 + 1;
@@ -283,7 +283,7 @@ void func_80147958(void) {
         do {
             temp_lo_2 = var_v1_4 * 0x24;
             var_v1_4 += 1;
-            temp_v0_4 = &D_801217D0[var_v1_4];
+            temp_v0_4 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_2);
             temp_v0_4[4].unk_00 = (s32) (temp_v0_4[4].unk_00 | 0x80000000);
         } while (var_v1_4 < 4);
         D_800E6280.unk_1104.w += 1;
@@ -307,7 +307,7 @@ void func_80147958(void) {
         do {
             temp_lo_3 = var_v1_5 * 0x24;
             var_v1_5 += 1;
-            temp_v0_5 = &D_801217D0[var_v1_5];
+            temp_v0_5 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_3);
             temp_v0_5[4].unk_00 = 0x02000000;
             temp_v0_5[4].unk_0A = 0xA0;
             temp_v0_5[4].unk_0F = 0;
@@ -317,7 +317,7 @@ void func_80147958(void) {
         do {
             temp_lo_4 = var_v1_6 * 0x24;
             var_v1_6 += 1;
-            temp_v0_6 = &D_801217D0[var_v1_6];
+            temp_v0_6 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_4);
             temp_v0_6[6].unk_00 = 0x02000000;
             temp_v0_6[6].unk_0A = 0;
             temp_v0_6[6].unk_0F = 0xA0;
@@ -349,7 +349,7 @@ void func_80147958(void) {
         do {
             temp_lo_5 = var_v1_7 * 0x24;
             var_v1_7 += 1;
-            temp_v0_7 = &D_801217D0[var_v1_7];
+            temp_v0_7 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_5);
             temp_v0_7[4].unk_0A = 0xA0;
             temp_v0_7[4].unk_0F = 0;
             temp_v0_7[4].unk_06 = -0x78;
@@ -358,7 +358,7 @@ void func_80147958(void) {
         do {
             temp_lo_6 = var_v1_8 * 0x24;
             var_v1_8 += 1;
-            temp_v0_8 = &D_801217D0[var_v1_8];
+            temp_v0_8 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_6);
             temp_v0_8[6].unk_0A = 0;
             temp_v0_8[6].unk_0F = 0xA0;
             temp_v0_8[6].unk_06 = -0x78;
@@ -377,7 +377,7 @@ void func_80147958(void) {
         do {
             temp_lo_7 = var_v1_9 * 0x24;
             var_v1_9 += 1;
-            temp_v0_9 = &D_801217D0[var_v1_9];
+            temp_v0_9 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_7);
             temp_v0_9[4].unk_0A = 0xA0;
             temp_v0_9[4].unk_0F = 0;
             temp_v0_9[4].unk_06 = -0x78;
@@ -386,7 +386,7 @@ void func_80147958(void) {
         do {
             temp_lo_8 = var_v1_10 * 0x24;
             var_v1_10 += 1;
-            temp_v0_10 = &D_801217D0[var_v1_10];
+            temp_v0_10 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_8);
             temp_v0_10[6].unk_0A = 0;
             temp_v0_10[6].unk_0F = 0xA0;
             temp_v0_10[6].unk_06 = -0x78;
@@ -405,7 +405,7 @@ void func_80147958(void) {
         do {
             temp_lo_9 = var_v1_11 * 0x24;
             var_v1_11 += 1;
-            temp_v0_11 = &D_801217D0[var_v1_11];
+            temp_v0_11 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_9);
             temp_v0_11[4].unk_0A = 0xA0;
             temp_v0_11[4].unk_0F = 0;
             temp_v0_11[4].unk_06 = -0x78;
@@ -414,7 +414,7 @@ void func_80147958(void) {
         do {
             temp_lo_10 = var_v1_12 * 0x24;
             var_v1_12 += 1;
-            temp_v0_12 = &D_801217D0[var_v1_12];
+            temp_v0_12 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_10);
             temp_v0_12[6].unk_0A = 0;
             temp_v0_12[6].unk_0F = 0xA0;
             temp_v0_12[6].unk_06 = -0x78;
@@ -457,7 +457,7 @@ void func_80147958(void) {
         do {
             temp_lo_11 = var_v1_13 * 0x24;
             var_v1_13 += 1;
-            temp_v0_13 = &D_801217D0[var_v1_13];
+            temp_v0_13 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_11);
             temp_v0_13[4].unk_0A = 0xA0;
             temp_v0_13[4].unk_0F = 0;
             temp_v0_13[4].unk_06 = -0x78;
@@ -466,7 +466,7 @@ void func_80147958(void) {
         do {
             temp_lo_12 = var_v1_14 * 0x24;
             var_v1_14 += 1;
-            temp_v0_14 = &D_801217D0[var_v1_14];
+            temp_v0_14 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_12);
             temp_v0_14[6].unk_0A = 0;
             temp_v0_14[6].unk_0F = 0xA0;
             temp_v0_14[6].unk_06 = -0x78;
@@ -499,7 +499,7 @@ void func_80147958(void) {
         do {
             temp_lo_13 = var_v1_15 * 0x24;
             var_v1_15 += 1;
-            temp_v0_15 = &D_801217D0[var_v1_15];
+            temp_v0_15 = (Rec24 *)((u8 *)D_801217D0 + temp_lo_13);
             temp_v0_15[4].unk_00 = (s32) (temp_v0_15[4].unk_00 | 0x80000000);
         } while (var_v1_15 < 4);
         D_800E6280.unk_1104.w = temp_a3 + 1;

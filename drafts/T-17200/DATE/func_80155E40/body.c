@@ -19,10 +19,10 @@ void func_80155E40(void) {
         do {
             temp_lo = var_v0 * 0x44;
             var_v0 += 1;
-            *(u8 *)((unsigned char *)((DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo)) + (6671)) = (u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6535));
+            *(u8 *)((unsigned char *)((DisplayActor44 *)((u8 *)D_8011ECD0 + temp_lo)) + (6671)) = (u8) ((DisplayActor44 *)D_8011ECD0)[96].unk_07;
         } while (var_v0 < 8);
         var_at = (u8) D_800E6280.unk_110A < 0x11U;
-        if ((u8) *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6535)) < 9U) {
+        if ((u8) ((DisplayActor44 *)D_8011ECD0)[96].unk_07 < 9U) {
             var_v0_2 = 0;
             do {
                 temp_lo_2 = var_v0_2 * 0x44;

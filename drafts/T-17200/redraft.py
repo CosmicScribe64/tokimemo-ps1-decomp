@@ -303,7 +303,29 @@ RECORDS = {"D_801217D0": "Rec24", "D_8011ECD0": "DisplayActor44"}
 OFF_PTR_RE = r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)%s \+ \((\d+)\)\)"
 
 
+DISP_OFF_RE = re.compile(r"\*\((u8|s8|u16|s16|u32|s32) \*\)\(\(unsigned char \*\)\(\(DisplayActor44 \*\)D_8011ECD0\) \+ \((\d+)\)\)")
+
+
+def display_offsets(body):
+    """`*(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6535))` is record 96's field."""
+    t = TYPES.get("DisplayActor44")
+
+    def repl(m):
+        ctype, n = m.group(1), int(m.group(2))
+        k, r = divmod(n, t.size)
+        path, lt = leaf_at(t, r, SIZES[ctype])
+        if path is None:
+            return m.group(0)
+        expr = "((DisplayActor44 *)D_8011ECD0)[%d]%s" % (k, path)
+        store = re.match(r"\s*=(?!=)", m.string[m.end():]) is not None
+        if lt.name == ctype or (store and lt.kind == "scalar" and lt.size == SIZES[ctype]):
+            return expr
+        return "*(%s *)&%s" % (ctype, expr)
+    return DISP_OFF_RE.sub(repl, body) if t is not None else body
+
+
 def record_temps(body):
+    body = display_offsets(body)
     for sym, tname in RECORDS.items():
         t = TYPES.get(tname)
         if t is None:
@@ -311,14 +333,23 @@ def record_temps(body):
         # p = D_801217D0 + temp_lo; with temp_lo = i * 0x24
         for var, lo in re.findall(r"^\s+(\w+) = %s \+ (\w+);$" % sym, body, re.M):
             m = re.search(r"^\s+%s = (.+) \* 0x%X;$" % (lo, t.size), body, re.M)
+            use = re.search(r"^\s+%s = %s \+ %s;$" % (var, sym, lo), body, re.M)
+            # the index must not change between the product and its use (`lo = i * 0x24; i += 1;`)
+            if m and use and re.fullmatch(r"\w+", m.group(1)) and re.search(
+                    r"\b%s\s*(?:[-+*/|&]?=(?!=)|\+\+|--)" % m.group(1), body[m.end():use.start()]):
+                body = re.sub(r"^(\s+)%s = %s \+ %s;$" % (var, sym, lo),
+                              r"\1%s = (%s *)((u8 *)%s + %s);" % (var, tname, sym, lo), body, flags=re.M)
+                continue
             if m:
                 body = re.sub(r"^(\s+)%s = %s \+ %s;$" % (var, sym, lo), r"\1%s = &%s[%s];" % (var, sym, m.group(1)),
                               body, flags=re.M)
         view = "((DisplayActor44 *)D_8011ECD0)" if sym == "D_8011ECD0" else sym
+        byte_form = "(%s *)((u8 *)%s + " % (tname, sym)
         ptrs = set(re.findall(r"^\s+(\w+) = &%s\[" % re.escape(view), body, re.M))
+        ptrs |= set(re.findall(r"^\s+(\w+) = %s" % re.escape(byte_form), body, re.M))
         for var in ptrs:
             assigns = re.findall(r"^\s+%s = (.+);$" % var, body, re.M)
-            if any(not a.startswith("&" + view + "[") for a in assigns):
+            if any(not (a.startswith("&" + view + "[") or a.startswith(byte_form)) for a in assigns):
                 continue
 
             def repl(m):

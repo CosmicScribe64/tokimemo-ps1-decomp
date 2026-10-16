@@ -120,8 +120,8 @@ void func_801556D8(void) {
     load_palette(D_8015F93C, 0x11, 1, 2, 0);
     func_80084E90(D_8015F940, D_8015F944, D_8015F948, D_8015F94C, D_8015F950, D_8015F954);
     func_800850D4(D_8015F930, D_8015F934, D_8015F92C, (s32) D_8015F938);
-    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6532)) = 8;
-    *(s8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6600)) = 8;
+    ((DisplayActor44 *)D_8011ECD0)[96].unk_04 = 8;
+    ((DisplayActor44 *)D_8011ECD0)[97].unk_04 = 8;
     var_s0 = 0;
     do {
         temp_t5 = &D_8015F9A0 + var_s0;
@@ -141,7 +141,7 @@ void func_801556D8(void) {
         var_s0_2 = temp_s0;
         *temp_t2 = (s8) (func_800AE0D0() % 120);
     } while (temp_at != 0);
-    *(s16 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6686)) = 4;
+    ((DisplayActor44 *)D_8011ECD0)[98].unk_16 = 4;
     func_8004284C();
 }
 

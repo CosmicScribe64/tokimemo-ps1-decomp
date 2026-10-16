@@ -410,10 +410,10 @@ void func_8014DCCC(void) {
     sp30 = D_8015E3C4;
     temp_v0 = sp30.f[D_800E6280.unk_110A];
     if (&D_8007EC9C == temp_v0) {
-        *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6531)) = (u8) (*(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6531)) | 0x80);
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = (u8) (((DisplayActor44 *)D_8011ECD0)[96].unk_03 | 0x80);
     }
     if (&D_8007D878 == temp_v0) {
-        *(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6531)) = (u8) (*(u8 *)((unsigned char *)((DisplayActor44 *)D_8011ECD0) + (6531)) & 0xFF7F);
+        ((DisplayActor44 *)D_8011ECD0)[96].unk_03 = (u8) (((DisplayActor44 *)D_8011ECD0)[96].unk_03 & 0xFF7F);
     }
     temp_v0(0x80);
     if (D_80122D04 != 0) {
