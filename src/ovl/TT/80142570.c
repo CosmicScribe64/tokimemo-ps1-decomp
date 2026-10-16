@@ -1,8 +1,6 @@
 #include "common.h"
 #include "ovl/TT.h"
 
-/* NON_MATCHING: T-11000, register-only (~60 lines, identical instruction stream incl. 4x unroll): original skips v1/a0, i in a1, 0x40/0x70/0x20 in a2/a3/t0; IDO uses v1, a0, a1, a2 (phantom a0, T-0018) */
-#ifdef NON_MATCHING
 void func_80142570(void) {
     u8 *p;
     s32 i;
@@ -14,12 +12,9 @@ void func_80142570(void) {
         i++;
         if (*p != 0 && *(u16 *)(p + 4) == 0x40) {
             *(u16 *)(p + 4) = 0x70;
-            *(s16 *)(p + 0xA) = 0;
-            *(s16 *)(p + 8) = 0;
-            *(s16 *)(p + 6) = 0;
-            p[0xF] = 0;
-            p[0xE] = 0;
-            p[0xD] = 0;
+            /* FAKE: chained stores (u16 view); the reloads keep dead uopt ranges (no code) that move i, 0x70 and 0x40 to a1/a3/a2. T-11860 */
+            *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
+            p[0xD] = p[0xE] = p[0xF] = 0;
         }
         p += 0x78;
     } while (i < 0x40);
@@ -27,19 +22,13 @@ void func_80142570(void) {
     for (i = 0; i < 0x20; i++) {
         if (*p != 0 && *(u16 *)(p + 4) == 0x40) {
             *(u16 *)(p + 4) = 0x70;
-            *(s16 *)(p + 0xA) = 0;
-            *(s16 *)(p + 8) = 0;
-            *(s16 *)(p + 6) = 0;
-            p[0xF] = 0;
-            p[0xE] = 0;
-            p[0xD] = 0;
+            /* FAKE: chained stores, as in the first loop. T-11860 */
+            *(u16 *)(p + 6) = *(u16 *)(p + 8) = *(u16 *)(p + 0xA) = 0;
+            p[0xD] = p[0xE] = p[0xF] = 0;
         }
         p += 0x78;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TT/nonmatchings/TT/80142570", func_80142570);
-#endif
 
 void func_801426F0(void) {
     s32 i;
