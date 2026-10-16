@@ -431,7 +431,9 @@ void func_80143470(void) {
  * masked flags byte in $v1 (a uopt variable), loads the s16 rating straight into $v0 and loads the three
  * constants 0x7E0000/0x7F0000/0x7D0000 together before three stores that share one `lui at`; IDO leaves the
  * flags in a ugen temporary, promotes the rating field into $a1 with a move and emits each constant
- * next to its store. Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). */
+ * next to its store. Same family as TAIIKU func_8013D2B4 (wiki/data/t0018-cases.md). T-19010 also tried, no
+ * gain: a raw byte local, separate rating and speed locals, direct access instead of `gs`, the doubled
+ * flags expression instead of `temp_v1`. */
 #ifdef NON_MATCHING
 void func_8014357C(void) {
     GameState *gs;

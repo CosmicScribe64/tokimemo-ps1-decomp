@@ -125,3 +125,7 @@ What the types did and did not do here: the new `TaiikuBall`, `TaiikuA0`, `Taiik
 ## Package w3-d-p04 (T-19004, `80133C80.c`)
 
 [[tickets/T-19004-w3-d-p04]], wave 3: `func_80137228` matched (260 bytes) once `D_80120A72` and `D_80120AA8` were read as fields of display records 111 and 112 (the loop's record stores then force the reload the original has); `func_80135830` (672 bytes) matched in the closer pass (index loop plus a FAKE dead `i = 0;`), `func_80137544` (26 lines) and `func_80135480` (22) unchanged, `func_80137C44` left `INCLUDE_ASM`. Details in [[matching-notes]], section T-19004.
+
+## Package w3-d-p10 (T-19010, `80142240.c`)
+
+[[tickets/T-19010-w3-d-p10]], wave 3: `func_80144464` (572 B), `func_80143814` (692 B), `func_80142FB8` (992 B) and `func_80144E54` (496 B) matched, `func_8014357C` guarded at 34 lines. Game B now has no `INCLUDE_ASM` left among the 80142240.c functions except `func_80142400`. The T-16554 gap of `func_80142FB8` (spills of the pointer and constants) was an index loop with `<`; `D_8014A110` is `u8`. Details in [[matching-notes]], section T-19010.
