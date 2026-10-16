@@ -14944,3 +14944,7 @@ Merged branch w1-p08 into w2-r08 (7 TAIIKU matches; main's func_80139330 kept an
 ## [2026-10-15] build | T-11640: func_8013BEF8 and func_8013C0E4 matched
 
 [[tickets/T-11640-w1-ovl-taiiku-80138950]]: the D_801499A2 counter functions match with u16 pointer views of the counter and the flag (no volatile flag); 10 wave-2 matches in total. Notes in [[matching-notes]], one more row in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11640 Done
+
+Reviewed [[tickets/T-11640-w1-ovl-taiiku-80138950]] against `CODING_STANDARDS.md`: one finding (FAKE explanations for the s16 tmp/halfword views, fixed, comments only), no open findings. 10 wave-2 functions matched in `src/ovl/TAIIKU/80138950.c` (6,876 bytes), 6 more from the merged wave-1 branch, 4 guarded drafts. TAIIKU sha1 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK. Moved to Done on the kanban board.
