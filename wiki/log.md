@@ -16586,3 +16586,7 @@ Opened [[tickets/T-17005-w3-main-p05]]: wave 3 package for `src/main/8005A0B0.c`
 ## [2026-10-16] build | T-17005 clean rebuild
 
 Clean rebuild of the w3-main-p05 worktree: 27/27 sha1 OK (`build/SLPM_86.053.bin: OK` with `pre_syogatu1`, `func_80060178` and `func_8005C14C` as C), `check_headers` headers OK, `migrate_globals --check` globals OK, `sync_protos --check-branch` OK (0 new disagreements, 15 known). Recorded in [[tickets/T-17005-w3-main-p05]].
+
+## [2026-10-16] ticket | T-17005 Done
+
+[[tickets/T-17005-w3-main-p05]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed (the two new rows in [[data/t0018-cases]] lacked the closing table pipe). Rebuild OK (sha1 OK, 27/27, headers OK, globals OK, `sync_protos --check-branch` OK). 3 of 5 functions matched (`pre_syogatu1`, `func_80060178`, `func_8005C14C`; 1,708 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.

@@ -54,7 +54,6 @@ kanban-plugin: board
 
 ## In Review
 
-- [ ] [[tickets/T-17005-w3-main-p05|T-17005 Wave 3 package w3-main-p05]]
 - [ ] [[tickets/T-11920-local-storage-cleanup|T-11920 Local storage cleanup]]
 
 - [ ] [[tickets/T-12400-integrate-verified-matches|T-12400 Integrate verified matching branches on main]]
@@ -139,6 +138,7 @@ kanban-plugin: board
 - [ ] [[tickets/T-11100-big-functions-gemini-33|T-11100 Big functions (Gemini) 33]]
 
 ## Done
+- [ ] [[tickets/T-17005-w3-main-p05|T-17005 Wave 3 package w3-main-p05]]
 - [ ] [[tickets/T-17117-w3-rpg-bat-p17|T-17117 Wave 3 package w3-rpg-bat-p17]]
 - [ ] [[tickets/T-20000-first-contribution|T-20000 Avoid whole-tree cache scans for scoped queues]]
 - [ ] [[tickets/T-17115-w3-rpg-bat-p15|T-17115 Wave 3 package w3-rpg-bat-p15]]
