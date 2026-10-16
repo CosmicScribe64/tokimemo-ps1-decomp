@@ -16574,3 +16574,7 @@ Clean rebuild of the w3-rpg-bat-p14 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17114 Done
 
 [[tickets/T-17114-w3-rpg-bat-p14]] In Review to Done: code review against `CODING_STANDARDS.md` found one issue, fixed (FAKE marks on the first-symbol accesses to the slot table `D_8015EBAC` in `func_8013F82C` and `func_80140204`, comment-only). Rebuild OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 4 of 4 functions matched (`func_80136A9C`, `func_80140E70`, `func_8013F82C`, `func_80140204`; 4,320 bytes). Card moved in [[kanban]]. Merge via the wave 3 merge script.
+
+## [2026-10-16] ticket | T-17005 In Progress
+
+Opened [[tickets/T-17005-w3-main-p05]]: wave 3 package for `src/main/8005A0B0.c` (`pre_syogatu1`, `func_8005CA94`, `func_80060178`, `func_8005C14C`, `func_8005CC40`), parent [[tickets/T-17000-types-first-main]]. Worktree `tokimemo-wt/w3-main-p05`, branch `w3-main-p05`.
