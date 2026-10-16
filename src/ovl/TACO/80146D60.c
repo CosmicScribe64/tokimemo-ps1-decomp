@@ -45,7 +45,29 @@ void func_80146E3C(void) {
     func_8009B340(0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80146D60", func_80146F74);
+/* Same shape as func_80147488 (T-16561): a local for the coordinate object would add a stack home and move the spill slots. */
+void func_80146F74(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+    MATRIX matrix;
+    TcPos *pos;
+
+    matrix = *(MATRIX *)D_80125C60;
+    matrix.t[0] = ((TcTransformObj50 *)&D_80127480[arg0])->transform.t[0] + arg1;
+    matrix.t[1] = ((TcTransformObj50 *)&D_80127480[arg0])->transform.t[1] + arg2;
+    matrix.t[2] = ((TcTransformObj50 *)&D_80127480[arg0])->transform.t[2] + arg3;
+    if (arg7 != 0 && arg8 != 0) {
+        matrix.t[0] += (D_8015EDB4->unk74 - matrix.t[0]) / arg7;
+        matrix.t[1] += (D_8015EDB4->unk76 - matrix.t[1]) / arg8;
+    }
+    pos = &D_80128880[arg0];
+    pos->x += arg4;
+    func_8015D0D0((pos->x << 12) / 360, &matrix);
+    pos->z += arg6;
+    func_8015CF30((pos->z << 12) / 360, &matrix);
+    pos->y += arg5;
+    func_8015D270((pos->y << 12) / 360, &matrix);
+    ((TcTransformObj50 *)&D_80127480[arg0])->transform = matrix;
+    ((TcTransformObj50 *)&D_80127480[arg0])->unk_00 = 0;
+}
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: T-11300, 4 lines: before the second loop the original copies arg0 to $s4 (`move s4,s3; lw s6,4(s4); addiu s4,s4,8`), IDO folds the copy and reads 4(s3); a pointer local for it is folded too (funcdiff also shows one lui row from its HI16 pairing, not a real difference) */
