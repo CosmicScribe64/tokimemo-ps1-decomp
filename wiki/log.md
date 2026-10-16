@@ -15032,3 +15032,7 @@ Merged branch w1-p08 into w2-r08 (7 TAIIKU matches; main's func_80139330 kept an
 ## [2026-10-16] ticket | T-11640 Done
 
 Reviewed [[tickets/T-11640-w1-ovl-taiiku-80138950]] against `CODING_STANDARDS.md`: one finding (FAKE explanations for the s16 tmp/halfword views, fixed, comments only), no open findings. 10 wave-2 functions matched in `src/ovl/TAIIKU/80138950.c` (6,876 bytes), 6 more from the merged wave-1 branch, 4 guarded drafts. TAIIKU sha1 OK, headers OK, globals OK, `sync_protos.py --check-branch` OK. Moved to Done on the kanban board.
+
+## [2026-10-16] ingest | Register cheat sheet: wave 2 tricks
+
+Folded the wave-2 FAKE tricks and the wave-2 sections of [[matching-notes]] (T-11640, T-11650, T-11670, T-11690, T-16210, T-16220, T-16230; no notes exist yet for T-16240 to T-16440) into [[register-cheatsheet]]: 21 new rows (callee `int`/`void`/unprototyped views, delay-slot `lui` fixed by implicit int, absolute-address `lui`/`lw` split, strength-reduced `(start + i) % n`, spill-slot and frame rules, chain assignment with a call index, single `&&` return chain, narrow-field decrement through `GameState`, record copy through one array, `GameState *g` colouring, field types and register sharing, peeled copy, empty last switch case, `(u8)` narrowing, `u16`/`s16` pointer views of the TAIIKU counter family, dead selector reads, `setWH`, plain unrolled loops) and 8 existing rows extended with the wave-2 variants. Tricks already on the page from T-16220 (assign to the global, masked byte stores) were not repeated.
