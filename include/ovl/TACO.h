@@ -552,7 +552,7 @@ extern u8 D_801603EC;
 extern u8 D_801603ED;
 void func_8015266C(u32 arg0);
 void func_80152764(s32 arg0);
-extern s16 *D_80160444;
+extern s16 *D_80160444[]; /* six pointers: [0] 0x23's model, [1..4] the walk of func_80152944; T-16563 */
 #endif
 
 #ifndef OVL_TACO_T10010_SELECTION

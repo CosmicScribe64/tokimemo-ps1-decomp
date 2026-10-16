@@ -150,7 +150,7 @@ void func_8015266C(u32 arg0) {
         D_8015EDB4[17].unk2 = 0U;
         D_8015EDB4[17].unk3 = D_8015EDB4[17].unk2;
         func_801472D4(0x23, 0, D_801603A0, D_801603A4, D_801603EC, D_801603ED);
-        func_801478F8(0x23, (s32) D_80160444);
+        func_801478F8(0x23, (s32) D_80160444[0]);
         return;
     }
     D_8015EDB4[17].unk3 = D_8015EDB4[17].unk3 + 1;
@@ -158,21 +158,63 @@ void func_8015266C(u32 arg0) {
 
 void func_80152764(s32 arg0) {
     if (arg0 < 5) {
-        func_80147674(0x23, D_80160444, 1, 0, 0);
+        func_80147674(0x23, D_80160444[0], 1, 0, 0);
         return;
     }
     if ((arg0 >= 5) && (arg0 < 0xF)) {
-        func_80147674(0x23, D_80160444, 2, 0, 0);
+        func_80147674(0x23, D_80160444[0], 2, 0, 0);
         return;
     }
     if ((arg0 >= 0xF) && (arg0 < 0x14)) {
-        func_80147674(0x23, D_80160444, 1, 0, 0);
+        func_80147674(0x23, D_80160444[0], 1, 0, 0);
     }
 }
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152808);
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80151C30", func_80152944);
+void func_80152944(s32 arg0, s32 arg1) {
+    s32 i;
+
+    if (arg1 < 8) {
+        for (i = 0; i < 4; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 1, 0, 0);
+        }
+    } else if (arg1 >= 8 && arg1 < 0x10) {
+        for (i = 0; i < 4; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 2, 0, 0);
+        }
+    } else if (arg1 >= 0x10 && arg1 < 0x18) {
+        for (i = 0; i < 4; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 3, 0, 0);
+        }
+    } else if (arg1 >= 0x18 && arg1 < 0x20) {
+        for (i = 0; i < 4; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 4, 0, 0);
+        }
+    } else if (arg1 >= 0x20 && arg1 < 0x28) {
+        for (i = 0; i < 4; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 5, 0, 0);
+        }
+    } else if (arg1 >= 0x28 && arg1 < 0x2E) {
+        for (i = 0; i < 4; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 6, 0, 0);
+        }
+    } else if (arg1 >= 0x2E && arg1 < 0x36) {
+        for (i = 0; i < 3; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 7, 0, 0);
+        }
+    } else if (arg1 >= 0x36 && arg1 < 0x3E) {
+        for (i = 0; i < 3; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 8, 0, 0);
+        }
+        func_80147674(0x20, D_80160444[4], 7, 0, 0);
+    } else if (arg1 >= 0x3E && arg1 < 0x46) {
+        for (i = 0; i < 3; i++) {
+            func_80147674(arg0 + i, D_80160444[i + 1], 9, 0, 0);
+        }
+        func_80147674(0x20, D_80160444[4], 8, 0, 0);
+    }
+}
 
 void func_80152C60(s32 arg0) {
     if ((u32) arg0 < D_8015EDB4[18].unk3) {
