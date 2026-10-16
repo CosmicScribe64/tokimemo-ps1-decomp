@@ -96,9 +96,9 @@ void func_8014A42C(void) {
     func_8014F820();
 }
 
-/* NON_MATCHING: T-19003, 16 differing lines; the spill slots of arg1 * 2 and &D_80127480[arg0] sit 4 bytes low (0x38/0x34, original 0x3C/0x38) and the first `lui` of the second 0x40000000 branch is scheduled in the other order */
+/* NON_MATCHING: T-19003, 12 differing lines; the spill slots of arg1 * 2 and &D_80127480[arg0] sit 4 bytes low (0x38/0x34, original 0x3C/0x38): the original has four slot-taking locals and one more word below the spills. With o inline the spills sit right under the locals but the frame is 8 bytes short; chain assignments put their temporaries above the spills. s32 with no return fixed the lui order of the second 0x40000000 branch. */
 #ifdef NON_MATCHING
-void func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {
+s32 func_8014A480(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, s32 arg5) {
     MATRIX m;
     SVECTOR vec;
     SVECTOR rot;
@@ -1212,7 +1212,7 @@ void func_8014F2A0(void) {
     }
 }
 
-/* NON_MATCHING: T-19003, 14 differing lines; the original keeps the loaded unk_038 in $a1 and the chain value in $v0 (a uopt range, stored before the unk_1104 store-back), IDO gives $v0 and the ugen temporary $t8 */
+/* NON_MATCHING: T-19003, 11 differing lines; the two + 1 stores share $v0 and the unk_038++ store-back comes after the unk_1104 one, as in the original, but the ++ adds 1 again (addiu t8,a1,1) where the original stores $v0. Writing it as = unk_038 + 1 or += 1 shares the sum but drops the store-back (78 lines). */
 #ifdef NON_MATCHING
 void func_8014F5F0(void) {
     if (D_800E6280.unk_1104.u < 0x64U) {
@@ -1224,7 +1224,9 @@ void func_8014F5F0(void) {
         func_8014FBD4((D_800E6280.unk_1104.u - 0x3C) / 40U);
     } else if (D_800E6280.unk_1104.u >= 0x226U) {
         if (D_800E6280.unk_036 < 0xFFU) {
-            D_800E6280.unk_036 = D_800E6280.unk_037 = D_800E6280.unk_038 += 1;
+            D_800E6280.unk_037 = D_800E6280.unk_038 + 1;
+            D_800E6280.unk_036 = D_800E6280.unk_038 + 1;
+            D_800E6280.unk_038++;
             func_801517AC(D_800E6280.unk_1104.u - 0x226);
         } else {
             D_80122760 = 0x64;
@@ -1506,7 +1508,7 @@ void func_80150F44(s32 arg0) {
     }
 }
 
-/* NON_MATCHING: T-10850, 10 differing listing lines; see the ticket scratch evidence. */
+/* NON_MATCHING: T-10850, 10 differing lines; only the sw a1,0x3C(sp) home store sits after the inits. The empty test gives arg1 a split range in $a1 for the first block, so uopt stores it back at the end of that block; without it arg1 stays in memory, the home store moves up, but ugen spends $t6 on the home reload and every temporary is one higher. Comparing arg1 with the constant 0 lets IDO rewrite the test as p != D_8016024C (28-31 lines). T-19003 */
 #ifdef NON_MATCHING
 /* FAKE: split pointer setup and empty test preserve address temporaries. T-10850 */
 void func_801511C0(s32 arg0, s32 arg1)

@@ -15390,3 +15390,7 @@ Wave 3 package w3-d-p03 on `src/ovl/TACO/80149F90.c`: 0 of 5 functions matched. 
 
 ## [2026-10-16] build | T-19003 final checks
 Clean build 27/27, `check_headers`, `migrate_globals --check` and `sync_protos --check-branch` all OK on branch w3-d-p03. See [[tickets/T-19003-w3-d-p03]].
+
+## [2026-10-16] ticket | T-19003 closer pass
+Opus closer on w3-d-p03: `func_8014E5F8` matched (`s32` with no `return`; the T-0018 const-order case was a delay-slot effect). `func_8014A480` 16 -> 12 lines, `func_8014F5F0` 14 -> 11, `func_801511C0` unchanged at 10. `include/ovl/TACO.h` declares `func_8014E5F8` and `func_8014A480` as `s32`. Notes in [[matching-notes]] (T-19003, "Closer pass"), rows in [[data/t0018-cases]], comment in [[tickets/T-19003-w3-d-p03]]. Ticket stays In Review.
+
