@@ -66,6 +66,7 @@ Read this first. Update on every ingest or new page.
 - [[tickets/T-11800-tt-batch-7|T-11800]] TT batch 7: bulk_m2c rerun and two Opus passes (Done; 10 matches, TT 56.7%).
 - [[tickets/T-11670-w1-main-8006cb30|T-11670]] Wave 1 package w1-p11, resumed as w2-r11: main 8006CB30.c work list, 4 matched (Done).
 - [[tickets/T-11650-w1-ovl-name_ent-80132000|T-11650]] Wave 1 package w1-p09: NAME_ENT 80132000.c work list (Done; 16 matched, 8 of them in wave 2).
+- [[tickets/T-11690-w1-main-800674b0|T-11690]] Wave 1 package w1-p13: main `800674B0.c` work list (Done; 3 matches, `func_8006A2CC` in wave 2 as w2-r13).
 - [[tickets/T-11600-w1-ovl-event-8010fe10|T-11600]] Wave 1 package w1-p04: EVENT 8010FE10.c work list (Done; 10 of 12 matched, 3,676 bytes).
 - [[tickets/T-11610-w1-main-80042540|T-11610]] Wave 1 package w1-p05: main 80042540.c and 80058D20.c (Done; 7 of 10 matched, 80042540.c all C).
 - [[tickets/T-11570-w1-ovl-name_ent-80139740|T-11570]] Wave 1 package w1-p01: NAME_ENT 80139740.c guarded drafts (Done; no match, selector-copy family traced to uopt copy propagation).

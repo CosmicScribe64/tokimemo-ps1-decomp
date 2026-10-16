@@ -144,6 +144,8 @@ kanban-plugin: board
 - [ ] [[tickets/T-16230-w2-date-80150010|T-16230 Wave 2 package w2-p03]]
 - [ ] [[tickets/T-11650-w1-ovl-name_ent-80132000|T-11650 Wave 1 package w1-p09]]
 
+- [ ] [[tickets/T-11690-w1-main-800674b0|T-11690 Wave 1 package w1-p13]]
+
 - [ ] [[tickets/T-13901-geko-families|T-13901 GEKO bounded family reconstruction]]
 
 - [ ] [[tickets/T-12802-tel|T-12802 TEL table and control flow matching]]

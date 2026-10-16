@@ -93,7 +93,51 @@ void func_8006764C(s32 arg0) {
     }
 }
 
+/* NON_MATCHING: T-11690, 11 differing lines; IDO keeps arg0 in $a1 (move a1,a0 at entry) and hoists li a0,27
+ * into the bnez delay slot, the original stores arg0 to D_800B5C08 straight from $a0. Index local, if/else and
+ * goto spellings give the same (T-9730 tried void/s32 and a 300-second permuter). */
+#ifdef NON_MATCHING
+void func_800676AC(s32 arg0) {
+    if (arg0 == 0 || arg0 >= 0xE) {
+        D_80125C50 = 0x78;
+        D_80125C52 = -0x37;
+        D_80125C54 = 0xF;
+        D_80125C55 = 8;
+        D_800B5C08 = 0;
+        func_8006764C(0);
+        return;
+    }
+    D_800B5C08 = arg0;
+    func_80048F64(0x1B);
+    D_8011ECD0[0x1B].unk_01 = 1;
+    D_8011ECD0[0x1B].unk_02 = 0x40;
+    D_8011ECD0[0x1B].unk_38 = 0x40000000;
+    D_8011ECD0[0x1B].unk_03 = 0x84;
+    D_8011ECD0[0x1B].unk_0C = D_800C5FD4;
+    D_8011ECD0[0x1B].unk_10 = D_800C6010;
+    D_8011ECD0[0x1B].unk_34 = (u8 *)&D_800C5FCC;
+    D_8011ECD0[0x1B].unk_14 = D_800C6014;
+    D_8011ECD0[0x1B].unk_04 = 8;
+    D_8011ECD0[0x1B].unk_05 = 1;
+    D_8011ECD0[0x1B].unk_16 = 0;
+    D_8011ECD0[0x1B].unk_18 = D_800B5C08 - 1;
+    func_80048F64(0x1C);
+    D_8011ECD0[0x1C].unk_01 = 1;
+    D_8011ECD0[0x1C].unk_02 = 0x40;
+    D_8011ECD0[0x1C].unk_38 = 0x40000000;
+    D_8011ECD0[0x1C].unk_03 = 0x84;
+    D_8011ECD0[0x1C].unk_0C = D_800C5FD4;
+    D_8011ECD0[0x1C].unk_10 = D_800C6010;
+    D_8011ECD0[0x1C].unk_34 = (u8 *)&D_800C5FCC;
+    D_8011ECD0[0x1C].unk_14 = D_800C6014;
+    D_8011ECD0[0x1C].unk_04 = 8;
+    D_8011ECD0[0x1C].unk_05 = 1;
+    D_8011ECD0[0x1C].unk_16 = 0;
+    D_8011ECD0[0x1C].unk_18 = 0xD;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800676AC);
+#endif
 
 /* NON_MATCHING: T-11100, 142 words differ in registers (14 structural): the original loads D_800B5C08 into $a3 and
  * passes it with `move a0,a3`, and keeps D_80125C54 in $a2 and the D_80125C5x values in other temporaries (T-0018 style
@@ -189,7 +233,59 @@ void func_80067870(void) {
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067870);
 #endif
 
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_80067C28);
+/* FAKE: the second `max` loop is dead (max is never read) and the u8 view of the s8 field unk_03C gives the original lbu;
+ * both are needed for the bytes, real source unknown. T-11690 */
+void func_80067C28(void) {
+    s32 max;
+    s32 level;
+    s32 n;
+    s32 i;
+    u8 k;
+
+    if (*(u8 *)&D_800E6280.unk_03C != 0) {
+        if (func_800460EC() & 4) {
+            level = getCDlevel() + 1;
+        } else {
+            level = 0;
+        }
+        D_80125C80[D_800E6280.unk_10F8 & 3] = level;
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        max = 0;
+        for (i = 0; i < 4; i++) {
+            if (max < D_80125C80[i]) {
+                max = D_80125C80[i];
+            }
+        }
+        n = 0;
+        k = D_800E6280.unk_F5F;
+        for (i = 0; i < 3; i++) {
+            if (D_800B5A68[k][i] < level) {
+                n = i + 1;
+            }
+        }
+        if (n >= 4) {
+            n = 3;
+        }
+        if (D_80120668 == 0 || !(D_800E6280.unk_10F8 & 1)) {
+            if (level == 0) {
+                D_80120668 = 0;
+            } else if (n == 0) {
+                D_80120668 = 0;
+            } else if (n == 1) {
+                D_80120668 = 1;
+            } else if (n == 2) {
+                D_80120668 = 2;
+            } else if (n >= 3) {
+                D_80120668 = 3;
+            }
+        }
+    }
+}
 
 /* FAKE: promoted halfword and byte alias retain the final andi before flag storage. T-9550 */
 s32 func_80067DD4(void)
@@ -610,19 +706,20 @@ INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_800696DC);
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A044);
 
-/* NON_MATCHING: T-11100, ~115 differing words: the store triples (unk_18/unk_26/unk_2A of the next DisplayRecord44) are
- * emitted in other orders in several branches (e.g. 26,18,2A or 2A,26,18 with the same constant registers), and the
- * unk_03E/unk_03F byte loads come in the other order at the start of the switch tail. Reordering the C statements
- * changes the constant registers instead; a record pointer local did not help. */
-#ifdef NON_MATCHING
+/* FAKE: each record triple (unk_18/unk_26/unk_2A) after the loop is written on one line, as from a macro (none is known):
+ * as1 schedules by source line and the grouping sets the store order in each branch. T-11690 */
 void func_8006A2CC(void) {
-    s32 pad1;
-    s32 var_v1;
-    s32 var_v1_2;
-    s32 pad2;
-    s32 sp3C;
+    u8 eight; /* FAKE: a named 8 gives the original `beq a1,t0` in cases 8-10 (a literal gives `beq t0,a1`). T-11690 */
+    s32 i;
+    s32 n;
+    s32 pad; /* FAKE: keeps the original frame slot between n and kind; real local unknown. T-11690 */
+    s32 kind;
 
-    var_v1 = D_800E6280.unk_03F;
+    eight = 8;
+    /* FAKE: dead reads of both selectors; without them uopt does not promote unk_03E and gives unk_03F $a2 instead
+     * of $t0. T-11690 */
+    i = D_800E6280.unk_03F;
+    n = D_800E6280.unk_03E;
     func_80048E78();
     func_80048F64(0x60);
     D_8011ECD0[96].unk_01 = 5;
@@ -638,25 +735,25 @@ void func_8006A2CC(void) {
     D_8011ECD0[96].unk_18 = 0x76;
     D_8011ECD0[96].unk_26 = 0;
     D_8011ECD0[96].unk_2A = -0x28;
-    for (var_v1 = 0; var_v1 < 0x20; var_v1++) {
-        func_80048F64(var_v1 + 0x61);
-        D_8011ECD0[var_v1 + 0x61].unk_01 = 4;
-        D_8011ECD0[var_v1 + 0x61].unk_02 = 0x40;
-        D_8011ECD0[var_v1 + 0x61].unk_38 = 0;
-        D_8011ECD0[var_v1 + 0x61].unk_03 = 0x84;
-        D_8011ECD0[var_v1 + 0x61].unk_0C = sprite_frame_table;
-        D_8011ECD0[var_v1 + 0x61].unk_10 = D_800C9A14;
-        D_8011ECD0[var_v1 + 0x61].unk_34 = D_800C9730;
-        D_8011ECD0[var_v1 + 0x61].unk_14 = D_800C9A54;
-        D_8011ECD0[var_v1 + 0x61].unk_04 = 8;
-        D_8011ECD0[var_v1 + 0x61].unk_05 = 1;
-        D_8011ECD0[var_v1 + 0x61].unk_06 = 8;
-        D_8011ECD0[var_v1 + 0x61].unk_18 = 0;
-        D_8011ECD0[var_v1 + 0x61].unk_26 = 0x100;
-        D_8011ECD0[var_v1 + 0x61].unk_2A = 0x100;
-        D_8011ECD0[var_v1 + 0x61].unk_07 = 0x80;
+    for (i = 0; i < 0x20; i++) {
+        func_80048F64(i + 0x61);
+        D_8011ECD0[i + 0x61].unk_01 = 4;
+        D_8011ECD0[i + 0x61].unk_02 = 0x40;
+        D_8011ECD0[i + 0x61].unk_38 = 0;
+        D_8011ECD0[i + 0x61].unk_03 = 0x84;
+        D_8011ECD0[i + 0x61].unk_0C = sprite_frame_table;
+        D_8011ECD0[i + 0x61].unk_10 = D_800C9A14;
+        D_8011ECD0[i + 0x61].unk_34 = D_800C9730;
+        D_8011ECD0[i + 0x61].unk_14 = D_800C9A54;
+        D_8011ECD0[i + 0x61].unk_04 = 8;
+        D_8011ECD0[i + 0x61].unk_05 = 1;
+        D_8011ECD0[i + 0x61].unk_06 = 8;
+        D_8011ECD0[i + 0x61].unk_18 = 0;
+        D_8011ECD0[i + 0x61].unk_26 = 0x100;
+        D_8011ECD0[i + 0x61].unk_2A = 0x100;
+        D_8011ECD0[i + 0x61].unk_07 = 0x80;
     }
-    var_v1_2 = 0x61;
+    n = 0x61;
     switch (D_800E6280.unk_03F) {
     case 2:
     case 3:
@@ -664,42 +761,34 @@ void func_8006A2CC(void) {
         if (D_800E6280.unk_03E == 0x5F) {
             D_8011ECD0[0x61].unk_18 = 0x79;
             D_8011ECD0[0x61].unk_26 = 0;
-            sp3C = 0;
+            kind = 0;
             D_8011ECD0[0x61].unk_2A = -0x28;
-            var_v1_2++;
+            n++;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E0C, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E25, 0);
         }
         if (D_800E6280.unk_03E == 0x60) {
-            sp3C = 4;
+            kind = 4;
             if (D_800E6280.unk_03F != 2) {
                 D_800E6280.unk_120[13] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x7A;
-            D_8011ECD0[var_v1_2].unk_26 = 0;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
-            D_8011ECD0[var_v1_2].unk_18 = 0x81;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x7A; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
+            D_8011ECD0[n].unk_18 = 0x81; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x61) {
-            sp3C = 8;
+            kind = 8;
             if (D_800E6280.unk_03F != 2) {
                 D_800E6280.unk_120[11] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x7A;
-            D_8011ECD0[var_v1_2].unk_26 = 0;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
-            D_8011ECD0[var_v1_2].unk_18 = 0x84;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x7A; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
+            D_8011ECD0[n].unk_18 = 0x84; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x62) {
-            sp3C = 0xC;
+            kind = 0xC;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
@@ -707,32 +796,26 @@ void func_8006A2CC(void) {
     case 5:
     case 6:
     case 7:
-        D_8011ECD0[0x61].unk_18 = 0x7B;
-        D_8011ECD0[0x61].unk_26 = 0;
-        D_8011ECD0[0x61].unk_2A = -0x28;
-        var_v1_2++;
+        D_8011ECD0[0x61].unk_18 = 0x7B; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        n++;
         if (D_800E6280.unk_03E == 0x5F) {
-            sp3C = 1;
+            kind = 1;
             if (D_800E6280.unk_03F != 5) {
                 D_800E6280.unk_120[1] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x7E;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x7E; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x60) {
-            sp3C = 5;
+            kind = 5;
             if (D_800E6280.unk_03F != 5) {
                 D_800E6280.unk_120[5] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x82;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x82; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x61) {
-            sp3C = 9;
+            kind = 9;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E3E, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E57, 0);
         }
@@ -740,171 +823,128 @@ void func_8006A2CC(void) {
     case 8:
     case 9:
     case 10:
-        D_8011ECD0[0x61].unk_18 = 0x7C;
-        D_8011ECD0[0x61].unk_26 = 0;
-        D_8011ECD0[0x61].unk_2A = -0x28;
-        var_v1_2++;
+        D_8011ECD0[0x61].unk_18 = 0x7C; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        n++;
         if (D_800E6280.unk_03E == 0x5F) {
-            sp3C = 2;
-            if (D_800E6280.unk_03F != 8) {
+            kind = 2;
+            if (D_800E6280.unk_03F != eight) {
                 D_800E6280.unk_120[7] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x7F;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x7F; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x60) {
-            sp3C = 6;
-            if (D_800E6280.unk_03F != 8) {
+            kind = 6;
+            if (D_800E6280.unk_03F != eight) {
                 D_800E6280.unk_120[10] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x83;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x83; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x61) {
-            sp3C = 0xA;
+            kind = 0xA;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E3E, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E57, 0);
         }
         break;
     case 11:
     case 12:
-        D_8011ECD0[0x61].unk_18 = 0x7D;
-        D_8011ECD0[0x61].unk_26 = 0;
-        D_8011ECD0[0x61].unk_2A = -0x28;
-        var_v1_2++;
+        D_8011ECD0[0x61].unk_18 = 0x7D; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        n++;
         if (D_800E6280.unk_03E == 0x5F) {
-            sp3C = 3;
+            kind = 3;
             if (D_800E6280.unk_03F == 0xC) {
                 D_800E6280.unk_120[3] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x80;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x80; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x60) {
-            sp3C = 7;
+            kind = 7;
             if (D_800E6280.unk_03F == 0xC) {
                 D_800E6280.unk_120[6] = 1;
             }
-            D_8011ECD0[var_v1_2].unk_18 = 0x85;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x85; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x61) {
-            sp3C = 0xB;
+            kind = 0xB;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
         break;
     case 1:
-        D_8011ECD0[0x61].unk_18 = 0x7D;
-        D_8011ECD0[0x61].unk_26 = 0;
-        D_8011ECD0[0x61].unk_2A = -0x28;
-        var_v1_2++;
+        D_8011ECD0[0x61].unk_18 = 0x7D; D_8011ECD0[0x61].unk_26 = 0; D_8011ECD0[0x61].unk_2A = -0x28;
+        n++;
         if (D_800E6280.unk_03E == 0x60) {
+            kind = 3;
             D_800E6280.unk_120[3] = 1;
-            sp3C = 3;
-            D_8011ECD0[var_v1_2].unk_18 = 0x80;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x80; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x61) {
+            kind = 7;
             D_800E6280.unk_120[6] = 1;
-            sp3C = 7;
-            D_8011ECD0[var_v1_2].unk_18 = 0x85;
-            D_8011ECD0[var_v1_2].unk_26 = 8;
-            D_8011ECD0[var_v1_2].unk_2A = -0x28;
-            var_v1_2++;
+            D_8011ECD0[n].unk_18 = 0x85; D_8011ECD0[n].unk_26 = 8; D_8011ECD0[n].unk_2A = -0x28;
+            n++;
         }
         if (D_800E6280.unk_03E == 0x62) {
-            sp3C = 0xB;
+            kind = 0xB;
             set_kanji_string(-0x9E, -0x3C, 3U, D_800B5E70, 0);
             set_kanji_string(-0x9E, -0x2C, 3U, D_800B5E89, 0);
         }
         break;
     }
     if ((D_800E6280.unk_03E != 0x5F) || (D_800E6280.unk_03F >= 6U)) {
-        D_8011ECD0[var_v1_2].unk_18 = 0x77;
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
+        D_8011ECD0[n].unk_18 = 0x77; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
     }
     if (D_800E6280.unk_03E == 0x5F) {
-        D_8011ECD0[var_v1_2].unk_18 = (s16) (sp3C + 0x97);
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
+        D_8011ECD0[n].unk_18 = (s16) (kind + 0x97); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
     } else if ((D_800E6280.unk_03E == 0x60) && (D_800E6280.unk_03F < 2U)) {
-        D_8011ECD0[var_v1_2].unk_18 = (s16) (sp3C + 0x97);
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
+        D_8011ECD0[n].unk_18 = (s16) (kind + 0x97); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
     } else {
-        D_8011ECD0[var_v1_2].unk_01++;
-        D_8011ECD0[var_v1_2].unk_18 = 0x78;
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
-        D_8011ECD0[var_v1_2].unk_18 = (s16) (D_800B3750[sp3C][0] + 0x90);
-        D_8011ECD0[var_v1_2].unk_26 = 0x110;
-        D_8011ECD0[var_v1_2].unk_2A = 0x18;
-        var_v1_2++;
-        D_8011ECD0[var_v1_2].unk_18 = (s16) (D_800B3750[sp3C][1] + 0x90);
-        D_8011ECD0[var_v1_2].unk_26 = 0x110;
-        D_8011ECD0[var_v1_2].unk_2A = 0x28;
-        var_v1_2++;
-        D_8011ECD0[var_v1_2].unk_18 = (s16) (D_800B3750[sp3C][2] + 0x90);
-        D_8011ECD0[var_v1_2].unk_26 = 0x110;
-        D_8011ECD0[var_v1_2].unk_2A = 0x38;
-        var_v1_2++;
-        set_kanji_string(0x100, 0x10, 6U, D_800B32CC[(sp3C * 3 + 2) % 12], 0);
-        set_kanji_string(0x100, 0x20, 6U, D_800B32CC[(sp3C * 3 + 3) % 12], 0);
-        set_kanji_string(0x100, 0x30, 6U, D_800B32CC[(sp3C * 3 + 4) % 12], 0);
+        D_8011ECD0[n].unk_01++;
+        D_8011ECD0[n].unk_18 = 0x78; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
+        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][0] + 0x90); D_8011ECD0[n].unk_26 = 0x110; D_8011ECD0[n].unk_2A = 0x18;
+        n++;
+        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][1] + 0x90); D_8011ECD0[n].unk_26 = 0x110; D_8011ECD0[n].unk_2A = 0x28;
+        n++;
+        D_8011ECD0[n].unk_18 = (s16) (D_800B3750[kind][2] + 0x90); D_8011ECD0[n].unk_26 = 0x110; D_8011ECD0[n].unk_2A = 0x38;
+        n++;
+        set_kanji_string(0x100, 0x10, 6U, D_800B32CC[(kind * 3 + 2) % 12], 0);
+        set_kanji_string(0x100, 0x20, 6U, D_800B32CC[(kind * 3 + 3) % 12], 0);
+        set_kanji_string(0x100, 0x30, 6U, D_800B32CC[(kind * 3 + 4) % 12], 0);
     }
-    if (D_800B5DFC[sp3C] != 0xFF) {
-        D_8011ECD0[var_v1_2].unk_18 = (s16) D_800B5DFC[sp3C];
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
+    if (D_800B5DFC[kind] != 0xFF) {
+        D_8011ECD0[n].unk_18 = (s16) D_800B5DFC[kind]; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
     }
-    set_kanji_string(0x20, -0x5E, 7U, D_800B5D1C[sp3C], 0);
-    if (D_800B5D0C[sp3C] != 0xFF) {
-        D_8011ECD0[var_v1_2].unk_18 = (s16) D_800B5D0C[sp3C];
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
+    set_kanji_string(0x20, -0x5E, 7U, D_800B5D1C[kind], 0);
+    if (D_800B5D0C[kind] != 0xFF) {
+        D_8011ECD0[n].unk_18 = (s16) D_800B5D0C[kind]; D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
     }
-    set_kanji_string(0x20, -0x3E, 8U, D_800B5C2C[sp3C], 0);
-    if (sp3C < 4) {
-        D_8011ECD0[var_v1_2].unk_18 = (s16) ((sp3C & 3) + 0x97);
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
+    set_kanji_string(0x20, -0x3E, 8U, D_800B5C2C[kind], 0);
+    if (kind < 4) {
+        D_8011ECD0[n].unk_18 = (s16) ((kind & 3) + 0x97); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
     }
-    if (sp3C >= 4) {
-        D_8011ECD0[var_v1_2].unk_18 = (s16) ((sp3C & 3) + 0x93);
-        D_8011ECD0[var_v1_2].unk_26 = 0;
-        D_8011ECD0[var_v1_2].unk_2A = -0x28;
-        var_v1_2++;
+    if (kind >= 4) {
+        D_8011ECD0[n].unk_18 = (s16) ((kind & 3) + 0x93); D_8011ECD0[n].unk_26 = 0; D_8011ECD0[n].unk_2A = -0x28;
+        n++;
     }
-    set_kanji_string(-0x8F, -0xE, 6U, D_800B5EA4[sp3C][0], 0);
-    set_kanji_string(-0x8F, 2, 6U, D_800B5EA4[sp3C][1], 0);
-    set_kanji_string(-0x8F, 0x12, 6U, D_800B5EA4[sp3C][2], 0);
+    set_kanji_string(-0x8F, -0xE, 6U, D_800B5EA4[kind][0], 0);
+    set_kanji_string(-0x8F, 2, 6U, D_800B5EA4[kind][1], 0);
+    set_kanji_string(-0x8F, 0x12, 6U, D_800B5EA4[kind][2], 0);
     k_sub_reset_point_set();
     k_sub_disp_start(0);
     gnsx(&D_800E6280.unk_0D4[0]);
-    sndisp(D_800B66A4[sp3C], 0, 0x1F);
+    sndisp(D_800B66A4[kind], 0, 0x1F);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006A2CC);
-#endif
 
 s32 appointment_find_today(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
@@ -973,10 +1013,8 @@ void func_8006B5BC(GsWord arg0) {
 void func_8006B640(void) {
 }
 
-/* NON_MATCHING: T-11040, 10 differing lines: the loop test is `li at,11; bne s0,at` where the original keeps `slti at,s0,11; bnez` (uopt counted-loop normalisation), and the constants for the cancel entry (li a0,40 / a1,8) come after li t9,64 / t0,16 where the original has them first. Frame, array slots and registers match (arrays x,y,w,h declared in that order; `first`,`i` and a pad above them). */
-#ifdef NON_MATCHING
 void club_list_menu(void) {
-    s32 pad[2];
+    s32 pad[2]; /* FAKE: reproduces the original's 8-byte gap above `first`; real locals unknown. T-11690 */
     s32 first;
     s32 i;
     s16 x[12];
@@ -1014,18 +1052,18 @@ void club_list_menu(void) {
             w[i] = 0;
         }
     }
-    w[11] = 0x40;
-    h[11] = 0x10;
-    set_kanji_string(x[11] = 0x28, y[11] = 8, 3, "取り消し", 0);
+    i = 11;
+    x[i] = 0x28;
+    y[i] = 8;
+    w[i] = 0x40;
+    h[i] = 0x10;
+    set_kanji_string(x[i], y[i], 3, "取り消し", 0);
     menu_set(1, 0xC, x, y, w, h);
     D_800E6280.unk_1094 = first;
     k_sub_reset_point_set();
     sndi("入部する部活を選択してください", 0, 0xFF);
     k_sub_disp_start(1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/main/800674B0", club_list_menu);
-#endif
 
 void func_8006B900(void) {
     s32 i;
@@ -1041,7 +1079,46 @@ void func_8006B900(void) {
 
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BA40);
 
+/* NON_MATCHING: T-11690, 17 differing lines; the original loads D_800B6708 once into $v0 in the dispatch block
+ * (arg0 reloaded into $v1), IDO loads it at the top of each arm; a local copy (s32, s16, u16, s8) is sunk the same way. */
+#ifdef NON_MATCHING
+void func_8006BC28(s32 arg0) {
+    s16 sp2E;
+    s16 sp2C;
+
+    sp2E = D_8011ECD0[0].unk_26;
+    sp2C = D_8011ECD0[0].unk_2A;
+    func_80048F64(0);
+    D_8011ECD0[0].unk_01 = 1;
+    D_8011ECD0[0].unk_02 = 0x40;
+    D_8011ECD0[0].unk_38 = 0;
+    D_8011ECD0[0].unk_03 = 0x84;
+    D_8011ECD0[0].unk_0C = sprite_frame_table;
+    D_8011ECD0[0].unk_10 = D_800C9A14;
+    D_8011ECD0[0].unk_34 = D_800C9730;
+    D_8011ECD0[0].unk_14 = D_800C9A54;
+    D_8011ECD0[0].unk_04 = 8;
+    D_8011ECD0[0].unk_05 = 1;
+    D_8011ECD0[0].unk_16 = 0;
+    switch (arg0) {
+    case 0:
+    default:
+        if (D_800B6708 == 0 || (s32)D_800B6708 < 0x9B || (D_8011ECD0[0].unk_18 = D_800B6708, (s32)D_800B6708 >= 0xAE)) {
+            D_8011ECD0[0].unk_18 = 0;
+        }
+        break;
+    case 1:
+        if (D_800B6708 == 0 || (s32)D_800B6708 < 0x9B || (D_8011ECD0[0].unk_18 = D_800B6708, (s32)D_800B6708 >= 0xAE)) {
+            D_8011ECD0[0].unk_18 = 0;
+        }
+        break;
+    }
+    D_8011ECD0[0].unk_26 = sp2E;
+    D_8011ECD0[0].unk_2A = sp2C;
+}
+#else
 INCLUDE_ASM("asm/nonmatchings/main/800674B0", func_8006BC28);
+#endif
 
 void func_8006BD6C(s32 arg0) {
     if (arg0 == 1) {

@@ -14998,3 +14998,18 @@ Created [[tickets/T-11650-w1-ovl-name_ent-80132000]] (In Progress): wave 1 packa
 ## [2026-10-16] ticket | T-11650 Done
 
 [[tickets/T-11650-w1-ovl-name_ent-80132000]] reviewed against `CODING_STANDARDS.md` and moved to Done: 8 functions matched in wave 2 (16 for the ticket) in `src/ovl/NAME_ENT/80132000.c`. Review fixes were comments only (lines left on the func_80134248 guard, `FAKE` marks on the u8-view casts, implicit-int notes). Clean build 27/27 sha1 OK.
+## [2026-10-15] ticket | T-11690 opened
+
+Created [[tickets/T-11690-w1-main-800674b0]] (In Progress): wave 1 package w1-p13, twelve functions of `src/main/800674B0.c`.
+
+## [2026-10-15] ticket | T-11690 resumed in wave 2 as w2-r13
+
+Merged branch w1-p13 (club_list_menu and func_80067C28 matched) onto w2-good in worktree w2-r13 under [[tickets/T-16200-matching-wave-2]]. Conflicts only in wiki index, kanban and log; all 27 sha1 OK after the merge. [[tickets/T-11690-w1-main-800674b0]] stays In Progress.
+
+## [2026-10-15] ticket | T-11690 to In Review (w2-r13)
+
+[[tickets/T-11690-w1-main-800674b0]] moved to In Review. Wave 2 matched 1 function, `func_8006A2CC` (3112 bytes), for 3 in total with the wave 1 matches `club_list_menu` and `func_80067C28`. Guarded drafts: `func_8006BC28` (17 lines), `func_800676AC` (11 lines). Notes in [[matching-notes]] ("T-11690"), new rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-11690 Done
+
+Code review of w2-r13 against CODING_STANDARDS.md: 4 findings (unmarked fakematches in `func_80067C28` and `func_8006A2CC`, a FAKE ticket reference, an indentation slip), all fixed in the worktree, build checks OK. [[tickets/T-11690-w1-main-800674b0]] moved to Done with 3 functions matched (`club_list_menu`, `func_80067C28`, `func_8006A2CC`); guarded drafts `func_8006BC28` and `func_800676AC`.
