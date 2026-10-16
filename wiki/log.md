@@ -15898,3 +15898,15 @@ Created [[tickets/T-18700-types-first-bunkasai]] (branch `w3-bunkasai-types` fro
 ## [2026-10-16] ticket | T-19018 Done
 
 [[tickets/T-19018-w3-d-p18]] In Review to Done after the code review: wave 3 package w3-d-p18 (TACO `src/ovl/TACO/8013D1E0.c`, `src/ovl/TACO/80153AA0.c`), 1 of 3 functions matched (784 bytes: `func_8013D528`, plain C with two FAKE marks, ticketed), `func_8013D838` guarded at 10 rows (NON_MATCHING comment with T-19018), `func_80153B38` stays `INCLUDE_ASM` (175 rows). No findings. TACO SHA1 OK, headers, globals and proto checks OK.
+
+## [2026-10-16] ticket | T-19020 started
+[[tickets/T-19020-w3-d-p20]] created In Progress: Wave 3 direct package w3-d-p20, RENSYU `src/ovl/RENSYU/80132040.c`, four functions (`func_80133CB8`, `func_80133990`, `func_80133628`, `func_8013325C`). Branch w3-d-p20 from w2-good.
+
+## [2026-10-16] build | T-19020 RENSYU func_80133CB8 matched
+RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/80132040.c`, commit "T-19020: match RENSYU:func_80133CB8"). FAKE: `i = 1; if (i) {}` after the counter statement plus the loop on the previous line. The `unk_66C` counter is `RensyuClubCount` (`->count++`). Notes in [[matching-notes]] ("T-19020"), idiom in [[register-cheatsheet]], row in [[data/t0018-cases]]. Other three functions of [[tickets/T-19020-w3-d-p20]] not matched.
+
+## [2026-10-16] ticket | T-19020 In Review
+[[tickets/T-19020-w3-d-p20]] In Progress to In Review: RENSYU package, 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE: empty test and same-line loop give the original's block boundary and `lui` order). `func_80133628` stays a guarded draft (21 lines), `func_80133990` (78 lines) and `func_8013325C` (about 100) are back to `INCLUDE_ASM` with drafts in `drafts/T-19020/RENSYU/`. New: bit-field counter `RensyuClubCount`, stack table layout rule, block-boundary idiom in [[register-cheatsheet]]; notes in [[matching-notes]], rows in [[data/t0018-cases]].
+
+## [2026-10-16] ticket | T-19020 Done
+[[tickets/T-19020-w3-d-p20]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RENSYU OK (headers OK, globals OK, sha1 OK). 1 of 4 functions matched (`func_80133CB8`, 420 bytes, FAKE), `func_80133628` stays a guarded draft (21 lines), `func_80133990` and `func_8013325C` stay `INCLUDE_ASM`. Merge via the wave 3 merge script.
