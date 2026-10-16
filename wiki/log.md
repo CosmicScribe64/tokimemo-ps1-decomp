@@ -16059,3 +16059,12 @@ Opus closer, worktree `w3-d-p26`, 16:22-16:45 UTC. `func_8015B1B8` stays guarded
 
 ## [2026-10-16] ticket | T-17201 started
 [[tickets/T-17201-w3-date-p01]] created In Progress: Wave 3 package w3-date-p01, DATE `src/ovl/DATE/801461B0.c`, two functions (`func_80147958`, `func_8014718C`). Branch w3-date-p01 from w2-good. Links [[tickets/T-17200-types-first-date]].
+
+## [2026-10-16] build | T-17201 DATE func_80147958 matched
+DATE `func_80147958` (4,044 bytes) matched in plain C, unit sha1 OK (`src/ovl/DATE/801461B0.c`, commit "T-17201: match DATE:func_80147958"). The guarded draft had four fade rows; comparing the `u8` local `value` (not the masked `color`) in the fade-in and fade-out steps gives the original registers and keeps the ugen temporary numbering. Found by a 42-variant grid. See [[matching-notes]] ("T-17201").
+
+## [2026-10-16] build | T-17201 DATE func_8014718C guarded at 26 lines
+DATE `func_8014718C` (1,996 bytes) rewritten by hand from the `func_80147958` shape (672 rows before, 26 differing lines now), kept under `#ifdef NON_MATCHING` in `src/ovl/DATE/801461B0.c`. Left: fade-step sum in v0 (original a1) and the tail timer web. Row in [[data/t0018-cases]]; `include/ovl/DATE.h` declares it `s32`.
+
+## [2026-10-16] ticket | T-17201 In Review
+[[tickets/T-17201-w3-date-p01]] In Progress to In Review: 1 of 2 functions matched (`func_80147958`), `func_8014718C` guarded at 26 lines. Notes in [[matching-notes]], rows in [[register-cheatsheet]] and [[data/t0018-cases]], family page [[date-family-results]] updated.
