@@ -174,3 +174,7 @@ New in `TACO.h`: `D_80160290` (`TcPair8[]`) and `D_801603A8` (`TcPair2[]`) read 
 ## Matching stage, package w3-d-p18 (T-19018)
 
 [[tickets/T-19018-w3-d-p18]] (`8013D1E0.c`, `80153AA0.c`): `func_8013D528` (the billboard quad, 784 bytes) matched, a clone of `func_80140ADC` (FAKE `pad[2]` and a one-line `setUVWH` expansion); `func_8013D838` (its large twin, 840 bytes) stays a 10-row guarded draft; `func_80153B38` (the 40-triangle fan, 832 bytes) stays `INCLUDE_ASM` at 175 rows. The frame rule refined there (declared scalars before the aggregates are the bytes above them) and the counter, store-order and colour-byte findings are in [[matching-notes]], "T-19018".
+
+## Matching stage, package w3-d-p25 (T-19025)
+
+[[tickets/T-19025-w3-d-p25]] (`80132220.c`, the two actor input/AI functions and their callers' helpers): `func_8013356C` (the four-way unrolled `unk13` clear of `D_8015EB30`) and `func_801328B0` (the second actor's AI, 1,848 bytes, FAKE pads for four frame words) matched; `func_80132FE8` (input collector, 10 rows) and `func_8013240C` (stick mover, 10 rows) stay guarded drafts. `func_80132FE8` takes no arguments (callers pass none). `D_800E7200`, `D_800E7208` and `D_800E7378` are `D_800E6280.unk_F80`, `unk_F88` and `unk_10F8`. Details, the ugen-order fix by a pointer local and the `funcdiff` guarded-neighbour gotcha: [[matching-notes]], "T-19025".

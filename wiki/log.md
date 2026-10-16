@@ -15913,3 +15913,6 @@ RENSYU `func_80133CB8` (420 bytes) matched, unit sha1 OK (`src/ovl/RENSYU/801320
 
 ## [2026-10-16] ticket | T-19025 In Progress
 [[tickets/T-19025-w3-d-p25]] created and started: Wave 3 package for TACO `src/ovl/TACO/80132220.c` (`func_8013356C`, `func_80132FE8`, `func_8013240C`, `func_801328B0`), worktree `tokimemo-wt/w3-d-p25`, branch `w3-d-p25`.
+
+## [2026-10-16] ticket | T-19025 In Review
+[[tickets/T-19025-w3-d-p25]] In Progress to In Review: TACO `src/ovl/TACO/80132220.c`, 2 of 4 functions matched (`func_8013356C` 48 bytes, `func_801328B0` 1,848 bytes, FAKE unused locals for four frame words and the pointer local `q` in a pad slot). `func_80132FE8` and `func_8013240C` stay guarded drafts at 10 differing lines each (register of two `D_8015EDE4` constant ranges; result variable `r` in `$a0`). Notes in [[matching-notes]] (T-19025), two rows in [[register-cheatsheet]], rows in [[data/t0018-cases]], section in [[taco-family-results]]. Tool finding: `funcdiff` can report a size difference from guarded neighbours in the same unit; make the function plain and let the unit sha1 decide.
