@@ -965,7 +965,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B78C);
 
 INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013B94C);
 
-/* FAKE: T-11640, same views as func_8013C33C (counter and flag reloaded per block). */
+/* FAKE: T-11640, same views as func_8013C33C (counter and flag reloaded per block, tmp split into s16 halves). */
 void func_8013BB3C(void) {
     s32 tmp;
 
@@ -1009,6 +1009,7 @@ INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_8013BCEC);
 /* FAKE: T-11640. The counter D_801499A0.unk_02 and the flag D_801499B0[0].val are read through u16 pointer
  * views: with the plain field IDO keeps a CVT copy of the promoted counter in a second register, and the
  * volatile D_801499B2 of func_8013C33C stops the lui of the flag load from moving into the branch delay slot.
+ * tmp is a stack word whose halves are written and read through s16 views (as in func_8013C33C).
  * Real source unknown (same family as func_8013BB3C/func_8013C33C). */
 void func_8013BEF8(void) {
     s32 tmp;
@@ -1053,7 +1054,7 @@ void func_8013BEF8(void) {
     }
 }
 
-/* FAKE: T-11640, the u16 pointer views of the counter and the flag as in func_8013BEF8. */
+/* FAKE: T-11640, the u16 pointer views of the counter and the flag and the s16 views of tmp as in func_8013BEF8. */
 void func_8013C0E4(void) {
     s32 tmp;
 
@@ -1099,7 +1100,8 @@ void func_8013C0E4(void) {
 /* FAKE: T-11640. The original reloads the counter D_801499A0.unk_02 and the flag D_801499B2 in
  * every block where IDO keeps them in a register: the counter is read through a u16 view of
  * D_801499A0, the flag is declared volatile and its second test reads it through a plain u16
- * view (all-volatile reads change the delay-slot fill). Real source unknown. */
+ * view (all-volatile reads change the delay-slot fill). tmp is a stack word whose halves are written and
+ * read through s16 views (the 16.16 position of the four sibling functions). Real source unknown. */
 void func_8013C33C(void) {
     s32 tmp;
 
@@ -1456,6 +1458,8 @@ void func_8013CF88(void) {
     }
 }
 
+/* FAKE: T-11640, the high halves of the 16.16 words (unk_14, unk_18) and of tmp are read and written through s16
+ * views, which is what reproduces the original's code here. Real source unknown. */
 void func_8013D114(void) {
     s32 tmp;
 
