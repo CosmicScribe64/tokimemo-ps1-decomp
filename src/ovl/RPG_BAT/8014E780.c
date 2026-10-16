@@ -120,7 +120,7 @@ void func_8014E8F4(void) {
 /* FAKE: the three clear loops share one counter (it keeps the first two rolled
  * and lets the last unroll by four, as in func_8014F540) and walk the legacy
  * scalar D_8015EBAC and the 2-D D_8015ED64 as flat word arrays; the third loop
- * body shares its for line to keep the store scheduling. The `+ k` stores
+ * body shares its for line to keep the store scheduling. The `(&X)[k]` stores
  * reach the later words of the shared-$at groups through their first symbol
  * (the aggregates are not recovered). T-17108. */
 s32 func_8014E994(void) {
@@ -141,36 +141,36 @@ s32 func_8014E994(void) {
     D_8015EE50.unk_08 = 0;
     D_8015EE5C = 0;
     D_8015EE60 = 0;
-    *(s32 *)((u8 *)(&D_8015EE60) + (4)) = 0;
+    (&D_8015EE60)[1] = 0;
     D_8015EE68 = 0;
-    *(s32 *)((u8 *)(&D_8015EE68) + (4)) = 0;
+    (&D_8015EE68)[1] = 0;
     D_8015EE70 = 0;
     D_8015EE74 = 0;
-    *(s32 *)((u8 *)(&D_8015EE74) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EE74) + (8)) = 0;
+    (&D_8015EE74)[1] = 0;
+    (&D_8015EE74)[2] = 0;
     D_8015EE80 = 0;
-    *(s32 *)((u8 *)(&D_8015EE80) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EE80) + (8)) = 0;
+    (&D_8015EE80)[1] = 0;
+    (&D_8015EE80)[2] = 0;
     D_8015ED94 = 0;
-    *(s32 *)((u8 *)(&D_8015ED94) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015ED94) + (8)) = 0;
+    (&D_8015ED94)[1] = 0;
+    (&D_8015ED94)[2] = 0;
     D_8015EDA0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDA0) + (4)) = 0;
+    (&D_8015EDA0)[1] = 0;
     D_8015EDEC = 0;
     D_8015EDF0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDF0) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDF0) + (8)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDF0) + (12)) = 0;
+    (&D_8015EDF0)[1] = 0;
+    (&D_8015EDF0)[2] = 0;
+    (&D_8015EDF0)[3] = 0;
     D_8015EDC0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDC0) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDC0) + (8)) = 0;
-    *(s32 *)((u8 *)(&D_8015EDC0) + (12)) = 0;
+    (&D_8015EDC0)[1] = 0;
+    (&D_8015EDC0)[2] = 0;
+    (&D_8015EDC0)[3] = 0;
     D_8015EDD0 = 0;
     D_8015EE18 = 0;
-    *(s32 *)((u8 *)(&D_8015EE18) + (4)) = 0;
+    (&D_8015EE18)[1] = 0;
     D_8015EE20 = 0;
-    *(s32 *)((u8 *)(&D_8015EE20) + (4)) = 0;
-    *(s32 *)((u8 *)(&D_8015EE20) + (8)) = 0;
+    (&D_8015EE20)[1] = 0;
+    (&D_8015EE20)[2] = 0;
     D_8015EDA8[0] = 0;
     D_8015EDA8[1] = 0;
     D_8015EDB0.unk_04 = 0;
@@ -180,9 +180,9 @@ s32 func_8014E994(void) {
     D_8015EE00.unk_0C = 0;
     D_8015EE10 = 0;
     D_8015EDD4 = 0;
-    *(s32 *)((u8 *)(&D_8015EDD4) + (4)) = 0;
+    (&D_8015EDD4)[1] = 0;
     D_8015EDE0 = 0;
-    *(s32 *)((u8 *)(&D_8015EDE0) + (4)) = 0;
+    (&D_8015EDE0)[1] = 0;
     D_8015EE2C = 0;
     D_8015EE30.unk_00 = 0;
     D_8015EE30.unk_08 = 0;
