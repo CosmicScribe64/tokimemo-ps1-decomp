@@ -1,0 +1,8 @@
+{
+ "base": "",
+ "files": {
+  "include/game.h": "fa6c9ec1cc98805db26d3b88dd14a66ea2568efc0e4e92f1ef2d6a25134cf02a",
+  "include/main_api.h": "22c3257a622e5d5c2c6d468352c29b1d3ea10ab1ba07473d13332150a830416b",
+  "include/ovl/SHUGAKU.h": "c2a582cef9beeb110c9511745cce4533e20870a822a591e06b0459d21f371890"
+ }
+}

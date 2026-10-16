@@ -1,0 +1,13 @@
+python3 failed:
+ ----------------------^
+cfe: Warning 681: drafts/T-18000/_runs/typed/SHUGAKU/func_80133E10/work/guarded.c, line 3304: '&' before array or function; ignored
+     func_800AE0F0(&D_800CA188, &D_8013AD70);
+ ------------------^
+cfe: Warning 709: drafts/T-18000/_runs/typed/SHUGAKU/func_80133E10/work/guarded.c, line 3337: Incompatible pointer type assignment
+     D_800CA134 = &D_800CA2E4;
+ ---------------^
+cfe: Warning 709: drafts/T-18000/_runs/typed/SHUGAKU/func_80133E10/work/guarded.c, line 3338: Incompatible pointer type assignment
+     D_800CA138 = &D_800CA2E8;
+ ---------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18000/_runs/typed/SHUGAKU/func_80133E10/work -o drafts/T-18000/_runs/typed/SHUGAKU/func_80133E10/work/guarded.o /tmp/asm_processor_l4sek1g/preprocessed_8ea24ed5d65d40d8b3ad1231265d94d7.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibpum4r5dc/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18000/_runs/typed/SHUGAKU/func_80133E10/work/guarded.o drafts/T-18000/_runs/typed/SHUGAKU/func_80133E10/work/guarded.c

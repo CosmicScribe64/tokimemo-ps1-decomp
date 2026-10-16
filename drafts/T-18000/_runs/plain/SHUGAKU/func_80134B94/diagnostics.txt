@@ -1,0 +1,37 @@
+python3 failed:
+ ---------------------^
+cfe: Error: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3270: 'sp' undefined; reoccurrences will not be reported.
+     temp_v0 = *(s32 *)((unsigned char *)(sp + (D_800E738A * 4)) + (48));
+ -----------------------------------------^
+cfe: Warning 712: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3271: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3275: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work -o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o /tmp/asm_processor8wbkvrqh/preprocessed_dfc1365e23ba41ca8416dac8f51d23fd.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibk4fcz4po/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3269: 'sp30' undefined; reoccurrences will not be reported.
+     *(M2cBlockA4 *)(&sp30[0]) = *(M2cBlockA4 *)(&D_8013C228);
+ ---------------------^
+cfe: Warning 712: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3272: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3276: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work -o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o /tmp/asm_processorctw19h97/preprocessed_de9ec84308884237b2ab502a2a3838a2.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibqlt_93jy/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c
+python3 failed:
+cfe: Error: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3271: Non-function name referenced in function call.
+     (&sp30[0])[D_800E738A](0x80);
+ --------------------------^
+cfe: Warning 712: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3273: illegal combination of pointer and integer
+     if (&D_80085368 == temp_v0) {
+ --------------------^
+cfe: Warning 712: drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c, line 3277: illegal combination of pointer and integer
+     if (func_800853FC == temp_v0) {
+ ----------------------^
+cc.py: stage failed (1): /opt/ido/5.3/cc -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -I /work/drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work -o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o /tmp/asm_processorkpo0lfsp/preprocessed_05d10aca058b4fe0b562a57dcbde37cc.c
+cc.py: stage failed (55): python3 /opt/asm-processor/build.py --no-dep-file --drop-mdebug-gptab --convert-statics no --asm-prelude include/asmproc_prelude.inc python3 /work/tools/cc.py --ido-deps /tmp/idolibxgjwc5dx/headers.json /opt/ido/5.3/cc -- mips-linux-gnu-as -EL -march=r3000 -mabi=32 -G0 -Iinclude -I. -- -c -EL -O2 -mips1 -G 0 -non_shared -Wo,-nokpicopt -cckr -Xcpluscomm -Iinclude -o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o drafts/T-18000/_runs/plain/SHUGAKU/func_80134B94/work/guarded.o.sjis.c
