@@ -1,7 +1,7 @@
 ---
 id: T-18800
 title: "Types-first: DATE2"
-status: In Review
+status: Done
 assignee: claude (w3-date2-types)
 created: 2026-10-16
 updated: 2026-10-16
@@ -45,3 +45,11 @@ Start: 10 unmatched DATE2 functions (15,752 bytes by `tools/siblings.py`), none 
 - Packages: T-18801 `w3-date2-p01` (`80137D50.c`, 3 functions, 3,784 B), T-18802 `w3-date2-p02` (`80132DE0.c`,
   4 functions, 3,200 B). `func_80133AF0` and `func_801350A4` left for later.
 - Wiki: [[scenes-family-results]] "Types-first pass (T-18800)", [[matching-notes]] "DATE2 types-first pass (T-18800)".
+
+### 2026-10-16 claude (review): code review against CODING_STANDARDS.md, Done
+
+- Scope: only `src/ovl/DATE2/80132DE0.c`, `include/ovl/DATE2.h`, `config/overlays/DATE2.yaml`, new `drafts/T-18800/` folders and wiki pages changed; no existing drafts archive touched; no game data, asm or binaries; no inline asm, `.word` or pragma; C89 and ASCII only.
+- `func_80135E50` (1,932 B) is plain C ported from the matched DATE twin `func_801489D0`; its one fakematch (empty `if (var_s3) {}`) carries a `FAKE (T-18800)` comment with the reason. No `NON_MATCHING` block in DATE2. The `.data` island follows the documented `tools/data_island.py` step (T-9010), same shape as the DATE files.
+- Header: each new declaration appears once, `check_headers` OK, `migrate_globals --check` OK, `sync_protos --check-branch` 0 new disagreements (15 known).
+- Finding 1 (minor, fixed): the `s32` return of `func_80135E50` (implicit int, only the case 2 error path sets `v0`) was explained in the wiki but not in the source. Added a comment; rebuilt, DATE2 sha1 OK.
+- Matched: 1 function, 1,932 bytes (`DATE2:func_80135E50`).
