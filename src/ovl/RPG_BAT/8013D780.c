@@ -21,7 +21,6 @@ u8 func_8013D780(void) {
     }
 }
 
-#ifdef NON_MATCHING
 void func_8013D834(void) {
     if (D_800E6280.unk_110D == 0) {
         switch (D_8015EB98) {
@@ -97,6 +96,7 @@ void func_8013D834(void) {
             }
             D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
         } else {
+            /* three single increments: ugen takes a temporary per step, a +3 leaves every later temporary two registers low */
             D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
             D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
             D_800E6280.unk_110D = D_800E6280.unk_110D + 1;
@@ -113,9 +113,7 @@ void func_8013D834(void) {
         func_80042808();
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/8013D780", func_8013D834);
-#endif
+
 
 /* s32 without a return: v0 live at the exit keeps as1 from filling the branch delay slots with the next block's lui,
  * as in the original (T-17109). */
