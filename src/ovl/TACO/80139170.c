@@ -100,6 +100,8 @@ void func_80139B54(void) {
     }
 }
 
+/* NON_MATCHING: T-19021, 14 differing lines (7 rows); the pad-word range gets $a2 and `right` $v1 (original: pad $v1, `right` $a2), a priority tie
+   (regdiff: the pad range is 0.4, the two button masks 0.5); everything else including the frame and slot matches. */
 #ifdef NON_MATCHING
 void func_80139BCC(void) {
     s32 temp_lo;
