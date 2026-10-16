@@ -1,8 +1,10 @@
 #define MAIN_API_OVERRIDE_cd_read_sectors /* arg1 is a RAM address: matched as u32 (main_api.h: s32), T-16552 */
+#define MAIN_API_OVERRIDE_func_80085E30 /* called as an implicit int function (definition: void), T-16552 */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 #include "psx_types.h"
 void cd_read_sectors(u8 arg0, u32 arg1, s32 arg2);
+s32 func_80085E30();
 /* .data of this object (T-9010, tools/data_island.py): one line per variable in
  * address order; replace a line by the variable's C definition. */
 INCLUDE_RODATA("asm/ovl/TAIIKU/data/TAIIKU/80138950.data", D_80149940);
@@ -78,14 +80,12 @@ void func_80138A34(void) {
     tbl.f[idx]();
 }
 
-/* NON_MATCHING: T-11640, 22 differing lines, registers only: the pointer of the two GameState loops in case 0
- * takes $v0 and the constant 8 $v1; the original has them the other way round (the pointer range, priority 41,
- * is coloured before the constant 8, priority 10; the original needs the constant first). T-16552: the call
- * result goes through idx, which replaces both frame pads of T-11640 (A[f()] = v with the call in the index
- * reserves a second spill slot; see func_80138DF8). Tried without effect: separate counters for the two loops,
- * a local for the 8, other loop forms, permuter 300 s, autotweak 120 s. */
-#ifdef NON_MATCHING
+/* func_80085E30 is called as an int function here (see the override at the top): its unused $v0 result keeps
+ * the loop pointer of case 0 out of $v0, and the constant 8 takes it, as in the original (with void the pointer,
+ * priority 41, is coloured first and takes $v0). The call result goes through idx: A[f()] = v with the call in
+ * the index reserves a second spill slot (see func_80138DF8). T-16552. */
 void func_80138AA8(void) {
+    s32 p;
     s32 i;
     s32 idx;
     TaiikuW2 tpage;
@@ -127,7 +127,8 @@ void func_80138AA8(void) {
     case 2:
         Fade_Out_Main();
         if (cd_read_sync_status() & 1) {
-            cd_read_sectors(0x27, 0x8018F000, 0xBAEE);
+            p = 0x8018F000;
+            cd_read_sectors(0x27, p, 0xBAEE);
             func_8004284C();
         }
         break;
@@ -155,9 +156,6 @@ void func_80138AA8(void) {
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/ovl/TAIIKU/nonmatchings/TAIIKU/80138950", func_80138AA8);
-#endif
 
 /* The A[f()] = v stores go through idx: with the call inside the index IDO reserves a second, unused spill slot
  * and the tables sit 4 bytes high (T-16552). cd_read_sectors takes its address as u32 here (see the override at
