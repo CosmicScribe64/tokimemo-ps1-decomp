@@ -29,7 +29,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-17800-types-first-option|T-17800]] Types-first: OPTION: menu rows, word tables and the `OptActor44` record view in `OPTION.h`, 32 redrafts (19 better than the census), 4 matches / 1,548 bytes, packages T-17801..T-17803 (Done).
-- [[tickets/T-19016-w3-d-p16|T-19016]] Wave 3 package w3-d-p16: VALEN `80132760.c` and `80133C70.c`, 5 functions (In Progress).
+- [[tickets/T-19016-w3-d-p16|T-19016]] Wave 3 package w3-d-p16: VALEN `80132760.c` and `80133C70.c`, 2 of 5 matched (`func_80133670`, `func_80133728`: call argument read through a `GameState *g` local), `func_80134030` guarded (27 lines), 2 left `INCLUDE_ASM` (In Review).
 - [[tickets/T-19012-w3-d-p12|T-19012]] Wave 3 package w3-d-p12: OMIMAI `801320A0.c`, `801331B0.c`, 2 of 3 matched (`func_80132670` with a scalar-view FAKE, `func_80134628` from its KANGEI sibling, 928 B), `func_8013388C` back to `INCLUDE_ASM` (Done).
 - [[tickets/T-17900-types-first-name_ent|T-17900]] Types-first: NAME_ENT: flag-counter, digit and name-buffer tables in `NAME_ENT.h`, typed views of the main-exe records in the redraft, 30 redrafts (14 better than the census), 2 matches / 904 bytes, packages T-17901..T-17904 (Done).
 - [[tickets/T-19011-w3-d-p11|T-19011]] Wave 3 package w3-d-p11: TACO `func_8013506C` (29 lines) and `func_80134A18` (36 lines) stay guarded drafts, `func_80133E98` stays `INCLUDE_ASM`; chain-assignment store order and the call-saved quotient rule found (Done).

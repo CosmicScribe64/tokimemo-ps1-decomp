@@ -15705,3 +15705,9 @@ Clean build 27/27 (all unit sha1 OK, TACO included), `check_headers`, `migrate_g
 
 ## [2026-10-16] ticket | T-19016 In Progress
 [[tickets/T-19016-w3-d-p16]] created and In Progress: Wave 3 package w3-d-p16, VALEN `func_80133670`, `func_80133728`, `func_80134030`, `func_80132D0C`, `func_80133088` in `src/ovl/VALEN/80132760.c` and `src/ovl/VALEN/80133C70.c`.
+
+## [2026-10-16] build | T-19016 matches and findings
+`src/ovl/VALEN/80132760.c`: `func_80133670` and `func_80133728` matched in plain C by reading the selected girl through a local `GameState *g = &D_800E6280;`; `src/ovl/VALEN/80133C70.c`: `func_80134030` kept as a `NON_MATCHING` draft (27 lines, the default block's `lui` hoisting); `func_80132D0C` and `func_80133088` back to `INCLUDE_ASM` with drafts in `drafts/T-19016/`. Findings in [[matching-notes]] ("T-19016"), rows in [[data/t0018-cases]], row in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-19016 In Review
+[[tickets/T-19016-w3-d-p16]] In Progress to In Review: 2 of 5 functions matched. Awaiting the code review against `CODING_STANDARDS.md` and the final checks.
