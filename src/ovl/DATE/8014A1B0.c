@@ -317,6 +317,8 @@ void func_8014AD9C(s32 arg0, s16 *arg1, s32 arg2) {
     D_801227A0[arg0].unk0 = 0;
 }
 
+/* The display-list argument is the pointer variable dop (base plus steps), as in TACO func_801347F4;
+ * with immediates the hoisted constants take other saved registers. T-17208 */
 void func_8014AF88(void) {
     u32 *dop;
     s32 i;
