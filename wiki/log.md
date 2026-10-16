@@ -16392,3 +16392,14 @@ Clean rebuild of the w3-rpg-bat-p06 worktree: 27/27 sha1 OK (`build/ovl/RPG_BAT.
 ## [2026-10-16] ticket | T-17106 Done
 
 [[tickets/T-17106-w3-rpg-bat-p06]] In Review to Done: code review against `CODING_STANDARDS.md` found nothing; rebuild of RPG_BAT OK (headers OK, globals OK, sha1 OK, `sync_protos --check-branch` OK). 1 of 3 functions matched (`func_80155868`, 520 bytes); `func_80154760` and `func_80154DD8` stay `INCLUDE_ASM` with drafts in `drafts/T-17106/`. Card moved in [[kanban]]. Merge via the wave 3 merge script.
+## [2026-10-16] ticket | T-17111 In Progress
+[[tickets/T-17111-w3-rpg-bat-p11]] created and started: RPG_BAT `func_80144010` and `func_801505B8` (`src/ovl/RPG_BAT/80144010.c`, `src/ovl/RPG_BAT/801504E0.c`), worktree `w3-rpg-bat-p11`.
+
+## [2026-10-16] build | T-17111 matches
+[[tickets/T-17111-w3-rpg-bat-p11]]: `func_80144010` (club index kept in the global `D_8015EBA0`, no local for `D_8015EB9C`) and `func_801505B8` (`RPG_BAT_OVERRIDE_D_8015EDAC` s32 selector, display-record fields as `DisplayActor44`) matched in plain C in `src/ovl/RPG_BAT/80144010.c` and `src/ovl/RPG_BAT/801504E0.c`; header additions in `include/ovl/RPG_BAT.h`. Notes in [[matching-notes]] (T-17111), four rows in [[register-cheatsheet]].
+
+## [2026-10-16] ticket | T-17111 In Review
+[[tickets/T-17111-w3-rpg-bat-p11]] In Progress to In Review (2 of 2 matched). Card moved.
+
+## [2026-10-16] ticket | T-17111 Done
+[[tickets/T-17111-w3-rpg-bat-p11]] In Review to Done after code review against `CODING_STANDARDS.md`: no findings. 2 of 2 functions matched (`func_80144010`, `func_801505B8`, 2,572 bytes). Rebuild: RPG_BAT unit sha1 OK, headers OK, globals OK, protos OK. Card moved to Done.

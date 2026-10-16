@@ -34,6 +34,7 @@ Read this first. Update on every ingest or new page.
 
 ## Tickets
 - [[tickets/T-20003-rpg-timer-callees|T-20003]] RPG_BAT func_80138F6C matched (1,268 bytes); two other independent matches dropped after upstream T-17102 landed (Done, PR #38 merged).
+- [[tickets/T-17111-w3-rpg-bat-p11|T-17111]] Wave 3 package w3-rpg-bat-p11: RPG_BAT `80144010.c`, `801504E0.c`, 2 of 2 matched (`func_80144010`, `func_801505B8`, 2,572 B; global as loop result, `s32` selector override, record-field views) (Done)
 - [[tickets/T-17103-w3-rpg-bat-p03|T-17103]] Wave 3 package w3-rpg-bat-p03: RPG_BAT `80137280.c`, 4 of 4 matched (`func_80139E88`, `func_8013A034`, `func_801387F0`, `func_80138B9C`; Done)
 - [[tickets/T-17106-w3-rpg-bat-p06|T-17106]] Wave 3 package w3-rpg-bat-p06: RPG_BAT `80154430.c`, 1 of 3 matched (`func_80155868`, 520 B: 20-reference block boundary moved with no-op references, unsigned constant for the second 0x2F), `func_80154760` and `func_80154DD8` stay `INCLUDE_ASM` (drafts in `drafts/T-17106/`), from [[tickets/T-17100-types-first-rpg_bat]]
 - [[tickets/T-17207-w3-date-p07|T-17207]] Wave 3 package w3-date-p07: DATE `80141EE0.c`, `func_801449D4` (312 to 71 rows) and `func_80144E20` (exact frame, about 180 register rows), 0 of 2 matched, drafts in `drafts/T-17207/` (Done).

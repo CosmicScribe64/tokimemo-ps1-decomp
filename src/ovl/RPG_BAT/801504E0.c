@@ -1,5 +1,8 @@
+#define RPG_BAT_OVERRIDE_D_8015EDAC /* switched and compared as s32 here (RPG_BAT.h: u32), T-17111 */
 #include "common.h"
 #include "ovl/RPG_BAT.h"
+
+extern s32 D_8015EDAC;
 
 /* returns int without a value: the switch temporary stays live in $v0, as in the original (T-8080) */
 s32 func_801504E0(void) {
@@ -23,7 +26,142 @@ s32 func_801504E0(void) {
     }
 }
 
-INCLUDE_ASM("asm/ovl/RPG_BAT/nonmatchings/RPG_BAT/801504E0", func_801505B8);
+void func_801505B8(void) {
+    s32 i;
+
+    switch (D_8015EDAC) {
+    case 0:
+        func_800AE0F0(D_8015E74C, "　　　　　　　脱力漫才　　　　　　　");
+        func_8014B738(&D_8015E814, 1, 0x5A);
+        func_80144480();
+        func_8013EEAC(D_8015EBAC);
+        func_80148F70();
+        func_801513C8();
+        func_8014EBA8();
+        func_8014EBA8();
+        break;
+    case 2:
+        func_8013D418();
+        break;
+    case 3:
+        func_80151108();
+        break;
+    case 4:
+        if (D_8015EB98 == 0x08000000) {
+            D_8015EDAC = 0xC8;
+        } else {
+            func_80151380(D_8015EDB0.unk_04);
+            D_8015EDB0.unk_04 += 4;
+            if (D_8015EDB0.unk_04 >= 0xE1) {
+                func_8014EBA8();
+            }
+        }
+        break;
+    case 5:
+        func_8013D350();
+        if (D_8015EDC4 & 0x100000) {
+            for (i = 0; i < 3; i++) {
+                ((DisplayActor44 *)D_8011ECD0)[149 + i].unk_03 &= ~1;
+            }
+        }
+        func_8014EBA8();
+        break;
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
+    case 14:
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+        func_80150AA4();
+        break;
+    default:
+        D_8015EDAC = 0x64;
+    case 0x64:
+        func_80151380(0xE0 - D_8015EDB0.unk_04);
+        D_8015EDB0.unk_04 += 4;
+        if (D_8015EDB0.unk_04 >= 0xE1) {
+            func_801515F0();
+            func_8014EBA8();
+        }
+        break;
+    case 0x65:
+        func_8014ED44(0x14);
+        break;
+    case 0x66:
+        func_8013D59C();
+        break;
+    case 0x67:
+        func_8014EBEC();
+        break;
+    case 0xC8:
+        func_8014ED44(0x3C);
+        break;
+    case 0xC9:
+        func_800AE0F0(D_8015E74C, "ロボ「ガガッ・・理解不能 ");
+        func_8014B738(&D_8015E814, 1, 0x5A);
+        func_8014EBA8();
+        break;
+    case 0xCA:
+        func_8014EE3C(0);
+        break;
+    case 0xCB:
+        func_8013D3E4();
+        func_8014EBA8();
+        break;
+    case 0xCC:
+        func_8014ED44(0x3C);
+        break;
+    case 0xCD:
+        func_801504E0();
+        break;
+    case 0xCE:
+        func_8013E97C(0x38, 0x140, 0x5E);
+        func_8013E810(0x38, 1, 1, 1);
+        func_8013E97C(0x32, 0x140, 0x60);
+        func_8013E810(0x32, 6, 5, 1);
+        ((DisplayActor44 *)D_8011ECD0)[152].unk_03 |= 1;
+        ((DisplayActor44 *)D_8011ECD0)[152].unk_01 = 4;
+        ((DisplayActor44 *)D_8011ECD0)[146].unk_01 = 4;
+        func_8014EBA8();
+        break;
+    case 0xCF:
+        ((DisplayActor44 *)D_8011ECD0)[152].unk_26 -= 0x10;
+        ((DisplayActor44 *)D_8011ECD0)[146].unk_26 -= 0x10;
+        D_8015EDB0.unk_04 += 1;
+        if (D_8015EDB0.unk_04 == 2) {
+            func_8013F0F4(0x513, 0, 5);
+            func_8013E7C0(0x34, 0xC, 1, 1);
+            func_8013E7C0(0x33, 8, 1, 1);
+            ((DisplayActor44 *)D_8011ECD0)[146].unk_18 = 2;
+        }
+        if (D_8015EDB0.unk_04 == 0xA) {
+            ((DisplayActor44 *)D_8011ECD0)[152].unk_01 = 6;
+            ((DisplayActor44 *)D_8011ECD0)[146].unk_01 = 6;
+        }
+        if (D_8015EDB0.unk_04 >= 0x16) {
+            func_8014EBA8();
+        }
+        break;
+    case 0xD0:
+        if (D_8015EDB0.unk_08 == 0x14) {
+            func_8013E7C0(0x33, 0xFF, 1, 0);
+        }
+        func_8014ED44(0x3C);
+        break;
+    case 0xD1:
+        func_8013E7C0(0x34, 2, 1, 1);
+        func_8013E7C0(0x33, 0xFF, 1, 0);
+        D_8015EDAC = 0x65;
+        break;
+    }
+}
 
 void func_80150AA4(void) {
     switch (D_8015EB9C) {

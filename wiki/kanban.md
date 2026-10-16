@@ -141,6 +141,7 @@ kanban-plugin: board
 ## Done
 - [ ] [[tickets/T-20003-rpg-timer-callees|T-20003 Match RPG battle callback func_80138F6C (1,268 bytes)]]
 - [ ] [[tickets/T-17109-w3-rpg-bat-p09|T-17109 Wave 3 package w3-rpg-bat-p09]]
+- [ ] [[tickets/T-17111-w3-rpg-bat-p11|T-17111 Wave 3 package w3-rpg-bat-p11]]
 - [ ] [[tickets/T-17104-w3-rpg-bat-p04|T-17104 Wave 3 package w3-rpg-bat-p04]]
 - [ ] [[tickets/T-17103-w3-rpg-bat-p03|T-17103 Wave 3 package w3-rpg-bat-p03]]
 - [ ] [[tickets/T-17108-w3-rpg-bat-p08|T-17108 Wave 3 package w3-rpg-bat-p08]]
