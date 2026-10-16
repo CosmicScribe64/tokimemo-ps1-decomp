@@ -79,7 +79,50 @@ void func_8013F874(s32 arg0, s32 arg1, s32 arg2) {
     dtd_on_tpage(0x380, 0x100, 1, 0, 0);
 }
 
-INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_8013F9C0);
+/* FAKE: the second sprite's UV stores share a source line to preserve constant scheduling.
+ * T-19014; original statement layout unknown. */
+void func_8013F9C0(void) {
+    SPRT *sprite;
+    u32 dy;
+
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    sprite->w = 0x20;
+    sprite->h = 0x20;
+    SetSemiTrans(sprite, 1);
+    sprite->r0 = 0x80;
+    sprite->g0 = 0x80;
+    sprite->b0 = 0x80;
+    dy = (D_8015EDB4->unk2 & 0x40) >> 2;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + 0xC8;
+    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + dy + 0x28;
+    sprite->u0 = 0xE0;
+    sprite->v0 = 0;
+    if (D_8015EDB4->unk84[1] < 0x20) {
+        sprite->clut = func_8009ED74(0x10, 0x1EF);
+    } else {
+        sprite->clut = func_8009ED74(0, 0x1EF);
+    }
+    AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+    sprite = (SPRT *)GetWorkBase(0x14, D_8011ECA0);
+    func_8009F0A4(sprite);
+    sprite->w = 0x20;
+    sprite->h = 0x20;
+    SetSemiTrans(sprite, 1);
+    sprite->r0 = 0x80;
+    sprite->g0 = 0x80;
+    sprite->b0 = 0x80;
+    sprite->x0 = D_800E6280.unk_014[D_8011ECA0] + 0xC8;
+    sprite->y0 = D_800E6280.unk_018[D_8011ECA0] + 0x48;
+    sprite->u0 = 0xE0; sprite->v0 = 0x20;
+    if (D_8015EDB4->unk84[1] < 0x20) {
+        sprite->clut = func_8009ED74(0x10, 0x1EF);
+    } else {
+        sprite->clut = func_8009ED74(0, 0x1EF);
+    }
+    AddPrim((D_8011ECA0 << 10) + 4 + D_800E8CA0, (s32)sprite);
+    dtd_on_tpage(0x340, 0x100, 1, 0, 0);
+}
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/8013F250", func_8013FBF0);
 
