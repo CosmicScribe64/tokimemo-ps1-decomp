@@ -15949,3 +15949,6 @@ The T-19023 In Review entry above says 2,048 bytes; the three functions are 204 
 
 ## [2026-10-16] ticket | T-19022 Done
 [[tickets/T-19022-w3-d-p22]] In Review to Done after code review against `CODING_STANDARDS.md`: 4 findings, all fixed (nested comments made the type definitions in `drafts/T-19022/TEL/func_80136724.c` invalid C; `func_80136724` is 6,580 bytes of code, 7,044 with its jump tables; missing blank line before the matching-notes heading; board card placement). 0 of 2 matched, both functions still `INCLUDE_ASM`, `src/ovl/TEL/80132000.c` unchanged. Rebuild: ninja up to date, unit sha1 OK. Card moved to Done.
+
+## [2026-10-16] ticket | T-19028 In Progress
+[[tickets/T-19028-w3-d-p28]] created and In Progress: Wave 3 package w3-d-p28, five TACO functions in `src/ovl/TACO/8013DB80.c` and `src/ovl/TACO/8015CF30.c`, worktree `w3-d-p28`.
