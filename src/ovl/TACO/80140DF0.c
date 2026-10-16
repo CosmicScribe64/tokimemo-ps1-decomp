@@ -157,7 +157,74 @@ s32 func_80141290(s32 arg0, s32 arg1) {
     return 0;
 }
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: T-19017 */
+void func_801413B8(Tc14 *arg0, s32 arg1) {
+    s32 pad[2];
+    MATRIX m;
+    SVECTOR v;
+    s32 pt[4];
+    Tc14 *rec;
+    POLY_FT4 *poly;
+    s32 dist;
+    s32 side;
+    s32 depth;
+    s32 flag;
+    s32 o;
+    s32 j;
+    u8 tbl[2];
+    s32 rot;
+    s32 k;
+
+    *(u16 *)tbl = D_8015F580;
+    m = D_80129C40;
+    func_800A1100(&m);
+    func_800A1070(&m);
+    rec = &arg0[arg1];
+    v.vz = rec->unk4;
+    rot = 0;
+    for (o = 0; o < 2; o++) {
+        v.vy = rec->unk2 + rot - 0x28;
+        for (j = 0; j < 2; j++) {
+            v.vx = rec->unk0 + j * 0x50 - 0x28;
+            func_800AB170(&v, &pt[j * 2 + o], &depth, &flag);
+        }
+        rot += 0x50;
+    }
+    if (((s16 *)pt)[4] >= -0x2C0 && ((s16 *)pt)[0] < 0x2C1) {
+        if (((s16 *)pt)[3] >= D_800E6280.unk_018[D_8011ECA0] - 0x200
+            && D_800E6280.unk_018[D_8011ECA0] + 0x200 >= ((s16 *)pt)[7]) {
+            side = (rec->unk12 >> 2) & 1;
+            dist = (D_80122754 - rec->unk4) / 127;
+            if (dist >= 0x100) {
+                dist = 0xFF;
+            } else if (dist <= 0) {
+                dist = 1;
+            }
+            poly = func_800490F0(0x28, D_8011ECA0);
+            func_8009F040(poly);
+            SetSemiTrans(poly, 1);
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->tpage = func_8009ECB0(0, 1, 0x380, 0x100);
+            poly->clut = func_8009ED74(0x80, 0x1E4);
+            poly->u0 = tbl[side], poly->v0 = 1, poly->u1 = tbl[side] + 0xE, poly->v1 = 1, poly->u2 = tbl[side], poly->v2 = 1 + 0xE, poly->u3 = tbl[side] + 0xE, poly->v3 = 1 + 0xE;
+            poly->x0 = ((s16 *)pt)[0];
+            poly->y0 = ((s16 *)pt)[1];
+            poly->x1 = ((s16 *)pt)[2];
+            poly->y1 = ((s16 *)pt)[3];
+            poly->x2 = ((s16 *)pt)[4];
+            poly->y2 = ((s16 *)pt)[5];
+            poly->x3 = ((s16 *)pt)[6];
+            poly->y3 = ((s16 *)pt)[7];
+            func_8009EED0((D_8011ECA0 << 10) + dist * 4 + D_800E8CA0, poly);
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801413B8);
+#endif
 
 INCLUDE_ASM("asm/ovl/TACO/nonmatchings/TACO/80140DF0", func_801416E8);
 

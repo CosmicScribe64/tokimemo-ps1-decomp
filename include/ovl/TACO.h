@@ -256,6 +256,7 @@ s32 func_8013C1F4(void);
 s32 func_8013C440(void);
 void func_8013BAC4(Tc14 *arg0, s32 arg1, s32 arg2);
 extern Tc14 D_8015E3B0[];
+extern u16 D_8015F580;
 void func_801413B8(Tc14 *arg0, s32 arg1);
 void func_801416E8(Tc14 *arg0, s32 arg1);
 void func_80141B18(Tc14 *arg0, s32 arg1);
