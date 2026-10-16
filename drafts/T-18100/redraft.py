@@ -581,8 +581,79 @@ def return_type(body):
     return body
 
 
+# ------------------------------------------------------------------------------------------ T-18100
+
+PTR_DECL_RE = re.compile(r"^\s*extern\s+(u8|s8|u16|s16|u32|s32)\s*\*\s*(D_[0-9A-F]{8})\s*;", re.M)
+PTRS = {m.group(2): m.group(1) for m in PTR_DECL_RE.finditer(mg.read(HEADER))}
+
+
+def pointer_index(body):
+    """(T-18100) `*(s32 *)((unsigned char *)D_8013C730 + (8))`, `(*(s32 *)D_8013C730)` and
+    `D_8013C730->unk0` on a header global `s32 *D_8013C730`: `D_8013C730[2]`, `D_8013C730[0]`.
+    m2c keeps the byte offsets although the context gives the pointee type."""
+    for sym, ctype in PTRS.items():
+        size = SIZES[ctype]
+
+        def repl(m):
+            n = int(m.group(1))
+            return "%s[%d]" % (sym, n // size) if n % size == 0 else m.group(0)
+        body = re.sub(r"\*\(%s \*\)\(\(unsigned char \*\)%s \+ \((\d+)\)\)" % (ctype, sym), repl, body)
+        body = body.replace("(*(%s *)%s)" % (ctype, sym), "%s[0]" % sym)
+        body = re.sub(r"\b%s->unk0\b" % sym, "%s[0]" % sym, body)
+    return body
+
+
+WALK_DECL_RE = re.compile(r"^\s*DisplayActor44 \*(\w+);\s*$", re.M)
+WALK_OFF = r"\*\((u8|s8|u16|s16|u32|s32|void)( \*\*?)\)\(\(unsigned char \*\)%s \+ \((\d+)\)\)"
+
+
+def record_walk(body):
+    """(T-18100) A DisplayActor44 pointer that starts at D_8011ECD0 and steps one record per trip
+    of a do-while: m2c prints its fields as byte offsets past the pool and the step in the middle of
+    the body, where IDO scheduled it. The step (and a counter step right before it whose value no
+    later statement of the body reads) moves to the end of the body, the offsets after it gain
+    0x44, and the fields are printed as `p[96].unk_01` (the matched TAIIKU 80138950.c form)."""
+    t = TYPES.get("DisplayActor44")
+    if t is None:
+        return body
+    for var in WALK_DECL_RE.findall(body):
+        if not re.search(r"\b%s = (\(\(DisplayActor44 \*\))+D_8011ECD0\)+;" % var, body):
+            continue
+        lines = body.split("\n")
+        steps = [i for i, l in enumerate(lines) if l.strip() in ("%s += 1;" % var, "%s += 0x44;" % var)]
+        if len(steps) != 1:
+            continue
+        i = steps[0]
+        ind = len(lines[i]) - len(lines[i].lstrip())
+        end = next((j for j in range(i + 1, len(lines)) if lines[j].startswith(" " * (ind - 4) + "} while")), None)
+        if end is None:
+            continue
+        moved = [lines[i].replace("+= 0x44;", "+= 1;")]
+        k = i - 1
+        m = re.match(r"^\s*(\w+) \+= 1;$", lines[k])
+        if m and not any(re.search(r"\b%s\b" % m.group(1), l) for l in lines[i + 1:end]):
+            moved.insert(0, lines[k])
+        else:
+            k = i
+        tail = [re.sub(WALK_OFF % var, lambda mm: "*(%s%s)((unsigned char *)%s + (%d))" % (
+            mm.group(1), mm.group(2), var, int(mm.group(3)) + t.size), l) for l in lines[i + 1:end]]
+        lines = lines[:k] + tail + moved + lines[end:]
+        body = "\n".join(lines)
+
+        def repl(mm):
+            n = int(mm.group(3))
+            idx, r = divmod(n, t.size)
+            path, lt = leaf_at(t, r, 4 if mm.group(2) == " **" else SIZES.get(mm.group(1), 0))
+            if path is None:
+                return mm.group(0)
+            return "%s[%d]%s" % (var, idx, path)
+        body = re.sub(WALK_OFF % var, repl, body)
+        body = re.sub(r"\(s32 \*\) (D_[0-9A-F]{8})\b", r"(u8 *)\1", body)
+    return body
+
+
 def typed_rewrites(body, known, log=None):
-    for name, fn in (("raw-display", raw_display), ("return-type", return_type), ("record-temp", record_temps), ("actor-offset", actor_offsets),
+    for name, fn in (("raw-display", raw_display), ("pointer-index", pointer_index), ("record-walk", record_walk), ("return-type", return_type), ("record-temp", record_temps), ("actor-offset", actor_offsets),
                      ("pointer-step", pointer_steps)):
         new = fn(body)
         if new != body and log is not None:
