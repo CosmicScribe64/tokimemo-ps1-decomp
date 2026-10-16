@@ -137,7 +137,9 @@ void func_8014280C(void) {
     case 3:
         Scroll(0, 0xF, 0, 0xF0, 0x280);
         if (((DisplayActor44 *)D_8011ECD0)[96].unk_2A >= 0x61) {
-            *(s32 *)&((DisplayActor44 *)D_8011ECD0)[96].pad_28 -= 0x18000;
+            /* FAKE: s32 view of the 16.16 y position at 0x28 (its high half is unk_2A); the actor
+             * type has no field for the word yet. T-16554 */
+            *(s32 *)((DisplayActor44 *)D_8011ECD0)[96].pad_28 -= 0x18000;
         } else {
             if (*(u8 *)&D_8014A110 == 0) {
                 ((DisplayActor44 *)D_8011ECD0)[96].unk_16 = 1;
@@ -533,7 +535,7 @@ void func_80143DD0(void) {
     }
     if (D_8014A13C[0].unk_1C != 0) {
         if ((u8) D_8014A110 != 0) {
-            D_80120668 = *(s16 *)&D_8014A1E8[D_8014A13C[0].unk_00 * 2];
+            D_80120668 = D_8014A1E8[D_8014A13C[0].unk_00];
         } else {
             D_80120668 = *(s16 *)&D_8014A1D4[D_8014A13C[0].unk_00 * 2];
         }
@@ -544,6 +546,7 @@ void func_80143DD0(void) {
 
 /* FAKE: the u8 view of the s8 flag D_8014A110 keeps the lbu loads and the register shape of the
  * original; the plain s8 or a (u8) cast changes the allocation. T-16554
+ *
  * `bits` (GameState unk_F88) is read per region into a local: reading the field
  * directly lets the hoisted `& 5` test outrank it and take $v0. */
 void func_80143F50(void) {

@@ -1,5 +1,5 @@
 #define MAIN_API_OVERRIDE_func_80085368 /* callers ignore the result, the original calls it as int; blocks $v0 (T-16554) */
-#define MAIN_API_OVERRIDE_func_800853FC /* same */
+#define MAIN_API_OVERRIDE_func_800853FC /* callers ignore the result, the original calls it as int (T-16554) */
 #include "common.h"
 #include "ovl/TAIIKU.h"
 
